@@ -2,16 +2,11 @@ package org.dicadeveloper.weplantaforest.persist.dto;
 
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.dozer.Mapping;
 
-@XmlRootElement
 public class TreeDto {
 
     @Mapping("_id")
-    @XmlElement(name = "_id")
     private long _id;
 
     @Mapping("_longitude")
