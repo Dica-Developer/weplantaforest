@@ -26,6 +26,17 @@ public class TreeDto {
     @Mapping("_submittedOn")
     private Date _submittedOn;
 
+    public TreeDto() {
+
+    }
+
+    public TreeDto(float latitude, float longitude, int amount) {
+        _latitude = latitude;
+        _longitude = longitude;
+        _amount = amount;
+        _submittedOn = new Date();
+    }
+
     public long getId() {
         return _id;
     }
