@@ -21,6 +21,9 @@ public class TreeDto {
     @Mapping("_submittedOn")
     private Date _submittedOn;
 
+    @Mapping("_type")
+    private TreeTypeDto _type;
+
     public TreeDto() {
 
     }
@@ -72,9 +75,17 @@ public class TreeDto {
         _submittedOn = submittedOn;
     }
 
+    public TreeTypeDto getTreeType() {
+        return _type;
+    }
+
+    public void setTreeType(TreeTypeDto type) {
+        _type = type;
+    }
+
     @Override
     public String toString() {
-        return "TreeDto [_id=" + _id + ", _longitude=" + _longitude + ", _latitude=" + _latitude + ", _amount=" + _amount + "]";
+        return "TreeDto [_id=" + _id + ", _longitude=" + _longitude + ", _latitude=" + _latitude + ", _amount=" + _amount + ", _submittedOn=" + _submittedOn + ", _type=" + _type + "]";
     }
 
 }

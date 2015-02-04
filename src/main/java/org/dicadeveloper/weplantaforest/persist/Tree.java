@@ -38,6 +38,9 @@ public class Tree {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     private User _owner;
 
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
+    private TreeType _type;
+
     public long getId() {
         return _id;
     }
@@ -98,14 +101,22 @@ public class Tree {
         return _owner;
     }
 
+    public TreeType getType() {
+        return _type;
+    }
+
     public void setOwner(User owner) {
         _owner = owner;
+    }
+
+    public void setType(TreeType type) {
+        _type = type;
     }
 
     @Override
     public String toString() {
         return "Tree [_id=" + _id + ", _amount=" + _amount + ", _imagePath=" + _imagePath + ", _longitude=" + _longitude + ", _latitude=" + _latitude + ", _submittedOn=" + _submittedOn
-                + ", _plantedOn=" + _plantedOn + ", _owner=" + _owner + "]";
+                + ", _plantedOn=" + _plantedOn + ", _owner=" + _owner + ", _type=" + _type + "]";
     }
 
 }

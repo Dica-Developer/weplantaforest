@@ -11,7 +11,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
+import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.services.TreeService;
+import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,9 @@ public class TreeEndpoint {
 
     @Autowired
     private TreeService _treeService;
+
+    @Autowired
+    TreeTypeService _treeTypeSerivce;
 
     @GET
     @Path("/")
@@ -40,11 +45,16 @@ public class TreeEndpoint {
     }
 
     @POST
-    @Path("/{latitude}/{longitude}/{amount}")
-    public Response createTree(@PathParam("latitude") float latitude, @PathParam("longitude") float longitude, @PathParam("amount") int amount) {
+    @Path("/{latitude}/{longitude}/{amount}/{treeTypeName}")
+    public Response createTree(@PathParam("latitude") float latitude, @PathParam("longitude") float longitude, @PathParam("amount") int amount, @PathParam("treeTypeName") String treeTypeName) {
         // TODO validation
-        // create TreeDto and persist
+        TreeTypeDto treeType = _treeTypeSerivce.findByName(treeTypeName);
+        if (treeType.equals(TreeTypeDto.NO_TREE_TYPE)) {
+            Response response = Response.status(400).entity("You must define the tree type '" + treeTypeName + "' first.").build();
+            return response;
+        }
         TreeDto tree = new TreeDto(latitude, longitude, amount);
+        tree.setTreeType(treeType);
         _treeService.save(tree);
         Response response = Response.status(200).entity(tree).build();
         return response;

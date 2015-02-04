@@ -8,8 +8,11 @@ import java.util.Map;
 import org.assertj.core.util.Maps;
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
+import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -33,15 +36,32 @@ public class TreesEndpointIntegrationTest {
 
     private RestTemplate _restTemplate = new TestRestTemplate();
 
+    @Autowired
+    private TreeTypeService _treeTypeService;
+
     @Test
     public void testTreeCreation_Successful() {
         Map<String, String> params = Maps.newHashMap();
-        ResponseEntity<TreeDto> entity = _restTemplate.postForEntity("http://localhost:" + this.port + "/rest/v1/trees/51.23/11.43/34", params, TreeDto.class);
+        ResponseEntity<TreeDto> entity = _restTemplate.postForEntity("http://localhost:" + this.port + "/rest/v1/trees/51.23/11.43/34/Ahorn", params, TreeDto.class);
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
         TreeDto tree = entity.getBody();
         assertThat(tree.getLatitude()).isEqualTo(51.23f);
         assertThat(tree.getLongitude()).isEqualTo(11.43f);
         assertThat(tree.getAmount()).isEqualTo(34);
-        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        TreeTypeDto type = tree.getTreeType();
+        assertThat(type.getName()).isEqualTo("Ahorn");
+        assertThat(type.getDescription()).contains(
+                "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae).");
+    }
+
+    @Test
+    public void testTreeCreation_TreeTypeShouldExists() {
+        Map<String, String> params = Maps.newHashMap();
+        assertThat(_treeTypeService.findByName("Buche")).isEqualTo(TreeTypeDto.NO_TREE_TYPE);
+        ResponseEntity<String> entity = _restTemplate.postForEntity("http://localhost:" + this.port + "/rest/v1/trees/51.23/11.43/34/Buche", params, String.class);
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        String errorMessage = entity.getBody();
+        assertThat(errorMessage).isEqualTo("You must define the tree type 'Buche' first.");
     }
 
     @Test
