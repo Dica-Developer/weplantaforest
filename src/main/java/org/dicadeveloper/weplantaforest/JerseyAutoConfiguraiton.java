@@ -35,16 +35,16 @@ import org.springframework.web.filter.RequestContextFilter;
 @AutoConfigureBefore(DispatcherServletAutoConfiguration.class)
 public class JerseyAutoConfiguraiton implements WebApplicationInitializer {
     @Autowired
-    private ListableBeanFactory context;
+    private ListableBeanFactory _context;
 
     @Autowired
-    private ResourceConfig config;
+    private ResourceConfig _config;
 
-    private String path;
+    private String _path;
 
     @PostConstruct
     public void path() {
-        path = findPath(AnnotationUtils.findAnnotation(config.getClass(), ApplicationPath.class));
+        _path = findPath(AnnotationUtils.findAnnotation(_config.getClass(), ApplicationPath.class));
     }
 
     @Bean
@@ -56,8 +56,8 @@ public class JerseyAutoConfiguraiton implements WebApplicationInitializer {
     @Bean
     @ConditionalOnMissingBean(name = "jerseyServletRegistration")
     public ServletRegistrationBean jerseyServletRegistration() {
-        Class<? extends ResourceConfig> configType = config.getClass();
-        ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), path);
+        Class<? extends ResourceConfig> configType = _config.getClass();
+        ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), _path);
         registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, configType.getName());
         registration.setName("jerseyServlet");
         return registration;

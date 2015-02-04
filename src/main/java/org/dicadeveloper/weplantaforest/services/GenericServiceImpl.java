@@ -26,8 +26,8 @@ public class GenericServiceImpl<T, D, ID extends Serializable> implements Generi
     @SuppressWarnings("unchecked")
     public GenericServiceImpl() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-        this._entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-        this._dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
+        _entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+        _dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
     }
 
     @Override
