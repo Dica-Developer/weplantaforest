@@ -1,6 +1,6 @@
 package org.dicadeveloper.weplantaforest;
 
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-        register(JacksonJsonProvider.class);
+        register(DeclarativeLinkingFeature.class);
         packages("org.dicadeveloper.weplantaforest.endpoints");
     }
+
 }
