@@ -14,10 +14,10 @@ import com.google.common.collect.Lists;
 public class GenericServiceImpl<T, D, ID extends Serializable> implements GenericService<T, D, ID> {
 
     @Autowired
-    private JpaRepository<T, ID> _repository;
+    protected JpaRepository<T, ID> _repository;
 
     @Autowired
-    private DozerBeanMapper _mapper;
+    protected DozerBeanMapper _mapper;
 
     protected Class<T> _entityClass;
 
