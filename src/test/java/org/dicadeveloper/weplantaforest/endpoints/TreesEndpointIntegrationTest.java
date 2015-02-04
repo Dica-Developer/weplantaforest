@@ -48,10 +48,7 @@ public class TreesEndpointIntegrationTest {
         assertThat(tree.getLatitude()).isEqualTo(51.23f);
         assertThat(tree.getLongitude()).isEqualTo(11.43f);
         assertThat(tree.getAmount()).isEqualTo(34);
-        TreeTypeDto type = tree.getTreeType();
-        assertThat(type.getName()).isEqualTo("Ahorn");
-        assertThat(type.getDescription()).contains(
-                "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae).");
+        assertThat(tree.getTreeType()).isNull();
     }
 
     @Test
