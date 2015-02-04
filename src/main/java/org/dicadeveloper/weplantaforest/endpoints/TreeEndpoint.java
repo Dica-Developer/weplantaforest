@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.dicadeveloper.weplantaforest.PATHS;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.services.TreeService;
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Produces({ MediaType.APPLICATION_JSON })
-@Path("/rest/v1/trees")
+@Path(PATHS.PATH_TREES)
 @Transactional
 public class TreeEndpoint {
 
@@ -54,6 +55,7 @@ public class TreeEndpoint {
         Response response = Response.ok(tree).build();
         return response;
     }
+
     @POST
     @Path("/{latitude}/{longitude}/{amount}/{treeTypeName}")
     public Response createTree(@PathParam("latitude") float latitude, @PathParam("longitude") float longitude, @PathParam("amount") int amount, @PathParam("treeTypeName") String treeTypeName) {
@@ -71,10 +73,13 @@ public class TreeEndpoint {
     }
 
     @GET
-    @Path("/{treeType}")
-    public Response getTreeType(@PathParam("treetype") String treeType) {
-        String type = "Ahorn";
-        return Response.status(200).entity(type).build();
+    @Path("type/{treeTypeName}")
+    public Response getTreeType(@PathParam("treeTypeName") String treeTypeName) {
+        String typeName = treeTypeName;
+        if (typeName == null) {
+            typeName = "Ahorn";
+        }
+        return Response.status(200).entity(typeName).build();
     }
 
 }

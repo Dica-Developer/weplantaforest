@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.dicadeveloper.weplantaforest.PATHS;
 import org.dozer.Mapping;
 import org.glassfish.jersey.linking.Binding;
 import org.glassfish.jersey.linking.InjectLink;
@@ -46,10 +47,12 @@ public class TreeDto {
     @XmlElementWrapper(name = "links")
     @XmlElement(name = "link")
     @InjectLinks({
-            @InjectLink(style = Style.ABSOLUTE, rel = "self", value = "tree/{value}", bindings = { @Binding("${instance.id}") }),
-            @InjectLink(style = Style.ABSOLUTE, value = "query/offset/{offset}/limit/{limit}", condition = "${instance.offset + instance.limit < instance.modelLimit}", bindings = {
+            @InjectLink(style = Style.ABSOLUTE, rel = "self", value = PATHS.PATH_TREES + "/{value}", bindings = { @Binding("${instance.id}") }),
+            @InjectLink(style = Style.ABSOLUTE, rel = "parent", value = PATHS.PATH_TREES),
+            @InjectLink(style = Style.ABSOLUTE, rel = "type", value = PATHS.PATH_TREE_TYPES + "/{value}", bindings = { @Binding("${instance.treeType.id}") }),
+            @InjectLink(style = Style.ABSOLUTE, value = PATHS.PATH_TREES + "query/offset/{offset}/limit/{limit}", condition = "${instance.offset + instance.limit < instance.modelLimit}", bindings = {
                     @Binding(name = "offset", value = "${instance.offset + instance.limit}"), @Binding(name = "limit", value = "${instance.limit}") }, rel = "next"),
-            @InjectLink(style = Style.ABSOLUTE, value = "query/offset/{offset}/limit/{limit}", condition = "${instance.offset - instance.limit >= 0}", bindings = {
+            @InjectLink(style = Style.ABSOLUTE, value = PATHS.PATH_TREES + "query/offset/{offset}/limit/{limit}", condition = "${instance.offset - instance.limit >= 0}", bindings = {
                     @Binding(name = "offset", value = "${instance.offset - instance.limit}"), @Binding(name = "limit", value = "${instance.limit}") }, rel = "prev") })
     @XmlJavaTypeAdapter(Link.JaxbAdapter.class)
     List<Link> links;
@@ -105,6 +108,7 @@ public class TreeDto {
         _submittedOn = submittedOn;
     }
 
+    @XmlTransient
     public TreeTypeDto getTreeType() {
         return _type;
     }

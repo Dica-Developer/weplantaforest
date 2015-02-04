@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.dicadeveloper.weplantaforest.PATHS;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Produces({ MediaType.APPLICATION_JSON })
-@Path("/rest/v1/treetypes")
+@Path(PATHS.PATH_TREE_TYPES)
 @Transactional
 public class TreeTypeEndpoint {
 
