@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -34,6 +35,17 @@ public class TreeTypeEndpoint {
             _treeTypeService.save(treeType);
         }
         Response response = Response.status(200).entity(treeTypes).build();
+        return response;
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getTree(@PathParam("id") Long id) {
+        if (id == null) {
+            return Response.status(400).entity("Parameter 'id' must not be null.").build();
+        }
+        TreeTypeDto treeType = _treeTypeService.findOne(id);
+        Response response = Response.ok(treeType).build();
         return response;
     }
 

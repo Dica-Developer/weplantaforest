@@ -44,6 +44,16 @@ public class TreeEndpoint {
         return response;
     }
 
+    @GET
+    @Path("/{id}")
+    public Response getTree(@PathParam("id") Long id) {
+        if (id == null) {
+            return Response.status(400).entity("Parameter 'id' must not be null.").build();
+        }
+        TreeDto tree = _treeService.findOne(id);
+        Response response = Response.ok(tree).build();
+        return response;
+    }
     @POST
     @Path("/{latitude}/{longitude}/{amount}/{treeTypeName}")
     public Response createTree(@PathParam("latitude") float latitude, @PathParam("longitude") float longitude, @PathParam("amount") int amount, @PathParam("treeTypeName") String treeTypeName) {
