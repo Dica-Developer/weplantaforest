@@ -72,10 +72,11 @@ public class JerseyAutoConfiguraiton implements WebApplicationInitializer {
 
     private static String findPath(ApplicationPath annotation) {
         // Jersey doesn't like to be the default servlet, so map to /* as a fallback
+        String restPath = "/rest/*";
         if (annotation == null) {
-            return "/*";
+            return restPath;
         }
         String path = annotation.value();
-        return path.isEmpty() || path.equals("/") ? "/*" : path + "/*";
+        return path + restPath;
     }
 }
