@@ -4,3 +4,5 @@
 .project
 .classpath
 .settings
+weplantaforest.h2.db
+weplantaforest.trace.db
