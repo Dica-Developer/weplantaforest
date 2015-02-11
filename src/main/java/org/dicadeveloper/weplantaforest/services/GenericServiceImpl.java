@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.services;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
@@ -46,7 +47,7 @@ public class GenericServiceImpl<T, D, ID extends Serializable> implements Generi
 
     @Override
     public List<D> findAll(Pageable page) {
-        List<D> result = (List<D>) Lists.newArrayList(page.getPageSize());
+        List<D> result = new ArrayList<D>(page.getPageSize());
         for (T t : _repository.findAll(page)) {
             result.add(_mapper.map(t, _dtoClass));
         }
