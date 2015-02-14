@@ -52,6 +52,10 @@ dependencies {
     compile group: 'org.glassfish.jersey.media', name:'jersey-media-json-jackson', version: '2.9.1'
     compile group: 'org.glassfish.jersey.ext', name: 'jersey-declarative-linking', version: '2.9.1'
     
+    compile group: 'com.theoryinpractise', name: 'halbuilder-jaxrs', version: '1.1.1'
+    compile group: 'com.theoryinpractise', name: 'halbuilder', version: '1.0.5'
+    compile group: 'com.theoryinpractise', name: 'halbuilder-standard', version: '4.0.1'
+
     compile group: 'javax.el', name: 'javax.el-api', version: '2.2.5'
     compile group: 'org.glassfish.web', name: 'javax.el', version: '2.2.6'
 

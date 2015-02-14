@@ -10,6 +10,8 @@ public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
         register(DeclarativeLinkingFeature.class);
         packages("org.dicadeveloper.weplantaforest.endpoints");
+        packages("com.theoryinpractise.halbuilder.jaxrs");
+        packages("com.theoryinpractise.halbuilder.jersey");
     }
 
 }

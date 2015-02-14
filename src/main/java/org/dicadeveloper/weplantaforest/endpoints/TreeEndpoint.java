@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.endpoints;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -7,8 +9,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.dicadeveloper.weplantaforest.PATHS;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
@@ -19,8 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.theoryinpractise.halbuilder.api.RepresentationFactory;
+import com.theoryinpractise.halbuilder.impl.representations.MutableRepresentation;
+import com.theoryinpractise.halbuilder.standard.StandardRepresentationFactory;
+
 @Component
-@Produces({ MediaType.APPLICATION_JSON })
+@Produces({ RepresentationFactory.HAL_JSON })
 @Path(PATHS.PATH_TREES)
 @Transactional
 public class TreeEndpoint {
@@ -30,6 +38,13 @@ public class TreeEndpoint {
 
     @Autowired
     TreeTypeService _treeTypeSerivce;
+
+    public static final String BASE_URI = "http://localhost:8080/rest/";
+
+    public static URI mkUri(final Class resourceClass) throws URISyntaxException {
+        URI href = UriBuilder.fromResource(resourceClass).build();
+        return new URI(BASE_URI).resolve(href);
+    }
 
     @GET
     @Path("/")
@@ -47,12 +62,17 @@ public class TreeEndpoint {
 
     @GET
     @Path("/{id}")
-    public Response getTree(@PathParam("id") Long id) {
+    public Response getTree(@PathParam("id") Long id, @Context UriInfo ui) throws URISyntaxException {
         if (id == null) {
             return Response.status(400).entity("Parameter 'id' must not be null.").build();
         }
+        RepresentationFactory representationFactory = new StandardRepresentationFactory().withFlag(RepresentationFactory.PRETTY_PRINT).withLink("website", "http://iplantatree.org");
+        MutableRepresentation rep = (MutableRepresentation) representationFactory.newRepresentation(mkUri(TreeEndpoint.class));
+
         TreeDto tree = _treeService.findOne(id);
-        Response response = Response.ok(tree).build();
+        rep.withFields(tree);
+
+        Response response = Response.ok(rep).build();
         return response;
     }
 
