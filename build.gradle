@@ -58,17 +58,13 @@ dependencies {
     compile group: 'com.fasterxml.jackson.jaxrs', name:'jackson-jaxrs-json-provider', version: '2.0.1'
     compile group: 'com.fasterxml.jackson.jaxrs', name:'jackson-jaxrs-base', version: '2.5.0'
 
-    // tag::actuator[]
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.2.1.RELEASE'
-    // end::actuator[]
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.2.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '1.2.1.RELEASE'
-    // tag::jetty[]
     compile("org.springframework.boot:spring-boot-starter-web") {
     //    exclude module: "spring-boot-starter-tomcat"
     }
     //compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
-    // end::jetty[]
     compile group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: '2.9'
 
     compile group: 'net.sf.dozer', name: 'dozer', version: '5.5.1'
