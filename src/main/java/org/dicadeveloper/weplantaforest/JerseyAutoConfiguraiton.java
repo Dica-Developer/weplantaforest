@@ -65,9 +65,7 @@ public class JerseyAutoConfiguraiton implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        // We need to switch *off* the Jersey WebApplicationInitializer because it
-        // will try and register a ContextLoaderListener which we don't need
-        servletContext.setInitParameter("contextConfigLocation", "<NONE>");
+        // nothing todo
     }
 
     private static String findPath(ApplicationPath annotation) {
