@@ -2,12 +2,16 @@ package org.dicadeveloper.weplantaforest.persist.dto;
 
 import java.util.Date;
 
-import org.dozer.Mapping;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class TreeDto {
+import org.dozer.Mapping;
+import org.springframework.hateoas.Identifiable;
+
+@XmlRootElement
+public class TreeDto implements Identifiable<Long> {
 
     @Mapping("_id")
-    public long _id;
+    public Long _id;
 
     @Mapping("_longitude")
     public float _longitude;
@@ -20,9 +24,6 @@ public class TreeDto {
 
     @Mapping("_submittedOn")
     public Date _submittedOn;
-
-    @Mapping("_type")
-    private TreeTypeDto _type;
 
     // TODO figure out how to set this properly
     public int limit = 5, offset = 10; // Getters for these
@@ -40,11 +41,12 @@ public class TreeDto {
         _submittedOn = new Date();
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return _id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         _id = id;
     }
 
@@ -80,14 +82,6 @@ public class TreeDto {
         _submittedOn = submittedOn;
     }
 
-    public TreeTypeDto getTreeType() {
-        return _type;
-    }
-
-    public void setTreeType(TreeTypeDto type) {
-        _type = type;
-    }
-
     public int getLimit() {
         return limit;
     }
@@ -102,7 +96,7 @@ public class TreeDto {
 
     @Override
     public String toString() {
-        return "TreeDto [_id=" + _id + ", _longitude=" + _longitude + ", _latitude=" + _latitude + ", _amount=" + _amount + ", _submittedOn=" + _submittedOn + ", _type=" + _type + "]";
+        return "TreeDto [_id=" + _id + ", _longitude=" + _longitude + ", _latitude=" + _latitude + ", _amount=" + _amount + ", _submittedOn=" + _submittedOn + "]";
     }
 
 }
