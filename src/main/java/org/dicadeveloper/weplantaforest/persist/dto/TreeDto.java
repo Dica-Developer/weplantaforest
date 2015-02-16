@@ -11,25 +11,28 @@ import org.springframework.hateoas.Identifiable;
 public class TreeDto implements Identifiable<Long> {
 
     @Mapping("_id")
-    public Long _id;
+    private Long _id;
 
     @Mapping("_longitude")
-    public float _longitude;
+    private float _longitude;
 
     @Mapping("_latitude")
-    public float _latitude;
+    private float _latitude;
 
     @Mapping("_amount")
-    public int _amount;
+    private int _amount;
 
     @Mapping("_submittedOn")
-    public Date _submittedOn;
+    private Date _submittedOn;
 
     // TODO figure out how to set this properly
-    public int limit = 5, offset = 10; // Getters for these
+    private int limit = 5, offset = 10; // Getters for these
 
     // TODO figure out how to set this properly
-    public int modelLimit = 100; // Getters for these
+    private int modelLimit = 100; // Getters for these
+
+    @Mapping("_type")
+    private TreeTypeDto _treeType;
 
     public TreeDto() {
     }
@@ -92,6 +95,14 @@ public class TreeDto implements Identifiable<Long> {
 
     public int getModelLimit() {
         return modelLimit;
+    }
+
+    public TreeTypeDto getTreeType() {
+        return _treeType;
+    }
+
+    public void setTreeType(TreeTypeDto treeType) {
+        _treeType = treeType;
     }
 
     @Override

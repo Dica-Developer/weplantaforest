@@ -1,4 +1,7 @@
-package org.dicadeveloper.weplantaforest.endpoints;
+package org.dicadeveloper.weplantaforest.controller;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.List;
 
@@ -38,18 +41,21 @@ public class TreeTypeController {
             TreeTypeDto treeType = new TreeTypeDto(name, description);
             _treeTypeService.save(treeType);
         }
-        Resources<Resource<TreeTypeDto>> treeResources = Resources.wrap(treeTypes);
-        return new ResponseEntity<Resources<Resource<TreeTypeDto>>>(treeResources, HttpStatus.OK);
+        Resources<Resource<TreeTypeDto>> treeTypeResources = Resources.wrap(treeTypes);
+        treeTypeResources.add(linkTo(methodOn(TreeTypeController.class).getTreeTypes()).withSelfRel());
+        return new ResponseEntity<Resources<Resource<TreeTypeDto>>>(treeTypeResources, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
-    public HttpEntity<Resource<TreeTypeDto>> getTree(@PathVariable("id") Long id) {
+    public HttpEntity<Resource<TreeTypeDto>> getTreeType(@PathVariable("id") Long id) {
         if (id == null) {
             return new ResponseEntity<Resource<TreeTypeDto>>(HttpStatus.NOT_FOUND);
         }
         TreeTypeDto treeType = _treeTypeService.findOne(id);
-        Resource<TreeTypeDto> treeResource = new Resource(treeType);
-        return new ResponseEntity<Resource<TreeTypeDto>>(treeResource, HttpStatus.OK);
+        Resource<TreeTypeDto> treeTypeResource = new Resource(treeType);
+        treeTypeResource.add(linkTo(methodOn(TreeTypeController.class).getTreeType(id)).withSelfRel());
+        treeTypeResource.add(linkTo(methodOn(TreeTypeController.class).getTreeTypes()).withRel("parent"));
+        return new ResponseEntity<Resource<TreeTypeDto>>(treeTypeResource, HttpStatus.OK);
     }
 
 }

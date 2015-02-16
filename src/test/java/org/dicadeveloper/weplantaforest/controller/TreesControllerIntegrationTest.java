@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.endpoints;
+package org.dicadeveloper.weplantaforest.controller;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -29,7 +29,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest("server.port=0")
 @WebAppConfiguration
-public class TreesEndpointIntegrationTest {
+public class TreesControllerIntegrationTest {
 
     @Value("${local.server.port}")
     private int port;
@@ -48,7 +48,7 @@ public class TreesEndpointIntegrationTest {
         assertThat(tree.getLatitude()).isEqualTo(51.23f);
         assertThat(tree.getLongitude()).isEqualTo(11.43f);
         assertThat(tree.getAmount()).isEqualTo(34);
-        // assertThat(tree.getTreeType()).isNull();
+        assertThat(tree.getTreeType()).isNull();
     }
 
     @Test

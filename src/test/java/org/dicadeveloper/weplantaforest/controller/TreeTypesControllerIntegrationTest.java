@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.endpoints;
+package org.dicadeveloper.weplantaforest.controller;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -24,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest("server.port=0")
 @WebAppConfiguration
-public class TreeTypesEndpointIntegrationTest {
+public class TreeTypesControllerIntegrationTest {
 
     @Value("${local.server.port}")
     private int port;

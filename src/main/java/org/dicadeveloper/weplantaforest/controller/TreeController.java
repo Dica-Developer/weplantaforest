@@ -1,14 +1,10 @@
-package org.dicadeveloper.weplantaforest.endpoints;
+package org.dicadeveloper.weplantaforest.controller;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Component
-@RequestMapping(PATHS.PATH_TREES)
+@RequestMapping(value = PATHS.PATH_TREES, produces = { MediaType.APPLICATION_JSON })
 @ExposesResourceFor(TreeDto.class)
 @Produces(MediaType.APPLICATION_JSON)
 @Controller
@@ -44,13 +40,16 @@ public class TreeController {
     @Autowired
     TreeTypeService _treeTypeSerivce;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<Resources<Resource<TreeDto>>> getTrees() {
         List<TreeDto> trees = _treeService.findAll();
         if (trees.isEmpty()) {
             float latitude = 51.51f;
             float longitude = 11.12f;
             TreeDto tree = new TreeDto(latitude, longitude, 20);
+            TreeTypeDto treeType = new TreeTypeDto("Ahorne", "Die Ahorne (Acer) ");
+            _treeTypeSerivce.save(treeType);
+            tree.setTreeType(treeType);
             _treeService.save(tree);
         }
         Resources<Resource<TreeDto>> treeResources = Resources.wrap(trees);
@@ -59,22 +58,28 @@ public class TreeController {
         return new ResponseEntity<Resources<Resource<TreeDto>>>(treeResources, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
-    public HttpEntity<Resource<TreeDto>> getTree(@PathVariable("id") Long id) {
-        if (id == null) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public HttpEntity<Resource<TreeDto>> getTree(@PathVariable("id") Long treeId) {
+        if (treeId == null) {
             return new ResponseEntity<Resource<TreeDto>>(HttpStatus.NOT_FOUND);
         }
-        TreeDto tree = _treeService.findOne(id);
+        TreeDto tree = _treeService.findOne(treeId);
+
+        Long treeTypeId = _treeService.findTreeTypeIdById(treeId);
+        // TODO improve error handling
+        if (treeTypeId == null)
+            treeTypeId = 2L;
 
         Resource<TreeDto> treeResource = new Resource(tree);
-        treeResource.add(linkTo(methodOn(TreeController.class).getTree(id)).withSelfRel());
+        treeResource.add(linkTo(methodOn(TreeController.class).getTree(treeId)).withSelfRel());
         treeResource.add(linkTo(methodOn(TreeController.class).getTrees()).withRel("parent"));
+        treeResource.add(linkTo(methodOn(TreeTypeController.class).getTreeType(treeTypeId)).withRel("treeType"));
         return new ResponseEntity<Resource<TreeDto>>(treeResource, HttpStatus.OK);
     }
 
-    @POST
-    @Path("/{latitude}/{longitude}/{amount}/{treeTypeName}")
-    public Response createTree(@PathParam("latitude") float latitude, @PathParam("longitude") float longitude, @PathParam("amount") int amount, @PathParam("treeTypeName") String treeTypeName) {
+    @RequestMapping(value = "/{latitude}/{longitude}/{amount}/{treeTypeName}", method = RequestMethod.POST)
+    public Response createTree(@PathVariable("latitude") float latitude, @PathVariable("longitude") float longitude, @PathVariable("amount") int amount,
+            @PathVariable("treeTypeName") String treeTypeName) {
         // TODO validation
         TreeTypeDto treeType = _treeTypeSerivce.findByName(treeTypeName);
         if (treeType.equals(TreeTypeDto.NO_TREE_TYPE)) {
@@ -82,15 +87,14 @@ public class TreeController {
             return response;
         }
         TreeDto tree = new TreeDto(latitude, longitude, amount);
-        // tree.setTreeType(treeType);
+        tree.setTreeType(treeType);
         _treeService.save(tree);
         Response response = Response.status(200).entity(tree).build();
         return response;
     }
 
-    @GET
-    @Path("type/{treeTypeName}")
-    public Response getTreeType(@PathParam("treeTypeName") String treeTypeName) {
+    @RequestMapping(value = "/type/{treeTypeName}", method = RequestMethod.GET)
+    public Response getTreeType(@PathVariable("treeTypeName") String treeTypeName) {
         String typeName = treeTypeName;
         if (typeName == null) {
             typeName = "Ahorn";
