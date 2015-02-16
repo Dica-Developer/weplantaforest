@@ -1,14 +1,18 @@
 package org.dicadeveloper.weplantaforest;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.hateoas.config.EnableEntityLinks;
 
 @ComponentScan
+@SpringBootApplication
+@EnableEntityLinks
 @EnableAutoConfiguration
-@Import({ InfrastructureConfig.class, JerseyAutoConfiguraiton.class })
+@Import({ InfrastructureConfig.class, HATEOASConfiguraiton.class })
 public class Application extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

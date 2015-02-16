@@ -48,7 +48,7 @@ public class TreesEndpointIntegrationTest {
         assertThat(tree.getLatitude()).isEqualTo(51.23f);
         assertThat(tree.getLongitude()).isEqualTo(11.43f);
         assertThat(tree.getAmount()).isEqualTo(34);
-        assertThat(tree.getTreeType()).isNull();
+        // assertThat(tree.getTreeType()).isNull();
     }
 
     @Test

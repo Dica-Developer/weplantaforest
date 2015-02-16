@@ -1,7 +1,8 @@
 package org.dicadeveloper.weplantaforest.endpoints;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -9,10 +10,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
 
 import org.dicadeveloper.weplantaforest.PATHS;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
@@ -20,18 +19,24 @@ import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.services.TreeService;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.theoryinpractise.halbuilder.api.RepresentationFactory;
-import com.theoryinpractise.halbuilder.impl.representations.MutableRepresentation;
-import com.theoryinpractise.halbuilder.standard.StandardRepresentationFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Component
-@Produces({ RepresentationFactory.HAL_JSON })
-@Path(PATHS.PATH_TREES)
-@Transactional
-public class TreeEndpoint {
+@RequestMapping(PATHS.PATH_TREES)
+@ExposesResourceFor(TreeDto.class)
+@Produces(MediaType.APPLICATION_JSON)
+@Controller
+public class TreeController {
 
     @Autowired
     private TreeService _treeService;
@@ -39,16 +44,8 @@ public class TreeEndpoint {
     @Autowired
     TreeTypeService _treeTypeSerivce;
 
-    public static final String BASE_URI = "http://localhost:8080/rest/";
-
-    public static URI mkUri(final Class resourceClass) throws URISyntaxException {
-        URI href = UriBuilder.fromResource(resourceClass).build();
-        return new URI(BASE_URI).resolve(href);
-    }
-
-    @GET
-    @Path("/")
-    public Response getTrees() {
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
+    public HttpEntity<Resources<Resource<TreeDto>>> getTrees() {
         List<TreeDto> trees = _treeService.findAll();
         if (trees.isEmpty()) {
             float latitude = 51.51f;
@@ -56,24 +53,23 @@ public class TreeEndpoint {
             TreeDto tree = new TreeDto(latitude, longitude, 20);
             _treeService.save(tree);
         }
-        Response response = Response.status(200).entity(trees).build();
-        return response;
+        Resources<Resource<TreeDto>> treeResources = Resources.wrap(trees);
+        treeResources.add(linkTo(methodOn(TreeController.class).getTrees()).withSelfRel());
+
+        return new ResponseEntity<Resources<Resource<TreeDto>>>(treeResources, HttpStatus.OK);
     }
 
-    @GET
-    @Path("/{id}")
-    public Response getTree(@PathParam("id") Long id, @Context UriInfo ui) throws URISyntaxException {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
+    public HttpEntity<Resource<TreeDto>> getTree(@PathVariable("id") Long id) {
         if (id == null) {
-            return Response.status(400).entity("Parameter 'id' must not be null.").build();
+            return new ResponseEntity<Resource<TreeDto>>(HttpStatus.NOT_FOUND);
         }
-        RepresentationFactory representationFactory = new StandardRepresentationFactory().withFlag(RepresentationFactory.PRETTY_PRINT).withLink("website", "http://iplantatree.org");
-        MutableRepresentation rep = (MutableRepresentation) representationFactory.newRepresentation(mkUri(TreeEndpoint.class));
-
         TreeDto tree = _treeService.findOne(id);
-        rep.withFields(tree);
 
-        Response response = Response.ok(rep).build();
-        return response;
+        Resource<TreeDto> treeResource = new Resource(tree);
+        treeResource.add(linkTo(methodOn(TreeController.class).getTree(id)).withSelfRel());
+        treeResource.add(linkTo(methodOn(TreeController.class).getTrees()).withRel("parent"));
+        return new ResponseEntity<Resource<TreeDto>>(treeResource, HttpStatus.OK);
     }
 
     @POST
@@ -86,7 +82,7 @@ public class TreeEndpoint {
             return response;
         }
         TreeDto tree = new TreeDto(latitude, longitude, amount);
-        tree.setTreeType(treeType);
+        // tree.setTreeType(treeType);
         _treeService.save(tree);
         Response response = Response.status(200).entity(tree).build();
         return response;

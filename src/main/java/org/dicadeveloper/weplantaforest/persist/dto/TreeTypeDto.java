@@ -1,28 +1,18 @@
 package org.dicadeveloper.weplantaforest.persist.dto;
 
-import java.util.List;
-
-import javax.ws.rs.core.Link;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.dicadeveloper.weplantaforest.PATHS;
 import org.dozer.Mapping;
-import org.glassfish.jersey.linking.Binding;
-import org.glassfish.jersey.linking.InjectLink;
-import org.glassfish.jersey.linking.InjectLink.Style;
-import org.glassfish.jersey.linking.InjectLinks;
+import org.springframework.hateoas.Identifiable;
 
 @XmlRootElement
-public class TreeTypeDto {
+public class TreeTypeDto implements Identifiable<Long> {
 
     public static final TreeTypeDto NO_TREE_TYPE = new TreeTypeDto();
 
     @Mapping("_id")
-    private long _id;
+    private Long _id;
 
     @Mapping("_name")
     private String _name;
@@ -41,18 +31,6 @@ public class TreeTypeDto {
 
     // TODO figure out how to set this properly
     private int modelLimit = 100; // Getters for these
-
-    @XmlElementWrapper(name = "links")
-    @XmlElement(name = "link")
-    @InjectLinks({
-            @InjectLink(style = Style.ABSOLUTE, rel = "self", value = PATHS.PATH_TREE_TYPES + "/{value}", bindings = { @Binding("${instance.id}") }),
-            @InjectLink(style = Style.ABSOLUTE, rel = "parent", value = PATHS.PATH_TREE_TYPES),
-            @InjectLink(style = Style.ABSOLUTE, value = PATHS.PATH_TREE_TYPES + "query/offset/{offset}/limit/{limit}", condition = "${instance.offset + instance.limit < instance.modelLimit}", bindings = {
-                    @Binding(name = "offset", value = "${instance.offset + instance.limit}"), @Binding(name = "limit", value = "${instance.limit}") }, rel = "next"),
-            @InjectLink(style = Style.ABSOLUTE, value = PATHS.PATH_TREE_TYPES + "query/offset/{offset}/limit/{limit}", condition = "${instance.offset - instance.limit >= 0}", bindings = {
-                    @Binding(name = "offset", value = "${instance.offset - instance.limit}"), @Binding(name = "limit", value = "${instance.limit}") }, rel = "prev") })
-    @XmlJavaTypeAdapter(Link.JaxbAdapter.class)
-    List<Link> links;
 
     public TreeTypeDto() {
 
@@ -95,12 +73,9 @@ public class TreeTypeDto {
         _infoPath = infoPath;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return _id;
-    }
-
-    public List<Link> getLinks() {
-        return links;
     }
 
     @XmlTransient
