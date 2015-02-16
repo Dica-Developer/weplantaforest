@@ -1,10 +1,11 @@
 package org.dicadeveloper.weplantaforest.persist.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import org.dozer.Mapping;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
 public class TreeTypeDto implements Identifiable<Long> {
@@ -78,17 +79,17 @@ public class TreeTypeDto implements Identifiable<Long> {
         return _id;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public int getLimit() {
         return limit;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public int getOffset() {
         return offset;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public int getModelLimit() {
         return modelLimit;
     }

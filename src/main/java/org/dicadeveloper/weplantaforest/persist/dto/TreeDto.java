@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.dozer.Mapping;
 import org.springframework.hateoas.Identifiable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @XmlRootElement
 public class TreeDto implements Identifiable<Long> {
 
@@ -85,18 +87,22 @@ public class TreeDto implements Identifiable<Long> {
         _submittedOn = submittedOn;
     }
 
+    @JsonIgnore
     public int getLimit() {
         return limit;
     }
 
+    @JsonIgnore
     public int getOffset() {
         return offset;
     }
 
+    @JsonIgnore
     public int getModelLimit() {
         return modelLimit;
     }
 
+    @JsonIgnore
     public TreeTypeDto getTreeType() {
         return _treeType;
     }

@@ -59,4 +59,7 @@ public class TreeType {
         _infoPath = infoPath;
     }
 
+    public long getId() {
+        return _id;
+    }
 }
