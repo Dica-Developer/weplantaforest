@@ -49,6 +49,7 @@ public class TreeController {
             TreeDto tree = new TreeDto(latitude, longitude, 20);
             TreeTypeDto treeType = new TreeTypeDto("Ahorne", "Die Ahorne (Acer) ");
             _treeTypeSerivce.save(treeType);
+            treeType = _treeTypeSerivce.findByName("Ahorne");
             tree.setTreeType(treeType);
             _treeService.save(tree);
         }
@@ -66,9 +67,6 @@ public class TreeController {
         TreeDto tree = _treeService.findOne(treeId);
 
         Long treeTypeId = _treeService.findTreeTypeIdById(treeId);
-        // TODO improve error handling
-        if (treeTypeId == null)
-            treeTypeId = 2L;
 
         Resource<TreeDto> treeResource = new Resource(tree);
         treeResource.add(linkTo(methodOn(TreeController.class).getTree(treeId)).withSelfRel());

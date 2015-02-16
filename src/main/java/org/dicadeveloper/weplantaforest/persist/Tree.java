@@ -38,7 +38,7 @@ public class Tree {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     private User _owner;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = TreeType.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
     private TreeType _type;
 
     public long getId() {
