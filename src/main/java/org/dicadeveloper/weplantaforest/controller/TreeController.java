@@ -66,7 +66,7 @@ public class TreeController {
         }
         TreeDto tree = _treeService.findOne(treeId);
 
-        Long treeTypeId = _treeService.findTreeTypeIdById(treeId);
+        Long treeTypeId = _treeService.findTreeTypeIdByTreeId(treeId);
 
         Resource<TreeDto> treeResource = new Resource(tree);
         treeResource.add(linkTo(methodOn(TreeController.class).getTree(treeId)).withSelfRel());

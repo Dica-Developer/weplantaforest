@@ -8,5 +8,5 @@ public interface TreeService extends GenericService<Tree, TreeDto, Long> {
     @Override
     void save(TreeDto treeDto);
 
-    Long findTreeTypeIdById(Long id);
+    Long findTreeTypeIdByTreeId(Long treeId);
 }

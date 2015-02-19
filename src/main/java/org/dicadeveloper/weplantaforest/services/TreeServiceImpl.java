@@ -18,8 +18,8 @@ public class TreeServiceImpl extends GenericServiceImpl<Tree, TreeDto, Long> imp
     }
 
     @Override
-    public Long findTreeTypeIdById(Long id) {
-        return _treeRepository.findTreeTypeIdById(id);
+    public Long findTreeTypeIdByTreeId(Long treeId) {
+        return _treeRepository.findTreeTypeIdByTreeId(treeId);
     }
 
 }

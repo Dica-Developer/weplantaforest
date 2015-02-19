@@ -11,6 +11,6 @@ public interface TreeRepository extends JpaRepository<Tree, Long> {
 
     @Query(value = FIND_TREETYPE_ID_BY_TREE_ID_QUERY)
     @Transactional(readOnly = true)
-    public Long findTreeTypeIdById(@Param("id") Long id);
+    public Long findTreeTypeIdByTreeId(@Param("id") Long treeId);
 
 }
