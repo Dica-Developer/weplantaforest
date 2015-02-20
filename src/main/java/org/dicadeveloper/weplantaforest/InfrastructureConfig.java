@@ -32,6 +32,8 @@ public class InfrastructureConfig {
     private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
     private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
     private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
+    private static final String PROPERTY_NAME_DATABASE_TYPE = "db.type";
+    private static final String PROPERTY_NAME_DATABASE_SHOW_SQL = "db.show.sql";
 
     @Bean
     public JpaTransactionManager transactionManager() {
@@ -43,9 +45,9 @@ public class InfrastructureConfig {
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setShowSql(true);
+        hibernateJpaVendorAdapter.setShowSql(_env.getProperty(PROPERTY_NAME_DATABASE_SHOW_SQL, Boolean.class));
         hibernateJpaVendorAdapter.setGenerateDdl(true);
-        hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
+        hibernateJpaVendorAdapter.setDatabase(Database.valueOf(_env.getRequiredProperty(PROPERTY_NAME_DATABASE_TYPE)));
         return hibernateJpaVendorAdapter;
     }
 
