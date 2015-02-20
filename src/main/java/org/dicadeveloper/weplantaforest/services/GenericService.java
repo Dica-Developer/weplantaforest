@@ -15,4 +15,5 @@ public interface GenericService<T, D, ID extends Serializable> {
 
     void save(D dto);
 
+    boolean existsAtAll();
 }

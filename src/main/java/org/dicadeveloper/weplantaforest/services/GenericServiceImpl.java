@@ -59,4 +59,12 @@ public class GenericServiceImpl<T, D, ID extends Serializable> implements Generi
         _repository.saveAndFlush(_mapper.map(dto, _entityClass));
     }
 
+    /**
+     * Returns true in case at least one entity exists otherwise false.
+     */
+    @Override
+    public boolean existsAtAll() {
+        return _repository.count() > 0;
+    }
+
 }

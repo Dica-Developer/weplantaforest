@@ -1,8 +1,5 @@
 package org.dicadeveloper.weplantaforest.controller;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
@@ -23,6 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @Component
 @Controller
 @RequestMapping(PATHS.PATH_TREE_TYPES)
@@ -35,12 +35,6 @@ public class TreeTypeController {
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
     public HttpEntity<Resources<Resource<TreeTypeDto>>> getTreeTypes() {
         List<TreeTypeDto> treeTypes = _treeTypeService.findAll();
-        if (treeTypes.isEmpty()) {
-            final String name = "Ahorn";
-            final String description = "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ";
-            TreeTypeDto treeType = new TreeTypeDto(name, description);
-            _treeTypeService.save(treeType);
-        }
         Resources<Resource<TreeTypeDto>> treeTypeResources = Resources.wrap(treeTypes);
         treeTypeResources.add(linkTo(methodOn(TreeTypeController.class).getTreeTypes()).withSelfRel());
         return new ResponseEntity<Resources<Resource<TreeTypeDto>>>(treeTypeResources, HttpStatus.OK);
