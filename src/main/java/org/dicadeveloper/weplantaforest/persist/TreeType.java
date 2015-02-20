@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "treeTypes")
-public class TreeType {
+public class TreeType implements Base {
 
     @Id
     @GeneratedValue

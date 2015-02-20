@@ -8,7 +8,7 @@ import org.springframework.hateoas.Identifiable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
-public class TreeTypeDto implements Identifiable<Long> {
+public class TreeTypeDto implements Identifiable<Long>, BaseDto {
 
     public static final TreeTypeDto NO_TREE_TYPE = new TreeTypeDto();
 
@@ -92,6 +92,11 @@ public class TreeTypeDto implements Identifiable<Long> {
     @JsonIgnore
     public int getModelLimit() {
         return modelLimit;
+    }
+
+    @Override
+    public void setId(Long id) {
+        _id = id;
     }
 
 }

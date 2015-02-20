@@ -5,6 +5,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dicadeveloper.weplantaforest.persist.Base;
+import org.dicadeveloper.weplantaforest.persist.dto.BaseDto;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
 
-public class GenericServiceImpl<T, D, ID extends Serializable> implements GenericService<T, D, ID> {
+public class GenericServiceImpl<T extends Base, D extends BaseDto, ID extends Serializable> implements GenericService<T, D, ID> {
 
     @Autowired
     protected JpaRepository<T, ID> _repository;
@@ -56,7 +58,8 @@ public class GenericServiceImpl<T, D, ID extends Serializable> implements Generi
 
     @Override
     public void save(D dto) {
-        _repository.saveAndFlush(_mapper.map(dto, _entityClass));
+        T entity = _repository.saveAndFlush(_mapper.map(dto, _entityClass));
+        dto.setId(entity.getId());
     }
 
     /**

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "trees")
-public class Tree {
+public class Tree implements Base {
 
     @Id
     @GeneratedValue

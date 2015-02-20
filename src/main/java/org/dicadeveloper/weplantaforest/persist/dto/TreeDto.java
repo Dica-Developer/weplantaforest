@@ -10,7 +10,7 @@ import org.springframework.hateoas.Identifiable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
-public class TreeDto implements Identifiable<Long> {
+public class TreeDto implements Identifiable<Long>, BaseDto {
 
     @Mapping("_id")
     private Long _id;
