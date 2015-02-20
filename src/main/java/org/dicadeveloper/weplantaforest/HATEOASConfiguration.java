@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableHypermediaSupport(type = { HypermediaType.HAL })
-public class HATEOASConfiguraiton extends WebMvcConfigurerAdapter {
+public class HATEOASConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {

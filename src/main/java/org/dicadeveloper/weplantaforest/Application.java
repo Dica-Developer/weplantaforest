@@ -12,7 +12,7 @@ import org.springframework.hateoas.config.EnableEntityLinks;
 @SpringBootApplication
 @EnableEntityLinks
 @EnableAutoConfiguration
-@Import({ InfrastructureConfig.class, HATEOASConfiguraiton.class })
+@Import({ InfrastructureConfig.class, HATEOASConfiguration.class })
 public class Application extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
