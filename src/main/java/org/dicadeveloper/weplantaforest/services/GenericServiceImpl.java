@@ -8,6 +8,8 @@ import java.util.List;
 import org.dicadeveloper.weplantaforest.persist.Base;
 import org.dicadeveloper.weplantaforest.persist.dto.BaseDto;
 import org.dozer.DozerBeanMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -47,12 +49,14 @@ abstract class GenericServiceImpl<T extends Base, D extends BaseDto, ID extends 
     }
 
     @Override
-    public List<D> findAll(Pageable page) {
+    public Page<D> findAll(Pageable page) {
         List<D> result = new ArrayList<D>(page.getPageSize());
-        for (T t : _repository.findAll(page)) {
+        Page<T> allEntitiesInPage = _repository.findAll(page);
+        for (T t : allEntitiesInPage) {
             result.add(_mapper.map(t, _dtoClass));
         }
-        return result;
+        Page<D> results = new PageImpl<D>(result, page, allEntitiesInPage.getTotalElements());
+        return results;
     }
 
     @Override

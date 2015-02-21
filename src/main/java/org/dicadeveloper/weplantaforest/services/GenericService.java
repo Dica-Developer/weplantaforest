@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.persist.dto.BaseDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface GenericService<T, D extends BaseDto, ID extends Serializable> {
@@ -12,11 +13,10 @@ public interface GenericService<T, D extends BaseDto, ID extends Serializable> {
 
     List<D> findAll();
 
-    List<D> findAll(Pageable page);
+    Page<D> findAll(Pageable page);
 
     /**
-     * Persists the given DTO and sets the id on this DTO to allow to use it on
-     * persisting referencing DTO's.
+     * Persists the given DTO and sets the id on this DTO to allow to use it on persisting referencing DTO's.
      * 
      * @param dto
      */
