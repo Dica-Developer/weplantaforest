@@ -6,6 +6,8 @@ import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.services.TreeService;
@@ -23,6 +25,8 @@ public class DatabaseConfiguration {
 
     @Autowired
     private TreeService _treeService;
+
+    private final Log LOG = LogFactory.getLog(DatabaseConfiguration.class);
 
     public DatabaseConfiguration() {
     }
@@ -43,7 +47,7 @@ public class DatabaseConfiguration {
             treeTypeNames.add("Robin");
             treeTypeNames.add("Espe");
             treeTypeNames.add("Default");
-            System.out.println("Start injecting " + treeTypeNames.size() + " tree types");
+            LOG.info("Start injecting " + treeTypeNames.size() + " tree types");
             for (String treeTypeName : treeTypeNames) {
                 final String description = "Die " + treeTypeName
                         + " bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ";
@@ -55,9 +59,9 @@ public class DatabaseConfiguration {
                     _treeService.save(treeDto);
                 }
             }
-            System.out.println("Finished injecting " + treeTypeNames.size() + " tree types");
+            LOG.info("Finished injecting " + treeTypeNames.size() + " tree types");
         } else {
-            System.out.println("hat sebastian gesagt!!!! blame him!!!!");
+            LOG.info("No entities will be injected.");
         }
     }
 }
