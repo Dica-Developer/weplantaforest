@@ -43,16 +43,6 @@ public class TreeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<Resources<Resource<TreeDto>>> getTrees() {
         List<TreeDto> trees = _treeService.findAll();
-        if (trees.isEmpty()) {
-            float latitude = 51.51f;
-            float longitude = 11.12f;
-            TreeDto tree = new TreeDto(latitude, longitude, 20);
-            TreeTypeDto treeType = new TreeTypeDto("Ahorne", "Die Ahorne (Acer) ");
-            _treeTypeSerivce.save(treeType);
-            treeType = _treeTypeSerivce.findByName("Ahorne");
-            tree.setTreeType(treeType);
-            _treeService.save(tree);
-        }
         Resources<Resource<TreeDto>> treeResources = Resources.wrap(trees);
         treeResources.add(linkTo(methodOn(TreeController.class).getTrees()).withSelfRel());
 
@@ -91,13 +81,5 @@ public class TreeController {
         return response;
     }
 
-    @RequestMapping(value = "/type/{treeTypeName}", method = RequestMethod.GET)
-    public Response getTreeType(@PathVariable("treeTypeName") String treeTypeName) {
-        String typeName = treeTypeName;
-        if (typeName == null) {
-            typeName = "Ahorn";
-        }
-        return Response.status(200).entity(typeName).build();
-    }
 
 }
