@@ -23,4 +23,6 @@ public interface GenericService<T, D extends BaseDto, ID extends Serializable> {
     void save(D dto);
 
     boolean existsAtAll();
+
+    public long count();
 }

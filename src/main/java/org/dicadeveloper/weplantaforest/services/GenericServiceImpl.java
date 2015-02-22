@@ -70,4 +70,9 @@ public class GenericServiceImpl<T extends Base, D extends BaseDto, ID extends Se
         return _repository.count() > 0;
     }
 
+    @Override
+    public long count() {
+        return _repository.count();
+    }
+
 }

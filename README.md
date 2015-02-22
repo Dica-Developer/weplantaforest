@@ -19,3 +19,10 @@ How ever if *Gradle* is not installed on your system you can use ```sh gradlew <
 * ```gradle test``` - execute unit tests (open report with ```open build/reports/tests/index.html```
  * for executing single test add ```-Dtest.single=ExampleMainTest```
 * ```gradle clean``` - clean the project
+
+### IDE Configuration
+Make sure you have following classes included for static import:
+* org.assertj.core.api.Assertions
+* org.mockito.Matchers
+
+(In Eclipse under Preferences/Java/Editor/Content Assist/Favorites)
