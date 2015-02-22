@@ -17,7 +17,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-@IntegrationTest("server.port=0")
+@IntegrationTest({"server.port=0","spring.profiles.active=dev,h2-memory"})
 @WebAppConfiguration
 public class TreeTypeServiceImplIntegrationTest {
 
