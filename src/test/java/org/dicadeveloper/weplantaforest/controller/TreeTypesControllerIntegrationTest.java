@@ -1,12 +1,12 @@
 package org.dicadeveloper.weplantaforest.controller;
 
-import static org.fest.assertions.Assertions.assertThat;
-
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.Application;
+import org.dicadeveloper.weplantaforest.CategoryIntegration;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
@@ -20,10 +20,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
+import static org.fest.assertions.Assertions.assertThat;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest("server.port=0")
 @WebAppConfiguration
+@Category(CategoryIntegration.class)
 public class TreeTypesControllerIntegrationTest {
 
     @Value("${local.server.port}")
