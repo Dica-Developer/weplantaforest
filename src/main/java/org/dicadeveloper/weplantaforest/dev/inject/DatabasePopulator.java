@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.services;
+package org.dicadeveloper.weplantaforest.dev.inject;
 
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +7,8 @@ import jersey.repackaged.com.google.common.collect.Iterators;
 
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.services.TreeService;
+import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
