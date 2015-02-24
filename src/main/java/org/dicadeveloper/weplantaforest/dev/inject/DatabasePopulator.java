@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.dev.inject;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import com.google.common.collect.ImmutableList;
 @Service
 public class DatabasePopulator {
 
-    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe");
+    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
 
     @Autowired
     private TreeTypeService _treeTypeService;
@@ -33,6 +34,17 @@ public class DatabasePopulator {
             final String description = "Die " + treeTypeName
                     + " bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ";
             TreeTypeDto treeType = new TreeTypeDto(treeTypeName, description);
+            double co2Savings = 0.02;
+            switch (treeTypeName) {
+            case "Robin":
+            case "Wildapfel":
+                co2Savings = 0.01;
+                break;
+            case "Default":
+                co2Savings = 0.011;
+                break;
+            }
+            treeType.setAnnualCo2SavingInTons(co2Savings);
             _treeTypeService.save(treeType);
         });
         return this;
@@ -43,6 +55,7 @@ public class DatabasePopulator {
         for (int i = 0; i < count; i++) {
             TreeDto treeDto = new TreeDto(i, i, i % 20);
             treeDto.setTreeType(_treeTypeService.findByName(cyclingTreeTypes.next().getName()));
+            treeDto.setPlantedOn(new Date(0L));
             _treeService.save(treeDto);
         }
         return this;

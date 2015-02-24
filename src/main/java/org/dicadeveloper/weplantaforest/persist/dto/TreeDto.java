@@ -36,6 +36,9 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
     @Mapping("_type")
     private TreeTypeDto _treeType;
 
+    @Mapping("_plantedOn")
+    private Date _plantedOn;
+
     public TreeDto() {
     }
 
@@ -114,6 +117,14 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
     @Override
     public String toString() {
         return "TreeDto [_id=" + _id + ", _longitude=" + _longitude + ", _latitude=" + _latitude + ", _amount=" + _amount + ", _submittedOn=" + _submittedOn + "]";
+    }
+
+    public Date getPlantedOn() {
+        return _plantedOn;
+    }
+
+    public void setPlantedOn(Date plantedOn) {
+        _plantedOn = plantedOn;
     }
 
 }

@@ -27,6 +27,9 @@ public class TreeType implements Base {
     @Column(name = "infoPath")
     private String _infoPath;
 
+    @Column(name = "annualCo2SavingInTons")
+    private double _annualCo2SavingInTons;
+
     public String getName() {
         return _name;
     }
@@ -61,5 +64,13 @@ public class TreeType implements Base {
 
     public long getId() {
         return _id;
+    }
+
+    public double getAnnualCo2SavingInTons() {
+        return _annualCo2SavingInTons;
+    }
+
+    public void setAnnualCo2SavingInTons(double annualCo2SavingInTons) {
+        _annualCo2SavingInTons = annualCo2SavingInTons;
     }
 }

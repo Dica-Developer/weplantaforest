@@ -15,12 +15,14 @@ public class DataInjector {
 
     private final Log LOG = LogFactory.getLog(DataInjector.class);
 
-    @Autowired
     private TreeTypeService _treeTypeService;
-    @Autowired
+
     private DatabasePopulator _databasePopulator;
 
-    public DataInjector() {
+    @Autowired
+    public DataInjector(TreeTypeService treeTypeService, DatabasePopulator databasePopulator) {
+        _treeTypeService = treeTypeService;
+        _databasePopulator = databasePopulator;
     }
 
     @PostConstruct
@@ -28,7 +30,7 @@ public class DataInjector {
         // TODO jz: Thinking about giving this an extra state table in the db
         // (like db.populates=v23)
         if (!_treeTypeService.existsAtAll()) {
-            int treeCount = 5000;
+            int treeCount = 15000;
             _databasePopulator.insertDefaultTreeTypes().insertTrees(treeCount);
             LOG.info("Finished injecting " + treeCount + " trees ");
         } else {

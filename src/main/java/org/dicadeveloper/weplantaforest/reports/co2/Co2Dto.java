@@ -8,9 +8,9 @@ public class Co2Dto {
     private long _treesCount;
 
     @Mapping("co2")
-    private float _co2;
+    private double _co2;
 
-    public Co2Dto(long treesCount, float co2) {
+    public Co2Dto(long treesCount, double co2) {
         _treesCount = treesCount;
         _co2 = co2;
     }
@@ -23,7 +23,7 @@ public class Co2Dto {
         _treesCount = trees;
     }
 
-    public float getCo2() {
+    public double getCo2() {
         return _co2;
     }
 

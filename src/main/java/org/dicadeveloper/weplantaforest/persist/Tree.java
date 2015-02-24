@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.persist;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +35,7 @@ public class Tree implements Base {
     private long _submittedOn;
 
     @Column(name = "plantedOn")
-    private long _plantedOn;
+    private Timestamp _plantedOn;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     private User _owner;
@@ -89,11 +91,11 @@ public class Tree implements Base {
         _submittedOn = submittedOn;
     }
 
-    public long getPlantedOn() {
+    public Timestamp getPlantedOn() {
         return _plantedOn;
     }
 
-    public void setPlantedOn(long plantedOn) {
+    public void setPlantedOn(Timestamp plantedOn) {
         _plantedOn = plantedOn;
     }
 

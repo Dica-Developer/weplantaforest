@@ -27,6 +27,9 @@ public class TreeTypeDto implements Identifiable<Long>, BaseDto {
     @Mapping("_infoPath")
     private String _infoPath;
 
+    @Mapping("_annualCo2SavingInTons")
+    private double _annualCo2SavingInTons;
+
     // TODO figure out how to set this properly
     private int limit = 5, offset = 10; // Getters for these
 
@@ -97,6 +100,14 @@ public class TreeTypeDto implements Identifiable<Long>, BaseDto {
     @Override
     public void setId(Long id) {
         _id = id;
+    }
+
+    public double getAnnualCo2SavingInTons() {
+        return _annualCo2SavingInTons;
+    }
+
+    public void setAnnualCo2SavingInTons(double annualCo2SavingInTons) {
+        _annualCo2SavingInTons = annualCo2SavingInTons;
     }
 
 }
