@@ -3,14 +3,18 @@ package org.dicadeveloper.weplantaforest.services;
 import org.dicadeveloper.weplantaforest.persist.Tree;
 import org.dicadeveloper.weplantaforest.persist.TreeRepository;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TreeServiceImpl extends GenericServiceImpl<Tree, TreeDto, Long> implements TreeService {
 
     @Autowired
-    private TreeRepository _treeRepository;
+    public TreeServiceImpl(DozerBeanMapper mapper, @Qualifier("treeRepository") TreeRepository repository) {
+        super(mapper, repository);
+    }
 
     @Override
     public void save(TreeDto treeDto) {
@@ -19,7 +23,7 @@ public class TreeServiceImpl extends GenericServiceImpl<Tree, TreeDto, Long> imp
 
     @Override
     public Long findTreeTypeIdByTreeId(Long treeId) {
-        return _treeRepository.findTreeTypeIdByTreeId(treeId);
+        return ((TreeRepository) _repository).findTreeTypeIdByTreeId(treeId);
     }
 
 }

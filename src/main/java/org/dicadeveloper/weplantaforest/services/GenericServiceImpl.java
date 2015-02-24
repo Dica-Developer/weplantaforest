@@ -8,26 +8,25 @@ import java.util.List;
 import org.dicadeveloper.weplantaforest.persist.Base;
 import org.dicadeveloper.weplantaforest.persist.dto.BaseDto;
 import org.dozer.DozerBeanMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
 
-public class GenericServiceImpl<T extends Base, D extends BaseDto, ID extends Serializable> implements GenericService<T, D, ID> {
-
-    @Autowired
-    protected JpaRepository<T, ID> _repository;
-
-    @Autowired
-    protected DozerBeanMapper _mapper;
+abstract class GenericServiceImpl<T extends Base, D extends BaseDto, ID extends Serializable> implements GenericService<T, D, ID> {
 
     protected Class<T> _entityClass;
 
     protected Class<D> _dtoClass;
 
+    protected DozerBeanMapper _mapper;
+
+    protected JpaRepository<T, ID> _repository;
+
     @SuppressWarnings("unchecked")
-    public GenericServiceImpl() {
+    public GenericServiceImpl(DozerBeanMapper mapper, JpaRepository<T, ID> repository) {
+        _mapper = mapper;
+        _repository = repository;
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         _entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         _dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
