@@ -2,7 +2,6 @@ package org.dicadeveloper.weplantaforest.reports.co2;
 
 import javax.validation.constraints.NotNull;
 
-import org.dicadeveloper.weplantaforest.persist.Co2Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

@@ -6,12 +6,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.hateoas.config.EnableEntityLinks;
 
 @ComponentScan
 @SpringBootApplication
 @EnableEntityLinks
 @EnableAutoConfiguration
+@EnableJpaRepositories(basePackages = { "org.dicadeveloper.weplantaforest.persist", "org.dicadeveloper.weplantaforest.reports.co2" })
 @Import({ DataSourceConfiguration.class, HATEOASConfiguration.class })
 public class Application extends SpringBootServletInitializer {
     @Override
