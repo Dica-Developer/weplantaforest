@@ -29,7 +29,6 @@ public class DataSourceConfiguration {
         LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
         lef.setDataSource(dataSource);
         lef.setJpaVendorAdapter(jpaVendorAdapter);
-        lef.setPackagesToScan("org.dicadeveloper.weplantaforest.persist");
         return lef;
     }
 
