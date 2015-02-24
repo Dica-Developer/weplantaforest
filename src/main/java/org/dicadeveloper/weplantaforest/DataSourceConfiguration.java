@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest;
 
+import javax.annotation.Resource;
 import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:application.properties")
 public class DataSourceConfiguration {
 
-    @javax.annotation.Resource
+    @Resource
     Environment _env;
 
     @Bean
