@@ -27,14 +27,23 @@ public class DataInjector {
 
     @PostConstruct
     private void inject() {
-        // TODO jz: Thinking about giving this an extra state table in the db
-        // (like db.populates=v23)
-        if (!_treeTypeService.existsAtAll()) {
-            int treeCount = 15000;
-            _databasePopulator.insertDefaultTreeTypes().insertTrees(treeCount);
-            LOG.info("Finished injecting " + treeCount + " trees ");
-        } else {
-            LOG.info("No entities will be injected.");
-        }
+        Runnable treeInjector = new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO jz: Thinking about giving this an extra state table in
+                // the db
+                // (like db.populates=v23)
+                if (!_treeTypeService.existsAtAll()) {
+                    int treeCount = 15000;
+                    _databasePopulator.insertDefaultTreeTypes().insertTrees(treeCount);
+                    LOG.info("Finished injecting " + treeCount + " trees ");
+                } else {
+                    LOG.info("No entities will be injected.");
+                }
+            }
+        };
+        Thread thread = new Thread(treeInjector);
+        thread.start();
     }
 }
