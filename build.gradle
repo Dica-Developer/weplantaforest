@@ -30,7 +30,7 @@ tasks.withType(FindBugs) {
 }
 
 findbugs {
-    ignoreFailures = true
+    ignoreFailures = false
 }
 
 jacocoTestReport {
