@@ -5,15 +5,39 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
     }
+    dependencies {
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+    }
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'spring-boot'
+apply plugin: 'findbugs'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 
 repositories {
     mavenCentral()
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+findbugs {
+    ignoreFailures = true
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
 
 sourceCompatibility=1.8
