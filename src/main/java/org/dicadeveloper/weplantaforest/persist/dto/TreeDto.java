@@ -83,11 +83,11 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
     }
 
     public Date getSubmittedOn() {
-        return _submittedOn;
+        return (Date) _submittedOn.clone();
     }
 
     public void setSubmittedOn(Date submittedOn) {
-        _submittedOn = submittedOn;
+        _submittedOn = (Date) submittedOn.clone();
     }
 
     @JsonIgnore
@@ -120,11 +120,11 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
     }
 
     public Date getPlantedOn() {
-        return _plantedOn;
+        return (Date) _plantedOn.clone();
     }
 
     public void setPlantedOn(Date plantedOn) {
-        _plantedOn = plantedOn;
+        _plantedOn = (Date) plantedOn.clone();
     }
 
 }

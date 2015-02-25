@@ -92,11 +92,11 @@ public class Tree implements Base {
     }
 
     public Timestamp getPlantedOn() {
-        return _plantedOn;
+        return (Timestamp) _plantedOn.clone();
     }
 
     public void setPlantedOn(Timestamp plantedOn) {
-        _plantedOn = plantedOn;
+        _plantedOn = (Timestamp) plantedOn.clone();
     }
 
     public User getOwner() {
