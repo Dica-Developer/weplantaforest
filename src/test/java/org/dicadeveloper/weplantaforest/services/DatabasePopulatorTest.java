@@ -1,8 +1,5 @@
 package org.dicadeveloper.weplantaforest.services;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.junit.Test;
@@ -13,6 +10,9 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -39,7 +39,7 @@ public class DatabasePopulatorTest {
             _databasePopulator.insertTrees(10);
             fail("should throw exception");
         } catch (Exception e) {
-            // expected
+            assertThat(e.getMessage()).isEqualTo("");
         }
     }
 

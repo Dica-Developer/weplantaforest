@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Profile("dev")
 public class DataInjector {
 
-    private final Log LOG = LogFactory.getLog(DataInjector.class);
+    protected final Log LOG = LogFactory.getLog(DataInjector.class.getName());
 
-    private TreeTypeService _treeTypeService;
+    protected TreeTypeService _treeTypeService;
 
-    private DatabasePopulator _databasePopulator;
+    protected DatabasePopulator _databasePopulator;
 
     @Autowired
     public DataInjector(TreeTypeService treeTypeService, DatabasePopulator databasePopulator) {

@@ -29,6 +29,9 @@ import static org.fest.assertions.Assertions.assertThat;
 @Category(CategoryIntegration.class)
 public class TreeTypesControllerIntegrationTest {
 
+    private final static class ParameterizedTypeReferenceExtension extends ParameterizedTypeReference<List<TreeTypeDto>> {
+    }
+
     @Value("${local.server.port}")
     private int port;
 
@@ -51,8 +54,6 @@ public class TreeTypesControllerIntegrationTest {
     }
 
     private ParameterizedTypeReference<List<TreeTypeDto>> getParameterizedPageTypeReference() {
-        return new ParameterizedTypeReference<List<TreeTypeDto>>() {
-            // nothing todo
-        };
+        return new ParameterizedTypeReferenceExtension();
     }
 }

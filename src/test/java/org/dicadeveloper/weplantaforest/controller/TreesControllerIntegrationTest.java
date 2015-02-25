@@ -31,6 +31,9 @@ import org.springframework.web.client.RestTemplate;
 @WebAppConfiguration
 public class TreesControllerIntegrationTest {
 
+    private final static class ParameterizedTypeReferenceExtension extends ParameterizedTypeReference<List<TreeDto>> {
+    }
+
     @Value("${local.server.port}")
     private int port;
 
@@ -79,8 +82,6 @@ public class TreesControllerIntegrationTest {
     }
 
     private ParameterizedTypeReference<List<TreeDto>> getParameterizedPageTypeReference() {
-        return new ParameterizedTypeReference<List<TreeDto>>() {
-            // nothing todo
-        };
+        return new ParameterizedTypeReferenceExtension();
     }
 }
