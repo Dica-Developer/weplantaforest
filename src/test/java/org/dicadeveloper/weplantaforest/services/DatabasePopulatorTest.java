@@ -30,7 +30,7 @@ public class DatabasePopulatorTest {
     @Test
     public void testInsertDefaultTreeTypes() throws Exception {
         _databasePopulator.insertDefaultTreeTypes();
-        assertThat(_treeTypeService.findAll()).hasSize(10);
+        assertThat(_treeTypeService.findAll()).hasSize(11);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class DatabasePopulatorTest {
             _databasePopulator.insertTrees(10);
             fail("should throw exception");
         } catch (Exception e) {
-            assertThat(e.getMessage()).isEqualTo("");
+            assertThat(e.getMessage()).isEqualTo("No TreeTypes set up!");
         }
     }
 
