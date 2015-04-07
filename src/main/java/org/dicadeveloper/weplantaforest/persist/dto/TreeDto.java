@@ -27,6 +27,8 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
     @Mapping("_submittedOn")
     private Date _submittedOn;
 
+    private String _treeTypeName;
+
     // TODO figure out how to set this properly
     private int limit = 5, offset = 10; // Getters for these
 
@@ -125,6 +127,14 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
 
     public void setPlantedOn(Date plantedOn) {
         _plantedOn = (Date) plantedOn.clone();
+    }
+
+    public String getTreeTypeName() {
+        return _treeTypeName;
+    }
+
+    public void setTreeTypeName(String treeTypeName) {
+        _treeTypeName = treeTypeName;
     }
 
 }

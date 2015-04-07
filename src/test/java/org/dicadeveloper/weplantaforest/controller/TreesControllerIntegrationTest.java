@@ -1,7 +1,5 @@
 package org.dicadeveloper.weplantaforest.controller;
 
-import static org.fest.assertions.Assertions.assertThat;
-
 import java.util.List;
 import java.util.Map;
 
@@ -21,14 +19,19 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
+import static org.fest.assertions.Assertions.assertThat;
+
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-@IntegrationTest("server.port=0")
-@WebAppConfiguration
+@IntegrationTest({ "spring.profiles.active=test" })
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class TreesControllerIntegrationTest {
 
     private final static class ParameterizedTypeReferenceExtension extends ParameterizedTypeReference<List<TreeDto>> {
