@@ -5,7 +5,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status.Family;
@@ -69,12 +68,11 @@ public class TreeController {
         TreeDto tree = _treeService.findOne(treeId);
 
         Long treeTypeId = _treeService.findTreeTypeIdByTreeId(treeId);
-
         Resource<TreeDto> treeResource = new Resource(tree);
         treeResource.add(linkTo(methodOn(TreeController.class).getTree(treeId)).withSelfRel());
-        Pageable firstPage = new PageRequest(0, UtilConstants.DEFAULT_RETURN_RECORD_COUNT);
-        treeResource.add(linkTo(methodOn(TreeController.class).getTrees(firstPage, null)).withRel("parent"));
-        treeResource.add(linkTo(methodOn(TreeTypeController.class).getTreeType(treeTypeId)).withRel("treeType"));
+        treeResource.add(linkTo(methodOn(TreeController.class).getTrees(null, null)).withRel("parent"));
+        // TODO treeTypeID is null -> JPA query needs to be fixed.
+        // treeResource.add(linkTo(methodOn(TreeTypeController.class).getTreeType(treeTypeId)).withRel("treeType"));
         return new ResponseEntity<Resource<TreeDto>>(treeResource, HttpStatus.OK);
     }
 
