@@ -78,9 +78,9 @@ dependencies {
     compile group: 'com.fasterxml.jackson.jaxrs', name:'jackson-jaxrs-json-provider', version: '2.0.1'
     compile group: 'com.fasterxml.jackson.jaxrs', name:'jackson-jaxrs-base', version: '2.5.0'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.2.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.2.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '1.2.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.2.3.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.2.3.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '1.2.3.RELEASE'
     compile("org.springframework.boot:spring-boot-starter-web") {
     //    exclude module: "spring-boot-starter-tomcat"
     }
@@ -90,7 +90,7 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '1.7.1'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.2.1.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.2.3.RELEASE'
     testCompile group: 'org.easytesting', name: 'fest-assert', version: '1.4'
 }
 
