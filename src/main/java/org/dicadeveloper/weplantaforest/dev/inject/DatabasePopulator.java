@@ -36,13 +36,13 @@ public class DatabasePopulator {
             TreeTypeDto treeType = new TreeTypeDto(treeTypeName, description);
             double co2Savings = 0.02;
             switch (treeTypeName) {
-            case "Robin":
-            case "Wildapfel":
-                co2Savings = 0.01;
-                break;
-            case "Default":
-                co2Savings = 0.011;
-                break;
+                case "Robin":
+                case "Wildapfel":
+                    co2Savings = 0.01;
+                    break;
+                case "Default":
+                    co2Savings = 0.011;
+                    break;
             }
             treeType.setAnnualCo2SavingInTons(co2Savings);
             _treeTypeService.save(treeType);
