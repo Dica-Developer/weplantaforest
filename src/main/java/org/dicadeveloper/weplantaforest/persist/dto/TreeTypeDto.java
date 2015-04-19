@@ -2,7 +2,6 @@ package org.dicadeveloper.weplantaforest.persist.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.dozer.Mapping;
 import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,22 +11,16 @@ public class TreeTypeDto implements Identifiable<Long>, BaseDto {
 
     public static final TreeTypeDto NO_TREE_TYPE = new TreeTypeDto();
 
-    @Mapping("_id")
     private Long _id;
 
-    @Mapping("_name")
     private String _name;
 
-    @Mapping("_description")
     private String _description;
 
-    @Mapping("_imagePath")
     private String _imagePath;
 
-    @Mapping("_infoPath")
     private String _infoPath;
 
-    @Mapping("_annualCo2SavingInTons")
     private double _annualCo2SavingInTons;
 
     // TODO figure out how to set this properly

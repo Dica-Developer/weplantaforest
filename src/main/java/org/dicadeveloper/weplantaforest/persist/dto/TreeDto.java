@@ -2,32 +2,31 @@ package org.dicadeveloper.weplantaforest.persist.dto;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.dozer.Mapping;
-import org.springframework.hateoas.Identifiable;
+import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
-public class TreeDto implements Identifiable<Long>, BaseDto {
+public class TreeDto extends ResourceSupport implements BaseDto {
 
-    @Mapping("_id")
+    @Mapping(value = "_id")
     private Long _id;
 
-    @Mapping("_longitude")
     private float _longitude;
 
-    @Mapping("_latitude")
     private float _latitude;
 
-    @Mapping("_amount")
     private int _amount;
 
-    @Mapping("_submittedOn")
     private Date _submittedOn;
 
     private String _treeTypeName;
+
+    private Long _treeTypeId;
 
     // TODO figure out how to set this properly
     private int limit = 5, offset = 10; // Getters for these
@@ -35,10 +34,9 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
     // TODO figure out how to set this properly
     private int modelLimit = 100; // Getters for these
 
-    @Mapping("_type")
+    // @Mapping("_type")
     private TreeTypeDto _treeType;
 
-    @Mapping("_plantedOn")
     private Date _plantedOn;
 
     public TreeDto() {
@@ -52,12 +50,13 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
     }
 
     @Override
-    public Long getId() {
-        return _id;
-    }
-
     public void setId(Long id) {
         _id = id;
+    }
+
+    @XmlElement(name = "dtoID")
+    public Long getDtoId() {
+        return _id;
     }
 
     public int getAmount() {
@@ -135,6 +134,14 @@ public class TreeDto implements Identifiable<Long>, BaseDto {
 
     public void setTreeTypeName(String treeTypeName) {
         _treeTypeName = treeTypeName;
+    }
+
+    public Long getTreeTypeId() {
+        return _treeTypeId;
+    }
+
+    public void setTreeTypeId(Long treeTypeId) {
+        _treeTypeId = treeTypeId;
     }
 
 }
