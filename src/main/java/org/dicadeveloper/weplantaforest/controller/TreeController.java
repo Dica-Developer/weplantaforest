@@ -78,11 +78,11 @@ public class TreeController {
 
     @RequestMapping(value = PATHS.PATH_TREES, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON })
     public Response createTree(@RequestBody TreeDto tree) {
+        Response response;
         // TODO validation
-        System.out.println("POST trees");
         TreeTypeDto treeType = _treeTypeSerivce.findByName(tree.getTreeTypeName());
         if (treeType.equals(TreeTypeDto.NO_TREE_TYPE)) {
-            Response response = Response.status(new StatusType() {
+            response = Response.status(new StatusType() {
 
                 @Override
                 public int getStatusCode() {
@@ -99,12 +99,12 @@ public class TreeController {
                     return Family.CLIENT_ERROR;
                 }
             }).entity(new TreeDto()).build();
-            return response;
+        } else {
+            tree.setPlantedOn(new Date());
+            tree.setSubmittedOn(new Date());
+            _treeService.save(tree);
+            response = Response.status(200).entity(tree).build();
         }
-        tree.setPlantedOn(new Date());
-        tree.setSubmittedOn(new Date());
-        _treeService.save(tree);
-        Response response = Response.status(200).entity(tree).build();
         return response;
     }
 
