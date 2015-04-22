@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.controller;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.util.Maps;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
@@ -38,9 +36,6 @@ import static org.fest.assertions.Assertions.assertThat;
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class TreesControllerIntegrationTest {
-
-    private final static class ParameterizedTypeReferenceExtension extends ParameterizedTypeReference<List<TreeDto>> {
-    }
 
     @Value("${local.server.port}")
     private int _port;
