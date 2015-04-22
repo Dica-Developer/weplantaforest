@@ -144,4 +144,76 @@ public class TreeDto extends ResourceSupport implements BaseDto {
         _treeTypeId = treeTypeId;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + _amount;
+        result = prime * result + ((_id == null) ? 0 : _id.hashCode());
+        result = prime * result + Float.floatToIntBits(_latitude);
+        result = prime * result + Float.floatToIntBits(_longitude);
+        result = prime * result + ((_plantedOn == null) ? 0 : _plantedOn.hashCode());
+        result = prime * result + ((_submittedOn == null) ? 0 : _submittedOn.hashCode());
+        result = prime * result + ((_treeType == null) ? 0 : _treeType.hashCode());
+        result = prime * result + ((_treeTypeId == null) ? 0 : _treeTypeId.hashCode());
+        result = prime * result + ((_treeTypeName == null) ? 0 : _treeTypeName.hashCode());
+        result = prime * result + limit;
+        result = prime * result + modelLimit;
+        result = prime * result + offset;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TreeDto other = (TreeDto) obj;
+        if (_amount != other._amount)
+            return false;
+        if (_id == null) {
+            if (other._id != null)
+                return false;
+        } else if (!_id.equals(other._id))
+            return false;
+        if (Float.floatToIntBits(_latitude) != Float.floatToIntBits(other._latitude))
+            return false;
+        if (Float.floatToIntBits(_longitude) != Float.floatToIntBits(other._longitude))
+            return false;
+        if (_plantedOn == null) {
+            if (other._plantedOn != null)
+                return false;
+        } else if (!_plantedOn.equals(other._plantedOn))
+            return false;
+        if (_submittedOn == null) {
+            if (other._submittedOn != null)
+                return false;
+        } else if (!_submittedOn.equals(other._submittedOn))
+            return false;
+        if (_treeType == null) {
+            if (other._treeType != null)
+                return false;
+        } else if (!_treeType.equals(other._treeType))
+            return false;
+        if (_treeTypeId == null) {
+            if (other._treeTypeId != null)
+                return false;
+        } else if (!_treeTypeId.equals(other._treeTypeId))
+            return false;
+        if (_treeTypeName == null) {
+            if (other._treeTypeName != null)
+                return false;
+        } else if (!_treeTypeName.equals(other._treeTypeName))
+            return false;
+        if (limit != other.limit)
+            return false;
+        if (modelLimit != other.modelLimit)
+            return false;
+        if (offset != other.offset)
+            return false;
+        return true;
+    }
 }

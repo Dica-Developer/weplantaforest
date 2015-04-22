@@ -1,17 +1,14 @@
 package org.dicadeveloper.weplantaforest.controller;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
+import java.util.ArrayList;
 import java.util.Date;
 
+import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.Response.StatusType;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.PATHS;
 import org.dicadeveloper.weplantaforest.assembler.TreeResourceAssembler;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
@@ -37,6 +34,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @ExposesResourceFor(TreeDto.class)
 @RestController
 public class TreeController {
@@ -47,16 +47,20 @@ public class TreeController {
     @Autowired
     private TreeResourceAssembler _treeResourceAssembler;
 
-    private final Log LOG = LogFactory.getLog(TreeController.class);
-
     @Autowired
     TreeTypeService _treeTypeSerivce;
 
     @RequestMapping(value = PATHS.PATH_TREES, method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
     @ResponseBody
-    public PagedResources<TreeDto> getTrees(@PageableDefault(size = UtilConstants.DEFAULT_RETURN_RECORD_COUNT, page = 0, sort = { "_plantedOn" }) Pageable pageable, PagedResourcesAssembler assembler) {
+    public PagedResources<TreeDto> getTrees(@PageableDefault(size = UtilConstants.DEFAULT_RETURN_RECORD_COUNT, page = 0, sort = { "_plantedOn" }) Pageable pageable,
+            @Nullable PagedResourcesAssembler assembler) {
         Page<TreeDto> trees = _treeService.findAll(pageable);
-        PagedResources<TreeDto> pagedResource = assembler.toResource(trees, _treeResourceAssembler);
+        PagedResources<TreeDto> pagedResource = null;
+        if (null != assembler) {
+            pagedResource = assembler.toResource(trees, _treeResourceAssembler);
+        } else {
+            pagedResource = new PagedResources<TreeDto>(new ArrayList<TreeDto>(), null);
+        }
         return pagedResource;
     }
 
@@ -66,12 +70,11 @@ public class TreeController {
             return new ResponseEntity<Resource<TreeDto>>(HttpStatus.NOT_FOUND);
         }
         TreeDto tree = _treeService.findOne(treeId);
-
-        Long treeTypeId = _treeService.findTreeTypeIdByTreeId(treeId);
         Resource<TreeDto> treeResource = new Resource(tree);
         treeResource.add(linkTo(methodOn(TreeController.class).getTree(treeId)).withSelfRel());
         treeResource.add(linkTo(methodOn(TreeController.class).getTrees(null, null)).withRel("parent"));
         // TODO treeTypeID is null -> JPA query needs to be fixed.
+        // Long treeTypeId = _treeService.findTreeTypeIdByTreeId(treeId);
         // treeResource.add(linkTo(methodOn(TreeTypeController.class).getTreeType(treeTypeId)).withRel("treeType"));
         return new ResponseEntity<Resource<TreeDto>>(treeResource, HttpStatus.OK);
     }

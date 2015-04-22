@@ -1,7 +1,5 @@
 package org.dicadeveloper.weplantaforest.assembler;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-
 import java.util.List;
 
 import jersey.repackaged.com.google.common.collect.Lists;
@@ -14,9 +12,11 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @Service
+// FIXME specify also the type for resource
 public class TreeResourceAssembler extends ResourceAssemblerSupport<TreeDto, Resource> {
 
     public TreeResourceAssembler() {
@@ -34,9 +34,8 @@ public class TreeResourceAssembler extends ResourceAssemblerSupport<TreeDto, Res
     }
 
     @Override
-    public Resource toResource(TreeDto treeDto) {
+    public Resource<TreeDto> toResource(TreeDto treeDto) {
         ControllerLinkBuilder treeLink = linkTo(TreeController.class);
-        UriComponentsBuilder treeUri = treeLink.toUriComponentsBuilder();
         Link selfLinkTree = treeLink.slash(PATHS.PATH_TREES + "/" + treeDto.getDtoId()).withRel("self");
         Link treeType = treeLink.slash(PATHS.PATH_TREE_TYPES + "/" + treeDto.getTreeTypeId()).withRel("treeType");
         return new Resource<TreeDto>(treeDto, selfLinkTree, treeType);

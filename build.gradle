@@ -93,6 +93,7 @@ dependencies {
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.2.3.RELEASE'
     testCompile group: 'org.easytesting', name: 'fest-assert', version: '1.4'
     testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.4.1'
+    compile 'com.google.code.findbugs:jsr305:3.0.0'
 }
 
 //start server from command line

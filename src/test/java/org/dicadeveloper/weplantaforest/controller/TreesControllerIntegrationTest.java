@@ -19,7 +19,6 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
@@ -93,13 +92,5 @@ public class TreesControllerIntegrationTest {
         response.body("_embedded.treeDtoList.latitude", Matchers.hasItems(1.0f));
         response.body("_embedded.treeDtoList.longitude", Matchers.hasItems(3.0f));
         response.body("_embedded.treeDtoList.amount", Matchers.hasItems(67));
-    }
-
-    private ResponseEntity<List<TreeDto>> getTrees(String uri) {
-        return _restTemplate.exchange(uri, HttpMethod.GET, null, getParameterizedPageTypeReference());
-    }
-
-    private ParameterizedTypeReference<List<TreeDto>> getParameterizedPageTypeReference() {
-        return new ParameterizedTypeReferenceExtension();
     }
 }
