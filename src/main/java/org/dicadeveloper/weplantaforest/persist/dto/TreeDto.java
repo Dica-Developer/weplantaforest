@@ -84,7 +84,11 @@ public class TreeDto extends ResourceSupport implements BaseDto {
     }
 
     public Date getSubmittedOn() {
-        return (Date) _submittedOn.clone();
+        Date result = null;
+        if (null != _submittedOn) {
+            result = (Date) _submittedOn.clone();
+        }
+        return result;
     }
 
     public void setSubmittedOn(Date submittedOn) {
@@ -121,7 +125,11 @@ public class TreeDto extends ResourceSupport implements BaseDto {
     }
 
     public Date getPlantedOn() {
-        return (Date) _plantedOn.clone();
+        Date result = null;
+        if (null != _plantedOn) {
+            result = (Date) _plantedOn.clone();
+        }
+        return result;
     }
 
     public void setPlantedOn(Date plantedOn) {
