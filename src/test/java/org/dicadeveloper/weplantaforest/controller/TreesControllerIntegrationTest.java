@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
 import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ValidatableResponse;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -49,15 +52,19 @@ public class TreesControllerIntegrationTest {
     private TreeService _treeService;
 
     @Test
-    public void testTreeCreation_Successful() {
-        Map<String, String> params = Maps.newHashMap();
-        ResponseEntity<TreeDto> entity = _restTemplate.postForEntity("http://localhost:" + this._port + "/rest/v1/trees/51.23/11.43/34/Ahorn", params, TreeDto.class);
-        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        TreeDto tree = entity.getBody();
-        assertThat(tree.getLatitude()).isEqualTo(51.23f);
-        assertThat(tree.getLongitude()).isEqualTo(11.43f);
-        assertThat(tree.getAmount()).isEqualTo(34);
-        assertThat(tree.getTreeType()).isNull();
+    public void testTreeCreation_Successful() throws URISyntaxException {
+        if (TreeTypeDto.NO_TREE_TYPE.equals(_treeTypeService.findByName("Buche"))) {
+            TreeTypeDto treeType = new TreeTypeDto();
+            treeType.setName("Buche");
+            _treeTypeService.save(treeType);
+        }
+
+        ValidatableResponse response = RestAssured.given().contentType(ContentType.JSON).body("{\"longitude\":51.26,\"latitude\":11.4,\"amount\":36467574,\"treeTypeName\":\"Buche\"}")
+                .post(new URI("http://localhost:" + _port + "/rest/v1/trees")).then();
+        response.statusCode(Matchers.equalTo(200));
+        response.body("context.entity.longitude", Matchers.equalTo(new Float(51.26)));
+        response.body("context.entity.latitude", Matchers.equalTo(new Float(11.4)));
+        response.body("context.entity.amount", Matchers.equalTo(36467574));
     }
 
     @Test
@@ -82,7 +89,6 @@ public class TreesControllerIntegrationTest {
 
         ValidatableResponse response = RestAssured.get("http://localhost:" + _port + "/rest/v1/trees").then();
         response.statusCode(Matchers.equalTo(200));
-        System.out.println(RestAssured.get("http://localhost:" + _port + "/rest/v1/trees").getBody().asString());
         response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/trees{?page,size,sort}"));
         response.body("_embedded.treeDtoList.latitude", Matchers.hasItems(1.0f));
         response.body("_embedded.treeDtoList.longitude", Matchers.hasItems(3.0f));
