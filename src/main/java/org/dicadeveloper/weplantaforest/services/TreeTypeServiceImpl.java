@@ -30,4 +30,9 @@ public class TreeTypeServiceImpl extends GenericServiceImpl<TreeType, TreeTypeDt
         return _mapper.map(treeType, _dtoClass);
     }
 
+    @Override
+    public void delete(TreeTypeDto treeType) {
+        super.delete(treeType.getId());
+    }
+
 }

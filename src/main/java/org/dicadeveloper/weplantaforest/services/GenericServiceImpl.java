@@ -78,4 +78,8 @@ abstract class GenericServiceImpl<T extends Base, D extends BaseDto, ID extends 
         return _repository.count();
     }
 
+    public void delete(ID entityId) {
+        _repository.delete(entityId);
+    }
+
 }

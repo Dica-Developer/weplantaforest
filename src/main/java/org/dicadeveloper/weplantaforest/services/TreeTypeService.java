@@ -9,4 +9,6 @@ public interface TreeTypeService extends GenericService<TreeType, TreeTypeDto, L
     void save(TreeTypeDto treeTypeDto);
 
     TreeTypeDto findByName(String name);
+
+    void delete(TreeTypeDto treeType);
 }
