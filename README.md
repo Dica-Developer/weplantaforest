@@ -28,5 +28,6 @@ How ever if *Gradle* is not installed on your system you can use ```sh gradlew <
 Make sure you have following classes included for static import:
 * org.assertj.core.api.Assertions
 * org.mockito.Matchers
+* com.jayway.restassured.RestAssured
 
 (In Eclipse under Preferences/Java/Editor/Content Assist/Favorites)
