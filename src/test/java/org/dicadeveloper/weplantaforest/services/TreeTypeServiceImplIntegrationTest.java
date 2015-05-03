@@ -48,7 +48,9 @@ public class TreeTypeServiceImplIntegrationTest {
         TreeTypeDto treeType = new TreeTypeDto("Ahorn2",
                 "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ");
         treeType.setInfoPath("http://de.wikipedia.org/wiki/Ahorne");
-        _treeTypeService.save(treeType);
+        if (_treeTypeService.findByName("Ahorn2").getId() == null) {
+            _treeTypeService.save(treeType);
+        }
 
         try {
             TreeTypeDto treeTypeWithSameName = new TreeTypeDto(treeType.getName(), treeType.getDescription());
