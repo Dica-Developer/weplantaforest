@@ -1,59 +1,56 @@
 package org.dicadeveloper.weplantaforest.controller;
 
-import java.util.List;
-
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.CategoryIntegration;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.services.TreeTypeService;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.client.RestTemplate;
 
-import static org.fest.assertions.Assertions.assertThat;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ValidatableResponse;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-@IntegrationTest("server.port=0")
-@WebAppConfiguration
+@IntegrationTest({ "spring.profiles.active=test" })
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @Category(CategoryIntegration.class)
 public class TreeTypesControllerIntegrationTest {
 
-    private final static class ParameterizedTypeReferenceExtension extends ParameterizedTypeReference<List<TreeTypeDto>> {
-    }
-
     @Value("${local.server.port}")
-    private int port;
+    private int _port;
 
-    private RestTemplate _restTemplate = new TestRestTemplate();
+    @Autowired
+    private TreeTypeService _treeTypeService;
 
     @Test
     public void testGetTreeTypes_Successful() {
-        ResponseEntity<List<TreeTypeDto>> entity = getTreeTypes("http://localhost:" + this.port + "/rest/v1/treetypes/");
-        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        List<TreeTypeDto> treeTypes = entity.getBody();
-        assertThat(treeTypes.size()).isGreaterThan(0);
-        TreeTypeDto tree = treeTypes.get(0);
-        assertThat(tree.getName()).isNotEmpty();
-        assertThat(tree.getDescription()).isNotEmpty();
-        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        TreeTypeDto treeType = new TreeTypeDto();
+        treeType.setName("Buche");
+        treeType.setAnnualCo2SavingInTons(1.2f);
+        treeType.setDescription("Baum typ Buche");
+        _treeTypeService.save(treeType);
+        Response responseTreeTypes = RestAssured.get("http://localhost:" + _port + "/rest/v1/treetypes/");
+        System.out.println("response: " + responseTreeTypes.print());
+        ValidatableResponse response = responseTreeTypes.then();
+        response.statusCode(Matchers.equalTo(200));
+        response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/treetypes/"));
+        response.body("_embedded.treeTypeDtoList.name", Matchers.hasItems("Buche"));
+        response.body("_embedded.treeTypeDtoList.annualCo2SavingInTons", Matchers.hasItems(1.2f));
+        response.body("_embedded.treeTypeDtoList.description", Matchers.hasItems("Baum typ Buche"));
+
     }
 
-    private ResponseEntity<List<TreeTypeDto>> getTreeTypes(String uri) {
-        return _restTemplate.exchange(uri, HttpMethod.GET, null, getParameterizedPageTypeReference());
-    }
-
-    private ParameterizedTypeReference<List<TreeTypeDto>> getParameterizedPageTypeReference() {
-        return new ParameterizedTypeReferenceExtension();
-    }
 }
