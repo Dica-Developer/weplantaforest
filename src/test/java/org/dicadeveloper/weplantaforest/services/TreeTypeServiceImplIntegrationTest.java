@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.services;
 
 import static org.fest.assertions.Assertions.assertThat;
-
 import static org.junit.Assert.fail;
 
 import org.dicadeveloper.weplantaforest.Application;
@@ -16,8 +15,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
