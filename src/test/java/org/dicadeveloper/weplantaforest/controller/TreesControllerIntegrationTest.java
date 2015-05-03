@@ -16,12 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.client.RestTemplate;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
@@ -36,8 +34,6 @@ public class TreesControllerIntegrationTest {
 
     @Value("${local.server.port}")
     private int _port;
-
-    private RestTemplate _restTemplate = new TestRestTemplate();
 
     @Autowired
     private TreeTypeService _treeTypeService;
