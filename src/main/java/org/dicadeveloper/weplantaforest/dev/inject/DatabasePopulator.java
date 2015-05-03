@@ -31,21 +31,24 @@ public class DatabasePopulator {
 
     public DatabasePopulator insertDefaultTreeTypes() {
         DEFAULT_TREE_TYPES.forEach((treeTypeName) -> {
-            final String description = "Die " + treeTypeName
-                    + " bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ";
-            TreeTypeDto treeType = new TreeTypeDto(treeTypeName, description);
-            double co2Savings = 0.02;
-            switch (treeTypeName) {
-                case "Robin":
-                case "Wildapfel":
-                    co2Savings = 0.01;
-                    break;
-                case "Default":
-                    co2Savings = 0.011;
-                    break;
+            TreeTypeDto findByName = _treeTypeService.findByName(treeTypeName);
+            if (TreeTypeDto.NO_TREE_TYPE.equals(findByName)) {
+                final String description = "Die " + treeTypeName
+                        + " bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ";
+                TreeTypeDto treeType = new TreeTypeDto(treeTypeName, description);
+                double co2Savings = 0.02;
+                switch (treeTypeName) {
+                    case "Robin":
+                    case "Wildapfel":
+                        co2Savings = 0.01;
+                        break;
+                    case "Default":
+                        co2Savings = 0.011;
+                        break;
+                }
+                treeType.setAnnualCo2SavingInTons(co2Savings);
+                _treeTypeService.save(treeType);
             }
-            treeType.setAnnualCo2SavingInTons(co2Savings);
-            _treeTypeService.save(treeType);
         });
         return this;
     }
