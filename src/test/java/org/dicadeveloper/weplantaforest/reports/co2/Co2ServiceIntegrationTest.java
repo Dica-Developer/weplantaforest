@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.reports.co2;
 
+import static org.fest.assertions.Assertions.assertThat;
+
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -16,10 +18,10 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.fest.assertions.Assertions.assertThat;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
