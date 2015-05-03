@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
+import org.dicadeveloper.weplantaforest.persist.TreeTypeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class DatabasePopulatorTest {
     @Autowired
     private TreeService _treeService;
 
+    @Autowired
+    private TreeTypeRepository _treeTypeRepository;
+
     @Test
     public void testInsertDefaultTreeTypes() throws Exception {
         _databasePopulator.insertDefaultTreeTypes();
@@ -38,6 +42,9 @@ public class DatabasePopulatorTest {
     @Test
     public void testInsertTrees_noTypes() throws Exception {
         try {
+            assertThat(_treeTypeService.existsAtAll()).isTrue();
+            _treeTypeRepository.deleteAll();
+            assertThat(_treeTypeService.existsAtAll()).isFalse();
             _databasePopulator.insertTrees(10);
             fail("should throw exception");
         } catch (Exception e) {
