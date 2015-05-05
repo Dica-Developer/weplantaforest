@@ -7,31 +7,43 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "User")
+public class User implements Base {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private long _id;
+    @Column(name = "_userId")
+    private long _userId;
 
-    @Column(name = "nickName")
-    private String _nickName;
+    @Column(unique = true, name = "_name")
+    private String _name;
+
+    @Column(name = "_enabled", nullable = false)
+    private boolean _enabled = false;
+    @Column(name = "_banned", nullable = false)
+    private boolean _banned = false;
 
     public long getId() {
-        return _id;
+        return _userId;
     }
 
     public void setId(long id) {
-        _id = id;
+        _userId = id;
     }
 
-    public String getNickName() {
-        return _nickName;
+    public String getName() {
+        return _name;
     }
 
-    public void setNickName(String nickName) {
-        _nickName = nickName;
+    public void setName(String name) {
+        _name = name;
     }
 
+    public void setEnabled(boolean enabled) {
+        _enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return _enabled;
+    }
 }

@@ -22,6 +22,7 @@ How ever if *Gradle* is not installed on your system you can use ```sh gradlew <
 * ```gradle run``` - start server
 * ```gradle test``` - execute unit tests (open report with ```open build/reports/tests/index.html```
  * for executing single test add ```-Dtest.single=ExampleMainTest```
+ * for running tests on mysql add ```-Pmysql``` 
 * ```gradle clean``` - clean the project
 
 ### IDE Configuration
@@ -31,3 +32,15 @@ Make sure you have following classes included for static import:
 * com.jayway.restassured.RestAssured
 
 (In Eclipse under Preferences/Java/Editor/Content Assist/Favorites)
+
+### Testing and Developing with MySql
+* Create fresh databases:
+ * ```drop database weplantaforest; create database weplantaforest;```
+ * ```drop database weplantaforest_test; create database weplantaforest_test;```
+* Run tests with MySql from Gradle by adding the flag ```-Pmysql```, e.g. ```gradle  test -Pmysql ```
+* Run tests with MySql from Eclipse by either:
+ * Change existing annotation ```@IntegrationTest({ "spring.profiles.active=test" })``` into ```@IntegrationTest({ "spring.profiles.active=test,mysql-test" })```
+ * OR switch the included profiles in ```application-test.properties```
+* Change existing MySql Schema (managed by Flyway)
+ * Add to the latest (unreleased) ```src/main/resources/db/migration/V*.sql``` script
+ * OR create a new script, e.g. ```src/main/resources/db/migration/V1_2__descriptionOfMyChange.sql```

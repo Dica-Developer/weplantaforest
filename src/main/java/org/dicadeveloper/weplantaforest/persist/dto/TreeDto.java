@@ -13,18 +13,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @XmlRootElement
 public class TreeDto extends ResourceSupport implements BaseDto {
 
-    @Mapping(value = "_id")
+    @Mapping("_treeId")
     private Long _id;
 
     private float _longitude;
-
+    @Mapping("_latitude")
     private float _latitude;
 
     private int _amount;
 
     private Date _submittedOn;
+    @Mapping("_plantedOn")
+    private Date _plantedOn;
 
     private String _treeTypeName;
+    private String _ownerName;
 
     private Long _treeTypeId;
 
@@ -34,10 +37,11 @@ public class TreeDto extends ResourceSupport implements BaseDto {
     // TODO figure out how to set this properly
     private int modelLimit = 100; // Getters for these
 
-    // @Mapping("_type")
+    @Mapping("_treeType")
     private TreeTypeDto _treeType;
 
-    private Date _plantedOn;
+    @Mapping("_owner")
+    private UserDto _owner;
 
     public TreeDto() {
     }
@@ -119,6 +123,14 @@ public class TreeDto extends ResourceSupport implements BaseDto {
         _treeType = treeType;
     }
 
+    public UserDto getOwner() {
+        return _owner;
+    }
+
+    public void setOwner(UserDto owner) {
+        _owner = owner;
+    }
+
     @Override
     public String toString() {
         return "TreeDto [_id=" + _id + ", _longitude=" + _longitude + ", _latitude=" + _latitude + ", _amount=" + _amount + ", _submittedOn=" + _submittedOn + "]";
@@ -142,6 +154,14 @@ public class TreeDto extends ResourceSupport implements BaseDto {
 
     public void setTreeTypeName(String treeTypeName) {
         _treeTypeName = treeTypeName;
+    }
+
+    public String getOwnerName() {
+        return _ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        _ownerName = ownerName;
     }
 
     public Long getTreeTypeId() {

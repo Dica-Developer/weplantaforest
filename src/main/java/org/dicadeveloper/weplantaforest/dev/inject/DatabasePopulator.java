@@ -8,8 +8,10 @@ import jersey.repackaged.com.google.common.collect.Iterators;
 
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
 import org.dicadeveloper.weplantaforest.services.TreeService;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
+import org.dicadeveloper.weplantaforest.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,10 @@ import com.google.common.collect.ImmutableList;
 public class DatabasePopulator {
 
     private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
+    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes");
 
+    @Autowired
+    private UserService _userService;
     @Autowired
     private TreeTypeService _treeTypeService;
     @Autowired
@@ -53,15 +58,33 @@ public class DatabasePopulator {
         return this;
     }
 
+    public DatabasePopulator insertUsers() {
+        DEFAULT_USERS.forEach((userName) -> {
+            UserDto user = new UserDto();
+            user.setName(userName);
+            user.setEnabled(true);
+            _userService.save(user);
+        });
+        return this;
+    }
+
     public DatabasePopulator insertTrees(int count) {
         Iterator<TreeTypeDto> cyclingTreeTypes = Iterators.cycle(loadTreeTypes());
+        Iterator<UserDto> cyclingUsers = Iterators.cycle(loadUsers());
         for (int i = 0; i < count; i++) {
             TreeDto treeDto = new TreeDto(i, i, i % 20);
             treeDto.setTreeType(_treeTypeService.findByName(cyclingTreeTypes.next().getName()));
-            treeDto.setPlantedOn(new Date(0L));
+            treeDto.setPlantedOn(new Date(i + 1000000L));
+            treeDto.setOwner(cyclingUsers.next());
             _treeService.save(treeDto);
         }
         return this;
+    }
+
+    private List<UserDto> loadUsers() {
+        List<UserDto> allUsers = _userService.findAll();
+        Verify.verify(allUsers.size() > 0, "No Users set up!");
+        return allUsers;
     }
 
     private List<TreeTypeDto> loadTreeTypes() {

@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.fail;
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.persist.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +16,21 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class DatabasePopulatorTest {
 
+    @Rule
+    @Autowired
+    public CleanDbRule _cleanDbRule;
+
     @Autowired
     private DatabasePopulator _databasePopulator;
+    @Autowired
+    private UserService _userService;
     @Autowired
     private TreeTypeService _treeTypeService;
     @Autowired
@@ -32,6 +38,12 @@ public class DatabasePopulatorTest {
 
     @Autowired
     private TreeTypeRepository _treeTypeRepository;
+
+    @Test
+    public void testInsertUsers() throws Exception {
+        _databasePopulator.insertUsers();
+        assertThat(_userService.findAll()).hasSize(4);
+    }
 
     @Test
     public void testInsertDefaultTreeTypes() throws Exception {
@@ -42,9 +54,6 @@ public class DatabasePopulatorTest {
     @Test
     public void testInsertTrees_noTypes() throws Exception {
         try {
-            assertThat(_treeTypeService.existsAtAll()).isTrue();
-            _treeTypeRepository.deleteAll();
-            assertThat(_treeTypeService.existsAtAll()).isFalse();
             _databasePopulator.insertTrees(10);
             fail("should throw exception");
         } catch (Exception e) {
@@ -54,6 +63,7 @@ public class DatabasePopulatorTest {
 
     @Test
     public void testInsertTrees() throws Exception {
+        _databasePopulator.insertUsers();
         _databasePopulator.insertDefaultTreeTypes();
         _databasePopulator.insertTrees(1000);
         assertThat(_treeService.count()).isEqualTo(1000);

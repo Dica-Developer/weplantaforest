@@ -72,6 +72,8 @@ dependencies {
     compile group: 'com.h2database', name: 'h2', version: '1.4.186'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
     
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '3.1'
+    
     compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '1.1.0.RELEASE'
     compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: '0.16.0.RELEASE'
 
@@ -103,10 +105,15 @@ run {
 }
 
 test {
-    maxParallelForks Runtime.getRuntime().availableProcessors()
     testLogging {
         // Show that tests are run in the command-line output
         events 'passed'
+    }
+    if(project.hasProperty('mysql')) {
+        println "Running tests on mysql db!"
+        systemProperty "spring.profiles.active", "test,mysql-test"
+    } else {
+        maxParallelForks Runtime.getRuntime().availableProcessors()
     }
 }
 

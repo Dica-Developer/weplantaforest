@@ -7,27 +7,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "treeTypes")
+@Table(name = "TreeType")
 public class TreeType implements Base {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private long _id;
+    @Column(name = "treeTypeId")
+    private long treeTypeId;
 
-    @Column(name = "name", unique = true)
+    @Column(name = "_name", unique = true)
     private String _name;
-
-    @Column(name = "description")
+    @Column(name = "_description")
     private String _description;
-
-    @Column(name = "imagePath")
-    private String _imagePath;
-
-    @Column(name = "infoPath")
-    private String _infoPath;
-
-    @Column(name = "annualCo2SavingInTons")
+    @Column(name = "_imageFile")
+    private String _imageFile;
+    @Column(name = "_infoLink")
+    private String _infoLink;
+    @Column(name = "_annualCo2SavingInTons")
     private double _annualCo2SavingInTons;
 
     public String getName() {
@@ -46,24 +42,24 @@ public class TreeType implements Base {
         _description = description;
     }
 
-    public String getImagePath() {
-        return _imagePath;
+    public String getImageFile() {
+        return _imageFile;
     }
 
-    public void setImagePath(String imagePath) {
-        _imagePath = imagePath;
+    public void setImageFile(String imageFile) {
+        _imageFile = imageFile;
     }
 
-    public String getInfoPath() {
-        return _infoPath;
+    public String getInfoLink() {
+        return _infoLink;
     }
 
-    public void setInfoPath(String infoPath) {
-        _infoPath = infoPath;
+    public void setInfoLink(String infoLink) {
+        _infoLink = infoLink;
     }
 
     public long getId() {
-        return _id;
+        return treeTypeId;
     }
 
     public double getAnnualCo2SavingInTons() {

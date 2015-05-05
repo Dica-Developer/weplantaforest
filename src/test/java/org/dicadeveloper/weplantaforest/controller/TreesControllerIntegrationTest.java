@@ -7,9 +7,13 @@ import java.util.Date;
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
 import org.dicadeveloper.weplantaforest.services.TreeService;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
+import org.dicadeveloper.weplantaforest.services.UserService;
+import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,32 +29,39 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ValidatableResponse;
 
-@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
+@WebAppConfiguration
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class TreesControllerIntegrationTest {
+
+    @Rule
+    @Autowired
+    public CleanDbRule _cleanDbRule;
 
     @Value("${local.server.port}")
     private int _port;
 
     @Autowired
+    private UserService _userService;
+    @Autowired
     private TreeTypeService _treeTypeService;
-
     @Autowired
     private TreeService _treeService;
 
     @Test
     public void testTreeCreation_Successful() throws URISyntaxException {
-        if (TreeTypeDto.NO_TREE_TYPE.equals(_treeTypeService.findByName("Buche"))) {
-            TreeTypeDto treeType = new TreeTypeDto();
-            treeType.setName("Buche");
-            _treeTypeService.save(treeType);
-        }
+        TreeTypeDto treeType = new TreeTypeDto();
+        treeType.setName("Buche");
+        _treeTypeService.save(treeType);
 
-        ValidatableResponse response = RestAssured.given().contentType(ContentType.JSON).body("{\"longitude\":51.26,\"latitude\":11.4,\"amount\":36467574,\"treeTypeName\":\"Buche\"}")
-                .post(new URI("http://localhost:" + _port + "/rest/v1/trees")).then();
+        UserDto user = new UserDto("Bert");
+        _userService.save(user);
+
+        ValidatableResponse response = RestAssured.given().contentType(ContentType.JSON)
+                .body("{\"longitude\":51.26,\"latitude\":11.4,\"amount\":36467574,\"treeTypeName\":\"Buche\",\"ownerName\":\"Bert\"}").post(new URI("http://localhost:" + _port + "/rest/v1/trees"))
+                .then();
         response.statusCode(Matchers.equalTo(200));
         response.body("context.entity.longitude", Matchers.equalTo(new Float(51.26)));
         response.body("context.entity.latitude", Matchers.equalTo(new Float(11.4)));
@@ -59,10 +70,6 @@ public class TreesControllerIntegrationTest {
 
     @Test
     public void testTreeCreation_FailsBecauseTreeTypeDidNotExist() throws URISyntaxException {
-        TreeTypeDto treeType = _treeTypeService.findByName("Buche");
-        if (!TreeTypeDto.NO_TREE_TYPE.equals(treeType)) {
-            _treeTypeService.delete(treeType);
-        }
         ValidatableResponse response = RestAssured.given().contentType(ContentType.JSON).body("{\"longitude\":51.26,\"latitude\":11.4,\"amount\":36467574,\"treeTypeName\":\"Buche\"}")
                 .post(new URI("http://localhost:" + _port + "/rest/v1/trees")).then();
         response.statusCode(Matchers.equalTo(200));
@@ -76,9 +83,14 @@ public class TreesControllerIntegrationTest {
         TreeTypeDto treeType = new TreeTypeDto();
         treeType.setName("Buche");
         _treeTypeService.save(treeType);
+
+        UserDto user = new UserDto("Bert");
+        _userService.save(user);
+
         TreeDto tree = new TreeDto(1.0f, 3.0f, 67);
         tree.setPlantedOn(new Date());
         tree.setTreeType(treeType);
+        tree.setOwner(user);
         _treeService.save(tree);
 
         ValidatableResponse response = RestAssured.get("http://localhost:" + _port + "/rest/v1/trees").then();

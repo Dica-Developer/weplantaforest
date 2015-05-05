@@ -4,7 +4,9 @@ import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.CategoryIntegration;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
+import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -21,13 +23,17 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ValidatableResponse;
 
-@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
+@WebAppConfiguration
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @Category(CategoryIntegration.class)
 public class TreeTypesControllerIntegrationTest {
+
+    @Rule
+    @Autowired
+    public CleanDbRule _cleanDbRule;
 
     @Value("${local.server.port}")
     private int _port;

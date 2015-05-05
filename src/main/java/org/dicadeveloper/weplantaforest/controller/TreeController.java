@@ -1,21 +1,25 @@
 package org.dicadeveloper.weplantaforest.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status.Family;
-import javax.ws.rs.core.Response.StatusType;
 
 import org.dicadeveloper.weplantaforest.PATHS;
 import org.dicadeveloper.weplantaforest.assembler.TreeResourceAssembler;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
 import org.dicadeveloper.weplantaforest.services.TreeService;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
+import org.dicadeveloper.weplantaforest.services.UserService;
 import org.dicadeveloper.weplantaforest.util.UtilConstants;
+import org.glassfish.jersey.message.internal.Statuses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,9 +38,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 @ExposesResourceFor(TreeDto.class)
 @RestController
 public class TreeController {
@@ -47,6 +48,8 @@ public class TreeController {
     @Autowired
     private TreeResourceAssembler _treeResourceAssembler;
 
+    @Autowired
+    UserService _userService;
     @Autowired
     TreeTypeService _treeTypeSerivce;
 
@@ -84,25 +87,13 @@ public class TreeController {
         Response response;
         // TODO validation
         TreeTypeDto treeType = _treeTypeSerivce.findByName(tree.getTreeTypeName());
+        UserDto owner = _userService.findByName(tree.getOwnerName());
         if (treeType.equals(TreeTypeDto.NO_TREE_TYPE)) {
-            response = Response.status(new StatusType() {
-
-                @Override
-                public int getStatusCode() {
-                    return 400;
-                }
-
-                @Override
-                public String getReasonPhrase() {
-                    return "You must define the tree type '" + tree.getTreeTypeName() + "' first.";
-                }
-
-                @Override
-                public Family getFamily() {
-                    return Family.CLIENT_ERROR;
-                }
-            }).entity(new TreeDto()).build();
+            response = Response.status(Statuses.from(400, "You must define the tree type '" + tree.getTreeTypeName() + "' first.")).entity(new TreeDto()).build();
+        } else if (owner.equals(UserDto.NO_USER)) {
+            response = Response.status(Statuses.from(400, "You must define the owner '" + tree.getOwnerName() + "' first.")).entity(new UserDto()).build();
         } else {
+            tree.setOwner(owner);
             tree.setPlantedOn(new Date());
             tree.setSubmittedOn(new Date());
             _treeService.save(tree);

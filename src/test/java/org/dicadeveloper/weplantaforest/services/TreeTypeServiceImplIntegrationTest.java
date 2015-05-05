@@ -6,6 +6,8 @@ import static org.junit.Assert.fail;
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class TreeTypeServiceImplIntegrationTest {
 
+    @Rule
+    @Autowired
+    public CleanDbRule _cleanDbRule;
     @Autowired
     private DatabasePopulator _databasePopulator;
     @Autowired
@@ -38,19 +43,17 @@ public class TreeTypeServiceImplIntegrationTest {
     public void testSaveTreeType() {
         TreeTypeDto treeType = new TreeTypeDto("Ahorn2",
                 "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ");
-        treeType.setInfoPath("http://de.wikipedia.org/wiki/Ahorne");
+        treeType.setInfoLink("http://de.wikipedia.org/wiki/Ahorne");
         _treeTypeService.save(treeType);
-        assertThat(_treeTypeService.findByName(treeType.getName()).getInfoPath()).isEqualTo("http://de.wikipedia.org/wiki/Ahorne");
+        assertThat(_treeTypeService.findByName(treeType.getName()).getInfoLink()).isEqualTo("http://de.wikipedia.org/wiki/Ahorne");
     }
 
     @Test
     public void testSaveTreeType_UniqueConstraint() {
         TreeTypeDto treeType = new TreeTypeDto("Ahorn2",
                 "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ");
-        treeType.setInfoPath("http://de.wikipedia.org/wiki/Ahorne");
-        if (_treeTypeService.findByName("Ahorn2").getId() == null) {
-            _treeTypeService.save(treeType);
-        }
+        treeType.setInfoLink("http://de.wikipedia.org/wiki/Ahorne");
+        _treeTypeService.save(treeType);
 
         try {
             TreeTypeDto treeTypeWithSameName = new TreeTypeDto(treeType.getName(), treeType.getDescription());
