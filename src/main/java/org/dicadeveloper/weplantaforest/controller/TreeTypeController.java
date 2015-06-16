@@ -1,11 +1,7 @@
 package org.dicadeveloper.weplantaforest.controller;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 import javax.ws.rs.core.MediaType;
 
-import org.dicadeveloper.weplantaforest.PATHS;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.dicadeveloper.weplantaforest.util.UtilConstants;
@@ -23,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 public class TreeTypeController {
 
     @Autowired
     private TreeTypeService _treeTypeService;
 
-    @RequestMapping(value = PATHS.PATH_TREE_TYPES + "/", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
+    @RequestMapping(value = "/rest/v1/treetypes", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
     public HttpEntity<Resources<Resource<TreeTypeDto>>> getTreeTypes(@PageableDefault(size = UtilConstants.DEFAULT_RETURN_RECORD_COUNT, page = 0, sort = { "_name" }) Pageable pageable) {
         Page<TreeTypeDto> treeTypes = _treeTypeService.findAll(pageable);
         Resources<Resource<TreeTypeDto>> treeTypeResources = Resources.wrap(treeTypes);
@@ -37,7 +36,7 @@ public class TreeTypeController {
         return new ResponseEntity<Resources<Resource<TreeTypeDto>>>(treeTypeResources, HttpStatus.OK);
     }
 
-    @RequestMapping(value = PATHS.PATH_TREE_TYPES + "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
+    @RequestMapping(value = "/rest/v1/treetypes/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
     public HttpEntity<Resource<TreeTypeDto>> getTreeType(@PathVariable("id") Long id) {
         if (id == null) {
             return new ResponseEntity<Resource<TreeTypeDto>>(HttpStatus.NOT_FOUND);

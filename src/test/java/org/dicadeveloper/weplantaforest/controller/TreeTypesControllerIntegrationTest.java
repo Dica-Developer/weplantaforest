@@ -48,11 +48,11 @@ public class TreeTypesControllerIntegrationTest {
         treeType.setAnnualCo2SavingInTons(1.2f);
         treeType.setDescription("Baum typ Buche");
         _treeTypeService.save(treeType);
-        Response responseTreeTypes = RestAssured.get("http://localhost:" + _port + "/rest/v1/treetypes/");
+        Response responseTreeTypes = RestAssured.get("http://localhost:" + _port + "/rest/v1/treetypes");
         System.out.println("response: " + responseTreeTypes.print());
         ValidatableResponse response = responseTreeTypes.then();
         response.statusCode(Matchers.equalTo(200));
-        response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/treetypes/"));
+        response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/treetypes"));
         response.body("_embedded.treeTypeDtoList.name", Matchers.hasItems("Buche"));
         response.body("_embedded.treeTypeDtoList.annualCo2SavingInTons", Matchers.hasItems(1.2f));
         response.body("_embedded.treeTypeDtoList.description", Matchers.hasItems("Baum typ Buche"));

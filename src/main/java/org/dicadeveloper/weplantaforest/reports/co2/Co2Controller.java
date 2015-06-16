@@ -3,7 +3,6 @@ package org.dicadeveloper.weplantaforest.reports.co2;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.dicadeveloper.weplantaforest.PATHS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Resource;
@@ -19,7 +18,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Component
-@RequestMapping(value = PATHS.REST_ROOT_PATH_V1, produces = { MediaType.APPLICATION_JSON })
+@RequestMapping(value = "/rest/v1/", produces = { MediaType.APPLICATION_JSON })
 @ExposesResourceFor(Co2Dto.class)
 @Produces(MediaType.APPLICATION_JSON)
 @Controller

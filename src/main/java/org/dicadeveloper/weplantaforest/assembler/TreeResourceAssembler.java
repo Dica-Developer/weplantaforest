@@ -4,7 +4,6 @@ import java.util.List;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
-import org.dicadeveloper.weplantaforest.PATHS;
 import org.dicadeveloper.weplantaforest.controller.TreeController;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.springframework.hateoas.Link;
@@ -27,7 +26,7 @@ public class TreeResourceAssembler extends ResourceAssemblerSupport<TreeDto, Res
     public List<Resource> toResources(Iterable<? extends TreeDto> treeDtos) {
         List<Resource> resources = Lists.newArrayList();
         treeDtos.forEach((treeDto) -> {
-            Link selfLinkTree = linkTo(TreeController.class).slash(PATHS.PATH_TREES + "/" + treeDto.getId()).withRel("self");
+            Link selfLinkTree = linkTo(TreeController.class).slash("/rest/v1/trees/" + treeDto.getId()).withRel("self");
             resources.add(new Resource<TreeDto>(treeDto, selfLinkTree));
         });
         return resources;
@@ -36,8 +35,8 @@ public class TreeResourceAssembler extends ResourceAssemblerSupport<TreeDto, Res
     @Override
     public Resource<TreeDto> toResource(TreeDto treeDto) {
         ControllerLinkBuilder treeLink = linkTo(TreeController.class);
-        Link selfLinkTree = treeLink.slash(PATHS.PATH_TREES + "/" + treeDto.getDtoId()).withRel("self");
-        Link treeType = treeLink.slash(PATHS.PATH_TREE_TYPES + "/" + treeDto.getTreeTypeId()).withRel("treeType");
+        Link selfLinkTree = treeLink.slash("/rest/v1/trees/" + treeDto.getDtoId()).withRel("self");
+        Link treeType = treeLink.slash("/rest/v1/treetypes/" + treeDto.getTreeTypeId()).withRel("treeType");
         return new Resource<TreeDto>(treeDto, selfLinkTree, treeType);
     }
 
