@@ -1,0 +1,15 @@
+{
+  "generator-ramlang": {
+    "apiModuleName": "api",
+    "ramlPath": "api/iplantatree.raml",
+    "selectedResources": [
+      "Treetypes",
+      "Trees",
+      "Projects",
+      "Users"
+    ],
+    "allInOneFile": true,
+    "destination": "client/components/api",
+    "mediaTypeExtension": ".json"
+  }
+}

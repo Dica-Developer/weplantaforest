@@ -9,3 +9,7 @@ weplantaforest.trace.db
 /.idea
 /gradlew
 /gradlew.bat
+
+# Don't add processed ui files except the dev related files like HAL-Browser
+!/src/main/resources/static/dev
+/src/main/resources/static
