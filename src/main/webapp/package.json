@@ -4,6 +4,8 @@
   "dependencies": {},
   "devDependencies": {
     "connect-livereload": "~0.4.0",
+    "eslint": "^0.23.0",
+    "eslint-plugin-mocha": "^0.2.2",
     "generator-ramlang": "^0.2.0",
     "grunt": "~0.4.4",
     "grunt-angular-templates": "^0.5.4",

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(config) {
   config.set({
     basePath: '',
@@ -15,6 +17,8 @@ module.exports = function(config) {
       'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'client/bower_components/lodash/dist/lodash.compat.js',
       'client/bower_components/angular-ui-router/release/angular-ui-router.js',
+      'client/bower_components/angular-translate/angular-translate.js',
+      'client/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       'client/app/app.js',
       'client/app/**/*.js',
       'client/components/**/*.js',

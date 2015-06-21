@@ -1,0 +1,9 @@
+{
+  "LINK": {
+    "PLANT": "Plant",
+    "EXPLORE": "Explore"
+  },
+  "BUTTON": {
+    "SEARCH": "Search"
+  }
+}
