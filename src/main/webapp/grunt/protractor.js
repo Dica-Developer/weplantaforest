@@ -1,17 +1,14 @@
-(function () {
-  'use strict';
+'use strict';
 
-  module.exports = {
+module.exports = {
+  options: {
+    configFile: 'protractor.conf.js'
+  },
+  chrome: {
     options: {
-      configFile: 'protractor.conf.js'
-    },
-    chrome: {
-      options: {
-        args: {
-          browser: 'chrome'
-        }
+      args: {
+        browser: 'chrome'
       }
     }
-  };
-
-}());
+  }
+};

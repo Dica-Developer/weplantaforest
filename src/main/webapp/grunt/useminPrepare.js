@@ -1,11 +1,8 @@
-(function () {
-  'use strict';
+'use strict';
 
-  module.exports = {
-    html: ['<%= yeoman.client %>/index.html'],
-    options: {
-      dest: '<%= yeoman.dist %>'
-    }
-  };
-
-}());
+module.exports = {
+  html: ['<%= yeoman.client %>/index.html'],
+  options: {
+    dest: '<%= yeoman.dist %>'
+  }
+};
