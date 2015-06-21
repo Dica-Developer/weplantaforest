@@ -165,6 +165,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:eslint',
+    'newer:bootlint',
     'test',
     'build'
   ]);

@@ -32,6 +32,11 @@ module.exports = {
       '<%= yeoman.client %>/{app,components}/**/*.less'],
     tasks: ['less', 'autoprefixer']
   },
+  templates: {
+    files: [
+      '<%= yeoman.client %>/{app,components}/**/*.html'],
+    tasks: ['bootlint']
+  },
   gruntfile: {
     files: ['Gruntfile.js']
   },
