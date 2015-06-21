@@ -1,7 +1,7 @@
-'use strict';
-
 angular.module('IPAT')
   .factory('Modal', function ($rootScope, $modal) {
+    'use strict';
+
     /**
      * Opens a modal
      * @param  {Object} scope      - an object to be merged with modal's scope

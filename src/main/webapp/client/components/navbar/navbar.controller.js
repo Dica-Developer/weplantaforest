@@ -1,7 +1,7 @@
-'use strict';
-
 angular.module('IPAT')
   .controller('NavbarCtrl', function ($scope, $location) {
+    'use strict';
+
     $scope.menu = [
       {
         'title': 'Pflanzen',

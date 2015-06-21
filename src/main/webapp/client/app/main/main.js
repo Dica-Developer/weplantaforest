@@ -1,7 +1,7 @@
-'use strict';
-
 angular.module('IPAT')
   .config(function ($stateProvider) {
+    'use strict';
+
     $stateProvider
       .state('main', {
         url: '/',

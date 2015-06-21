@@ -1,0 +1,18 @@
+{
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "angular": true
+  },
+  "rules": {
+    "quotes": [2, "single"],
+    "curly": [2, "all"],
+    "eol-last": [2],
+    "semi": 2,
+    "consistent-this": [1, "self"],
+    "comma-style": [2, "last"],
+    "indent": [2, 2, {"indentSwitchCase": false}],
+    "no-array-constructor": [2]
+  }
+}

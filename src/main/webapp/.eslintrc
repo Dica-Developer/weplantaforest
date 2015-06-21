@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": true
+  },
+  "globals": {
+  },
+  "rules": {
+    "quotes": [2, "single"],
+    "curly": [2, "all"],
+    "eol-last": [2],
+    "semi": 2
+  }
+}

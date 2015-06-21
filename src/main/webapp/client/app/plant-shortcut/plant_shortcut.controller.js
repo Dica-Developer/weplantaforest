@@ -1,6 +1,5 @@
-'use strict';
-
 angular.module('IPAT')
-  .controller('Plant-Shortcut-Ctrl', function ($scope, $http) {
+  .controller('Plant-Shortcut-Ctrl', function () {
+    'use strict';
 
   });

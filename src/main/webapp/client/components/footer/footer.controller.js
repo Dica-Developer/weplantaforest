@@ -1,5 +1,4 @@
-'use strict';
-
 angular.module('IPAT')
-  .controller('FooterCtrl', function ($scope, $location) {
+  .controller('FooterCtrl', function () {
+    'use strict';
   });

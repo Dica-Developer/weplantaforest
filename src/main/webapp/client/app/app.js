@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('IPAT', [
   'ngCookies',
   'ngResource',
@@ -9,6 +7,8 @@ angular.module('IPAT', [
   'api'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    'use strict';
+
     $urlRouterProvider
       .otherwise('/');
 

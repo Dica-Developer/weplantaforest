@@ -1,6 +1,5 @@
-'use strict';
-
 angular.module('IPAT')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function () {
+    'use strict';
 
   });
