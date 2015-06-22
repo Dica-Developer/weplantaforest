@@ -113,7 +113,7 @@ test {
         println "Running tests on mysql db!"
         systemProperty "spring.profiles.active", "test,mysql-test"
     } else {
-        maxParallelForks Runtime.getRuntime().availableProcessors()
+        maxParallelForks 1
     }
 }
 
