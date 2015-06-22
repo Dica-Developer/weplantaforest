@@ -1,7 +1,26 @@
 {
   "LINK": {
     "PLANT": "Pflanzen",
-    "EXPLORE": "Entdecken"
+    "PLANTINGS": "Pflanzungen",
+    "EXPLORE": "Entdecken",
+    "PROJECT_ACREAGES": "Projektflächen",
+    "CERTIFICATE": "Zertifikat",
+    "VOUCHER": "Gutschein",
+    "IDEA": "Idee",
+    "CODEX": "Kodex",
+    "TEAM": "Team",
+    "PARTNERS": "Partner",
+    "FINANCIALS": "Finanzen",
+    "JOBS": "Jobs",
+    "PRESS": "Presse",
+    "LEAGUE_TABLES": "Bestenliste",
+    "ALL": "Alle",
+    "PRIVATE": "Privat",
+    "COMMERCIAL": "Firma",
+    "NON_PROFIT_ORG": "Non-Profit Org.",
+    "SCHOOLS": "Schulen",
+    "TEAMS": "Teams",
+    "COMPANY": "Unternehmen"
   },
   "BUTTON": {
     "SEARCH": "Suchen"

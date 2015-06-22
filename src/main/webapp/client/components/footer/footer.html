@@ -1,5 +1,17 @@
 <footer class="footer" ng-controller="FooterCtrl">
   <div class="container">
+    <div class="row">
+      <div class="col-md-4" ng-repeat="(category_name, categories) in sitemap">
+        <ul class="list-unstyled site-map">
+          <li>
+            <h4 translate="{{category_name}}"></h4>
+          </li>
+          <li ng-repeat="(link_name, link_src) in categories">
+            <a ui-sref="{{link_src}}" translate="{{link_name}}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <p>Copyright © 2007-2015 I Plant A Tree. All rights reserved.</p>
   </div>
 </footer>

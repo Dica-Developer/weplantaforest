@@ -1,7 +1,26 @@
 {
   "LINK": {
     "PLANT": "Plant",
-    "EXPLORE": "Explore"
+    "PLANTINGS": "Plantings",
+    "EXPLORE": "Explore",
+    "PROJECT_ACREAGES": "Project acreages",
+    "CERTIFICATE": "Certificate",
+    "VOUCHER": "Voucher",
+    "IDEA": "Idea",
+    "CODEX": "Codex",
+    "TEAM": "Team",
+    "PARTNERS": "Partners",
+    "FINANCIALS": "Financials",
+    "JOBS": "Jobs",
+    "PRESS": "Press",
+    "LEAGUE_TABLES": "League tables",
+    "ALL": "All",
+    "PRIVATE": "Private",
+    "COMMERCIAL": "Commercial",
+    "NON_PROFIT_ORG": "Non-Profit org.",
+    "SCHOOLS": "Schools",
+    "TEAMS": "Teams",
+    "COMPANY": "Company"
   },
   "BUTTON": {
     "SEARCH": "Search"
