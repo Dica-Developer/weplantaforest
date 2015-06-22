@@ -5,11 +5,11 @@ angular.module('IPAT')
     $scope.menu = [
       {
         'title': 'LINK.PLANT',
-        'link': '/plant-shortcut'
+        'link': 'plant-shortcut'
       },
       {
         'title': 'LINK.EXPLORE',
-        'link': '/explore'
+        'link': 'explore'
       }
     ];
 

@@ -7,13 +7,18 @@ describe('Controller: NavbarCtrl', function () {
     $translateProvider.translations('de', {});
   }));
 
+  beforeEach(module('app/users/users.html'));
+
   var scope,
-    $translate;
+    $rootScope,
+    $translate,
+    $state;
 
   beforeEach(inject(function ($injector) {
-    var $controller = $injector.get('$controller'),
-      $rootScope = $injector.get('$rootScope');
+    var $controller = $injector.get('$controller');
 
+    $rootScope = $injector.get('$rootScope');
+    $state = $injector.get('$state');
     $translate = $injector.get('$translate');
 
     scope = $rootScope.$new();
@@ -40,8 +45,13 @@ describe('Controller: NavbarCtrl', function () {
 
   describe('isActive', function () {
 
+    beforeEach(function () {
+      $state.go('users');
+      $rootScope.$digest();
+    });
+
     it('should return true if given argument is equal to current route', function () {
-      expect(scope.isActive('/')).to.be.true;
+      expect(scope.isActive('/users')).to.be.true;
     });
 
     it('should return false if given argument is not equal to current route', function () {
