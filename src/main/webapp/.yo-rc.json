@@ -37,9 +37,9 @@
     "filterTemplates": "",
     "serviceTemplates": "",
     "factoryTemplates": "",
-    "controllerTemplates": "",
+    "controllerTemplates": "build-templates/controller",
     "decoratorTemplates": "",
     "providerTemplates": "",
-    "routeTemplates": ""
+    "routeTemplates": "build-templates/route"
   }
 }
