@@ -8,6 +8,6 @@ notifications:
       - https://webhooks.gitter.im/e/72d92f6ecbc9b66f264c
     on_success: change
     on_failure: always
-script: gradle test -i --debug
+script: ./gradlew test -i --debug
 after_script:  gradle jacocoTestReport coveralls 
 
