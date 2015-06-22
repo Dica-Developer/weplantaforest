@@ -135,12 +135,16 @@ task setupUiDev << {
     print "npm version: " + ("npm --version".execute().text) 
     print "node version: " + ("node --version".execute().text)
     def process = "npm install -g yo grunt-cli bower".execute()
-    process.text.eachLine {println it}
+    process.text.eachLine {
+        println it
+    }
     if (0 != process.exitValue()) {
         throw new org.gradle.tooling.BuildActionFailureException("npm install in root failed with " + process.exitValue(), null)
     }
     process = "npm install && bower install".execute(null, new File("src/main/webapp"))
-    process.text.eachLine {println it}
+    process.text.eachLine {
+        println it
+    }
     if (0 != process.exitValue()) {
         throw new org.gradle.tooling.BuildActionFailureException("npm install in webapp failed with " + process.exitValue(), null)
     }
@@ -148,7 +152,9 @@ task setupUiDev << {
 
 task buildUi << {
     def process = "grunt build".execute(null, new File("src/main/webapp"))
-    process.text.eachLine {println it}
+    process.text.eachLine {
+        println it
+    }
     if (0 != process.exitValue()) {
         throw new org.gradle.tooling.BuildActionFailureException("grunt build failed with " + process.exitValue(), null)
     }
