@@ -141,12 +141,19 @@ task setupUiDev << {
     if (0 != process.exitValue()) {
         throw new org.gradle.tooling.BuildActionFailureException("npm install in root failed with " + process.exitValue(), null)
     }
-    process = "npm install && bower install".execute(null, new File("src/main/webapp"))
+    process = "npm install".execute(null, new File("src/main/webapp"))
     process.text.eachLine {
         println it
     }
     if (0 != process.exitValue()) {
         throw new org.gradle.tooling.BuildActionFailureException("npm install in webapp failed with " + process.exitValue(), null)
+    }
+    process = "bower install".execute(null, new File("src/main/webapp"))
+    process.text.eachLine {
+        println it
+    }
+    if (0 != process.exitValue()) {
+        throw new org.gradle.tooling.BuildActionFailureException("bower install in webapp failed with " + process.exitValue(), null)
     }
 }
 
