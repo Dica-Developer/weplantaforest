@@ -1,7 +1,10 @@
 language:
   - java
+  - node_js
 jdk:
   - oraclejdk8
+node_js:
+  - "0.12.4"
 notifications:
   webhooks:
     urls:
