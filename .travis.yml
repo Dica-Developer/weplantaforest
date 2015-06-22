@@ -4,7 +4,7 @@ language:
 jdk:
   - oraclejdk8
 node_js:
-  - "0.12.4"
+  - 0.12
 notifications:
   webhooks:
     urls:
@@ -12,5 +12,5 @@ notifications:
     on_success: change
     on_failure: always
 script: ./gradlew setupUiDev testAll
-after_script:  gradle jacocoTestReport coveralls 
+after_script:  ./gradlew jacocoTestReport coveralls 
 
