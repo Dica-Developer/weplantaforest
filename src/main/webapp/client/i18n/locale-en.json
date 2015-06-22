@@ -20,6 +20,20 @@
         "TITLE": "Her Forestness Recommend",
         "TEXT": "The Tree-Sub"
       }
+    },
+    "TEASER": {
+      "1": {
+        "TITLE": "Project acreages",
+        "TEXT": "Choose from one of the following projects to plant your trees"
+      },
+      "2": {
+        "TITLE": "Plantings",
+        "TEXT": "Overview of planted trees"
+      },
+      "3": {
+        "TITLE": "Statistics",
+        "TEXT": ""
+      }
     }
   }
 }

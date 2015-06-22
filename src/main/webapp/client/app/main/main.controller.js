@@ -20,4 +20,31 @@ angular.module('IPAT')
       }
     ];
 
+    $scope.teaser = [
+      {
+        'image': {
+          'src': 'http://placehold.it/350',
+          'alt': ''
+        },
+        'title': 'MAIN.TEASER.1.TITLE',
+        'text': 'MAIN.TEASER.1.TEXT'
+      },
+      {
+        'image': {
+          'src': 'http://placehold.it/350',
+          'alt': ''
+        },
+        'title': 'MAIN.TEASER.2.TITLE',
+        'text': 'MAIN.TEASER.2.TEXT'
+      },
+      {
+        'image': {
+          'src': 'http://placehold.it/350',
+          'alt': ''
+        },
+        'title': 'MAIN.TEASER.3.TITLE',
+        'text': 'MAIN.TEASER.3.TEXT'
+      }
+    ];
+
   });

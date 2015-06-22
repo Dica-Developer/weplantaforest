@@ -20,6 +20,20 @@
         "TITLE": "Ihre ? empfiehlt",
         "TEXT": "The Tree-Sub"
       }
+    },
+    "TEASER": {
+      "1": {
+        "TITLE": "Projektflächen",
+        "TEXT": "Wähle aus einem der folgenden Projekte, in denen Du deine Bäume pflanzen kannst."
+      },
+      "2": {
+        "TITLE": "Pflanzungen",
+        "TEXT": "Übersicht über gepflanzte Bäume."
+      },
+      "3": {
+        "TITLE": "Statistiken",
+        "TEXT": ""
+      }
     }
   }
 }
