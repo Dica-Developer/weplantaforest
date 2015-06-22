@@ -7,7 +7,7 @@ describe('Controller: NavbarCtrl', function () {
     $translateProvider.translations('de', {});
   }));
 
-  beforeEach(module('app/users/users.html'));
+  beforeEach(module('app/plant-shortcut/plant_shortcut.html'));
 
   var scope,
     $rootScope,
@@ -46,12 +46,12 @@ describe('Controller: NavbarCtrl', function () {
   describe('isActive', function () {
 
     beforeEach(function () {
-      $state.go('users');
+      $state.go('plant-shortcut');
       $rootScope.$digest();
     });
 
     it('should return true if given argument is equal to current route', function () {
-      expect(scope.isActive('/users')).to.be.true;
+      expect(scope.isActive('/plant-shortcut')).to.be.true;
     });
 
     it('should return false if given argument is not equal to current route', function () {
