@@ -49,7 +49,6 @@ public class TreeTypesControllerIntegrationTest {
         treeType.setDescription("Baum typ Buche");
         _treeTypeService.save(treeType);
         Response responseTreeTypes = RestAssured.get("http://localhost:" + _port + "/rest/v1/treetypes");
-        System.out.println("response: " + responseTreeTypes.print());
         ValidatableResponse response = responseTreeTypes.then();
         response.statusCode(Matchers.equalTo(200));
         response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/treetypes"));
