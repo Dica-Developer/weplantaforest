@@ -5,5 +5,21 @@
   },
   "BUTTON": {
     "SEARCH": "Search"
+  },
+  "MAIN": {
+    "SLIDES": {
+      "1": {
+        "TITLE": "Register",
+        "TEXT": "a tree you planted yourself"
+      },
+      "2": {
+        "TITLE": "Donate",
+        "TEXT": "trees for for a project near you"
+      },
+      "3": {
+        "TITLE": "Her Forestness Recommend",
+        "TEXT": "The Tree-Sub"
+      }
+    }
   }
 }
