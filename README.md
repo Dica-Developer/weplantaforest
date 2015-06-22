@@ -26,12 +26,22 @@ How ever if *Gradle* is not installed on your system you can use ```sh gradlew <
 * ```gradle clean``` - clean the project
 
 ### IDE Configuration
-Make sure you have following classes included for static import:
+Setup with the Gradle Integration for Eclipse plugin.
+
+Setup by using the gradle eclipse plugin
+
+Select "Import..." -> "Gradle Project" then build the model and import the plugins you need.
+
+Additional stuff:
+
+Make sure you have the following classes included for static import:
 * org.assertj.core.api.Assertions
 * org.mockito.Matchers
 * com.jayway.restassured.RestAssured
 
 (In Eclipse under Preferences/Java/Editor/Content Assist/Favorites)
+
+
 
 ### Testing and Developing with MySql
 * Create fresh databases:
