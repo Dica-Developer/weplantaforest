@@ -19,7 +19,8 @@ How ever if *Gradle* is not installed on your system you can use ```sh gradlew <
 ##### Useful commands
 * ```gradle tasks``` - list all tasks
 * ```gradle eclipse``` - setup eclipse files
-* ```gradle run``` - start server
+* ```gradle run``` - start server for UI development
+* ```gradle bootRun``` - start server for development (refreshes static resources)
 * ```gradle test``` - execute unit tests (open report with ```open build/reports/tests/index.html```
  * for executing single test add ```-Dtest.single=ExampleMainTest```
  * for running tests on mysql add ```-Pmysql``` 
