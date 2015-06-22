@@ -117,3 +117,27 @@ test {
     }
 }
 
+task testUi << {
+    def process = "grunt test".execute(null, new File("src/main/webapp"))
+    process.text.eachLine {println it}
+    if (0 != process.exitValue()) {
+        println "grunt test in webapp failed with " + process.exitValue()
+    }
+} 
+
+test.dependsOn testUi
+
+task setupUiDev << {
+    print "npm version: " + ("npm --version".execute().text) 
+    print "node version: " + ("node --version".execute().text)
+    def process = "npm install -g yo grunt-cli bower".execute()
+    process.text.eachLine {println it}
+    if (0 != process.exitValue()) {
+        println "npm install in root failed with " + process.exitValue()
+    }
+    process = "npm install && bower install".execute(null, new File("src/main/webapp"))
+    process.text.eachLine {println it}
+    if (0 != process.exitValue()) {
+        println "npm install in webapp failed with " + process.exitValue()
+    }
+}
