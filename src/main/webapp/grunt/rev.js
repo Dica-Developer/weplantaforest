@@ -7,7 +7,7 @@ module.exports = {
         '<%= yeoman.dist %>/{,*/}*.js',
         '<%= yeoman.dist %>/{,*/}*.css',
         '<%= yeoman.dist %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-        '<%= yeoman.dist %>/assets/fonts/*'
+        '<%= yeoman.dist %>/assets/fonts/**/*.*'
       ]
     }
   }
