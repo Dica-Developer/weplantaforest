@@ -113,7 +113,7 @@ test {
         println "Running tests on mysql db!"
         systemProperty "spring.profiles.active", "test,mysql-test"
     } else {
-        maxParallelForks 1
+        maxParallelForks 4
     }
 }
 
@@ -125,7 +125,9 @@ task testUi << {
     }
 } 
 
-test.dependsOn testUi
+task testAll<< {
+}
+testAll.dependsOn testUi, test
 
 task setupUiDev << {
     print "npm version: " + ("npm --version".execute().text) 
