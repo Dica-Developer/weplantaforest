@@ -9,7 +9,6 @@ notifications:
     on_success: change
     on_failure: always
 before_script:
-  - wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash
   - nvm install 0.12.4
   - nvm use 0.12.4
 script: ./gradlew setupUiDev testAll
