@@ -119,13 +119,15 @@ test {
 
 task testUi << {
     def process = "grunt test".execute(null, new File("src/main/webapp"))
-    process.text.eachLine {println it}
+    process.text.eachLine {
+        println it
+    }
     if (0 != process.exitValue()) {
-        println "grunt test in webapp failed with " + process.exitValue()
+        throw new org.gradle.tooling.BuildActionFailureException("grunt test in webapp failed with " + process.exitValue(), null)
     }
 } 
 
-task testAll<< {
+task testAll << {
 }
 testAll.dependsOn testUi, test
 
