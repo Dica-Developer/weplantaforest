@@ -12,7 +12,7 @@ public class ProjectService {
     private ProjectRepository _projectRespository;
 
     @Autowired
-    public ProjectService(@Qualifier("co2TreeRepository") ProjectRepository projectRespository) {
+    public ProjectService(@Qualifier("projectRepository") ProjectRepository projectRespository) {
         _projectRespository = projectRespository;
     }
 

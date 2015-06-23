@@ -21,7 +21,7 @@ public class Project implements Base {
     @Column(name = "_plantId")
     private long _id;
 
-    @Column(name = "_plantId", length = 255)
+    @Column(name = "_name", length = 255)
     private String _name;
 
     @Column(name = "_description", length = 65535)

@@ -14,9 +14,9 @@ import org.springframework.hateoas.config.EnableEntityLinks;
 @SpringBootApplication
 @EnableEntityLinks
 @EnableAutoConfiguration
-@EnableJpaRepositories(basePackages = { "org.dicadeveloper.weplantaforest.persist", "org.dicadeveloper.weplantaforest.reports.co2", "org.dicadeveloper.weplantaforest.project" })
+@EnableJpaRepositories(basePackages = { "org.dicadeveloper.weplantaforest.persist", "org.dicadeveloper.weplantaforest.reports.co2", "org.dicadeveloper.weplantaforest.projects" })
 @Import({ DataSourceConfiguration.class, HATEOASConfiguration.class })
-@EntityScan("org.dicadeveloper.weplantaforest.persist")
+@EntityScan({ "org.dicadeveloper.weplantaforest.persist", "org.dicadeveloper.weplantaforest.projects" })
 public class Application extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
