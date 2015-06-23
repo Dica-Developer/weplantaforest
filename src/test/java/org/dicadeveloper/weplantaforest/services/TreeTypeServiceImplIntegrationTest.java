@@ -1,8 +1,5 @@
 package org.dicadeveloper.weplantaforest.services;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.fail;
-
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
@@ -18,6 +15,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import static org.junit.Assert.fail;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -60,7 +61,20 @@ public class TreeTypeServiceImplIntegrationTest {
             _treeTypeService.save(treeTypeWithSameName);
             fail("should throw exception");
         } catch (DataIntegrityViolationException e) {
-            // should happen since name already exists
+            assertThat(e)
+                    .hasMessage(
+                            "could not execute statement; SQL [n/a]; constraint [\"UK_TNKFFNPMDERWBF406D8POUK89_INDEX_8 ON PUBLIC.TREETYPE(_NAME) VALUES ('Ahorn2', 1)\"; SQL statement:\ninsert into TreeType (treeTypeId, _annualCo2SavingInTons, _description, _imageFile, _infoLink, _name) values (null, ?, ?, ?, ?, ?) [23505-186]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement");
         }
+    }
+
+    @Test
+    public void testDeleteTreeType() {
+        TreeTypeDto treeType = new TreeTypeDto("Ahorn2",
+                "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ");
+        treeType.setInfoLink("http://de.wikipedia.org/wiki/Ahorne");
+        _treeTypeService.save(treeType);
+        assertThat(_treeTypeService.findByName(treeType.getName()).getInfoLink()).isEqualTo("http://de.wikipedia.org/wiki/Ahorne");
+        _treeTypeService.delete(treeType);
+        assertThat(_treeTypeService.existsAtAll()).isFalse();
     }
 }
