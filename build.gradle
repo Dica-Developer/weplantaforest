@@ -1,3 +1,9 @@
+println "Available processors: " + Runtime.getRuntime().availableProcessors()
+print "npm version: " + ("npm --version".execute().text)
+print "node version: " + ("node --version".execute().text)
+print "java version: " + ("java -version".execute().text)
+println ""
+
 buildscript {
     repositories {
         mavenCentral()
@@ -115,6 +121,7 @@ test {
         def env = System.getenv()
         boolean isTravis = env['TRAVIS']
         if (isTravis) {
+            println "Maximum used parallel forks: " + (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 4))
             maxParallelForks ((int) (Runtime.getRuntime().availableProcessors() / 2))
         } else {
             maxParallelForks Runtime.getRuntime().availableProcessors()
@@ -137,8 +144,6 @@ task testAll << {
 testAll.dependsOn testUi, test
 
 task setupUiDev << {
-    print "npm version: " + ("npm --version".execute().text) 
-    print "node version: " + ("node --version".execute().text)
     def process = "npm install -g yo grunt-cli bower".execute()
     process.text.eachLine {
         println it
