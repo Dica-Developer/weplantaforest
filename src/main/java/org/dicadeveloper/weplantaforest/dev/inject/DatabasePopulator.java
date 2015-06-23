@@ -3,12 +3,15 @@ package org.dicadeveloper.weplantaforest.dev.inject;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import jersey.repackaged.com.google.common.collect.Iterators;
 
 import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
+import org.dicadeveloper.weplantaforest.projects.ProjectDto;
+import org.dicadeveloper.weplantaforest.projects.ProjectService;
 import org.dicadeveloper.weplantaforest.services.TreeService;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.dicadeveloper.weplantaforest.services.UserService;
@@ -34,6 +37,20 @@ public class DatabasePopulator {
     @Autowired
     private TreeService _treeService;
 
+    @Autowired
+    private ProjectService _projectService;
+
+    public void insertProjects() {
+        Random random = new Random();
+        Date now = new Date();
+        for (int i = 0; i < 10; i++) {
+            int pickOne = random.nextInt(4);
+            ProjectDto project = new ProjectDto("Project " + i + " von " + DEFAULT_USERS.get(pickOne), now, now, false);
+            project.setManager(_userService.findByName(DEFAULT_USERS.get(pickOne)));
+            _projectService.save(project);
+        }
+    }
+
     public DatabasePopulator insertDefaultTreeTypes() {
         DEFAULT_TREE_TYPES.forEach((treeTypeName) -> {
             TreeTypeDto findByName = _treeTypeService.findByName(treeTypeName);
@@ -43,13 +60,13 @@ public class DatabasePopulator {
                 TreeTypeDto treeType = new TreeTypeDto(treeTypeName, description);
                 double co2Savings = 0.02;
                 switch (treeTypeName) {
-                    case "Robin":
-                    case "Wildapfel":
-                        co2Savings = 0.01;
-                        break;
-                    case "Default":
-                        co2Savings = 0.011;
-                        break;
+                case "Robin":
+                case "Wildapfel":
+                    co2Savings = 0.01;
+                    break;
+                case "Default":
+                    co2Savings = 0.011;
+                    break;
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
                 _treeTypeService.save(treeType);

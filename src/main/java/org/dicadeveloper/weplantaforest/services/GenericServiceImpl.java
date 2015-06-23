@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
 
-abstract class GenericServiceImpl<T extends Base, D extends BaseDto, ID extends Serializable> implements GenericService<T, D, ID> {
+public abstract class GenericServiceImpl<T extends Base, D extends BaseDto, ID extends Serializable> implements GenericService<T, D, ID> {
 
     protected Class<T> _entityClass;
 
