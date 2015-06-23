@@ -8,9 +8,9 @@ println "               | |                                                "
 println "               |_|                                                "
 
 println "Available processors: " + Runtime.getRuntime().availableProcessors()
-print "npm version: " + ("npm --version".execute().text)
-print "node version: " + ("node --version".execute().text)
-print "java version: " + ("java -version".execute().text)
+//print "npm version: " + ("npm --version".execute().text)
+//print "node version: " + ("node --version".execute().text)
+//print "java version: " + ("java -version".execute().text)
 println ""
 
 buildscript {
