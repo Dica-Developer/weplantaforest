@@ -130,7 +130,7 @@ test {
         def env = System.getenv()
         boolean isTravis = env['TRAVIS']
         if (isTravis) {
-            println "Maximum used parallel forks: " + (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 4))
+            println "Maximum used parallel forks: " + (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
             maxParallelForks ((int) (Runtime.getRuntime().availableProcessors() / 2))
         } else {
             maxParallelForks Runtime.getRuntime().availableProcessors()
