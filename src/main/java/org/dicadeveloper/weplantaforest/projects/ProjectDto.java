@@ -23,6 +23,9 @@ public class ProjectDto implements BaseDto {
     @Mapping("_manager")
     private UserDto _manager;
 
+    @Mapping("_shopActive")
+    private boolean _active;
+
     public ProjectDto() {
     }
 
@@ -30,6 +33,7 @@ public class ProjectDto implements BaseDto {
         _name = name;
         _shopOpening = opening;
         _shopClosing = closing;
+        _active = active;
     }
 
     public void setId(Long id) {
@@ -70,5 +74,13 @@ public class ProjectDto implements BaseDto {
 
     public UserDto getManager() {
         return _manager;
+    }
+
+    public boolean isActive() {
+        return _active;
+    }
+
+    public void setActive(boolean active) {
+        _active = active;
     }
 }

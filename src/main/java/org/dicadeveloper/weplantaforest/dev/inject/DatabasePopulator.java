@@ -45,7 +45,7 @@ public class DatabasePopulator {
         Date now = new Date();
         for (int i = 0; i < 10; i++) {
             int pickOne = random.nextInt(4);
-            ProjectDto project = new ProjectDto("Project " + i + " von " + DEFAULT_USERS.get(pickOne), now, now, false);
+            ProjectDto project = new ProjectDto("Project " + i + " von " + DEFAULT_USERS.get(pickOne), now, now, random.nextBoolean());
             project.setManager(_userService.findByName(DEFAULT_USERS.get(pickOne)));
             _projectService.save(project);
         }
