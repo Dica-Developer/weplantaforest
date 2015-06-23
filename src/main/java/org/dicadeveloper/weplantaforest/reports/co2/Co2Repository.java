@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-//FIXME it seems the repository has to lay in the persist folder. Why?
 @Repository("co2TreeRepository")
 public interface Co2Repository extends JpaRepository<Tree, Long> {
 
