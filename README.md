@@ -6,15 +6,16 @@
 [![Build Status](http://img.shields.io/travis/Dica-Developer/weplantaforest/master.svg?style=flat-square&label=Travis%20CI)](https://travis-ci.org/Dica-Developer/weplantaforest)
 [![Coverage Status](http://img.shields.io/coveralls/Dica-Developer/weplantaforest/master.svg?style=flat-square&label=Test%20Coverage)](https://coveralls.io/r/Dica-Developer/weplantaforest?branch=master)
 
-### Requirements
+### Dev Requirements
 
 * Java 8
 * Eclipse Luna / 4.4 (for 4.3.2 see https://wiki.eclipse.org/JDT/Eclipse_Java_8_Support_For_Kepler)
+* Gradle (```brew install gradle```)
+* NodeJs (```brew install npm```)
 
 ### Build System
-We use *Gradle* as our build system. All commands listed here follow the pattern ```gradle <task>'```. That requires *Gradle* to be installed on your system (e.g. ```brew install gradle```). 
-
-How ever if *Gradle* is not installed on your system you can use ```sh gradlew <task>``` instead.
+We use *Gradle* as our build system. All commands listed here follow the pattern ```gradle <task>'```. 
+If *Gradle* is not installed on your system you can use ```sh gradlew <task>``` instead.
 
 ##### Useful commands
 * ```gradle tasks``` - list all tasks
