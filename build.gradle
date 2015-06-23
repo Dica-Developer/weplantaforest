@@ -128,13 +128,13 @@ test {
         systemProperty "spring.profiles.active", "test,mysql-test"
     } else {
         def env = System.getenv()
+        def maxForks = Runtime.getRuntime().availableProcessors()
         boolean isTravis = env['TRAVIS']
         if (isTravis) {
-            println "Maximum used parallel forks: " + (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
-            maxParallelForks (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
-        } else {
-            maxParallelForks Runtime.getRuntime().availableProcessors()
+            maxForks = (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
         }
+        println "Maximum used parallel forks: " + maxForks
+        maxParallelForks maxForks
     }
 }
 
