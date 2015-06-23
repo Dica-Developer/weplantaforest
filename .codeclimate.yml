@@ -1,0 +1,6 @@
+languages:
+  JavaScript: true
+exclude_paths:
+  - "src/main/webapp/api"
+  - "src/main/webapp/build-templates"
+  - "src/main/resources/static/dev"
