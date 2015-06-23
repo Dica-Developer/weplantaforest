@@ -77,4 +77,13 @@ public class TreeTypeServiceImplIntegrationTest {
         _treeTypeService.delete(treeType);
         assertThat(_treeTypeService.existsAtAll()).isFalse();
     }
+
+    @Test
+    public void testFindOne() {
+        TreeTypeDto treeType = new TreeTypeDto("Ahorn2",
+                "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ");
+        treeType.setInfoLink("http://de.wikipedia.org/wiki/Ahorne");
+        _treeTypeService.save(treeType);
+        assertThat(_treeTypeService.findOne(treeType.getId()).getInfoLink()).isEqualTo("http://de.wikipedia.org/wiki/Ahorne");
+    }
 }
