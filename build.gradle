@@ -131,7 +131,7 @@ test {
         boolean isTravis = env['TRAVIS']
         if (isTravis) {
             println "Maximum used parallel forks: " + (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
-            maxParallelForks ((int) (Runtime.getRuntime().availableProcessors() / 2))
+            maxParallelForks (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
         } else {
             maxParallelForks Runtime.getRuntime().availableProcessors()
         }
