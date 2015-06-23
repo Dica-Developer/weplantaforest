@@ -113,7 +113,13 @@ test {
         println "Running tests on mysql db!"
         systemProperty "spring.profiles.active", "test,mysql-test"
     } else {
-        maxParallelForks 4
+        def env = System.getenv()
+        boolean isTravis = env['TRAVIS']
+        if (isTravis) {
+            maxParallelForks ((int) (Runtime.getRuntime().availableProcessors() / 2))
+        } else {
+            maxParallelForks Runtime.getRuntime().availableProcessors()
+        }
     }
 }
 
