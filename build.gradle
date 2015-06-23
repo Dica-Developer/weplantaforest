@@ -106,7 +106,6 @@ run {
 
 test {
     testLogging {
-        // Show that tests are run in the command-line output
         events 'passed'
     }
     if(project.hasProperty('mysql')) {
