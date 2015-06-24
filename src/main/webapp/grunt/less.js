@@ -10,7 +10,7 @@ module.exports = {
   },
   server: {
     files: {
-      '.tmp/app/app.css': '<%= yeoman.client %>/app/app.less'
+      '<%= yeoman.client %>/app/app.css': '<%= yeoman.client %>/app/app.less'
     }
   }
 };

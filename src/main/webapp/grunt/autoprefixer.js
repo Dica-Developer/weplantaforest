@@ -11,5 +11,13 @@ module.exports = {
       src: '{,*/}*.css',
       dest: '.tmp/'
     }]
+  },
+  dev: {
+    files: [{
+      expand: true,
+      cwd: 'client/app',
+      src: '{,*/}*.css',
+      dest: 'client/app'
+    }]
   }
 };

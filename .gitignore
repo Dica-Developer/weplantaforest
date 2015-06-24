@@ -13,4 +13,5 @@ weplantaforest.trace.db
 !/src/main/resources/static/dev
 /src/main/resources/static
 src/main/webapp/npm-debug.log
+src/main/webapp/client/app/app.css
 npm-debug.log*

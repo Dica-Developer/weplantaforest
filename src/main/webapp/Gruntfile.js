@@ -103,14 +103,12 @@ module.exports = function (grunt) {
     injector: require('./grunt/injector')
   });
 
-  grunt.registerTask('serve', [
+  grunt.registerTask('dev', [
     'injector:less',
-    'concurrent:server',
     'injector',
     'wiredep',
-    'autoprefixer',
-    'express',
-    'open',
+    'less',
+    'autoprefixer:dev',
     'watch'
   ]);
 
@@ -120,7 +118,7 @@ module.exports = function (grunt) {
         'injector:less',
         'concurrent:test',
         'injector',
-        'autoprefixer',
+        'autoprefixer:dist',
         'karma'
       ]);
     }
@@ -131,7 +129,7 @@ module.exports = function (grunt) {
         'concurrent:test',
         'injector',
         'wiredep',
-        'autoprefixer',
+        'autoprefixer:dist',
         'express:dev',
         'protractor'
       ]);
@@ -151,7 +149,7 @@ module.exports = function (grunt) {
     'injector',
     'wiredep',
     'useminPrepare',
-    'autoprefixer',
+    'autoprefixer:dist',
     'ngtemplates',
     'concat',
     'ngAnnotate',
