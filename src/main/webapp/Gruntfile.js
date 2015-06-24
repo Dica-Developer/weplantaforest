@@ -4,7 +4,6 @@ module.exports = function (grunt) {
 
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
-    express: 'grunt-express',
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
@@ -25,12 +24,6 @@ module.exports = function (grunt) {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
       dist: '../resources/static'
-    },
-    express: require('./grunt/express'),
-    open: {
-      server: {
-        url: 'http://localhost:9000'
-      }
     },
     watch: require('./grunt/watch'),
 
