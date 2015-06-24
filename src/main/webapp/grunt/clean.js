@@ -13,5 +13,11 @@ module.exports = {
         '!<%= yeoman.dist %>/dev'
       ]
     }]
+  },
+  api: {
+    files: [{
+      dot: true,
+      src: ['<%= yeoman.client %>/components/api/*']
+    }]
   }
 };

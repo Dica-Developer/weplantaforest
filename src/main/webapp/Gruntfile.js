@@ -96,7 +96,17 @@ module.exports = function (grunt) {
     injector: require('./grunt/injector')
   });
 
+  grunt.registerTask('runYoRamlang', function () {
+    var done = this.async();
+
+    require('child_process').spawn('yo', ['ramlang', '--force'])
+      .on('close', done);
+  });
+
+  grunt.registerTask('buildApi', ['clean:api', 'runYoRamlang']);
+
   grunt.registerTask('dev', [
+    'buildApi',
     'injector:less',
     'injector',
     'wiredep',
@@ -105,7 +115,7 @@ module.exports = function (grunt) {
     'watch'
   ]);
 
-  grunt.registerTask('test', function(target) {
+  grunt.registerTask('test', function (target) {
     if (target === 'client') {
       return grunt.task.run([
         'injector:less',
@@ -136,6 +146,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', [
+    'buildApi',
     'clean:dist',
     'injector:less',
     'concurrent:dist',
