@@ -16,12 +16,16 @@ println ""
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
     }
     dependencies {
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+    }
+    dependencies {
+        classpath 'org.kordamp.gradle:livereload-gradle-plugin:0.2.1'
     }
 }
 
@@ -32,6 +36,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'findbugs'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'org.kordamp.gradle.livereload'
 
 repositories {
     mavenCentral()
@@ -191,3 +196,7 @@ task watchUiDev << {
     "grunt dev".execute(null, new File("src/main/webapp"))
 }
 bootRun.dependsOn watchUiDev
+
+liveReload {
+    docRoot='src/main/webapp/client'
+}
