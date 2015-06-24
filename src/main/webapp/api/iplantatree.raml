@@ -1,6 +1,7 @@
 #%RAML 0.8
 ---
 title: I Plant A Tree API
+#baseUri: http://iplantatree.org/rest/{version}
 baseUri: http://localhost:8080/rest/{version}
 version: v1
 mediaType: application/json
@@ -102,6 +103,24 @@ resourceTypes:
         body:
           application/json:
   put:
+  /active:
+    type:
+      collection:
+        exampleCollection: !include treetypes.sample
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+  /recommend:
+    type:
+      collection-item:
+        exampleItem: !include treetype.sample
+    get:
+      responses:
+        200:
+          body:
+            application/json:
   /{id}:
       type:
         collection-item:
@@ -160,3 +179,23 @@ resourceTypes:
                 {}
     patch:
     delete:
+/reports:
+  /co2:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include co2.sample
+  /plants/newest:
+      get:
+  /users/newest:
+      get:
+  /users/best:
+      get:
+  /teams/newest:
+      get:
+  /teams/best:
+      get:
+  /comments/newest:
+      get:

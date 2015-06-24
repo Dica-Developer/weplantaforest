@@ -6,7 +6,8 @@
       "Treetypes",
       "Trees",
       "Projects",
-      "Users"
+      "Users",
+      "Reports"
     ],
     "allInOneFile": true,
     "destination": "client/components/api",
