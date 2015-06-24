@@ -22,7 +22,9 @@
         <button type="submit" class="btn btn-default" translate="{{'BUTTON.SEARCH'}}"></button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" ng-click="switchLanguage()">{{getSwitchLanguageToString()}}</a></li>
+        <li>
+          <p class="navbar-text switch-language" ng-click="switchLanguage()">{{getSwitchLanguageToString()}}</p>
+        </li>
       </ul>
     </div>
   </div>
