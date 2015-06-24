@@ -186,3 +186,8 @@ task buildUi << {
     }
 }
 build.dependsOn buildUi
+
+task watchUiDev << {
+    "grunt dev".execute(null, new File("src/main/webapp"))
+}
+bootRun.dependsOn watchUiDev
