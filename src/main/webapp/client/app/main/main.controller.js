@@ -23,7 +23,7 @@ angular.module('IPAT')
     $scope.teaser = [
       {
         'image': {
-          'src': 'http://placehold.it/350',
+          'src': 'https://placeholdit.imgix.net/~text?txtsize=26&w=350&h=350&txttrack=0&txt=',
           'alt': ''
         },
         'title': 'MAIN.TEASER.1.TITLE',
@@ -31,7 +31,7 @@ angular.module('IPAT')
       },
       {
         'image': {
-          'src': 'http://placehold.it/350',
+          'src': 'https://placeholdit.imgix.net/~text?txtsize=26&w=350&h=350&txttrack=0&txt=',
           'alt': ''
         },
         'title': 'MAIN.TEASER.2.TITLE',
@@ -39,7 +39,7 @@ angular.module('IPAT')
       },
       {
         'image': {
-          'src': 'http://placehold.it/350',
+          'src': 'https://placeholdit.imgix.net/~text?txtsize=26&w=350&h=350&txttrack=0&txt=',
           'alt': ''
         },
         'title': 'MAIN.TEASER.3.TITLE',
