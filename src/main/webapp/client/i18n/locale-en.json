@@ -54,5 +54,9 @@
         "TEXT": ""
       }
     }
+  },
+  "REPORTS": {
+    "TREES": "trees planted",
+    "CO2": "t CO2 saved"
   }
 }
