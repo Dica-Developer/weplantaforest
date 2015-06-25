@@ -1,6 +1,5 @@
-'use strict';
-
 describe('Controller: ProjectsCtrl', function () {
+  'use strict';
 
   // load the controller's module
   beforeEach(module('IPAT'));
@@ -19,6 +18,6 @@ describe('Controller: ProjectsCtrl', function () {
   }));
 
   it('should have defined scope', function () {
-    expect(scope).not.to.be.undefined;
+    expect(scope).not.to.be.an('undefined');
   });
 });

@@ -1,6 +1,5 @@
-'use strict';
-
 describe('Controller: NavbarCtrl', function () {
+  'use strict';
 
   beforeEach(module('IPAT', function ($translateProvider) {
     $translateProvider.translations('en', {});
@@ -38,7 +37,7 @@ describe('Controller: NavbarCtrl', function () {
   describe('isCollapsed', function () {
 
     it('should return true', function () {
-      expect(scope.isCollapsed).to.be.true;
+      expect(scope.isCollapsed).to.equal(true);
     });
 
   });
@@ -51,11 +50,11 @@ describe('Controller: NavbarCtrl', function () {
     });
 
     it('should return true if given argument is equal to current route', function () {
-      expect(scope.isActive('/plant-shortcut')).to.be.true;
+      expect(scope.isActive('/plant-shortcut')).to.equal(true);
     });
 
     it('should return false if given argument is not equal to current route', function () {
-      expect(scope.isActive('/notEqual')).to.be.false;
+      expect(scope.isActive('/notEqual')).to.equal(false);
     });
 
   });
