@@ -5,7 +5,7 @@ angular.module('IPAT')
     $scope.sitemap = {
       'LINK.PLANTINGS': {
         'LINK.PLANTINGS': 'main',
-        'LINK.PROJECT_ACREAGES': 'main',
+        'LINK.PROJECT_ACREAGES': 'projects',
         'LINK.CERTIFICATE': 'main',
         'LINK.VOUCHER': 'main'
       },
