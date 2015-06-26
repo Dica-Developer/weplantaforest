@@ -11,7 +11,8 @@ describe('Controller: ProjectDetailsCtrl', function () {
 
     scope = $rootScope.$new();
     $controller('ProjectDetailsCtrl', {
-      $scope: scope
+      $scope: scope,
+      $stateParams: {id: 13}
     });
   }));
 
