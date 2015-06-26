@@ -4,10 +4,11 @@ angular.module('IPAT', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
+  'uiGmapgoogle-maps',
   'pascalprecht.translate',
   'api'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider, uiGmapGoogleMapApiProvider) {
     'use strict';
 
     $urlRouterProvider
@@ -22,4 +23,10 @@ angular.module('IPAT', [
       })
       .useSanitizeValueStrategy('sanitize')
       .preferredLanguage('de');
+
+    uiGmapGoogleMapApiProvider.configure({
+      //    key: 'your api key',
+      v: '3.17',
+      libraries: 'geometry,visualization'
+    });
   });

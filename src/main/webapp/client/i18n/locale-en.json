@@ -20,7 +20,8 @@
     "NON_PROFIT_ORG": "Non-Profit org.",
     "SCHOOLS": "Schools",
     "TEAMS": "Teams",
-    "COMPANY": "Company"
+    "COMPANY": "Company",
+    "MORE": "more"
   },
   "BUTTON": {
     "SEARCH": "Search"
@@ -58,5 +59,19 @@
   "REPORTS": {
     "TREES": "trees planted",
     "CO2": "t CO2 saved"
+  },
+  "PROJECTS": {
+    "13": {
+      "TEASER": "We have decided to take over another project in Berlin. This project acreage is a water protection forest, filtering the drinking water for the greater Berlin area. The project is located in ...",
+      "TEXT": "We have decided to take over another project in Berlin. This project acreage is a water protection forest, filtering the drinking water for the greater Berlin area. The project is located in Mittelheide, part of the Berlin-Friedrichshagen district. Here we have the same problem as on the other Berlin projects: Due to natural overgrowth with black cherry shrubs (Prunus serotina) as well as prolonged damage by wildlife such as roe deer, the area can no longer regenerate without human intervention. <br />The project is a typical Berlin Scots Pine monoculture, 3 hectares in size. The area’s average plant life is 75 years and the trees stand understandably thin. We already have some oaks, beech trees and larger birch trees on the edges along the tracks. Therefore, the structure of the forest is perfect for us to conduct the project.In order to preserve this inner-city recreation area we plant on this 3ha large monoculture 18,000 common Beech trees. In addition, the black cherry shrubbery growth will be significantly contained while the newly-planted beech trees gain a natural protective barrier from wildlife through carefully-installed fencing. This project demands intensive nurture of the general grove area with the intention of promoting a healthier and more balanced forest habitat that allows for natural regeneration as well as meaningful long-term benefit for the general climate.<br />On our first Berlin project we have taken the responsibility for the continuous diminishing of the black cherry with volunteers and supporters. Two times a year we drive up to Berlin to remove the black cherry with axes and loppers.  With this new project we are not able to take this workload. We have an agreement with a forest service company that helps us to fight the black cherry for 5 consecutive years after the planting. We will pay 370,- Euro Net per hectare and year. Therefore we had to adapt the prices for the trees moderately.<br />Berliner Landesforstamt is our strategic partner in this endeavor however they are unfortunately not in a financial position to fully cover the scope and breadth of this ambitious ecological project’s cost structure. Your financial contribution directly funds both the preservation of public recreation areas and the enhancement of the natural habitats of wildlife. We are effectively achieving our dual-faceted goal of ground-up forestation and tackling the growing danger of unchecked carbon emissions for the greater Berlin area. Please join us in our unanimous efforts and experience the immediate impact of your donation by visiting the Mittelheide project."
+    },
+    "12": {
+      "TEASER": "We have initiated the afforestation approval from the local authorities for the next part of the project acreage Wallendorf. We call it Wallendorf II. Close to the entrance, located at the north ...",
+      "TEXT": "We have initiated the afforestation approval from the local authorities for the next part of the project acreage Wallendorf. We call it Wallendorf II. Close to the entrance, located at the north edge we will fence two hectares. Planting will take place in spring 2015. It might be even possible to plant the oaks and maples already in fall 2014, in case a lot of trees have been donated by then.<br />There is also a novelty starting with this project. For the first time we are able to take fuzzy prices. Until now our bank connector only allowed prices in whole Euros. So we can calculate our prices exactly. So this will democratize our platform - bigger donors will from now on pay the same prices as people donating only a few trees.<br />If you would like to know more about our motivation, process on this project or seek for a general description please see the extensive description of Wallendorf I."
+    },
+    "11": {
+      "TEASER": "The area is located between Merseburg and Leipzig near the B181 on the outskirts of Wallendorf. The 15-acre area is a former dump for municipal waste which was covered in 1990 with a layer of sewage ...",
+      "TEXT": "The area is located between Merseburg and Leipzig near the B181 on the outskirts of Wallendorf. The 15-acre area is a former dump for municipal waste which was covered in 1990 with a layer of sewage sludge and soil. The area shall be reforested step by step and be given back to nature. However, the project should not be conducted solely as a reforestation. Rather, it is long-term objective to realize an inclusive concept, which integrates local actors and provides educational activities in the field of environmental education. Today, the area is used by a tenant who cultivated the soil over the years to make hay for his sheep. The area will be planted in due course subdivided in different sections and accompanied by a close monitoring. By permanent monitoring of the restoration the sustainable success will be secured and possible failures will be counteracted.<br />The concept of environmental education can be run for years, allowing children to not just plant trees but to see their development over several years and to support them, so they can learn to appreciate nature's benefits.Extensive studies of the authorities have shown that there is currently no more risk attached to the waste that has been dumped."
+    }
   }
 }
