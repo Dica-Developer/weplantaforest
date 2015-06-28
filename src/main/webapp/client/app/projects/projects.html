@@ -8,6 +8,12 @@
       <div class="thumbnail">
         <img ng-src="{{project.pictureLink}}" alt="project.name">
         <div class="caption">
+          <div class="progress">
+            <progressbar max="100" value="getPercentage(project.total, project.current)" type="success">
+              <span style="color:black; white-space:nowrap;">{{getPercentage(project.total, project.current)}}%</span>
+            </progressbar>
+          </div>
+          <p translate="PROJECTS.TREES_PLANTED" translate-values="{'current': project.current, 'total': project.total}"></p>
           <h3 translate="{{project.name}}"></h3>
           <p translate="{{project.teaser}}"></p>
           <p class="pull-right"><a ui-sref="project-details({id: project.id})" translate="LINK.MORE"></a></p>
