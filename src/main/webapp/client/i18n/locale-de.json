@@ -29,16 +29,16 @@
   "MAIN": {
     "SLIDES": {
       "1": {
-        "TITLE": "Register",
-        "TEXT": "einen Baum den du selber gepflanzt hast"
+        "TITLE": "Verändere die Zukunft",
+        "TEXT": "Stell uns deine Projektidee vor."
       },
       "2": {
-        "TITLE": "Unterstütze",
-        "TEXT": "Bäume in deiner Nähe"
+        "TITLE": "Pflanz-König",
+        "TEXT": "Hier geht es zu den Bestenlisten"
       },
       "3": {
-        "TITLE": "Ihre ? empfiehlt",
-        "TEXT": "The Tree-Sub"
+        "TITLE": "Blog",
+        "TEXT": "Lies die neuesten Nachrichten zu aktuellen Projekten."
       }
     },
     "TEASER": {

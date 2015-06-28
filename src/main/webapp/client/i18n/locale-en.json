@@ -29,16 +29,16 @@
   "MAIN": {
     "SLIDES": {
       "1": {
-        "TITLE": "Register",
-        "TEXT": "a tree you planted yourself"
+        "TITLE": "Change the future",
+        "TEXT": "Tell us your project idea."
       },
       "2": {
-        "TITLE": "Donate",
-        "TEXT": "trees for for a project near you"
+        "TITLE": "Plant king",
+        "TEXT": "See here who planted the most trees."
       },
       "3": {
-        "TITLE": "Her Forestness Recommend",
-        "TEXT": "The Tree-Sub"
+        "TITLE": "Blog",
+        "TEXT": "Read news about the current projects."
       }
     },
     "TEASER": {
