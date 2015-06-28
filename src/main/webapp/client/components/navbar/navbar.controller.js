@@ -1,5 +1,5 @@
 angular.module('IPAT')
-  .controller('NavbarCtrl', function ($scope, $location, $translate) {
+  .controller('NavbarCtrl', function ($scope, $location) {
     'use strict';
 
     $scope.menu = [
@@ -17,14 +17,5 @@ angular.module('IPAT')
 
     $scope.isActive = function (route) {
       return route === $location.path();
-    };
-
-    $scope.getSwitchLanguageToString = function (){
-      return $translate.use() === 'en' ? 'Deutsch' : 'English';
-    };
-
-    $scope.switchLanguage = function () {
-      var langKey = $translate.use() === 'de' ? 'en' : 'de';
-      $translate.use(langKey);
     };
   });

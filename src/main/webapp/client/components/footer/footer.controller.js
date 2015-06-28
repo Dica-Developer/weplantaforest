@@ -1,5 +1,5 @@
 angular.module('IPAT')
-  .controller('FooterCtrl', function ($scope) {
+  .controller('FooterCtrl', function ($scope, $translate) {
     'use strict';
 
     $scope.sitemap = {
@@ -26,5 +26,14 @@ angular.module('IPAT')
         'LINK.JOBS': 'main',
         'LINK.PRESS': 'main'
       }
+    };
+
+    $scope.getSwitchLanguageToString = function (){
+      return $translate.use() === 'en' ? 'Deutsch' : 'English';
+    };
+
+    $scope.switchLanguage = function () {
+      var langKey = $translate.use() === 'de' ? 'en' : 'de';
+      $translate.use(langKey);
     };
   });
