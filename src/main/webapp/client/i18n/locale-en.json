@@ -43,16 +43,16 @@
     },
     "TEASER": {
       "1": {
-        "TITLE": "Project acreages",
-        "TEXT": "Choose from one of the following projects to plant your trees"
+        "TITLE": "Plant",
+        "TEXT": "Donate trees for a project near you"
       },
       "2": {
-        "TITLE": "Plantings",
-        "TEXT": "Overview of planted trees"
+        "TITLE": "Subscribe",
+        "TEXT": "Her Forestness recommends: The Tree-Sub"
       },
       "3": {
-        "TITLE": "Statistics",
-        "TEXT": ""
+        "TITLE": "Register",
+        "TEXT": "Register a tree you planted yourself"
       }
     }
   },
