@@ -26,6 +26,12 @@ public class ProjectDto implements BaseDto {
     @Mapping("_shopActive")
     private boolean _active;
 
+    @Mapping("_description")
+    private String _description;
+
+    @Mapping("_mainImageFileName")
+    private String _imageFileName;
+
     public ProjectDto() {
     }
 
@@ -82,5 +88,21 @@ public class ProjectDto implements BaseDto {
 
     public void setActive(boolean active) {
         _active = active;
+    }
+
+    public void setDescription(String description) {
+        _description = description;
+    }
+
+    public String getDescription() {
+        return _description;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        _imageFileName = imageFileName;
+    }
+
+    public String getImageFileName() {
+        return _imageFileName;
     }
 }
