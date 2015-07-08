@@ -51,6 +51,10 @@ public class Project implements Base {
     @Column(name = "_mainImageFileName", length = 255)
     private String _mainImageFileName;
 
+    /**
+     * @deprecated no longer used in new version
+     */
+    @Deprecated
     @Column(name = "_googleMapsOverlayImageFileName", length = 200)
     private String _googleMapsOverlayImageFileName;
 
