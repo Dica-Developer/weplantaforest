@@ -3,12 +3,12 @@
 <div class="container">
   <div ng-include="'components/counter/counter.html'"></div>
 
-  <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+  <ui-gmap-google-map center='center' zoom='zoom'></ui-gmap-google-map>
 
   <div class="row">
     <div class="col-md-12">
       <h2>{{project.name}}</h2>
-      <p translate="PROJECTS.{{projectId}}.TEXT"></p>
+      <p>{{project.description}}</p>
     </div>
   </div>
 </div>
