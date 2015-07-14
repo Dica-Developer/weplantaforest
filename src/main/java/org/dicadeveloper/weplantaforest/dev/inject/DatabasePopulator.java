@@ -49,7 +49,7 @@ public class DatabasePopulator {
             ProjectDto project = new ProjectDto(projectName, now, now, random.nextBoolean());
             project.setManager(_userService.findByName(DEFAULT_USERS.get(pickOne)));
             project.setDescription("dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
-            project.setImageFileName("https://placeholdit.imgix.net/~text?txtsize=26&w=350&h=350&txttrack=0&txt=" + projectName);
+            project.setImageFileName(projectName);
             _projectService.save(project);
         }
     }
