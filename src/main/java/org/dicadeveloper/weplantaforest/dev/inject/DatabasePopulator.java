@@ -50,6 +50,48 @@ public class DatabasePopulator {
             project.setManager(_userService.findByName(DEFAULT_USERS.get(pickOne)));
             project.setDescription("dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
             project.setImageFileName(projectName);
+            switch (i) {
+            case 0:
+                project.setLatitude(52.4626536896816f);
+                project.setLongitude(13.607287460327143f);
+                break;
+            case 1:
+                project.setLatitude(37.235000f);
+                project.setLongitude(-115.811111f);
+                break;
+            case 2:
+                project.setLatitude(52.4626536896816f);
+                project.setLongitude(13.607287460327143f);
+                break;
+            case 3:
+                project.setLatitude(52.4626536896816f);
+                project.setLongitude(13.607287460327143f);
+                break;
+            case 4:
+                project.setLatitude(52.4626536896816f);
+                project.setLongitude(13.607287460327143f);
+                break;
+            case 5:
+                project.setLatitude(52.4626536896816f);
+                project.setLongitude(13.607287460327143f);
+                break;
+            case 6:
+                project.setLatitude(52.4626536896816f);
+                project.setLongitude(13.607287460327143f);
+                break;
+            case 7:
+                project.setLatitude(52.4626536896816f);
+                project.setLongitude(13.607287460327143f);
+                break;
+            case 8:
+                project.setLatitude(52.4626536896816f);
+                project.setLongitude(13.607287460327143f);
+                break;
+            default:
+                project.setLatitude(51.482691f);
+                project.setLongitude(11.969947f);
+                break;
+            }
             _projectService.save(project);
         }
     }

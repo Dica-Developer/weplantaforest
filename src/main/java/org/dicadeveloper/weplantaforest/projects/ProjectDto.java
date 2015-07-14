@@ -32,6 +32,12 @@ public class ProjectDto implements BaseDto {
     @Mapping("_mainImageFileName")
     private String _imageFileName;
 
+    @Mapping("_longitude")
+    private Float _longitude;
+
+    @Mapping("_latitude")
+    private Float _latitude;
+
     public ProjectDto() {
     }
 
@@ -104,5 +110,21 @@ public class ProjectDto implements BaseDto {
 
     public String getImageFileName() {
         return _imageFileName;
+    }
+
+    public void setLongitude(Float longitude) {
+        _longitude = longitude;
+    }
+
+    public void setLatitude(Float latitude) {
+        _latitude = latitude;
+    }
+
+    public Float getLongitude() {
+        return _longitude;
+    }
+
+    public Float getLatitude() {
+        return _latitude;
     }
 }
