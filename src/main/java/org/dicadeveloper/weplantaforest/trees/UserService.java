@@ -1,7 +1,6 @@
-package org.dicadeveloper.weplantaforest.services;
+package org.dicadeveloper.weplantaforest.trees;
 
-import org.dicadeveloper.weplantaforest.persist.User;
-import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
+import org.dicadeveloper.weplantaforest.base.GenericService;
 
 public interface UserService extends GenericService<User, UserDto, Long> {
 

@@ -1,9 +1,8 @@
-package org.dicadeveloper.weplantaforest.services;
+package org.dicadeveloper.weplantaforest.base;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.persist.dto.BaseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

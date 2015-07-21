@@ -2,9 +2,9 @@ package org.dicadeveloper.weplantaforest.controller;
 
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.CategoryIntegration;
-import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
-import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;

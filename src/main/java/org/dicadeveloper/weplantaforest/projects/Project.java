@@ -9,8 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.dicadeveloper.weplantaforest.persist.Base;
-import org.dicadeveloper.weplantaforest.persist.User;
+import org.dicadeveloper.weplantaforest.base.Base;
+import org.dicadeveloper.weplantaforest.trees.User;
 
 @Entity
 @Table(name = "Plant")

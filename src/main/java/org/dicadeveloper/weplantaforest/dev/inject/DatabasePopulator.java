@@ -7,14 +7,14 @@ import java.util.Random;
 
 import jersey.repackaged.com.google.common.collect.Iterators;
 
-import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
-import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
 import org.dicadeveloper.weplantaforest.projects.ProjectDto;
 import org.dicadeveloper.weplantaforest.projects.ProjectService;
-import org.dicadeveloper.weplantaforest.services.TreeTypeService;
-import org.dicadeveloper.weplantaforest.services.UserService;
 import org.dicadeveloper.weplantaforest.trees.TreeDto;
 import org.dicadeveloper.weplantaforest.trees.TreeService;
+import org.dicadeveloper.weplantaforest.trees.UserDto;
+import org.dicadeveloper.weplantaforest.trees.UserService;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

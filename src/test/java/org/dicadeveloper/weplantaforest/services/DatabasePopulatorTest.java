@@ -5,9 +5,11 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
-import org.dicadeveloper.weplantaforest.persist.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.trees.TreeService;
+import org.dicadeveloper.weplantaforest.trees.UserService;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,7 @@
-package org.dicadeveloper.weplantaforest.controller;
+package org.dicadeveloper.weplantaforest.treetypes;
 
 import javax.ws.rs.core.MediaType;
 
-import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
-import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.dicadeveloper.weplantaforest.util.UtilConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

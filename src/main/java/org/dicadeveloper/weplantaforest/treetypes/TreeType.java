@@ -1,10 +1,12 @@
-package org.dicadeveloper.weplantaforest.persist;
+package org.dicadeveloper.weplantaforest.treetypes;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.dicadeveloper.weplantaforest.base.Base;
 
 @Entity
 @Table(name = "TreeType")

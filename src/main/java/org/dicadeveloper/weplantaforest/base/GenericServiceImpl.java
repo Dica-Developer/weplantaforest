@@ -1,12 +1,10 @@
-package org.dicadeveloper.weplantaforest.services;
+package org.dicadeveloper.weplantaforest.base;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.persist.Base;
-import org.dicadeveloper.weplantaforest.persist.dto.BaseDto;
 import org.dozer.DozerBeanMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

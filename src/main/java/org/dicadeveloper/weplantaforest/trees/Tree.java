@@ -8,9 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.dicadeveloper.weplantaforest.persist.Base;
-import org.dicadeveloper.weplantaforest.persist.TreeType;
-import org.dicadeveloper.weplantaforest.persist.User;
+import org.dicadeveloper.weplantaforest.base.Base;
+import org.dicadeveloper.weplantaforest.treetypes.TreeType;
 
 @Entity
 @Table(name = "Tree")

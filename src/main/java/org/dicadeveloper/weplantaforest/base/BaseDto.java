@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.persist.dto;
+package org.dicadeveloper.weplantaforest.base;
 
 /**
  * Allows to set a id after persisting and this allows to persist a referencing

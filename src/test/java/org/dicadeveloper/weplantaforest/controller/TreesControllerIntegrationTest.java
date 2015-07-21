@@ -5,13 +5,13 @@ import java.net.URISyntaxException;
 import java.util.Date;
 
 import org.dicadeveloper.weplantaforest.Application;
-import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
-import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
-import org.dicadeveloper.weplantaforest.services.TreeTypeService;
-import org.dicadeveloper.weplantaforest.services.UserService;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.trees.TreeDto;
 import org.dicadeveloper.weplantaforest.trees.TreeService;
+import org.dicadeveloper.weplantaforest.trees.UserDto;
+import org.dicadeveloper.weplantaforest.trees.UserService;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;

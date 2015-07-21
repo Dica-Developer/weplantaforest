@@ -2,8 +2,8 @@ package org.dicadeveloper.weplantaforest.projects;
 
 import java.util.Date;
 
-import org.dicadeveloper.weplantaforest.persist.dto.BaseDto;
-import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
+import org.dicadeveloper.weplantaforest.base.BaseDto;
+import org.dicadeveloper.weplantaforest.trees.UserDto;
 import org.dozer.Mapping;
 
 public class ProjectDto implements BaseDto {

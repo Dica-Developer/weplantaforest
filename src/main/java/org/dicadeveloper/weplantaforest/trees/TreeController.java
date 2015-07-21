@@ -7,10 +7,8 @@ import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
-import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
-import org.dicadeveloper.weplantaforest.services.TreeTypeService;
-import org.dicadeveloper.weplantaforest.services.UserService;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.dicadeveloper.weplantaforest.util.UtilConstants;
 import org.glassfish.jersey.message.internal.Statuses;
 import org.springframework.beans.factory.annotation.Autowired;

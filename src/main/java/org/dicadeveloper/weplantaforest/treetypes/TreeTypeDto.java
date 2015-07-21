@@ -1,7 +1,8 @@
-package org.dicadeveloper.weplantaforest.persist.dto;
+package org.dicadeveloper.weplantaforest.treetypes;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.dicadeveloper.weplantaforest.base.BaseDto;
 import org.dozer.Mapping;
 import org.springframework.hateoas.Identifiable;
 

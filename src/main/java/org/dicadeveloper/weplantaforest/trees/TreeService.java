@@ -1,6 +1,6 @@
 package org.dicadeveloper.weplantaforest.trees;
 
-import org.dicadeveloper.weplantaforest.services.GenericService;
+import org.dicadeveloper.weplantaforest.base.GenericService;
 
 public interface TreeService extends GenericService<Tree, TreeDto, Long> {
 
