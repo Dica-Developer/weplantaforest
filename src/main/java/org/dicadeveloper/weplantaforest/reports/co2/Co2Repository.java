@@ -1,6 +1,6 @@
 package org.dicadeveloper.weplantaforest.reports.co2;
 
-import org.dicadeveloper.weplantaforest.persist.Tree;
+import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

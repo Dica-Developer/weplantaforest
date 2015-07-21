@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.persist;
+package org.dicadeveloper.weplantaforest.trees;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.dicadeveloper.weplantaforest.persist.Base;
+import org.dicadeveloper.weplantaforest.persist.TreeType;
+import org.dicadeveloper.weplantaforest.persist.User;
 
 @Entity
 @Table(name = "Tree")

@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.persist;
+package org.dicadeveloper.weplantaforest.trees;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

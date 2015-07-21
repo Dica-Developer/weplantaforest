@@ -1,9 +1,10 @@
 package org.dicadeveloper.weplantaforest.services;
 
 import org.dicadeveloper.weplantaforest.Application;
-import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.trees.TreeDto;
+import org.dicadeveloper.weplantaforest.trees.TreeService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

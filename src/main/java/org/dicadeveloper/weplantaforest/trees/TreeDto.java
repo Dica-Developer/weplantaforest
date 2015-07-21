@@ -1,10 +1,13 @@
-package org.dicadeveloper.weplantaforest.persist.dto;
+package org.dicadeveloper.weplantaforest.trees;
 
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.dicadeveloper.weplantaforest.persist.dto.BaseDto;
+import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
+import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
 import org.dozer.Mapping;
 import org.springframework.hateoas.ResourceSupport;
 

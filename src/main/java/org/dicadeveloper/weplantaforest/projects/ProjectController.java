@@ -3,6 +3,7 @@ package org.dicadeveloper.weplantaforest.projects;
 import java.util.ArrayList;
 
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 
 import org.dicadeveloper.weplantaforest.util.UtilConstants;
@@ -64,7 +65,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/rest/v1/projects/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
-    public HttpEntity<Resource<ProjectDto>> getProject(@PathVariable("id") Long id) {
+    public HttpEntity<Resource<ProjectDto>> getProject(@Valid @PathVariable("id") Long id) {
         ProjectDto project = _projectService.findOne(id);
         Resource<ProjectDto> projectResources = new Resource<ProjectDto>(project);
         projectResources.add(linkTo(methodOn(ProjectController.class).getProject(id)).withSelfRel());

@@ -4,7 +4,7 @@ import java.util.List;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
-import org.dicadeveloper.weplantaforest.controller.TreeController;
+import org.dicadeveloper.weplantaforest.trees.TreeController;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;

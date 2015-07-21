@@ -1,8 +1,6 @@
-package org.dicadeveloper.weplantaforest.services;
+package org.dicadeveloper.weplantaforest.trees;
 
-import org.dicadeveloper.weplantaforest.persist.Tree;
-import org.dicadeveloper.weplantaforest.persist.TreeRepository;
-import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
+import org.dicadeveloper.weplantaforest.services.GenericServiceImpl;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

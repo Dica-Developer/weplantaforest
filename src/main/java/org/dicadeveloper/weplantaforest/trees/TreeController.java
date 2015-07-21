@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.controller;
+package org.dicadeveloper.weplantaforest.trees;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,11 +7,8 @@ import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.dicadeveloper.weplantaforest.assembler.TreeResourceAssembler;
-import org.dicadeveloper.weplantaforest.persist.dto.TreeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.persist.dto.UserDto;
-import org.dicadeveloper.weplantaforest.services.TreeService;
 import org.dicadeveloper.weplantaforest.services.TreeTypeService;
 import org.dicadeveloper.weplantaforest.services.UserService;
 import org.dicadeveloper.weplantaforest.util.UtilConstants;
