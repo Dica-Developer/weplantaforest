@@ -91,22 +91,14 @@ dependencies {
     //databases
     compile group: 'com.h2database', name: 'h2', version: '1.4.186'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
-    
+
     compile group: 'org.flywaydb', name: 'flyway-core', version: '3.1'
-    
-    compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '1.1.0.RELEASE'
-    compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: '0.16.0.RELEASE'
 
-    compile group: 'com.fasterxml.jackson.jaxrs', name:'jackson-jaxrs-json-provider', version: '2.0.1'
-    compile group: 'com.fasterxml.jackson.jaxrs', name:'jackson-jaxrs-base', version: '2.5.0'
-
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.2.3.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.2.3.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '1.2.3.RELEASE'
-    compile("org.springframework.boot:spring-boot-starter-web") {
-    //    exclude module: "spring-boot-starter-tomcat"
-    }
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.2.5.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.2.5.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '1.2.5.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '1.2.5.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.2.5.RELEASE'
 
     compile group: 'net.sf.dozer', name: 'dozer', version: '5.5.1'
 
