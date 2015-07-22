@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.services;
+package org.dicadeveloper.weplantaforest.treetypes;
 
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;

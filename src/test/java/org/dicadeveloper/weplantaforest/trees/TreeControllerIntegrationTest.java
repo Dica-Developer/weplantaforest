@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.controller;
+package org.dicadeveloper.weplantaforest.trees;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -6,10 +6,6 @@ import java.util.Date;
 
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.trees.TreeDto;
-import org.dicadeveloper.weplantaforest.trees.TreeService;
-import org.dicadeveloper.weplantaforest.trees.UserDto;
-import org.dicadeveloper.weplantaforest.trees.UserService;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.hamcrest.Matchers;
@@ -34,7 +30,7 @@ import com.jayway.restassured.response.ValidatableResponse;
 @WebAppConfiguration
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class TreesControllerIntegrationTest {
+public class TreeControllerIntegrationTest {
 
     @Rule
     @Autowired
@@ -63,9 +59,11 @@ public class TreesControllerIntegrationTest {
                 .body("{\"longitude\":51.26,\"latitude\":11.4,\"amount\":36467574,\"treeTypeName\":\"Buche\",\"ownerName\":\"Bert\"}").post(new URI("http://localhost:" + _port + "/rest/v1/trees"))
                 .then();
         response.statusCode(Matchers.equalTo(200));
-        response.body("context.entity.longitude", Matchers.equalTo(new Float(51.26)));
-        response.body("context.entity.latitude", Matchers.equalTo(new Float(11.4)));
-        response.body("context.entity.amount", Matchers.equalTo(36467574));
+        response.body("status", Matchers.equalTo(200));
+        response.log();
+        response.body("entity.longitude", Matchers.equalTo(new Float(51.26)));
+        response.body("entity.latitude", Matchers.equalTo(new Float(11.4)));
+        response.body("entity.amount", Matchers.equalTo(36467574));
     }
 
     @Test
@@ -96,8 +94,8 @@ public class TreesControllerIntegrationTest {
         ValidatableResponse response = RestAssured.get("http://localhost:" + _port + "/rest/v1/trees").then();
         response.statusCode(Matchers.equalTo(200));
         response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/trees{?page,size,sort}"));
-        response.body("_embedded.treeDtoList.latitude", Matchers.hasItems(1.0f));
-        response.body("_embedded.treeDtoList.longitude", Matchers.hasItems(3.0f));
-        response.body("_embedded.treeDtoList.amount", Matchers.hasItems(67));
+        response.body("_embedded.treeDtoes.latitude", Matchers.hasItems(1.0f));
+        response.body("_embedded.treeDtoes.longitude", Matchers.hasItems(3.0f));
+        response.body("_embedded.treeDtoes.amount", Matchers.hasItems(67));
     }
 }

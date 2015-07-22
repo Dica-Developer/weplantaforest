@@ -1,10 +1,8 @@
-package org.dicadeveloper.weplantaforest.controller;
+package org.dicadeveloper.weplantaforest.treetypes;
 
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.CategoryIntegration;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
-import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,7 +27,7 @@ import com.jayway.restassured.response.ValidatableResponse;
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @Category(CategoryIntegration.class)
-public class TreeTypesControllerIntegrationTest {
+public class TreeTypeControllerIntegrationTest {
 
     @Rule
     @Autowired
@@ -52,9 +50,9 @@ public class TreeTypesControllerIntegrationTest {
         ValidatableResponse response = responseTreeTypes.then();
         response.statusCode(Matchers.equalTo(200));
         response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/treetypes"));
-        response.body("_embedded.treeTypeDtoList.name", Matchers.hasItems("Buche"));
-        response.body("_embedded.treeTypeDtoList.annualCo2SavingInTons", Matchers.hasItems(1.2f));
-        response.body("_embedded.treeTypeDtoList.description", Matchers.hasItems("Baum typ Buche"));
+        response.body("_embedded.treeTypeDtoes.name", Matchers.hasItems("Buche"));
+        response.body("_embedded.treeTypeDtoes.annualCo2SavingInTons", Matchers.hasItems(1.2f));
+        response.body("_embedded.treeTypeDtoes.description", Matchers.hasItems("Baum typ Buche"));
 
     }
 

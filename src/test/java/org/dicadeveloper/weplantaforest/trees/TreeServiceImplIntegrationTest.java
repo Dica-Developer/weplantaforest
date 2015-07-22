@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.services;
+package org.dicadeveloper.weplantaforest.trees;
 
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
