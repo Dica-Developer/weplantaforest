@@ -1,3 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+        classpath 'org.kordamp.gradle:livereload-gradle-plugin:0.2.1'
+        classpath 'org.hidetake:gradle-ssh-plugin:1.1.3'
+    }
+}
+
+plugins {
+    id 'org.hidetake.ssh' version '1.1.3'
+}
+
 println "                            # #### ####"
 println "                          ### \\/#|### |/####"
 println "                         ##\\/#/ \\||/##/_/##/_#"
@@ -23,22 +40,6 @@ println "Available processors: " + Runtime.getRuntime().availableProcessors()
 //print "java version: " + ("java -version".execute().text)
 println ""
 
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
-    }
-    dependencies {
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
-    }
-    dependencies {
-        classpath 'org.kordamp.gradle:livereload-gradle-plugin:0.2.1'
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
@@ -47,9 +48,18 @@ apply plugin: 'findbugs'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'org.kordamp.gradle.livereload'
+apply plugin: 'org.hidetake.ssh'
 
 repositories {
     mavenCentral()
+}
+
+remotes {
+    ipatHost {
+        host = 'iplantatree.org'
+        user = 'ipat'
+        identity = file("${System.properties['user.home']}/.ssh/id_rsa")
+    }
 }
 
 tasks.withType(FindBugs) {
@@ -94,6 +104,10 @@ tasks.eclipse.doLast {
     }
 }
 
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+}
+
 dependencies {
 
     compile group: 'com.google.guava', name: 'guava', version: '18.0'
@@ -109,6 +123,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '1.2.5.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '1.2.5.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.2.5.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: '1.2.5.RELEASE'
 
     compile group: 'net.sf.dozer', name: 'dozer', version: '5.5.1'
 
@@ -194,6 +209,8 @@ task buildUi << {
 }
 build.dependsOn buildUi
 
+buildUi.dependsOn setupUiDev
+
 task watchUiDev << {
     "grunt dev".execute(null, new File("src/main/webapp"))
 }
@@ -201,4 +218,29 @@ bootRun.dependsOn watchUiDev
 
 liveReload {
     docRoot='src/main/webapp/client'
+}
+
+task deploy(dependsOn: [clean, buildUi, distTar]) << {
+    ssh.run {
+        session(remotes.ipatHost) {
+            String distName = "${project.name}-${version}"
+            String distTar = "${distName}.tar"
+            File distributionFile = file("build/distributions/${distTar}")
+            assert distributionFile.exists(), "File $distributionFile"
+            
+            println "Uploading distribution (${distributionFile.length()/1024/1024} MB) ..."
+            put(distributionFile,"./")
+            
+            println "Backing up old project to weplantaforest.backup..."
+            execute "rm -rf weplantaforest.backup"
+            execute "if [ -d weplantaforest ]; then mv weplantaforest weplantaforest.backup; fi"
+            
+            println "Unpacking distribution to weplantaforest"
+            execute "mkdir weplantaforest"
+            execute "tar --strip-components=1 -C weplantaforest -xvf ${distTar}"
+            
+            println "Starting Application"
+            println "TODO: cd weplantaforest;export JAVA_HOME=/opt/jdk1.8.0_45/;bin/weplantaforest"
+        }
+    }
 }
