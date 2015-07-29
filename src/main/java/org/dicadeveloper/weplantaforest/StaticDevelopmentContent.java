@@ -20,9 +20,9 @@ public class StaticDevelopmentContent extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String absoluteStaticPath = (new File(_staticPath)).getAbsolutePath() + "/";
-        log.info("Loading static resources also from: " + absoluteStaticPath);
-        if (_staticPath != null) {
+        if (_staticPath != null && !_staticPath.isEmpty()) {
+            String absoluteStaticPath = (new File(_staticPath)).getAbsolutePath() + "/";
+            log.info("Loading static resources also from: " + absoluteStaticPath);
             registry.addResourceHandler("/**").addResourceLocations("file:" + absoluteStaticPath);
         }
     }
