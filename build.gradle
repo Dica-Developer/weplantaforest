@@ -32,7 +32,7 @@ println "                                 {"
 println "88     88\"\"Yb 88        db    88b 88 888888        db        888888 88\"\"Yb 888888 888888"
 println "88     88__dP 88       dPYb   88Yb88   88         dPYb         88   88__dP 88__   88__"
 println "88     88\"\"\"  88  .o  dP__Yb  88 Y88   88        dP__Yb        88   88\"Yb  88\"\"   88\"\""
-println "88     88     88ood8 dP\"\"\"\"Yb 88  Y8   88       dP\"\"\"\"Yb       88   88  Yb 888888 888888" 
+println "88     88     88ood8 dP\"\"\"\"Yb 88  Y8   88       dP\"\"\"\"Yb       88   88  Yb 888888 888888"
 
 println "Available processors: " + Runtime.getRuntime().availableProcessors()
 if (!System.env.'CI') {
@@ -168,7 +168,7 @@ task testUi << {
     if (0 != process.exitValue()) {
         throw new org.gradle.tooling.BuildActionFailureException("grunt test in webapp failed with " + process.exitValue(), null)
     }
-} 
+}
 
 task testAll << {
 }
@@ -227,18 +227,18 @@ task deploy(dependsOn: [clean, buildUi, distTar]) << {
             String distTar = "${distName}.tar"
             File distributionFile = file("build/distributions/${distTar}")
             assert distributionFile.exists(), "File $distributionFile"
-            
+
             println "Uploading distribution (${distributionFile.length()/1024/1024} MB) ..."
             put(distributionFile,"./")
-            
+
             println "Backing up old project to weplantaforest.backup..."
             execute "rm -rf weplantaforest.backup"
             execute "if [ -d weplantaforest ]; then mv weplantaforest weplantaforest.backup; fi"
-            
+
             println "Unpacking distribution to weplantaforest"
             execute "mkdir weplantaforest"
             execute "tar --strip-components=1 -C weplantaforest -xvf ${distTar}"
-            
+
             println "Starting Application"
             println "TODO: cd weplantaforest;export JAVA_HOME=/opt/jdk1.8.0_45/;bin/weplantaforest"
         }
