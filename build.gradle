@@ -233,16 +233,21 @@ task deploy(dependsOn: [clean, buildUi, distTar]) << {
             println "Uploading distribution (${distributionFile.length()/1024/1024} MB) ..."
             put(distributionFile,"./")
 
-            println "Backing up old project to weplantaforest.backup..."
-            execute "rm -rf weplantaforest.backup"
-            execute "if [ -d weplantaforest ]; then mv weplantaforest weplantaforest.backup; fi"
+            println "Stopping old application..."
+            execute "/etc/init.d/wpaf-staging stop"
+            
+            println "Backing up old project to weplantaforest-staging.backup..."
+            execute "rm -rf weplantaforest-staging.backup"
+            execute "if [ -d weplantaforest-staging ]; then mv weplantaforest-staging weplantaforest-staging.backup; fi"
 
-            println "Unpacking distribution to weplantaforest"
-            execute "mkdir weplantaforest"
-            execute "tar --strip-components=1 -C weplantaforest -xvf ${distTar}"
+            println "Unpacking distribution to weplantaforest-staging"
+            execute "mkdir weplantaforest-staging"
+            execute "tar --strip-components=1 -C weplantaforest-staging -xvf ${distTar}"
 
-            println "Starting Application"
-            println "TODO: cd weplantaforest;export JAVA_HOME=/opt/jdk1.8.0_45/;bin/weplantaforest"
+            println "Starting Application..."
+            execute "/etc/init.d/wpaf-staging start"
+            
+            println "Watch log under weplantaforest-staging/console.log"
         }
     }
 }
