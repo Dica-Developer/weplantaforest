@@ -104,10 +104,10 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('buildApiDev', ['clean:api', 'runYoRamlang']);
-  grunt.registerTask('buildApiProd', ['clean:api', 'runYoRamlang']);
+  grunt.registerTask('buildApiStaging', ['clean:api', 'runYoRamlang']);
 
   grunt.registerTask('dev', [
-    'buildApi',
+    'buildApiDev',
     'injector:less',
     'injector',
     'wiredep',
@@ -147,7 +147,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', [
-    'buildApi',
+    'buildApiStaging',
     'clean:dist',
     'injector:less',
     'concurrent:dist',
