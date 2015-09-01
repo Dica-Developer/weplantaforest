@@ -1,7 +1,7 @@
 {
   "generator-ramlang": {
     "apiModuleName": "api",
-    "ramlPath": "api/iplantatree.raml",
+    "ramlPath": "api/iplantatree.dev.raml",
     "selectedResources": [
       "Treetypes",
       "Trees",

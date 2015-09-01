@@ -103,7 +103,8 @@ module.exports = function (grunt) {
       .on('close', done);
   });
 
-  grunt.registerTask('buildApi', ['clean:api', 'runYoRamlang']);
+  grunt.registerTask('buildApiDev', ['clean:api', 'runYoRamlang']);
+  grunt.registerTask('buildApiProd', ['clean:api', 'runYoRamlang']);
 
   grunt.registerTask('dev', [
     'buildApi',
