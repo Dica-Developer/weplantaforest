@@ -7,7 +7,7 @@ angular.module('IPAT')
     window.ProjectApi = ProjectApi
     ProjectApi.active.query().then(function(response) {
       if (200 === response.status) {
-          $scope.projects = response.data._embedded.projectDtoList;
+          $scope.projects = response.data._embedded.projectDtoes;
       } else {
         console.log("error occured");
       }
