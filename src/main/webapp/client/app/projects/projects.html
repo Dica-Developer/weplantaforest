@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col-sm-6 col-md-4" ng-repeat="project in projects">
       <div class="thumbnail">
-        <img ng-src="{{project.pictureLink}}" alt="project.name">
+        <img ng-src="{{project.pictureLink}}" alt="{{project.name}}">
         <div class="caption">
           <div class="progress">
             <progressbar max="100" value="getPercentage(project.total, project.current)" type="success">
