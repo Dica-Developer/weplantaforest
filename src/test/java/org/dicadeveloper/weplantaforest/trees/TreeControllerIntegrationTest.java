@@ -93,7 +93,7 @@ public class TreeControllerIntegrationTest {
 
         ValidatableResponse response = RestAssured.get("http://localhost:" + _port + "/rest/v1/trees").then();
         response.statusCode(Matchers.equalTo(200));
-        response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/trees{?page,size,sort}"));
+        response.body("_links.self.href", Matchers.equalTo("http://localhost:" + _port + "/rest/v1/trees"));
         response.body("_embedded.treeDtoes.latitude", Matchers.hasItems(1.0f));
         response.body("_embedded.treeDtoes.longitude", Matchers.hasItems(3.0f));
         response.body("_embedded.treeDtoes.amount", Matchers.hasItems(67));
