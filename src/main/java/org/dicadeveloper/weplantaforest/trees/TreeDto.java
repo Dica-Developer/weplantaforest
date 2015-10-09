@@ -18,17 +18,23 @@ public class TreeDto extends ResourceSupport implements BaseDto {
     @Mapping("_treeId")
     private Long _id;
 
+    @Mapping("_longitude")
     private float _longitude;
+
     @Mapping("_latitude")
     private float _latitude;
 
+    @Mapping("_amount")
     private int _amount;
 
+    @Mapping("_submittedOn")
     private Date _submittedOn;
+
     @Mapping("_plantedOn")
     private Date _plantedOn;
 
     private String _treeTypeName;
+
     private String _ownerName;
 
     private Long _treeTypeId;
