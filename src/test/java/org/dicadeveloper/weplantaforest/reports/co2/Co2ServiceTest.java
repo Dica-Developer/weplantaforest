@@ -1,6 +1,6 @@
 package org.dicadeveloper.weplantaforest.reports.co2;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 

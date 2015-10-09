@@ -1,9 +1,10 @@
 package org.dicadeveloper.weplantaforest.reports.co2;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 
+import org.assertj.core.data.Offset;
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.trees.TreeDto;
@@ -12,7 +13,6 @@ import org.dicadeveloper.weplantaforest.trees.UserDto;
 import org.dicadeveloper.weplantaforest.trees.UserService;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
-import org.fest.assertions.Delta;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +36,7 @@ public class Co2ServiceIntegrationTest {
      * database query. There is a slight but neglectable difference in the
      * results. The expected test results are matching the java version.
      */
-    private static final Delta OK_DELTA_FOR_CO2_SAVING = Delta.delta(0.000001D);
+    private static final Offset<Double> OK_DELTA_FOR_CO2_SAVING = Offset.offset(0.000001D);
 
     @Rule
     @Autowired

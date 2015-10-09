@@ -1,6 +1,6 @@
 package org.dicadeveloper.weplantaforest.trees;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
