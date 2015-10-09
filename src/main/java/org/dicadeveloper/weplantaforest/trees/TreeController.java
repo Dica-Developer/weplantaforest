@@ -86,6 +86,7 @@ public class TreeController {
             response = new ResponseEntity<Resource<Object>>(new Resource<Object>("You must define the owner '" + tree.getOwnerName() + "' first."), HttpStatus.BAD_REQUEST);
         } else {
             tree.setOwner(owner);
+            tree.setTreeType(treeType);
             tree.setPlantedOn(new Date());
             tree.setSubmittedOn(new Date());
             _treeService.save(tree);

@@ -37,8 +37,6 @@ public class TreeDto extends ResourceSupport implements BaseDto {
 
     private String _ownerName;
 
-    private Long _treeTypeId;
-
     // TODO figure out how to set this properly
     private int limit = 5, offset = 10; // Getters for these
 
@@ -122,7 +120,6 @@ public class TreeDto extends ResourceSupport implements BaseDto {
         return modelLimit;
     }
 
-    @JsonIgnore
     public TreeTypeDto getTreeType() {
         return _treeType;
     }
@@ -172,14 +169,6 @@ public class TreeDto extends ResourceSupport implements BaseDto {
         _ownerName = ownerName;
     }
 
-    public Long getTreeTypeId() {
-        return _treeTypeId;
-    }
-
-    public void setTreeTypeId(Long treeTypeId) {
-        _treeTypeId = treeTypeId;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -191,7 +180,6 @@ public class TreeDto extends ResourceSupport implements BaseDto {
         result = prime * result + ((_plantedOn == null) ? 0 : _plantedOn.hashCode());
         result = prime * result + ((_submittedOn == null) ? 0 : _submittedOn.hashCode());
         result = prime * result + ((_treeType == null) ? 0 : _treeType.hashCode());
-        result = prime * result + ((_treeTypeId == null) ? 0 : _treeTypeId.hashCode());
         result = prime * result + ((_treeTypeName == null) ? 0 : _treeTypeName.hashCode());
         result = prime * result + limit;
         result = prime * result + modelLimit;
@@ -233,11 +221,6 @@ public class TreeDto extends ResourceSupport implements BaseDto {
             if (other._treeType != null)
                 return false;
         } else if (!_treeType.equals(other._treeType))
-            return false;
-        if (_treeTypeId == null) {
-            if (other._treeTypeId != null)
-                return false;
-        } else if (!_treeTypeId.equals(other._treeTypeId))
             return false;
         if (_treeTypeName == null) {
             if (other._treeTypeName != null)
