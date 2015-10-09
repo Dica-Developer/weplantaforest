@@ -13,7 +13,7 @@ angular.module('IPAT')
       }
     ];
 
-    $scope.isCollapsed = true;
+    $scope.isCollapsed = false;
 
     $scope.isActive = function (route) {
       return route === $location.path();

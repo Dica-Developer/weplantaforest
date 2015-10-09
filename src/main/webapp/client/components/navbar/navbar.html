@@ -11,7 +11,7 @@
         <img alt="I Plant A Tree" ng-src="assets/images/ipat_logo.jpg" />
       </a>
     </div>
-    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+    <div uib-collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
           <a ui-sref="{{item.link}}" translate="{{item.title}}"></a>
