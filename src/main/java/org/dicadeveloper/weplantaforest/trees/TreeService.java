@@ -8,4 +8,6 @@ public interface TreeService extends GenericService<Tree, TreeDto, Long> {
     void save(TreeDto treeDto);
 
     Long findTreeTypeIdByTreeId(Long treeId);
+
+    boolean exists(Long treeId);
 }

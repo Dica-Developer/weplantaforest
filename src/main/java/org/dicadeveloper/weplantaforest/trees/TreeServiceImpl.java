@@ -24,4 +24,8 @@ public class TreeServiceImpl extends GenericServiceImpl<Tree, TreeDto, Long> imp
         return ((TreeRepository) _repository).findTreeTypeIdByTreeId(treeId);
     }
 
+    @Override
+    public boolean exists(Long treeId) {
+        return ((TreeRepository) _repository).exists(treeId);
+    }
 }

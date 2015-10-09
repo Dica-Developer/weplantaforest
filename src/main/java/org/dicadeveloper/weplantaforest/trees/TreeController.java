@@ -63,11 +63,11 @@ public class TreeController {
 
     @RequestMapping(value = "/rest/v1/trees/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON })
     public HttpEntity<Resource<TreeDto>> getTree(@PathVariable("id") Long treeId) {
-        if (treeId == null) {
+        if (treeId == null || !_treeService.exists(treeId)) {
             return new ResponseEntity<Resource<TreeDto>>(HttpStatus.NOT_FOUND);
         }
         TreeDto tree = _treeService.findOne(treeId);
-        Resource<TreeDto> treeResource = new Resource(tree);
+        Resource<TreeDto> treeResource = new Resource<TreeDto>(tree);
         treeResource.add(linkTo(methodOn(TreeController.class).getTree(treeId)).withSelfRel());
         treeResource.add(linkTo(methodOn(TreeController.class).getTrees(null, null)).withRel("parent"));
         // TODO treeTypeID is null -> JPA query needs to be fixed.
