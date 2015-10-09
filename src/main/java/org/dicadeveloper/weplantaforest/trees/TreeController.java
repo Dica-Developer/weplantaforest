@@ -8,12 +8,10 @@ import java.util.Date;
 
 import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.dicadeveloper.weplantaforest.util.UtilConstants;
-import org.glassfish.jersey.message.internal.Statuses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -77,21 +75,21 @@ public class TreeController {
     }
 
     @RequestMapping(value = "/rest/v1/trees", method = RequestMethod.PUT, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON })
-    public Response createTree(@RequestBody TreeDto tree) {
-        Response response;
+    public HttpEntity<Resource<Object>> createTree(@RequestBody TreeDto tree) {
+        ResponseEntity<Resource<Object>> response;
         // TODO validation
         TreeTypeDto treeType = _treeTypeSerivce.findByName(tree.getTreeTypeName());
         UserDto owner = _userService.findByName(tree.getOwnerName());
         if (treeType.equals(TreeTypeDto.NO_TREE_TYPE)) {
-            response = Response.status(Statuses.from(400, "You must define the tree type '" + tree.getTreeTypeName() + "' first.")).entity(new TreeDto()).build();
+            response = new ResponseEntity<Resource<Object>>(new Resource<Object>("You must define the tree type '" + tree.getTreeTypeName() + "' first."), HttpStatus.BAD_REQUEST);
         } else if (owner.equals(UserDto.NO_USER)) {
-            response = Response.status(Statuses.from(400, "You must define the owner '" + tree.getOwnerName() + "' first.")).entity(new UserDto()).build();
+            response = new ResponseEntity<Resource<Object>>(new Resource<Object>("You must define the owner '" + tree.getOwnerName() + "' first."), HttpStatus.BAD_REQUEST);
         } else {
             tree.setOwner(owner);
             tree.setPlantedOn(new Date());
             tree.setSubmittedOn(new Date());
             _treeService.save(tree);
-            response = Response.status(200).entity(tree).build();
+            response = new ResponseEntity<Resource<Object>>(new Resource<Object>(tree), HttpStatus.OK);
         }
         return response;
     }
