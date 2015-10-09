@@ -1,9 +1,9 @@
 package org.dicadeveloper.weplantaforest.trees;
 
+import static org.fest.assertions.Assertions.assertThat;
+
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.trees.TreeDto;
-import org.dicadeveloper.weplantaforest.trees.TreeService;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.junit.Rule;
@@ -16,8 +16,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import static org.fest.assertions.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -32,9 +30,10 @@ public class TreeServiceImplIntegrationTest {
 
     @Autowired
     private TreeService _treeService;
-
     @Autowired
     private TreeTypeService _treeTypeService;
+    @Autowired
+    private UserService _userService;
 
     @Test
     public void testFindTreeTypeIdByTreeId_Find() {
@@ -42,8 +41,13 @@ public class TreeServiceImplIntegrationTest {
                 "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ");
         treeType.setInfoLink("http://de.wikipedia.org/wiki/Ahorne");
         _treeTypeService.save(treeType);
+
+        UserDto userDto = new UserDto("Bert");
+        _userService.save(userDto);
+
         TreeDto treeDto = new TreeDto(0, 0, 0);
         treeDto.setTreeType(treeType);
+        treeDto.setOwner(userDto);
         _treeService.save(treeDto);
 
         Long treeTypeId = _treeService.findTreeTypeIdByTreeId(treeDto.getDtoId());
@@ -62,7 +66,12 @@ public class TreeServiceImplIntegrationTest {
                 "Die Ahorne (Acer) bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ");
         treeType.setInfoLink("http://de.wikipedia.org/wiki/Ahorne");
         _treeTypeService.save(treeType);
+
+        UserDto userDto = new UserDto("Bert");
+        _userService.save(userDto);
+
         TreeDto treeDto = new TreeDto(0, 0, 0);
+        treeDto.setOwner(userDto);
         _treeService.save(treeDto);
 
         Long treeTypeId = _treeService.findTreeTypeIdByTreeId(treeDto.getDtoId());

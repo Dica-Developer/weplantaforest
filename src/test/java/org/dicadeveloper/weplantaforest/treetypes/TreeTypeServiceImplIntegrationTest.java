@@ -1,10 +1,11 @@
 package org.dicadeveloper.weplantaforest.treetypes;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
+
 import org.dicadeveloper.weplantaforest.Application;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.treetypes.TreeTypeDto;
-import org.dicadeveloper.weplantaforest.treetypes.TreeTypeService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +17,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import static org.junit.Assert.fail;
-
-import static org.fest.assertions.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -62,9 +59,7 @@ public class TreeTypeServiceImplIntegrationTest {
             _treeTypeService.save(treeTypeWithSameName);
             fail("should throw exception");
         } catch (DataIntegrityViolationException e) {
-            assertThat(e)
-                    .hasMessage(
-                            "could not execute statement; SQL [n/a]; constraint [\"UK_TNKFFNPMDERWBF406D8POUK89_INDEX_8 ON PUBLIC.TREETYPE(_NAME) VALUES ('Ahorn2', 1)\"; SQL statement:\ninsert into TreeType (treeTypeId, _annualCo2SavingInTons, _description, _imageFile, _infoLink, _name) values (null, ?, ?, ?, ?, ?) [23505-186]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement");
+            assertThat(e).hasMessageContaining("ConstraintViolationException");
         }
     }
 
