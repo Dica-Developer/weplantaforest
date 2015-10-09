@@ -32,5 +32,4 @@ public class TreeTypeServiceImpl extends GenericServiceImpl<TreeType, TreeTypeDt
     public void delete(TreeTypeDto treeType) {
         super.delete(treeType.getId());
     }
-
 }

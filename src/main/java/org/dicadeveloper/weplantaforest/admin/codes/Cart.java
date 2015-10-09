@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -19,11 +20,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.dicadeveloper.weplantaforest.base.Base;
 import org.dicadeveloper.weplantaforest.trees.User;
 import org.hibernate.annotations.Cascade;
 
-@javax.persistence.Entity
-public class Cart {
+@Entity
+public class Cart implements Base {
 
     public static class Editor extends PropertyEditorSupport {
         @Override
@@ -134,7 +136,7 @@ public class Cart {
     @Column
     private float _targetedPrice;
 
-    public Long getId() {
+    public long getId() {
         return _cartId;
     }
 

@@ -11,10 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.dicadeveloper.weplantaforest.base.Base;
 import org.dicadeveloper.weplantaforest.trees.User;
 
 @Entity
-public class Event {
+public class Event implements Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,7 +62,7 @@ public class Event {
         _id = id;
     }
 
-    public Long getId() {
+    public long getId() {
         return _id;
     }
 

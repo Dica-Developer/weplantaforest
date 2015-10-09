@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.admin.codes;
 
-public interface CartService {
+import org.dicadeveloper.weplantaforest.base.GenericService;
 
-    Cart generateCart(Coupon coupon);
-
+public interface CartService extends GenericService<Cart, CartDto, Long> {
 }

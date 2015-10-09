@@ -4,8 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.base.Base;
 
 @Entity
@@ -24,6 +26,9 @@ public class User implements Base {
     private boolean _enabled = false;
     @Column(name = "_banned", nullable = false)
     private boolean _banned = false;
+
+    @ManyToOne(optional = true)
+    private Team _team;
 
     public long getId() {
         return _userId;

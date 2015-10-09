@@ -13,10 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.dicadeveloper.weplantaforest.base.Base;
 import org.dicadeveloper.weplantaforest.trees.User;
 
 @Entity
-public class Team {
+public class Team implements Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,7 +46,7 @@ public class Team {
         return this;
     }
 
-    public Long getId() {
+    public long getId() {
         return _teamId;
     }
 

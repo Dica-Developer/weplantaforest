@@ -7,11 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.dicadeveloper.weplantaforest.base.Base;
+
 /**
  * Minimal version of what used to be the 'Code' entity in IPAT.
  */
 @Entity(name = "Code")
-public class Coupon {
+public class Coupon implements Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,10 +44,6 @@ public class Coupon {
 
     public void setId(final Long id) {
         _id = id;
-    }
-
-    public Long getId() {
-        return _id;
     }
 
     public void setCode(final String code) {
@@ -94,6 +92,12 @@ public class Coupon {
 
     public boolean isEvaluated() {
         return _evaluated;
+    }
+
+    @Override
+    public long getId() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }
