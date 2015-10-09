@@ -1,5 +1,8 @@
 package org.dicadeveloper.weplantaforest.trees;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,9 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @ExposesResourceFor(TreeDto.class)
 @RestController
@@ -76,7 +76,7 @@ public class TreeController {
         return new ResponseEntity<Resource<TreeDto>>(treeResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/rest/v1/trees", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON })
+    @RequestMapping(value = "/rest/v1/trees", method = RequestMethod.PUT, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON })
     public Response createTree(@RequestBody TreeDto tree) {
         Response response;
         // TODO validation
