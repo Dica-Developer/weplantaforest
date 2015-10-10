@@ -189,6 +189,11 @@ angular.module('api', [])
       return Api.get('/trees', null, query);
     },
     
+    
+    put: function(entity) {
+      return Api.put('/trees', entity.id, entity);
+    },
+    
     /**
      * Get the tree with trees/id
      */

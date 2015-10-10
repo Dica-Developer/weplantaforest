@@ -82,6 +82,12 @@ resourceTypes:
         body:
           application/json:
             schema: trees
+  put:
+    responses:
+      200:
+        body:
+          application/json:
+            schema: tree
   /{id}:
     type:
       collection-item:
@@ -187,14 +193,14 @@ resourceTypes:
             application/json:
               example: !include co2.sample
   /plants/newest:
-      get:
+    get:
   /users/newest:
-      get:
+    get:
   /users/best:
-      get:
+    get:
   /teams/newest:
-      get:
+    get:
   /teams/best:
-      get:
+    get:
   /comments/newest:
-      get:
+    get:
