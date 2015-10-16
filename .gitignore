@@ -15,4 +15,4 @@ weplantaforest.trace.db
 src/main/webapp/npm-debug.log
 src/main/webapp/client/app/app.css
 npm-debug.log*
-src/main/resources/application-staging-secret.properties
+src/main/resources/application-staging-secret.propertiesweplantaforest.iml
