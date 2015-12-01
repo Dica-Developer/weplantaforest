@@ -1,0 +1,11 @@
+package org.dicadeveloper.weplantaforest.treetypes;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+public interface TreeTypeRepository extends CrudRepository<TreeType, Long> {
+
+	@Query
+	public TreeType findByName(@Param("name") String name);
+}
