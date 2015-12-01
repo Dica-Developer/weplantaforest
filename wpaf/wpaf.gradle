@@ -17,6 +17,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'project-report'
+apply plugin: 'application'
 
 jar {
     baseName = 'wpaf'
@@ -47,6 +48,8 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
 }
+
+mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
 
 eclipse {
     classpath {
