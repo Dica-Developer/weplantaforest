@@ -14,5 +14,4 @@ public interface TreeRepository extends CrudRepository<Tree, Long> {
 	@Query(value = FIND_TREETYPE_ID_BY_TREE_ID_QUERY)
 	@Transactional(readOnly = true)
 	public Long findTreeTypeIdByTreeId(@Param("id") Long treeId);
-
 }
