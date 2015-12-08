@@ -1,5 +1,5 @@
-/bin
-/build
+**/bin
+**/build
 .gradle
 .project
 .classpath
@@ -8,7 +8,6 @@ weplantaforest.h2.db
 weplantaforest.trace.db
 /.idea
 .DS_Store
-
 # Don't add processed ui files except the dev related files like HAL-Browser
 !/src/main/resources/static/dev
 /src/main/resources/static
@@ -17,6 +16,3 @@ src/main/webapp/client/app/app.css
 npm-debug.log*
 src/main/resources/application-staging-secret.properties
 weplantaforest.iml
-
-wpaf/bin/
-wpaf/build/
