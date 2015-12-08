@@ -16,3 +16,4 @@ src/main/webapp/client/app/app.css
 npm-debug.log*
 src/main/resources/application-staging-secret.properties
 weplantaforest.iml
+ui/node_modules/

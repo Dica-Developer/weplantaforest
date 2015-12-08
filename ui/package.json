@@ -1,0 +1,10 @@
+{
+  "version": "0.0.1",
+  "name": "wpaf-ui",
+  "devDependencies": {
+    "webpack": "^1.12.9"
+  },
+  "dependencies": {
+    "http-server": "^0.8.5"
+  }
+}
