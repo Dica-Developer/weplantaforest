@@ -1,0 +1,78 @@
+{
+  "LINK": {
+    "PLANT": "Pflanzen",
+    "PLANTINGS": "Pflanzungen",
+    "EXPLORE": "Entdecken",
+    "PROJECT_ACREAGES": "Projektflächen",
+    "CERTIFICATE": "Zertifikat",
+    "VOUCHER": "Gutschein",
+    "IDEA": "Idee",
+    "CODEX": "Kodex",
+    "TEAM": "Team",
+    "PARTNERS": "Partner",
+    "FINANCIALS": "Finanzen",
+    "JOBS": "Jobs",
+    "PRESS": "Presse",
+    "LEAGUE_TABLES": "Bestenliste",
+    "ALL": "Alle",
+    "PRIVATE": "Privat",
+    "COMMERCIAL": "Firma",
+    "NON_PROFIT_ORG": "Non-Profit Org.",
+    "SCHOOLS": "Schulen",
+    "TEAMS": "Teams",
+    "COMPANY": "Unternehmen",
+    "MORE": "mehr"
+  },
+  "BUTTON": {
+    "SEARCH": "Suchen"
+  },
+  "MAIN": {
+    "SLIDES": {
+      "1": {
+        "TITLE": "Verändere die Zukunft",
+        "TEXT": "Stell uns deine Projektidee vor."
+      },
+      "2": {
+        "TITLE": "Pflanz-König",
+        "TEXT": "Hier geht es zu den Bestenlisten"
+      },
+      "3": {
+        "TITLE": "Blog",
+        "TEXT": "Lies die neuesten Nachrichten zu aktuellen Projekten."
+      }
+    },
+    "TEASER": {
+      "1": {
+        "TITLE": "Pflanzen",
+        "TEXT": "Online auf eine Projektfläche pflanzen"
+      },
+      "2": {
+        "TITLE": "Baum-Abo",
+        "TEXT": "Die schöne Försterin empfiehlt das Baum-Abo"
+      },
+      "3": {
+        "TITLE": "Registrieren",
+        "TEXT": "Selbst gepflanzten Baum online stellen"
+      }
+    }
+  },
+  "REPORTS": {
+    "TREES": "Bäume gepflanzt",
+    "CO2": "t CO2 gebunden"
+  },
+  "PROJECTS": {
+    "TREES_PLANTED": "{{current}} von {{total}} Bäume gepflanzt",
+    "13": {
+      "TEASER": "Wir haben uns entschieden eine weitere Fläche in Berlin zu übernehmen. Es handelt sich auch hier um ein Trinkwasserschutzgebiet, welches den Berlinern das Trinkwasser filtert. Die Fläche ...",
+      "TEXT": "Wir haben uns entschieden eine weitere Fläche in Berlin zu übernehmen. Es handelt sich auch hier um ein Trinkwasserschutzgebiet, welches den Berlinern das Trinkwasser filtert. Die Fläche liegt in Mittelheide und gehört zum Stadtbezirk Friedrichshagen. Es besteht das gleiche Problem, wie bei den von uns bearbeiteten Flächen: Aufgrund starken Befalls mit spätblühenden Traubenkirschen und der intensiven Verbisstätigkeit des Rehwildes, kann sich der bestehende Wald nicht mehr natürlich verjüngen.<br />Es handelt es sich bei der Fläche um eine typische Berliner Kiefernmonokultur. Die Fläche ist 3ha gross. Die Fläche ist vom Baumbestand und Durchforstungsgrad sehr gut geeignet für das Projekt; die Kiefern sind etwa 75 Jahre alt. Es wachsen vereinzelt auch Eichen und Buchen auf der Fläche und am Wegesrand stehen einige grosse Birken.<br />Um dieses innerstädtische Naherholungsgebiet zu erhalten und damit wichtige CO2 Senken zu schaffen, unterpflanzen wir die 3ha große Monokultur mit 18.000 Rotbuchen. Zusätzlich wird die wuchernde Traubenkirsche bekämpft und die jungen Pflanzen durch Einzäunung vor Rehverbiss geschützt. Die Unterpflanzung als auch die intensive Pflege der Fläche sorgen dafür, dass hier wieder ein gesunder Wald entsteht der sich auf natürlichem Wege regenerieren kann und damit langfristig zur Verbesserung des Klimas beiträgt. Als Schattenbaumart ist die Buche gutes natürliches Bekämpfungsmittel gegen Traubenkirsche, denn sie setzt sich gut nach den ersten Jahren gut gegen den Schädling durch.<br />Wir haben bei unserer ersten Fläche in Berlin die Pflege selbst übernommen und fahren 2x pro Jahr mit Freiwilligen auf die Fläche, um die wuchernde Traubenkirsche mit Äxten und Scheren zurückzuschneiden, damit unsere Buchen Licht bekommen. Dies werden wir bei dieser Fläche nicht mehr übernehmen können, da es einfach nicht mehr zu schaffen ist. Wir haben mit einem Dienstleister vereinbart, dass dieser nun die Pflege für 5 Jahre übernehmen wird. Das kostet uns 370,- netto pro Jahr und Hektar. Diese Pflege haben wir eingepreist und die Buchen sind daher etwas teuer.<br />Bei diesem Projekt arbeiten wir mit dem Berliner Landesforstamt zusammen, das aufgrund mangelnder finanzieller Mittel leider nicht in der Lage ist die ökologisch wichtigen Maßnahmen flächendeckend selbst  durchzuführen. Mit Eurer Hilfe erhalten wir dieses Naherholungsgebiet und den Lebensraum vieler Tierarten. Wir schaffen nachhaltig natürlichen Wald und damit lebensnotwendige CO2 Senken für den Großraum Berlin."
+    },
+    "12": {
+      "TEASER": "Wir haben für die nächste Teilfläche auf der Deponie Wallendorf die Aufforstungsgenehmigung beantragt. Wir werden auf der Nordseite in der Nähe des Eingangs schon im Herbst 2014 zwei Hektar ...",
+      "TEXT": "Wir haben für die nächste Teilfläche auf der Deponie Wallendorf die Aufforstungsgenehmigung beantragt. Wir werden auf der Nordseite in der Nähe des Eingangs schon im Herbst 2014 zwei Hektar einzäunen und vorraussichtlich im Frühjahr 2015 bepflanzen. Wenn bereits im Spätsommer genug Bäume gespendet sind, werden wir die Pflanzung bereits im Herbst 2014 umsetzen.<br />Es gibt eine Neuigkeit. Bei diesem Projekt können wir erstmals \"unrunde\" Preise für unsere Bäume veranschlagen. Seit der SEPA Umstellung kann unsere Bankanbindung dies leisten. (wir haben übrigens nie verstanden, warum das vorher nicht möglich war)<br />Wir sind also ab sofort in der Lage unsere Preise besser zu kalkulieren und unsere Mischkalkulation (mit der Rabattierung) fällt weg. Es wird also demokratisch. Also auch grössere Spender, die viele Bäume auf einmal gespendet haben zahlen ab sofort für den einzelnen Baum genau den gleichen Preis wie die Unterstützer, die nur einen einzelnen Baum spenden wollen."
+    },
+    "11": {
+      "TEASER": "Die Fläche befindet sich zwischen Merseburg und Leipzig nahe der B181 am Rande des Ortes Wallendorf. Die 15 ha große Fläche ist eine ehemalige Hausmüll-Deponie welche kurz nach der Wende mit ...",
+      "TEXT": "Die Fläche befindet sich zwischen Merseburg und Leipzig nahe der B181 am Rande des Ortes Wallendorf.  Die 15 ha große Fläche ist eine ehemalige Hausmüll-Deponie welche kurz nach der Wende mit Klärschlamm und Erde abgedeckt wurde. der in Wallendorf soll naturnah und standortgerecht aufgeforstet und der Natur „zurückgegeben“ werden. Das Vorhaben soll jedoch nicht als rein ökologische Maßnahme abgewickelt werden. Vielmehr ist es Zielstellung, ein integriertes integratives Konzept zu realisieren, welches lokale Akteure mit einbindet und pädagogische Angebote im Bereich der Umweltbildung bereithält. Heute wird die Fläche durch einen Pächter genutzt, der sich über die Jahre den Boden urbar gemacht hat um Heu für sein Vieh zu machen. "
+    }
+  }
+}

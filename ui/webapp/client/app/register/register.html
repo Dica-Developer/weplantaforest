@@ -1,0 +1,81 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div ng-include="'components/counter/counter.html'"></div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Einloggen</h3>
+        </div>
+        <div class="panel-body form-body">
+          <form>
+            <div class="form-group">
+              <label for="loginFormUser">Email / Nutzername</label>
+              <input type="email" class="form-control" id="loginFormUser" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label for="loginFormPassword">Password</label>
+              <input type="password" class="form-control" id="loginFormPassword" placeholder="Password">
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Eingeloggt bleiben
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button type="submit" class="btn btn-default pull-right">Submit</button>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Registrieren</h3>
+        </div>
+        <div class="panel-body form-body">
+          <form>
+            <div class="form-group">
+              <label for="signupFormUser">Email</label>
+              <input type="email" class="form-control" id="signupFormUser" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label for="signupFormPassword">Password</label>
+              <input type="password" class="form-control" id="signupFormPassword" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <label for="signupFormLanguage">Sprache</label>
+              <select id="signupFormLanguage" class="form-control">
+                <option>Deutsch</option>
+                <option>English</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="signupFormUserType">Nutzertyp</label>
+              <select id="signupFormUserType" class="form-control">
+                <option>Privat</option>
+                <option>Unternehmen</option>
+                <option>Non-Profit Organisation</option>
+              </select>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Newsletter
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button type="submit" class="btn btn-default pull-right">Registrieren</button>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

@@ -1,0 +1,47 @@
+{
+  "id": "http://iplantatree/rest/v1/schema#/tree",
+  "type": "object",
+  "properties": {
+    "owner": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/owner",
+      "type": "object",
+      "properties": {}
+    },
+    "dtoId": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/dtoId",
+      "type": "integer"
+    },
+    "amount": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/amount",
+      "type": "integer"
+    },
+    "longitude": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/longitude",
+      "type": "integer"
+    },
+    "latitude": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/latitude",
+      "type": "integer"
+    },
+    "submittedOn": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/submittedOn",
+      "type": "integer"
+    },
+    "plantedOn": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/plantedOn",
+      "type": "integer"
+    },
+    "treeTypeName": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/treeTypeName",
+      "type": "null"
+    },
+    "ownerName": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/ownerName",
+      "type": "null"
+    },
+    "treeTypeId": {
+      "id": "http://iplantatree/rest/v1/schema#/tree/treeTypeId",
+      "type": "null"
+    }
+  }
+}

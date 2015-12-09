@@ -1,0 +1,9 @@
+{
+  "treesCount" : 142500,
+  "co2" : 112607.27246026296,
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/rest/v1/reports/co2"
+    }
+  }
+}
