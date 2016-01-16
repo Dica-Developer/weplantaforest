@@ -53,15 +53,10 @@ task buildUi << {
         throw new org.gradle.tooling.BuildActionFailureException("grunt build failed with " + process.exitValue(), null)
     }
 }
-build.dependsOn buildUi
 
 buildUi.dependsOn setupUiDev
 
 task watchUiDev << {
     "grunt dev".execute(null, new File("src/main/webapp"))
 }
-bootRun.dependsOn watchUiDev
 
-liveReload {
-    docRoot='src/main/webapp/client'
-}

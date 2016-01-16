@@ -157,7 +157,7 @@ test {
     }
 }
 
-task deploy(dependsOn: [clean, buildUi, distTar]) << {
+task deploy(dependsOn: [clean, distTar]) << {
     ssh.run {
         session(remotes.ipatHost) {
             String distName = "${project.name}-${version}"
