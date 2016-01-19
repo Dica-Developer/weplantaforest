@@ -33,11 +33,11 @@ public class Team implements Identifiable<Long> {
 
 	private Long _timeStamp;
 
-	@Column(nullable = false, unique = true, length = 256)
-	private String _name;
+	@Column(name = "_name", nullable = false, unique = true, length = 256)
+	private String name;
 
-	@OneToMany(mappedBy = "_team", fetch = FetchType.EAGER)
-	private List<User> _members = new ArrayList<User>();
+	@OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
+	private List<User> members = new ArrayList<User>();
 
 	@Column(/* length = ModifiedMySql5InnoDbDialect.LENGTH_FOR_TEXT_TYPE */)
 	private String _description;
@@ -46,14 +46,14 @@ public class Team implements Identifiable<Long> {
 	private User _admin;
 
 	public void addMember(final User member) {
-		if (!_members.contains(member)) {
-			_members.add(member);
+		if (!members.contains(member)) {
+			members.add(member);
 		}
 	}
 
 	public void removeMember(final User user) {
 		if (!_admin.equals(user)) {
-			_members.remove(user);
+			members.remove(user);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class Team implements Identifiable<Long> {
 	}
 
 	public boolean isMember(final User user) {
-		return _members.contains(user);
+		return members.contains(user);
 	}
 
 	public boolean isLeader(final User user) {

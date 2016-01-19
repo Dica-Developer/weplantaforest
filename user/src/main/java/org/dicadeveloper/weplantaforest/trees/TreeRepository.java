@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository("treeRepository")
+@Transactional
 public interface TreeRepository extends CrudRepository<Tree, Long> {
 
-	public final static String FIND_TREETYPE_ID_BY_TREE_ID_QUERY = "SELECT tree._treeType.id  FROM Tree tree WHERE tree.id = :id";
+	public final static String FIND_TREETYPE_ID_BY_TREE_ID_QUERY = "SELECT tree.treeType.id  FROM Tree tree WHERE tree.id = :id";
 
 	@Query(value = FIND_TREETYPE_ID_BY_TREE_ID_QUERY)
 	@Transactional(readOnly = true)

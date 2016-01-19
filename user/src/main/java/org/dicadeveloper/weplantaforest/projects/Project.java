@@ -14,11 +14,13 @@ import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @ToString
 @Getter
+@Setter
 @EqualsAndHashCode
 @Table(name = "Plant")
 public class Project implements Identifiable<Long> {
@@ -29,34 +31,34 @@ public class Project implements Identifiable<Long> {
 	private Long id;
 
 	@Column(name = "_name", length = 255)
-	private String _name;
+	private String name;
 
 	@Column(name = "_description", length = 65535)
-	private String _description;
+	private String description;
 
 	@Column(name = "_longitude")
-	private Float _longitude;
+	private Float longitude;
 
 	@Column(name = "_latitude")
-	private Float _latitude;
+	private Float latitude;
 
 	@Column(name = "_zoom")
-	private Integer _zoom;
+	private Integer zoom;
 
-	@Column
-	private Long _shopOpening;
+	@Column(name = "_shopOpening")
+	private Long shopOpening;
 
-	@Column
-	private Long _shopClosing;
+	@Column(name = "_shopClosing")
+	private Long shopClosing;
 
-	@Column
-	private Boolean _shopActive;
+	@Column(name = "_shopActive")
+	private Boolean shopActive;
 
-	@Column
-	private Boolean _visible;
+	@Column(name = "_visible")
+	private Boolean visible;
 
 	@Column(name = "_mainImageFileName", length = 255)
-	private String _mainImageFileName;
+	private String imageFileName;
 
 	/**
 	 * @deprecated no longer used in new version
@@ -67,5 +69,5 @@ public class Project implements Identifiable<Long> {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
-	private User _manager;
+	private User manager;
 }

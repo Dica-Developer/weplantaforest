@@ -12,10 +12,12 @@ import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @Table(name = "User")
@@ -27,14 +29,14 @@ public class User implements Identifiable<Long> {
 	private Long id;
 
 	@Column(unique = true, name = "_name")
-	private String _name;
+	private String name;
 
 	@Column(name = "_enabled", nullable = false)
-	private boolean _enabled = false;
+	private boolean enabled = false;
 
 	@Column(name = "_banned", nullable = false)
-	private boolean _banned = false;
+	private boolean banned = false;
 
 	@ManyToOne(optional = true)
-	private Team _team;
+	private Team team;
 }

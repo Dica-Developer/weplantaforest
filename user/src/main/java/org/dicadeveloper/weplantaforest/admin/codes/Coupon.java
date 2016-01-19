@@ -31,10 +31,10 @@ public class Coupon implements Identifiable<Long> {
 	private String _code;
 
 	// TODO review, creationDate ?
-	@Column(nullable = false)
-	private int _year;
-	@Column(nullable = false)
-	private int _month;
+	@Column(nullable = false, name = "_year")
+	private int year;
+	@Column(nullable = false, name = "_month")
+	private int month;
 
 	// TODO to be removed (not used really)
 	@Deprecated
@@ -42,11 +42,11 @@ public class Coupon implements Identifiable<Long> {
 	private int _number = -1;
 
 	@ManyToOne(optional = true)
-	private Event _event;
+	private Event event;
 
-	@Column
-	private int _treeCount;
+	@Column(name = "_treeCount")
+	private int treeCount;
 
-	@Column(nullable = false)
-	private boolean _evaluated = false;
+	@Column(nullable = false, name = "_evaluated")
+	private boolean evaluated = false;
 }

@@ -42,12 +42,8 @@ try {
 print "java version: " + System.getProperty("java.version")
 println ""
 
-apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
-apply plugin: 'spring-boot'
-apply plugin: 'findbugs'
-apply plugin: 'jacoco'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'project-report'
 
@@ -66,26 +62,6 @@ remotes {
     }
 }
 
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-}
-
-findbugs {
-    ignoreFailures = false
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-
-sourceCompatibility=1.8
-targetCompatibility=1.8
 version = '0.1'
 compileJava.options.encoding = 'UTF-8'
 
@@ -95,50 +71,6 @@ eclipse {
 	  properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
 	}
 }
-
-tasks.eclipse.doLast {
-    def props = new Properties()
-    props.setProperty('eclipse.preferences.version', '1')
-    props.setProperty('org.moreunit.preferences.version', '2')
-    props.setProperty('org.moreunit.unitsourcefolder', "${project.name}:src/main/java:${project.name}:src/test/java")
-    props.setProperty('org.moreunit.useprojectsettings', 'true')
-    file(".settings/org.moreunit.prefs").withOutputStream {
-        stream -> props.store(stream, null)
-    }
-}
-
-configurations {
-    compile.exclude module: "spring-boot-starter-tomcat"
-}
-
-dependencies {
-
-    compile group: 'com.google.guava', name: 'guava', version: '18.0'
-
-    //databases
-    compile group: 'com.h2database', name: 'h2', version: '1.4.186'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
-
-    compile group: 'org.flywaydb', name: 'flyway-core', version: '3.1'
-
-    def springBootVersion = '1.3.0.M5'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: springBootVersion
-
-    compile group: 'net.sf.dozer', name: 'dozer', version: '5.5.1'
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '1.7.1'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
-    testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.4.1'
-    compile 'com.google.code.findbugs:jsr305:3.0.0'
-}
-
-mainClassName = 'org.dicadeveloper.weplantaforest.Application'
 
 test {
     testLogging {
@@ -157,32 +89,3 @@ test {
     }
 }
 
-task deploy(dependsOn: [clean, distTar]) << {
-    ssh.run {
-        session(remotes.ipatHost) {
-            String distName = "${project.name}-${version}"
-            String distTar = "${distName}.tar"
-            File distributionFile = file("build/distributions/${distTar}")
-            assert distributionFile.exists(), "File $distributionFile"
-
-            println "Uploading distribution (${distributionFile.length()/1024/1024} MB) ..."
-            put(distributionFile,"./")
-
-            println "Stopping old application..."
-            execute "/etc/init.d/wpaf-staging stop"
-            
-            println "Backing up old project to weplantaforest-staging.backup..."
-            execute "rm -rf weplantaforest-staging.backup"
-            execute "if [ -d weplantaforest-staging ]; then mv weplantaforest-staging weplantaforest-staging.backup; fi"
-
-            println "Unpacking distribution to weplantaforest-staging"
-            execute "mkdir weplantaforest-staging"
-            execute "tar --strip-components=1 -C weplantaforest-staging -xvf ${distTar}"
-
-            println "Starting Application..."
-            execute "/etc/init.d/wpaf-staging start"
-            
-            println "Watch log under weplantaforest-staging/console.log"
-        }
-    }
-}

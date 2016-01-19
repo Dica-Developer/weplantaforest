@@ -26,22 +26,20 @@ import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Getter
 @ToString
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Cart implements Identifiable<Long> {
 
 	public static class Editor extends PropertyEditorSupport {
 		@Override
 		public void setAsText(final String text) throws IllegalArgumentException {
 		}
-	}
-
-	public Cart() {
-		// for hibernate
 	}
 
 	@Id
@@ -52,17 +50,17 @@ public class Cart implements Identifiable<Long> {
 	private Long _timeStamp;
 
 	@Enumerated(EnumType.STRING)
-	private CartState _cartState;
+	private CartState cartState;
 
-	@OneToMany(mappedBy = "_cart", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
 	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
-	private List<CartItem> _cartItems = new ArrayList<CartItem>();
+	private List<CartItem> cartItems = new ArrayList<CartItem>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	private User _buyer;
+	private User buyer;
 
 	@ManyToOne
-	private Event _event;
+	private Event event;
 
 	@Column(length = 1024)
 	private String _callbackParams;
@@ -145,9 +143,9 @@ public class Cart implements Identifiable<Long> {
 	private float _targetedPrice;
 
 	public CartItem removeCartItem(final Long articleId) {
-		for (final CartItem item : _cartItems) {
+		for (final CartItem item : cartItems) {
 			if (item.getPlantArticleId().equals(articleId)) {
-				_cartItems.remove(item);
+				cartItems.remove(item);
 				return item;
 			}
 		}
@@ -156,12 +154,12 @@ public class Cart implements Identifiable<Long> {
 
 	public void addCartItem(final CartItem cartItem) {
 		if (!containsCartItem(cartItem)) {
-			_cartItems.add(cartItem);
+			cartItems.add(cartItem);
 		}
 	}
 
 	public boolean containsCartItem(final CartItem cartItem) {
-		for (final CartItem item : _cartItems) {
+		for (final CartItem item : cartItems) {
 			if (item.getPlantArticleId().equals(cartItem.getPlantArticleId())) {
 				return true;
 			}
@@ -170,11 +168,11 @@ public class Cart implements Identifiable<Long> {
 	}
 
 	public void removeCartItem(final CartItem cartItem) {
-		_cartItems.remove(cartItem);
+		cartItems.remove(cartItem);
 	}
 
 	public boolean isFilled() {
-		return !_cartItems.isEmpty();
+		return !cartItems.isEmpty();
 	}
 
 	public Date getTimeStampAsDate() {
@@ -184,7 +182,7 @@ public class Cart implements Identifiable<Long> {
 	@Transient
 	public int getTreeCount() {
 		int count = 0;
-		for (final CartItem item : _cartItems) {
+		for (final CartItem item : cartItems) {
 			count += item.getAmount();
 		}
 		return count;
@@ -193,7 +191,7 @@ public class Cart implements Identifiable<Long> {
 	@Transient
 	public BigDecimal getTotalPrice() {
 		BigDecimal total = new BigDecimal(0.00);
-		for (final CartItem item : _cartItems) {
+		for (final CartItem item : cartItems) {
 			total = total.add(item.getTotalPrice());
 		}
 		return total;
@@ -202,7 +200,7 @@ public class Cart implements Identifiable<Long> {
 	@Transient
 	public List<Long> getPlantArticleIds() {
 		final List<Long> ids = new ArrayList<Long>();
-		for (final CartItem item : _cartItems) {
+		for (final CartItem item : cartItems) {
 			ids.add(item.getPlantArticleId());
 		}
 		return ids;

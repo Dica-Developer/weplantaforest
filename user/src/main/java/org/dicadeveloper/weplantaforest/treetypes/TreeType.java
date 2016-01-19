@@ -8,15 +8,17 @@ import javax.persistence.Table;
 
 import org.springframework.hateoas.Identifiable;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "TreeType")
 @ToString(callSuper = true)
-@AllArgsConstructor
+@NoArgsConstructor
 public class TreeType implements Identifiable<Long> {
 
 	@Id

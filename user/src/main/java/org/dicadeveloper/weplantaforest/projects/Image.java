@@ -10,12 +10,14 @@ import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Getter
 @ToString
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Image implements Identifiable<Long> {
 
 	@Id
@@ -24,8 +26,8 @@ public class Image implements Identifiable<Long> {
 	private Long id;
 
 	@Column(nullable = false)
-	private DataType _type;
+	private DataType type;
 
 	@Column(nullable = false)
-	private String _file;
+	private String file;
 }

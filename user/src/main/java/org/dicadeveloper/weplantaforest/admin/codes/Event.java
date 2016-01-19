@@ -16,12 +16,14 @@ import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @ToString
 @EqualsAndHashCode
 @Getter
+@NoArgsConstructor
 public class Event implements Identifiable<Long> {
 
 	@Id
@@ -30,10 +32,10 @@ public class Event implements Identifiable<Long> {
 	private Long id;
 
 	@Column(nullable = false, unique = true)
-	private String _name;
+	private String name;
 
-	@OneToMany(mappedBy = "_event")
-	private List<Coupon> _codes = new ArrayList<Coupon>();
+	@OneToMany(mappedBy = "event")
+	private List<Coupon> codes = new ArrayList<Coupon>();
 
 	@ManyToOne
 	private Team _team;
@@ -44,18 +46,18 @@ public class Event implements Identifiable<Long> {
 	@Column
 	private Integer _valid;
 
-	@OneToMany(mappedBy = "_event")
-	private List<Cart> _carts = new ArrayList<Cart>();
+	@OneToMany(mappedBy = "event")
+	private List<Cart> carts = new ArrayList<Cart>();
 
 	@Column
 	private Boolean _userReceiptReceiver = false;
 
 	public int getCodesCount() {
-		return _codes.size();
+		return codes.size();
 	}
 
 	public boolean getDeleteable() {
-		return _carts.size() == 0;
+		return carts.size() == 0;
 	}
 
 	public void addValid(final int valid) {
@@ -68,8 +70,8 @@ public class Event implements Identifiable<Long> {
 
 	public int getUnevaluated() {
 		int count = 0;
-		for (final Coupon code : _codes) {
-			if (!code.is_evaluated()) {
+		for (final Coupon code : codes) {
+			if (!code.isEvaluated()) {
 				count++;
 			}
 		}
@@ -78,9 +80,9 @@ public class Event implements Identifiable<Long> {
 
 	public Coupon getFirstCode() {
 		Coupon last = null;
-		for (final Coupon code : _codes) {
+		for (final Coupon code : codes) {
 			last = code;
-			if (!code.is_evaluated()) {
+			if (!code.isEvaluated()) {
 				return code;
 			}
 		}
@@ -92,15 +94,15 @@ public class Event implements Identifiable<Long> {
 	}
 
 	public void addCart(final Cart cart) {
-		_carts.add(cart);
+		carts.add(cart);
 	}
 
 	public void removeCart(final Cart cart) {
-		_carts.remove(cart);
+		carts.remove(cart);
 	}
 
 	public int getCartsCount() {
-		return _carts.size();
+		return carts.size();
 	}
 
 	public boolean getUserReceiptReceiver() {

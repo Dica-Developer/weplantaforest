@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("projectRepository")
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 
-	@Query(value = "SELECT p FROM Project p where p._shopActive=true")
+	@Query(value = "SELECT p FROM Project p where p.shopActive=true")
 	@Transactional(readOnly = true)
 	public Page<Project> findAllActive(Pageable pageable);
 }
