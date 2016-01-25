@@ -47,7 +47,6 @@ public class DatabasePopulator {
 
 	public void insertProjects() {
 		Random random = new Random();
-		Date now = new Date();
 		for (int i = 0; i < 10; i++) {
 			int pickOne = random.nextInt(4);
 			String projectName = "Project " + i + " von " + DEFAULT_USERS.get(pickOne);
@@ -57,6 +56,7 @@ public class DatabasePopulator {
 			project.setDescription(
 					"dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
 			project.setImageFileName(projectName);
+			project.setShopActive(random.nextBoolean());
 			switch (i) {
 			case 0:
 				project.setLatitude(52.4626536896816f);

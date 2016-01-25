@@ -21,7 +21,7 @@ task testUi << {
 }
 
 task setupUiDev << {
-    def process = "npm install -g yo grunt-cli bower".execute()
+    def process = "npm install -g yo grunt-cli bower http-server".execute()
     process.text.eachLine {
         println it
     }

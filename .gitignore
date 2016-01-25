@@ -23,3 +23,6 @@ cscope.po.out
 env.vim
 tags
 files.list
+.tmp
+ui/client/bower_components/
+ui/resources

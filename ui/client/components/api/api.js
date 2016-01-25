@@ -151,7 +151,7 @@ angular.module('api', [])
  * Sets up the api base url.
  */
 .config(['ApiProvider', function(ApiProvider) {
-  ApiProvider.setApiBaseUrl('http://localhost:8080/rest/v1');
+  ApiProvider.setApiBaseUrl('http://localhost:8081');
 }])
 
 /**
@@ -221,16 +221,25 @@ angular.module('api', [])
       return Api.put('/projects', entity.id, entity);
     },
     
-    /**
-     * Collection of available active.
-     */
-    active: {
+    
+    search: {
+      
+      
+      query: function(query) {
+        return Api.get('/projects/search', null, query);
+      },
       
       /**
-       * Get a list of active.
+       * Collection of available active.
        */
-      query: function(query) {
-        return Api.get('/projects/active', null, query);
+      active: {
+        
+        /**
+         * Get a list of active.
+         */
+        query: function(query) {
+          return Api.get('/projects/search/active', null, query);
+        }
       }
     },
     

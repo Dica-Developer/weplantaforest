@@ -12,5 +12,5 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 
 	@Query(value = "SELECT p FROM Project p where p.shopActive=true")
 	@Transactional(readOnly = true)
-	public Page<Project> findAllActive(Pageable pageable);
+	public Page<Project> active(Pageable pageable);
 }

@@ -2,7 +2,7 @@
 ---
 title: I Plant A Tree API
 #baseUri: http://iplantatree.org/rest/{version}
-baseUri: http://localhost:8080/rest/{version}
+baseUri: http://localhost:8081
 version: v1
 mediaType: application/json
 traits:
@@ -109,15 +109,21 @@ resourceTypes:
         body:
           application/json:
   put:
-  /active:
-    type:
-      collection:
-        exampleCollection: !include treetypes.sample
+  /search:
     get:
       responses:
         200:
           body:
             application/json:
+    /active:
+      type:
+        collection:
+          exampleCollection: !include treetypes.sample
+      get:
+        responses:
+          200:
+            body:
+              application/json:
   /recommend:
     type:
       collection-item:

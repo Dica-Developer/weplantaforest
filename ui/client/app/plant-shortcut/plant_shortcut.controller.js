@@ -5,7 +5,7 @@ angular.module('IPAT')
     $scope.projects = [];
 
     window.ProjectApi = ProjectApi
-    ProjectApi.active.query().then(function(response) {
+    ProjectApi.search.active.query().then(function(response) {
       if (200 === response.status) {
           $scope.projects = response.data._embedded.projectDtoes;
       } else {
