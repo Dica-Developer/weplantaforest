@@ -10,32 +10,25 @@ buildscript {
 
 apply plugin: 'com.github.kt3k.coveralls'
 
-task testUi << {
-    def process = "grunt test".execute(null, new File("src/main/webapp"))
-    process.text.eachLine {
-        println it
-    }
-    if (0 != process.exitValue()) {
-        throw new org.gradle.tooling.BuildActionFailureException("grunt test in webapp failed with " + process.exitValue(), null)
-    }
+task test {
 }
 
 task setupUiDev << {
-    def process = "npm install -g yo grunt-cli bower http-server".execute()
+    def process = "npm install -g yo grunt-cli bower http-server".execute(null, new File("ui/"))
     process.text.eachLine {
         println it
     }
     if (0 != process.exitValue()) {
         throw new org.gradle.tooling.BuildActionFailureException("npm install in root failed with " + process.exitValue(), null)
     }
-    process = "npm install".execute(null, new File("src/main/webapp"))
+    process = "npm install".execute(null, new File("ui"))
     process.text.eachLine {
         println it
     }
     if (0 != process.exitValue()) {
         throw new org.gradle.tooling.BuildActionFailureException("npm install in webapp failed with " + process.exitValue(), null)
     }
-    process = "bower install".execute(null, new File("src/main/webapp"))
+    process = "bower install".execute(null, new File("ui"))
     process.text.eachLine {
         println it
     }
@@ -45,7 +38,7 @@ task setupUiDev << {
 }
 
 task buildUi << {
-    def process = "grunt build".execute(null, new File("src/main/webapp"))
+    def process = "grunt build".execute(null, new File("ui"))
     process.text.eachLine {
         println it
     }
@@ -57,6 +50,6 @@ task buildUi << {
 buildUi.dependsOn setupUiDev
 
 task watchUiDev << {
-    "grunt dev".execute(null, new File("src/main/webapp"))
+    "grunt dev".execute()
 }
 
