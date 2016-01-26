@@ -28,6 +28,7 @@ jar {
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -62,3 +63,28 @@ dependencies {
 }
 
 mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
+
+eclipse {
+    jdt.file.withProperties { properties ->
+        properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
+        properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
+    }
+}
+
+test {
+    testLogging {
+        events 'passed'
+    }
+    if(project.hasProperty('mysql')) {
+        logger.info "Running tests on mysql db!"
+        systemProperty "spring.profiles.active", "test,mysql-test"
+    } else {
+        def maxForks = Runtime.getRuntime().availableProcessors()
+        if (System.env.'CI') {
+            maxForks = (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
+        }
+        logger.info "Maximum used parallel forks: " + maxForks
+        maxParallelForks maxForks
+    }
+}
+

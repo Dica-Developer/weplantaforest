@@ -42,7 +42,6 @@ try {
 logger.lifecycle "java version: " + JavaVersion.current()
 
 apply plugin: 'eclipse'
-apply plugin: 'application'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'project-report'
 
@@ -62,29 +61,4 @@ remotes {
 }
 
 version = '0.1'
-compileJava.options.encoding = 'UTF-8'
-
-eclipse {
-	jdt.file.withProperties { properties ->
-	  properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
-	  properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
-	}
-}
-
-test {
-    testLogging {
-        events 'passed'
-    }
-    if(project.hasProperty('mysql')) {
-        logger.info "Running tests on mysql db!"
-        systemProperty "spring.profiles.active", "test,mysql-test"
-    } else {
-        def maxForks = Runtime.getRuntime().availableProcessors()
-        if (System.env.'CI') {
-            maxForks = (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
-        }
-        logger.info "Maximum used parallel forks: " + maxForks
-        maxParallelForks maxForks
-    }
-}
 
