@@ -34,8 +34,8 @@ logger.lifecycle  "88     88     88ood8 dP\"\"\"\"Yb 88  Y8   88       dP\"\"\"\
 
 logger.lifecycle "Available processors: " + Runtime.getRuntime().availableProcessors()
 try {
-  logger.lifecycle "npm version: " + ("npm --version".execute().text)
-  logger.lifecycle "node version: " + ("node --version".execute().text)
+  logger.lifecycle "npm version: " + ("npm --version".execute().text.trim())
+  logger.lifecycle "node version: " + ("node --version".execute().text.trim())
 } catch (Exception e) {
   logger.warn("Didn't find npm and/or node to determine the used versions.")
 }
