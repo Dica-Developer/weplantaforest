@@ -12,22 +12,22 @@
 
 * Java 8
 * Eclipse Luna / 4.4 (for 4.3.2 see https://wiki.eclipse.org/JDT/Eclipse_Java_8_Support_For_Kepler)
-* Gradle (```brew install gradle```)
-* NodeJs (```brew install npm```)
+* Gradle (./gradlew)
+* NodeJs (https://github.com/creationix/nvm)
 
 ### Build System
 We use *Gradle* as our build system. All commands listed here follow the pattern ```gradle <task>'```. 
 If *Gradle* is not installed on your system you can use ```sh gradlew <task>``` instead.
 
 ##### Useful commands
-* ```gradle tasks``` - list all tasks
-* ```gradle eclipse``` - setup eclipse files
-* ```gradle run``` - start server for UI development
-* ```gradle bootRun``` - start server for development (refreshes static resources)
-* ```gradle test``` - execute unit tests (open report with ```open build/reports/tests/index.html```
+* ```gradlew tasks``` - list all tasks
+* ```gradlew eclipse``` - setup eclipse files
+* ```gradlew run``` - start server for UI development
+* ```gradlew bootRun``` - start server for development (refreshes static resources)
+* ```gradlew test``` - execute unit tests (open report with ```open build/reports/tests/index.html```
  * for executing single test add ```-Dtest.single=ExampleMainTest```
  * for running tests on mysql add ```-Pmysql``` 
-* ```gradle clean``` - clean the project
+* ```gradlew clean``` - clean the project
 
 ### IDE Configuration
 Setup with the Gradle Integration for Eclipse plugin.
