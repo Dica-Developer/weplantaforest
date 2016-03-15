@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="js/react/react.js"></script>
+<script src="js/react/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
+</head>
+<body>
+<table>
+	<thead>
+		<tr><th>co2</th><th>trees</th></tr>
+	</thead>
+	<tbody id="co2bar"></tbody>
+</table>
+<script type="text/babel">
+var Co2Bar = React.createClass({
+    getInitialState: function () {
+        return {co2: 0, treesCount: 0.0};
+    },
+    componentDidMount: function () {
+        $.getJSON('http://localhost:8081/reports/co2', function(co2) {
+            this.setState(co2);
+        }.bind(this));
+    },
+    render: function() {
+	return (<tr><td>{this.state.co2}</td><td>{this.state.treesCount}</td></tr>);
+    }
+});
+
+
+ReactDOM.render(
+    <Co2Bar/>,
+    document.getElementById('co2bar')
+);
+</script>
+</body>
+</html>
+
