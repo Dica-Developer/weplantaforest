@@ -39,6 +39,7 @@ Select "Import..." -> "Gradle Project" then build the model and import the plugi
 Additional stuff:
 
 Make sure you have the following classes included for static import:
+* lombok
 * org.assertj.core.api.Assertions
 * org.mockito.Matchers
 * com.jayway.restassured.RestAssured
