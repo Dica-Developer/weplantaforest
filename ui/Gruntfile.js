@@ -98,8 +98,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('runYoRamlang', function () {
     var done = this.async();
-
-    require('child_process').spawn('yo', ['ramlang', '--force'])
+    var yoCommand = (process.platform === "win32" ? "yo.cmd" : "yo");
+	
+    require('child_process').spawn(yoCommand, ['ramlang', '--force'])
       .on('close', done);
   });
 
