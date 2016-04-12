@@ -19,9 +19,9 @@ import org.gradle.api.tasks.Exec
 import org.apache.tools.ant.taskdefs.condition.Os
 
 ext {
-	npmCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'npm.cmd' : 'npm'
-	bowerCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'bower.cmd' : 'bower'
-	gruntCommand  = Os.isFamily(Os.FAMILY_WINDOWS) ? 'grunt.cmd' : 'grunt'
+    npmCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'npm.cmd' : 'npm'
+    bowerCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'bower.cmd' : 'bower'
+    gruntCommand  = Os.isFamily(Os.FAMILY_WINDOWS) ? 'grunt.cmd' : 'grunt'
 }
 
 logger.lifecycle "                            # #### ####"
