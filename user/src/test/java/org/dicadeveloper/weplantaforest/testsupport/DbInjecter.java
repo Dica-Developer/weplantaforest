@@ -1,9 +1,15 @@
 package org.dicadeveloper.weplantaforest.testsupport;
 
+import java.util.Date;
+
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
+import org.dicadeveloper.weplantaforest.trees.Tree;
+import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.trees.User;
 import org.dicadeveloper.weplantaforest.trees.UserRepository;
+import org.dicadeveloper.weplantaforest.treetypes.TreeType;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +22,13 @@ public class DbInjecter {
     @Autowired
     private UserRepository _userRepository;
 
-    public void createAndSaveProect(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
+    @Autowired
+    private TreeTypeRepository _treeTypeRepository;
+
+    @Autowired
+    private TreeRepository _treeRepository;
+
+    public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
         String projectName = pName;
         project.setName(projectName);
@@ -29,10 +41,31 @@ public class DbInjecter {
         _projectRepository.save(project);
     }
 
-    public void createAndSaveUser(String userName) {
+    public void injectUser(String userName) {
         User userDto = new User();
         userDto.setName(userName);
         _userRepository.save(userDto);
+    }
+
+    public void injectTreeType(String name, String desc, double co2) {
+        TreeType treeTypeDto = new TreeType();
+        treeTypeDto.setName(name);
+        treeTypeDto.setDescription(desc);
+        treeTypeDto.setAnnualCo2SavingInTons(co2);
+        _treeTypeRepository.save(treeTypeDto);
+    }
+
+    public void injectTree(String treeType, String owner,int amount, long timeOfPlanting) {
+        Tree tree = new Tree();
+        tree.setLatitude(0);
+        tree.setLongitude(0);
+        tree.setAmount(amount);
+        tree.setTreeType(_treeTypeRepository.findByName(treeType));
+        tree.setPlantedOn(new Date(timeOfPlanting).getTime());
+        tree.setSubmittedOn(new Date(timeOfPlanting).getTime());
+        tree.setOwner(_userRepository.findByName(owner));
+        _treeRepository.save(tree);
+
     }
 
 }
