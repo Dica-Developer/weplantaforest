@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import org.dicadeveloper.weplantaforest.admin.codes.Team;
+import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
@@ -35,14 +37,16 @@ public class DatabasePopulator {
 	private UserRepository _userRepository;
 	private TreeTypeRepository _treeTypeRepository;
 	private TreeRepository _treeRepository;
+	private TeamRepository _teamRepository;
 
 	@Autowired
 	public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository,
-			TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
+			TreeTypeRepository treeTypeRepository, TreeRepository treeRepository, TeamRepository teamRepository) {
 		_projectRepository = projectRepository;
 		_userRepository = userRepository;
 		_treeTypeRepository = treeTypeRepository;
 		_treeRepository = treeRepository;
+		_teamRepository = teamRepository;
 	}
 
 	public void insertProjects() {
@@ -165,4 +169,16 @@ public class DatabasePopulator {
 		Verify.verify(_treeTypeRepository.count() > 0, "No TreeTypes set up!");
 		return _treeTypeRepository.findAll();
 	}
+	
+    public DatabasePopulator insertTeams() {
+        for (int i = 0; i < 4; i++) {
+            Team t = new Team();
+            t.setName("team " + i);
+            t.set_description("team description blabla");
+            t.set_timeStamp(new Date(i * 1000000000L).getTime());
+            t.set_admin(_userRepository.findByName(DEFAULT_USERS.get(i)));
+            _teamRepository.save(t);
+        }
+        return this;
+    }
 }
