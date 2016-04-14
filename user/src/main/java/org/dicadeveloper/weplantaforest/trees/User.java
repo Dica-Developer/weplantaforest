@@ -39,4 +39,7 @@ public class User implements Identifiable<Long> {
 
 	@ManyToOne(optional = true)
 	private Team team;
+	
+	@Column
+    private Long _regDate;
 }
