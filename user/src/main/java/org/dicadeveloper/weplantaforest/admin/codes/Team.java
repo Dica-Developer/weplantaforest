@@ -18,10 +18,12 @@ import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 public class Team implements Identifiable<Long> {
