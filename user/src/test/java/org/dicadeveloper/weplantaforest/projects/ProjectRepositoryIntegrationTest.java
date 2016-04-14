@@ -34,8 +34,8 @@ public class ProjectRepositoryIntegrationTest {
 
     @Test
     public void testGetActiveProjects() {
-        dbInjecter.createAndSaveUser("Bert");
-        dbInjecter.createAndSaveProect("Project von Bert", "Bert", "desc", true, 52.4626536896816f, 13.607287460327143f);
+        dbInjecter.injectUser("Bert");
+        dbInjecter.injectProject("Project von Bert", "Bert", "desc", true, 52.4626536896816f, 13.607287460327143f);
 
         final PageRequest page1 = new PageRequest(0, 20);
         Page<Project> projects = _projectRepository.active(page1);
