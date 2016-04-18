@@ -6,9 +6,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface TreeTypeRepository extends CrudRepository<TreeType, Long> {
 
-	@Query
-	public TreeType findByName(@Param("name") String name);
+    @Query
+    public TreeType findByName(@Param("name") String name);
 
-	@Query(value = "SELECT count(id) > 0 FROM TreeType")
-	public boolean existsAtAll();
+    @Query(value = "SELECT count(id) > 0 FROM TreeType")
+    public boolean existsAtAll();
 }

@@ -13,36 +13,36 @@ import org.springframework.stereotype.Component;
 @Profile("dev")
 public class DataInjector {
 
-	protected final Log LOG = LogFactory.getLog(DataInjector.class.getName());
+    protected final Log LOG = LogFactory.getLog(DataInjector.class.getName());
 
-	protected DatabasePopulator _databasePopulator;
+    protected DatabasePopulator _databasePopulator;
 
-	private TreeTypeRepository _treeTypeRepository;
+    private TreeTypeRepository _treeTypeRepository;
 
-	@Autowired
-	public DataInjector(TreeTypeRepository treeTypeRepository, DatabasePopulator databasePopulator) {
-		_treeTypeRepository = treeTypeRepository;
-		_databasePopulator = databasePopulator;
-	}
+    @Autowired
+    public DataInjector(TreeTypeRepository treeTypeRepository, DatabasePopulator databasePopulator) {
+        _treeTypeRepository = treeTypeRepository;
+        _databasePopulator = databasePopulator;
+    }
 
-	@PostConstruct
-	private void inject() {
-		Runnable treeInjector = new Runnable() {
+    @PostConstruct
+    private void inject() {
+        Runnable treeInjector = new Runnable() {
 
-			@Override
-			public void run() {
-				// TODO jz: Thinking about giving this an extra state table in
-				// the db (like db.populates=v23)
-				if (!_treeTypeRepository.existsAtAll()) {
-					int treeCount = 15000;
-					_databasePopulator.insertUsers().insertDefaultTreeTypes().insertTrees(treeCount).insertProjects();
-					LOG.info("Finished injecting " + treeCount + " trees ");
-				} else {
-					LOG.info("No entities will be injected.");
-				}
-			}
-		};
-		Thread thread = new Thread(treeInjector);
-		thread.start();
-	}
+            @Override
+            public void run() {
+                // TODO jz: Thinking about giving this an extra state table in
+                // the db (like db.populates=v23)
+                if (!_treeTypeRepository.existsAtAll()) {
+                    int treeCount = 15000;
+                    _databasePopulator.insertUsers().insertDefaultTreeTypes().insertTrees(treeCount).insertProjects();
+                    LOG.info("Finished injecting " + treeCount + " trees ");
+                } else {
+                    LOG.info("No entities will be injected.");
+                }
+            }
+        };
+        Thread thread = new Thread(treeInjector);
+        thread.start();
+    }
 }

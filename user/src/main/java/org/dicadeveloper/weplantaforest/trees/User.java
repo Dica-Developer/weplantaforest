@@ -24,24 +24,24 @@ import lombok.ToString;
 @Table(name = "User")
 public class User implements Identifiable<Long> {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "_userId")
-	private Long id;
+    @Id
+    @GeneratedValue
+    @Column(name = "_userId")
+    private Long id;
 
-	@Column(unique = true, name = "_name")
-	private String name;
+    @Column(unique = true, name = "_name")
+    private String name;
 
-	@Column(name = "_enabled", nullable = false)
-	private boolean enabled = false;
+    @Column(name = "_enabled", nullable = false)
+    private boolean enabled = false;
 
-	@Column(name = "_banned", nullable = false)
-	private boolean banned = false;
+    @Column(name = "_banned", nullable = false)
+    private boolean banned = false;
 
-	@ManyToOne(optional = true)
-    @JoinColumn(name="_team__teamId")	
-	private Team team;
-	
-	@Column
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "_team__teamId")
+    private Team team;
+
+    @Column
     private Long _regDate;
 }

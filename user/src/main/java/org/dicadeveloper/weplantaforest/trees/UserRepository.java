@@ -6,8 +6,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-	public final static String FIND_BY_NAME_QUERY = "SELECT user FROM User user WHERE user.name = :name";
+    public final static String FIND_BY_NAME_QUERY = "SELECT user FROM User user WHERE user.name = :name";
 
-	@Query(FIND_BY_NAME_QUERY)
-	public User findByName(@Param("name") String name);
+    @Query(FIND_BY_NAME_QUERY)
+    public User findByName(@Param("name") String name);
 }

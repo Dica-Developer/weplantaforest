@@ -29,38 +29,36 @@ import org.springframework.web.context.WebApplicationContext;
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class Co2ControllerTest {
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@Rule
-	@Autowired
-	public CleanDbRule _cleanDbRule;
+    @Rule
+    @Autowired
+    public CleanDbRule _cleanDbRule;
 
-	@Autowired
-	private DbInjecter dbInjecter;
+    @Autowired
+    private DbInjecter dbInjecter;
 
-	@Autowired
-	private WebApplicationContext wac;
+    @Autowired
+    private WebApplicationContext wac;
 
-	@Before
-	public void setup() {
-		this.mockMvc = webAppContextSetup(this.wac).build();
-	}
+    @Before
+    public void setup() {
+        this.mockMvc = webAppContextSetup(this.wac).build();
+    }
 
-	@Test
-	public void testGetTreesCountAndCo2WithSavedObjects() throws Exception {
-	    dbInjecter.injectUser("Bert");
+    @Test
+    public void testGetTreesCountAndCo2WithSavedObjects() throws Exception {
+        dbInjecter.injectUser("Bert");
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTree("wood", "Bert", 10, 30000L);
-        
-		this.mockMvc.perform(get("/reports/co2").accept("application/json")).andExpect(status().isOk())
-		        .andExpect(jsonPath("$.treesCount").value(10)).andExpect(jsonPath("$.co2").exists());
-	}
 
-	@Test
-	public void testGetTreesCountAndCo2WithoutSavedObjects() throws Exception {
-		this.mockMvc.perform(get("/reports/co2").accept("application/json")).andExpect(status().isOk())
-		        .andExpect(jsonPath("$.treesCount").value(0)).andExpect(jsonPath("$.co2").value(0.0));
+        this.mockMvc.perform(get("/reports/co2").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.treesCount").value(10)).andExpect(jsonPath("$.co2").exists());
+    }
 
-	}
+    @Test
+    public void testGetTreesCountAndCo2WithoutSavedObjects() throws Exception {
+        this.mockMvc.perform(get("/reports/co2").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.treesCount").value(0)).andExpect(jsonPath("$.co2").value(0.0));
+
+    }
 
 }

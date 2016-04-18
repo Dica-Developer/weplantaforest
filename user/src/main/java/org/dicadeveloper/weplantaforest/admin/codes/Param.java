@@ -22,7 +22,7 @@ public class Param {
     private String _value;
 
     @ManyToOne
-    @JoinColumn(name="_abo__id")    
+    @JoinColumn(name = "_abo__id")
     private Abo _abo;
 
     public Param() {
