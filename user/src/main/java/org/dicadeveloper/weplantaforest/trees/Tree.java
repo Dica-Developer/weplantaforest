@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -42,8 +43,10 @@ public class Tree implements Identifiable<Long> {
 	private long plantedOn;
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @JoinColumn(name = "_owner__userId")
 	private User owner;
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
+    @JoinColumn(name = "_treeType_treeTypeId")
 	private TreeType treeType;
 }

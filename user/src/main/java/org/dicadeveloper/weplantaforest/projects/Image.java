@@ -25,9 +25,9 @@ public class Image implements Identifiable<Long> {
 	@Column(name = "_id")
 	private Long id;
 
-	@Column(nullable = false)
+    @Column(name = "_type", nullable = false)
 	private DataType type;
 
-	@Column(nullable = false)
+    @Column(name = "_file", nullable = false)
 	private String file;
 }
