@@ -50,6 +50,7 @@ public class Cart implements Identifiable<Long> {
 	private Long _timeStamp;
 
 	@Enumerated(EnumType.STRING)
+    @Column(name = "_cartState")
 	private CartState cartState;
 
 	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
@@ -57,9 +58,11 @@ public class Cart implements Identifiable<Long> {
 	private List<CartItem> cartItems = new ArrayList<CartItem>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "_buyer__userId")	
 	private User buyer;
 
 	@ManyToOne
+    @JoinColumn(name = "_event__id")	
 	private Event event;
 
 	@Column(length = 1024)
@@ -123,7 +126,7 @@ public class Cart implements Identifiable<Long> {
 	private String _callBackFirmanzusatz;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = true)
+    @JoinColumn(name = "_abo__id", nullable = true)
 	private Abo _abo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -131,6 +134,7 @@ public class Cart implements Identifiable<Long> {
 	private Receipt _receipt;
 
 	@OneToOne(optional = true)
+    @JoinColumn(name = "_code__id")	
 	private Coupon _code;
 
 	@Transient

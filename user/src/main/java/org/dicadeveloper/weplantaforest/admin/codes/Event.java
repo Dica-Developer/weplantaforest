@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -31,16 +32,18 @@ public class Event implements Identifiable<Long> {
 	@Column(name = "_id")
 	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(name = "_name", nullable = false, unique = true)
 	private String name;
 
 	@OneToMany(mappedBy = "event")
 	private List<Coupon> codes = new ArrayList<Coupon>();
 
 	@ManyToOne
+    @JoinColumn(name = "_team__teamId") 	
 	private Team _team;
 
 	@ManyToOne
+    @JoinColumn(name = "_user__userId")	
 	private User _user;
 
 	@Column

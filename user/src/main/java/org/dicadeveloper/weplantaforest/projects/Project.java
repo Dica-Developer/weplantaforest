@@ -33,7 +33,7 @@ public class Project implements Identifiable<Long> {
 	@Column(name = "_name", length = 255)
 	private String name;
 
-	@Column(name = "_description", length = 65535)
+    @Column(name = "_description", length = 65535, columnDefinition = "TEXT")
 	private String description;
 
 	@Column(name = "_longitude")
@@ -68,6 +68,6 @@ public class Project implements Identifiable<Long> {
 	private String _googleMapsOverlayImageFileName;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false)
+    @JoinColumn(name = "_manager__userId", nullable = false)
 	private User manager;
 }

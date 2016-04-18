@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -36,6 +37,7 @@ public class CartItem implements Identifiable<Long> {
 	// TODO: remove
 	// a real reference?
 	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="_treeType_treeTypeId")
 	private TreeType _treeType;
 
 	private int _amount;
@@ -55,6 +57,7 @@ public class CartItem implements Identifiable<Long> {
 	private BigDecimal _totalPrice;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="_cart__cartId")
 	private Cart cart;
 
 	public Long getId() {

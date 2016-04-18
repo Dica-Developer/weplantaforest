@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.springframework.hateoas.Identifiable;
@@ -42,6 +43,7 @@ public class Coupon implements Identifiable<Long> {
 	private int _number = -1;
 
 	@ManyToOne(optional = true)
+    @JoinColumn(name="_event__id")	
 	private Event event;
 
 	@Column(name = "_treeCount")

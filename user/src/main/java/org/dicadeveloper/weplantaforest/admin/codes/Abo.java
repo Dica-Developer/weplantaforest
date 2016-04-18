@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -40,6 +41,7 @@ public class Abo {
     private Period _period;
 
     @ManyToOne(optional = true)
+    @JoinColumn(name = "_user__userId")
     private User _user;
 
     @Column(nullable = false)
@@ -58,6 +60,7 @@ public class Abo {
     private List<Cart> _carts = new ArrayList<Cart>();
 
     @OneToOne(optional = true)
+    @JoinColumn(name = "_currentCart__cartId")
     private Cart _currentCart;
 
     public void setType(final Type type) {
