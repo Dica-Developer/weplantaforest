@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -21,6 +22,7 @@ public class Param {
     private String _value;
 
     @ManyToOne
+    @JoinColumn(name = "_abo__id")
     private Abo _abo;
 
     public Param() {

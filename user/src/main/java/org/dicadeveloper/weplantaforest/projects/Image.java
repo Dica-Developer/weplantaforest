@@ -20,14 +20,14 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Image implements Identifiable<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "_id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "_id")
+    private Long id;
 
-	@Column(nullable = false)
-	private DataType type;
+    @Column(name = "_type", nullable = false)
+    private DataType type;
 
-	@Column(nullable = false)
-	private String file;
+    @Column(name = "_file", nullable = false)
+    private String file;
 }

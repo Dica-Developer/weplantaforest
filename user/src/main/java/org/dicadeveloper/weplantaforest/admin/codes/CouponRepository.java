@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CouponRepository extends CrudRepository<Coupon, Long> {
 
-	@Query("select coupon from Code coupon where coupon._code = :code")
-	public boolean existCouponWithCode(@Param("code") String code);
+    @Query("select coupon from Code coupon where coupon._code = :code")
+    public boolean existCouponWithCode(@Param("code") String code);
 }

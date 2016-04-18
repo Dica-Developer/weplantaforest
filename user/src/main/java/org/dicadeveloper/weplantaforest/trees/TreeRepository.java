@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface TreeRepository extends CrudRepository<Tree, Long> {
 
-	public final static String FIND_TREETYPE_ID_BY_TREE_ID_QUERY = "SELECT tree.treeType.id  FROM Tree tree WHERE tree.id = :id";
+    public final static String FIND_TREETYPE_ID_BY_TREE_ID_QUERY = "SELECT tree.treeType.id  FROM Tree tree WHERE tree.id = :id";
 
-	@Query(value = FIND_TREETYPE_ID_BY_TREE_ID_QUERY)
-	@Transactional(readOnly = true)
-	public Long findTreeTypeIdByTreeId(@Param("id") Long treeId);
+    @Query(value = FIND_TREETYPE_ID_BY_TREE_ID_QUERY)
+    @Transactional(readOnly = true)
+    public Long findTreeTypeIdByTreeId(@Param("id") Long treeId);
 }

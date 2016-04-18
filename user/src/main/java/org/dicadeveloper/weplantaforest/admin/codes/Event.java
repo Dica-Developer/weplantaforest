@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -26,86 +27,88 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Event implements Identifiable<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "_id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "_id")
+    private Long id;
 
-	@Column(nullable = false, unique = true)
-	private String name;
+    @Column(name = "_name", nullable = false, unique = true)
+    private String name;
 
-	@OneToMany(mappedBy = "event")
-	private List<Coupon> codes = new ArrayList<Coupon>();
+    @OneToMany(mappedBy = "event")
+    private List<Coupon> codes = new ArrayList<Coupon>();
 
-	@ManyToOne
-	private Team _team;
+    @ManyToOne
+    @JoinColumn(name = "_team__teamId")
+    private Team _team;
 
-	@ManyToOne
-	private User _user;
+    @ManyToOne
+    @JoinColumn(name = "_user__userId")
+    private User _user;
 
-	@Column
-	private Integer _valid;
+    @Column
+    private Integer _valid;
 
-	@OneToMany(mappedBy = "event")
-	private List<Cart> carts = new ArrayList<Cart>();
+    @OneToMany(mappedBy = "event")
+    private List<Cart> carts = new ArrayList<Cart>();
 
-	@Column
-	private Boolean _userReceiptReceiver = false;
+    @Column
+    private Boolean _userReceiptReceiver = false;
 
-	public int getCodesCount() {
-		return codes.size();
-	}
+    public int getCodesCount() {
+        return codes.size();
+    }
 
-	public boolean getDeleteable() {
-		return carts.size() == 0;
-	}
+    public boolean getDeleteable() {
+        return carts.size() == 0;
+    }
 
-	public void addValid(final int valid) {
-		if (_valid == null) {
-			_valid = valid;
-		} else {
-			_valid += valid;
-		}
-	}
+    public void addValid(final int valid) {
+        if (_valid == null) {
+            _valid = valid;
+        } else {
+            _valid += valid;
+        }
+    }
 
-	public int getUnevaluated() {
-		int count = 0;
-		for (final Coupon code : codes) {
-			if (!code.isEvaluated()) {
-				count++;
-			}
-		}
-		return count;
-	}
+    public int getUnevaluated() {
+        int count = 0;
+        for (final Coupon code : codes) {
+            if (!code.isEvaluated()) {
+                count++;
+            }
+        }
+        return count;
+    }
 
-	public Coupon getFirstCode() {
-		Coupon last = null;
-		for (final Coupon code : codes) {
-			last = code;
-			if (!code.isEvaluated()) {
-				return code;
-			}
-		}
-		return last;
-	}
+    public Coupon getFirstCode() {
+        Coupon last = null;
+        for (final Coupon code : codes) {
+            last = code;
+            if (!code.isEvaluated()) {
+                return code;
+            }
+        }
+        return last;
+    }
 
-	public boolean isActive() {
-		return _user == null && _valid == null || _user != null && _valid != null;
-	}
+    public boolean isActive() {
+        return _user == null && _valid == null || _user != null && _valid != null;
+    }
 
-	public void addCart(final Cart cart) {
-		carts.add(cart);
-	}
+    public void addCart(final Cart cart) {
+        carts.add(cart);
+    }
 
-	public void removeCart(final Cart cart) {
-		carts.remove(cart);
-	}
+    public void removeCart(final Cart cart) {
+        carts.remove(cart);
+    }
 
-	public int getCartsCount() {
-		return carts.size();
-	}
+    public int getCartsCount() {
+        return carts.size();
+    }
 
-	public boolean getUserReceiptReceiver() {
-		return _userReceiptReceiver != null && _userReceiptReceiver;
-	}
+    public boolean getUserReceiptReceiver() {
+        return _userReceiptReceiver != null && _userReceiptReceiver;
+    }
 }
