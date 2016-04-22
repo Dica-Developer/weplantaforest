@@ -5,16 +5,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import java.util.Date;
-
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.trees.Tree;
-import org.dicadeveloper.weplantaforest.trees.TreeRepository;
-import org.dicadeveloper.weplantaforest.trees.User;
-import org.dicadeveloper.weplantaforest.trees.UserRepository;
-import org.dicadeveloper.weplantaforest.treetypes.TreeType;
-import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,13 +39,7 @@ public class UserAndOrgRankingControllerTest {
     private WebApplicationContext wac;
 
     @Autowired
-    private UserRepository _uUserRepository;
-
-    @Autowired
-    private TreeTypeRepository _treeTypeRepository;
-
-    @Autowired
-    private TreeRepository _treeRepository;
+    public DbInjecter _dbInjecter;
 
     @Before
     public void setup() {
@@ -61,26 +48,10 @@ public class UserAndOrgRankingControllerTest {
 
     @Test
     public void testGetBestUser() throws Exception {
-        TreeType treeTypeDto = new TreeType();
-        treeTypeDto.setName("wood");
-        treeTypeDto.setDescription("description");
-        treeTypeDto.setAnnualCo2SavingInTons(0.5);
-        _treeTypeRepository.save(treeTypeDto);
-
-        User userDto = new User();
-        userDto.setName("Bert");
-        _uUserRepository.save(userDto);
-
         long timeOfPlanting = System.currentTimeMillis();
-        Tree tree = new Tree();
-        tree.setLatitude(0);
-        tree.setLongitude(0);
-        tree.setAmount(10);
-        tree.setTreeType(treeTypeDto);
-        tree.setPlantedOn(new Date(timeOfPlanting).getTime());
-        tree.setSubmittedOn(new Date(timeOfPlanting).getTime());
-        tree.setOwner(userDto);
-        _treeRepository.save(tree);
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+        _dbInjecter.injectUser("Bert");
+        _dbInjecter.injectTree("wood", "Bert", 10, timeOfPlanting);
 
         this.mockMvc.perform(get("/ranking/bestUser/{pageNr}/{pageSize}", 0, 4).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.content[0].name").value("Bert"))
                 .andExpect(jsonPath("$.content[0].amount").value(10)).andExpect(jsonPath("$.content[0].co2Saved").exists());
