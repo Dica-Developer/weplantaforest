@@ -38,14 +38,25 @@ public class UserAndOrgRepoIntegrationTest {
         long timeOfPlanting = System.currentTimeMillis();
 
         _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam");
         _dbInjecter.injectUser("Bert");
-        _dbInjecter.injectTree("wood", "Bert", 10, timeOfPlanting);
+        _dbInjecter.injectUser("Claus");
+        _dbInjecter.injectUser("Dirk");
+
+        _dbInjecter.injectTree("wood", "Adam", 100, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Claus", 50, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Dirk", 10, timeOfPlanting);
 
         Page<RankedUser> ruList = userAndOrgRankingRepo.getBestUser(System.currentTimeMillis(), new PageRequest(0, 5));
 
         assertThat(ruList).isNotNull();
-        assertThat(ruList.getContent().get(0).getName()).isEqualTo("Bert");
-        assertThat(ruList.getContent().get(0).getAmount()).isEqualTo(10);
+        assertThat(ruList.getTotalElements()).isEqualTo(4);
+        assertThat(ruList.getTotalPages()).isEqualTo(1);
+        assertThat(ruList.getContent().size()).isEqualTo(4);
+        assertThat(ruList.getContent().get(0).getName()).isEqualTo("Adam");
+        assertThat(ruList.getContent().get(0).getAmount()).isEqualTo(100);
         assertThat(ruList.getContent().get(0).getCo2Saved()).isGreaterThan(0);
     }
 }
