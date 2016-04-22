@@ -28,7 +28,6 @@ public class DbInjecter {
     @Autowired
     private TreeRepository _treeRepository;
 
-
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
         String projectName = pName;
