@@ -69,7 +69,7 @@ public class UserAndOrgRepoIntegrationTest {
         tree.setOwner(userDto);
         _treeRepository.save(tree);
 
-        Page<RankedUser> ruList = userAndOrgRankingRepo.getBestUser( System.currentTimeMillis(), new PageRequest(0, 5));
+        Page<RankedUser> ruList = userAndOrgRankingRepo.getBestUser(System.currentTimeMillis(), new PageRequest(0, 5));
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.getContent().get(0).getName()).isEqualTo("Bert");

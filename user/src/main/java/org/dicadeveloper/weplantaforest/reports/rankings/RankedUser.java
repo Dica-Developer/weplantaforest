@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class RankedUser extends ResourceSupport{
+public class RankedUser extends ResourceSupport {
 
     String name;
     Long amount;
