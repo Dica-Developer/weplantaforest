@@ -7,16 +7,11 @@
     <title>I Plant A Tree</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/main.css">
 
-
-    <script src="js/react/react.js"></script>
-    <script src="js/react/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.2.1.js"></script>
-    <script src="js/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/bundle.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -147,31 +142,11 @@
         </ul>
       </div>
     </div>
-    <p>Copyright © 2007-2015 I Plant A Tree. All rights reserved.</p>
+    <p>Copyright © 2007-2016 I Plant A Tree. All rights reserved.</p>
   </div>
 </footer>
-
-<script type="text/babel">
-var Co2Bar = React.createClass({
-    getInitialState: function () {
-        return {co2: 0, treesCount: 0.0};
-    },
-    componentDidMount: function () {
-        $.getJSON('http://localhost:8081/reports/co2', function(co2) {
-            this.setState(co2);
-        }.bind(this));
-    },
-    render: function() {
-	return (<div><div className="col-md-6"><h3>{this.state.co2} <small>t CO2 gebunden</small></h3></div><div className="col-md-6"><h3>{this.state.treesCount} <small>Bäume gepflanzt</small></h3></div></div>);
-    }
-});
-
-
-ReactDOM.render(
-    <Co2Bar/>,
-    document.getElementById('co2Bar')
-);
-</script>
+<div id="test"></div>
+    <script src="js/bundle.js"></script>
 </body>
 </html>
 
