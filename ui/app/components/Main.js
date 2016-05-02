@@ -151,7 +151,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.body)
+render(<App />, document.getElementById('app'));
 
 /* vim: set softtabstop=2:shiftwidth=2:expandtab */ 
 
