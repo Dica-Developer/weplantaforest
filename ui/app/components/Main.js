@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Locations, Location, NotFound} from 'react-router-component';
 import NavBar from './NavBar';
+import PlantPage from './PlantPage';
 import Footer from './Footer';
 
 class Co2Bar extends Component {
@@ -54,7 +55,7 @@ class App extends Component {
     return (
       <Locations hash>
         <Location path="/" handler={MainPage} />
-        <Location path="/plant" handler={MainPage} />
+        <Location path="/plant" handler={PlantPage} />
         <NotFound handler={NotFoundPage} />
       </Locations>);
   }
