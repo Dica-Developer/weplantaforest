@@ -25,10 +25,10 @@ class NavBar extends React.Component {
     <div className="navbar-collapse collapse" id="navbar-main">
       <ul className="nav navbar-nav">
         <li>
-        <a href="/pant">Pflanzen</a>
+        <a href="#/plant">Pflanzen</a>
         </li>
         <li>
-        <a href="/explore">Entdecken</a>
+        <a href="#/explore">Entdecken</a>
         </li>
       </ul>
       <form className="navbar-form navbar-left" role="search">
@@ -60,11 +60,6 @@ class Co2Bar extends React.Component {
     axios.get('http://localhost:8081/reports/co2').then(function(co2) {
       that.setState(co2.data);
     });
-    window.setInterval(function () {
-      axios.get('http://localhost:8081/reports/co2').then(function(co2) {
-        that.setState(co2.data);
-      })
-    }, 10000);
   }
 
   render() {
@@ -180,7 +175,7 @@ class NotFoundPage extends React.Component {
     return (<div>
             <NavBar/>
             <div className="container">
-              <b>!!!Trees burnt out!!!</b>
+              <img width="100%" height="100%" src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Tunguska.png" />
             </div>
             <Footer/>
             </div>);
@@ -190,9 +185,9 @@ class NotFoundPage extends React.Component {
 class App extends React.Component {
   render() {
     return (
-      <Locations>
+      <Locations hash>
         <Location path="/" handler={MainPage} />
-        <Location path="/pant" handler={MainPage} />
+        <Location path="/plant" handler={MainPage} />
         <NotFound handler={NotFoundPage} />
       </Locations>);
   }
