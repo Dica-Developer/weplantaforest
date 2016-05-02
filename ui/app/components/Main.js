@@ -1,12 +1,10 @@
-var axios = require('axios');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Router = require('react-router-component');
-var Locations = Router.Locations;
-var Location = Router.Location;
-var NotFound = Router.NotFound;
+import axios from 'axios';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
+import {Locations, Location, NotFound} from 'react-router-component';
+import NavBar from './NavBar';
 
-class Co2Bar extends React.Component {
+class Co2Bar extends Component {
 
   constructor() {
     super();
@@ -25,7 +23,7 @@ class Co2Bar extends React.Component {
   }
 }
 
-class MainPage extends React.Component {
+class MainPage extends Component {
   render() {
     return (
       <div>
@@ -38,7 +36,7 @@ class MainPage extends React.Component {
   }
 }
 
-class Footer extends React.Component {
+class Footer extends Component {
   render() {
     return (
 <footer id="footer" className="footer">
@@ -128,7 +126,7 @@ class Footer extends React.Component {
   }
 }
 
-class NotFoundPage extends React.Component {
+class NotFoundPage extends Component {
   render() {
     return (<div>
             <NavBar/>
@@ -140,7 +138,7 @@ class NotFoundPage extends React.Component {
   }
 }
 
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <Locations hash>
