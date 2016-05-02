@@ -8,7 +8,7 @@
     "axios": "^0.11.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
-    "react-router": "^2.4.0"
+    "react-router-component": "^0.32.2"
   },
   "devDependencies": {
     "babel-core": "^6.7.7",
