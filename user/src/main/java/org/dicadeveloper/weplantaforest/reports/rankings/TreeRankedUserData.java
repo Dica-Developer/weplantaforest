@@ -2,7 +2,6 @@ package org.dicadeveloper.weplantaforest.reports.rankings;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
