@@ -65,4 +65,27 @@ public class RankingControllerTest {
                 .andExpect(jsonPath("$.content[0].date").value("31.12.1969"));
     }
 
+    @Test
+    public void testGetBestOrganizationTypeRanking() throws Exception {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam", 10000L, 0);
+        _dbInjecter.injectUser("Bert", 10000L, 0);
+        _dbInjecter.injectUser("money company", 10000L, 1);
+        _dbInjecter.injectUser("no money company", 10000L, 2);
+        _dbInjecter.injectUser("hogwarts", 10000L, 3);
+
+        _dbInjecter.injectTree("wood", "Adam", 100, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "money company", 50, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
+
+        this.mockMvc.perform(get("/ranking/bestOrgType/{organizationType}/{pageNr}/{pageSize}", 0, 0, 4).accept("application/json")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(2)).andExpect(jsonPath("$.content[0].name").value("Adam")).andExpect(jsonPath("$.content[0].amount").value(100))
+                .andExpect(jsonPath("$.content[0].co2Saved").exists());
+    }
+
 }

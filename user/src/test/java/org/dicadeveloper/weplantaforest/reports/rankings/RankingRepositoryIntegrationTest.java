@@ -77,4 +77,33 @@ public class RankingRepositoryIntegrationTest {
         assertThat(ruList.getContent().get(0).getDate()).isEqualTo("31.12.1969");
         assertThat(ruList.getContent().get(0).getTime()).isEqualTo("16:01:30");
     }
+
+    @Test
+    public void testGetBestOrganizationTypeRanking() {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam", 10000L, 0);
+        _dbInjecter.injectUser("Bert", 10000L, 0);
+        _dbInjecter.injectUser("money company", 10000L, 1);
+        _dbInjecter.injectUser("no money company", 10000L, 2);
+        _dbInjecter.injectUser("hogwarts", 10000L, 3);
+
+        _dbInjecter.injectTree("wood", "Adam", 100, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "money company", 50, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
+
+        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), 0, new PageRequest(0, 5));
+
+        assertThat(privateList).isNotNull();
+        assertThat(privateList.getTotalElements()).isEqualTo(2);
+        assertThat(privateList.getTotalPages()).isEqualTo(1);
+        assertThat(privateList.getContent().size()).isEqualTo(2);
+        assertThat(privateList.getContent().get(0).getName()).isEqualTo("Adam");
+        assertThat(privateList.getContent().get(0).getAmount()).isEqualTo(100);
+        assertThat(privateList.getContent().get(0).getCo2Saved()).isGreaterThan(0);
+    }
 }

@@ -27,4 +27,9 @@ public class RankingController {
         return _userAndOrgRankingRepo.getLastCreatedUser(new PageRequest(pageNr, pageSize));
     }
 
+    @RequestMapping(value = "/ranking/bestOrgType/{organizationType}/{pageNr}/{pageSize}", method = RequestMethod.GET)
+    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType, @PathVariable int pageNr, @PathVariable int pageSize) {
+        return _userAndOrgRankingRepo.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(pageNr, pageSize));
+    }
+
 }

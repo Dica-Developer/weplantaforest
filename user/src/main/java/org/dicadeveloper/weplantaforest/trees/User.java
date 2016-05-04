@@ -40,6 +40,9 @@ public class User implements Identifiable<Long> {
 
     @Column(name = "_regDate")
     private Long regDate;
+    
+    @Column(name = "_organisationType")
+    private int organizationType;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
