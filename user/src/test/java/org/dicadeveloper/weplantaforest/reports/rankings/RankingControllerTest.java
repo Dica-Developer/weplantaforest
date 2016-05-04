@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class UserAndOrgRankingControllerTest {
+public class RankingControllerTest {
 
     private MockMvc mockMvc;
 
@@ -55,6 +55,14 @@ public class UserAndOrgRankingControllerTest {
 
         this.mockMvc.perform(get("/ranking/bestUser/{pageNr}/{pageSize}", 0, 4).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.content[0].name").value("Bert"))
                 .andExpect(jsonPath("$.content[0].amount").value(10)).andExpect(jsonPath("$.content[0].co2Saved").exists());
+    }
+
+    @Test
+    public void testGetLastUser() throws Exception {
+        _dbInjecter.injectUser("Bert", 90000L);
+
+        this.mockMvc.perform(get("/ranking/lastCreatedUser/{pageNr}/{pageSize}", 0, 4).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.content[0].name").value("Bert"))
+                .andExpect(jsonPath("$.content[0].date").value("31.12.1969"));
     }
 
 }

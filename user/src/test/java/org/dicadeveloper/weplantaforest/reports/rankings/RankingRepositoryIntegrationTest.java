@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class UserAndOrgRepoIntegrationTest {
+public class RankingRepositoryIntegrationTest {
 
     @Rule
     @Autowired
@@ -31,7 +31,7 @@ public class UserAndOrgRepoIntegrationTest {
     public DbInjecter _dbInjecter;
 
     @Autowired
-    private UserAndOrgRankingRepository userAndOrgRankingRepo;
+    private RankingRepository _rankingRepository;
 
     @Test
     public void testGetBestUserRanking() {
@@ -49,7 +49,7 @@ public class UserAndOrgRepoIntegrationTest {
         _dbInjecter.injectTree("wood", "Claus", 50, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Dirk", 10, timeOfPlanting);
 
-        Page<RankedUser> ruList = userAndOrgRankingRepo.getBestUser(System.currentTimeMillis(), new PageRequest(0, 5));
+        Page<TreeRankedUserData> ruList = _rankingRepository.getBestUser(System.currentTimeMillis(), new PageRequest(0, 5));
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.getTotalElements()).isEqualTo(4);
@@ -58,5 +58,23 @@ public class UserAndOrgRepoIntegrationTest {
         assertThat(ruList.getContent().get(0).getName()).isEqualTo("Adam");
         assertThat(ruList.getContent().get(0).getAmount()).isEqualTo(100);
         assertThat(ruList.getContent().get(0).getCo2Saved()).isGreaterThan(0);
+    }
+
+    @Test
+    public void testGetLastUserRanking() {
+        _dbInjecter.injectUser("Adam", 90000L);
+        _dbInjecter.injectUser("Bert", 70000L);
+        _dbInjecter.injectUser("Claus", 60000L);
+        _dbInjecter.injectUser("Dirk", 50000L);
+
+        Page<TimeRankedUserData> ruList = _rankingRepository.getLastCreatedUser(new PageRequest(0, 5));
+
+        assertThat(ruList).isNotNull();
+        assertThat(ruList.getTotalElements()).isEqualTo(4);
+        assertThat(ruList.getTotalPages()).isEqualTo(1);
+        assertThat(ruList.getContent().size()).isEqualTo(4);
+        assertThat(ruList.getContent().get(0).getName()).isEqualTo("Adam");
+        assertThat(ruList.getContent().get(0).getDate()).isEqualTo("31.12.1969");
+        assertThat(ruList.getContent().get(0).getTime()).isEqualTo("16:01:30");
     }
 }

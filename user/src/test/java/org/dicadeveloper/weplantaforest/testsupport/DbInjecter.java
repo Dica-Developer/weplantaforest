@@ -47,6 +47,13 @@ public class DbInjecter {
         _userRepository.save(userDto);
     }
 
+    public void injectUser(String userName, Long regDate) {
+        User userDto = new User();
+        userDto.setName(userName);
+        userDto.setRegDate(regDate);
+        _userRepository.save(userDto);
+    }
+
     public void injectTreeType(String name, String desc, double co2) {
         TreeType treeTypeDto = new TreeType();
         treeTypeDto.setName(name);
