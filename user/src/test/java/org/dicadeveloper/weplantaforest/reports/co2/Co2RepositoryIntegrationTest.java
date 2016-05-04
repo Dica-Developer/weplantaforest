@@ -49,8 +49,9 @@ public class Co2RepositoryIntegrationTest {
         _dbInjecter.injectUser("Bert");
         _dbInjecter.injectTree("wood", "Bert", 10, timeOfPlanting);
 
-        Double co2 = _co2Repository.getCo2Saving(timeOfPlanting);
-        assertThat(co2).isEqualTo(0.0);
+        Co2Data co2 = _co2Repository.getAllTreesAndCo2Saving(timeOfPlanting);
+        assertThat(co2.getTreesCount()).isEqualTo(10);
+        assertThat(co2.getCo2()).isEqualTo(0.0);
     }
 
     /**
@@ -62,7 +63,9 @@ public class Co2RepositoryIntegrationTest {
         _dbInjecter.injectUser("Bert");
         _dbInjecter.injectTree("wood", "Bert", 1, new Date(0).getTime());
 
-        Double co2Dto = _co2Repository.getCo2Saving(1207077022876l);
-        assertThat(co2Dto).isEqualTo(3.8276161874139056D, OK_DELTA_FOR_CO2_SAVING);
+        Co2Data co2 = _co2Repository.getAllTreesAndCo2Saving(1207077022876l);
+
+        assertThat(co2.getTreesCount()).isEqualTo(1);
+        assertThat(co2.getCo2()).isEqualTo(3.8276161874139056D, OK_DELTA_FOR_CO2_SAVING);
     }
 }
