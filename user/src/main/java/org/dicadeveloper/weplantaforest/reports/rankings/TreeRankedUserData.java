@@ -1,15 +1,12 @@
 package org.dicadeveloper.weplantaforest.reports.rankings;
 
-import org.springframework.hateoas.ResourceSupport;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 @AllArgsConstructor
-public class RankedUser extends ResourceSupport {
+public class TreeRankedUserData {
 
     String name;
     Long amount;

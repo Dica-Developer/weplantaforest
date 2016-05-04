@@ -38,6 +38,9 @@ public class User implements Identifiable<Long> {
     @Column(name = "_banned", nullable = false)
     private boolean banned = false;
 
+    @Column(name = "_regDate")
+    private Long regDate;
+
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;

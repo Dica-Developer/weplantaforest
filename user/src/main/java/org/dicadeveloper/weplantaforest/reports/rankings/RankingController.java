@@ -13,13 +13,18 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserAndOrgRankingController {
+public class RankingController {
 
-    private @NonNull UserAndOrgRankingRepository _userAndOrgRankingRepo;
+    private @NonNull RankingRepository _userAndOrgRankingRepo;
 
     @RequestMapping(value = "/ranking/bestUser/{pageNr}/{pageSize}", method = RequestMethod.GET)
-    public Page<RankedUser> getAmount(@PathVariable int pageNr, @PathVariable int pageSize) {
+    public Page<TreeRankedUserData> getBestUser(@PathVariable int pageNr, @PathVariable int pageSize) {
         return _userAndOrgRankingRepo.getBestUser(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));
+    }
+
+    @RequestMapping(value = "/ranking/lastCreatedUser/{pageNr}/{pageSize}", method = RequestMethod.GET)
+    public Page<TimeRankedUserData> getLastUser(@PathVariable int pageNr, @PathVariable int pageSize) {
+        return _userAndOrgRankingRepo.getLastCreatedUser(new PageRequest(pageNr, pageSize));
     }
 
 }
