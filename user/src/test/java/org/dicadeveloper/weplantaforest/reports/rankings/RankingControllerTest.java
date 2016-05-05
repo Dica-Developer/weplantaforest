@@ -88,4 +88,24 @@ public class RankingControllerTest {
                 .andExpect(jsonPath("$.content[0].co2Saved").exists());
     }
 
+    @Test
+    public void testGetLastPlantedTrees() throws Exception {
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam", 90000L);
+        _dbInjecter.injectUser("Bert", 90000L);
+        _dbInjecter.injectUser("Claus", 90000L);
+
+        _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
+
+        _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, 800000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 5, 600000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 30, 100000L, "Project");
+
+        this.mockMvc.perform(get("/ranking/lastPlanted/{pageNr}/{pageSize}", 0, 4).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.totalElements").value(3))
+                .andExpect(jsonPath("$.content[0].name").value("Adam")).andExpect(jsonPath("$.content[0].amount").value(1)).andExpect(jsonPath("$.content[0].projectName").value("Project"));
+    }
+
 }

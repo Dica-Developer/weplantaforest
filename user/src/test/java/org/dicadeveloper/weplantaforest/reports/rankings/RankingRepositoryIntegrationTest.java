@@ -106,4 +106,33 @@ public class RankingRepositoryIntegrationTest {
         assertThat(privateList.getContent().get(0).getAmount()).isEqualTo(100);
         assertThat(privateList.getContent().get(0).getCo2Saved()).isGreaterThan(0);
     }
+
+    @Test
+    public void testGetLastPlantedTrees() {
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+        _dbInjecter.injectTreeType("woood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam", 90000L);
+        _dbInjecter.injectUser("Bert", 90000L);
+        _dbInjecter.injectUser("Claus", 90000L);
+
+        _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
+
+        _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
+        _dbInjecter.injectPlantArticle("woood", "Project", 3.0);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, 800000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 5, 600000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 30, 100000L, "Project");
+
+        Page<TimeRankedTreeData> treeList = _rankingRepository.getLastPlantedTrees(new PageRequest(0, 5));
+
+        assertThat(treeList).isNotNull();
+        assertThat(treeList.getTotalElements()).isEqualTo(3);
+        assertThat(treeList.getTotalPages()).isEqualTo(1);
+        assertThat(treeList.getContent().size()).isEqualTo(3);
+        assertThat(treeList.getContent().get(0).getName()).isEqualTo("Adam");
+        assertThat(treeList.getContent().get(0).getAmount()).isEqualTo(1);
+        assertThat(treeList.getContent().get(0).getProjectName()).isEqualTo("Project");
+    }
 }

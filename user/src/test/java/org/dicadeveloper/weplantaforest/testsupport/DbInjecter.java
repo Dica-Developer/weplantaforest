@@ -1,8 +1,14 @@
 package org.dicadeveloper.weplantaforest.testsupport;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
+import org.dicadeveloper.weplantaforest.projects.Price;
+import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
+import org.dicadeveloper.weplantaforest.projects.PriceRepository;
 import org.dicadeveloper.weplantaforest.projects.Project;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -27,6 +33,12 @@ public class DbInjecter {
 
     @Autowired
     private TreeRepository _treeRepository;
+
+    @Autowired
+    private ProjectArticleRepository _projectArticleRepository;
+
+    @Autowired
+    private PriceRepository _priceRepository;
 
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
@@ -53,7 +65,7 @@ public class DbInjecter {
         userDto.setRegDate(regDate);
         _userRepository.save(userDto);
     }
-    
+
     public void injectUser(String userName, Long regDate, int organizationType) {
         User userDto = new User();
         userDto.setName(userName);
@@ -81,6 +93,34 @@ public class DbInjecter {
         tree.setOwner(_userRepository.findByName(owner));
         _treeRepository.save(tree);
 
+    }
+
+    public void injectTreeToProject(String treeType, String owner, int amount, long timeOfPlanting, String pName) {
+        Tree tree = new Tree();
+        tree.setLatitude(0);
+        tree.setLongitude(0);
+        tree.setAmount(amount);
+        tree.setTreeType(_treeTypeRepository.findByName(treeType));
+        tree.setPlantedOn(new Date(timeOfPlanting).getTime());
+        tree.setSubmittedOn(new Date(timeOfPlanting).getTime());
+        tree.setOwner(_userRepository.findByName(owner));
+        tree.setProjectArticle(_projectArticleRepository.findByProject(_projectRepository.findByName(pName)).get(0));
+        _treeRepository.save(tree);
+
+    }
+
+    public void injectPlantArticle(String treeType, String pName, double priceAmount) {
+        ProjectArticle plantArticle = new ProjectArticle();
+        Price price = new Price();
+
+        price.setAmount(new BigDecimal(5.0));
+        price.setScontoType(ScontoType.NONE);
+        _priceRepository.save(price);
+
+        plantArticle.setTreeType(_treeTypeRepository.findByName(treeType));
+        plantArticle.setProject(_projectRepository.findByName(pName));
+        plantArticle.setPrice(price);
+        _projectArticleRepository.save(plantArticle);
     }
 
 }

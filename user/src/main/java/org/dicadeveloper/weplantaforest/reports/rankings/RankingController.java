@@ -15,21 +15,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RankingController {
 
-    private @NonNull RankingRepository _userAndOrgRankingRepo;
+    private @NonNull RankingRepository _rankingRepository;
 
     @RequestMapping(value = "/ranking/bestUser/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUser(@PathVariable int pageNr, @PathVariable int pageSize) {
-        return _userAndOrgRankingRepo.getBestUser(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));
+        return _rankingRepository.getBestUser(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));
     }
 
     @RequestMapping(value = "/ranking/lastCreatedUser/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TimeRankedUserData> getLastUser(@PathVariable int pageNr, @PathVariable int pageSize) {
-        return _userAndOrgRankingRepo.getLastCreatedUser(new PageRequest(pageNr, pageSize));
+        return _rankingRepository.getLastCreatedUser(new PageRequest(pageNr, pageSize));
     }
 
     @RequestMapping(value = "/ranking/bestOrgType/{organizationType}/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType, @PathVariable int pageNr, @PathVariable int pageSize) {
-        return _userAndOrgRankingRepo.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(pageNr, pageSize));
+        return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(pageNr, pageSize));
+    }
+    
+    @RequestMapping(value = "/ranking/lastPlanted/{pageNr}/{pageSize}", method = RequestMethod.GET)
+    public Page<TimeRankedTreeData> getLastPlantedTrees(@PathVariable int pageNr, @PathVariable int pageSize) {
+        return _rankingRepository.getLastPlantedTrees(new PageRequest(pageNr, pageSize));
     }
 
 }
