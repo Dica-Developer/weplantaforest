@@ -7,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
 import org.springframework.hateoas.Identifiable;
 
@@ -49,4 +51,8 @@ public class Tree implements Identifiable<Long> {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
     @JoinColumn(name = "_treeType_treeTypeId")
     private TreeType treeType;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "_plantArticle__articleId")
+    private ProjectArticle projectArticle;
 }
