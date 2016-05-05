@@ -40,9 +40,9 @@ public class ProjectRepositoryIntegrationTest {
 
         _dbInjecter.injectProject("Adam's project", "Adam", "n1 project", true, 0, 0);
         _dbInjecter.injectProject("Bert's project", "Bert", "n1 project", true, 0, 0);
-        _dbInjecter.injectProject("Adam's project", "Adam", "n1 project", false, 0, 0);
-        _dbInjecter.injectProject("Bert's project", "Bert", "n1 project", false, 0, 0);
-        _dbInjecter.injectProject("Bert's project", "Bert", "n1 project", false, 0, 0);
+        _dbInjecter.injectProject("Adam's 2nd project", "Adam", "n1 project", false, 0, 0);
+        _dbInjecter.injectProject("Bert's 2nd project", "Bert", "n1 project", false, 0, 0);
+        _dbInjecter.injectProject("Bert's 3rd project", "Bert", "n1 project", false, 0, 0);
 
         Page<Project> activeProjectList = _projectRepository.active(new PageRequest(0, 5));
 
