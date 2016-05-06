@@ -3,6 +3,8 @@ package org.dicadeveloper.weplantaforest.testsupport;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.dicadeveloper.weplantaforest.admin.codes.Team;
+import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.projects.PriceRepository;
@@ -39,6 +41,9 @@ public class DbInjecter {
 
     @Autowired
     private PriceRepository _priceRepository;
+
+    @Autowired
+    private TeamRepository _teamRepository;
 
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
@@ -121,6 +126,20 @@ public class DbInjecter {
         plantArticle.setProject(_projectRepository.findByName(pName));
         plantArticle.setPrice(price);
         _projectArticleRepository.save(plantArticle);
+    }
+
+    public void injectTeam(String tName, String admin) {
+        Team team = new Team();
+        team.setName(tName);
+        team.setAdmin(_userRepository.findByName(admin));
+        _teamRepository.save(team);
+        addUserToTeam(tName, admin);
+    }
+
+    public void addUserToTeam(String tName, String userName) {
+        User user = _userRepository.findByName(userName);
+        user.setTeam(_teamRepository.findByName(tName));
+        _userRepository.save(user);
     }
 
 }

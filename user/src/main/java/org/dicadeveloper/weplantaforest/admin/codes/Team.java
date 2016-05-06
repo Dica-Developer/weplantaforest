@@ -19,10 +19,12 @@ import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 public class Team implements Identifiable<Long> {
@@ -45,7 +47,7 @@ public class Team implements Identifiable<Long> {
 
     @OneToOne(optional = false)
     @JoinColumn(name = "_admin__userId")
-    private User _admin;
+    private User admin;
 
     public void addMember(final User member) {
         if (!members.contains(member)) {
@@ -54,7 +56,7 @@ public class Team implements Identifiable<Long> {
     }
 
     public void removeMember(final User user) {
-        if (!_admin.equals(user)) {
+        if (!admin.equals(user)) {
             members.remove(user);
         }
     }
@@ -68,6 +70,6 @@ public class Team implements Identifiable<Long> {
     }
 
     public boolean isLeader(final User user) {
-        return _admin.equals(user);
+        return admin.equals(user);
     }
 }

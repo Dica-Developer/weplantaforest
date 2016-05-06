@@ -107,5 +107,29 @@ public class RankingControllerTest {
         this.mockMvc.perform(get("/ranking/lastPlanted/{pageNr}/{pageSize}", 0, 4).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.totalElements").value(3))
                 .andExpect(jsonPath("$.content[0].name").value("Adam")).andExpect(jsonPath("$.content[0].amount").value(1)).andExpect(jsonPath("$.content[0].projectName").value("Project"));
     }
+    
+    @Test
+    public void testGetBestTeams() throws Exception{
+        long timeOfPlanting = System.currentTimeMillis();
+        
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+        
+        _dbInjecter.injectUser("Adam", 90000L);
+        _dbInjecter.injectUser("Bert", 90000L);
+        _dbInjecter.injectUser("Claus", 90000L);
+        
+        _dbInjecter.injectTeam("avengers", "Adam");
+        
+        _dbInjecter.addUserToTeam("avengers", "Bert");
+        
+        _dbInjecter.injectTree("wood", "Adam", 100, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
+        
+        this.mockMvc.perform(get("/ranking/bestTeam/{pageNr}/{pageSize}", 0, 4).accept("application/json")).andExpect(status().isOk())
+        .andExpect(jsonPath("$.totalElements").value(1)).andExpect(jsonPath("$.content[0].name").value("avengers")).andExpect(jsonPath("$.content[0].amount").value(180))
+        .andExpect(jsonPath("$.content[0].co2Saved").exists());
+              
+    }
 
 }

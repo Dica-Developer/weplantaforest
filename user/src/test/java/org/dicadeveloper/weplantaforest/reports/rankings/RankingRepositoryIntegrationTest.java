@@ -135,4 +135,34 @@ public class RankingRepositoryIntegrationTest {
         assertThat(treeList.getContent().get(0).getAmount()).isEqualTo(1);
         assertThat(treeList.getContent().get(0).getProjectName()).isEqualTo("Project");
     }
+    
+    @Test
+    public void testGetBestTeams() {
+        long timeOfPlanting = System.currentTimeMillis();
+        
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+        
+        _dbInjecter.injectUser("Adam", 90000L);
+        _dbInjecter.injectUser("Bert", 90000L);
+        _dbInjecter.injectUser("Claus", 90000L);
+        
+        _dbInjecter.injectTeam("avengers", "Adam");
+        
+        _dbInjecter.addUserToTeam("avengers", "Bert");
+        
+        _dbInjecter.injectTree("wood", "Adam", 100, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
+        
+        Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(0, 5));
+        
+        assertThat(treeList).isNotNull();
+        assertThat(treeList.getTotalElements()).isEqualTo(1);
+        assertThat(treeList.getTotalPages()).isEqualTo(1);
+        assertThat(treeList.getContent().size()).isEqualTo(1);
+        assertThat(treeList.getContent().get(0).getName()).isEqualTo("avengers");
+        assertThat(treeList.getContent().get(0).getAmount()).isEqualTo(180);
+        assertThat(treeList.getContent().get(0).getCo2Saved()).isGreaterThan(0.0);
+              
+    }
 }

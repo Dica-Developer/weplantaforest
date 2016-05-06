@@ -23,11 +23,16 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
             + "FROM Tree as tree WHERE tree.owner.organizationType = :organizationType GROUP BY tree.owner ORDER BY sum(tree.amount) desc";
 
     public final static String COUNT_BEST_ORGANIZATION_USER_QUERY = COUNT_BEST_USER_QUERY + " and tree.owner.organizationType = :organizationType";
-    
+
     public final static String FIND_LAST_PLANTED_TREES_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(tree.owner.name, tree.amount, tree.projectArticle.project.name)"
             + "FROM Tree as tree ORDER BY tree.plantedOn desc";
-    
+
     public final static String COUNT_LAST_PLANTED_TREES_QUERY = "SELECT count(tree) from Tree as tree";
+
+    public final static String FIND_BEST_TEAM_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData(tree.owner.team.name, sum(tree.amount), sum(tree.amount * tree.treeType.annualCo2SavingInTons * ((:time - tree.plantedOn) / 3.1536E10)))"
+            + "FROM Tree as tree WHERE tree.owner.team != null GROUP BY tree.owner.team.name ORDER BY sum(tree.amount) desc";
+
+    public final static String COUNT_BEST_TEAM_QUERY = "SELECT count(distinct team.name) from Team as team where :time = :time";
 
     @Query(value = FIND_BEST_USER_QUERY, countQuery = COUNT_BEST_USER_QUERY)
     Page<TreeRankedUserData> getBestUser(@Param("time") long timeOfMeasurement, Pageable page);
@@ -40,4 +45,7 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
 
     @Query(value = FIND_LAST_PLANTED_TREES_QUERY, countQuery = COUNT_LAST_PLANTED_TREES_QUERY)
     Page<TimeRankedTreeData> getLastPlantedTrees(Pageable Page);
+
+    @Query(value = FIND_BEST_TEAM_QUERY, countQuery = COUNT_BEST_TEAM_QUERY)
+    Page<TreeRankedUserData> getBestTeams(@Param("time") long timeOfMeasurement, Pageable Page);
 }

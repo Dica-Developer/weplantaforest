@@ -36,5 +36,10 @@ public class RankingController {
     public Page<TimeRankedTreeData> getLastPlantedTrees(@PathVariable int pageNr, @PathVariable int pageSize) {
         return _rankingRepository.getLastPlantedTrees(new PageRequest(pageNr, pageSize));
     }
+    
+    @RequestMapping(value = "/ranking/bestTeam/{pageNr}/{pageSize}", method = RequestMethod.GET)
+    public Page<TreeRankedUserData> getBestTeams(@PathVariable int pageNr, @PathVariable int pageSize) {
+        return _rankingRepository.getBestTeams(System.currentTimeMillis(),new PageRequest(pageNr, pageSize));
+    }
 
 }
