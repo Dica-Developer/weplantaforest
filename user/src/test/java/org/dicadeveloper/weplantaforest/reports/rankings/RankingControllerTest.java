@@ -59,10 +59,21 @@ public class RankingControllerTest {
 
     @Test
     public void testGetLastUser() throws Exception {
-        _dbInjecter.injectUser("Bert", 90000L);
+        _dbInjecter.injectUser("Adam", 90000L);
+        _dbInjecter.injectUser("Bert", 70000L);
+        _dbInjecter.injectUser("Claus", 60000L);
+        _dbInjecter.injectUser("Dirk", 50000L);
+        _dbInjecter.injectUser("Adam2", 40000L);
+        _dbInjecter.injectUser("Bert2", 30000L);
+        _dbInjecter.injectUser("Claus2", 20000L);
+        _dbInjecter.injectUser("Dirk2", 10000L);
+        _dbInjecter.injectUser("Adam3", 10000L);
+        _dbInjecter.injectUser("Bert3", 10000L);
+        _dbInjecter.injectUser("Claus3", 10000L);
+        _dbInjecter.injectUser("Dirk3", 10000L);
 
-        this.mockMvc.perform(get("/ranking/lastCreatedUser/{pageNr}/{pageSize}", 0, 4).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.content[0].name").value("Bert"))
-                .andExpect(jsonPath("$.content[0].date").value("31.12.1969"));
+        this.mockMvc.perform(get("/ranking/lastCreatedUser").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].name").value("Adam"))
+                .andExpect(jsonPath("$.[0].date").value("31.12.1969")).andExpect(jsonPath("$.[0].time").value("16:01:30")).andExpect(jsonPath("$.[11]").doesNotExist());
     }
 
     @Test
@@ -100,12 +111,21 @@ public class RankingControllerTest {
 
         _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
 
-        _dbInjecter.injectTreeToProject("wood", "Adam", 1, 800000L, "Project");
-        _dbInjecter.injectTreeToProject("wood", "Bert", 5, 600000L, "Project");
-        _dbInjecter.injectTreeToProject("wood", "Claus", 30, 100000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 9, 900000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 8, 800000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 7, 700000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 6, 600000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 5, 500000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 4, 400000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 3, 300000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 2, 200000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 1, 100000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, 100000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 1, 100000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 1, 100000L, "Project");
 
-        this.mockMvc.perform(get("/ranking/lastPlanted/{pageNr}/{pageSize}", 0, 4).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.totalElements").value(3))
-                .andExpect(jsonPath("$.content[0].name").value("Adam")).andExpect(jsonPath("$.content[0].amount").value(1)).andExpect(jsonPath("$.content[0].projectName").value("Project"));
+        this.mockMvc.perform(get("/ranking/lastPlantedTrees").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[11]").doesNotExist())
+                .andExpect(jsonPath("$.[0].name").value("Adam")).andExpect(jsonPath("$.[0].amount").value(9)).andExpect(jsonPath("$.[0].projectName").value("Project"));
     }
     
     @Test

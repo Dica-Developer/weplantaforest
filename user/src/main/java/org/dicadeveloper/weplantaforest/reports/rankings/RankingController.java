@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.reports.rankings;
 
+import java.util.List;
+
 import org.dicadeveloper.weplantaforest.CacheConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,9 +27,9 @@ public class RankingController {
         return _rankingRepository.getBestUser(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));
     }
 
-    @RequestMapping(value = "/ranking/lastCreatedUser/{pageNr}/{pageSize}", method = RequestMethod.GET)
-    public Page<TimeRankedUserData> getLastUser(@PathVariable int pageNr, @PathVariable int pageSize) {
-        return _rankingRepository.getLastCreatedUser(new PageRequest(pageNr, pageSize));
+    @RequestMapping(value = "/ranking/lastCreatedUser", method = RequestMethod.GET)
+    public List<TimeRankedUserData> getLastUser() {
+        return _rankingRepository.getLastCreatedUser(new PageRequest(0, 10));
     }
 
     @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)
@@ -36,9 +38,9 @@ public class RankingController {
         return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(pageNr, pageSize));
     }
     
-    @RequestMapping(value = "/ranking/lastPlanted/{pageNr}/{pageSize}", method = RequestMethod.GET)
-    public Page<TimeRankedTreeData> getLastPlantedTrees(@PathVariable int pageNr, @PathVariable int pageSize) {
-        return _rankingRepository.getLastPlantedTrees(new PageRequest(pageNr, pageSize));
+    @RequestMapping(value = "/ranking/lastPlantedTrees", method = RequestMethod.GET)
+    public List<TimeRankedTreeData> getLastPlantedTrees() {
+        return _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
     }
     
     @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)

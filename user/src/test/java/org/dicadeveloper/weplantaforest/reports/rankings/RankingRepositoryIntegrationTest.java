@@ -2,6 +2,8 @@ package org.dicadeveloper.weplantaforest.reports.rankings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
@@ -66,16 +68,22 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectUser("Bert", 70000L);
         _dbInjecter.injectUser("Claus", 60000L);
         _dbInjecter.injectUser("Dirk", 50000L);
+        _dbInjecter.injectUser("Adam2", 40000L);
+        _dbInjecter.injectUser("Bert2", 30000L);
+        _dbInjecter.injectUser("Claus2", 20000L);
+        _dbInjecter.injectUser("Dirk2", 10000L);
+        _dbInjecter.injectUser("Adam3", 10000L);
+        _dbInjecter.injectUser("Bert3", 10000L);
+        _dbInjecter.injectUser("Claus3", 10000L);
+        _dbInjecter.injectUser("Dirk3", 10000L);
 
-        Page<TimeRankedUserData> ruList = _rankingRepository.getLastCreatedUser(new PageRequest(0, 5));
+        List<TimeRankedUserData> ruList = _rankingRepository.getLastCreatedUser(new PageRequest(0, 10));
 
         assertThat(ruList).isNotNull();
-        assertThat(ruList.getTotalElements()).isEqualTo(4);
-        assertThat(ruList.getTotalPages()).isEqualTo(1);
-        assertThat(ruList.getContent().size()).isEqualTo(4);
-        assertThat(ruList.getContent().get(0).getName()).isEqualTo("Adam");
-        assertThat(ruList.getContent().get(0).getDate()).isEqualTo("31.12.1969");
-        assertThat(ruList.getContent().get(0).getTime()).isEqualTo("16:01:30");
+        assertThat(ruList.size()).isEqualTo(10);
+        assertThat(ruList.get(0).getName()).isEqualTo("Adam");
+        assertThat(ruList.get(0).getDate()).isEqualTo("31.12.1969");
+        assertThat(ruList.get(0).getTime()).isEqualTo("16:01:30");
     }
 
     @Test
@@ -110,7 +118,6 @@ public class RankingRepositoryIntegrationTest {
     @Test
     public void testGetLastPlantedTrees() {
         _dbInjecter.injectTreeType("wood", "desc", 0.5);
-        _dbInjecter.injectTreeType("woood", "desc", 0.5);
 
         _dbInjecter.injectUser("Adam", 90000L);
         _dbInjecter.injectUser("Bert", 90000L);
@@ -119,43 +126,49 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
 
         _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
-        _dbInjecter.injectPlantArticle("woood", "Project", 3.0);
 
-        _dbInjecter.injectTreeToProject("wood", "Adam", 1, 800000L, "Project");
-        _dbInjecter.injectTreeToProject("wood", "Bert", 5, 600000L, "Project");
-        _dbInjecter.injectTreeToProject("wood", "Claus", 30, 100000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 9, 900000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 8, 800000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 7, 700000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 6, 600000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 5, 500000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 4, 400000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 3, 300000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 2, 200000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 1, 100000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, 100000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 1, 100000L, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 1, 100000L, "Project");
 
-        Page<TimeRankedTreeData> treeList = _rankingRepository.getLastPlantedTrees(new PageRequest(0, 5));
+        List<TimeRankedTreeData> treeList = _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
 
         assertThat(treeList).isNotNull();
-        assertThat(treeList.getTotalElements()).isEqualTo(3);
-        assertThat(treeList.getTotalPages()).isEqualTo(1);
-        assertThat(treeList.getContent().size()).isEqualTo(3);
-        assertThat(treeList.getContent().get(0).getName()).isEqualTo("Adam");
-        assertThat(treeList.getContent().get(0).getAmount()).isEqualTo(1);
-        assertThat(treeList.getContent().get(0).getProjectName()).isEqualTo("Project");
+        assertThat(treeList.size()).isEqualTo(10);
+        assertThat(treeList.get(0).getName()).isEqualTo("Adam");
+        assertThat(treeList.get(0).getAmount()).isEqualTo(9);
+        assertThat(treeList.get(0).getProjectName()).isEqualTo("Project");
     }
-    
+
     @Test
     public void testGetBestTeams() {
         long timeOfPlanting = System.currentTimeMillis();
-        
+
         _dbInjecter.injectTreeType("wood", "desc", 0.5);
-        
+
         _dbInjecter.injectUser("Adam", 90000L);
         _dbInjecter.injectUser("Bert", 90000L);
         _dbInjecter.injectUser("Claus", 90000L);
-        
+
         _dbInjecter.injectTeam("avengers", "Adam");
-        
+
         _dbInjecter.addUserToTeam("avengers", "Bert");
-        
+
         _dbInjecter.injectTree("wood", "Adam", 100, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
-        
+
         Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(0, 5));
-        
+
         assertThat(treeList).isNotNull();
         assertThat(treeList.getTotalElements()).isEqualTo(1);
         assertThat(treeList.getTotalPages()).isEqualTo(1);
@@ -163,6 +176,6 @@ public class RankingRepositoryIntegrationTest {
         assertThat(treeList.getContent().get(0).getName()).isEqualTo("avengers");
         assertThat(treeList.getContent().get(0).getAmount()).isEqualTo(180);
         assertThat(treeList.getContent().get(0).getCo2Saved()).isGreaterThan(0.0);
-              
+
     }
 }
