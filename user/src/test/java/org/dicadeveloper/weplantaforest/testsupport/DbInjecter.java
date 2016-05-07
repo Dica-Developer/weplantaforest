@@ -109,9 +109,8 @@ public class DbInjecter {
         tree.setPlantedOn(new Date(timeOfPlanting).getTime());
         tree.setSubmittedOn(new Date(timeOfPlanting).getTime());
         tree.setOwner(_userRepository.findByName(owner));
-        tree.setProjectArticle(_projectArticleRepository.findByProject(_projectRepository.findByName(pName)).get(0));
+        tree.setProjectArticle(_projectArticleRepository.findByProjectAndTreeType(_projectRepository.findByName(pName), _treeTypeRepository.findByName(treeType)));
         _treeRepository.save(tree);
-
     }
 
     public void injectPlantArticle(String treeType, String pName, double priceAmount) {
