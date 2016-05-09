@@ -13,7 +13,7 @@ public interface TreeRepository extends CrudRepository<Tree, Long> {
 
     public final static String FIND_TREETYPE_ID_BY_TREE_ID_QUERY = "SELECT tree.treeType.id  FROM Tree tree WHERE tree.id = :id";
 
-    public final static String COUNT_ALREADY_PLANTED_TREES_BY_PROJECTARTICLE = "SELECT sum(tree.amount)  FROM Tree tree WHERE tree.projectArticle = :projectArticle";
+    public final static String COUNT_ALREADY_PLANTED_TREES_BY_PROJECTARTICLE = "SELECT COALESCE(sum(tree.amount), 0)  FROM Tree tree WHERE tree.projectArticle = :projectArticle";
 
     @Query(value = FIND_TREETYPE_ID_BY_TREE_ID_QUERY)
     @Transactional(readOnly = true)
