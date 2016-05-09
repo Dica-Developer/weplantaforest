@@ -120,7 +120,7 @@ public class RankingControllerTest {
 
         _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
 
-        _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
+        _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
 
         _dbInjecter.injectTreeToProject("wood", "Adam", 9, 900000L, "Project");
         _dbInjecter.injectTreeToProject("wood", "Bert", 8, 800000L, "Project");
@@ -182,7 +182,7 @@ public class RankingControllerTest {
 
         _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
 
-        _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
+        _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
 
         _dbInjecter.injectTreeToProject("wood", "Adam", 3, timeOfPlantingNow, "Project");
         _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlantingNow, "Project");

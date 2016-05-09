@@ -56,8 +56,8 @@ public class TreeRepositoryIntegrationTest {
 
         _dbInjecter.injectProject("Project", "Adam", "adam's project", true, 0, 0);
 
-        _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
-        _dbInjecter.injectPlantArticle("big wood", "Project", 3.0);
+        _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
+        _dbInjecter.injectProjectArticle("big wood", "Project", 3.0);
 
         _dbInjecter.injectTreeToProject("wood", "Bert", 5, timeOfPlanting, "Project");
         _dbInjecter.injectTreeToProject("wood", "Bert", 5, timeOfPlanting, "Project");
