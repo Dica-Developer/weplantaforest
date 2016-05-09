@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
-import org.dicadeveloper.weplantaforest.testsupport.TimeConstants;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -207,6 +207,60 @@ public class RankingRepositoryIntegrationTest {
         assertThat(treeList.getContent()
                            .get(0)
                            .getCo2Saved()).isEqualTo(90);
+
+    }
+
+    @Test
+    public void testGetBestUserFromTimeRange() {
+        long timeOfPlantingNow = System.currentTimeMillis();
+        long timeOfPlantingTwoWeeksBefore = timeOfPlantingNow - (2 * TimeConstants.WEEK_IN_MILLISECONDS);
+
+        long timeOfOneWeekBefore = timeOfPlantingNow - TimeConstants.WEEK_IN_MILLISECONDS;
+        long timeOfOneYearBefore = timeOfPlantingNow - TimeConstants.YEAR_IN_MILLSECONDS;
+
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam", 90000L);
+        _dbInjecter.injectUser("Bert", 90000L);
+        _dbInjecter.injectUser("Claus", 90000L);
+
+        _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
+
+        _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 3, timeOfPlantingNow, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlantingNow, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlantingNow, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlantingTwoWeeksBefore, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 1, timeOfPlantingTwoWeeksBefore, "Project");
+
+        List<TreeRankedUserData> lastWeekList = _rankingRepository.getBestUserFromTimeRange(timeOfPlantingNow,
+                timeOfOneWeekBefore, new PageRequest(0, 5));
+
+        assertThat(lastWeekList).isNotNull();
+        assertThat(lastWeekList.size()).isEqualTo(2);
+        assertThat(lastWeekList.get(0)
+                               .getName()).isEqualTo("Adam");
+        assertThat(lastWeekList.get(0)
+                               .getAmount()).isEqualTo(3);
+        assertThat(lastWeekList.get(1)
+                               .getName()).isEqualTo("Bert");
+        assertThat(lastWeekList.get(1)
+                               .getAmount()).isEqualTo(2);
+
+        List<TreeRankedUserData> lastYearList = _rankingRepository.getBestUserFromTimeRange(timeOfPlantingNow,
+                timeOfOneYearBefore, new PageRequest(0, 5));
+
+        assertThat(lastYearList).isNotNull();
+        assertThat(lastYearList.size()).isEqualTo(3);
+        assertThat(lastYearList.get(0)
+                               .getName()).isEqualTo("Adam");
+        assertThat(lastYearList.get(0)
+                               .getAmount()).isEqualTo(4);
+        assertThat(lastYearList.get(1)
+                               .getName()).isEqualTo("Bert");
+        assertThat(lastYearList.get(1)
+                               .getAmount()).isEqualTo(2);
 
     }
 

@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Before;
@@ -166,6 +167,42 @@ public class RankingControllerTest {
                     .andExpect(jsonPath("$.content[0].amount").value(180))
                     .andExpect(jsonPath("$.content[0].co2Saved").exists());
 
+    }
+
+    @Test
+    public void testGetBestUserFromTimeRange() throws Exception {
+        long timeOfPlantingNow = System.currentTimeMillis();
+        long timeOfPlantingTwoWeeksBefore = timeOfPlantingNow - (2 * TimeConstants.WEEK_IN_MILLISECONDS);
+
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam", 90000L);
+        _dbInjecter.injectUser("Bert", 90000L);
+        _dbInjecter.injectUser("Claus", 90000L);
+
+        _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
+
+        _dbInjecter.injectPlantArticle("wood", "Project", 3.0);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 3, timeOfPlantingNow, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlantingNow, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlantingNow, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlantingTwoWeeksBefore, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Claus", 1, timeOfPlantingTwoWeeksBefore, "Project");
+
+        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", "w").accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.[0].name").value("Adam"))
+                    .andExpect(jsonPath("$.[0].amount").value(3))
+                    .andExpect(jsonPath("$.[1].name").value("Bert"))
+                    .andExpect(jsonPath("$.[1].amount").value(2));
+
+        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", "y").accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.[0].name").value("Adam"))
+                    .andExpect(jsonPath("$.[0].amount").value(4))
+                    .andExpect(jsonPath("$.[1].name").value("Bert"))
+                    .andExpect(jsonPath("$.[1].amount").value(2));
     }
 
 }

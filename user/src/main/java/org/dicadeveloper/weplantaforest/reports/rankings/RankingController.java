@@ -3,6 +3,7 @@ package org.dicadeveloper.weplantaforest.reports.rankings;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.CacheConfiguration;
+import org.dicadeveloper.weplantaforest.support.TimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -49,6 +50,23 @@ public class RankingController {
     @RequestMapping(value = "/ranking/bestTeam/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestTeams(@PathVariable int pageNr, @PathVariable int pageSize) {
         return _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));
+    }
+
+    @RequestMapping(value = "/ranking/bestUserFromTimeRange/{range}", method = RequestMethod.GET)
+    public List<TreeRankedUserData> getBestUserFromTimeRange(@PathVariable String range) {
+        Long timeOfMeasurement = System.currentTimeMillis();
+        Long timeRange = 0L;
+        switch (range) {
+        case "y":
+            timeRange = timeOfMeasurement - TimeConstants.YEAR_IN_MILLSECONDS;
+            break;
+        case "w":
+            timeRange = timeOfMeasurement - TimeConstants.WEEK_IN_MILLISECONDS;
+            break;
+        default:
+            break;
+        }
+        return _rankingRepository.getBestUserFromTimeRange(timeOfMeasurement, timeRange, new PageRequest(0, 10));
     }
 
 }
