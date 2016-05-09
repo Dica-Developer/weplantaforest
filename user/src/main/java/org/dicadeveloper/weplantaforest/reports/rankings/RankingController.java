@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class RankingController {
 
     private @NonNull RankingRepository _rankingRepository;
-    
+
     @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)
     @RequestMapping(value = "/ranking/bestUser/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUser(@PathVariable int pageNr, @PathVariable int pageSize) {
@@ -34,19 +34,21 @@ public class RankingController {
 
     @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)
     @RequestMapping(value = "/ranking/bestOrgType/{organizationType}/{pageNr}/{pageSize}", method = RequestMethod.GET)
-    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType, @PathVariable int pageNr, @PathVariable int pageSize) {
-        return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(pageNr, pageSize));
+    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType,
+            @PathVariable int pageNr, @PathVariable int pageSize) {
+        return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType,
+                new PageRequest(pageNr, pageSize));
     }
-    
+
     @RequestMapping(value = "/ranking/lastPlantedTrees", method = RequestMethod.GET)
     public List<TimeRankedTreeData> getLastPlantedTrees() {
         return _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
     }
-    
+
     @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)
     @RequestMapping(value = "/ranking/bestTeam/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestTeams(@PathVariable int pageNr, @PathVariable int pageSize) {
-        return _rankingRepository.getBestTeams(System.currentTimeMillis(),new PageRequest(pageNr, pageSize));
+        return _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));
     }
 
 }

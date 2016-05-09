@@ -52,15 +52,23 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "Claus", 50, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Dirk", 10, timeOfPlanting);
 
-        Page<TreeRankedUserData> ruList = _rankingRepository.getBestUser(timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, new PageRequest(0, 5));
+        Page<TreeRankedUserData> ruList = _rankingRepository.getBestUser(
+                timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, new PageRequest(0, 5));
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.getTotalElements()).isEqualTo(4);
         assertThat(ruList.getTotalPages()).isEqualTo(1);
-        assertThat(ruList.getContent().size()).isEqualTo(4);
-        assertThat(ruList.getContent().get(0).getName()).isEqualTo("Adam");
-        assertThat(ruList.getContent().get(0).getAmount()).isEqualTo(100);
-        assertThat(ruList.getContent().get(0).getCo2Saved()).isEqualTo(50);
+        assertThat(ruList.getContent()
+                         .size()).isEqualTo(4);
+        assertThat(ruList.getContent()
+                         .get(0)
+                         .getName()).isEqualTo("Adam");
+        assertThat(ruList.getContent()
+                         .get(0)
+                         .getAmount()).isEqualTo(100);
+        assertThat(ruList.getContent()
+                         .get(0)
+                         .getCo2Saved()).isEqualTo(50);
     }
 
     @Test
@@ -82,9 +90,12 @@ public class RankingRepositoryIntegrationTest {
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.size()).isEqualTo(10);
-        assertThat(ruList.get(0).getName()).isEqualTo("Adam");
-        assertThat(ruList.get(0).getDate()).isEqualTo("31.12.1969");
-        assertThat(ruList.get(0).getTime()).isEqualTo("16:01:30");
+        assertThat(ruList.get(0)
+                         .getName()).isEqualTo("Adam");
+        assertThat(ruList.get(0)
+                         .getDate()).isEqualTo("31.12.1969");
+        assertThat(ruList.get(0)
+                         .getTime()).isEqualTo("16:01:30");
     }
 
     @Test
@@ -105,15 +116,23 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
-        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, 0, new PageRequest(0, 5));
+        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(
+                timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, 0, new PageRequest(0, 5));
 
         assertThat(privateList).isNotNull();
         assertThat(privateList.getTotalElements()).isEqualTo(2);
         assertThat(privateList.getTotalPages()).isEqualTo(1);
-        assertThat(privateList.getContent().size()).isEqualTo(2);
-        assertThat(privateList.getContent().get(0).getName()).isEqualTo("Adam");
-        assertThat(privateList.getContent().get(0).getAmount()).isEqualTo(100);
-        assertThat(privateList.getContent().get(0).getCo2Saved()).isEqualTo(50);
+        assertThat(privateList.getContent()
+                              .size()).isEqualTo(2);
+        assertThat(privateList.getContent()
+                              .get(0)
+                              .getName()).isEqualTo("Adam");
+        assertThat(privateList.getContent()
+                              .get(0)
+                              .getAmount()).isEqualTo(100);
+        assertThat(privateList.getContent()
+                              .get(0)
+                              .getCo2Saved()).isEqualTo(50);
     }
 
     @Test
@@ -145,9 +164,12 @@ public class RankingRepositoryIntegrationTest {
 
         assertThat(treeList).isNotNull();
         assertThat(treeList.size()).isEqualTo(10);
-        assertThat(treeList.get(0).getName()).isEqualTo("Adam");
-        assertThat(treeList.get(0).getAmount()).isEqualTo(9);
-        assertThat(treeList.get(0).getProjectName()).isEqualTo("Project");
+        assertThat(treeList.get(0)
+                           .getName()).isEqualTo("Adam");
+        assertThat(treeList.get(0)
+                           .getAmount()).isEqualTo(9);
+        assertThat(treeList.get(0)
+                           .getProjectName()).isEqualTo("Project");
     }
 
     @Test
@@ -168,15 +190,24 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
 
-        Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, new PageRequest(0, 5));
+        Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(
+                timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, new PageRequest(0, 5));
 
         assertThat(treeList).isNotNull();
         assertThat(treeList.getTotalElements()).isEqualTo(1);
         assertThat(treeList.getTotalPages()).isEqualTo(1);
-        assertThat(treeList.getContent().size()).isEqualTo(1);
-        assertThat(treeList.getContent().get(0).getName()).isEqualTo("avengers");
-        assertThat(treeList.getContent().get(0).getAmount()).isEqualTo(180);
-        assertThat(treeList.getContent().get(0).getCo2Saved()).isEqualTo(90);
+        assertThat(treeList.getContent()
+                           .size()).isEqualTo(1);
+        assertThat(treeList.getContent()
+                           .get(0)
+                           .getName()).isEqualTo("avengers");
+        assertThat(treeList.getContent()
+                           .get(0)
+                           .getAmount()).isEqualTo(180);
+        assertThat(treeList.getContent()
+                           .get(0)
+                           .getCo2Saved()).isEqualTo(90);
 
     }
+
 }

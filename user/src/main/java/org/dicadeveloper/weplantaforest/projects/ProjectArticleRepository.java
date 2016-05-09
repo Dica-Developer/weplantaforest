@@ -11,8 +11,9 @@ public interface ProjectArticleRepository extends CrudRepository<ProjectArticle,
 
     @Query
     public List<ProjectArticle> findByProject(@Param("project") Project project);
-    
+
     @Query
-    public ProjectArticle findByProjectAndTreeType(@Param("project") Project project, @Param("treeType") TreeType treeType);
-    
+    public ProjectArticle findByProjectAndTreeType(@Param("project") Project project,
+            @Param("treeType") TreeType treeType);
+
 }

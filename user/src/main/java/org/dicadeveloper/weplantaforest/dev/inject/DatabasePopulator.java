@@ -26,7 +26,8 @@ import com.google.common.collect.Iterators;
 @Service
 public class DatabasePopulator {
 
-    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
+    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn",
+            "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
 
     private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes");
 
@@ -36,7 +37,8 @@ public class DatabasePopulator {
     private TreeRepository _treeRepository;
 
     @Autowired
-    public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
+    public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository,
+            TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -145,7 +147,8 @@ public class DatabasePopulator {
             treeDto.setAmount(i % 20);
             treeDto.setLatitude(i);
             treeDto.setLongitude(i);
-            treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next().getName()));
+            treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next()
+                                                                               .getName()));
             treeDto.setPlantedOn(new Date(i + 1000000L).getTime());
             treeDto.setOwner(cyclingUsers.next());
             _treeRepository.save(treeDto);

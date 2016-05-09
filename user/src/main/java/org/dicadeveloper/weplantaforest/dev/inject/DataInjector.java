@@ -35,7 +35,10 @@ public class DataInjector {
                 // the db (like db.populates=v23)
                 if (!_treeTypeRepository.existsAtAll()) {
                     int treeCount = 15000;
-                    _databasePopulator.insertUsers().insertDefaultTreeTypes().insertTrees(treeCount).insertProjects();
+                    _databasePopulator.insertUsers()
+                                      .insertDefaultTreeTypes()
+                                      .insertTrees(treeCount)
+                                      .insertProjects();
                     LOG.info("Finished injecting " + treeCount + " trees ");
                 } else {
                     LOG.info("No entities will be injected.");

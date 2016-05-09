@@ -148,7 +148,8 @@ public class Cart implements Identifiable<Long> {
 
     public CartItem removeCartItem(final Long articleId) {
         for (final CartItem item : cartItems) {
-            if (item.getPlantArticleId().equals(articleId)) {
+            if (item.getPlantArticleId()
+                    .equals(articleId)) {
                 cartItems.remove(item);
                 return item;
             }
@@ -164,7 +165,8 @@ public class Cart implements Identifiable<Long> {
 
     public boolean containsCartItem(final CartItem cartItem) {
         for (final CartItem item : cartItems) {
-            if (item.getPlantArticleId().equals(cartItem.getPlantArticleId())) {
+            if (item.getPlantArticleId()
+                    .equals(cartItem.getPlantArticleId())) {
                 return true;
             }
         }

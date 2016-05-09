@@ -73,7 +73,7 @@ public class Project implements Identifiable<Long> {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_manager__userId", nullable = false)
     private User manager;
-    
+
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private List<ProjectArticle> articles;
 }

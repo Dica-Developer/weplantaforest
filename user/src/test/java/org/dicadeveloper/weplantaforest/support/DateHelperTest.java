@@ -18,7 +18,7 @@ public class DateHelperTest {
         assertThat(dateAndTime[0]).isEqualTo("31.12.1969");
         assertThat(dateAndTime[1]).isEqualTo("16:01:30");
     }
-    
+
     @Test
     public void testGetDateAndTimeFromNull() {
         String[] dateAndTime = DateHelper.getDateAndTimeAsString(null);

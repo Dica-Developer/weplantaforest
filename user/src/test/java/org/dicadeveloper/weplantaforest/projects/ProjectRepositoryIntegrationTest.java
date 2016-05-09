@@ -49,7 +49,8 @@ public class ProjectRepositoryIntegrationTest {
         assertThat(activeProjectList).isNotNull();
         assertThat(activeProjectList.getTotalElements()).isEqualTo(2);
         assertThat(activeProjectList.getTotalPages()).isEqualTo(1);
-        assertThat(activeProjectList.getContent().size()).isEqualTo(2);
+        assertThat(activeProjectList.getContent()
+                                    .size()).isEqualTo(2);
     }
 
 }

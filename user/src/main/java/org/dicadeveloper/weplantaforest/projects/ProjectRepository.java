@@ -13,7 +13,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 
     @Query
     public Project findByName(@Param("name") String name);
-    
+
     @Query(value = "SELECT p FROM Project p where p.shopActive=true")
     @Transactional(readOnly = true)
     public Page<Project> active(Pageable pageable);

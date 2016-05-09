@@ -45,7 +45,8 @@ public class DbInjecter {
     @Autowired
     private TeamRepository _teamRepository;
 
-    public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
+    public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude,
+            float longitude) {
         Project project = new Project();
         String projectName = pName;
         project.setName(projectName);
@@ -109,7 +110,8 @@ public class DbInjecter {
         tree.setPlantedOn(new Date(timeOfPlanting).getTime());
         tree.setSubmittedOn(new Date(timeOfPlanting).getTime());
         tree.setOwner(_userRepository.findByName(owner));
-        tree.setProjectArticle(_projectArticleRepository.findByProjectAndTreeType(_projectRepository.findByName(pName), _treeTypeRepository.findByName(treeType)));
+        tree.setProjectArticle(_projectArticleRepository.findByProjectAndTreeType(_projectRepository.findByName(pName),
+                _treeTypeRepository.findByName(treeType)));
         _treeRepository.save(tree);
     }
 

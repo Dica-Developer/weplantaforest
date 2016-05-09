@@ -25,7 +25,9 @@ public class CacheConfiguration {
     }
 
     private GuavaCache buildTenMinuteCache() {
-        return new GuavaCache(TEN_MIUTE_CACHE, CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build());
+        return new GuavaCache(TEN_MIUTE_CACHE, CacheBuilder.newBuilder()
+                                                           .expireAfterWrite(10, TimeUnit.MINUTES)
+                                                           .build());
     }
 
 }
