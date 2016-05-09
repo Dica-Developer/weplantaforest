@@ -52,7 +52,10 @@ public class Co2ControllerTest {
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTree("wood", "Bert", 10, 30000L);
 
-        this.mockMvc.perform(get("/reports/co2").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.treesCount").value(10)).andExpect(jsonPath("$.co2").exists());
+        this.mockMvc.perform(get("/reports/co2").accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.treesCount").value(10))
+                    .andExpect(jsonPath("$.co2").exists());
     }
 
 }
