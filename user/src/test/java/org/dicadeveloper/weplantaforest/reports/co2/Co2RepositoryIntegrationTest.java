@@ -2,12 +2,10 @@ package org.dicadeveloper.weplantaforest.reports.co2;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Date;
-
-import org.assertj.core.data.Offset;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.testsupport.TimeConstants;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,13 +21,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class Co2RepositoryIntegrationTest {
-
-    /**
-     * For performance reasons we shifted calculation of co2 from java to the
-     * database query. There is a slight but neglectable difference in the
-     * results. The expected test results are matching the java version.
-     */
-    private static final Offset<Double> OK_DELTA_FOR_CO2_SAVING = Offset.offset(0.000001D);
 
     @Rule
     @Autowired
@@ -59,13 +50,14 @@ public class Co2RepositoryIntegrationTest {
      */
     @Test
     public void testGetCo2SavingByPlantingForPointInTime() {
+        long timeOfPlanting = System.currentTimeMillis();
         _dbInjecter.injectTreeType("wood", "desc", 0.1);
         _dbInjecter.injectUser("Bert");
-        _dbInjecter.injectTree("wood", "Bert", 1, new Date(0).getTime());
+        _dbInjecter.injectTree("wood", "Bert", 1, timeOfPlanting);
 
-        Co2Data co2 = _co2Repository.getAllTreesAndCo2Saving(1207077022876l);
+        Co2Data co2 = _co2Repository.getAllTreesAndCo2Saving(timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS);
 
         assertThat(co2.getTreesCount()).isEqualTo(1);
-        assertThat(co2.getCo2()).isEqualTo(3.8276161874139056D, OK_DELTA_FOR_CO2_SAVING);
+        assertThat(co2.getCo2()).isEqualTo(0.1);
     }
 }
