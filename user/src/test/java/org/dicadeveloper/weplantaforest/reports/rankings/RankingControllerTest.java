@@ -79,8 +79,7 @@ public class RankingControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].name").value("Adam"))
                     .andExpect(jsonPath("$.[0].date").value("31.12.1969"))
-                    .andExpect(jsonPath("$.[0].time").value("16:01:30"))
-                    .andExpect(jsonPath("$.[11]").doesNotExist());
+                    .andExpect(jsonPath("$.[0].time").value("16:01:30"));
     }
 
     @Test
@@ -137,7 +136,6 @@ public class RankingControllerTest {
 
         this.mockMvc.perform(get("/ranking/lastPlantedTrees").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[11]").doesNotExist())
                     .andExpect(jsonPath("$.[0].name").value("Adam"))
                     .andExpect(jsonPath("$.[0].amount").value(9))
                     .andExpect(jsonPath("$.[0].projectName").value("Project"));
