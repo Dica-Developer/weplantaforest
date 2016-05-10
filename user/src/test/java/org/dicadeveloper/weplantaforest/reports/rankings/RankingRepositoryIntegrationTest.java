@@ -53,7 +53,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "Dirk", 10, timeOfPlanting);
 
         Page<TreeRankedUserData> ruList = _rankingRepository.getBestUser(
-                timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, new PageRequest(0, 5));
+                timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, new PageRequest(0, 5));
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.getTotalElements()).isEqualTo(4);
@@ -117,7 +117,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
         Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(
-                timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, 0, new PageRequest(0, 5));
+                timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, 0, new PageRequest(0, 5));
 
         assertThat(privateList).isNotNull();
         assertThat(privateList.getTotalElements()).isEqualTo(2);
@@ -191,7 +191,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
 
         Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(
-                timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS, new PageRequest(0, 5));
+                timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, new PageRequest(0, 5));
 
         assertThat(treeList).isNotNull();
         assertThat(treeList.getTotalElements()).isEqualTo(1);
@@ -216,7 +216,7 @@ public class RankingRepositoryIntegrationTest {
         long timeOfPlantingTwoWeeksBefore = timeOfPlantingNow - (2 * TimeConstants.WEEK_IN_MILLISECONDS);
 
         long timeOfOneWeekBefore = timeOfPlantingNow - TimeConstants.WEEK_IN_MILLISECONDS;
-        long timeOfOneYearBefore = timeOfPlantingNow - TimeConstants.YEAR_IN_MILLSECONDS;
+        long timeOfOneYearBefore = timeOfPlantingNow - TimeConstants.YEAR_IN_MILLISECONDS;
 
         _dbInjecter.injectTreeType("wood", "desc", 0.5);
 

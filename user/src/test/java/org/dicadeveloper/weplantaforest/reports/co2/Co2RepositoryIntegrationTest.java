@@ -55,7 +55,7 @@ public class Co2RepositoryIntegrationTest {
         _dbInjecter.injectUser("Bert");
         _dbInjecter.injectTree("wood", "Bert", 1, timeOfPlanting);
 
-        Co2Data co2 = _co2Repository.getAllTreesAndCo2Saving(timeOfPlanting + TimeConstants.YEAR_IN_MILLSECONDS);
+        Co2Data co2 = _co2Repository.getAllTreesAndCo2Saving(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS);
 
         assertThat(co2.getTreesCount()).isEqualTo(1);
         assertThat(co2.getCo2()).isEqualTo(0.1);

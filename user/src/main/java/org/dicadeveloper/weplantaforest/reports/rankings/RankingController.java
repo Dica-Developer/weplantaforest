@@ -58,7 +58,7 @@ public class RankingController {
         Long timeRange = 0L;
         switch (range) {
         case "y":
-            timeRange = timeOfMeasurement - TimeConstants.YEAR_IN_MILLSECONDS;
+            timeRange = timeOfMeasurement - TimeConstants.YEAR_IN_MILLISECONDS;
             break;
         case "w":
             timeRange = timeOfMeasurement - TimeConstants.WEEK_IN_MILLISECONDS;
