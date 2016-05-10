@@ -52,21 +52,21 @@ public class RankingController {
         return _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));
     }
 
-    @RequestMapping(value = "/ranking/bestUserFromTimeRange/{range}", method = RequestMethod.GET)
-    public List<TreeRankedUserData> getBestUserFromTimeRange(@PathVariable String range) {
-        Long timeOfMeasurement = System.currentTimeMillis();
-        Long timeRange = 0L;
-        switch (range) {
+    @RequestMapping(value = "/ranking/bestUserFromTimeRange/{timeRange}", method = RequestMethod.GET)
+    public List<TreeRankedUserData> getBestUserFromTimeRange(@PathVariable String timeRange) {
+        Long timeRangeEnd = System.currentTimeMillis();
+        Long timeRangeStart = 0L;
+        switch (timeRange) {
         case "y":
-            timeRange = timeOfMeasurement - TimeConstants.YEAR_IN_MILLISECONDS;
+            timeRangeStart = timeRangeEnd - TimeConstants.YEAR_IN_MILLISECONDS;
             break;
         case "w":
-            timeRange = timeOfMeasurement - TimeConstants.WEEK_IN_MILLISECONDS;
+            timeRangeStart = timeRangeEnd - TimeConstants.WEEK_IN_MILLISECONDS;
             break;
         default:
             break;
         }
-        return _rankingRepository.getBestUserFromTimeRange(timeOfMeasurement, timeRange, new PageRequest(0, 10));
+        return _rankingRepository.getBestUserFromTimeRange(timeRangeStart, timeRangeEnd, new PageRequest(0, 10));
     }
 
 }

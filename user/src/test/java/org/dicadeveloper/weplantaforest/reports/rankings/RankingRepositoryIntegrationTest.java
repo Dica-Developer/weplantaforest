@@ -234,8 +234,8 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlantingTwoWeeksBefore, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 1, timeOfPlantingTwoWeeksBefore, "Project");
 
-        List<TreeRankedUserData> lastWeekList = _rankingRepository.getBestUserFromTimeRange(timeOfPlantingNow,
-                timeOfOneWeekBefore, new PageRequest(0, 5));
+        List<TreeRankedUserData> lastWeekList = _rankingRepository.getBestUserFromTimeRange(timeOfOneWeekBefore,
+                 timeOfPlantingNow, new PageRequest(0, 5));
 
         assertThat(lastWeekList).isNotNull();
         assertThat(lastWeekList.size()).isEqualTo(2);
@@ -248,8 +248,8 @@ public class RankingRepositoryIntegrationTest {
         assertThat(lastWeekList.get(1)
                                .getAmount()).isEqualTo(2);
 
-        List<TreeRankedUserData> lastYearList = _rankingRepository.getBestUserFromTimeRange(timeOfPlantingNow,
-                timeOfOneYearBefore, new PageRequest(0, 5));
+        List<TreeRankedUserData> lastYearList = _rankingRepository.getBestUserFromTimeRange(timeOfOneYearBefore,
+                 timeOfPlantingNow, new PageRequest(0, 5));
 
         assertThat(lastYearList).isNotNull();
         assertThat(lastYearList.size()).isEqualTo(3);

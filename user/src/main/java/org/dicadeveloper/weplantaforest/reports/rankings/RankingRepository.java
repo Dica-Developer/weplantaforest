@@ -34,7 +34,7 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
     public final static String COUNT_BEST_TEAM_QUERY = "SELECT count(distinct team.name) from Team as team where :time = :time";
 
     public final static String FIND_BEST_USER_FROM_TIMERANGE_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData(tree.owner.name, sum(tree.amount))"
-            + "FROM Tree as tree WHERE tree.plantedOn BETWEEN :timeRange AND :time GROUP BY tree.owner ORDER BY sum(tree.amount) desc";
+            + "FROM Tree as tree WHERE tree.plantedOn BETWEEN :timeRangeStart AND :timeRangeEnd GROUP BY tree.owner ORDER BY sum(tree.amount) desc";
 
     @Query(value = FIND_BEST_USER_QUERY, countQuery = COUNT_BEST_USER_QUERY)
     Page<TreeRankedUserData> getBestUser(@Param("time") long timeOfMeasurement, Pageable page);
@@ -53,7 +53,7 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
     Page<TreeRankedUserData> getBestTeams(@Param("time") long timeOfMeasurement, Pageable Page);
 
     @Query(value = FIND_BEST_USER_FROM_TIMERANGE_QUERY)
-    List<TreeRankedUserData> getBestUserFromTimeRange(@Param("time") long timeOfMeasurement,
-            @Param("timeRange") long timeRange, Pageable Page);
+    List<TreeRankedUserData> getBestUserFromTimeRange(@Param("timeRangeStart") long timeRangeStart,
+            @Param("timeRangeEnd") long timeRangeEnd, Pageable Page);
 
 }
