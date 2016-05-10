@@ -5,6 +5,7 @@ import {Locations, Location, NotFound} from 'react-router-component';
 import NavBar from './NavBar';
 import PlantPage from './PlantPage';
 import Footer from './Footer';
+import Boostrap from 'bootstrap';
 
 class Co2Bar extends Component {
 
