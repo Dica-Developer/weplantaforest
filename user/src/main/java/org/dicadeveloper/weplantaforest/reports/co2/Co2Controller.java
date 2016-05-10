@@ -16,7 +16,7 @@ public class Co2Controller {
 
     private @NonNull Co2Repository _co2Repository;
 
-    @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)
+    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = "/reports/co2", method = RequestMethod.GET)
     public Co2Data getAmount() {
         return _co2Repository.getAllTreesAndCo2Saving(System.currentTimeMillis());

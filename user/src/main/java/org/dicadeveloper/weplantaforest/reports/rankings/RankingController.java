@@ -22,7 +22,7 @@ public class RankingController {
 
     private @NonNull RankingRepository _rankingRepository;
 
-    @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)
+    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = "/ranking/bestUser/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUser(@PathVariable int pageNr, @PathVariable int pageSize) {
         return _rankingRepository.getBestUser(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));
@@ -33,7 +33,7 @@ public class RankingController {
         return _rankingRepository.getLastCreatedUser(new PageRequest(0, 10));
     }
 
-    @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)
+    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = "/ranking/bestOrgType/{organizationType}/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType,
             @PathVariable int pageNr, @PathVariable int pageSize) {
@@ -46,7 +46,7 @@ public class RankingController {
         return _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
     }
 
-    @Cacheable(value = CacheConfiguration.TEN_MIUTE_CACHE)
+    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = "/ranking/bestTeam/{pageNr}/{pageSize}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestTeams(@PathVariable int pageNr, @PathVariable int pageSize) {
         return _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(pageNr, pageSize));

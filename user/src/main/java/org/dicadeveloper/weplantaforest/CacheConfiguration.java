@@ -14,7 +14,7 @@ import com.google.common.cache.CacheBuilder;
 @Configuration
 public class CacheConfiguration {
 
-    public final static String TEN_MIUTE_CACHE = "ten_minute_cache";
+    public final static String TEN_MINUTE_CACHE = "ten_minute_cache";
 
     @Bean
     public CacheManager cacheManager() {
@@ -25,7 +25,7 @@ public class CacheConfiguration {
     }
 
     private GuavaCache buildTenMinuteCache() {
-        return new GuavaCache(TEN_MIUTE_CACHE, CacheBuilder.newBuilder()
+        return new GuavaCache(TEN_MINUTE_CACHE, CacheBuilder.newBuilder()
                                                            .expireAfterWrite(10, TimeUnit.MINUTES)
                                                            .build());
     }
