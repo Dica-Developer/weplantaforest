@@ -129,6 +129,22 @@ public class DbInjecter {
         _projectArticleRepository.save(plantArticle);
     }
 
+    public void injectProjectArticle(String treeType, String pName, long amount, double priceAmount, double priceMarge) {
+        ProjectArticle plantArticle = new ProjectArticle();
+        Price price = new Price();
+
+        price.setAmount(new BigDecimal(priceAmount));
+        price.setScontoType(ScontoType.NONE);
+        price.setMarge(new BigDecimal(priceMarge));
+        _priceRepository.save(price);
+
+        plantArticle.setTreeType(_treeTypeRepository.findByName(treeType));
+        plantArticle.setProject(_projectRepository.findByName(pName));
+        plantArticle.setPrice(price);
+        plantArticle.setAmount(amount);
+        _projectArticleRepository.save(plantArticle);
+    }
+
     public void injectTeam(String tName, String admin) {
         Team team = new Team();
         team.setName(tName);
