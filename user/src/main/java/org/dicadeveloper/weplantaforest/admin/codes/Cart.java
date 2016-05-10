@@ -27,10 +27,12 @@ import org.springframework.hateoas.Identifiable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -47,7 +49,8 @@ public class Cart implements Identifiable<Long> {
     @Column(name = "_cartId")
     private Long id;
 
-    private Long _timeStamp;
+    @Column(name = "_timeStamp")
+    private Long timeStamp;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "_cartState")
@@ -65,86 +68,86 @@ public class Cart implements Identifiable<Long> {
     @JoinColumn(name = "_event__id")
     private Event event;
 
-    @Column(length = 1024)
-    private String _callbackParams;
+    @Column(name = "_callbackParams", length = 1024)
+    private String callbackParams;
 
-    @Column(length = 32)
-    private String _callBackVzid;
+    @Column(name = "_callBackVzid", length = 32)
+    private String callBackVzid;
 
-    @Column(length = 32)
-    private String _callBackStrasse;
+    @Column(name = "_callBackStrasse", length = 32)
+    private String callBackStrasse;
 
-    @Column(length = 32)
-    private String _callBackTimestamp;
+    @Column(name = "_callBackTimestamp", length = 32)
+    private String callBackTimestamp;
 
-    @Column(length = 256)
-    private String _callBackFirma;
+    @Column(name = "_callBackFirma", length = 256)
+    private String callBackFirma;
 
-    @Column(length = 32)
-    private String _callBackBanktransactionid;
+    @Column(name = "_callBackBanktransactionid", length = 32)
+    private String callBackBanktransactionid;
 
-    @Column(length = 128)
-    private String _callBackVorname;
+    @Column(name = "_callBackVorname", length = 128)
+    private String callBackVorname;
 
-    @Column(length = 16)
-    private String _callBackPlz;
+    @Column(name = "_callBackPlz", length = 16)
+    private String callBackPlz;
 
-    @Column(length = 32)
-    private String _callBackStatus;
+    @Column(name = "_callBackStatus", length = 32)
+    private String callBackStatus;
 
-    @Column(length = 128)
-    private String _callBackNachname;
+    @Column(name = "_callBackNachname", length = 128)
+    private String callBackNachname;
 
-    @Column(length = 128)
-    private String _callBackOrt;
+    @Column(name = "_callBackOrt", length = 128)
+    private String callBackOrt;
 
-    @Column(length = 16)
-    private String _callBackBetrag;
+    @Column(name = "_callBackBetrag", length = 16)
+    private String callBackBetrag;
 
-    @Column(length = 16)
-    private String _callBackLand;
+    @Column(name = "_callBackLand", length = 16)
+    private String callBackLand;
 
-    @Column(length = 256)
-    private String _callBackEmail;
+    @Column(name = "_callBackEmail", length = 256)
+    private String callBackEmail;
 
-    @Column(length = 32)
-    private String _callBackTrackingcode;
+    @Column(name = "_callBackTrackingcode", length = 32)
+    private String callBackTrackingcode;
 
-    @Column(length = 64)
-    private String _callBackTransactionid;
+    @Column(name = "_callBackTransactionid", length = 64)
+    private String callBackTransactionid;
 
-    @Column(length = 32)
-    private String _callBackOid;
+    @Column(name = "_callBackOid", length = 32)
+    private String callBackOid;
 
-    @Column(length = 128)
-    private String _callBackMethod;
+    @Column(name = "_callBackMethod", length = 128)
+    private String callBackMethod;
 
-    @Column(length = 32)
-    private String _callBackZahlungsart;
+    @Column(name = "_callBackZahlungsart", length = 32)
+    private String callBackZahlungsart;
 
-    @Column(length = 256)
-    private String _callBackFirmanzusatz;
+    @Column(name = "_callBackFirmanzusatz", length = 256)
+    private String callBackFirmanzusatz;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_abo__id", nullable = true)
-    private Abo _abo;
+    private Abo abo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_receipt__receiptId")
-    private Receipt _receipt;
+    private Receipt receipt;
 
     @OneToOne(optional = true)
     @JoinColumn(name = "_code__id")
-    private Coupon _code;
+    private Coupon code;
 
     @Transient
-    private boolean _gift = false;
+    private boolean gift = false;
 
     /**
      * Target price in case this card was generated for an price based code.
      */
-    @Column
-    private float _targetedPrice;
+    @Column(name = "_targetedPrice")
+    private float targetedPrice;
 
     public CartItem removeCartItem(final Long articleId) {
         for (final CartItem item : cartItems) {
@@ -182,7 +185,7 @@ public class Cart implements Identifiable<Long> {
     }
 
     public Date getTimeStampAsDate() {
-        return new Date(_timeStamp);
+        return new Date(timeStamp);
     }
 
     @Transient
@@ -213,12 +216,12 @@ public class Cart implements Identifiable<Long> {
     }
 
     public Date getCallBackTimestampAsDate() {
-        if (_callBackTimestamp == null) {
+        if (callBackTimestamp == null) {
             return null;
         }
-        return new Date(Long.parseLong(_callBackTimestamp) * 1000); // its php,
-                                                                    // sec since
-                                                                    // 1970, not
-                                                                    // msec
+        return new Date(Long.parseLong(callBackTimestamp) * 1000); // its php,
+                                                                   // sec since
+                                                                   // 1970, not
+                                                                   // msec
     }
 }

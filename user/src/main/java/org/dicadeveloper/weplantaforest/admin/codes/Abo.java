@@ -16,7 +16,12 @@ import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.trees.User;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 public class Abo {
 
     public enum Type {
@@ -29,137 +34,50 @@ public class Abo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long _id;
+    @Column(name ="_id")
+    private Long id;
 
-    @Column(nullable = false)
-    private Type _type;
+    @Column(name="_type",nullable = false)
+    private Type type;
 
-    @Column(nullable = false)
-    private Integer _amount;
+    @Column(name="_amount",nullable = false)
+    private Integer amount;
 
-    @Column(nullable = false)
-    private Period _period;
+    @Column(name="_period",nullable = false)
+    private Period period;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "_user__userId")
-    private User _user;
+    private User user;
 
-    @Column(nullable = false)
-    private Long _timeStamp;
+    @Column(name="_timeStamp",nullable = false)
+    private Long timeStamp;
 
-    @Column(nullable = true)
-    private Long _last;
+    @Column(name="_last",nullable = true)
+    private Long last;
 
-    @Column(nullable = false)
-    private boolean _active = false;
+    @Column(name="_active",nullable = false)
+    private boolean active = false;
 
-    @OneToMany(mappedBy = "_abo")
-    private List<Param> _params = new ArrayList<Param>();
+    @OneToMany(mappedBy = "abo")
+    private List<Param> params = new ArrayList<Param>();
 
-    @OneToMany(mappedBy = "_abo")
-    private List<Cart> _carts = new ArrayList<Cart>();
+    @OneToMany(mappedBy = "abo")
+    private List<Cart> carts = new ArrayList<Cart>();
 
     @OneToOne(optional = true)
     @JoinColumn(name = "_currentCart__cartId")
-    private Cart _currentCart;
-
-    public void setType(final Type type) {
-        _type = type;
-    }
-
-    public Type getType() {
-        return _type;
-    }
-
-    public void setAmount(final Integer amount) {
-        _amount = amount;
-    }
-
-    public Integer getAmount() {
-        return _amount;
-    }
-
-    public void setPeriod(final Period period) {
-        _period = period;
-    }
-
-    public Period getPeriod() {
-        return _period;
-    }
-
-    public void setUser(final User user) {
-        _user = user;
-    }
-
-    public User getUser() {
-        return _user;
-    }
-
-    public void setTimeStamp(final Long timeStamp) {
-        _timeStamp = timeStamp;
-    }
-
-    public Long getTimeStamp() {
-        return _timeStamp;
-    }
+    private Cart currentCart;
 
     public Date getTimeStampAsDate() {
-        return new Date(_timeStamp);
-    }
-
-    public void setLast(final Long last) {
-        _last = last;
-    }
-
-    public Long getLast() {
-        return _last;
+        return new Date(timeStamp);
     }
 
     public Date getLastAsDate() {
-        return new Date(_last);
-    }
-
-    public void setId(final Long id) {
-        _id = id;
-    }
-
-    public Long getId() {
-        return _id;
-    }
-
-    public void setCurrentCart(final Cart currentCart) {
-        _currentCart = currentCart;
-    }
-
-    public Cart getCurrentCart() {
-        return _currentCart;
-    }
-
-    public void setCarts(final List<Cart> carts) {
-        _carts = carts;
-    }
-
-    public List<Cart> getCarts() {
-        return _carts;
-    }
-
-    public void setParams(final List<Param> params) {
-        _params = params;
-    }
-
-    public List<Param> getParams() {
-        return _params;
+        return new Date(last);
     }
 
     public void addParam(final Param param) {
-        _params.add(param);
-    }
-
-    public void setActive(final boolean active) {
-        _active = active;
-    }
-
-    public boolean isActive() {
-        return _active;
+        params.add(param);
     }
 }

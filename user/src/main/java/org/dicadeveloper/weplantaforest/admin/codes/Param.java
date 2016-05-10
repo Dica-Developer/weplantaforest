@@ -8,60 +8,34 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 public class Param {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long _id;
+    @Column(name="_id")
+    private Long id;
 
-    @Column(nullable = false)
-    private String _name;
+    @Column(name="_name",nullable = false)
+    private String name;
 
-    @Column(nullable = false, length = 10000)
-    private String _value;
+    @Column(name="_value",nullable = false, length = 10000)
+    private String value;
 
     @ManyToOne
     @JoinColumn(name = "_abo__id")
-    private Abo _abo;
+    private Abo abo;
 
     public Param() {
     }
 
     public Param(final String name, final String value) {
-        _name = name;
-        _value = value;
-    }
-
-    public void setValue(final String value) {
-        _value = value;
-    }
-
-    public String getValue() {
-        return _value;
-    }
-
-    public void setName(final String name) {
-        _name = name;
-    }
-
-    public String getName() {
-        return _name;
-    }
-
-    public void setId(final Long id) {
-        _id = id;
-    }
-
-    public Long getId() {
-        return _id;
-    }
-
-    public void setAbo(final Abo abo) {
-        _abo = abo;
-    }
-
-    public Abo getAbo() {
-        return _abo;
+        this.name = name;
+        this.value = value;
     }
 }
