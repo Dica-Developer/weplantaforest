@@ -45,9 +45,8 @@ public class TreeRepositoryIntegrationTest {
     private TreeTypeRepository _treeTypeRepository;
 
     @Test
-    public void testGetPlantedTreesFromProjectArticle() {
-        long timeOfPlanting = System.currentTimeMillis();
-
+    public void testGetPlantedTreesFromProjectArticleWithoutPlantedTrees() {
+     
         _dbInjecter.injectTreeType("wood", "this is a wood", 0.5);
         _dbInjecter.injectTreeType("big wood", "this is a big wood", 0.5);
 
@@ -65,14 +64,34 @@ public class TreeRepositoryIntegrationTest {
         Long plantedTrees = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
         
         assertThat(plantedTrees).isNotNull();
-        assertThat(plantedTrees).isEqualTo(0);
-        
+        assertThat(plantedTrees).isEqualTo(0);       
+    }
+    
+    @Test
+    public void testGetPlantedTreesFromProjectArticleWitPlantedTrees() {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectTreeType("wood", "this is a wood", 0.5);
+        _dbInjecter.injectTreeType("big wood", "this is a big wood", 0.5);
+
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectUser("Bert");
+
+        _dbInjecter.injectProject("Project", "Adam", "adam's project", true, 0, 0);
+
+        _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
+        _dbInjecter.injectProjectArticle("big wood", "Project", 3.0);
+
         _dbInjecter.injectTreeToProject("wood", "Bert", 5, timeOfPlanting, "Project");
         _dbInjecter.injectTreeToProject("wood", "Bert", 5, timeOfPlanting, "Project");
         _dbInjecter.injectTreeToProject("big wood", "Bert", 5, timeOfPlanting, "Project");
 
-        plantedTrees = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
+        ProjectArticle projectArticle = _projectArticleRepository.findByProjectAndTreeType(
+                _projectRepository.findByName("Project"), _treeTypeRepository.findByName("wood"));
+   
+        Long plantedTrees = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
 
         assertThat(plantedTrees).isEqualTo(10);
     }
+      
 }
