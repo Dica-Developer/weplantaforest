@@ -32,7 +32,7 @@ class PaymentBar extends Component {
         return (<div className="container">
           Hier kannst Du Bäume pflanzen. Du wählst aus wieviel Bäume oder für wieviel Geld wir für Dich Bäume pflanzen.
           <br/>
-          <div className="btn-group btn-group-lg" role="group" data-toggle="buttons">
+          <div className="btn-group btn-group-justified btn-group-lg" role="group" data-toggle="buttons">
             <label className="btn btn-primary active" onClick={this.toggleButtonState.bind(this, 500)}>
               <input type="radio" defaultChecked autocomplete="off"/>5€
             </label>
