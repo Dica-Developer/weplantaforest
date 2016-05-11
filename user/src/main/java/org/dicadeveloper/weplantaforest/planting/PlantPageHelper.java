@@ -1,10 +1,12 @@
-package org.dicadeveloper.weplantaforest.admin.codes;
+package org.dicadeveloper.weplantaforest.planting;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.dicadeveloper.weplantaforest.admin.codes.Cart;
+import org.dicadeveloper.weplantaforest.admin.codes.CartItem;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Component;
 import lombok.NonNull;
 
 @Component
-public class CartHelper {
+public class PlantPageHelper {
 
     private @NonNull ProjectRepository _projectRepository;
 
@@ -33,7 +35,7 @@ public class CartHelper {
     float targetedPrice = 10.0f;
 
     @Autowired
-    public CartHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
+    public PlantPageHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
             TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         _projectRepository = projectRepository;
         _projectArticleRepository = projectArticleRepository;
