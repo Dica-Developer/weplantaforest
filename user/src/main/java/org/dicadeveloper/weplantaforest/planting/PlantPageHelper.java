@@ -32,8 +32,6 @@ public class PlantPageHelper {
 
     List<ProjectArticle> projectArticles;
 
-    float targetedPrice = 10.0f;
-
     @Autowired
     public PlantPageHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
             TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
@@ -43,7 +41,7 @@ public class PlantPageHelper {
         _treeRepository = treeRepository;
     }
 
-    public PlantPageData createPlantProposal() {
+    public PlantPageData createPlantProposal(double targetedPrice) {
         plantPageData = new PlantPageData();
         addActiveProjectsToPlantPageData();
 
@@ -53,7 +51,7 @@ public class PlantPageHelper {
 
         double newTargetedPrice = targetedPrice - plantPageData.getActualPrice();
         addFurtherPlantItems(newTargetedPrice);
-      
+
         return plantPageData;
     }
 
@@ -65,9 +63,10 @@ public class PlantPageHelper {
             String projectName = project.getName();
 
             plantPageData.projects.put(projectName, projectData);
-            
+
             HashMap<String, PlantItem> plantItemMap = new HashMap<>();
-            plantPageData.projects.get(projectName).setPlantItems(plantItemMap);
+            plantPageData.projects.get(projectName)
+                                  .setPlantItems(plantItemMap);
         }
     }
 
@@ -208,7 +207,7 @@ public class PlantPageHelper {
         plantItem.setAmount(amount);
         plantItem.setTreePrice(treePrice);
 
-        double actualPriceNow = plantPageData.getActualPrice() +  amount * treePrice;
+        double actualPriceNow = plantPageData.getActualPrice() + amount * treePrice;
 
         plantPageData.setActualPrice(actualPriceNow);
 
