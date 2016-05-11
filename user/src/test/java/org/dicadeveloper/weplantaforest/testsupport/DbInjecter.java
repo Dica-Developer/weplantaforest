@@ -119,7 +119,7 @@ public class DbInjecter {
         ProjectArticle plantArticle = new ProjectArticle();
         Price price = new Price();
 
-        price.setAmount(new BigDecimal(5.0));
+        price.setAmount(new BigDecimal(priceAmount));
         price.setScontoType(ScontoType.NONE);
         _priceRepository.save(price);
 
