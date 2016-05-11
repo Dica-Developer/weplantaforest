@@ -1,12 +1,10 @@
 package org.dicadeveloper.weplantaforest.planting;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.dicadeveloper.weplantaforest.admin.codes.Cart;
-import org.dicadeveloper.weplantaforest.admin.codes.CartItem;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -30,6 +28,8 @@ public class PlantPageHelper {
 
     private @NonNull TreeTypeRepository _treeTypeRepository;
 
+    PlantPageData plantPageData;
+
     List<ProjectArticle> projectArticles;
 
     float targetedPrice = 10.0f;
@@ -43,19 +43,32 @@ public class PlantPageHelper {
         _treeRepository = treeRepository;
     }
 
-    public Cart createCartProposal() {
-        Cart cart = new Cart();
-        cart.setTimeStamp(System.currentTimeMillis());
+    public PlantPageData createPlantProposal() {
+        plantPageData = new PlantPageData();
+        addActiveProjectsToPlantPageData();
+
         projectArticles = createListOfAllAvailableProjectArticles();
 
-        cart.addCartItem(createFirstCartItemWithHighestMarge(targetedPrice));
+        addPlantItemWithHighestMarge(targetedPrice);
 
-        double newTargetedPrice = targetedPrice - cart.getTotalPrice()
-                                                      .doubleValue();
-        for (CartItem cartItem : createFurtherCartItems(newTargetedPrice)) {
-            cart.addCartItem(cartItem);
+        double newTargetedPrice = targetedPrice - plantPageData.getActualPrice();
+        addFurtherPlantItems(newTargetedPrice);
+      
+        return plantPageData;
+    }
+
+    private void addActiveProjectsToPlantPageData() {
+        HashMap<String, ProjectData> projectMap = new HashMap<>();
+        plantPageData.setProjects(projectMap);
+        for (Project project : _projectRepository.active(new PageRequest(0, 5))) {
+            ProjectData projectData = new ProjectData();
+            String projectName = project.getName();
+
+            plantPageData.projects.put(projectName, projectData);
+            
+            HashMap<String, PlantItem> plantItemMap = new HashMap<>();
+            plantPageData.projects.get(projectName).setPlantItems(plantItemMap);
         }
-        return cart;
     }
 
     private List<ProjectArticle> createListOfAllAvailableProjectArticles() {
@@ -72,7 +85,7 @@ public class PlantPageHelper {
         return projectArticles;
     }
 
-    private CartItem createFirstCartItemWithHighestMarge(double targetedPrice) {
+    private void addPlantItemWithHighestMarge(double targetedPrice) {
         double newTargetedPrice;
         // if there are more articles, use 70% of the targeted price for the
         // article with highest marge
@@ -91,11 +104,10 @@ public class PlantPageHelper {
         int maxMargeTreeAmount = countAmountOfTreesToPlant(newTargetedPrice, treesRemaining, treePrice);
 
         projectArticles.remove(article);
-        return createCartItem(article, maxMargeTreeAmount);
+        addPlantItemToProject(article, maxMargeTreeAmount);
     }
 
-    private List<CartItem> createFurtherCartItems(double targetedPrice) {
-        List<CartItem> cartItems = new ArrayList<>();
+    private void addFurtherPlantItems(double targetedPrice) {
         Random random = new Random();
 
         while (projectArticles.size() > 0) {
@@ -120,8 +132,7 @@ public class PlantPageHelper {
                 // fill the cart with
                 if (areThereMorePossibilitiesToPlant(projectArticles, targetedPrice - treePrice)) {
                     // if yes, just add 1 tree by this article
-                    CartItem cartItem = createCartItem(article, 1);
-                    cartItems.add(cartItem);
+                    addPlantItemToProject(article, 1);
 
                     // targeted price lowered by price of one tree
                     targetedPrice = targetedPrice - treePrice;
@@ -136,16 +147,18 @@ public class PlantPageHelper {
                     int amount = countAmountOfTreesToPlant(targetedPrice, treesRemaining, treePrice);
 
                     // now you can create the cartItem with the amount of trees
-                    CartItem cartItem = createCartItem(article, amount);
-                    cartItems.add(cartItem);
+                    addPlantItemToProject(article, amount);
 
                     // targeted price lowered by the amount of trees multiplied
                     // by the price og one tree
                     targetedPrice = targetedPrice - (amount * treePrice);
                 }
+            } else {
+                // add PlantItem with amount 0 to let the user the possibility
+                // to change this
+                addPlantItemToProject(article, 0);
             }
         }
-        return cartItems;
     }
 
     private ProjectArticle findProjectArticleWithHighestMarge() {
@@ -181,23 +194,28 @@ public class PlantPageHelper {
         return cartPrice <= targetedPrice;
     }
 
-    private CartItem createCartItem(ProjectArticle article, int amount) {
-        CartItem cartItem = new CartItem();
+    private void addPlantItemToProject(ProjectArticle article, int amount) {
+        String projectName = article.getProject()
+                                    .getName();
+        String treeTypeName = article.getTreeType()
+                                     .getName();
 
-        cartItem.setPlantArticleId(article.getArticleId());
-        cartItem.setAmount(amount);
-        cartItem.setBasePricePerPiece(article.getPrice()
-                                             .getAmount());
-        cartItem.setFundingPerPiece(article.getPrice()
-                                           .getFunding());
+        double treePrice = article.getPrice()
+                                  .getAmount()
+                                  .doubleValue();
 
-        BigDecimal totalPrice = new BigDecimal(article.getPrice()
-                                                      .getAmount()
-                                                      .doubleValue()
-                * amount);
-        cartItem.setTotalPrice(totalPrice);
+        PlantItem plantItem = new PlantItem();
+        plantItem.setAmount(amount);
+        plantItem.setTreePrice(treePrice);
 
-        return cartItem;
+        double actualPriceNow = plantPageData.getActualPrice() +  amount * treePrice;
+
+        plantPageData.setActualPrice(actualPriceNow);
+
+        plantPageData.getProjects()
+                     .get(projectName)
+                     .getPlantItems()
+                     .put(treeTypeName, plantItem);
     }
 
     private boolean areThereTreesRemaining(ProjectArticle article) {

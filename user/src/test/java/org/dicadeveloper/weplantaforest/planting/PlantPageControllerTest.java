@@ -1,5 +1,6 @@
-package org.dicadeveloper.weplantaforest.admin.codes;
+package org.dicadeveloper.weplantaforest.planting;
 
+import static org.hamcrest.Matchers.isOneOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class CartControllerTest {
+public class PlantPageControllerTest {
 
     private MockMvc mockMvc;
 
@@ -56,10 +57,11 @@ public class CartControllerTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(10))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(10))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
     }
 
     @Test
@@ -71,14 +73,16 @@ public class CartControllerTest {
 
         dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
 
-        dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 0.5);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.8);
+        dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(7))
-                    .andExpect(jsonPath("$.cartItems[1].amount").value(3))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(7))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(3))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
     }
 
     @Test
@@ -96,12 +100,15 @@ public class CartControllerTest {
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(7))
-                    .andExpect(jsonPath("$.cartItems[1].amount").value(1))
-                    .andExpect(jsonPath("$.cartItems[2].amount").value(2))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(1, 2)))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].amount").value(isOneOf(1, 2)))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
 
     }
 
@@ -122,20 +129,24 @@ public class CartControllerTest {
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
         dbInjecter.injectProjectArticle("dowo", "Project A", 10, 1.0, 0.3);
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(7))
-                    .andExpect(jsonPath("$.cartItems[1].amount").value(1))
-                    .andExpect(jsonPath("$.cartItems[2].amount").value(1))
-                    .andExpect(jsonPath("$.cartItems[3].amount").value(1))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(1))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].amount").value(1))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].amount").value(1))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
 
     }
-    
+
     @Test
     public void testGetCartWithOneArticleNotEnoughTreesRemaining() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
-        
+
         dbInjecter.injectTreeType("wood", "desc", 0.5);
 
         dbInjecter.injectUser("Adam");
@@ -143,19 +154,20 @@ public class CartControllerTest {
         dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
-        
+
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(5))
-                    .andExpect(jsonPath("$.totalPrice").value(5));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(5))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(5.0));
     }
-    
+
     @Test
     public void testGetCartWithTwoArticlesNotEnoughTreesRemainingForHighestMarge() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
-        
+
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTreeType("doow", "desc", 0.5);
 
@@ -165,20 +177,22 @@ public class CartControllerTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
-        
+
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(5))
-                    .andExpect(jsonPath("$.cartItems[1].amount").value(5))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(5))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(5))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
     }
-    
+
     @Test
     public void testGetCartWithTwoArticlesNoTreesRemainingForHighestMarge() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
-        
+
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTreeType("doow", "desc", 0.5);
 
@@ -188,19 +202,20 @@ public class CartControllerTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
-        
+
         dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(10))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(10))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
     }
-    
+
     @Test
     public void testGetCartWithTwoArticlesNoTreesRemainingFromLowerMarge() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
-        
+
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTreeType("doow", "desc", 0.5);
 
@@ -210,18 +225,19 @@ public class CartControllerTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
-        
+
         dbInjecter.injectTreeToProject("doow", "Adam", 10, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(10))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(10))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
     }
-    
+
     @Test
     public void testGetCartWithTwoArticlesWherePriceTenCantBeReached() throws Exception {
-        
+
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTreeType("doow", "desc", 0.5);
 
@@ -231,18 +247,19 @@ public class CartControllerTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.5, 0.5);
-        
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(2))
-                    .andExpect(jsonPath("$.cartItems[1].amount").value(2))
-                    .andExpect(jsonPath("$.totalPrice").value(9));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(2))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(3.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(2))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.5))
+                    .andExpect(jsonPath("$.actualPrice").value(9.0));
     }
-    
+
     @Test
     public void testGetCartWithTwoArticlesFromDifferentProjects() throws Exception {
-        
+
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTreeType("doow", "desc", 0.5);
 
@@ -253,18 +270,19 @@ public class CartControllerTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 1.0, 0.5);
-        
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(7))
-                    .andExpect(jsonPath("$.cartItems[1].amount").value(3))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(3))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
     }
-    
+
     @Test
     public void testGetCartWithFourArticlesFromDifferentProjects() throws Exception {
-        
+
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTreeType("doow", "desc", 0.5);
 
@@ -274,17 +292,21 @@ public class CartControllerTest {
         dbInjecter.injectProject("Project B", "Adam", "adam's project", true, 0, 0);
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 2.0);
-        dbInjecter.injectProjectArticle("doow", "Project A", 10, 2.0, 1.0);        
+        dbInjecter.injectProjectArticle("doow", "Project A", 10, 2.0, 1.0);
         dbInjecter.injectProjectArticle("wood", "Project B", 10, 2.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 2.0, 0.5);
-        
 
-        this.mockMvc.perform(get("/cartProposal").accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.cartItems[0].amount").value(2))
-                    .andExpect(jsonPath("$.cartItems[1].amount").value(1))
-                    .andExpect(jsonPath("$.cartItems[2].amount").value(1))
-                    .andExpect(jsonPath("$.totalPrice").value(10));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(2))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(3.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(0,1)))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(2.0))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].amount").value(isOneOf(0,1)))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(2.0))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(0,1)))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(2.0))
+                    .andExpect(jsonPath("$.actualPrice").value(10.0));
     }
 
 }
