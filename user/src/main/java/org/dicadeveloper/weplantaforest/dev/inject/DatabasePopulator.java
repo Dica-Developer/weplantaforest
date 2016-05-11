@@ -1,11 +1,17 @@
 package org.dicadeveloper.weplantaforest.dev.inject;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import org.dicadeveloper.weplantaforest.projects.Price;
+import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
+import org.dicadeveloper.weplantaforest.projects.PriceRepository;
 import org.dicadeveloper.weplantaforest.projects.Project;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -14,6 +20,7 @@ import org.dicadeveloper.weplantaforest.trees.UserRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Verify;
@@ -35,17 +42,22 @@ public class DatabasePopulator {
     private UserRepository _userRepository;
     private TreeTypeRepository _treeTypeRepository;
     private TreeRepository _treeRepository;
+    private ProjectArticleRepository _projectArticleRepository;
+    private PriceRepository _priceRepository;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository,
-            TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
+            TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
+            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
         _treeRepository = treeRepository;
+        _projectArticleRepository = projectArticleRepository;
+        _priceRepository = priceRepository;
     }
 
-    public void insertProjects() {
+    public DatabasePopulator insertProjects() {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
             int pickOne = random.nextInt(4);
@@ -101,6 +113,7 @@ public class DatabasePopulator {
             }
             _projectRepository.save(project);
         }
+        return this;
     }
 
     public DatabasePopulator insertDefaultTreeTypes() {
@@ -152,6 +165,40 @@ public class DatabasePopulator {
             treeDto.setPlantedOn(new Date(i + 1000000L).getTime());
             treeDto.setOwner(cyclingUsers.next());
             _treeRepository.save(treeDto);
+        }
+        return this;
+    }
+
+    public DatabasePopulator insertProjectArticles() {
+        Random random = new Random();
+
+        for (Project project : _projectRepository.active(new PageRequest(0, 10))) {
+            for (int i = 0; i < 3; i++) {
+                int pickOne = random.nextInt(11);
+                long randomAmount = random.nextInt(500);
+
+                double randomPrice = random.nextDouble() * 6;
+                double randomMarge = random.nextDouble() * 2;
+
+                while (randomPrice < randomMarge) {
+                    randomPrice = random.nextDouble() * 6;
+                    randomMarge = random.nextDouble() * 2;
+                }
+
+                ProjectArticle plantArticle = new ProjectArticle();
+                Price price = new Price();
+
+                price.setAmount(new BigDecimal(randomPrice));
+                price.setScontoType(ScontoType.NONE);
+                price.setMarge(new BigDecimal(randomMarge));
+                _priceRepository.save(price);
+
+                plantArticle.setTreeType(_treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(pickOne)));
+                plantArticle.setProject(project);
+                plantArticle.setPrice(price);
+                plantArticle.setAmount(randomAmount);
+                _projectArticleRepository.save(plantArticle);
+            }
         }
         return this;
     }

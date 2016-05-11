@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
+import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.trees.UserRepository;
@@ -15,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -40,6 +43,12 @@ public class DatabasePopulatorTest {
 
     @Autowired
     private UserRepository _userRepository;
+
+    @Autowired
+    private ProjectArticleRepository _projectArticleRepository;
+
+    @Autowired
+    private ProjectRepository _projectRepository;
 
     @Test
     public void testInsertUsers() throws Exception {
@@ -69,5 +78,19 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertDefaultTreeTypes();
         _databasePopulator.insertTrees(1000);
         assertThat(_treeRepository.count()).isEqualTo(1000);
+    }
+
+    @Test
+    public void testInsertProjectArticles() throws Exception {
+        _databasePopulator.insertUsers();
+        _databasePopulator.insertDefaultTreeTypes();
+        _databasePopulator.insertProjects();
+        _databasePopulator.insertProjectArticles();
+
+        long activeProjectCount = _projectRepository.active(new PageRequest(0, 5))
+                                                    .getTotalElements();
+
+        assertThat(_projectArticleRepository.count()).isEqualTo(activeProjectCount * 3);
+
     }
 }
