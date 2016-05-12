@@ -40,11 +40,11 @@ public class PlantPageControllerGetMethodTest {
     private DbInjecter dbInjecter;
 
     @Autowired
-    private WebApplicationContext wac;
+    private WebApplicationContext webApplicationContext;
 
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(this.wac).build();
+        this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
     }
 
     @Test

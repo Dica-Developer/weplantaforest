@@ -44,14 +44,14 @@ public class PlantPageControllerPostMethodTest {
     private DbInjecter dbInjecter;
 
     @Autowired
-    private WebApplicationContext wac;
+    private WebApplicationContext webApplicationContext;
 
     @Autowired
     private CartRepository _cartRepository;
 
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(this.wac).build();
+        this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
     }
 
     @Test

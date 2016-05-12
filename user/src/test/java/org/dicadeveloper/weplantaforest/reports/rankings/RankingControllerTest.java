@@ -37,14 +37,14 @@ public class RankingControllerTest {
     public CleanDbRule _cleanDbRule;
 
     @Autowired
-    private WebApplicationContext wac;
+    private WebApplicationContext webApplicationContext;
 
     @Autowired
     public DbInjecter _dbInjecter;
 
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(this.wac).build();
+        this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
     }
 
     @Test
