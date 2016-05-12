@@ -47,7 +47,7 @@ public class PlantPageControllerPostMethodTest {
     private WebApplicationContext wac;
 
     @Autowired
-    public CartRepository _cartRepository;
+    private CartRepository _cartRepository;
 
     @Before
     public void setup() {
