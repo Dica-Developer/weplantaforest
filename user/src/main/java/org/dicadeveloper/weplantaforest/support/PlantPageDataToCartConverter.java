@@ -47,25 +47,23 @@ public class PlantPageDataToCartConverter {
                                                        .getPlantItems()
                                                        .get(plantItemName);
 
-                    double treePrice = plantItem.getTreePrice();
-                    double totalPrice = amount * plantItem.getTreePrice();
+                    BigDecimal treePrice = PriceHelper.fromLongToBigDecimal(plantItem.getTreePrice());
+                    BigDecimal totalPrice = PriceHelper.fromLongToBigDecimal(amount * plantItem.getTreePrice());
                     Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectname,
                             plantItemName);
 
                     cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
                 }
             }
-
         }
-
         return cart;
     }
 
-    private CartItem createCartItem(int amount, double treePrice, double totalPrice, Long articleId) {
+    private CartItem createCartItem(int amount, BigDecimal treePrice, BigDecimal totalPrice, Long articleId) {
         CartItem cartItem = new CartItem();
         cartItem.setAmount(amount);
-        cartItem.setBasePricePerPiece(new BigDecimal(treePrice));
-        cartItem.setTotalPrice(new BigDecimal(totalPrice));
+        cartItem.setBasePricePerPiece(treePrice);
+        cartItem.setTotalPrice(totalPrice);
         cartItem.setPlantArticleId(articleId);
         return cartItem;
     }

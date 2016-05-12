@@ -46,7 +46,7 @@ public class PlantPageDataValidatorTest {
 
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
 
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 100, "wood", "Project A",
                 plantPageData);
 
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
@@ -70,9 +70,9 @@ public class PlantPageDataValidatorTest {
 
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
 
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 100, "wood", "Project A",
                 plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(10, 1.0, "doow", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(10, 100, "doow", "Project A",
                 plantPageData);
 
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
@@ -94,7 +94,7 @@ public class PlantPageDataValidatorTest {
 
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
 
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 100, "wood", "Project A",
                 plantPageData);
 
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
@@ -116,9 +116,9 @@ public class PlantPageDataValidatorTest {
 
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 100, "wood", "Project A",
                 plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 100, "wood", "Project A",
                 plantPageData);
 
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
@@ -143,13 +143,13 @@ public class PlantPageDataValidatorTest {
 
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(0, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(0, 100, "wood", "Project A",
                 plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 100, "wood", "Project A",
                 plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(6, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(6, 100, "wood", "Project A",
                 plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(12, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(12, 100, "wood", "Project A",
                 plantPageData);
 
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
@@ -172,7 +172,7 @@ public class PlantPageDataValidatorTest {
 
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(4, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(4, 100, "wood", "Project A",
                 plantPageData);
 
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
@@ -195,7 +195,7 @@ public class PlantPageDataValidatorTest {
 
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(4, 1.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(4, 100, "wood", "Project A",
                 plantPageData);
 
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);

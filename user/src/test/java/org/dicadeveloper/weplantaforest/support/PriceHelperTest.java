@@ -92,4 +92,11 @@ public class PriceHelperTest {
         assertThat(bigDecimalValue.doubleValue()).isEqualTo(13333.37);       
     }
     
+    @Test
+    public void testCentsToEuro() {
+        long cents = 100;
+        double euro = PriceHelper.fromCentsToEuro(cents);
+        assertThat(euro).isEqualTo(1.0);
+    }
+    
 }

@@ -28,7 +28,7 @@ public class PlantPageController {
     private @NonNull PlantPageDataValidator _plantPageDataValidator;
 
     @RequestMapping(value = "/plantProposal/{targetedPrice}", method = RequestMethod.GET)
-    public PlantPageData getCartProposal(@PathVariable double targetedPrice) {
+    public PlantPageData getCartProposal(@PathVariable long targetedPrice) {
         return plantPageHelper.createPlantProposal(targetedPrice);
     }
 

@@ -42,7 +42,7 @@ public class PlantPageDataCartConverterTest {
     public void testConvertFromPlantPageDataToCartOneItem() {
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A",
                 plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
@@ -73,9 +73,9 @@ public class PlantPageDataCartConverterTest {
     public void testConvertFromPlantPageDataToCartTwoItems() {
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A",
                 plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 1.0, "doow", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 100, "doow", "Project A",
                 plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
@@ -118,11 +118,11 @@ public class PlantPageDataCartConverterTest {
     public void testConvertFromPlantPageDataToCartThreeItemsOneWithZeroAmount() {
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A",
                 plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 1.0, "doow", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 100, "doow", "Project A",
                 plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(0, 1.0, "wodo", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(0, 100, "wodo", "Project A",
                 plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
@@ -169,7 +169,7 @@ public class PlantPageDataCartConverterTest {
     public void testSavetoDBAfterConversion() {
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A",
                 plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);

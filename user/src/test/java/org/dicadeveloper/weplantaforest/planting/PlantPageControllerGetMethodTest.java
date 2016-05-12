@@ -57,11 +57,11 @@ public class PlantPageControllerGetMethodTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(10))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
     }
 
     @Test
@@ -76,13 +76,13 @@ public class PlantPageControllerGetMethodTest {
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.8);
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(7))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(3))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
     }
 
     @Test
@@ -100,15 +100,15 @@ public class PlantPageControllerGetMethodTest {
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(1, 2)))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].amount").value(isOneOf(1, 2)))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
 
     }
 
@@ -129,17 +129,17 @@ public class PlantPageControllerGetMethodTest {
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
         dbInjecter.injectProjectArticle("dowo", "Project A", 10, 1.0, 0.3);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(1))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].amount").value(1))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].amount").value(1))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
 
     }
 
@@ -157,11 +157,11 @@ public class PlantPageControllerGetMethodTest {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(5))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(5.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(500));
     }
 
     @Test
@@ -180,13 +180,13 @@ public class PlantPageControllerGetMethodTest {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(5))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(5))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
     }
 
     @Test
@@ -205,11 +205,11 @@ public class PlantPageControllerGetMethodTest {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(10))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
     }
 
     @Test
@@ -228,11 +228,11 @@ public class PlantPageControllerGetMethodTest {
 
         dbInjecter.injectTreeToProject("doow", "Adam", 10, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(10))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
     }
 
     @Test
@@ -248,13 +248,13 @@ public class PlantPageControllerGetMethodTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.5, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(2))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(3.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(2))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(1.5))
-                    .andExpect(jsonPath("$.actualPrice").value(9.0));
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(150))
+                    .andExpect(jsonPath("$.actualPrice").value(900));
     }
 
     @Test
@@ -271,13 +271,13 @@ public class PlantPageControllerGetMethodTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(1.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(3))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(1.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
     }
 
     @Test
@@ -296,17 +296,17 @@ public class PlantPageControllerGetMethodTest {
         dbInjecter.injectProjectArticle("wood", "Project B", 10, 2.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 2.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 10.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(2))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(3.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(0, 1)))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(2.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(200))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].amount").value(isOneOf(0, 1)))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(2.0))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(200))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(0, 1)))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(2.0))
-                    .andExpect(jsonPath("$.actualPrice").value(10.0));
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(200))
+                    .andExpect(jsonPath("$.actualPrice").value(1000));
     }
 
     @Test
@@ -325,17 +325,17 @@ public class PlantPageControllerGetMethodTest {
         dbInjecter.injectProjectArticle("wood", "Project B", 10, 2.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 2.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 30.0).accept("application/json"))
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 3000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(3.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(1, 2)))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(2.0))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(200))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].amount").value(isOneOf(1, 2)))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(2.0))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(200))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(1, 2)))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(2.0))
-                    .andExpect(jsonPath("$.actualPrice").value(29.0));
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(200))
+                    .andExpect(jsonPath("$.actualPrice").value(2900));
     }
 
 }

@@ -64,7 +64,7 @@ public class PlantPageControllerPostMethodTest {
 
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A",
                 plantPageData);
 
         this.mockMvc.perform(post("/donateTrees").contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -87,7 +87,7 @@ public class PlantPageControllerPostMethodTest {
 
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 3.0, "wood", "Project A",
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 300, "wood", "Project A",
                 plantPageData);
 
         this.mockMvc.perform(post("/donateTrees").contentType(TestUtil.APPLICATION_JSON_UTF8)

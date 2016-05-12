@@ -11,6 +11,6 @@ public class PlantItem {
 
     int amount;
 
-    double treePrice;
+    long treePrice;
 
 }

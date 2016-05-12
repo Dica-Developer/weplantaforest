@@ -23,7 +23,7 @@ public class PlantPageDataCreater {
         return plantPageData;
     }
 
-    public static PlantPageData createPlantItemAndAddToPlantPageData(int amount, double price, String plantItemName,
+    public static PlantPageData createPlantItemAndAddToPlantPageData(int amount, long price, String plantItemName,
             String projectName, PlantPageData plantPageData) {
         PlantItem plantItem = new PlantItem();
         plantItem.setAmount(amount);

@@ -9,6 +9,7 @@ import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
+import org.dicadeveloper.weplantaforest.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +42,16 @@ public class PlantPageHelper {
         _treeRepository = treeRepository;
     }
 
-    protected PlantPageData createPlantProposal(double targetedPrice) {
+    protected PlantPageData createPlantProposal(long targetedPrice) {
         plantPageData = new PlantPageData();
         addActiveProjectsToPlantPageData();
 
         projectArticles = createListOfAllAvailableProjectArticles();
 
-        addPlantItemWithHighestMarge(targetedPrice);
+        addPlantItemWithHighestMarge(PriceHelper.fromCentsToEuro(targetedPrice));
 
-        double newTargetedPrice = targetedPrice - plantPageData.getActualPrice();
+        double newTargetedPrice = PriceHelper.fromCentsToEuro(targetedPrice)
+                - PriceHelper.fromCentsToEuro(plantPageData.getActualPrice());
         addFurtherPlantItems(newTargetedPrice);
 
         return plantPageData;
@@ -199,15 +201,14 @@ public class PlantPageHelper {
         String treeTypeName = article.getTreeType()
                                      .getName();
 
-        double treePrice = article.getPrice()
-                                  .getAmount()
-                                  .doubleValue();
+        long treePrice = PriceHelper.fromBigDecimalToLong(article.getPrice()
+                                                                 .getAmount());
 
         PlantItem plantItem = new PlantItem();
         plantItem.setAmount(amount);
         plantItem.setTreePrice(treePrice);
 
-        double actualPriceNow = plantPageData.getActualPrice() + amount * treePrice;
+        long actualPriceNow = plantPageData.getActualPrice() + amount * treePrice;
 
         plantPageData.setActualPrice(actualPriceNow);
 

@@ -15,4 +15,8 @@ public class PriceHelper {
         return new BigDecimal(doubleValue);
     }
 
+    public static double fromCentsToEuro(long cents) {
+        return ((double) cents / 100.0);
+    }
+
 }
