@@ -52,11 +52,11 @@ class PaymentBar extends Component {
               {item.treeType.name}
             </li>);
           })}
-          <br />
-          <button type="button" className="btn btn-default btn-lg">Nehme ich für {(() => {
+          </ul>
+          <button type="button" className="btn btn-group-justified btn-default btn-lg">Nehme ich für {(() => {
             return Accounting.formatMoney(this.state.price / 100, { thousand: '.', decimal: ',', symbol: '€',  format: '%v %s' });
           })()}</button>
-          </ul>
+          <br />
         </div>)
   }
 }
