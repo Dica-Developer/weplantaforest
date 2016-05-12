@@ -1,7 +1,11 @@
 package org.dicadeveloper.weplantaforest.planting;
 
+import org.dicadeveloper.weplantaforest.admin.codes.Cart;
+import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
+import org.dicadeveloper.weplantaforest.support.PlantPageDataToCartConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +17,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlantPageController {
 
-   private @NonNull PlantPageHelper plantPageHelper;
+    private @NonNull PlantPageHelper plantPageHelper;
+
+    private @NonNull PlantPageDataToCartConverter plantPageToCartConverter;
+
+    private @NonNull CartRepository _cartRepository;
 
     @RequestMapping(value = "/plantProposal/{targetedPrice}", method = RequestMethod.GET)
     public PlantPageData getCartProposal(@PathVariable double targetedPrice) {
         return plantPageHelper.createPlantProposal(targetedPrice);
+    }
+
+    @RequestMapping(value = "/donateTrees", method = RequestMethod.POST)
+    public String processPlant(@RequestBody PlantPageData plantPageData) {
+        Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantPageData);
+        _cartRepository.save(cart);
+        return "trees donated";
     }
 
 }
