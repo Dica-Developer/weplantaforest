@@ -53,7 +53,7 @@ public class PlantPageControllerPostMethodTest {
     }
 
     @Test
-    public void testDonateTrees() throws Exception {
+    public void testDonateTreesSatusOk() throws Exception {
         dbInjecter.injectTreeType("wood", "desc", 0.5);
 
         dbInjecter.injectUser("Adam");
@@ -72,6 +72,29 @@ public class PlantPageControllerPostMethodTest {
                     .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
+
+    }
+
+    @Test
+    public void testDonateTreesSatusBadRequest() throws Exception {
+        dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        dbInjecter.injectUser("Adam");
+
+        dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+
+        dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
+
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 3.0, "wood", "Project A",
+                plantPageData);
+
+        this.mockMvc.perform(post("/donateTrees").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                 .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                    .andExpect(status().isBadRequest());
+
+        assertThat(_cartRepository.count()).isEqualTo(0);
 
     }
 
