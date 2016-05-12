@@ -28,12 +28,12 @@ public class PlantPageHelper {
 
     private @NonNull TreeTypeRepository _treeTypeRepository;
 
-    PlantPageData plantPageData;
+    private PlantPageData plantPageData;
 
-    List<ProjectArticle> projectArticles;
+    private List<ProjectArticle> projectArticles;
 
     @Autowired
-    public PlantPageHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
+    private PlantPageHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
             TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         _projectRepository = projectRepository;
         _projectArticleRepository = projectArticleRepository;
@@ -41,7 +41,7 @@ public class PlantPageHelper {
         _treeRepository = treeRepository;
     }
 
-    public PlantPageData createPlantProposal(double targetedPrice) {
+    protected PlantPageData createPlantProposal(double targetedPrice) {
         plantPageData = new PlantPageData();
         addActiveProjectsToPlantPageData();
 
