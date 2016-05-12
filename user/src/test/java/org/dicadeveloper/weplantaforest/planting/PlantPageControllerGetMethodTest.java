@@ -28,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class PlantPageControllerTest {
+public class PlantPageControllerGetMethodTest {
 
     private MockMvc mockMvc;
 
