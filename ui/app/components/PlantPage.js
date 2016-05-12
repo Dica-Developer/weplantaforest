@@ -66,21 +66,6 @@ class PaymentBar extends Component {
         </div>)
   }
 }
-         /* {this.state.projects.entries.each(function(projectName, trees) {
-            return (<div class="panel panel-default">
-              <div class="panel-heading">{projectName}</div>
-                <div class="panel-body">
-                  <ul className="list-group">
-                  for (var i = 0; i < trees.entries.length; i++) {
-                    <li className="list-group-item">
-                      <span className="badge">{tress.entries[i].value.amount}</span>
-                      {item.entries[i].key}
-                    </li>
-                  }
-                  </ul>
-                </div>
-              </div>)
-          })}*/
 
 export default class PlantPage extends Component {
   render() {
