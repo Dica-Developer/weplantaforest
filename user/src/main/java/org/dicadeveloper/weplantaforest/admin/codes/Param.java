@@ -18,13 +18,13 @@ public class Param {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="_id")
+    @Column(name = "_id")
     private Long id;
 
-    @Column(name="_name",nullable = false)
+    @Column(name = "_name", nullable = false)
     private String name;
 
-    @Column(name="_value",nullable = false, length = 10000)
+    @Column(name = "_value", nullable = false, length = 10000)
     private String value;
 
     @ManyToOne

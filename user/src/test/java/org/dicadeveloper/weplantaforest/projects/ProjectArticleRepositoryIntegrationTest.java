@@ -38,11 +38,11 @@ public class ProjectArticleRepositoryIntegrationTest {
         _dbInjecter.injectUser("Adam");
 
         _dbInjecter.injectProject("Project A", "Adam", "this is a project", true, 0, 0);
-        
+
         _dbInjecter.injectProjectArticle("wood", "Project A", 1.0);
-        
+
         Long articleId = _projectArticleRepository.findArticleIdByProjectAndTreeType("Project A", "wood");
-        
+
         assertThat(articleId).isNotNull();
         assertThat(articleId).isEqualTo(1L);
 

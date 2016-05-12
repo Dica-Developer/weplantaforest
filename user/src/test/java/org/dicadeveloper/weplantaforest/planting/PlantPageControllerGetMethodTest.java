@@ -300,15 +300,15 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(2))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(3.0))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(0,1)))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(0, 1)))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(2.0))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].amount").value(isOneOf(0,1)))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].amount").value(isOneOf(0, 1)))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(2.0))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(0,1)))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(0, 1)))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(2.0))
                     .andExpect(jsonPath("$.actualPrice").value(10.0));
     }
-    
+
     @Test
     public void testGetCartWithFourArticlesFromDifferentProjectsWithOtherTargetedPrice() throws Exception {
 
@@ -329,11 +329,11 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(3.0))
-                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(1,2)))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(isOneOf(1, 2)))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(2.0))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].amount").value(isOneOf(1,2)))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].amount").value(isOneOf(1, 2)))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(2.0))
-                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(1,2)))
+                    .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(1, 2)))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(2.0))
                     .andExpect(jsonPath("$.actualPrice").value(29.0));
     }

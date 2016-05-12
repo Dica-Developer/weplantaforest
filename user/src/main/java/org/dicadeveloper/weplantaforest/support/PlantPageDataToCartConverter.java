@@ -51,7 +51,7 @@ public class PlantPageDataToCartConverter {
                     double totalPrice = amount * plantItem.getTreePrice();
                     Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectname,
                             plantItemName);
-                    
+
                     cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
                 }
             }

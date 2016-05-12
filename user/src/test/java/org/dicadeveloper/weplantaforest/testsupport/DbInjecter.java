@@ -129,7 +129,8 @@ public class DbInjecter {
         _projectArticleRepository.save(plantArticle);
     }
 
-    public void injectProjectArticle(String treeType, String pName, long amount, double priceAmount, double priceMarge) {
+    public void injectProjectArticle(String treeType, String pName, long amount, double priceAmount,
+            double priceMarge) {
         ProjectArticle plantArticle = new ProjectArticle();
         Price price = new Price();
 

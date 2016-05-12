@@ -30,7 +30,7 @@ public class CartItemTest {
 
     @Test
     public void testBigDecimalObjectsNotNull() {
-        CartItem cartItem = new CartItem();    
+        CartItem cartItem = new CartItem();
 
         assertThat(cartItem.getBasePricePerPiece()).isNotNull();
         assertThat(cartItem.getBasePricePerPiece()).isEqualTo(BigDecimal.ZERO);
@@ -41,11 +41,11 @@ public class CartItemTest {
         assertThat(cartItem.getTotalPrice()).isNotNull();
         assertThat(cartItem.getTotalPrice()).isEqualTo(BigDecimal.ZERO);
     }
-    
+
     @Test
     public void testBigDecimalObjectsNoDefaultWhenSetAnotherValue() {
-        CartItem cartItem = new CartItem();    
-        
+        CartItem cartItem = new CartItem();
+
         cartItem.setBasePricePerPiece(BigDecimal.TEN);
         cartItem.setFundingPerPiece(BigDecimal.TEN);
         cartItem.setScontoPerPiece(BigDecimal.TEN);
@@ -56,5 +56,5 @@ public class CartItemTest {
         assertThat(cartItem.getFundingPerPiece()).isEqualTo(BigDecimal.TEN);
         assertThat(cartItem.getTotalPrice()).isEqualTo(BigDecimal.TEN);
     }
-    
+
 }

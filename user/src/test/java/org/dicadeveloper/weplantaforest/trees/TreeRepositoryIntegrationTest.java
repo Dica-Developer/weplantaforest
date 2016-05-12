@@ -46,7 +46,7 @@ public class TreeRepositoryIntegrationTest {
 
     @Test
     public void testGetPlantedTreesFromProjectArticleWithoutPlantedTrees() {
-     
+
         _dbInjecter.injectTreeType("wood", "this is a wood", 0.5);
         _dbInjecter.injectTreeType("big wood", "this is a big wood", 0.5);
 
@@ -62,11 +62,11 @@ public class TreeRepositoryIntegrationTest {
                 _projectRepository.findByName("Project"), _treeTypeRepository.findByName("wood"));
 
         Long plantedTrees = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
-        
+
         assertThat(plantedTrees).isNotNull();
-        assertThat(plantedTrees).isEqualTo(0);       
+        assertThat(plantedTrees).isEqualTo(0);
     }
-    
+
     @Test
     public void testGetPlantedTreesFromProjectArticleWitPlantedTrees() {
         long timeOfPlanting = System.currentTimeMillis();
@@ -88,10 +88,10 @@ public class TreeRepositoryIntegrationTest {
 
         ProjectArticle projectArticle = _projectArticleRepository.findByProjectAndTreeType(
                 _projectRepository.findByName("Project"), _treeTypeRepository.findByName("wood"));
-   
+
         Long plantedTrees = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
 
         assertThat(plantedTrees).isEqualTo(10);
     }
-      
+
 }

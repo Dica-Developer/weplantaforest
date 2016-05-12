@@ -34,29 +34,29 @@ public class Abo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name ="_id")
+    @Column(name = "_id")
     private Long id;
 
-    @Column(name="_type",nullable = false)
+    @Column(name = "_type", nullable = false)
     private Type type;
 
-    @Column(name="_amount",nullable = false)
+    @Column(name = "_amount", nullable = false)
     private Integer amount;
 
-    @Column(name="_period",nullable = false)
+    @Column(name = "_period", nullable = false)
     private Period period;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "_user__userId")
     private User user;
 
-    @Column(name="_timeStamp",nullable = false)
+    @Column(name = "_timeStamp", nullable = false)
     private Long timeStamp;
 
-    @Column(name="_last",nullable = true)
+    @Column(name = "_last", nullable = true)
     private Long last;
 
-    @Column(name="_active",nullable = false)
+    @Column(name = "_active", nullable = false)
     private boolean active = false;
 
     @OneToMany(mappedBy = "abo")

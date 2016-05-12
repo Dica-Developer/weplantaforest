@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ProjectData {
-    
+
     Map<String, PlantItem> plantItems;
 
 }

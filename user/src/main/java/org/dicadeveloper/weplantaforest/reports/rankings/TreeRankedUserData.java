@@ -12,10 +12,10 @@ public class TreeRankedUserData {
 
     @NonNull
     String name;
-    
+
     @NonNull
     Long amount;
-    
+
     Double co2Saved;
 
 }

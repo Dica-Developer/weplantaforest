@@ -10,7 +10,7 @@ import lombok.Setter;
 public class PlantItem {
 
     int amount;
-    
+
     double treePrice;
 
 }
