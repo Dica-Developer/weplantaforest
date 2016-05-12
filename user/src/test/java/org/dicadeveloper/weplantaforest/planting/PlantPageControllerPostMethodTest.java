@@ -1,17 +1,15 @@
 package org.dicadeveloper.weplantaforest.planting;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.HashMap;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.dicadeveloper.weplantaforest.testsupport.TestUtil;
 import org.junit.Before;
 import org.junit.Rule;
@@ -64,15 +62,10 @@ public class PlantPageControllerPostMethodTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
 
-        PlantPageData plantPageData = initializePlantPageData();
-        plantPageData = initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-
-        PlantItem plantItem = createPlantItem(3, 3.0);
-
-        plantPageData.getProjects()
-                     .get("Project A")
-                     .getPlantItems()
-                     .put("wood", plantItem);
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+                plantPageData);
 
         this.mockMvc.perform(post("/donateTrees").contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                  .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
@@ -80,27 +73,6 @@ public class PlantPageControllerPostMethodTest {
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
 
-    }
-
-    private PlantPageData initializePlantPageData() {
-        PlantPageData plantPageData = new PlantPageData();
-        plantPageData.setProjects(new HashMap<String, ProjectData>());
-        return plantPageData;
-    }
-
-    private PlantPageData initializeProjectDataAndAddToPlantPageData(PlantPageData plantPageData, String projectName) {
-        ProjectData projectData = new ProjectData();
-        projectData.setPlantItems(new HashMap<String, PlantItem>());
-        plantPageData.getProjects()
-                     .put(projectName, projectData);
-        return plantPageData;
-    }
-
-    private PlantItem createPlantItem(int amount, double price) {
-        PlantItem plantItem = new PlantItem();
-        plantItem.setAmount(amount);
-        plantItem.setTreePrice(price);
-        return plantItem;
     }
 
 }

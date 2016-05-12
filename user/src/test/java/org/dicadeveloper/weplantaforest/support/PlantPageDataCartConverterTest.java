@@ -2,16 +2,13 @@ package org.dicadeveloper.weplantaforest.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.HashMap;
-
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.Cart;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
-import org.dicadeveloper.weplantaforest.planting.PlantItem;
 import org.dicadeveloper.weplantaforest.planting.PlantPageData;
-import org.dicadeveloper.weplantaforest.planting.ProjectData;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,15 +40,10 @@ public class PlantPageDataCartConverterTest {
 
     @Test
     public void testConvertFromPlantPageDataToCartOneItem() {
-        PlantPageData plantPageData = initializePlantPageData();
-        plantPageData = initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-
-        PlantItem plantItem = createPlantItem(3, 3.0);
-
-        plantPageData.getProjects()
-                     .get("Project A")
-                     .getPlantItems()
-                     .put("wood", plantItem);
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+                plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
 
@@ -79,21 +71,12 @@ public class PlantPageDataCartConverterTest {
 
     @Test
     public void testConvertFromPlantPageDataToCartTwoItems() {
-        PlantPageData plantPageData = initializePlantPageData();
-        plantPageData = initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-
-        PlantItem plantItem = createPlantItem(3, 3.0);
-
-        plantPageData.getProjects()
-                     .get("Project A")
-                     .getPlantItems()
-                     .put("wood", plantItem);
-
-        PlantItem secondPlantItem = createPlantItem(1, 1.0);
-        plantPageData.getProjects()
-                     .get("Project A")
-                     .getPlantItems()
-                     .put("doow", secondPlantItem);
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+                plantPageData);
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 1.0, "doow", "Project A",
+                plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
         _dbInjecter.injectTreeType("doow", "doow", 0.5);
@@ -133,27 +116,14 @@ public class PlantPageDataCartConverterTest {
 
     @Test
     public void testConvertFromPlantPageDataToCartThreeItemsOneWithZeroAmount() {
-        PlantPageData plantPageData = initializePlantPageData();
-        plantPageData = initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-
-        PlantItem plantItem = createPlantItem(3, 3.0);
-
-        plantPageData.getProjects()
-                     .get("Project A")
-                     .getPlantItems()
-                     .put("wood", plantItem);
-
-        PlantItem secondPlantItem = createPlantItem(1, 1.0);
-        plantPageData.getProjects()
-                     .get("Project A")
-                     .getPlantItems()
-                     .put("doow", secondPlantItem);
-
-        PlantItem thirdPlantItem = createPlantItem(0, 1.0);
-        plantPageData.getProjects()
-                     .get("Project A")
-                     .getPlantItems()
-                     .put("wodo", thirdPlantItem);
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+                plantPageData);
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 1.0, "doow", "Project A",
+                plantPageData);
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(0, 1.0, "wodo", "Project A",
+                plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
         _dbInjecter.injectTreeType("doow", "doow", 0.5);
@@ -197,15 +167,10 @@ public class PlantPageDataCartConverterTest {
 
     @Test
     public void testSavetoDBAfterConversion() {
-        PlantPageData plantPageData = initializePlantPageData();
-        plantPageData = initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-
-        PlantItem plantItem = createPlantItem(3, 3.0);
-
-        plantPageData.getProjects()
-                     .get("Project A")
-                     .getPlantItems()
-                     .put("wood", plantItem);
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 3.0, "wood", "Project A",
+                plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
 
@@ -220,27 +185,6 @@ public class PlantPageDataCartConverterTest {
         _cartRepository.save(cart);
 
         assertThat(_cartRepository.count()).isEqualTo(1);
-    }
-
-    private PlantPageData initializePlantPageData() {
-        PlantPageData plantPageData = new PlantPageData();
-        plantPageData.setProjects(new HashMap<String, ProjectData>());
-        return plantPageData;
-    }
-
-    private PlantPageData initializeProjectDataAndAddToPlantPageData(PlantPageData plantPageData, String projectName) {
-        ProjectData projectData = new ProjectData();
-        projectData.setPlantItems(new HashMap<String, PlantItem>());
-        plantPageData.getProjects()
-                     .put(projectName, projectData);
-        return plantPageData;
-    }
-
-    private PlantItem createPlantItem(int amount, double price) {
-        PlantItem plantItem = new PlantItem();
-        plantItem.setAmount(amount);
-        plantItem.setTreePrice(price);
-        return plantItem;
     }
 
 }
