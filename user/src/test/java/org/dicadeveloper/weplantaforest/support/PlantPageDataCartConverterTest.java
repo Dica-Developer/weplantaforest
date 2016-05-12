@@ -12,11 +12,6 @@ import org.dicadeveloper.weplantaforest.planting.PlantPageData;
 import org.dicadeveloper.weplantaforest.planting.ProjectData;
 import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
-import org.hibernate.ConnectionReleaseMode;
-import org.hibernate.engine.jdbc.spi.JdbcConnectionAccess;
-import org.hibernate.engine.transaction.spi.TransactionContext;
-import org.hibernate.engine.transaction.spi.TransactionEnvironment;
-import org.hibernate.engine.transaction.spi.TransactionImplementor;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,7 +73,8 @@ public class PlantPageDataCartConverterTest {
                        .getAmount()).isEqualTo(3);
         assertThat(cart.getCartItems()
                        .get(0)
-                       .getBasePricePerPiece().doubleValue()).isEqualTo(3.0);
+                       .getBasePricePerPiece()
+                       .doubleValue()).isEqualTo(3.0);
     }
 
     @Test
@@ -222,7 +218,7 @@ public class PlantPageDataCartConverterTest {
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData);
 
         _cartRepository.save(cart);
-        
+
         assertThat(_cartRepository.count()).isEqualTo(1);
     }
 
