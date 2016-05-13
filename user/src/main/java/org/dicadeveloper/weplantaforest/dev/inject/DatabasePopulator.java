@@ -174,7 +174,6 @@ public class DatabasePopulator {
 
         for (Project project : _projectRepository.active(new PageRequest(0, 10))) {
             for (int i = 0; i < 3; i++) {
-                int pickOne = random.nextInt(11);
                 long randomAmount = random.nextInt(500);
 
                 double randomPrice = random.nextDouble() * 6;
@@ -193,7 +192,7 @@ public class DatabasePopulator {
                 price.setMarge(new BigDecimal(randomMarge));
                 _priceRepository.save(price);
 
-                plantArticle.setTreeType(_treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(pickOne)));
+                plantArticle.setTreeType(_treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(i)));
                 plantArticle.setProject(project);
                 plantArticle.setPrice(price);
                 plantArticle.setAmount(randomAmount);
