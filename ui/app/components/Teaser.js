@@ -7,27 +7,27 @@ export default class Teaser extends Component {
     this.teaser = [
       {
         'image': {
-          'src': 'https://placeholdit.imgix.net/~text?txtsize=26&w=350&h=350&txttrack=0&txt=',
+          'src': 'http://www.iplantatree.org/img/article/1676/width/305',
           'alt': ''
         },
-        'title': 'MAIN.TEASER.1.TITLE',
-        'text': 'MAIN.TEASER.1.TEXT'
+        'title': 'Praktikant für die neue Website ist da',
+        'text': 'Gabor hat sein halbjährliches Praktikum bei uns angefangen. Er wird sich in dieser Zeit um den Website Relaunch kümmern. Dann wollen wir ihn mal ausquetschen:'
       },
       {
         'image': {
-          'src': 'https://placeholdit.imgix.net/~text?txtsize=26&w=350&h=350&txttrack=0&txt=',
+          'src': 'http://www.iplantatree.org/img/article/1675/width/305',
           'alt': ''
         },
-        'title': 'MAIN.TEASER.2.TITLE',
-        'text': 'MAIN.TEASER.2.TEXT'
+        'title': 'Baum des Jahres ist die Winterlinde',
+        'text': 'Das Wetter wird wieder besser und heute ist der Tag des Baumes, also unternehmt etwas, was euch Bäumen näher bringt. Ihr könnt selber Bäume pflanzen, wandern gehen oder ein Picknick'
       },
       {
         'image': {
-          'src': 'https://placeholdit.imgix.net/~text?txtsize=26&w=350&h=350&txttrack=0&txt=',
+          'src': 'http://www.iplantatree.org/img/article/1674/width/305',
           'alt': ''
         },
-        'title': 'MAIN.TEASER.3.TITLE',
-        'text': 'MAIN.TEASER.3.TEXT'
+        'title': 'Der Traktor ist da',
+        'text': 'Dank eurer Hilfe konnten wir per Crowdfunding einen kleinen Traktor knapp zur Hälfte finanzieren. Diesen haben wir in der letzten Woche abgeholt. Seinen ersten Einsatz wird er Ende April in Wallendorf haben.'
       }
     ];
   }
