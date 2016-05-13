@@ -6,6 +6,7 @@ import NavBar from './NavBar';
 import PlantPage from './PlantPage';
 import Footer from './Footer';
 import Boostrap from 'bootstrap';
+import Carousel from './Carousel';
 
 class Co2Bar extends Component {
 
@@ -33,6 +34,7 @@ class MainPage extends Component {
         <NavBar/>
         <div className="container">
           <Co2Bar/>
+          <Carousel />
         </div>
         <Footer/>
       </div>);
