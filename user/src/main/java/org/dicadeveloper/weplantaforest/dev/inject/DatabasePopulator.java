@@ -176,22 +176,9 @@ public class DatabasePopulator {
             for (int i = 0; i < 3; i++) {
                 long randomAmount = random.nextInt(500);
 
-                double randomPrice = random.nextDouble() * 6;
-                double randomMarge = random.nextDouble() * 2;
-
-                while (randomPrice < randomMarge) {
-                    randomPrice = random.nextDouble() * 6;
-                    randomMarge = random.nextDouble() * 2;
-                }
+                Price price = createPrice();
 
                 ProjectArticle plantArticle = new ProjectArticle();
-                Price price = new Price();
-
-                price.setAmount(new BigDecimal(randomPrice));
-                price.setScontoType(ScontoType.NONE);
-                price.setMarge(new BigDecimal(randomMarge));
-                _priceRepository.save(price);
-
                 plantArticle.setTreeType(_treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(i)));
                 plantArticle.setProject(project);
                 plantArticle.setPrice(price);
@@ -211,5 +198,24 @@ public class DatabasePopulator {
     private Iterable<TreeType> loadTreeTypes() {
         Verify.verify(_treeTypeRepository.count() > 0, "No TreeTypes set up!");
         return _treeTypeRepository.findAll();
+    }
+
+    private Price createPrice() {
+        Price price = new Price();
+        Random random = new Random();
+
+        double randomPrice = random.nextDouble() * 6;
+        double randomMarge = random.nextDouble() * 2;
+
+        while (randomPrice < randomMarge) {
+            randomPrice = random.nextDouble() * 6;
+            randomMarge = random.nextDouble() * 2;
+        }
+
+        price.setAmount(new BigDecimal(randomPrice));
+        price.setScontoType(ScontoType.NONE);
+        price.setMarge(new BigDecimal(randomMarge));
+        _priceRepository.save(price);
+        return price;
     }
 }
