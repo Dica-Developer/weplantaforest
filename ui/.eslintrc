@@ -1,6 +1,8 @@
 {
   "env": {
-    "node": true
+    "node": false,
+    "browser": true,
+    "es6": true
   },
   "globals": {
     "describe": true,
@@ -18,5 +20,12 @@
     "curly": [2, "all"],
     "eol-last": [2],
     "semi": 2
-  }
+  },
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
 }
