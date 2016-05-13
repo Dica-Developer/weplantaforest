@@ -27,7 +27,7 @@ export default class Carousel extends Component {
                 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
               </ol>
               <div className="carousel-inner" role="listbox">
-                {this.slides.map(function (slide, i) {
+                {this.slides.map(function (slide) {
                     return (<div className={slide.className}>
                         <img src={slide.image} width="1140" height="400" alt={slide.title} />
                         <div className="carousel-caption">
