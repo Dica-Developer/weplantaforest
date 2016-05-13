@@ -7,6 +7,7 @@ import PlantPage from './PlantPage';
 import Footer from './Footer';
 import Boostrap from 'bootstrap';
 import Carousel from './Carousel';
+import Teaser from './Teaser';
 
 class Co2Bar extends Component {
 
@@ -35,6 +36,7 @@ class MainPage extends Component {
         <div className="container">
           <Co2Bar/>
           <Carousel />
+          <Teaser />
         </div>
         <Footer/>
       </div>);
