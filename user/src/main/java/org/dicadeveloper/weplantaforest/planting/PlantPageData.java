@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PlantPageData {
 
+    long targetPrice;
     long actualPrice;
 
     Map<String, ProjectData> projects;

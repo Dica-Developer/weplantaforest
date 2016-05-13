@@ -61,7 +61,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(10))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -82,7 +83,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(3))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -108,7 +110,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].amount").value(isOneOf(1, 2)))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
 
     }
 
@@ -139,7 +142,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].amount").value(1))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
 
     }
 
@@ -161,7 +165,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(5))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(500));
+                    .andExpect(jsonPath("$.actualPrice").value(500))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -186,7 +191,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(5))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -209,7 +215,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(10))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -232,7 +239,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(10))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -254,7 +262,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(2))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(150))
-                    .andExpect(jsonPath("$.actualPrice").value(900));
+                    .andExpect(jsonPath("$.actualPrice").value(900))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -277,7 +286,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(3))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(100))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -306,7 +316,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(200))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(0, 1)))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(200))
-                    .andExpect(jsonPath("$.actualPrice").value(1000));
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
+                    .andExpect(jsonPath("$.targetPrice").value(1000));
     }
 
     @Test
@@ -335,7 +346,8 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['wood'].treePrice").value(200))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].amount").value(isOneOf(1, 2)))
                     .andExpect(jsonPath("$.projects['Project B'].plantItems['doow'].treePrice").value(200))
-                    .andExpect(jsonPath("$.actualPrice").value(2900));
+                    .andExpect(jsonPath("$.actualPrice").value(2900))
+                    .andExpect(jsonPath("$.targetPrice").value(3000));
     }
 
 }

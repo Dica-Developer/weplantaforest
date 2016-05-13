@@ -47,6 +47,8 @@ public class PlantPageHelper {
         addActiveProjectsToPlantPageData();
 
         projectArticles = createListOfAllAvailableProjectArticles();
+        
+        plantPageData.setTargetPrice(targetedPrice);
 
         addPlantItemWithHighestMarge(PriceHelper.fromCentsToEuro(targetedPrice));
 
