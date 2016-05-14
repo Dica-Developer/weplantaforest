@@ -51,6 +51,9 @@ class PaymentBar extends Component {
                   <ul className="list-group">
                   {Object.keys(that.state.projects[projectName].plantItems).map(function (treeName) {
                     return (<li className="list-group-item">
+                      <span className="badge">{(() => {
+                        return Accounting.formatMoney(that.state.projects[projectName].plantItems[treeName].treePrice / 100, { thousand: '.', decimal: ',', symbol: '€',  format: '%v %s' });
+                      })()}</span>
                       <span className="badge">{that.state.projects[projectName].plantItems[treeName].amount}</span>
                       {treeName}
                     </li>)
