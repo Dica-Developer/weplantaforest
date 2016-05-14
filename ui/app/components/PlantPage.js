@@ -1,4 +1,6 @@
-import React, {Component} from 'react'
+import React, {
+  Component
+} from 'react';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import Bootstrap from 'bootstrap';
@@ -9,7 +11,10 @@ class PaymentBar extends Component {
 
   constructor() {
     super();
-    this.state = {actualPrice: 500, projects: []};
+    this.state = {
+      actualPrice: 500,
+      projects: []
+    };
   }
 
   toggleButtonState(amount) {
@@ -27,8 +32,8 @@ class PaymentBar extends Component {
   }
 
   render() {
-        var that = this;
-        return (<div className="container">
+    var that = this;
+    return (<div className="container">
           Hier kannst Du Bäume pflanzen. Du wählst aus wieviel Bäume oder für wieviel Geld wir für Dich Bäume pflanzen.
           <br/>
           <div className="btn-group btn-group-justified btn-group-lg" role="group" data-toggle="buttons">
@@ -52,21 +57,21 @@ class PaymentBar extends Component {
                   {Object.keys(that.state.projects[projectName].plantItems).map(function (treeName) {
                     return (<li className="list-group-item">
                       <span className="badge">{(() => {
-                        return Accounting.formatMoney(that.state.projects[projectName].plantItems[treeName].treePrice / 100, { thousand: '.', decimal: ',', symbol: '€',  format: '%v %s' });
+                        return Accounting.formatMoney(that.state.projects[projectName].plantItems[treeName].treePrice / 100, { thousand: '.', decimal: ',', symbol: '€', format: '%v %s' });
                       })()}</span>
                       <span className="badge">{that.state.projects[projectName].plantItems[treeName].amount}</span>
                       {treeName}
-                    </li>)
+                    </li>);
                   })}
                   </ul>
                 </div>
-              </div>)
+              </div>);
           })}
           <button type="button" className="btn btn-group-justified btn-default btn-lg">Nehme ich für {(() => {
-            return Accounting.formatMoney(this.state.actualPrice / 100, { thousand: '.', decimal: ',', symbol: '€',  format: '%v %s' });
+            return Accounting.formatMoney(this.state.actualPrice / 100, { thousand: '.', decimal: ',', symbol: '€', format: '%v %s' });
           })()}</button>
           <br />
-        </div>)
+        </div>);
   }
 }
 
@@ -81,5 +86,7 @@ export default class PlantPage extends Component {
   }
 }
 
-/* vim: set softtabstop=2:shiftwidth=2:expandtab */ 
+/* vim: set softtabstop=2:shiftwidth=2:expandtab */
+
+
 
