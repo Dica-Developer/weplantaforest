@@ -1,9 +1,11 @@
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 
 export default class NavBar extends Component {
   render() {
     return (
-    <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
+      <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
     <div className="container">
     <div className="navbar-header">
       <button className="navbar-toggle" type="button">
@@ -42,5 +44,4 @@ export default class NavBar extends Component {
   }
 }
 
-/* vim: set softtabstop=2:shiftwidth=2:expandtab */ 
-
+/* vim: set softtabstop=2:shiftwidth=2:expandtab */

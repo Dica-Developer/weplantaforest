@@ -1,7 +1,15 @@
 import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Locations, Location, NotFound} from 'react-router-component';
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
+import {
+  Locations,
+  Location,
+  NotFound
+} from 'react-router-component';
 import NavBar from './NavBar';
 import PlantPage from './PlantPage';
 import Footer from './Footer';
@@ -13,7 +21,10 @@ class Co2Bar extends Component {
 
   constructor() {
     super();
-    this.state = {co2: 0, treesCount: 0.0};
+    this.state = {
+      co2: 0,
+      treesCount: 0.0
+    };
   }
 
   componentDidMount() {
@@ -68,5 +79,4 @@ class App extends Component {
 
 render(<App />, document.getElementById('app'));
 
-/* vim: set softtabstop=2:shiftwidth=2:expandtab */ 
-
+/* vim: set softtabstop=2:shiftwidth=2:expandtab */

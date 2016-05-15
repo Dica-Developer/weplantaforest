@@ -87,6 +87,3 @@ export default class PlantPage extends Component {
 }
 
 /* vim: set softtabstop=2:shiftwidth=2:expandtab */
-
-
-

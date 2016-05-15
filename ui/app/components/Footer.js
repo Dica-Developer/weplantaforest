@@ -1,9 +1,11 @@
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 
 export default class Footer extends Component {
   render() {
     return (
-<footer id="footer" className="footer">
+      <footer id="footer" className="footer">
   <div className="container">
     <div className="row">
       <div className="col-md-12">
@@ -90,5 +92,4 @@ export default class Footer extends Component {
   }
 }
 
-/* vim: set softtabstop=2:shiftwidth=2:expandtab */ 
-
+/* vim: set softtabstop=2:shiftwidth=2:expandtab */

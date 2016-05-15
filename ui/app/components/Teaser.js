@@ -1,35 +1,33 @@
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 import Boostrap from 'bootstrap';
 
 export default class Teaser extends Component {
   constructor() {
     super();
-    this.teaser = [
-      {
-        'image': {
-          'src': 'http://www.iplantatree.org/img/article/1676/width/305',
-          'alt': ''
-        },
-        'title': 'Praktikant für die neue Website ist da',
-        'text': 'Gabor hat sein halbjährliches Praktikum bei uns angefangen. Er wird sich in dieser Zeit um den Website Relaunch kümmern. Dann wollen wir ihn mal ausquetschen:'
+    this.teaser = [{
+      'image': {
+        'src': 'http://www.iplantatree.org/img/article/1676/width/305',
+        'alt': ''
       },
-      {
-        'image': {
-          'src': 'http://www.iplantatree.org/img/article/1675/width/305',
-          'alt': ''
-        },
-        'title': 'Baum des Jahres ist die Winterlinde',
-        'text': 'Das Wetter wird wieder besser und heute ist der Tag des Baumes, also unternehmt etwas, was euch Bäumen näher bringt. Ihr könnt selber Bäume pflanzen, wandern gehen oder ein Picknick'
+      'title': 'Praktikant für die neue Website ist da',
+      'text': 'Gabor hat sein halbjährliches Praktikum bei uns angefangen. Er wird sich in dieser Zeit um den Website Relaunch kümmern. Dann wollen wir ihn mal ausquetschen:'
+    }, {
+      'image': {
+        'src': 'http://www.iplantatree.org/img/article/1675/width/305',
+        'alt': ''
       },
-      {
-        'image': {
-          'src': 'http://www.iplantatree.org/img/article/1674/width/305',
-          'alt': ''
-        },
-        'title': 'Der Traktor ist da',
-        'text': 'Dank eurer Hilfe konnten wir per Crowdfunding einen kleinen Traktor knapp zur Hälfte finanzieren. Diesen haben wir in der letzten Woche abgeholt. Seinen ersten Einsatz wird er Ende April in Wallendorf haben.'
-      }
-    ];
+      'title': 'Baum des Jahres ist die Winterlinde',
+      'text': 'Das Wetter wird wieder besser und heute ist der Tag des Baumes, also unternehmt etwas, was euch Bäumen näher bringt. Ihr könnt selber Bäume pflanzen, wandern gehen oder ein Picknick'
+    }, {
+      'image': {
+        'src': 'http://www.iplantatree.org/img/article/1674/width/305',
+        'alt': ''
+      },
+      'title': 'Der Traktor ist da',
+      'text': 'Dank eurer Hilfe konnten wir per Crowdfunding einen kleinen Traktor knapp zur Hälfte finanzieren. Diesen haben wir in der letzten Woche abgeholt. Seinen ersten Einsatz wird er Ende April in Wallendorf haben.'
+    }];
   }
 
   render() {
@@ -50,3 +48,4 @@ export default class Teaser extends Component {
   }
 }
 
+/* vim: set softtabstop=2:shiftwidth=2:expandtab */

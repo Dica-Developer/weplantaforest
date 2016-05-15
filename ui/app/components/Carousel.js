@@ -1,23 +1,22 @@
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 import Boostrap from 'bootstrap';
 
 export default class Carousel extends Component {
   constructor() {
     super();
-    this.slides = [
-      {
-        'image': 'http://www.iplantatree.org/img/plantImage/96/width/1140/max',
-        'title': 'Projektfläche: Kobschütz',
-        'text': 'Projektfläche: Kobschütz',
-        'className': 'item active'
-      },
-      {
-        'image': 'http://www.iplantatree.org/img/plantImage/114/width/1140/max',
-        'title': 'Projektfläche: Berlin Mittelheide',
-        'text': 'Projektfläche: Berlin Mittelheide',
-        'className': 'item'
-      }
-    ];
+    this.slides = [{
+      'image': 'http://www.iplantatree.org/img/plantImage/96/width/1140/max',
+      'title': 'Projektfläche: Kobschütz',
+      'text': 'Projektfläche: Kobschütz',
+      'className': 'item active'
+    }, {
+      'image': 'http://www.iplantatree.org/img/plantImage/114/width/1140/max',
+      'title': 'Projektfläche: Berlin Mittelheide',
+      'text': 'Projektfläche: Berlin Mittelheide',
+      'className': 'item'
+    }];
   }
 
   render() {
@@ -47,4 +46,3 @@ export default class Carousel extends Component {
             </div>);
   }
 }
-
