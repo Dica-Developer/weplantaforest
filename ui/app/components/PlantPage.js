@@ -7,14 +7,44 @@ import Bootstrap from 'bootstrap';
 import Accounting from 'accounting';
 import axios from 'axios';
 
+class CustomPaymentButton extends Component {
+  constructor(props) {
+    super();
+    this.properties = props;
+  }
+
+  render() {
+    return (
+      <form className="form-inline">
+          <div className="form-group">
+            <label className="sr-only" for="treeInput">Höchstgrenze für Baumspende (in Euro)</label>
+            <div className="input-group">
+              <div className="input-group-addon">€</div>
+              <input id="treeInput" type="text" className="form-control" placeholder="Höchstgrenze für Baumspende" onChange={this.properties.parent.toggleButtonStateCustom.bind(this.properties.parent)} />
+              <div className="input-group-addon">.00</div>
+            </div>
+          </div>
+        </form>
+    );
+  }
+}
+
 class PaymentBar extends Component {
 
   constructor() {
     super();
     this.state = {
-      actualPrice: 500,
+      actualPrice: 0,
       projects: []
     };
+  }
+
+  toggleButtonStateCustom() {
+    var that = this;
+    var amount = jQuery('#treeInput').val() * 100;
+    axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
+      that.setState(response.data);
+    });
   }
 
   toggleButtonState(amount) {
@@ -22,6 +52,13 @@ class PaymentBar extends Component {
     axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
       that.setState(response.data);
     });
+    this.state.customPaymentButtonSelected = false;
+  }
+
+  showCustomPayment() {
+    var state = this.state;
+    state.customPaymentButtonSelected = true;
+    this.setState(state);
   }
 
   componentDidMount() {
@@ -29,16 +66,21 @@ class PaymentBar extends Component {
     axios.get('http://localhost:8081/plantProposal/500').then(function(response) {
       that.setState(response.data);
     });
+    this.state.customPaymentButtonSelected = false;
   }
 
   render() {
     var that = this;
+    var customPaymentButton = '';
+    if (this.state.customPaymentButtonSelected) {
+      customPaymentButton = <CustomPaymentButton parent={this} />;
+    }
     return (<div className="container">
           Hier kannst Du Bäume pflanzen. Du wählst aus wieviel Bäume oder für wieviel Geld wir für Dich Bäume pflanzen.
           <br/>
           <div className="btn-group btn-group-justified btn-group-lg" role="group" data-toggle="buttons">
             <label className="btn btn-primary active" onClick={this.toggleButtonState.bind(this, 500)}>
-              <input type="radio" defaultChecked autocomplete="off"/>5€
+              <input type="radio" autocomplete="off"/>5€
             </label>
             <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 1000)}>
               <input type="radio" autocomplete="off"/>10€
@@ -46,8 +88,12 @@ class PaymentBar extends Component {
             <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 1500)}>
               <input type="radio" autocomplete="off"/>15€
             </label>
+            <label className="btn btn-primary" onClick={this.showCustomPayment.bind(this)}>
+              <input type="radio" autocomplete="off"/>Benutzerdefiniert
+            </label>
           </div>
           <br />
+          {customPaymentButton}
           <br />
           {Object.keys(that.state.projects).map(function (projectName) {
             return (<div className="panel panel-default">
