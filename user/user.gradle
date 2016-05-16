@@ -9,7 +9,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
     }
 }
 
@@ -77,7 +77,7 @@ test {
     testLogging {
         events 'passed'
     }
-    if(project.hasProperty('mysql')) {
+    if (project.hasProperty('mysql')) {
         logger.info "Running tests on mysql db!"
         systemProperty "spring.profiles.active", "test,mysql-test"
     } else {
@@ -89,4 +89,12 @@ test {
         maxParallelForks maxForks
     }
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
 
