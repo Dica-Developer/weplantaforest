@@ -3,10 +3,10 @@ package org.dicadeveloper.weplantaforest.trees;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
-import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.junit.Rule;

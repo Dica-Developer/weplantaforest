@@ -3,7 +3,7 @@ package org.dicadeveloper.weplantaforest.reports.rankings;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.CacheConfiguration;
-import org.dicadeveloper.weplantaforest.support.TimeConstants;
+import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;

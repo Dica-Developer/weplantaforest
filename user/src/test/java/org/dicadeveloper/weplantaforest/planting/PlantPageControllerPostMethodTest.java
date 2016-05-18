@@ -7,10 +7,10 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
-import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
-import org.dicadeveloper.weplantaforest.testsupport.TestUtil;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

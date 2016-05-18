@@ -3,8 +3,8 @@ package org.dicadeveloper.weplantaforest.reports.co2;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
-import org.dicadeveloper.weplantaforest.support.TimeConstants;
-import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
+import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Rule;
 import org.junit.Test;

@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
-import org.dicadeveloper.weplantaforest.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

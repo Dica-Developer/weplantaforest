@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
-import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Before;
 import org.junit.Rule;

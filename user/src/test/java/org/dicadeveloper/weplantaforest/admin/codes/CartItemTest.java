@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
-import org.dicadeveloper.weplantaforest.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

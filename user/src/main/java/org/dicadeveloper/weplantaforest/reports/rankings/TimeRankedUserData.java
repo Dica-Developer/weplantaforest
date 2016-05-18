@@ -1,6 +1,6 @@
 package org.dicadeveloper.weplantaforest.reports.rankings;
 
-import org.dicadeveloper.weplantaforest.support.DateHelper;
+import org.dicadeveloper.weplantaforest.common.support.DateHelper;
 
 import lombok.Getter;
 
