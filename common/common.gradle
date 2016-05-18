@@ -86,7 +86,7 @@ test {
     } else {
         def maxForks = Runtime.getRuntime().availableProcessors()
         if (System.env.'CI') {
-            maxForks = (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
+            maxForks = 1
         }
         logger.info "Maximum used parallel forks: " + maxForks
         maxParallelForks maxForks
