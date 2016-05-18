@@ -85,7 +85,7 @@ test {
         if (System.env.'CI') {
             maxForks = (Math.min(((int) (Runtime.getRuntime().availableProcessors() / 2)), 2))
         }
-        logger.info "Maximum used parallel forks: " + maxForks
+        logger.lifecycle "Maximum used parallel forks: " + maxForks
         maxParallelForks maxForks
     }
 }
