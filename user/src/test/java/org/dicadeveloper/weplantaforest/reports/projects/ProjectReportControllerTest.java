@@ -77,14 +77,14 @@ public class ProjectReportControllerTest {
                     .andExpect(jsonPath("$.[0].description").value("project A desc"))
                     .andExpect(jsonPath("$.[0].latitude").value(1.0))
                     .andExpect(jsonPath("$.[0].longitude").value(2.0))
-                    .andExpect(jsonPath("$.[0].amount").value(300))
-                    .andExpect(jsonPath("$.[0].alreadyPlanted").value(100))
+                    .andExpect(jsonPath("$.[0].amountOfMaximumTreesToPlant").value(300))
+                    .andExpect(jsonPath("$.[0].amountOfPlantedTrees").value(100))
                     .andExpect(jsonPath("$.[1].projectName").value("Project B"))
                     .andExpect(jsonPath("$.[1].description").value("project B desc"))
                     .andExpect(jsonPath("$.[1].latitude").value(3.0))
                     .andExpect(jsonPath("$.[1].longitude").value(4.0))
-                    .andExpect(jsonPath("$.[1].amount").value(800))
-                    .andExpect(jsonPath("$.[1].alreadyPlanted").value(400));
+                    .andExpect(jsonPath("$.[1].amountOfMaximumTreesToPlant").value(800))
+                    .andExpect(jsonPath("$.[1].amountOfPlantedTrees").value(400));
     }
 
 }

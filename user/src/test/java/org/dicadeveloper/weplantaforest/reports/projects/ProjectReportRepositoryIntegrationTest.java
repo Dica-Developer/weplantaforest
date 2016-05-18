@@ -58,9 +58,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(0)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(0)
-                           .getAmount()).isEqualTo(300);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(projects.get(0)
-                           .getAlreadyPlanted()).isEqualTo(0);
+                           .getAmountOfPlantedTrees()).isEqualTo(0);
     }
 
     @Test
@@ -92,9 +92,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(0)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(0)
-                           .getAmount()).isEqualTo(300);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(projects.get(0)
-                           .getAlreadyPlanted()).isEqualTo(20);
+                           .getAmountOfPlantedTrees()).isEqualTo(20);
     }
 
     @Test
@@ -127,9 +127,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(0)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(0)
-                           .getAmount()).isEqualTo(300);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(projects.get(0)
-                           .getAlreadyPlanted()).isEqualTo(50);
+                           .getAmountOfPlantedTrees()).isEqualTo(50);
     }
 
     @Test
@@ -160,9 +160,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(0)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(0)
-                           .getAmount()).isEqualTo(300);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(projects.get(0)
-                           .getAlreadyPlanted()).isEqualTo(0);
+                           .getAmountOfPlantedTrees()).isEqualTo(0);
         assertThat(projects.get(1)
                            .getProjectName()).isEqualTo("Project B");
         assertThat(projects.get(1)
@@ -172,9 +172,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(1)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(1)
-                           .getAmount()).isEqualTo(800);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(800);
         assertThat(projects.get(1)
-                           .getAlreadyPlanted()).isEqualTo(0);
+                           .getAmountOfPlantedTrees()).isEqualTo(0);
     }
 
     @Test
@@ -214,9 +214,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(0)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(0)
-                           .getAmount()).isEqualTo(300);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(projects.get(0)
-                           .getAlreadyPlanted()).isEqualTo(100);
+                           .getAmountOfPlantedTrees()).isEqualTo(100);
         assertThat(projects.get(1)
                            .getProjectName()).isEqualTo("Project B");
         assertThat(projects.get(1)
@@ -226,9 +226,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(1)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(1)
-                           .getAmount()).isEqualTo(800);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(800);
         assertThat(projects.get(1)
-                           .getAlreadyPlanted()).isEqualTo(400);
+                           .getAmountOfPlantedTrees()).isEqualTo(400);
     }
 
     @Test
@@ -264,9 +264,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(0)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(0)
-                           .getAmount()).isEqualTo(300);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(projects.get(0)
-                           .getAlreadyPlanted()).isEqualTo(100);
+                           .getAmountOfPlantedTrees()).isEqualTo(100);
         assertThat(projects.get(1)
                            .getProjectName()).isEqualTo("Project B");
         assertThat(projects.get(1)
@@ -276,9 +276,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.get(1)
                            .getLongitude()).isEqualTo(2.0f);
         assertThat(projects.get(1)
-                           .getAmount()).isEqualTo(800);
+                           .getAmountOfMaximumTreesToPlant()).isEqualTo(800);
         assertThat(projects.get(1)
-                           .getAlreadyPlanted()).isEqualTo(0);
+                           .getAmountOfPlantedTrees()).isEqualTo(0);
     }
 
 }

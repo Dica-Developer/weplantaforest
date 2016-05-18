@@ -13,7 +13,7 @@ public class ProjectReportData {
     Float longitude;
     Float latitude;
     
-    long amount;
-    long alreadyPlanted;
+    long amountOfMaximumTreesToPlant;
+    long amountOfPlantedTrees;
         
 }
