@@ -69,7 +69,7 @@ dependencies {
     testCompile project (path: ':common', configuration: 'testArchives')
  }
 
-mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
+mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication'
 
 eclipse {
     jdt.file.withProperties { properties ->

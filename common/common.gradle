@@ -67,7 +67,7 @@ dependencies {
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
 }
 
-mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
+mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestCommonApplication'
 
 eclipse {
     jdt.file.withProperties { properties ->
