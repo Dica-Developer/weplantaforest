@@ -1,15 +1,17 @@
 package org.dicadeveloper.weplantaforest.support;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateHelper {
 
-    static Format format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    static SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
     public static String[] getDateAndTimeAsString(Long timeStamp) {
         String[] dateAndTime = new String[2];
+        TimeZone zone = TimeZone.getTimeZone("CEST");
+        format.setTimeZone(zone);
 
         if (null != timeStamp) {
 

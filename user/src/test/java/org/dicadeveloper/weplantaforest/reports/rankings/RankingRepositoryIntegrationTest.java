@@ -93,9 +93,9 @@ public class RankingRepositoryIntegrationTest {
         assertThat(ruList.get(0)
                          .getName()).isEqualTo("Adam");
         assertThat(ruList.get(0)
-                         .getDate()).isEqualTo("31.12.1969");
+                         .getDate()).isEqualTo("01.01.1970");
         assertThat(ruList.get(0)
-                         .getTime()).isEqualTo("16:01:30");
+                         .getTime()).isEqualTo("00:01:30");
     }
 
     @Test
