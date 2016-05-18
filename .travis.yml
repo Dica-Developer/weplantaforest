@@ -11,6 +11,6 @@ notifications:
 before_script:
   - nvm install v5.5.0
   - nvm use v5.5.0
-script: ./gradlew user:test
+script: ./gradlew user:test -s
 after_success:  ./gradlew user:jacocoTestReport user:coveralls 
 
