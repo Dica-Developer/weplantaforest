@@ -15,8 +15,8 @@ public class DateHelperTest {
     @Test
     public void testGetDateAndTimeFromLong() {
         String[] dateAndTime = DateHelper.getDateAndTimeAsString(90000L);
-        assertThat(dateAndTime[0]).isEqualTo("31.12.1969");
-        assertThat(dateAndTime[1]).isEqualTo("16:01:30");
+        assertThat(dateAndTime[0]).isEqualTo("01.01.1970");
+        assertThat(dateAndTime[1]).isEqualTo("00:01:30");
     }
 
     @Test
