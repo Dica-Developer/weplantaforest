@@ -21,6 +21,8 @@ public class PlantPageController {
 
     private @NonNull PlantPagePriceHelper plantPagePriceHelper;
     
+    private @NonNull PlantPageTreeHelper plantPageTreeHelper;
+    
     private @NonNull PlantPageDataToCartConverter plantPageToCartConverter;
 
     private @NonNull CartRepository _cartRepository;
@@ -31,6 +33,11 @@ public class PlantPageController {
     public PlantPageData getCartProposal(@PathVariable long targetedPrice) {
         return plantPagePriceHelper.createPlantProposalForTargetPrice(targetedPrice);
     }
+    
+    @RequestMapping(value = "/plantProposalForTrees/{amountOfTrees}", method = RequestMethod.GET)
+     public SimplePlantPageData getCartProposalForAmountOfTrees(@PathVariable long amountOfTrees) {
+         return plantPageTreeHelper.createPlantProposalForAmountOfTrees(amountOfTrees);
+     }
 
     @RequestMapping(value = "/donateTrees", method = RequestMethod.POST)
     public ResponseEntity<?> processPlant(@RequestBody PlantPageData plantPageData) {
