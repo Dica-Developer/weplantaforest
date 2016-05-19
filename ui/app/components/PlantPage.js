@@ -44,6 +44,15 @@ class PaymentBar extends Component {
     var amount = jQuery('#treeInput').val() * 100;
     axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
       that.setState(response.data);
+    }).catch(function (response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
     });
   }
 
@@ -51,6 +60,15 @@ class PaymentBar extends Component {
     var that = this;
     axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
       that.setState(response.data);
+    }).catch(function (response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
     });
     this.state.customPaymentButtonSelected = false;
   }
@@ -65,6 +83,15 @@ class PaymentBar extends Component {
     var that = this;
     axios.get('http://localhost:8081/plantProposal/500').then(function(response) {
       that.setState(response.data);
+    }).catch(function (response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
     });
     this.state.customPaymentButtonSelected = false;
   }
