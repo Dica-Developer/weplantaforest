@@ -3,7 +3,6 @@ package org.dicadeveloper.weplantaforest.planting;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.projects.Project;
@@ -42,21 +41,37 @@ public class PlantPageHelper {
         _treeRepository = treeRepository;
     }
 
-    protected PlantPageData createPlantProposal(long targetedPrice) {
+    protected PlantPageData createPlantProposalForTargetPrice(long targetedPrice) {
+        initialize(targetedPrice);
+
+        ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge();
+
+        double targetPriceAsDouble = PriceHelper.fromCentsToEuro(targetedPrice);
+        double targetedPriceForHighestMarge = targetPriceAsDouble * 0.7;
+
+        increaseAmountOfPlantItemTillPriceReached(articleWithHighestMarge, targetedPriceForHighestMarge);
+
+        double targetedPriceForOtherTrees = targetPriceAsDouble
+                - PriceHelper.fromCentsToEuro(plantPageData.getActualPrice());
+
+        targetedPriceForOtherTrees = addFurtherPlantItems(targetedPriceForOtherTrees);
+
+        increaseAmountOfPlantItemTillPriceReached(articleWithHighestMarge, targetedPriceForOtherTrees);
+        return plantPageData;
+    }
+
+    private void initialize(long targetedPrice) {
         plantPageData = new PlantPageData();
         addActiveProjectsToPlantPageData();
-
-        projectArticles = createListOfAllAvailableProjectArticles();
-        
         plantPageData.setTargetPrice(targetedPrice);
+        projectArticles = createListOfAllAvailableProjectArticles();
+        initializePlantItems();
+    }
 
-        addPlantItemWithHighestMarge(PriceHelper.fromCentsToEuro(targetedPrice));
-
-        double newTargetedPrice = PriceHelper.fromCentsToEuro(targetedPrice)
-                - PriceHelper.fromCentsToEuro(plantPageData.getActualPrice());
-        addFurtherPlantItems(newTargetedPrice);
-
-        return plantPageData;
+    private void initializePlantItems() {
+        for (ProjectArticle article : projectArticles) {
+            initialisePlantItem(article);
+        }
     }
 
     private void addActiveProjectsToPlantPageData() {
@@ -88,80 +103,64 @@ public class PlantPageHelper {
         return projectArticles;
     }
 
-    private void addPlantItemWithHighestMarge(double targetedPrice) {
-        double newTargetedPrice;
-        // if there are more articles, use 70% of the targeted price for the
-        // article with highest marge
-        if (projectArticles.size() > 1) {
-            newTargetedPrice = targetedPrice * 0.7;
-        } else {
-            newTargetedPrice = targetedPrice;
-        }
+    private void increaseAmountOfPlantItemTillPriceReached(ProjectArticle article, double targetedPrice) {
+        boolean treeCouldBeAdded = false;
 
-        ProjectArticle article = findProjectArticleWithHighestMarge();
-
-        long treesRemaining = countTreesRemainingByThisArticle(article);
-        double treePrice = article.getPrice()
-                                  .getAmount()
-                                  .doubleValue();
-        int maxMargeTreeAmount = countAmountOfTreesToPlant(newTargetedPrice, treesRemaining, treePrice);
-
-        projectArticles.remove(article);
-        addPlantItemToProject(article, maxMargeTreeAmount);
-    }
-
-    private void addFurtherPlantItems(double targetedPrice) {
-        Random random = new Random();
-
-        while (projectArticles.size() > 0) {
-            // pick randomly one article
-            int pickOne = random.nextInt(projectArticles.size());
-            ProjectArticle article = projectArticles.get(pickOne);
-
+        do {
+            treeCouldBeAdded = false;
             double treePrice = article.getPrice()
                                       .getAmount()
                                       .doubleValue();
-
-            // remove the article, so this list can be used to compare the
-            // picked article with the rest of them
-            projectArticles.remove(pickOne);
-
             // check, if it's possible to add 1 tree without
-            // exceeding the targeted price and if there are remaining trees by
-            // this article
+            // exceeding the targeted price
             if (targetedPrice > 0 && isLowerOrEqualThanTargetedPrice(treePrice, targetedPrice)) {
-
-                // Check, if there are other articles, where it's possible to
-                // fill the cart with
-                if (areThereMorePossibilitiesToPlant(projectArticles, targetedPrice - treePrice)) {
-                    // if yes, just add 1 tree by this article
-                    addPlantItemToProject(article, 1);
-
+                // if yes, increase the amount of this article by one, if there
+                // are enough remaining trees
+                if (increasePlantItemAmountByOneIfEnoughTreesRemaining(article)) {
                     // targeted price lowered by price of one tree
                     targetedPrice = targetedPrice - treePrice;
-                } else {
-                    // if not, fill the rest of the remaining price with this
-                    // article
-
-                    // but first, find out, how many trees are remained by this
-                    // article
-                    long treesRemaining = countTreesRemainingByThisArticle(article);
-                    // then count, how many trees can be planted
-                    int amount = countAmountOfTreesToPlant(targetedPrice, treesRemaining, treePrice);
-
-                    // now you can create the cartItem with the amount of trees
-                    addPlantItemToProject(article, amount);
-
-                    // targeted price lowered by the amount of trees multiplied
-                    // by the price og one tree
-                    targetedPrice = targetedPrice - (amount * treePrice);
+                    treeCouldBeAdded = true;
                 }
             } else {
-                // add PlantItem with amount 0 to let the user the possibility
-                // to change this
-                addPlantItemToProject(article, 0);
+                // do Nothing
+            }
+
+        }
+        // if at least 1 tree could be added, iterate over all articles again
+        while (treeCouldBeAdded);
+    }
+
+    private double addFurtherPlantItems(double targetedPrice) {
+        boolean treeCouldBeAdded = false;
+
+        do {
+            treeCouldBeAdded = false;
+
+            for (ProjectArticle article : projectArticles) {
+                double treePrice = article.getPrice()
+                                          .getAmount()
+                                          .doubleValue();
+                // check, if it's possible to add 1 tree without
+                // exceeding the targeted price and if there are remaining trees
+                // by
+                // this article
+                if (targetedPrice > 0 && isLowerOrEqualThanTargetedPrice(treePrice, targetedPrice)) {
+                    // if yes, increase the amount of this article by one
+                    if (increasePlantItemAmountByOneIfEnoughTreesRemaining(article)) {
+                        // targeted price lowered by price of one tree
+                        targetedPrice = targetedPrice - treePrice;
+                        treeCouldBeAdded = true;
+                    }
+                } else {
+                    // do Nothing
+                }
             }
         }
+        // if at least 1 tree could be added, iterate over all articles again
+        while (treeCouldBeAdded);
+
+        return targetedPrice;
+
     }
 
     private ProjectArticle findProjectArticleWithHighestMarge() {
@@ -177,27 +176,15 @@ public class PlantPageHelper {
                 article = projectArticle;
             }
         }
-
+        projectArticles.remove(article);
         return article;
-    }
-
-    private boolean areThereMorePossibilitiesToPlant(List<ProjectArticle> articles, double targetedPrice) {
-        for (ProjectArticle article : articles) {
-            double treePrice = article.getPrice()
-                                      .getAmount()
-                                      .doubleValue();
-            if (isLowerOrEqualThanTargetedPrice(treePrice, targetedPrice)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private boolean isLowerOrEqualThanTargetedPrice(double cartPrice, double targetedPrice) {
         return cartPrice <= targetedPrice;
     }
 
-    private void addPlantItemToProject(ProjectArticle article, int amount) {
+    private void initialisePlantItem(ProjectArticle article) {
         String projectName = article.getProject()
                                     .getName();
         String treeTypeName = article.getTreeType()
@@ -207,17 +194,46 @@ public class PlantPageHelper {
                                                                  .getAmount());
 
         PlantItem plantItem = new PlantItem();
-        plantItem.setAmount(amount);
+        plantItem.setAmount(0);
         plantItem.setTreePrice(treePrice);
-
-        long actualPriceNow = plantPageData.getActualPrice() + amount * treePrice;
-
-        plantPageData.setActualPrice(actualPriceNow);
 
         plantPageData.getProjects()
                      .get(projectName)
                      .getPlantItems()
                      .put(treeTypeName, plantItem);
+    }
+
+    private boolean increasePlantItemAmountByOneIfEnoughTreesRemaining(ProjectArticle article) {
+        String projectName = article.getProject()
+                                    .getName();
+        String treeTypeName = article.getTreeType()
+                                     .getName();
+
+        int amountNow = plantPageData.getProjects()
+                                     .get(projectName)
+                                     .getPlantItems()
+                                     .get(treeTypeName)
+                                     .getAmount();
+
+        if ((amountNow + 1) <= countTreesRemainingByThisArticle(article)) {
+
+            long treePrice = PriceHelper.fromBigDecimalToLong(article.getPrice()
+                                                                     .getAmount());
+
+            long actualPriceNow = plantPageData.getActualPrice() + treePrice;
+
+            plantPageData.setActualPrice(actualPriceNow);
+
+            plantPageData.getProjects()
+                         .get(projectName)
+                         .getPlantItems()
+                         .get(treeTypeName)
+                         .setAmount(amountNow + 1);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean areThereTreesRemaining(ProjectArticle article) {
@@ -226,27 +242,6 @@ public class PlantPageHelper {
 
     private Long countTreesRemainingByThisArticle(ProjectArticle article) {
         return article.getAmount() - _treeRepository.countAlreadyPlantedTreesByProjectArticle(article);
-    }
-
-    private int countAmountOfTreesToPlant(double targetedPrice, long treesRemaining, double treePrice) {
-        int amount = 0;
-
-        // check if you could reach the targeted price with this article
-        if (isEnoughToReachTargetedPrice(targetedPrice, treesRemaining, treePrice)) {
-            // if yes, iterate until you reach the last possible amount to not
-            // exceed the targeted price
-            while ((amount + 1) * treePrice <= targetedPrice) {
-                amount++;
-            }
-        } else {
-            // if not, you can take all remaining trees
-            amount = (int) treesRemaining;
-        }
-        return amount;
-    }
-
-    private boolean isEnoughToReachTargetedPrice(double targetedPrice, long treesRemaining, double treePrice) {
-        return (treesRemaining * treePrice) > targetedPrice;
     }
 
 }

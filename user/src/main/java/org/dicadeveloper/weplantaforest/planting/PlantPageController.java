@@ -29,7 +29,7 @@ public class PlantPageController {
 
     @RequestMapping(value = "/plantProposal/{targetedPrice}", method = RequestMethod.GET)
     public PlantPageData getCartProposal(@PathVariable long targetedPrice) {
-        return plantPageHelper.createPlantProposal(targetedPrice);
+        return plantPageHelper.createPlantProposalForTargetPrice(targetedPrice);
     }
 
     @RequestMapping(value = "/donateTrees", method = RequestMethod.POST)

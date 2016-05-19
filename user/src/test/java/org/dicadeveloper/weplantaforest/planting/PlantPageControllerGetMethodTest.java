@@ -349,5 +349,92 @@ public class PlantPageControllerGetMethodTest {
                     .andExpect(jsonPath("$.actualPrice").value(2900))
                     .andExpect(jsonPath("$.targetPrice").value(3000));
     }
+    
+    
+    @Test
+    public void testGetCartWithFourArticlesThreeArticlesAveraged() throws Exception {
+
+        dbInjecter.injectTreeType("wood", "desc", 0.5);
+        dbInjecter.injectTreeType("doow", "desc", 0.5);
+        dbInjecter.injectTreeType("wodo", "desc", 0.5);
+        dbInjecter.injectTreeType("dowo", "desc", 0.5);
+
+        dbInjecter.injectUser("Adam");
+
+        dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+     
+        dbInjecter.injectProjectArticle("wood", "Project A", 500, 3.5, 2.0);
+        dbInjecter.injectProjectArticle("doow", "Project A", 500, 1.0, 0.5);
+        dbInjecter.injectProjectArticle("wodo", "Project A", 500, 1.0, 0.5);
+        dbInjecter.injectProjectArticle("dowo", "Project A", 500, 1.0, 0.5);
+
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 100000).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(200))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(350))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(100))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].amount").value(100))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(100))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].amount").value(100))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(100000))
+                    .andExpect(jsonPath("$.targetPrice").value(100000));
+    }
+    
+    @Test
+    public void testGetCartWithFourArticlesTwoArticlesAveragedOneNotEnough() throws Exception {
+
+        dbInjecter.injectTreeType("wood", "desc", 0.5);
+        dbInjecter.injectTreeType("doow", "desc", 0.5);
+        dbInjecter.injectTreeType("wodo", "desc", 0.5);
+        dbInjecter.injectTreeType("dowo", "desc", 0.5);
+
+        dbInjecter.injectUser("Adam");
+
+        dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+     
+        dbInjecter.injectProjectArticle("wood", "Project A", 500, 3.5, 2.0);
+        dbInjecter.injectProjectArticle("doow", "Project A", 500, 1.0, 0.5);
+        dbInjecter.injectProjectArticle("wodo", "Project A", 500, 1.0, 0.5);
+        dbInjecter.injectProjectArticle("dowo", "Project A", 100, 1.0, 0.5);
+
+        dbInjecter.injectTreeToProject("dowo", "Adam", 50, System.currentTimeMillis(), "Project A");
+        
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 100000).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(200))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(350))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(125))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].amount").value(125))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wodo'].treePrice").value(100))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].amount").value(50))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['dowo'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(100000))
+                    .andExpect(jsonPath("$.targetPrice").value(100000));
+    }
+    
+    @Test
+    public void testGetCartWithTwoArticlesLowerMargeNotEnoughRemaining() throws Exception {
+        dbInjecter.injectTreeType("wood", "desc", 0.5);
+        dbInjecter.injectTreeType("doow", "desc", 0.5);
+     
+        dbInjecter.injectUser("Adam");
+
+        dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+     
+        dbInjecter.injectProjectArticle("wood", "Project A", 500, 3.0, 2.0);
+        dbInjecter.injectProjectArticle("doow", "Project A", 100, 1.0, 0.5);
+       
+        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 100000).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(300))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(100))
+                    .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
+                    .andExpect(jsonPath("$.actualPrice").value(100000))
+                    .andExpect(jsonPath("$.targetPrice").value(100000));
+    }
 
 }
