@@ -15,16 +15,9 @@ class CustomPaymentButton extends Component {
 
   render() {
     return (
-      <form className="form-inline">
-          <div className="form-group">
-            <label className="sr-only" for="treeInput">Höchstgrenze für Baumspende (in Euro)</label>
-            <div className="input-group">
-              <div className="input-group-addon">€</div>
-              <input id="treeInput" type="text" className="form-control" placeholder="Höchstgrenze für Baumspende" onChange={this.properties.parent.toggleButtonStateCustom.bind(this.properties.parent)} />
-              <div className="input-group-addon">.00</div>
-            </div>
-          </div>
-        </form>
+      <div>
+        <input id="maxAmountSlider" type="range" min="1" max="1000" step="1" stepUp="5" defaultValue="10" onChange={this.properties.parent.toggleButtonStateCustom.bind(this.properties.parent, 'maxAmountSlider')}/>
+      </div>
     );
   }
 }
@@ -37,11 +30,14 @@ class PaymentBar extends Component {
       actualPrice: 0,
       projects: []
     };
+    this.proposalTimeout = null;
   }
 
-  toggleButtonStateCustom() {
+  toggleButtonStateCustom(elementId) {
     var that = this;
-    var amount = jQuery('#treeInput').val() * 100;
+    var amount = jQuery('#' + elementId).val() * 100;
+    window.clearTimeout(this.proposalTimeout);
+    this.proposalTimeout = window.setTimeout(function () {
     axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
       that.setState(response.data);
     }).catch(function (response) {
@@ -54,6 +50,7 @@ class PaymentBar extends Component {
         console.error(response.config);
       }
     });
+    }, 250);
   }
 
   toggleButtonState(amount) {
