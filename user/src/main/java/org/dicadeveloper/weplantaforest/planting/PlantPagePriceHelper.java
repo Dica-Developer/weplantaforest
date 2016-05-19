@@ -1,8 +1,6 @@
 package org.dicadeveloper.weplantaforest.planting;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.projects.Project;
@@ -15,31 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import lombok.NonNull;
-
 @Component
-public class PlantPageHelper {
-
-    private @NonNull ProjectRepository _projectRepository;
-
-    private @NonNull ProjectArticleRepository _projectArticleRepository;
-
-    private @NonNull TreeRepository _treeRepository;
-
-    private @NonNull TreeTypeRepository _treeTypeRepository;
+public class PlantPagePriceHelper extends AbstractPlantPageHelper {
 
     private PlantPageData plantPageData;
 
-    private List<ProjectArticle> projectArticles;
-
     @Autowired
-    private PlantPageHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
-            TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
-        _projectRepository = projectRepository;
-        _projectArticleRepository = projectArticleRepository;
-        _treeTypeRepository = treeTypeRepository;
-        _treeRepository = treeRepository;
+    private PlantPagePriceHelper(ProjectRepository projectRepository,
+            ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository,
+            TreeRepository treeRepository) {
+        super(projectRepository, projectArticleRepository, treeTypeRepository, treeRepository);
     }
+
 
     protected PlantPageData createPlantProposalForTargetPrice(long targetedPrice) {
         initialize(targetedPrice);
@@ -87,20 +72,6 @@ public class PlantPageHelper {
             plantPageData.projects.get(projectName)
                                   .setPlantItems(plantItemMap);
         }
-    }
-
-    private List<ProjectArticle> createListOfAllAvailableProjectArticles() {
-        List<ProjectArticle> projectArticles = new ArrayList<>();
-        // only the active Projects
-        for (Project project : _projectRepository.active(new PageRequest(0, 5))) {
-            for (ProjectArticle article : project.getArticles()) {
-                // add only articles, where there are remaining trees to plant
-                if (areThereTreesRemaining(article)) {
-                    projectArticles.add(article);
-                }
-            }
-        }
-        return projectArticles;
     }
 
     private void increaseAmountOfPlantItemTillPriceReached(ProjectArticle article, double targetedPrice) {
@@ -163,27 +134,6 @@ public class PlantPageHelper {
 
     }
 
-    private ProjectArticle findProjectArticleWithHighestMarge() {
-        ProjectArticle article = null;
-        double maxMarge = 0.0;
-
-        for (ProjectArticle projectArticle : projectArticles) {
-            double articleMarge = projectArticle.getPrice()
-                                                .getMarge()
-                                                .doubleValue();
-            if (articleMarge > maxMarge) {
-                maxMarge = articleMarge;
-                article = projectArticle;
-            }
-        }
-        projectArticles.remove(article);
-        return article;
-    }
-
-    private boolean isLowerOrEqualThanTargetedPrice(double cartPrice, double targetedPrice) {
-        return cartPrice <= targetedPrice;
-    }
-
     private void initialisePlantItem(ProjectArticle article) {
         String projectName = article.getProject()
                                     .getName();
@@ -235,13 +185,4 @@ public class PlantPageHelper {
             return false;
         }
     }
-
-    private boolean areThereTreesRemaining(ProjectArticle article) {
-        return countTreesRemainingByThisArticle(article) > 0 ? true : false;
-    }
-
-    private Long countTreesRemainingByThisArticle(ProjectArticle article) {
-        return article.getAmount() - _treeRepository.countAlreadyPlantedTreesByProjectArticle(article);
-    }
-
 }
