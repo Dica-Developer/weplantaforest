@@ -34,11 +34,6 @@ public class PlantPageController {
         return plantPagePriceHelper.createPlantProposalForTargetPrice(targetedPrice);
     }
     
-    @RequestMapping(value = "/plantProposalForTrees/{amountOfTrees}", method = RequestMethod.GET)
-     public SimplePlantPageData getCartProposalForAmountOfTrees(@PathVariable long amountOfTrees) {
-         return plantPageTreeHelper.createPlantProposalForAmountOfTrees(amountOfTrees);
-     }
-
     @RequestMapping(value = "/donateTrees", method = RequestMethod.POST)
     public ResponseEntity<?> processPlant(@RequestBody PlantPageData plantPageData) {
 

@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class PlantPageControllerGetProposalForAmountOfTrees {
+public class SimplePlantPageControllerGetForTreeTest {
 
     private MockMvc mockMvc;
 
@@ -56,7 +56,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(10))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -79,7 +79,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 0.8);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 11).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 11).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(8))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -109,7 +109,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(7))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -145,7 +145,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
         dbInjecter.injectProjectArticle("dowo", "Project A", 10, 1.0, 0.3);
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(7))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -183,7 +183,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(5))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -210,7 +210,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(5))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -241,7 +241,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
 
         dbInjecter.injectTreeToProject("doow", "Adam", 10, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(10))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -266,7 +266,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(7))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -297,7 +297,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
         dbInjecter.injectProjectArticle("wood", "Project B", 10, 2.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 2.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 10).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(7))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -337,7 +337,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
         dbInjecter.injectProjectArticle("wodo", "Project A", 500, 1.0, 0.5);
         dbInjecter.injectProjectArticle("dowo", "Project A", 500, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 1000).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(700))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -379,7 +379,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
 
         dbInjecter.injectTreeToProject("dowo", "Adam", 50, System.currentTimeMillis(), "Project A");
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 1000).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(700))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
@@ -414,7 +414,7 @@ public class PlantPageControllerGetProposalForAmountOfTrees {
         dbInjecter.injectProjectArticle("wood", "Project A", 1000, 3.0, 2.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 100, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposalForTrees/{amountOfTrees}", 1000).accept("application/json"))
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.plantItems[0].amount").value(900))
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
