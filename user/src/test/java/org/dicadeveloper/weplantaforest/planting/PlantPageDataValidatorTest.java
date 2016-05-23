@@ -202,7 +202,7 @@ public class PlantPageDataValidatorTest {
 
         assertThat(validation).isFalse();
     }
-    
+
     @Test
     public void testValidatePlantPageDataWithNonExistingProject() {
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
@@ -214,11 +214,11 @@ public class PlantPageDataValidatorTest {
 
         assertThat(validation).isFalse();
     }
-    
+
     @Test
     public void testValidatePlantPageDataWithNonActiveProject() {
         _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectProject("Project A", "Adam", "this is a project", false, 0, 0);
+        _dbInjecter.injectProject("Project A", "Adam", "this is a project", true, 0, 0);
 
         PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
@@ -229,7 +229,7 @@ public class PlantPageDataValidatorTest {
 
         assertThat(validation).isFalse();
     }
-    
+
     @Test
     public void testValidatePlantPageDataWithNonExistingArticle() {
         _dbInjecter.injectUser("Adam");
