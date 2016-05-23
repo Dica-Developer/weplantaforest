@@ -64,4 +64,19 @@ public class SimplePlantPageData {
         return null;
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class SimplePlantPageItem {
+
+        String treeType;
+
+        long amount;
+
+        long treePrice;
+
+        String projectName;
+
+    }
+
 }

@@ -1,6 +1,6 @@
 package org.dicadeveloper.weplantaforest.planting;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +14,26 @@ public class PlantPageData {
     long targetPrice;
     long actualPrice;
 
-    Map<String, ProjectData> projects;
+    HashMap<String, ProjectData> projects;
+    
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class ProjectData {
+
+        HashMap<String, PlantItem> plantItems;
+        
+        @NoArgsConstructor
+        @Getter
+        @Setter
+        public static class PlantItem {
+
+            int amount;
+
+            long treePrice;
+
+        }
+
+    }
 
 }

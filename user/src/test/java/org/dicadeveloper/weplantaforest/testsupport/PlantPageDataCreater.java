@@ -2,9 +2,9 @@ package org.dicadeveloper.weplantaforest.testsupport;
 
 import java.util.HashMap;
 
-import org.dicadeveloper.weplantaforest.planting.PlantItem;
 import org.dicadeveloper.weplantaforest.planting.PlantPageData;
-import org.dicadeveloper.weplantaforest.planting.ProjectData;
+import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData;
+import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData.PlantItem;
 
 public class PlantPageDataCreater {
 

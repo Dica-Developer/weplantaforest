@@ -3,6 +3,8 @@ package org.dicadeveloper.weplantaforest.planting;
 import java.util.HashMap;
 
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
+import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData;
+import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData.PlantItem;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -19,12 +21,10 @@ public class PlantPagePriceHelper extends AbstractPlantPageHelper {
     private PlantPageData plantPageData;
 
     @Autowired
-    private PlantPagePriceHelper(ProjectRepository projectRepository,
-            ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository,
-            TreeRepository treeRepository) {
+    private PlantPagePriceHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
+            TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         super(projectRepository, projectArticleRepository, treeTypeRepository, treeRepository);
     }
-
 
     protected PlantPageData createPlantProposalForTargetPrice(long targetedPrice) {
         initialize(targetedPrice);

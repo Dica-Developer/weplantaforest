@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
+import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
