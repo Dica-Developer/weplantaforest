@@ -9,8 +9,19 @@ notifications:
     on_success: change
     on_failure: always
 before_script:
+  - sudo service postgresql stop || true
+  - sudo service mysql stop || true
+  - sudo service memcached stop || true
+  - sudo service bootlogd stop || true
+  - sudo service elasticsearch stop || true
+  - sudo service mongodb stop || true
+  - sudo service neo4j stop || true
+  - sudo service cassandra stop || true
+  - sudo service riak stop || true
+  - sudo service rsync stop || true
+  - sudo service x11-common stop || true
   - nvm install v5.5.0
   - nvm use v5.5.0
-script: ./gradlew user:test || ./gradlew common:test || ./gradlew article-manager:test
+script: ./gradlew test
 after_success: ./gradlew user:jacocoTestReport user:coveralls common:jacocoTestReport common:coveralls article-manager:jacocoTestReport article-manager:coveralls
 
