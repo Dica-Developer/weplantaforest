@@ -202,5 +202,47 @@ public class PlantPageDataValidatorTest {
 
         assertThat(validation).isFalse();
     }
+    
+    @Test
+    public void testValidatePlantPageDataWithNonExistingProject() {
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(4, 100, "wood", "Project A",
+                plantPageData);
+
+        boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
+
+        assertThat(validation).isFalse();
+    }
+    
+    @Test
+    public void testValidatePlantPageDataWithNonActiveProject() {
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectProject("Project A", "Adam", "this is a project", false, 0, 0);
+
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(4, 100, "wood", "Project A",
+                plantPageData);
+
+        boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
+
+        assertThat(validation).isFalse();
+    }
+    
+    @Test
+    public void testValidatePlantPageDataWithNonExistingArticle() {
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectProject("Project A", "Adam", "this is a project", false, 0, 0);
+
+        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(4, 100, "wood", "Project A",
+                plantPageData);
+
+        boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
+
+        assertThat(validation).isFalse();
+    }
 
 }
