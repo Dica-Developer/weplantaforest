@@ -19,9 +19,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlantPageController {
 
-    private @NonNull PlantPagePriceHelper plantPagePriceHelper;
+    private @NonNull PlantPageDataHelper plantPagePriceHelper;
     
-    private @NonNull PlantPageTreeHelper plantPageTreeHelper;
+    private @NonNull SimplePlantPageDataHelper plantPageTreeHelper;
     
     private @NonNull PlantPageDataToCartConverter plantPageToCartConverter;
 

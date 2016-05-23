@@ -14,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlantPageTreeHelper extends AbstractPlantPageHelper {
+public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
 
     private SimplePlantPageData simplePlantPageData;
 
     @Autowired
-    protected PlantPageTreeHelper(ProjectRepository projectRepository,
+    protected SimplePlantPageDataHelper(ProjectRepository projectRepository,
             ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository,
             TreeRepository treeRepository) {
         super(projectRepository, projectArticleRepository, treeTypeRepository, treeRepository);

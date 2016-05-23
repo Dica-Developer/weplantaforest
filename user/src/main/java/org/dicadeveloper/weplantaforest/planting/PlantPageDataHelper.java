@@ -16,12 +16,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlantPagePriceHelper extends AbstractPlantPageHelper {
+public class PlantPageDataHelper extends AbstractPlantPageHelper {
 
     private PlantPageData plantPageData;
 
     @Autowired
-    private PlantPagePriceHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
+    private PlantPageDataHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
             TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         super(projectRepository, projectArticleRepository, treeTypeRepository, treeRepository);
     }
