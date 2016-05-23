@@ -86,7 +86,9 @@ test {
     } else {
         def maxForks = Runtime.getRuntime().availableProcessors()
         if (System.env.'CI') {
-            maxForks = 1
+            jacoco {
+                enabled true
+            }
         }
         logger.info "Maximum used parallel forks: " + maxForks
         maxParallelForks maxForks
