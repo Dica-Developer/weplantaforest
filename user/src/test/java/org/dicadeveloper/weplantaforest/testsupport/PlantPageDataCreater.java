@@ -1,10 +1,13 @@
 package org.dicadeveloper.weplantaforest.testsupport;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.dicadeveloper.weplantaforest.planting.PlantPageData;
 import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData;
 import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData.PlantItem;
+import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData;
+import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData.SimplePlantPageItem;
 
 public class PlantPageDataCreater {
 
@@ -33,6 +36,26 @@ public class PlantPageDataCreater {
                      .get(projectName)
                      .getPlantItems()
                      .put(plantItemName, plantItem);
+
+        return plantPageData;
+    }
+
+    public static SimplePlantPageData initializeSimplePlantPageData() {
+        SimplePlantPageData plantPageData = new SimplePlantPageData();
+        plantPageData.setPlantItems(new ArrayList<>());
+        return plantPageData;
+    }
+
+    public static SimplePlantPageData createSimplePlantItemAndAddToSimplePlantPageData(int amount, long price,
+            String treeType, String projectName, SimplePlantPageData plantPageData) {
+        SimplePlantPageItem plantItem = new SimplePlantPageItem();
+        plantItem.setAmount(amount);
+        plantItem.setTreePrice(price);
+        plantItem.setProjectName(projectName);
+        plantItem.setTreeType(treeType);
+
+        plantPageData.getPlantItems()
+                     .add(plantItem);
 
         return plantPageData;
     }

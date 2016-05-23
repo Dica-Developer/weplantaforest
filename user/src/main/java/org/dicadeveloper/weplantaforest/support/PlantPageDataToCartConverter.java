@@ -8,6 +8,8 @@ import org.dicadeveloper.weplantaforest.admin.codes.CartItem;
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.planting.PlantPageData;
 import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData.PlantItem;
+import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData;
+import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -56,6 +58,28 @@ public class PlantPageDataToCartConverter {
                     cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
                 }
             }
+        }
+        return cart;
+    }
+
+    public Cart convertSimplePlantPageDataToCart(SimplePlantPageData simplePlantPageData) {
+        Cart cart = new Cart();
+
+        for (SimplePlantPageItem simplePlantPageItem : simplePlantPageData.getPlantItems()) {
+            int amount = (int) simplePlantPageItem.getAmount();
+
+            long treePriceAsLong = simplePlantPageItem.getTreePrice();
+
+            String projectName = simplePlantPageItem.getProjectName();
+            String plantItemName = simplePlantPageItem.getTreeType();
+
+            BigDecimal treePrice = PriceHelper.fromLongToBigDecimal(treePriceAsLong);
+            BigDecimal totalPrice = PriceHelper.fromLongToBigDecimal(amount * treePriceAsLong);
+
+            Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectName,
+                    plantItemName);
+
+            cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
         }
         return cart;
     }
