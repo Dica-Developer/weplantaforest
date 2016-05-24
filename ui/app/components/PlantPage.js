@@ -55,7 +55,7 @@ class PaymentBar extends Component {
 
   toggleButtonState(amount) {
     var that = this;
-    axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
+    axios.get('http://localhost:8081/simplePlantProposalForTrees/' + amount).then(function(response) {
       that.setState(response.data);
     }).catch(function (response) {
       if (response instanceof Error) {
@@ -78,7 +78,7 @@ class PaymentBar extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/plantProposal/500').then(function(response) {
+    axios.get('http://localhost:8081/simplePlantProposalForTrees/1').then(function(response) {
       that.setState(response.data);
     }).catch(function (response) {
       if (response instanceof Error) {
@@ -103,14 +103,14 @@ class PaymentBar extends Component {
           Hier kannst Du Bäume pflanzen. Du wählst aus wieviel Bäume oder für wieviel Geld wir für Dich Bäume pflanzen.
           <br/>
           <div className="btn-group btn-group-justified btn-group-lg" role="group" data-toggle="buttons">
-            <label className="btn btn-primary active" onClick={this.toggleButtonState.bind(this, 500)}>
-              <input type="radio" autocomplete="off"/>5€
+            <label className="btn btn-primary active" onClick={this.toggleButtonState.bind(this, 1)}>
+              <input type="radio" autocomplete="off"/>1 Baum
             </label>
-            <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 1000)}>
-              <input type="radio" autocomplete="off"/>10€
+            <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 2)}>
+              <input type="radio" autocomplete="off"/>2 Bäume
             </label>
-            <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 1500)}>
-              <input type="radio" autocomplete="off"/>15€
+            <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 3)}>
+              <input type="radio" autocomplete="off"/>3 Bäume
             </label>
             <label className="btn btn-primary" onClick={this.showCustomPayment.bind(this)}>
               <input type="radio" autocomplete="off"/>Benutzerdefiniert
