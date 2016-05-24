@@ -27,9 +27,8 @@ public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
 
     protected SimplePlantPageData createPlantProposalForAmountOfTrees(long targetAmountOfTrees) {
         initialize(targetAmountOfTrees);
-
         ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge();
-        addItemWithHighestMarge(articleWithHighestMarge, targetAmountOfTrees);
+        addItemWithHighestMarge(articleWithHighestMarge);
         addFurtherItems();
         increaseAmountOfItemWithHighestMargeIfNeeded(articleWithHighestMarge);
         return simplePlantPageData;
@@ -43,17 +42,10 @@ public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
         projectArticles = createListOfAllAvailableProjectArticles();
     }
 
-    private void addItemWithHighestMarge(ProjectArticle article, long targetAmountOfTrees) {
-        long treePriceForHighestMarge = PriceHelper.fromBigDecimalToLong(article.getPrice()
-                                                                                .getAmount());
-        long amountOfTreesForHighestMarge = (long) Math.round((targetAmountOfTrees * 0.7));
-        String treeTypeForHighestMarge = article.getTreeType()
-                                                .getName();
-        String projectNameForHighestMarge = article.getProject()
-                                                   .getName();
+    private void addItemWithHighestMarge(ProjectArticle article) {
+        long amountOfTreesForHighestMarge = (long) Math.round((simplePlantPageData.getTargetAmountOfTrees() * 0.7));
 
-        SimplePlantPageItem itemWithHighestMarge = createPlantItem(treePriceForHighestMarge, treeTypeForHighestMarge,
-                projectNameForHighestMarge);
+        SimplePlantPageItem itemWithHighestMarge = createPlantItemFromArticle(article);
 
         if (amountOfTreesForHighestMarge <= countTreesRemainingByThisArticle(article)) {
             itemWithHighestMarge.setAmount(amountOfTreesForHighestMarge);
@@ -61,39 +53,26 @@ public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
             long treesRemaining = countTreesRemainingByThisArticle(article);
             itemWithHighestMarge.setAmount(treesRemaining);
         }
-        simplePlantPageData.getPlantItems()
-                           .add(itemWithHighestMarge);
-        simplePlantPageData.setActualAmountOfTrees(simplePlantPageData.calcActualAmountOfTrees());
-        simplePlantPageData.setPrice(simplePlantPageData.calcPrice());
-
+        simplePlantPageData.addPlantItem(itemWithHighestMarge);
         projectArticles.remove(article);
     }
 
     private void increaseAmountOfItemWithHighestMargeIfNeeded(ProjectArticle article) {
-        if (simplePlantPageData.calcActualAmountOfTrees() < simplePlantPageData.getTargetAmountOfTrees()) {
-            long diffTotargetAmount = simplePlantPageData.getTargetAmountOfTrees()
-                    - simplePlantPageData.calcActualAmountOfTrees();
+        if (simplePlantPageData.getDiffToTargetAmount() > 0) {
+            long diffTotargetAmount = simplePlantPageData.getDiffToTargetAmount();
 
-            if ((simplePlantPageData.getPlantItems()
-                                    .get(0)
-                                    .getAmount()
-                    + diffTotargetAmount) <= countTreesRemainingByThisArticle(article)) {
-                simplePlantPageData.getPlantItems()
-                                   .get(0)
-                                   .setAmount(simplePlantPageData.getPlantItems()
-                                                                 .get(0)
-                                                                 .getAmount()
-                                           + diffTotargetAmount);
+            SimplePlantPageItem plantItemWithHighestMarge = simplePlantPageData.getPlantItems()
+                                                                               .get(0);
+
+            if ((plantItemWithHighestMarge.getAmount() + diffTotargetAmount) <= countTreesRemainingByThisArticle(
+                    article)) {
+                simplePlantPageData.increaseAmountOfPlantItem(plantItemWithHighestMarge, diffTotargetAmount);
             } else {
                 long treesRemaining = countTreesRemainingByThisArticle(article);
-                simplePlantPageData.getPlantItems()
-                                   .get(0)
-                                   .setAmount(treesRemaining);
+                long increaseAmountBy = treesRemaining - plantItemWithHighestMarge.getAmount();
+                simplePlantPageData.increaseAmountOfPlantItem(plantItemWithHighestMarge, increaseAmountBy);
             }
         }
-
-        simplePlantPageData.setActualAmountOfTrees(simplePlantPageData.calcActualAmountOfTrees());
-        simplePlantPageData.setPrice(simplePlantPageData.calcPrice());
     }
 
     private void addFurtherItems() {
@@ -101,43 +80,39 @@ public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
         do {
             treeCouldBeAdded = false;
             for (ProjectArticle article : projectArticles) {
-                if (simplePlantPageData.calcActualAmountOfTrees() < simplePlantPageData.getTargetAmountOfTrees()) {
-
-                    String treeType = article.getTreeType()
-                                             .getName();
-                    long treePrice = PriceHelper.fromBigDecimalToLong(article.getPrice()
-                                                                             .getAmount());
-                    String projectName = article.getProject()
-                                                .getName();
-                    if (simplePlantPageData.containsPlantItem(treeType, treePrice, projectName)) {
-                        SimplePlantPageItem plantPageItem = simplePlantPageData.getPlantPageItem(treeType, treePrice,
-                                projectName);
-                        long itemAmount = plantPageItem.getAmount();
+                if (simplePlantPageData.getDiffToTargetAmount() > 0) {
+                    SimplePlantPageItem plantItemFromArticle = createPlantItemFromArticle(article);
+                    if (simplePlantPageData.containsPlantItem(plantItemFromArticle)) {
+                        SimplePlantPageItem plantItemFromList = simplePlantPageData.getPlantItem(
+                                plantItemFromArticle);
+                        long itemAmount = plantItemFromList.getAmount();
                         if ((itemAmount + 1) <= countTreesRemainingByThisArticle(article)) {
-                            plantPageItem.setAmount(itemAmount + 1);
+                            simplePlantPageData.increaseAmountOfPlantItem(plantItemFromList, 1);
                             treeCouldBeAdded = true;
                         } else {
-                            //do nothing
+                            // do nothing
                         }
-
                     } else {
-                        if (1 <= countTreesRemainingByThisArticle(article)) {
-                            SimplePlantPageItem plantPageItem = createPlantItem(treePrice, treeType, projectName);
-                            simplePlantPageData.getPlantItems()
-                                               .add(plantPageItem);
+                        if (countTreesRemainingByThisArticle(article) >= 1) {
+                            simplePlantPageData.addPlantItem(plantItemFromArticle);
                             treeCouldBeAdded = true;
                         } else {
-                            //do nothing
+                            // do nothing
                         }
                     }
                 }
             }
         } while (treeCouldBeAdded);
-        simplePlantPageData.setActualAmountOfTrees(simplePlantPageData.calcActualAmountOfTrees());
-        simplePlantPageData.setPrice(simplePlantPageData.calcPrice());
     }
 
-    private SimplePlantPageItem createPlantItem(long treePrice, String treeType, String projectName) {
+    private SimplePlantPageItem createPlantItemFromArticle(ProjectArticle article) {
+        String treeType = article.getTreeType()
+                                 .getName();
+        long treePrice = PriceHelper.fromBigDecimalToLong(article.getPrice()
+                                                                 .getAmount());
+        String projectName = article.getProject()
+                                    .getName();
+
         SimplePlantPageItem plantPageItem = new SimplePlantPageItem();
         plantPageItem.setTreePrice(treePrice);
         plantPageItem.setTreeType(treeType);

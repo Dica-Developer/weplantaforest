@@ -18,32 +18,21 @@ public class SimplePlantPageData {
 
     List<SimplePlantPageItem> plantItems;
 
-    protected long calcActualAmountOfTrees() {
-        long amount = 0;
-        for (SimplePlantPageItem plantPageItem : getPlantItems()) {
-            amount = amount + plantPageItem.getAmount();
-        }
-        return amount;
+    protected long getDiffToTargetAmount() {
+        calcAndSetActualAmountOfTrees();
+        return targetAmountOfTrees - actualAmountOfTrees;
     }
 
-    protected long calcPrice() {
-        long price = 0;
-        for (SimplePlantPageItem plantPageItem : getPlantItems()) {
-            price = price + plantPageItem.getTreePrice() * plantPageItem.getAmount();
-        }
-        return price;
-    }
-
-    protected boolean containsPlantItem(String treeType, long treePrice, String projectName) {
+    protected boolean containsPlantItem(SimplePlantPageItem plantItemToCheck) {
         boolean contains = false;
 
         if (null != plantItems) {
             for (SimplePlantPageItem plantPageItem : plantItems) {
                 if (plantPageItem.getTreeType()
-                                 .equals(treeType)
+                                 .equals(plantItemToCheck.getTreeType())
                         && plantPageItem.getProjectName()
-                                        .equals(projectName)
-                        && plantPageItem.getTreePrice() == treePrice) {
+                                        .equals(plantItemToCheck.getProjectName())
+                        && plantPageItem.getTreePrice() == plantItemToCheck.getTreePrice()) {
                     contains = true;
                 }
             }
@@ -51,17 +40,46 @@ public class SimplePlantPageData {
         return contains;
     }
 
-    protected SimplePlantPageItem getPlantPageItem(String treeType, long treePrice, String projectName) {
+    protected void addPlantItem(SimplePlantPageItem plantItem) {
+        getPlantItems().add(plantItem);
+        calcAndSetActualAmountOfTrees();
+        calcAndSetPrice();
+    }
+
+    protected void increaseAmountOfPlantItem(SimplePlantPageItem plantItem, long toIncrease) {
+        long amountNow = plantItem.getAmount() + toIncrease;
+        getPlantItem(plantItem).setAmount(amountNow);
+        calcAndSetActualAmountOfTrees();
+        calcAndSetPrice();
+    }
+
+    protected SimplePlantPageItem getPlantItem(SimplePlantPageItem plantItemToGet) {
         for (SimplePlantPageItem plantPageItem : getPlantItems()) {
             if (plantPageItem.getTreeType()
-                             .equals(treeType)
+                             .equals(plantItemToGet.getTreeType())
                     && plantPageItem.getProjectName()
-                                    .equals(projectName)
-                    && plantPageItem.getTreePrice() == treePrice) {
+                                    .equals(plantItemToGet.getProjectName())
+                    && plantPageItem.getTreePrice() == plantItemToGet.getTreePrice()) {
                 return plantPageItem;
             }
         }
         return null;
+    }
+
+    private void calcAndSetActualAmountOfTrees() {
+        long actualAmountOfTrees = 0;
+        for (SimplePlantPageItem plantPageItem : getPlantItems()) {
+            actualAmountOfTrees += plantPageItem.getAmount();
+        }
+        this.actualAmountOfTrees = actualAmountOfTrees;
+    }
+
+    private void calcAndSetPrice() {
+        long price = 0;
+        for (SimplePlantPageItem plantPageItem : getPlantItems()) {
+            price += plantPageItem.getTreePrice() * plantPageItem.getAmount();
+        }
+        this.price = price;
     }
 
     @Getter
