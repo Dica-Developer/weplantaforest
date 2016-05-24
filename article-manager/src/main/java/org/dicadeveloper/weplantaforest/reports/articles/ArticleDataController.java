@@ -18,9 +18,9 @@ public class ArticleDataController {
 
     private @NonNull ArticleDataRepository _articleDataRepository;
 
-    @RequestMapping(value = "/reports/articles/{articleType}", method = RequestMethod.GET)
-    public List<ArticleData> getArticlesByType(@PathVariable int articleType) {
-        return _articleDataRepository.getArticlesByType(ArticleType.values()[articleType]);
+    @RequestMapping(value = "/articles/{articleType}", method = RequestMethod.GET)
+    public List<ArticleData> getArticlesByType(@PathVariable ArticleType articleType) {
+        return _articleDataRepository.getArticlesByType(articleType);
     }
 
     @RequestMapping(value = "/reports/article/{articleTitle}", method = RequestMethod.GET)
