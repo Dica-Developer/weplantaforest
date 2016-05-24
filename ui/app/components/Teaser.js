@@ -37,7 +37,7 @@ export default class Teaser extends Component {
             <div className="caption">
               <h3>{teaser.title}</h3>
               <p>{teaser.intro}</p>
-              <p><span className="label label-info">{teaser.createdOn}</span></p>
+              <p><span className="label label-info">{new Date(teaser.createdOn) + ""}</span></p>
             </div>
           </div>
         </div>);
