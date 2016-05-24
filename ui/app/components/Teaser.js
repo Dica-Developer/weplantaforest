@@ -7,12 +7,12 @@ import axios from 'axios';
 export default class Teaser extends Component {
   constructor() {
     super();
-    this.state = {teaser: []};
+    this.state = {teaser: {content: []}};
   }
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8083/articles/BLOG?page=1&size=3').then(function(response) {
+    axios.get('http://localhost:8083/articles/BLOG?page=0&size=3').then(function(response) {
       var result = response.data;
       that.setState({teaser: result});
     }).catch(function (response) {
@@ -29,7 +29,7 @@ export default class Teaser extends Component {
 
   render() {
     return (<div className="row">
-    {this.state.teaser.map(function (teaser) {
+    {this.state.teaser.content.map(function (teaser) {
       return (
         <div className="col-md-4">
           <div className="thumbnail">
