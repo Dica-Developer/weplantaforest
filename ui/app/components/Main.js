@@ -22,8 +22,8 @@ class Co2Bar extends Component {
   constructor() {
     super();
     this.state = {
-      co2: 0,
-      treesCount: 0.0
+      co2: 0.0,
+      treesCount: 0
     };
   }
 
@@ -35,7 +35,7 @@ class Co2Bar extends Component {
   }
 
   render() {
-    return (<div className="row"><div className="col-md-6"><h3>{this.state.co2} <small>t CO2 gebunden</small></h3></div><div className="col-md-6"><h3>{this.state.treesCount} <small>Bäume gepflanzt</small></h3></div></div>);
+    return (<div className="row"><div className="col-md-6"><h3>{this.state.co2.toLocaleString()} <small>t CO2 gebunden</small></h3></div><div className="col-md-6"><h3>{this.state.treesCount.toLocaleString()} <small>Bäume gepflanzt</small></h3></div></div>);
   }
 }
 
