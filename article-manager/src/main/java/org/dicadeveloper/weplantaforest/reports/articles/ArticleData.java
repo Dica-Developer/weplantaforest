@@ -10,5 +10,7 @@ public class ArticleData {
     String title;
 
     String intro;
+    
+    long createdOn;
 
 }

@@ -53,6 +53,8 @@ public class ArticleDataRepositoryIntegrationTest {
                            .getTitle()).isEqualTo("article title");
         assertThat(articles.getContent().get(0)
                            .getIntro()).isEqualTo("article blablabla");
+        assertThat(articles.getContent().get(0)
+                .getCreatedOn()).isEqualTo(createdOn);
     }
 
     @Test

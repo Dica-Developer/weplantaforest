@@ -63,7 +63,7 @@ public class DatabasePopulator {
                 article.setLang(Language.GERMAN);
                 article.setShowFull(true);
                 article.setCreatedOn((long) random.nextInt(1000000000));
-                article.setTitle("our first " + articleType.toString() + " article");
+                article.setTitle("this is article nr " + i + " from " + articleType.toString() + " article");
                 article.setIntro("this is an article about " + articleType.toString());
                 _articleRepository.save(article);
             }
