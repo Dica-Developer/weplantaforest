@@ -28,7 +28,8 @@ class PaymentBar extends Component {
     super();
     this.state = {
       actualPrice: 0,
-      projects: []
+      projects: [],
+      plantItems: []
     };
     this.proposalTimeout = null;
   }
@@ -136,6 +137,20 @@ class PaymentBar extends Component {
                   </ul>
                 </div>
               </div>);
+          })}
+          {Object.keys(that.state.plantItems).map(function (index) {
+            var treeItem = that.state.plantItems[index];
+            return (
+                  <ul className="list-group">
+                    <li className="list-group-item">
+                      <span className="badge">{(() => {
+                        return Accounting.formatMoney(treeItem.treePrice / 100, { thousand: '.', decimal: ',', symbol: '€', format: '%v %s' });
+                      })()}</span>
+                      <span className="badge">{treeItem.amount}</span>
+                      <span className="badge">{treeItem.projectName}</span>
+                      {treeItem.treeType}
+                    </li>
+                  </ul>);
           })}
           <button type="button" className="btn btn-group-justified btn-default btn-lg">Nehme ich für {(() => {
             return Accounting.formatMoney(this.state.actualPrice / 100, { thousand: '.', decimal: ',', symbol: '€', format: '%v %s' });
