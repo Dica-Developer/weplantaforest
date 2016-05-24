@@ -30,6 +30,23 @@ export default class Teaser extends Component {
     }];
   }
 
+  componentDidMount() {
+    var that = this;
+    axios.get('http://localhost:8083/articles/BLOG').then(function(response) {
+      var result = response.data;
+      that.setState(result);
+    }).catch(function (response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+  }
+
   render() {
     return (<div className="row">
     {this.teaser.map(function (teaser) {
