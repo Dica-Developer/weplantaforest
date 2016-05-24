@@ -83,8 +83,7 @@ public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
                 if (simplePlantPageData.getDiffToTargetAmount() > 0) {
                     SimplePlantPageItem plantItemFromArticle = createPlantItemFromArticle(article);
                     if (simplePlantPageData.containsPlantItem(plantItemFromArticle)) {
-                        SimplePlantPageItem plantItemFromList = simplePlantPageData.getPlantItem(
-                                plantItemFromArticle);
+                        SimplePlantPageItem plantItemFromList = simplePlantPageData.getPlantItem(plantItemFromArticle);
                         long itemAmount = plantItemFromList.getAmount();
                         if ((itemAmount + 1) <= countTreesRemainingByThisArticle(article)) {
                             simplePlantPageData.increaseAmountOfPlantItem(plantItemFromList, 1);
@@ -93,12 +92,8 @@ public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
                             // do nothing
                         }
                     } else {
-                        if (countTreesRemainingByThisArticle(article) >= 1) {
-                            simplePlantPageData.addPlantItem(plantItemFromArticle);
-                            treeCouldBeAdded = true;
-                        } else {
-                            // do nothing
-                        }
+                        simplePlantPageData.addPlantItem(plantItemFromArticle);
+                        treeCouldBeAdded = true;
                     }
                 }
             }
