@@ -57,13 +57,14 @@ public class RankingController {
         Long timeRangeEnd = System.currentTimeMillis();
         Long timeRangeStart = 0L;
         switch (timeRange) {
-        case "y":
+        case "year":
             timeRangeStart = timeRangeEnd - TimeConstants.YEAR_IN_MILLISECONDS;
             break;
-        case "w":
+        case "week":
             timeRangeStart = timeRangeEnd - TimeConstants.WEEK_IN_MILLISECONDS;
             break;
         default:
+            timeRangeStart = timeRangeEnd - TimeConstants.YEAR_IN_MILLISECONDS;
             break;
         }
         return _rankingRepository.getBestUserFromTimeRange(timeRangeStart, timeRangeEnd, new PageRequest(0, 10));

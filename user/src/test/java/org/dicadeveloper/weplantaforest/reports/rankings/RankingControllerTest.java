@@ -190,19 +190,27 @@ public class RankingControllerTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlantingTwoWeeksBefore, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 1, timeOfPlantingTwoWeeksBefore, "Project");
 
-        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", "w").accept("application/json"))
+        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", "week").accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].name").value("Adam"))
                     .andExpect(jsonPath("$.[0].amount").value(3))
                     .andExpect(jsonPath("$.[1].name").value("Bert"))
                     .andExpect(jsonPath("$.[1].amount").value(2));
 
-        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", "y").accept("application/json"))
+        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", "year").accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].name").value("Adam"))
                     .andExpect(jsonPath("$.[0].amount").value(4))
                     .andExpect(jsonPath("$.[1].name").value("Bert"))
                     .andExpect(jsonPath("$.[1].amount").value(2));
+
+        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", "a").accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.[0].name").value("Adam"))
+                    .andExpect(jsonPath("$.[0].amount").value(4))
+                    .andExpect(jsonPath("$.[1].name").value("Bert"))
+                    .andExpect(jsonPath("$.[1].amount").value(2));
+
     }
 
 }
