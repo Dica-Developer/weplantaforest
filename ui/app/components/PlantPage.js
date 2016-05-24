@@ -40,7 +40,9 @@ class PaymentBar extends Component {
     window.clearTimeout(this.proposalTimeout);
     this.proposalTimeout = window.setTimeout(function () {
     axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
-      that.setState(response.data);
+      var result = response.data;
+      result.plantItems = [];
+      that.setState(result);
     }).catch(function (response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -57,7 +59,9 @@ class PaymentBar extends Component {
   toggleButtonState(amount) {
     var that = this;
     axios.get('http://localhost:8081/simplePlantProposalForTrees/' + amount).then(function(response) {
-      that.setState(response.data);
+      var result = response.data;
+      result.projects = [];
+      that.setState(result);
     }).catch(function (response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -80,7 +84,9 @@ class PaymentBar extends Component {
   componentDidMount() {
     var that = this;
     axios.get('http://localhost:8081/simplePlantProposalForTrees/1').then(function(response) {
-      that.setState(response.data);
+      var result = response.data;
+      result.projects = [];
+      that.setState(result);
     }).catch(function (response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -110,8 +116,14 @@ class PaymentBar extends Component {
             <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 2)}>
               <input type="radio" autocomplete="off"/>2 Bäume
             </label>
-            <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 3)}>
-              <input type="radio" autocomplete="off"/>3 Bäume
+            <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 4)}>
+              <input type="radio" autocomplete="off"/>4 Bäume
+            </label>
+            <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 8)}>
+              <input type="radio" autocomplete="off"/>8 Bäume
+            </label>
+            <label className="btn btn-primary" onClick={this.toggleButtonState.bind(this, 16)}>
+              <input type="radio" autocomplete="off"/>16 Bäume
             </label>
             <label className="btn btn-primary" onClick={this.showCustomPayment.bind(this)}>
               <input type="radio" autocomplete="off"/>Benutzerdefiniert
@@ -126,32 +138,37 @@ class PaymentBar extends Component {
                 <div className="panel-body">
                   <ul className="list-group">
                   {Object.keys(that.state.projects[projectName].plantItems).map(function (treeName) {
-                    return (<li className="list-group-item">
-                      <span className="badge">{(() => {
+                  return (<li className="list-group-item">
+                      <div className="pull-right">
+                      <span className="label label-danger">{(() => {
                         return Accounting.formatMoney(that.state.projects[projectName].plantItems[treeName].treePrice / 100, { thousand: '.', decimal: ',', symbol: '€', format: '%v %s' });
                       })()}</span>
-                      <span className="badge">{that.state.projects[projectName].plantItems[treeName].amount}</span>
+                      <span className="label label-primary">{that.state.projects[projectName].plantItems[treeName].amount}</span>
+                      </div>
                       {treeName}
-                    </li>);
+                      </li>);
                   })}
                   </ul>
                 </div>
               </div>);
           })}
+          <ul className="list-group">
           {Object.keys(that.state.plantItems).map(function (index) {
             var treeItem = that.state.plantItems[index];
             return (
-                  <ul className="list-group">
                     <li className="list-group-item">
-                      <span className="badge">{(() => {
+                      <div className="pull-right">
+                      <span className="label label-danger">{(() => {
                         return Accounting.formatMoney(treeItem.treePrice / 100, { thousand: '.', decimal: ',', symbol: '€', format: '%v %s' });
                       })()}</span>
-                      <span className="badge">{treeItem.amount}</span>
-                      <span className="badge">{treeItem.projectName}</span>
+                      <span className="label label-primary">{treeItem.amount}</span>
+                      <span className="label label-success">{treeItem.projectName}</span>
+                      </div>
                       {treeItem.treeType}
                     </li>
-                  </ul>);
+            );
           })}
+          </ul>
           <button type="button" className="btn btn-group-justified btn-default btn-lg">Nehme ich für {(() => {
             return Accounting.formatMoney(this.state.actualPrice / 100, { thousand: '.', decimal: ',', symbol: '€', format: '%v %s' });
           })()}</button>

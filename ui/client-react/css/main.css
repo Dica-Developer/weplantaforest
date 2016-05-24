@@ -9,3 +9,7 @@
   width: 30px;
   height: 30px;
 }
+
+.list-group-item .label {
+  margin-right: 5px;
+}
