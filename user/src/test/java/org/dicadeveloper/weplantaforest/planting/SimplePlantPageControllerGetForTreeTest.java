@@ -62,7 +62,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
                     .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(1000))
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
@@ -89,7 +89,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
                     .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(1100))
+                    .andExpect(jsonPath("$.actualPrice").value(1100))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(11))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(11));
     }
@@ -123,7 +123,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo"))
                     .andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(1000))
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
@@ -163,7 +163,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo"))
                     .andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(1000))
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
 
@@ -189,7 +189,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
                     .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(500))
+                    .andExpect(jsonPath("$.actualPrice").value(500))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(5))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
@@ -220,7 +220,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
                     .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(1000))
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
@@ -247,7 +247,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
                     .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(1000))
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
@@ -276,7 +276,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
                     .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[1].projectName").value("Project B"))
-                    .andExpect(jsonPath("$.price").value(1000))
+                    .andExpect(jsonPath("$.actualPrice").value(1000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
@@ -315,7 +315,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[3].treeType").value("doow"))
                     .andExpect(jsonPath("$.plantItems[3].treePrice").value(200))
                     .andExpect(jsonPath("$.plantItems[3].projectName").value("Project B"))
-                    .andExpect(jsonPath("$.price").value(2700))
+                    .andExpect(jsonPath("$.actualPrice").value(2700))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
@@ -355,7 +355,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo"))
                     .andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(100000))
+                    .andExpect(jsonPath("$.actualPrice").value(100000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
@@ -397,7 +397,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo"))
                     .andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(100000))
+                    .andExpect(jsonPath("$.actualPrice").value(100000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
@@ -424,7 +424,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
                     .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(280000))
+                    .andExpect(jsonPath("$.actualPrice").value(280000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
@@ -462,7 +462,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo"))
                     .andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
                     .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.price").value(100000))
+                    .andExpect(jsonPath("$.actualPrice").value(100000))
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
