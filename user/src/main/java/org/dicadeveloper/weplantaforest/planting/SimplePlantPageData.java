@@ -14,7 +14,7 @@ public class SimplePlantPageData {
     long targetAmountOfTrees;
     long actualAmountOfTrees;
 
-    long price;
+    long actualPrice;
 
     List<SimplePlantPageItem> plantItems;
 
@@ -81,7 +81,7 @@ public class SimplePlantPageData {
         for (SimplePlantPageItem plantPageItem : getPlantItems()) {
             price += plantPageItem.getTreePrice() * plantPageItem.getAmount();
         }
-        this.price = price;
+        this.actualPrice = price;
     }
 
     @Getter
