@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import lombok.NonNull;
 
 @Component
-public class AbstractPlantPageValidator {
+public abstract class AbstractPlantPageValidator {
 
     @Autowired
     protected @NonNull TreeRepository _treeRepository;
