@@ -15,14 +15,14 @@ public class PlantPageData {
     long actualPrice;
 
     HashMap<String, ProjectData> projects;
-    
+
     @Getter
     @Setter
     @NoArgsConstructor
     public static class ProjectData {
 
         HashMap<String, PlantItem> plantItems;
-        
+
         @NoArgsConstructor
         @Getter
         @Setter

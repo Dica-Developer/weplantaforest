@@ -25,84 +25,84 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class IlegalArgumentTester {
-    
+
     @Autowired
     PlantPageDataHelper plantPageDataHelper;
-    
+
     @Autowired
     SimplePlantPageDataHelper simplePlantPageDataHelper;
-    
-    @Autowired 
+
+    @Autowired
     PlantPageDataToCartConverter plantPageDataToCartConverter;
-    
+
     @Autowired
     CartRepository cartRepository;
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForRankingController() {
         new RankingController(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForProjectReportController() {
         new ProjectReportController(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForCo2Controller() {
         new Co2Controller(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForPlantPageControllerFourNulls() {        
+    public void testFailedContructorForPlantPageControllerFourNulls() {
         new PlantPageController(null, null, null, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForPlantPageControllerThreeNulls() {        
+    public void testFailedContructorForPlantPageControllerThreeNulls() {
         new PlantPageController(plantPageDataHelper, null, null, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForPlantPageControllerTwoNulls() {        
+    public void testFailedContructorForPlantPageControllerTwoNulls() {
         new PlantPageController(plantPageDataHelper, plantPageDataToCartConverter, null, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForPlantPageControllerOneNulls() {        
+    public void testFailedContructorForPlantPageControllerOneNulls() {
         new PlantPageController(plantPageDataHelper, plantPageDataToCartConverter, cartRepository, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForSimplePlantPageControllerFourNulls() {        
+    public void testFailedContructorForSimplePlantPageControllerFourNulls() {
         new SimplePlantPageController(null, null, null, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForSimplePlantPageControllerThreeNulls() {        
+    public void testFailedContructorForSimplePlantPageControllerThreeNulls() {
         new SimplePlantPageController(simplePlantPageDataHelper, null, null, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForSimplePlantPageControllerTwoNulls() {        
+    public void testFailedContructorForSimplePlantPageControllerTwoNulls() {
         new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, null, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForSimplePlantPageControllerOneNulls() {        
+    public void testFailedContructorForSimplePlantPageControllerOneNulls() {
         new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, cartRepository, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForTreeRankedUserDataTwoNulls() {        
+    public void testFailedContructorForTreeRankedUserDataTwoNulls() {
         new TreeRankedUserData(null, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForTreeRankedUserDataOneNull() {        
+    public void testFailedContructorForTreeRankedUserDataOneNull() {
         new TreeRankedUserData("name", null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testFailedAllArgsContructorForTreeRankedUserDataTwoNulls() {
         new TreeRankedUserData("name", null, null);
@@ -113,5 +113,5 @@ public class IlegalArgumentTester {
     public void testFailedAllArgsContructorForTreeRankedUserDataThreeNulls() {
         new TreeRankedUserData(null, null, null);
     }
-    
+
 }

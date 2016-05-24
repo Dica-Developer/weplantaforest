@@ -11,7 +11,7 @@ public class PriceHelper {
     }
 
     public static BigDecimal fromLongToBigDecimal(long longValue) {
-        double doubleValue = ((double) longValue / 100.0);      
+        double doubleValue = ((double) longValue / 100.0);
         return new BigDecimal(doubleValue);
     }
 

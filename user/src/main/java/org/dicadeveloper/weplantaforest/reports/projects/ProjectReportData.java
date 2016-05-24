@@ -9,11 +9,11 @@ public class ProjectReportData {
 
     String projectName;
     String description;
-    
+
     Float longitude;
     Float latitude;
-    
+
     long amountOfMaximumTreesToPlant;
     long amountOfPlantedTrees;
-        
+
 }

@@ -33,7 +33,7 @@ public abstract class AbstractPlantPageHelper {
         _treeTypeRepository = treeTypeRepository;
         _treeRepository = treeRepository;
     }
-    
+
     protected boolean areThereTreesRemaining(ProjectArticle article) {
         return countTreesRemainingByThisArticle(article) > 0 ? true : false;
     }
@@ -72,7 +72,7 @@ public abstract class AbstractPlantPageHelper {
         }
         return projectArticles;
     }
-    
+
     protected boolean isLowerOrEqualThanTargetedPrice(double cartPrice, double targetedPrice) {
         return cartPrice <= targetedPrice;
     }

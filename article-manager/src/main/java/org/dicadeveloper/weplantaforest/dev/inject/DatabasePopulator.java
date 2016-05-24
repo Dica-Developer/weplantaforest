@@ -5,10 +5,10 @@ import java.util.Random;
 
 import org.dicadeveloper.weplantaforest.articles.Article;
 import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
-import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
 import org.dicadeveloper.weplantaforest.articles.Paragraph;
 import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

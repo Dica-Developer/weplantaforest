@@ -165,8 +165,8 @@ public class SimplePlantPageDataValidatorTest {
 
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
 
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood", "Project A",
-                plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood",
+                "Project A", plantPageData);
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantPageData);
 
@@ -188,8 +188,8 @@ public class SimplePlantPageDataValidatorTest {
 
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
 
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood", "Project A",
-                plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood",
+                "Project A", plantPageData);
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantPageData);
 
@@ -200,9 +200,8 @@ public class SimplePlantPageDataValidatorTest {
     public void testValidatePlantPageDataWithNonExistingProject() {
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
 
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood", "Project A",
-                plantPageData);
-
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood",
+                "Project A", plantPageData);
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantPageData);
 
@@ -216,8 +215,8 @@ public class SimplePlantPageDataValidatorTest {
 
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
 
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood", "Project A",
-                plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood",
+                "Project A", plantPageData);
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantPageData);
 
@@ -231,8 +230,8 @@ public class SimplePlantPageDataValidatorTest {
 
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
 
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood", "Project A",
-                plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(4, 100, "wood",
+                "Project A", plantPageData);
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantPageData);
 

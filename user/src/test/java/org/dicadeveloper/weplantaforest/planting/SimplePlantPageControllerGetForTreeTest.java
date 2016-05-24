@@ -428,7 +428,7 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
-    
+
     @Test
     public void testGetCartWithFourArticlesTwoArticlesAveragedOneNoRemainingTrees() throws Exception {
 

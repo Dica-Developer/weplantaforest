@@ -64,11 +64,11 @@ public class SimplePlantPageControllerPostMethodTest {
 
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
 
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A",
-                plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
+                "Project A", plantPageData);
 
         this.mockMvc.perform(post("/simpleDonateTrees").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                 .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                                                       .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                     .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
@@ -87,11 +87,11 @@ public class SimplePlantPageControllerPostMethodTest {
 
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
 
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(11, 300, "wood", "Project A",
-                plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(11, 300, "wood",
+                "Project A", plantPageData);
 
         this.mockMvc.perform(post("/simpleDonateTrees").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                 .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                                                       .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                     .andExpect(status().isBadRequest());
 
         assertThat(_cartRepository.count()).isEqualTo(0);

@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class PlantPageController {
 
     private @NonNull PlantPageDataHelper plantPageDataHelper;
-    
+
     private @NonNull PlantPageDataToCartConverter plantPageToCartConverter;
 
     private @NonNull CartRepository _cartRepository;
@@ -31,7 +31,7 @@ public class PlantPageController {
     public PlantPageData getCartProposal(@PathVariable long targetedPrice) {
         return plantPageDataHelper.createPlantProposalForTargetPrice(targetedPrice);
     }
-    
+
     @RequestMapping(value = "/donateTrees", method = RequestMethod.POST)
     public ResponseEntity<?> processPlant(@RequestBody PlantPageData plantPageData) {
 
