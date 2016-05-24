@@ -9,6 +9,7 @@ import org.dicadeveloper.weplantaforest.planting.SimplePlantPageDataHelper;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Controller;
 import org.dicadeveloper.weplantaforest.reports.projects.ProjectReportController;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingController;
+import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.support.PlantPageDataToCartConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -92,4 +93,25 @@ public class IlegalArgumentTester {
         new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, cartRepository, null);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedContructorForTreeRankedUserDataTwoNulls() {        
+        new TreeRankedUserData(null, null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedContructorForTreeRankedUserDataOneNull() {        
+        new TreeRankedUserData("name", null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedAllArgsContructorForTreeRankedUserDataTwoNulls() {
+        new TreeRankedUserData("name", null, null);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedAllArgsContructorForTreeRankedUserDataThreeNulls() {
+        new TreeRankedUserData(null, null, null);
+    }
+    
 }
