@@ -26,8 +26,8 @@ public class SimplePlantPageData {
     protected boolean containsPlantItem(SimplePlantPageItem plantItemToCheck) {
         boolean contains = false;
 
-        if (null != plantItems) {
-            for (SimplePlantPageItem plantPageItem : plantItems) {
+        if (null != getPlantItems()) {
+            for (SimplePlantPageItem plantPageItem : getPlantItems()) {
                 if (plantPageItem.getTreeType()
                                  .equals(plantItemToCheck.getTreeType())
                         && plantPageItem.getProjectName()
@@ -54,13 +54,15 @@ public class SimplePlantPageData {
     }
 
     protected SimplePlantPageItem getPlantItem(SimplePlantPageItem plantItemToGet) {
-        for (SimplePlantPageItem plantPageItem : getPlantItems()) {
-            if (plantPageItem.getTreeType()
-                             .equals(plantItemToGet.getTreeType())
-                    && plantPageItem.getProjectName()
-                                    .equals(plantItemToGet.getProjectName())
-                    && plantPageItem.getTreePrice() == plantItemToGet.getTreePrice()) {
-                return plantPageItem;
+        if (null != getPlantItems()) {
+            for (SimplePlantPageItem plantPageItem : getPlantItems()) {
+                if (plantPageItem.getTreeType()
+                                 .equals(plantItemToGet.getTreeType())
+                        && plantPageItem.getProjectName()
+                                        .equals(plantItemToGet.getProjectName())
+                        && plantPageItem.getTreePrice() == plantItemToGet.getTreePrice()) {
+                    return plantPageItem;
+                }
             }
         }
         return null;
