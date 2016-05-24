@@ -50,7 +50,7 @@ public class DatabasePopulatorTest {
     public void testInsertArticles() throws Exception {
         _databasePopulator.insertUsers();
         _databasePopulator.insertArticles();
-        assertThat(_articleRepository.count()).isEqualTo(20);
+        assertThat(_articleRepository.count()).isEqualTo(100);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertUsers();
         _databasePopulator.insertArticles();
         _databasePopulator.insertParagraphsToArticles();
-        assertThat(_paragraphRepository.count()).isEqualTo(60);
+        assertThat(_paragraphRepository.count()).isEqualTo(300);
     }
 
 }

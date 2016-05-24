@@ -56,9 +56,9 @@ public class ArticleDataControllerTest {
 
         _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
 
-        this.mockMvc.perform(get("/reports/articles/{articleType}", 19).accept("application/json"))
+        this.mockMvc.perform(get("/articles/{articleType}?page=0&size=10", "BLOG").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[0].title").value("article title"));
+                    .andExpect(jsonPath("$.content[0].title").value("article title"));
     }
 
     @Test
