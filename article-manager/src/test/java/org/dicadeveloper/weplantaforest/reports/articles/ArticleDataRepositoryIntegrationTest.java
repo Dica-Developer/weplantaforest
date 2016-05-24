@@ -14,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -41,13 +43,15 @@ public class ArticleDataRepositoryIntegrationTest {
         _dbInjecter.injectUser("Adam");
 
         _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
+        
+        _dbInjecter.injectArticle("later article title", "article more blablabla", ArticleType.BLOG, "Adam", createdOn - 1000000);
 
-        List<ArticleData> articles = _articleDataRepository.getArticlesByType(ArticleType.BLOG);
+        Page<ArticleData> articles = _articleDataRepository.getArticlesByType(ArticleType.BLOG, new PageRequest(0, 3));
 
-        assertThat(articles.size()).isEqualTo(1);
-        assertThat(articles.get(0)
+        assertThat(articles.getTotalElements()).isEqualTo(2);
+        assertThat(articles.getContent().get(0)
                            .getTitle()).isEqualTo("article title");
-        assertThat(articles.get(0)
+        assertThat(articles.getContent().get(0)
                            .getIntro()).isEqualTo("article blablabla");
     }
 

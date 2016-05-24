@@ -53,17 +53,20 @@ public class DatabasePopulator {
         Random random = new Random();
 
         for (ArticleType articleType : ArticleType.values()) {
-            int pickOne = random.nextInt(4);
+            for (int i = 0; i < 5; i++) {
 
-            Article article = new Article();
-            article.setOwner(_userRepository.findByName(DEFAULT_USERS.get(pickOne)));
-            article.setArticleType(articleType);
-            article.setLang(Language.GERMAN);
-            article.setShowFull(true);
-            article.setCreatedOn((long) random.nextInt(1000000000));
-            article.setTitle("our first " + articleType.toString() + " article");
-            article.setIntro("this is an article about " + articleType.toString());
-            _articleRepository.save(article);
+                int pickOne = random.nextInt(4);
+
+                Article article = new Article();
+                article.setOwner(_userRepository.findByName(DEFAULT_USERS.get(pickOne)));
+                article.setArticleType(articleType);
+                article.setLang(Language.GERMAN);
+                article.setShowFull(true);
+                article.setCreatedOn((long) random.nextInt(1000000000));
+                article.setTitle("our first " + articleType.toString() + " article");
+                article.setIntro("this is an article about " + articleType.toString());
+                _articleRepository.save(article);
+            }
         }
         return this;
     }
