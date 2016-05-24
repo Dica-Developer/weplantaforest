@@ -12,7 +12,7 @@ export default class Teaser extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8083/articles/BLOG').then(function(response) {
+    axios.get('http://localhost:8083/articles/BLOG?page=1&size=3').then(function(response) {
       var result = response.data;
       that.setState({teaser: result});
     }).catch(function (response) {
