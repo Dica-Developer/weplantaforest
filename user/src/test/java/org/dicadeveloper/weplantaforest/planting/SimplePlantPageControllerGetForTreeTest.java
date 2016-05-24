@@ -428,5 +428,43 @@ public class SimplePlantPageControllerGetForTreeTest {
                     .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
                     .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
+    
+    @Test
+    public void testGetCartWithFourArticlesTwoArticlesAveragedOneNoRemainingTrees() throws Exception {
+
+        dbInjecter.injectTreeType("wood", "desc", 0.5);
+        dbInjecter.injectTreeType("doow", "desc", 0.5);
+        dbInjecter.injectTreeType("wodo", "desc", 0.5);
+        dbInjecter.injectTreeType("dowo", "desc", 0.5);
+
+        dbInjecter.injectUser("Adam");
+
+        dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+
+        dbInjecter.injectProjectArticle("wood", "Project A", 1000, 1.0, 0.8);
+        dbInjecter.injectProjectArticle("doow", "Project A", 500, 1.0, 0.5);
+        dbInjecter.injectProjectArticle("wodo", "Project A", 500, 1.0, 0.5);
+        dbInjecter.injectProjectArticle("dowo", "Project A", 100, 1.0, 0.5);
+
+        dbInjecter.injectTreeToProject("dowo", "Adam", 100, System.currentTimeMillis(), "Project A");
+
+        this.mockMvc.perform(get("/simplePlantProposalForTrees/{amountOfTrees}", 1000).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.plantItems[0].amount").value(700))
+                    .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
+                    .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                    .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
+                    .andExpect(jsonPath("$.plantItems[1].amount").value(150))
+                    .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
+                    .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                    .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
+                    .andExpect(jsonPath("$.plantItems[2].amount").value(150))
+                    .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo"))
+                    .andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
+                    .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A"))
+                    .andExpect(jsonPath("$.price").value(100000))
+                    .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
+                    .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
+    }
 
 }
