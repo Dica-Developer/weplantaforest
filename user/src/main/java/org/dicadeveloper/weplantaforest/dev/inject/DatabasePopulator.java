@@ -205,12 +205,7 @@ public class DatabasePopulator {
         Random random = new Random();
 
         double randomPrice = random.nextDouble() * 6;
-        double randomMarge = random.nextDouble() * 2;
-
-        while (randomPrice < randomMarge) {
-            randomPrice = random.nextDouble() * 6;
-            randomMarge = random.nextDouble() * 2;
-        }
+        double randomMarge = randomPrice / 2;
 
         price.setAmount(new BigDecimal(randomPrice));
         price.setScontoType(ScontoType.NONE);
