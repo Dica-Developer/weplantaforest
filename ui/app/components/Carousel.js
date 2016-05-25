@@ -13,7 +13,7 @@ export default class Carousel extends Component {
   componentDidMount() {
     var that = this;
     axios.get('http://localhost:8081/reports/activeProjects?page=0&size=10').then(function(response) {
-      var result = response.data;
+      var result = response.data.content;
       that.setState({slides: result});
     }).catch(function (response) {
       if (response instanceof Error) {
@@ -44,12 +44,12 @@ export default class Carousel extends Component {
                   if (0 === index) {
                     activeItem = 'item active';
                   }
-                    return (<div className={activeItem}>
-                      <img src="http://www.iplantatree.org/img/plantImage/96/width/1140/max" width="1140" height="400" alt={slide.projectName} />
-                        <div className="carousel-caption">
-                        {slide.description}
-                        </div>
-                      </div>);
+                  return (<div className={activeItem}>
+                    <img src="http://www.iplantatree.org/img/plantImage/96/width/1140/max" width="1140" height="400" alt={slide.projectName} />
+                    <div className="carousel-caption">
+                      {slide.description}
+                    </div>
+                  </div>);
                 })}
               </div>
               <a className="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
