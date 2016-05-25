@@ -2,35 +2,52 @@ import React, {
   Component
 } from 'react';
 import Boostrap from 'bootstrap';
+import axios from 'axios';
 
 export default class Carousel extends Component {
   constructor() {
     super();
-    this.slides = [{
-      'image': 'http://www.iplantatree.org/img/plantImage/96/width/1140/max',
-      'title': 'Projektfläche: Kobschütz',
-      'text': 'Projektfläche: Kobschütz',
-      'className': 'item active'
-    }, {
-      'image': 'http://www.iplantatree.org/img/plantImage/114/width/1140/max',
-      'title': 'Projektfläche: Berlin Mittelheide',
-      'text': 'Projektfläche: Berlin Mittelheide',
-      'className': 'item'
-    }];
+    this.state = {slides : []};
+  }
+
+  componentDidMount() {
+    var that = this;
+    axios.get('http://localhost:8081/reports/activeProjects?page=0&size=10').then(function(response) {
+      var result = response.data;
+      that.setState({slides: result});
+    }).catch(function (response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
   }
 
   render() {
     return (<div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
               <ol className="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" className="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                {this.state.slides.map(function (slide, index) {
+                  var activeItem = '';
+                  if (0 === index) {
+                    activeItem = 'active';
+                  }
+                  return (<li data-target="#carousel-example-generic" data-slide-to="{index}" className={activeItem}></li>);
+                })}
               </ol>
               <div className="carousel-inner" role="listbox">
-                {this.slides.map(function (slide) {
-                    return (<div className={slide.className}>
-                        <img src={slide.image} width="1140" height="400" alt={slide.title} />
+                {this.state.slides.map(function (slide, index) {
+                  var activeItem = 'item';
+                  if (0 === index) {
+                    activeItem = 'item active';
+                  }
+                    return (<div className={activeItem}>
+                      <img src="http://www.iplantatree.org/img/plantImage/96/width/1140/max" width="1140" height="400" alt={slide.projectName} />
                         <div className="carousel-caption">
-                        {slide.text}
+                        {slide.description}
                         </div>
                       </div>);
                 })}
