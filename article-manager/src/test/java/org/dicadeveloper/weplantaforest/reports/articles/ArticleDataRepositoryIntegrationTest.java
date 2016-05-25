@@ -50,6 +50,8 @@ public class ArticleDataRepositoryIntegrationTest {
 
         assertThat(articles.getTotalElements()).isEqualTo(2);
         assertThat(articles.getContent().get(0)
+                .getId()).isEqualTo(1L);
+        assertThat(articles.getContent().get(0)
                            .getTitle()).isEqualTo("article title");
         assertThat(articles.getContent().get(0)
                            .getIntro()).isEqualTo("article blablabla");
@@ -67,7 +69,7 @@ public class ArticleDataRepositoryIntegrationTest {
                    .injectParagraphToArticle("article title", "1st paragraph title", "1st paragraph blablablalba")
                    .injectParagraphToArticle("article title", "2nd paragraph title", "2nd paragraph blablablalba");
 
-        List<ArticleContentData> articles = _articleDataRepository.getParagraphsByArticleTitle("article title");
+        List<ArticleContentData> articles = _articleDataRepository.getParagraphsByArticleId(1);
 
         assertThat(articles.size()).isEqualTo(2);
         assertThat(articles.get(0)

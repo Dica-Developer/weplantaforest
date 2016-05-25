@@ -6,6 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ArticleData {
+    
+    long id;
 
     String title;
 

@@ -27,9 +27,9 @@ public class ArticleDataController {
         return _articleDataRepository.getArticlesByType(articleType, new PageRequest(page, size));
     }
 
-    @RequestMapping(value = "/reports/article/{articleTitle}", method = RequestMethod.GET)
-    public List<ArticleContentData> getParagraphsByArticleTitle(@PathVariable String articleTitle) {
-        return _articleDataRepository.getParagraphsByArticleTitle(articleTitle);
+    @RequestMapping(value = "/reports/article/{articleId}", method = RequestMethod.GET)
+    public List<ArticleContentData> getParagraphsByArticleTitle(@PathVariable long articleId) {
+        return _articleDataRepository.getParagraphsByArticleId(articleId);
     }
 
 }

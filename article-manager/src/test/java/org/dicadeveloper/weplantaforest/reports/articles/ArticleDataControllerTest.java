@@ -72,7 +72,7 @@ public class ArticleDataControllerTest {
                    .injectParagraphToArticle("article title", "1st paragraph title", "1st paragraph blablablalba")
                    .injectParagraphToArticle("article title", "2nd paragraph title", "2nd paragraph blablablalba");
 
-        this.mockMvc.perform(get("/reports/article/{articleTitle}", "article title").accept("application/json"))
+        this.mockMvc.perform(get("/reports/article/{articleId}", 1).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].paragraphTitle").value("1st paragraph title"))
                     .andExpect(jsonPath("$.[0].paragraphText").value("1st paragraph blablablalba"));
