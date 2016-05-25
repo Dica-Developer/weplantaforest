@@ -1,3 +1,7 @@
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var inDev = process.env.NODE_ENV = 'development';
+
 module.exports = (function() {
     var config = {
         'modulesDirectories': ['node_modules']
@@ -27,7 +31,34 @@ module.exports = (function() {
         ]
     };
 
+    config.plugins = [
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
+        })
+    ];
+
+    if (inDev) {
+        config.plugins.push(
+           new HtmlWebpackPlugin({
+            'template': __dirname + '/client-react/index.html',
+            'inject': 'body',
+            'minify': false
+           })
+        );
+    }
+
     config.devtool = 'eval';
+
+    config.devServer = {
+        contentBase: __dirname + '/client-react/js',
+        port: 8080,
+        stats: {
+            modules: false,
+            cached: false,
+            colors: true,
+            chunk: false
+        }
+    };
 
     return config;
 })();
