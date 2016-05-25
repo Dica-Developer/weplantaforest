@@ -62,7 +62,9 @@ Make sure you have the following classes included for static import:
 
 ### Stating the backend and the UI
 
+```
 ./gradlew user:bootRun
 ./gradlew article-manager:bootRun
 ui/node_modules/.bin/http-server --cors ui/client-react/
 cd ui; webpack -w
+```
