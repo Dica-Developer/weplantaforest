@@ -71,20 +71,20 @@ public class ProjectReportControllerTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 100, timeOfPlanting, "Project B");
         _dbInjecter.injectTreeToProject("doow", "Adam", 200, timeOfPlanting, "Project B");
 
-        this.mockMvc.perform(get("/reports/activeProjects").accept("application/json"))
+        this.mockMvc.perform(get("/reports/activeProjects?page=0&size=10").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[0].projectName").value("Project A"))
-                    .andExpect(jsonPath("$.[0].description").value("project A desc"))
-                    .andExpect(jsonPath("$.[0].latitude").value(1.0))
-                    .andExpect(jsonPath("$.[0].longitude").value(2.0))
-                    .andExpect(jsonPath("$.[0].amountOfMaximumTreesToPlant").value(300))
-                    .andExpect(jsonPath("$.[0].amountOfPlantedTrees").value(100))
-                    .andExpect(jsonPath("$.[1].projectName").value("Project B"))
-                    .andExpect(jsonPath("$.[1].description").value("project B desc"))
-                    .andExpect(jsonPath("$.[1].latitude").value(3.0))
-                    .andExpect(jsonPath("$.[1].longitude").value(4.0))
-                    .andExpect(jsonPath("$.[1].amountOfMaximumTreesToPlant").value(800))
-                    .andExpect(jsonPath("$.[1].amountOfPlantedTrees").value(400));
+                    .andExpect(jsonPath("$.content[0].projectName").value("Project A"))
+                    .andExpect(jsonPath("$.content[0].description").value("project A desc"))
+                    .andExpect(jsonPath("$.content[0].latitude").value(1.0))
+                    .andExpect(jsonPath("$.content[0].longitude").value(2.0))
+                    .andExpect(jsonPath("$.content[0].amountOfMaximumTreesToPlant").value(300))
+                    .andExpect(jsonPath("$.content[0].amountOfPlantedTrees").value(100))
+                    .andExpect(jsonPath("$.content[1].projectName").value("Project B"))
+                    .andExpect(jsonPath("$.content[1].description").value("project B desc"))
+                    .andExpect(jsonPath("$.content[1].latitude").value(3.0))
+                    .andExpect(jsonPath("$.content[1].longitude").value(4.0))
+                    .andExpect(jsonPath("$.content[1].amountOfMaximumTreesToPlant").value(800))
+                    .andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400));
     }
 
 }

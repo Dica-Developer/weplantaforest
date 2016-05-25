@@ -1,9 +1,9 @@
 package org.dicadeveloper.weplantaforest.reports.projects;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +18,9 @@ public class ProjectReportController {
     private @NonNull ProjectReportRepository _projectRepository;
 
     @RequestMapping(value = "/reports/activeProjects", method = RequestMethod.GET)
-    public List<ProjectReportData> getActiveProjectData() {
-        return _projectRepository.getActiveProjectData(new PageRequest(0, 5));
+    public Page<ProjectReportData> getActiveProjectData(@Param(value = "page") int page,
+            @Param(value = "size") int size) {
+        return _projectRepository.getActiveProjectData(new PageRequest(page, size));
     }
 
 }

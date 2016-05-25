@@ -1,8 +1,7 @@
 package org.dicadeveloper.weplantaforest.reports.projects;
 
-import java.util.List;
-
 import org.dicadeveloper.weplantaforest.projects.Project;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,7 +14,9 @@ public interface ProjectReportRepository extends CrudRepository<Project, Long> {
             + "FROM Project project JOIN project.articles articles WHERE project.shopActive = true "
             + "AND articles.project = project GROUP BY project.name";
 
-    @Query(value = FIND_ACTIVE_PROJECTS_QUERY)
-    List<ProjectReportData> getActiveProjectData(Pageable page);
+    public final static String FIND_ACTIVE_PROJECTS_COUNT_QUERY = "SELECT count(distinct project.name) from Project project WHERE project.shopActive = true";
+
+    @Query(value = FIND_ACTIVE_PROJECTS_QUERY, countQuery = FIND_ACTIVE_PROJECTS_COUNT_QUERY)
+    Page<ProjectReportData> getActiveProjectData(Pageable page);
 
 }
