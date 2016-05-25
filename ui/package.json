@@ -28,5 +28,6 @@
     "node": ">=5.5.0"
   },
   "scripts": {
+    "dev": "webpack -w"
   }
 }
