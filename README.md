@@ -68,3 +68,9 @@ Make sure you have the following classes included for static import:
 ui/node_modules/.bin/http-server --cors ui/client-react/
 cd ui; webpack -w
 ```
+
+### Troubleshooting
+P: I get an error while starting a gradle task.
+  `Could not open terminal for stdout: could not get termcap entry`
+A: Paste following command in current before executing gradle
+  `export GRADLE_OPTS=-Dorg.gradle.native=false`
