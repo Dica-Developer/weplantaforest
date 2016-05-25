@@ -59,3 +59,10 @@ Make sure you have the following classes included for static import:
 * Change existing MySql Schema (managed by Flyway)
  * Add to the latest (unreleased) ```src/main/resources/db/migration/V*.sql``` script
  * OR create a new script, e.g. ```src/main/resources/db/migration/V1_2__descriptionOfMyChange.sql```
+
+### Stating the backend and the UI
+
+./gradlew user:bootRun
+./gradlew article-manager:bootRun
+ui/node_modules/.bin/http-server --cors ui/client-react/
+cd ui; webpack -w
