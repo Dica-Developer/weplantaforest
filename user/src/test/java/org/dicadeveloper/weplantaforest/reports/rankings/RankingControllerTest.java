@@ -54,7 +54,7 @@ public class RankingControllerTest {
         _dbInjecter.injectUser("Bert");
         _dbInjecter.injectTree("wood", "Bert", 10, timeOfPlanting);
 
-        this.mockMvc.perform(get("/ranking/bestUser/{pageNr}/{pageSize}", 0, 4).accept("application/json"))
+        this.mockMvc.perform(get("/ranking/bestUser?page=0&size=10").accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.content[0].name").value("Bert"))
                     .andExpect(jsonPath("$.content[0].amount").value(10))
@@ -102,7 +102,7 @@ public class RankingControllerTest {
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
         this.mockMvc.perform(
-                get("/ranking/bestOrgType/{organizationType}/{pageNr}/{pageSize}", 0, 0, 4).accept("application/json"))
+                get("/ranking/bestOrgType/{organizationType}?page=0&size=10", 0).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.totalElements").value(2))
                     .andExpect(jsonPath("$.content[0].name").value("Adam"))
@@ -160,7 +160,7 @@ public class RankingControllerTest {
         _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
 
-        this.mockMvc.perform(get("/ranking/bestTeam/{pageNr}/{pageSize}", 0, 4).accept("application/json"))
+        this.mockMvc.perform(get("/ranking/bestTeam?page=0&size=10").accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.totalElements").value(1))
                     .andExpect(jsonPath("$.content[0].name").value("avengers"))
