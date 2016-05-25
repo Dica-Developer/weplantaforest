@@ -14,5 +14,9 @@ public class ArticleData {
     String intro;
     
     long createdOn;
+    
+    long ownerId;
+    
+    String ownerName;
 
 }

@@ -58,7 +58,12 @@ public class ArticleDataControllerTest {
 
         this.mockMvc.perform(get("/articles/{articleType}?page=0&size=10", "BLOG").accept("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.content[0].title").value("article title"));
+                    .andExpect(jsonPath("$.content[0].id").value(1))
+                    .andExpect(jsonPath("$.content[0].title").value("article title"))
+                    .andExpect(jsonPath("$.content[0].intro").value("article blablabla"))
+                    .andExpect(jsonPath("$.content[0].createdOn").value(createdOn))
+                    .andExpect(jsonPath("$.content[0].ownerId").value(1))
+                    .andExpect(jsonPath("$.content[0].ownerName").value("Adam"));
     }
 
     @Test

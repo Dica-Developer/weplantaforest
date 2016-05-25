@@ -43,20 +43,31 @@ public class ArticleDataRepositoryIntegrationTest {
         _dbInjecter.injectUser("Adam");
 
         _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
-        
-        _dbInjecter.injectArticle("later article title", "article more blablabla", ArticleType.BLOG, "Adam", createdOn - 1000000);
+
+        _dbInjecter.injectArticle("later article title", "article more blablabla", ArticleType.BLOG, "Adam",
+                createdOn - 1000000);
 
         Page<ArticleData> articles = _articleDataRepository.getArticlesByType(ArticleType.BLOG, new PageRequest(0, 3));
 
         assertThat(articles.getTotalElements()).isEqualTo(2);
-        assertThat(articles.getContent().get(0)
-                .getId()).isEqualTo(1L);
-        assertThat(articles.getContent().get(0)
+        assertThat(articles.getContent()
+                           .get(0)
+                           .getId()).isEqualTo(1L);
+        assertThat(articles.getContent()
+                           .get(0)
                            .getTitle()).isEqualTo("article title");
-        assertThat(articles.getContent().get(0)
+        assertThat(articles.getContent()
+                           .get(0)
                            .getIntro()).isEqualTo("article blablabla");
-        assertThat(articles.getContent().get(0)
-                .getCreatedOn()).isEqualTo(createdOn);
+        assertThat(articles.getContent()
+                           .get(0)
+                           .getCreatedOn()).isEqualTo(createdOn);
+        assertThat(articles.getContent()
+                           .get(0)
+                           .getOwnerId()).isEqualTo(1);
+        assertThat(articles.getContent()
+                           .get(0)
+                           .getOwnerName()).isEqualTo("Adam");
     }
 
     @Test
