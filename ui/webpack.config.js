@@ -9,11 +9,11 @@ module.exports = (function() {
 
     // Define entry points
     config.entry = {
-        'app': __dirname + '/app/components/Main.js'
+        'app': __dirname + '/app/src/components/Main.js'
     };
 
     config.output = {
-        'path': __dirname + '/client-react/js',
+        'path': __dirname + '/app/dist/',
         'publicPath': 'http://localhost:8080/',
         'filename': '[name].bundle.js'
     };
@@ -40,17 +40,17 @@ module.exports = (function() {
     if (inDev) {
         config.plugins.push(
            new HtmlWebpackPlugin({
-            'template': __dirname + '/client-react/index.html',
+            'template': __dirname + '/app/index.html',
             'inject': 'body',
             'minify': false
            })
         );
+
+        config.devtool = 'eval';
     }
 
-    config.devtool = 'eval';
-
     config.devServer = {
-        contentBase: __dirname + '/client-react/js',
+        contentBase: __dirname + '/app',
         port: 8080,
         stats: {
             modules: false,
