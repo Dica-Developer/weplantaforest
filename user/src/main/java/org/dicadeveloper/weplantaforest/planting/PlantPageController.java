@@ -3,6 +3,7 @@ package org.dicadeveloper.weplantaforest.planting;
 import org.dicadeveloper.weplantaforest.admin.codes.Cart;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.support.PlantPageDataToCartConverter;
+import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,12 @@ public class PlantPageController {
 
     private @NonNull PlantPageDataValidator _plantPageDataValidator;
 
-    @RequestMapping(value = "/plantProposal/{targetedPrice}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", method = RequestMethod.GET)
     public PlantPageData getCartProposal(@PathVariable long targetedPrice) {
         return plantPageDataHelper.createPlantProposalForTargetPrice(targetedPrice);
     }
 
-    @RequestMapping(value = "/donateTrees", method = RequestMethod.POST)
+    @RequestMapping(value = Uris.COMPLEX_DONATION, method = RequestMethod.POST)
     public ResponseEntity<?> processPlant(@RequestBody PlantPageData plantPageData) {
 
         if (_plantPageDataValidator.isPlantPageDataValid(plantPageData)) {

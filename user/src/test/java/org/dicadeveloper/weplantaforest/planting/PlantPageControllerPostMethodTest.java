@@ -9,6 +9,7 @@ import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.junit.Before;
@@ -67,7 +68,7 @@ public class PlantPageControllerPostMethodTest {
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A",
                 plantPageData);
 
-        this.mockMvc.perform(post("/donateTrees").contentType(TestUtil.APPLICATION_JSON_UTF8)
+        this.mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                  .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                     .andExpect(status().isOk());
 
@@ -90,7 +91,7 @@ public class PlantPageControllerPostMethodTest {
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 300, "wood", "Project A",
                 plantPageData);
 
-        this.mockMvc.perform(post("/donateTrees").contentType(TestUtil.APPLICATION_JSON_UTF8)
+        this.mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                  .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                     .andExpect(status().isBadRequest());
 

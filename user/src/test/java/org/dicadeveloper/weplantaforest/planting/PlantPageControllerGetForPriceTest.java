@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Before;
 import org.junit.Rule;
@@ -57,7 +58,7 @@ public class PlantPageControllerGetForPriceTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(10))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
@@ -77,7 +78,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.8);
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(7))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
@@ -102,7 +103,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
@@ -132,7 +133,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
         dbInjecter.injectProjectArticle("dowo", "Project A", 10, 1.0, 0.3);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
@@ -161,7 +162,7 @@ public class PlantPageControllerGetForPriceTest {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(5))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
@@ -185,7 +186,7 @@ public class PlantPageControllerGetForPriceTest {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(5))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
@@ -211,7 +212,7 @@ public class PlantPageControllerGetForPriceTest {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].amount").value(10))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['doow'].treePrice").value(100))
@@ -235,7 +236,7 @@ public class PlantPageControllerGetForPriceTest {
 
         dbInjecter.injectTreeToProject("doow", "Adam", 10, timeOfPlanting, "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(10))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
@@ -256,7 +257,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.5, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(2))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
@@ -280,7 +281,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(100))
@@ -306,7 +307,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("wood", "Project B", 10, 2.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 2.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 1000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 1000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(2))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
@@ -336,7 +337,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("wood", "Project B", 10, 2.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 2.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 3000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 3000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(7))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
@@ -367,7 +368,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("wodo", "Project A", 500, 1.0, 0.5);
         dbInjecter.injectProjectArticle("dowo", "Project A", 500, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 100000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 100000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(200))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(350))
@@ -400,7 +401,7 @@ public class PlantPageControllerGetForPriceTest {
 
         dbInjecter.injectTreeToProject("dowo", "Adam", 50, System.currentTimeMillis(), "Project A");
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 100000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 100000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(200))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(350))
@@ -426,7 +427,7 @@ public class PlantPageControllerGetForPriceTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 500, 3.0, 2.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 100, 1.0, 0.5);
 
-        this.mockMvc.perform(get("/plantProposal/{targetedPrice}", 100000).accept("application/json"))
+        this.mockMvc.perform(get(Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", 100000).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].amount").value(300))
                     .andExpect(jsonPath("$.projects['Project A'].plantItems['wood'].treePrice").value(300))
