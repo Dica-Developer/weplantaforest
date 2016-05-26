@@ -46,7 +46,7 @@ module.exports = (function() {
            })
         );
 
-        config.devtool = 'eval';
+        config.devtool = 'cheap-module-eval-source-map';
     }
 
     config.devServer = {
