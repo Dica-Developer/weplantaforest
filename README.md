@@ -60,13 +60,18 @@ Make sure you have the following classes included for static import:
  * Add to the latest (unreleased) ```src/main/resources/db/migration/V*.sql``` script
  * OR create a new script, e.g. ```src/main/resources/db/migration/V1_2__descriptionOfMyChange.sql```
 
-### Stating the backend and the UI
+### Starting the backend and the UI
 
 ```
 ./gradlew user:bootRun
 ./gradlew article-manager:bootRun
 ui/node_modules/.bin/http-server --cors ui/client-react/
 cd ui; webpack -w
+```
+Now you can open a browser window with:
+
+```
+open http://localhost:8080
 ```
 
 ### Troubleshooting
