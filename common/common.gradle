@@ -10,19 +10,15 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
         classpath "gradle.plugin.gradle-plugins:jartest:1.0"
     }
 }
 
-apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'project-report'
 apply plugin: 'application'
-apply plugin: 'jacoco'
 apply plugin: 'com.github.hauner.jarTest'
 
 jar {
@@ -86,20 +82,8 @@ test {
     } else {
         def maxForks = Runtime.getRuntime().availableProcessors()
         if (System.env.'CI') {
-            jacoco {
-                enabled true
-            }
         }
         logger.info "Maximum used parallel forks: " + maxForks
         maxParallelForks maxForks
     }
 }
-
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-
-

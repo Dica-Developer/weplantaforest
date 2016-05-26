@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("dev")
-public class DataInjector {
+public class DataInjectorForArticleManager {
 
-    protected final Log LOG = LogFactory.getLog(DataInjector.class.getName());
+    protected final Log LOG = LogFactory.getLog(DataInjectorForArticleManager.class.getName());
 
-    protected DatabasePopulator _databasePopulator;
+    protected DatabasePopulatorForArticleManager _databasePopulator;
 
     @Autowired
-    public DataInjector(DatabasePopulator databasePopulator) {
+    public DataInjectorForArticleManager(DatabasePopulatorForArticleManager databasePopulator) {
         _databasePopulator = databasePopulator;
     }
 

@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList;
  * Provides the functionality to easily populate the database with test data.
  */
 @Service
-public class DatabasePopulator {
+public class DatabasePopulatorForArticleManager {
 
     private final static List<String> DEFAULT_USERS = ImmutableList.of("articleManager", "blogManager", "newsManager",
             "knowledgeManager");
@@ -32,14 +32,14 @@ public class DatabasePopulator {
     private ParagraphRepository _parapgraphRepository;
 
     @Autowired
-    public DatabasePopulator(ArticleRepository articleRepository, ParagraphRepository paragraphRepository,
+    public DatabasePopulatorForArticleManager(ArticleRepository articleRepository, ParagraphRepository paragraphRepository,
             UserRepository userRepository) {
         _articleRepository = articleRepository;
         _userRepository = userRepository;
         _parapgraphRepository = paragraphRepository;
     }
 
-    public DatabasePopulator insertUsers() {
+    public DatabasePopulatorForArticleManager insertUsers() {
         DEFAULT_USERS.forEach((userName) -> {
             User user = new User();
             user.setName(userName);
@@ -49,7 +49,7 @@ public class DatabasePopulator {
         return this;
     }
 
-    public DatabasePopulator insertArticles() {
+    public DatabasePopulatorForArticleManager insertArticles() {
         Random random = new Random();
 
         for (ArticleType articleType : ArticleType.values()) {
@@ -71,7 +71,7 @@ public class DatabasePopulator {
         return this;
     }
 
-    public DatabasePopulator insertParagraphsToArticles() {
+    public DatabasePopulatorForArticleManager insertParagraphsToArticles() {
         for (Article article : _articleRepository.findAll()) {
             for (int i = 0; i < 3; i++) {
                 Paragraph paragraph = new Paragraph();

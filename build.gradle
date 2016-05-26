@@ -6,6 +6,8 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.0.RELEASE")
         classpath 'org.hidetake:gradle-ssh-plugin:1.1.3'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
+        classpath "gradle.plugin.gradle-plugins:jartest:1.0"
     }
 }
 
@@ -55,6 +57,8 @@ logger.lifecycle "java version: " + JavaVersion.current()
 apply plugin: 'eclipse'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'project-report'
+apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'jacoco'
 
 repositories {
     mavenCentral()
@@ -73,3 +77,89 @@ remotes {
 
 version = '0.1'
 
+task testReport(type: TestReport, group: 'Build') {
+  description = 'Generates an aggregate test report'
+  destinationDir = file("${buildDir}/reports/allTests")
+}
+
+
+subprojects {
+  apply plugin:'java'
+
+  apply from: "${rootDir}/common/common.gradle"
+  apply from: "${rootDir}/article-manager/article-manager.gradle"
+  apply from: "${rootDir}/user/user.gradle"
+
+  sourceCompatibility = JavaVersion.VERSION_1_8
+
+  archivesBaseName = path[1..-1].replaceAll(':', '-').toLowerCase()
+
+  dependencies {
+    if (project != project(':common')) {
+      compile project(':common')
+      testCompile project (path: ':common', configuration: 'testArchives')
+    }
+  }
+
+  configurations {
+    testArtifacts
+  }
+
+  tasks.withType(Test) {
+    rootProject.testReport.reportOn it
+    it.dependsOn('jar')
+
+    // ensure tasks don't overwrite the default report directories used by the 'test' task
+    reports.html.destination = "${buildDir}/reports/${name}"
+    reports.junitXml.destination = "${buildDir}/reports/${name}/results"
+    binResultsDir = file("${buildDir}/reports/${name}/results/binary/${name}")
+  }
+
+  task testJar(type: Jar, group: 'Build') {
+    description = 'Assembles a jar archive containing the test classes.'
+    baseName = "${archivesBaseName}-test"
+    from sourceSets.test.output
+  }
+
+  artifacts {
+    testArtifacts testJar
+  }
+}
+
+
+
+// Only report code coverage for projects that are distributed
+def publishedProjects = subprojects.findAll {true}
+
+task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
+  description = 'Generates an aggregate report from all subprojects'
+  dependsOn(publishedProjects.test)
+
+  additionalSourceDirs = files(publishedProjects.sourceSets.main.allSource.srcDirs)
+  sourceDirectories = files(publishedProjects.sourceSets.main.allSource.srcDirs)
+  classDirectories = files(publishedProjects.sourceSets.main.output)
+  executionData = files(publishedProjects.jacocoTestReport.executionData)
+
+  reports {
+    html.enabled = true // human readable
+    xml.enabled = true // required by coveralls
+  }
+
+  doFirst {
+  logger.lifecycle "started doFirst"
+    executionData = files(executionData.findAll { it.exists() })
+  }
+}
+
+coveralls {
+  sourceDirs = publishedProjects.sourceSets.main.allSource.srcDirs.flatten()
+  jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+}
+
+tasks.coveralls {
+  group = 'Coverage reports'
+  description = 'Uploads the aggregated coverage report to Coveralls'
+
+  dependsOn jacocoRootReport
+  onlyIf { System.env.'CI' }
+}

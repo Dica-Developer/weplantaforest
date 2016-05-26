@@ -23,5 +23,4 @@ before_script:
   - nvm install v5.5.0
   - nvm use v5.5.0
 script: ./gradlew test
-after_success: ./gradlew user:jacocoTestReport user:coveralls common:jacocoTestReport common:coveralls article-manager:jacocoTestReport article-manager:coveralls
-
+after_success: ./gradlew coveralls uploadArchives

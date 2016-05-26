@@ -15,11 +15,9 @@ buildscript {
 
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
   }
 }
 
-apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 apply plugin: 'com.github.kt3k.coveralls'
@@ -47,8 +45,6 @@ repositories {
 }
 
 dependencies {
-  compile project(':common')
-
   compile('org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion)
   compile('org.springframework.boot:spring-boot-starter-data-rest:' + springBootVersion)
   compile('org.springframework.data:spring-data-rest-hal-browser:2.4.1.RELEASE')
@@ -75,8 +71,6 @@ dependencies {
   testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.4.1'
   testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
   testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
-
-  testCompile project (path: ':common', configuration: 'testArchives')
 }
 
 mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
@@ -88,18 +82,7 @@ eclipse {
   }
 }
 
-jacocoTestReport {
-  reports {
-    xml.enabled true
-    csv.enabled true
-  }
-}
-
 test {
-  jacoco {
-    enabled false
-  }
-
   testLogging {
     events 'passed'
   }
@@ -109,12 +92,8 @@ test {
   } else {
     def maxForks = Runtime.getRuntime().availableProcessors()
     if (System.env.'CI') {
-      jacoco {
-        enabled true
-      }
     }
     logger.lifecycle "Maximum used parallel forks: " + maxForks
     maxParallelForks maxForks
   }
 }
-
