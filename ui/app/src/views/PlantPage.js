@@ -1,11 +1,12 @@
 import React, {
   Component
 } from 'react';
-import NavBar from './NavBar';
-import Footer from './Footer';
-import Bootstrap from 'bootstrap';
 import Accounting from 'accounting';
 import axios from 'axios';
+
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import Bootstrap from 'bootstrap';
 
 class CustomPaymentButton extends Component {
   constructor(props) {
