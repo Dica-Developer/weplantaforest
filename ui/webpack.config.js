@@ -9,7 +9,7 @@ module.exports = (function() {
 
     // Define entry points
     config.entry = {
-        'app': __dirname + '/app/src/components/Main.js'
+        'app': __dirname + '/app/src/app.js'
     };
 
     config.output = {
