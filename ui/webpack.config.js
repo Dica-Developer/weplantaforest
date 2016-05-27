@@ -9,7 +9,14 @@ module.exports = (function() {
 
     // Define entry points
     config.entry = {
-        'app': __dirname + '/app/src/app.js'
+        'app': __dirname + '/app/src/app.js',
+        'vendor': [
+            'react',
+            'react-dom',
+            'react-router-component',
+            'bootstrap',
+            'axios'
+        ]
     };
 
     config.output = {
@@ -34,7 +41,8 @@ module.exports = (function() {
     config.plugins = [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin("vendor", "[name].bundle.js")
     ];
 
     if (inDev) {
