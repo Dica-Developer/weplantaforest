@@ -45,6 +45,10 @@ task testReport(type: TestReport, group: 'Build') {
   destinationDir = file("${buildDir}/reports/allTests")
 }
 
+allprojects {
+  apply plugin: 'jacoco'
+}
+
 apply from: "${rootDir}/gradle/subProjects.gradle"
 
 // Only report code coverage for projects that are distributed
