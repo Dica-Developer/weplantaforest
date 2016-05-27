@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var inDev = process.env.NODE_ENV = 'development';
+var inDev = process.env.NODE_ENV === 'development';
+var JS_FILE_NAME = inDev ? 'js/[name].bundle.js' : 'js/[name].[hash].js';
 
 module.exports = (function() {
     var config = {
@@ -9,26 +10,27 @@ module.exports = (function() {
 
     // Define entry points
     config.entry = {
-        'app': __dirname + '/app/src/app.js',
+        'app': __dirname + '/src/js/app.js',
         'vendor': [
             'react',
             'react-dom',
             'react-router-component',
             'bootstrap',
-            'axios'
+            'axios',
+            'accounting'
         ]
     };
 
     config.output = {
-        'path': __dirname + '/app/dist/',
-        'publicPath': 'http://localhost:8080/',
-        'filename': '[name].bundle.js'
+        'path': __dirname + '/dist',
+        'publicPath': inDev ? 'http://localhost:8080/' : '/',
+        'filename': JS_FILE_NAME
     };
 
     config.module = {
         loaders: [
             {
-                test: /\.jsx?$/,
+                test: /\.js?$/,
                 exclude: /node_modules/,
                 loader: 'babel',
                 query: {
@@ -42,23 +44,26 @@ module.exports = (function() {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
         }),
-        new webpack.optimize.CommonsChunkPlugin("vendor", "[name].bundle.js")
+        new webpack.optimize.CommonsChunkPlugin('vendor', JS_FILE_NAME),
+        new HtmlWebpackPlugin({
+            'template': __dirname + '/src/index.html',
+            'inject': 'body',
+            'minify': false
+        })
     ];
 
     if (inDev) {
-        config.plugins.push(
-           new HtmlWebpackPlugin({
-            'template': __dirname + '/app/index.html',
-            'inject': 'body',
-            'minify': false
-           })
-        );
-
         config.devtool = 'cheap-module-eval-source-map';
+    } else {
+        config.devtool = 'source-map';
+        config.plugins.push(
+            new webpack.optimize.UglifyJsPlugin(),
+            new webpack.optimize.DedupePlugin()
+        );
     }
 
     config.devServer = {
-        contentBase: __dirname + '/app',
+        contentBase: __dirname + '/dist',
         port: 8080,
         stats: {
             modules: false,
