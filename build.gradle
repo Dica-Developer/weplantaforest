@@ -46,62 +46,7 @@ task testReport(type: TestReport, group: 'Build') {
   destinationDir = file("${buildDir}/reports/allTests")
 }
 
-
-subprojects {
-  apply plugin:'java'
-
-  apply from: "${rootDir}/common/common.gradle"
-  apply from: "${rootDir}/article-manager/article-manager.gradle"
-  apply from: "${rootDir}/user/user.gradle"
-
-  sourceCompatibility = JavaVersion.VERSION_1_8
-
-  archivesBaseName = path[1..-1].replaceAll(':', '-').toLowerCase()
-
-  dependencies {
-    if (project != project(':common')) {
-      compile project(':common')
-      testCompile project (path: ':common', configuration: 'testArchives')
-    }
-  }
-  
-  test {  
-    testLogging {
-      events 'passed'
-    }
-    if (project.hasProperty('mysql')) {
-      logger.info "Running tests on mysql db!"
-      systemProperty "spring.profiles.active", "test,mysql-test"
-    }
-    def maxForks = Runtime.getRuntime().availableProcessors()
-    logger.lifecycle "Maximum used parallel forks for " + project + ": " + maxForks
-    maxParallelForks maxForks
-  }  
-  
-  configurations {
-    testArtifacts
-  }
-
-  tasks.withType(Test) {
-    rootProject.testReport.reportOn it
-    it.dependsOn('jar')
-
-    // ensure tasks don't overwrite the default report directories used by the 'test' task
-    reports.html.destination = "${buildDir}/reports/${name}"
-    reports.junitXml.destination = "${buildDir}/reports/${name}/results"
-    binResultsDir = file("${buildDir}/reports/${name}/results/binary/${name}")
-  }
-
-  task testJar(type: Jar, group: 'Build') {
-    description = 'Assembles a jar archive containing the test classes.'
-    baseName = "${archivesBaseName}-test"
-    from sourceSets.test.output
-  }
-
-  artifacts {
-    testArtifacts testJar
-  }
-}
+apply from: "${rootDir}/gradle/subProjects.gradle"
 
 // Only report code coverage for projects that are distributed
 def publishedProjects = subprojects.findAll {true}
