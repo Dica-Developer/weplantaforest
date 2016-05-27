@@ -1,5 +1,5 @@
 subprojects {
-  apply plugin:'java'
+  apply plugin: 'java'
 
   apply from: "${rootDir}/common/common.gradle"
   apply from: "${rootDir}/article-manager/article-manager.gradle"
@@ -13,6 +13,13 @@ subprojects {
     if (project != project(':common')) {
       compile project(':common')
       testCompile project (path: ':common', configuration: 'testArchives')
+    }
+  }
+   
+  eclipse {
+    jdt.file.withProperties { properties ->
+        properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
+        properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
     }
   }
   

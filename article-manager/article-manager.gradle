@@ -62,10 +62,3 @@ dependencies {
  }
 
 mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication'
-
-eclipse {
-    jdt.file.withProperties { properties ->
-        properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
-        properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
-    }
-}
