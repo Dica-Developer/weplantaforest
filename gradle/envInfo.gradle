@@ -1,0 +1,19 @@
+import org.gradle.api.tasks.Exec
+import org.apache.tools.ant.taskdefs.condition.Os
+
+ext {
+    npmCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'npm.cmd' : 'npm'
+}
+
+logger.lifecycle "Available processors: " + Runtime.getRuntime().availableProcessors()
+try {
+  logger.lifecycle "node version: " + ("node --version".execute().text.trim())
+} catch (Exception e) {
+  logger.warn("Didn't find node to determine the used versions.")
+}
+try {
+  logger.lifecycle "npm version: " + ((npmCommand +" -version").execute().text.trim())
+} catch (Exception e) {
+  logger.warn("Didn't find npm to determine the used versions.")
+}
+logger.lifecycle "java version: " + JavaVersion.current()
