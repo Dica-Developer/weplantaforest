@@ -12,8 +12,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.dicadeveloper.weplantaforest.Views;
 import org.dicadeveloper.weplantaforest.trees.User;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,15 +37,19 @@ public class Project implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "_name", length = 255)
+    @JsonView(Views.Project.class)
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")
+    @JsonView(Views.Project.class)
     private String description;
 
     @Column(name = "_longitude")
+    @JsonView({Views.Project.class})
     private Float longitude;
 
     @Column(name = "_latitude")
+    @JsonView(Views.Project.class)
     private Float latitude;
 
     @Column(name = "_zoom")
@@ -72,8 +79,10 @@ public class Project implements Identifiable<Long> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_manager__userId", nullable = false)
+    @JsonView(Views.Project.class)
     private User manager;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    @JsonView(Views.Project.class)
     private List<ProjectArticle> articles;
 }
