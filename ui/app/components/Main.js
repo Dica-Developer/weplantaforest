@@ -16,6 +16,7 @@ import Footer from './Footer';
 import Boostrap from 'bootstrap';
 import Carousel from './Carousel';
 import Teaser from './Teaser';
+import ExplorePage from './Explore';
 
 class Co2Bar extends Component {
 
@@ -72,6 +73,7 @@ class App extends Component {
       <Locations hash>
         <Location path="/" handler={MainPage} />
         <Location path="/plant" handler={PlantPage} />
+        <Location path="/explore" handler={ExplorePage} />
         <NotFound handler={NotFoundPage} />
       </Locations>);
   }
