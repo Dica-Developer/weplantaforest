@@ -18,9 +18,7 @@ buildscript {
   }
 }
 
-apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
-apply plugin: 'project-report'
 apply plugin: 'application'
 
 jar {

@@ -1,5 +1,8 @@
 subprojects {
   apply plugin: 'java'
+  apply plugin: 'eclipse'
+  apply plugin: 'idea'
+  apply plugin: 'project-report'
 
   apply from: "${rootDir}/common/common.gradle"
   apply from: "${rootDir}/article-manager/article-manager.gradle"
