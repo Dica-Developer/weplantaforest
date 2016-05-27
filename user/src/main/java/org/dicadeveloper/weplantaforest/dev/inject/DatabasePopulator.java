@@ -172,7 +172,7 @@ public class DatabasePopulator {
     public DatabasePopulator insertProjectArticles() {
         Random random = new Random();
 
-        for (Project project : _projectRepository.active(new PageRequest(0, 10))) {
+        for (Project project : _projectRepository.findAll()) {
             for (int i = 0; i < 3; i++) {
                 long randomAmount = random.nextInt(500);
 
