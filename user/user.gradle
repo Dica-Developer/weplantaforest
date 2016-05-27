@@ -91,8 +91,6 @@ test {
     systemProperty "spring.profiles.active", "test,mysql-test"
   } else {
     def maxForks = Runtime.getRuntime().availableProcessors()
-    if (System.env.'CI') {
-    }
     logger.lifecycle "Maximum used parallel forks: " + maxForks
     maxParallelForks maxForks
   }
