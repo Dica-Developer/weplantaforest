@@ -18,9 +18,7 @@ plugins {
 apply from: "${rootDir}/gradle/banner.gradle"
 apply from: "${rootDir}/gradle/envInfo.gradle"
 
-apply plugin: 'eclipse'
 apply plugin: 'org.hidetake.ssh'
-apply plugin: 'project-report'
 apply plugin: 'com.github.kt3k.coveralls'
 
 repositories {
@@ -47,6 +45,8 @@ task testReport(type: TestReport, group: 'Build') {
 
 allprojects {
   apply plugin: 'jacoco'
+  apply plugin: 'eclipse'
+  apply plugin: 'project-report'
 }
 
 apply from: "${rootDir}/gradle/subProjects.gradle"
