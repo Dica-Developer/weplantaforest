@@ -71,17 +71,3 @@ eclipse {
         properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
     }
 }
-
-test {
-    testLogging {
-        events 'passed'
-    }
-    if (project.hasProperty('mysql')) {
-        logger.info "Running tests on mysql db!"
-        systemProperty "spring.profiles.active", "test,mysql-test"
-    } else {
-        def maxForks = Runtime.getRuntime().availableProcessors()
-        logger.info "Maximum used parallel forks: " + maxForks
-        maxParallelForks maxForks
-    }
-}

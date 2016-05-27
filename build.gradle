@@ -64,7 +64,20 @@ subprojects {
       testCompile project (path: ':common', configuration: 'testArchives')
     }
   }
-
+  
+  test {  
+    testLogging {
+      events 'passed'
+    }
+    if (project.hasProperty('mysql')) {
+      logger.info "Running tests on mysql db!"
+      systemProperty "spring.profiles.active", "test,mysql-test"
+    }
+    def maxForks = Runtime.getRuntime().availableProcessors()
+    logger.lifecycle "Maximum used parallel forks for " + project + ": " + maxForks
+    maxParallelForks maxForks
+  }  
+  
   configurations {
     testArtifacts
   }
