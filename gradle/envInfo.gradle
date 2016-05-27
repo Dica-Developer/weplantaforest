@@ -2,7 +2,7 @@ import org.gradle.api.tasks.Exec
 import org.apache.tools.ant.taskdefs.condition.Os
 
 ext {
-    npmCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'npm.cmd' : 'npm'
+  npmCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'npm.cmd' : 'npm'
 }
 
 logger.lifecycle "Available processors: " + Runtime.getRuntime().availableProcessors()

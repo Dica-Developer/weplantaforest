@@ -54,8 +54,8 @@ subprojects {
    
   eclipse {
     jdt.file.withProperties { properties ->
-        properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
-        properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
+      properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
+      properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
     }
   }
   
