@@ -16,15 +16,9 @@ buildscript {
 
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
 apply plugin: 'project-report'
-apply plugin: 'application'
 apply plugin: 'com.github.hauner.jarTest'
 
-jar {
-    baseName = 'wpaf'
-    version = '0.0.1-SNAPSHOT'
-}
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
@@ -36,24 +30,6 @@ repositories {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion)
-    compile('org.springframework.boot:spring-boot-starter-data-rest:' + springBootVersion)
-    compile('org.springframework.data:spring-data-rest-hal-browser:2.4.1.RELEASE')
-    compile('org.springframework.boot:spring-boot-devtools:' + springBootVersion)
-//    compile('org.springframework.boot:spring-boot-starter-security:' + springBootVersion)
-    compile('org.springframework.boot:spring-boot-starter-validation:' + springBootVersion)
-    compile 'org.springframework:spring-context-support:4.1.8.RELEASE'
-
-    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.3')
-    compile('com.fasterxml.jackson.module:jackson-module-parameter-names:2.6.3')
-
-    compile group: 'org.flywaydb', name: 'flyway-core', version: '3.1'
-    compile('com.jayway.jsonpath:json-path:2.1.0')
-    runtime('com.h2database:h2:1.4.190')
-//    runtime('mysql:mysql-connector-java')
-    compile 'com.google.code.findbugs:jsr305:3.0.1'
-    compile 'com.google.code.findbugs:findbugs:3.0.1'
-    compile group: 'com.google.guava', name: 'guava', version: '18.0'
     compile('org.projectlombok:lombok:1.16.6')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -62,5 +38,3 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
 }
-
-mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestCommonApplication'
