@@ -22,7 +22,6 @@ apply plugin: 'eclipse'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'project-report'
 apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'jacoco'
 
 repositories {
     mavenCentral()

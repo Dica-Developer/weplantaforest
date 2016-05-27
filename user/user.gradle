@@ -20,10 +20,8 @@ buildscript {
 
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
-apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'project-report'
 apply plugin: 'application'
-apply plugin: 'jacoco'
 
 jar {
   baseName = 'wpaf-user'
