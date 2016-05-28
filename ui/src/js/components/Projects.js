@@ -5,11 +5,9 @@ import React, {
 import {
   render
 } from 'react-dom';
-import NavBar from './NavBar';
-import Footer from './Footer';
 import Boostrap from 'bootstrap';
 
-class Projects extends Component {
+export default class Projects extends Component {
 
   constructor() {
     super();
@@ -53,18 +51,3 @@ class Projects extends Component {
     </div>);
   }
 }
-
-export default class ExplorePage extends Component {
-  render() {
-    return (
-      <div>
-        <NavBar/>
-        <div className="container">
-          <Projects />
-        </div>
-        <Footer/>
-      </div>);
-  }
-}
-
-/* vim: set softtabstop=2:shiftwidth=2:expandtab */
