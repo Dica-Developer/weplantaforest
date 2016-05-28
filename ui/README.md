@@ -1,9 +1,11 @@
 # Weplant A Forest UI
 
-1. ``npm install``
-2. ``npm install webpack -g``
+## Prepare UI
+* `npm install`
 
-Client
-3. ``webpack`` with option ``-w`` it can wait for changes and apply them automatically
-4. ``http-server --cors client-react``
+## Start UI for development
+* `npm run dev` starts webpack dev server
+
+## Build UI distribution for production
+* `npm run build` build UI for production under dist
 

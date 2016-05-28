@@ -1,4 +1,3 @@
-/ui/client-react/js/bundle.js
 **/bin
 **/build
 .gradle
@@ -10,10 +9,7 @@ weplantaforest.trace.db
 /.idea
 .DS_Store
 # Don't add processed ui files except the dev related files like HAL-Browser
-!/src/main/resources/static/dev
-/src/main/resources/static
 src/main/webapp/npm-debug.log
-src/main/webapp/client/app/app.css
 npm-debug.log*
 src/main/resources/application-staging-secret.properties
 weplantaforest.iml
@@ -25,5 +21,3 @@ env.vim
 tags
 files.list
 .tmp
-ui/client/bower_components/
-ui/resources
