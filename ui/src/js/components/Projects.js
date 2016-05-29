@@ -38,14 +38,15 @@ export default class Projects extends Component {
     return (
     <div className="row">
       {this.state.projects.map(function (project) {
+        var linkUrl = '/#/projects/' + project.name;
         return (<div className="col-md-4">
-          <div className="thumbnail">
+          <a href={linkUrl} className="thumbnail">
             <img src="" alt="" />
             <div className="caption">
               <h3>{project.name}</h3>
               <p>{project.description}</p>
             </div>
-          </div>
+          </a>
         </div>);
       })}
     </div>);
