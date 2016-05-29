@@ -333,5 +333,35 @@ public class ProjectReportRepositoryIntegrationTest {
                            .get(1)
                            .getAmountOfPlantedTrees()).isEqualTo(0);
     }
+    
+    @Test
+    public void testGetProjectByProjectName() {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
+        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
+
+        _dbInjecter.injectUser("Adam");
+
+        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
+
+        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
+        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
+        _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
+        
+        ProjectReportData project = _projectReportRepository.getProjectDataByProjectName("Project A");
+
+
+        assertThat(project.getProjectName()).isEqualTo("Project A");
+        assertThat(project.getDescription()).isEqualTo("projectdesc");
+        assertThat(project.getLatitude()).isEqualTo(1.0f);
+        assertThat(project.getLongitude()).isEqualTo(2.0f);
+        assertThat(project.getAmountOfMaximumTreesToPlant()).isEqualTo(300);
+        assertThat(project.getAmountOfPlantedTrees()).isEqualTo(100);
+        
+    }  
 
 }

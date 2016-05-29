@@ -88,4 +88,33 @@ public class ProjectReportControllerTest {
                     .andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400));
     }
 
+    @Test
+    public void testGetProjectByProjectName() throws Exception {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
+        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
+
+        _dbInjecter.injectUser("Adam");
+
+        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
+
+        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
+        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
+        _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
+
+        this.mockMvc.perform(get(Uris.PROJECT_SEARCH_NAME + "Project A").accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.projectName").value("Project A"))
+                    .andExpect(jsonPath("$.description").value("projectdesc"))
+                    .andExpect(jsonPath("$.latitude").value(1.0))
+                    .andExpect(jsonPath("$.longitude").value(2.0))
+                    .andExpect(jsonPath("$.amountOfMaximumTreesToPlant").value(300))
+                    .andExpect(jsonPath("$.amountOfPlantedTrees").value(100));
+
+    }
+
 }
