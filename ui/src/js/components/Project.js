@@ -49,7 +49,7 @@ export default class Project extends Component {
           <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
           <Marker position={position}>
             <Popup>
-              <span>A pretty CSS3 popup.<br/>Easily customizable.</span>
+              <span>{project.name}</span>
             </Popup>
           </Marker>
         </Map>
@@ -63,3 +63,5 @@ export default class Project extends Component {
     );
   }
 }
+
+/* vim: set softtabstop=2:shiftwidth=2:expandtab */
