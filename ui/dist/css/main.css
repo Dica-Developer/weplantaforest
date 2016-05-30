@@ -14,7 +14,7 @@
   margin-right: 5px;
 }
 
-#map1 {
+.leaflet-container {
   height: 180px;
 }
 
