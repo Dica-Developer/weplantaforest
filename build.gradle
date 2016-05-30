@@ -45,7 +45,6 @@ task testReport(type: TestReport, group: 'Build') {
 
 allprojects {
   apply plugin: 'jacoco'
-  apply plugin: 'eclipse'
   apply plugin: 'project-report'
 }
 
