@@ -68,7 +68,7 @@ task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
   }
 
   doFirst {
-  logger.lifecycle "started doFirst"
+    logger.lifecycle "started doFirst"
     executionData = files(executionData.findAll { it.exists() })
   }
 }
