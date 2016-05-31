@@ -15,5 +15,7 @@ public class ProjectReportData {
 
     long amountOfMaximumTreesToPlant;
     long amountOfPlantedTrees;
+    
+    boolean active;
 
 }

@@ -85,7 +85,9 @@ public class ProjectReportControllerTest {
                     .andExpect(jsonPath("$.content[1].latitude").value(3.0))
                     .andExpect(jsonPath("$.content[1].longitude").value(4.0))
                     .andExpect(jsonPath("$.content[1].amountOfMaximumTreesToPlant").value(800))
-                    .andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400));
+                    .andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400))
+                    .andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400))
+                    .andExpect(jsonPath("$.content[1].active").value(true));
     }
 
     @Test

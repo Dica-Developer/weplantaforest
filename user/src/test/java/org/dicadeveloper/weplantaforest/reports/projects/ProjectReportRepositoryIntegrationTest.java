@@ -66,6 +66,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.getContent()
                            .get(0)
                            .getAmountOfPlantedTrees()).isEqualTo(0);
+        assertThat(projects.getContent()
+                           .get(0)
+                           .isActive()).isEqualTo(true);
     }
 
     @Test
@@ -333,7 +336,7 @@ public class ProjectReportRepositoryIntegrationTest {
                            .get(1)
                            .getAmountOfPlantedTrees()).isEqualTo(0);
     }
-    
+
     @Test
     public void testGetProjectByProjectName() {
         long timeOfPlanting = System.currentTimeMillis();
@@ -351,9 +354,8 @@ public class ProjectReportRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
-        
-        ProjectReportData project = _projectReportRepository.getProjectDataByProjectName("Project A");
 
+        ProjectReportData project = _projectReportRepository.getProjectDataByProjectName("Project A");
 
         assertThat(project.getProjectName()).isEqualTo("Project A");
         assertThat(project.getDescription()).isEqualTo("projectdesc");
@@ -361,7 +363,7 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(project.getLongitude()).isEqualTo(2.0f);
         assertThat(project.getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(project.getAmountOfPlantedTrees()).isEqualTo(100);
-        
-    }  
+
+    }
 
 }
