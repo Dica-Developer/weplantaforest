@@ -21,3 +21,4 @@ env.vim
 tags
 files.list
 .tmp
+.lvimrc
