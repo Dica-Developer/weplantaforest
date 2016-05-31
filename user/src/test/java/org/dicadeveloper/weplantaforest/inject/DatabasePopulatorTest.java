@@ -87,10 +87,7 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertProjects();
         _databasePopulator.insertProjectArticles();
 
-        long activeProjectCount = _projectRepository.active(new PageRequest(0, 5))
-                                                    .getTotalElements();
-
-        assertThat(_projectArticleRepository.count()).isEqualTo(activeProjectCount * 3);
+        assertThat(_projectArticleRepository.count()).isEqualTo(30);
 
     }
 }
