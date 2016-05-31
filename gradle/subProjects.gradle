@@ -23,26 +23,28 @@ subprojects {
   }
   
   test {  
-    testLogging {
-      events 'passed'
-    }
-    if (project.hasProperty('mysql')) {
-      logger.info "Running tests on mysql db!"
-      systemProperty "spring.profiles.active", "test,mysql-test"
-    }
-    
-    
-    def maxForks = Runtime.getRuntime().availableProcessors()
-    logger.lifecycle "Maximum used parallel forks for " + project + ": " + maxForks
-    maxParallelForks maxForks
-    
-    if (System.env.'CI') {
-      jacoco {
-        enabled true
+  	if (project != project(':testkit')) {
+      testLogging {
+        events 'passed'
       }
-    } else {
-      jacoco {
-        enabled false
+      if (project.hasProperty('mysql')) {
+        logger.info "Running tests on mysql db!"
+        systemProperty "spring.profiles.active", "test,mysql-test"
+      }
+    
+    
+      def maxForks = Runtime.getRuntime().availableProcessors()
+      logger.lifecycle "Maximum used parallel forks for " + project + ": " + maxForks
+      maxParallelForks maxForks	 
+    
+      if (System.env.'CI') {
+        jacoco {
+          enabled true
+        }
+      } else {
+        jacoco {
+          enabled false
+        }
       }
     }
   }  
@@ -70,4 +72,8 @@ subprojects {
   artifacts {
     testArtifacts testJar
   }
+  
+
 }
+
+

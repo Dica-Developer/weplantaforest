@@ -51,7 +51,7 @@ allprojects {
 apply from: "${rootDir}/gradle/subProjects.gradle"
 
 // Only report code coverage for projects that are distributed
-def publishedProjects = subprojects.findAll {true}
+def publishedProjects = subprojects.findAll {it.path != ':testkit'}
 
 task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
   description = 'Generates an aggregate report from all subprojects'
