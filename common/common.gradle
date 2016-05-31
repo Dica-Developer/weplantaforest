@@ -10,7 +10,6 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-    classpath "gradle.plugin.gradle-plugins:jartest:1.0"
   }
 }
 
@@ -22,7 +21,6 @@ dependencies {
 
   testCompile group: 'junit', name: 'junit', version: '4.12'
   testCompile group: 'org.assertj', name: 'assertj-core', version: '1.7.1'
-  testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.4.1'
   testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
   testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
 }
