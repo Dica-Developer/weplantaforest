@@ -1,6 +1,7 @@
 include 'common'
 include 'article-manager'
 include 'user'
+include 'testkit'
 
 rootProject.name = 'weplantaforest'
 rootProject.children.each {project ->

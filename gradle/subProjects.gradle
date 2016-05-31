@@ -3,10 +3,6 @@ subprojects {
   apply plugin: 'idea'
   apply plugin: 'eclipse'
 
-  apply from: "${rootDir}/common/common.gradle"
-  apply from: "${rootDir}/article-manager/article-manager.gradle"
-  apply from: "${rootDir}/user/user.gradle"
-
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
   compileJava.options.encoding = 'UTF-8'
@@ -18,41 +14,7 @@ subprojects {
   }
 
   archivesBaseName = path[1..-1].replaceAll(':', '-').toLowerCase()
-
-  dependencies {
-    compile('org.projectlombok:lombok:1.16.6')   
-    compile 'com.google.code.findbugs:jsr305:3.0.1'
-    compile 'com.google.code.findbugs:findbugs:3.0.1'
-    compile group: 'org.flywaydb', name: 'flyway-core', version: '3.1'
-    compile('org.springframework.boot:spring-boot-devtools:' + springBootVersion)
-    
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '1.7.1'
-    testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.4.1'
-    testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
-    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
-    
-    if (project != project(':common')) {
-      compile project(':common')
-      compile('org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion)
-      compile('org.springframework.boot:spring-boot-starter-data-rest:' + springBootVersion)
-      compile('org.springframework.data:spring-data-rest-hal-browser:2.4.1.RELEASE')
-      //compile('org.springframework.boot:spring-boot-starter-security:' + springBootVersion)
-      compile('org.springframework.boot:spring-boot-starter-validation:' + springBootVersion)
-      compile 'org.springframework:spring-context-support:4.1.8.RELEASE'
-
-      compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.3')
-      compile('com.fasterxml.jackson.module:jackson-module-parameter-names:2.6.3')
-
-      compile('com.jayway.jsonpath:json-path:2.1.0')
-      runtime('com.h2database:h2:1.4.190')
-      //runtime('mysql:mysql-connector-java')
-      compile group: 'com.google.guava', name: 'guava', version: '18.0'
-      
-      testCompile project (path: ':common', configuration: 'testArchives')
-    }
-  }
-   
+  
   eclipse {
     jdt.file.withProperties { properties ->
       properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
@@ -74,17 +36,17 @@ subprojects {
     logger.lifecycle "Maximum used parallel forks for " + project + ": " + maxForks
     maxParallelForks maxForks
     
-    if(System.env.'CI'){
+    if (System.env.'CI') {
       jacoco {
         enabled true
       }
-    }else{
+    } else {
       jacoco {
         enabled false
       }
     }
   }  
-  
+
   configurations {
     testArtifacts
   }
