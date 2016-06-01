@@ -1,9 +1,6 @@
 buildscript {
   repositories {
     mavenCentral()
-      maven { url "https://repo.spring.io/snapshot" }
-      maven { url "https://repo.spring.io/milestone" }
-      maven { url "https://plugins.gradle.org/m2/" }
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
@@ -12,12 +9,8 @@ buildscript {
 
 dependencies {
   compile('org.projectlombok:lombok:1.16.6')   
-  compile 'com.google.code.findbugs:jsr305:3.0.1'
   compile 'com.google.code.findbugs:findbugs:3.0.1'
-  // compile('org.springframework.boot:spring-boot-devtools:' + springBootVersion)
 
   testCompile group: 'junit', name: 'junit', version: '4.12'
   testCompile group: 'org.assertj', name: 'assertj-core', version: '1.7.1'
-  testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
-  testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
 }
