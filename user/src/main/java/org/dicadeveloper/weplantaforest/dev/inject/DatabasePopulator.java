@@ -33,8 +33,7 @@ import com.google.common.collect.Iterators;
 @Service
 public class DatabasePopulator {
 
-    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn",
-            "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
+    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
 
     private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes");
 
@@ -46,8 +45,7 @@ public class DatabasePopulator {
     private PriceRepository _priceRepository;
 
     @Autowired
-    public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository,
-            TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
+    public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
@@ -67,7 +65,7 @@ public class DatabasePopulator {
             project.setManager(_userRepository.findByName(DEFAULT_USERS.get(pickOne)));
             project.setDescription(
                     "dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
-            project.setImageFileName(projectName);
+            project.setImageFileName("project" + (i + 1) + ".jpg");
             project.setShopActive(random.nextBoolean());
             switch (i) {
             case 0:
