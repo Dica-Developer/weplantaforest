@@ -54,10 +54,3 @@ dependencies{
   testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE')
   testCompile project(':testkit')
 }
-
-jacocoTestReport {
-  reports {
-      xml.enabled = true
-      html.enabled = true
-  }
-}
