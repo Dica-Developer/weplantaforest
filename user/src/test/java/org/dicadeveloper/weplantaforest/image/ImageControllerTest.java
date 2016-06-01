@@ -35,25 +35,25 @@ public class ImageControllerTest {
 
     @Test
     public void testGetImageNonScaled() throws Exception {
-        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}", "test.jpg").accept("application/json"))
+        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}", "test.jpg").accept("image/jpg"))
                     .andExpect(status().isOk());
     }
     
     @Test
     public void testGetImageNonScaledBadRequest() throws Exception {
-        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}", "testttt.jpg").accept("application/json"))
+        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}", "testttt.jpg").accept("image/jpg"))
                     .andExpect(status().isBadRequest());
     }
     
     @Test
     public void testGetImageScaled() throws Exception {
-        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 500, 500).accept("application/json"))
+        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isOk());
     }
     
     @Test
     public void testGetImageScaledBadRequest() throws Exception {
-        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "testttt.jpg", 500, 500).accept("application/json"))
+        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "testttt.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isBadRequest());
     }
 }
