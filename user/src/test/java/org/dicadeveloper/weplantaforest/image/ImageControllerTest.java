@@ -5,13 +5,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,9 +25,14 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ImageControllerTest {
 
     private MockMvc mockMvc;
+
+    @Rule
+    @Autowired
+    public CleanDbRule _cleanDbRule;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -38,19 +47,19 @@ public class ImageControllerTest {
         this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}", "test.jpg").accept("image/jpg"))
                     .andExpect(status().isOk());
     }
-    
+
     @Test
     public void testGetImageNonScaledBadRequest() throws Exception {
         this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}", "testttt.jpg").accept("image/jpg"))
                     .andExpect(status().isBadRequest());
     }
-    
+
     @Test
     public void testGetImageScaled() throws Exception {
         this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isOk());
     }
-    
+
     @Test
     public void testGetImageScaledBadRequest() throws Exception {
         this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "testttt.jpg", 500, 500).accept("image/jpg"))
