@@ -22,10 +22,11 @@ public class ImageController {
 
     public final static String IMAGE_FOLDER = "../../../../static/images/";
 
-    @RequestMapping(value = Uris.IMAGE + "{imageName:.+}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.IMAGE + "{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getImage(@PathVariable String imageName) {
         try {
-            InputStream imageInputStream = this.getClass().getResourceAsStream(IMAGE_FOLDER + imageName);
+            InputStream imageInputStream = this.getClass()
+                                               .getResourceAsStream(IMAGE_FOLDER + imageName);
             String imageType = StringHelper.getDataTypeFromFileName(imageName);
             BufferedImage img = ImageIO.read(imageInputStream);
             ByteArrayOutputStream bao = new ByteArrayOutputStream();
@@ -39,11 +40,14 @@ public class ImageController {
         }
     }
 
-    @RequestMapping(value = Uris.IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getScaledImage(@PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
         try {
-            InputStream imageInputStream = this.getClass().getResourceAsStream(IMAGE_FOLDER + imageName);
-            BufferedImage img = Thumbnails.of(imageInputStream).size(width, 500).asBufferedImage();
+            InputStream imageInputStream = this.getClass()
+                                               .getResourceAsStream(IMAGE_FOLDER + imageName);
+            BufferedImage img = Thumbnails.of(imageInputStream)
+                                          .size(width, height)
+                                          .asBufferedImage();
             String imageType = StringHelper.getDataTypeFromFileName(imageName);
             ByteArrayOutputStream bao = new ByteArrayOutputStream();
 
