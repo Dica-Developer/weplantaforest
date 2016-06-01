@@ -8,6 +8,7 @@ import lombok.Getter;
 public class ProjectReportData {
 
     String projectName;
+    String projectImageFileName;
     String description;
 
     Float longitude;

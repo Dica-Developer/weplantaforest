@@ -53,6 +53,9 @@ public class ProjectReportRepositoryIntegrationTest {
                            .getProjectName()).isEqualTo("Project A");
         assertThat(projects.getContent()
                            .get(0)
+                           .getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent()
+                           .get(0)
                            .getDescription()).isEqualTo("projectdesc");
         assertThat(projects.getContent()
                            .get(0)
@@ -96,6 +99,9 @@ public class ProjectReportRepositoryIntegrationTest {
                            .getProjectName()).isEqualTo("Project A");
         assertThat(projects.getContent()
                            .get(0)
+                           .getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent()
+                           .get(0)
                            .getDescription()).isEqualTo("projectdesc");
         assertThat(projects.getContent()
                            .get(0)
@@ -137,6 +143,9 @@ public class ProjectReportRepositoryIntegrationTest {
                            .getProjectName()).isEqualTo("Project A");
         assertThat(projects.getContent()
                            .get(0)
+                           .getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent()
+                           .get(0)
                            .getDescription()).isEqualTo("projectdesc");
         assertThat(projects.getContent()
                            .get(0)
@@ -176,6 +185,9 @@ public class ProjectReportRepositoryIntegrationTest {
                            .getProjectName()).isEqualTo("Project A");
         assertThat(projects.getContent()
                            .get(0)
+                           .getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent()
+                           .get(0)
                            .getDescription()).isEqualTo("projectdesc");
         assertThat(projects.getContent()
                            .get(0)
@@ -192,6 +204,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.getContent()
                            .get(1)
                            .getProjectName()).isEqualTo("Project B");
+        assertThat(projects.getContent()
+                           .get(1)
+                           .getProjectImageFileName()).isEqualTo("Project B");
         assertThat(projects.getContent()
                            .get(1)
                            .getDescription()).isEqualTo("projectdesc");
@@ -242,6 +257,9 @@ public class ProjectReportRepositoryIntegrationTest {
                            .getProjectName()).isEqualTo("Project A");
         assertThat(projects.getContent()
                            .get(0)
+                           .getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent()
+                           .get(0)
                            .getDescription()).isEqualTo("projectdesc");
         assertThat(projects.getContent()
                            .get(0)
@@ -258,6 +276,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.getContent()
                            .get(1)
                            .getProjectName()).isEqualTo("Project B");
+        assertThat(projects.getContent()
+                           .get(1)
+                           .getProjectImageFileName()).isEqualTo("Project B");
         assertThat(projects.getContent()
                            .get(1)
                            .getDescription()).isEqualTo("projectdesc");
@@ -304,6 +325,9 @@ public class ProjectReportRepositoryIntegrationTest {
                            .getProjectName()).isEqualTo("Project A");
         assertThat(projects.getContent()
                            .get(0)
+                           .getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent()
+                           .get(0)
                            .getDescription()).isEqualTo("projectdesc");
         assertThat(projects.getContent()
                            .get(0)
@@ -320,6 +344,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.getContent()
                            .get(1)
                            .getProjectName()).isEqualTo("Project B");
+        assertThat(projects.getContent()
+                           .get(1)
+                           .getProjectImageFileName()).isEqualTo("Project B");
         assertThat(projects.getContent()
                            .get(1)
                            .getDescription()).isEqualTo("projectdesc");
@@ -358,6 +385,7 @@ public class ProjectReportRepositoryIntegrationTest {
         ProjectReportData project = _projectReportRepository.getProjectDataByProjectName("Project A");
 
         assertThat(project.getProjectName()).isEqualTo("Project A");
+        assertThat(project.getProjectImageFileName()).isEqualTo("Project A");
         assertThat(project.getDescription()).isEqualTo("projectdesc");
         assertThat(project.getLatitude()).isEqualTo(1.0f);
         assertThat(project.getLongitude()).isEqualTo(2.0f);
