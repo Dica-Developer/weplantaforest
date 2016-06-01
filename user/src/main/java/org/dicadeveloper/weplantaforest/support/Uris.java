@@ -27,5 +27,7 @@ public class Uris {
     public final static String RANKING_BEST_TEAM = "/ranking/bestTeam";
 
     public final static String RANKING_BEST_USER_FOR_TIMERANGE = "/ranking/bestUserFromTimeRange/";
+    
+    public final static String IMAGE = "/image/";
 
 }
