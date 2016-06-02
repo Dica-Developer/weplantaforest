@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
@@ -119,6 +120,51 @@ public class ProjectReportControllerTest {
                     .andExpect(jsonPath("$.amountOfMaximumTreesToPlant").value(300))
                     .andExpect(jsonPath("$.amountOfPlantedTrees").value(100));
 
+    }
+
+    @Test
+    public void testGetExtendedProjecReporttByProjectName() throws Exception {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
+        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
+
+        _dbInjecter.injectUser("Adam");
+
+        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
+
+        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
+        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
+        _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
+
+        _dbInjecter.injectProjectImage("image title 1", "image desc 1", "image1.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS, "Project A");
+        _dbInjecter.injectProjectImage("image title 2", "image desc 2", "image2.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 2, "Project A");
+        _dbInjecter.injectProjectImage("image title 3", "image desc 3", "image3.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 3, "Project A");
+
+        this.mockMvc.perform(get(Uris.PROJECT_SEARCH_NAME + "/extended/" + "Project A").accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.projectReportData.projectName").value("Project A"))
+                    .andExpect(jsonPath("$.projectReportData.projectImageFileName").value("Project A"))
+                    .andExpect(jsonPath("$.projectReportData.description").value("projectdesc"))
+                    .andExpect(jsonPath("$.projectReportData.latitude").value(1.0))
+                    .andExpect(jsonPath("$.projectReportData.longitude").value(2.0))
+                    .andExpect(jsonPath("$.projectReportData.amountOfMaximumTreesToPlant").value(300))
+                    .andExpect(jsonPath("$.projectReportData.amountOfPlantedTrees").value(100))
+                    .andExpect(jsonPath("$.images[0].title").value("image title 1"))
+                    .andExpect(jsonPath("$.images[0].description").value("image desc 1"))
+                    .andExpect(jsonPath("$.images[0].imageFileName").value("image1.jpg"))
+                    .andExpect(jsonPath("$.images[0].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.images[1].title").value("image title 2"))
+                    .andExpect(jsonPath("$.images[1].description").value("image desc 2"))
+                    .andExpect(jsonPath("$.images[1].imageFileName").value("image2.jpg"))
+                    .andExpect(jsonPath("$.images[1].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 2))
+                    .andExpect(jsonPath("$.images[2].title").value("image title 3"))
+                    .andExpect(jsonPath("$.images[2].description").value("image desc 3"))
+                    .andExpect(jsonPath("$.images[2].imageFileName").value("image3.jpg"))
+                    .andExpect(jsonPath("$.images[2].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 3));
     }
 
 }

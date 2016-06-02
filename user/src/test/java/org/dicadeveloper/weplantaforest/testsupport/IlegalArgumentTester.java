@@ -8,6 +8,7 @@ import org.dicadeveloper.weplantaforest.planting.SimplePlantPageController;
 import org.dicadeveloper.weplantaforest.planting.SimplePlantPageDataHelper;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Controller;
 import org.dicadeveloper.weplantaforest.reports.projects.ProjectReportController;
+import org.dicadeveloper.weplantaforest.reports.projects.ProjectReportRepository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingController;
 import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.support.PlantPageDataToCartConverter;
@@ -36,6 +37,9 @@ public class IlegalArgumentTester {
     PlantPageDataToCartConverter plantPageDataToCartConverter;
 
     @Autowired
+    ProjectReportRepository projectReportRepository;
+
+    @Autowired
     CartRepository cartRepository;
 
     @Test(expected = IllegalArgumentException.class)
@@ -45,7 +49,12 @@ public class IlegalArgumentTester {
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForProjectReportController() {
-        new ProjectReportController(null);
+        new ProjectReportController(null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedContructorForProjectReportControllerOneNull() {
+        new ProjectReportController(projectReportRepository, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
