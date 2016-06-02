@@ -19,12 +19,9 @@ export default class Projects extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/projects').then(function (response) {
+    axios.get('http://localhost:8081/reports/activeProjects?page=0&size=10').then(function (response) {
       var result = response.data;
-      // TODO workaround a backend issue which returns two invalid json objects
-      result = result.substring(0, (result.indexOf('}{') + 1));
-      result = JSON.parse(result);
-      that.setState({projects: result._embedded.projects});
+      that.setState({projects: result.content});
     }).catch(function (response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
