@@ -44,8 +44,9 @@ export default class Carousel extends Component {
                   if (0 === index) {
                     activeItem = 'item active';
                   }
+                  let imageUrl = 'http://localhost:8081/image/' + slide.projectImageFileName + '/1140/1140';
                   return (<div className={activeItem}>
-                    <img src="http://www.iplantatree.org/img/plantImage/96/width/1140/max" width="1140" height="400" alt={slide.projectName} />
+                    <img src={imageUrl} width="1140" height="400" alt={slide.projectName} />
                     <div className="carousel-caption">
                       {slide.description}
                     </div>

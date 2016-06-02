@@ -17,7 +17,12 @@ export default class Project extends Component {
 
   constructor() {
     super();
-    this.state = {project: {name: 'default project'}};
+    this.state = {
+      project: {
+        name: 'default project',
+        projectImageFileName: 'test.jpg'
+      }
+    };
   }
 
   componentDidMount() {
@@ -40,8 +45,10 @@ export default class Project extends Component {
   render() {
     let position = [51.4825041, 11.9705452];
     let project = this.state.project;
+    let imageUrl = 'http://localhost:8081/image/' + project.projectImageFileName + '/1170/1170';
     return (
       <div className="container">
+        <div className="row">
         <Map center={position} zoom={13}>
           <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
           <Marker position={position}>
@@ -50,7 +57,9 @@ export default class Project extends Component {
             </Popup>
           </Marker>
         </Map>
+        </div>
         <div className="row">
+          <img src={imageUrl} alt={project.projectName} />
           <div className="col-md-12">
             <h2>{project.name}</h2>
             <p>{project.description}</p>
