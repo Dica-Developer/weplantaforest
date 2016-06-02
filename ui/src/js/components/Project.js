@@ -27,7 +27,7 @@ export default class Project extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/projects/search/name/' + encodeURIComponent(this.props.params.projectName)).then(function (response) {
+    axios.get('http://localhost:8081/projects/search/name/' + encodeURIComponent(this.props.projectName)).then(function (response) {
       var result = response.data;
       that.setState({project: result});
     }).catch(function (response) {

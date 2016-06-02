@@ -10,12 +10,13 @@ import Project from '../components/Project';
 import Boostrap from 'bootstrap';
 
 export default class ProjectDetailsPage extends Component {
+
   render() {
     return (
       <div>
         <NavBar/>
         <div className="container">
-          <Project />
+          <Project projectName={this.props.params.projectName} />
         </div>
         <Footer/>
       </div>);
