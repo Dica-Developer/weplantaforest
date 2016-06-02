@@ -162,11 +162,12 @@ public class DbInjecter {
         _userRepository.save(user);
     }
 
-    public void injectProjectImage(String imageTitle, String text, String imageFileName, String projectName) {
+    public void injectProjectImage(String imageTitle, String text, String imageFileName, long date, String projectName) {
         ProjectImage projectImage = new ProjectImage();
         projectImage.setTitle(imageTitle);
         projectImage.setDescription(text);
         projectImage.setImageFileName(imageFileName);      
+        projectImage.setDate(date);
         projectImage.setProject(_projectRepository.findByName(projectName));
         _projectImageRepository.save(projectImage);
     }

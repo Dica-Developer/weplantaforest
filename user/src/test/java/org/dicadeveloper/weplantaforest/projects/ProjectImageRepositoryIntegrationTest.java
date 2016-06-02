@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Rule;
@@ -39,12 +40,12 @@ public class ProjectImageRepositoryIntegrationTest {
         _dbInjecter.injectProject("Project A", "Adam", "project with images", true, 1.0f, 1.0f);
         _dbInjecter.injectProject("Project B", "Adam", "project with images", true, 1.0f, 1.0f);
 
-        _dbInjecter.injectProjectImage("image1", "image description 1", "test1.jpg", "Project A");
-        _dbInjecter.injectProjectImage("image2", "image description 2", "test2.jpg", "Project A");
-        _dbInjecter.injectProjectImage("image3", "image description 3", "test3.jpg", "Project A");
+        _dbInjecter.injectProjectImage("image1", "image description 1", "test1.jpg", TimeConstants.YEAR_IN_MILLISECONDS * 10, "Project A");
+        _dbInjecter.injectProjectImage("image2", "image description 2", "test2.jpg", TimeConstants.YEAR_IN_MILLISECONDS * 20, "Project A");
+        _dbInjecter.injectProjectImage("image3", "image description 3", "test3.jpg", TimeConstants.YEAR_IN_MILLISECONDS * 30, "Project A");
 
-        _dbInjecter.injectProjectImage("image1", "image description", "test4.jpg", "Project B");
-        _dbInjecter.injectProjectImage("image2", "image description", "test5.jpg", "Project B");
+        _dbInjecter.injectProjectImage("image1", "image description", "test4.jpg", TimeConstants.YEAR_IN_MILLISECONDS * 40, "Project B");
+        _dbInjecter.injectProjectImage("image2", "image description", "test5.jpg", TimeConstants.YEAR_IN_MILLISECONDS * 50, "Project B");
 
         List<ProjectImage> imageList = _projectImageRepository.findProjectImagesToProjectByProjectId(1);
 
@@ -67,6 +68,12 @@ public class ProjectImageRepositoryIntegrationTest {
                             .getImageFileName()).isEqualTo("test2.jpg");
         assertThat(imageList.get(2)
                             .getImageFileName()).isEqualTo("test3.jpg");
+        assertThat(imageList.get(0)
+                            .getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 10);
+        assertThat(imageList.get(1)
+                            .getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 20);
+        assertThat(imageList.get(2)
+                            .getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 30);
     }
 
 }
