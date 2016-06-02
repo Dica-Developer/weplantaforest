@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ProjectReportData {
 
+    long projectId;
+    
     String projectName;
     String projectImageFileName;
     String description;

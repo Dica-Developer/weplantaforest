@@ -50,6 +50,9 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(projects.getTotalElements()).isEqualTo(1);
         assertThat(projects.getContent()
                            .get(0)
+                           .getProjectId()).isEqualTo(1);
+        assertThat(projects.getContent()
+                           .get(0)
                            .getProjectName()).isEqualTo("Project A");
         assertThat(projects.getContent()
                            .get(0)
