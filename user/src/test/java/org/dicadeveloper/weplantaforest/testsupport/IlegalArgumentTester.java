@@ -2,6 +2,8 @@ package org.dicadeveloper.weplantaforest.testsupport;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
+import org.dicadeveloper.weplantaforest.image.ImageController;
+import org.dicadeveloper.weplantaforest.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.planting.PlantPageController;
 import org.dicadeveloper.weplantaforest.planting.PlantPageDataHelper;
 import org.dicadeveloper.weplantaforest.planting.PlantPageDataValidator;
@@ -53,6 +55,9 @@ public class IlegalArgumentTester {
 
     @Autowired
     SimplePlantPageDataValidator simplePlantPageDataValidator;
+
+    @Autowired
+    ImageHelper imageHelper;
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForRankingController() {
@@ -147,12 +152,16 @@ public class IlegalArgumentTester {
     @Test(expected = IllegalArgumentException.class)
     public void testFailedAllArgsContructorForTreeRankedUserDataTwoNulls() {
         new TreeRankedUserData("name", null, null);
-
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedAllArgsContructorForTreeRankedUserDataThreeNulls() {
         new TreeRankedUserData(null, null, null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedImageController() {
+        new ImageController(null);
     }
 
 }
