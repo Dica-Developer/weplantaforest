@@ -29,6 +29,9 @@ public class Paragraph implements Identifiable<Long> {
 
     @Column(name = "_text")
     private String text;
+    
+    @Column(name = "_imageFileName")
+    private String imageFileName;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_article__articleId", nullable = false)

@@ -13,6 +13,8 @@ public class ArticleData {
 
     String intro;
     
+    String imageFileName;
+    
     long createdOn;
     
     long ownerId;

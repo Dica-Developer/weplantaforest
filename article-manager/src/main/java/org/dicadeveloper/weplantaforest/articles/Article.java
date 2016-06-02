@@ -54,6 +54,9 @@ public class Article implements Identifiable<Long> {
     @Column(name = "_intro", columnDefinition = "TEXT")
     private String intro;
 
+    @Column(name = "_imageFileName")
+    private String imageFileName;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_owner__userId", nullable = false)
     private User owner;

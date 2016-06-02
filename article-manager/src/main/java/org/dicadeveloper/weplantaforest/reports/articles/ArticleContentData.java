@@ -10,4 +10,6 @@ public class ArticleContentData {
     String paragraphTitle;
 
     String paragraphText;
+    
+    String imageFileName;
 }
