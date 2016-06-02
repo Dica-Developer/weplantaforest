@@ -14,6 +14,10 @@ class CustomPaymentButton extends Component {
     this.properties = props;
   }
 
+  componentDidMount() {
+    this.properties.parent.toggleButtonStateCustom('maxAmountSlider');
+  }
+
   render() {
     return (
       <div>
@@ -101,11 +105,45 @@ class PaymentBar extends Component {
     this.state.customPaymentButtonSelected = false;
   }
 
+  simpleDonation() {
+    axios.post('http://localhost:8081/simpleDonateTrees', this.state).then(function(response) {
+      console.log('You paid successful');
+    }).catch(function (response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+      console.error('Payment failed');
+    });
+  }
+
+  complexDonation() {
+    axios.post('http://localhost:8081/donateTrees', this.state).then(function(response) {
+      console.log('You paid successful');
+    }).catch(function (response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+      console.error('Payment failed');
+    });
+  }
+
   render() {
     var that = this;
     var customPaymentButton = '';
+    var paymentHandler = this.simpleDonation;
     if (this.state.customPaymentButtonSelected) {
       customPaymentButton = <CustomPaymentButton parent={this} />;
+      paymentHandler = this.complexDonation;
     }
     return (<div className="container">
           Hier kannst Du Bäume pflanzen. Du wählst aus wieviel Bäume oder für wieviel Geld wir für Dich Bäume pflanzen.
@@ -170,7 +208,7 @@ class PaymentBar extends Component {
             );
           })}
           </ul>
-          <button type="button" className="btn btn-group-justified btn-default btn-lg">Nehme ich für {(() => {
+          <button type="button" className="btn btn-group-justified btn-default btn-lg" onClick={paymentHandler.bind(this)}>Nehme ich für {(() => {
             return Accounting.formatMoney(this.state.actualPrice / 100, { thousand: '.', decimal: ',', symbol: '€', format: '%v %s' });
           })()}</button>
           <br />

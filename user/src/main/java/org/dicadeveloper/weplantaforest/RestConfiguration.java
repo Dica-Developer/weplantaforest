@@ -17,6 +17,8 @@ public class RestConfiguration {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:8080");
         config.addAllowedHeader("*");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("GET");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
