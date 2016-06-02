@@ -76,4 +76,7 @@ public class Project implements Identifiable<Long> {
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private List<ProjectArticle> articles;
+    
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    private List<ProjectImage> images;
 }

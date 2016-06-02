@@ -11,6 +11,8 @@ import org.dicadeveloper.weplantaforest.projects.PriceRepository;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
+import org.dicadeveloper.weplantaforest.projects.ProjectImage;
+import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -44,9 +46,11 @@ public class DbInjecter {
 
     @Autowired
     private TeamRepository _teamRepository;
+    
+    @Autowired
+    private ProjectImageRepository _projectImageRepository;
 
-    public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude,
-            float longitude) {
+    public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
         String projectName = pName;
         project.setName(projectName);
@@ -110,8 +114,7 @@ public class DbInjecter {
         tree.setPlantedOn(new Date(timeOfPlanting).getTime());
         tree.setSubmittedOn(new Date(timeOfPlanting).getTime());
         tree.setOwner(_userRepository.findByName(owner));
-        tree.setProjectArticle(_projectArticleRepository.findByProjectAndTreeType(_projectRepository.findByName(pName),
-                _treeTypeRepository.findByName(treeType)));
+        tree.setProjectArticle(_projectArticleRepository.findByProjectAndTreeType(_projectRepository.findByName(pName), _treeTypeRepository.findByName(treeType)));
         _treeRepository.save(tree);
     }
 
@@ -129,8 +132,7 @@ public class DbInjecter {
         _projectArticleRepository.save(plantArticle);
     }
 
-    public void injectProjectArticle(String treeType, String pName, long amount, double priceAmount,
-            double priceMarge) {
+    public void injectProjectArticle(String treeType, String pName, long amount, double priceAmount, double priceMarge) {
         ProjectArticle plantArticle = new ProjectArticle();
         Price price = new Price();
 
@@ -159,5 +161,16 @@ public class DbInjecter {
         user.setTeam(_teamRepository.findByName(tName));
         _userRepository.save(user);
     }
+
+    public void injectProjectImage(String imageTitle, String text, String imageFileName, String projectName) {
+        ProjectImage projectImage = new ProjectImage();
+        projectImage.setTitle(imageTitle);
+        projectImage.setDescription(text);
+        projectImage.setImageFileName(imageFileName);      
+        projectImage.setProject(_projectRepository.findByName(projectName));
+        _projectImageRepository.save(projectImage);
+    }
+    
+    
 
 }
