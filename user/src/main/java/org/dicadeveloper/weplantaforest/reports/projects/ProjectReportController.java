@@ -20,9 +20,8 @@ public class ProjectReportController {
     private @NonNull ProjectReportRepository _projectReportRepository;
 
     @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
-    public Page<ProjectReportData> getActiveProjectData(@Param(value = "page") int page,
-            @Param(value = "size") int size) {
-        return _projectReportRepository.getActiveProjectData(new PageRequest(page, size));
+    public Page<ProjectReportData> getAllProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
+        return _projectReportRepository.getAllProjects(new PageRequest(page, size));
     }
 
     @RequestMapping(value = Uris.PROJECT_SEARCH_NAME + "{projectName}", method = RequestMethod.GET)
