@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.admin.codes.Cart;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -25,6 +26,7 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -58,6 +60,7 @@ public class PlantPageControllerPostMethodTest {
     }
 
     @Test
+    @Transactional
     public void testDonateTreesSatusOk() throws Exception {
         dbInjecter.injectTreeType("wood", "desc", 0.5);
 
@@ -76,10 +79,19 @@ public class PlantPageControllerPostMethodTest {
                     .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
+
+        Cart cart = _cartRepository.findOne(1L);
+        assertThat(cart.getTotalPrice()
+                       .doubleValue()).isEqualTo(9.0);
+        assertThat(cart.getCartItems()
+                       .get(0)
+                       .getPlantArticleId()).isEqualTo(1);
+
         assertThat(_treeRepository.count()).isEqualTo(1L);
     }
-    
+
     @Test
+    @Transactional
     public void testDonateTreesWithMultipleEntriesSatusOk() throws Exception {
         dbInjecter.injectTreeType("wood", "desc", 0.5);
         dbInjecter.injectTreeType("doow", "desc", 0.5);
@@ -104,6 +116,11 @@ public class PlantPageControllerPostMethodTest {
                     .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
+
+        Cart cart = _cartRepository.findOne(1L);
+        assertThat(cart.getTotalPrice()
+                       .doubleValue()).isEqualTo(27.0);
+        assertThat(cart.getPlantArticleIds()).contains(1L, 2L, 3L);
         assertThat(_treeRepository.count()).isEqualTo(3L);
     }
 
