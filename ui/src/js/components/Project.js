@@ -20,7 +20,9 @@ export default class Project extends Component {
     this.state = {
       project: {
         name: 'default project',
-        projectImageFileName: 'test.jpg'
+        projectImageFileName: 'test.jpg',
+        latitude: 0,
+        longitude: 0
       }
     };
   }
@@ -43,9 +45,9 @@ export default class Project extends Component {
   }
 
   render() {
-    let position = [51.4825041, 11.9705452];
     let project = this.state.project;
     let imageUrl = 'http://localhost:8081/image/' + project.projectImageFileName + '/1170/1170';
+    let position = [project.latitude, project.longitude];
     return (
       <div className="container">
         <div className="row">
