@@ -9,6 +9,7 @@ import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
 import org.dicadeveloper.weplantaforest.articles.Paragraph;
 import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
 import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,7 @@ import com.google.common.collect.ImmutableList;
 @Service
 public class DatabasePopulatorForArticleManager {
 
-    private final static List<String> DEFAULT_USERS = ImmutableList.of("articleManager", "blogManager", "newsManager",
-            "knowledgeManager");
+    private final static List<String> DEFAULT_USERS = ImmutableList.of("articleManager", "blogManager", "newsManager", "knowledgeManager");
 
     private UserRepository _userRepository;
 
@@ -32,8 +32,7 @@ public class DatabasePopulatorForArticleManager {
     private ParagraphRepository _parapgraphRepository;
 
     @Autowired
-    public DatabasePopulatorForArticleManager(ArticleRepository articleRepository, ParagraphRepository paragraphRepository,
-            UserRepository userRepository) {
+    public DatabasePopulatorForArticleManager(ArticleRepository articleRepository, ParagraphRepository paragraphRepository, UserRepository userRepository) {
         _articleRepository = articleRepository;
         _userRepository = userRepository;
         _parapgraphRepository = paragraphRepository;
@@ -62,9 +61,10 @@ public class DatabasePopulatorForArticleManager {
                 article.setArticleType(articleType);
                 article.setLang(Language.GERMAN);
                 article.setShowFull(true);
-                article.setCreatedOn((long) random.nextInt(1000000000));
+                article.setCreatedOn(TimeConstants.YEAR_IN_MILLISECONDS * (i + 1) * 5);
                 article.setTitle("this is article nr " + i + " from " + articleType.toString() + " article");
                 article.setIntro("this is an article about " + articleType.toString());
+                article.setImageFileName("test.jpg");
                 _articleRepository.save(article);
             }
         }
@@ -78,6 +78,9 @@ public class DatabasePopulatorForArticleManager {
                 paragraph.setArticle(article);
                 paragraph.setTitle("this is the paragraph nr " + (i + 1));
                 paragraph.setText("this is a paragraph about a lot of blabla(" + (i + 1) + ")");
+                if (i == 1) {
+                    paragraph.setImageFileName("test.jpg");
+                }
                 _parapgraphRepository.save(paragraph);
             }
         }
