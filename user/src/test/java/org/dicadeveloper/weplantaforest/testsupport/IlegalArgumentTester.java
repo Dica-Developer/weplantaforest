@@ -4,13 +4,16 @@ import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.planting.PlantPageController;
 import org.dicadeveloper.weplantaforest.planting.PlantPageDataHelper;
+import org.dicadeveloper.weplantaforest.planting.PlantPageDataValidator;
 import org.dicadeveloper.weplantaforest.planting.SimplePlantPageController;
 import org.dicadeveloper.weplantaforest.planting.SimplePlantPageDataHelper;
+import org.dicadeveloper.weplantaforest.planting.SimplePlantPageDataValidator;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Controller;
 import org.dicadeveloper.weplantaforest.reports.projects.ProjectReportController;
 import org.dicadeveloper.weplantaforest.reports.projects.ProjectReportRepository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingController;
 import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
+import org.dicadeveloper.weplantaforest.support.CartToTreeListConverter;
 import org.dicadeveloper.weplantaforest.support.PlantPageDataToCartConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +45,15 @@ public class IlegalArgumentTester {
     @Autowired
     CartRepository cartRepository;
 
+    @Autowired
+    PlantPageDataValidator plantPageDataValidator;
+
+    @Autowired
+    CartToTreeListConverter cartToTreeListConverter;
+
+    @Autowired
+    SimplePlantPageDataValidator simplePlantPageDataValidator;
+
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForRankingController() {
         new RankingController(null);
@@ -63,43 +75,63 @@ public class IlegalArgumentTester {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void testFailedContructorForPlantPageControllerAllNulls() {
+        new PlantPageController(null, null, null, null, null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedContructorForPlantPageControllerFiveNulls() {
+        new PlantPageController(plantPageDataHelper, null, null, null, null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForPlantPageControllerFourNulls() {
-        new PlantPageController(null, null, null, null);
+        new PlantPageController(plantPageDataHelper, plantPageDataToCartConverter, null, null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForPlantPageControllerThreeNulls() {
-        new PlantPageController(plantPageDataHelper, null, null, null);
+        new PlantPageController(plantPageDataHelper, plantPageDataToCartConverter, cartRepository, null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForPlantPageControllerTwoNulls() {
-        new PlantPageController(plantPageDataHelper, plantPageDataToCartConverter, null, null);
+        new PlantPageController(plantPageDataHelper, plantPageDataToCartConverter, cartRepository, plantPageDataValidator, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForPlantPageControllerOneNulls() {
-        new PlantPageController(plantPageDataHelper, plantPageDataToCartConverter, cartRepository, null);
+    public void testFailedContructorForPlantPageControllerOneNull() {
+        new PlantPageController(plantPageDataHelper, plantPageDataToCartConverter, cartRepository, plantPageDataValidator, cartToTreeListConverter, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedContructorForSimplePlantPageControllerOnlyNulls() {
+        new SimplePlantPageController(null, null, null, null, null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedContructorForSimplePlantPageControllerFiveNulls() {
+        new SimplePlantPageController(simplePlantPageDataHelper, null, null, null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForSimplePlantPageControllerFourNulls() {
-        new SimplePlantPageController(null, null, null, null);
+        new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, null, null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForSimplePlantPageControllerThreeNulls() {
-        new SimplePlantPageController(simplePlantPageDataHelper, null, null, null);
+        new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, cartRepository, null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForSimplePlantPageControllerTwoNulls() {
-        new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, null, null);
+        new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, cartRepository, simplePlantPageDataValidator, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testFailedContructorForSimplePlantPageControllerOneNulls() {
-        new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, cartRepository, null);
+    public void testFailedContructorForSimplePlantPageControllerOneNull() {
+        new SimplePlantPageController(simplePlantPageDataHelper, plantPageDataToCartConverter, cartRepository, simplePlantPageDataValidator, cartToTreeListConverter, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
