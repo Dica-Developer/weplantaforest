@@ -13,28 +13,38 @@ subprojects {
     maven { url "https://repo.spring.io/milestone" }
   }
 
+  configurations.all {
+    resolutionStrategy {
+      failOnVersionConflict()
+      force 'org.ow2.asm:asm-debug-all:5.0.4'
+      force 'org.ow2.asm:asm:5.0.3'
+      cacheDynamicVersionsFor 10*60, 'seconds'
+      cacheChangingModulesFor 0, 'seconds'
+    }
+  }
+
   archivesBaseName = path[1..-1].replaceAll(':', '-').toLowerCase()
-  
+
   eclipse {
     jdt.file.withProperties { properties ->
       properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
       properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
     }
   }
-  
-  test {  
+
+  test {
     testLogging {
       events 'passed'
     }
     if (project.hasProperty('mysql')) {
       logger.info "Running tests on mysql db!"
       systemProperty "spring.profiles.active", "test,mysql-test"
-    } 
-  
+    }
+
     def maxForks = Runtime.getRuntime().availableProcessors()
     logger.lifecycle "Maximum used parallel forks for " + project + ": " + maxForks
     maxParallelForks maxForks	 
-  
+
     if (System.env.'CI') {
       jacoco {
         enabled true
@@ -43,8 +53,8 @@ subprojects {
       jacoco {
         enabled false
       }
-    }   
-  }  
+    }
+  }
 
   configurations {
     testArtifacts
@@ -69,11 +79,11 @@ subprojects {
   artifacts {
     testArtifacts testJar
   }
-  
+
   jacocoTestReport {
     reports {
         xml.enabled = true
         html.enabled = true
     }
-}
+  }
 }
