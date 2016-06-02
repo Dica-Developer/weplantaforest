@@ -12,6 +12,8 @@ import org.dicadeveloper.weplantaforest.projects.PriceRepository;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
+import org.dicadeveloper.weplantaforest.projects.ProjectImage;
+import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -43,16 +45,18 @@ public class DatabasePopulator {
     private TreeRepository _treeRepository;
     private ProjectArticleRepository _projectArticleRepository;
     private PriceRepository _priceRepository;
+    private ProjectImageRepository _projectImageRepository;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
-            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository) {
+            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
         _treeRepository = treeRepository;
         _projectArticleRepository = projectArticleRepository;
         _priceRepository = priceRepository;
+        _projectImageRepository = projectImageRepository;
     }
 
     public DatabasePopulator insertProjects() {
@@ -210,5 +214,21 @@ public class DatabasePopulator {
         price.setMarge(new BigDecimal(randomMarge));
         _priceRepository.save(price);
         return price;
+    }
+
+    public DatabasePopulator insertProjectImages() {
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 5; j++) {
+                ProjectImage projectImage = new ProjectImage();
+                projectImage.setTitle("image " + j);
+                projectImage.setDescription(" image description " + j);
+                projectImage.setImageFileName("project." + j + "jpg");
+                projectImage.setDate(100000000L * j);
+                projectImage.setProject(_projectRepository.findOne((long) i));
+                _projectImageRepository.save(projectImage);
+            }
+        }
+
+        return this;
     }
 }
