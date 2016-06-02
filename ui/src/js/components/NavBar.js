@@ -1,6 +1,9 @@
 import React, {
   Component
 } from 'react';
+import {
+  Link
+} from 'react-router';
 
 export default class NavBar extends Component {
   render() {
@@ -14,17 +17,17 @@ export default class NavBar extends Component {
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
       </button>
-      <a href="#" className="navbar-brand">
+      <a href="/" className="navbar-brand">
         <img alt="I Plant A Tree" src="assets/images/ipat_logo.jpg" />
       </a>
     </div>
     <div className="navbar-collapse collapse" id="navbar-main">
       <ul className="nav navbar-nav">
         <li>
-        <a href="#/plant">Pflanzen</a>
+          <Link to={`/plant`}>Pflanzen</Link>
         </li>
         <li>
-        <a href="#/explore">Entdecken</a>
+          <Link to={`/explore`}>Entdecken</Link>
         </li>
       </ul>
       <form className="navbar-form navbar-left" role="search">

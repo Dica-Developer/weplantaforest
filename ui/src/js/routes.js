@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import {
-  Locations,
-  Location,
-  NotFound
-} from 'react-router-component';
+  Router,
+  Route,
+  browserHistory
+} from 'react-router';
 
 import MainPage from './views/MainPage';
 import PlantPage from './views/PlantPage';
@@ -13,15 +13,15 @@ import ExplorePage from './views/ExplorePage';
 import ProjectDetailsPage from './views/ProjectDetailsPage';
 
 export default class Routes extends Component {
-    render() {
-        return (
-            <Locations hash>
-                <Location path="/" handler={MainPage} />
-                <Location path="/plant" handler={PlantPage} />
-                <Location path="/explore" handler={ExplorePage} />
-                <Location path="/projects/:projectName" handler={ProjectDetailsPage} />
-                <NotFound handler={NotFoundPage} />
-            </Locations>
-        );
-    }
+  render() {
+    return (
+      <Router history={browserHistory}>
+        <Route path="/" component={MainPage} />
+        <Route path="/plant" component={PlantPage} />
+        <Route path="/explore" component={ExplorePage} />
+        <Route path="/projects/:projectName" component={ProjectDetailsPage} />
+        <Route path="*" component={NotFoundPage} />
+      </Router>
+    );
+  }
 };

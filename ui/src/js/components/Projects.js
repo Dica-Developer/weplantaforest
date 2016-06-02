@@ -5,6 +5,9 @@ import React, {
 import {
   render
 } from 'react-dom';
+import {
+  Link,
+} from 'react-router';
 import Boostrap from 'bootstrap';
 
 export default class Projects extends Component {
@@ -38,15 +41,14 @@ export default class Projects extends Component {
     return (
     <div className="row">
       {this.state.projects.map(function (project) {
-        var linkUrl = '/#/projects/' + project.name;
         return (<div className="col-md-4">
-          <a href={linkUrl} className="thumbnail">
+          <Link to={`/projects/${project.projectName}`}>
             <img src="" alt="" />
             <div className="caption">
-              <h3>{project.name}</h3>
+              <h3>{project.projectName}</h3>
               <p>{project.description}</p>
             </div>
-          </a>
+          </Link>
         </div>);
       })}
     </div>);
