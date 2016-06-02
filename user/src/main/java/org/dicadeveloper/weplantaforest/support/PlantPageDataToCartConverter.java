@@ -28,6 +28,7 @@ public class PlantPageDataToCartConverter {
 
     public Cart convertPlantPageDataToCart(PlantPageData plantPageData) {
         Cart cart = new Cart();
+        cart.setTimeStamp(System.currentTimeMillis());
 
         Set<String> projectNames = plantPageData.getProjects()
                                                 .keySet();
@@ -52,8 +53,7 @@ public class PlantPageDataToCartConverter {
 
                     BigDecimal treePrice = PriceHelper.fromLongToBigDecimal(plantItem.getTreePrice());
                     BigDecimal totalPrice = PriceHelper.fromLongToBigDecimal(amount * plantItem.getTreePrice());
-                    Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectname,
-                            plantItemName);
+                    Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectname, plantItemName);
 
                     cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
                 }
@@ -64,7 +64,8 @@ public class PlantPageDataToCartConverter {
 
     public Cart convertSimplePlantPageDataToCart(SimplePlantPageData simplePlantPageData) {
         Cart cart = new Cart();
-
+        cart.setTimeStamp(System.currentTimeMillis());
+        
         for (SimplePlantPageItem simplePlantPageItem : simplePlantPageData.getPlantItems()) {
             int amount = (int) simplePlantPageItem.getAmount();
 
@@ -76,8 +77,7 @@ public class PlantPageDataToCartConverter {
             BigDecimal treePrice = PriceHelper.fromLongToBigDecimal(treePriceAsLong);
             BigDecimal totalPrice = PriceHelper.fromLongToBigDecimal(amount * treePriceAsLong);
 
-            Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectName,
-                    plantItemName);
+            Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectName, plantItemName);
 
             cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
         }
