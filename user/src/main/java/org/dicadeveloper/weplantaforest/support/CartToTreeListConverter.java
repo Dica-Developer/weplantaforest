@@ -39,7 +39,8 @@ public class CartToTreeListConverter {
             Project project = _projectArticleRepository.findOne(cartItem.getPlantArticleId())
                                                        .getProject();
             ProjectArticle projectArticle = _projectArticleRepository.findOne(cartItem.getPlantArticleId());
-
+            
+            tree.setAmount(cartItem.getAmount());
             tree.setTreeType(projectArticle.getTreeType());
             tree.setProjectArticle(projectArticle);
             tree.setPlantedOn(plantedOn);

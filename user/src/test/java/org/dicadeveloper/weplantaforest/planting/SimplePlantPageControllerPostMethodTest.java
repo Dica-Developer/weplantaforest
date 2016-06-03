@@ -10,6 +10,8 @@ import org.dicadeveloper.weplantaforest.admin.codes.Cart;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
@@ -54,6 +56,9 @@ public class SimplePlantPageControllerPostMethodTest {
     @Autowired
     private TreeRepository _treeRepository;
 
+    @Autowired
+    private ProjectArticleRepository _projectArticleRepository;
+
     @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
@@ -87,6 +92,10 @@ public class SimplePlantPageControllerPostMethodTest {
                        .get(0)
                        .getPlantArticleId()).isEqualTo(1);
         assertThat(_treeRepository.count()).isEqualTo(1L);
+
+        ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
+        long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
+        assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
     }
 
     @Test
@@ -121,6 +130,12 @@ public class SimplePlantPageControllerPostMethodTest {
                        .doubleValue()).isEqualTo(27.0);
         assertThat(cart.getPlantArticleIds()).contains(1L, 2L, 3L);
         assertThat(_treeRepository.count()).isEqualTo(3L);
+
+        for (int i = 1; i <= 3; i++) {
+            ProjectArticle projectArticle = _projectArticleRepository.findOne((long) i);
+            long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
+            assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
+        }
     }
 
     @Test
