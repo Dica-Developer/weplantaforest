@@ -37,7 +37,7 @@ public class DatabasePopulator {
 
     private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
 
-    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes");
+    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp");
 
     private ProjectRepository _projectRepository;
     private UserRepository _userRepository;
@@ -62,11 +62,11 @@ public class DatabasePopulator {
     public DatabasePopulator insertProjects() {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
-            int pickOne = random.nextInt(4);
-            String projectName = "Project " + i + " von " + DEFAULT_USERS.get(pickOne);
+           
+            String projectName = "Project " + i + " von " + DEFAULT_USERS.get(i);
             Project project = new Project();
             project.setName(projectName);
-            project.setManager(_userRepository.findByName(DEFAULT_USERS.get(pickOne)));
+            project.setManager(_userRepository.findByName(DEFAULT_USERS.get(i)));
             project.setDescription(
                     "dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
             project.setImageFileName("project" + (i + 1) + ".jpg");
