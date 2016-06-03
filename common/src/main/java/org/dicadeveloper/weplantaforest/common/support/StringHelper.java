@@ -13,4 +13,16 @@ public class StringHelper {
         }
     }
 
+    public static String addNumberToFileName(String fileName, int number) {
+        if (fileName.contains(".")) {
+            String newFileName = fileName;
+            String fileType = getDataTypeFromFileName(fileName);
+            newFileName = fileName.substring(0, fileName.lastIndexOf("."));
+            return newFileName + number + "." + fileType;
+        } else {
+            return UNKNOWN_DATATYPE;
+        }
+
+    }
+
 }

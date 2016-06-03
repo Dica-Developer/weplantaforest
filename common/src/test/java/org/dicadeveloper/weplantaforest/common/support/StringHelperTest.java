@@ -32,4 +32,22 @@ public class StringHelperTest {
 
         assertThat(fileType).isEqualTo("file");
     }
+    
+    @Test
+    public void testAddNumberToFileName() {
+        String fileName = "abc.file";
+
+        String newFileName = StringHelper.addNumberToFileName(fileName, 2);
+
+        assertThat(newFileName).isEqualTo("abc2.file");
+    }
+    
+    @Test
+    public void testAddNumberToFileNameWithoutPoint() {
+        String fileName = "abcfile";
+
+        String newFileName = StringHelper.addNumberToFileName(fileName, 2);
+
+        assertThat(newFileName).isEqualTo(StringHelper.UNKNOWN_DATATYPE);
+    }
 }
