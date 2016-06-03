@@ -33,7 +33,6 @@ dependencies{
   compile('org.springframework.data:spring-data-rest-hal-browser:2.4.1.RELEASE')
   compile 'com.h2database:h2:1.4.190'
 
-  runtime('com.h2database:h2:1.4.190')
 //  runtime('mysql:mysql-connector-java')
 
   testCompile group: 'junit', name: 'junit', version: '4.12'
