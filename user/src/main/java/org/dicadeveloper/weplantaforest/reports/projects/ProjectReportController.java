@@ -66,10 +66,10 @@ public class ProjectReportController {
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getProjectImage(@PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName, @PathVariable int width,
             @PathVariable int height) {
-        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.PROJECTS, projectName, width, height);
-        if (imageBytes.length == 0) {
+        try {
+            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.PROJECTS, projectName, width, height);
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } else {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
