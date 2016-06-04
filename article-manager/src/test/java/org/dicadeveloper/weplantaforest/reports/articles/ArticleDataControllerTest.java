@@ -56,14 +56,9 @@ public class ArticleDataControllerTest {
 
         _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
 
-        this.mockMvc.perform(get("/articles/{articleType}?page=0&size=10", "BLOG").accept("application/json"))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.content[0].id").value(1))
-                    .andExpect(jsonPath("$.content[0].title").value("article title"))
-                    .andExpect(jsonPath("$.content[0].intro").value("article blablabla"))
-                    .andExpect(jsonPath("$.content[0].createdOn").value(createdOn))
-                    .andExpect(jsonPath("$.content[0].ownerId").value(1))
-                    .andExpect(jsonPath("$.content[0].ownerName").value("Adam"));
+        this.mockMvc.perform(get("/articles/{articleType}?page=0&size=10", "BLOG").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.content[0].id").value(1))
+                .andExpect(jsonPath("$.content[0].title").value("article title")).andExpect(jsonPath("$.content[0].intro").value("article blablabla"))
+                .andExpect(jsonPath("$.content[0].createdOn").value(createdOn)).andExpect(jsonPath("$.content[0].ownerId").value(1)).andExpect(jsonPath("$.content[0].ownerName").value("Adam"));
     }
 
     @Test
@@ -74,13 +69,31 @@ public class ArticleDataControllerTest {
         _dbInjecter.injectUser("Adam");
 
         _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn)
-                   .injectParagraphToArticle("article title", "1st paragraph title", "1st paragraph blablablalba")
-                   .injectParagraphToArticle("article title", "2nd paragraph title", "2nd paragraph blablablalba");
+                .injectParagraphToArticle("article title", "1st paragraph title", "1st paragraph blablablalba")
+                .injectParagraphToArticle("article title", "2nd paragraph title", "2nd paragraph blablablalba");
 
-        this.mockMvc.perform(get("/reports/article/{articleId}", 1).accept("application/json"))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[0].paragraphTitle").value("1st paragraph title"))
-                    .andExpect(jsonPath("$.[0].paragraphText").value("1st paragraph blablablalba"));
+        this.mockMvc.perform(get("/reports/article/{articleId}", 1).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].paragraphTitle").value("1st paragraph title"))
+                .andExpect(jsonPath("$.[0].paragraphText").value("1st paragraph blablablalba"));
+    }
+
+    @Test
+    public void testGetImageNonScaled() throws Exception {
+        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}", "1", "article1.jpg").accept("image/jpg")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetImageNonScaledBadRequest() throws Exception {
+        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}", "1", "wrongName.jpg").accept("image/jpg")).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testGetImageScaled() throws Exception {
+        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "article1.jpg", 500, 500).accept("image/jpg")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetImageScaledBadRequest() throws Exception {
+        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "wrongName.jpg", 500, 500).accept("image/jpg")).andExpect(status().isBadRequest());
     }
 
 }
