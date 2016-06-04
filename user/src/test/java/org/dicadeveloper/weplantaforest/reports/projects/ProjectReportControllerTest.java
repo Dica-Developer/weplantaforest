@@ -167,4 +167,28 @@ public class ProjectReportControllerTest {
                     .andExpect(jsonPath("$.images[2].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 3));
     }
 
+    @Test
+    public void testGetImageNonScaled() throws Exception {
+        this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "project1.jpg").accept("image/jpg"))
+                    .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetImageNonScaledBadRequest() throws Exception {
+        this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "wrongName.jpg").accept("image/jpg"))
+                    .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testGetImageScaled() throws Exception {
+        this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "project1.jpg", 500, 500).accept("image/jpg"))
+                    .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetImageScaledBadRequest() throws Exception {
+        this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "wrongName.jpg", 500, 500).accept("image/jpg"))
+                    .andExpect(status().isBadRequest());
+    }
+
 }

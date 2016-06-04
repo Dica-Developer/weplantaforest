@@ -16,6 +16,8 @@ public class Uris {
     
     public final static String PROJECT_SEARCH_NAME = "/projects/search/name/";
 
+    public final static String PROJECT_IMAGE = "/project/image/";
+    
     public final static String RANKING_BEST_USER = "/ranking/bestUser";
 
     public final static String RANKING_LAST_CREATED_USER = "/ranking/lastCreatedUser";

@@ -2,8 +2,8 @@ package org.dicadeveloper.weplantaforest.testsupport;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
+import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.image.ImageController;
-import org.dicadeveloper.weplantaforest.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.planting.PlantPageController;
 import org.dicadeveloper.weplantaforest.planting.PlantPageDataHelper;
 import org.dicadeveloper.weplantaforest.planting.PlantPageDataValidator;
@@ -66,12 +66,17 @@ public class IlegalArgumentTester {
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForProjectReportController() {
-        new ProjectReportController(null, null);
+        new ProjectReportController(null, null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailedContructorForProjectReportControllerTwoNull() {
+        new ProjectReportController(projectReportRepository, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFailedContructorForProjectReportControllerOneNull() {
-        new ProjectReportController(projectReportRepository, null);
+        new ProjectReportController(projectReportRepository, null, imageHelper);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -158,7 +163,7 @@ public class IlegalArgumentTester {
     public void testFailedAllArgsContructorForTreeRankedUserDataThreeNulls() {
         new TreeRankedUserData(null, null, null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testFailedImageController() {
         new ImageController(null);
