@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.image;
 
+import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
+import org.dicadeveloper.weplantaforest.common.image.ImageHelper.ImageFolder;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,7 @@ public class ImageController {
     @RequestMapping(value = Uris.IMAGE + "{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getImage(@PathVariable String imageName) {
         try {
-            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName);
+            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.DEFAULT, "");
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -33,7 +35,7 @@ public class ImageController {
     @RequestMapping(value = Uris.IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getScaledImage(@PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
         try {
-            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, width, height);
+            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.DEFAULT, "", width, height);
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

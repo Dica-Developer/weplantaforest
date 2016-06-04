@@ -1,6 +1,5 @@
 package org.dicadeveloper.weplantaforest.image;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -8,6 +7,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.junit.After;
 import org.junit.Before;
@@ -38,6 +38,8 @@ public class ImageControllerUploadTest {
     
     public final static String UPLOAD_TEST_FOLDER_2 = ImageHelper.UPLOAD_IMAGE_FOLDER_EXTENDED_FROM_CURRENT + "test2";
 
+    public final static String IMAGE_FOLDER_RELATIVE = "../../../../static/images/";
+    
     private MockMvc mockMvc;
 
     @Rule
@@ -62,7 +64,7 @@ public class ImageControllerUploadTest {
     @Test
     public void testUploadImage() throws Exception {
         InputStream inputStream = this.getClass()
-                                      .getResourceAsStream(ImageHelper.IMAGE_FOLDER_RELATIVE + "test.jpg");
+                                      .getResourceAsStream(IMAGE_FOLDER_RELATIVE + "test.jpg");
         MockMultipartFile image = new MockMultipartFile("file", inputStream);
 
         MediaType mediaType = new MediaType("multipart", "form-data");
@@ -76,7 +78,7 @@ public class ImageControllerUploadTest {
     @Test
     public void testUploadImageToNonExistingFolder() throws Exception {
         InputStream inputStream = this.getClass()
-                                      .getResourceAsStream(ImageHelper.IMAGE_FOLDER_RELATIVE + "test.jpg");
+                                      .getResourceAsStream(IMAGE_FOLDER_RELATIVE + "test.jpg");
         MockMultipartFile image = new MockMultipartFile("file", inputStream);
 
         MediaType mediaType = new MediaType("multipart", "form-data");
