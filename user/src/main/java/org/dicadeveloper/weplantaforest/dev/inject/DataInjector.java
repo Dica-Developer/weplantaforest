@@ -37,10 +37,10 @@ public class DataInjector {
                     int treeCount = 15000;
                     _databasePopulator.insertUsers()
                                       .insertDefaultTreeTypes()
-                                      .insertTrees(treeCount)
                                       .insertProjects()
                                       .insertProjectArticles()
-                                      .insertProjectImages();
+                                      .insertProjectImages()
+                                      .insertTrees(treeCount);
                     LOG.info("Finished injecting " + treeCount + " trees ");
                 } else {
                     LOG.info("No entities will be injected.");

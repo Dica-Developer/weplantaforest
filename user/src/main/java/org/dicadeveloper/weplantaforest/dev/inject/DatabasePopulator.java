@@ -22,7 +22,6 @@ import org.dicadeveloper.weplantaforest.trees.UserRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Verify;
@@ -60,7 +59,6 @@ public class DatabasePopulator {
     }
 
     public DatabasePopulator insertProjects() {
-        Random random = new Random();
         for (int i = 0; i < 10; i++) {
 
             String projectName = "Project " + (i + 1) + " von " + DEFAULT_USERS.get(i);
@@ -70,7 +68,11 @@ public class DatabasePopulator {
             project.setDescription(
                     "dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
             project.setImageFileName("project" + (i + 1) + ".jpg");
-            project.setShopActive(random.nextBoolean());
+            if (i < 5) {
+                project.setShopActive(false);
+            } else {
+                project.setShopActive(true);
+            }
             switch (i) {
             case 0:
                 project.setLatitude(52.4626536896816f);
@@ -157,6 +159,7 @@ public class DatabasePopulator {
     public DatabasePopulator insertTrees(int count) {
         Iterator<TreeType> cyclingTreeTypes = Iterators.cycle(loadTreeTypes());
         Iterator<User> cyclingUsers = Iterators.cycle(loadUsers());
+        Iterator<ProjectArticle> cyclingProjectArticles = Iterators.cycle(loadProjectArticles());
         for (int i = 0; i < count; i++) {
             Tree treeDto = new Tree();
             treeDto.setAmount(i % 20);
@@ -166,6 +169,7 @@ public class DatabasePopulator {
                                                                                .getName()));
             treeDto.setPlantedOn(new Date(i + 1000000L).getTime());
             treeDto.setOwner(cyclingUsers.next());
+            treeDto.setProjectArticle(cyclingProjectArticles.next());
             _treeRepository.save(treeDto);
         }
         return this;
@@ -173,8 +177,7 @@ public class DatabasePopulator {
 
     public DatabasePopulator insertProjectArticles() {
         Random random = new Random();
-
-        for (Project project : _projectRepository.active(new PageRequest(0, 10))) {
+        for (Project project : _projectRepository.findAll()) {
             for (int i = 0; i < 3; i++) {
                 long randomAmount = random.nextInt(500);
 
@@ -200,6 +203,11 @@ public class DatabasePopulator {
     private Iterable<TreeType> loadTreeTypes() {
         Verify.verify(_treeTypeRepository.count() > 0, "No TreeTypes set up!");
         return _treeTypeRepository.findAll();
+    }
+
+    private Iterable<ProjectArticle> loadProjectArticles() {
+        Verify.verify(_projectArticleRepository.count() > 0, "No ProjectArticles set up!");
+        return _projectArticleRepository.findAll();
     }
 
     private Price createPrice() {

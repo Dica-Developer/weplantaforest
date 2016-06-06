@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,6 +27,9 @@ public class ProjectReportRepositoryIntegrationTest {
     @Rule
     @Autowired
     public CleanDbRule _cleanDbRule;
+
+    @Autowired
+    public DatabasePopulator _databasePopulator;
 
     @Autowired
     public DbInjecter _dbInjecter;
@@ -368,6 +372,19 @@ public class ProjectReportRepositoryIntegrationTest {
     }
 
     @Test
+    public void testGetAllProjectsFromDatabasePopulatorInjection() {
+        _databasePopulator.insertUsers()
+                          .insertDefaultTreeTypes()
+                          .insertProjects()
+                          .insertProjectArticles();
+
+        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 10));
+
+        assertThat(projects.getTotalElements()).isEqualTo(10);
+        assertThat(projects.getNumberOfElements()).isEqualTo(10);
+    }
+
+    @Test
     public void testGetProjectByProjectName() {
         long timeOfPlanting = System.currentTimeMillis();
 
@@ -396,5 +413,36 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(project.getAmountOfPlantedTrees()).isEqualTo(100);
 
     }
+    
+    @Test
+    public void testGetProjectByProjectNameFalse() {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
+        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
+
+        _dbInjecter.injectUser("Adam");
+
+        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", false, 1.0f, 2.0f);
+
+        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
+        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
+        _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
+
+        ProjectReportData project = _projectReportRepository.getProjectDataByProjectName("Project A");
+
+        assertThat(project.getProjectName()).isEqualTo("Project A");
+        assertThat(project.getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(project.getDescription()).isEqualTo("projectdesc");
+        assertThat(project.getLatitude()).isEqualTo(1.0f);
+        assertThat(project.getLongitude()).isEqualTo(2.0f);
+        assertThat(project.getAmountOfMaximumTreesToPlant()).isEqualTo(300);
+        assertThat(project.getAmountOfPlantedTrees()).isEqualTo(100);
+
+    }
+
 
 }
