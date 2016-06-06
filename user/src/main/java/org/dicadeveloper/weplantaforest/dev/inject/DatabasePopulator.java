@@ -185,18 +185,15 @@ public class DatabasePopulator {
     }
 
     public DatabasePopulator insertProjectArticles() {
-        Random random = new Random();
         for (Project project : _projectRepository.findAll()) {
             for (int i = 0; i < 3; i++) {
-                long randomAmount = random.nextInt(500);
-
                 Price price = createPrice();
 
                 ProjectArticle plantArticle = new ProjectArticle();
                 plantArticle.setTreeType(_treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(i)));
                 plantArticle.setProject(project);
                 plantArticle.setPrice(price);
-                plantArticle.setAmount(randomAmount);
+                plantArticle.setAmount(10000L);
                 _projectArticleRepository.save(plantArticle);
             }
         }
