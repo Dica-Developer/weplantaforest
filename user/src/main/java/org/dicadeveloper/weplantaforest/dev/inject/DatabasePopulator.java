@@ -62,8 +62,8 @@ public class DatabasePopulator {
     public DatabasePopulator insertProjects() {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
-           
-            String projectName = "Project " + i + " von " + DEFAULT_USERS.get(i);
+
+            String projectName = "Project " + (i + 1) + " von " + DEFAULT_USERS.get(i);
             Project project = new Project();
             project.setName(projectName);
             project.setManager(_userRepository.findByName(DEFAULT_USERS.get(i)));
