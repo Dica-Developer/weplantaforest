@@ -8,6 +8,7 @@ import java.util.Random;
 
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
+import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.projects.PriceRepository;
@@ -151,12 +152,15 @@ public class DatabasePopulator {
     }
 
     public DatabasePopulator insertUsers() {
-        DEFAULT_USERS.forEach((userName) -> {
+        long timeNoew = System.currentTimeMillis();
+
+        for (int i = 0; i < DEFAULT_USERS.size(); i++) {
             User user = new User();
-            user.setName(userName);
+            user.setName(DEFAULT_USERS.get(i));
             user.setEnabled(true);
+            user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
             _userRepository.save(user);
-        });
+        }
         return this;
     }
 
