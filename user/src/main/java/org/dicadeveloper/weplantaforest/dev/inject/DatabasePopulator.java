@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.dev.inject;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -160,6 +159,7 @@ public class DatabasePopulator {
         Iterator<TreeType> cyclingTreeTypes = Iterators.cycle(loadTreeTypes());
         Iterator<User> cyclingUsers = Iterators.cycle(loadUsers());
         Iterator<ProjectArticle> cyclingProjectArticles = Iterators.cycle(loadProjectArticles());
+        long timeOfPlant = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
             Tree treeDto = new Tree();
             treeDto.setAmount(i % 20);
@@ -167,7 +167,7 @@ public class DatabasePopulator {
             treeDto.setLongitude(i);
             treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next()
                                                                                .getName()));
-            treeDto.setPlantedOn(new Date(i + 1000000L).getTime());
+            treeDto.setPlantedOn(timeOfPlant - i * 1000000L);
             treeDto.setOwner(cyclingUsers.next());
             treeDto.setProjectArticle(cyclingProjectArticles.next());
             _treeRepository.save(treeDto);
