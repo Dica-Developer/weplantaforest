@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -52,6 +53,9 @@ public class DatabasePopulatorTest {
 
     @Autowired
     private ProjectImageRepository _projectImageRepository;
+    
+    @Autowired
+    private TeamRepository _teamRepository;
 
     @Test
     public void testInsertUsers() throws Exception {
@@ -107,4 +111,13 @@ public class DatabasePopulatorTest {
 
         assertThat(_projectImageRepository.count()).isEqualTo(50);
     }
+    
+    @Test
+    public void testInsertTeams() {
+        _databasePopulator.insertUsers();
+        _databasePopulator.insertTeams();
+
+        assertThat(_teamRepository.count()).isEqualTo(3);
+    }
+    
 }

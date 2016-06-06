@@ -1,10 +1,13 @@
 package org.dicadeveloper.weplantaforest.dev.inject;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import org.dicadeveloper.weplantaforest.admin.codes.Team;
+import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.projects.PriceRepository;
@@ -44,10 +47,11 @@ public class DatabasePopulator {
     private ProjectArticleRepository _projectArticleRepository;
     private PriceRepository _priceRepository;
     private ProjectImageRepository _projectImageRepository;
+    private TeamRepository _teamRepository;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
-            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository) {
+            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -55,6 +59,7 @@ public class DatabasePopulator {
         _projectArticleRepository = projectArticleRepository;
         _priceRepository = priceRepository;
         _projectImageRepository = projectImageRepository;
+        _teamRepository = teamRepository;
     }
 
     public DatabasePopulator insertProjects() {
@@ -235,6 +240,34 @@ public class DatabasePopulator {
                 projectImage.setProject(_projectRepository.findOne((long) i));
                 _projectImageRepository.save(projectImage);
             }
+        }
+
+        return this;
+    }
+
+    public DatabasePopulator insertTeams() {
+        for (int i = 1; i <= 3; i++) {
+            Team team = new Team();
+            User admin = _userRepository.findByName(DEFAULT_USERS.get(i * 3));
+
+            team.setName("Team " + i);
+            team.setAdmin(admin);
+
+            List<User> teamMember = new ArrayList<User>();
+            for (int j = 1; j <= 2; j++) {
+                teamMember.add(_userRepository.findByName(DEFAULT_USERS.get(i * 3 - j)));
+            }
+
+            team.setMembers(teamMember);
+            _teamRepository.save(team);
+
+            admin.setTeam(team);
+            _userRepository.save(admin);
+            for (User member : team.getMembers()) {
+                member.setTeam(team);
+                _userRepository.save(member);
+            }
+
         }
 
         return this;
