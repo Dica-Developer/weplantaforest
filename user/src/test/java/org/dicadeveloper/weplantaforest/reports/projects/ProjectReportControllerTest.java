@@ -57,8 +57,8 @@ public class ProjectReportControllerTest {
 
         _dbInjecter.injectUser("Adam");
 
-        _dbInjecter.injectProject("Project A", "Adam", "project A desc", true, 1.0f, 2.0f);
         _dbInjecter.injectProject("Project B", "Adam", "project B desc", true, 3.0f, 4.0f);
+        _dbInjecter.injectProject("Project A", "Adam", "project A desc", true, 1.0f, 2.0f);
 
         _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
         _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);

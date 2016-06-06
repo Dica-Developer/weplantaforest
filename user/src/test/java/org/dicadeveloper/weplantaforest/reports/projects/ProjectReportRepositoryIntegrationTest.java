@@ -175,8 +175,8 @@ public class ProjectReportRepositoryIntegrationTest {
 
         _dbInjecter.injectUser("Adam");
 
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
         _dbInjecter.injectProject("Project B", "Adam", "projectdesc", true, 1.0f, 2.0f);
+        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
 
         _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
         _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
@@ -240,8 +240,8 @@ public class ProjectReportRepositoryIntegrationTest {
 
         _dbInjecter.injectUser("Adam");
 
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
         _dbInjecter.injectProject("Project B", "Adam", "projectdesc", true, 1.0f, 2.0f);
+        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
 
         _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
         _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
@@ -312,8 +312,8 @@ public class ProjectReportRepositoryIntegrationTest {
 
         _dbInjecter.injectUser("Adam");
 
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
         _dbInjecter.injectProject("Project B", "Adam", "projectdesc", true, 1.0f, 2.0f);
+        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
 
         _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
         _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
