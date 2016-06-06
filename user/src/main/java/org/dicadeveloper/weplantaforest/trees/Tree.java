@@ -43,6 +43,8 @@ public class Tree implements Identifiable<Long> {
     private long submittedOn;
     @Column(name = "_plantedOn")
     private long plantedOn;
+    @Column(name ="_desc", columnDefinition = "TEXT")
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "_owner__userId")
