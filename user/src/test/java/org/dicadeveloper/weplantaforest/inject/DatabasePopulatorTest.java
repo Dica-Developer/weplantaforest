@@ -18,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -80,6 +79,8 @@ public class DatabasePopulatorTest {
     public void testInsertTrees() throws Exception {
         _databasePopulator.insertUsers();
         _databasePopulator.insertDefaultTreeTypes();
+        _databasePopulator.insertProjects();
+        _databasePopulator.insertProjectArticles();
         _databasePopulator.insertTrees(1000);
         assertThat(_treeRepository.count()).isEqualTo(1000);
     }
@@ -91,8 +92,7 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertProjects();
         _databasePopulator.insertProjectArticles();
 
-        long activeProjectCount = _projectRepository.active(new PageRequest(0, 5))
-                                                    .getTotalElements();
+        long activeProjectCount = _projectRepository.count();
 
         assertThat(_projectArticleRepository.count()).isEqualTo(activeProjectCount * 3);
 
