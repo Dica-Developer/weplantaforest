@@ -35,6 +35,7 @@ public class Tree implements Identifiable<Long> {
     @Id
     @GeneratedValue
     @Column(name = "_treeId")
+    @JsonView(Views.PlantedTree.class)
     private Long id;
 
     @Column(name = "_amount")

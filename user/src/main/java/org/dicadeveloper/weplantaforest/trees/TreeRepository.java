@@ -2,14 +2,14 @@ package org.dicadeveloper.weplantaforest.trees;
 
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository("treeRepository")
 @Transactional
-public interface TreeRepository extends CrudRepository<Tree, Long> {
+public interface TreeRepository extends PagingAndSortingRepository<Tree, Long> {
 
     public final static String FIND_TREETYPE_ID_BY_TREE_ID_QUERY = "SELECT tree.treeType.id  FROM Tree tree WHERE tree.id = :id";
 
