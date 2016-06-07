@@ -49,5 +49,9 @@ public class Uris {
     public final static String TREE = "/tree/";
     
     public final static String TREES = "/trees";
+    
+    public final static String TREES_BY_USER = "/trees/owner/";
+    
+    public final static String TREES_BY_PROJECT = "/trees/project/";
 
 }

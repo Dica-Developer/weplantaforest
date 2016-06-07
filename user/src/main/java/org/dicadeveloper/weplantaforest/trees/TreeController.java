@@ -38,10 +38,18 @@ public class TreeController {
         return _treeRepository.findAll(new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
 
-    @RequestMapping(value = Uris.TREES + "/{ownerId}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.TREES_BY_USER + "{ownerId}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Page<Tree> findTreesByOwnerId(@PathVariable("ownerId") long ownerId, @Param("page") int page, @Param("size") int size) {
         return _treeRepository.findTreesByUserId(ownerId, new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
+    
+    @RequestMapping(value = Uris.TREES_BY_PROJECT + "{projectId}", method = RequestMethod.GET)
+    @JsonView(Views.PlantedTree.class)
+    public Page<Tree> findTreesByProjectId(@PathVariable("projectId") long projectId, @Param("page") int page, @Param("size") int size) {
+        return _treeRepository.findTreesByProjectId(projectId, new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
+    }
+    
+    
 
 }

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
@@ -153,7 +154,7 @@ public class TreeControllerTest {
         dbInjecter.injectTree("wood4", "Adam", 7, 70000);
         dbInjecter.injectTree("wood4", "Bert", 8, 80000);
 
-        this.mockMvc.perform(get((Uris.TREES + "/{ownerId}?page=0&size=2"), 1).accept("application/json"))
+        this.mockMvc.perform(get((Uris.TREES_BY_USER + "{ownerId}?page=0&size=2"), 1).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.totalElements").value(4))
                     .andExpect(jsonPath("$.totalPages").value(2))
@@ -170,12 +171,12 @@ public class TreeControllerTest {
 
                     .andExpect(jsonPath("$.content[1].id").value(5))
                     .andExpect(jsonPath("$.content[1].amount").value(5))
-                    .andExpect(jsonPath("$.content[1].submittedOn").value(90000))
-                    .andExpect(jsonPath("$.content[1].plantedOn").value(90000))
+                    .andExpect(jsonPath("$.content[1].submittedOn").value(50000))
+                    .andExpect(jsonPath("$.content[1].plantedOn").value(50000))
                     .andExpect(jsonPath("$.content[1].owner.name").value("Adam"))
                     .andExpect(jsonPath("$.content[1].treeType.name").value("wood3"));
 
-        this.mockMvc.perform(get((Uris.TREES + "/{ownerId}?page=0&size=2"), 2).accept("application/json"))
+        this.mockMvc.perform(get((Uris.TREES_BY_USER + "{ownerId}?page=0&size=2"), 2).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.totalElements").value(4))
                     .andExpect(jsonPath("$.totalPages").value(2))
@@ -196,6 +197,92 @@ public class TreeControllerTest {
                     .andExpect(jsonPath("$.content[1].plantedOn").value(60000))
                     .andExpect(jsonPath("$.content[1].owner.name").value("Bert"))
                     .andExpect(jsonPath("$.content[1].treeType.name").value("wood3"));
+    }
+
+    @Test
+    @Transactional
+    public void testGetPagedTreesByProjectId() throws Exception {
+        long timeNow = System.currentTimeMillis();
+
+        dbInjecter.injectUser("Adam");
+        dbInjecter.injectUser("Bert");
+
+        dbInjecter.injectTreeType("wood", "this is wood", 0.5);
+        dbInjecter.injectTreeType("wood4", "this is wood", 0.5);
+
+        dbInjecter.injectProject("Project A", "Adam", "project a desc", true, 1.0f, 2.0f);
+        dbInjecter.injectProject("Project B", "Bert", "project b desc", true, 3.0f, 4.0f);
+
+        dbInjecter.injectProjectArticle("wood", "Project A", 1.0);
+        dbInjecter.injectProjectArticle("wood4", "Project A", 1.0);
+        dbInjecter.injectProjectArticle("wood", "Project B", 1.0);
+        dbInjecter.injectProjectArticle("wood4", "Project B", 1.0);
+
+        dbInjecter.injectTreeToProject("wood", "Adam", 1, timeNow - TimeConstants.WEEK_IN_MILLISECONDS, "Project A");
+        dbInjecter.injectTreeToProject("wood", "Bert", 2, timeNow - 2 * TimeConstants.WEEK_IN_MILLISECONDS, "Project A");
+        dbInjecter.injectTreeToProject("wood4", "Adam", 3, timeNow - 3 * TimeConstants.WEEK_IN_MILLISECONDS, "Project A");
+
+        dbInjecter.injectTreeToProject("wood", "Bert", 4, timeNow - TimeConstants.WEEK_IN_MILLISECONDS, "Project B");
+        dbInjecter.injectTreeToProject("wood", "Adam", 5, timeNow - 2 * TimeConstants.WEEK_IN_MILLISECONDS, "Project B");
+        dbInjecter.injectTreeToProject("wood4", "Bert", 6, timeNow - 3 * TimeConstants.WEEK_IN_MILLISECONDS, "Project B");
+
+        this.mockMvc.perform(get((Uris.TREES_BY_PROJECT + "{projectId}?page=0&size=3"), 1).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.totalElements").value(3))
+                    .andExpect(jsonPath("$.totalPages").value(1))
+                    .andExpect(jsonPath("$.numberOfElements").value(3))
+                    .andExpect(jsonPath("$.last").value(true))
+                    .andExpect(jsonPath("$.first").value(true))
+
+                    .andExpect(jsonPath("$.content[0].id").value(1))
+                    .andExpect(jsonPath("$.content[0].amount").value(1))
+                    .andExpect(jsonPath("$.content[0].submittedOn").value(timeNow - TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[0].plantedOn").value(timeNow - TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[0].owner.name").value("Adam"))
+                    .andExpect(jsonPath("$.content[0].treeType.name").value("wood"))
+
+                    .andExpect(jsonPath("$.content[1].id").value(2))
+                    .andExpect(jsonPath("$.content[1].amount").value(2))
+                    .andExpect(jsonPath("$.content[1].submittedOn").value(timeNow - 2 * TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[1].plantedOn").value(timeNow - 2 * TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[1].owner.name").value("Bert"))
+                    .andExpect(jsonPath("$.content[1].treeType.name").value("wood"))
+
+                    .andExpect(jsonPath("$.content[2].id").value(3))
+                    .andExpect(jsonPath("$.content[2].amount").value(3))
+                    .andExpect(jsonPath("$.content[2].submittedOn").value(timeNow - 3 * TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[2].plantedOn").value(timeNow - 3 * TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[2].owner.name").value("Adam"))
+                    .andExpect(jsonPath("$.content[2].treeType.name").value("wood4"));
+
+        this.mockMvc.perform(get((Uris.TREES_BY_PROJECT + "{projectId}?page=0&size=3"), 2).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.totalElements").value(3))
+                    .andExpect(jsonPath("$.totalPages").value(1))
+                    .andExpect(jsonPath("$.numberOfElements").value(3))
+                    .andExpect(jsonPath("$.last").value(true))
+                    .andExpect(jsonPath("$.first").value(true))
+
+                    .andExpect(jsonPath("$.content[0].id").value(4))
+                    .andExpect(jsonPath("$.content[0].amount").value(4))
+                    .andExpect(jsonPath("$.content[0].submittedOn").value(timeNow - TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[0].plantedOn").value(timeNow - TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[0].owner.name").value("Bert"))
+                    .andExpect(jsonPath("$.content[0].treeType.name").value("wood"))
+
+                    .andExpect(jsonPath("$.content[1].id").value(5))
+                    .andExpect(jsonPath("$.content[1].amount").value(5))
+                    .andExpect(jsonPath("$.content[1].submittedOn").value(timeNow - 2 * TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[1].plantedOn").value(timeNow - 2 * TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[1].owner.name").value("Adam"))
+                    .andExpect(jsonPath("$.content[1].treeType.name").value("wood"))
+
+                    .andExpect(jsonPath("$.content[2].id").value(6))
+                    .andExpect(jsonPath("$.content[2].amount").value(6))
+                    .andExpect(jsonPath("$.content[2].submittedOn").value(timeNow - 3 * TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[2].plantedOn").value(timeNow - 3 * TimeConstants.WEEK_IN_MILLISECONDS))
+                    .andExpect(jsonPath("$.content[2].owner.name").value("Bert"))
+                    .andExpect(jsonPath("$.content[2].treeType.name").value("wood4"));
 
     }
 
