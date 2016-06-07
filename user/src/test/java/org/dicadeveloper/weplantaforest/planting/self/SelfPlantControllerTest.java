@@ -5,11 +5,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
-import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,6 +27,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -53,48 +58,67 @@ public class SelfPlantControllerTest {
     }
 
     @Test
+    @Transactional
     public void testSelfPlantStatusOk() throws Exception {
         dbInjecter.injectUser("Adam");
         dbInjecter.injectTreeType("wood", "this is wood", 0.5);
-        long plantedOn = System.currentTimeMillis() - TimeConstants.YEAR_IN_MILLISECONDS;
+        
+        String jsonString = "{  \"amount\": 10,  \"longitude\": 1.0, \"latitude\": 2.0, \"plantedOn\": 100000, \"description\": \"description\", \"owner\": { \"id\": 1 },\"treeType\": {\"id\": 1}}";
 
-        SelfPlantData selfPlantData = new SelfPlantData();
+        ObjectMapper mapper = new ObjectMapper();
 
-        selfPlantData.setOwner("Adam");
-        selfPlantData.setPlantedOn(plantedOn);
-        selfPlantData.setAmount(10);
-        selfPlantData.setTreeType("wood");
-        selfPlantData.setDescription("I planted a tree by myself in my garden.");
-        selfPlantData.setLongitude(1.0f);
-        selfPlantData.setLatitude(2.0f);
+        Tree treeObject = mapper.readValue(jsonString, Tree.class);
 
-        this.mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
+        long timeNow = System.currentTimeMillis();
+        this.mockMvc.perform(post(Uris.PLANT_SELF).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                  .content(TestUtil.convertObjectToJsonBytes(treeObject)))
                     .andExpect(status().isOk());
         assertThat(_treeRepository.count()).isEqualTo(1L);
+
+        Tree savedTree = _treeRepository.findOne(1L);
+
+        assertThat(savedTree.getAmount()).isEqualTo(10);
+        assertThat(savedTree.getLongitude()).isEqualTo(1.0f);
+        assertThat(savedTree.getLatitude()).isEqualTo(2.0f);
+        assertThat(savedTree.getPlantedOn()).isEqualTo(100000);
+        assertThat(savedTree.getSubmittedOn()).isStrictlyBetween(timeNow - 10000, timeNow + 10000);
+        assertThat(savedTree.getDescription()).isEqualTo("description");
+        assertThat(savedTree.getOwner()
+                            .getName()).isEqualTo("Adam");
+        assertThat(savedTree.getTreeType()
+                            .getName()).isEqualTo("wood");
+
     }
 
     @Test
-    public void testSelfPlantStatusBadRequest() throws Exception {
+    public void testSelfPlantStatusBadRequestCauseOfAmountHigherTen() throws Exception {
         dbInjecter.injectUser("Adam");
         dbInjecter.injectTreeType("wood", "this is wood", 0.5);
-        long plantedOn = System.currentTimeMillis() - TimeConstants.YEAR_IN_MILLISECONDS;
+        
+        String jsonString = "{  \"amount\": 11,  \"longitude\": 1.0, \"latitude\": 2.0, \"plantedOn\": 100000, \"description\": \"description\", \"owner\": { \"id\": 1 },\"treeType\": {\"id\": 1}}";
+        ObjectMapper mapper = new ObjectMapper();
 
-        SelfPlantData selfPlantData = new SelfPlantData();
+        Tree treeObject = mapper.readValue(jsonString, Tree.class);
 
-        selfPlantData.setOwner("Adam");
-        selfPlantData.setPlantedOn(plantedOn);
-        selfPlantData.setAmount(12);
-        selfPlantData.setTreeType("wood");
-        selfPlantData.setDescription("I planted a tree by myself in my garden.");
-        selfPlantData.setLongitude(1.0f);
-        selfPlantData.setLatitude(2.0f);
-
-        this.mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
+        this.mockMvc.perform(post(Uris.PLANT_SELF).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                  .content(TestUtil.convertObjectToJsonBytes(treeObject)))
                     .andExpect(status().isBadRequest());
-
         assertThat(_treeRepository.count()).isEqualTo(0);
     }
+    
+    @Test
+    public void testSelfPlantStatusBadRequestCauseOfAmountLowerOne() throws Exception {
+        dbInjecter.injectUser("Adam");
+        dbInjecter.injectTreeType("wood", "this is wood", 0.5);
+        
+        String jsonString = "{  \"amount\": 0,  \"longitude\": 1.0, \"latitude\": 2.0, \"plantedOn\": 100000, \"description\": \"description\", \"owner\": { \"id\": 1 },\"treeType\": {\"id\": 1}}";
+        ObjectMapper mapper = new ObjectMapper();
 
+        Tree treeObject = mapper.readValue(jsonString, Tree.class);
+
+        this.mockMvc.perform(post(Uris.PLANT_SELF).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                  .content(TestUtil.convertObjectToJsonBytes(treeObject)))
+                    .andExpect(status().isBadRequest());
+        assertThat(_treeRepository.count()).isEqualTo(0);
+    }
 }

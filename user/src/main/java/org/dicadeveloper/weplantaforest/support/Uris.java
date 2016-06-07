@@ -9,6 +9,8 @@ public class Uris {
     public final static String SIMPLE_PROPOSAL_FOR_TREE = "/simplePlantProposalForTrees/";
 
     public final static String SIMPLE_DONATION = "/simpleDonateTrees";
+    
+    public final static String PLANT_SELF = "/plantSelf";
 
     public final static String REPORT_CO2 = "/reports/co2";
 
