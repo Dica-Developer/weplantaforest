@@ -28,14 +28,20 @@ public class TreeController {
 
     @RequestMapping(value = Uris.TREE + "{id}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
-    public Tree list(@PathVariable("id") int id) {
-        return _treeRepository.findOne((long) id);
+    public Tree list(@PathVariable("id") long id) {
+        return _treeRepository.findOne(id);
     }
 
     @RequestMapping(value = Uris.TREES, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Page<Tree> list(@Param("page") int page, @Param("size") int size) {
         return _treeRepository.findAll(new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
+    }
+
+    @RequestMapping(value = Uris.TREES + "/{ownerId}", method = RequestMethod.GET)
+    @JsonView(Views.PlantedTree.class)
+    public Page<Tree> findTreesByOwnerId(@PathVariable("ownerId") long ownerId, @Param("page") int page, @Param("size") int size) {
+        return _treeRepository.findTreesByUserId(ownerId, new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
 
 }

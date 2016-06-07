@@ -59,8 +59,8 @@ public class TreeControllerTest {
         dbInjecter.injectTree("wood", "Adam", 1, 10000);
 
         assertThat(_treeRepository.count()).isEqualTo(1L);
-        
-        this.mockMvc.perform(get((Uris.TREE +"{id}"), 1).accept("application/json"))
+
+        this.mockMvc.perform(get((Uris.TREE + "{id}"), 1).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value(1))
                     .andExpect(jsonPath("$.amount").value(1))
@@ -72,34 +72,34 @@ public class TreeControllerTest {
                     .andExpect(jsonPath("$.owner.name").value("Adam"))
                     .andExpect(jsonPath("$.treeType.name").value("wood"));
     }
-    
+
     @Test
     @Transactional
     public void testGetPagedTrees() throws Exception {
         dbInjecter.injectUser("Adam");
         dbInjecter.injectUser("Bert");
-        
+
         dbInjecter.injectTreeType("wood", "this is wood", 0.5);
         dbInjecter.injectTreeType("wood2", "this is wood", 0.5);
         dbInjecter.injectTreeType("wood3", "this is wood", 0.5);
         dbInjecter.injectTreeType("wood4", "this is wood", 0.5);
         dbInjecter.injectTreeType("wood5", "this is wood", 0.5);
- 
+
         dbInjecter.injectTree("wood", "Adam", 1, 10000);
         dbInjecter.injectTree("wood", "Bert", 2, 20000);
-        
+
         dbInjecter.injectTree("wood2", "Adam", 3, 30000);
         dbInjecter.injectTree("wood2", "Bert", 4, 40000);
-        
+
         dbInjecter.injectTree("wood3", "Adam", 5, 50000);
         dbInjecter.injectTree("wood3", "Bert", 6, 60000);
-        
+
         dbInjecter.injectTree("wood4", "Adam", 7, 70000);
         dbInjecter.injectTree("wood4", "Bert", 8, 80000);
-        
+
         dbInjecter.injectTree("wood5", "Adam", 9, 90000);
-        dbInjecter.injectTree("wood5", "Bert",10, 100000);
-        
+        dbInjecter.injectTree("wood5", "Bert", 10, 100000);
+
         this.mockMvc.perform(get(Uris.TREES + "?page=0&size=5").accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.totalElements").value(10))
@@ -107,27 +107,96 @@ public class TreeControllerTest {
                     .andExpect(jsonPath("$.numberOfElements").value(5))
                     .andExpect(jsonPath("$.last").value(false))
                     .andExpect(jsonPath("$.first").value(true))
-                    
+
                     .andExpect(jsonPath("$.content[0].id").value(10))
                     .andExpect(jsonPath("$.content[0].amount").value(10))
                     .andExpect(jsonPath("$.content[0].submittedOn").value(100000))
                     .andExpect(jsonPath("$.content[0].plantedOn").value(100000))
                     .andExpect(jsonPath("$.content[0].owner.name").value("Bert"))
                     .andExpect(jsonPath("$.content[0].treeType.name").value("wood5"))
-                    
+
                     .andExpect(jsonPath("$.content[1].id").value(9))
                     .andExpect(jsonPath("$.content[1].amount").value(9))
                     .andExpect(jsonPath("$.content[1].submittedOn").value(90000))
                     .andExpect(jsonPath("$.content[1].plantedOn").value(90000))
                     .andExpect(jsonPath("$.content[1].owner.name").value("Adam"))
                     .andExpect(jsonPath("$.content[1].treeType.name").value("wood5"))
-                    
+
                     .andExpect(jsonPath("$.content[4].id").value(6))
                     .andExpect(jsonPath("$.content[4].amount").value(6))
                     .andExpect(jsonPath("$.content[4].submittedOn").value(60000))
                     .andExpect(jsonPath("$.content[4].plantedOn").value(60000))
                     .andExpect(jsonPath("$.content[4].owner.name").value("Bert"))
                     .andExpect(jsonPath("$.content[4].treeType.name").value("wood3"));
+    }
+
+    @Test
+    @Transactional
+    public void testGetPagedTreesByOwnerId() throws Exception {
+        dbInjecter.injectUser("Adam");
+        dbInjecter.injectUser("Bert");
+
+        dbInjecter.injectTreeType("wood", "this is wood", 0.5);
+        dbInjecter.injectTreeType("wood2", "this is wood", 0.5);
+        dbInjecter.injectTreeType("wood3", "this is wood", 0.5);
+        dbInjecter.injectTreeType("wood4", "this is wood", 0.5);
+
+        dbInjecter.injectTree("wood", "Adam", 1, 10000);
+        dbInjecter.injectTree("wood", "Bert", 2, 20000);
+
+        dbInjecter.injectTree("wood2", "Adam", 3, 30000);
+        dbInjecter.injectTree("wood2", "Bert", 4, 40000);
+
+        dbInjecter.injectTree("wood3", "Adam", 5, 50000);
+        dbInjecter.injectTree("wood3", "Bert", 6, 60000);
+
+        dbInjecter.injectTree("wood4", "Adam", 7, 70000);
+        dbInjecter.injectTree("wood4", "Bert", 8, 80000);
+
+        this.mockMvc.perform(get((Uris.TREES + "/{ownerId}?page=0&size=2"), 1).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.totalElements").value(4))
+                    .andExpect(jsonPath("$.totalPages").value(2))
+                    .andExpect(jsonPath("$.numberOfElements").value(2))
+                    .andExpect(jsonPath("$.last").value(false))
+                    .andExpect(jsonPath("$.first").value(true))
+
+                    .andExpect(jsonPath("$.content[0].id").value(7))
+                    .andExpect(jsonPath("$.content[0].amount").value(7))
+                    .andExpect(jsonPath("$.content[0].submittedOn").value(70000))
+                    .andExpect(jsonPath("$.content[0].plantedOn").value(70000))
+                    .andExpect(jsonPath("$.content[0].owner.name").value("Adam"))
+                    .andExpect(jsonPath("$.content[0].treeType.name").value("wood4"))
+
+                    .andExpect(jsonPath("$.content[1].id").value(5))
+                    .andExpect(jsonPath("$.content[1].amount").value(5))
+                    .andExpect(jsonPath("$.content[1].submittedOn").value(90000))
+                    .andExpect(jsonPath("$.content[1].plantedOn").value(90000))
+                    .andExpect(jsonPath("$.content[1].owner.name").value("Adam"))
+                    .andExpect(jsonPath("$.content[1].treeType.name").value("wood3"));
+
+        this.mockMvc.perform(get((Uris.TREES + "/{ownerId}?page=0&size=2"), 2).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.totalElements").value(4))
+                    .andExpect(jsonPath("$.totalPages").value(2))
+                    .andExpect(jsonPath("$.numberOfElements").value(2))
+                    .andExpect(jsonPath("$.last").value(false))
+                    .andExpect(jsonPath("$.first").value(true))
+
+                    .andExpect(jsonPath("$.content[0].id").value(8))
+                    .andExpect(jsonPath("$.content[0].amount").value(8))
+                    .andExpect(jsonPath("$.content[0].submittedOn").value(80000))
+                    .andExpect(jsonPath("$.content[0].plantedOn").value(80000))
+                    .andExpect(jsonPath("$.content[0].owner.name").value("Bert"))
+                    .andExpect(jsonPath("$.content[0].treeType.name").value("wood4"))
+
+                    .andExpect(jsonPath("$.content[1].id").value(6))
+                    .andExpect(jsonPath("$.content[1].amount").value(6))
+                    .andExpect(jsonPath("$.content[1].submittedOn").value(60000))
+                    .andExpect(jsonPath("$.content[1].plantedOn").value(60000))
+                    .andExpect(jsonPath("$.content[1].owner.name").value("Bert"))
+                    .andExpect(jsonPath("$.content[1].treeType.name").value("wood3"));
+
     }
 
 }
