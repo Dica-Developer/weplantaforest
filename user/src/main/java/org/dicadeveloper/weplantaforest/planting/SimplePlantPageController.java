@@ -12,6 +12,7 @@ import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,13 +39,13 @@ public class SimplePlantPageController {
     private @NonNull TreeRepository _treeRepository;
 
     @RequestMapping(value = Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", method = RequestMethod.GET)
+    @Transactional
     public SimplePlantPageData getCartProposalForAmountOfTrees(@PathVariable long amountOfTrees) {
         return simplePlantPageDataHelper.createPlantProposalForAmountOfTrees(amountOfTrees);
     }
 
     @RequestMapping(value = Uris.SIMPLE_DONATION, method = RequestMethod.POST)
     public ResponseEntity<?> processPlant(@RequestBody SimplePlantPageData plantPageData) {
-
         if (_simplePlantPageDataValidator.isPlantPageDataValid(plantPageData)) {
             Cart cart = plantPageToCartConverter.convertSimplePlantPageDataToCart(plantPageData);
             _cartRepository.save(cart);

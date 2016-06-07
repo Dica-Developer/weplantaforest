@@ -14,7 +14,10 @@ import javax.validation.constraints.Min;
 
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,32 +40,40 @@ public class Tree implements Identifiable<Long> {
     @Column(name = "_amount")
     @Min(1)
     @Max(10)
+    @JsonView(Views.PlantedTree.class)
     private int amount;
 
     @Column(name = "_imagePath")
     private String imagePath;
 
     @Column(name = "_longitude")
+    @JsonView(Views.PlantedTree.class)
     private float longitude;
  
     @Column(name = "_latitude")
+    @JsonView(Views.PlantedTree.class)
     private float latitude;
 
     @Column(name = "_submittedOn")
+    @JsonView(Views.PlantedTree.class)
     private long submittedOn;
 
     @Column(name = "_plantedOn")
+    @JsonView(Views.PlantedTree.class)
     private long plantedOn;
 
     @Column(name ="_desc", columnDefinition = "TEXT")
+    @JsonView(Views.PlantedTree.class)
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "_owner__userId")
+    @JsonView(Views.PlantedTree.class)
     private User owner;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
     @JoinColumn(name = "_treeType_treeTypeId")
+    @JsonView(Views.PlantedTree.class)
     private TreeType treeType;
 
     @OneToOne(fetch = FetchType.LAZY)
