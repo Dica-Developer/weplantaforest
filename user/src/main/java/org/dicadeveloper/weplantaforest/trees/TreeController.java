@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.trees;
 
+import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,13 +26,13 @@ public class TreeController {
     @Autowired
     private @NonNull TreeRepository _treeRepository;
 
-    @RequestMapping(value = "/tree/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.TREE + "{id}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Tree list(@PathVariable("id") int id) {
         return _treeRepository.findOne((long) id);
     }
 
-    @RequestMapping(value = "/trees", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.TREES, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Page<Tree> list(@Param("page") int page, @Param("size") int size) {
         return _treeRepository.findAll(new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));

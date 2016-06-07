@@ -2,6 +2,8 @@ package org.dicadeveloper.weplantaforest.support;
 
 public class Uris {
 
+    //Planting urls
+    
     public final static String COMPLEX_PROPOSAL_FOR_PRICE = "/plantProposal/";
 
     public final static String COMPLEX_DONATION = "/donateTrees";
@@ -12,13 +14,19 @@ public class Uris {
     
     public final static String PLANT_SELF = "/plantSelf";
 
+    //Co2 report url
+    
     public final static String REPORT_CO2 = "/reports/co2";
 
+    //project urls
+    
     public final static String REPORT_ACTIVE_PROJECTS = "/reports/activeProjects";
     
     public final static String PROJECT_SEARCH_NAME = "/projects/search/name/";
 
     public final static String PROJECT_IMAGE = "/project/image/";
+    
+    //ranking urls
     
     public final static String RANKING_BEST_USER = "/ranking/bestUser";
 
@@ -32,6 +40,14 @@ public class Uris {
 
     public final static String RANKING_BEST_USER_FOR_TIMERANGE = "/ranking/bestUserFromTimeRange/";
     
+    //image url
+    
     public final static String IMAGE = "/image/";
+    
+    //planted tree urls
+    
+    public final static String TREE = "/tree/";
+    
+    public final static String TREES = "/trees/";
 
 }

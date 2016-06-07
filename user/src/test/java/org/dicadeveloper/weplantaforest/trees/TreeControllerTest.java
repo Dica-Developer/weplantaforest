@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Before;
 import org.junit.Rule;
@@ -59,7 +60,7 @@ public class TreeControllerTest {
 
         assertThat(_treeRepository.count()).isEqualTo(1L);
         
-        this.mockMvc.perform(get("/tree/1").accept("application/json"))
+        this.mockMvc.perform(get((Uris.TREE +"{id}"), 1).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value(1))
                     .andExpect(jsonPath("$.amount").value(1))
@@ -99,7 +100,7 @@ public class TreeControllerTest {
         dbInjecter.injectTree("wood5", "Adam", 9, 90000);
         dbInjecter.injectTree("wood5", "Bert",10, 100000);
         
-        this.mockMvc.perform(get("/trees?page=0&size=5").accept("application/json"))
+        this.mockMvc.perform(get(Uris.TREES + "?page=0&size=5").accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.totalElements").value(10))
                     .andExpect(jsonPath("$.totalPages").value(2))
