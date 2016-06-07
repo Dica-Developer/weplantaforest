@@ -33,20 +33,27 @@ public class Tree implements Identifiable<Long> {
     @GeneratedValue
     @Column(name = "_treeId")
     private Long id;
+
     @Column(name = "_amount")
     @Min(1)
     @Max(10)
     private int amount;
+
     @Column(name = "_imagePath")
     private String imagePath;
+
     @Column(name = "_longitude")
     private float longitude;
+ 
     @Column(name = "_latitude")
     private float latitude;
+
     @Column(name = "_submittedOn")
     private long submittedOn;
+
     @Column(name = "_plantedOn")
     private long plantedOn;
+
     @Column(name ="_desc", columnDefinition = "TEXT")
     private String description;
 
