@@ -27,7 +27,7 @@ export default class NavBar extends Component {
           <Link to="/plant">Pflanzen</Link>
         </li>
         <li>
-          <Link to={`/explore`}>Entdecken</Link>
+          <Link to={'/explore'}>Entdecken</Link>
         </li>
       </ul>
       <form className="navbar-form navbar-left" role="search">
