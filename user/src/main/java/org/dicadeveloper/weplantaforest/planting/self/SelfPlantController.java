@@ -5,10 +5,6 @@ import javax.validation.Valid;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
-import org.dicadeveloper.weplantaforest.trees.User;
-import org.dicadeveloper.weplantaforest.trees.UserRepository;
-import org.dicadeveloper.weplantaforest.treetypes.TreeType;
-import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,29 +18,18 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class SelfPlantController {
+
+    private @NonNull SelfPlantDataToTreeConverter _selfPlantDataToTreeConverter;
 
     private @NonNull TreeRepository _treeRepository;
 
-    private @NonNull UserRepository _userRepository;
-
-    private @NonNull TreeTypeRepository _treeTypeRepository;
-
     @RequestMapping(value = Uris.PLANT_SELF, method = RequestMethod.POST)
-    public ResponseEntity<?> plantTreesByMyself(@Valid @RequestBody Tree selfPlantedTree, BindingResult bindingResult) {
+    public ResponseEntity<?> plantTreesByMyself(@Valid @RequestBody SelfPlantData selfPlantedTree, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            User owner = _userRepository.findOne(selfPlantedTree.getOwner()
-                                                                .getId());
-            TreeType treeType = _treeTypeRepository.findOne(selfPlantedTree.getTreeType()
-                                                                           .getId());
-            selfPlantedTree.setOwner(owner);
-            selfPlantedTree.setTreeType(treeType);
-            
-            long submittedOn = System.currentTimeMillis();
-            selfPlantedTree.setSubmittedOn(submittedOn);
-
-            _treeRepository.save(selfPlantedTree);
+            Tree tree = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantedTree);
+            _treeRepository.save(tree);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
