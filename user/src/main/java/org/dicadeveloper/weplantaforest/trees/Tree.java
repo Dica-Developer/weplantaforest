@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
@@ -39,8 +37,6 @@ public class Tree implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "_amount")
-    @Min(1)
-    @Max(10)
     @JsonView(Views.PlantedTree.class)
     private int amount;
 
