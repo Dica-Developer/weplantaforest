@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -36,7 +37,7 @@ public class ImageHelper {
         return imageBytes;
     }
 
-    public void storeImage(MultipartFile file, String folder, String imageName) throws IOException {
+    public boolean storeImage(MultipartFile file, String folder, String imageName) {
         if (!folderExists(folder)) {
             createNewFolder(folder);
         }
@@ -44,13 +45,34 @@ public class ImageHelper {
             imageName = createNonExistingImageName(folder, imageName);
         }
 
-        byte[] bytes = file.getBytes();
+        byte[] bytes = null;
+        try {
+            bytes = file.getBytes();
+        } catch (IOException e1) {
+            LOG.error("Error occured while applying bytes from imageFile: " + file.getName() + "!");
+            return false;
+        }
 
         File fileToSave = new File(folder, imageName);
+        FileOutputStream fileOutPutStreamfromFileToSave = null;
+       
+        try {
+            fileOutPutStreamfromFileToSave = new FileOutputStream(fileToSave);
+        } catch (FileNotFoundException e) {
+           LOG.error("File not found for " + fileToSave.getPath() + "!");
+           return false;
+        }
 
-        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileToSave));
-        stream.write(bytes);
-        stream.close();
+        BufferedOutputStream stream = new BufferedOutputStream(fileOutPutStreamfromFileToSave);
+        try {
+            stream.write(bytes);
+            stream.close();
+            fileOutPutStreamfromFileToSave.close();
+        } catch (IOException e) {
+            LOG.error("Error occured while writing stream for " + file.getName() + "!");
+            return false;
+        }
+        return true;
     }
 
     private File getImageAsFile(String imageName, String folder) {

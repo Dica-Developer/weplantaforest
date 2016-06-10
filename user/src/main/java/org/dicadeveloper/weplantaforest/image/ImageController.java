@@ -1,7 +1,5 @@
 package org.dicadeveloper.weplantaforest.image;
 
-import java.io.IOException;
-
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -53,13 +51,11 @@ public class ImageController {
         String imageFolder = FileSystemInjector.getImageUploadFolder();
 
         if (!file.isEmpty()) {
-            try {
-                _imageHelper.storeImage(file, imageFolder, imageName);
+            if (_imageHelper.storeImage(file, imageFolder, imageName)) {
                 return new ResponseEntity<>(HttpStatus.OK);
-            } catch (IOException e) {
+            } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
