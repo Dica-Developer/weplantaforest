@@ -2,6 +2,9 @@ package org.dicadeveloper.weplantaforest.inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.File;
+
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication;
 import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
 import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
@@ -59,6 +62,24 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertArticles();
         _databasePopulator.insertParagraphsToArticles();
         assertThat(_paragraphRepository.count()).isEqualTo(300);
+    }
+    
+    @Test
+    public void testcreateProjectFoldersAndInsertMainImages() {
+        _databasePopulator.insertUsers();
+        _databasePopulator.insertArticles();
+        
+        File articleTopFolder = new File(FileSystemInjector.getImageUploadFolder());
+
+        int articleFolderCount = articleTopFolder.listFiles().length;
+        
+        File[] articleFolders = articleTopFolder.listFiles();
+        
+        assertThat(_articleRepository.count()).isEqualTo(articleFolderCount);
+        
+        for(int i = 0; i < articleFolders.length; i++){
+            assertThat(articleFolders[i].listFiles().length).isEqualTo(1);
+        }
     }
 
 }

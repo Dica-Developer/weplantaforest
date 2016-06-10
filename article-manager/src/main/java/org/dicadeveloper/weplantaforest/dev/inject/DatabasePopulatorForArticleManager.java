@@ -1,8 +1,16 @@
 package org.dicadeveloper.weplantaforest.dev.inject;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.articles.Article;
 import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
@@ -23,7 +31,11 @@ import com.google.common.collect.ImmutableList;
 @Service
 public class DatabasePopulatorForArticleManager {
 
+    protected final Log LOG = LogFactory.getLog(DatabasePopulatorForArticleManager.class.getName());
+
     private final static List<String> DEFAULT_USERS = ImmutableList.of("articleManager", "blogManager", "newsManager", "knowledgeManager");
+
+    public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
     private UserRepository _userRepository;
 
@@ -64,7 +76,7 @@ public class DatabasePopulatorForArticleManager {
                 article.setCreatedOn(TimeConstants.YEAR_IN_MILLISECONDS * (i + 1) * 5);
                 article.setTitle("this is article nr " + i + " from " + articleType.toString() + " article");
                 article.setIntro("this is an article about " + articleType.toString());
-                article.setImageFileName("test.jpg");
+                article.setImageFileName("article" + (i + 1) + ".jpg");
                 _articleRepository.save(article);
             }
         }
@@ -86,6 +98,49 @@ public class DatabasePopulatorForArticleManager {
         }
 
         return this;
+    }
+
+    public DatabasePopulatorForArticleManager createArticleImageFoldersAndAddImage() {
+        int articleCnt = 1;
+        for (Article article : _articleRepository.findAll()) {
+            if (articleCnt > 3) {
+                articleCnt = 1;
+            }
+
+            long articleId = article.getId();
+            String imageSrcName = "article" + articleCnt + ".jpg";
+
+            String imageDestName = "article" + articleId + ".jpg";
+
+            createArticleFolder(articleId);
+
+            Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageSrcName).toPath();
+            String imageFileDest = creatImageDestinationPath(articleId, imageDestName);
+
+            createImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
+
+            articleCnt++;
+        }
+
+        return this;
+    }
+
+    private void createArticleFolder(long articleId) {
+        new File(FileSystemInjector.getImageUploadFolder() + "/" + articleId).mkdir();
+    }
+
+    private String creatImageDestinationPath(long articleId, String imageName) {
+        return FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+    }
+
+    private void createImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {
+        try {
+            File newImageFile = new File(destPath);
+            newImageFile.createNewFile();
+            Files.copy(srcPath, newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e1) {
+            LOG.error("Error occured while copying " + srcPath.toString() + " to " + destPath + "!");
+        }
     }
 
 }
