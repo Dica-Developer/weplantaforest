@@ -42,7 +42,8 @@ public class DataInjector {
                                       .insertProjectImages()
                                       .insertTrees(treeCount)
                                       .insertTeams()
-                                      .createProjectImageFoldersAndAddMainImages();
+                                      .createProjectImageFoldersAndAddMainImages()
+                                      .copyAndRenameProjectImagesToProjectFolders();
                     LOG.info("Finished injecting " + treeCount + " trees ");
                 } else {
                     LOG.info("No entities will be injected.");

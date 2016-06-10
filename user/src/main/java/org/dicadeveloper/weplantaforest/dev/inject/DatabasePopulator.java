@@ -248,7 +248,7 @@ public class DatabasePopulator {
                 ProjectImage projectImage = new ProjectImage();
                 projectImage.setTitle("image " + j);
                 projectImage.setDescription(" image description " + j);
-                projectImage.setImageFileName("project." + j + "jpg");
+                projectImage.setImageFileName("project" + i + "_" + j + ".jpg");
                 projectImage.setDate(100000000L * j);
                 projectImage.setProject(_projectRepository.findOne((long) i));
                 _projectImageRepository.save(projectImage);
@@ -295,7 +295,7 @@ public class DatabasePopulator {
             createProjectFolder(projectName);
 
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + mainImageFileName).toPath();
-            String imageFileDest = FolderConfiguration.getImageFolderForProjects() + "/" + projectName + "/" + mainImageFileName;
+            String imageFileDest = createProjectImageDestinationPath(projectName, mainImageFileName);
 
             createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
 
@@ -303,6 +303,30 @@ public class DatabasePopulator {
         }
 
         return this;
+    }
+
+    public DatabasePopulator copyAndRenameProjectImagesToProjectFolders() {
+        int projectCnt = 1;
+        for (Project project : _projectRepository.findAll()) {
+            for (int j = 1; j <= 5; j++) {
+                String projectImageName = "project" + projectCnt + "_" + j + ".jpg";
+                String projectName = project.getName();
+
+                String imageSrcName = "project" + j + ".jpg";
+                Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageSrcName).toPath();
+
+                String imageFileDest = createProjectImageDestinationPath(projectName, projectImageName);
+
+                createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
+            }
+            projectCnt++;
+        }
+
+        return this;
+    }
+
+    private String createProjectImageDestinationPath(String projectName, String projectImageName) {
+        return FolderConfiguration.getImageFolderForProjects() + "/" + projectName + "/" + projectImageName;
     }
 
     private void createProjectImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {

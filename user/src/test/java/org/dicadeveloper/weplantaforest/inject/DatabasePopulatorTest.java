@@ -141,5 +141,21 @@ public class DatabasePopulatorTest {
             assertThat(projectFolders[i].listFiles().length).isEqualTo(1);
         }
     }
+    
+    @Test
+    public void testCopyAndRenameProjectImagesToProjectFolders() {
+        _databasePopulator.insertUsers();
+        _databasePopulator.insertProjects();
+        _databasePopulator.createProjectImageFoldersAndAddMainImages();
+        _databasePopulator.copyAndRenameProjectImagesToProjectFolders();
+        
+        File projectTopFolder = new File(FolderConfiguration.getImageFolderForProjects());
+        
+        File[] projectFolders = projectTopFolder.listFiles();
+        
+        for(int i = 0; i < projectFolders.length; i++){
+            assertThat(projectFolders[i].listFiles().length).isEqualTo(6);
+        }
+    }
 
 }
