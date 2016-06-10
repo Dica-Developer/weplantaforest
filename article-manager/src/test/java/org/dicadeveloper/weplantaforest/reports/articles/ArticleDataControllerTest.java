@@ -5,9 +5,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication;
 import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulatorForArticleManager;
 import org.dicadeveloper.weplantaforest.testSupport.DbInjecter;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,6 +39,8 @@ import org.springframework.web.context.WebApplicationContext;
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ArticleDataControllerTest {
+    
+    protected final Log LOG = LogFactory.getLog(ArticleDataControllerTest.class.getName());
 
     private MockMvc mockMvc;
 
@@ -78,6 +90,8 @@ public class ArticleDataControllerTest {
 
     @Test
     public void testGetImageNonScaled() throws Exception {
+        createArticleFolderAndInsertImage(1, "article1.jpg");
+        
         this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}", "1", "article1.jpg").accept("image/jpg")).andExpect(status().isOk());
     }
 
@@ -88,12 +102,29 @@ public class ArticleDataControllerTest {
 
     @Test
     public void testGetImageScaled() throws Exception {
+        createArticleFolderAndInsertImage(1, "article1.jpg");
+        
         this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "article1.jpg", 500, 500).accept("image/jpg")).andExpect(status().isOk());
     }
 
     @Test
     public void testGetImageScaledBadRequest() throws Exception {
         this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "wrongName.jpg", 500, 500).accept("image/jpg")).andExpect(status().isBadRequest());
+    }
+    
+    private void createArticleFolderAndInsertImage(long articleId, String imageName){
+        new File(FileSystemInjector.getImageUploadFolder() + "/" +  articleId).mkdir();
+        
+        Path imageFileSrc = new File(DatabasePopulatorForArticleManager.DUMMY_IMAGE_FOLDER + imageName).toPath();
+        String imageFileDest = FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        
+        try {
+            File newImageFile = new File(imageFileDest);
+            newImageFile.createNewFile();
+            Files.copy(imageFileSrc, newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e1) {
+            LOG.error("Error occured while copying " + imageFileSrc.toString() + " to " + imageFileDest + "!");
+        }
     }
 
 }

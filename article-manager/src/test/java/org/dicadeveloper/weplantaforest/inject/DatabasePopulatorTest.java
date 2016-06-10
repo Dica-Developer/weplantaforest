@@ -68,6 +68,7 @@ public class DatabasePopulatorTest {
     public void testcreateProjectFoldersAndInsertMainImages() {
         _databasePopulator.insertUsers();
         _databasePopulator.insertArticles();
+        _databasePopulator.createArticleImageFoldersAndAddImage();
         
         File articleTopFolder = new File(FileSystemInjector.getImageUploadFolder());
 
