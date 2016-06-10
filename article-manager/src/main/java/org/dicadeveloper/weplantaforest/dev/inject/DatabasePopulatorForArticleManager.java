@@ -62,7 +62,7 @@ public class DatabasePopulatorForArticleManager {
 
     public DatabasePopulatorForArticleManager insertArticles() {
         Random random = new Random();
-
+        int articleCount = 1;
         for (ArticleType articleType : ArticleType.values()) {
             for (int i = 0; i < 5; i++) {
 
@@ -76,8 +76,9 @@ public class DatabasePopulatorForArticleManager {
                 article.setCreatedOn(TimeConstants.YEAR_IN_MILLISECONDS * (i + 1) * 5);
                 article.setTitle("this is article nr " + i + " from " + articleType.toString() + " article");
                 article.setIntro("this is an article about " + articleType.toString());
-                article.setImageFileName("article" + (i + 1) + ".jpg");
+                article.setImageFileName("article" + articleCount + ".jpg");
                 _articleRepository.save(article);
+                articleCount++;
             }
         }
         return this;
