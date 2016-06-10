@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component(value = "fileSystemInjector")
-public class FileSystemInjector {
+public class FileSystemInjectorForArticleManager {
 
     @Autowired
     Environment env;

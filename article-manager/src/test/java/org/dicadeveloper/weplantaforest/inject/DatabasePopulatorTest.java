@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 
-import org.dicadeveloper.weplantaforest.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
 import org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication;
 import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
 import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
@@ -70,7 +70,7 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertArticles();
         _databasePopulator.createArticleImageFoldersAndAddImage();
         
-        File articleTopFolder = new File(FileSystemInjector.getImageUploadFolder());
+        File articleTopFolder = new File(FileSystemInjectorForArticleManager.getImageUploadFolder());
 
         int articleFolderCount = articleTopFolder.listFiles().length;
         

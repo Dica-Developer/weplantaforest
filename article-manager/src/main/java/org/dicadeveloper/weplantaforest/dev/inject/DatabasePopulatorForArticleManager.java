@@ -10,7 +10,7 @@ import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dicadeveloper.weplantaforest.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
 import org.dicadeveloper.weplantaforest.articles.Article;
 import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
@@ -127,11 +127,11 @@ public class DatabasePopulatorForArticleManager {
     }
 
     private void createArticleFolder(long articleId) {
-        new File(FileSystemInjector.getImageUploadFolder() + "/" + articleId).mkdir();
+        new File(FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId).mkdir();
     }
 
     private String creatImageDestinationPath(long articleId, String imageName) {
-        return FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        return FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId + "/" + imageName;
     }
 
     private void createImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {

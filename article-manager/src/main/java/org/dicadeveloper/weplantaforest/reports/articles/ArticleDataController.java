@@ -2,7 +2,7 @@ package org.dicadeveloper.weplantaforest.reports.articles;
 
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
 import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ArticleDataController {
 
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getArticleImage(@PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName) {
-        String articleFolder = FileSystemInjector.getImageUploadFolder() + "/" + articleId;
+        String articleFolder = FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId;
         byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, articleFolder);
 
         if (imageBytes.length > 0) {
@@ -52,7 +52,7 @@ public class ArticleDataController {
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getArticleImage(@PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName, @PathVariable int width,
             @PathVariable int height) {
-        String articleFolder = FileSystemInjector.getImageUploadFolder() + "/" + articleId;
+        String articleFolder = FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId;
         byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, articleFolder, width, height);
 
         if (imageBytes.length > 0) {

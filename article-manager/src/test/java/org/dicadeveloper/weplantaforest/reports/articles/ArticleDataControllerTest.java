@@ -13,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dicadeveloper.weplantaforest.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
 import org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication;
 import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
@@ -113,10 +113,10 @@ public class ArticleDataControllerTest {
     }
     
     private void createArticleFolderAndInsertImage(long articleId, String imageName){
-        new File(FileSystemInjector.getImageUploadFolder() + "/" +  articleId).mkdir();
+        new File(FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" +  articleId).mkdir();
         
         Path imageFileSrc = new File(DatabasePopulatorForArticleManager.DUMMY_IMAGE_FOLDER + imageName).toPath();
-        String imageFileDest = FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        String imageFileDest = FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId + "/" + imageName;
         
         try {
             File newImageFile = new File(imageFileDest);
