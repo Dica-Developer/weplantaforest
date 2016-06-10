@@ -5,9 +5,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Before;
@@ -30,6 +40,8 @@ import org.springframework.web.context.WebApplicationContext;
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ProjectReportControllerTest {
+    
+    protected final Log LOG = LogFactory.getLog(ProjectReportControllerTest.class.getName());
 
     private MockMvc mockMvc;
 
@@ -169,6 +181,10 @@ public class ProjectReportControllerTest {
 
     @Test
     public void testGetImageNonScaled() throws Exception {
+        String projectName = "Project 1 von admin";
+        String projectImageName = "project1.jpg";      
+        createProjectFolderAndInsertImage(projectName, projectImageName);
+        
         this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "project1.jpg").accept("image/jpg"))
                     .andExpect(status().isOk());
     }
@@ -181,6 +197,10 @@ public class ProjectReportControllerTest {
 
     @Test
     public void testGetImageScaled() throws Exception {
+        String projectName = "Project 1 von admin";
+        String projectImageName = "project1.jpg";      
+        createProjectFolderAndInsertImage(projectName, projectImageName);
+        
         this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "project1.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isOk());
     }
@@ -189,6 +209,21 @@ public class ProjectReportControllerTest {
     public void testGetImageScaledBadRequest() throws Exception {
         this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "wrongName.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isBadRequest());
+    }
+    
+    private void createProjectFolderAndInsertImage(String projectName, String imageName){
+        new File(FileSystemInjector.getImageFolderForProjects() + "/" +  projectName).mkdir();
+        
+        Path imageFileSrc = new File(DatabasePopulator.DUMMY_IMAGE_FOLDER + imageName).toPath();
+        String imageFileDest = FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + imageName;
+        
+        try {
+            File newImageFile = new File(imageFileDest);
+            newImageFile.createNewFile();
+            Files.copy(imageFileSrc, newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e1) {
+            LOG.error("Error occured while copying " + imageFileSrc.toString() + " to " + imageFileDest + "!");
+        }
     }
 
 }

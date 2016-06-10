@@ -4,8 +4,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,6 +37,8 @@ import org.springframework.web.context.WebApplicationContext;
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ImageControllerTest {
+    
+    protected final Log LOG = LogFactory.getLog(ImageControllerTest.class.getName());
 
     private MockMvc mockMvc;
 
@@ -44,6 +56,8 @@ public class ImageControllerTest {
 
     @Test
     public void testGetImageNonScaled() throws Exception {
+        createFolderAndInsertImage("test.jpg");
+        
         this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}", "test.jpg").accept("image/jpg"))
                     .andExpect(status().isOk());
     }
@@ -56,6 +70,8 @@ public class ImageControllerTest {
 
     @Test
     public void testGetImageScaled() throws Exception {
+        createFolderAndInsertImage("test.jpg");
+        
         this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isOk());
     }
@@ -64,5 +80,18 @@ public class ImageControllerTest {
     public void testGetImageScaledBadRequest() throws Exception {
         this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "testttt.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isBadRequest());
+    }
+    
+    private void createFolderAndInsertImage(String imageName){
+        Path imageFileSrc = new File(DatabasePopulator.DUMMY_IMAGE_FOLDER + imageName).toPath();
+        String imageFileDest = FileSystemInjector.getImageUploadFolder() + "/" + imageName;
+        
+        try {
+            File newImageFile = new File(imageFileDest);
+            newImageFile.createNewFile();
+            Files.copy(imageFileSrc, newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e1) {
+            LOG.error("Error occured while copying " + imageFileSrc.toString() + " to " + imageFileDest + "!");
+        }
     }
 }

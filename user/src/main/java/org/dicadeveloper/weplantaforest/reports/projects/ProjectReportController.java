@@ -2,8 +2,8 @@ package org.dicadeveloper.weplantaforest.reports.projects;
 
 import java.util.List;
 
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
-import org.dicadeveloper.weplantaforest.common.image.ImageHelper.ImageFolder;
 import org.dicadeveloper.weplantaforest.projects.ProjectImage;
 import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -22,7 +22,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class ProjectReportController {
 
     private @NonNull ProjectReportRepository _projectReportRepository;
@@ -55,21 +55,26 @@ public class ProjectReportController {
 
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getProjectImage(@PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName) {
-        try {
-            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.PROJECTS, projectName);
+        String projectFolder = FileSystemInjector.getImageFolderForProjects() + "/" + projectName;
+
+        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, projectFolder);
+        if (imageBytes.length > 0) {
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } catch (Exception e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
     }
 
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getProjectImage(@PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName, @PathVariable int width,
             @PathVariable int height) {
-        try {
-            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.PROJECTS, projectName, width, height);
+        String projectFolder = FileSystemInjector.getImageFolderForProjects() + "/" + projectName;
+
+        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, projectFolder, width, height);
+        if (imageBytes.length > 0) {
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } catch (Exception e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

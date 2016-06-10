@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.io.File;
 
-import org.dicadeveloper.weplantaforest.FolderConfiguration;
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
@@ -129,17 +129,11 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertProjects();
         _databasePopulator.createProjectImageFoldersAndAddMainImages();
         
-        File projectTopFolder = new File(FolderConfiguration.getImageFolderForProjects());
+        File projectTopFolder = new File(FileSystemInjector.getImageFolderForProjects());
 
         int projectFolderCount = projectTopFolder.listFiles().length;
         
         assertThat(_projectRepository.count()).isEqualTo(projectFolderCount);
-        
-        File[] projectFolders = projectTopFolder.listFiles();
-        
-        for(int i = 0; i < projectFolders.length; i++){
-            assertThat(projectFolders[i].listFiles().length).isEqualTo(1);
-        }
     }
     
     @Test
@@ -149,7 +143,7 @@ public class DatabasePopulatorTest {
         _databasePopulator.createProjectImageFoldersAndAddMainImages();
         _databasePopulator.copyAndRenameProjectImagesToProjectFolders();
         
-        File projectTopFolder = new File(FolderConfiguration.getImageFolderForProjects());
+        File projectTopFolder = new File(FileSystemInjector.getImageFolderForProjects());
         
         File[] projectFolders = projectTopFolder.listFiles();
         

@@ -1,7 +1,9 @@
 package org.dicadeveloper.weplantaforest.image;
 
+import java.io.IOException;
+
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
-import org.dicadeveloper.weplantaforest.common.image.ImageHelper.ImageFolder;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,40 +19,47 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class ImageController {
 
     private @NonNull ImageHelper _imageHelper;
 
     @RequestMapping(value = Uris.IMAGE + "{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getImage(@PathVariable String imageName) {
-        try {
-            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.DEFAULT, "");
+        String imageFolder = FileSystemInjector.getImageUploadFolder();
+
+        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, imageFolder);
+        if (imageBytes.length > 0) {
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } catch (Exception e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(value = Uris.IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getScaledImage(@PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
-        try {
-            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.DEFAULT, "", width, height);
+        String imageFolder = FileSystemInjector.getImageUploadFolder();
+
+        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, imageFolder, width, height);
+        if (imageBytes.length > 0) {
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } catch (Exception e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(value = "/uploadImage/{folder}/{imageName:.+}", method = RequestMethod.POST)
-    public ResponseEntity<?> handleFileUpload(@PathVariable("folder") String folder, @PathVariable("imageName") String imageName, @RequestParam("file") MultipartFile file) {
+    @RequestMapping(value = Uris.IMAGE + "uploadImage/{imageName:.+}", method = RequestMethod.POST)
+    public ResponseEntity<?> handleFileUpload(@PathVariable("imageName") String imageName, @RequestParam("file") MultipartFile file) {
+        String imageFolder = FileSystemInjector.getImageUploadFolder();
+
         if (!file.isEmpty()) {
             try {
-                _imageHelper.storeImage(file, folder, imageName);
+                _imageHelper.storeImage(file, imageFolder, imageName);
                 return new ResponseEntity<>(HttpStatus.OK);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
+
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
