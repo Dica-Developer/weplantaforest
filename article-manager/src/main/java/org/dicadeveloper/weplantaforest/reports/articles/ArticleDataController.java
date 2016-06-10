@@ -2,9 +2,9 @@ package org.dicadeveloper.weplantaforest.reports.articles;
 
 import java.util.List;
 
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
-import org.dicadeveloper.weplantaforest.common.image.ImageHelper.ImageFolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +20,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class ArticleDataController {
 
     private @NonNull ArticleDataRepository _articleDataRepository;
@@ -28,8 +28,7 @@ public class ArticleDataController {
     private @NonNull ImageHelper _imageHelper;
 
     @RequestMapping(value = "/articles/{articleType}", method = RequestMethod.GET)
-    public Page<ArticleData> getArticlesByType(@PathVariable ArticleType articleType, @Param(value = "page") int page,
-            @Param(value = "size") int size) {
+    public Page<ArticleData> getArticlesByType(@PathVariable ArticleType articleType, @Param(value = "page") int page, @Param(value = "size") int size) {
         return _articleDataRepository.getArticlesByType(articleType, new PageRequest(page, size));
     }
 
@@ -40,10 +39,12 @@ public class ArticleDataController {
 
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getArticleImage(@PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName) {
-        try {
-            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.ARTICLES, articleId);
+        String articleFolder = FileSystemInjector.getImageUploadFolder() + "/" + articleId;
+        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, articleFolder);
+
+        if (imageBytes.length > 0) {
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } catch (Exception e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -51,12 +52,14 @@ public class ArticleDataController {
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<byte[]> getArticleImage(@PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName, @PathVariable int width,
             @PathVariable int height) {
-        try {
-            byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, ImageFolder.ARTICLES, articleId, width, height);
+        String articleFolder = FileSystemInjector.getImageUploadFolder() + "/" + articleId;
+        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, articleFolder, width, height);
+
+        if (imageBytes.length > 0) {
             return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } catch (Exception e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
 }
