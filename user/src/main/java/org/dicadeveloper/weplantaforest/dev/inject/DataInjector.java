@@ -6,11 +6,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
 @Profile("dev")
+@DependsOn(value = "fileSystemInjector")
 public class DataInjector {
 
     protected final Log LOG = LogFactory.getLog(DataInjector.class.getName());

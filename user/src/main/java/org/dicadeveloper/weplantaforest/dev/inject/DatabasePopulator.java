@@ -13,7 +13,7 @@ import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dicadeveloper.weplantaforest.FolderConfiguration;
+import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
@@ -51,7 +51,7 @@ public class DatabasePopulator {
 
     private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp");
 
-    private final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
+    public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
     private ProjectRepository _projectRepository;
     private UserRepository _userRepository;
@@ -326,7 +326,7 @@ public class DatabasePopulator {
     }
 
     private String createProjectImageDestinationPath(String projectName, String projectImageName) {
-        return FolderConfiguration.getImageFolderForProjects() + "/" + projectName + "/" + projectImageName;
+        return FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + projectImageName;
     }
 
     private void createProjectImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {
@@ -340,6 +340,6 @@ public class DatabasePopulator {
     }
 
     private void createProjectFolder(String projectName) {
-        new File(FolderConfiguration.getImageFolderForProjects() + "/" + projectName).mkdir();
+        new File(FileSystemInjector.getImageFolderForProjects() + "/" + projectName).mkdir();
     }
 }
