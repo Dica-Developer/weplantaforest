@@ -1,11 +1,19 @@
 package org.dicadeveloper.weplantaforest.dev.inject;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dicadeveloper.weplantaforest.FolderConfiguration;
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
@@ -37,9 +45,13 @@ import com.google.common.collect.Iterators;
 @Service
 public class DatabasePopulator {
 
+    protected final Log LOG = LogFactory.getLog(DatabasePopulator.class.getName());
+
     private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
 
     private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp");
+
+    private final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
     private ProjectRepository _projectRepository;
     private UserRepository _userRepository;
@@ -272,5 +284,38 @@ public class DatabasePopulator {
         }
 
         return this;
+    }
+
+    public DatabasePopulator createProjectImageFoldersAndAddMainImages() {
+        int projectCount = 1;
+        for (Project project : _projectRepository.findAll()) {
+            String projectName = project.getName();
+            String mainImageFileName = "project" + projectCount + ".jpg";
+
+            createProjectFolder(projectName);
+
+            Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + mainImageFileName).toPath();
+            String imageFileDest = FolderConfiguration.getImageFolderForProjects() + "/" + projectName + "/" + mainImageFileName;
+
+            createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
+
+            projectCount++;
+        }
+
+        return this;
+    }
+
+    private void createProjectImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {
+        try {
+            File newImageFile = new File(destPath);
+            newImageFile.createNewFile();
+            Files.copy(srcPath, newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e1) {
+            LOG.error("Error occured while copying " + srcPath.toString() + " to " + destPath + "!");
+        }
+    }
+
+    private void createProjectFolder(String projectName) {
+        new File(FolderConfiguration.getImageFolderForProjects() + "/" + projectName).mkdir();
     }
 }

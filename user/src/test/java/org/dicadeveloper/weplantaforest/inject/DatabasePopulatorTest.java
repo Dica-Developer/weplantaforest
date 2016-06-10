@@ -3,6 +3,9 @@ package org.dicadeveloper.weplantaforest.inject;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import java.io.File;
+
+import org.dicadeveloper.weplantaforest.FolderConfiguration;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
@@ -53,7 +56,7 @@ public class DatabasePopulatorTest {
 
     @Autowired
     private ProjectImageRepository _projectImageRepository;
-    
+
     @Autowired
     private TeamRepository _teamRepository;
 
@@ -111,7 +114,7 @@ public class DatabasePopulatorTest {
 
         assertThat(_projectImageRepository.count()).isEqualTo(50);
     }
-    
+
     @Test
     public void testInsertTeams() {
         _databasePopulator.insertUsers();
@@ -119,5 +122,24 @@ public class DatabasePopulatorTest {
 
         assertThat(_teamRepository.count()).isEqualTo(3);
     }
-    
+
+    @Test
+    public void testcreateProjectFoldersAndInsertMainImages() {
+        _databasePopulator.insertUsers();
+        _databasePopulator.insertProjects();
+        _databasePopulator.createProjectImageFoldersAndAddMainImages();
+        
+        File projectTopFolder = new File(FolderConfiguration.getImageFolderForProjects());
+
+        int projectFolderCount = projectTopFolder.listFiles().length;
+        
+        assertThat(_projectRepository.count()).isEqualTo(projectFolderCount);
+        
+        File[] projectFolders = projectTopFolder.listFiles();
+        
+        for(int i = 0; i < projectFolders.length; i++){
+            assertThat(projectFolders[i].listFiles().length).isEqualTo(1);
+        }
+    }
+
 }

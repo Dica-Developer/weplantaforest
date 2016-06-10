@@ -20,15 +20,21 @@ public class FolderConfiguration {
 
     public static String PROJECT_DIR = "/projects";
 
+    private static String topFolder;
+
     @Bean
     CommandLineRunner initFolderStructure() {
         return (String[] args) -> {
-            String topFolder = env.getProperty("upload.root");
+            topFolder = env.getProperty("upload.root");
 
             new File(topFolder).mkdir();
             new File(topFolder + UPLOAD_DIR).mkdir();
             new File(topFolder + UPLOAD_DIR + IMAGE_DIR).mkdir();
             new File(topFolder + UPLOAD_DIR + IMAGE_DIR + PROJECT_DIR).mkdir();
         };
+    }
+
+    public static String getImageFolderForProjects() {
+        return topFolder + UPLOAD_DIR + IMAGE_DIR + PROJECT_DIR;
     }
 }
