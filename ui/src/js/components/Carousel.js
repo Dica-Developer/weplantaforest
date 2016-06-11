@@ -44,7 +44,7 @@ export default class Carousel extends Component {
                   if (0 === index) {
                     activeItem = 'item active';
                   }
-                  let imageUrl = 'http://localhost:8081/image/' + slide.projectImageFileName + '/1140/1140';
+                  let imageUrl = 'http://localhost:8081/project/image/' + slide.projectName + '/'+ slide.projectImageFileName + '/1140/1140';
                   return (<div className={activeItem}>
                     <img src={imageUrl} width="1140" height="400" alt={slide.projectName} />
                     <div className="carousel-caption">

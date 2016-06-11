@@ -38,7 +38,7 @@ export default class Projects extends Component {
     return (
     <div className="row">
       {this.state.projects.map(function (project) {
-        let imageUrl = 'http://localhost:8081/image/' + project.projectImageFileName + '/360/360';
+        let imageUrl = 'http://localhost:8081/project/image/' + project.projectName + '/'+ project.projectImageFileName + '/360/360';
         return (<div className="col-md-4">
           <Link to={`/projects/${project.projectName}`}>
             <img src={imageUrl} alt={project.projectName} />

@@ -30,10 +30,11 @@ export default class Teaser extends Component {
   render() {
     return (<div className="row">
     {this.state.teaser.content.map(function (teaser) {
+	  let imageUrl = 'http://localhost:8083/article/image/' + teaser.id + '/' + teaser.imageFileName + '/360/360';
       return (
         <div className="col-md-4">
           <div className="thumbnail">
-            <img src="" alt="" />
+            <img src={imageUrl} alt={teaser.title} />
             <div className="caption">
               <h3>{teaser.title}</h3>
               <p>{teaser.intro}</p>

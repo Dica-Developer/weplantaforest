@@ -46,7 +46,7 @@ export default class Project extends Component {
 
   render() {
     let project = this.state.project;
-    let imageUrl = 'http://localhost:8081/image/' + project.projectImageFileName + '/1170/1170';
+    let imageUrl = 'http://localhost:8081/project/image/' + project.projectName + '/' + project.projectImageFileName + '/1170/1170';
     let position = [project.latitude, project.longitude];
     return (
       <div className="container">
