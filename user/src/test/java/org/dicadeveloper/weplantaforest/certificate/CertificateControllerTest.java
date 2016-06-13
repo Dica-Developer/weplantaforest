@@ -242,5 +242,14 @@ public class CertificateControllerTest {
                     .andExpect(jsonPath("$.[2].owner.name").value("Adam"))
                     .andExpect(jsonPath("$.[2].treeType.name").value("wodo"));
     }
+    
+    @Test
+    @Transactional
+    public void testGetTreeByCertificateIdBadRequestCauseOfWrongNumber() throws Exception {
+    String certNumber = "wrong cert number";
+
+        this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
+                    .andExpect(status().isBadRequest());
+    }
 
 }

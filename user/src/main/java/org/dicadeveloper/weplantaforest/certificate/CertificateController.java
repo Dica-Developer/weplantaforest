@@ -10,6 +10,8 @@ import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,25 +27,29 @@ import lombok.RequiredArgsConstructor;
 public class CertificateController {
 
     private @NonNull CertificateRepository _certificateRepository;
-    
+
     private @NonNull TreeRepository _treeRepository;
 
     @RequestMapping(value = "/certificate/search/{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     @Transactional
-    public List<Tree> findTreesForCertificateNumber(@PathVariable("certificateNumber") String certificateNumber) {
+    public ResponseEntity<List<Tree>> findTreesForCertificateNumber(@PathVariable("certificateNumber") String certificateNumber) {
         certificateNumber = certificateNumber.replace("#", "");
-        
+
         Certificate certificate = _certificateRepository.findByNumber(certificateNumber);
-        
-        List<Long> treeIds = new ArrayList<>();
-        for(Cart cart : certificate.getCarts()){
-            treeIds.addAll(cart.getTreeIds());
+
+        if (null != certificate) {
+            List<Long> treeIds = new ArrayList<>();
+            for (Cart cart : certificate.getCarts()) {
+                treeIds.addAll(cart.getTreeIds());
+            }
+
+            List<Tree> trees = _treeRepository.findTreesByIdIn(treeIds);
+
+            return new ResponseEntity<>(trees, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        
-        List<Tree> trees = _treeRepository.findTreesByIdIn(treeIds);
-        
-        return trees;
     }
 
 }
