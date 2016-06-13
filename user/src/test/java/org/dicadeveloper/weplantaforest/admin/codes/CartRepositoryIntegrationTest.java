@@ -77,7 +77,6 @@ public class CartRepositoryIntegrationTest {
         cart.addCartItem(cartItem);
         _cartRepository.save(cart);
 
-
         Cart savedCart = _cartRepository.findOne(1L);
 
         assertThat(savedCart.getCartItems()
@@ -91,6 +90,29 @@ public class CartRepositoryIntegrationTest {
         expectedTreeIdList.add(1L);
 
         assertThat(savedCart.getTreeIds()).isEqualTo(expectedTreeIdList);
+    }
+
+    @Test
+    public void testGetCartsByCartIds() {
+        _dbInjecter.injectUser("Adam");
+
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName("Adam"));
+
+        _cartRepository.save(cart);
+
+        Cart cart2 = new Cart();
+        cart2.setBuyer(_userRepository.findByName("Adam"));
+
+        _cartRepository.save(cart2);
+        
+        List<Long> cartIds = new ArrayList<>();
+        cartIds.add(1L);
+        cartIds.add(2L);
+        
+        List<Cart> carts = _cartRepository.findCartsByIdIn(cartIds);
+        
+        assertThat(carts.size()).isEqualTo(2);
     }
 
 }
