@@ -44,6 +44,7 @@ public class CartToTreeListConverter {
             tree.setTreeType(projectArticle.getTreeType());
             tree.setProjectArticle(projectArticle);
             tree.setPlantedOn(plantedOn);
+            tree.setSubmittedOn(plantedOn);
             tree.setOwner(owner);
             tree.setLatitude(project.getLatitude());
             tree.setLongitude(project.getLongitude());
