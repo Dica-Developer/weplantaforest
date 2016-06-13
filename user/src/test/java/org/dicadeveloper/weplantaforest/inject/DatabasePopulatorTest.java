@@ -7,7 +7,9 @@ import java.io.File;
 
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
+import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -59,6 +61,12 @@ public class DatabasePopulatorTest {
 
     @Autowired
     private TeamRepository _teamRepository;
+    
+    @Autowired
+    private CartRepository _cartRepository;
+    
+    @Autowired
+    private CertificateRepository _certificateRepository;
 
     @Test
     public void testInsertUsers() throws Exception {
@@ -128,28 +136,38 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertUsers();
         _databasePopulator.insertProjects();
         _databasePopulator.createProjectImageFoldersAndAddMainImages();
-        
+
         File projectTopFolder = new File(FileSystemInjector.getImageFolderForProjects());
 
         int projectFolderCount = projectTopFolder.listFiles().length;
-        
+
         assertThat(_projectRepository.count()).isEqualTo(projectFolderCount);
     }
-    
+
     @Test
     public void testCopyAndRenameProjectImagesToProjectFolders() {
         _databasePopulator.insertUsers();
         _databasePopulator.insertProjects();
         _databasePopulator.createProjectImageFoldersAndAddMainImages();
         _databasePopulator.copyAndRenameProjectImagesToProjectFolders();
-        
+
         File projectTopFolder = new File(FileSystemInjector.getImageFolderForProjects());
-        
+
         File[] projectFolders = projectTopFolder.listFiles();
-        
-        for(int i = 0; i < projectFolders.length; i++){
+
+        for (int i = 0; i < projectFolders.length; i++) {
             assertThat(projectFolders[i].listFiles().length).isEqualTo(6);
         }
+    }
+
+    @Test
+    public void testInsertCartAndCertificateToCart() {
+        _databasePopulator.insertUsers();
+        _databasePopulator.insertCartAndCertificateToCart();
+        
+        assertThat(_cartRepository.count()).isEqualTo(1L);
+        assertThat(_certificateRepository.count()).isEqualTo(1L);
+        
     }
 
 }

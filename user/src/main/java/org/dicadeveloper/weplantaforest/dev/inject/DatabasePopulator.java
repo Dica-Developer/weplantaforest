@@ -14,8 +14,13 @@ import java.util.Random;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.admin.codes.Cart;
+import org.dicadeveloper.weplantaforest.admin.codes.CartItem;
+import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
+import org.dicadeveloper.weplantaforest.certificate.Certificate;
+import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
@@ -61,10 +66,13 @@ public class DatabasePopulator {
     private PriceRepository _priceRepository;
     private ProjectImageRepository _projectImageRepository;
     private TeamRepository _teamRepository;
+    private CartRepository _cartRepository;
+    private CertificateRepository _certificateRepository;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
-            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository) {
+            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository,
+            CartRepository cartRepository, CertificateRepository certificateRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -73,6 +81,8 @@ public class DatabasePopulator {
         _priceRepository = priceRepository;
         _projectImageRepository = projectImageRepository;
         _teamRepository = teamRepository;
+        _cartRepository = cartRepository;
+        _certificateRepository = certificateRepository;
     }
 
     public DatabasePopulator insertProjects() {
@@ -321,6 +331,35 @@ public class DatabasePopulator {
             }
             projectCnt++;
         }
+
+        return this;
+    }
+
+    public DatabasePopulator insertCartAndCertificateToCart() {
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName(DEFAULT_USERS.get(0)));
+
+        CartItem cartItem = new CartItem();
+        cartItem.setAmount(2);
+        cartItem.setBasePricePerPiece(new BigDecimal(2.0));
+        cartItem.setTotalPrice(new BigDecimal(4.0));
+        cartItem.setPlantArticleId(1L);
+        cartItem.setTreeId(1L);
+        
+        cart.addCartItem(cartItem);
+
+        _cartRepository.save(cart);
+
+        Certificate certificate = new Certificate();
+        certificate.setCreator(_userRepository.findByName(DEFAULT_USERS.get(0)));
+        certificate.setText("Very happy to save the plaent");
+        certificate.generateAndSetNumber(0);
+        
+        List<Cart> carts = new ArrayList<>();
+        carts.add(_cartRepository.findOne(1L));
+        certificate.setCarts(carts);
+
+        _certificateRepository.save(certificate);
 
         return this;
     }
