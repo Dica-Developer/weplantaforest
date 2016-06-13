@@ -214,6 +214,15 @@ public class Cart implements Identifiable<Long> {
         }
         return ids;
     }
+    
+    @Transient
+    public List<Long> getTreeIds() {
+        final List<Long> ids = new ArrayList<Long>();
+        for (final CartItem item : cartItems) {
+            ids.add(item.getTreeId());
+        }
+        return ids;
+    }
 
     public Date getCallBackTimestampAsDate() {
         if (callBackTimestamp == null) {

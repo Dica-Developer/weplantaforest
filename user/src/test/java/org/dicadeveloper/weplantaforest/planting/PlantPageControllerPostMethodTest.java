@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.Cart;
+import org.dicadeveloper.weplantaforest.admin.codes.CartItem;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -15,6 +16,7 @@ import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.junit.Before;
 import org.junit.Rule;
@@ -91,6 +93,9 @@ public class PlantPageControllerPostMethodTest {
         assertThat(cart.getCartItems()
                        .get(0)
                        .getPlantArticleId()).isEqualTo(1);
+        assertThat(cart.getCartItems()
+                       .get(0)
+                       .getTreeId()).isEqualTo(1);
 
         assertThat(_treeRepository.count()).isEqualTo(1L);
 
@@ -130,8 +135,14 @@ public class PlantPageControllerPostMethodTest {
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(27.0);
         assertThat(cart.getPlantArticleIds()).contains(1L, 2L, 3L);
-        assertThat(_treeRepository.count()).isEqualTo(3L);
+        for(CartItem cartItem : cart.getCartItems()){
+            Tree tree = _treeRepository.findOne(cartItem.getTreeId());
+            assertThat(tree.getAmount()).isEqualTo(cartItem.getAmount());
+            assertThat(tree.getProjectArticle().getArticleId()).isEqualTo(cartItem.getPlantArticleId());
+        }
         
+        assertThat(_treeRepository.count()).isEqualTo(3L);
+
         for (int i = 1; i <= 3; i++) {
             ProjectArticle projectArticle = _projectArticleRepository.findOne((long) i);
             long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);

@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.support;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 import org.dicadeveloper.weplantaforest.admin.codes.Cart;
@@ -11,6 +12,7 @@ import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData.Plant
 import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData;
 import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
+import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -65,7 +67,7 @@ public class PlantPageDataToCartConverter {
     public Cart convertSimplePlantPageDataToCart(SimplePlantPageData simplePlantPageData) {
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
-        
+
         for (SimplePlantPageItem simplePlantPageItem : simplePlantPageData.getPlantItems()) {
             int amount = (int) simplePlantPageItem.getAmount();
 
@@ -80,6 +82,18 @@ public class PlantPageDataToCartConverter {
             Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectName, plantItemName);
 
             cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
+        }
+        return cart;
+    }
+
+    public Cart setTreeIdsToCartItems(Cart cart, List<Tree> treeList) {
+        for (CartItem cartItem : cart.getCartItems()) {
+            for (Tree tree : treeList) {
+                if (cartItem.getPlantArticleId() == tree.getProjectArticle()
+                                                        .getArticleId()) {
+                    cartItem.setTreeId(tree.getId());
+                }
+            }
         }
         return cart;
     }

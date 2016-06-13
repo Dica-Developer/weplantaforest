@@ -33,7 +33,6 @@ public class CartItem implements Identifiable<Long> {
     // @Column(length = 100)
     // private String _plantName;
 
-    // TODO: implement
     @Column(name = "_treeId")
     private Long treeId;
 

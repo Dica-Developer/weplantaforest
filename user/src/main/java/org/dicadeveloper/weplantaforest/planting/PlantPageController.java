@@ -50,10 +50,13 @@ public class PlantPageController {
 
         if (_plantPageDataValidator.isPlantPageDataValid(plantPageData)) {
             Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantPageData);
-            _cartRepository.save(cart);
 
             List<Tree> treeList = _cartToTreeListConverter.createTreeListFromCart(cart);
             _treeRepository.save(treeList);
+            
+            cart = plantPageToCartConverter.setTreeIdsToCartItems(cart, treeList);
+            _cartRepository.save(cart);
+            
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
