@@ -3,6 +3,8 @@ package org.dicadeveloper.weplantaforest.certificate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.admin.codes.Cart;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -28,6 +30,7 @@ public class CertificateController {
 
     @RequestMapping(value = "/certificate/search/{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
+    @Transactional
     public List<Tree> findTreesForCertificateNumber(@PathVariable("certificateNumber") String certificateNumber) {
         certificateNumber = certificateNumber.replace("#", "");
         

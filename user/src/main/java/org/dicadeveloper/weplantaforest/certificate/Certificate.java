@@ -41,7 +41,7 @@ public class Certificate {
     @Column(name = "_text", columnDefinition = "TEXT")
     private String text;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "Certificate_Cart", joinColumns = { @JoinColumn(name = "Certificate__certId", nullable = false, updatable = false) }, inverseJoinColumns = {
             @JoinColumn(name = "_carts__cartId", nullable = false, updatable = false) })
     private List<Cart> carts = new ArrayList<Cart>();
