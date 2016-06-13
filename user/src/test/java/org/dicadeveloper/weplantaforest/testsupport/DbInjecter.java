@@ -1,10 +1,17 @@
 package org.dicadeveloper.weplantaforest.testsupport;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.dicadeveloper.weplantaforest.admin.codes.Cart;
+import org.dicadeveloper.weplantaforest.admin.codes.CartItem;
+import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
+import org.dicadeveloper.weplantaforest.certificate.Certificate;
+import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.projects.PriceRepository;
@@ -46,9 +53,15 @@ public class DbInjecter {
 
     @Autowired
     private TeamRepository _teamRepository;
-    
+
     @Autowired
     private ProjectImageRepository _projectImageRepository;
+
+    @Autowired
+    private CartRepository _cartRepository;
+
+    @Autowired
+    private CertificateRepository _certificateRepository;
 
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
@@ -166,12 +179,53 @@ public class DbInjecter {
         ProjectImage projectImage = new ProjectImage();
         projectImage.setTitle(imageTitle);
         projectImage.setDescription(text);
-        projectImage.setImageFileName(imageFileName);      
+        projectImage.setImageFileName(imageFileName);
         projectImage.setDate(date);
         projectImage.setProject(_projectRepository.findByName(projectName));
         _projectImageRepository.save(projectImage);
     }
-    
-    
+
+    public void injectCart(String buyer, List<Long> treeIds) {
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName(buyer));
+
+        List<Tree> trees = _treeRepository.findTreesByIdIn(treeIds);
+
+        for (Tree tree : trees) {
+            CartItem cartItem = new CartItem();
+            cartItem.setAmount(1);
+            cartItem.setBasePricePerPiece(new BigDecimal(1.0));
+            cartItem.setTotalPrice(new BigDecimal(1.0));
+            cartItem.setPlantArticleId(tree.getProjectArticle()
+                                           .getArticleId());
+            cartItem.setTreeId(tree.getId());
+
+            cart.addCartItem(cartItem);
+        }
+        _cartRepository.save(cart);
+
+    }
+
+    public String injectCertificate(String creatorName, List<Long> cartIds) {
+        User creator = _userRepository.findByName(creatorName);
+
+        Certificate certificate = new Certificate();
+        certificate.setCreator(creator);
+        certificate.setText("db injected test certificate");
+        certificate.generateAndSetNumber(_certificateRepository.countCertificatesByUser(creator.getId()));
+
+        List<Cart> carts = new ArrayList<>();
+
+        for (Cart cart : _cartRepository.findAll(cartIds)) {
+            carts.add(_cartRepository.findOne(cart.getId()));
+        }
+
+        certificate.setCarts(carts);
+
+        _certificateRepository.save(certificate);
+
+        return certificate.getNumber();
+
+    }
 
 }
