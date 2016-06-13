@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartRepository extends CrudRepository<Cart, Long> {
     
-    public List<Cart> findCartsByIdIn(@Param("id") List<Long> ids);
+    public List<Cart> findCartsByIdIn(@Param("id") Long[] ids);
 
 }

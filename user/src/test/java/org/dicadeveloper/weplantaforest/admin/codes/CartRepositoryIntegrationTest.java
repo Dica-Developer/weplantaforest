@@ -106,9 +106,7 @@ public class CartRepositoryIntegrationTest {
 
         _cartRepository.save(cart2);
         
-        List<Long> cartIds = new ArrayList<>();
-        cartIds.add(1L);
-        cartIds.add(2L);
+        Long[] cartIds = {1L, 2L};
         
         List<Cart> carts = _cartRepository.findCartsByIdIn(cartIds);
         
