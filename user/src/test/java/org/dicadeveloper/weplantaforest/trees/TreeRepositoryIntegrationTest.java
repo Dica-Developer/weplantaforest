@@ -2,6 +2,9 @@ package org.dicadeveloper.weplantaforest.trees;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
@@ -92,6 +95,25 @@ public class TreeRepositoryIntegrationTest {
         Long plantedTrees = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
 
         assertThat(plantedTrees).isEqualTo(10);
+    }
+    
+    @Test
+    public void testFindTreesByTreeIds(){
+        long timeOfPlanting = System.currentTimeMillis();
+        _dbInjecter.injectTreeType("wood", "this is a wood", 0.5);
+        _dbInjecter.injectUser("Adam");
+        
+        _dbInjecter.injectTree("wood", "Adam", 1, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Adam", 1, timeOfPlanting);
+        _dbInjecter.injectTree("wood", "Adam", 1, timeOfPlanting);
+        
+        List<Long> treeIdList = new ArrayList<>();
+        treeIdList.add(1L);
+        treeIdList.add(2L);
+        treeIdList.add(3L);
+        
+        List<Tree> trees = _treeRepository.findTreesByIdIn(treeIdList);
+        assertThat(trees.size()).isEqualTo(3);
     }
 
 }

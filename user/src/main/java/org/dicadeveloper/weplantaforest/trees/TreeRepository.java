@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.trees;
 
+import java.util.List;
+
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,4 +35,6 @@ public interface TreeRepository extends PagingAndSortingRepository<Tree, Long> {
     
     @Query(value = FIND_TREES_BY_PROJECT_ID_QUERY)
     public Page<Tree> findTreesByProjectId(@Param("projectId") Long projectId, Pageable page);
+    
+    public List<Tree> findTreesByIdIn(@Param("id") List<Long> ids);
 }
