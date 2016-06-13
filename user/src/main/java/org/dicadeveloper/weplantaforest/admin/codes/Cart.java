@@ -163,6 +163,7 @@ public class Cart implements Identifiable<Long> {
     public void addCartItem(final CartItem cartItem) {
         if (!containsCartItem(cartItem)) {
             cartItems.add(cartItem);
+            cartItem.setCart(this);
         }
     }
 
