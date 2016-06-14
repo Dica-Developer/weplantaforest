@@ -1,7 +1,7 @@
 package org.dicadeveloper.weplantaforest.certificate;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Before;
 import org.junit.Rule;
@@ -270,12 +271,38 @@ public class CertificateControllerTest {
 
         _dbInjecter.injectCart("Adam", treeIds);
 
-        String[] cartIds = { "1" };
+        Long userId = 1L;
+        String text = "blabla";
+        Long[] cartIds = { 1L };
 
-        this.mockMvc.perform(post("/certificate/create").param("userId", "1")
-                                                        .param("text", "blabla")
-                                                        .param("cartIds", cartIds))
+        CertificateRequestData certificateRequest = new CertificateRequestData();
+        certificateRequest.userId = userId;
+        certificateRequest.text = text;
+        certificateRequest.cartIds = cartIds;
+
+        this.mockMvc.perform(get("/certificate/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                       .content(TestUtil.convertObjectToJsonBytes(certificateRequest))
+                                                       .accept("application/pdf"))
                     .andExpect(status().isOk());
+
+        assertThat(_certificateRepository.count()).isEqualTo(1L);
+
+        Certificate savedCertificate = _certificateRepository.findOne(1L);
+        assertThat(savedCertificate.getCreator()
+                                   .getName()).isEqualTo("Adam");
+        assertThat(savedCertificate.getText()).isEqualTo("blabla");
+
+        String certNumber = savedCertificate.getNumber();
+
+        this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.[0].id").value(1))
+                    .andExpect(jsonPath("$.[0].amount").value(1))
+                    .andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting))
+                    .andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
+                    .andExpect(jsonPath("$.[0].owner.name").value("Adam"))
+                    .andExpect(jsonPath("$.[0].treeType.name").value("wood"));
+
     }
 
 }

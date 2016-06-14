@@ -4,11 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
@@ -24,9 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -72,18 +70,17 @@ public class CertificateController {
         }
     }
 
-    @RequestMapping(value = "/certificate/create", method = RequestMethod.POST)
-    public ResponseEntity<byte[]> createCertificate(@RequestParam(value = "userId", required = false) final long userId, @RequestParam(value = "text", required = false) final String text,
-            @RequestParam(value = "cartIds", required = false) final Long[] cartIds) {
-        if (cartIds != null && cartIds.length > 0) {
-            User user = _userRepository.findOne(userId);
+    @RequestMapping(value = "/certificate/create", method = RequestMethod.GET, headers = "Accept=application/pdf")
+    public ResponseEntity<byte[]> createCertificate(@RequestBody CertificateRequestData requestData) {
+        if (requestData.getCartIds() != null && requestData.getCartIds().length > 0) {
+            User user = _userRepository.findOne(requestData.getUserId());
 
             Certificate certificate = new Certificate();
 
             certificate.setCreator(user);
-            certificate.setText(text);
+            certificate.setText(requestData.getText());
 
-            List<Cart> carts = _cartRepository.findCartsByIdIn(cartIds);
+            List<Cart> carts = _cartRepository.findCartsByIdIn(requestData.getCartIds());
 
             // get tree count
             int treeCount = 0;
@@ -93,7 +90,7 @@ public class CertificateController {
             }
 
             // generate certificate number
-            int certificateCountByUser = _certificateRepository.countCertificatesByUser(userId);
+            int certificateCountByUser = _certificateRepository.countCertificatesByUser(requestData.getUserId());
             String certificateNumber = certificate.generateAndSetNumber(certificateCountByUser);
 
             _certificateRepository.save(certificate);
@@ -101,8 +98,11 @@ public class CertificateController {
             PdfCertificateView pdf = new PdfCertificateView();
             byte[] pdfBytes = null;
             try {
-                File pdfFile = pdf.buildPdfDocument(treeCount, text, user.getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH);
-                pdfBytes = getCertificateAsPdf(pdfFile);
+                File pdfFile = pdf.buildPdfDocument(treeCount, requestData.getText(), user.getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH);
+                pdfBytes = getPdfAsByteArray(pdfFile);
+                if (null == pdfBytes) {
+                    return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             } catch (Exception e) {
                 LOG.error("Error occured while creating PDF!", e);
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -113,7 +113,7 @@ public class CertificateController {
         }
     }
 
-    private byte[] getCertificateAsPdf(File pdfFile) {
+    private byte[] getPdfAsByteArray(File pdfFile) {
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             final FileInputStream inputStream = new FileInputStream(pdfFile);
