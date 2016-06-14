@@ -43,9 +43,9 @@ public class PdfCertificateView {
     public File buildPdfDocument(final int treeCount, final String text, final String name, final String number, String gfxPath) throws Exception {
         // create pdf
         final Document doc = new Document();
-//         final File file = File.createTempFile(treeCount + "-" + name,
-//         ".pdf");
-        File file = new File(treeCount + "-" + name + ".pdf");
+         final File file = File.createTempFile(treeCount + "-" + name,
+         ".pdf");
+//        File file = new File(treeCount + "-" + name + ".pdf");
         final PdfWriter pdfWriter = PdfWriter.getInstance(doc, new FileOutputStream(file));
         pdfWriter.setEncryption(null, null, PdfWriter.ALLOW_DEGRADED_PRINTING | PdfWriter.ALLOW_PRINTING, PdfWriter.STANDARD_ENCRYPTION_128);
 
