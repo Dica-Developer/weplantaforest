@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Before;
 import org.junit.Rule;
@@ -81,7 +82,7 @@ public class CertificateControllerTest {
         String certNumber = _certificateRepository.findOne(1L)
                                                   .getNumber();
 
-        this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
+        this.mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumber).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
                     .andExpect(jsonPath("$.[0].amount").value(1))
@@ -118,7 +119,7 @@ public class CertificateControllerTest {
 
         certNumber = "#" + certNumber;
 
-        this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
+        this.mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumber).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
                     .andExpect(jsonPath("$.[0].amount").value(1))
@@ -162,7 +163,7 @@ public class CertificateControllerTest {
         String certNumber = _certificateRepository.findOne(1L)
                                                   .getNumber();
 
-        this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
+        this.mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumber).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
                     .andExpect(jsonPath("$.[0].amount").value(1))
@@ -223,7 +224,7 @@ public class CertificateControllerTest {
         String certNumber = _certificateRepository.findOne(1L)
                                                   .getNumber();
 
-        this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
+        this.mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumber).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
                     .andExpect(jsonPath("$.[0].amount").value(1))
@@ -250,7 +251,7 @@ public class CertificateControllerTest {
     public void testGetTreeByCertificateIdBadRequestCauseOfWrongNumber() throws Exception {
         String certNumber = "wrong cert number";
 
-        this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
+        this.mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumber).accept("application/json"))
                     .andExpect(status().isBadRequest());
     }
 
@@ -280,9 +281,9 @@ public class CertificateControllerTest {
         certificateRequest.text = text;
         certificateRequest.cartIds = cartIds;
 
-        this.mockMvc.perform(get("/certificate/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                       .content(TestUtil.convertObjectToJsonBytes(certificateRequest))
-                                                       .accept("application/pdf"))
+        this.mockMvc.perform(get(Uris.CERTIFICATE_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                         .content(TestUtil.convertObjectToJsonBytes(certificateRequest))
+                                                         .accept("application/pdf"))
                     .andExpect(status().isOk());
 
         assertThat(_certificateRepository.count()).isEqualTo(1L);
@@ -294,7 +295,7 @@ public class CertificateControllerTest {
 
         String certNumber = savedCertificate.getNumber();
 
-        this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
+        this.mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumber).accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
                     .andExpect(jsonPath("$.[0].amount").value(1))

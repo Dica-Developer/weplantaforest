@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.admin.codes.Cart;
 import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
+import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.trees.User;
@@ -48,7 +49,7 @@ public class CertificateController {
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
 
-    @RequestMapping(value = "/certificate/search/{certificateNumber:.+}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.CERTIFICATE_SEARCH + "{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     @Transactional
     public ResponseEntity<List<Tree>> findTreesForCertificateNumber(@PathVariable("certificateNumber") String certificateNumber) {
@@ -70,7 +71,7 @@ public class CertificateController {
         }
     }
 
-    @RequestMapping(value = "/certificate/create", method = RequestMethod.GET, headers = "Accept=application/pdf")
+    @RequestMapping(value = Uris.CERTIFICATE_CREATE, method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<byte[]> createCertificate(@RequestBody CertificateRequestData requestData) {
         if (requestData.getCartIds() != null && requestData.getCartIds().length > 0) {
             User user = _userRepository.findOne(requestData.getUserId());

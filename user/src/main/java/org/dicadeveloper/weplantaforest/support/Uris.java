@@ -53,5 +53,11 @@ public class Uris {
     public final static String TREES_BY_USER = "/trees/owner/";
     
     public final static String TREES_BY_PROJECT = "/trees/project/";
+    
+    //certificates
+    
+    public final static String CERTIFICATE_SEARCH = "/certificate/search/";
+    
+    public final static String CERTIFICATE_CREATE = "/certificate/create";
 
 }
