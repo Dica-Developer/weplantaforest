@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin.codes;
+package org.dicadeveloper.weplantaforest.cart;
 
 import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
@@ -20,6 +20,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.dicadeveloper.weplantaforest.admin.codes.Abo;
+import org.dicadeveloper.weplantaforest.admin.codes.Coupon;
+import org.dicadeveloper.weplantaforest.admin.codes.Event;
+import org.dicadeveloper.weplantaforest.admin.codes.Receipt;
 import org.dicadeveloper.weplantaforest.trees.User;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.hibernate.annotations.Cascade;

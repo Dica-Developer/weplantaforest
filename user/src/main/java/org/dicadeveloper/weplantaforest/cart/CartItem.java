@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin.codes;
+package org.dicadeveloper.weplantaforest.cart;
 
 import java.math.BigDecimal;
 

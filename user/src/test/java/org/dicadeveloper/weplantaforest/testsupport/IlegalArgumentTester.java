@@ -1,7 +1,7 @@
 package org.dicadeveloper.weplantaforest.testsupport;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
-import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.image.ImageController;
 import org.dicadeveloper.weplantaforest.planting.PlantPageController;

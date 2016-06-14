@@ -11,8 +11,8 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dicadeveloper.weplantaforest.admin.codes.Cart;
-import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;

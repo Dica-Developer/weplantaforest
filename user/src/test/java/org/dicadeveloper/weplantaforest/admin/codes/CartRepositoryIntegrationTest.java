@@ -9,6 +9,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartItem;
+import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;

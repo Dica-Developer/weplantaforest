@@ -3,8 +3,8 @@ package org.dicadeveloper.weplantaforest.support;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
-import org.dicadeveloper.weplantaforest.admin.codes.Cart;
-import org.dicadeveloper.weplantaforest.admin.codes.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;

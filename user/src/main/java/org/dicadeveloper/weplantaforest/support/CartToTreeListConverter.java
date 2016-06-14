@@ -3,8 +3,8 @@ package org.dicadeveloper.weplantaforest.support;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.admin.codes.Cart;
-import org.dicadeveloper.weplantaforest.admin.codes.CartItem;
+import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
