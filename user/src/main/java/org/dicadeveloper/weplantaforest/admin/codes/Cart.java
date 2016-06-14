@@ -21,8 +21,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.trees.User;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.hibernate.annotations.Cascade;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -47,9 +50,11 @@ public class Cart implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_cartId")
+    @JsonView(Views.ShortCart.class)
     private Long id;
 
     @Column(name = "_timeStamp")
+    @JsonView(Views.ShortCart.class)
     private Long timeStamp;
 
     @Enumerated(EnumType.STRING)
@@ -190,6 +195,7 @@ public class Cart implements Identifiable<Long> {
     }
 
     @Transient
+    @JsonView(Views.ShortCart.class)
     public int getTreeCount() {
         int count = 0;
         for (final CartItem item : cartItems) {
@@ -199,6 +205,7 @@ public class Cart implements Identifiable<Long> {
     }
 
     @Transient
+    @JsonView(Views.ShortCart.class)
     public BigDecimal getTotalPrice() {
         BigDecimal total = new BigDecimal(0.00);
         for (final CartItem item : cartItems) {

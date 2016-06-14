@@ -206,6 +206,33 @@ public class DbInjecter {
 
     }
 
+    public void injectCart(String buyer, List<Long> treeIds, long timeStamp) {
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName(buyer));
+        cart.setTimeStamp(timeStamp);
+
+        List<Tree> trees = _treeRepository.findTreesByIdIn(treeIds);
+
+        for (Tree tree : trees) {
+            CartItem cartItem = new CartItem();
+            cartItem.setAmount(tree.getAmount());
+            cartItem.setBasePricePerPiece(new BigDecimal(1.0));
+
+            double totalPrice = cartItem.getBasePricePerPiece()
+                                        .doubleValue()
+                    * cartItem.getAmount();
+
+            cartItem.setTotalPrice(new BigDecimal(totalPrice));
+            cartItem.setPlantArticleId(tree.getProjectArticle()
+                                           .getArticleId());
+            cartItem.setTreeId(tree.getId());
+
+            cart.addCartItem(cartItem);
+        }
+        _cartRepository.save(cart);
+
+    }
+
     public String injectCertificate(String creatorName, List<Long> cartIds) {
         User creator = _userRepository.findByName(creatorName);
 
