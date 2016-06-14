@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.certificate;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -88,7 +89,7 @@ public class CertificateControllerTest {
                     .andExpect(jsonPath("$.[0].owner.name").value("Adam"))
                     .andExpect(jsonPath("$.[0].treeType.name").value("wood"));
     }
-    
+
     @Test
     @Transactional
     public void testGetTreeByCertificateIdWithHashInFront() throws Exception {
@@ -113,7 +114,7 @@ public class CertificateControllerTest {
 
         String certNumber = _certificateRepository.findOne(1L)
                                                   .getNumber();
-        
+
         certNumber = "#" + certNumber;
 
         this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
@@ -181,7 +182,7 @@ public class CertificateControllerTest {
                     .andExpect(jsonPath("$.[2].owner.name").value("Adam"))
                     .andExpect(jsonPath("$.[2].treeType.name").value("wodo"));
     }
-    
+
     @Test
     @Transactional
     public void testGetTreesByCertificateIdWithMultipleCarts() throws Exception {
@@ -206,12 +207,12 @@ public class CertificateControllerTest {
         treeIds.add(2L);
 
         _dbInjecter.injectCart("Adam", treeIds);
-        
+
         List<Long> treeIds2 = new ArrayList<>();
         treeIds2.add(3L);
 
         _dbInjecter.injectCart("Adam", treeIds2);
-        
+
         List<Long> cartIds = new ArrayList<>();
         cartIds.add(1L);
         cartIds.add(2L);
@@ -242,14 +243,39 @@ public class CertificateControllerTest {
                     .andExpect(jsonPath("$.[2].owner.name").value("Adam"))
                     .andExpect(jsonPath("$.[2].treeType.name").value("wodo"));
     }
-    
+
     @Test
     @Transactional
     public void testGetTreeByCertificateIdBadRequestCauseOfWrongNumber() throws Exception {
-    String certNumber = "wrong cert number";
+        String certNumber = "wrong cert number";
 
         this.mockMvc.perform(get("/certificate/search/{certificateNumber}", certNumber).accept("application/json"))
                     .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void testCreateCertificate() throws Exception {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        _dbInjecter.injectProject("Project A", "Adam", "desc", true, 1.0f, 2.0f);
+        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "Project A");
+
+        List<Long> treeIds = new ArrayList<>();
+        treeIds.add(1L);
+
+        _dbInjecter.injectCart("Adam", treeIds);
+
+        String[] cartIds = { "1" };
+
+        this.mockMvc.perform(post("/certificate/create").param("userId", "1")
+                                                        .param("text", "blabla")
+                                                        .param("cartIds", cartIds))
+                    .andExpect(status().isOk());
     }
 
 }

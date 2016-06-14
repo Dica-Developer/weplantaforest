@@ -63,4 +63,8 @@ public class Certificate {
         return sb.toString();
     }
 
+    public void addCart(final Cart cart) {
+        carts.add(cart);
+    }
+
 }

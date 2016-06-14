@@ -29,6 +29,9 @@ dependencies{
   compile 'org.springframework:spring-context-support:4.1.8.RELEASE'
   compile group: 'com.google.guava', name: 'guava', version: '18.0'
   compile 'net.coobird:thumbnailator:0.4.8'
+  compile 'com.itextpdf:itextpdf:5.5.9'
+  compile 'org.bouncycastle:bcprov-jdk15on:1.51'
+  compile 'org.bouncycastle:bcpkix-jdk15on:1.51'
   
   compile('org.springframework.data:spring-data-rest-hal-browser:2.4.1.RELEASE')
   compile 'com.h2database:h2:1.4.190'
