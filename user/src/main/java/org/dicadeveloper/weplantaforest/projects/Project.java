@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.dicadeveloper.weplantaforest.trees.User;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;

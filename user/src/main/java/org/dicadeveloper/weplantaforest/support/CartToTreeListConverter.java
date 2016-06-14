@@ -9,8 +9,8 @@ import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
-import org.dicadeveloper.weplantaforest.trees.User;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

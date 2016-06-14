@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
-import org.dicadeveloper.weplantaforest.trees.User;
+import org.dicadeveloper.weplantaforest.user.User;
 
 import lombok.Getter;
 import lombok.Setter;

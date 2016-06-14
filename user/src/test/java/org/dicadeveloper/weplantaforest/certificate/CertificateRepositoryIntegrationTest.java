@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
-import org.dicadeveloper.weplantaforest.trees.UserRepository;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

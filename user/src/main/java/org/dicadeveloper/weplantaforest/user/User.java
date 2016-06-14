@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.trees;
+package org.dicadeveloper.weplantaforest.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

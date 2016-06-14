@@ -1,8 +1,8 @@
 package org.dicadeveloper.weplantaforest.planting.self;
 
 import org.dicadeveloper.weplantaforest.trees.Tree;
-import org.dicadeveloper.weplantaforest.trees.UserRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

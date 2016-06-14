@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
-import org.dicadeveloper.weplantaforest.trees.User;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.hateoas.Identifiable;
 
 import lombok.EqualsAndHashCode;

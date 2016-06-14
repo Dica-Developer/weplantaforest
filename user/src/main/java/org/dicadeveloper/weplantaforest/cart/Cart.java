@@ -24,7 +24,7 @@ import org.dicadeveloper.weplantaforest.admin.codes.Abo;
 import org.dicadeveloper.weplantaforest.admin.codes.Coupon;
 import org.dicadeveloper.weplantaforest.admin.codes.Event;
 import org.dicadeveloper.weplantaforest.admin.codes.Receipt;
-import org.dicadeveloper.weplantaforest.trees.User;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.hibernate.annotations.Cascade;
 import org.springframework.hateoas.Identifiable;

@@ -17,7 +17,7 @@ import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
-import org.dicadeveloper.weplantaforest.trees.UserRepository;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
