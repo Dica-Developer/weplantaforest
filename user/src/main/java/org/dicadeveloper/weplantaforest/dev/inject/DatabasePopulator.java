@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
@@ -337,14 +339,23 @@ public class DatabasePopulator {
 
     public DatabasePopulator insertCartAndCertificateToCart() {
         Cart cart = new Cart();
-        cart.setBuyer(_userRepository.findByName(DEFAULT_USERS.get(0)));
+        User buyer = _userRepository.findByName(DEFAULT_USERS.get(0));
+        
+        cart.setBuyer(buyer);
 
+        Tree tree = new Tree();
+        ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);    
+        tree.setAmount(2);
+        tree.setProjectArticle(projectArticle);       
+        tree.setTreeType(projectArticle.getTreeType());
+        tree.setOwner(buyer);
+        
         CartItem cartItem = new CartItem();
         cartItem.setAmount(2);
         cartItem.setBasePricePerPiece(new BigDecimal(2.0));
         cartItem.setTotalPrice(new BigDecimal(4.0));
         cartItem.setPlantArticleId(1L);
-        cartItem.setTreeId(1L);
+        cartItem.setTree(tree);
         
         cart.addCartItem(cartItem);
 

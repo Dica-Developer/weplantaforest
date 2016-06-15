@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.support;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
@@ -11,8 +10,11 @@ import org.dicadeveloper.weplantaforest.planting.PlantPageData;
 import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData.PlantItem;
 import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData;
 import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData.SimplePlantPageItem;
+import org.dicadeveloper.weplantaforest.projects.Project;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -57,7 +59,9 @@ public class PlantPageDataToCartConverter {
                     BigDecimal totalPrice = PriceHelper.fromLongToBigDecimal(amount * plantItem.getTreePrice());
                     Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectname, plantItemName);
 
-                    cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
+                    Tree tree = createTree(amount, cart.getTimeStamp(), cart.getBuyer(), plantArticleId);
+                    
+                    cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId, tree));
                 }
             }
         }
@@ -81,29 +85,39 @@ public class PlantPageDataToCartConverter {
 
             Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectName, plantItemName);
 
-            cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId));
+            Tree tree = createTree(amount, cart.getTimeStamp(), cart.getBuyer(), plantArticleId);
+            
+            cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId, tree));
         }
         return cart;
     }
-
-    public Cart setTreeIdsToCartItems(Cart cart, List<Tree> treeList) {
-        for (CartItem cartItem : cart.getCartItems()) {
-            for (Tree tree : treeList) {
-                if (cartItem.getPlantArticleId() == tree.getProjectArticle()
-                                                        .getArticleId()) {
-                    cartItem.setTreeId(tree.getId());
-                }
-            }
-        }
-        return cart;
+    
+    private Tree createTree(int amount, long plantedOn, User owner, long projectArticleId){
+        Tree tree = new Tree();
+        Project project = _projectArticleRepository.findOne(projectArticleId)
+                                                   .getProject();
+        ProjectArticle projectArticle = _projectArticleRepository.findOne(projectArticleId);
+        
+        tree.setAmount(amount);
+        tree.setTreeType(projectArticle.getTreeType());
+        tree.setProjectArticle(projectArticle);
+        tree.setPlantedOn(plantedOn);
+        tree.setSubmittedOn(plantedOn);
+        tree.setOwner(owner);
+        tree.setLatitude(project.getLatitude());
+        tree.setLongitude(project.getLongitude());
+        
+        return tree;
     }
 
-    private CartItem createCartItem(int amount, BigDecimal treePrice, BigDecimal totalPrice, Long articleId) {
+    private CartItem createCartItem(int amount, BigDecimal treePrice, BigDecimal totalPrice, Long articleId, Tree tree) {
         CartItem cartItem = new CartItem();
         cartItem.setAmount(amount);
         cartItem.setBasePricePerPiece(treePrice);
         cartItem.setTotalPrice(totalPrice);
         cartItem.setPlantArticleId(articleId);
+        cartItem.setTree(tree);
+        
         return cartItem;
     }
 

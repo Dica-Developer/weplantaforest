@@ -24,6 +24,7 @@ import org.dicadeveloper.weplantaforest.admin.codes.Abo;
 import org.dicadeveloper.weplantaforest.admin.codes.Coupon;
 import org.dicadeveloper.weplantaforest.admin.codes.Event;
 import org.dicadeveloper.weplantaforest.admin.codes.Receipt;
+import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.hibernate.annotations.Cascade;
@@ -228,12 +229,12 @@ public class Cart implements Identifiable<Long> {
     }
     
     @Transient
-    public List<Long> getTreeIds() {
-        final List<Long> ids = new ArrayList<Long>();
+    public List<Tree> getTrees() {
+        final List<Tree> trees = new ArrayList<Tree>();
         for (final CartItem item : cartItems) {
-            ids.add(item.getTreeId());
+            trees.add(item.getTree());
         }
-        return ids;
+        return trees;
     }
 
     public Date getCallBackTimestampAsDate() {

@@ -58,12 +58,10 @@ public class CertificateController {
         Certificate certificate = _certificateRepository.findByNumber(certificateNumber);
 
         if (null != certificate) {
-            List<Long> treeIds = new ArrayList<>();
+            List<Tree> trees = new ArrayList<>();
             for (Cart cart : certificate.getCarts()) {
-                treeIds.addAll(cart.getTreeIds());
+                trees.addAll(cart.getTrees());
             }
-
-            List<Tree> trees = _treeRepository.findTreesByIdIn(treeIds);
 
             return new ResponseEntity<>(trees, HttpStatus.OK);
         } else {

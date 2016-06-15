@@ -94,8 +94,8 @@ public class PlantPageControllerPostMethodTest {
                        .get(0)
                        .getPlantArticleId()).isEqualTo(1);
         assertThat(cart.getCartItems()
-                       .get(0)
-                       .getTreeId()).isEqualTo(1);
+                       .get(0).getTree()
+                       .getId()).isEqualTo(1);
 
         assertThat(_treeRepository.count()).isEqualTo(1L);
 
@@ -136,7 +136,7 @@ public class PlantPageControllerPostMethodTest {
                        .doubleValue()).isEqualTo(27.0);
         assertThat(cart.getPlantArticleIds()).contains(1L, 2L, 3L);
         for(CartItem cartItem : cart.getCartItems()){
-            Tree tree = _treeRepository.findOne(cartItem.getTreeId());
+            Tree tree = cartItem.getTree();
             assertThat(tree.getAmount()).isEqualTo(cartItem.getAmount());
             assertThat(tree.getProjectArticle().getArticleId()).isEqualTo(cartItem.getPlantArticleId());
         }

@@ -3,7 +3,6 @@ package org.dicadeveloper.weplantaforest.admin.codes;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -76,7 +75,7 @@ public class CartRepositoryIntegrationTest {
         cartItem.setTotalPrice(new BigDecimal(1.0));
         cartItem.setPlantArticleId(tree.getProjectArticle()
                                        .getArticleId());
-        cartItem.setTreeId(tree.getId());
+        cartItem.setTree(tree);
         cart.addCartItem(cartItem);
         _cartRepository.save(cart);
 
@@ -89,10 +88,7 @@ public class CartRepositoryIntegrationTest {
                             .getCart()
                             .getId()).isEqualTo(1L);
 
-        List<Long> expectedTreeIdList = new ArrayList<>();
-        expectedTreeIdList.add(1L);
-
-        assertThat(savedCart.getTreeIds()).isEqualTo(expectedTreeIdList);
+        assertThat(savedCart.getTrees().size()).isEqualTo(1);
     }
 
     @Test

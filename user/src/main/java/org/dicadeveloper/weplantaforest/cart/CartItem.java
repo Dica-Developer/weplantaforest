@@ -10,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
+import org.dicadeveloper.weplantaforest.trees.Tree;
+import org.hibernate.annotations.Cascade;
 import org.springframework.hateoas.Identifiable;
 
 import lombok.Getter;
@@ -33,14 +36,10 @@ public class CartItem implements Identifiable<Long> {
     // @Column(length = 100)
     // private String _plantName;
 
-    @Column(name = "_treeId")
-    private Long treeId;
-
-    // // TODO: remove
-    // // a real reference?
-    // @OneToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "_treeType_treeTypeId")
-    // private TreeType tt;
+    @OneToOne( fetch = FetchType.LAZY)
+    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
+    @JoinColumn(name = "_treeId")
+    private Tree tree;
 
     @Column(name = "_amount")
     private int amount;

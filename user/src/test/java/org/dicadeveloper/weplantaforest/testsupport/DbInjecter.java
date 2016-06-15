@@ -205,7 +205,7 @@ public class DbInjecter {
             cartItem.setTotalPrice(new BigDecimal(1.0));
             cartItem.setPlantArticleId(tree.getProjectArticle()
                                            .getArticleId());
-            cartItem.setTreeId(tree.getId());
+            cartItem.setTree(tree);
 
             cart.addCartItem(cartItem);
         }
@@ -232,7 +232,7 @@ public class DbInjecter {
             cartItem.setTotalPrice(new BigDecimal(totalPrice));
             cartItem.setPlantArticleId(tree.getProjectArticle()
                                            .getArticleId());
-            cartItem.setTreeId(tree.getId());
+            cartItem.setTree(tree);
 
             cart.addCartItem(cartItem);
         }

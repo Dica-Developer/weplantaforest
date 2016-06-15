@@ -1,13 +1,9 @@
 package org.dicadeveloper.weplantaforest.planting;
 
-import java.util.List;
-
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
-import org.dicadeveloper.weplantaforest.support.CartToTreeListConverter;
 import org.dicadeveloper.weplantaforest.support.PlantPageDataToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
-import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +19,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class PlantPageController {
 
     private @NonNull PlantPageDataHelper plantPageDataHelper;
@@ -33,8 +29,6 @@ public class PlantPageController {
     private @NonNull CartRepository _cartRepository;
 
     private @NonNull PlantPageDataValidator _plantPageDataValidator;
-
-    private @NonNull CartToTreeListConverter _cartToTreeListConverter;
 
     private @NonNull TreeRepository _treeRepository;
 
@@ -50,13 +44,8 @@ public class PlantPageController {
 
         if (_plantPageDataValidator.isPlantPageDataValid(plantPageData)) {
             Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantPageData);
-
-            List<Tree> treeList = _cartToTreeListConverter.createTreeListFromCart(cart);
-            _treeRepository.save(treeList);
-            
-            cart = plantPageToCartConverter.setTreeIdsToCartItems(cart, treeList);
             _cartRepository.save(cart);
-            
+
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
