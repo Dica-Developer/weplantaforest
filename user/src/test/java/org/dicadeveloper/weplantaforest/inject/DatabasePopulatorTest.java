@@ -163,11 +163,13 @@ public class DatabasePopulatorTest {
     @Test
     public void testInsertCartAndCertificateToCart() {
         _databasePopulator.insertUsers();
+        _databasePopulator.insertDefaultTreeTypes();
+        _databasePopulator.insertProjects();
+        _databasePopulator.insertProjectArticles();
         _databasePopulator.insertCartAndCertificateToCart();
         
         assertThat(_cartRepository.count()).isEqualTo(1L);
-        assertThat(_certificateRepository.count()).isEqualTo(1L);
-        
+        assertThat(_certificateRepository.count()).isEqualTo(1L);        
     }
 
 }

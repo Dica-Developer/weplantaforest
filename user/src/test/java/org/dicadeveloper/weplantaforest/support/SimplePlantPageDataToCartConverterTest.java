@@ -2,6 +2,8 @@ package org.dicadeveloper.weplantaforest.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
@@ -39,6 +41,7 @@ public class SimplePlantPageDataToCartConverterTest {
     public CartRepository _cartRepository;
 
     @Test
+    @Transactional
     public void testConvertFromPlantPageDataToCartOneItem() {
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
@@ -69,6 +72,7 @@ public class SimplePlantPageDataToCartConverterTest {
     }
 
     @Test
+    @Transactional
     public void testConvertFromPlantPageDataToCartTwoItems() {
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
@@ -113,6 +117,7 @@ public class SimplePlantPageDataToCartConverterTest {
     }
 
     @Test
+    @Transactional
     public void testConvertFromPlantPageDataToCartThreeItems() {
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
@@ -173,6 +178,7 @@ public class SimplePlantPageDataToCartConverterTest {
     }
 
     @Test
+    @Transactional
     public void testSavetoDBAfterConversion() {
         SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
