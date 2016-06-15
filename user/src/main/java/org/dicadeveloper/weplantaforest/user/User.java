@@ -17,12 +17,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @Table(name = "User")
 public class User implements Identifiable<Long> {
@@ -35,6 +33,9 @@ public class User implements Identifiable<Long> {
     @Column(unique = true, name = "_name")
     @JsonView(Views.PlantedTree.class)
     private String name;
+
+    @Column(name = "_email", length = 500)
+    private String mail;
 
     @Column(name = "_enabled", nullable = false)
     private boolean enabled = false;
@@ -51,4 +52,9 @@ public class User implements Identifiable<Long> {
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;
+
+    @Override
+    public String toString() {
+        return "'" + name + "'(" + mail + ")[" + id + "]";
+    }
 }

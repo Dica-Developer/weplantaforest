@@ -81,6 +81,13 @@ public class DbInjecter {
         userDto.setName(userName);
         _userRepository.save(userDto);
     }
+    
+    public void injectUser(String userName, String mail) {
+        User userDto = new User();
+        userDto.setName(userName);
+        userDto.setMail(mail);
+        _userRepository.save(userDto);
+    }
 
     public void injectUser(String userName, Long regDate) {
         User userDto = new User();

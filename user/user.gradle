@@ -46,3 +46,9 @@ dependencies{
   testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
   testCompile project(':testkit')
 }
+
+test{
+  if (System.env.'CI') {
+    exclude 'org/dicadeveloper/weplantaforest/projects/offer/ProjectOfferControllerSendMailTests.java'
+  }
+}
