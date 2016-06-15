@@ -19,7 +19,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Table(name = "User")
-public class User implements Identifiable<Long> {
+public class UserAM implements Identifiable<Long> {
 
     @Id
     @GeneratedValue

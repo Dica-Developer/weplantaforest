@@ -18,8 +18,8 @@ import org.dicadeveloper.weplantaforest.articles.Paragraph;
 import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
-import org.dicadeveloper.weplantaforest.user.User;
-import org.dicadeveloper.weplantaforest.user.UserRepository;
+import org.dicadeveloper.weplantaforest.user.UserAM;
+import org.dicadeveloper.weplantaforest.user.UserRepositoryAM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,14 +37,14 @@ public class DatabasePopulatorForArticleManager {
 
     public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
-    private UserRepository _userRepository;
+    private UserRepositoryAM _userRepository;
 
     private ArticleRepository _articleRepository;
 
     private ParagraphRepository _parapgraphRepository;
 
     @Autowired
-    public DatabasePopulatorForArticleManager(ArticleRepository articleRepository, ParagraphRepository paragraphRepository, UserRepository userRepository) {
+    public DatabasePopulatorForArticleManager(ArticleRepository articleRepository, ParagraphRepository paragraphRepository, UserRepositoryAM userRepository) {
         _articleRepository = articleRepository;
         _userRepository = userRepository;
         _parapgraphRepository = paragraphRepository;
@@ -52,7 +52,7 @@ public class DatabasePopulatorForArticleManager {
 
     public DatabasePopulatorForArticleManager insertUsers() {
         DEFAULT_USERS.forEach((userName) -> {
-            User user = new User();
+            UserAM user = new UserAM();
             user.setName(userName);
             user.setEnabled(true);
             _userRepository.save(user);

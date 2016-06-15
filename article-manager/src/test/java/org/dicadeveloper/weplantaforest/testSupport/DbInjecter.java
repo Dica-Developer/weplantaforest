@@ -5,8 +5,8 @@ import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
 import org.dicadeveloper.weplantaforest.articles.Paragraph;
 import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
-import org.dicadeveloper.weplantaforest.user.User;
-import org.dicadeveloper.weplantaforest.user.UserRepository;
+import org.dicadeveloper.weplantaforest.user.UserAM;
+import org.dicadeveloper.weplantaforest.user.UserRepositoryAM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public class DbInjecter {
 
     @Autowired
-    private UserRepository _userRepository;
+    private UserRepositoryAM _userRepository;
 
     @Autowired
     private ArticleRepository _articleRepository;
@@ -23,20 +23,20 @@ public class DbInjecter {
     private ParagraphRepository _paragraphRepository;
 
     public void injectUser(String userName) {
-        User userDto = new User();
+        UserAM userDto = new UserAM();
         userDto.setName(userName);
         _userRepository.save(userDto);
     }
 
     public void injectUser(String userName, Long regDate) {
-        User userDto = new User();
+        UserAM userDto = new UserAM();
         userDto.setName(userName);
         userDto.setRegDate(regDate);
         _userRepository.save(userDto);
     }
 
     public void injectUser(String userName, Long regDate, int organizationType) {
-        User userDto = new User();
+        UserAM userDto = new UserAM();
         userDto.setName(userName);
         userDto.setRegDate(regDate);
         userDto.setOrganizationType(organizationType);

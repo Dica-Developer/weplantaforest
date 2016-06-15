@@ -10,7 +10,7 @@ import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
 import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulatorForArticleManager;
-import org.dicadeveloper.weplantaforest.user.UserRepository;
+import org.dicadeveloper.weplantaforest.user.UserRepositoryAM;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +35,7 @@ public class DatabasePopulatorTest {
     private DatabasePopulatorForArticleManager _databasePopulator;
 
     @Autowired
-    private UserRepository _userRepository;
+    private UserRepositoryAM _userRepository;
 
     @Autowired
     private ArticleRepository _articleRepository;
