@@ -23,6 +23,8 @@ public class ImageHelper {
 
     protected final Log LOG = LogFactory.getLog(ImageHelper.class.getName());
 
+    private final static int maxSize = 1500;
+
     public byte[] getByteArrayForImageName(String imageName, String folder) {
         folder = folder + "/";
         File imageFile = getImageAsFile(imageName, folder);
@@ -31,9 +33,13 @@ public class ImageHelper {
     }
 
     public byte[] getByteArrayForImageName(String imageName, String folder, int width, int height) {
+        int[] sizes = { width, height };
+        if (sizes[0] > maxSize || sizes[1] > maxSize) {
+            sizes = scaleSize(sizes);
+        }
         folder = folder + "/";
         File imageFile = getImageAsFile(imageName, folder);
-        byte[] imageBytes = getByteArray(imageFile, imageName, width, height);
+        byte[] imageBytes = getByteArray(imageFile, imageName, sizes[0], sizes[1]);
         return imageBytes;
     }
 
@@ -55,12 +61,12 @@ public class ImageHelper {
 
         File fileToSave = new File(folder, imageName);
         FileOutputStream fileOutPutStreamfromFileToSave = null;
-       
+
         try {
             fileOutPutStreamfromFileToSave = new FileOutputStream(fileToSave);
         } catch (FileNotFoundException e) {
-           LOG.error("File not found for " + fileToSave.getPath() + "!");
-           return false;
+            LOG.error("File not found for " + fileToSave.getPath() + "!");
+            return false;
         }
 
         BufferedOutputStream stream = new BufferedOutputStream(fileOutPutStreamfromFileToSave);
@@ -76,7 +82,7 @@ public class ImageHelper {
     }
 
     private File getImageAsFile(String imageName, String folder) {
-        String filePath = folder + imageName;            
+        String filePath = folder + imageName;
         return new File(filePath);
     }
 
@@ -88,9 +94,9 @@ public class ImageHelper {
             ImageIO.write(img, imageType, bao);
             bao.close();
         } catch (IOException e) {
-           LOG.error("Problem occured while creatinig image bytes for image " + imageName + "!");
+            LOG.error("Problem occured while creatinig image bytes for image " + imageName + "!");
         }
-        
+
         return bao.toByteArray();
     }
 
@@ -105,6 +111,21 @@ public class ImageHelper {
             return bao.toByteArray();
         }
         return bao.toByteArray();
+    }
+
+    private int[] scaleSize(int[] sizes) {
+        if (sizes[0] >= sizes[1]) {
+            double scaledPercent = maxSize * 1.0 / (sizes[0] * 1.0);
+            sizes[0] = maxSize;
+            double newHeight = scaledPercent * sizes[1] * 1.0;
+            sizes[1] = (int) newHeight;
+        } else {
+            double scaledPercent = maxSize * 1.0 / (sizes[1] * 1.0);
+            sizes[1] = maxSize;
+            double newWidth = scaledPercent * sizes[0] * 1.0;
+            sizes[0] = (int) newWidth;
+        }
+        return sizes;
     }
 
     private boolean imageNameExists(String folder, String imageName) {

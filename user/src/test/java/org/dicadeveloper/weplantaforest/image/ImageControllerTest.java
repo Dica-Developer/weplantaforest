@@ -75,6 +75,38 @@ public class ImageControllerTest {
         this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isOk());
     }
+    
+    @Test
+    public void testGetImageScaledVeryBigHeight() throws Exception {
+        createFolderAndInsertImage("test.jpg");
+        
+        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 30000, 150000).accept("image/jpg"))
+                    .andExpect(status().isOk());
+    }
+    
+    @Test
+    public void testGetImageScaledVeryBigWidth() throws Exception {
+        createFolderAndInsertImage("test.jpg");
+        
+        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 150000, 30000).accept("image/jpg"))
+                    .andExpect(status().isOk());
+    }
+    
+    @Test
+    public void testGetImageScaledVeryBigWidthHeightNormal() throws Exception {
+        createFolderAndInsertImage("test.jpg");
+        
+        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 150000, 1500).accept("image/jpg"))
+                    .andExpect(status().isOk());
+    }
+    
+    @Test
+    public void testGetImageScaledVeryBigHeightWidthNormal() throws Exception {
+        createFolderAndInsertImage("test.jpg");
+        
+        this.mockMvc.perform(get(Uris.IMAGE + "{imageName:.+}/{width}/{height}", "test.jpg", 1500, 15000).accept("image/jpg"))
+                    .andExpect(status().isOk());
+    }
 
     @Test
     public void testGetImageScaledBadRequest() throws Exception {
