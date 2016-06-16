@@ -1,8 +1,7 @@
 package org.dicadeveloper.weplantaforest.certificate;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.Calendar;
 import java.util.Locale;
@@ -40,22 +39,18 @@ public class PdfCertificateView {
 
     private static final Font FOOTER_FONT = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.GRAY);
 
-    public File buildPdfDocument(final int treeCount, final String text, final String name, final String number, String gfxPath) throws Exception {
+    public void writePdfDataToOutputStream(OutputStream toWrite, final int treeCount, final String text, final String name, final String number, String imagePath) throws Exception {
         // create pdf
         final Document doc = new Document();
-         final File file = File.createTempFile(treeCount + "-" + name,
-         ".pdf");
-//        File file = new File(treeCount + "-" + name + ".pdf");
-        final PdfWriter pdfWriter = PdfWriter.getInstance(doc, new FileOutputStream(file));
+        final PdfWriter pdfWriter = PdfWriter.getInstance(doc, toWrite);
         pdfWriter.setEncryption(null, null, PdfWriter.ALLOW_DEGRADED_PRINTING | PdfWriter.ALLOW_PRINTING, PdfWriter.STANDARD_ENCRYPTION_128);
 
         final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"), Locale.GERMAN);
         cal.setTimeInMillis(System.currentTimeMillis());
         final String date = cal.get(Calendar.DAY_OF_MONTH) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.YEAR);
 
-        _imagePath = gfxPath;
+        _imagePath = imagePath;
         composeDocument(doc, String.valueOf(treeCount), text, name, date, number);
-        return file;
     }
 
     private void composeDocument(final Document doc, final String numberOfTrees, final String userText, final String userName, final String date, final String number)

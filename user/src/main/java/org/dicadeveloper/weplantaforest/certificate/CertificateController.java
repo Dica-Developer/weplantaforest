@@ -1,12 +1,9 @@
 package org.dicadeveloper.weplantaforest.certificate;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
@@ -70,7 +67,8 @@ public class CertificateController {
     }
 
     @RequestMapping(value = Uris.CERTIFICATE_CREATE, method = RequestMethod.GET, headers = "Accept=application/pdf")
-    public ResponseEntity<byte[]> createCertificate(@RequestBody CertificateRequestData requestData) {
+    @Transactional
+    public ResponseEntity<?> createCertificate(HttpServletResponse response, @RequestBody CertificateRequestData requestData) {
         if (requestData.getCartIds() != null && requestData.getCartIds().length > 0) {
             User user = _userRepository.findOne(requestData.getUserId());
 
@@ -95,40 +93,16 @@ public class CertificateController {
             _certificateRepository.save(certificate);
 
             PdfCertificateView pdf = new PdfCertificateView();
-            byte[] pdfBytes = null;
             try {
-                File pdfFile = pdf.buildPdfDocument(treeCount, requestData.getText(), user.getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH);
-                pdfBytes = getPdfAsByteArray(pdfFile);
-                if (null == pdfBytes) {
-                    return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-                }
+                pdf.writePdfDataToOutputStream(response.getOutputStream(), treeCount, requestData.getText(), user.getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH);
             } catch (Exception e) {
                 LOG.error("Error occured while creating PDF!", e);
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            return new ResponseEntity<>(pdfBytes, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
-
-    private byte[] getPdfAsByteArray(File pdfFile) {
-        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            final FileInputStream inputStream = new FileInputStream(pdfFile);
-            final byte[] bytes = new byte[1024];
-            int read = 0;
-            while ((read = inputStream.read(bytes, 0, bytes.length)) != -1) {
-                outputStream.write(bytes, 0, read);
-            }
-            outputStream.flush();
-            outputStream.close();
-            inputStream.close();
-        } catch (final IOException e) {
-            LOG.error("could not load pdf!", e);
-            return null;
-        }
-        return outputStream.toByteArray();
     }
 
 }
