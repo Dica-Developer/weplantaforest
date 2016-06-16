@@ -4,9 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
@@ -25,21 +27,23 @@ public class ImageHelper {
 
     private final static int maxSize = 1500;
 
-    public byte[] getByteArrayForImageName(String imageName, String folder) {
-        folder = folder + "/";
-        File imageFile = getImageAsFile(imageName, folder);
-        byte[] imageBytes = getByteArray(imageFile, imageName);
-        return imageBytes;
-    }
-
-    public byte[] getByteArrayForImageName(String imageName, String folder, int width, int height) {
+    public OutputStream writeImageToOutputStream(OutputStream toWrite, String filePath, int width, int height) {
         int[] sizes = { width, height };
         if (sizes[0] > maxSize || sizes[1] > maxSize) {
             sizes = scaleSize(sizes);
         }
+        try {
+            Thumbnails.of(new FileInputStream(filePath)).size(sizes[0], sizes[1]).toOutputStream(toWrite);
+        } catch (IOException e) {
+            LOG.error("Error occured while creating FileinputStream for: " + filePath, e);
+        }
+        return toWrite;
+    }
+
+    public byte[] getByteArrayForImageName(String imageName, String folder) {
         folder = folder + "/";
         File imageFile = getImageAsFile(imageName, folder);
-        byte[] imageBytes = getByteArray(imageFile, imageName, sizes[0], sizes[1]);
+        byte[] imageBytes = getByteArray(imageFile, imageName);
         return imageBytes;
     }
 
@@ -84,20 +88,6 @@ public class ImageHelper {
     private File getImageAsFile(String imageName, String folder) {
         String filePath = folder + imageName;
         return new File(filePath);
-    }
-
-    private byte[] getByteArray(File file, String imageName, int width, int height) {
-        String imageType = StringHelper.getDataTypeFromFileName(imageName);
-        ByteArrayOutputStream bao = new ByteArrayOutputStream(0);
-        try {
-            BufferedImage img = Thumbnails.of(file).size(width, height).asBufferedImage();
-            ImageIO.write(img, imageType, bao);
-            bao.close();
-        } catch (IOException e) {
-            LOG.error("Problem occured while creatinig image bytes for image " + imageName + "!");
-        }
-
-        return bao.toByteArray();
     }
 
     private byte[] getByteArray(File file, String imageName) {

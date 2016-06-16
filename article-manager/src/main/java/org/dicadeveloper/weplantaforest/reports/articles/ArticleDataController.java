@@ -1,7 +1,12 @@
 package org.dicadeveloper.weplantaforest.reports.articles;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
 import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
@@ -22,6 +27,8 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class ArticleDataController {
+
+    protected final Log LOG = LogFactory.getLog(ArticleDataController.class.getName());
 
     private @NonNull ArticleDataRepository _articleDataRepository;
 
@@ -50,15 +57,13 @@ public class ArticleDataController {
     }
 
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public ResponseEntity<byte[]> getArticleImage(@PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName, @PathVariable int width,
+    public void getArticleImage(HttpServletResponse response, @PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName, @PathVariable int width,
             @PathVariable int height) {
-        String articleFolder = FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId;
-        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, articleFolder, width, height);
-
-        if (imageBytes.length > 0) {
-            return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        String filePath = FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        try {
+            _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
+        } catch (IOException e) {
+            LOG.error("Error occured while getting OutputStream from HttServletResponse!", e);
         }
     }
 
