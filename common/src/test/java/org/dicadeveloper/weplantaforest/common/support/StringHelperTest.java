@@ -50,4 +50,28 @@ public class StringHelperTest {
 
         assertThat(newFileName).isEqualTo(StringHelper.UNKNOWN_DATATYPE);
     }
+    
+    @Test
+    public void testEmailIsValid(){
+        String validEmail = "bla@blubb.de";
+        assertThat(StringHelper.isValidEmail(validEmail)).isTrue();
+    }
+    
+    @Test
+    public void testEmailIsNotValidMissingAt(){
+        String validEmail = "blablubb.de";
+        assertThat(StringHelper.isValidEmail(validEmail)).isFalse();
+    }
+    
+    @Test
+    public void testEmailIsNotValidMissingDot(){
+        String validEmail = "bla@blubbde";
+        assertThat(StringHelper.isValidEmail(validEmail)).isFalse();
+    }
+    
+    @Test
+    public void testEmailIsNotValidMissingPrefix(){
+        String validEmail = "@blubb.de";
+        assertThat(StringHelper.isValidEmail(validEmail)).isFalse();
+    }
 }
