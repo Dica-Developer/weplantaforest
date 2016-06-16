@@ -1,8 +1,6 @@
 package org.dicadeveloper.weplantaforest.common.image;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,12 +8,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.imageio.ImageIO;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.common.support.StringHelper;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.coobird.thumbnailator.Thumbnails;
@@ -33,18 +30,24 @@ public class ImageHelper {
             sizes = scaleSize(sizes);
         }
         try {
-            Thumbnails.of(new FileInputStream(filePath)).size(sizes[0], sizes[1]).toOutputStream(toWrite);
+            FileInputStream inputStream = new FileInputStream(filePath);
+            Thumbnails.of(inputStream).size(sizes[0], sizes[1]).toOutputStream(toWrite);
+            inputStream.close();
         } catch (IOException e) {
             LOG.error("Error occured while creating FileinputStream for: " + filePath, e);
         }
         return toWrite;
     }
 
-    public byte[] getByteArrayForImageName(String imageName, String folder) {
-        folder = folder + "/";
-        File imageFile = getImageAsFile(imageName, folder);
-        byte[] imageBytes = getByteArray(imageFile, imageName);
-        return imageBytes;
+    public OutputStream writeImageToOutputStream(OutputStream toWrite, String filePath) {
+        try {
+            FileInputStream inputStream = new FileInputStream(filePath);
+            FileCopyUtils.copy(new FileInputStream(filePath), toWrite);
+            inputStream.close();
+        } catch (IOException e) {
+            LOG.error("Error occured while creating FileinputStream for: " + filePath, e);
+        }
+        return toWrite;
     }
 
     public boolean storeImage(MultipartFile file, String folder, String imageName) {
@@ -83,24 +86,6 @@ public class ImageHelper {
             return false;
         }
         return true;
-    }
-
-    private File getImageAsFile(String imageName, String folder) {
-        String filePath = folder + imageName;
-        return new File(filePath);
-    }
-
-    private byte[] getByteArray(File file, String imageName) {
-        String imageType = StringHelper.getDataTypeFromFileName(imageName);
-        ByteArrayOutputStream bao = new ByteArrayOutputStream(0);
-        try {
-            BufferedImage img = ImageIO.read(file);
-            ImageIO.write(img, imageType, bao);
-            bao.close();
-        } catch (IOException e) {
-            return bao.toByteArray();
-        }
-        return bao.toByteArray();
     }
 
     private int[] scaleSize(int[] sizes) {

@@ -25,25 +25,24 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class ImageController {
-    
+
     protected final Log LOG = LogFactory.getLog(ImageController.class.getName());
 
     private @NonNull ImageHelper _imageHelper;
 
     @RequestMapping(value = Uris.IMAGE + "{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public ResponseEntity<byte[]> getImage(@PathVariable String imageName) {
-        String imageFolder = FileSystemInjector.getImageUploadFolder();
+    public void getImage(HttpServletResponse response, @PathVariable String imageName) {
+        String filePath = FileSystemInjector.getImageUploadFolder() + "/" + imageName;
 
-        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, imageFolder);
-        if (imageBytes.length > 0) {
-            return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath);
+        } catch (IOException e) {
+            LOG.error("Error occured while getting OutputStream from HttServletResponse!", e);
         }
     }
 
     @RequestMapping(value = Uris.IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public void getScaledImage(HttpServletResponse response,@PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
+    public void getScaledImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getImageUploadFolder() + "/" + imageName;
 
         try {

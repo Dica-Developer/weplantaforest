@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,14 +59,13 @@ public class ProjectReportController {
     }
 
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public ResponseEntity<byte[]> getProjectImage(@PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName) {
-        String projectFolder = FileSystemInjector.getImageFolderForProjects() + "/" + projectName;
+    public void getProjectImage(HttpServletResponse response, @PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName) {
+        String filePath = FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + imageName;
 
-        byte[] imageBytes = _imageHelper.getByteArrayForImageName(imageName, projectFolder);
-        if (imageBytes.length > 0) {
-            return new ResponseEntity<>(imageBytes, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath);
+        } catch (IOException e) {
+            LOG.error("Error occured while getting OutputStream from HttServletResponse!", e);
         }
 
     }
