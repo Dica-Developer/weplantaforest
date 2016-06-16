@@ -64,8 +64,6 @@ public class ProjectOfferControllerSendMailTests {
         offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
-        System.out.println(TestUtil.getJsonStringFromObject(offer));
-
         this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                    .content(TestUtil.convertObjectToJsonBytes(offer)))
                     .andExpect(status().isOk());
@@ -89,8 +87,6 @@ public class ProjectOfferControllerSendMailTests {
         offer.purpose = "liegt brach";
         offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
-
-        System.out.println(TestUtil.getJsonStringFromObject(offer));
 
         this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                    .content(TestUtil.convertObjectToJsonBytes(offer)))
