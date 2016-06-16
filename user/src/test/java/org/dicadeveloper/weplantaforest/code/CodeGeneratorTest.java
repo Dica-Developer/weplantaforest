@@ -9,8 +9,8 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.gift.Event;
-import org.dicadeveloper.weplantaforest.gift.EventRepository;
+import org.dicadeveloper.weplantaforest.event.Event;
+import org.dicadeveloper.weplantaforest.event.EventRepository;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;

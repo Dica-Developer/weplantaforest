@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
-import org.dicadeveloper.weplantaforest.gift.Event;
+import org.dicadeveloper.weplantaforest.event.Event;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.gift;
+package org.dicadeveloper.weplantaforest.event;
 
 import org.springframework.data.repository.CrudRepository;
 

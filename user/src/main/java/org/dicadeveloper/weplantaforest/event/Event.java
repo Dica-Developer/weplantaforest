@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.gift;
+package org.dicadeveloper.weplantaforest.event;
 
 import java.util.ArrayList;
 import java.util.List;

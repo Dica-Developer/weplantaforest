@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.dicadeveloper.weplantaforest.gift.Event;
+import org.dicadeveloper.weplantaforest.event.Event;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
