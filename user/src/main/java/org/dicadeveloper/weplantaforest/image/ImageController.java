@@ -36,7 +36,7 @@ public class ImageController {
 
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
             LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
