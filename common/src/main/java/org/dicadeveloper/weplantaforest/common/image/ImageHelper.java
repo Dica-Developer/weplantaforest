@@ -24,7 +24,7 @@ public class ImageHelper {
 
     private final static int maxSize = 1500;
 
-    public OutputStream writeImageToOutputStream(OutputStream toWrite, String filePath, int width, int height) throws FileNotFoundException, IOException {
+    public void writeImageToOutputStream(OutputStream toWrite, String filePath, int width, int height) throws FileNotFoundException, IOException {
         int[] sizes = { width, height };
         if (sizes[0] > maxSize || sizes[1] > maxSize) {
             sizes = scaleSize(sizes);
@@ -33,15 +33,12 @@ public class ImageHelper {
         FileInputStream inputStream = new FileInputStream(filePath);
         Thumbnails.of(inputStream).size(sizes[0], sizes[1]).toOutputStream(toWrite);
         inputStream.close();
-
-        return toWrite;
     }
 
-    public OutputStream writeImageToOutputStream(OutputStream toWrite, String filePath) throws FileNotFoundException, IOException {
+    public void writeImageToOutputStream(OutputStream toWrite, String filePath) throws FileNotFoundException, IOException {
         FileInputStream inputStream = new FileInputStream(filePath);
         FileCopyUtils.copy(new FileInputStream(filePath), toWrite);
         inputStream.close();
-        return toWrite;
     }
 
     public boolean storeImage(MultipartFile file, String folder, String imageName) {
