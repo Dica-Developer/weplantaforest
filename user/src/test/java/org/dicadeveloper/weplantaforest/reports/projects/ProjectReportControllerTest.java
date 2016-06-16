@@ -201,13 +201,13 @@ public class ProjectReportControllerTest {
         String projectImageName = "project1.jpg";      
         createProjectFolderAndInsertImage(projectName, projectImageName);
         
-        this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "project1.jpg", 500, 500).accept("image/jpg"))
+        this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", "Project 1 von admin", "project1.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isOk());
     }
 
     @Test
     public void testGetImageScaledBadRequest() throws Exception {
-        this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "wrongName.jpg", 500, 500).accept("image/jpg"))
+        this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", "Project 1 von admin", "wrongName.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isBadRequest());
     }
     
