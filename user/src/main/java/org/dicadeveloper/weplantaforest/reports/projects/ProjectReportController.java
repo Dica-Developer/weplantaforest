@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,26 +61,30 @@ public class ProjectReportController {
     }
 
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public void getProjectImage(HttpServletResponse response, @PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName) {
+    public ResponseEntity<?> getProjectImage(HttpServletResponse response, @PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName) {
         String filePath = FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + imageName;
 
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IOException e) {
-            LOG.error("Error occured while getting OutputStream from HttServletResponse!", e);
+            LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public void getProjectImage(HttpServletResponse response, @PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName, @PathVariable int width,
-            @PathVariable int height) {
+    public ResponseEntity<?> getProjectImage(HttpServletResponse response, @PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName,
+            @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + imageName;
 
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IOException e) {
-            LOG.error("Error occured while getting OutputStream from HttServletResponse!", e);
+            LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
