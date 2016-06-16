@@ -21,9 +21,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.admin.codes.Abo;
-import org.dicadeveloper.weplantaforest.admin.codes.Coupon;
-import org.dicadeveloper.weplantaforest.admin.codes.Event;
 import org.dicadeveloper.weplantaforest.admin.codes.Receipt;
+import org.dicadeveloper.weplantaforest.code.Code;
+import org.dicadeveloper.weplantaforest.gift.Event;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
@@ -148,7 +148,7 @@ public class Cart implements Identifiable<Long> {
 
     @OneToOne(optional = true)
     @JoinColumn(name = "_code__id")
-    private Coupon code;
+    private Code code;
 
     @Transient
     private boolean gift = false;
