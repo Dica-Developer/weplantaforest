@@ -125,7 +125,7 @@ public class CodeGenerator {
             while (code == null) {
                 code = generate(event, year, month, i);
             }
-            code.setAmount(price);
+            code.setPrice(price);
             _codeRepository.save(code);
             codes.add(code);
         }

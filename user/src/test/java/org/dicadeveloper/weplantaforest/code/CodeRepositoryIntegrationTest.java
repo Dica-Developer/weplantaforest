@@ -36,7 +36,7 @@ public class CodeRepositoryIntegrationTest {
         String codeString = "a-b-c";
 
         Code code = new Code();
-        code.setAmount(1.0f);
+        code.setPrice(1.0f);
         code.setCode(codeString);
         code.setNumber(1);
         code.setMonth(1);
@@ -49,7 +49,7 @@ public class CodeRepositoryIntegrationTest {
 
         Code savedCode = _codeRepository.findByCode(codeString);
 
-        assertThat(savedCode.getAmount()).isEqualTo(1.0f);
+        assertThat(savedCode.getPrice()).isEqualTo(1.0f);
         assertThat(savedCode.getNumber()).isEqualTo(1);
         assertThat(savedCode.getMonth()).isEqualTo(1);
         assertThat(savedCode.getYear()).isEqualTo(2016);
