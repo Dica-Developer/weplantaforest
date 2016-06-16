@@ -50,7 +50,7 @@ public class Code {
     private int treeCount;
 
     @Column(name ="_amount")
-    private float amount;
+    private float price;
 
     @Column(name ="_evaluated",nullable = false)
     private boolean evaluated = false;

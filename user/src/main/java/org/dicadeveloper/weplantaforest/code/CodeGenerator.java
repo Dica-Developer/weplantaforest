@@ -105,7 +105,7 @@ public class CodeGenerator {
         return codes;
     }
 
-    public List<Code> generate(final Event event, final int count, final float amount) {
+    public List<Code> generate(final Event event, final int count, final float price) {
         final Calendar cal = Calendar.getInstance();
         final int year = cal.get(Calendar.YEAR);
         final int month = cal.get(Calendar.MONTH);
@@ -125,7 +125,7 @@ public class CodeGenerator {
             while (code == null) {
                 code = generate(event, year, month, i);
             }
-            code.setAmount(amount);
+            code.setAmount(price);
             _codeRepository.save(code);
             codes.add(code);
         }
