@@ -61,9 +61,11 @@ public class ImageController {
         String imageFolder = FileSystemInjector.getImageUploadFolder();
 
         if (!file.isEmpty()) {
-            if (_imageHelper.storeImage(file, imageFolder, imageName)) {
+            try {
+                _imageHelper.storeImage(file, imageFolder, imageName);
                 return new ResponseEntity<>(HttpStatus.OK);
-            } else {
+            } catch (IOException e) {
+                LOG.error("Error occured while trying to save image " + imageName + " in folder: " + imageFolder, e);
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } else {

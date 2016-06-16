@@ -41,7 +41,7 @@ public class ImageHelper {
         inputStream.close();
     }
 
-    public boolean storeImage(MultipartFile file, String folder, String imageName) {
+    public void storeImage(MultipartFile file, String folder, String imageName) throws IOException {
         if (!folderExists(folder)) {
             createNewFolder(folder);
         }
@@ -50,33 +50,19 @@ public class ImageHelper {
         }
 
         byte[] bytes = null;
-        try {
-            bytes = file.getBytes();
-        } catch (IOException e1) {
-            LOG.error("Error occured while applying bytes from imageFile: " + file.getName() + "!");
-            return false;
-        }
+        bytes = file.getBytes();
 
         File fileToSave = new File(folder, imageName);
         FileOutputStream fileOutPutStreamfromFileToSave = null;
 
-        try {
-            fileOutPutStreamfromFileToSave = new FileOutputStream(fileToSave);
-        } catch (FileNotFoundException e) {
-            LOG.error("File not found for " + fileToSave.getPath() + "!");
-            return false;
-        }
+        fileOutPutStreamfromFileToSave = new FileOutputStream(fileToSave);
 
         BufferedOutputStream stream = new BufferedOutputStream(fileOutPutStreamfromFileToSave);
-        try {
-            stream.write(bytes);
-            stream.close();
-            fileOutPutStreamfromFileToSave.close();
-        } catch (IOException e) {
-            LOG.error("Error occured while writing stream for " + file.getName() + "!");
-            return false;
-        }
-        return true;
+
+        stream.write(bytes);
+        stream.close();
+        fileOutPutStreamfromFileToSave.close();
+
     }
 
     private int[] scaleSize(int[] sizes) {
