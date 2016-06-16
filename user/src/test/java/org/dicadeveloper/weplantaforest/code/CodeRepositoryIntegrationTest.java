@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,9 +24,6 @@ public class CodeRepositoryIntegrationTest {
     @Rule
     @Autowired
     public CleanDbRule _cleanDbRule;
-
-    @Autowired
-    public DatabasePopulator _databasePopulator;
 
     @Autowired
     public DbInjecter _dbInjecter;
