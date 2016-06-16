@@ -306,4 +306,22 @@ public class CertificateControllerTest {
 
     }
 
+    @Test
+    @Transactional
+    public void testCreateCertificateBadRequestCauseOfMissingCartIds() throws Exception {
+        Long userId = 1L;
+        String text = "blabla";
+        Long[] cartIds = {};
+
+        CertificateRequestData certificateRequest = new CertificateRequestData();
+        certificateRequest.userId = userId;
+        certificateRequest.text = text;
+        certificateRequest.cartIds = cartIds;
+
+        this.mockMvc.perform(get(Uris.CERTIFICATE_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                         .content(TestUtil.convertObjectToJsonBytes(certificateRequest))
+                                                         .accept("application/pdf"))
+                    .andExpect(status().isBadRequest());
+    }
+
 }
