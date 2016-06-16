@@ -38,7 +38,6 @@ public class FileSystemInjector{
     }
     
     public static String getImageUploadFolder() {
-        System.out.println(topFolder);
         return topFolder + UPLOAD_DIR;
     }
 
