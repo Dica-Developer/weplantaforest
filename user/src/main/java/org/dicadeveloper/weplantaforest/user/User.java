@@ -31,7 +31,7 @@ public class User implements Identifiable<Long> {
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView(Views.PlantedTree.class)
+    @JsonView({Views.PlantedTree.class, Views.OverviewGift.class})
     private String name;
 
     @Column(name = "_email", length = 500)

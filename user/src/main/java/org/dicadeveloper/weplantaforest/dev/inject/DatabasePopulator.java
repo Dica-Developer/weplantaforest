@@ -21,7 +21,12 @@ import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
+import org.dicadeveloper.weplantaforest.code.Code;
+import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
+import org.dicadeveloper.weplantaforest.gift.Gift;
+import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.projects.PriceRepository;
@@ -68,11 +73,13 @@ public class DatabasePopulator {
     private TeamRepository _teamRepository;
     private CartRepository _cartRepository;
     private CertificateRepository _certificateRepository;
+    private GiftRepository _giftRepository;
+    private CodeGenerator _codeGenerator;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository,
-            CartRepository cartRepository, CertificateRepository certificateRepository) {
+            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -83,6 +90,8 @@ public class DatabasePopulator {
         _teamRepository = teamRepository;
         _cartRepository = cartRepository;
         _certificateRepository = certificateRepository;
+        _giftRepository = giftRepository;
+        _codeGenerator = codeGenerator;
     }
 
     public DatabasePopulator insertProjects() {
@@ -338,23 +347,23 @@ public class DatabasePopulator {
     public DatabasePopulator insertCartAndCertificateToCart() {
         Cart cart = new Cart();
         User buyer = _userRepository.findByName(DEFAULT_USERS.get(0));
-        
+
         cart.setBuyer(buyer);
 
         Tree tree = new Tree();
-        ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);    
+        ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
         tree.setAmount(2);
-        tree.setProjectArticle(projectArticle);       
+        tree.setProjectArticle(projectArticle);
         tree.setTreeType(projectArticle.getTreeType());
         tree.setOwner(buyer);
-        
+
         CartItem cartItem = new CartItem();
         cartItem.setAmount(2);
         cartItem.setBasePricePerPiece(new BigDecimal(2.0));
         cartItem.setTotalPrice(new BigDecimal(4.0));
         cartItem.setPlantArticleId(1L);
         cartItem.setTree(tree);
-        
+
         cart.addCartItem(cartItem);
 
         _cartRepository.save(cart);
@@ -363,13 +372,27 @@ public class DatabasePopulator {
         certificate.setCreator(_userRepository.findByName(DEFAULT_USERS.get(0)));
         certificate.setText("Very happy to save the plaent");
         certificate.generateAndSetNumber(0);
-        
+
         List<Cart> carts = new ArrayList<>();
         carts.add(_cartRepository.findOne(1L));
         certificate.setCarts(carts);
 
         _certificateRepository.save(certificate);
 
+        return this;
+    }
+
+    public DatabasePopulator insertGifts() {        
+        for (int i = 0; i < 10; i++) {
+            Gift gift = new Gift();
+            gift.setConsignor(_userRepository.findByName(DEFAULT_USERS.get(i)));
+            gift.setRecipient(_userRepository.findByName(DEFAULT_USERS.get(9 - i)));
+            _giftRepository.save(gift);
+            Code code = _codeGenerator.generate(gift);
+            gift.setCode(code);
+            gift.setStatus(Status.REDEEMED);
+            _giftRepository.save(gift);
+        }
         return this;
     }
 

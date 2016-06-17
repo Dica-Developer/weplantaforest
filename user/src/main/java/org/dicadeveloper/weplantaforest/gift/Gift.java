@@ -11,6 +11,9 @@ import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,17 +34,21 @@ public class Gift {
 
     @ManyToOne
     @JoinColumn(name = "_consignor__userId")
+    @JsonView(Views.OverviewGift.class)
     private User consignor;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "_recipient__userId")
+    @JsonView(Views.OverviewGift.class)
     private User recipient;
 
     @OneToOne(optional = true)
     @JoinColumn(name = "_code__id")
+    @JsonView(Views.OverviewGift.class)
     private Code code;
 
     @Column(name = "_status")
+    @JsonView(Views.OverviewGift.class)
     private Status status;
 
 }

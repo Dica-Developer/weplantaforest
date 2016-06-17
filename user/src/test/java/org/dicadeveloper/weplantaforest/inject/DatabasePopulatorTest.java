@@ -12,6 +12,7 @@ import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
+import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
@@ -67,6 +68,9 @@ public class DatabasePopulatorTest {
     
     @Autowired
     private CertificateRepository _certificateRepository;
+    
+    @Autowired
+    private GiftRepository _giftRepository;
 
     @Test
     public void testInsertUsers() throws Exception {
@@ -170,6 +174,14 @@ public class DatabasePopulatorTest {
         
         assertThat(_cartRepository.count()).isEqualTo(1L);
         assertThat(_certificateRepository.count()).isEqualTo(1L);        
+    }
+    
+    @Test
+    public void testInsertGifts(){
+        _databasePopulator.insertUsers();
+        _databasePopulator.insertGifts();
+        
+        assertThat(_giftRepository.count()).isEqualTo(10);
     }
 
 }

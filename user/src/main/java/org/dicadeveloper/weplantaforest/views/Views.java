@@ -7,4 +7,8 @@ public interface Views {
     public static interface ShortCart{
         
     }
+    
+    public static interface OverviewGift{
+        
+    }
 }

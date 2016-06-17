@@ -12,6 +12,11 @@ import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
+import org.dicadeveloper.weplantaforest.code.Code;
+import org.dicadeveloper.weplantaforest.code.CodeGenerator;
+import org.dicadeveloper.weplantaforest.gift.Gift;
+import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.projects.PriceRepository;
@@ -62,6 +67,12 @@ public class DbInjecter {
 
     @Autowired
     private CertificateRepository _certificateRepository;
+    
+    @Autowired
+    private GiftRepository _giftRepository;
+    
+    @Autowired
+    private CodeGenerator _codeGenerator;
 
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
@@ -260,6 +271,31 @@ public class DbInjecter {
 
         return certificate.getNumber();
 
+    }
+    
+    public String injectGiftWithCode(String userName,String recipient, Status giftStatus){
+        Gift gift = new Gift();
+        gift.setConsignor(_userRepository.findByName(userName));
+        gift.setRecipient(_userRepository.findByName(recipient));
+        _giftRepository.save(gift);
+        Code code = _codeGenerator.generate(gift);
+        gift.setCode(code);
+        gift.setStatus(giftStatus);
+        _giftRepository.save(gift);
+        
+        return gift.getCode().getCode();
+    }
+    
+    public String injectGiftWithCode(String consignor, Status giftStatus){
+        Gift gift = new Gift();
+        gift.setConsignor(_userRepository.findByName(consignor));
+        _giftRepository.save(gift);
+        Code code = _codeGenerator.generate(gift);
+        gift.setCode(code);
+        gift.setStatus(giftStatus);
+        _giftRepository.save(gift);
+        
+        return gift.getCode().getCode();
     }
 
 }
