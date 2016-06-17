@@ -154,8 +154,6 @@ public class CodeGenerator {
         code.setMonth(month);
         code.setNumber(number);
 
-        year = (year - 2000) % 30;
-
         // try 1000 times to generate a code
         for (int i = 0; i < 1000; i++) {
             final StringBuilder key = new StringBuilder();
@@ -166,8 +164,8 @@ public class CodeGenerator {
             key.append(small(countB));
 
             // create year [medium]
-            final int yearA = random(Math.max(year - 15, 0), Math.min(year, 15));
-            final int yearB = year - yearA;
+            final int yearA = random(0,15);
+            final int yearB = 15 - yearA;
             key.append(medium(yearA));
             key.append(medium(yearB));
 
