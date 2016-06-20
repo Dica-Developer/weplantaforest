@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
@@ -23,6 +24,9 @@ import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,6 +70,12 @@ public class GiftControllerTest {
 
     @Autowired
     private CodeGenerator _codeGenerator;
+
+    @Autowired
+    private UserRepository _userRepository;
+
+    @Autowired
+    private TreeTypeRepository _treeTypeRepository;
 
     @Before
     public void setup() {
@@ -203,6 +213,133 @@ public class GiftControllerTest {
                                                .param("giftId", "1")
                                                .accept("application/pdf"))
                     .andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
+    public void testRedeemGiftCode() throws Exception {
+        _dbInjecter.injectUser("Consignor");
+        _dbInjecter.injectUser("Receiver");
+        _dbInjecter.injectTreeType("wood", "a wood", 0.5);
+
+        User consignor = _userRepository.findByName("Consignor");
+
+        Code code = _dbInjecter.injectGiftWithCode("Consignor", Status.UNREDEEMED);
+
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName("Adam"));
+        cart.setCode(code);
+
+        Tree tree = new Tree();
+        tree.setOwner(consignor);
+        tree.setAmount(1);
+        tree.setTreeType(_treeTypeRepository.findByName("wood"));
+
+        CartItem cartItem = new CartItem();
+        cartItem.setAmount(1);
+        cartItem.setTree(tree);
+        cartItem.setPlantArticleId(1L);
+
+        cart.addCartItem(cartItem);
+
+        _cartRepository.save(cart);
+
+        Gift savedGiftBeforeRedeem = _giftRepository.findOne(1L);
+        assertThat(savedGiftBeforeRedeem.getStatus()).isEqualTo(Status.UNREDEEMED);
+        Tree savedTreeBeforeRedeem = _treeRepository.findOne(1L);
+        assertThat(savedTreeBeforeRedeem.getOwner()
+                                        .getName()).isEqualTo("Consignor");
+
+        this.mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                  .param("giftCode", code.getCode())
+                                                  .param("userId", "2")
+                                                  .accept("application/json"))
+                    .andExpect(status().isOk());
+
+        Tree savedTreeAfterRedeem = _treeRepository.findOne(1L);
+        assertThat(savedTreeAfterRedeem.getOwner()
+                                       .getName()).isEqualTo("Receiver");
+
+        Gift savedGiftAfterRedeem = _giftRepository.findOne(1L);
+        assertThat(savedGiftAfterRedeem.getStatus()).isEqualTo(Status.REDEEMED);
+
+    }
+
+    @Test
+    @Transactional
+    public void testRedeemGiftCodeBadRequestCauseOfNonValidCode() throws Exception {
+        _dbInjecter.injectUser("Consignor");
+        _dbInjecter.injectUser("Receiver");
+        _dbInjecter.injectTreeType("wood", "a wood", 0.5);
+
+        User consignor = _userRepository.findByName("Consignor");
+
+        Code code = _dbInjecter.injectGiftWithCode("Consignor", Status.UNREDEEMED);
+
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName("Adam"));
+        cart.setCode(code);
+
+        Tree tree = new Tree();
+        tree.setOwner(consignor);
+        tree.setAmount(1);
+        tree.setTreeType(_treeTypeRepository.findByName("wood"));
+
+        CartItem cartItem = new CartItem();
+        cartItem.setAmount(1);
+        cartItem.setTree(tree);
+        cartItem.setPlantArticleId(1L);
+
+        cart.addCartItem(cartItem);
+
+        _cartRepository.save(cart);
+
+        this.mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                  .param("giftCode", "NON VALID CODE")
+                                                  .param("userId", "2")
+                                                  .accept("application/json"))
+                    .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void testRedeemGiftCodeBadRequestCauseOfAlreadyRedeemed() throws Exception {
+        _dbInjecter.injectUser("Consignor");
+        _dbInjecter.injectUser("Receiver");
+        _dbInjecter.injectTreeType("wood", "a wood", 0.5);
+
+        User consignor = _userRepository.findByName("Consignor");
+
+        Code code = _dbInjecter.injectGiftWithCode("Consignor", Status.UNREDEEMED);
+
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName("Adam"));
+        cart.setCode(code);
+
+        Tree tree = new Tree();
+        tree.setOwner(consignor);
+        tree.setAmount(1);
+        tree.setTreeType(_treeTypeRepository.findByName("wood"));
+
+        CartItem cartItem = new CartItem();
+        cartItem.setAmount(1);
+        cartItem.setTree(tree);
+        cartItem.setPlantArticleId(1L);
+
+        cart.addCartItem(cartItem);
+
+        _cartRepository.save(cart);
+
+        this.mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                  .param("giftCode", code.getCode())
+                                                  .param("userId", "2")
+                                                  .accept("application/json"))
+                    .andExpect(status().isOk());
+        this.mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                  .param("giftCode", code.getCode())
+                                                  .param("userId", "2")
+                                                  .accept("application/json"))
+                    .andExpect(status().isBadRequest());
     }
 
 }

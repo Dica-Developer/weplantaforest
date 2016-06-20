@@ -16,6 +16,7 @@ import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
 import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
+import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
@@ -114,6 +115,33 @@ public class GiftController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = Uris.GIFT_REDEEM, method = RequestMethod.GET)
+    @Transactional
+    public ResponseEntity<?> redeemGiftCode(@RequestParam String giftCode, @RequestParam long userId) {
+        if (_codeGenerator.isValid(giftCode)) {
+            Gift gift = _giftRepository.findGiftByCode(giftCode);
+            if (gift.getStatus() == Status.UNREDEEMED) {
+                User recipient = _userRepository.findOne(userId);
+                Cart cartToGift = _cartRepository.findCartByCode(giftCode);
+
+                gift.setRecipient(recipient);
+                gift.setStatus(Status.REDEEMED);
+
+                for (Tree cartTree : cartToGift.getTrees()) {
+                    cartTree.setOwner(recipient);
+                }
+                _cartRepository.save(cartToGift);
+                _giftRepository.save(gift);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }
