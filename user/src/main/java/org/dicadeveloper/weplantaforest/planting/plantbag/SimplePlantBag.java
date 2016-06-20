@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SimplePlantPageData {
+public class SimplePlantBag {
 
     long targetAmountOfTrees;
     long actualAmountOfTrees;

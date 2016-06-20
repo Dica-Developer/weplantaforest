@@ -6,10 +6,10 @@ import java.util.Set;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
-import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData;
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData;
-import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData.ProjectData.PlantItem;
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData.SimplePlantPageItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag.ProjectData.PlantItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -21,16 +21,16 @@ import org.springframework.stereotype.Component;
 import lombok.NonNull;
 
 @Component
-public class PlantPageDataToCartConverter {
+public class PlantBagToCartConverter {
 
     private @NonNull ProjectArticleRepository _projectArticleRepository;
 
     @Autowired
-    public PlantPageDataToCartConverter(ProjectArticleRepository projectArticleRepository) {
+    public PlantBagToCartConverter(ProjectArticleRepository projectArticleRepository) {
         _projectArticleRepository = projectArticleRepository;
     }
 
-    public Cart convertPlantPageDataToCart(PlantPageData plantPageData) {
+    public Cart convertPlantPageDataToCart(PlantBag plantPageData) {
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
 
@@ -68,7 +68,7 @@ public class PlantPageDataToCartConverter {
         return cart;
     }
 
-    public Cart convertSimplePlantPageDataToCart(SimplePlantPageData simplePlantPageData) {
+    public Cart convertSimplePlantPageDataToCart(SimplePlantBag simplePlantPageData) {
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
 

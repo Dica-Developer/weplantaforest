@@ -3,7 +3,7 @@ package org.dicadeveloper.weplantaforest.planting.plantbag;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData.SimplePlantPageItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -11,15 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SimplePlantPageDataValidator extends AbstractPlantPageValidator {
+public class SimplePlantBagValidator extends AbstractPlantBagValidator {
 
     @Autowired
-    private SimplePlantPageDataValidator(TreeRepository treeRepository,
+    private SimplePlantBagValidator(TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, ProjectRepository projectRepository) {
         super(treeRepository, projectArticleRepository, projectRepository);
     }
 
-    public boolean isPlantPageDataValid(SimplePlantPageData plantPageData) {
+    public boolean isPlantPageDataValid(SimplePlantBag plantPageData) {
         Set<String> projectNames = new HashSet<>();
 
         for (SimplePlantPageItem plantItem : plantPageData.getPlantItems()) {
@@ -30,7 +30,7 @@ public class SimplePlantPageDataValidator extends AbstractPlantPageValidator {
                 && areThereEnoughTreesRemaining(plantPageData);
     }
 
-    private boolean articlesExist(SimplePlantPageData plantPageData) {
+    private boolean articlesExist(SimplePlantBag plantPageData) {
         for (SimplePlantPageItem plantItem : plantPageData.getPlantItems()) {
             String projectName = plantItem.getProjectName();
             String articleName = plantItem.getTreeType();
@@ -42,7 +42,7 @@ public class SimplePlantPageDataValidator extends AbstractPlantPageValidator {
         return true;
     }
 
-    private boolean areThereEnoughTreesRemaining(SimplePlantPageData plantPageData) {
+    private boolean areThereEnoughTreesRemaining(SimplePlantBag plantPageData) {
         for (SimplePlantPageItem plantItem : plantPageData.getPlantItems()) {
             String projectName = plantItem.getProjectName();
             String articleName = plantItem.getTreeType();

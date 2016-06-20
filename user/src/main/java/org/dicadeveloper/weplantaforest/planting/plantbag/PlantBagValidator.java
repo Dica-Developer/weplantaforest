@@ -9,22 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlantPageDataValidator extends AbstractPlantPageValidator {
+public class PlantBagValidator extends AbstractPlantBagValidator {
 
     @Autowired
-    private PlantPageDataValidator(TreeRepository treeRepository, ProjectArticleRepository projectArticleRepository,
+    private PlantBagValidator(TreeRepository treeRepository, ProjectArticleRepository projectArticleRepository,
             ProjectRepository projectRepository) {
         super(treeRepository, projectArticleRepository, projectRepository);
     }
 
-    public boolean isPlantPageDataValid(PlantPageData plantPageData) {
+    public boolean isPlantPageDataValid(PlantBag plantPageData) {
         Set<String> projectNames = plantPageData.getProjects()
                                                 .keySet();
         return projectsExist(projectNames) && projectsAreActive(projectNames) && articlesExist(plantPageData)
                 && areThereEnoughTreesRemaining(plantPageData);
     }
 
-    private boolean articlesExist(PlantPageData plantPageData) {
+    private boolean articlesExist(PlantBag plantPageData) {
         Set<String> projectNames = plantPageData.getProjects()
                                                 .keySet();
 
@@ -42,7 +42,7 @@ public class PlantPageDataValidator extends AbstractPlantPageValidator {
         return true;
     }
 
-    private boolean areThereEnoughTreesRemaining(PlantPageData plantPageData) {
+    private boolean areThereEnoughTreesRemaining(PlantBag plantPageData) {
         Set<String> projectNames = plantPageData.getProjects()
                                                 .keySet();
 

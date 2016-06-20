@@ -13,7 +13,7 @@ import org.springframework.data.domain.PageRequest;
 
 import lombok.NonNull;
 
-public abstract class AbstractPlantPageHelper {
+public abstract class AbstractPlantBagHelper {
 
     protected @NonNull ProjectRepository _projectRepository;
 
@@ -25,7 +25,7 @@ public abstract class AbstractPlantPageHelper {
 
     protected List<ProjectArticle> projectArticles;
 
-    protected AbstractPlantPageHelper(ProjectRepository projectRepository,
+    protected AbstractPlantBagHelper(ProjectRepository projectRepository,
             ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository,
             TreeRepository treeRepository) {
         _projectRepository = projectRepository;

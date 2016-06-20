@@ -3,8 +3,8 @@ package org.dicadeveloper.weplantaforest.planting.plantbag;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData;
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData.SimplePlantPageItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,11 +18,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class SimplePlantPageDataTest {
+public class SimplePlantBagTest {
 
     @Test
     public void testGetPlantItemWithoutAddedPlantItems() {
-        SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
+        SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         SimplePlantPageItem plantItemToCheck = new SimplePlantPageItem();
 
         boolean contains = plantPageData.containsPlantItem(plantItemToCheck);
@@ -34,7 +34,7 @@ public class SimplePlantPageDataTest {
 
     @Test
     public void testGetPlantItemWithoutInitialisedPlantItemList() {
-        SimplePlantPageData plantPageData = new SimplePlantPageData();
+        SimplePlantBag plantPageData = new SimplePlantBag();
         SimplePlantPageItem plantItemToCheck = new SimplePlantPageItem();
 
         boolean contains = plantPageData.containsPlantItem(plantItemToCheck);
@@ -46,7 +46,7 @@ public class SimplePlantPageDataTest {
 
     @Test
     public void testGetPlantItemWithoutAskedProjectInPlantItem() {
-        SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
+        SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(1, 100, "wood", "Project",
                 plantPageData);
 
@@ -63,7 +63,7 @@ public class SimplePlantPageDataTest {
 
     @Test
     public void testGetPlantItemWithoutAskedPriceInPlantItem() {
-        SimplePlantPageData plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
+        SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(1, 100, "wood", "Project",
                 plantPageData);
 

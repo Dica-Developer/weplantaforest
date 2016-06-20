@@ -3,8 +3,8 @@ package org.dicadeveloper.weplantaforest.planting.plantbag;
 import java.util.HashMap;
 
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
-import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData.ProjectData;
-import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData.ProjectData.PlantItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag.ProjectData;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag.ProjectData.PlantItem;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -16,17 +16,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlantPageDataHelper extends AbstractPlantPageHelper {
+public class PlantBagHelper extends AbstractPlantBagHelper {
 
-    private PlantPageData plantPageData;
+    private PlantBag plantPageData;
 
     @Autowired
-    private PlantPageDataHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
+    private PlantBagHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
             TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         super(projectRepository, projectArticleRepository, treeTypeRepository, treeRepository);
     }
 
-    public PlantPageData createPlantProposalForTargetPrice(long targetedPrice) {
+    public PlantBag createPlantProposalForTargetPrice(long targetedPrice) {
         initialize(targetedPrice);
 
         ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge();
@@ -46,7 +46,7 @@ public class PlantPageDataHelper extends AbstractPlantPageHelper {
     }
 
     private void initialize(long targetedPrice) {
-        plantPageData = new PlantPageData();
+        plantPageData = new PlantBag();
         addActiveProjectsToPlantPageData();
         plantPageData.setTargetPrice(targetedPrice);
         projectArticles = createListOfAllAvailableProjectArticles();

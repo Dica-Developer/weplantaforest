@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData.SimplePlantPageItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
@@ -14,18 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
+public class SimplePlantBagHelper extends AbstractPlantBagHelper {
 
-    private SimplePlantPageData simplePlantPageData;
+    private SimplePlantBag simplePlantPageData;
 
     @Autowired
-    protected SimplePlantPageDataHelper(ProjectRepository projectRepository,
+    protected SimplePlantBagHelper(ProjectRepository projectRepository,
             ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository,
             TreeRepository treeRepository) {
         super(projectRepository, projectArticleRepository, treeTypeRepository, treeRepository);
     }
 
-    public SimplePlantPageData createPlantProposalForAmountOfTrees(long targetAmountOfTrees) {
+    public SimplePlantBag createPlantProposalForAmountOfTrees(long targetAmountOfTrees) {
         initialize(targetAmountOfTrees);
         ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge();
         addItemWithHighestMarge(articleWithHighestMarge);
@@ -35,7 +35,7 @@ public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
     }
 
     private void initialize(long targetAmountOfTrees) {
-        simplePlantPageData = new SimplePlantPageData();
+        simplePlantPageData = new SimplePlantBag();
         List<SimplePlantPageItem> simplePlantPageItems = new ArrayList<>();
         simplePlantPageData.setPlantItems(simplePlantPageItems);
         simplePlantPageData.setTargetAmountOfTrees(targetAmountOfTrees);

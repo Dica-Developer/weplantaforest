@@ -2,10 +2,10 @@ package org.dicadeveloper.weplantaforest.planting;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
-import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData;
-import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageDataHelper;
-import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageDataValidator;
-import org.dicadeveloper.weplantaforest.support.PlantPageDataToCartConverter;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagHelper;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
+import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,25 +25,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class PlantPageController {
 
-    private @NonNull PlantPageDataHelper plantPageDataHelper;
+    private @NonNull PlantBagHelper plantPageDataHelper;
 
-    private @NonNull PlantPageDataToCartConverter plantPageToCartConverter;
+    private @NonNull PlantBagToCartConverter plantPageToCartConverter;
 
     private @NonNull CartRepository _cartRepository;
 
-    private @NonNull PlantPageDataValidator _plantPageDataValidator;
+    private @NonNull PlantBagValidator _plantPageDataValidator;
 
     private @NonNull TreeRepository _treeRepository;
 
     @RequestMapping(value = Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", method = RequestMethod.GET)
     @Transactional
-    public PlantPageData getCartProposal(@PathVariable long targetedPrice) {
+    public PlantBag getCartProposal(@PathVariable long targetedPrice) {
         return plantPageDataHelper.createPlantProposalForTargetPrice(targetedPrice);
     }
 
     @RequestMapping(value = Uris.COMPLEX_DONATION, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> processPlant(@RequestBody PlantPageData plantPageData) {
+    public ResponseEntity<?> processPlant(@RequestBody PlantBag plantPageData) {
 
         if (_plantPageDataValidator.isPlantPageDataValid(plantPageData)) {
             Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantPageData);

@@ -11,7 +11,7 @@ import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
-import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -78,7 +78,7 @@ public class PlantPageControllerPostMethodTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
 
-        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
 
@@ -120,7 +120,7 @@ public class PlantPageControllerPostMethodTest {
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 3.0, 1.0);
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 3.0, 1.0);
 
-        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wodo", "Project A", plantPageData);
@@ -161,7 +161,7 @@ public class PlantPageControllerPostMethodTest {
 
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
 
-        PlantPageData plantPageData = PlantPageDataCreater.initializePlantPageData();
+        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 300, "wood", "Project A", plantPageData);
 

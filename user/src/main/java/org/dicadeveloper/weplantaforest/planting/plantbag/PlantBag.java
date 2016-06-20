@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PlantPageData {
+public class PlantBag {
 
     long targetPrice;
     long actualPrice;

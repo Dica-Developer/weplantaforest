@@ -2,10 +2,10 @@ package org.dicadeveloper.weplantaforest.planting;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData;
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageDataHelper;
-import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageDataValidator;
-import org.dicadeveloper.weplantaforest.support.PlantPageDataToCartConverter;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBagHelper;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBagValidator;
+import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,24 +25,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SimplePlantPageController {
 
-    private @NonNull SimplePlantPageDataHelper simplePlantPageDataHelper;
+    private @NonNull SimplePlantBagHelper simplePlantPageDataHelper;
 
-    private @NonNull PlantPageDataToCartConverter plantPageToCartConverter;
+    private @NonNull PlantBagToCartConverter plantPageToCartConverter;
 
     private @NonNull CartRepository _cartRepository;
 
-    private @NonNull SimplePlantPageDataValidator _simplePlantPageDataValidator;
+    private @NonNull SimplePlantBagValidator _simplePlantPageDataValidator;
 
     private @NonNull TreeRepository _treeRepository;
 
     @RequestMapping(value = Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", method = RequestMethod.GET)
     @Transactional
-    public SimplePlantPageData getCartProposalForAmountOfTrees(@PathVariable long amountOfTrees) {
+    public SimplePlantBag getCartProposalForAmountOfTrees(@PathVariable long amountOfTrees) {
         return simplePlantPageDataHelper.createPlantProposalForAmountOfTrees(amountOfTrees);
     }
 
     @RequestMapping(value = Uris.SIMPLE_DONATION, method = RequestMethod.POST)
-    public ResponseEntity<?> processPlant(@RequestBody SimplePlantPageData plantPageData) {
+    public ResponseEntity<?> processPlant(@RequestBody SimplePlantBag plantPageData) {
         if (_simplePlantPageDataValidator.isPlantPageDataValid(plantPageData)) {
             Cart cart = plantPageToCartConverter.convertSimplePlantPageDataToCart(plantPageData);
             _cartRepository.save(cart);
