@@ -10,6 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SimplePlantBag {
+    
+    long userId;
 
     long targetAmountOfTrees;
     long actualAmountOfTrees;

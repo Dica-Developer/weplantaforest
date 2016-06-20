@@ -81,6 +81,7 @@ public class PlantPageControllerPostMethodTest {
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
+        plantPageData.setUserId(1L);
 
         this.mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                         .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
@@ -95,14 +96,24 @@ public class PlantPageControllerPostMethodTest {
                        .get(0)
                        .getPlantArticleId()).isEqualTo(1);
         assertThat(cart.getCartItems()
-                       .get(0).getTree()
+                       .get(0)
+                       .getTree()
                        .getId()).isEqualTo(1);
+        assertThat(cart.getBuyer()
+                       .getName()).isEqualTo("Adam");
 
         assertThat(_treeRepository.count()).isEqualTo(1L);
 
         ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
         long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
         assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
+
+        Tree createdTree = _treeRepository.findOne(1L);
+        assertThat(createdTree.getAmount()).isEqualTo(3);
+        assertThat(createdTree.getOwner()
+                              .getName()).isEqualTo("Adam");
+        assertThat(createdTree.getProjectArticle()
+                              .getArticleId()).isEqualTo(1L);
     }
 
     @Test
@@ -125,6 +136,7 @@ public class PlantPageControllerPostMethodTest {
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wodo", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "doow", "Project A", plantPageData);
+        plantPageData.setUserId(1L);
 
         this.mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                         .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
@@ -136,18 +148,25 @@ public class PlantPageControllerPostMethodTest {
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(27.0);
         assertThat(cart.getPlantArticleIds()).contains(1L, 2L, 3L);
-        for(CartItem cartItem : cart.getCartItems()){
+        assertThat(cart.getBuyer()
+                .getName()).isEqualTo("Adam");
+        for (CartItem cartItem : cart.getCartItems()) {
             Tree tree = cartItem.getTree();
             assertThat(tree.getAmount()).isEqualTo(cartItem.getAmount());
-            assertThat(tree.getProjectArticle().getArticleId()).isEqualTo(cartItem.getPlantArticleId());
+            assertThat(tree.getProjectArticle()
+                           .getArticleId()).isEqualTo(cartItem.getPlantArticleId());
         }
-        
+
         assertThat(_treeRepository.count()).isEqualTo(3L);
 
         for (int i = 1; i <= 3; i++) {
             ProjectArticle projectArticle = _projectArticleRepository.findOne((long) i);
             long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
             assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
+            
+            Tree tree = _treeRepository.findOne((long) i);
+            assertThat(tree.getOwner()
+                    .getName()).isEqualTo("Adam");
         }
     }
 

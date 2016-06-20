@@ -15,6 +15,7 @@ import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,15 +25,21 @@ import lombok.NonNull;
 public class PlantBagToCartConverter {
 
     private @NonNull ProjectArticleRepository _projectArticleRepository;
+    
+    private @NonNull UserRepository _userRepository;
 
     @Autowired
-    public PlantBagToCartConverter(ProjectArticleRepository projectArticleRepository) {
+    public PlantBagToCartConverter(ProjectArticleRepository projectArticleRepository, UserRepository userRepository) {
         _projectArticleRepository = projectArticleRepository;
+        _userRepository = userRepository;
     }
 
     public Cart convertPlantPageDataToCart(PlantBag plantPageData) {
+        User buyer = _userRepository.findOne(plantPageData.getUserId());
+        
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
+        cart.setBuyer(buyer);
 
         Set<String> projectNames = plantPageData.getProjects()
                                                 .keySet();
@@ -69,8 +76,11 @@ public class PlantBagToCartConverter {
     }
 
     public Cart convertSimplePlantPageDataToCart(SimplePlantBag simplePlantPageData) {
+        User buyer = _userRepository.findOne(simplePlantPageData.getUserId());
+        
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
+        cart.setBuyer(buyer);
 
         for (SimplePlantPageItem simplePlantPageItem : simplePlantPageData.getPlantItems()) {
             int amount = (int) simplePlantPageItem.getAmount();

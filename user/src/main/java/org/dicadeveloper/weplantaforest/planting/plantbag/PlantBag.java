@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PlantBag {
 
+    long userId;
+    
     long targetPrice;
     long actualPrice;
 
