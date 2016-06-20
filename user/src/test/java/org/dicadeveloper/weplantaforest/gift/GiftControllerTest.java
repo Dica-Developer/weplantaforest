@@ -197,14 +197,11 @@ public class GiftControllerTest {
     public void testCreateGiftPdf() throws Exception {
         _dbInjecter.injectUser("Adam");
         _dbInjecter.injectGiftWithCode("Adam", Status.UNREDEEMED);
-        long giftId = 1L;
-        
-        System.out.println(TestUtil.getJsonStringFromObject(giftId));
-        
-        this.mockMvc.perform(get(Uris.CERTIFICATE_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                         .content(TestUtil.convertObjectToJsonBytes(giftId))
-                                                         .accept("application/pdf"))
-                    .andExpect(status().isBadRequest());
+
+        this.mockMvc.perform(get(Uris.GIFT_PDF).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                               .param("giftId", "1")
+                                               .accept("application/pdf"))
+                    .andExpect(status().isOk());
     }
 
 }
