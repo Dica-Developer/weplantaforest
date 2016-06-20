@@ -11,8 +11,10 @@ import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
+import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -88,7 +90,8 @@ public class CartRepositoryIntegrationTest {
                             .getCart()
                             .getId()).isEqualTo(1L);
 
-        assertThat(savedCart.getTrees().size()).isEqualTo(1);
+        assertThat(savedCart.getTrees()
+                            .size()).isEqualTo(1);
     }
 
     @Test
@@ -104,12 +107,29 @@ public class CartRepositoryIntegrationTest {
         cart2.setBuyer(_userRepository.findByName("Adam"));
 
         _cartRepository.save(cart2);
-        
-        Long[] cartIds = {1L, 2L};
-        
+
+        Long[] cartIds = { 1L, 2L };
+
         List<Cart> carts = _cartRepository.findCartsByIdIn(cartIds);
-        
+
         assertThat(carts.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void testFindCartByCode() {
+        _dbInjecter.injectUser("Adam");
+        Code code = _dbInjecter.injectGiftWithCode("Adam", Status.UNREDEEMED);
+
+        Cart cart = new Cart();
+        cart.setCode(code);
+        cart.setBuyer(_userRepository.findByName("Adam"));
+        _cartRepository.save(cart);
+
+        Cart savedCart = _cartRepository.findCartByCode(code.getCode());
+
+        assertThat(savedCart).isNotNull();
+        assertThat(savedCart.getBuyer()
+                            .getName()).isEqualTo("Adam");
     }
 
 }

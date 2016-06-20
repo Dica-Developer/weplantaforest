@@ -286,7 +286,7 @@ public class DbInjecter {
         return gift.getCode().getCode();
     }
     
-    public String injectGiftWithCode(String consignor, Status giftStatus){
+    public Code injectGiftWithCode(String consignor, Status giftStatus){
         Gift gift = new Gift();
         gift.setConsignor(_userRepository.findByName(consignor));
         _giftRepository.save(gift);
@@ -295,7 +295,7 @@ public class DbInjecter {
         gift.setStatus(giftStatus);
         _giftRepository.save(gift);
         
-        return gift.getCode().getCode();
+        return gift.getCode();
     }
 
 }

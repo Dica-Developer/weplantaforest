@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
@@ -62,9 +63,9 @@ public class GiftRepositoryIntegrationTest {
         _dbInjecter.injectUser("Consignore");
         _dbInjecter.injectUser("otherUser");
 
-        String code1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW);
+        Code code1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW);
         String code2 = _dbInjecter.injectGiftWithCode("Consignore", "otherUser", Status.REDEEMED);
-        String code3 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
+        Code code3 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
 
         _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
 
@@ -81,13 +82,13 @@ public class GiftRepositoryIntegrationTest {
 
         assertThat(gifts.get(0)
                         .getCode()
-                        .getCode()).isEqualTo(code1);
+                        .getCode()).isEqualTo(code1.getCode());
         assertThat(gifts.get(1)
                         .getCode()
                         .getCode()).isEqualTo(code2);
         assertThat(gifts.get(2)
                         .getCode()
-                        .getCode()).isEqualTo(code3);
+                        .getCode()).isEqualTo(code3.getCode());
     }
 
     @Test
@@ -110,5 +111,19 @@ public class GiftRepositoryIntegrationTest {
         assertThat(gifts.get(0)
                         .getCode()
                         .getCode()).isEqualTo(code1);
+    }
+
+    @Test
+    public void testFindGiftByCode() {
+        _dbInjecter.injectUser("Adam");
+
+        Code code = _dbInjecter.injectGiftWithCode("Adam", Status.UNREDEEMED);
+
+        Gift gift = _giftRepository.findGiftByCode(code.getCode());
+
+        assertThat(gift).isNotNull();
+        assertThat(gift.getConsignor()
+                       .getName()).isEqualTo("Adam");
+        assertThat(gift.getStatus()).isEqualTo(Status.UNREDEEMED);
     }
 }

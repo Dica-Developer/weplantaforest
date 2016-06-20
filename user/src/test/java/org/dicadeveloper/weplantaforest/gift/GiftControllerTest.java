@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -76,9 +77,9 @@ public class GiftControllerTest {
         _dbInjecter.injectUser("Consignore");
         _dbInjecter.injectUser("otherUser");
 
-        String code1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW);
+        Code code1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW);
         String code2 = _dbInjecter.injectGiftWithCode("Consignore", "otherUser", Status.REDEEMED);
-        String code3 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
+        Code code3 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
 
         _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
 
@@ -86,7 +87,7 @@ public class GiftControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
                     .andExpect(jsonPath("$.[0].recipient").isEmpty())
-                    .andExpect(jsonPath("$.[0].code.code").value(code1))
+                    .andExpect(jsonPath("$.[0].code.code").value(code1.getCode()))
                     .andExpect(jsonPath("$.[0].status").value("NEW"))
                     .andExpect(jsonPath("$.[1].consignor.name").value("Consignore"))
                     .andExpect(jsonPath("$.[1].recipient.name").value("otherUser"))
@@ -94,7 +95,7 @@ public class GiftControllerTest {
                     .andExpect(jsonPath("$.[1].status").value("REDEEMED"))
                     .andExpect(jsonPath("$.[2].consignor.name").value("Consignore"))
                     .andExpect(jsonPath("$.[2].recipient").isEmpty())
-                    .andExpect(jsonPath("$.[2].code.code").value(code3))
+                    .andExpect(jsonPath("$.[2].code.code").value(code3.getCode()))
                     .andExpect(jsonPath("$.[2].status").value("UNREDEEMED"));
     }
 
