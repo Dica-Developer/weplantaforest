@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.planting;
+package org.dicadeveloper.weplantaforest.planting.plantbag;
 
 import java.util.Set;
 
@@ -17,7 +17,7 @@ public class PlantPageDataValidator extends AbstractPlantPageValidator {
         super(treeRepository, projectArticleRepository, projectRepository);
     }
 
-    protected boolean isPlantPageDataValid(PlantPageData plantPageData) {
+    public boolean isPlantPageDataValid(PlantPageData plantPageData) {
         Set<String> projectNames = plantPageData.getProjects()
                                                 .keySet();
         return projectsExist(projectNames) && projectsAreActive(projectNames) && articlesExist(plantPageData)

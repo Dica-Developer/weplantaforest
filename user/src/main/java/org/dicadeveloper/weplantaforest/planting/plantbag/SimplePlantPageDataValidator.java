@@ -1,9 +1,9 @@
-package org.dicadeveloper.weplantaforest.planting;
+package org.dicadeveloper.weplantaforest.planting.plantbag;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData.SimplePlantPageItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -19,7 +19,7 @@ public class SimplePlantPageDataValidator extends AbstractPlantPageValidator {
         super(treeRepository, projectArticleRepository, projectRepository);
     }
 
-    protected boolean isPlantPageDataValid(SimplePlantPageData plantPageData) {
+    public boolean isPlantPageDataValid(SimplePlantPageData plantPageData) {
         Set<String> projectNames = new HashSet<>();
 
         for (SimplePlantPageItem plantItem : plantPageData.getPlantItems()) {

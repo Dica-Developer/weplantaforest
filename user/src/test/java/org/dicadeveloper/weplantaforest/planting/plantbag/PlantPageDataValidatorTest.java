@@ -1,9 +1,11 @@
-package org.dicadeveloper.weplantaforest.planting;
+package org.dicadeveloper.weplantaforest.planting.plantbag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageDataValidator;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.junit.Rule;

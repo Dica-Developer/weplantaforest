@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.planting;
+package org.dicadeveloper.weplantaforest.planting.plantbag;
 
 import java.util.Set;
 

@@ -1,10 +1,10 @@
-package org.dicadeveloper.weplantaforest.planting;
+package org.dicadeveloper.weplantaforest.planting.plantbag;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
-import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData.SimplePlantPageItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
@@ -25,7 +25,7 @@ public class SimplePlantPageDataHelper extends AbstractPlantPageHelper {
         super(projectRepository, projectArticleRepository, treeTypeRepository, treeRepository);
     }
 
-    protected SimplePlantPageData createPlantProposalForAmountOfTrees(long targetAmountOfTrees) {
+    public SimplePlantPageData createPlantProposalForAmountOfTrees(long targetAmountOfTrees) {
         initialize(targetAmountOfTrees);
         ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge();
         addItemWithHighestMarge(articleWithHighestMarge);

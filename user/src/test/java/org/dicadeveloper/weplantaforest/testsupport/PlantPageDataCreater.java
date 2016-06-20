@@ -3,11 +3,11 @@ package org.dicadeveloper.weplantaforest.testsupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.dicadeveloper.weplantaforest.planting.PlantPageData;
-import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData;
-import org.dicadeveloper.weplantaforest.planting.PlantPageData.ProjectData.PlantItem;
-import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData;
-import org.dicadeveloper.weplantaforest.planting.SimplePlantPageData.SimplePlantPageItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData.ProjectData;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantPageData.ProjectData.PlantItem;
+import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantPageData.SimplePlantPageItem;
 
 public class PlantPageDataCreater {
 
