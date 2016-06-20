@@ -1,15 +1,27 @@
 package org.dicadeveloper.weplantaforest.gift;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.trees.Tree;
+import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,6 +53,18 @@ public class GiftControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    private CartRepository _cartRepository;
+
+    @Autowired
+    private GiftRepository _giftRepository;
+
+    @Autowired
+    private TreeRepository _treeRepository;
+
+    @Autowired
+    private CodeGenerator _codeGenerator;
 
     @Before
     public void setup() {
@@ -91,6 +115,82 @@ public class GiftControllerTest {
                     .andExpect(jsonPath("$.[0].recipient.name").value("otherUser"))
                     .andExpect(jsonPath("$.[0].code.code").value(code1))
                     .andExpect(jsonPath("$.[0].status").value("REDEEMED"));
+    }
+
+    @Test
+    @Transactional
+    public void testCreateGift() throws Exception {
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam");
+
+        _dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+
+        _dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
+
+        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
+        plantPageData.setUserId(1);
+
+        this.mockMvc.perform(post("/gift/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                 .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                    .andExpect(status().isOk());
+
+        assertThat(_cartRepository.count()).isEqualTo(1);
+        assertThat(_treeRepository.count()).isEqualTo(1);
+        assertThat(_giftRepository.count()).isEqualTo(1);
+
+        Cart createdCart = _cartRepository.findOne(1L);
+        Tree createdTree = _treeRepository.findOne(1L);
+        Gift createdGift = _giftRepository.findOne(1L);
+
+        assertThat(createdCart.getBuyer()
+                              .getName()).isEqualTo("Adam");
+        assertThat(createdCart.getTotalPrice()
+                              .doubleValue()).isEqualTo(9.0);
+        assertThat(createdCart.isGift()).isEqualTo(true);
+
+        assertThat(createdTree.getAmount()).isEqualTo(3);
+        assertThat(createdTree.getOwner()
+                              .getName()).isEqualTo("Adam");
+        assertThat(createdTree.getProjectArticle()
+                              .getArticleId()).isEqualTo(1L);
+
+        String codeFromCart = createdCart.getCode()
+                                         .getCode();
+        String codeFromGift = createdCart.getCode()
+                                         .getCode();
+
+        assertThat(codeFromCart).isEqualTo(codeFromGift);
+
+        assertThat(_codeGenerator.isValid(codeFromGift)).isTrue();
+
+        assertThat(createdGift.getStatus()).isEqualTo(Status.NEW);
+        assertThat(createdGift.getRecipient()).isNull();
+    }
+
+    @Test
+    @Transactional
+    public void testCreateGiftBadRequestCauseOfNoTreesRemaining() throws Exception {
+        _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        _dbInjecter.injectUser("Adam");
+
+        _dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+
+        _dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
+
+        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
+        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
+        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
+        plantPageData.setUserId(1);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 10, System.currentTimeMillis(), "Project A");
+
+        this.mockMvc.perform(post("/gift/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                 .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                    .andExpect(status().isBadRequest());
     }
 
 }
