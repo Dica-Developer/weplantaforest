@@ -1,6 +1,10 @@
 package org.dicadeveloper.weplantaforest.support;
 
 public class Uris {
+    
+    //host
+    
+    public final static String HOST = "https://www.iplantatree.org";
 
     //Planting urls
     
@@ -68,6 +72,11 @@ public class Uris {
     public final static String GIFTS_BY_CONSIGNOR = "/gift/search/consignor/";
 
     public final static String GIFTS_BY_RECIPIENT = "/gift/search/recipient/";
-
+    
+    public final static String GIFT_CREATE = "/gift/create";
+    
+    public final static String GIFT_PDF = "/gift/pdf";
+    
+    public final static String GIFT_REDEEM = "/gift/redeem/";
 
 }

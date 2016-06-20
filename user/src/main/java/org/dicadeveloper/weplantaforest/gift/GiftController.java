@@ -2,8 +2,11 @@ package org.dicadeveloper.weplantaforest.gift;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -33,6 +37,8 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class GiftController {
+
+    protected final static Log LOG = LogFactory.getLog(GiftController.class.getName());
 
     private @NonNull GiftRepository _giftRepository;
 
@@ -46,6 +52,8 @@ public class GiftController {
 
     private @NonNull CodeGenerator _codeGenerator;
 
+    private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/gift";
+
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR + "{userId}", method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
     public List<Gift> findGiftsByConsignor(@PathVariable("userId") long userId) {
@@ -58,11 +66,12 @@ public class GiftController {
         return _giftRepository.findGiftsByRecipient(userId);
     }
 
-    @RequestMapping(value = "/gift/create", method = RequestMethod.POST)
+    @RequestMapping(value = Uris.GIFT_CREATE, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> generateGift(@RequestBody PlantBag plantBag) {
         if (_plantBagValidator.isPlantPageDataValid(plantBag)) {
             User consignor = _userRepository.findOne(plantBag.getUserId());
+            Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag);
 
             Gift gift = new Gift();
             gift.setConsignor(consignor);
@@ -70,11 +79,11 @@ public class GiftController {
             _giftRepository.save(gift);
 
             Code code = _codeGenerator.generate(gift);
+            code.setTreeCount(cart.getTreeCount());
+
             gift.setCode(code);
             _giftRepository.save(gift);
 
-            Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag);
-            cart.setBuyer(consignor);
             cart.setCode(code);
             cart.setGift(true);
             _cartRepository.save(cart);
@@ -83,7 +92,28 @@ public class GiftController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @RequestMapping(value = Uris.GIFT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
+    public ResponseEntity<?> createGiftPdf(HttpServletResponse response, @RequestParam long giftId) {
+        Gift gift = _giftRepository.findOne(giftId);
+        Code code = gift.getCode();
+
+        String codeString = code.getCode();
+        String[] splittedCode = codeString.split("-");
+
+        PdfGiftView pdf = new PdfGiftView();
+
+        try {
+            pdf.buildPdfDocument(response.getOutputStream(), gift.getConsignor()
+                                                                 .getMail(),
+                    code.getTreeCount(), splittedCode, RELATIVE_STATIC_IMAGES_PATH);
+        } catch (Exception e) {
+            LOG.error("Error occured while creating PDF!", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

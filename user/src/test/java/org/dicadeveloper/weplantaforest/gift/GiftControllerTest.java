@@ -133,8 +133,8 @@ public class GiftControllerTest {
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData.setUserId(1);
 
-        this.mockMvc.perform(post("/gift/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                 .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+        this.mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                     .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1);
@@ -188,8 +188,22 @@ public class GiftControllerTest {
 
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, System.currentTimeMillis(), "Project A");
 
-        this.mockMvc.perform(post("/gift/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                 .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+        this.mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                    .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testCreateGiftPdf() throws Exception {
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectGiftWithCode("Adam", Status.UNREDEEMED);
+        long giftId = 1L;
+        
+        System.out.println(TestUtil.getJsonStringFromObject(giftId));
+        
+        this.mockMvc.perform(get(Uris.CERTIFICATE_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                         .content(TestUtil.convertObjectToJsonBytes(giftId))
+                                                         .accept("application/pdf"))
                     .andExpect(status().isBadRequest());
     }
 
