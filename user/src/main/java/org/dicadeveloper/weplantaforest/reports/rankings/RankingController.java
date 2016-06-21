@@ -2,11 +2,9 @@ package org.dicadeveloper.weplantaforest.reports.rankings;
 
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.CacheConfiguration;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
@@ -24,7 +22,7 @@ public class RankingController {
 
     private @NonNull RankingRepository _rankingRepository;
 
-    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
+//    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_USER, method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUser(@Param(value = "page") int page, @Param(value = "size") int size) {
         return _rankingRepository.getBestUser(System.currentTimeMillis(), new PageRequest(page, size));
@@ -35,7 +33,7 @@ public class RankingController {
         return _rankingRepository.getLastCreatedUser(new PageRequest(0, 10));
     }
 
-    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
+//    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}", method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType,
             @Param(value = "page") int page, @Param(value = "size") int size) {
@@ -48,7 +46,7 @@ public class RankingController {
         return _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
     }
 
-    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
+//    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_TEAM, method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestTeams(@Param(value = "page") int page, @Param(value = "size") int size) {
         return _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(page, size));
