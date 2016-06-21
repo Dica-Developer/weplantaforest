@@ -20,6 +20,8 @@ import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,9 +40,9 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public class ProjectReportControllerTest {
-    
+
     protected final Log LOG = LogFactory.getLog(ProjectReportControllerTest.class.getName());
 
     private MockMvc mockMvc;
@@ -55,28 +57,50 @@ public class ProjectReportControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private TreeRepository _treeRepository;
+
     @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
     }
 
+    static long timeOfPlanting;
+    static boolean entitiesInjected = false;
+
+    @Before
+    public void setupDb() {
+        if (!entitiesInjected) {
+            timeOfPlanting = System.currentTimeMillis();
+
+            _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
+            _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
+
+            _dbInjecter.injectUser("Adam");
+
+            _dbInjecter.injectProject("Project B", "Adam", "projectdesc", true, 3.0f, 4.0f);
+            _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
+
+            _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
+            _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
+
+            _dbInjecter.injectProjectArticle("wood", "Project B", 300, 1.0, 0.5);
+            _dbInjecter.injectProjectArticle("doow", "Project B", 500, 1.0, 0.5);
+
+            _dbInjecter.injectProjectImage("image title 1", "image desc 1", "image1.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS, "Project A");
+            _dbInjecter.injectProjectImage("image title 2", "image desc 2", "image2.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 2, "Project A");
+            _dbInjecter.injectProjectImage("image title 3", "image desc 3", "image3.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 3, "Project A");
+            entitiesInjected = true;
+        }
+    }
+
+    @After
+    public void clearTreeTable() {
+        _treeRepository.deleteAll();
+    }
+
     @Test
     public void testGetProjectReport() throws Exception {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project B", "Adam", "project B desc", true, 3.0f, 4.0f);
-        _dbInjecter.injectProject("Project A", "Adam", "project A desc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("wood", "Project B", 300, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project B", 500, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
@@ -89,13 +113,13 @@ public class ProjectReportControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.content[0].projectName").value("Project A"))
                     .andExpect(jsonPath("$.content[0].projectImageFileName").value("Project A"))
-                    .andExpect(jsonPath("$.content[0].description").value("project A desc"))
+                    .andExpect(jsonPath("$.content[0].description").value("projectdesc"))
                     .andExpect(jsonPath("$.content[0].latitude").value(1.0))
                     .andExpect(jsonPath("$.content[0].longitude").value(2.0))
                     .andExpect(jsonPath("$.content[0].amountOfMaximumTreesToPlant").value(300))
                     .andExpect(jsonPath("$.content[0].amountOfPlantedTrees").value(100))
                     .andExpect(jsonPath("$.content[1].projectName").value("Project B"))
-                    .andExpect(jsonPath("$.content[1].description").value("project B desc"))
+                    .andExpect(jsonPath("$.content[1].description").value("projectdesc"))
                     .andExpect(jsonPath("$.content[1].latitude").value(3.0))
                     .andExpect(jsonPath("$.content[1].longitude").value(4.0))
                     .andExpect(jsonPath("$.content[1].amountOfMaximumTreesToPlant").value(800))
@@ -106,18 +130,6 @@ public class ProjectReportControllerTest {
 
     @Test
     public void testGetProjectByProjectName() throws Exception {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
@@ -136,25 +148,9 @@ public class ProjectReportControllerTest {
 
     @Test
     public void testGetExtendedProjecReporttByProjectName() throws Exception {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
-
-        _dbInjecter.injectProjectImage("image title 1", "image desc 1", "image1.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS, "Project A");
-        _dbInjecter.injectProjectImage("image title 2", "image desc 2", "image2.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 2, "Project A");
-        _dbInjecter.injectProjectImage("image title 3", "image desc 3", "image3.jpg", timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 3, "Project A");
 
         this.mockMvc.perform(get(Uris.PROJECT_SEARCH_NAME + "/extended/" + "Project A").accept("application/json"))
                     .andExpect(status().isOk())
@@ -182,9 +178,9 @@ public class ProjectReportControllerTest {
     @Test
     public void testGetImageNonScaled() throws Exception {
         String projectName = "Project 1 von admin";
-        String projectImageName = "project1.jpg";      
+        String projectImageName = "project1.jpg";
         createProjectFolderAndInsertImage(projectName, projectImageName);
-        
+
         this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "project1.jpg").accept("image/jpg"))
                     .andExpect(status().isOk());
     }
@@ -198,9 +194,9 @@ public class ProjectReportControllerTest {
     @Test
     public void testGetImageScaled() throws Exception {
         String projectName = "Project 1 von admin";
-        String projectImageName = "project1.jpg";      
+        String projectImageName = "project1.jpg";
         createProjectFolderAndInsertImage(projectName, projectImageName);
-        
+
         this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", "Project 1 von admin", "project1.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isOk());
     }
@@ -210,13 +206,13 @@ public class ProjectReportControllerTest {
         this.mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", "Project 1 von admin", "wrongName.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isBadRequest());
     }
-    
-    private void createProjectFolderAndInsertImage(String projectName, String imageName){
-        new File(FileSystemInjector.getImageFolderForProjects() + "/" +  projectName).mkdir();
-        
+
+    private void createProjectFolderAndInsertImage(String projectName, String imageName) {
+        new File(FileSystemInjector.getImageFolderForProjects() + "/" + projectName).mkdir();
+
         Path imageFileSrc = new File(DatabasePopulator.DUMMY_IMAGE_FOLDER + imageName).toPath();
         String imageFileDest = FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + imageName;
-        
+
         try {
             File newImageFile = new File(imageFileDest);
             newImageFile.createNewFile();

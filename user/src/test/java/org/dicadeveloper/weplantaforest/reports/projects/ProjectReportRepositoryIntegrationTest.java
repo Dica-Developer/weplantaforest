@@ -6,6 +6,9 @@ import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public class ProjectReportRepositoryIntegrationTest {
 
     @Rule
@@ -36,25 +39,48 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Autowired
     private ProjectReportRepository _projectReportRepository;
+    
+    @Autowired
+    private TreeRepository _treeRepository;
+
+    static long timeOfPlanting;
+    static boolean entitiesInjected = false;
+
+    @Before
+    public void setupDb() {
+        if (!entitiesInjected) {
+            timeOfPlanting = System.currentTimeMillis();
+
+            _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
+            _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
+
+            _dbInjecter.injectUser("Adam");
+
+            _dbInjecter.injectProject("Project B", "Adam", "projectdesc", true, 1.0f, 2.0f);
+            _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
+
+            _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
+            _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
+
+            _dbInjecter.injectProjectArticle("wood", "Project B", 300, 1.0, 0.5);
+            _dbInjecter.injectProjectArticle("doow", "Project B", 500, 1.0, 0.5);
+            entitiesInjected = true;
+        }
+    }
+    
+    @After
+    public void clearTreeTable(){
+        _treeRepository.deleteAll();
+    }
 
     @Test
     public void testGetActiveProjectReportWithoutPlantedTrees() {
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
 
-        assertThat(projects.getTotalElements()).isEqualTo(1);
+        assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()
                            .get(0)
-                           .getProjectId()).isEqualTo(1);
+                           .getProjectId()).isEqualTo(2);
         assertThat(projects.getContent()
                            .get(0)
                            .getProjectName()).isEqualTo("Project A");
@@ -83,24 +109,12 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Test
     public void testGetActiveProjectReportOneTreeTypePlanted() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
 
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
 
-        assertThat(projects.getTotalElements()).isEqualTo(1);
+        assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()
                            .get(0)
                            .getProjectName()).isEqualTo("Project A");
@@ -126,25 +140,13 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Test
     public void testGetActiveProjectReportWithPlantedTrees() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
 
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
 
-        assertThat(projects.getTotalElements()).isEqualTo(1);
+        assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()
                            .get(0)
                            .getProjectName()).isEqualTo("Project A");
@@ -170,20 +172,6 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Test
     public void testGetActiveProjectReportWithTwoProjectsWithoutPlantedTrees() {
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project B", "Adam", "projectdesc", true, 1.0f, 2.0f);
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-
-        _dbInjecter.injectProjectArticle("wood", "Project B", 300, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project B", 500, 1.0, 0.5);
-
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
@@ -233,21 +221,6 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Test
     public void testGetActiveProjectReportWithTwoProjectsWithPlantedTrees() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project B", "Adam", "projectdesc", true, 1.0f, 2.0f);
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("wood", "Project B", 300, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project B", 500, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
@@ -305,21 +278,6 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Test
     public void testGetActiveProjectReportWithTwoProjectsOneWithoutPlantedTrees() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project B", "Adam", "projectdesc", true, 1.0f, 2.0f);
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("wood", "Project B", 300, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project B", 500, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
@@ -372,32 +330,7 @@ public class ProjectReportRepositoryIntegrationTest {
     }
 
     @Test
-    public void testGetAllProjectsFromDatabasePopulatorInjection() {
-        _databasePopulator.insertUsers()
-                          .insertDefaultTreeTypes()
-                          .insertProjects()
-                          .insertProjectArticles();
-
-        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 10));
-
-        assertThat(projects.getTotalElements()).isEqualTo(10);
-        assertThat(projects.getNumberOfElements()).isEqualTo(10);
-    }
-
-    @Test
     public void testGetProjectByProjectName() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", true, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
@@ -411,23 +344,10 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(project.getLongitude()).isEqualTo(2.0f);
         assertThat(project.getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(project.getAmountOfPlantedTrees()).isEqualTo(100);
-
     }
-    
+
     @Test
     public void testGetProjectByProjectNameFalse() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "wooddesc", 0.5);
-        _dbInjecter.injectTreeType("doow", "wooddesc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "projectdesc", false, 1.0f, 2.0f);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 200, 1.0, 0.5);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 50, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
@@ -441,8 +361,6 @@ public class ProjectReportRepositoryIntegrationTest {
         assertThat(project.getLongitude()).isEqualTo(2.0f);
         assertThat(project.getAmountOfMaximumTreesToPlant()).isEqualTo(300);
         assertThat(project.getAmountOfPlantedTrees()).isEqualTo(100);
-
     }
-
 
 }
