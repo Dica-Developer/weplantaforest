@@ -108,6 +108,7 @@ class PaymentBar extends Component {
   simpleDonation() {
     axios.post('http://localhost:8081/simpleDonateTrees', this.state).then(function(response) {
       console.log('You paid successful');
+      window.location = '/plant/succcess';
     }).catch(function (response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -124,6 +125,7 @@ class PaymentBar extends Component {
   complexDonation() {
     axios.post('http://localhost:8081/donateTrees', this.state).then(function(response) {
       console.log('You paid successful');
+      window.location = '/plant/succcess';
     }).catch(function (response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
