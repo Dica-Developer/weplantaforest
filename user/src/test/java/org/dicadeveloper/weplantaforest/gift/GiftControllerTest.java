@@ -19,6 +19,7 @@ import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
@@ -76,6 +77,9 @@ public class GiftControllerTest {
 
     @Autowired
     private TreeTypeRepository _treeTypeRepository;
+    
+    @Autowired
+    private ProjectArticleRepository _projectArticleRepository;
 
     @Before
     public void setup() {
@@ -221,6 +225,8 @@ public class GiftControllerTest {
         _dbInjecter.injectUser("Consignor");
         _dbInjecter.injectUser("Receiver");
         _dbInjecter.injectTreeType("wood", "a wood", 0.5);
+        _dbInjecter.injectProject("Project A", "Consignor", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
 
         User consignor = _userRepository.findByName("Consignor");
 
@@ -234,6 +240,7 @@ public class GiftControllerTest {
         tree.setOwner(consignor);
         tree.setAmount(1);
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
+        tree.setProjectArticle(_projectArticleRepository.findOne(1L));
 
         CartItem cartItem = new CartItem();
         cartItem.setTree(tree);
@@ -269,6 +276,8 @@ public class GiftControllerTest {
         _dbInjecter.injectUser("Consignor");
         _dbInjecter.injectUser("Receiver");
         _dbInjecter.injectTreeType("wood", "a wood", 0.5);
+        _dbInjecter.injectProject("Project A", "Consignor", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
 
         User consignor = _userRepository.findByName("Consignor");
 
@@ -282,7 +291,8 @@ public class GiftControllerTest {
         tree.setOwner(consignor);
         tree.setAmount(1);
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
-
+        tree.setProjectArticle(_projectArticleRepository.findOne(1L));
+        
         CartItem cartItem = new CartItem();
         cartItem.setTree(tree);
 
@@ -303,6 +313,8 @@ public class GiftControllerTest {
         _dbInjecter.injectUser("Consignor");
         _dbInjecter.injectUser("Receiver");
         _dbInjecter.injectTreeType("wood", "a wood", 0.5);
+        _dbInjecter.injectProject("Project A", "Consignor", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
 
         User consignor = _userRepository.findByName("Consignor");
 
@@ -316,7 +328,8 @@ public class GiftControllerTest {
         tree.setOwner(consignor);
         tree.setAmount(1);
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
-
+        tree.setProjectArticle(_projectArticleRepository.findOne(1L));
+        
         CartItem cartItem = new CartItem();
         cartItem.setTree(tree);
 

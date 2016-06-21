@@ -31,7 +31,7 @@ public class CartItem implements Identifiable<Long> {
     @Column(name = "_cartItemId")
     private Long id;
 
-    @OneToOne( fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @JoinColumn(name = "_treeId")
     private Tree tree;
@@ -51,6 +51,34 @@ public class CartItem implements Identifiable<Long> {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_cart__cartId")
     private Cart cart;
+
+    private void calcAndSetTotalPrice() {
+        if (tree != null) {
+            double totalPrice = tree.getAmount() * (tree.getProjectArticle()
+                                                        .getPrice()
+                                                        .getAmount()
+                                                        .doubleValue()
+                    - scontoPerPiece.doubleValue() - fundingPerPiece.doubleValue());
+            this.totalPrice = new BigDecimal(totalPrice);
+
+        } else {
+            this.totalPrice = BigDecimal.ZERO;
+        }
+    }
+
+    public void setTree(Tree tree) {
+        this.tree = tree;
+        this.basePricePerPiece = tree.getProjectArticle()
+                                     .getPrice()
+                                     .getAmount();
+        this.fundingPerPiece = tree.getProjectArticle()
+                                   .getPrice()
+                                   .getFunding();
+        this.scontoPerPiece = tree.getProjectArticle()
+                                  .getPrice()
+                                  .getSconto();
+        calcAndSetTotalPrice();
+    }
 
     @Override
     public String toString() {

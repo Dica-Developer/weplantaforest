@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.io.File;
 
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
@@ -165,6 +167,7 @@ public class DatabasePopulatorTest {
     }
 
     @Test
+    @Transactional
     public void testInsertCartAndCertificateToCart() {
         _databasePopulator.insertUsers();
         _databasePopulator.insertDefaultTreeTypes();
