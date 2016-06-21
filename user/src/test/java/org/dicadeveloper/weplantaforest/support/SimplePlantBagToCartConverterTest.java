@@ -44,8 +44,7 @@ public class SimplePlantBagToCartConverterTest {
     @Transactional
     public void testConvertFromPlantPageDataToCartOneItem() {
         SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
-                "Project A", plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A", plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
 
@@ -61,9 +60,12 @@ public class SimplePlantBagToCartConverterTest {
                        .doubleValue()).isEqualTo(9.0);
         assertThat(cart.getCartItems()
                        .get(0)
-                       .getPlantArticleId()).isEqualTo(1L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isEqualTo(1L);
         assertThat(cart.getCartItems()
                        .get(0)
+                       .getTree()
                        .getAmount()).isEqualTo(3);
         assertThat(cart.getCartItems()
                        .get(0)
@@ -75,10 +77,8 @@ public class SimplePlantBagToCartConverterTest {
     @Transactional
     public void testConvertFromPlantPageDataToCartTwoItems() {
         SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
-                "Project A", plantPageData);
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(1, 100, "doow",
-                "Project A", plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A", plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(1, 100, "doow", "Project A", plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
         _dbInjecter.injectTreeType("doow", "doow", 0.5);
@@ -96,6 +96,7 @@ public class SimplePlantBagToCartConverterTest {
                        .doubleValue()).isEqualTo(10.0);
         assertThat(cart.getCartItems()
                        .get(0)
+                       .getTree()
                        .getAmount()).isIn(1, 3);
         assertThat(cart.getCartItems()
                        .get(0)
@@ -103,9 +104,12 @@ public class SimplePlantBagToCartConverterTest {
                        .doubleValue()).isIn(1.0, 3.0);
         assertThat(cart.getCartItems()
                        .get(0)
-                       .getPlantArticleId()).isIn(1L, 2L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isIn(1L, 2L);
         assertThat(cart.getCartItems()
                        .get(1)
+                       .getTree()
                        .getAmount()).isIn(1, 3);
         assertThat(cart.getCartItems()
                        .get(1)
@@ -113,19 +117,18 @@ public class SimplePlantBagToCartConverterTest {
                        .doubleValue()).isIn(1.0, 3.0);
         assertThat(cart.getCartItems()
                        .get(1)
-                       .getPlantArticleId()).isIn(1L, 2L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isIn(1L, 2L);
     }
 
     @Test
     @Transactional
     public void testConvertFromPlantPageDataToCartThreeItems() {
         SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
-                "Project A", plantPageData);
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(1, 100, "doow",
-                "Project A", plantPageData);
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(2, 100, "wodo",
-                "Project A", plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A", plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(1, 100, "doow", "Project A", plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(2, 100, "wodo", "Project A", plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
         _dbInjecter.injectTreeType("doow", "doow", 0.5);
@@ -145,6 +148,7 @@ public class SimplePlantBagToCartConverterTest {
                        .doubleValue()).isEqualTo(12.0);
         assertThat(cart.getCartItems()
                        .get(0)
+                       .getTree()
                        .getAmount()).isEqualTo(3);
         assertThat(cart.getCartItems()
                        .get(0)
@@ -152,9 +156,12 @@ public class SimplePlantBagToCartConverterTest {
                        .doubleValue()).isEqualTo(3.0);
         assertThat(cart.getCartItems()
                        .get(0)
-                       .getPlantArticleId()).isEqualTo(1L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isEqualTo(1L);
         assertThat(cart.getCartItems()
                        .get(1)
+                       .getTree()
                        .getAmount()).isEqualTo(1);
         assertThat(cart.getCartItems()
                        .get(1)
@@ -162,9 +169,12 @@ public class SimplePlantBagToCartConverterTest {
                        .doubleValue()).isEqualTo(1.0);
         assertThat(cart.getCartItems()
                        .get(1)
-                       .getPlantArticleId()).isEqualTo(2L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isEqualTo(2L);
         assertThat(cart.getCartItems()
                        .get(2)
+                       .getTree()
                        .getAmount()).isEqualTo(2);
         assertThat(cart.getCartItems()
                        .get(2)
@@ -172,7 +182,9 @@ public class SimplePlantBagToCartConverterTest {
                        .doubleValue()).isEqualTo(1.0);
         assertThat(cart.getCartItems()
                        .get(2)
-                       .getPlantArticleId()).isEqualTo(3L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isEqualTo(3L);
         assertThat(cart.getCartItems()
                        .size()).isEqualTo(3);
     }
@@ -181,8 +193,7 @@ public class SimplePlantBagToCartConverterTest {
     @Transactional
     public void testSavetoDBAfterConversion() {
         SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
-        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood",
-                "Project A", plantPageData);
+        plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A", plantPageData);
 
         _dbInjecter.injectTreeType("wood", "wood", 0.5);
 

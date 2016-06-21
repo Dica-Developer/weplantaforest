@@ -25,7 +25,7 @@ import lombok.NonNull;
 public class PlantBagToCartConverter {
 
     private @NonNull ProjectArticleRepository _projectArticleRepository;
-    
+
     private @NonNull UserRepository _userRepository;
 
     @Autowired
@@ -36,7 +36,7 @@ public class PlantBagToCartConverter {
 
     public Cart convertPlantPageDataToCart(PlantBag plantPageData) {
         User buyer = _userRepository.findOne(plantPageData.getUserId());
-        
+
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
         cart.setBuyer(buyer);
@@ -67,8 +67,8 @@ public class PlantBagToCartConverter {
                     Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectname, plantItemName);
 
                     Tree tree = createTree(amount, cart.getTimeStamp(), cart.getBuyer(), plantArticleId);
-                    
-                    cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId, tree));
+
+                    cart.addCartItem(createCartItem(treePrice, totalPrice, tree));
                 }
             }
         }
@@ -77,7 +77,7 @@ public class PlantBagToCartConverter {
 
     public Cart convertSimplePlantPageDataToCart(SimplePlantBag simplePlantPageData) {
         User buyer = _userRepository.findOne(simplePlantPageData.getUserId());
-        
+
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
         cart.setBuyer(buyer);
@@ -96,18 +96,18 @@ public class PlantBagToCartConverter {
             Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectName, plantItemName);
 
             Tree tree = createTree(amount, cart.getTimeStamp(), cart.getBuyer(), plantArticleId);
-            
-            cart.addCartItem(createCartItem(amount, treePrice, totalPrice, plantArticleId, tree));
+
+            cart.addCartItem(createCartItem(treePrice, totalPrice, tree));
         }
         return cart;
     }
-    
-    private Tree createTree(int amount, long plantedOn, User owner, long projectArticleId){
+
+    private Tree createTree(int amount, long plantedOn, User owner, long projectArticleId) {
         Tree tree = new Tree();
         Project project = _projectArticleRepository.findOne(projectArticleId)
                                                    .getProject();
         ProjectArticle projectArticle = _projectArticleRepository.findOne(projectArticleId);
-        
+
         tree.setAmount(amount);
         tree.setTreeType(projectArticle.getTreeType());
         tree.setProjectArticle(projectArticle);
@@ -116,18 +116,16 @@ public class PlantBagToCartConverter {
         tree.setOwner(owner);
         tree.setLatitude(project.getLatitude());
         tree.setLongitude(project.getLongitude());
-        
+
         return tree;
     }
 
-    private CartItem createCartItem(int amount, BigDecimal treePrice, BigDecimal totalPrice, Long articleId, Tree tree) {
+    private CartItem createCartItem(BigDecimal treePrice, BigDecimal totalPrice, Tree tree) {
         CartItem cartItem = new CartItem();
-        cartItem.setAmount(amount);
         cartItem.setBasePricePerPiece(treePrice);
         cartItem.setTotalPrice(totalPrice);
-        cartItem.setPlantArticleId(articleId);
         cartItem.setTree(tree);
-        
+
         return cartItem;
     }
 

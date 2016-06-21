@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
-import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -93,8 +92,9 @@ public class PlantPageControllerPostMethodTest {
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(9.0);
         assertThat(cart.getCartItems()
-                       .get(0)
-                       .getPlantArticleId()).isEqualTo(1);
+                       .get(0) .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isEqualTo(1);
         assertThat(cart.getCartItems()
                        .get(0)
                        .getTree()
@@ -150,12 +150,6 @@ public class PlantPageControllerPostMethodTest {
         assertThat(cart.getPlantArticleIds()).contains(1L, 2L, 3L);
         assertThat(cart.getBuyer()
                 .getName()).isEqualTo("Adam");
-        for (CartItem cartItem : cart.getCartItems()) {
-            Tree tree = cartItem.getTree();
-            assertThat(tree.getAmount()).isEqualTo(cartItem.getAmount());
-            assertThat(tree.getProjectArticle()
-                           .getArticleId()).isEqualTo(cartItem.getPlantArticleId());
-        }
 
         assertThat(_treeRepository.count()).isEqualTo(3L);
 

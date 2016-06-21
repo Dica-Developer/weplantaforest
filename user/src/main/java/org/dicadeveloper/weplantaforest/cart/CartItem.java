@@ -31,21 +31,10 @@ public class CartItem implements Identifiable<Long> {
     @Column(name = "_cartItemId")
     private Long id;
 
-    // TODO: remove
-    // is always NULL?
-    // @Column(length = 100)
-    // private String _plantName;
-
     @OneToOne( fetch = FetchType.LAZY)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @JoinColumn(name = "_treeId")
     private Tree tree;
-
-    @Column(name = "_amount")
-    private int amount;
-
-    @Column(name = "_plantArticleId")
-    private Long plantArticleId;
 
     @Column(name = "_basePricePerPiece", precision = 7, scale = 2)
     private BigDecimal basePricePerPiece = BigDecimal.ZERO;

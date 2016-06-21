@@ -358,10 +358,8 @@ public class DatabasePopulator {
         tree.setOwner(buyer);
 
         CartItem cartItem = new CartItem();
-        cartItem.setAmount(2);
         cartItem.setBasePricePerPiece(new BigDecimal(2.0));
         cartItem.setTotalPrice(new BigDecimal(4.0));
-        cartItem.setPlantArticleId(1L);
         cartItem.setTree(tree);
 
         cart.addCartItem(cartItem);

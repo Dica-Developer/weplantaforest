@@ -236,9 +236,7 @@ public class GiftControllerTest {
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
 
         CartItem cartItem = new CartItem();
-        cartItem.setAmount(1);
         cartItem.setTree(tree);
-        cartItem.setPlantArticleId(1L);
 
         cart.addCartItem(cartItem);
 
@@ -286,9 +284,7 @@ public class GiftControllerTest {
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
 
         CartItem cartItem = new CartItem();
-        cartItem.setAmount(1);
         cartItem.setTree(tree);
-        cartItem.setPlantArticleId(1L);
 
         cart.addCartItem(cartItem);
 
@@ -322,9 +318,7 @@ public class GiftControllerTest {
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
 
         CartItem cartItem = new CartItem();
-        cartItem.setAmount(1);
         cartItem.setTree(tree);
-        cartItem.setPlantArticleId(1L);
 
         cart.addCartItem(cartItem);
 

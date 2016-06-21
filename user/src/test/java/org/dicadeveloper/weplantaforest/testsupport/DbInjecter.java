@@ -67,10 +67,10 @@ public class DbInjecter {
 
     @Autowired
     private CertificateRepository _certificateRepository;
-    
+
     @Autowired
     private GiftRepository _giftRepository;
-    
+
     @Autowired
     private CodeGenerator _codeGenerator;
 
@@ -92,7 +92,7 @@ public class DbInjecter {
         userDto.setName(userName);
         _userRepository.save(userDto);
     }
-    
+
     public void injectUser(String userName, String mail) {
         User userDto = new User();
         userDto.setName(userName);
@@ -211,11 +211,8 @@ public class DbInjecter {
 
         for (Tree tree : trees) {
             CartItem cartItem = new CartItem();
-            cartItem.setAmount(1);
             cartItem.setBasePricePerPiece(new BigDecimal(1.0));
             cartItem.setTotalPrice(new BigDecimal(1.0));
-            cartItem.setPlantArticleId(tree.getProjectArticle()
-                                           .getArticleId());
             cartItem.setTree(tree);
 
             cart.addCartItem(cartItem);
@@ -233,18 +230,15 @@ public class DbInjecter {
 
         for (Tree tree : trees) {
             CartItem cartItem = new CartItem();
-            cartItem.setAmount(tree.getAmount());
+            cartItem.setTree(tree);
             cartItem.setBasePricePerPiece(new BigDecimal(1.0));
 
             double totalPrice = cartItem.getBasePricePerPiece()
                                         .doubleValue()
-                    * cartItem.getAmount();
+                    * cartItem.getTree()
+                              .getAmount();
 
             cartItem.setTotalPrice(new BigDecimal(totalPrice));
-            cartItem.setPlantArticleId(tree.getProjectArticle()
-                                           .getArticleId());
-            cartItem.setTree(tree);
-
             cart.addCartItem(cartItem);
         }
         _cartRepository.save(cart);
@@ -272,8 +266,8 @@ public class DbInjecter {
         return certificate.getNumber();
 
     }
-    
-    public String injectGiftWithCode(String userName,String recipient, Status giftStatus){
+
+    public String injectGiftWithCode(String userName, String recipient, Status giftStatus) {
         Gift gift = new Gift();
         gift.setConsignor(_userRepository.findByName(userName));
         gift.setRecipient(_userRepository.findByName(recipient));
@@ -282,11 +276,12 @@ public class DbInjecter {
         gift.setCode(code);
         gift.setStatus(giftStatus);
         _giftRepository.save(gift);
-        
-        return gift.getCode().getCode();
+
+        return gift.getCode()
+                   .getCode();
     }
-    
-    public Code injectGiftWithCode(String consignor, Status giftStatus){
+
+    public Code injectGiftWithCode(String consignor, Status giftStatus) {
         Gift gift = new Gift();
         gift.setConsignor(_userRepository.findByName(consignor));
         _giftRepository.save(gift);
@@ -294,7 +289,7 @@ public class DbInjecter {
         gift.setCode(code);
         gift.setStatus(giftStatus);
         _giftRepository.save(gift);
-        
+
         return gift.getCode();
     }
 

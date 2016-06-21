@@ -161,7 +161,9 @@ public class Cart implements Identifiable<Long> {
 
     public CartItem removeCartItem(final Long articleId) {
         for (final CartItem item : cartItems) {
-            if (item.getPlantArticleId()
+            if (item.getTree()
+                    .getProjectArticle()
+                    .getArticleId()
                     .equals(articleId)) {
                 cartItems.remove(item);
                 return item;
@@ -179,8 +181,12 @@ public class Cart implements Identifiable<Long> {
 
     public boolean containsCartItem(final CartItem cartItem) {
         for (final CartItem item : cartItems) {
-            if (item.getPlantArticleId()
-                    .equals(cartItem.getPlantArticleId())) {
+            if (item.getTree()
+                    .getProjectArticle()
+                    .getArticleId()
+                    .equals(cartItem.getTree()
+                                    .getProjectArticle()
+                                    .getArticleId())) {
                 return true;
             }
         }
@@ -203,8 +209,8 @@ public class Cart implements Identifiable<Long> {
     @JsonView(Views.ShortCart.class)
     public int getTreeCount() {
         int count = 0;
-        for (final CartItem item : cartItems) {
-            count += item.getAmount();
+        for (Tree tree : getTrees()) {
+            count += tree.getAmount();
         }
         return count;
     }
@@ -222,12 +228,13 @@ public class Cart implements Identifiable<Long> {
     @Transient
     public List<Long> getPlantArticleIds() {
         final List<Long> ids = new ArrayList<Long>();
-        for (final CartItem item : cartItems) {
-            ids.add(item.getPlantArticleId());
+        for (Tree tree : getTrees()) {
+            ids.add(tree.getProjectArticle()
+                        .getArticleId());
         }
         return ids;
     }
-    
+
     @Transient
     public List<Tree> getTrees() {
         final List<Tree> trees = new ArrayList<Tree>();

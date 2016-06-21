@@ -15,9 +15,11 @@ import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,6 +56,12 @@ public class CartRepositoryIntegrationTest {
     @Autowired
     private TreeRepository _treeRepository;
 
+    @Autowired
+    private TreeTypeRepository _treeTypeRepository;
+
+    @Autowired
+    private ProjectArticleRepository _projectArticleRepository;
+
     @Test
     @Transactional
     public void testSaveCartWithCartItem() {
@@ -72,11 +80,8 @@ public class CartRepositoryIntegrationTest {
         Tree tree = _treeRepository.findOne(1L);
 
         CartItem cartItem = new CartItem();
-        cartItem.setAmount(1);
         cartItem.setBasePricePerPiece(new BigDecimal(1.0));
         cartItem.setTotalPrice(new BigDecimal(1.0));
-        cartItem.setPlantArticleId(tree.getProjectArticle()
-                                       .getArticleId());
         cartItem.setTree(tree);
         cart.addCartItem(cartItem);
         _cartRepository.save(cart);
@@ -130,6 +135,42 @@ public class CartRepositoryIntegrationTest {
         assertThat(savedCart).isNotNull();
         assertThat(savedCart.getBuyer()
                             .getName()).isEqualTo("Adam");
+    }
+
+    @Test
+    @Transactional
+    public void testDeleteCart() {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        _dbInjecter.injectProject("Project A", "Adam", "desc", true, 1.0f, 2.0f);
+        _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
+
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName("Adam"));
+
+        Tree tree = new Tree();
+        tree.setAmount(1);
+        tree.setPlantedOn(timeOfPlanting);
+        tree.setSubmittedOn(timeOfPlanting);
+        tree.setTreeType(_treeTypeRepository.findOne(1L));
+        tree.setProjectArticle(_projectArticleRepository.findOne(1L));
+
+        CartItem cartItem = new CartItem();
+        cartItem.setBasePricePerPiece(new BigDecimal(1.0));
+        cartItem.setTotalPrice(new BigDecimal(1.0));
+        cartItem.setTree(tree);
+        cart.addCartItem(cartItem);
+        _cartRepository.save(cart);
+
+        assertThat(_cartRepository.count()).isEqualTo(1);
+        assertThat(_treeRepository.count()).isEqualTo(1);
+
+        _cartRepository.delete(cart);
+        assertThat(_cartRepository.count()).isEqualTo(0);
+        assertThat(_treeRepository.count()).isEqualTo(0);
+
     }
 
 }

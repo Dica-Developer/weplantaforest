@@ -93,7 +93,9 @@ public class SimplePlantPageControllerPostMethodTest {
                        .doubleValue()).isEqualTo(9.0);
         assertThat(cart.getCartItems()
                        .get(0)
-                       .getPlantArticleId()).isEqualTo(1);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isEqualTo(1);
         assertThat(cart.getBuyer()
                        .getName()).isEqualTo("Adam");
         assertThat(_treeRepository.count()).isEqualTo(1L);

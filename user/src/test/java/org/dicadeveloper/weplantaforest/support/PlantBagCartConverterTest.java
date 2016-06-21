@@ -62,9 +62,12 @@ public class PlantBagCartConverterTest {
                        .doubleValue()).isEqualTo(9.0);
         assertThat(cart.getCartItems()
                        .get(0)
-                       .getPlantArticleId()).isEqualTo(1L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isEqualTo(1L);
         assertThat(cart.getCartItems()
                        .get(0)
+                       .getTree()
                        .getAmount()).isEqualTo(3);
         assertThat(cart.getCartItems()
                        .get(0)
@@ -98,6 +101,7 @@ public class PlantBagCartConverterTest {
                        .doubleValue()).isEqualTo(10.0);
         assertThat(cart.getCartItems()
                        .get(0)
+                       .getTree()
                        .getAmount()).isIn(1, 3);
         assertThat(cart.getCartItems()
                        .get(0)
@@ -105,9 +109,12 @@ public class PlantBagCartConverterTest {
                        .doubleValue()).isIn(1.0, 3.0);
         assertThat(cart.getCartItems()
                        .get(0)
-                       .getPlantArticleId()).isIn(1L, 2L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isIn(1L, 2L);
         assertThat(cart.getCartItems()
                        .get(1)
+                       .getTree()
                        .getAmount()).isIn(1, 3);
         assertThat(cart.getCartItems()
                        .get(1)
@@ -115,7 +122,9 @@ public class PlantBagCartConverterTest {
                        .doubleValue()).isIn(1.0, 3.0);
         assertThat(cart.getCartItems()
                        .get(1)
-                       .getPlantArticleId()).isIn(1L, 2L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isIn(1L, 2L);
     }
 
     @Test
@@ -148,6 +157,7 @@ public class PlantBagCartConverterTest {
                        .doubleValue()).isEqualTo(10.0);
         assertThat(cart.getCartItems()
                        .get(0)
+                       .getTree()
                        .getAmount()).isIn(1, 3);
         assertThat(cart.getCartItems()
                        .get(0)
@@ -155,9 +165,12 @@ public class PlantBagCartConverterTest {
                        .doubleValue()).isIn(1.0, 3.0);
         assertThat(cart.getCartItems()
                        .get(0)
-                       .getPlantArticleId()).isIn(1L, 2L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isIn(1L, 2L);
         assertThat(cart.getCartItems()
                        .get(1)
+                       .getTree()
                        .getAmount()).isIn(1, 3);
         assertThat(cart.getCartItems()
                        .get(1)
@@ -165,7 +178,9 @@ public class PlantBagCartConverterTest {
                        .doubleValue()).isIn(1.0, 3.0);
         assertThat(cart.getCartItems()
                        .get(1)
-                       .getPlantArticleId()).isIn(1L, 2L);
+                       .getTree()
+                       .getProjectArticle()
+                       .getArticleId()).isIn(1L, 2L);
         assertThat(cart.getCartItems()
                        .size()).isEqualTo(2);
     }
