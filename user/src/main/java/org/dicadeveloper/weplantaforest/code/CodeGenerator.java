@@ -76,8 +76,6 @@ public class CodeGenerator {
         _crypt.put('9', Values.create(4, 3, 8));
     }
 
- 
-
     public List<Code> generate(final Event event, final int count, final int treeCount) {
         final Calendar cal = Calendar.getInstance();
         final int year = cal.get(Calendar.YEAR);
@@ -94,10 +92,7 @@ public class CodeGenerator {
 
         final List<Code> codes = new ArrayList<Code>();
         for (int i = from; i < to; i++) {
-            Code code = null;
-            while (code == null) {
-                code = generate(event, year, month, i);
-            }
+            Code code = generate(event, year, month, i);
             code.setTreeCount(treeCount);
             _codeRepository.save(code);
             codes.add(code);
@@ -121,10 +116,7 @@ public class CodeGenerator {
 
         final List<Code> codes = new ArrayList<Code>();
         for (int i = from; i < to; i++) {
-            Code code = null;
-            while (code == null) {
-                code = generate(event, year, month, i);
-            }
+            Code code = generate(event, year, month, i);
             code.setPrice(price);
             _codeRepository.save(code);
             codes.add(code);
@@ -146,7 +138,7 @@ public class CodeGenerator {
         return generate(event, null, year, month, number);
     }
 
-    private Code generate(final Event event, final Gift gift, int year, final int month, final int number) {
+    private Code generate(final Event event, final Gift gift, int year, final int month, int number) {
         final Code code = new Code();
         code.setEvent(event);
         code.setGift(gift);
@@ -154,101 +146,28 @@ public class CodeGenerator {
         code.setMonth(month);
         code.setNumber(number);
 
-        // try 1000 times to generate a code
-        for (int i = 0; i < 1000; i++) {
-            final StringBuilder key = new StringBuilder();
-            // build secure count [small]
-            final int countA = random(8);
-            final int countB = random(8);
-            key.append(small(countA));
-            key.append(small(countB));
+        int idValue = 0;
+        if (event != null) {
+            idValue = (int) (event.getId() % 16);
+        }
+        if (gift != null) {
+            idValue = (int) (gift.getId() % 16);
+        }
 
-            // create year [medium]
-            final int yearA = random(0,15);
-            final int yearB = 15 - yearA;
-            key.append(medium(yearA));
-            key.append(medium(yearB));
-
-            key.append("-");
-
-            // generate number [large]
-            float num = number / 16.0f;
-            int numberA = (int) (num % 1.0f * 16.0f);
-            num = (int) num / 16.0f;
-            int numberB = (int) (num % 1.0f * 16.0f);
-            num = (int) num / 16.0f;
-            int numberC = (int) (num % 1.0f * 16.0f);
-            num = (int) num / 16.0f;
-            int numberD = (int) (num % 1.0f * 16.0f);
-
-            numberA = numberA + 8 - countB;
-            numberB = numberB + 8 + countA;
-            numberC = numberC + 8 + countB;
-            numberD = numberD + 8 - countA;
-
-            key.append(large(numberD));
-            key.append(large(numberA));
-            key.append(large(numberC));
-            key.append(large(numberB));
-
-            key.append("-");
-
-            // generate part of event id [large]
-            float eve = 0.0f;
-            if (event != null) {
-                eve += event.getId();
-            }
-            if (gift != null) {
-                eve += gift.getId();
-            }
-            eve /= 16.0f;
-
-            int eventA = (int) (eve % 1.0f * 16.0f);
-            eve = (int) eve / 16.0f;
-            int eventB = (int) (eve % 1.0f * 16.0f);
-            eve = (int) eve / 16.0f;
-            int eventC = (int) (eve % 1.0f * 16.0f);
-            eve = (int) eve / 16.0f;
-            int eventD = (int) (eve % 1.0f * 16.0f);
-
-            eventA = eventA + 8 + countB;
-            eventB = eventB + 8 - countA;
-            eventC = eventC + 8 - countB;
-            eventD = eventD + 8 + countA;
-
-            key.append(large(eventB));
-            key.append(large(eventC));
-            key.append(large(eventA));
-            key.append(large(eventD));
-
-            key.append("-");
-
-            // create month [small]
-            final int monthA = random(Math.max(month - 7, 0), Math.min(month, 8));
-            final int monthB = month - monthA;
-            key.append(small(monthA));
-            key.append(small(monthB));
-
-            // calculate checksum [medium]
-            final int sum = countA + countB + yearA + yearB + numberA + numberB + numberC + numberD + eventA + eventB + eventC + eventD + monthA + monthB;
-            final int missing = 23 - sum % 23;
-            final int checkA = random(Math.max(missing - 8, 0), Math.min(missing, 8));
-            final int checkB = missing - checkA;
-            key.append(medium(checkA));
-            key.append(medium(checkB));
-
-            // save code or try generate a new one
-            final String codeString = key.toString();
+        // save code or try generate a new one
+        boolean codeSaved = false;
+        while (!codeSaved) {
+            final String codeString = generateCodeString(idValue, number);
             if (null == _codeRepository.findByCode(codeString)) {
                 code.setCode(codeString);
                 _codeRepository.save(code);
-                break;
+                codeSaved = true;
             }
         }
 
         return code;
     }
-    
+
     public boolean isValid(final String code) {
         final Matcher matcher = CODE_PATTERN.matcher(code);
         if (matcher.matches()) {
@@ -284,10 +203,74 @@ public class CodeGenerator {
         return false;
     }
 
+    private static String generateCodeString(int id, int number) {
+        final StringBuilder key = new StringBuilder();
+        // build secure count [small]
+        final int countA = random(8);
+        final int countB = random(8);
+        key.append(small(countA));
+        key.append(small(countB));
+
+        // create year [medium]
+        final int yearA = random(15);
+        final int yearB = 15 - yearA;
+        key.append(medium(yearA));
+        key.append(medium(yearB));
+
+        key.append("-");
+
+        number = number % 16;
+
+        int numberA = number + 8 - countB;
+        int numberB = number + 8 + countA;
+        int numberC = number + 8 + countB;
+        int numberD = number + 8 - countA;
+
+        key.append(large(numberD));
+        key.append(large(numberA));
+        key.append(large(numberC));
+        key.append(large(numberB));
+
+        key.append("-");
+
+        // generate part of event id [large]
+
+        int eventA = id + 8 + countB;
+        int eventB = id + 8 - countA;
+        int eventC = id + 8 - countB;
+        int eventD = id + 8 + countA;
+
+        key.append(large(eventB));
+        key.append(large(eventC));
+        key.append(large(eventA));
+        key.append(large(eventD));
+
+        key.append("-");
+
+        // create month [small]
+        final int monthA = random(8);
+        final int monthB = random(8);
+
+        key.append(small(monthA));
+        key.append(small(monthB));
+
+        // calculate checksum [medium]
+        final int sum = countA + countB + yearA + yearB + numberA + numberB + numberC + numberD + eventA + eventB + eventC + eventD + monthA + monthB;
+
+        final int missing = 23 - sum % 23;
+        final int checkA = random(Math.max(missing - 8, 0), Math.min(missing, 8));
+        final int checkB = missing - checkA;
+
+        key.append(medium(checkA));
+        key.append(medium(checkB));
+
+        return key.toString();
+    }
+
     private static int random(final int to) {
         return random(0, to);
     }
-    
+
     private static int random(final int from, final int to) {
         return (int) (from + Math.random() * (to - from));
     }
@@ -304,7 +287,7 @@ public class CodeGenerator {
         final int max = cs.size() - 1;
         return cs.get(random(max));
     }
-    
+
     private static char medium(final int v) {
         final List<Character> cs = new ArrayList<Character>();
         for (final Character c : _crypt.keySet()) {
@@ -316,7 +299,7 @@ public class CodeGenerator {
         final int max = cs.size() - 1;
         return cs.get(random(max));
     }
-    
+
     private static char large(final int v) {
         for (final Character c : _crypt.keySet()) {
             final Values values = _crypt.get(c);
