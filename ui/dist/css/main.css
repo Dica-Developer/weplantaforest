@@ -1,7 +1,7 @@
 .navbar {
   position: relative;
   min-height: 50px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   border: 1px solid transparent;
 }
 
@@ -18,3 +18,76 @@
   height: 180px;
 }
 
+.navbar-default {
+  background-color: #000;
+  background-image: linear-gradient(to bottom,#000 0,#000 100%);
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.navbar-header {
+  float: none;
+}
+
+.navbar-toggle {
+  display: block;
+}
+
+.navbar-collapse {
+  border-top: 1px solid transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.navbar-collapse.collapse {
+  display: none!important;
+}
+
+.navbar-nav {
+  float: none!important;
+  margin: 7.5px -15px;
+}
+
+.navbar-nav>li {
+  float: none;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: #000;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #fff
+}
+
+.container {
+  background-color: #000;
+  padding-top: 15px;
+}
+
+.carousel {
+  margin-bottom: 20px;
+}
+
+.header-image {
+  position: absolute;
+  z-index: -99999;
+}
+
+.background-transparent {
+  background: transparent;
+}
+
+.co2-header-number {
+  color: #91da91;
+  font-size: 66px;
+  font-weight: bold;
+}
+
+.co2-header-chars {
+  color: #fff;
+  font-size: 33px;
+}

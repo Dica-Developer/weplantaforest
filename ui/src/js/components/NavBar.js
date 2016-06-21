@@ -11,13 +11,13 @@ export default class NavBar extends Component {
       <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
     <div className="container">
     <div className="navbar-header">
-      <button className="navbar-toggle" type="button">
+      <button className="navbar-toggle navbar-left" type="button" data-toggle="collapse" data-target=".navbar-collapse">
         <span className="sr-only">Toggle navigation</span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
       </button>
-      <a href="/" className="navbar-brand">
+      <a href="/" className="navbar-brand navbar-right">
         <img alt="I Plant A Tree" src="assets/images/ipat_logo.jpg" />
       </a>
     </div>

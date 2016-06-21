@@ -19,6 +19,13 @@ export default class Co2Bar extends Component {
   }
 
   render() {
-    return (<div className="row"><div className="col-md-6"><h3>{this.state.co2.toLocaleString()} <small>t CO2 gebunden</small></h3></div><div className="col-md-6"><h3>{this.state.treesCount.toLocaleString()} <small>Bäume gepflanzt</small></h3></div></div>);
+    return (
+      <div className="row">
+        <div className="co2-header-chars">gepflanzte Bäume</div>
+        <div className="co2-header-number">{this.state.co2.toLocaleString()}</div>
+        <br />
+        <div className="co2-header-chars">CO2 gebunden / Tonnen</div>
+        <div className="co2-header-number">{this.state.treesCount.toLocaleString()}</div>
+      </div>);
   }
 }

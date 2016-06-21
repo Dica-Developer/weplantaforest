@@ -11,8 +11,11 @@ export default class MainPage extends Component {
     return (
       <div>
         <NavBar/>
-        <div className="container">
+        <img className="header-image" src="/assets/images/header.png" width="100%"></img>
+        <div className="container background-transparent">
           <Co2Bar/>
+        </div>
+        <div className="container">
           <Carousel />
           <Teaser />
         </div>
