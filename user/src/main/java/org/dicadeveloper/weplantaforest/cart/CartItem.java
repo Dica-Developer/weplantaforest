@@ -36,6 +36,9 @@ public class CartItem implements Identifiable<Long> {
     @JoinColumn(name = "_treeId")
     private Tree tree;
 
+    @Column(name = "_plantArticleId")
+    private Long plantArticleId;
+
     @Column(name = "_basePricePerPiece", precision = 7, scale = 2)
     private BigDecimal basePricePerPiece = BigDecimal.ZERO;
 
@@ -60,7 +63,6 @@ public class CartItem implements Identifiable<Long> {
                                                         .doubleValue()
                     - scontoPerPiece.doubleValue() - fundingPerPiece.doubleValue());
             this.totalPrice = new BigDecimal(totalPrice);
-
         } else {
             this.totalPrice = BigDecimal.ZERO;
         }
@@ -77,6 +79,8 @@ public class CartItem implements Identifiable<Long> {
         this.scontoPerPiece = tree.getProjectArticle()
                                   .getPrice()
                                   .getSconto();
+        this.plantArticleId = tree.getProjectArticle()
+                                  .getArticleId();
         calcAndSetTotalPrice();
     }
 
