@@ -8,11 +8,9 @@ import {
 export default class NavBar extends Component {
   render() {
     return (
-      <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
-    <div className="container">
+  <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
     <div className="navbar-header">
       <button className="navbar-toggle navbar-left" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-        <span className="sr-only">Toggle navigation</span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
@@ -21,7 +19,7 @@ export default class NavBar extends Component {
         <img alt="I Plant A Tree" src="assets/images/ipat_logo.jpg" />
       </a>
     </div>
-    <div className="navbar-collapse collapse" id="navbar-main">
+    <div className="navbar-collapse collapse">
       <ul className="nav navbar-nav">
         <li>
           <Link to="/plant">Pflanzen</Link>
@@ -42,7 +40,6 @@ export default class NavBar extends Component {
         </li>
       </ul>
     </div>
-  </div>
   </nav>);
   }
 }
