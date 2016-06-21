@@ -44,20 +44,20 @@ class PaymentBar extends Component {
     var amount = jQuery('#' + elementId).val() * 100;
     window.clearTimeout(this.proposalTimeout);
     this.proposalTimeout = window.setTimeout(function () {
-    axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
-      var result = response.data;
-      result.plantItems = [];
-      that.setState(result);
-    }).catch(function (response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+      axios.get('http://localhost:8081/plantProposal/' + amount).then(function(response) {
+        var result = response.data;
+        result.plantItems = [];
+        that.setState(result);
+      }).catch(function (response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+      });
     }, 250);
   }
 
