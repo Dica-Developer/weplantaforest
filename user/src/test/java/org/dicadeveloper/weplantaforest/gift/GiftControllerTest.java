@@ -7,6 +7,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
@@ -28,6 +30,7 @@ import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,8 +38,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -46,9 +52,10 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
+@Transactional
 public class GiftControllerTest {
-    private MockMvc mockMvc;
+    private static MockMvc mockMvc;
 
     @Rule
     @Autowired
@@ -77,125 +84,134 @@ public class GiftControllerTest {
 
     @Autowired
     private TreeTypeRepository _treeTypeRepository;
-    
+
     @Autowired
     private ProjectArticleRepository _projectArticleRepository;
 
+    static boolean entitiesInjected = false;
+
+    static String codeString1;
+    static String codeString2;
+    static String codeString3;
+
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
+        if (!entitiesInjected) {
+            mockMvc = webAppContextSetup(this.webApplicationContext).build();
+
+            _dbInjecter.injectUser("Consignore");
+            _dbInjecter.injectUser("Recipient");
+            _dbInjecter.injectUser("otherUser");
+            _dbInjecter.injectUser("Adam");
+
+            codeString1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW)
+                                     .getCode();
+            codeString2 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED)
+                                     .getCode();
+            codeString3 = _dbInjecter.injectGiftWithCode("Consignore", "Recipient", Status.REDEEMED);
+            _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
+
+            _dbInjecter.injectTreeType("wood", "desc", 0.5);
+            _dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+            _dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
+
+            entitiesInjected = true;
+        }
+    }
+
+    @After
+    public void clear() {
+        _cartRepository.deleteAll();
+        _treeRepository.deleteAll();
     }
 
     @Test
+    @Rollback(false)
     public void testFindGiftsByConsignor() throws Exception {
-        _dbInjecter.injectUser("Consignore");
-        _dbInjecter.injectUser("otherUser");
-
-        Code code1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW);
-        String code2 = _dbInjecter.injectGiftWithCode("Consignore", "otherUser", Status.REDEEMED);
-        Code code3 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
-
-        _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
-
-        this.mockMvc.perform(get((Uris.GIFTS_BY_CONSIGNOR + "{id}"), 1).accept("application/json"))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
-                    .andExpect(jsonPath("$.[0].recipient").isEmpty())
-                    .andExpect(jsonPath("$.[0].code.code").value(code1.getCode()))
-                    .andExpect(jsonPath("$.[0].status").value("NEW"))
-                    .andExpect(jsonPath("$.[1].consignor.name").value("Consignore"))
-                    .andExpect(jsonPath("$.[1].recipient.name").value("otherUser"))
-                    .andExpect(jsonPath("$.[1].code.code").value(code2))
-                    .andExpect(jsonPath("$.[1].status").value("REDEEMED"))
-                    .andExpect(jsonPath("$.[2].consignor.name").value("Consignore"))
-                    .andExpect(jsonPath("$.[2].recipient").isEmpty())
-                    .andExpect(jsonPath("$.[2].code.code").value(code3.getCode()))
-                    .andExpect(jsonPath("$.[2].status").value("UNREDEEMED"));
+        mockMvc.perform(get((Uris.GIFTS_BY_CONSIGNOR + "{id}"), 1).accept("application/json"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
+               .andExpect(jsonPath("$.[0].recipient").isEmpty())
+               .andExpect(jsonPath("$.[0].code.code").value(codeString1))
+               .andExpect(jsonPath("$.[0].status").value("NEW"))
+               .andExpect(jsonPath("$.[1].consignor.name").value("Consignore"))
+               .andExpect(jsonPath("$.[1].recipient").isEmpty())
+               .andExpect(jsonPath("$.[1].code.code").value(codeString2))
+               .andExpect(jsonPath("$.[1].status").value("UNREDEEMED"))
+               .andExpect(jsonPath("$.[2].consignor.name").value("Consignore"))
+               .andExpect(jsonPath("$.[2].recipient.name").value("Recipient"))
+               .andExpect(jsonPath("$.[2].code.code").value(codeString3))
+               .andExpect(jsonPath("$.[2].status").value("REDEEMED"));
     }
 
     @Test
+    @Rollback(false)
     public void testFindGiftsByRecipient() throws Exception {
-        _dbInjecter.injectUser("Consignore");
-        _dbInjecter.injectUser("otherUser");
-
-        String code1 = _dbInjecter.injectGiftWithCode("Consignore", "otherUser", Status.REDEEMED);
-
-        _dbInjecter.injectGiftWithCode("Consignore", Status.NEW);
-        _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
-        _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
-
-        this.mockMvc.perform(get((Uris.GIFTS_BY_RECIPIENT + "{id}"), 2).accept("application/json"))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
-                    .andExpect(jsonPath("$.[0].recipient.name").value("otherUser"))
-                    .andExpect(jsonPath("$.[0].code.code").value(code1))
-                    .andExpect(jsonPath("$.[0].status").value("REDEEMED"));
+        mockMvc.perform(get((Uris.GIFTS_BY_RECIPIENT + "{id}"), 2).accept("application/json"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
+               .andExpect(jsonPath("$.[0].recipient.name").value("Recipient"))
+               .andExpect(jsonPath("$.[0].code.code").value(codeString3))
+               .andExpect(jsonPath("$.[0].status").value("REDEEMED"));
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testCreateGift() throws Exception {
-        _dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
-
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
-        plantPageData.setUserId(1);
+        plantPageData.setUserId(4);
 
-        this.mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-                    .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+               .andExpect(status().isOk());
 
-        assertThat(_cartRepository.count()).isEqualTo(1);
-        assertThat(_treeRepository.count()).isEqualTo(1);
-        assertThat(_giftRepository.count()).isEqualTo(1);
+        List<Cart> createdCarts = _cartRepository.findCartsByUserId(4);
+        Page<Tree> createdTrees = _treeRepository.findTreesByUserId(4L, new PageRequest(0, 1));
+        List<Gift> createdGifts = _giftRepository.findGiftsByConsignor(4L);
 
-        Cart createdCart = _cartRepository.findOne(1L);
-        Tree createdTree = _treeRepository.findOne(1L);
-        Gift createdGift = _giftRepository.findOne(1L);
+        assertThat(createdCarts.get(0)
+                               .getBuyer()
+                               .getName()).isEqualTo("Adam");
+        assertThat(createdCarts.get(0)
+                               .getTotalPrice()
+                               .doubleValue()).isEqualTo(9.0);
+        assertThat(createdCarts.get(0)
+                               .isGift()).isEqualTo(true);
 
-        assertThat(createdCart.getBuyer()
-                              .getName()).isEqualTo("Adam");
-        assertThat(createdCart.getTotalPrice()
-                              .doubleValue()).isEqualTo(9.0);
-        assertThat(createdCart.isGift()).isEqualTo(true);
+        assertThat(createdTrees.getContent()
+                               .get(0)
+                               .getAmount()).isEqualTo(3);
+        assertThat(createdTrees.getContent()
+                               .get(0)
+                               .getOwner()
+                               .getName()).isEqualTo("Adam");
+        assertThat(createdTrees.getContent()
+                               .get(0)
+                               .getProjectArticle()
+                               .getArticleId()).isEqualTo(1L);
 
-        assertThat(createdTree.getAmount()).isEqualTo(3);
-        assertThat(createdTree.getOwner()
-                              .getName()).isEqualTo("Adam");
-        assertThat(createdTree.getProjectArticle()
-                              .getArticleId()).isEqualTo(1L);
-
-        String codeFromCart = createdCart.getCode()
-                                         .getCode();
-        String codeFromGift = createdCart.getCode()
-                                         .getCode();
+        String codeFromCart = createdCarts.get(0)
+                                          .getCode()
+                                          .getCode();
+        String codeFromGift = createdCarts.get(0)
+                                          .getCode()
+                                          .getCode();
 
         assertThat(codeFromCart).isEqualTo(codeFromGift);
 
         assertThat(_codeGenerator.isValid(codeFromGift)).isTrue();
 
-        assertThat(createdGift.getStatus()).isEqualTo(Status.NEW);
-        assertThat(createdGift.getRecipient()).isNull();
+        assertThat(createdGifts.get(0)
+                               .getStatus()).isEqualTo(Status.NEW);
+        assertThat(createdGifts.get(0)
+                               .getRecipient()).isNull();
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testCreateGiftBadRequestCauseOfNoTreesRemaining() throws Exception {
-        _dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
-
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
@@ -203,41 +219,33 @@ public class GiftControllerTest {
 
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, System.currentTimeMillis(), "Project A");
 
-        this.mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-                    .andExpect(status().isBadRequest());
+        mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+               .andExpect(status().isBadRequest());
     }
 
     @Test
+    @Rollback(false)
     public void testCreateGiftPdf() throws Exception {
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectGiftWithCode("Adam", Status.UNREDEEMED);
-
-        this.mockMvc.perform(get(Uris.GIFT_PDF).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .param("giftId", "1")
-                                               .accept("application/pdf"))
-                    .andExpect(status().isOk());
+        mockMvc.perform(get(Uris.GIFT_PDF).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                          .param("giftId", "1")
+                                          .accept("application/pdf"))
+               .andExpect(status().isOk());
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testRedeemGiftCode() throws Exception {
-        _dbInjecter.injectUser("Consignor");
-        _dbInjecter.injectUser("Receiver");
-        _dbInjecter.injectTreeType("wood", "a wood", 0.5);
-        _dbInjecter.injectProject("Project A", "Consignor", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
+        Code code = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
 
-        User consignor = _userRepository.findByName("Consignor");
-
-        Code code = _dbInjecter.injectGiftWithCode("Consignor", Status.UNREDEEMED);
+        User buyer = _userRepository.findByName("Adam");
 
         Cart cart = new Cart();
-        cart.setBuyer(_userRepository.findByName("Adam"));
+        cart.setBuyer(buyer);
         cart.setCode(code);
 
         Tree tree = new Tree();
-        tree.setOwner(consignor);
+        tree.setOwner(buyer);
         tree.setAmount(1);
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
         tree.setProjectArticle(_projectArticleRepository.findOne(1L));
@@ -249,50 +257,41 @@ public class GiftControllerTest {
 
         _cartRepository.save(cart);
 
-        Gift savedGiftBeforeRedeem = _giftRepository.findOne(1L);
-        assertThat(savedGiftBeforeRedeem.getStatus()).isEqualTo(Status.UNREDEEMED);
-        Tree savedTreeBeforeRedeem = _treeRepository.findOne(1L);
-        assertThat(savedTreeBeforeRedeem.getOwner()
-                                        .getName()).isEqualTo("Consignor");
+        mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                             .param("giftCode", code.getCode())
+                                             .param("userId", "3")
+                                             .accept("application/json"))
+               .andExpect(status().isOk());
 
-        this.mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                  .param("giftCode", code.getCode())
-                                                  .param("userId", "2")
-                                                  .accept("application/json"))
-                    .andExpect(status().isOk());
+        Page<Tree> savedTreeAfterRedeem = _treeRepository.findTreesByUserId(3L, new PageRequest(0, 5));
+        assertThat(savedTreeAfterRedeem.getContent()
+                                       .get(0)
+                                       .getOwner()
+                                       .getName()).isEqualTo("otherUser");
 
-        Tree savedTreeAfterRedeem = _treeRepository.findOne(1L);
-        assertThat(savedTreeAfterRedeem.getOwner()
-                                       .getName()).isEqualTo("Receiver");
-
-        Gift savedGiftAfterRedeem = _giftRepository.findOne(1L);
-        assertThat(savedGiftAfterRedeem.getStatus()).isEqualTo(Status.REDEEMED);
+        List<Gift> savedGiftAfterRedeem = _giftRepository.findGiftsByRecipient(3L);
+        assertThat(savedGiftAfterRedeem.get(0)
+                                       .getStatus()).isEqualTo(Status.REDEEMED);
 
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testRedeemGiftCodeBadRequestCauseOfNonValidCode() throws Exception {
-        _dbInjecter.injectUser("Consignor");
-        _dbInjecter.injectUser("Receiver");
-        _dbInjecter.injectTreeType("wood", "a wood", 0.5);
-        _dbInjecter.injectProject("Project A", "Consignor", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
+        Code code = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
 
-        User consignor = _userRepository.findByName("Consignor");
-
-        Code code = _dbInjecter.injectGiftWithCode("Consignor", Status.UNREDEEMED);
+        User buyer = _userRepository.findByName("Adam");
 
         Cart cart = new Cart();
-        cart.setBuyer(_userRepository.findByName("Adam"));
+        cart.setBuyer(buyer);
         cart.setCode(code);
 
         Tree tree = new Tree();
-        tree.setOwner(consignor);
+        tree.setOwner(buyer);
         tree.setAmount(1);
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
         tree.setProjectArticle(_projectArticleRepository.findOne(1L));
-        
+
         CartItem cartItem = new CartItem();
         cartItem.setTree(tree);
 
@@ -300,36 +299,30 @@ public class GiftControllerTest {
 
         _cartRepository.save(cart);
 
-        this.mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                  .param("giftCode", "NON VALID CODE")
-                                                  .param("userId", "2")
-                                                  .accept("application/json"))
-                    .andExpect(status().isBadRequest());
+        mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                             .param("giftCode", "NON VALID CODE")
+                                             .param("userId", "2")
+                                             .accept("application/json"))
+               .andExpect(status().isBadRequest());
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testRedeemGiftCodeBadRequestCauseOfAlreadyRedeemed() throws Exception {
-        _dbInjecter.injectUser("Consignor");
-        _dbInjecter.injectUser("Receiver");
-        _dbInjecter.injectTreeType("wood", "a wood", 0.5);
-        _dbInjecter.injectProject("Project A", "Consignor", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
+        Code code = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
 
-        User consignor = _userRepository.findByName("Consignor");
-
-        Code code = _dbInjecter.injectGiftWithCode("Consignor", Status.UNREDEEMED);
+        User buyer = _userRepository.findByName("Adam");
 
         Cart cart = new Cart();
-        cart.setBuyer(_userRepository.findByName("Adam"));
+        cart.setBuyer(buyer);
         cart.setCode(code);
 
         Tree tree = new Tree();
-        tree.setOwner(consignor);
+        tree.setOwner(buyer);
         tree.setAmount(1);
         tree.setTreeType(_treeTypeRepository.findByName("wood"));
         tree.setProjectArticle(_projectArticleRepository.findOne(1L));
-        
+
         CartItem cartItem = new CartItem();
         cartItem.setTree(tree);
 
@@ -337,16 +330,16 @@ public class GiftControllerTest {
 
         _cartRepository.save(cart);
 
-        this.mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                  .param("giftCode", code.getCode())
-                                                  .param("userId", "2")
-                                                  .accept("application/json"))
-                    .andExpect(status().isOk());
-        this.mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                  .param("giftCode", code.getCode())
-                                                  .param("userId", "2")
-                                                  .accept("application/json"))
-                    .andExpect(status().isBadRequest());
+        mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                             .param("giftCode", code.getCode())
+                                             .param("userId", "2")
+                                             .accept("application/json"))
+               .andExpect(status().isOk());
+        mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                             .param("giftCode", code.getCode())
+                                             .param("userId", "2")
+                                             .accept("application/json"))
+               .andExpect(status().isBadRequest());
     }
 
 }
