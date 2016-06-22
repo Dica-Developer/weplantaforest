@@ -8,6 +8,9 @@ import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public class RankingRepositoryIntegrationTest {
 
     @Rule
@@ -36,24 +39,57 @@ public class RankingRepositoryIntegrationTest {
     @Autowired
     private RankingRepository _rankingRepository;
 
+    @Autowired
+    private TreeRepository _treeRepository;
+
+    static boolean entitiesInjected = false;
+    static long timeOfPlanting;
+
+    @Before
+    public void setup() {
+        if (!entitiesInjected) {
+            timeOfPlanting = System.currentTimeMillis();
+
+            _dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+            _dbInjecter.injectUser("Adam", 90000L);
+            _dbInjecter.injectUser("Bert", 70000L);
+            _dbInjecter.injectUser("Claus", 60000L);
+            _dbInjecter.injectUser("Dirk", 50000L);
+            _dbInjecter.injectUser("Adam2", 40000L);
+            _dbInjecter.injectUser("Bert2", 30000L);
+            _dbInjecter.injectUser("Claus2", 20000L);
+            _dbInjecter.injectUser("Dirk2", 10000L);
+            _dbInjecter.injectUser("Adam3", 10000L);
+            _dbInjecter.injectUser("Bert3", 10000L);
+            _dbInjecter.injectUser("Claus3", 10000L);
+            _dbInjecter.injectUser("Dirk3", 10000L);
+
+            _dbInjecter.injectUser("money company", 10000L, 1);
+            _dbInjecter.injectUser("no money company", 10000L, 2);
+            _dbInjecter.injectUser("hogwarts", 10000L, 3);
+
+            _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
+
+            _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
+
+            entitiesInjected = true;
+        }
+    }
+
+    @After
+    public void clearTreeTable() {
+        _treeRepository.deleteAll();
+    }
+
     @Test
     public void testGetBestUserRanking() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectUser("Bert");
-        _dbInjecter.injectUser("Claus");
-        _dbInjecter.injectUser("Dirk");
-
         _dbInjecter.injectTree("wood", "Adam", 100, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Claus", 50, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Dirk", 10, timeOfPlanting);
 
-        Page<TreeRankedUserData> ruList = _rankingRepository.getBestUser(
-                timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, new PageRequest(0, 5));
+        Page<TreeRankedUserData> ruList = _rankingRepository.getBestUser(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, new PageRequest(0, 5));
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.getTotalElements()).isEqualTo(4);
@@ -73,19 +109,6 @@ public class RankingRepositoryIntegrationTest {
 
     @Test
     public void testGetLastUserRanking() {
-        _dbInjecter.injectUser("Adam", 90000L);
-        _dbInjecter.injectUser("Bert", 70000L);
-        _dbInjecter.injectUser("Claus", 60000L);
-        _dbInjecter.injectUser("Dirk", 50000L);
-        _dbInjecter.injectUser("Adam2", 40000L);
-        _dbInjecter.injectUser("Bert2", 30000L);
-        _dbInjecter.injectUser("Claus2", 20000L);
-        _dbInjecter.injectUser("Dirk2", 10000L);
-        _dbInjecter.injectUser("Adam3", 10000L);
-        _dbInjecter.injectUser("Bert3", 10000L);
-        _dbInjecter.injectUser("Claus3", 10000L);
-        _dbInjecter.injectUser("Dirk3", 10000L);
-
         List<TimeRankedUserData> ruList = _rankingRepository.getLastCreatedUser(new PageRequest(0, 10));
 
         assertThat(ruList).isNotNull();
@@ -100,24 +123,13 @@ public class RankingRepositoryIntegrationTest {
 
     @Test
     public void testGetBestOrganizationTypeRanking() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        _dbInjecter.injectUser("Adam", 10000L, 0);
-        _dbInjecter.injectUser("Bert", 10000L, 0);
-        _dbInjecter.injectUser("money company", 10000L, 1);
-        _dbInjecter.injectUser("no money company", 10000L, 2);
-        _dbInjecter.injectUser("hogwarts", 10000L, 3);
-
         _dbInjecter.injectTree("wood", "Adam", 100, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "money company", 50, timeOfPlanting);
         _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
-        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(
-                timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, 0, new PageRequest(0, 5));
+        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, 0, new PageRequest(0, 5));
 
         assertThat(privateList).isNotNull();
         assertThat(privateList.getTotalElements()).isEqualTo(2);
@@ -137,16 +149,6 @@ public class RankingRepositoryIntegrationTest {
 
     @Test
     public void testGetLastPlantedTrees() {
-        _dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        _dbInjecter.injectUser("Adam", 90000L);
-        _dbInjecter.injectUser("Bert", 90000L);
-        _dbInjecter.injectUser("Claus", 90000L);
-
-        _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
-
-        _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
-
         _dbInjecter.injectTreeToProject("wood", "Adam", 9, 900000L, "Project");
         _dbInjecter.injectTreeToProject("wood", "Bert", 8, 800000L, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 7, 700000L, "Project");
@@ -174,14 +176,6 @@ public class RankingRepositoryIntegrationTest {
 
     @Test
     public void testGetBestTeams() {
-        long timeOfPlanting = System.currentTimeMillis();
-
-        _dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        _dbInjecter.injectUser("Adam", 90000L);
-        _dbInjecter.injectUser("Bert", 90000L);
-        _dbInjecter.injectUser("Claus", 90000L);
-
         _dbInjecter.injectTeam("avengers", "Adam");
 
         _dbInjecter.addUserToTeam("avengers", "Bert");
@@ -190,8 +184,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
 
-        Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(
-                timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, new PageRequest(0, 5));
+        Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, new PageRequest(0, 5));
 
         assertThat(treeList).isNotNull();
         assertThat(treeList.getTotalElements()).isEqualTo(1);
@@ -212,30 +205,18 @@ public class RankingRepositoryIntegrationTest {
 
     @Test
     public void testGetBestUserFromTimeRange() {
-        long timeOfPlantingNow = System.currentTimeMillis();
-        long timeOfPlantingTwoWeeksBefore = timeOfPlantingNow - (2 * TimeConstants.WEEK_IN_MILLISECONDS);
+        long timeOfPlantingTwoWeeksBefore = timeOfPlanting - (2 * TimeConstants.WEEK_IN_MILLISECONDS);
 
-        long timeOfOneWeekBefore = timeOfPlantingNow - TimeConstants.WEEK_IN_MILLISECONDS;
-        long timeOfOneYearBefore = timeOfPlantingNow - TimeConstants.YEAR_IN_MILLISECONDS;
+        long timeOfOneWeekBefore = timeOfPlanting - TimeConstants.WEEK_IN_MILLISECONDS;
+        long timeOfOneYearBefore = timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS;
 
-        _dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        _dbInjecter.injectUser("Adam", 90000L);
-        _dbInjecter.injectUser("Bert", 90000L);
-        _dbInjecter.injectUser("Claus", 90000L);
-
-        _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
-
-        _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
-
-        _dbInjecter.injectTreeToProject("wood", "Adam", 3, timeOfPlantingNow, "Project");
-        _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlantingNow, "Project");
-        _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlantingNow, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Adam", 3, timeOfPlanting, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlanting, "Project");
+        _dbInjecter.injectTreeToProject("wood", "Bert", 1, timeOfPlanting, "Project");
         _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlantingTwoWeeksBefore, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 1, timeOfPlantingTwoWeeksBefore, "Project");
 
-        List<TreeRankedUserData> lastWeekList = _rankingRepository.getBestUserFromTimeRange(timeOfOneWeekBefore,
-                timeOfPlantingNow, new PageRequest(0, 5));
+        List<TreeRankedUserData> lastWeekList = _rankingRepository.getBestUserFromTimeRange(timeOfOneWeekBefore, timeOfPlanting, new PageRequest(0, 5));
 
         assertThat(lastWeekList).isNotNull();
         assertThat(lastWeekList.size()).isEqualTo(2);
@@ -248,8 +229,7 @@ public class RankingRepositoryIntegrationTest {
         assertThat(lastWeekList.get(1)
                                .getAmount()).isEqualTo(2);
 
-        List<TreeRankedUserData> lastYearList = _rankingRepository.getBestUserFromTimeRange(timeOfOneYearBefore,
-                timeOfPlantingNow, new PageRequest(0, 5));
+        List<TreeRankedUserData> lastYearList = _rankingRepository.getBestUserFromTimeRange(timeOfOneYearBefore, timeOfPlanting, new PageRequest(0, 5));
 
         assertThat(lastYearList).isNotNull();
         assertThat(lastYearList.size()).isEqualTo(3);
