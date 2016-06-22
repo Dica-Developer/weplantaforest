@@ -10,7 +10,7 @@ export default class NavBar extends Component {
     return (
   <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
     <div className="navbar-header">
-      <button className="navbar-toggle navbar-left" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+      <button className="navbar-toggle navbar-left" type="button" data-toggle="collapse" data-target="#navbarLinkBar" aria-expanded="false">
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
@@ -19,13 +19,13 @@ export default class NavBar extends Component {
         <img alt="I Plant A Tree" src="assets/images/ipat_logo.jpg" />
       </a>
     </div>
-    <div className="navbar-collapse collapse">
+    <div className="collapse navbar-collapse" id="navbarLinkBar">
       <ul className="nav navbar-nav">
         <li>
           <Link to="/plant">Pflanzen</Link>
         </li>
         <li>
-          <Link to={'/explore'}>Entdecken</Link>
+          <Link to='/explore'>Entdecken</Link>
         </li>
       </ul>
       <form className="navbar-form navbar-left" role="search">
@@ -36,7 +36,7 @@ export default class NavBar extends Component {
       </form>
       <ul className="nav navbar-nav navbar-right">
         <li>
-        <a href="#">Login</a>
+          <a href="#">Login</a>
         </li>
       </ul>
     </div>
