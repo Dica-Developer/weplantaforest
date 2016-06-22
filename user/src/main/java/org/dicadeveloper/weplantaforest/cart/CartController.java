@@ -24,6 +24,6 @@ public class CartController {
     @RequestMapping(value = Uris.CART_SHORT_VIEW + "{userId}", method = RequestMethod.GET)
     @JsonView(Views.ShortCart.class)
     public List<Cart> getShortCartsByUser(@PathVariable("userId") long userId) {
-        return _cartRepository.findShortCartsByUserId(userId);
+        return _cartRepository.findCartsByUserId(userId);
     }
 }
