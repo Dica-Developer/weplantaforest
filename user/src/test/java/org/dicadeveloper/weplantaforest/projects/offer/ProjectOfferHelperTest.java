@@ -1,7 +1,7 @@
 package org.dicadeveloper.weplantaforest.projects.offer;
 
-import static org.junit.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
