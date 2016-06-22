@@ -136,7 +136,7 @@ public class DbInjecter {
 
     }
 
-    public void injectTreeToProject(String treeType, String owner, int amount, long timeOfPlanting, String pName) {
+    public Tree injectTreeToProject(String treeType, String owner, int amount, long timeOfPlanting, String pName) {
         Tree tree = new Tree();
         tree.setLatitude(0);
         tree.setLongitude(0);
@@ -147,6 +147,8 @@ public class DbInjecter {
         tree.setOwner(_userRepository.findByName(owner));
         tree.setProjectArticle(_projectArticleRepository.findByProjectAndTreeType(_projectRepository.findByName(pName), _treeTypeRepository.findByName(treeType)));
         _treeRepository.save(tree);
+
+        return tree;
     }
 
     public void injectProjectArticle(String treeType, String pName, double priceAmount) {
@@ -221,6 +223,24 @@ public class DbInjecter {
 
     }
 
+    public Cart injectCartWithTrees(String buyer, Tree... trees) {
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName(buyer));
+
+        for (Tree tree : trees) {
+            CartItem cartItem = new CartItem();
+            cartItem.setBasePricePerPiece(new BigDecimal(1.0));
+            cartItem.setTotalPrice(new BigDecimal(1.0));
+            cartItem.setTree(tree);
+
+            cart.addCartItem(cartItem);
+        }
+        _cartRepository.save(cart);
+
+        return cart;
+
+    }
+
     public void injectCart(String buyer, List<Long> treeIds, long timeStamp) {
         Cart cart = new Cart();
         cart.setBuyer(_userRepository.findByName(buyer));
@@ -245,7 +265,7 @@ public class DbInjecter {
 
     }
 
-    public String injectCertificate(String creatorName, List<Long> cartIds) {
+    public String injectCertificateWithCarts(String creatorName, List<Cart> carts) {
         User creator = _userRepository.findByName(creatorName);
 
         Certificate certificate = new Certificate();
@@ -253,17 +273,23 @@ public class DbInjecter {
         certificate.setText("db injected test certificate");
         certificate.generateAndSetNumber(_certificateRepository.countCertificatesByUser(creator.getId()));
 
-        List<Cart> carts = new ArrayList<>();
-
-        for (Cart cart : _cartRepository.findAll(cartIds)) {
-            carts.add(_cartRepository.findOne(cart.getId()));
-        }
-
         certificate.setCarts(carts);
 
         _certificateRepository.save(certificate);
 
         return certificate.getNumber();
+
+    }
+
+    public String injectCertificateWithTreesForOneCart(String creatorName, Tree... trees) {
+        Cart cart = injectCartWithTrees(creatorName, trees);
+
+        List<Cart> carts = new ArrayList<>();
+        carts.add(cart);
+
+        String certificateString = injectCertificateWithCarts("Adam", carts);
+
+        return certificateString;
 
     }
 
