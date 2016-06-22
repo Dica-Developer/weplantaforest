@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.util.List;
+
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
@@ -18,6 +20,7 @@ import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,6 +30,7 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,10 +41,11 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
+@Transactional
 public class PlantPageControllerPostMethodTest {
 
-    private MockMvc mockMvc;
+    private static MockMvc mockMvc;
 
     @Rule
     @Autowired
@@ -61,46 +66,67 @@ public class PlantPageControllerPostMethodTest {
     @Autowired
     private ProjectArticleRepository _projectArticleRepository;
 
+    static boolean entitiesInjected = false;
+
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
+        if (!entitiesInjected) {
+            mockMvc = webAppContextSetup(this.webApplicationContext).build();
+
+            dbInjecter.injectTreeType("wood", "desc", 0.5);
+            dbInjecter.injectTreeType("doow", "desc", 0.5);
+            dbInjecter.injectTreeType("wodo", "desc", 0.5);
+
+            dbInjecter.injectUser("Adam");
+            dbInjecter.injectUser("Bert");
+
+            dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
+
+            dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
+            dbInjecter.injectProjectArticle("doow", "Project A", 10, 3.0, 1.0);
+            dbInjecter.injectProjectArticle("wodo", "Project A", 10, 3.0, 1.0);
+
+            entitiesInjected = true;
+        }
+    }
+
+    @After
+    public void clear() {
+        _cartRepository.deleteAll();
+        _treeRepository.deleteAll();
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testDonateTreesSatusOk() throws Exception {
-        dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        dbInjecter.injectUser("Adam");
-
-        dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
-
-        dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
-
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData.setUserId(1L);
 
-        this.mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                        .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-                    .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+               .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
 
-        Cart cart = _cartRepository.findOne(1L);
-        assertThat(cart.getTotalPrice()
-                       .doubleValue()).isEqualTo(9.0);
-        assertThat(cart.getCartItems()
-                       .get(0) .getTree()
-                       .getProjectArticle()
-                       .getArticleId()).isEqualTo(1);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getTree()
-                       .getId()).isEqualTo(1);
-        assertThat(cart.getBuyer()
-                       .getName()).isEqualTo("Adam");
+        List<Cart> carts = _cartRepository.findCartsByUserId(1L);
+        assertThat(carts.get(0)
+                        .getTotalPrice()
+                        .doubleValue()).isEqualTo(9.0);
+        assertThat(carts.get(0)
+                        .getCartItems()
+                        .get(0)
+                        .getProjectArticleId()).isEqualTo(1);
+        assertThat(carts.get(0)
+                        .getCartItems()
+                        .get(0)
+                        .getTree()
+                        .getTreeType()
+                        .getName()).isEqualTo("wood");
+        assertThat(carts.get(0)
+                        .getBuyer()
+                        .getName()).isEqualTo("Adam");
 
         assertThat(_treeRepository.count()).isEqualTo(1L);
 
@@ -108,7 +134,11 @@ public class PlantPageControllerPostMethodTest {
         long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
         assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
 
-        Tree createdTree = _treeRepository.findOne(1L);
+        long createdTreeId = carts.get(0)
+                                  .getTrees()
+                                  .get(0)
+                                  .getId();
+        Tree createdTree = _treeRepository.findOne(createdTreeId);
         assertThat(createdTree.getAmount()).isEqualTo(3);
         assertThat(createdTree.getOwner()
                               .getName()).isEqualTo("Adam");
@@ -117,39 +147,30 @@ public class PlantPageControllerPostMethodTest {
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testDonateTreesWithMultipleEntriesSatusOk() throws Exception {
-        dbInjecter.injectTreeType("wood", "desc", 0.5);
-        dbInjecter.injectTreeType("doow", "desc", 0.5);
-        dbInjecter.injectTreeType("wodo", "desc", 0.5);
-
-        dbInjecter.injectUser("Adam");
-
-        dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
-
-        dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
-        dbInjecter.injectProjectArticle("doow", "Project A", 10, 3.0, 1.0);
-        dbInjecter.injectProjectArticle("wodo", "Project A", 10, 3.0, 1.0);
-
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wodo", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "doow", "Project A", plantPageData);
-        plantPageData.setUserId(1L);
+        plantPageData.setUserId(2L);
 
-        this.mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                        .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-                    .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+               .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
 
-        Cart cart = _cartRepository.findOne(1L);
-        assertThat(cart.getTotalPrice()
-                       .doubleValue()).isEqualTo(27.0);
-        assertThat(cart.getPlantArticleIds()).contains(1L, 2L, 3L);
-        assertThat(cart.getBuyer()
-                .getName()).isEqualTo("Adam");
+        List<Cart> carts = _cartRepository.findCartsByUserId(2L);
+        assertThat(carts.get(0)
+                        .getTotalPrice()
+                        .doubleValue()).isEqualTo(27.0);
+        assertThat(carts.get(0)
+                        .getPlantArticleIds()).contains(1L, 2L, 3L);
+        assertThat(carts.get(0)
+                        .getBuyer()
+                        .getName()).isEqualTo("Bert");
 
         assertThat(_treeRepository.count()).isEqualTo(3L);
 
@@ -157,30 +178,26 @@ public class PlantPageControllerPostMethodTest {
             ProjectArticle projectArticle = _projectArticleRepository.findOne((long) i);
             long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
             assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
-            
-            Tree tree = _treeRepository.findOne((long) i);
+
+            long createdTreeId = carts.get(0)
+                                      .getTrees()
+                                      .get(i - 1)
+                                      .getId();
+            Tree tree = _treeRepository.findOne(createdTreeId);
             assertThat(tree.getOwner()
-                    .getName()).isEqualTo("Adam");
+                           .getName()).isEqualTo("Bert");
         }
     }
 
     @Test
     public void testDonateTreesSatusBadRequest() throws Exception {
-        dbInjecter.injectTreeType("wood", "desc", 0.5);
-
-        dbInjecter.injectUser("Adam");
-
-        dbInjecter.injectProject("Project A", "Adam", "adam's project", true, 0, 0);
-
-        dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 1.0);
-
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 300, "wood", "Project A", plantPageData);
 
-        this.mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                        .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-                    .andExpect(status().isBadRequest());
+        mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+               .andExpect(status().isBadRequest());
 
         assertThat(_cartRepository.count()).isEqualTo(0);
 
