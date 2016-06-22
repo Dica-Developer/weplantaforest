@@ -11,6 +11,7 @@ import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +20,14 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
+@Transactional
 public class SimplePlantBagToCartConverterTest {
 
     @Rule
@@ -40,19 +43,32 @@ public class SimplePlantBagToCartConverterTest {
     @Autowired
     public CartRepository _cartRepository;
 
+    static boolean entitiesInjected = false;
+
+    @Before
+    public void setup() {
+        if (!entitiesInjected) {
+            _dbInjecter.injectTreeType("wood", "wood", 0.5);
+            _dbInjecter.injectTreeType("doow", "doow", 0.5);
+            _dbInjecter.injectTreeType("wodo", "doow", 0.5);
+
+            _dbInjecter.injectUser("Adam");
+
+            _dbInjecter.injectProject("Project A", "Adam", "another project", true, 0, 0);
+
+            _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
+            _dbInjecter.injectProjectArticle("doow", "Project A", 1.0);
+            _dbInjecter.injectProjectArticle("wodo", "Project A", 1.0);
+
+            entitiesInjected = true;
+        }
+    }
+
     @Test
-    @Transactional
+    @Rollback(false)
     public void testConvertFromPlantPageDataToCartOneItem() {
         SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A", plantPageData);
-
-        _dbInjecter.injectTreeType("wood", "wood", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "another project", true, 0, 0);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
 
         Cart cart = _plantPageDataCartConverter.convertSimplePlantPageDataToCart(plantPageData);
 
@@ -74,21 +90,11 @@ public class SimplePlantBagToCartConverterTest {
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testConvertFromPlantPageDataToCartTwoItems() {
         SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(1, 100, "doow", "Project A", plantPageData);
-
-        _dbInjecter.injectTreeType("wood", "wood", 0.5);
-        _dbInjecter.injectTreeType("doow", "doow", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "another project", true, 0, 0);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 1.0);
 
         Cart cart = _plantPageDataCartConverter.convertSimplePlantPageDataToCart(plantPageData);
 
@@ -123,24 +129,12 @@ public class SimplePlantBagToCartConverterTest {
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testConvertFromPlantPageDataToCartThreeItems() {
         SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(1, 100, "doow", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(2, 100, "wodo", "Project A", plantPageData);
-
-        _dbInjecter.injectTreeType("wood", "wood", 0.5);
-        _dbInjecter.injectTreeType("doow", "doow", 0.5);
-        _dbInjecter.injectTreeType("wodo", "doow", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "another project", true, 0, 0);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
-        _dbInjecter.injectProjectArticle("doow", "Project A", 1.0);
-        _dbInjecter.injectProjectArticle("wodo", "Project A", 1.0);
 
         Cart cart = _plantPageDataCartConverter.convertSimplePlantPageDataToCart(plantPageData);
 
@@ -190,18 +184,10 @@ public class SimplePlantBagToCartConverterTest {
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testSavetoDBAfterConversion() {
         SimplePlantBag plantPageData = PlantPageDataCreater.initializeSimplePlantPageData();
         plantPageData = PlantPageDataCreater.createSimplePlantItemAndAddToSimplePlantPageData(3, 300, "wood", "Project A", plantPageData);
-
-        _dbInjecter.injectTreeType("wood", "wood", 0.5);
-
-        _dbInjecter.injectUser("Adam");
-
-        _dbInjecter.injectProject("Project A", "Adam", "another project", true, 0, 0);
-
-        _dbInjecter.injectProjectArticle("wood", "Project A", 3.0);
 
         Cart cart = _plantPageDataCartConverter.convertSimplePlantPageDataToCart(plantPageData);
 
