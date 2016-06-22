@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
-import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulator;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public class GiftRepositoryIntegrationTest {
     @Rule
     @Autowired
@@ -38,92 +38,79 @@ public class GiftRepositoryIntegrationTest {
     @Autowired
     private GiftRepository _giftRepository;
 
+    static boolean entitiesInjected = false;
+
+    static String codeString1;
+    static String codeString2;
+    static String codeString3;
+
+    @Before
+    public void setup() {
+        if (!entitiesInjected) {
+            entitiesInjected = true;
+
+            _dbInjecter.injectUser("Consignore");
+            _dbInjecter.injectUser("Recipient");
+            _dbInjecter.injectUser("otherUser");
+
+            codeString1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW)
+                                     .getCode();
+            codeString2 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED)
+                                     .getCode();
+            codeString3 = _dbInjecter.injectGiftWithCode("Consignore", "Recipient", Status.REDEEMED);
+            _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
+
+        }
+    }
+
     @Test
-    public void testSaveAndLoadGift() {
-        _dbInjecter.injectUser("Consignore");
-        _dbInjecter.injectUser("Recipient");
-
-        String codeString = _dbInjecter.injectGiftWithCode("Consignore", "Recipient", Status.NEW);
-
-        Gift savedGift = _giftRepository.findOne(1L);
+    public void testFindGiftByCode() {
+        Gift savedGift = _giftRepository.findGiftByCode(codeString1);
 
         assertThat(savedGift).isNotNull();
         assertThat(savedGift.getConsignor()
                             .getName()).isEqualTo("Consignore");
-        assertThat(savedGift.getRecipient()
-                            .getName()).isEqualTo("Recipient");
+        assertThat(savedGift.getRecipient()).isNull();
         assertThat(savedGift.getStatus()).isEqualTo(Status.NEW);
         assertThat(savedGift.getCode()
-                            .getCode()).isEqualTo(codeString);
+                            .getCode()).isEqualTo(codeString1);
 
     }
 
     @Test
     public void testFindGiftsByConsignor() {
-        _dbInjecter.injectUser("Consignore");
-        _dbInjecter.injectUser("otherUser");
-
-        Code code1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW);
-        String code2 = _dbInjecter.injectGiftWithCode("Consignore", "otherUser", Status.REDEEMED);
-        Code code3 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
-
-        _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
-
         List<Gift> gifts = _giftRepository.findGiftsByConsignor(1L);
 
         assertThat(gifts.size()).isEqualTo(3);
         assertThat(gifts.get(0)
                         .getRecipient()).isNull();
         assertThat(gifts.get(1)
-                        .getRecipient()
-                        .getName()).isEqualTo("otherUser");
-        assertThat(gifts.get(2)
                         .getRecipient()).isNull();
+        assertThat(gifts.get(2)
+                        .getRecipient()
+                        .getName()).isEqualTo("Recipient");
 
         assertThat(gifts.get(0)
                         .getCode()
-                        .getCode()).isEqualTo(code1.getCode());
+                        .getCode()).isEqualTo(codeString1);
         assertThat(gifts.get(1)
                         .getCode()
-                        .getCode()).isEqualTo(code2);
+                        .getCode()).isEqualTo(codeString2);
         assertThat(gifts.get(2)
                         .getCode()
-                        .getCode()).isEqualTo(code3.getCode());
+                        .getCode()).isEqualTo(codeString3);
     }
 
     @Test
     public void testFindGiftsByRecipient() {
-        _dbInjecter.injectUser("Consignore");
-        _dbInjecter.injectUser("otherUser");
-
-        String code1 = _dbInjecter.injectGiftWithCode("Consignore", "otherUser", Status.REDEEMED);
-
-        _dbInjecter.injectGiftWithCode("Consignore", Status.NEW);
-        _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
-        _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
-
         List<Gift> gifts = _giftRepository.findGiftsByRecipient(2L);
 
         assertThat(gifts.size()).isEqualTo(1);
         assertThat(gifts.get(0)
                         .getRecipient()
-                        .getName()).isEqualTo("otherUser");
+                        .getName()).isEqualTo("Recipient");
         assertThat(gifts.get(0)
                         .getCode()
-                        .getCode()).isEqualTo(code1);
-    }
-
-    @Test
-    public void testFindGiftByCode() {
-        _dbInjecter.injectUser("Adam");
-
-        Code code = _dbInjecter.injectGiftWithCode("Adam", Status.UNREDEEMED);
-
-        Gift gift = _giftRepository.findGiftByCode(code.getCode());
-
-        assertThat(gift).isNotNull();
-        assertThat(gift.getConsignor()
-                       .getName()).isEqualTo("Adam");
-        assertThat(gift.getStatus()).isEqualTo(Status.UNREDEEMED);
+                        .getCode()).isEqualTo(codeString3);
     }
 }
