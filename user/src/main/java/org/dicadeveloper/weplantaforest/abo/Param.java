@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin.codes;
+package org.dicadeveloper.weplantaforest.abo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,8 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.dicadeveloper.weplantaforest.abo.Abo;
 
 import lombok.Getter;
 import lombok.Setter;
