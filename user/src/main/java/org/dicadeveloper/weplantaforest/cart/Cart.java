@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import org.dicadeveloper.weplantaforest.admin.codes.Abo;
+import org.dicadeveloper.weplantaforest.abo.Abo;
 import org.dicadeveloper.weplantaforest.admin.codes.Receipt;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.event.Event;
