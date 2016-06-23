@@ -12,6 +12,7 @@ import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +45,9 @@ public class AboRepositoryIntegrationTest {
 
     @Autowired
     public CartRepository _cartRepository;
+    
+    @Autowired
+    public TreeRepository _treeRepository;
 
     @Test
     public void testFindAbosByUserId() {
@@ -106,6 +110,7 @@ public class AboRepositoryIntegrationTest {
 
         assertThat(_aboRepository.count()).isEqualTo(1);
         assertThat(_cartRepository.count()).isEqualTo(1);
+        assertThat(_treeRepository.count()).isEqualTo(1);
 
         Abo savedAbo = _aboRepository.findOne(1L);
         assertThat(savedAbo.getCurrentCart()).isNotNull();
