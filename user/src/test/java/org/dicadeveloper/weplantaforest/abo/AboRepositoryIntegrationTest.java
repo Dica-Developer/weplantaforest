@@ -49,5 +49,18 @@ public class AboRepositoryIntegrationTest {
         assertThat(savedAbos.get(0).getTimeStamp()).isEqualTo(createdOn);
         assertThat(savedAbos.get(0).getUser().getName()).isEqualTo("Adam");
     }
+    
+    @Test
+    public void testFindActiveAbos(){
+        long createdOn = System.currentTimeMillis();
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectAbo("Adam", true, 1, Period.WEEKLY, createdOn);
+        _dbInjecter.injectAbo("Adam", true, 1, Period.WEEKLY, createdOn);
+        _dbInjecter.injectAbo("Adam", false, 1, Period.WEEKLY, createdOn);
+        
+        List<Abo> activeAbos = _aboRepository.findAllActiveAbos();
+        
+        assertThat(activeAbos.size()).isEqualTo(2);
+    }
 
 }
