@@ -16,6 +16,9 @@ import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.abo.Abo;
+import org.dicadeveloper.weplantaforest.abo.AboRepository;
+import org.dicadeveloper.weplantaforest.abo.Abo.Period;
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.cart.Cart;
@@ -77,11 +80,12 @@ public class DatabasePopulator {
     private CertificateRepository _certificateRepository;
     private GiftRepository _giftRepository;
     private CodeGenerator _codeGenerator;
+    private AboRepository _aboRepository;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository,
-            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator) {
+            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator, AboRepository aboRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -94,6 +98,7 @@ public class DatabasePopulator {
         _certificateRepository = certificateRepository;
         _giftRepository = giftRepository;
         _codeGenerator = codeGenerator;
+        _aboRepository = aboRepository;
     }
 
     public DatabasePopulator insertProjects() {
@@ -393,6 +398,18 @@ public class DatabasePopulator {
             gift.setStatus(Status.REDEEMED);
             _giftRepository.save(gift);
         }
+        return this;
+    }
+    
+    public DatabasePopulator insertAbo(){
+        Abo abo = new Abo();
+        abo.setActive(true);
+        abo.setAmount(1);
+        abo.setPeriod(Period.WEEKLY);
+        abo.setTimeStamp(System.currentTimeMillis());
+        abo.setUser(_userRepository.findByName("Gabor"));
+        
+        _aboRepository.save(abo);
         return this;
     }
 
