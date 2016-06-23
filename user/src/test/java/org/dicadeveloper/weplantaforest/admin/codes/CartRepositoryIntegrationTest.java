@@ -72,16 +72,16 @@ public class CartRepositoryIntegrationTest {
         _dbInjecter.injectProject("Project A", "Adam", "desc", true, 1.0f, 2.0f);
         _dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
 
-        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "Project A");
-
         Cart cart = new Cart();
         cart.setBuyer(_userRepository.findByName("Adam"));
 
-        Tree tree = _treeRepository.findOne(1L);
+        Tree tree = new Tree();
+        tree.setAmount(2);
+        tree.setPlantedOn(timeOfPlanting);
+        tree.setProjectArticle(_projectArticleRepository.findOne(1L));
+        tree.setTreeType(_treeTypeRepository.findOne(1L));
 
         CartItem cartItem = new CartItem();
-        cartItem.setBasePricePerPiece(new BigDecimal(1.0));
-        cartItem.setTotalPrice(new BigDecimal(1.0));
         cartItem.setTree(tree);
         cart.addCartItem(cartItem);
         _cartRepository.save(cart);
@@ -90,13 +90,26 @@ public class CartRepositoryIntegrationTest {
 
         assertThat(savedCart.getCartItems()
                             .size()).isEqualTo(1);
+
+        assertThat(savedCart.getTrees()
+                            .size()).isEqualTo(1);
         assertThat(savedCart.getCartItems()
                             .get(0)
                             .getCart()
                             .getId()).isEqualTo(1L);
 
-        assertThat(savedCart.getTrees()
-                            .size()).isEqualTo(1);
+        CartItem cartItemInCart = savedCart.getCartItems()
+                                           .get(0);
+        assertThat(cartItemInCart.getAmount()).isEqualTo(2);
+        assertThat(cartItemInCart.getBasePricePerPiece()
+                                 .doubleValue()).isEqualTo(1.0);
+        assertThat(cartItemInCart.getFundingPerPiece()
+                                 .doubleValue()).isEqualTo(0.0);
+        assertThat(cartItemInCart.getProjectArticleId()).isEqualTo(1);
+        assertThat(cartItemInCart.getScontoPerPiece()
+                                 .doubleValue()).isEqualTo(0.0);
+        assertThat(cartItemInCart.getTotalPrice()
+                                 .doubleValue()).isEqualTo(2.0);
     }
 
     @Test

@@ -39,6 +39,9 @@ public class CartItem implements Identifiable<Long> {
     @Column(name = "_plantArticleId")
     private Long projectArticleId;
 
+    @Column(name = "_amount")
+    private int amount;
+
     @Column(name = "_basePricePerPiece", precision = 7, scale = 2)
     private BigDecimal basePricePerPiece = BigDecimal.ZERO;
 
@@ -80,7 +83,8 @@ public class CartItem implements Identifiable<Long> {
                                   .getPrice()
                                   .getSconto();
         this.projectArticleId = tree.getProjectArticle()
-                                  .getArticleId();
+                                    .getArticleId();
+        this.amount = tree.getAmount();
         calcAndSetTotalPrice();
     }
 
