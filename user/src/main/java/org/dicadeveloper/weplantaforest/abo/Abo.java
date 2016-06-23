@@ -25,10 +25,6 @@ import lombok.Setter;
 @Setter
 public class Abo {
 
-    public enum Type {
-        TREE, PRICE;
-    }
-
     public enum Period {
         DAYLI, WEEKLY, MONTHLY, QUARTERLY, YEARLY;
     }
@@ -37,9 +33,6 @@ public class Abo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_id")
     private Long id;
-
-    @Column(name = "_type", nullable = false)
-    private Type type;
 
     @Column(name = "_amount", nullable = false)
     private Integer amount;

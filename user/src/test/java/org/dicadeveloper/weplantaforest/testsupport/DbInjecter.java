@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.dicadeveloper.weplantaforest.abo.Abo;
+import org.dicadeveloper.weplantaforest.abo.Abo.Period;
+import org.dicadeveloper.weplantaforest.abo.AboRepository;
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.cart.Cart;
@@ -73,6 +76,9 @@ public class DbInjecter {
 
     @Autowired
     private CodeGenerator _codeGenerator;
+
+    @Autowired
+    private AboRepository _aboRepository;
 
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
@@ -297,7 +303,7 @@ public class DbInjecter {
         Gift gift = new Gift();
         gift.setConsignor(_userRepository.findByName(userName));
         gift.setRecipient(_userRepository.findByName(recipient));
-        
+
         Code code = _codeGenerator.generate(gift);
         gift.setCode(code);
         gift.setStatus(giftStatus);
@@ -310,13 +316,24 @@ public class DbInjecter {
     public Code injectGiftWithCode(String consignor, Status giftStatus) {
         Gift gift = new Gift();
         gift.setConsignor(_userRepository.findByName(consignor));
-        
+
         Code code = _codeGenerator.generate(gift);
         gift.setCode(code);
         gift.setStatus(giftStatus);
         _giftRepository.save(gift);
 
         return gift.getCode();
+    }
+
+    public void injectAbo(String owner, boolean isActive, int amount, Period period, long timeStamp) {
+        Abo abo = new Abo();
+        abo.setActive(isActive);
+        abo.setAmount(amount);
+        abo.setPeriod(period);
+        abo.setTimeStamp(timeStamp);
+        abo.setUser(_userRepository.findByName(owner));
+
+        _aboRepository.save(abo);
     }
 
 }
