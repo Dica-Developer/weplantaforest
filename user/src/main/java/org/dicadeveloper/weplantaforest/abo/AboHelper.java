@@ -22,6 +22,8 @@ public class AboHelper {
         abo.setTimeStamp(createdOn);
         
         Cart cart = _plantBagToCartConverter.convertPlantPageDataToCart(aboRequest.getPlantBag());
+        cart.setAbo(abo);
+        
         abo.setCurrentCart(cart);
         abo.getCarts().add(cart);
         abo.setLast(createdOn);

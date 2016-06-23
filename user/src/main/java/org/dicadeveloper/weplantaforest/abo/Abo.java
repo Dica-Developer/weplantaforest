@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -69,6 +70,7 @@ public class Abo {
     private List<Cart> carts = new ArrayList<Cart>();
 
     @OneToOne(optional = true)
+    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @JoinColumn(name = "_currentCart__cartId")
     private Cart currentCart;
 
