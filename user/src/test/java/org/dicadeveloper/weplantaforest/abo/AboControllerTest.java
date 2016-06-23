@@ -1,15 +1,21 @@
 package org.dicadeveloper.weplantaforest.abo;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.io.IOException;
+
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.abo.Abo.Period;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,9 +34,9 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public class AboControllerTest {
-    private MockMvc mockMvc;
+    private static MockMvc mockMvc;
 
     @Rule
     @Autowired
@@ -42,17 +48,30 @@ public class AboControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    static long createdOn;
+    static boolean entitiesInjected = false;
+
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
+        if (!entitiesInjected) {
+            mockMvc = webAppContextSetup(this.webApplicationContext).build();
+
+            createdOn = System.currentTimeMillis();
+            _dbInjecter.injectUser("Adam");
+            _dbInjecter.injectUser("Bert");
+
+            _dbInjecter.injectTreeType("wood", "this is wood", 0.5);
+            _dbInjecter.injectProject("Project A", "Adam", "desc", true, 1.0f, 1.0f);
+            _dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 0.5);
+
+            _dbInjecter.injectAbo("Adam", true, 1, Period.WEEKLY, createdOn);
+
+            entitiesInjected = true;
+        }
     }
 
     @Test
     public void testGetAbosByUserId() throws Exception {
-        long createdOn = System.currentTimeMillis();
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectAbo("Adam", true, 1, Period.WEEKLY, createdOn);
-
         mockMvc.perform(get((Uris.ABOS_BY_USER + "{userId}"), 1).accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].id").value(1))
@@ -61,5 +80,41 @@ public class AboControllerTest {
                .andExpect(jsonPath("$.[0].timeStamp").value(createdOn))
                .andExpect(jsonPath("$.[0].last").isEmpty())
                .andExpect(jsonPath("$.[0].active").value(true));
+    }
+
+    @Test
+    public void testCreateAboStatusOk() throws IOException, Exception {
+        AboRequestData aboRequest = new AboRequestData();
+        aboRequest.amount = 1;
+        aboRequest.period = "WEEKLY";
+
+        PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
+        plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
+        plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantBag);
+        plantBag.setUserId(2L);
+
+        aboRequest.plantBag = plantBag;
+
+        mockMvc.perform(post(Uris.ABO_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                             .content(TestUtil.convertObjectToJsonBytes(aboRequest)))
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testCreateAboStatusBadRequestCauseOfNotEnoughTreesToPlant() throws IOException, Exception {
+        AboRequestData aboRequest = new AboRequestData();
+        aboRequest.amount = 1;
+        aboRequest.period = "WEEKLY";
+
+        PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
+        plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
+        plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 300, "wood", "Project A", plantBag);
+        plantBag.setUserId(2L);
+
+        aboRequest.plantBag = plantBag;
+
+        mockMvc.perform(post(Uris.ABO_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                             .content(TestUtil.convertObjectToJsonBytes(aboRequest)))
+               .andExpect(status().isBadRequest());
     }
 }

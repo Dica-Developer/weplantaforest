@@ -1,13 +1,13 @@
 package org.dicadeveloper.weplantaforest.support;
 
 public class Uris {
-    
-    //host
-    
+
+    // host
+
     public final static String HOST = "https://www.iplantatree.org";
 
-    //Planting urls
-    
+    // Planting urls
+
     public final static String COMPLEX_PROPOSAL_FOR_PRICE = "/plantProposal/";
 
     public final static String COMPLEX_DONATION = "/donateTrees";
@@ -15,23 +15,23 @@ public class Uris {
     public final static String SIMPLE_PROPOSAL_FOR_TREE = "/simplePlantProposalForTrees/";
 
     public final static String SIMPLE_DONATION = "/simpleDonateTrees";
-    
+
     public final static String PLANT_SELF = "/plantSelf";
 
-    //Co2 report url
-    
+    // Co2 report url
+
     public final static String REPORT_CO2 = "/reports/co2";
 
-    //project urls
-    
+    // project urls
+
     public final static String REPORT_ACTIVE_PROJECTS = "/reports/activeProjects";
-    
+
     public final static String PROJECT_SEARCH_NAME = "/projects/search/name/";
 
     public final static String PROJECT_IMAGE = "/project/image/";
-    
-    //ranking urls
-    
+
+    // ranking urls
+
     public final static String RANKING_BEST_USER = "/ranking/bestUser";
 
     public final static String RANKING_LAST_CREATED_USER = "/ranking/lastCreatedUser";
@@ -43,44 +43,46 @@ public class Uris {
     public final static String RANKING_BEST_TEAM = "/ranking/bestTeam";
 
     public final static String RANKING_BEST_USER_FOR_TIMERANGE = "/ranking/bestUserFromTimeRange/";
-    
-    //image url
-    
+
+    // image url
+
     public final static String IMAGE = "/image/";
-    
-    //planted tree urls
-    
+
+    // planted tree urls
+
     public final static String TREE = "/tree/";
-    
+
     public final static String TREES = "/trees";
-    
+
     public final static String TREES_BY_USER = "/trees/owner/";
-    
+
     public final static String TREES_BY_PROJECT = "/trees/project/";
-    
-    //certificates
-    
+
+    // certificates
+
     public final static String CERTIFICATE_SEARCH = "/certificate/search/";
-    
+
     public final static String CERTIFICATE_CREATE = "/certificate/create";
-    
-    //carts
-    
+
+    // carts
+
     public final static String CART_SHORT_VIEW = "/carts/search/short/";
-    
-    //gifts
+
+    // gifts
     public final static String GIFTS_BY_CONSIGNOR = "/gift/search/consignor/";
 
     public final static String GIFTS_BY_RECIPIENT = "/gift/search/recipient/";
-    
+
     public final static String GIFT_CREATE = "/gift/create";
-    
+
     public final static String GIFT_PDF = "/gift/pdf";
-    
+
     public final static String GIFT_REDEEM = "/gift/redeem/";
-    
-    //Abo
-    
+
+    // Abo
+
     public final static String ABOS_BY_USER = "/abo/search/";
+
+    public final static String ABO_CREATE = "/abo/create";
 
 }
