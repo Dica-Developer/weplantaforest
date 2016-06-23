@@ -16,6 +16,9 @@ import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,12 +35,15 @@ public class Abo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_id")
+    @JsonView(Views.AboOverview.class)
     private Long id;
 
     @Column(name = "_amount", nullable = false)
+    @JsonView(Views.AboOverview.class)
     private Integer amount;
 
     @Column(name = "_period", nullable = false)
+    @JsonView(Views.AboOverview.class)
     private Period period;
 
     @ManyToOne(optional = true)
@@ -45,12 +51,15 @@ public class Abo {
     private User user;
 
     @Column(name = "_timeStamp", nullable = false)
+    @JsonView(Views.AboOverview.class)
     private Long timeStamp;
 
     @Column(name = "_last", nullable = true)
+    @JsonView(Views.AboOverview.class)
     private Long last;
 
     @Column(name = "_active", nullable = false)
+    @JsonView(Views.AboOverview.class)
     private boolean active = false;
 
     @OneToMany(mappedBy = "abo")
