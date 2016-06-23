@@ -71,6 +71,7 @@ public class AboControllerTest {
 
             _dbInjecter.injectAbo("Adam", true, 1, Period.WEEKLY, createdOn);
             _dbInjecter.injectAbo("AboEditor", true, 1, Period.WEEKLY, createdOn);
+            _dbInjecter.injectAbo("AboEditor", true, 1, Period.WEEKLY, createdOn);
 
             entitiesInjected = true;
         }
@@ -140,5 +141,15 @@ public class AboControllerTest {
         assertThat(editedAbo.getAmount()).isEqualTo(3);
         assertThat(editedAbo.getPeriod()).isEqualTo(Period.MONTHLY);
 
+    }
+
+    @Test
+    public void testCancelAbo() throws IOException, Exception {
+        mockMvc.perform(post(Uris.ABO_CANCEL).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                           .param("aboId", "3"))
+               .andExpect(status().isOk());
+
+        Abo editedAbo = _aboRepository.findOne(3L);
+        assertThat(editedAbo.isActive()).isFalse();
     }
 }

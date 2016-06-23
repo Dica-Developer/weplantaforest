@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -56,6 +57,15 @@ public class AboController {
         Abo abo = _aboRepository.findOne(aboEditData.aboId);
         abo.setAmount(aboEditData.getAmount());
         abo.setPeriod(Period.valueOf(aboEditData.getPeriod()));
+        _aboRepository.save(abo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = Uris.ABO_CANCEL, method = RequestMethod.POST)
+    @Transactional
+    public ResponseEntity<?> cancelAbo(@RequestParam long aboId) {
+        Abo abo = _aboRepository.findOne(aboId);
+        abo.setActive(false);
         _aboRepository.save(abo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
