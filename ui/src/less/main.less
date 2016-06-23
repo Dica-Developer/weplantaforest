@@ -6,7 +6,7 @@
 
 @media (min-width: 0px) {
   .navbar-toggle {
-    display: none;
+    display: block;
   }
 }
 
@@ -18,11 +18,14 @@ body {
   min-height: 50px;
   margin-bottom: 0px;
   border: 1px solid transparent;
-}
 
-.navbar .navbar-brand img {
-  width: 30px;
-  height: 30px;
+    .navbar-brand {
+      float: right;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
 }
 
 .list-group-item .label {
@@ -36,25 +39,28 @@ body {
 .navbar-default {
   background-color: #000;
   background-image: linear-gradient(to bottom,#000 0,#000 100%);
-}
 
-.navbar-default .navbar-nav>li>a {
-  color: white;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  .navbar-toggle {
+    border-color: #000;
+   .icon-bar {
+      background-color: #fff
+    }
+  }
+
+  .navbar-nav {
+    li {
+      a {
+        color: white;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
 }
 
 .navbar-collapse {
   border-top: 1px solid transparent;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-}
-
-.navbar-default .navbar-toggle {
-  border-color: #000;
-}
-
-.navbar-default .navbar-toggle .icon-bar {
-  background-color: #fff
 }
 
 .container {
