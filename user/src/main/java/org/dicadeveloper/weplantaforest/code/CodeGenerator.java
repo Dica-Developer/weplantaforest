@@ -94,7 +94,6 @@ public class CodeGenerator {
         for (int i = from; i < to; i++) {
             Code code = generate(event, year, month, i);
             code.setTreeCount(treeCount);
-            _codeRepository.save(code);
             codes.add(code);
         }
         return codes;
@@ -118,7 +117,6 @@ public class CodeGenerator {
         for (int i = from; i < to; i++) {
             Code code = generate(event, year, month, i);
             code.setPrice(price);
-            _codeRepository.save(code);
             codes.add(code);
         }
 
@@ -152,7 +150,6 @@ public class CodeGenerator {
             final String codeString = generateCodeString();
             if (null == _codeRepository.findByCode(codeString)) {
                 code.setCode(codeString);
-                _codeRepository.save(code);
                 codeSaved = true;
             }
         }

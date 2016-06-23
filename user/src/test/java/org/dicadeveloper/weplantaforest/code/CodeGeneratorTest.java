@@ -49,11 +49,6 @@ public class CodeGeneratorTest {
     @Test
     public void generateCodeForGift() {
         Gift gift = new Gift();
-        _giftRepository.save(gift);
-
-        assertThat(_giftRepository.count()).isEqualTo(1);
-        assertThat(_giftRepository.findOne(1L)
-                                  .getCode()).isNull();
 
         Code code = _codegenerator.generate(gift);
 
@@ -74,11 +69,6 @@ public class CodeGeneratorTest {
     @Test
     public void generateCodeForGiftWithNumber() {
         Gift gift = new Gift();
-        _giftRepository.save(gift);
-
-        assertThat(_giftRepository.count()).isEqualTo(1);
-        assertThat(_giftRepository.findOne(1L)
-                                  .getCode()).isNull();
 
         Code code = _codegenerator.generate(gift, 2016, 1, 4);
 
@@ -100,12 +90,6 @@ public class CodeGeneratorTest {
     @Transactional
     public void generateCodeForEvent() {
         Event event = new Event();
-        _eventRepository.save(event);
-
-        assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(_eventRepository.findOne(1L)
-                                   .getCodes()
-                                   .size()).isEqualTo(0);
 
         Code code = _codegenerator.generate(event, 2016, 1, 1);
 
@@ -137,12 +121,6 @@ public class CodeGeneratorTest {
         int codeCount = 100;
 
         Event event = new Event();
-        _eventRepository.save(event);
-
-        assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(_eventRepository.findOne(1L)
-                                   .getCodes()
-                                   .size()).isEqualTo(0);
 
         List<Code> codes = _codegenerator.generate(event, codeCount, 2);
 
@@ -175,12 +153,6 @@ public class CodeGeneratorTest {
         int codeCount2 = 10;
 
         Event event = new Event();
-        _eventRepository.save(event);
-
-        assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(_eventRepository.findOne(1L)
-                                   .getCodes()
-                                   .size()).isEqualTo(0);
 
         List<Code> codes = _codegenerator.generate(event, codeCount, 2);
 
@@ -217,12 +189,6 @@ public class CodeGeneratorTest {
         int codeCount = 100;
 
         Event event = new Event();
-        _eventRepository.save(event);
-
-        assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(_eventRepository.findOne(1L)
-                                   .getCodes()
-                                   .size()).isEqualTo(0);
 
         List<Code> codes = _codegenerator.generate(event, codeCount, 2.0f);
 
@@ -255,12 +221,6 @@ public class CodeGeneratorTest {
         int codeCount2 = 10;
 
         Event event = new Event();
-        _eventRepository.save(event);
-
-        assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(_eventRepository.findOne(1L)
-                                   .getCodes()
-                                   .size()).isEqualTo(0);
 
         List<Code> codes = _codegenerator.generate(event, codeCount, 2.0f);
 

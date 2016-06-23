@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -44,6 +45,7 @@ public class Gift {
 
     @OneToOne(optional = true)
     @JoinColumn(name = "_code__id")
+    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @JsonView(Views.OverviewGift.class)
     private Code code;
 
