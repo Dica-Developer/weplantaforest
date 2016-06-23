@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.abo;
 
 import java.util.List;
 
+import org.dicadeveloper.weplantaforest.abo.Abo.Period;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.views.Views;
@@ -47,6 +48,16 @@ public class AboController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @RequestMapping(value = Uris.ABO_EDIT, method = RequestMethod.POST)
+    @Transactional
+    public ResponseEntity<?> editAbo(@RequestBody AboEditData aboEditData) {
+        Abo abo = _aboRepository.findOne(aboEditData.aboId);
+        abo.setAmount(aboEditData.getAmount());
+        abo.setPeriod(Period.valueOf(aboEditData.getPeriod()));
+        _aboRepository.save(abo);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

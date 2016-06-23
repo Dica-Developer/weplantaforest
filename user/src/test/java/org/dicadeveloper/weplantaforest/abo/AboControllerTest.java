@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.abo;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,6 +52,9 @@ public class AboControllerTest {
     static long createdOn;
     static boolean entitiesInjected = false;
 
+    @Autowired
+    private AboRepository _aboRepository;
+
     @Before
     public void setup() {
         if (!entitiesInjected) {
@@ -59,12 +63,14 @@ public class AboControllerTest {
             createdOn = System.currentTimeMillis();
             _dbInjecter.injectUser("Adam");
             _dbInjecter.injectUser("Bert");
+            _dbInjecter.injectUser("AboEditor");
 
             _dbInjecter.injectTreeType("wood", "this is wood", 0.5);
             _dbInjecter.injectProject("Project A", "Adam", "desc", true, 1.0f, 1.0f);
             _dbInjecter.injectProjectArticle("wood", "Project A", 10, 3.0, 0.5);
 
             _dbInjecter.injectAbo("Adam", true, 1, Period.WEEKLY, createdOn);
+            _dbInjecter.injectAbo("AboEditor", true, 1, Period.WEEKLY, createdOn);
 
             entitiesInjected = true;
         }
@@ -116,5 +122,25 @@ public class AboControllerTest {
         mockMvc.perform(post(Uris.ABO_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                              .content(TestUtil.convertObjectToJsonBytes(aboRequest)))
                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testEditAbo() throws IOException, Exception {
+        AboEditData aboEditData = new AboEditData();
+        aboEditData.aboId = 2;
+        aboEditData.amount = 3;
+        aboEditData.period = "MONTHLY";
+
+        System.out.println(TestUtil.getJsonStringFromObject(aboEditData));
+
+        mockMvc.perform(post(Uris.ABO_EDIT).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                           .content(TestUtil.convertObjectToJsonBytes(aboEditData)))
+               .andExpect(status().isOk());
+
+        Abo editedAbo = _aboRepository.findOne(2L);
+
+        assertThat(editedAbo.getAmount()).isEqualTo(3);
+        assertThat(editedAbo.getPeriod()).isEqualTo(Period.MONTHLY);
+
     }
 }
