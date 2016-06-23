@@ -146,18 +146,10 @@ public class CodeGenerator {
         code.setMonth(month);
         code.setNumber(number);
 
-        int idValue = 0;
-        if (event != null) {
-            idValue = (int) (event.getId() % 16);
-        }
-        if (gift != null) {
-            idValue = (int) (gift.getId() % 16);
-        }
-
         // save code or try generate a new one
         boolean codeSaved = false;
         while (!codeSaved) {
-            final String codeString = generateCodeString(idValue, number);
+            final String codeString = generateCodeString();
             if (null == _codeRepository.findByCode(codeString)) {
                 code.setCode(codeString);
                 _codeRepository.save(code);
@@ -203,59 +195,56 @@ public class CodeGenerator {
         return false;
     }
 
-    private static String generateCodeString(int id, int number) {
+    private static String generateCodeString() {
         final StringBuilder key = new StringBuilder();
-        // build secure count [small]
-        final int countA = random(8);
-        final int countB = random(8);
-        key.append(small(countA));
-        key.append(small(countB));
+        // 1st block
+        final int number11 = random(8);
+        final int number12 = random(8);
+        final int number13 = random(16);
+        final int number14 = random(16);
 
-        // create year [medium]
-        final int yearA = random(15);
-        final int yearB = 15 - yearA;
-        key.append(medium(yearA));
-        key.append(medium(yearB));
+        key.append(small(number11));
+        key.append(small(number12));
+        key.append(medium(number13));
+        key.append(medium(number14));
+
+        key.append("-");
+        
+        // 2nd block
+        int number21 = random(32);
+        int number22 = random(32);
+        int number23 = random(32);
+        int number24 = random(32);
+
+        key.append(large(number21));
+        key.append(large(number22));
+        key.append(large(number23));
+        key.append(large(number24));
 
         key.append("-");
 
-        number = number % 16;
-
-        int numberA = number + 8 - countB;
-        int numberB = number + 8 + countA;
-        int numberC = number + 8 + countB;
-        int numberD = number + 8 - countA;
-
-        key.append(large(numberD));
-        key.append(large(numberA));
-        key.append(large(numberC));
-        key.append(large(numberB));
-
-        key.append("-");
-
-        // generate part of event id [large]
-
-        int eventA = id + 8 + countB;
-        int eventB = id + 8 - countA;
-        int eventC = id + 8 - countB;
-        int eventD = id + 8 + countA;
-
-        key.append(large(eventB));
-        key.append(large(eventC));
-        key.append(large(eventA));
-        key.append(large(eventD));
+        // 3rd block
+        int number31 = random(32);
+        int number32 = random(32);
+        int number33 = random(32);
+        int number34 = random(32);
+        
+        key.append(large(number31));
+        key.append(large(number32));
+        key.append(large(number33));
+        key.append(large(number34));
 
         key.append("-");
 
-        // create month [small]
-        final int monthA = random(8);
-        final int monthB = random(8);
+        // 4th block
+        final int number41 = random(8);
+        final int number42 = random(8);
 
-        key.append(small(monthA));
-        key.append(small(monthB));
+        key.append(small(number41));
+        key.append(small(number42));
 
         // calculate checksum [medium]
-        final int sum = countA + countB + yearA + yearB + numberA + numberB + numberC + numberD + eventA + eventB + eventC + eventD + monthA + monthB;
+        final int sum = number11 + number12 + number13 + number14 + number21 + number22 + number23 + number24 + number31 + number32 + number33 + number34 + number41 + number42;
 
         final int missing = 23 - sum % 23;
         final int checkA = random(Math.max(missing - 8, 0), Math.min(missing, 8));
