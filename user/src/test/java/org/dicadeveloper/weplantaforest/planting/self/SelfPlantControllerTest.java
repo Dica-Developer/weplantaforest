@@ -14,6 +14,7 @@ import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,6 +24,7 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,10 +34,11 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
 @IntegrationTest({ "spring.profiles.active=test" })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
+@Transactional
 public class SelfPlantControllerTest {
 
-    private MockMvc mockMvc;
+    private static MockMvc mockMvc;
 
     @Rule
     @Autowired
@@ -50,32 +53,43 @@ public class SelfPlantControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    static long timeOfPlanting;
+    static boolean entitiesInjected = false;
+
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
+        if (!entitiesInjected) {
+            mockMvc = webAppContextSetup(this.webApplicationContext).build();
+            timeOfPlanting = System.currentTimeMillis() - TimeConstants.YEAR_IN_MILLISECONDS;
+
+            dbInjecter.injectUser("Adam");
+            dbInjecter.injectTreeType("wood", "this is wood", 0.5);
+
+            entitiesInjected = true;
+        }
+    }
+    
+    @After
+    public void clear(){
+        _treeRepository.deleteAll();
     }
 
     @Test
-    @Transactional
+    @Rollback(false)
     public void testSelfPlantStatusOk() throws Exception {
-        dbInjecter.injectUser("Adam");
-        dbInjecter.injectTreeType("wood", "this is wood", 0.5);
-
-        long plantedOn = System.currentTimeMillis() - TimeConstants.YEAR_IN_MILLISECONDS;
-
         SelfPlantData selfPlantData = new SelfPlantData();
 
         selfPlantData.setOwner("Adam");
-        selfPlantData.setPlantedOn(plantedOn);
+        selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(10);
         selfPlantData.setTreeType("wood");
         selfPlantData.setDescription("I planted a tree by myself in my garden.");
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
 
-        this.mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
-                    .andExpect(status().isOk());
+        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                          .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
+               .andExpect(status().isOk());
 
         long timeNow = System.currentTimeMillis();
         assertThat(_treeRepository.count()).isEqualTo(1L);
@@ -85,7 +99,7 @@ public class SelfPlantControllerTest {
         assertThat(savedTree.getAmount()).isEqualTo(10);
         assertThat(savedTree.getLongitude()).isEqualTo(1.0f);
         assertThat(savedTree.getLatitude()).isEqualTo(2.0f);
-        assertThat(savedTree.getPlantedOn()).isEqualTo(plantedOn);
+        assertThat(savedTree.getPlantedOn()).isEqualTo(timeOfPlanting);
         assertThat(savedTree.getSubmittedOn()).isStrictlyBetween(timeNow - 10000, timeNow + 10000);
         assertThat(savedTree.getDescription()).isEqualTo("I planted a tree by myself in my garden.");
         assertThat(savedTree.getOwner()
@@ -96,49 +110,41 @@ public class SelfPlantControllerTest {
     }
 
     @Test
+    @Rollback(false)
     public void testSelfPlantStatusBadRequestCauseOfAmountHigherTen() throws Exception {
-        dbInjecter.injectUser("Adam");
-        dbInjecter.injectTreeType("wood", "this is wood", 0.5);
-
-        long plantedOn = System.currentTimeMillis() - TimeConstants.YEAR_IN_MILLISECONDS;
-
         SelfPlantData selfPlantData = new SelfPlantData();
 
         selfPlantData.setOwner("Adam");
-        selfPlantData.setPlantedOn(plantedOn);
+        selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(11);
         selfPlantData.setTreeType("wood");
         selfPlantData.setDescription("I planted a tree by myself in my garden.");
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
 
-        this.mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
-                    .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                          .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
+               .andExpect(status().isBadRequest());
 
         assertThat(_treeRepository.count()).isEqualTo(0);
     }
 
     @Test
+    @Rollback(false)
     public void testSelfPlantStatusBadRequestCauseOfAmountLowerOne() throws Exception {
-        dbInjecter.injectUser("Adam");
-        dbInjecter.injectTreeType("wood", "this is wood", 0.5);
-
-        long plantedOn = System.currentTimeMillis() - TimeConstants.YEAR_IN_MILLISECONDS;
-
         SelfPlantData selfPlantData = new SelfPlantData();
 
         selfPlantData.setOwner("Adam");
-        selfPlantData.setPlantedOn(plantedOn);
+        selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(0);
         selfPlantData.setTreeType("wood");
         selfPlantData.setDescription("I planted a tree by myself in my garden.");
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
 
-        this.mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
-                    .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                          .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
+               .andExpect(status().isBadRequest());
         assertThat(_treeRepository.count()).isEqualTo(0);
     }
 }
