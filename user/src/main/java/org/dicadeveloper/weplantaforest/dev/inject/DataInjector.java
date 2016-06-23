@@ -47,7 +47,8 @@ public class DataInjector {
                                       .createProjectImageFoldersAndAddMainImages()
                                       .copyAndRenameProjectImagesToProjectFolders()
                                       .insertCartAndCertificateToCart()
-                                      .insertGifts();
+                                      .insertGifts()
+                                      .insertAbo();
                     LOG.info("Finished injecting " + treeCount + " trees ");
                 } else {
                     LOG.info("No entities will be injected.");
