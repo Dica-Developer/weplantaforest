@@ -77,7 +77,6 @@ public class GiftController {
             Gift gift = new Gift();
             gift.setConsignor(consignor);
             gift.setStatus(Status.NEW);
-            _giftRepository.save(gift);
 
             Code code = _codeGenerator.generate(gift);
             code.setTreeCount(cart.getTreeCount());

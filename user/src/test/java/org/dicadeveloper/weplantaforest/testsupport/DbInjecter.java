@@ -297,7 +297,7 @@ public class DbInjecter {
         Gift gift = new Gift();
         gift.setConsignor(_userRepository.findByName(userName));
         gift.setRecipient(_userRepository.findByName(recipient));
-        _giftRepository.save(gift);
+        
         Code code = _codeGenerator.generate(gift);
         gift.setCode(code);
         gift.setStatus(giftStatus);
@@ -310,7 +310,7 @@ public class DbInjecter {
     public Code injectGiftWithCode(String consignor, Status giftStatus) {
         Gift gift = new Gift();
         gift.setConsignor(_userRepository.findByName(consignor));
-        _giftRepository.save(gift);
+        
         Code code = _codeGenerator.generate(gift);
         gift.setCode(code);
         gift.setStatus(giftStatus);
