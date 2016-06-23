@@ -131,8 +131,6 @@ public class AboControllerTest {
         aboEditData.amount = 3;
         aboEditData.period = "MONTHLY";
 
-        System.out.println(TestUtil.getJsonStringFromObject(aboEditData));
-
         mockMvc.perform(post(Uris.ABO_EDIT).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                            .content(TestUtil.convertObjectToJsonBytes(aboEditData)))
                .andExpect(status().isOk());
