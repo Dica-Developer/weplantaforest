@@ -21,6 +21,8 @@ public class Uris {
     // Co2 report url
 
     public final static String REPORT_CO2 = "/reports/co2";
+    
+    public final static String REPORT_CO2_FOR_USER = "/reports/co2/user";
 
     // project urls
 

@@ -59,4 +59,21 @@ public class Co2ControllerTest {
                     .andExpect(jsonPath("$.co2").exists());
     }
 
+    @Test
+    public void testGetTreesCountAndCo2ForUser() throws Exception {
+        dbInjecter.injectTreeType("wood", "desc", 0.5);
+
+        dbInjecter.injectUser("Adam");
+        dbInjecter.injectUser("Bert");
+
+        dbInjecter.injectTree("wood", "Adam", 1, 30000L);
+        dbInjecter.injectTree("wood", "Bert", 1, 30000L);
+
+        this.mockMvc.perform(get(Uris.REPORT_CO2_FOR_USER).param("userId", "1")
+                                                          .accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.treesCount").value(1))
+                    .andExpect(jsonPath("$.co2").exists());
+    }
+
 }
