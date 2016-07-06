@@ -90,5 +90,9 @@ public class Uris {
     public final static String ABO_EDIT = "/abo/edit";
     
     public final static String ABO_CANCEL = "/abo/cancel";
+    
+    //login
+    
+    public final static String LOGIN = "/login";
 
 }
