@@ -30,18 +30,29 @@ public class UserRepositoryIntegrationTest {
 
     @Autowired
     private UserRepository _userRepository;
-    
-    
+
     @Test
-    public void testIfUserExistsToFalse(){
+    public void testIfUserExistsToFalse() {
         long exists = _userRepository.userExists("Adam");
-        assertThat(exists).isEqualTo(0);     
+        assertThat(exists).isEqualTo(0);
     }
-    
+
     @Test
-    public void testIfUserExistsToTrue(){
+    public void testIfUserExistsToTrue() {
         _dbInjecter.injectUser("Adam");
         long exists = _userRepository.userExists("Adam");
-        assertThat(exists).isEqualTo(1);     
+        assertThat(exists).isEqualTo(1);
     }
+
+    @Test
+    public void testGetPasswordByUserName() {
+        _dbInjecter.injectUser("Adam");
+        User user = _userRepository.findByName("Adam");
+        user.setPassword("blabla");
+        _userRepository.save(user);
+
+        String password = _userRepository.getPasswordByUserName("Adam");
+        assertThat(password).isEqualTo("blabla");
+    }
+
 }
