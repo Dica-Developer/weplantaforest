@@ -29,6 +29,7 @@ import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
+import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
@@ -81,11 +82,12 @@ public class DatabasePopulator {
     private GiftRepository _giftRepository;
     private CodeGenerator _codeGenerator;
     private AboRepository _aboRepository;
+    private PasswordEncrypter _passwordEncrypter;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository,
-            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator, AboRepository aboRepository) {
+            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator, AboRepository aboRepository, PasswordEncrypter passwordEncrypter) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -99,6 +101,7 @@ public class DatabasePopulator {
         _giftRepository = giftRepository;
         _codeGenerator = codeGenerator;
         _aboRepository = aboRepository;
+        _passwordEncrypter = passwordEncrypter;
     }
 
     public DatabasePopulator insertProjects() {
@@ -195,6 +198,7 @@ public class DatabasePopulator {
         for (int i = 0; i < DEFAULT_USERS.size(); i++) {
             User user = new User();
             user.setName(DEFAULT_USERS.get(i));
+            user.setPassword(_passwordEncrypter.encryptPassword(DEFAULT_USERS.get(i)));
             user.setEnabled(true);
             user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
             _userRepository.save(user);

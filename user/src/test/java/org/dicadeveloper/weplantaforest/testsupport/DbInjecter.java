@@ -17,6 +17,7 @@ import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
+import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
@@ -80,6 +81,9 @@ public class DbInjecter {
     @Autowired
     private AboRepository _aboRepository;
 
+    @Autowired
+    private PasswordEncrypter _passwordEncrypter;
+
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
         String projectName = pName;
@@ -96,6 +100,7 @@ public class DbInjecter {
     public void injectUser(String userName) {
         User userDto = new User();
         userDto.setName(userName);
+        userDto.setPassword(_passwordEncrypter.encryptPassword(userName));
         _userRepository.save(userDto);
     }
 
