@@ -34,6 +34,8 @@ dependencies{
   compile 'com.itextpdf:itextpdf:5.5.9'
   compile 'org.bouncycastle:bcprov-jdk15on:1.51'
   compile 'org.bouncycastle:bcpkix-jdk15on:1.51'
+  //Base64 encoding
+  compile 'commons-codec:commons-codec:1.10'
   
   compile('org.springframework.data:spring-data-rest-hal-browser:2.4.1.RELEASE')
   compile 'com.h2database:h2:1.4.190'
