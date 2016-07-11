@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest;
 
+import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +19,14 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
     @Autowired
     UserRepository _userRepository;
 
+    @Autowired
+    PasswordEncrypter _passwordEncrypter;
+
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService());
+        auth.userDetailsService(userDetailsService())
+            .passwordEncoder(_passwordEncrypter);
+
     }
 
     @Bean
@@ -30,7 +36,7 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 org.dicadeveloper.weplantaforest.user.User user = _userRepository.findByName(username);
-                if (user != null) {                 
+                if (user != null) {
                     return new User(user.getName(), user.getPassword(), true, true, true, true, AuthorityUtils.createAuthorityList("USER"));
                 } else {
                     throw new UsernameNotFoundException("could not find the user '" + username + "'");
