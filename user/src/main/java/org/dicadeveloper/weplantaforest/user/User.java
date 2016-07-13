@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.views.Views;
@@ -77,6 +78,11 @@ public class User implements Identifiable<Long> {
 
     public void removeRole(final Role role) {
         _roles.remove(role);
+    }
+    
+    @Transient
+    public boolean isAdmin() {
+        return _roles.contains(Role.ADMIN);
     }
 
     @Override
