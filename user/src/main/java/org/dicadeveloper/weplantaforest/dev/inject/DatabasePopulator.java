@@ -17,8 +17,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.abo.Abo;
-import org.dicadeveloper.weplantaforest.abo.AboRepository;
 import org.dicadeveloper.weplantaforest.abo.Abo.Period;
+import org.dicadeveloper.weplantaforest.abo.AboRepository;
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.cart.Cart;
@@ -201,6 +201,10 @@ public class DatabasePopulator {
             user.setPassword(_passwordEncrypter.encryptPassword(DEFAULT_USERS.get(i)));
             user.setEnabled(true);
             user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
+            user.addRole(org.dicadeveloper.weplantaforest.user.Role.USER);
+            if(i < 5){
+                user.addRole(org.dicadeveloper.weplantaforest.user.Role.ADMIN);
+            }
             _userRepository.save(user);
         }
         return this;

@@ -1,7 +1,14 @@
 package org.dicadeveloper.weplantaforest.user;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,6 +46,14 @@ public class User implements Identifiable<Long> {
 
     @Column(name = "_email", length = 500)
     private String mail;
+    
+    
+    @Enumerated(EnumType.ORDINAL)
+    @ElementCollection
+    @CollectionTable(name = "USER__ROLES",
+                     joinColumns = @JoinColumn(name = "USER__USERID"))
+    @Column(name = "ELEMENT")
+    private Set<Role> _roles = new HashSet<Role>();
 
     @Column(name = "_enabled", nullable = false)
     private boolean enabled = false;
@@ -55,6 +70,14 @@ public class User implements Identifiable<Long> {
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;
+    
+    public void addRole(final Role role) {
+        _roles.add(role);
+    }
+
+    public void removeRole(final Role role) {
+        _roles.remove(role);
+    }
 
     @Override
     public String toString() {
