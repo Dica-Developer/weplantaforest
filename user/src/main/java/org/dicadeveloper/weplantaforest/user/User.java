@@ -1,6 +1,9 @@
 package org.dicadeveloper.weplantaforest.user;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -19,6 +22,9 @@ import javax.persistence.Transient;
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -31,7 +37,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Table(name = "User")
-public class User implements Identifiable<Long> {
+public class User implements Identifiable<Long>, UserDetails {
 
     @Id
     @GeneratedValue
@@ -39,20 +45,18 @@ public class User implements Identifiable<Long> {
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView({Views.PlantedTree.class, Views.OverviewGift.class})
+    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class })
     private String name;
-    
-    @Column(name ="_password")
+
+    @Column(name = "_password")
     private String password;
 
     @Column(name = "_email", length = 500)
     private String mail;
-    
-    
+
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection
-    @CollectionTable(name = "USER__ROLES",
-                     joinColumns = @JoinColumn(name = "USER__USERID"))
+    @CollectionTable(name = "USER__ROLES", joinColumns = @JoinColumn(name = "USER__USERID") )
     @Column(name = "ELEMENT")
     private Set<Role> _roles = new HashSet<Role>();
 
@@ -71,7 +75,7 @@ public class User implements Identifiable<Long> {
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;
-    
+
     public void addRole(final Role role) {
         _roles.add(role);
     }
@@ -79,7 +83,7 @@ public class User implements Identifiable<Long> {
     public void removeRole(final Role role) {
         _roles.remove(role);
     }
-    
+
     @Transient
     public boolean isAdmin() {
         return _roles.contains(Role.ADMIN);
@@ -88,5 +92,34 @@ public class User implements Identifiable<Long> {
     @Override
     public String toString() {
         return "'" + name + "'(" + mail + ")[" + id + "]";
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        for (Role role : _roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getIdentifier()));
+        }
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 }
