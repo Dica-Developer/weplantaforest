@@ -5,13 +5,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,6 +57,11 @@ public class TreeTypeControllerTest {
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
     }
+    
+    @After
+    public void cleanUp() {
+        deleteFilesInDirectory(new File(FileSystemInjector.getTreeTypeFolder()));
+    }
 
     @Test
     public void testCreateTreeType() throws IOException, Exception {
@@ -84,6 +92,17 @@ public class TreeTypeControllerTest {
                                               .file(image)
                                               .contentType(mediaType))
                .andExpect(status().isOk());
+    }
+    
+    private void deleteFilesInDirectory(File path) {
+        if (path.exists()) {
+            File[] files = path.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                if (!files[i].isDirectory()) {
+                    files[i].delete();
+                }
+            }
+        }
     }
 
 }
