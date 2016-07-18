@@ -147,9 +147,65 @@ public class ProjectControllerTest {
                                                       .content(TestUtil.convertObjectToJsonBytes(projectArticle))
                                                       .param("projectId", "1"))
                .andExpect(status().isOk());
-        
+
         assertThat(_projectRepository.findOne(1L)
-                .getArticles().size()).isEqualTo(1);
+                                     .getArticles()
+                                     .size()).isEqualTo(1);
+
+    }
+
+    @Test
+    @Transactional
+    public void testAddProjectArticleTwoTimes() throws Exception {
+        _dbInjecter.injectUser("manager");
+        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        _dbInjecter.injectTreeType("big wood", "big wood desc", 0.5);
+
+        ProjectArticle projectArticle = new ProjectArticle();
+        Price price = new Price();
+
+        price.setAmount(new BigDecimal(2.0));
+        price.setScontoType(ScontoType.NONE);
+        price.setMarge(new BigDecimal(1.0));
+        _priceRepository.save(price);
+
+        projectArticle.setAmount(100L);
+        projectArticle.setTreeType(_treeTypeRepository.findOne(1L));
+        projectArticle.setDescription("article for project");
+        projectArticle.setPrice(price);
+
+        assertThat(_projectRepository.findOne(1L)
+                                     .getArticles()).isNull();
+
+        mockMvc.perform(post(Uris.PROJECT_ADD_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                      .content(TestUtil.convertObjectToJsonBytes(projectArticle))
+                                                      .param("projectId", "1"))
+               .andExpect(status().isOk());
+
+        assertThat(_projectRepository.findOne(1L)
+                                     .getArticles()
+                                     .size()).isEqualTo(1);
+
+        ProjectArticle projectArticle2 = new ProjectArticle();
+
+        projectArticle2.setAmount(100L);
+        projectArticle2.setTreeType(_treeTypeRepository.findOne(2L));
+        projectArticle2.setDescription("article for project");
+        projectArticle2.setPrice(price);
+
+        assertThat(_projectRepository.findOne(1L)
+                                     .getArticles()
+                                     .size()).isEqualTo(1);
+
+        mockMvc.perform(post(Uris.PROJECT_ADD_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                      .content(TestUtil.convertObjectToJsonBytes(projectArticle))
+                                                      .param("projectId", "1"))
+               .andExpect(status().isOk());
+
+        assertThat(_projectRepository.findOne(1L)
+                                     .getArticles()
+                                     .size()).isEqualTo(2);
 
     }
 }
