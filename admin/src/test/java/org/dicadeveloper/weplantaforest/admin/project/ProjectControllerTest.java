@@ -1,0 +1,155 @@
+package org.dicadeveloper.weplantaforest.admin.project;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+
+import javax.transaction.Transactional;
+
+import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
+import org.dicadeveloper.weplantaforest.admin.project.Price.ScontoType;
+import org.dicadeveloper.weplantaforest.admin.support.Uris;
+import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.admin.treeType.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
+import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@SpringApplicationConfiguration(classes = WeplantaforestAdminApplication.class)
+@IntegrationTest({ "spring.profiles.active=test" })
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+public class ProjectControllerTest {
+
+    private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @Rule
+    @Autowired
+    public CleanDbRule _cleanDbRule;
+
+    @Autowired
+    private DbInjecter _dbInjecter;
+
+    @Autowired
+    private UserRepository _userRepository;
+
+    @Autowired
+    private ProjectRepository _projectRepository;
+
+    @Autowired
+    private TreeTypeRepository _treeTypeRepository;
+
+    @Autowired
+    private PriceRepository _priceRepository;
+
+    @Before
+    public void setup() {
+        mockMvc = webAppContextSetup(this.webApplicationContext).build();
+    }
+
+    @Test
+    public void testCreateProject() throws IOException, Exception {
+        _dbInjecter.injectUser("ProjectManager");
+
+        Project project = new Project();
+
+        project.setName("PROJECT");
+        project.setDescription("this is a project!");
+        project.setLatitude(1.0f);
+        project.setLongitude(2.0f);
+        project.setShopActive(true);
+        project.setVisible(true);
+        project.setManager(_userRepository.findByName("ProjectManager"));
+
+        mockMvc.perform(post(Uris.PROJECT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                 .content(TestUtil.convertObjectToJsonBytes(project)))
+               .andExpect(status().isOk());
+
+        assertThat(_projectRepository.count()).isEqualTo(1L);
+    }
+
+    @Test
+    public void testCreateProjectServerErrorCauseOfMissingManager() throws IOException, Exception {
+        _dbInjecter.injectUser("ProjectManager");
+
+        Project project = new Project();
+
+        project.setName("PROJECT");
+        project.setDescription("this is a project!");
+        project.setLatitude(1.0f);
+        project.setLongitude(2.0f);
+        project.setShopActive(true);
+        project.setVisible(true);
+
+        mockMvc.perform(post(Uris.PROJECT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                 .content(TestUtil.convertObjectToJsonBytes(project)))
+               .andExpect(status().is5xxServerError());
+    }
+
+    @Test
+    public void testDeleteProject() throws Exception {
+        _dbInjecter.injectUser("manager");
+        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
+
+        assertThat(_projectRepository.count()).isEqualTo(1L);
+
+        mockMvc.perform(post(Uris.PROJECT_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                 .param("id", "1"))
+               .andExpect(status().isOk());
+        assertThat(_projectRepository.count()).isEqualTo(0);
+    }
+
+    @Test
+    @Transactional
+    public void testAddProjectArticle() throws Exception {
+        _dbInjecter.injectUser("manager");
+        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+
+        ProjectArticle projectArticle = new ProjectArticle();
+        Price price = new Price();
+
+        price.setAmount(new BigDecimal(2.0));
+        price.setScontoType(ScontoType.NONE);
+        price.setMarge(new BigDecimal(1.0));
+        _priceRepository.save(price);
+
+        projectArticle.setAmount(100L);
+        projectArticle.setTreeType(_treeTypeRepository.findOne(1L));
+        projectArticle.setDescription("article for project");
+        projectArticle.setPrice(price);
+
+        assertThat(_projectRepository.findOne(1L)
+                                     .getArticles()).isNull();
+
+        mockMvc.perform(post(Uris.PROJECT_ADD_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                      .content(TestUtil.convertObjectToJsonBytes(projectArticle))
+                                                      .param("projectId", "1"))
+               .andExpect(status().isOk());
+        
+        assertThat(_projectRepository.findOne(1L)
+                .getArticles().size()).isEqualTo(1);
+
+    }
+}
