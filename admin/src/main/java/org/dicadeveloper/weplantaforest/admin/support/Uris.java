@@ -17,4 +17,6 @@ public class Uris {
     public final static String PROJECT_ADD_ARTICLE = "/project/article/add";
     
     public final static String PROJECT_REMOVE_ARTICLE = "/project/article/remove";
+    
+    public final static String PROJECT_IMAGE_UPLOAD = "/project/image/upload";
 }

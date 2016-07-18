@@ -5,12 +5,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
 import org.dicadeveloper.weplantaforest.admin.project.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
@@ -19,6 +22,7 @@ import org.dicadeveloper.weplantaforest.admin.treeType.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,11 +30,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -62,6 +69,9 @@ public class ProjectControllerTest {
     private ProjectArticleRepository _projectArticleRepository;
 
     @Autowired
+    private ProjectImageRepository _projectImageRepository;
+
+    @Autowired
     private TreeTypeRepository _treeTypeRepository;
 
     @Autowired
@@ -70,6 +80,11 @@ public class ProjectControllerTest {
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
+    }
+    
+    @After
+    public void cleanUp() {
+        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getTreeTypeFolder()));
     }
 
     @Test
@@ -236,7 +251,7 @@ public class ProjectControllerTest {
 
         assertThat(articlesAfterRemove.size()).isEqualTo(0);
     }
-    
+
     @Test
     @Transactional
     public void testRemoveProjectArticleBadRequestCauseOfWrongProjectId() throws Exception {
@@ -254,7 +269,7 @@ public class ProjectControllerTest {
                                                          .param("projectId", "2"))
                .andExpect(status().isBadRequest());
     }
-    
+
     @Test
     @Transactional
     public void testRemoveProjectArticleBadRequestCauseOfWrongArticleId() throws Exception {
@@ -271,5 +286,32 @@ public class ProjectControllerTest {
                                                          .param("articleId", "2")
                                                          .param("projectId", "1"))
                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testAddProjectImage() throws Exception {
+        _dbInjecter.injectUser("manager");
+        _dbInjecter.injectProject("project 1", "manager", "desc", true, 1.0f, 1.0f);
+
+        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
+                                          .size()).isEqualTo(0);
+
+        FileInputStream fileInputStream = new FileInputStream("src/test/resources/images/" + "test.jpg");
+        MockMultipartFile image = new MockMultipartFile("file", fileInputStream);
+
+        MediaType mediaType = new MediaType("multipart", "form-data");
+
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.PROJECT_IMAGE_UPLOAD)
+                                              .file(image)
+                                              .contentType(mediaType)
+                                              .param("projectName", "project 1")
+                                              .param("title", "first pic")
+                                              .param("description", "first pic desc")
+                                              .param("imgType", "jpg")
+                                              .param("date", "1000000000000"))
+               .andExpect(status().isOk());
+
+        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
+                                          .size()).isEqualTo(1);
     }
 }
