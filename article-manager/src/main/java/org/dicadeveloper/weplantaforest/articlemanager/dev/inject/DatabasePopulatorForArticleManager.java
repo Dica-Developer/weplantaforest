@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.dev.inject;
+package org.dicadeveloper.weplantaforest.articlemanager.dev.inject;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,16 +10,16 @@ import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
-import org.dicadeveloper.weplantaforest.articles.Article;
-import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
-import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
-import org.dicadeveloper.weplantaforest.articles.Paragraph;
-import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.ArticleRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Paragraph;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.ParagraphRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.user.User;
+import org.dicadeveloper.weplantaforest.articlemanager.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
-import org.dicadeveloper.weplantaforest.user.UserAM;
-import org.dicadeveloper.weplantaforest.user.UserRepositoryAM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,14 +37,14 @@ public class DatabasePopulatorForArticleManager {
 
     public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
-    private UserRepositoryAM _userRepository;
+    private UserRepository _userRepository;
 
     private ArticleRepository _articleRepository;
 
     private ParagraphRepository _parapgraphRepository;
 
     @Autowired
-    public DatabasePopulatorForArticleManager(ArticleRepository articleRepository, ParagraphRepository paragraphRepository, UserRepositoryAM userRepository) {
+    public DatabasePopulatorForArticleManager(ArticleRepository articleRepository, ParagraphRepository paragraphRepository, UserRepository userRepository) {
         _articleRepository = articleRepository;
         _userRepository = userRepository;
         _parapgraphRepository = paragraphRepository;
@@ -52,7 +52,7 @@ public class DatabasePopulatorForArticleManager {
 
     public DatabasePopulatorForArticleManager insertUsers() {
         DEFAULT_USERS.forEach((userName) -> {
-            UserAM user = new UserAM();
+            User user = new User();
             user.setName(userName);
             user.setEnabled(true);
             _userRepository.save(user);
@@ -127,11 +127,11 @@ public class DatabasePopulatorForArticleManager {
     }
 
     private void createArticleFolder(long articleId) {
-        new File(FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId).mkdir();
+        new File(FileSystemInjector.getImageUploadFolder() + "/" + articleId).mkdir();
     }
 
     private String creatImageDestinationPath(long articleId, String imageName) {
-        return FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        return FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
     }
 
     private void createImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {

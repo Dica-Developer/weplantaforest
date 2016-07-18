@@ -1,16 +1,16 @@
-package org.dicadeveloper.weplantaforest.inject;
+package org.dicadeveloper.weplantaforest.articlemanager.inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 
-import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
-import org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication;
-import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
-import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.articlemanager.WeplantaforestArticleManagerApplication;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.ArticleRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.ParagraphRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.dev.inject.DatabasePopulatorForArticleManager;
+import org.dicadeveloper.weplantaforest.articlemanager.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulatorForArticleManager;
-import org.dicadeveloper.weplantaforest.user.UserRepositoryAM;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +35,7 @@ public class DatabasePopulatorTest {
     private DatabasePopulatorForArticleManager _databasePopulator;
 
     @Autowired
-    private UserRepositoryAM _userRepository;
+    private UserRepository _userRepository;
 
     @Autowired
     private ArticleRepository _articleRepository;
@@ -70,7 +70,7 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertArticles();
         _databasePopulator.createArticleImageFoldersAndAddImage();
         
-        File articleTopFolder = new File(FileSystemInjectorForArticleManager.getImageUploadFolder());
+        File articleTopFolder = new File(FileSystemInjector.getImageUploadFolder());
 
         int articleFolderCount = articleTopFolder.listFiles().length;
         

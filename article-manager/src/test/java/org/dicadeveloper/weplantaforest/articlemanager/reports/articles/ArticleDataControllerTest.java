@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.reports.articles;
+package org.dicadeveloper.weplantaforest.articlemanager.reports.articles;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -13,12 +13,12 @@ import java.nio.file.StandardCopyOption;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
-import org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication;
-import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.articlemanager.WeplantaforestArticleManagerApplication;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.dev.inject.DatabasePopulatorForArticleManager;
+import org.dicadeveloper.weplantaforest.articlemanager.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.dev.inject.DatabasePopulatorForArticleManager;
-import org.dicadeveloper.weplantaforest.testSupport.DbInjecter;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -113,10 +113,10 @@ public class ArticleDataControllerTest {
     }
     
     private void createArticleFolderAndInsertImage(long articleId, String imageName){
-        new File(FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" +  articleId).mkdir();
+        new File(FileSystemInjector.getImageUploadFolder() + "/" +  articleId).mkdir();
         
         Path imageFileSrc = new File(DatabasePopulatorForArticleManager.DUMMY_IMAGE_FOLDER + imageName).toPath();
-        String imageFileDest = FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        String imageFileDest = FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
         
         try {
             File newImageFile = new File(imageFileDest);

@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.dev.inject;
+package org.dicadeveloper.weplantaforest.articlemanager.dev.inject;
 
 import javax.annotation.PostConstruct;
 

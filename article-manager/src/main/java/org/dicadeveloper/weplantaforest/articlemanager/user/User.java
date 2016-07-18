@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.user;
+package org.dicadeveloper.weplantaforest.articlemanager.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Table(name = "User")
-public class UserAM implements Identifiable<Long> {
+public class User implements Identifiable<Long> {
 
     @Id
     @GeneratedValue

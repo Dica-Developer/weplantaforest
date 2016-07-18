@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.articles;
+package org.dicadeveloper.weplantaforest.articlemanager.articles;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

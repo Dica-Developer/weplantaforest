@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.articles;
+package org.dicadeveloper.weplantaforest.articlemanager.articles;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.articles;
+package org.dicadeveloper.weplantaforest.articlemanager.articles;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.dicadeveloper.weplantaforest.articlemanager.user.User;
 import org.dicadeveloper.weplantaforest.common.support.Language;
-import org.dicadeveloper.weplantaforest.user.UserAM;
 import org.springframework.hateoas.Identifiable;
 
 import lombok.Getter;
@@ -59,7 +59,7 @@ public class Article implements Identifiable<Long> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_owner__userId", nullable = false)
-    private UserAM owner;
+    private User owner;
 
     @Column(name = "_visible")
     private boolean visible;

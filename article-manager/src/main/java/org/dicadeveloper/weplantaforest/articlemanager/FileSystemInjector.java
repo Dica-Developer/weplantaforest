@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest;
+package org.dicadeveloper.weplantaforest.articlemanager;
 
 import java.io.File;
 
@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component(value = "fileSystemInjector")
-public class FileSystemInjectorForArticleManager {
+public class FileSystemInjector {
 
     @Autowired
     Environment env;

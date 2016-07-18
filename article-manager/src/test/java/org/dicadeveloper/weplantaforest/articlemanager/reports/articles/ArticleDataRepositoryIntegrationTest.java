@@ -1,13 +1,16 @@
-package org.dicadeveloper.weplantaforest.reports.articles;
+package org.dicadeveloper.weplantaforest.articlemanager.reports.articles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication;
-import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.WeplantaforestArticleManagerApplication;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.reports.articles.ArticleContentData;
+import org.dicadeveloper.weplantaforest.articlemanager.reports.articles.ArticleData;
+import org.dicadeveloper.weplantaforest.articlemanager.reports.articles.ArticleDataRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.testSupport.DbInjecter;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

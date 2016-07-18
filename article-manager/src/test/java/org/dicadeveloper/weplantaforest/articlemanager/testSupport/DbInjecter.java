@@ -1,12 +1,12 @@
-package org.dicadeveloper.weplantaforest.testSupport;
+package org.dicadeveloper.weplantaforest.articlemanager.testSupport;
 
-import org.dicadeveloper.weplantaforest.articles.Article;
-import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
-import org.dicadeveloper.weplantaforest.articles.ArticleRepository;
-import org.dicadeveloper.weplantaforest.articles.Paragraph;
-import org.dicadeveloper.weplantaforest.articles.ParagraphRepository;
-import org.dicadeveloper.weplantaforest.user.UserAM;
-import org.dicadeveloper.weplantaforest.user.UserRepositoryAM;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.ArticleRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Paragraph;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.ParagraphRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.user.User;
+import org.dicadeveloper.weplantaforest.articlemanager.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public class DbInjecter {
 
     @Autowired
-    private UserRepositoryAM _userRepository;
+    private UserRepository _userRepository;
 
     @Autowired
     private ArticleRepository _articleRepository;
@@ -23,20 +23,20 @@ public class DbInjecter {
     private ParagraphRepository _paragraphRepository;
 
     public void injectUser(String userName) {
-        UserAM userDto = new UserAM();
+        User userDto = new User();
         userDto.setName(userName);
         _userRepository.save(userDto);
     }
 
     public void injectUser(String userName, Long regDate) {
-        UserAM userDto = new UserAM();
+        User userDto = new User();
         userDto.setName(userName);
         userDto.setRegDate(regDate);
         _userRepository.save(userDto);
     }
 
     public void injectUser(String userName, Long regDate, int organizationType) {
-        UserAM userDto = new UserAM();
+        User userDto = new User();
         userDto.setName(userName);
         userDto.setRegDate(regDate);
         userDto.setOrganizationType(organizationType);

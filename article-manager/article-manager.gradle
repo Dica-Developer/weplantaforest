@@ -17,7 +17,7 @@ jar {
   version = '0.0.1-SNAPSHOT'
 }
 
-mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestArticleManagerApplication'
+mainClassName = 'org.dicadeveloper.weplantaforest.articlemanager.WeplantaforestArticleManagerApplication'
 
 dependencies{
   compile project(':common')

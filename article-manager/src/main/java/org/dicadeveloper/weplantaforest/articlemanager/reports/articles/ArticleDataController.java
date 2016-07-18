@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.reports.articles;
+package org.dicadeveloper.weplantaforest.articlemanager.reports.articles;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dicadeveloper.weplantaforest.FileSystemInjectorForArticleManager;
-import org.dicadeveloper.weplantaforest.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,7 +46,7 @@ public class ArticleDataController {
 
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getArticleImage(HttpServletResponse response, @PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName) {
-        String filePath = FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        String filePath = FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -59,7 +59,7 @@ public class ArticleDataController {
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getArticleImage(HttpServletResponse response, @PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName,
             @PathVariable int width, @PathVariable int height) {
-        String filePath = FileSystemInjectorForArticleManager.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        String filePath = FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
             return new ResponseEntity<>(HttpStatus.OK);

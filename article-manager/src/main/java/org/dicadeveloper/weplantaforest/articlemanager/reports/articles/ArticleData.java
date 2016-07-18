@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.reports.articles;
+package org.dicadeveloper.weplantaforest.articlemanager.reports.articles;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
