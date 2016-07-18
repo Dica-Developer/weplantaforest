@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.ParagraphRepository;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,8 @@ public class ArticleDataController {
     protected final Log LOG = LogFactory.getLog(ArticleDataController.class.getName());
 
     private @NonNull ArticleDataRepository _articleDataRepository;
+
+    private @NonNull ParagraphRepository _paragraphRepository;
 
     private @NonNull ImageHelper _imageHelper;
 

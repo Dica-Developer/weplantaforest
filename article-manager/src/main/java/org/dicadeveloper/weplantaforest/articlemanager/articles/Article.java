@@ -1,7 +1,9 @@
 package org.dicadeveloper.weplantaforest.articlemanager.articles;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.articlemanager.user.User;
 import org.dicadeveloper.weplantaforest.common.support.Language;
@@ -64,8 +65,16 @@ public class Article implements Identifiable<Long> {
     @Column(name = "_visible")
     private boolean visible;
 
-    @Transient
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Paragraph> paragraphs;
+
+    public Article addParagraph(Paragraph paragraph) {
+        if (paragraphs == null) {
+            paragraphs = new ArrayList<>();
+        }
+        paragraphs.add(paragraph);
+       paragraph.setArticle(this);
+       return this;
+    }
 
 }
