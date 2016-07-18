@@ -72,8 +72,6 @@ public class TreeTypeControllerTest {
         treeType.setImageFile("abc.jpg");
         treeType.setDescription("description");
 
-        System.out.println(TestUtil.getJsonStringFromObject(treeType));
-
         mockMvc.perform(post(Uris.TREETYPE_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                   .content(TestUtil.convertObjectToJsonBytes(treeType)))
                .andExpect(status().isOk());
