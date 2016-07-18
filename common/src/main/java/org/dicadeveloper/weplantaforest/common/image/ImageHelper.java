@@ -41,7 +41,7 @@ public class ImageHelper {
         inputStream.close();
     }
 
-    public void storeImage(MultipartFile file, String folder, String imageName) throws IOException {
+    public String storeImage(MultipartFile file, String folder, String imageName) throws IOException {
         if (!folderExists(folder)) {
             createNewFolder(folder);
         }
@@ -62,6 +62,8 @@ public class ImageHelper {
         stream.write(bytes);
         stream.close();
         fileOutPutStreamfromFileToSave.close();
+        
+        return imageName;
 
     }
 

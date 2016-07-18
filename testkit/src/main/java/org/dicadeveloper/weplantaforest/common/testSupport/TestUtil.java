@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.common.testSupport;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -23,5 +24,16 @@ public class TestUtil {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return new String(mapper.writeValueAsBytes(object));
+    }
+    
+    public static void deleteFilesInDirectory(File path) {
+        if (path.exists()) {
+            File[] files = path.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                if (!files[i].isDirectory()) {
+                    files[i].delete();
+                }
+            }
+        }
     }
 }
