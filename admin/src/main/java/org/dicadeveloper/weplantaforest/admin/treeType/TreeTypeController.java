@@ -4,15 +4,13 @@ import java.io.IOException;
 
 import javax.transaction.Transactional;
 
+import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
-import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,21 +33,26 @@ public class TreeTypeController {
 
     @RequestMapping(value = Uris.TREETYPE_CREATE, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> createTreeType(@RequestBody TreeType treeType) {
-        try {
-            _treeTypeRepository.save(treeType);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (JDBCException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    public ResponseEntity<?> createTreeType(@RequestParam String treeTypeName, @RequestParam long annualCo2, @RequestParam String description, @RequestParam String imgType,
+            @RequestParam("file") MultipartFile file) {
 
-    @RequestMapping(value = Uris.TREETYPE_IMAGE_UPLOAD + "{imageName:.+}", method = RequestMethod.POST)
-    public ResponseEntity<?> handleFileUpload(@PathVariable("imageName") String imageName, @RequestParam("file") MultipartFile file) {
-        String treeTypeFolder = env.getProperty("upload.root") + "/ipat_uploads/images/treeTypes";
+        if(_treeTypeRepository.findByName(treeTypeName) != null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
+        TreeType treeType = new TreeType();
+
+        treeType.setName(treeTypeName);
+        treeType.setAnnualCo2SavingInTons(((double) annualCo2)/100);
+        treeType.setDescription(description);
+
+        String treeTypeFolder = FileSystemInjector.getTreeTypeFolder();
+        String imageName = treeTypeName + "." + imgType;
         if (!file.isEmpty()) {
             try {
-                _imageHelper.storeImage(file, treeTypeFolder, imageName);
+                imageName = _imageHelper.storeImage(file, treeTypeFolder, imageName);
+                treeType.setImageFile(imageName);
+                _treeTypeRepository.save(treeType);
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -57,6 +60,7 @@ public class TreeTypeController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
     }
 
 }

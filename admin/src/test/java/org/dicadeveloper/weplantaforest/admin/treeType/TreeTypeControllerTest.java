@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.admin.treeType;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -57,50 +56,64 @@ public class TreeTypeControllerTest {
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
     }
-    
+
     @After
     public void cleanUp() {
-        deleteFilesInDirectory(new File(FileSystemInjector.getTreeTypeFolder()));
+        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getTreeTypeFolder()));
     }
 
     @Test
+    @Transactional
     public void testCreateTreeType() throws IOException, Exception {
-        TreeType treeType = new TreeType();
-
-        treeType.setName("wood");
-        treeType.setAnnualCo2SavingInTons(0.5);
-        treeType.setImageFile("abc.jpg");
-        treeType.setDescription("description");
-
-        mockMvc.perform(post(Uris.TREETYPE_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                  .content(TestUtil.convertObjectToJsonBytes(treeType)))
-               .andExpect(status().isOk());
-
-        assertThat(_treeTypeRepository.count()).isEqualTo(1L);
-    }
-
-    @Test
-    public void testUploadTreeTypeImage() throws Exception {
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/images/" + "test.jpg");
         MockMultipartFile image = new MockMultipartFile("file", fileInputStream);
 
         MediaType mediaType = new MediaType("multipart", "form-data");
 
-        mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.TREETYPE_IMAGE_UPLOAD + "{imageName}", "test.jpg")
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.TREETYPE_CREATE)
                                               .file(image)
-                                              .contentType(mediaType))
+                                              .contentType(mediaType)
+                                              .param("treeTypeName", "wood")
+                                              .param("annualCo2", "50")
+                                              .param("description", "wood description")
+                                              .param("imgType", "jpg"))
                .andExpect(status().isOk());
+
+        assertThat(_treeTypeRepository.count()).isEqualTo(1L);
+        assertThat(_treeTypeRepository.findOne(1L)
+                                      .getAnnualCo2SavingInTons()).isEqualTo(0.5);
     }
-    
-    private void deleteFilesInDirectory(File path) {
-        if (path.exists()) {
-            File[] files = path.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                if (!files[i].isDirectory()) {
-                    files[i].delete();
-                }
-            }
-        }
+
+    @Test
+    @Transactional
+    public void testCreateTreeTypebadRequestCauseOfAlreadyExistingTreeType() throws IOException, Exception {
+        FileInputStream fileInputStream = new FileInputStream("src/test/resources/images/" + "test.jpg");
+        MockMultipartFile image = new MockMultipartFile("file", fileInputStream);
+
+        MediaType mediaType = new MediaType("multipart", "form-data");
+
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.TREETYPE_CREATE)
+                                              .file(image)
+                                              .contentType(mediaType)
+                                              .param("treeTypeName", "wood")
+                                              .param("annualCo2", "50")
+                                              .param("description", "wood description")
+                                              .param("imgType", "jpg"))
+               .andExpect(status().isOk());
+
+        assertThat(_treeTypeRepository.count()).isEqualTo(1L);
+        assertThat(_treeTypeRepository.findOne(1L)
+                                      .getAnnualCo2SavingInTons()).isEqualTo(0.5);
+
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.TREETYPE_CREATE)
+                                              .file(image)
+                                              .contentType(mediaType)
+                                              .param("treeTypeName", "wood")
+                                              .param("annualCo2", "50")
+                                              .param("description", "wood description")
+                                              .param("imgType", "jpg"))
+               .andExpect(status().isBadRequest());
+
     }
 
 }
