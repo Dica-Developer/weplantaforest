@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -56,6 +57,9 @@ public class ProjectControllerTest {
 
     @Autowired
     private ProjectRepository _projectRepository;
+
+    @Autowired
+    private ProjectArticleRepository _projectArticleRepository;
 
     @Autowired
     private TreeTypeRepository _treeTypeRepository;
@@ -110,7 +114,9 @@ public class ProjectControllerTest {
     @Test
     public void testDeleteProject() throws Exception {
         _dbInjecter.injectUser("manager");
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
         _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
 
         assertThat(_projectRepository.count()).isEqualTo(1L);
 
@@ -207,5 +213,63 @@ public class ProjectControllerTest {
                                      .getArticles()
                                      .size()).isEqualTo(2);
 
+    }
+
+    @Test
+    @Transactional
+    public void testRemoveProjectArticle() throws Exception {
+        _dbInjecter.injectUser("manager");
+        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
+
+        List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
+
+        assertThat(articles.size()).isEqualTo(1);
+
+        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                         .param("articleId", "1")
+                                                         .param("projectId", "1"))
+               .andExpect(status().isOk());
+
+        List<ProjectArticle> articlesAfterRemove = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
+
+        assertThat(articlesAfterRemove.size()).isEqualTo(0);
+    }
+    
+    @Test
+    @Transactional
+    public void testRemoveProjectArticleBadRequestCauseOfWrongProjectId() throws Exception {
+        _dbInjecter.injectUser("manager");
+        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
+
+        List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
+
+        assertThat(articles.size()).isEqualTo(1);
+
+        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                         .param("articleId", "1")
+                                                         .param("projectId", "2"))
+               .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    @Transactional
+    public void testRemoveProjectArticleBadRequestCauseOfWrongArticleId() throws Exception {
+        _dbInjecter.injectUser("manager");
+        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
+
+        List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
+
+        assertThat(articles.size()).isEqualTo(1);
+
+        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                         .param("articleId", "2")
+                                                         .param("projectId", "1"))
+               .andExpect(status().isBadRequest());
     }
 }
