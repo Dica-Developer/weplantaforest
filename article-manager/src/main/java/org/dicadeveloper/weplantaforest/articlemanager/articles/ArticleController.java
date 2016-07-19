@@ -35,7 +35,7 @@ public class ArticleController {
 
     private @NonNull ImageHelper _imageHelper;
 
-    @RequestMapping(value = "/article/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/article/createEdit", method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> createArticle(@RequestBody Article article) {
         try {

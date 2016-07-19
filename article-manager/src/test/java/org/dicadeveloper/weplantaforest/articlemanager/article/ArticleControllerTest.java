@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.articlemanager.WeplantaforestArticleManagerApplication;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.Article;
@@ -100,8 +102,8 @@ public class ArticleControllerTest {
         paragraphs.add(paragraph);
         article.setParagraphs(paragraphs);
 
-        mockMvc.perform(post("/article/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(article)))
+        mockMvc.perform(post("/article/createEdit").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .content(TestUtil.convertObjectToJsonBytes(article)))
                .andExpect(status().isOk());
 
         assertThat(_articleRepository.count()).isEqualTo(1L);
@@ -150,8 +152,46 @@ public class ArticleControllerTest {
                                               .param("imgType", "jpg"))
                .andExpect(status().isOk());
         assertThat(_paragraphRepository.findOne(1L)
-                .getImageFileName()).isEqualTo("paragraph_1.jpg");
-        
+                                       .getImageFileName()).isEqualTo("paragraph_1.jpg");
+
         TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getArticleFolder() + "/1"));
+    }
+
+    @Test
+    @Transactional
+    public void testEditArticle() throws Exception {
+        _dbInjecter.injectUser("manager");
+        _dbInjecter.injectArticle("title", "intro", ArticleType.BLOG, "manager", 1000000L)
+                   .injectParagraphToArticle("title", "paragraph title", "paragraph text");
+
+        assertThat(_articleRepository.count()).isEqualTo(1);
+        assertThat(_paragraphRepository.count()).isEqualTo(1);
+
+        Article article = _articleRepository.findOne(1L);
+
+        assertThat(article.getParagraphs()
+                          .size()).isEqualTo(1);
+
+        List<Paragraph> paragraphs = new ArrayList<>();
+        for (Paragraph paragraph : article.getParagraphs()) {
+            // this has to be done to avoid infinite recursion in the json
+            // object
+            paragraph.setArticle(null);
+            paragraphs.add(paragraph);
+        }
+        article.setParagraphs(paragraphs);
+
+        article.setTitle("edited title");
+
+        mockMvc.perform(post("/article/createEdit").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .content(TestUtil.convertObjectToJsonBytes(article)))
+               .andExpect(status().isOk());
+
+        assertThat(_articleRepository.count()).isEqualTo(1);
+        assertThat(_paragraphRepository.count()).isEqualTo(1);
+
+        Article editArticle = _articleRepository.findOne(1L);
+
+        assertThat(editArticle.getTitle()).isEqualTo("edited title");
     }
 }

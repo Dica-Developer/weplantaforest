@@ -1,10 +1,11 @@
 package org.dicadeveloper.weplantaforest.articlemanager.testSupport;
 
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.articlemanager.articles.Article;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.ArticleRepository;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.Paragraph;
-import org.dicadeveloper.weplantaforest.articlemanager.articles.ParagraphRepository;
-import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.articlemanager.user.User;
 import org.dicadeveloper.weplantaforest.articlemanager.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,6 @@ public class DbInjecter {
 
     @Autowired
     private ArticleRepository _articleRepository;
-
-    @Autowired
-    private ParagraphRepository _paragraphRepository;
 
     public void injectUser(String userName) {
         User userDto = new User();
@@ -56,13 +54,18 @@ public class DbInjecter {
         return this;
     }
 
+    @Transactional
     public DbInjecter injectParagraphToArticle(String articleTitle, String paragraphTitle, String paragraphText) {
         Paragraph paragraph = new Paragraph();
 
-        paragraph.setArticle(_articleRepository.findByTitle(articleTitle));
+        Article article = _articleRepository.findByTitle(articleTitle);
+        
+        
+        paragraph.setArticle(article);
         paragraph.setTitle(paragraphTitle);
         paragraph.setText(paragraphText);
-        _paragraphRepository.save(paragraph);
+        article.addParagraph(paragraph);
+       _articleRepository.save(article);
 
         return this;
     }
