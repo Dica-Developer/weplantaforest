@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.admin.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -126,13 +127,18 @@ public class ProjectControllerTest {
         _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
         _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
+        _dbInjecter.injectProjectImage("title", "desc", 1L, 1000000L);
 
         assertThat(_projectRepository.count()).isEqualTo(1L);
+        assertThat(_projectArticleRepository.count()).isEqualTo(1L);
+        assertThat(_projectImageRepository.count()).isEqualTo(1L);
 
-        mockMvc.perform(post(Uris.PROJECT_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                 .param("id", "1"))
+        mockMvc.perform(delete(Uris.PROJECT_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .param("id", "1"))
                .andExpect(status().isOk());
         assertThat(_projectRepository.count()).isEqualTo(0);
+        assertThat(_projectArticleRepository.count()).isEqualTo(0);
+        assertThat(_projectImageRepository.count()).isEqualTo(0);
     }
 
     @Test

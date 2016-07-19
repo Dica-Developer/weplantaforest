@@ -43,12 +43,14 @@ public class ProjectController {
         }
     }
 
-    @RequestMapping(value = Uris.PROJECT_DELETE, method = RequestMethod.POST)
+    @RequestMapping(value = Uris.PROJECT_DELETE, method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteProject(@RequestParam Long id) {
         try {
             if (_projectRepository.exists(id)) {
                 Project project = _projectRepository.findOne(id);
                 List<ProjectArticle> articles = _projectArticleRepository.findByProject(project);
+                List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(id);
+                _projectImageRepository.delete(images);
                 _projectArticleRepository.delete(articles);
                 _projectRepository.delete(id);
                 return new ResponseEntity<>(HttpStatus.OK);

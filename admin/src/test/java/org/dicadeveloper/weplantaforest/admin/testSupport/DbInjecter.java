@@ -9,6 +9,8 @@ import org.dicadeveloper.weplantaforest.admin.project.PriceRepository;
 import org.dicadeveloper.weplantaforest.admin.project.Project;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectArticle;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectArticleRepository;
+import org.dicadeveloper.weplantaforest.admin.project.ProjectImage;
+import org.dicadeveloper.weplantaforest.admin.project.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectRepository;
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
@@ -36,7 +38,10 @@ public class DbInjecter {
 
     @Autowired
     private ProjectArticleRepository _projectArticleRepository;
-    
+
+    @Autowired
+    private ProjectImageRepository _projectImageRepository;
+
     @Autowired
     private PriceRepository _priceRepository;
 
@@ -58,8 +63,6 @@ public class DbInjecter {
         userDto.setName(userName);
         _userRepository.save(userDto);
     }
-
-  
 
     public void injectTreeType(String name, String desc, double co2) {
         TreeType treeTypeDto = new TreeType();
@@ -127,6 +130,14 @@ public class DbInjecter {
         _projectArticleRepository.save(plantArticle);
     }
 
-   
+    public void injectProjectImage(String title, String description, Long projectId, Long date) {
+        ProjectImage image = new ProjectImage();
+        image.setDate(date);
+        image.setDescription(description);
+        image.setProject(_projectRepository.findOne(projectId));
+        image.setTitle(title);
+
+        _projectImageRepository.save(image);
+    }
 
 }
