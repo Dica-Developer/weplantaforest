@@ -65,7 +65,7 @@ public class ArticleController {
             _articleRepository.save(articleForImage);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
-            LOG.error("Error occured while saving article!", e);
+            LOG.error("Error occured while uploading article image!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -81,7 +81,7 @@ public class ArticleController {
             _paragraphRepository.save(paragraphForImage);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
-            LOG.error("Error occured while saving article!", e);
+            LOG.error("Error occured while uploading paragraph image for article!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
