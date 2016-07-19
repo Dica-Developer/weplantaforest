@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.articlemanager.WeplantaforestArticleManagerApplication;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.articlemanager.dev.inject.DatabasePopulatorForArticleManager;
 import org.dicadeveloper.weplantaforest.articlemanager.testSupport.DbInjecter;
@@ -39,7 +40,7 @@ import org.springframework.web.context.WebApplicationContext;
 @IntegrationTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ArticleDataControllerTest {
-    
+
     protected final Log LOG = LogFactory.getLog(ArticleDataControllerTest.class.getName());
 
     private MockMvc mockMvc;
@@ -68,9 +69,14 @@ public class ArticleDataControllerTest {
 
         _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
 
-        this.mockMvc.perform(get("/articles/{articleType}?page=0&size=10", "BLOG").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.content[0].id").value(1))
-                .andExpect(jsonPath("$.content[0].title").value("article title")).andExpect(jsonPath("$.content[0].intro").value("article blablabla"))
-                .andExpect(jsonPath("$.content[0].createdOn").value(createdOn)).andExpect(jsonPath("$.content[0].ownerId").value(1)).andExpect(jsonPath("$.content[0].ownerName").value("Adam"));
+        this.mockMvc.perform(get("/articles/{articleType}?page=0&size=10", "BLOG").accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.content[0].id").value(1))
+                    .andExpect(jsonPath("$.content[0].title").value("article title"))
+                    .andExpect(jsonPath("$.content[0].intro").value("article blablabla"))
+                    .andExpect(jsonPath("$.content[0].createdOn").value(createdOn))
+                    .andExpect(jsonPath("$.content[0].ownerId").value(1))
+                    .andExpect(jsonPath("$.content[0].ownerName").value("Adam"));
     }
 
     @Test
@@ -80,44 +86,50 @@ public class ArticleDataControllerTest {
 
         _dbInjecter.injectUser("Adam");
 
-        _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn)
-                .injectParagraphToArticle("article title", "1st paragraph title", "1st paragraph blablablalba")
-                .injectParagraphToArticle("article title", "2nd paragraph title", "2nd paragraph blablablalba");
+        Article article = _dbInjecter.injectArticle("title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
+        _dbInjecter.injectParagraphToArticle(article, "1st paragraph title", "1st paragraph blablablalba");
+        _dbInjecter.injectParagraphToArticle(article, "2nd paragraph title", "2nd paragraph blablablalba");
 
-        this.mockMvc.perform(get("/reports/article/{articleId}", 1).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].paragraphTitle").value("1st paragraph title"))
-                .andExpect(jsonPath("$.[0].paragraphText").value("1st paragraph blablablalba"));
+        this.mockMvc.perform(get("/reports/article/{articleId}", 1).accept("application/json"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.[0].paragraphTitle").value("1st paragraph title"))
+                    .andExpect(jsonPath("$.[0].paragraphText").value("1st paragraph blablablalba"));
     }
 
     @Test
     public void testGetImageNonScaled() throws Exception {
         createArticleFolderAndInsertImage(1, "article1.jpg");
-        
-        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}", "1", "article1.jpg").accept("image/jpg")).andExpect(status().isOk());
+
+        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}", "1", "article1.jpg").accept("image/jpg"))
+                    .andExpect(status().isOk());
     }
 
     @Test
     public void testGetImageNonScaledBadRequest() throws Exception {
-        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}", "1", "wrongName.jpg").accept("image/jpg")).andExpect(status().isBadRequest());
+        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}", "1", "wrongName.jpg").accept("image/jpg"))
+                    .andExpect(status().isBadRequest());
     }
 
     @Test
     public void testGetImageScaled() throws Exception {
         createArticleFolderAndInsertImage(1, "article1.jpg");
-        
-        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "article1.jpg", 500, 500).accept("image/jpg")).andExpect(status().isOk());
+
+        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "article1.jpg", 500, 500).accept("image/jpg"))
+                    .andExpect(status().isOk());
     }
 
     @Test
     public void testGetImageScaledBadRequest() throws Exception {
-        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "wrongName.jpg", 500, 500).accept("image/jpg")).andExpect(status().isBadRequest());
+        this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "wrongName.jpg", 500, 500).accept("image/jpg"))
+                    .andExpect(status().isBadRequest());
     }
-    
-    private void createArticleFolderAndInsertImage(long articleId, String imageName){
-        new File(FileSystemInjector.getArticleFolder() + "/" +  articleId).mkdir();
-        
+
+    private void createArticleFolderAndInsertImage(long articleId, String imageName) {
+        new File(FileSystemInjector.getArticleFolder() + "/" + articleId).mkdir();
+
         Path imageFileSrc = new File(DatabasePopulatorForArticleManager.DUMMY_IMAGE_FOLDER + imageName).toPath();
         String imageFileDest = FileSystemInjector.getArticleFolder() + "/" + articleId + "/" + imageName;
-        
+
         try {
             File newImageFile = new File(imageFileDest);
             newImageFile.createNewFile();

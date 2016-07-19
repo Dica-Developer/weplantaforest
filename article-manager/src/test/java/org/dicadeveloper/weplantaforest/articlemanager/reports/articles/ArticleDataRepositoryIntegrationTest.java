@@ -5,10 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.articlemanager.WeplantaforestArticleManagerApplication;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
-import org.dicadeveloper.weplantaforest.articlemanager.reports.articles.ArticleContentData;
-import org.dicadeveloper.weplantaforest.articlemanager.reports.articles.ArticleData;
-import org.dicadeveloper.weplantaforest.articlemanager.reports.articles.ArticleDataRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.ArticleRepository;
 import org.dicadeveloper.weplantaforest.articlemanager.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.junit.Rule;
@@ -38,6 +37,9 @@ public class ArticleDataRepositoryIntegrationTest {
 
     @Autowired
     private ArticleDataRepository _articleDataRepository;
+    
+    @Autowired
+    private ArticleRepository _articleRepository;
 
     @Test
     public void getArticlesByType() {
@@ -47,8 +49,7 @@ public class ArticleDataRepositoryIntegrationTest {
 
         _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
 
-        _dbInjecter.injectArticle("later article title", "article more blablabla", ArticleType.BLOG, "Adam",
-                createdOn - 1000000);
+        _dbInjecter.injectArticle("later article title", "article more blablabla", ArticleType.BLOG, "Adam", createdOn - 1000000);
 
         Page<ArticleData> articles = _articleDataRepository.getArticlesByType(ArticleType.BLOG, new PageRequest(0, 3));
 
@@ -79,10 +80,21 @@ public class ArticleDataRepositoryIntegrationTest {
 
         _dbInjecter.injectUser("Adam");
 
-        _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn)
-                   .injectParagraphToArticle("article title", "1st paragraph title", "1st paragraph blablablalba")
-                   .injectParagraphToArticle("article title", "2nd paragraph title", "2nd paragraph blablablalba");
+        Article article = _dbInjecter.injectArticle("article title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
 
+        System.out.println("articles: " + _articleRepository.count());
+        System.out.println("paragraphs: " + _articleDataRepository.getParagraphsByArticleId(1).size());
+        
+        _dbInjecter.injectParagraphToArticle(article, "1st paragraph title", "1st paragraph blablablalba");
+
+        System.out.println("articles: " + _articleRepository.count());
+        System.out.println("paragraphs: " + _articleDataRepository.getParagraphsByArticleId(1).size());
+        
+        _dbInjecter.injectParagraphToArticle(article, "2nd paragraph title", "2nd paragraph blablablalba");
+
+        System.out.println("articles: " + _articleRepository.count());
+        System.out.println("paragraphs: " + _articleDataRepository.getParagraphsByArticleId(1).size());
+        
         List<ArticleContentData> articles = _articleDataRepository.getParagraphsByArticleId(1);
 
         assertThat(articles.size()).isEqualTo(2);
