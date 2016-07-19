@@ -89,7 +89,21 @@ public class ImageHelper {
     }
 
     private void createNewFolder(String folder) {
-        new File(folder).mkdir();
+        if (folder.contains("/")) {
+            StringBuffer folderToCreate = new StringBuffer();
+            while (folder.contains("/")) {
+                String topFolder = folder.substring(0, folder.indexOf("/"));
+                folderToCreate.append(topFolder);
+                new File(folderToCreate.toString()).mkdir();
+
+                folderToCreate.append("/");
+                folder = folder.substring(folder.indexOf("/") + 1);
+            }
+            folderToCreate.append(folder);
+            new File(folderToCreate.toString()).mkdir();
+        } else {
+            new File(folder).mkdir();
+        }
     }
 
     private String createNonExistingImageName(String folder, String imageName) {
