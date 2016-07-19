@@ -46,7 +46,7 @@ public class ArticleDataController {
 
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getArticleImage(HttpServletResponse response, @PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName) {
-        String filePath = FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        String filePath = FileSystemInjector.getArticleFolder() + "/" + articleId + "/" + imageName;
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -59,7 +59,7 @@ public class ArticleDataController {
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getArticleImage(HttpServletResponse response, @PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName,
             @PathVariable int width, @PathVariable int height) {
-        String filePath = FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        String filePath = FileSystemInjector.getArticleFolder() + "/" + articleId + "/" + imageName;
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
             return new ResponseEntity<>(HttpStatus.OK);

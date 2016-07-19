@@ -70,7 +70,7 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertArticles();
         _databasePopulator.createArticleImageFoldersAndAddImage();
         
-        File articleTopFolder = new File(FileSystemInjector.getImageUploadFolder());
+        File articleTopFolder = new File(FileSystemInjector.getArticleFolder());
 
         int articleFolderCount = articleTopFolder.listFiles().length;
         

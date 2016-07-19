@@ -127,11 +127,11 @@ public class DatabasePopulatorForArticleManager {
     }
 
     private void createArticleFolder(long articleId) {
-        new File(FileSystemInjector.getImageUploadFolder() + "/" + articleId).mkdir();
+        new File(FileSystemInjector.getArticleFolder() + "/" + articleId).mkdir();
     }
 
     private String creatImageDestinationPath(long articleId, String imageName) {
-        return FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        return FileSystemInjector.getArticleFolder() + "/" + articleId + "/" + imageName;
     }
 
     private void createImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {

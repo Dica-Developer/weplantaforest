@@ -14,9 +14,11 @@ public class FileSystemInjector {
     @Autowired
     Environment env;
 
-    public static String UPLOAD_DIR = "/ipat_uploads_articles";
+    public static String UPLOAD_DIR = "/ipat_uploads";
 
     public static String IMAGE_DIR = "/images";
+    
+    public static String ARTICLE_DIR = "/articles";
 
     private static String topFolder;
 
@@ -31,13 +33,14 @@ public class FileSystemInjector {
                 new File(topFolder).mkdir();
                 new File(topFolder + UPLOAD_DIR).mkdir();
                 new File(topFolder + UPLOAD_DIR + IMAGE_DIR).mkdir();
+                new File(topFolder + UPLOAD_DIR + IMAGE_DIR + ARTICLE_DIR).mkdir();
             }
         };
         Thread thread = new Thread(treeInjector);
         thread.start();
     }
 
-    public static String getImageUploadFolder() {
-        return topFolder + UPLOAD_DIR + IMAGE_DIR;
+    public static String getArticleFolder() {
+        return topFolder + UPLOAD_DIR + IMAGE_DIR + ARTICLE_DIR;
     }
 }

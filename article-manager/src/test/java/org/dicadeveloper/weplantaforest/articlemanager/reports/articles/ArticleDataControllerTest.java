@@ -113,10 +113,10 @@ public class ArticleDataControllerTest {
     }
     
     private void createArticleFolderAndInsertImage(long articleId, String imageName){
-        new File(FileSystemInjector.getImageUploadFolder() + "/" +  articleId).mkdir();
+        new File(FileSystemInjector.getArticleFolder() + "/" +  articleId).mkdir();
         
         Path imageFileSrc = new File(DatabasePopulatorForArticleManager.DUMMY_IMAGE_FOLDER + imageName).toPath();
-        String imageFileDest = FileSystemInjector.getImageUploadFolder() + "/" + articleId + "/" + imageName;
+        String imageFileDest = FileSystemInjector.getArticleFolder() + "/" + articleId + "/" + imageName;
         
         try {
             File newImageFile = new File(imageFileDest);
