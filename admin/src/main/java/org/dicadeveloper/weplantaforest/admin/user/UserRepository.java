@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.admin.user;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +20,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     
     @Query(value = FIND_PASSWORD_BY_USER_QUERY)
     public String getPasswordByUserName(@Param("name") String name);
+    
+    @Query(value ="SELECT user FROM User user")
+    public Page<User> findAllUser(Pageable page);
 }
