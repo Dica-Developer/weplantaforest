@@ -22,7 +22,6 @@ import org.dicadeveloper.weplantaforest.admin.treeType.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,11 +79,6 @@ public class ProjectControllerTest {
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
-    }
-    
-    @After
-    public void cleanUp() {
-        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getTreeTypeFolder()));
     }
 
     @Test
@@ -313,5 +307,7 @@ public class ProjectControllerTest {
 
         assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
                                           .size()).isEqualTo(1);
+        
+        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getImageFolderForProjects() + "/project 1"));
     }
 }
