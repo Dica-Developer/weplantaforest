@@ -163,10 +163,11 @@ public class ProjectControllerTest {
                                                       .param("projectId", "1"))
                .andExpect(status().isOk());
 
-        assertThat(_projectRepository.findOne(1L)
-                                     .getArticles()
-                                     .size()).isEqualTo(1);
+        List<ProjectArticle> projectArticles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
 
+        assertThat(projectArticles.size()).isEqualTo(1);
+        assertThat(projectArticles.get(0)
+                                  .getDescription()).isEqualTo("article for project");
     }
 
     @Test
@@ -198,29 +199,29 @@ public class ProjectControllerTest {
                                                       .param("projectId", "1"))
                .andExpect(status().isOk());
 
-        assertThat(_projectRepository.findOne(1L)
-                                     .getArticles()
-                                     .size()).isEqualTo(1);
+        List<ProjectArticle> projectArticles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
+
+        assertThat(projectArticles.size()).isEqualTo(1);
+        assertThat(projectArticles.get(0)
+                                  .getDescription()).isEqualTo("article for project");
 
         ProjectArticle projectArticle2 = new ProjectArticle();
 
         projectArticle2.setAmount(100L);
         projectArticle2.setTreeType(_treeTypeRepository.findOne(2L));
-        projectArticle2.setDescription("article for project");
+        projectArticle2.setDescription("2nd article for project");
         projectArticle2.setPrice(price);
 
-        assertThat(_projectRepository.findOne(1L)
-                                     .getArticles()
-                                     .size()).isEqualTo(1);
-
         mockMvc.perform(post(Uris.PROJECT_ADD_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                      .content(TestUtil.convertObjectToJsonBytes(projectArticle))
+                                                      .content(TestUtil.convertObjectToJsonBytes(projectArticle2))
                                                       .param("projectId", "1"))
                .andExpect(status().isOk());
 
-        assertThat(_projectRepository.findOne(1L)
-                                     .getArticles()
-                                     .size()).isEqualTo(2);
+        List<ProjectArticle> projectArticlesAfter2ndAddition = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
+
+        assertThat(projectArticlesAfter2ndAddition.size()).isEqualTo(2);
+        assertThat(projectArticlesAfter2ndAddition.get(1)
+                                                  .getDescription()).isEqualTo("2nd article for project");
 
     }
 
@@ -248,24 +249,6 @@ public class ProjectControllerTest {
 
     @Test
     @Transactional
-    public void testRemoveProjectArticleBadRequestCauseOfWrongProjectId() throws Exception {
-        _dbInjecter.injectUser("manager");
-        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
-        _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
-
-        List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
-
-        assertThat(articles.size()).isEqualTo(1);
-
-        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                         .param("articleId", "1")
-                                                         .param("projectId", "2"))
-               .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @Transactional
     public void testRemoveProjectArticleBadRequestCauseOfWrongArticleId() throws Exception {
         _dbInjecter.injectUser("manager");
         _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
@@ -277,8 +260,7 @@ public class ProjectControllerTest {
         assertThat(articles.size()).isEqualTo(1);
 
         mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                         .param("articleId", "2")
-                                                         .param("projectId", "1"))
+                                                         .param("articleId", "2"))
                .andExpect(status().isBadRequest());
     }
 
@@ -307,7 +289,7 @@ public class ProjectControllerTest {
 
         assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
                                           .size()).isEqualTo(1);
-        
+
         TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getImageFolderForProjects() + "/project 1"));
     }
 }

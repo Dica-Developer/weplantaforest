@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.admin.project;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -47,11 +46,15 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_DELETE, method = RequestMethod.POST)
     public ResponseEntity<?> deleteProject(@RequestParam Long id) {
         try {
-            Project project = _projectRepository.findOne(id);
-            List<ProjectArticle> articles = _projectArticleRepository.findByProject(project);
-            _projectArticleRepository.delete(articles);
-            _projectRepository.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            if (_projectRepository.exists(id)) {
+                Project project = _projectRepository.findOne(id);
+                List<ProjectArticle> articles = _projectArticleRepository.findByProject(project);
+                _projectArticleRepository.delete(articles);
+                _projectRepository.delete(id);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,43 +63,23 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_ADD_ARTICLE, method = RequestMethod.POST)
     public ResponseEntity<?> addProjectArticle(@RequestBody ProjectArticle projectArticle, @RequestParam Long projectId) {
         try {
-            Project project = _projectRepository.findOne(projectId);
-
-            if (project.getArticles() != null) {
-                project.getArticles()
-                       .add(projectArticle);
+            if (_projectRepository.exists(projectId)) {
+                Project project = _projectRepository.findOne(projectId);
+                projectArticle.setProject(project);
+                _projectArticleRepository.save(projectArticle);
+                return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                List<ProjectArticle> articleList = new ArrayList<>();
-                articleList.add(projectArticle);
-                project.setArticles(articleList);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            _projectRepository.save(project);
-            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = Uris.PROJECT_REMOVE_ARTICLE, method = RequestMethod.POST)
-    public ResponseEntity<?> addProjectImage(@RequestParam Long projectId, @RequestParam Long articleId) {
-
-        Project project = _projectRepository.findOne(projectId);
-        List<ProjectArticle> articles = null;
-        if (project != null) {
-            articles = _projectArticleRepository.findByProject(project);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        ProjectArticle articleToRemove = null;
-        for (ProjectArticle article : articles) {
-            if (article.getArticleId()
-                       .equals(articleId)) {
-                articleToRemove = article;
-            }
-        }
-        if (articleToRemove != null) {
-            _projectArticleRepository.delete(articleToRemove);
+    public ResponseEntity<?> removeArticle(@RequestParam Long articleId) {
+        if (_projectArticleRepository.exists(articleId)) {
+            _projectArticleRepository.delete(articleId);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
