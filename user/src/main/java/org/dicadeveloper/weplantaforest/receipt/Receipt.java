@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin.codes;
+package org.dicadeveloper.weplantaforest.receipt;
 
 import java.util.ArrayList;
 import java.util.Date;

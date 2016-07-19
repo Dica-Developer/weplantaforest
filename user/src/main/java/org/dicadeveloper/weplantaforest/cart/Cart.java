@@ -21,9 +21,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.abo.Abo;
-import org.dicadeveloper.weplantaforest.admin.codes.Receipt;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.event.Event;
+import org.dicadeveloper.weplantaforest.receipt.Receipt;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
