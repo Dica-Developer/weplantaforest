@@ -20,7 +20,7 @@ public class DbInjecter {
 
     @Autowired
     private ArticleRepository _articleRepository;
-    
+
     @Autowired
     private ParagraphRepository _paragraphRepository;
 
@@ -45,8 +45,7 @@ public class DbInjecter {
         _userRepository.save(userDto);
     }
 
-    public Article injectArticle(String title, String intro, ArticleType articleType, String ownerName,
-            long createdOn) {
+    public Article injectArticle(String title, String intro, ArticleType articleType, String ownerName, long createdOn) {
         Article article = new Article();
         article.setTitle(title);
         article.setIntro(intro);
@@ -61,10 +60,11 @@ public class DbInjecter {
     @Transactional
     public DbInjecter injectParagraphToArticle(Article article, String paragraphTitle, String paragraphText) {
         Paragraph paragraph = new Paragraph();
-        
+
         paragraph.setArticle(article);
         paragraph.setTitle(paragraphTitle);
         paragraph.setText(paragraphText);
+ 
         _paragraphRepository.save(paragraph);
 
         return this;

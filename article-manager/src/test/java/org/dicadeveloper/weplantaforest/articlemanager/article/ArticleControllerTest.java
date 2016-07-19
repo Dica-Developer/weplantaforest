@@ -81,6 +81,7 @@ public class ArticleControllerTest {
     }
 
     @Test
+    @Transactional
     public void testCreateArticle() throws Exception {
         _dbInjecter.injectUser("Adam");
 
@@ -102,12 +103,16 @@ public class ArticleControllerTest {
         paragraphs.add(paragraph);
         article.setParagraphs(paragraphs);
 
-        mockMvc.perform(post("/article/createEdit").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .content(TestUtil.convertObjectToJsonBytes(article)))
+        mockMvc.perform(post("/article/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                               .content(TestUtil.convertObjectToJsonBytes(article)))
                .andExpect(status().isOk());
 
         assertThat(_articleRepository.count()).isEqualTo(1L);
-        assertThat(_paragraphRepository.count()).isEqualTo(1L);
+
+        Article createdArticle = _articleRepository.findOne(1L);
+        assertThat(createdArticle.getParagraphs()).isNotNull();
+        assertThat(createdArticle.getParagraphs()
+                                 .size()).isEqualTo(1);
     }
 
     @Test
@@ -156,35 +161,4 @@ public class ArticleControllerTest {
 
         TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getArticleFolder() + "/1"));
     }
-
-//    @Test
-//    @Transactional
-//    public void testEditArticle() throws Exception {
-//        _dbInjecter.injectUser("manager");
-//        Article article = _dbInjecter.injectArticle("title", "intro", ArticleType.BLOG, "manager", 1000000L);
-//        _dbInjecter.injectParagraphToArticle(article, "paragraph title", "paragraph text");
-//
-//        assertThat(_articleRepository.count()).isEqualTo(1);
-//        assertThat(_paragraphRepository.count()).isEqualTo(1);
-//
-//        Article savedArticle = _articleRepository.findOne(1L);
-//
-//        List<Paragraph> paragraphs = _paragraphRepository.getParagraphsByArticleId(1L);
-//
-//        assertThat(paragraphs.size()).isEqualTo(1);
-//
-//        savedArticle.setTitle("edited title");
-//
-//        mockMvc.perform(post("/article/createEdit").contentType(TestUtil.APPLICATION_JSON_UTF8)
-//                                                   .content(TestUtil.convertObjectToJsonBytes(savedArticle)))
-//               .andExpect(status().isOk());
-//
-//        assertThat(_articleRepository.count()).isEqualTo(1);
-//        assertThat(_paragraphRepository.getParagraphsByArticleId(1L)
-//                                       .size()).isEqualTo(1);
-//
-//        Article editArticle = _articleRepository.findOne(1L);
-//
-//        assertThat(editArticle.getTitle()).isEqualTo("edited title");
-//    }
 }

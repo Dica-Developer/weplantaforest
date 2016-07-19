@@ -1,10 +1,6 @@
 package org.dicadeveloper.weplantaforest.articlemanager.articles;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,17 +31,16 @@ public class ArticleController {
 
     private @NonNull ImageHelper _imageHelper;
 
-    @RequestMapping(value = "/article/createEdit", method = RequestMethod.POST)
-    @Transactional
+    @RequestMapping(value = "/article/create", method = RequestMethod.POST)
     public ResponseEntity<?> createArticle(@RequestBody Article article) {
         try {
 
-            List<Paragraph> paragraphs = article.getParagraphs();
-
-            article.setParagraphs(new ArrayList<>());
-            for (Paragraph paragraph : paragraphs) {
-                article = article.addParagraph(paragraph);
+            if (article.getParagraphs() != null) {
+                for (Paragraph paragraph : article.getParagraphs()) {
+                    paragraph.setArticle(article);
+                }
             }
+            
             _articleRepository.save(article);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
@@ -73,7 +68,7 @@ public class ArticleController {
     @RequestMapping(value = "/paragraph/upload/image", method = RequestMethod.POST)
     public ResponseEntity<?> uploadParagraphImage(@RequestParam Long articleId, @RequestParam Long paragraphId, @RequestParam String imgType, @RequestParam("file") MultipartFile file) {
         String folder = FileSystemInjector.getArticleFolder() + "/" + articleId;
-        String imageName = "paragraph_"+ paragraphId + "." + imgType;
+        String imageName = "paragraph_" + paragraphId + "." + imgType;
         try {
             imageName = _imageHelper.storeImage(file, folder, imageName);
             Paragraph paragraphForImage = _paragraphRepository.findOne(paragraphId);
