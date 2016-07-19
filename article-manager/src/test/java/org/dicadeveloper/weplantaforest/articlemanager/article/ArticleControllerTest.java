@@ -2,11 +2,13 @@ package org.dicadeveloper.weplantaforest.articlemanager.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +115,23 @@ public class ArticleControllerTest {
         assertThat(createdArticle.getParagraphs()).isNotNull();
         assertThat(createdArticle.getParagraphs()
                                  .size()).isEqualTo(1);
+    }
+
+    @Test
+    public void testDeleteArticle() throws IOException, Exception {
+        _dbInjecter.injectUser("manager");
+        Article article = _dbInjecter.injectArticle("title", "intro", ArticleType.BLOG, "manager", 1000000L);
+        _dbInjecter.injectParagraphToArticle(article, "paragraph title", "paragraph text");
+
+        assertThat(_articleRepository.count()).isEqualTo(1L);
+        assertThat(_paragraphRepository.count()).isEqualTo(1L);
+
+        mockMvc.perform(delete("/article/delete").contentType(MediaType.APPLICATION_JSON)
+                                                 .param("articleId", "1"))
+               .andExpect(status().isOk());
+
+        assertThat(_articleRepository.count()).isEqualTo(0);
+        assertThat(_paragraphRepository.count()).isEqualTo(0);
     }
 
     @Test

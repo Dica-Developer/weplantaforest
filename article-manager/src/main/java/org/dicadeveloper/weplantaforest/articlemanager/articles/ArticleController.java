@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.articlemanager.articles;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,6 +49,20 @@ public class ArticleController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @RequestMapping(value = "/article/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteeArticle(@RequestParam Long articleId) {
+        try {
+            List<Paragraph> paragraphs = _paragraphRepository.getParagraphsByArticleId(articleId);
+            _paragraphRepository.delete(paragraphs);
+            _articleRepository.delete(articleId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.error("Error occured while deleting article!", e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
 
     @RequestMapping(value = "/article/upload/image", method = RequestMethod.POST)
     public ResponseEntity<?> uploadArticleImage(@RequestParam Long articleId, @RequestParam String imgType, @RequestParam("file") MultipartFile file) {
