@@ -1,6 +1,11 @@
 package org.dicadeveloper.weplantaforest.admin.cart;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
+import org.dicadeveloper.weplantaforest.admin.tree.Tree;
+import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +28,8 @@ public class CartController {
 
     private @NonNull CartRepository _cartRepository;
 
+    private @NonNull TreeRepository _treeRepository;
+
     @RequestMapping(value = Uris.CARTS, method = RequestMethod.GET)
     @JsonView(Views.OverviewCart.class)
     public Page<Cart> getAllCarts(@RequestParam int page, @RequestParam int size) {
@@ -34,6 +41,15 @@ public class CartController {
         if (_cartRepository.exists(cartId)) {
             Cart cart = _cartRepository.findOne(cartId);
             cart.setCartState(cartState);
+            if (CartState.DISCARDED.equals(cartState)) {
+                List<Tree> treesToDelete = new ArrayList<>();
+                for (CartItem cartItem : cart.getCartItems()) {
+                    Tree tree = cartItem.getTree();
+                    treesToDelete.add(tree);
+                    cartItem.removeTree();
+                }
+                _treeRepository.delete(treesToDelete);
+            }
             _cartRepository.save(cart);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

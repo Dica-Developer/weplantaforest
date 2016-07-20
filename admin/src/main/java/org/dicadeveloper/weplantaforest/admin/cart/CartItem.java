@@ -91,6 +91,10 @@ public class CartItem implements Identifiable<Long> {
         this.amount = tree.getAmount();
         calcAndSetTotalPrice();
     }
+    
+    public void removeTree(){
+        this.tree = null;
+    }
 
     @Override
     public String toString() {

@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.junit.Before;
@@ -53,6 +54,9 @@ public class CartControllerTest {
     
     @Autowired
     private CartRepository _cartRepository;
+    
+    @Autowired
+    private TreeRepository _treeRepository;
 
     @Before
     public void setup() {
@@ -92,7 +96,7 @@ public class CartControllerTest {
 
     @Test
     @Transactional
-    public void testChangeCartState() throws Exception {
+    public void testChangeCartStateToVerfied() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
 
         _dbInjecter.injectUser("Adam");
@@ -122,6 +126,42 @@ public class CartControllerTest {
         assertThat(_cartRepository.count()).isEqualTo(1);
         assertThat(cartAfterChangedState.getCartState()).isEqualTo(CartState.VERIFIED);
 
+    }
+    
+    @Test
+    @Transactional
+    public void testChangeCartStateToDiscarded() throws Exception {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+
+        _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle("wood", "project", 1.0);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "project");
+
+        List<Long> treeIdList = new ArrayList<>();
+        treeIdList.add(1L);
+
+        _dbInjecter.injectCart("Adam", treeIdList);
+        
+        Cart cartBeforeChangedState = _cartRepository.findOne(1L);
+        
+        assertThat(cartBeforeChangedState.getCartState()).isNull();
+        
+        assertThat(_treeRepository.count()).isEqualTo(1);
+
+        mockMvc.perform(post(Uris.CHANGE_CART_STATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                    .param("cartId", "1")
+                                                    .param("cartState", "DISCARDED"))
+               .andExpect(status().isOk());
+        
+        Cart cartAfterChangedState = _cartRepository.findOne(1L);
+        
+        assertThat(_cartRepository.count()).isEqualTo(1);
+        assertThat(cartAfterChangedState.getCartState()).isEqualTo(CartState.DISCARDED);
+        assertThat(_treeRepository.count()).isEqualTo(0);
     }
     
     @Test
