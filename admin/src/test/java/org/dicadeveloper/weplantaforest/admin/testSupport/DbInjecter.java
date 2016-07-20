@@ -2,7 +2,11 @@ package org.dicadeveloper.weplantaforest.admin.testSupport;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import org.dicadeveloper.weplantaforest.admin.cart.Cart;
+import org.dicadeveloper.weplantaforest.admin.cart.CartItem;
+import org.dicadeveloper.weplantaforest.admin.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.admin.project.Price;
 import org.dicadeveloper.weplantaforest.admin.project.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.admin.project.PriceRepository;
@@ -44,6 +48,9 @@ public class DbInjecter {
 
     @Autowired
     private PriceRepository _priceRepository;
+    
+    @Autowired
+    private CartRepository _cartRepository;
 
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
@@ -138,6 +145,24 @@ public class DbInjecter {
         image.setTitle(title);
 
         _projectImageRepository.save(image);
+    }
+    
+    public void injectCart(String buyer, List<Long> treeIds) {
+        Cart cart = new Cart();
+        cart.setBuyer(_userRepository.findByName(buyer));
+
+        List<Tree> trees = _treeRepository.findTreesByIdIn(treeIds);
+
+        for (Tree tree : trees) {
+            CartItem cartItem = new CartItem();
+            cartItem.setBasePricePerPiece(new BigDecimal(1.0));
+            cartItem.setTotalPrice(new BigDecimal(1.0));
+            cartItem.setTree(tree);
+
+            cart.addCartItem(cartItem);
+        }
+        _cartRepository.save(cart);
+
     }
 
 }

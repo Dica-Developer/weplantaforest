@@ -13,8 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.hibernate.annotations.Cascade;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +37,7 @@ public class CartItem implements Identifiable<Long> {
     @OneToOne(fetch = FetchType.LAZY)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @JoinColumn(name = "_treeId")
+    @JsonView(Views.OverviewCart.class)
     private Tree tree;
 
     @Column(name = "_plantArticleId")

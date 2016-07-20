@@ -9,7 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.team.Team;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,6 +31,7 @@ public class User implements Identifiable<Long> {
     private Long id;
 
     @Column(unique = true, name = "_name")
+    @JsonView(Views.OverviewCart.class)
     private String name;
     
     @Column(name ="_password")
