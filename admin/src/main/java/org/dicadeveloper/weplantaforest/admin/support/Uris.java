@@ -19,4 +19,10 @@ public class Uris {
     public final static String PROJECT_REMOVE_ARTICLE = "/project/article/remove";
     
     public final static String PROJECT_IMAGE_UPLOAD = "/project/image/upload";
+    
+    // carts
+    
+    public final static String CARTS = "/carts";
+    
+    public final static String CHANGE_CART_STATE = "/cart/changeState";
 }

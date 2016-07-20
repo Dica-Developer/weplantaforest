@@ -1,9 +1,12 @@
 package org.dicadeveloper.weplantaforest.admin.cart;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +14,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
+import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,6 +50,9 @@ public class CartControllerTest {
 
     @Autowired
     private DbInjecter _dbInjecter;
+    
+    @Autowired
+    private CartRepository _cartRepository;
 
     @Before
     public void setup() {
@@ -69,9 +77,9 @@ public class CartControllerTest {
 
         _dbInjecter.injectCart("Adam", treeIdList);
 
-        mockMvc.perform(get("/carts").accept("application/json")
-                                     .param("page", "0")
-                                     .param("size", "5"))
+        mockMvc.perform(get(Uris.CARTS).accept("application/json")
+                                       .param("page", "0")
+                                       .param("size", "5"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.totalElements").value(1))
                .andExpect(jsonPath("$.totalPages").value(1))
@@ -80,6 +88,40 @@ public class CartControllerTest {
                .andExpect(jsonPath("$.first").value(true))
 
                .andExpect(jsonPath("$.content[0].buyer.name").value("Adam"));
+    }
+
+    @Test
+    @Transactional
+    public void testChangeCartState() throws Exception {
+        long timeOfPlanting = System.currentTimeMillis();
+
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+
+        _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle("wood", "project", 1.0);
+
+        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "project");
+
+        List<Long> treeIdList = new ArrayList<>();
+        treeIdList.add(1L);
+
+        _dbInjecter.injectCart("Adam", treeIdList);
+        
+        Cart cartBeforeChangedState = _cartRepository.findOne(1L);
+        
+        assertThat(cartBeforeChangedState.getCartState()).isNull();
+
+        mockMvc.perform(post(Uris.CHANGE_CART_STATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                    .param("cartId", "1")
+                                                    .param("cartState", "VERIFIED"))
+               .andExpect(status().isOk());
+        
+        Cart cartAfterChangedState = _cartRepository.findOne(1L);
+        
+        assertThat(_cartRepository.count()).isEqualTo(1);
+        assertThat(cartAfterChangedState.getCartState()).isEqualTo(CartState.VERIFIED);
+
     }
 
 }
