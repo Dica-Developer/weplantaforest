@@ -25,4 +25,8 @@ public class Uris {
     public final static String CARTS = "/carts";
     
     public final static String CHANGE_CART_STATE = "/cart/changeState";
+    
+    //plant
+    
+    public final static String PLANT_FOR_USER = "/plantForUser";
 }
