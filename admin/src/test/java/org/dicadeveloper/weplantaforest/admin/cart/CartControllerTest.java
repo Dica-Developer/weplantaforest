@@ -123,5 +123,13 @@ public class CartControllerTest {
         assertThat(cartAfterChangedState.getCartState()).isEqualTo(CartState.VERIFIED);
 
     }
+    
+    @Test
+    public void testChangeCartStateBadRequestCauseOfNonExistingCartId() throws Exception {
+     mockMvc.perform(post(Uris.CHANGE_CART_STATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                    .param("cartId", "1")
+                                                    .param("cartState", "VERIFIED"))
+               .andExpect(status().isBadRequest());
+    }
 
 }
