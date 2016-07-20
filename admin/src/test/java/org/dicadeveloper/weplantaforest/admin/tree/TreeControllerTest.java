@@ -1,11 +1,9 @@
 package org.dicadeveloper.weplantaforest.admin.tree;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
@@ -106,7 +104,7 @@ public class TreeControllerTest {
 
         mockMvc.perform(post(Uris.PLANT_FOR_USER).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("userId", "1")
-                                                    .param("projectArticleId", "2")
+                                                    .param("projectArticleId", "1")
                                                     .param("amount", "10"))
                .andExpect(status().isBadRequest());
     }
