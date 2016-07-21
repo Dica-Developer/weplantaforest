@@ -54,9 +54,7 @@ public class DummyPdfController {
         PdfGiftView pdf = new PdfGiftView();
 
         try {
-            pdf.buildPdfDocument(response.getOutputStream(), gift.getConsignor()
-                                                                 .getMail(),
-                    code.getTreeCount(), splittedCode, RELATIVE_STATIC_IMAGES_PATH_GIFT);
+            pdf.buildPdfDocument(response.getOutputStream(), gift.getConsignor().getMail(), code.getTreeCount(), splittedCode, RELATIVE_STATIC_IMAGES_PATH_GIFT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -74,7 +72,7 @@ public class DummyPdfController {
         Certificate certificate = new Certificate();
 
         certificate.setCreator(user);
-        certificate.setText("just a dummy pdf");
+        certificate.setText("Dies ist mein Beitrag zur Rettung der Umwelt. Ich freue mich wie ein Schnitzel und kann gar nicht glauben, wie toll das ist.");
 
         List<Cart> carts = _cartRepository.findCartsByIdIn(cartIds);
 
