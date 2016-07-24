@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.dicadeveloper.weplantaforest.support.PdfHelper;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -17,7 +19,6 @@ import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -26,6 +27,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class PdfCertificateView2 {
 
     private String _imagePath;
+
+    private final static Font textFontForCircle = new Font(FontFamily.TIMES_ROMAN, 26, Font.ITALIC, BaseColor.WHITE);
 
     public void writePdfDataToOutputStream(OutputStream toWrite, final int treeCount, final String text, final String name, final String number, String imagePath) throws Exception {
         // create pdf
@@ -42,56 +45,13 @@ public class PdfCertificateView2 {
         doc.open();
 
         PdfContentByte cb = pdfWriter.getDirectContent();
-        createHeaderBlock(cb);
-        createCircleAndText(cb);
+        PdfHelper.createHeaderBlock(cb);
+        PdfHelper.createCircleAndText(cb, "Zertifikat", 298f, 665f, 75f, textFontForCircle, 0x9E, 0x3C, 0x59);
         createTreeCountAndCustomTextBlock(cb, text, treeCount);
         createLawTextDateAndSignatureBlock(cb, number, date);
-        addLogoToBottom(cb);
+        PdfHelper.addLogoToBottom(cb, _imagePath, 262f, 20f);
 
         doc.close();
-    }
-
-    private void createHeaderBlock(PdfContentByte cb) throws DocumentException, IOException {
-        cb.saveState();
-        cb.setColorFill(BaseColor.BLACK);
-        cb.rectangle(0.0f, 822.0f, 595.0f, 20.0f);
-        cb.fill();
-        cb.stroke();
-        cb.restoreState();
-
-        Font textFont = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.WHITE);
-
-        PdfPTable table = new PdfPTable(4);
-        float[] rows = { 100f, 100f, 100f, 295f };
-        table.setTotalWidth(rows);
-        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-        table.getDefaultCell().setFixedHeight(20);
-        table.addCell(new Phrase(new Chunk("WALD 1.1 gGmbH", textFont)));
-        table.addCell(new Phrase(new Chunk("[ Spendenkonto 222 888 ]", textFont)));
-        table.addCell(new Phrase(new Chunk("www.iplantatree.org", textFont)));
-        table.addCell(new Phrase(new Chunk(" ", textFont)));
-        table.writeSelectedRows(0, 1, 0, 842, cb);
-    }
-
-    private void createCircleAndText(PdfContentByte cb) throws DocumentException, IOException {
-        cb.saveState();
-        cb.setRGBColorFill(0x9E, 0x3C, 0x59);
-        cb.circle(298.0f, 665.0f, 75.0f);
-        cb.fill();
-        cb.stroke();
-        cb.restoreState();
-
-        cb.saveState();
-        cb.beginText();
-        cb.moveText(250.0f, 657.0f);
-        BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-        cb.setColorFill(BaseColor.WHITE);
-        cb.setFontAndSize(bf, 26.0f);
-        cb.showText("Zertifikat");
-        cb.endText();
-        cb.restoreState();
     }
 
     private void createTreeCountAndCustomTextBlock(PdfContentByte cb, String customText, int treeCount) throws DocumentException {
@@ -105,10 +65,6 @@ public class PdfCertificateView2 {
         cb.fill();
         cb.stroke();
         cb.restoreState();
-        
-        
-        
-        
 
         Integer treeCountAsObj = treeCount;
 
@@ -152,7 +108,7 @@ public class PdfCertificateView2 {
         cb.fill();
         cb.stroke();
         cb.restoreState();
-        
+
         cb.saveState();
         cb.setRGBColorFill(0x64, 0xA7, 0xBD);
         cb.moveTo(275f, 326f);
@@ -160,9 +116,9 @@ public class PdfCertificateView2 {
         cb.lineTo(298f, 315f);
         cb.lineTo(275f, 326f);
         cb.fill();
-        cb.closePathStroke();       
+        cb.closePathStroke();
         cb.restoreState();
-        
+
         PdfPTable table = new PdfPTable(2);
         float[] rows = { 247.5f, 247.5f };
         table.setTotalWidth(rows);
@@ -210,17 +166,17 @@ public class PdfCertificateView2 {
 
         underSignatureCell.addElement(underSignaturePhrase);
         underSignatureCell.setVerticalAlignment(Element.ALIGN_TOP);
-        
+
         PdfPCell spacerCell = new PdfPCell();
         spacerCell.setBorder(Rectangle.NO_BORDER);
         spacerCell.setFixedHeight(15f);
-        
+
         table.addCell(leftPhrase);
         table.addCell(rightCell);
 
         table.addCell(dateCell);
         table.addCell(emptyCell);
-        
+
         table.addCell(spacerCell);
         table.addCell(spacerCell);
 
@@ -231,13 +187,6 @@ public class PdfCertificateView2 {
         table.addCell(emptyCell);
 
         table.writeSelectedRows(0, 4, 50, 305, cb);
-    }
-
-    private void addLogoToBottom(PdfContentByte cb) throws MalformedURLException, IOException, DocumentException {
-        final Image logoImage = Image.getInstance(_imagePath + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg");
-        logoImage.setAbsolutePosition(262, 20);
-        logoImage.scalePercent(3f, 3f);
-        cb.addImage(logoImage);
     }
 
 }

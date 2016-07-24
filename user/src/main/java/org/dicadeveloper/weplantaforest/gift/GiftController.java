@@ -53,7 +53,7 @@ public class GiftController {
 
     private @NonNull CodeGenerator _codeGenerator;
 
-    private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/gift";
+    private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
 
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR + "{userId}", method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)

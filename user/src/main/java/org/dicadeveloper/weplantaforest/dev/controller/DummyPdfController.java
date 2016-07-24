@@ -40,7 +40,7 @@ public class DummyPdfController {
 
     private @NonNull CertificateRepository _certificateRepository;
 
-    private final static String RELATIVE_STATIC_IMAGES_PATH_GIFT = "src/main/resources/static/images/gift";
+    private final static String RELATIVE_STATIC_IMAGES_PATH_GIFT = "src/main/resources/static/images/pdf";
 
     private final static String RELATIVE_STATIC_IMAGES_PATH_CERTIFICATE = "src/main/resources/static/images/pdf";
 
