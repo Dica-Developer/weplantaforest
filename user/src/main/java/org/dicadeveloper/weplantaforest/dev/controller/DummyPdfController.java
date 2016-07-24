@@ -9,6 +9,7 @@ import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.certificate.PdfCertificateView;
+import org.dicadeveloper.weplantaforest.certificate.PdfCertificateView2;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
@@ -90,6 +91,42 @@ public class DummyPdfController {
         _certificateRepository.save(certificate);
 
         PdfCertificateView pdf = new PdfCertificateView();
+        try {
+            pdf.writePdfDataToOutputStream(response.getOutputStream(), treeCount, certificate.getText(), user.getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH_CERTIFICATE);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/certificate/pdf/test2", method = RequestMethod.GET, headers = "Accept=application/pdf")
+    public ResponseEntity<?> createCertificatePdf2(HttpServletResponse response) {
+        User user = _userRepository.findOne(1L);
+
+        Long[] cartIds = { 1L };
+
+        Certificate certificate = new Certificate();
+
+        certificate.setCreator(user);
+        certificate.setText("Dies ist mein Beitrag zur Rettung der Umwelt. Ich freue mich wie ein Schnitzel und kann gar nicht glauben, wie toll das ist.");
+
+        List<Cart> carts = _cartRepository.findCartsByIdIn(cartIds);
+
+        // get tree count
+        int treeCount = 0;
+        for (Cart cart : carts) {
+            certificate.addCart(cart);
+            treeCount = +cart.getTreeCount();
+        }
+
+        // generate certificate number
+        int certificateCountByUser = _certificateRepository.countCertificatesByUser(1L);
+        String certificateNumber = certificate.generateAndSetNumber(certificateCountByUser);
+
+        _certificateRepository.save(certificate);
+
+        PdfCertificateView2 pdf = new PdfCertificateView2();
         try {
             pdf.writePdfDataToOutputStream(response.getOutputStream(), treeCount, certificate.getText(), user.getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH_CERTIFICATE);
         } catch (Exception e) {
