@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
@@ -45,6 +46,9 @@ public class ReceiptControllerTest {
 
     @Autowired
     private DbInjecter _dbInjecter;
+    
+    @Autowired
+    private CartRepository _cartRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -82,6 +86,15 @@ public class ReceiptControllerTest {
         Tree tree = _dbInjecter.injectTreeToProject("wood", "Adam", 1, createAndSentDate, "project");
 
         Cart cart = _dbInjecter.injectCartWithTrees("Adam", tree);
+        
+        cart.setCallBackFirma("0815 Company");
+        cart.setCallBackVorname("Hans");
+        cart.setCallBackNachname("Wurst");
+        cart.setCallBackPlz("123456");
+        cart.setCallBackOrt("Musterstadt");
+        cart.setTimeStamp(System.currentTimeMillis());
+        
+        _cartRepository.save(cart);
 
         List<Cart> carts = new ArrayList<>();
         carts.add(cart);
