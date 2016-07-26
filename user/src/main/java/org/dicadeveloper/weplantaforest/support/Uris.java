@@ -104,5 +104,7 @@ public class Uris {
     // receipts
 
     public final static String RECEIPTS = "/receipts";
+    
+    public final static String RECEIPT_PDF = "/receipt/pdf";
 
 }
