@@ -5,10 +5,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
+import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,11 +70,23 @@ public class ReceiptControllerTest {
     }
 
     @Test
+    @Transactional
     public void testGetReceiptPdfForReceiptId() throws Exception {
         long createAndSentDate = System.currentTimeMillis();
 
         _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectReceipt("Adam", createAndSentDate, createAndSentDate, "12345");
+
+        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        _dbInjecter.injectProject("project", "Adam", "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle("wood", "project", 10, 2.0, 1.0);
+        Tree tree = _dbInjecter.injectTreeToProject("wood", "Adam", 1, createAndSentDate, "project");
+
+        Cart cart = _dbInjecter.injectCartWithTrees("Adam", tree);
+
+        List<Cart> carts = new ArrayList<>();
+        carts.add(cart);
+
+        _dbInjecter.injectReceipt("Adam", createAndSentDate, createAndSentDate, "12345", carts);
 
         mockMvc.perform(get((Uris.RECEIPT_PDF)).accept("application/pdf")
                                                .param("receiptId", "1"))

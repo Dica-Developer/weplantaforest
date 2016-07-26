@@ -354,5 +354,15 @@ public class DbInjecter {
 
         _receiptRepository.save(receipt);
     }
+    
+    public void injectReceipt(String owner, long createdOn, long sentOn, String invoiceNumber, List<Cart> carts) {
+        Receipt receipt = new Receipt();
+        receipt.setOwner(_userRepository.findByName(owner));
+        receipt.setSentOn(sentOn);
+        receipt.setInvoiceNumber(invoiceNumber);
+        receipt.setCarts(carts);
+
+        _receiptRepository.save(receipt);
+    }
 
 }
