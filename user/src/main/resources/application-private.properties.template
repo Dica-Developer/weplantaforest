@@ -5,3 +5,8 @@ mail.sender=
 mail.password=
 mail.receiver=
 mail.debug=
+
+bfs.url=
+bfs.oid=
+
+token.secret=
