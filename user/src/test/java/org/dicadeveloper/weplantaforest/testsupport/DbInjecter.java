@@ -30,6 +30,8 @@ import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectImage;
 import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
+import org.dicadeveloper.weplantaforest.receipt.Receipt;
+import org.dicadeveloper.weplantaforest.receipt.ReceiptRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
@@ -83,6 +85,9 @@ public class DbInjecter {
 
     @Autowired
     private PasswordEncrypter _passwordEncrypter;
+
+    @Autowired
+    private ReceiptRepository _receiptRepository;
 
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
@@ -339,6 +344,15 @@ public class DbInjecter {
         abo.setUser(_userRepository.findByName(owner));
 
         _aboRepository.save(abo);
+    }
+
+    public void injectReceipt(String owner, long createdOn, long sentOn, String invoiceNumber) {
+        Receipt receipt = new Receipt();
+        receipt.setOwner(_userRepository.findByName(owner));
+        receipt.setSentOn(sentOn);
+        receipt.setInvoiceNumber(invoiceNumber);
+
+        _receiptRepository.save(receipt);
     }
 
 }

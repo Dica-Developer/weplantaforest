@@ -54,12 +54,24 @@ public class ReceiptControllerTest {
         _dbInjecter.injectUser("Adam");
         _dbInjecter.injectReceipt("Adam", createAndSentDate, createAndSentDate, "12345");
 
-        mockMvc.perform(get((Uris.RECEIPTS), 1).accept("application/json")
-                                               .param("ownerId", "1"))
+        mockMvc.perform(get((Uris.RECEIPTS)).accept("application/json")
+                                            .param("ownerId", "1"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].receiptId").value(1))
                .andExpect(jsonPath("$.[0].invoiceNumber").value("12345"))
                .andExpect(jsonPath("$.[0].createdOn").exists());
+    }
+
+    @Test
+    public void testGetReceiptPdfForReceiptId() throws Exception {
+        long createAndSentDate = System.currentTimeMillis();
+
+        _dbInjecter.injectUser("Adam");
+        _dbInjecter.injectReceipt("Adam", createAndSentDate, createAndSentDate, "12345");
+
+        mockMvc.perform(get((Uris.RECEIPT_PDF)).accept("application/pdf")
+                                               .param("receiptId", "1"))
+               .andExpect(status().isOk());
     }
 
 }
