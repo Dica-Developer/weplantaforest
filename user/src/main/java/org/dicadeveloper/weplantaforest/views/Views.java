@@ -15,4 +15,8 @@ public interface Views {
     public static interface AboOverview{
         
     }
+    
+    public static interface ReceiptOverview{
+        
+    }
 }

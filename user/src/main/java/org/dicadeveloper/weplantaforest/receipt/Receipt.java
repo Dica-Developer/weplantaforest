@@ -11,116 +11,86 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Receipt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long _receiptId;
+    @JsonView(Views.ReceiptOverview.class)
+    @Column(name = "_receiptId")
+    private Long receiptId;
 
-    @Column(unique = true)
-    private String _invoiceNumber;
+    @Column(name = "_invoiceNumber", unique = true)
+    @JsonView(Views.ReceiptOverview.class)
+    private String invoiceNumber;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "_receipt__receiptId")
-    private List<Cart> _carts = new ArrayList<Cart>();
+    private List<Cart> carts = new ArrayList<Cart>();
+
+    @Column(name = "_createdOn")
+    @JsonView(Views.ReceiptOverview.class)
+    private final Long createdOn;
 
     @Column
-    private final Long _createdOn;
+    private Long sentOn;
 
-    @Column
-    private Long _sentOn;
-
-    @Column
-    private Long _ownerId;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @JoinColumn(name = "_ownerId")
+    private User owner;
 
     public Receipt() {
-        _createdOn = System.currentTimeMillis();
-    }
-
-    public void setInvoiceNumber(final String invoiceNumber) {
-        _invoiceNumber = invoiceNumber;
-    }
-
-    public String getInvoiceNumber() {
-        return _invoiceNumber;
+        createdOn = System.currentTimeMillis();
     }
 
     public String getMaskedInvoiceNumber() {
-        return _invoiceNumber.replace("/", "_");
+        return invoiceNumber.replace("/", "_");
     }
 
     public static String demaskInvoiceNumber(final String invoiceNumber) {
         return invoiceNumber.replace("_", "/");
     }
 
-    public void setCarts(final List<Cart> carts) {
-        _carts = carts;
-    }
-
     public void addCart(final Cart cart) {
-        if (!_carts.contains(cart)) {
-            _carts.add(cart);
+        if (!carts.contains(cart)) {
+            carts.add(cart);
         }
     }
 
     public void removeCart(final Cart cart) {
-        _carts.remove(cart);
+        carts.remove(cart);
     }
 
     public void clearCarts() {
-        _carts.clear();
-    }
-
-    public List<Cart> getCarts() {
-        return _carts;
-    }
-
-    public Long getId() {
-        return _receiptId;
-    }
-
-    public Long getCreatedOn() {
-        return _createdOn;
+        carts.clear();
     }
 
     public Date getCreatedOnAsDate() {
-        if (_createdOn / 1000000000000000000l >= 1) {
-            return new Date(_createdOn / 1000000l);
+        if (createdOn / 1000000000000000000l >= 1) {
+            return new Date(createdOn / 1000000l);
         }
-        return new Date(_createdOn);
-    }
-
-    public void setSentOn(final Long sentOn) {
-        _sentOn = sentOn;
+        return new Date(createdOn);
     }
 
     public void setSent() {
-        _sentOn = System.nanoTime();
-    }
-
-    public Long getSentOn() {
-        return _sentOn;
+        sentOn = System.nanoTime();
     }
 
     public boolean isSent() {
-        return _sentOn == null;
-    }
-
-    public void setOwnerId(final Long ownerId) {
-        _ownerId = ownerId;
-    }
-
-    public void setOwner(final User owner) {
-        _ownerId = owner.getId();
-    }
-
-    public Long getOwnerId() {
-        return _ownerId;
+        return sentOn == null;
     }
 }

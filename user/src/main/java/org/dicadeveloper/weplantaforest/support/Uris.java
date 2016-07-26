@@ -21,7 +21,7 @@ public class Uris {
     // Co2 report url
 
     public final static String REPORT_CO2 = "/reports/co2";
-    
+
     public final static String REPORT_CO2_FOR_USER = "/reports/co2/user";
 
     // project urls
@@ -88,11 +88,21 @@ public class Uris {
     public final static String ABO_CREATE = "/abo/create";
 
     public final static String ABO_EDIT = "/abo/edit";
-    
+
     public final static String ABO_CANCEL = "/abo/cancel";
-    
-    //login
-    
+
+    // login
+
     public final static String LOGIN = "/login";
+
+    // payment
+
+    public final static String PAYMENT_SUCCESS = "/payment/success";
+
+    public final static String PAYMENT_ERROR = "/payment/error";
+
+    // receipts
+
+    public final static String RECEIPTS = "/receipts";
 
 }
