@@ -42,6 +42,8 @@ import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectImage;
 import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
+import org.dicadeveloper.weplantaforest.receipt.Receipt;
+import org.dicadeveloper.weplantaforest.receipt.ReceiptRepository;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
@@ -83,11 +85,13 @@ public class DatabasePopulator {
     private CodeGenerator _codeGenerator;
     private AboRepository _aboRepository;
     private PasswordEncrypter _passwordEncrypter;
+    private ReceiptRepository _receiptRepository;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository,
-            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator, AboRepository aboRepository, PasswordEncrypter passwordEncrypter) {
+            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator, AboRepository aboRepository,
+            PasswordEncrypter passwordEncrypter, ReceiptRepository receiptRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -102,6 +106,7 @@ public class DatabasePopulator {
         _codeGenerator = codeGenerator;
         _aboRepository = aboRepository;
         _passwordEncrypter = passwordEncrypter;
+        _receiptRepository = receiptRepository;
     }
 
     public DatabasePopulator insertProjects() {
@@ -216,8 +221,7 @@ public class DatabasePopulator {
             treeDto.setAmount(i % 20);
             treeDto.setLatitude(i);
             treeDto.setLongitude(i);
-            treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next()
-                                                                               .getName()));
+            treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next().getName()));
             treeDto.setPlantedOn(timeOfPlant - i * 1000000L);
             treeDto.setOwner(cyclingUsers.next());
             treeDto.setProjectArticle(cyclingProjectArticles.next());
@@ -390,7 +394,7 @@ public class DatabasePopulator {
         return this;
     }
 
-    public DatabasePopulator insertGifts() {        
+    public DatabasePopulator insertGifts() {
         for (int i = 0; i < 10; i++) {
             Gift gift = new Gift();
             gift.setConsignor(_userRepository.findByName(DEFAULT_USERS.get(i)));
@@ -404,16 +408,36 @@ public class DatabasePopulator {
         }
         return this;
     }
-    
-    public DatabasePopulator insertAbo(){
+
+    public DatabasePopulator insertAbo() {
         Abo abo = new Abo();
         abo.setActive(true);
         abo.setAmount(1);
         abo.setPeriod(Period.WEEKLY);
         abo.setTimeStamp(System.currentTimeMillis());
         abo.setUser(_userRepository.findByName("Gabor"));
-        
+
         _aboRepository.save(abo);
+        return this;
+    }
+
+    public DatabasePopulator insertReceipt() {
+        Receipt receipt = new Receipt();
+        receipt.setInvoiceNumber("10001/2016");
+        receipt.setOwner(_userRepository.findOne(1L));
+        Cart cart = _cartRepository.findOne(1L);
+        cart.setCallBackFirma("0815 Company");
+        cart.setCallBackVorname("Hans");
+        cart.setCallBackNachname("Wurst");
+        cart.setCallBackPlz("123456");
+        cart.setCallBackOrt("Musterstadt");
+        cart.setTimeStamp(System.currentTimeMillis());
+
+        _cartRepository.save(cart);
+
+        receipt.addCart(cart);
+        _receiptRepository.save(receipt);
+
         return this;
     }
 

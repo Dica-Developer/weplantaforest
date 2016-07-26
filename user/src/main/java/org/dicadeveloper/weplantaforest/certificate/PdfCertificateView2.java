@@ -49,7 +49,7 @@ public class PdfCertificateView2 {
         PdfHelper.createCircleAndText(cb, "Zertifikat", 298f, 665f, 75f, textFontForCircle, 0x9E, 0x3C, 0x59);
         createTreeCountAndCustomTextBlock(cb, text, treeCount);
         createLawTextDateAndSignatureBlock(cb, number, date);
-        PdfHelper.addLogoToBottom(cb, _imagePath, 262f, 20f);
+        PdfHelper.addLogo(cb, _imagePath, 262f, 20f);
 
         doc.close();
     }
@@ -133,7 +133,7 @@ public class PdfCertificateView2 {
                 "Hiermit wird die Pflanzung dieser Bäume bescheinigt. Die Pflanzung erfolgt durch die Wald 1.1 gGmbH und kann im Internet unter www.iplantatree.org über die Zertifikat-Nummer #",
                 textFont));
         leftPhrase.add(new Chunk(number, textFontBold));
-        leftPhrase.add(new Chunk(" abgerufen bzw. nachvollzogen wer", textFont));
+        leftPhrase.add(new Chunk(" abgerufen bzw. nachvollzogen werden.", textFont));
 
         Phrase rightPhrase = new Phrase(10f);
         rightPhrase.add(new Chunk(

@@ -44,7 +44,7 @@ public class PdfGiftView {
         createBlueBlock(cb, treeCount);
         createGreyBlock(cb, codeFragments);
 
-        PdfHelper.addLogoToBottom(cb, _imagePath, 262f, 35f);
+        PdfHelper.addLogo(cb, _imagePath, 262f, 35f);
         doc.close();
     }
 

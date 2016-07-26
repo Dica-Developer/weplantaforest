@@ -61,10 +61,26 @@ public class PdfHelper {
         table.writeSelectedRows(0, 1, 0, yCoord + radius, cb);
     }
 
-    public static void addLogoToBottom(PdfContentByte cb, String imagePath, float xPos, float yPos) throws MalformedURLException, IOException, DocumentException {
+    public static void addLogo(PdfContentByte cb, String imagePath, float xPos, float yPos) throws MalformedURLException, IOException, DocumentException {
         final Image logoImage = Image.getInstance(imagePath + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg");
         logoImage.setAbsolutePosition(xPos, yPos);
         logoImage.scalePercent(3f, 3f);
         cb.addImage(logoImage);
+    }
+
+    public static void createAdress(PdfContentByte cb, float xCoord, float yCoord) throws DocumentException {
+        Font textFontForAdress = new Font(FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
+
+        PdfPTable table = new PdfPTable(1);
+        float[] rows = { 200f };
+        table.setTotalWidth(rows);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setFixedHeight(14f);
+
+        table.addCell(new Phrase(new Chunk("Wald 1.1 gemeinnützige GmbH", textFontForAdress)));
+        table.addCell(new Phrase(new Chunk("Gabelsbergerstraße 4", textFontForAdress)));
+        table.addCell(new Phrase(new Chunk("D-06114 Halle", textFontForAdress)));
+
+        table.writeSelectedRows(0, 3, xCoord, yCoord, cb);
     }
 }

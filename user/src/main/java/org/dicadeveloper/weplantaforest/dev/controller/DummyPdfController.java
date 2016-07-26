@@ -14,6 +14,9 @@ import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.gift.PdfGiftView;
+import org.dicadeveloper.weplantaforest.receipt.PdfReceiptView;
+import org.dicadeveloper.weplantaforest.receipt.Receipt;
+import org.dicadeveloper.weplantaforest.receipt.ReceiptRepository;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,8 @@ public class DummyPdfController {
     private @NonNull CartRepository _cartRepository;
 
     private @NonNull CertificateRepository _certificateRepository;
+
+    private @NonNull ReceiptRepository _receiptRepository;
 
     private final static String RELATIVE_STATIC_IMAGES_PATH_GIFT = "src/main/resources/static/images/pdf";
 
@@ -132,6 +137,22 @@ public class DummyPdfController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/receipt/pdf/test", method = RequestMethod.GET, headers = "Accept=application/pdf")
+    public ResponseEntity<?> createReceiptPdf(HttpServletResponse response) {
+        Receipt receipt = _receiptRepository.findOne(1L);
+
+        PdfReceiptView pdf = new PdfReceiptView();
+
+        try {
+            pdf.writePdfDataToOutputStream(response.getOutputStream(), RELATIVE_STATIC_IMAGES_PATH_GIFT, receipt);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
