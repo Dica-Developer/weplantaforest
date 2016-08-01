@@ -299,6 +299,7 @@ public class DatabasePopulator {
 
             team.setName("Team " + i);
             team.setAdmin(admin);
+            team.set_timeStamp(10000000L * i);
 
             List<User> teamMember = new ArrayList<User>();
             for (int j = 1; j <= 2; j++) {
