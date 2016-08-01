@@ -14,45 +14,71 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.NullRememberMeServices;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-	private final TokenAuthenticationService tokenAuthenticationService;
-	private final UserDetailsService userDetailsService;
+    private final TokenAuthenticationService tokenAuthenticationService;
+    private final UserDetailsService userDetailsService;
 
-	public StatelessLoginFilter(String urlMapping, TokenAuthenticationService tokenAuthenticationService,
-			UserDetailsService userDetailsService, AuthenticationManager authManager) {
-		super(new AntPathRequestMatcher(urlMapping));
-		this.userDetailsService = userDetailsService;
-		this.tokenAuthenticationService = tokenAuthenticationService;
-		setAuthenticationManager(authManager);
-	}
+    private AuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+    private RememberMeServices rememberMeServices = new NullRememberMeServices();
 
-	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException, IOException, ServletException {
+    public StatelessLoginFilter(String urlMapping, TokenAuthenticationService tokenAuthenticationService, UserDetailsService userDetailsService, AuthenticationManager authManager) {
+        super(new AntPathRequestMatcher(urlMapping));
+        this.userDetailsService = userDetailsService;
+        this.tokenAuthenticationService = tokenAuthenticationService;
+        setAuthenticationManager(authManager);
+    }
 
-		final User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(
-				user.getUsername(), user.getPassword());
-		return getAuthenticationManager().authenticate(loginToken);
-	}
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+        final User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+        final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+        return getAuthenticationManager().authenticate(loginToken);
+    }
 
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-			FilterChain chain, Authentication authentication) throws IOException, ServletException {
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
 
-		// Lookup the complete User object from the database and create an Authentication for it
-		final User authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
-		final UserAuthentication userAuthentication = new UserAuthentication(authenticatedUser);
+        // Lookup the complete User object from the database and create an
+        // Authentication for it
+        final User authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
+        final UserAuthentication userAuthentication = new UserAuthentication(authenticatedUser);
 
-		// Add the custom token as HTTP header to the response
-		tokenAuthenticationService.addAuthentication(response, userAuthentication);
+        addCorsRelevantResponseHeaders(response);
 
-		// Add the authentication to the Security context
-		SecurityContextHolder.getContext().setAuthentication(userAuthentication);
-	}
+        // Add the custom token as HTTP header to the response
+        tokenAuthenticationService.addAuthentication(response, userAuthentication);
+
+        // Add the authentication to the Security context
+        SecurityContextHolder.getContext()
+                             .setAuthentication(userAuthentication);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        SecurityContextHolder.clearContext();
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("Authentication request failed: " + failed.toString());
+            logger.debug("Updated SecurityContextHolder to contain null Authentication");
+            logger.debug("Delegating to authentication failure handler " + failureHandler);
+        }
+        addCorsRelevantResponseHeaders(response);
+        rememberMeServices.loginFail(request, response);
+
+        failureHandler.onAuthenticationFailure(request, response, failed);
+    }
+
+    private void addCorsRelevantResponseHeaders(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept, x-requested-with, Cache-Control");
+    }
 }
