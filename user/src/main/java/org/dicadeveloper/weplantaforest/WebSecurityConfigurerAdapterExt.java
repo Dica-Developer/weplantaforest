@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @EnableWebSecurity
 @Configuration
@@ -24,7 +25,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Autowired
     private UserDetailsService _userDetailsService;
-    
+
     @Autowired
     private PasswordEncrypter _passwordEncrypter;
 
@@ -37,36 +38,49 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .exceptionHandling().and()
-                .anonymous().and()
-                .servletApi().and()
-                .authorizeRequests()
-                                
-                //allow anonymous resource requests
-                .antMatchers("/").permitAll()
-                .antMatchers("/browser/**").permitAll()
-                
-                //allow anonymous POSTs to login
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                
-                //allow anonymous GETs to API
-                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
-                
-                //defined Admin only API area
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                
-                //all other request need to be authenticated
-                .anyRequest().hasRole("USER").and()             
-        
-                // custom JSON based authentication by POST of {"username":"<name>","password":"<password>"} which sets the token header upon authentication
-                .addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+        http.exceptionHandling()
+            .and()
+            .anonymous()
+            .and()
+            .servletApi()
+            .and()
+            .authorizeRequests()
 
-                // custom Token based authentication based on the header previously given to the client
-                .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class)
-                .headers().cacheControl();
+            // allow anonymous resource requests
+            .antMatchers("/")
+            .permitAll()
+            .antMatchers("/browser/**")
+            .permitAll()
+
+            // allow anonymous POSTs to login
+            .antMatchers(HttpMethod.POST, "/api/login")
+            .permitAll()
+
+            // allow anonymous GETs to API
+            .antMatchers(HttpMethod.GET, "/api/**")
+            .permitAll()
+
+            // defined Admin only API area
+            .antMatchers("/admin/**")
+            .hasRole("ADMIN")
+            .and()
+
+            // all other request need to be authenticated
+            // .anyRequest().hasRole("USER").and()
+
+            // custom JSON based authentication by POST of
+            // {"name":"<name>","password":"<password>"} which sets the
+            // token
+            // header upon authentication
+            .addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+
+            // custom Token based authentication based on the header previously
+            // given to the client
+            .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class)
+            .headers()
+            .cacheControl();
     }
-    
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -75,7 +89,8 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(_userDetailsService).passwordEncoder(_passwordEncrypter);
+        auth.userDetailsService(_userDetailsService)
+            .passwordEncoder(_passwordEncrypter);
     }
 
     @Override
