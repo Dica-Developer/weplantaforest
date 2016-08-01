@@ -12,6 +12,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,13 +40,18 @@ import lombok.Setter;
 @Table(name = "User")
 public class User implements Identifiable<Long>, UserDetails {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4288563962830437191L;
+
     @Id
     @GeneratedValue
     @Column(name = "_userId")
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class })
+    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class})
     private String name;
 
     @Column(name = "_password")
@@ -55,10 +61,10 @@ public class User implements Identifiable<Long>, UserDetails {
     private String mail;
 
     @Enumerated(EnumType.ORDINAL)
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "USER__ROLES", joinColumns = @JoinColumn(name = "USER__USERID") )
     @Column(name = "ELEMENT")
-    private Set<Role> _roles = new HashSet<Role>();
+    private Set<Role> roles = new HashSet<Role>();
 
     @Column(name = "_enabled", nullable = false)
     private boolean enabled = false;
@@ -77,16 +83,16 @@ public class User implements Identifiable<Long>, UserDetails {
     private Team team;
 
     public void addRole(final Role role) {
-        _roles.add(role);
+        roles.add(role);
     }
 
     public void removeRole(final Role role) {
-        _roles.remove(role);
+        roles.remove(role);
     }
 
     @Transient
     public boolean isAdmin() {
-        return _roles.contains(Role.ADMIN);
+        return roles.contains(Role.ADMIN);
     }
 
     @Override
@@ -97,7 +103,7 @@ public class User implements Identifiable<Long>, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (Role role : _roles) {
+        for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getIdentifier()));
         }
         return authorities;
