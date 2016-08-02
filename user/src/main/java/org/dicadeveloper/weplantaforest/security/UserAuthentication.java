@@ -32,7 +32,12 @@ public class UserAuthentication implements Authentication {
 
 	@Override
 	public User getDetails() {
-		return user;
+	    User customUser = new User();
+	    customUser.setId(user.getId());
+	    customUser.setName(user.getName());
+	    customUser.setMail(user.getMail());
+	    customUser.setRoles(user.getRoles());
+		return customUser;
 	}
 
 	@Override

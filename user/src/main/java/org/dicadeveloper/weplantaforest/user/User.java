@@ -27,6 +27,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
@@ -91,6 +92,7 @@ public class User implements Identifiable<Long>, UserDetails {
     }
 
     @Transient
+    @JsonIgnore
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
@@ -101,30 +103,35 @@ public class User implements Identifiable<Long>, UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getIdentifier()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getIdentifier()));
         }
         return authorities;
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return name;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
