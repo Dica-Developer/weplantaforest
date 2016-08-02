@@ -52,8 +52,6 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
         final User authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
         final UserAuthentication userAuthentication = new UserAuthentication(authenticatedUser);
 
-        addCorsRelevantResponseHeaders(response);
-
         // Add the custom token as HTTP header to the response
         tokenAuthenticationService.addAuthentication(response, userAuthentication);
 
@@ -71,14 +69,8 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
             logger.debug("Updated SecurityContextHolder to contain null Authentication");
             logger.debug("Delegating to authentication failure handler " + failureHandler);
         }
-        addCorsRelevantResponseHeaders(response);
         rememberMeServices.loginFail(request, response);
 
         failureHandler.onAuthenticationFailure(request, response, failed);
-    }
-
-    private void addCorsRelevantResponseHeaders(HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept, x-requested-with, Cache-Control");
     }
 }
