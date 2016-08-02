@@ -16,11 +16,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 @EnableWebSecurity
 @Configuration
-@Order(1)
 public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -42,31 +41,16 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             .and()
             .anonymous()
             .and()
-            .servletApi()
+            .servletApi();
+            // .and()
+            // .headers()
+            // .cacheControl();
+
+        // only for testing, concrete config has to be implemented later
+        http.authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/simplePlantProposalForTrees/2")
+            .hasRole("USER")
             .and()
-            .authorizeRequests()
-
-            // allow anonymous resource requests
-            .antMatchers("/")
-            .permitAll()
-            .antMatchers("/browser/**")
-            .permitAll()
-
-            // allow anonymous POSTs to login
-            .antMatchers(HttpMethod.POST, "/api/login")
-            .permitAll()
-
-            // allow anonymous GETs to API
-            .antMatchers(HttpMethod.GET, "/api/**")
-            .permitAll()
-
-            // defined Admin only API area
-            .antMatchers("/admin/**")
-            .hasRole("ADMIN")
-            .and()
-
-            // all other request need to be authenticated
-            // .anyRequest().hasRole("USER").and()
 
             // custom JSON based authentication by POST of
             // {"name":"<name>","password":"<password>"} which sets the
@@ -76,9 +60,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
             // custom Token based authentication based on the header previously
             // given to the client
-            .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class)
-            .headers()
-            .cacheControl();
+            .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
