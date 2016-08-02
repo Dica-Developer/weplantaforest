@@ -22,5 +22,5 @@ before_script:
   - sudo service x11-common stop || true
   - nvm install v5.5.0
   - nvm use v5.5.0
-script: ./gradlew test
+script: ./gradlew test -s
 after_success: ./gradlew coveralls uploadArchives
