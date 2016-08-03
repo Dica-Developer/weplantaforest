@@ -63,7 +63,12 @@ class PaymentBar extends Component {
 
   toggleButtonState(amount) {
     var that = this;
-    axios.get('http://localhost:8081/simplePlantProposalForTrees/' + amount).then(function(response) {
+    var token = localStorage.getItem('jwt');
+    var config = {
+      headers: {'X-AUTH-TOKEN': token}
+    };
+
+    axios.get('http://localhost:8081/simplePlantProposalForTrees/' + amount, config).then(function(response) {
       var result = response.data;
       result.projects = [];
       that.setState(result);
