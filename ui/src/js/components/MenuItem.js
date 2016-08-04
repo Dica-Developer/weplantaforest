@@ -5,9 +5,6 @@ import React, {
 export default class MenuItem extends Component {
   constructor() {
     super();
-    this.state = {
-      visible: false
-    };
   }
 
   render() {

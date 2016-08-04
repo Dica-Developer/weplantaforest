@@ -6,16 +6,13 @@ export default class Menu extends Component {
     this.state = {
       visible: false
     };
-    this.hide = this.hide.bind(this);
   }
 
   show() {
     this.setState({visible: true});
-    document.addEventListener("click", this.hide);
   }
 
   hide() {
-    document.removeEventListener("click", this.hide);
     this.setState({visible: false});
   }
 
@@ -24,7 +21,11 @@ export default class Menu extends Component {
       <div className="menu">
         <div className={(this.state.visible
           ? "visible "
-          : "") + this.props.alignment}>{this.props.children}</div>
+          : "") + this.props.alignment}>
+          <button onClick={this.hide.bind(this)}>
+            X
+          </button>
+          {this.props.children}</div>
       </div>
     );
   }

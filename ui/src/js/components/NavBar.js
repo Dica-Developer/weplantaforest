@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 
 import Menu from '../components/Menu';
 import MenuItem from '../components/MenuItem';
+import LoginMenuItem from '../components/LoginMenuItem';
 
 export default class NavBar extends Component {
 
@@ -18,14 +19,25 @@ export default class NavBar extends Component {
     return (
       <div>
         <Menu ref="left" alignment="left">
-          <MenuItem hash="first-page">First Page</MenuItem>
-          <MenuItem hash="second-page">Second Page</MenuItem>
-          <MenuItem hash="third-page">Third Page</MenuItem>
+          <MenuItem hash="first-page">PFLANZUNGEN</MenuItem>
+          <MenuItem hash="second-page">PROJEKTFLÄCHEN</MenuItem>
+          <MenuItem hash="third-page">FINDEN</MenuItem>
+          <MenuItem hash="4">FINDEN</MenuItem>
+          <MenuItem hash="5">GUTSCHEIN</MenuItem>
+          <MenuItem hash="6">FLÄCHE ANBIETEN</MenuItem>
+          <MenuItem hash="7">BESTENLISTE</MenuItem>
+          <MenuItem hash="8">STATISTIKEN</MenuItem>
+          <MenuItem hash="9">BLOG</MenuItem>
+          <MenuItem hash="10">FAQs</MenuItem>
         </Menu>
         <Menu ref="right" alignment="right">
-          <MenuItem hash="first-page">First Page</MenuItem>
-          <MenuItem hash="second-page">Second Page</MenuItem>
-          <MenuItem hash="third-page">Third Page</MenuItem>
+          <LoginMenuItem hash="login"></LoginMenuItem>
+          <MenuItem hash="first-page">MEIN WALD</MenuItem>
+          <MenuItem hash="second-page">MEIN PROFIL</MenuItem>
+          <MenuItem hash="third-page">MEIN TEAM</MenuItem>
+          <MenuItem hash="4">POSTFACH</MenuItem>
+          <MenuItem hash="5">TOOLS</MenuItem>
+          <MenuItem hash="6">ABONNEMENTS</MenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-header">

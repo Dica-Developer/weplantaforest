@@ -46,7 +46,7 @@ body {
   }
   .navbar-toggle:hover {
     background-color: #82AB1F;
-    .nav-img{
+    .nav-img {
       background-color: #82AB1F;
     }
   }
@@ -160,9 +160,23 @@ body {
     transition: -webkit-transform ease 250ms;
     transition: transform ease 250ms;
 
+    > button{
+      font-size: 30px;
+      font-weight: bold;
+      background: transparent;
+      border: 0;
+        margin-top: 10px;
+    }
+
     &.left {
       background: #82AB1F;
       left: @menu-width*-1;
+
+      > button{
+        float: right;
+        color: #3C191E;
+        margin-right: 10px;
+      }
     }
 
     &.visible.left {
@@ -172,11 +186,57 @@ body {
     &.right {
       background: #3C191E;
       right: @menu-width*-1;
+
+      > button{
+        float: left;
+        color: #fff;
+        margin-left: 10px;
+      }
     }
 
     &.visible.right {
       transform: translate3d(@menu-width*-1, 0, 0);
     }
 
+
+
+    > .menu-item {
+      float: left;
+      width: 100%;
+      margin: 0;
+      padding: 10px 15px;
+      cursor: pointer;
+      box-sizing: border-box;
+      color: #fff;
+      text-align: center;
+      &:hover {
+        font-weight: bold;
+      }
+    }
+
+    > .login-menu-item {
+      background-color: #fff;
+      float: left;
+      width: 100%;
+      margin: 0;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      text-align: center;
+
+      > input{
+        border-style: none none dashed none;
+        border-color: #3C191E;
+        &:focus{
+           outline: none;
+        }
+      }
+
+      > button{
+        margin-top: 15px;
+        margin-right: 20px;
+        float: right;
+        color: #3C191E;
+      }
+    }
   }
 }
