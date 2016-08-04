@@ -15,7 +15,7 @@ export default class MainPage extends Component {
         <div className="container background-transparent">
           <Co2Bar/>
         </div>
-        <div className="container">
+        <div className="container paddingTop15">
           <Carousel />
           <Teaser />
         </div>
