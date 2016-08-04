@@ -68,8 +68,8 @@ export default class NavBar extends Component {
               <button className="navbar-right green-button">
                 <div className="wrapper">
                   <div className="image-wrapper">
-                    <p className="price">0 €</p>
-                    <img className="nav-img" src="/assets/images/Schubkarre.png" alt="mein Pflanzkorb" width="100" height="49"/>
+                    <p className="price">300 €</p>
+                    <img className="nav-img" src="/assets/images/Schubkarre.png" alt="mein Pflanzkorb" width="60" height="30"/>
                   </div>
                   <div className="green-button-text">
                     <span className="buttonText">PFLANZKORB</span>
