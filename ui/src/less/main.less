@@ -12,7 +12,6 @@
 body {
   padding-top: 68px;
   overflow-x: hidden;
-  //  background-color: #539487;
 }
 
 .navbar {
@@ -76,10 +75,10 @@ body {
     background-color: #82AB1F;
     display: block;
     border: 0;
+    margin-right: -15px;
     .buttonText {
       color: #fff;
-      font-size: 15px;
-      font-weight: bold;
+      font-size: 18px;
     }
 
     .image-wrapper {
@@ -100,8 +99,7 @@ body {
 
     .green-button-text {
       float: left;
-      /* add this */
-      padding-top: 15px;
+      padding-top: 20px;
     }
   }
 
@@ -135,20 +133,33 @@ body {
   background: transparent;
 }
 
-.co2-header-number {
-  color: #91da91;
-  font-size: 66px;
+.tree-chars {
+  font-family: "Times New Roman", Times, serif;
+  color: #82AB1F;
+  font-size: 33px;
+}
+
+.tree-number {
+  color: #82AB1F;
+  font-size: 50px;
   font-weight: bold;
 }
 
-.co2-header-chars {
-  color: #fff;
+.co2-number {
+  color: #53F2D3;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.co2-chars {
+  font-family: "Times New Roman", Times, serif;
+  color: #53F2D3;
   font-size: 33px;
 }
 
 .menu {
   display: block;
-  @menu-width: 250px;
+  @menu-width: 350px;
 
   > div {
     position: absolute;
@@ -160,19 +171,19 @@ body {
     transition: -webkit-transform ease 250ms;
     transition: transform ease 250ms;
 
-    > button{
+    > button {
       font-size: 30px;
       font-weight: bold;
       background: transparent;
       border: 0;
-        margin-top: 10px;
+      margin-top: 10px;
     }
 
     &.left {
       background: #82AB1F;
       left: @menu-width*-1;
 
-      > button{
+      > button {
         float: right;
         color: #3C191E;
         margin-right: 10px;
@@ -187,7 +198,8 @@ body {
       background: #3C191E;
       right: @menu-width*-1;
 
-      > button{
+      > button {
+        padding-bottom: 19px;
         float: left;
         color: #fff;
         margin-left: 10px;
@@ -198,8 +210,6 @@ body {
       transform: translate3d(@menu-width*-1, 0, 0);
     }
 
-
-
     > .menu-item {
       float: left;
       width: 100%;
@@ -209,6 +219,7 @@ body {
       box-sizing: border-box;
       color: #fff;
       text-align: center;
+      font-size: 20px;
       &:hover {
         font-weight: bold;
       }
@@ -223,20 +234,81 @@ body {
       box-sizing: border-box;
       text-align: center;
 
-      > input{
+      > input {
         border-style: none none dashed none;
         border-color: #3C191E;
-        &:focus{
-           outline: none;
+        font-size: 16px;
+        width: 80%;
+        padding: 10px;
+        &:focus {
+          outline: none;
         }
       }
 
-      > button{
-        margin-top: 15px;
+      > button {
+        margin-top: 20px;
         margin-right: 20px;
         float: right;
         color: #3C191E;
       }
     }
+  }
+}
+
+.co2ButtonDiv {
+  padding-top: 25px;
+}
+
+.co2ButtonTable {
+  width: 100%;
+  td {
+    vertical-align: bottom;
+  }
+}
+
+.outline-logo {
+  margin-bottom: 40px;
+}
+
+.buttonBar {
+  float: right;
+  background-color: #3C191E;
+  padding: 10px;
+
+  margin-right: -15px;
+
+  tr {
+    color: #fff;
+    font-size: 16px;
+    img {
+      background-color: #fff;
+      margin-bottom: 10px;
+      margin-right: 15px;
+    }
+
+  }
+  tr:hover {
+    color: #82AB1F;
+    img {
+      background-color: #82AB1F;
+    }
+    .no-link-deco{
+        color: #82AB1F;
+        text-decoration: none;
+    }
+
+    a:hover{
+        color: #82AB1F;
+        text-decoration: none;
+    }
+  }
+
+  .no-link-deco{
+    color: #fff;
+    text-decoration: none;
+  }
+
+  td {
+    vertical-align: middle;
   }
 }

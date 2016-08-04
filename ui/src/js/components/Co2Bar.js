@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 
 export default class Co2Bar extends Component {
@@ -21,11 +21,12 @@ export default class Co2Bar extends Component {
   render() {
     return (
       <div className="row">
-        <div className="co2-header-chars">gepflanzte Bäume</div>
-        <div className="co2-header-number">{this.state.co2.toLocaleString()}</div>
-        <br />
-        <div className="co2-header-chars">CO2 gebunden / Tonnen</div>
-        <div className="co2-header-number">{this.state.treesCount.toLocaleString()}</div>
-      </div>);
+        <div className="tree-chars">gepflanzte Bäume</div>
+        <div className="tree-number">{this.state.treesCount.toLocaleString()}</div>
+        <br/>
+        <div className="co2-chars">CO<sub>2</sub> gebunden / Tonnen</div>
+        <div className="co2-number">{this.state.co2.toLocaleString()}</div>
+      </div>
+    );
   }
 }
