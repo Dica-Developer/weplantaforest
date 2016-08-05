@@ -7,10 +7,11 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PasswordEncrypter {
+public class PasswordEncrypter implements PasswordEncoder{
 
     protected final Log LOG = LogFactory.getLog(PasswordEncrypter.class.getName());
 
@@ -40,6 +41,16 @@ public class PasswordEncrypter {
             LOG.error("Unknown encoding " + US_ASCII, e);
             return null;
         }
+    }
+
+    @Override
+    public String encode(CharSequence rawPassword) {
+        return encryptPassword(rawPassword.toString());
+    }
+
+    @Override
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {    
+        return encryptPassword(rawPassword.toString()).equals(encodedPassword);
     }
 
 }
