@@ -65,6 +65,7 @@ export default class NavBar extends Component {
               <Link to="/plant" className="navbar-left">
                 <img className="nav-img" src="/assets/images/Schere.png" alt="Baumservice" width="59" height="50"/>
               </Link>
+              //TODO: extract in own component
               <button className="navbar-right green-button">
                 <div className="wrapper">
                   <div className="image-wrapper">
