@@ -20,7 +20,7 @@ export default class Co2Bar extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div>
         <div className="tree-chars">gepflanzte Bäume</div>
         <div className="tree-number">{this.state.treesCount.toLocaleString()}</div>
         <br/>

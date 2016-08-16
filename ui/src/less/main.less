@@ -76,10 +76,7 @@ body {
     display: block;
     border: 0;
     margin-right: -15px;
-    padding-top: 5px;
-    padding-bottom: 10px;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding: 5px 20px 10px;
     .buttonText {
       color: #fff;
       font-size: 18px;
@@ -253,7 +250,7 @@ body {
         color: #3C191E;
       }
 
-      .validation-text{
+      .validation-text {
         color: red;
         text-align: left;
         margin-top: 70px;
@@ -264,24 +261,29 @@ body {
 
 .co2ButtonDiv {
   padding-top: 25px;
-}
+  > * {
+    float: none;
+    display: inline-block;
+  }
 
-.co2ButtonTable {
-  width: 100%;
-  td {
+  > *:first-child {
     vertical-align: bottom;
   }
-}
 
-.outline-logo {
-  margin-bottom: 40px;
+  .outline-logo {
+    vertical-align: top;
+    text-align: center;
+  }
+
+  > *:last-child {
+    vertical-align: bottom;
+  }
 }
 
 .buttonBar {
   float: right;
   background-color: #3C191E;
   padding: 10px;
-
   margin-right: -15px;
 
   tr {
@@ -299,18 +301,17 @@ body {
     img {
       background-color: #82AB1F;
     }
-    .no-link-deco{
-        color: #82AB1F;
-        text-decoration: none;
+    .no-link-deco {
+      color: #82AB1F;
+      text-decoration: none;
     }
-
-    a:hover{
-        color: #82AB1F;
-        text-decoration: none;
+    a:hover {
+      color: #82AB1F;
+      text-decoration: none;
     }
   }
 
-  .no-link-deco{
+  .no-link-deco {
     color: #fff;
     text-decoration: none;
   }
