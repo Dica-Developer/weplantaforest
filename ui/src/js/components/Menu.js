@@ -21,7 +21,7 @@ export default class Menu extends Component {
       <div className="menu">
         <div className={(this.state.visible
           ? "visible "
-          : "") + this.props.alignment}>
+          : "notvisible ") + this.props.alignment}>
           <button onClick={this.hide.bind(this)}>
             X
           </button>
