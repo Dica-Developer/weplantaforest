@@ -51,7 +51,8 @@ export default class Teaser extends Component {
           {
             name: '',
             amount: 0,
-            co2Saved: 0.0
+            co2Saved: 0.0,
+            imageName: ''
           }
         ]
       },
@@ -60,7 +61,8 @@ export default class Teaser extends Component {
           {
             name: '',
             amount: 0,
-            co2Saved: 0.0
+            co2Saved: 0.0,
+            imageName: ''
           }
         ]
       }
