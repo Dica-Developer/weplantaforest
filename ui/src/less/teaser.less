@@ -1,0 +1,88 @@
+@media only screen and (min-width : 768px) {
+  .is-table-row {
+    display: table;
+  }
+  .is-table-row [class*="col-"] {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+  }
+}
+
+.teaser {
+  padding-left: 15px;
+  padding-right: 15px;
+
+  h2 {
+    padding-left: 20px;
+    color: #fff;
+  }
+  > * {
+    padding: 0;
+    h3 {
+      color: #fff;
+      margin-left: 20px;
+    }
+
+    p{
+      margin-left: 20px;
+    }
+  }
+  > *:nth-child(1) {
+    background-color: #bfbfbf;
+    .leaflet-container {
+      height: 285px;
+      width: 100%;
+    }
+  }
+  > *:nth-child(2) {
+    background-color: #737373;
+  }
+  > *:nth-child(3) {
+    p {
+      font-size: 16px;
+    }
+
+    .rankingSummary {
+      padding-top: 10px;
+      margin-left: 100px;
+      margin-right: 50px;
+      border-style: none none solid none;
+      border-width: 1px;
+      border-color: #fff;
+    }
+    div:nth-of-type(5) {
+      div {
+        border-style: none;
+      }
+    }
+
+    .ranking-img {
+      float: left;
+      margin-right: 20px;
+      margin-left: 20px;
+      margin-top: 10px;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+
+    .name {
+      color: #fff;
+    }
+
+    .stats {
+      color: #000;
+    }
+    .stats:nth-of-type(3n+4) {
+      padding-left: 23px;
+    }
+  }
+
+  .lightBlue {
+    background-color: #51a8be;
+  }
+
+  .violett {
+    background-color: #813d59;
+  }
+}

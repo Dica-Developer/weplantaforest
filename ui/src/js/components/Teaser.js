@@ -1,21 +1,121 @@
-import React, {
-  Component
-} from 'react';
+import React, {Component} from 'react';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
+
+import ArticleTeaser from '../components/teaser/ArticleTeaser';
+import ProjectTeaser from '../components/teaser/ProjectTeaser';
+import RankingTeaser from '../components/teaser/RankingTeaser';
 
 export default class Teaser extends Component {
   constructor() {
     super();
-    this.state = {teaser: {content: []}};
+    this.state = {
+      projects: {
+        content: [
+          {
+            projectId: '',
+            projectName: '',
+            description: '',
+            longitude: 0,
+            latitude: 0,
+            amountOfMaximumTreesToPlant: '',
+            amountOfPlantedTrees: ''
+          }, {
+            projectId: '',
+            projectName: '',
+            description: '',
+            longitude: 0,
+            latitude: 0,
+            amountOfMaximumTreesToPlant: '',
+            amountOfPlantedTrees: ''
+          }
+        ]
+      },
+      teaser: {
+        content: [
+          {
+            id: '',
+            title: '',
+            imageFileName: '',
+            intro: ''
+          }, {
+            id: '',
+            title: '',
+            imageFileName: '',
+            intro: ''
+          }
+        ]
+      },
+      bestUserRanking: {
+        content: [
+          {
+            name: '',
+            amount: 0,
+            co2Saved: 0.0
+          }
+        ]
+      },
+      bestCompanyRanking: {
+        content: [
+          {
+            name: '',
+            amount: 0,
+            co2Saved: 0.0
+          }
+        ]
+      }
+    };
   }
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8083/articles/BLOG?page=0&size=3').then(function(response) {
+
+    axios.get('http://localhost:8081/reports/activeProjects?page=0&size=2').then(function(response) {
+      var result = response.data;
+      that.setState({projects: result});
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+
+    axios.get('http://localhost:8083/articles/BLOG?page=0&size=2').then(function(response) {
       var result = response.data;
       that.setState({teaser: result});
-    }).catch(function (response) {
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+
+    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=5').then(function(response) {
+      var result = response.data;
+      that.setState({bestUserRanking: result});
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+
+    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=5').then(function(response) {
+      var result = response.data;
+      that.setState({bestCompanyRanking: result});
+    }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
@@ -28,22 +128,21 @@ export default class Teaser extends Component {
   }
 
   render() {
-    return (<div className="row">
-    {this.state.teaser.content.map(function (teaser) {
-	  let imageUrl = 'http://localhost:8083/article/image/' + teaser.id + '/' + teaser.imageFileName + '/360/360';
-      return (
-        <div className="col-md-4">
-          <div className="thumbnail">
-            <img src={imageUrl} alt={teaser.title} />
-            <div className="caption">
-              <h3>{teaser.title}</h3>
-              <p>{teaser.intro}</p>
-              <p><span className="label label-info">{new Date(teaser.createdOn) + ''}</span></p>
-            </div>
-          </div>
-        </div>);
-    })}
-  </div>);
+    console.log(this.state.teaser.content);
+    return (
+      <div>
+        <div className="row teaser is-table-row">
+          <ProjectTeaser content={this.state.projects.content[0]}/>
+          <ArticleTeaser content={this.state.teaser.content[0]}/>
+          <RankingTeaser title="Beste Pflanzer" content={this.state.bestUserRanking} background="lightBlue"/>
+        </div>
+        <div className="row teaser is-table-row">
+          <ProjectTeaser content={this.state.projects.content[1]}/>
+          <ArticleTeaser content={this.state.teaser.content[1]}/>
+          <RankingTeaser title="Beste Firmen" content={this.state.bestCompanyRanking} background="violett"/>
+        </div>
+      </div>
+    );
   }
 }
 
