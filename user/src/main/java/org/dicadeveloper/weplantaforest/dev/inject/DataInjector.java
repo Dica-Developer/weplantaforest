@@ -49,7 +49,8 @@ public class DataInjector {
                                       .insertCartAndCertificateToCart()
                                       .insertGifts()
                                       .insertAbo()
-                                      .insertReceipt();
+                                      .insertReceipt()
+                                      .addUserImages();
                     LOG.info("Finished injecting " + treeCount + " trees ");
                 } else {
                     LOG.info("No entities will be injected.");

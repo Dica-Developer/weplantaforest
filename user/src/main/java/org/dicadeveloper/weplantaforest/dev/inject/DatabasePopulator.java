@@ -207,8 +207,13 @@ public class DatabasePopulator {
             user.setEnabled(true);
             user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
             user.addRole(org.dicadeveloper.weplantaforest.user.Role.USER);
-            if(i < 5){
+            if (i < 5) {
+                user.setImageName("IPAT_logo_Relaunch2016_RZ_RGB.jpg");
                 user.addRole(org.dicadeveloper.weplantaforest.user.Role.ADMIN);
+            } else if (i < 8) {
+                user.setImageName("50.jpg");
+            } else {
+                user.setImageName("51.jpg");
             }
             _userRepository.save(user);
         }
@@ -225,7 +230,8 @@ public class DatabasePopulator {
             treeDto.setAmount(i % 20);
             treeDto.setLatitude(i);
             treeDto.setLongitude(i);
-            treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next().getName()));
+            treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next()
+                                                                               .getName()));
             treeDto.setPlantedOn(timeOfPlant - i * 1000000L);
             treeDto.setOwner(cyclingUsers.next());
             treeDto.setProjectArticle(cyclingProjectArticles.next());
@@ -321,6 +327,22 @@ public class DatabasePopulator {
             }
 
         }
+
+        return this;
+    }
+
+    public DatabasePopulator addUserImages() {
+        Path imageFileSrc1 = new File(DUMMY_IMAGE_FOLDER + "50.jpg").toPath();
+        Path imageFileSrc2 = new File(DUMMY_IMAGE_FOLDER + "51.jpg").toPath();
+        Path imageFileSrc3 = new File(DUMMY_IMAGE_FOLDER + "IPAT_logo_Relaunch2016_RZ_RGB.jpg").toPath();
+
+        String imgDest1 = FileSystemInjector.getUserFolder() + "/50.jpg";
+        String imgDest2 = FileSystemInjector.getUserFolder() + "/51.jpg";
+        String imgDest3 = FileSystemInjector.getUserFolder() + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg";
+
+        createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc1, imgDest1);
+        createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc2, imgDest2);
+        createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc3, imgDest3);
 
         return this;
     }

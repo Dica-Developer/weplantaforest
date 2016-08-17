@@ -153,6 +153,17 @@ public class DatabasePopulatorTest {
 
         assertThat(_projectRepository.count()).isEqualTo(projectFolderCount);
     }
+    
+    @Test
+    public void testAddUserImages() {
+        _databasePopulator.addUserImages();
+
+        File userImageFolder = new File(FileSystemInjector.getUserFolder());
+
+        int imageCount = userImageFolder.listFiles().length;
+
+        assertThat(imageCount).isEqualTo(3);
+    }
 
     @Test
     public void testCopyAndRenameProjectImagesToProjectFolders() {
