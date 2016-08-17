@@ -17,5 +17,7 @@ public class TreeRankedUserData {
     Long amount;
 
     Double co2Saved;
+    
+    String imageName;
 
 }

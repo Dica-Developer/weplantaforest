@@ -78,7 +78,10 @@ public class User implements Identifiable<Long>, UserDetails {
 
     @Column(name = "_organisationType")
     private int organizationType;
-
+    
+    @Column(name="_imageName")
+    private String imageName;
+    
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;
