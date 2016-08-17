@@ -23,7 +23,7 @@ export default class MainPage extends Component {
             <div className="col-md-4"><ButtonBar/></div>
           </div>
         </div>
-        <div className="container paddingTop15">
+        <div className="container paddingTopBottom15">
           <Carousel/>
           <Teaser/>
         </div>
