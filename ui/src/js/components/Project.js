@@ -132,7 +132,7 @@ export default class Project extends Component {
                   <td >
                     <span className="greenValue">{Accounting.formatNumber(project.projectReportData.amountOfPlantedTrees, 0, ".", ",")}</span><br/>
                     <span className="tableText">
-                      <i>von {Accounting.formatNumber(project.projectReportData.amountOfPlantedTrees, 0, ".", ",")}&nbsp;Bäumen</i>
+                      <i>von {Accounting.formatNumber(project.projectReportData.amountOfMaximumTreesToPlant, 0, ".", ",")}&nbsp;Bäumen</i>
                     </span>
                   </td>
                 </tr>
