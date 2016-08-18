@@ -69,5 +69,10 @@ public class RankingController {
         }
         return _rankingRepository.getBestUserFromTimeRange(timeRangeStart, timeRangeEnd, new PageRequest(0, 10));
     }
+    
+    @RequestMapping(value = Uris.RANKING_BEST_USER_FOR_PROJECT, method = RequestMethod.GET)
+    public Page<TreeRankedUserData> getBestUserForProject(@Param(value="projectName")String projectName,@Param(value = "page") int page, @Param(value = "size") int size) {
+        return _rankingRepository.getBestUserForProject(projectName, System.currentTimeMillis(), new PageRequest(page, size));
+    }
 
 }

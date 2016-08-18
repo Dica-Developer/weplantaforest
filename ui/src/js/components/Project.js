@@ -75,7 +75,7 @@ export default class Project extends Component {
       }
     });
 
-    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=5').then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestUser/project?projectName=' + this.props.projectName + '&page=0&size=5').then(function(response) {
       var result = response.data;
       that.setState({bestTeamRanking: result});
       that.setState({bestUserRanking: result});
