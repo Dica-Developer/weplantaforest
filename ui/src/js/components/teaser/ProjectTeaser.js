@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Link} from 'react-router';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
 
@@ -25,7 +25,7 @@ export default class ProjectTeaser extends Component {
         </Map>
         <h3>{this.props.content.projectName}</h3>
         <p>{this.props.content.description}
-          <Link to={`/projects/` + this.props.content.projectName}>
+          <Link className="more" to={`/projects/` + this.props.content.projectName}>
             <i> (mehr)</i>
           </Link>
         </p>
