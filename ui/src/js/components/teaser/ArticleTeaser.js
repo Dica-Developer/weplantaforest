@@ -12,7 +12,7 @@ export default class ArticleTeaser extends Component {
     return (
       <div className="col-md-4">
         <img src={imageUrl} alt={this.props.content.title}/>
-          <h3>{this.props.content.title}</h3>
+          <h3><i>{this.props.content.title}</i></h3>
           <p>{this.props.content.intro}</p>
       </div>
     );

@@ -23,7 +23,7 @@ export default class ProjectTeaser extends Component {
             </Popup>
           </Marker>
         </Map>
-        <h3>{this.props.content.projectName}</h3>
+        <h3><i>{this.props.content.projectName}</i></h3>
         <p>{this.props.content.description}
           <Link className="more" to={`/projects/` + this.props.content.projectName}>
             <i> (mehr)</i>

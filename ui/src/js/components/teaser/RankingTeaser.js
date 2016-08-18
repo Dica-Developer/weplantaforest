@@ -13,7 +13,7 @@ export default class RankingTeaser extends Component {
   render() {
     return (
       <div className={"col-md-4  " + this.props.background}>
-          <h2>{this.props.title}</h2>
+          <h2><i>{this.props.title}</i></h2>
           {this.props.content.content.map(function(content) {
             let co2Rounded = Math.round(content.co2Saved * 1000) / 1000;
             let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
