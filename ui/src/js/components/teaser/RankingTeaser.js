@@ -12,26 +12,27 @@ export default class RankingTeaser extends Component {
 
   render() {
     return (
-      <div className={"col-md-4  " + this.props.background}>
-          <h2><i>{this.props.title}</i></h2>
-          {this.props.content.content.map(function(content) {
-            let co2Rounded = Math.round(content.co2Saved * 1000) / 1000;
-            let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
-            return (
-              <div>
-                <img className="ranking-img" src={imageUrl} alt="logo"/>
-                <div className="rankingSummary">
-                  <p >
-                    <span className="name">{content.name}</span><br/>
-                    <span className="stats">Baeume gepflant: {content.amount}</span><br/>
-                    <span className="stats">CO<sub>2</sub> gebunden:</span>
-                    <span className="stats">{co2Rounded}
-                      t</span>
-                  </p>
-                </div>
+      <div className={"col-md-4 " + this.props.background + " " + this.props.headerSize + " ranking"}>
+        <h2>
+          <i>{this.props.title}</i>
+        </h2>
+        {this.props.content.content.map(function(content) {
+          let co2Rounded = Math.round(content.co2Saved * 1000) / 1000;
+          let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+          return (
+            <div>
+              <img className="ranking-img" src={imageUrl} alt="logo"/>
+              <div className="rankingSummary">
+                <p >
+                  <span className="name">{content.name}</span><br/>
+                  <span className="stats">Baeume gepflant:&nbsp;{content.amount}</span><br/>
+                  <span className="stats">CO<sub>2</sub>&nbsp;gebunden:</span>
+                  <span className="stats">{co2Rounded}&nbsp;t</span>
+                </p>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
     );
   }
