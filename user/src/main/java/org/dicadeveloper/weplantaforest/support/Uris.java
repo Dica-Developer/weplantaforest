@@ -115,4 +115,8 @@ public class Uris {
     
     public final static String USER_IMAGE = "/user/image/";
 
+    
+    //team
+    public final static String TEAM_IMAGE = "/team/image/";
+    
 }
