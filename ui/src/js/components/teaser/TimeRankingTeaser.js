@@ -26,7 +26,7 @@ export default class TimeRankingTeaser extends Component {
               <div className="rankingSummary">
                 <p >
                   <span className="name">{content.name}</span><br/>
-                  <span className="stats">Baeume gepflant:&nbsp;{content.amount}</span><br/>
+                  <span className="stats">B&auml;ume gepflant:&nbsp;{content.amount}</span><br/>
                   <span className="stats">Datum:</span>
                   <span className="stats">{moment(content.plantedOn).format("DD.MM.YYYY")}</span>
                 </p>

@@ -26,7 +26,7 @@ export default class RankingTeaser extends Component {
               <div className="rankingSummary">
                 <p >
                   <span className="name">{content.name}</span><br/>
-                  <span className="stats">Baeume gepflant:&nbsp;{content.amount}</span><br/>
+                  <span className="stats">B&auml;ume gepflant:&nbsp;{content.amount}</span><br/>
                   <span className="stats">CO<sub>2</sub>&nbsp;gebunden:</span>
                   <span className="stats">{co2Rounded}&nbsp;t</span>
                 </p>
