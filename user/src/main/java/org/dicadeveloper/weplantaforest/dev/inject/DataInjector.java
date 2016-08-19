@@ -50,7 +50,8 @@ public class DataInjector {
                                       .insertGifts()
                                       .insertAbo()
                                       .insertReceipt()
-                                      .addUserAndTeamImages();
+                                      .addUserAndTeamImages()
+                                      .addTreeTypeImage();
                     LOG.info("Finished injecting " + treeCount + " trees ");
                 } else {
                     LOG.info("No entities will be injected.");

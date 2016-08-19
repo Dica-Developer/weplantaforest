@@ -191,6 +191,7 @@ public class DatabasePopulator {
                     break;
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
+                treeType.setImageFile("baum.jpg");
                 _treeTypeRepository.save(treeType);
             }
         });
@@ -232,7 +233,7 @@ public class DatabasePopulator {
             treeDto.setLongitude(i);
             treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next()
                                                                                .getName()));
-            treeDto.setPlantedOn(timeOfPlant - i * 1000000L);
+            treeDto.setPlantedOn(timeOfPlant - i * 100000000L);
             treeDto.setOwner(cyclingUsers.next());
             treeDto.setProjectArticle(cyclingProjectArticles.next());
             _treeRepository.save(treeDto);
@@ -347,6 +348,14 @@ public class DatabasePopulator {
             String imgDest = FileSystemInjector.getTeamFolder() + "/" + team.getId() + "/team.jpg";
             createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc1, imgDest);
         }
+        return this;
+    }
+    
+    public DatabasePopulator addTreeTypeImage(){
+        Path imageFileSrc3 = new File(DUMMY_IMAGE_FOLDER + "IPAT_logo_Relaunch2016_RZ_RGB.jpg").toPath();
+        String imgDest1 = FileSystemInjector.getTreeTypeFolder() + "/baum.jpg";
+        createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc3, imgDest1);
+        
         return this;
     }
 
