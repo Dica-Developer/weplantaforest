@@ -17,12 +17,12 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class RankingController {
 
     private @NonNull RankingRepository _rankingRepository;
 
-//    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
+    // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_USER, method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUser(@Param(value = "page") int page, @Param(value = "size") int size) {
         return _rankingRepository.getBestUser(System.currentTimeMillis(), new PageRequest(page, size));
@@ -33,12 +33,10 @@ public class RankingController {
         return _rankingRepository.getLastCreatedUser(new PageRequest(0, 10));
     }
 
-//    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
+    // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}", method = RequestMethod.GET)
-    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType,
-            @Param(value = "page") int page, @Param(value = "size") int size) {
-        return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType,
-                new PageRequest(page, size));
+    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType, @Param(value = "page") int page, @Param(value = "size") int size) {
+        return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(page, size));
     }
 
     @RequestMapping(value = Uris.RANKING_LAST_PLANTED_TREES, method = RequestMethod.GET)
@@ -46,7 +44,7 @@ public class RankingController {
         return _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
     }
 
-//    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
+    // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_TEAM, method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestTeams(@Param(value = "page") int page, @Param(value = "size") int size) {
         return _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(page, size));
@@ -69,10 +67,15 @@ public class RankingController {
         }
         return _rankingRepository.getBestUserFromTimeRange(timeRangeStart, timeRangeEnd, new PageRequest(0, 10));
     }
-    
+
     @RequestMapping(value = Uris.RANKING_BEST_USER_FOR_PROJECT, method = RequestMethod.GET)
-    public Page<TreeRankedUserData> getBestUserForProject(@Param(value="projectName")String projectName,@Param(value = "page") int page, @Param(value = "size") int size) {
+    public Page<TreeRankedUserData> getBestUserForProject(@Param(value = "projectName") String projectName, @Param(value = "page") int page, @Param(value = "size") int size) {
         return _rankingRepository.getBestUserForProject(projectName, System.currentTimeMillis(), new PageRequest(page, size));
+    }
+
+    @RequestMapping(value = Uris.RANKING_BEST_TEAM_FOR_PROJECT, method = RequestMethod.GET)
+    public Page<TreeRankedUserData> getBestTeamsForProject(@Param(value = "projectName") String projectName, @Param(value = "page") int page, @Param(value = "size") int size) {
+        return _rankingRepository.getBestTeamsForProject(projectName, System.currentTimeMillis(), new PageRequest(page, size));
     }
 
 }
