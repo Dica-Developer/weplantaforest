@@ -65,7 +65,7 @@ public class DatabasePopulator {
 
     protected final Log LOG = LogFactory.getLog(DatabasePopulator.class.getName());
 
-    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robin", "Espe", "Default");
+    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
 
     private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp");
 
@@ -191,8 +191,9 @@ public class DatabasePopulator {
                     break;
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
-                treeType.setImageFile("baum.jpg");
+                treeType.setImageFile( treeTypeName +".jpeg");
                 _treeTypeRepository.save(treeType);
+               
             }
         });
         return this;
@@ -351,10 +352,12 @@ public class DatabasePopulator {
         return this;
     }
     
-    public DatabasePopulator addTreeTypeImage(){
-        Path imageFileSrc3 = new File(DUMMY_IMAGE_FOLDER + "IPAT_logo_Relaunch2016_RZ_RGB.jpg").toPath();
-        String imgDest1 = FileSystemInjector.getTreeTypeFolder() + "/baum.jpg";
-        createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc3, imgDest1);
+    public DatabasePopulator addTreeTypeImages(){
+        DEFAULT_TREE_TYPES.forEach((treeTypeName) -> {
+            Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + treeTypeName + ".jpeg").toPath();
+            String imgDest = FileSystemInjector.getTreeTypeFolder() + "/" + treeTypeName + ".jpeg";
+            createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imgDest);
+        });
         
         return this;
     }
