@@ -242,7 +242,7 @@ public class DatabasePopulator {
 
     public DatabasePopulator insertProjectArticles() {
         for (Project project : _projectRepository.findAll()) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 5; i++) {
                 Price price = createPrice();
 
                 ProjectArticle plantArticle = new ProjectArticle();
@@ -303,18 +303,16 @@ public class DatabasePopulator {
     }
 
     public DatabasePopulator insertTeams() {
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 0; i < 5; i++) {
             Team team = new Team();
-            User admin = _userRepository.findByName(DEFAULT_USERS.get(i * 3));
+            User admin = _userRepository.findByName(DEFAULT_USERS.get(i));
 
-            team.setName("Team " + i);
+            team.setName("Team " + (i + 1));
             team.setAdmin(admin);
-            team.set_timeStamp(10000000L * i);
+            team.set_timeStamp(10000000L * (i + 1));
 
             List<User> teamMember = new ArrayList<User>();
-            for (int j = 1; j <= 2; j++) {
-                teamMember.add(_userRepository.findByName(DEFAULT_USERS.get(i * 3 - j)));
-            }
+            teamMember.add(_userRepository.findByName(DEFAULT_USERS.get(i + 5)));
 
             team.setMembers(teamMember);
             _teamRepository.save(team);
