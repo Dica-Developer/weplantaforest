@@ -32,7 +32,7 @@ export default class ProjectCarousel extends Component {
               <div className={activeItem}>
                 <img src={imageUrl} width="1140" height="400" alt={slide.imageFileName}/>
                 <div className="imageDescription">
-                  <span className="date"><i>{moment(new Date(slide.date).toString(), "MM.DD.YYYY").format("DD.MM.YYYY")}</i>&nbsp;/&nbsp;</span><span className="text" >{slide.description}</span>
+                  <span className="date"><i>{moment(slide.date).format("DD.MM.YYYY")}</i>&nbsp;/&nbsp;</span><span className="text" >{slide.description}</span>
                 </div>
               </div>
             );
