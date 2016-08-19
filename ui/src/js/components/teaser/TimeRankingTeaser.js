@@ -2,10 +2,11 @@ import axios from 'axios';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import moment from 'moment';
 
 import Boostrap from 'bootstrap';
 
-export default class RankingTeaser extends Component {
+export default class TimeRankingTeaser extends Component {
   constructor(props) {
     super(props);
   }
@@ -13,13 +14,12 @@ export default class RankingTeaser extends Component {
   render() {
     var imageFolder = this.props.imageFolder;
     return (
-      <div className={"col-md-4 " + this.props.background + " " + this.props.headerSize + " ranking"}>
+      <div className={"col-md-4 " + this.props.background + " " + this.props.headerSize + " timeRanking"}>
         <h2>
           <i>{this.props.title}</i>
         </h2>
         {this.props.content.content.map(function(content) {
-          let co2Rounded = Math.round(content.co2Saved * 1000) / 1000;
-          let imageUrl = 'http://localhost:8081/' + imageFolder + '/image/' + content.imageName + '/60/60';
+          let imageUrl = 'http://localhost:8081/' + imageFolder + '/image/' + content.treeTypeImageName + '/60/60';
           return (
             <div>
               <img className="ranking-img" src={imageUrl} alt="logo"/>
@@ -27,8 +27,8 @@ export default class RankingTeaser extends Component {
                 <p >
                   <span className="name">{content.name}</span><br/>
                   <span className="stats">Baeume gepflant:&nbsp;{content.amount}</span><br/>
-                  <span className="stats">CO<sub>2</sub>&nbsp;gebunden:</span>
-                  <span className="stats">{co2Rounded}&nbsp;t</span>
+                  <span className="stats">Datum:</span>
+                  <span className="stats">{moment(content.plantedOn).format("DD.MM.YYYY")}</span>
                 </p>
               </div>
             </div>
