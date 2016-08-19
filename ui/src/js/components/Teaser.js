@@ -130,18 +130,17 @@ export default class Teaser extends Component {
   }
 
   render() {
-    console.log(this.state.teaser.content);
     return (
       <div>
         <div className="row teaser is-table-row">
           <ProjectTeaser content={this.state.projects.content[0]}/>
           <ArticleTeaser content={this.state.teaser.content[0]}/>
-          <RankingTeaser title="Beste Pflanzer" content={this.state.bestUserRanking} background="lightBlue"/>
+          <RankingTeaser title="Beste Pflanzer" content={this.state.bestUserRanking} background="lightBlue" rankingGroup="user"/>
         </div>
         <div className="row teaser is-table-row">
           <ProjectTeaser content={this.state.projects.content[1]}/>
           <ArticleTeaser content={this.state.teaser.content[1]}/>
-          <RankingTeaser title="Beste Firmen" content={this.state.bestCompanyRanking} background="violett"/>
+          <RankingTeaser title="Beste Firmen" content={this.state.bestCompanyRanking} background="violett" rankingGroup="user"/>
         </div>
       </div>
     );

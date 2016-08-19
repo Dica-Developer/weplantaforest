@@ -77,9 +77,22 @@ export default class Project extends Component {
 
     axios.get('http://localhost:8081/ranking/bestUser/project?projectName=' + this.props.projectName + '&page=0&size=5').then(function(response) {
       var result = response.data;
-      that.setState({bestTeamRanking: result});
       that.setState({bestUserRanking: result});
       that.setState({newestPlantRanking: result});
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+
+    axios.get('http://localhost:8081/ranking/bestTeam/project?projectName=' + this.props.projectName + '&page=0&size=5').then(function(response) {
+      var result = response.data;
+      that.setState({bestTeamRanking: result});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -155,9 +168,9 @@ export default class Project extends Component {
           <div className="col-md-4 "></div>
         </div>
         <div className="row teaser">
-          <RankingTeaser title="Beste Teams im Projekt" content={this.state.bestTeamRanking} background="lightBlue" headerSize="smallHeader"/>
-          <RankingTeaser title="Beste Pflanzer im Projekt" content={this.state.bestUserRanking} background="grey" headerSize="smallHeader"/>
-          <RankingTeaser title="Neueste Pflanzungen im Projekt" content={this.state.newestPlantRanking} background="violett" headerSize="smallHeader"/>
+          <RankingTeaser title="Beste Teams im Projekt" content={this.state.bestTeamRanking} background="lightBlue" headerSize="smallHeader" rankingGroup="team"/>
+          <RankingTeaser title="Beste Pflanzer im Projekt" content={this.state.bestUserRanking} background="grey" headerSize="smallHeader" rankingGroup="user"/>
+          <RankingTeaser title="Neueste Pflanzungen im Projekt" content={this.state.newestPlantRanking} background="violett" headerSize="smallHeader" rankingGroup="user"/>
         </div>
       </div>
     );
