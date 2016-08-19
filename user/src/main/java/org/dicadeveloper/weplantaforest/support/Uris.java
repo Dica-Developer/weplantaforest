@@ -45,10 +45,12 @@ public class Uris {
     public final static String RANKING_BEST_TEAM = "/ranking/bestTeam";
 
     public final static String RANKING_BEST_USER_FOR_TIMERANGE = "/ranking/bestUserFromTimeRange/";
-    
+
     public final static String RANKING_BEST_USER_FOR_PROJECT = "/ranking/bestUser/project";
-    
+
     public final static String RANKING_BEST_TEAM_FOR_PROJECT = "/ranking/bestTeam/project";
+
+    public final static String RANKING_LAST_PLANTED_TREES_IN_PROJECT = "/ranking/lastPlantedTrees/project";
 
     // image url
 
@@ -108,15 +110,18 @@ public class Uris {
     // receipts
 
     public final static String RECEIPTS = "/receipts";
-    
+
     public final static String RECEIPT_PDF = "/receipt/pdf";
-    
-    //user
-    
+
+    // user
+
     public final static String USER_IMAGE = "/user/image/";
 
-    
-    //team
+    // team
     public final static String TEAM_IMAGE = "/team/image/";
-    
+
+    // treeType
+
+    public final static String TREETYPE_IMAGE = "/treeType/image/";
+
 }
