@@ -156,7 +156,7 @@ public class DatabasePopulatorTest {
     
     @Test
     public void testAddUserImages() {
-        _databasePopulator.addUserImages();
+        _databasePopulator.addUserAndTeamImages();
 
         File userImageFolder = new File(FileSystemInjector.getUserFolder());
 

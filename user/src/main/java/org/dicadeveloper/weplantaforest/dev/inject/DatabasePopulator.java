@@ -329,7 +329,7 @@ public class DatabasePopulator {
         return this;
     }
 
-    public DatabasePopulator addUserImages() {
+    public DatabasePopulator addUserAndTeamImages() {
         Path imageFileSrc1 = new File(DUMMY_IMAGE_FOLDER + "50.jpg").toPath();
         Path imageFileSrc2 = new File(DUMMY_IMAGE_FOLDER + "51.jpg").toPath();
         Path imageFileSrc3 = new File(DUMMY_IMAGE_FOLDER + "IPAT_logo_Relaunch2016_RZ_RGB.jpg").toPath();
@@ -337,11 +337,16 @@ public class DatabasePopulator {
         String imgDest1 = FileSystemInjector.getUserFolder() + "/50.jpg";
         String imgDest2 = FileSystemInjector.getUserFolder() + "/51.jpg";
         String imgDest3 = FileSystemInjector.getUserFolder() + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg";
-
+        
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc1, imgDest1);
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc2, imgDest2);
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc3, imgDest3);
-
+              
+        for(Team team : _teamRepository.findAll()){
+            new File(FileSystemInjector.getTeamFolder() + "/" + team.getId()).mkdir();          
+            String imgDest = FileSystemInjector.getTeamFolder() + "/" + team.getId() + "/team.jpg";
+            createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc1, imgDest);
+        }
         return this;
     }
 
