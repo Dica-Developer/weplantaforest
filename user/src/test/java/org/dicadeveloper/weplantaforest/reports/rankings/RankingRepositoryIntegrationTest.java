@@ -171,7 +171,7 @@ public class RankingRepositoryIntegrationTest {
         assertThat(treeList.get(0)
                            .getAmount()).isEqualTo(9);
         assertThat(treeList.get(0)
-                           .getProjectName()).isEqualTo("Project");
+                           .getPlantedOn()).isEqualTo(900000L);
     }
 
     @Test

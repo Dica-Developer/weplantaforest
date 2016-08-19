@@ -24,7 +24,7 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
 
     public final static String COUNT_BEST_ORGANIZATION_USER_QUERY = COUNT_BEST_USER_QUERY + " and tree.owner.organizationType = :organizationType";
 
-    public final static String FIND_LAST_PLANTED_TREES_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(tree.owner.name, tree.amount, tree.projectArticle.project.name)"
+    public final static String FIND_LAST_PLANTED_TREES_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(tree.owner.name, tree.amount, tree.plantedOn, tree.treeType.imageFile) "
             + "FROM Tree as tree ORDER BY tree.plantedOn desc";
 
     public final static String FIND_BEST_TEAM_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData(tree.owner.team.name, sum(tree.amount), sum(tree.amount * tree.treeType.annualCo2SavingInTons * ((:time - tree.plantedOn) / 3.1536E10)), tree.owner.imageName) "
@@ -45,6 +45,9 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
 
     public final static String COUNT_BEST_TEAM_FOR_PROJECT_QUERY = "SELECT count(distinct team.name) from Team as team where :time = :time AND :projectName = :projectName";
 
+    public final static String FIND_LAST_PLANTED_TREES_IN_PROJECT_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(tree.owner.name, tree.amount, tree.plantedOn, tree.treeType.imageFile) "
+            + "FROM Tree as tree WHERE tree.projectArticle.project.name = :projectName ORDER BY tree.plantedOn desc";
+    
     @Query(value = FIND_BEST_USER_QUERY, countQuery = COUNT_BEST_USER_QUERY)
     Page<TreeRankedUserData> getBestUser(@Param("time") long timeOfMeasurement, Pageable page);
 
@@ -68,5 +71,8 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
 
     @Query(value = FIND_BEST_TEAM_FOR_PROJECT_QUERY, countQuery = COUNT_BEST_TEAM_FOR_PROJECT_QUERY)
     Page<TreeRankedUserData> getBestTeamsForProject(@Param("projectName") String projectName, @Param("time") long timeOfMeasurement, Pageable Page);
+    
+    @Query(value = FIND_LAST_PLANTED_TREES_IN_PROJECT_QUERY)
+    Page<TimeRankedTreeData> getLastPlantedTreesInProject(@Param("projectName") String projectName, Pageable Page);
 
 }

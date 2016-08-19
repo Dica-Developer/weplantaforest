@@ -9,6 +9,7 @@ public class TimeRankedTreeData {
 
     String name;
     int amount;
-    String projectName;
+    long plantedOn;
+    String treeTypeImageName;
 
 }

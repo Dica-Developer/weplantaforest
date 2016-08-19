@@ -78,4 +78,9 @@ public class RankingController {
         return _rankingRepository.getBestTeamsForProject(projectName, System.currentTimeMillis(), new PageRequest(page, size));
     }
 
+    @RequestMapping(value = Uris.RANKING_LAST_PLANTED_TREES_IN_PROJECT, method = RequestMethod.GET)
+    public Page<TimeRankedTreeData> getLastPlantedTreesInProject(@Param(value = "projectName") String projectName, @Param(value = "page") int page, @Param(value = "size") int size) {
+        return _rankingRepository.getLastPlantedTreesInProject(projectName, new PageRequest(page, size));
+    }
+
 }

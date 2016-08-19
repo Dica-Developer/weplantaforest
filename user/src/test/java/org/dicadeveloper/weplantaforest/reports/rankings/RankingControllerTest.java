@@ -143,7 +143,7 @@ public class RankingControllerTest {
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].name").value("Adam"))
                .andExpect(jsonPath("$.[0].amount").value(9))
-               .andExpect(jsonPath("$.[0].projectName").value("Project"));
+               .andExpect(jsonPath("$.[0].plantedOn").value(900000));
     }
 
     @Test
