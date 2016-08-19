@@ -120,7 +120,7 @@ export default class Project extends Component {
   render() {
     let project = this.state.project;
     var percent = project.projectReportData.amountOfPlantedTrees / project.projectReportData.amountOfMaximumTreesToPlant * 100;
-
+    var formattedPercent = Accounting.formatNumber(percent, 0, ".", ",")
     return (
       <div>
         <div className="row project">
@@ -137,7 +137,7 @@ export default class Project extends Component {
                 <tr>
                   <td>
                     <div className="floatRight">
-                      <span className="greenValue">{percent}%</span><br/>
+                      <span className="greenValue">{formattedPercent}%</span><br/>
                       <span className="tableText">
                         <i>bepflanzt</i>
                       </span>
