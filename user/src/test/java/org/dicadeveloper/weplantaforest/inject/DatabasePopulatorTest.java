@@ -119,7 +119,7 @@ public class DatabasePopulatorTest {
 
         long activeProjectCount = _projectRepository.count();
 
-        assertThat(_projectArticleRepository.count()).isEqualTo(activeProjectCount * 3);
+        assertThat(_projectArticleRepository.count()).isEqualTo(activeProjectCount * 5);
 
     }
 
@@ -138,7 +138,7 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertUsers();
         _databasePopulator.insertTeams();
 
-        assertThat(_teamRepository.count()).isEqualTo(3);
+        assertThat(_teamRepository.count()).isEqualTo(5);
     }
 
     @Test
