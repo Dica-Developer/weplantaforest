@@ -46,7 +46,7 @@ public class Receipt {
     @JsonView(Views.ReceiptOverview.class)
     private final Long createdOn;
 
-    @Column
+    @Column(name = "_sentOn")
     private Long sentOn;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
