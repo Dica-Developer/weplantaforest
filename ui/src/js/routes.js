@@ -12,6 +12,7 @@ import PlantSuccessPage from './views/PlantSuccessPage';
 import NotFoundPage from './views/NotFoundPage';
 import ExplorePage from './views/ExplorePage';
 import ProjectDetailsPage from './views/ProjectDetailsPage';
+import ProfilePage from './views/ProfilePage';
 
 export default class Routes extends Component {
   render() {
@@ -22,6 +23,7 @@ export default class Routes extends Component {
         <Route path="/plant/succcess" component={PlantSuccessPage} />
         <Route path="/explore" component={ExplorePage} />
         <Route path="/projects/:projectName" component={ProjectDetailsPage} />
+        <Route path="/profile/:userName" component={ProfilePage} />
         <Route path="*" component={NotFoundPage} />
       </Router>
     );
