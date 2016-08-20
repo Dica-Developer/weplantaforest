@@ -44,15 +44,4 @@ public class UserRepositoryIntegrationTest {
         assertThat(exists).isEqualTo(1);
     }
 
-    @Test
-    public void testGetPasswordByUserName() {
-        _dbInjecter.injectUser("Adam");
-        User user = _userRepository.findByName("Adam");
-        user.setPassword("blabla");
-        _userRepository.save(user);
-
-        String password = _userRepository.getPasswordByUserName("Adam");
-        assertThat(password).isEqualTo("blabla");
-    }
-
 }

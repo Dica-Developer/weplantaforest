@@ -75,9 +75,12 @@ public class User implements Identifiable<Long>, UserDetails {
 
     @Column(name = "_regDate")
     private Long regDate;
+    
+    @Column(name = "_lastVisit")
+    private Long lastVisit;
 
     @Column(name = "_organisationType")
-    private int organizationType;
+    private OrganizationType organizationType;
     
     @Column(name="_imageName")
     private String imageName;
@@ -85,7 +88,7 @@ public class User implements Identifiable<Long>, UserDetails {
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;
-
+    
     public void addRole(final Role role) {
         roles.add(role);
     }

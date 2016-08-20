@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.support.Uris;
+import org.dicadeveloper.weplantaforest.user.OrganizationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,7 @@ public class RankingController {
 
     // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}", method = RequestMethod.GET)
-    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable int organizationType, @Param(value = "page") int page, @Param(value = "size") int size) {
+    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable OrganizationType organizationType, @Param(value = "page") int page, @Param(value = "size") int size) {
         return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(page, size));
     }
 

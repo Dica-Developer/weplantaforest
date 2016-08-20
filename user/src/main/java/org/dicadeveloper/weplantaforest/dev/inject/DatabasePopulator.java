@@ -48,6 +48,7 @@ import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.user.OrganizationType;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,7 +209,9 @@ public class DatabasePopulator {
             user.setPassword(_passwordEncrypter.encryptPassword(DEFAULT_USERS.get(i)));
             user.setEnabled(true);
             user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
+            user.setLastVisit(timeNoew - TimeConstants.WEEK_IN_MILLISECONDS);
             user.addRole(org.dicadeveloper.weplantaforest.user.Role.USER);
+            user.setOrganizationType(OrganizationType.PRIVATE);
             if (i < 5) {
                 user.setImageName("IPAT_logo_Relaunch2016_RZ_RGB.jpg");
                 user.addRole(org.dicadeveloper.weplantaforest.user.Role.ADMIN);

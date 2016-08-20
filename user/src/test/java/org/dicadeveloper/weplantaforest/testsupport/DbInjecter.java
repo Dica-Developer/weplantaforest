@@ -36,6 +36,7 @@ import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
+import org.dicadeveloper.weplantaforest.user.OrganizationType;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,10 +121,11 @@ public class DbInjecter {
         User userDto = new User();
         userDto.setName(userName);
         userDto.setRegDate(regDate);
+        userDto.setOrganizationType(OrganizationType.PRIVATE);
         _userRepository.save(userDto);
     }
 
-    public void injectUser(String userName, Long regDate, int organizationType) {
+    public void injectUser(String userName, Long regDate, OrganizationType organizationType) {
         User userDto = new User();
         userDto.setName(userName);
         userDto.setRegDate(regDate);

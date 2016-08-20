@@ -11,6 +11,7 @@ import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.user.OrganizationType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -59,8 +60,8 @@ public class RankingControllerTest {
 
             _dbInjecter.injectTreeType("wood", "desc", 0.5);
 
-            _dbInjecter.injectUser("Adam", 90000L, 0);
-            _dbInjecter.injectUser("Bert", 70000L, 0);
+            _dbInjecter.injectUser("Adam", 90000L, OrganizationType.PRIVATE);
+            _dbInjecter.injectUser("Bert", 70000L, OrganizationType.PRIVATE);
             _dbInjecter.injectUser("Claus", 60000L);
             _dbInjecter.injectUser("Dirk", 50000L);
             _dbInjecter.injectUser("Adam2", 40000L);
@@ -71,9 +72,9 @@ public class RankingControllerTest {
             _dbInjecter.injectUser("Bert3", 10000L);
             _dbInjecter.injectUser("Claus3", 10000L);
             _dbInjecter.injectUser("Dirk3", 10000L);
-            _dbInjecter.injectUser("money company", 10000L, 1);
-            _dbInjecter.injectUser("no money company", 10000L, 2);
-            _dbInjecter.injectUser("hogwarts", 10000L, 3);
+            _dbInjecter.injectUser("money company", 10000L, OrganizationType.COMMERCIAL);
+            _dbInjecter.injectUser("no money company", 10000L, OrganizationType.EDUCATIONAL);
+            _dbInjecter.injectUser("hogwarts", 10000L, OrganizationType.NONPROFIT);
 
             _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
 
@@ -116,7 +117,7 @@ public class RankingControllerTest {
         _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
-        mockMvc.perform(get(Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}?page=0&size=10", 0).accept("application/json"))
+        mockMvc.perform(get(Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}?page=0&size=10", OrganizationType.PRIVATE).accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.totalElements").value(2))
                .andExpect(jsonPath("$.content[0].name").value("Adam"))

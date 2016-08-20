@@ -9,6 +9,7 @@ import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.user.OrganizationType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -65,9 +66,9 @@ public class RankingRepositoryIntegrationTest {
             _dbInjecter.injectUser("Claus3", 10000L);
             _dbInjecter.injectUser("Dirk3", 10000L);
 
-            _dbInjecter.injectUser("money company", 10000L, 1);
-            _dbInjecter.injectUser("no money company", 10000L, 2);
-            _dbInjecter.injectUser("hogwarts", 10000L, 3);
+            _dbInjecter.injectUser("money company", 10000L, OrganizationType.COMMERCIAL);
+            _dbInjecter.injectUser("no money company", 10000L, OrganizationType.NONPROFIT);
+            _dbInjecter.injectUser("hogwarts", 10000L, OrganizationType.EDUCATIONAL);
 
             _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
 
@@ -129,7 +130,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
-        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, 0, new PageRequest(0, 5));
+        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, OrganizationType.PRIVATE, new PageRequest(0, 5));
 
         assertThat(privateList).isNotNull();
         assertThat(privateList.getTotalElements()).isEqualTo(2);
