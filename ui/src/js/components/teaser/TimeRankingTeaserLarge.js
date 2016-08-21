@@ -22,7 +22,7 @@ export default class TimeRankingTeaserLarge extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/trees/owner/'+ encodeURIComponent(this.props.userName) +'?page=' + that.state.pageCount + '&size=10').then(function(response) {
+    axios.get('http://localhost:8081/trees/owner/' + encodeURIComponent(this.props.userName) + '?page=' + that.state.pageCount + '&size=10').then(function(response) {
       var result = response.data;
       that.setState({newestPlantRanking: result});
     }).catch(function(response) {
@@ -41,7 +41,7 @@ export default class TimeRankingTeaserLarge extends Component {
     var that = this;
     if (!this.state.newestPlantRanking.last) {
       var newPage = this.state.pageCount + 1;
-      axios.get('http://localhost:8081/trees/owner/'+ encodeURIComponent(this.props.userName) +'?page=' + newPage + '&size=10').then(function(response) {
+      axios.get('http://localhost:8081/trees/owner/' + encodeURIComponent(this.props.userName) + '?page=' + newPage + '&size=10').then(function(response) {
         var result = response.data;
         that.setState({newestPlantRanking: result});
       }).catch(function(response) {
@@ -62,7 +62,7 @@ export default class TimeRankingTeaserLarge extends Component {
     var that = this;
     if (!this.state.newestPlantRanking.first) {
       var newPage = this.state.pageCount - 1;
-      axios.get('http://localhost:8081/trees/owner/'+ encodeURIComponent(this.props.userName) +'?page=' + newPage + '&size=10').then(function(response) {
+      axios.get('http://localhost:8081/trees/owner/' + encodeURIComponent(this.props.userName) + '?page=' + newPage + '&size=10').then(function(response) {
         var result = response.data;
         that.setState({newestPlantRanking: result});
       }).catch(function(response) {
@@ -96,7 +96,10 @@ export default class TimeRankingTeaserLarge extends Component {
             <div className="rankingSummary">
               <p >
                 <span className="bold">Anzahl:&nbsp;</span>{content.amount}<br/>
-                <span className="bold">Projekt:&nbsp;</span>{content.projectArticle.project.name}<br/>
+                <span className="bold">Projekt:&nbsp;</span>
+                <Link className="more" to={`/projects/` + content.projectArticle.project.name}>
+                  {content.projectArticle.project.name}
+                </Link><br/>
                 <span className="bold">Datum:&nbsp;</span>
                 <span >{moment(content.plantedOn).format("DD.MM.YYYY")}</span>
               </p>
@@ -111,7 +114,10 @@ export default class TimeRankingTeaserLarge extends Component {
             <div className="rankingSummary">
               <p >
                 <span className="bold">Anzahl:&nbsp;</span>{content.amount}<br/>
-                <span className="bold">Projekt:&nbsp;</span>{content.projectArticle.project.name}<br/>
+                <span className="bold">Projekt:&nbsp;</span>
+                <Link className="more" to={`/projects/` + content.projectArticle.project.name}>
+                  {content.projectArticle.project.name}
+                </Link><br/>
                 <span className="bold">Datum:&nbsp;</span>
                 <span >{moment(content.plantedOn).format("DD.MM.YYYY")}</span>
               </p>
