@@ -27,6 +27,9 @@ public class UserReportData {
     @NonNull
     OrganizationType organizationType;
     
+    @NonNull
+    String teamName;
+    
     public String getOrganizationType(){
         return organizationType.getDescription();
     }

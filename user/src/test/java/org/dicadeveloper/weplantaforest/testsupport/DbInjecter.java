@@ -129,6 +129,7 @@ public class DbInjecter {
         User userDto = new User();
         userDto.setName(userName);
         userDto.setRegDate(regDate);
+        userDto.setLastVisit(regDate);
         userDto.setOrganizationType(organizationType);
         _userRepository.save(userDto);
     }
