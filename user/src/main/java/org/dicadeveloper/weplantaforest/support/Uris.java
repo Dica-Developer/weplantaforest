@@ -121,6 +121,8 @@ public class Uris {
 
     // team
     public final static String TEAM_IMAGE = "/team/image/";
+    
+    public final static String TEAM_DETAILS = "/team";
 
     // treeType
 

@@ -314,7 +314,7 @@ public class DatabasePopulator {
 
             team.setName("Team " + (i + 1));
             team.setAdmin(admin);
-            team.set_timeStamp(10000000L * (i + 1));
+            team.setTimeStamp(10000000L * (i + 1));
 
             List<User> teamMember = new ArrayList<User>();
             teamMember.add(_userRepository.findByName(DEFAULT_USERS.get(i + 5)));

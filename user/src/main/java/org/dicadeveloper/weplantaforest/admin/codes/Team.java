@@ -36,7 +36,8 @@ public class Team implements Identifiable<Long> {
     @Column(name = "_teamId")
     private Long id;
 
-    private Long _timeStamp;
+    @Column(name ="_timeStamp")
+    private Long timeStamp;
 
     @Column(name = "_name", nullable = false, unique = true, length = 256)
     private String name;
@@ -68,7 +69,7 @@ public class Team implements Identifiable<Long> {
     }
 
     public Date getDate() {
-        return new Date(_timeStamp);
+        return new Date(timeStamp);
     }
 
     public boolean isMember(final User user) {
