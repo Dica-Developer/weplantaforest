@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import moment from 'moment';
+import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
 
@@ -25,7 +26,9 @@ export default class TimeRankingTeaser extends Component {
               <img className="ranking-img" src={imageUrl} alt="logo"/>
               <div className="rankingSummary">
                 <p >
-                  <span className="name">{content.name}</span><br/>
+                  <Link to={`/profile/` + content.name}>
+                    <span className="name">{content.name}</span>
+                  </Link><br/>
                   <span className="stats">B&auml;ume gepflant:&nbsp;{content.amount}</span><br/>
                   <span className="stats">Datum:</span>
                   <span className="stats">{moment(content.plantedOn).format("DD.MM.YYYY")}</span>

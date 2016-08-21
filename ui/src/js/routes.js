@@ -23,7 +23,7 @@ export default class Routes extends Component {
         <Route path="/plant/succcess" component={PlantSuccessPage} />
         <Route path="/explore" component={ExplorePage} />
         <Route path="/projects/:projectName" component={ProjectDetailsPage} />
-        <Route path="/profile/:userName" component={ProfilePage} />
+        <Route path="/user/:userName" component={ProfilePage} />
         <Route path="*" component={NotFoundPage} />
       </Router>
     );
