@@ -25,6 +25,9 @@ public class TeamReportData {
     String adminName;
     
     @NonNull
+    String description;
+    
+    @NonNull
     Long memberCount;
     
     Co2Data co2Data;

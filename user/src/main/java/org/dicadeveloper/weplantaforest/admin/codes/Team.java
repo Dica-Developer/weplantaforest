@@ -47,8 +47,8 @@ public class Team implements Identifiable<Long> {
     @JsonIgnore
     private List<User> members = new ArrayList<User>();
 
-    @Column(/* length = ModifiedMySql5InnoDbDialect.LENGTH_FOR_TEXT_TYPE, */ columnDefinition = "TEXT")
-    private String _description;
+    @Column(name="_description", columnDefinition = "TEXT")
+    private String description;
 
     @OneToOne(optional = false)
     @JoinColumn(name = "_admin__userId")

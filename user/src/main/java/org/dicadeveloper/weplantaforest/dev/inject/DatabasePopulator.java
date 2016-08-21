@@ -315,6 +315,7 @@ public class DatabasePopulator {
             team.setName("Team " + (i + 1));
             team.setAdmin(admin);
             team.setTimeStamp(10000000L * (i + 1));
+            team.setDescription("Can i introduce you: the phenomenal " + "Team " + (i + 1)+ "!!!");
 
             List<User> teamMember = new ArrayList<User>();
             teamMember.add(_userRepository.findByName(DEFAULT_USERS.get(i + 5)));
