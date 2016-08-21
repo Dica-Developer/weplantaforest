@@ -9,7 +9,7 @@ import {Link} from 'react-router';
 import ProjectCarousel from '../components/ProjectCarousel';
 import RankingTeaser from '../components/teaser/RankingTeaser';
 import ProjectRankingTeaser from '../components/teaser/ProjectRankingTeaser';
-import TimeRankingTeaser from '../components/teaser/TimeRankingTeaser';
+import ProjectTimeRankingTeaser from '../components/teaser/ProjectTimeRankingTeaser';
 
 export default class Project extends Component {
 
@@ -28,12 +28,6 @@ export default class Project extends Component {
         },
         images: []
       },
-      bestTeamRanking: {
-        content: []
-      },
-      bestUserRanking: {
-        content: []
-      },
       newestPlantRanking: {
         content: []
       }
@@ -45,34 +39,6 @@ export default class Project extends Component {
     axios.get('http://localhost:8081/projects/search/name/extended/' + encodeURIComponent(this.props.projectName)).then(function(response) {
       var result = response.data;
       that.setState({project: result});
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
-
-    axios.get('http://localhost:8081/ranking/bestUser/project?projectName=' + this.props.projectName + '&page=0&size=5').then(function(response) {
-      var result = response.data;
-      that.setState({bestUserRanking: result});
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
-
-    axios.get('http://localhost:8081/ranking/bestTeam/project?projectName=' + this.props.projectName + '&page=0&size=5').then(function(response) {
-      var result = response.data;
-      that.setState({bestTeamRanking: result});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -164,7 +130,7 @@ export default class Project extends Component {
         <div className="row teaser">
           <ProjectRankingTeaser title="Beste Teams im Projekt" rankingType="bestTeam" projectName={this.props.projectName} background="lightBlue" imageFolder="team"/>
           <ProjectRankingTeaser title="Beste Pflanzer im Projekt" rankingType="bestUser" projectName={this.props.projectName} background="grey" imageFolder="user"/>
-          <TimeRankingTeaser title="Neueste Pflanzungen im Projekt" content={this.state.newestPlantRanking} background="violett" imageFolder="treeType"/>
+          <ProjectTimeRankingTeaser title="Neueste Pflanzungen im Projekt" projectName={this.props.projectName} background="violett" imageFolder="treeType"/>
         </div>
       </div>
     );
