@@ -81,7 +81,7 @@ public class DatabasePopulatorTest {
     @Test
     public void testInsertUsers() throws Exception {
         _databasePopulator.insertUsers();
-        assertThat(_userRepository.count()).isEqualTo(10);
+        assertThat(_userRepository.count()).isEqualTo(15);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class DatabasePopulatorTest {
             _databasePopulator.insertTrees(10);
             fail("should throw exception");
         } catch (Exception e) {
-            assertThat(e.getMessage()).isEqualTo("No TreeTypes set up!");
+            assertThat(e.getMessage()).isEqualTo("No ProjectArticles set up!");
         }
     }
 

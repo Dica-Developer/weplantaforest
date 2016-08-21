@@ -68,7 +68,7 @@ public class DatabasePopulator {
 
     private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
 
-    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp");
+    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert", "Claus", "Django", "Emil");
 
     public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
@@ -226,20 +226,23 @@ public class DatabasePopulator {
     }
 
     public DatabasePopulator insertTrees(int count) {
-        Iterator<TreeType> cyclingTreeTypes = Iterators.cycle(loadTreeTypes());
-        Iterator<User> cyclingUsers = Iterators.cycle(loadUsers());
         Iterator<ProjectArticle> cyclingProjectArticles = Iterators.cycle(loadProjectArticles());
         long timeOfPlant = System.currentTimeMillis();
+        
+        ProjectArticle articleToPlant = cyclingProjectArticles.next();
         for (int i = 0; i < count; i++) {
+            if(i > 0 && i%15 == 0){
+                articleToPlant = cyclingProjectArticles.next();
+            }
+            
             Tree treeDto = new Tree();
-            treeDto.setAmount(i % 20);
+            treeDto.setAmount(i % 20 + 1);
             treeDto.setLatitude(i);
             treeDto.setLongitude(i);
-            treeDto.setTreeType(_treeTypeRepository.findByName(cyclingTreeTypes.next()
-                                                                               .getName()));
+            treeDto.setTreeType(articleToPlant.getTreeType());
             treeDto.setPlantedOn(timeOfPlant - i * 100000000L);
-            treeDto.setOwner(cyclingUsers.next());
-            treeDto.setProjectArticle(cyclingProjectArticles.next());
+            treeDto.setOwner(_userRepository.findByName(DEFAULT_USERS.get(i%15)));
+            treeDto.setProjectArticle(articleToPlant);
             _treeRepository.save(treeDto);
         }
         return this;
@@ -261,16 +264,16 @@ public class DatabasePopulator {
         return this;
     }
 
-    private Iterable<User> loadUsers() {
-        Verify.verify(_userRepository.count() > 0, "No Users set up!");
-        return _userRepository.findAll();
-
-    }
-
-    private Iterable<TreeType> loadTreeTypes() {
-        Verify.verify(_treeTypeRepository.count() > 0, "No TreeTypes set up!");
-        return _treeTypeRepository.findAll();
-    }
+//    private Iterable<User> loadUsers() {
+//        Verify.verify(_userRepository.count() > 0, "No Users set up!");
+//        return _userRepository.findAll();
+//
+//    }
+//
+//    private Iterable<TreeType> loadTreeTypes() {
+//        Verify.verify(_treeTypeRepository.count() > 0, "No TreeTypes set up!");
+//        return _treeTypeRepository.findAll();
+//    }
 
     private Iterable<ProjectArticle> loadProjectArticles() {
         Verify.verify(_projectArticleRepository.count() > 0, "No ProjectArticles set up!");
