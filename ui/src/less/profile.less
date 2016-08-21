@@ -2,51 +2,56 @@
 
   margin-left: 0;
   margin-right: 0;
+  overflow: hidden;
 
-  h2{
-      font-family: Georgia,Times,Times New Roman,serif;
+  h2 {
+    font-family: Georgia,Times,Times New Roman,serif;
   }
 
   .userDetails {
     background-color: #fff;
+    padding-bottom: 1000px;
+    margin-bottom: -1000px;
+    height: 100%;
   }
 
   .teamDetails {
     background-color: #e5e5e5;
+    height: 100%;
+    padding-bottom: 1000px;
+    margin-bottom: -1000px;
   }
 
-  .imageDiv{
+  .imageDiv {
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
   }
 
-  .userName{
+  .userName {
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 18px;
   }
 
-  .bold{
+  .bold {
     font-weight: bold;
   }
 
-  table{
+  table {
     width: 100%;
     font-size: 14px;
   }
 
-  .details{
-    border-style: solid none solid none ;
+  .details {
+    border-style: solid none solid none;
     border-width: 1px;
     margin-top: 25px;
     margin-bottom: 25px;
-    padding-top: 25px;
     padding-top: 15px;
     padding-bottom: 15px;
   }
-
   .editLink,
   .editLink:active,
   .editLink:visited {
@@ -57,10 +62,8 @@
     font-size: 14px;
     div {
       background-color: #fff;
-      margin-top: 15px;
-      padding-top: 10px;
+      padding-top: 40px;
       padding-bottom: 10px;
-
     }
     img {
       background-color: #fff;
@@ -74,8 +77,53 @@
     font-weight: bold;
     text-decoration: none;
 
-    img {
-      background-color: #82ab1f;
+  }
+
+  .teamDesc {
+    font-family: Georgia,Times,Times New Roman,serif;
+    border-style: none none solid none;
+    font-size: 18px;
+    border-width: 1px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+  }
+  .teamLink,
+  .teamLink:active,
+  .teamLink:visited {
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+    height: 50px;
+    font-size: 14px;
+    div {
+      background-color: #e5e5e5;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
+
+    .imgDiv {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .textDiv1Line {
+      display: inline-block;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .textDiv2Lines {
+      display: table-row;
+      text-align: left;
+      div {
+        padding-left: 10px;
+      }
+    }
+
+  }
+  .teamLink:hover {
+    font-weight: bold;
+    text-decoration: none;
+
   }
 }
