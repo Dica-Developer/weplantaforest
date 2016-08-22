@@ -35,7 +35,7 @@ export default class Carousel extends Component {
                   if (0 === index) {
                     activeItem = 'active';
                   }
-                  return (<li data-target="#carousel-example-generic" data-slide-to="{index}" className={activeItem}></li>);
+                  return (<li data-target="#carousel-example-generic" data-slide-to="{index}" className={activeItem} key={index}></li>);
                 })}
               </ol>
               <div className="carousel-inner" role="listbox">
@@ -45,7 +45,7 @@ export default class Carousel extends Component {
                     activeItem = 'item active';
                   }
                   let imageUrl = 'http://localhost:8081/project/image/' + slide.projectName + '/'+ slide.projectImageFileName + '/1140/1140';
-                  return (<div className={activeItem}>
+                  return (<div className={activeItem} key={index}>
                     <img src={imageUrl} width="1140" height="400" alt={slide.projectName} />
                     <div className="carousel-caption">
                       {slide.description}
