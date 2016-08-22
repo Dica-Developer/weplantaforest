@@ -26,7 +26,7 @@ export default class TimeRankingTeaser extends Component {
               <img className="ranking-img" src={imageUrl} alt="logo"/>
               <div className="rankingSummary">
                 <p >
-                  <Link to={`/profile/` + content.name}>
+                  <Link to={`/user/` + content.name}>
                     <span className="name">{content.name}</span>
                   </Link><br/>
                   <span className="stats">B&auml;ume gepflant:&nbsp;{content.amount}</span><br/>
