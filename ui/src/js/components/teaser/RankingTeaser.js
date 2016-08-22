@@ -15,7 +15,7 @@ export default class RankingTeaser extends Component {
   render() {
     var imageFolder = this.props.imageFolder;
     return (
-      <div className={"col-md-4 " + this.props.background + " " + this.props.headerSize + " ranking"}>
+      <div className={"col-md-4 " + this.props.background + " ranking"}>
         <h2>
           <i>{this.props.title}</i>
         </h2>
