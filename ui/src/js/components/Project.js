@@ -31,7 +31,7 @@ export default class Project extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     var that = this;
     axios.get('http://localhost:8081/projects/search/name/extended/' + encodeURIComponent(this.props.projectName)).then(function(response) {
       var result = response.data;
@@ -50,7 +50,10 @@ export default class Project extends Component {
 
   render() {
     let project = this.state.project;
-    var percent = project.projectReportData.amountOfPlantedTrees / project.projectReportData.amountOfMaximumTreesToPlant * 100;
+    var percent = 0;
+    if(project.projectReportData.amountOfMaximumTreesToPlant != 0){
+      percent = project.projectReportData.amountOfPlantedTrees / project.projectReportData.amountOfMaximumTreesToPlant * 100;
+    }
     var formattedPercent = Accounting.formatNumber(percent, 0, ".", ",")
     return (
       <div>
