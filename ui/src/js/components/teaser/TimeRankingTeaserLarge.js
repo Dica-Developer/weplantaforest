@@ -5,6 +5,7 @@ import moment from 'moment';
 import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
+import LoadingItem from '../../components/LoadingItem';
 
 export default class TimeRankingTeaserLarge extends Component {
   constructor(props) {
@@ -80,13 +81,12 @@ export default class TimeRankingTeaserLarge extends Component {
   }
 
   render() {
-    var content = this.state.newestPlantRanking.content;
     var first5Trees = [];
     var last5Trees = [];
     var counter = 1;
     var page = this.state.pageCount;
 
-    content.map(function(content) {
+    this.state.newestPlantRanking.content.map(function(content) {
       let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60';
       if (counter <= 5) {
         first5Trees.push(
@@ -141,27 +141,40 @@ export default class TimeRankingTeaserLarge extends Component {
     } else {
       rightIcon = "glyphicon-chevron-right";
     };
+
+    var pageContent = [];
+
+    if (this.state.newestPlantRanking.content[0]) {
+      pageContent.push(
+        <div>
+          <div className="col-md-12">
+            <h2>Pflanzungen</h2>
+          </div>
+          <div className="col-md-6 left">
+            <div className="rankingWrapper">
+              {first5Trees}
+            </div>
+            <a className="carousel-control pagingLink" role="button" role="button" onClick={this.callPreviousPage}>
+              <span className={"glyphicon " + leftIcon}></span>
+            </a>
+          </div>
+          <div className="col-md-6 right">
+            <a className="carousel-control pagingLink rightLink" role="button" onClick={this.callNextPage}>
+              <span className={"glyphicon " + rightIcon}></span>
+            </a>
+            <div className="rankingWrapper">
+              {last5Trees}
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      pageContent.push(<LoadingItem background="#cccccc" colSize="col-md-12"/>);
+    }
+
     return (
       <div className="row timeRankingLarge">
-        <div className="col-md-12">
-          <h2>Pflanzungen</h2>
-        </div>
-        <div className="col-md-6 left">
-          <div className="rankingWrapper">
-            {first5Trees}
-          </div>
-          <a className="carousel-control pagingLink" role="button" role="button" onClick={this.callPreviousPage}>
-            <span className={"glyphicon " + leftIcon}></span>
-          </a>
-        </div>
-        <div className="col-md-6 right">
-          <a className="carousel-control pagingLink rightLink" role="button" onClick={this.callNextPage}>
-            <span className={"glyphicon " + rightIcon}></span>
-          </a>
-          <div className="rankingWrapper">
-            {last5Trees}
-          </div>
-        </div>
+      {pageContent}
       </div>
     );
   }
