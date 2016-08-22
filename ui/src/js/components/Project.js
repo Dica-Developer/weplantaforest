@@ -27,9 +27,6 @@ export default class Project extends Component {
           amountOfPlantedTrees: 0
         },
         images: []
-      },
-      newestPlantRanking: {
-        content: []
       }
     };
   }
@@ -39,20 +36,6 @@ export default class Project extends Component {
     axios.get('http://localhost:8081/projects/search/name/extended/' + encodeURIComponent(this.props.projectName)).then(function(response) {
       var result = response.data;
       that.setState({project: result});
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
-
-    axios.get('http://localhost:8081/ranking/lastPlantedTrees/project?projectName=' + this.props.projectName + '&page=0&size=5').then(function(response) {
-      var result = response.data;
-      that.setState({newestPlantRanking: result});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
