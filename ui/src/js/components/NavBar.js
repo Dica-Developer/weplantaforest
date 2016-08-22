@@ -20,12 +20,12 @@ export default class NavBar extends Component {
       <div>
         <Menu ref="left" alignment="left">
           <MenuItem hash="first-page">PFLANZUNGEN</MenuItem>
-          <MenuItem hash="second-page">PROJEKTFLÄCHEN</MenuItem>
+          <MenuItem hash="/explore">PROJEKTFLÄCHEN</MenuItem>
           <MenuItem hash="third-page">FINDEN</MenuItem>
           <MenuItem hash="4">FINDEN</MenuItem>
           <MenuItem hash="5">GUTSCHEIN</MenuItem>
           <MenuItem hash="6">FLÄCHE ANBIETEN</MenuItem>
-          <MenuItem hash="7">BESTENLISTE</MenuItem>
+          <MenuItem hash="/ranking">BESTENLISTE</MenuItem>
           <MenuItem hash="8">STATISTIKEN</MenuItem>
           <MenuItem hash="9">BLOG</MenuItem>
           <MenuItem hash="10">FAQs</MenuItem>

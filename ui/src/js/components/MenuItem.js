@@ -1,6 +1,9 @@
 import React, {
   Component
 } from 'react';
+import {
+  Link
+} from 'react-router';
 
 export default class MenuItem extends Component {
   constructor() {
@@ -9,6 +12,7 @@ export default class MenuItem extends Component {
 
   render() {
     return (
-      <div className="menu-item">{this.props.children}</div>);
+      <div className="menu-item">  <Link to={this.props.hash}>
+          {this.props.children}  </Link></div>);
   }
 }
