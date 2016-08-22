@@ -5,6 +5,7 @@ import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
+import LoadingItem from '../../components/LoadingItem';
 
 export default class ProjectTeaser extends Component {
   constructor(props) {
@@ -12,9 +13,11 @@ export default class ProjectTeaser extends Component {
   }
 
   render() {
-    let position = [this.props.content.latitude, this.props.content.longitude];
-    return (
-      <div className="col-md-4">
+    var content = {};
+
+    if (this.props.content) {
+      let position = [this.props.content.latitude, this.props.content.longitude];
+      content["1"] = <div>
         <Map center={position} zoom={13}>
           <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
           <Marker position={position}>
@@ -23,13 +26,23 @@ export default class ProjectTeaser extends Component {
             </Popup>
           </Marker>
         </Map>
-        <h3><i>{this.props.content.projectName}</i></h3>
+        <h3>
+          <i>{this.props.content.projectName}</i>
+        </h3>
         <p>{this.props.content.description}
           <Link className="more" to={`/projects/` + this.props.content.projectName}>
-            <i> (mehr)</i>
+            <i>
+              (mehr)</i>
           </Link>
         </p>
+      </div>;
+    } else {
+      content["1"] = <LoadingItem/>;
+    }
 
+    return (
+      <div className="col-md-4">
+        {content["1"]}
       </div>
     );
   }

@@ -13,7 +13,7 @@ export default class LoadingItem extends Component {
 
   render() {
     return (
-      <div className={this.props.colSize + " loadingItem "} style={{backgroundColor: this.props.background}}>
+      <div className="loadingItem" style={{backgroundColor: this.props.background}}>
         <h2>Daten werden geladen...</h2>
         <div>
           <span className="glyphicon glyphicon-refresh spinning"></span>
