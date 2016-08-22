@@ -68,7 +68,7 @@ public class DatabasePopulator {
 
     private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
 
-    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert", "Claus", "Django", "Emil");
+    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert", "Claus", "Django", "Emil","Mr NoTree");
 
     public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
