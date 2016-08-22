@@ -120,13 +120,13 @@ export default class Teaser extends Component {
     if (this.state.bestUserRanking.content[0]) {
       bestUser.push(<RankingTeaser title="Beste Pflanzer" content={this.state.bestUserRanking} background="lightBlue" imageFolder="user"/>);
     } else {
-      bestUser.push(<LoadingItem background="lightBlue"/>);
+      bestUser.push(<LoadingItem background="#51a8be"/>);
     }
 
     if (this.state.bestCompanyRanking.content[0]) {
       bestCompany.push(<RankingTeaser title="Beste Firmen" content={this.state.bestCompanyRanking} background="violett" imageFolder="user"/>);
     } else {
-      bestCompany.push(<LoadingItem background="violett"/>);
+      bestCompany.push(<LoadingItem background="#813d59"/>);
     }
 
     return (

@@ -10,9 +10,10 @@ export default class LoadingItem extends Component {
   constructor() {
     super();
   }
+
   render() {
     return (
-      <div className={"col-md-4 loadingItem " + this.props.background}>
+      <div className={this.props.colSize + " loadingItem "} style={{backgroundColor: this.props.background}}>
         <h2>Daten werden geladen...</h2>
         <div>
           <span className="glyphicon glyphicon-refresh spinning"></span>
@@ -21,5 +22,5 @@ export default class LoadingItem extends Component {
     );
   }
 }
-
+LoadingItem.defaultProps = { colSize: 'col-md-4' };
 /* vim: set softtabstop=2:shiftwidth=2:expandtab */
