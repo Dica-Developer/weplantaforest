@@ -111,10 +111,10 @@ export default class ProjectTimeRankingTeaser extends Component {
           </div>
         </a>
         <div className="rankingWrapper">
-          {content.map(function(content) {
+          {content.map(function(content, i) {
             let imageUrl = 'http://localhost:8081/' + imageFolder + '/image/' + content.treeTypeImageName + '/60/60';
             return (
-              <div>
+              <div key={i}>
                 <img className="ranking-img" src={imageUrl} alt="logo"/>
                 <div className="rankingSummary">
                   <p >

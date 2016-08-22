@@ -132,12 +132,12 @@ export default class ProjectRankingTeaser extends Component {
           </div>
         </a>
         <div className="rankingWrapper">
-        {content.map(function(content) {
+        {content.map(function(content, i) {
           let co2Rounded = Accounting.formatNumber(content.co2Saved, 3, ".", ",");
           let imageUrl = 'http://localhost:8081/' + imageFolder + '/image/' + content.imageName + '/60/60';
           rankCnt++;
           return (
-            <div>
+            <div key={i}>
               <div className="rankingNumber">{page * 5 + rankCnt}</div>
               <img className="ranking-img" src={imageUrl} alt="logo"/>
               <div className="rankingSummary">

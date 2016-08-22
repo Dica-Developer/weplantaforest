@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React, {Component} from 'react';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import moment from 'moment';
@@ -19,8 +17,6 @@ export default class ProjectCarousel extends Component {
 
     return (
       <div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
-
-
         <div className="carousel-inner" role="listbox">
           {this.props.slides.map(function(slide, index) {
             var activeItem = 'item';
@@ -29,10 +25,12 @@ export default class ProjectCarousel extends Component {
             }
             let imageUrl = 'http://localhost:8081/project/image/' + projectName + '/' + slide.imageFileName + '/1140/1140';
             return (
-              <div className={activeItem}>
+              <div className={activeItem} key={index}>
                 <img src={imageUrl} width="1140" height="400" alt={slide.imageFileName}/>
                 <div className="imageDescription">
-                  <span className="date"><i>{moment(slide.date).format("DD.MM.YYYY")}</i>&nbsp;/&nbsp;</span><span className="text" >{slide.description}</span>
+                  <span className="date">
+                    <i>{moment(slide.date).format("DD.MM.YYYY")}</i>&nbsp;/&nbsp;</span>
+                  <span className="text">{slide.description}</span>
                 </div>
               </div>
             );
