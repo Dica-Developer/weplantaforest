@@ -21,6 +21,8 @@ public interface TreeRepository extends PagingAndSortingRepository<Tree, Long> {
     
     public final static String FIND_TREES_BY_USER_ID_QUERY = "SELECT tree  FROM Tree tree WHERE tree.owner.id = :ownerId";
     
+    public final static String FIND_TREES_BY_USER_NAME_QUERY = "SELECT tree  FROM Tree tree WHERE tree.owner.name = :userName";
+    
     public final static String FIND_TREES_BY_PROJECT_ID_QUERY = "SELECT tree  FROM Tree tree WHERE tree.projectArticle.project.id = :projectId";
 
     @Query(value = FIND_TREETYPE_ID_BY_TREE_ID_QUERY)
@@ -32,6 +34,9 @@ public interface TreeRepository extends PagingAndSortingRepository<Tree, Long> {
     
     @Query(value = FIND_TREES_BY_USER_ID_QUERY)
     public Page<Tree> findTreesByUserId(@Param("ownerId") Long ownerId, Pageable page);
+    
+    @Query(value = FIND_TREES_BY_USER_NAME_QUERY)
+    public Page<Tree> findTreesByUserName(@Param("userName") String userName, Pageable page);
     
     @Query(value = FIND_TREES_BY_PROJECT_ID_QUERY)
     public Page<Tree> findTreesByProjectId(@Param("projectId") Long projectId, Pageable page);

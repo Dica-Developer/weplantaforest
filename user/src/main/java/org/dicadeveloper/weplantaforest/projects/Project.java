@@ -13,7 +13,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,6 +37,7 @@ public class Project implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "_name", length = 255)
+    @JsonView(Views.PlantedTree.class)
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")

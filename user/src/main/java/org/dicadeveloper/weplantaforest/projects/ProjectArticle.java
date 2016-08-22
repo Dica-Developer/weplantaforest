@@ -15,6 +15,9 @@ import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
+import org.dicadeveloper.weplantaforest.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,6 +39,7 @@ public class ProjectArticle {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_plant__plantId", nullable = false)
+    @JsonView(Views.PlantedTree.class)
     private Project project;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -76,5 +76,6 @@ public class Tree implements Identifiable<Long> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_plantArticle__articleId")
+    @JsonView(Views.PlantedTree.class)
     private ProjectArticle projectArticle;
 }

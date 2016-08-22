@@ -37,6 +37,7 @@ public class TreeType implements Identifiable<Long> {
     private String description;
 
     @Column(name = "_imageFile")
+    @JsonView(Views.PlantedTree.class)
     private String imageFile;
 
     @Column(name = "_infoLink")
