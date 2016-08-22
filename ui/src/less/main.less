@@ -4,7 +4,7 @@
 @import "ranking.less";
 @import "profile.less";
 @import "rankingPage.less";
-
+@import "loadingItem.less";
 @media (min-width: 0px) {
   .navbar-left {
     float: left!important;
@@ -13,17 +13,6 @@
 @media (min-width: 0px) {
   .navbar-toggle {
     display: block;
-  }
-}
-
-@media only screen and (min-width : 768px) {
-  .is-table-row {
-    display: table;
-  }
-  .is-table-row [class*="col-"] {
-    float: none;
-    display: table-cell;
-    vertical-align: top;
   }
 }
 
@@ -242,11 +231,10 @@ body {
       text-align: center;
       font-size: 20px;
 
-      a{
+      a {
         color: #fff;
         text-decoration: none;
       }
-
       &:hover {
         font-weight: bold;
       }
@@ -294,7 +282,6 @@ body {
     float: none;
     display: inline-block;
   }
-
   > *:first-child {
     vertical-align: bottom;
   }
@@ -303,7 +290,6 @@ body {
     vertical-align: top;
     text-align: center;
   }
-
   > *:last-child {
     vertical-align: bottom;
   }
@@ -348,4 +334,12 @@ body {
   td {
     vertical-align: middle;
   }
+}
+
+.lightBlue {
+  background-color: #51a8be;
+}
+
+.violett {
+  background-color: #813d59;
 }
