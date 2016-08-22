@@ -6,6 +6,7 @@ import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
 import LoadingItem from '../../components/LoadingItem';
+import NoTreesAvailable from '../../components/teaser/NoTreesAvailable';
 
 export default class TimeRankingTeaserLarge extends Component {
   constructor(props) {
@@ -144,37 +145,41 @@ export default class TimeRankingTeaserLarge extends Component {
 
     var pageContent = [];
 
-    if (this.state.newestPlantRanking.content[0]) {
-      pageContent.push(
-        <div>
-          <div className="col-md-12">
-            <h2>Pflanzungen</h2>
-          </div>
-          <div className="col-md-6 left">
-            <div className="rankingWrapper">
-              {first5Trees}
+    if (this.state.newestPlantRanking.totalElements == 0) {
+      if (this.state.newestPlantRanking.totalElements > 0) {
+        pageContent.push(
+          <div>
+            <div className="col-md-12">
+              <h2>Pflanzungen</h2>
             </div>
-            <a className="carousel-control pagingLink" role="button" role="button" onClick={this.callPreviousPage}>
-              <span className={"glyphicon " + leftIcon}></span>
-            </a>
-          </div>
-          <div className="col-md-6 right">
-            <a className="carousel-control pagingLink rightLink" role="button" onClick={this.callNextPage}>
-              <span className={"glyphicon " + rightIcon}></span>
-            </a>
-            <div className="rankingWrapper">
-              {last5Trees}
+            <div className="col-md-6 left">
+              <div className="rankingWrapper">
+                {first5Trees}
+              </div>
+              <a className="carousel-control pagingLink" role="button" role="button" onClick={this.callPreviousPage}>
+                <span className={"glyphicon " + leftIcon}></span>
+              </a>
+            </div>
+            <div className="col-md-6 right">
+              <a className="carousel-control pagingLink rightLink" role="button" onClick={this.callNextPage}>
+                <span className={"glyphicon " + rightIcon}></span>
+              </a>
+              <div className="rankingWrapper">
+                {last5Trees}
+              </div>
             </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        pageContent.push(<NoTreesAvailable/>);
+      };
     } else {
       pageContent.push(<LoadingItem background="#cccccc" colSize="col-md-12"/>);
-    }
+    };
 
     return (
       <div className="row timeRankingLarge">
-      {pageContent}
+        {pageContent}
       </div>
     );
   }
