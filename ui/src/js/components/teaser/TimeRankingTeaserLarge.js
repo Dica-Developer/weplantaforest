@@ -7,6 +7,7 @@ import {Link} from 'react-router';
 import Boostrap from 'bootstrap';
 import LoadingItem from '../../components/LoadingItem';
 import NoTreesAvailable from '../../components/teaser/NoTreesAvailable';
+import RankingItem from '../../components/teaser/TimeRankingLarge/RankingItem';
 
 export default class TimeRankingTeaserLarge extends Component {
   constructor(props) {
@@ -86,67 +87,36 @@ export default class TimeRankingTeaserLarge extends Component {
     var last5Trees = [];
     var counter = 1;
     var page = this.state.pageCount;
-
-    this.state.newestPlantRanking.content.map(function(content) {
-      let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60';
-      if (counter <= 5) {
-        first5Trees.push(
-          <div>
-            <div className="rankingNumber">{page * 10 + counter}</div>
-            <img className="ranking-img" src={imageUrl} alt="logo"/>
-            <div className="rankingSummary">
-              <p >
-                <span className="bold">Anzahl:&nbsp;</span>{content.amount}<br/>
-                <span className="bold">Projekt:&nbsp;</span>
-                <Link className="more" to={`/projects/` + content.projectArticle.project.name}>
-                  {content.projectArticle.project.name}
-                </Link><br/>
-                <span className="bold">Datum:&nbsp;</span>
-                <span >{moment(content.plantedOn).format("DD.MM.YYYY")}</span>
-              </p>
-            </div>
-          </div>
-        );
-      } else {
-        last5Trees.push(
-          <div>
-            <div className="rankingNumber">{page * 10 + counter}</div>
-            <img className="ranking-img" src={imageUrl} alt="logo"/>
-            <div className="rankingSummary">
-              <p >
-                <span className="bold">Anzahl:&nbsp;</span>{content.amount}<br/>
-                <span className="bold">Projekt:&nbsp;</span>
-                <Link className="more" to={`/projects/` + content.projectArticle.project.name}>
-                  {content.projectArticle.project.name}
-                </Link><br/>
-                <span className="bold">Datum:&nbsp;</span>
-                <span >{moment(content.plantedOn).format("DD.MM.YYYY")}</span>
-              </p>
-            </div>
-          </div>
-        );
-      };
-      counter++;
-    });
+    var pageContent = [];
 
     var leftIcon;
+    var rightIcon;
+
     if (this.state.newestPlantRanking.first) {
       leftIcon = "";
     } else {
       leftIcon = "glyphicon-chevron-left";
     };
 
-    var rightIcon;
     if (this.state.newestPlantRanking.last) {
       rightIcon = "";
     } else {
       rightIcon = "glyphicon-chevron-right";
     };
 
-    var pageContent = [];
-
-    if (this.state.newestPlantRanking.totalElements == 0) {
+    if (this.state.newestPlantRanking.totalElements >= 0) {
       if (this.state.newestPlantRanking.totalElements > 0) {
+
+        this.state.newestPlantRanking.content.map(function(content) {
+          let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60';
+          if (counter <= 5) {
+            first5Trees.push(<RankingItem imageUrl={imageUrl} rankNumber={page * 10 + counter} content={content}/>);
+          } else {
+            last5Trees.push(<RankingItem imageUrl={imageUrl} rankNumber={page * 10 + counter} content={content}/>);
+          };
+          counter++;
+        });
+
         pageContent.push(
           <div>
             <div className="col-md-12">
@@ -172,7 +142,7 @@ export default class TimeRankingTeaserLarge extends Component {
         );
       } else {
         pageContent.push(<NoTreesAvailable/>);
-      };
+      }
     } else {
       pageContent.push(<LoadingItem background="#cccccc" colSize="col-md-12"/>);
     };
