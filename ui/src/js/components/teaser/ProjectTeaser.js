@@ -29,12 +29,14 @@ export default class ProjectTeaser extends Component {
         <h3>
           <i>{this.props.content.projectName}</i>
         </h3>
-        <p>{this.props.content.description}
-          <Link className="more" to={`/projects/` + this.props.content.projectName}>
-            <i>
-              (mehr)</i>
-          </Link>
-        </p>
+        <div>
+          <p>{this.props.content.description}
+            <Link className="more" to={`/projects/` + this.props.content.projectName}>
+              <i>
+                (mehr)</i>
+            </Link>
+          </p>
+        </div>
       </div>;
     } else {
       content["1"] = <LoadingItem/>;
