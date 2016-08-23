@@ -21,7 +21,7 @@ export default class ButtonBar extends Component {
               </td>
               <td>
                 <Link to="/plant">
-                  <span className="no-link-deco">SELBST PFLANZEN</span>
+                  SELBST PFLANZEN
                 </Link>
               </td>
             </tr>
@@ -33,7 +33,7 @@ export default class ButtonBar extends Component {
               </td>
               <td>
                 <Link to="/plant">
-                  <span className="no-link-deco">ONLINE PFLANZEN</span>
+                  ONLINE PFLANZEN
                 </Link>
               </td>
             </tr>
@@ -45,7 +45,7 @@ export default class ButtonBar extends Component {
               </td>
               <td>
                 <Link to="/plant">
-                  <span className="no-link-deco">BAUMSERVICE</span>
+                  BAUMSERVICE
                 </Link>
               </td>
             </tr>

@@ -6,6 +6,7 @@
 @import "rankingPage.less";
 @import "loadingItem.less";
 @import "tools.less";
+
 @media (min-width: 0px) {
   .navbar-left {
     float: left!important;
@@ -19,6 +20,7 @@
 
 body {
   padding-top: 68px;
+  background-color: #516C49;
 }
 
 .navbar {
@@ -140,30 +142,6 @@ body {
   background: transparent;
 }
 
-.tree-chars {
-  font-family: "Times New Roman", Times, serif;
-  color: #82AB1F;
-  font-size: 33px;
-}
-
-.tree-number {
-  color: #82AB1F;
-  font-size: 50px;
-  font-weight: bold;
-}
-
-.co2-number {
-  color: #53F2D3;
-  font-size: 50px;
-  font-weight: bold;
-}
-
-.co2-chars {
-  font-family: "Times New Roman", Times, serif;
-  color: #53F2D3;
-  font-size: 33px;
-}
-
 .menu {
   display: block;
   @menu-width: 350px;
@@ -277,65 +255,8 @@ body {
   }
 }
 
-.co2ButtonDiv {
-  padding-top: 25px;
-  > * {
-    float: none;
-    display: inline-block;
-  }
-  > *:first-child {
-    vertical-align: bottom;
-  }
 
-  .outline-logo {
-    vertical-align: top;
-    text-align: center;
-  }
-  > *:last-child {
-    vertical-align: bottom;
-  }
-}
 
-.buttonBar {
-  float: right;
-  background-color: #3C191E;
-  padding: 10px;
-  margin-right: -15px;
-
-  tr {
-    color: #fff;
-    font-size: 16px;
-    img {
-      background-color: #fff;
-      margin-bottom: 10px;
-      margin-right: 15px;
-    }
-
-  }
-  tr:hover {
-    color: #82AB1F;
-    img {
-      background-color: #82AB1F;
-    }
-    .no-link-deco {
-      color: #82AB1F;
-      text-decoration: none;
-    }
-    a:hover {
-      color: #82AB1F;
-      text-decoration: none;
-    }
-  }
-
-  .no-link-deco {
-    color: #fff;
-    text-decoration: none;
-  }
-
-  td {
-    vertical-align: middle;
-  }
-}
 
 .lightBlue {
   background-color: #51a8be;
