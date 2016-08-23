@@ -120,7 +120,7 @@ export default class Ranking extends Component {
               }}>
                 <span className="stats">&nbsp;{Accounting.formatNumber(content.amount, 0, ".", ",")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span className="text">
-                  <i>B&auml;ume gepflant</i>
+                  <i>B&auml;ume gepflanzt</i>
                 </span><br/>
               </p>
               <p style={{
