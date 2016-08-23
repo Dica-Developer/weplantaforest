@@ -1,13 +1,7 @@
 import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link
-} from 'react-router';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
+import {Link} from 'react-router';
 import Boostrap from 'bootstrap';
 import moment from 'moment';
 import Accounting from 'accounting';
@@ -16,6 +10,7 @@ import TimeRankingTeaserLarge from '../components/teaser/TimeRankingTeaserLarge'
 import LoadingItem from '../components/LoadingItem';
 import UserDetails from '../components/profile/UserDetails';
 import TeamDetails from '../components/profile/TeamDetails';
+import Tools from '../components/profile/Tools';
 import NoTeamAvailable from '../components/profile/NoTeamAvailable';
 
 export default class Profile extends Component {
@@ -36,15 +31,11 @@ export default class Profile extends Component {
     var that = this;
     axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(this.props.userName)).then(function(response) {
       var result = response.data;
-      that.setState({
-        user: result
-      });
+      that.setState({user: result});
       if (that.state.user.teamName != '') {
         axios.get('http://localhost:8081/team?teamName=' + that.state.user.teamName).then(function(response) {
           var result = response.data;
-          that.setState({
-            team: result
-          });
+          that.setState({team: result});
         }).catch(function(response) {
           if (response instanceof Error) {
             console.error('Error', response.message);
@@ -77,6 +68,7 @@ export default class Profile extends Component {
           <TeamDetails teamName={this.state.user.teamName} team={this.state.team}/>
         </div>
         <TimeRankingTeaserLarge userName={this.props.userName}/>
+        <Tools/>
       </div>
     );
   }
