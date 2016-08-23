@@ -16,8 +16,8 @@ export default class TeamDetails extends Component {
 
   render() {
     var content = {};
-    if (this.props.teamName && this.props.team.teamName) {
-      if (this.props.teamName != '') {
+
+      if (this.props.teamName != '' && this.props.team.teamName) {
         let teamImageUrl = 'http://localhost:8081/team/image/' + this.props.team.teamId + '/150/150';
 
         content["1"] = <div>
@@ -92,17 +92,16 @@ export default class TeamDetails extends Component {
               </tr>
             </tbody>
           </table>
-        </div>
-      } else {
-        content["1"] = <NoTeamAvailable />;
-      };
+        </div>;
+
     } else {
-      content["1"] = <LoadingItem background="#e5e5e5"/>;
+      content["1"] = <NoTeamAvailable/>;
     };
 
-    return (
-      <div className="col-md-6 teamDetails">{content["1"]}</div>
-    );
-  }
+
+  return (
+    <div className="col-md-6 teamDetails">{content["1"]}</div>
+  );
+}
 }
 /* vim: set softtabstop=2:shiftwidth=2:expandtab */
