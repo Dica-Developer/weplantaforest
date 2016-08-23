@@ -11,7 +11,7 @@ import PlantPage from './views/PlantPage';
 import PlantSuccessPage from './views/PlantSuccessPage';
 import NotFoundPage from './views/NotFoundPage';
 import ExplorePage from './views/ExplorePage';
-import ProjectDetailsPage from './views/ProjectDetailsPage';
+import ProjectDetailsPage from './project/ProjectDetailsPage';
 import ProfilePage from './views/ProfilePage';
 import RankingPage from './views/RankingPage';
 
