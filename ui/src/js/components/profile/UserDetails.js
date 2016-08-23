@@ -1,15 +1,10 @@
 import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link
-} from 'react-router';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
+import {Link} from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
+import LoadingItem from '../../components/LoadingItem';
 
 import Boostrap from 'bootstrap';
 
@@ -19,9 +14,12 @@ export default class UserDetails extends Component {
   }
 
   render() {
-    let imageUrl = 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150';
-    return (
-      <div className="col-md-6 userDetails">
+    var content = {};
+
+    if (this.props.user.userName) {
+      let imageUrl = 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150';
+
+      content["1"] = <div>
         <h2>Profil</h2>
         <div className="imageDiv">
           <img src={imageUrl} alt="profile"/>
@@ -58,6 +56,14 @@ export default class UserDetails extends Component {
             <span className="no-link-deco">BEARBEITEN</span>
           </div>
         </Link>
+      </div>;
+    } else {
+      content["1"] = <LoadingItem background="#fff"/>;
+    };
+
+    return (
+      <div className="col-md-6 userDetails">
+        {content["1"]}
       </div>
     );
   }

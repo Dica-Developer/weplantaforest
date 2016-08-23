@@ -70,30 +70,11 @@ export default class Profile extends Component {
   }
 
   render() {
-    var userDetails = [];
-    var teamDetails = [];
-
-    if (this.state.user.userName) {
-      userDetails.push(<UserDetails user={this.state.user}/>);
-    } else {
-      userDetails.push(<LoadingItem colSize="col-md-6" background="#fff"/>);
-    }
-
-    if (this.state.user.teamName != '') {
-      if (this.state.team.teamName) {
-        teamDetails.push(<TeamDetails team={this.state.team}/>);
-      } else {
-        teamDetails.push(<LoadingItem colSize="col-md-6" background="#e5e5e5"/>);
-      }
-    }else{
-      teamDetails.push(<NoTeamAvailable c/>);
-    }
-
     return (
       <div>
         <div className="row profile ">
-          {userDetails}
-          {teamDetails}
+          <UserDetails user={this.state.user}/>
+          <TeamDetails teamName={this.state.user.teamName} team={this.state.team}/>
         </div>
         <TimeRankingTeaserLarge userName={this.props.userName}/>
       </div>
