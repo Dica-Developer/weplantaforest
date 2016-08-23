@@ -120,15 +120,15 @@ export default class Ranking extends Component {
               }}>
                 <span className="stats">&nbsp;{Accounting.formatNumber(content.amount, 0, ".", ",")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span className="text">
-                  <i>B&auml;ume gepflanzt</i>
+                  B&auml;ume gepflanzt
                 </span><br/>
               </p>
               <p style={{
                 width: percentCo2 + '%'
               }}>
-                <span className="stats">&nbsp;{Accounting.formatNumber(content.co2Saved, 3, ".", ",")}&nbsp;</span>
+                <span className="stats">&nbsp;{Accounting.formatNumber(content.co2Saved, 1, ".", ",")}&nbsp;</span>
                 <span className="text">
-                  <i>Tonnen CO<sub>2</sub>&nbsp;gebunden</i>
+                  Tonnen CO<sub>2</sub>&nbsp;gebunden
                 </span>
               </p>
             </div>
