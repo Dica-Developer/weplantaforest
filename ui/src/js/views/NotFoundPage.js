@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
+import Footer from '../common/Footer';
 
 export default class NotFoundPage extends Component {
   render() {
@@ -13,4 +13,3 @@ export default class NotFoundPage extends Component {
             </div>);
   }
 }
-

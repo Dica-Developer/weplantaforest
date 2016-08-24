@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
+require("./footer.less");
+
 export default class Footer extends Component {
   render() {
     return (

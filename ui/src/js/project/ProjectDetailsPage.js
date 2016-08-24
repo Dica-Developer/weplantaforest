@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import NavBar from '../components/NavBar';
 import Header from '../common/header/Header';
-import Footer from '../components/Footer';
+import Footer from '../common/Footer';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 

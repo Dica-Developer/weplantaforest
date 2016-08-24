@@ -4,7 +4,7 @@ import React, {
 import Accounting from 'accounting';
 
 import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
+import Footer from '../common/Footer';
 import Bootstrap from 'bootstrap';
 
 export default class PlantSuccessPage extends Component {

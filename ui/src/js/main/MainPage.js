@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import NavBar from '../components/NavBar';
 import Header from '../common/header/Header';
-import Footer from '../components/Footer';
+import Footer from '../common/Footer';
 
 import Carousel from './Carousel';
 import ArticleTeaser from './ArticleTeaser';
