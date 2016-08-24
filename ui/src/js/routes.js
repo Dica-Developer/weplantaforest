@@ -13,7 +13,7 @@ import NotFoundPage from './views/NotFoundPage';
 import ExplorePage from './views/ExplorePage';
 import ProjectDetailsPage from './project/ProjectDetailsPage';
 import ProfilePage from './profile/ProfilePage';
-import RankingPage from './views/RankingPage';
+import RankingPage from './ranking/RankingPage';
 
 export default class Routes extends Component {
   render() {

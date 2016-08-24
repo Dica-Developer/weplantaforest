@@ -1,16 +1,17 @@
 .rankingPage {
 
-  background-color: #fff;
-
-  padding-bottom: 25px;
+  .col-md-12 {
+    background-color: #fff;
+    padding-left: 0;
+    padding-right: 0;
+  }
 
   .linkTableDiv {
-    margin-top: 35px;
-    margin-left: 25px;
-    margin-right: 25px;
+    padding-top: 15px;
+    margin: 15px;
     border-style: none none solid none;
     border-width: 1px;
-    padding-bottom: 25px;
+    padding-bottom: 30px;
   }
 
   .linkTable {
@@ -69,15 +70,74 @@
   h2 {
     text-align: center;
     font-family: Georgia,Times,Times New Roman,serif;
-    margin-bottom: 25px;
-  }
-  div:nth-of-type(11) {
-    margin-bottom: 40px;
   }
 
-  .rankingItem {
+  .rankingItems {
+    div:nth-child(11) {
+      margin-bottom: 25px;
+    }
+    padding-bottom: 25px;
+  }
+
+  .rankingItemLarge {
     padding-top: 15px;
     margin-right: 25px;
+    .rankingSummary {
+      margin-left: 170px;
+      border-style: none none solid none;
+      border-width: 1px;
+      border-color: #fff;
+      color: #fff;
+      a,
+      a:active,
+      a:visited {
+        color: #000;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+      p:nth-of-type(1) {
+        background-color: #82ab1f;
+        margin-bottom: 2px;
+      }
+      p:nth-of-type(2) {
+        background-color: #51a8be;
+      }
+    }
+
+    .rankingNumber {
+      float: left;
+      min-width: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      text-align: right;
+      padding-top: 25px;
+      margin-right: 25px;
+      margin-left: 25px;
+    }
+
+    .ranking-img {
+      float: left;
+      border-radius: 50%;
+      border-color: #b2b2b2;
+      border-style: solid;
+      border-width: 1px;
+    }
+
+    .stats {
+      font-weight: bold;
+    }
+
+    .text {
+      font-size: 12px;
+      position: absolute;
+      left: 240px;
+      padding-top: 2px;
+    }
   }
 
   .smallRankingItem {
@@ -104,9 +164,18 @@
         }
       }
       td:nth-of-type(3) {
+        color: #fff;
         p {
-
           background-color: #82ab1f;
+        }
+        .stats{
+          font-weight: bold;
+        }
+        .text {
+          font-size: 12px;
+          position: absolute;
+          left: 240px;
+          padding-top: 2px;
         }
       }
 
@@ -125,60 +194,6 @@
     text-align: right;
     margin-right: 25px;
     margin-left: 25px;
-  }
-
-  .rankingNumber {
-    float: left;
-    min-width: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-    text-align: right;
-    padding-top: 25px;
-    margin-right: 25px;
-    margin-left: 25px;
-  }
-
-  .ranking-img {
-    float: left;
-    border-radius: 50%;
-    border-color: #b2b2b2;
-    border-style: solid;
-    border-width: 1px;
-  }
-
-  .rankingSummary {
-    margin-left: 170px;
-    border-style: none none solid none;
-    border-width: 1px;
-    border-color: #fff;
-    color: #fff;
-    a,
-    a:active,
-    a:visited {
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    p {
-      margin-bottom: 0;
-    }
-    p:nth-of-type(1) {
-      background-color: #82ab1f;
-      margin-bottom: 2px;
-    }
-    p:nth-of-type(2) {
-      background-color: #51a8be;
-    }
-  }
-
-  .stats {
-    font-weight: bold;
-  }
-
-  .text {
-    font-size: 12px;
   }
 
 }
