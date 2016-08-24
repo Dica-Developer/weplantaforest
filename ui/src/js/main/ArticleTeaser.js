@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-import LoadingItem from '../common/LoadingItem';
 
 export default class ArticleTeaser extends Component {
   constructor(props) {

@@ -5,17 +5,6 @@ import React, {
 import {
   render
 } from 'react-dom';
-import {
-  Map,
-  Marker,
-  Popup,
-  TileLayer
-} from 'react-leaflet';
-import Accounting from 'accounting';
-import {
-  Link
-} from 'react-router';
-
 import Boostrap from 'bootstrap';
 
 require("./projectRankingContainer.less");

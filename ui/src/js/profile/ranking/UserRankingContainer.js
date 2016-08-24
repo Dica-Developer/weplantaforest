@@ -1,9 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import moment from 'moment';
-import {Link} from 'react-router';
-
 import Boostrap from 'bootstrap';
 
 require("./rankingContainer.less");

@@ -4,7 +4,6 @@ import {render} from 'react-dom';
 import {Link} from 'react-router';
 import Accounting from 'accounting';
 import moment from 'moment';
-
 import Boostrap from 'bootstrap';
 
 require("./rankingItem.less");
