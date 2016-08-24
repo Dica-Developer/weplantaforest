@@ -5,6 +5,8 @@ import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
 
+require("./tools.less");
+
 export default class Tools extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,7 @@ export default class Tools extends Component {
   render() {
 
     return (
-      <div className="row tools">
+      <div>
         <div className="col-md-12">
           <h2>Tools</h2>
         </div>

@@ -12,7 +12,7 @@ import PlantSuccessPage from './views/PlantSuccessPage';
 import NotFoundPage from './views/NotFoundPage';
 import ExplorePage from './views/ExplorePage';
 import ProjectDetailsPage from './project/ProjectDetailsPage';
-import ProfilePage from './views/ProfilePage';
+import ProfilePage from './profile/ProfilePage';
 import RankingPage from './views/RankingPage';
 
 export default class Routes extends Component {

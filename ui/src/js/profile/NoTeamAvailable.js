@@ -15,7 +15,7 @@ export default class NoTeamAvailable extends Component {
 
   render() {
     return (
-      <div className="col-md-6 teamDetails">
+      <div>
         <h2>Du bist noch keinem Team beigetreten! Hast du keine Freunde!?</h2>
         <p>(Hier wäre noch eine Beschreibung gut, was da wirklich hin soll)</p>
       </div>
