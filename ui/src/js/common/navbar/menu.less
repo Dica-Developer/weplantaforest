@@ -1,0 +1,113 @@
+
+.menu {
+  display: block;
+  @menu-width: 350px;
+
+  > div {
+    position: absolute;
+    z-index: 10001;
+    top: 0;
+    width: @menu-width;
+    height: 100%;
+    box-sizing: border-box;
+    transition: -webkit-transform ease 250ms;
+    transition: transform ease 250ms;
+
+    > button {
+      font-size: 30px;
+      font-weight: bold;
+      background: transparent;
+      border: 0;
+      margin-top: 10px;
+    }
+
+    &.left {
+      background: #82AB1F;
+      left: @menu-width*-1;
+
+      > button {
+        float: right;
+        color: #3C191E;
+        margin-right: 10px;
+      }
+    }
+
+    &.notvisible {
+      display: none;
+    }
+
+    &.visible.left {
+      transform: translate3d(@menu-width, 0, 0);
+    }
+
+    &.right {
+      background: #3C191E;
+      right: @menu-width*-1;
+
+      > button {
+        padding-bottom: 16px;
+        float: left;
+        color: #fff;
+        margin-left: 10px;
+      }
+    }
+
+    &.visible.right {
+      transform: translate3d(@menu-width*-1, 0, 0);
+    }
+
+    > .menu-item {
+      float: left;
+      width: 100%;
+      margin: 0;
+      padding: 10px 15px;
+      cursor: pointer;
+      box-sizing: border-box;
+      color: #fff;
+      text-align: center;
+      font-size: 20px;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+      &:hover {
+        font-weight: bold;
+      }
+    }
+
+    > .login-menu-item {
+      background-color: #fff;
+      float: left;
+      width: 100%;
+      margin: 0;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      text-align: center;
+
+      > input {
+        border-style: none none dashed none;
+        border-color: #3C191E;
+        font-size: 16px;
+        width: 80%;
+        padding: 10px;
+        &:focus {
+          outline: none;
+        }
+      }
+
+      > button {
+        margin-top: 20px;
+        margin-right: 20px;
+        float: right;
+        color: #3C191E;
+      }
+
+      .validation-text {
+        color: red;
+        text-align: left;
+        margin-top: 70px;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavBar from '../components/NavBar';
+import NavBar from '../common/navbar/NavBar';
 import Footer from '../common/Footer';
 
 export default class NotFoundPage extends Component {

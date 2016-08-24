@@ -4,7 +4,7 @@ import React, {
 import {
   render
 } from 'react-dom';
-import NavBar from '../components/NavBar';
+import NavBar from '../common/navbar/NavBar';
 import Footer from '../common/Footer';
 import Projects from '../components/Projects';
 import Boostrap from 'bootstrap';

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
-import Menu from '../components/Menu';
-import MenuItem from '../components/MenuItem';
-import LoginMenuItem from '../components/LoginMenuItem';
+import Menu from './Menu';
+import MenuItem from './MenuItem';
+import LoginMenuItem from './LoginMenuItem';
+
+require("./navbar.less");
+require("./menu.less");
 
 export default class NavBar extends Component {
 
