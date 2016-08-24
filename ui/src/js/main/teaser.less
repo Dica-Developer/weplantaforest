@@ -1,0 +1,67 @@
+.teaser {
+  padding-left: 15px;
+  padding-right: 15px;
+
+  h2 {
+    padding-left: 20px;
+    color: #fff;
+    font-family: Georgia,Times,Times New Roman,serif;
+  }
+  h3 {
+    color: #fff;
+    margin-left: 20px;
+    font-family: Georgia,Times,Times New Roman,serif;
+  }
+
+  .row {
+    overflow: hidden;
+  }
+  .col-md-4 {
+    padding-left: 0;
+    padding-right: 0;
+
+    height: 100%;
+    padding-bottom: 1000px;
+    margin-bottom: -1000px;
+
+    min-height: 512px;
+  }
+
+  p {
+    margin-left: 20px;
+  }
+  .col-md-4:nth-child(3n + 1) {
+    background-color: #bfbfbf;
+
+    .leaflet-container {
+      height: 285px;
+      width: 100%;
+    }
+    .more,
+    .more:active,
+    .more:visited {
+      color: #fff;
+      text-decoration: none;
+    }
+    .more:hover {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+  .col-md-4:nth-child(3n + 2) {
+    background-color: #737373;
+  }
+
+  .firstRow {
+    .col-md-4:nth-child(3) {
+      background-color: #51a8be;
+    }
+  }
+  .secondRow {
+    .col-md-4:nth-child(3) {
+      background-color: #813d59;
+    }
+  }
+
+}

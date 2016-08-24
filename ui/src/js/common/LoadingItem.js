@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
-import {Link} from 'react-router';
-
 import Boostrap from 'bootstrap';
+
+require("./loadingItem.less");
+
 
 export default class LoadingItem extends Component {
   constructor() {
@@ -13,7 +13,7 @@ export default class LoadingItem extends Component {
 
   render() {
     return (
-      <div className="loadingItem" style={{backgroundColor: this.props.background}}>
+      <div className="loadingItem">
         <h2>Daten werden geladen...</h2>
         <div>
           <span className="glyphicon glyphicon-refresh spinning"></span>
@@ -22,5 +22,4 @@ export default class LoadingItem extends Component {
     );
   }
 }
-LoadingItem.defaultProps = { colSize: 'col-md-4' };
 /* vim: set softtabstop=2:shiftwidth=2:expandtab */

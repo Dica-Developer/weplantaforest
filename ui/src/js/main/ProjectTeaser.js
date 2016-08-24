@@ -5,7 +5,6 @@ import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
-import LoadingItem from '../../components/LoadingItem';
 
 export default class ProjectTeaser extends Component {
   constructor(props) {
@@ -13,11 +12,9 @@ export default class ProjectTeaser extends Component {
   }
 
   render() {
-    var content = {};
-
-    if (this.props.content) {
-      let position = [this.props.content.latitude, this.props.content.longitude];
-      content["1"] = <div>
+    let position = [this.props.content.latitude, this.props.content.longitude];
+    return (
+      <div>
         <Map center={position} zoom={13}>
           <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
           <Marker position={position}>
@@ -37,17 +34,18 @@ export default class ProjectTeaser extends Component {
             </Link>
           </p>
         </div>
-      </div>;
-    } else {
-      content["1"] = <LoadingItem/>;
-    }
-
-    return (
-      <div className="col-md-4">
-        {content["1"]}
       </div>
     );
   }
 }
+
+ProjectTeaser.defaultProps = {
+  content: {
+    latitude: 0,
+    longitude: 0,
+    projectName: '',
+    description: ''
+  }
+};
 
 /* vim: set softtabstop=2:shiftwidth=2:expandtab */

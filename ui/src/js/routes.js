@@ -6,7 +6,7 @@ import {
   browserHistory
 } from 'react-router';
 
-import MainPage from './views/MainPage';
+import MainPage from './main/MainPage';
 import PlantPage from './views/PlantPage';
 import PlantSuccessPage from './views/PlantSuccessPage';
 import NotFoundPage from './views/NotFoundPage';
