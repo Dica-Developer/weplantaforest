@@ -13,9 +13,20 @@ export default class UserDetails extends Component {
 
   render() {
     let imageUrl;
-    if(this.props.user.userName){
+    if (this.props.user.userName) {
       imageUrl = 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150'
     }
+
+    var editLink;
+    if (this.props.user.editAllowed) {
+      editLink = <Link to="/" className="editLink">
+        <div>
+          <img src="/assets/images/edit.jpg" alt="editieren" width="45" height="45"/>
+          <span className="no-link-deco">BEARBEITEN</span>
+        </div>
+      </Link>;
+    }
+
     return (
       <div>
         <h2>Profil</h2>
@@ -48,12 +59,7 @@ export default class UserDetails extends Component {
             </tbody>
           </table>
         </div>
-        <Link to="/" className="editLink">
-          <div>
-            <img src="/assets/images/edit.jpg" alt="editieren" width="45" height="45"/>
-            <span className="no-link-deco">BEARBEITEN</span>
-          </div>
-        </Link>
+        {editLink}
       </div>
     );
   }

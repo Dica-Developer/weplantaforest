@@ -36,7 +36,12 @@ export default class ProfilePage extends Component {
 
   componentWillMount() {
     var that = this;
-    axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(this.props.params.userName)).then(function(response) {
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(this.props.params.userName), config).then(function(response) {
       var result = response.data;
       that.setState({user: result});
       if (that.state.user.teamName != '') {
