@@ -37,5 +37,7 @@ public class UserReportData {
     long rank;
 
     Co2Data co2Data;
+    
+    boolean isEditAllowed;
 
 }
