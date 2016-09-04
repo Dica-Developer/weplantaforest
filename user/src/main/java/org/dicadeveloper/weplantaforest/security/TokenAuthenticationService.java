@@ -39,4 +39,14 @@ public class TokenAuthenticationService {
 		}
 		return null;
 	}
+	
+	public boolean isAuthenticatedUser(String userToken, String userName){
+	    if (userToken != "") {
+            final User user = tokenHandler.parseUserFromToken(userToken);
+            if (user != null && user.getName().equals(userName)) {
+                return true;
+            }
+        }
+	    return false;
+	}
 }
