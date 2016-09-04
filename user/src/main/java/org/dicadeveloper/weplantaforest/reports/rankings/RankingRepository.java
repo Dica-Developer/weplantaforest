@@ -2,8 +2,10 @@ package org.dicadeveloper.weplantaforest.reports.rankings;
 
 import java.util.List;
 
+import org.dicadeveloper.weplantaforest.CacheConfiguration;
 import org.dicadeveloper.weplantaforest.user.OrganizationType;
 import org.dicadeveloper.weplantaforest.user.User;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -51,6 +53,10 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
     
     @Query(value = FIND_BEST_USER_QUERY, countQuery = COUNT_BEST_USER_QUERY)
     Page<TreeRankedUserData> getBestUser(@Param("time") long timeOfMeasurement, Pageable page);
+
+    @Query(value = FIND_BEST_USER_QUERY, countQuery = COUNT_BEST_USER_QUERY)
+    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
+    List<TreeRankedUserData> getBestUserList(@Param("time") long timeOfMeasurement);
 
     @Query(value = FIND_LAST_CREATED_USER_QUERY)
     List<TimeRankedUserData> getLastCreatedUser(Pageable page);

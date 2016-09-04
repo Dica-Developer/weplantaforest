@@ -33,6 +33,8 @@ public class UserReportData {
     public String getOrganizationType(){
         return organizationType.getDescription();
     }
+    
+    long rank;
 
     Co2Data co2Data;
 

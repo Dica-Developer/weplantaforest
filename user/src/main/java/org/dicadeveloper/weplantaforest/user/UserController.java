@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.user;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
+import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
+import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +35,8 @@ public class UserController {
 
     private @NonNull UserRepository _userRepository;
 
+    private @NonNull RankingRepository _rankingRepository;
+
     private @NonNull Co2Repository _co2Repository;
 
     @RequestMapping(value = Uris.USER_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
@@ -50,7 +55,22 @@ public class UserController {
     public UserReportData getUserDetails(@RequestParam String userName) {
         UserReportData userReportData = _userRepository.getUserDetails(userName);
         userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName));
+        userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data().getTreesCount()));
         return userReportData;
+    }
+
+    private long calcUserRank(String userName, long treeCountOfUser) {
+        List<TreeRankedUserData> userList = _rankingRepository.getBestUserList(System.currentTimeMillis());
+        long rank = 1;
+        for (TreeRankedUserData user : userList) {
+            if (treeCountOfUser < user.getAmount()) {
+                rank++;
+            }
+            if (user.getName().equals(userName)) {
+                break;
+            }
+        }
+        return rank;
     }
 
 }
