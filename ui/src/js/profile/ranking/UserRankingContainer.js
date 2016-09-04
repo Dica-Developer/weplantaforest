@@ -17,7 +17,7 @@ export default class TimeRankingTeaserLarge extends Component {
   }
 
   callPreviousPage() {
-    if (!this.props.isLastPage) {
+    if (!this.props.isFirstPage) {
       this.props.callPreviousPage();
     }
   }

@@ -1,10 +1,6 @@
 import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import moment from 'moment';
 import {Link} from 'react-router';
 import Accounting from 'accounting';
@@ -19,7 +15,9 @@ export default class RankingItem extends Component {
   render() {
     return (
       <div>
-        <div className="rankingNumber">{this.props.rankNumber}</div>
+        <div className="rankingNumberDiv">
+          <p className="rankingNumber">{this.props.rankNumber}</p>
+        </div>
         <img className="ranking-img" src={this.props.imageUrl} alt="logo"/>
         <div className="rankingSummary">
           <p >
