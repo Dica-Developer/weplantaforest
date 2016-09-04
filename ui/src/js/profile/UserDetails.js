@@ -28,7 +28,7 @@ export default class UserDetails extends Component {
             <tbody>
               <tr>
                 <td>
-                  <span className="bold">Rang:&nbsp;</span>
+                  <span className="bold">Rang:&nbsp;</span>{this.props.user.rank}
                 </td>
                 <td>
                   <span className="bold">Mitglied seit:&nbsp;</span>{moment(this.props.user.regDate).format("DD.MM.YYYY")}</td>
