@@ -29,7 +29,7 @@ export default class TeamDetails extends Component {
             <tbody>
               <tr>
                 <td>
-                  <span className="bold">Rang:&nbsp;</span>
+                  <span className="bold">Rang:&nbsp;</span>{this.props.team.rank}
                 </td>
                 <td>
                   <span className="bold">gegründet:&nbsp;</span>{moment(this.props.team.regDate).format("DD.MM.YYYY")}</td>

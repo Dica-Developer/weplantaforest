@@ -31,4 +31,6 @@ public class TeamReportData {
     Long memberCount;
     
     Co2Data co2Data;
+    
+    Long rank;
 }

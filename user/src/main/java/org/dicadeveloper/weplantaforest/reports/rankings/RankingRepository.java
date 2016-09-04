@@ -69,6 +69,10 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
 
     @Query(value = FIND_BEST_TEAM_QUERY, countQuery = COUNT_BEST_TEAM_QUERY)
     Page<TreeRankedUserData> getBestTeams(@Param("time") long timeOfMeasurement, Pageable Page);
+    
+    @Query(value = FIND_BEST_TEAM_QUERY, countQuery = COUNT_BEST_TEAM_QUERY)
+    @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
+    List<TreeRankedUserData> getBestTeamAsList(@Param("time") long timeOfMeasurement);
 
     @Query(value = FIND_BEST_USER_FROM_TIMERANGE_QUERY)
     List<TreeRankedUserData> getBestUserFromTimeRange(@Param("timeRangeStart") long timeRangeStart, @Param("timeRangeEnd") long timeRangeEnd, Pageable Page);

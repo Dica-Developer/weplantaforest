@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.admin.codes;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
+import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
+import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +37,8 @@ public class TeamController {
     private @NonNull TeamRepository _teamRepository;
 
     private @NonNull Co2Repository _co2Repository;
+    
+    private @NonNull RankingRepository _rankingRepository;
 
     @RequestMapping(value = Uris.TEAM_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
@@ -53,7 +58,22 @@ public class TeamController {
     public TeamReportData getTeamDetails(@RequestParam String teamName) {
         TeamReportData teamReportData = _teamRepository.getTeamDetails(teamName);
         teamReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamName));
+        teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
         return teamReportData;
+    }
+    
+    private long calcTeamRank(String teamName, long treeCountOfTeam) {
+        List<TreeRankedUserData> teamList = _rankingRepository.getBestTeamAsList(System.currentTimeMillis());
+        long rank = 1;
+        for (TreeRankedUserData team : teamList) {
+            if (treeCountOfTeam < team.getAmount()) {
+                rank++;
+            }
+            if (team.getName().equals(teamName)) {
+                break;
+            }
+        }
+        return rank;
     }
 
 }
