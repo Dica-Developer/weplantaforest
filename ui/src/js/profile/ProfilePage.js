@@ -7,6 +7,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 
 import UserDetails from './UserDetails';
+import EditUserDetails from './edit/EditUserDetails';
 import TeamDetails from './TeamDetails';
 import NoTeamAvailable from './NoTeamAvailable';
 import Tools from './Tools';
@@ -24,6 +25,7 @@ export default class ProfilePage extends Component {
       user: {
         co2Data: {}
       },
+      editUser: false,
       team: {
         co2Data: {}
       },
@@ -32,6 +34,7 @@ export default class ProfilePage extends Component {
       },
       pageCount: 0
     };
+
   }
 
   componentWillMount() {
@@ -124,10 +127,22 @@ export default class ProfilePage extends Component {
 
   }
 
+  showEditUser() {
+    this.setState({editUser: true});
+  }
+
   render() {
+    var userPart;
     var teamPart;
     var treePart;
     var page = this.state.pageCount;
+
+    if (!this.state.editUser) {
+      userPart = <UserDetails user={this.state.user} showEditUser={this.showEditUser.bind(this)}/>;
+    } else {
+      userPart = <EditUserDetails user={this.state.user} />;
+    }
+
     if (this.state.user.teamName != '') {
       teamPart = <TeamDetails team={this.state.team}/>;
     } else {
@@ -150,7 +165,7 @@ export default class ProfilePage extends Component {
         <div className="container paddingTopBottom15">
           <div className="row details">
             <div className="col-md-6 ">
-              <UserDetails user={this.state.user}/>
+              {userPart}
             </div>
             <div className="col-md-6">
               {teamPart}

@@ -11,6 +11,10 @@ export default class UserDetails extends Component {
     super(props);
   }
 
+  showEditUser(){
+    this.props.showEditUser();
+  }
+
   render() {
     let imageUrl;
     if (this.props.user.userName) {
@@ -19,12 +23,12 @@ export default class UserDetails extends Component {
 
     var editLink;
     if (this.props.user.editAllowed) {
-      editLink = <Link to="/" className="editLink">
+      editLink = <a role="button" onClick={this.showEditUser.bind(this)} className="editLink">
         <div>
           <img src="/assets/images/edit.jpg" alt="editieren" width="45" height="45"/>
           <span className="no-link-deco">BEARBEITEN</span>
         </div>
-      </Link>;
+      </a>;
     }
 
     return (
