@@ -8,7 +8,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     public final static String USER_EXISTS_QUERY = "SELECT COUNT(user) FROM User user WHERE user.name = :name)";
 
-    public final static String GET_USER_DETAILS_QUERY = "SELECT new org.dicadeveloper.weplantaforest.user.UserReportData(user.name, COALESCE(user.imageName, 'anonymous.jpg'), user.regDate, user.lastVisit, user.organizationType, COALESCE(tm.name, ''))"
+    public final static String GET_USER_DETAILS_QUERY = "SELECT new org.dicadeveloper.weplantaforest.user.UserReportData(user.name, COALESCE(user.imageName, 'anonymous.jpg'), user.regDate, user.lastVisit, user.organizationType, COALESCE(tm.name, ''), COALESCE(user.aboutMe, ''), COALESCE(user.location, ''), COALESCE(user.organisation, ''), COALESCE(user.homepage, ''), user.lang, user.newsletter)"
             + " FROM User user LEFT JOIN user.team tm WHERE user.name = :name";
 
     @Query

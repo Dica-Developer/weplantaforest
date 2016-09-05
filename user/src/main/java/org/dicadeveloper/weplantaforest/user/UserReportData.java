@@ -30,8 +30,44 @@ public class UserReportData {
     @NonNull
     String teamName;
     
+    @NonNull
+    String aboutMe;
+    
+    @NonNull
+    String location;
+    
+    @NonNull
+    String organisation;
+    
+    @NonNull
+    String homepage;
+    
+    @NonNull
+    Long lang;
+    
+    @NonNull
+    Boolean newsletter;
+    
     public String getOrganizationType(){
         return organizationType.getDescription();
+    }
+    
+    public String getNewsletter(){
+        return newsletter ? "JA" : "NEIN";
+    }
+    
+    public String getLang(){
+        String langString;
+        switch (lang.intValue()) {
+        case 0:
+            langString =  "DEUTSCH";
+            break;
+        default:
+            langString =  "DEUTSCH";
+            break;
+        }
+        
+        return langString;
     }
     
     long rank;

@@ -52,7 +52,7 @@ public class User implements Identifiable<Long>, UserDetails {
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class})
+    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class })
     private String name;
 
     @Column(name = "_password")
@@ -75,20 +75,38 @@ public class User implements Identifiable<Long>, UserDetails {
 
     @Column(name = "_regDate")
     private Long regDate;
-    
+
     @Column(name = "_lastVisit")
     private Long lastVisit;
 
     @Column(name = "_organisationType")
     private OrganizationType organizationType;
-    
-    @Column(name="_imageName")
+
+    @Column(name = "_imageName")
     private String imageName;
+
+    @Column(name = "_aboutme")
+    private String aboutMe;
+
+    @Column(name = "_location")
+    private String location;
+
+    @Column(name = "_organisation")
+    private String organisation;
+    
+    @Column(name ="_homepage")
+    private String homepage;
+    
+    @Column(name ="_lang")
+    private long lang;
+    
+    @Column(name ="_newsletter")
+    private boolean newsletter;
     
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;
-    
+
     public void addRole(final Role role) {
         roles.add(role);
     }
