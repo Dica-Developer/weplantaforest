@@ -118,6 +118,8 @@ public class Uris {
     public final static String USER_IMAGE = "/user/image/";
     
     public final static String USER_DETAILS = "/user";
+    
+    public final static String EDIT_USER_DETAILS = "/user/edit";
 
     // team
     public final static String TEAM_IMAGE = "/team/image/";

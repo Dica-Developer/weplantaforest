@@ -80,4 +80,49 @@ public class UserController {
         return rank;
     }
 
+    @RequestMapping(value = Uris.EDIT_USER_DETAILS, method = RequestMethod.POST)
+    public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken,HttpServletResponse response, @RequestParam String userName, @RequestParam String toEdit, @RequestParam String newEntry) throws IOException {
+        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
+            User user = _userRepository.findByName(userName);
+
+            switch (toEdit) {
+            case "NAME":
+                if (_userRepository.userExists(newEntry) == 1) {
+                    response.sendError(400, "Dieser Name ist bereits vergeben!");
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                } else {
+                    user.setName(newEntry);
+                }
+                break;
+            case "ABOUTME":
+                user.setAboutMe(newEntry);
+                break;
+            case "LOCATION":
+                user.setLocation(newEntry);
+                break;
+            case "ORGANISATION":
+                user.setOrganisation(newEntry);
+                break;
+            case "HOMEPAGE":
+                user.setHomepage(newEntry);
+                break;
+            case "MAIL":
+                user.setMail(newEntry);
+                break;
+            case "NEWSLETTER":
+                user.setNewsletter(newEntry.equals("JA") ? true : false);
+                break;   
+            case "ORGANIZATION_TYPE":
+                user.setOrganizationType(OrganizationType.valueOf(newEntry));
+                break;
+            default:
+                break;
+            }
+            _userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
 }
