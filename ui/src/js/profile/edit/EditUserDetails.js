@@ -18,6 +18,10 @@ export default class EditUserDetails extends Component {
     super(props);
   }
 
+  showProfile() {
+    this.props.showProfile();
+  }
+
   editUser(toEdit, newEntry) {
     var that = this;
     var config = {
@@ -84,7 +88,10 @@ export default class EditUserDetails extends Component {
         <EditItem text="Wohnort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)}/>
         <EditItem text="Organisation" content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)}/>
         <EditItem text="Webseite" content={this.props.user.homepage} toEdit="HOMEPAGE" editUser={this.editUser.bind(this)}/>
-        <EditItem text="Sprache" content={this.props.user.lang}/>
+        <EditDropdownItem text="Sprache" toEdit="LANGUAGE" content={this.props.user.lang} editUser={this.editUser.bind(this)} width="100">
+          <option value="0">DEUTSCH</option>
+          <option value="1">ENGLISCH</option>
+        </EditDropdownItem>
         <EditDropdownItem text="Newsletter abbonnieren" toEdit="NEWSLETTER" content={this.props.user.newsletter} editUser={this.editUser.bind(this)} width="70">
           <option value="JA">JA</option>
           <option value="NEIN">NEIN</option>
@@ -96,6 +103,14 @@ export default class EditUserDetails extends Component {
           <option value="NONPROFIT">Non-Profit Organisation</option>
           <option value="EDUCATIONAL">Schule</option>
         </EditDropdownItem>
+        <a role="button" className="showLink" onClick={this.showProfile.bind(this)}>
+          <div>
+            <span className="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+            <span className="no-link-deco">
+              ANSCHAUEN
+            </span>
+          </div>
+        </a>
       </div>
     );
   }

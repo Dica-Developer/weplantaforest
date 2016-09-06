@@ -131,6 +131,10 @@ export default class ProfilePage extends Component {
     this.setState({editUser: true});
   }
 
+  showProfile() {
+    this.setState({editUser: false});
+  }
+
   render() {
     var userPart;
     var teamPart;
@@ -140,7 +144,7 @@ export default class ProfilePage extends Component {
     if (!this.state.editUser) {
       userPart = <UserDetails user={this.state.user} showEditUser={this.showEditUser.bind(this)}/>;
     } else {
-      userPart = <EditUserDetails user={this.state.user} />;
+      userPart = <EditUserDetails user={this.state.user} showProfile={this.showProfile.bind(this)}/>;
     }
 
     if (this.state.user.teamName != '') {

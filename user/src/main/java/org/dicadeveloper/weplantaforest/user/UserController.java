@@ -115,6 +115,15 @@ public class UserController {
             case "ORGANIZATION_TYPE":
                 user.setOrganizationType(OrganizationType.valueOf(newEntry));
                 break;
+            case "LANGUAGE":
+                long lang = 0;
+                if(newEntry.equals("0")){
+                    lang = 0;
+                }else if(newEntry.equals("1")){
+                    lang = 1;
+                }
+                user.setLang(lang);
+                break; 
             default:
                 break;
             }
