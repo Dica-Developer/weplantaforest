@@ -89,28 +89,20 @@ export default class ProfilePage extends Component {
   }
 
   callNextPage() {
-    var that = this;
     var newPage = this.state.pageCount + 1;
-    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=' + newPage + '&size=10').then(function(response) {
-      var result = response.data;
-      that.setState({newestPlantRanking: result});
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+    this.callPage(newPage);
     this.setState({pageCount: newPage});
   }
 
   callPreviousPage() {
-    var that = this;
     var newPage = this.state.pageCount - 1;
-    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=' + newPage + '&size=10').then(function(response) {
+    this.callPage(newPage);
+    this.setState({pageCount: newPage});
+  }
+
+  callPage(page) {
+    var that = this;
+    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=' + page + '&size=10').then(function(response) {
       var result = response.data;
       that.setState({newestPlantRanking: result});
     }).catch(function(response) {
@@ -123,8 +115,6 @@ export default class ProfilePage extends Component {
         console.error(response.config);
       }
     });
-    this.setState({pageCount: newPage});
-
   }
 
   showEditUser() {
@@ -132,7 +122,26 @@ export default class ProfilePage extends Component {
   }
 
   showProfile() {
+    var that = this;
     this.setState({editUser: false});
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(this.props.params.userName), config).then(function(response) {
+      var result = response.data;
+      that.setState({user: result});
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
   }
 
   render() {
