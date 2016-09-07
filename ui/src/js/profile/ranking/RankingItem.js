@@ -18,7 +18,7 @@ export default class RankingItem extends Component {
         <div className="rankingNumberDiv">
           <p className="rankingNumber">{this.props.rankNumber}</p>
         </div>
-        <img className="ranking-img" src={this.props.imageUrl} alt="logo"/>
+        <img className="ranking-img" src={this.props.imageUrl} title={this.props.content.treeType.name} alt={this.props.content.treeType.name}/>
         <div className="rankingSummary">
           <p >
             <span className="bold">Anzahl:&nbsp;</span>{Accounting.formatNumber(this.props.content.amount, 0, ".", ",")}<br/>
