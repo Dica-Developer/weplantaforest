@@ -50,7 +50,7 @@ public class TreeTypeController {
         String imageName = treeTypeName + "." + imgType;
         if (!file.isEmpty()) {
             try {
-                imageName = _imageHelper.storeImage(file, treeTypeFolder, imageName);
+                imageName = _imageHelper.storeImage(file, treeTypeFolder, imageName, false);
                 treeType.setImageFile(imageName);
                 _treeTypeRepository.save(treeType);
                 return new ResponseEntity<>(HttpStatus.OK);

@@ -102,7 +102,7 @@ public class ProjectController {
 
         if (!file.isEmpty()) {
             try {
-                imageName = _imageHelper.storeImage(file, folder, imageName);
+                imageName = _imageHelper.storeImage(file, folder, imageName, false);
 
                 ProjectImage projectImage = new ProjectImage();
                 projectImage.setDescription(description);
