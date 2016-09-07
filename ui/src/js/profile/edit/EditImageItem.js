@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 
-import UploadButton from './UploadButton';
 import FileChooseAndUploadButton from './FileChooseAndUploadButton';
 
 export default class EditImageItem extends Component {
