@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -81,7 +82,8 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.EDIT_USER_DETAILS, method = RequestMethod.POST)
-    public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken,HttpServletResponse response, @RequestParam String userName, @RequestParam String toEdit, @RequestParam String newEntry) throws IOException {
+    public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, HttpServletResponse response, @RequestParam String userName, @RequestParam String toEdit,
+            @RequestParam String newEntry) throws IOException {
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
             User user = _userRepository.findByName(userName);
 
@@ -111,24 +113,50 @@ public class UserController {
                 break;
             case "NEWSLETTER":
                 user.setNewsletter(newEntry.equals("JA") ? true : false);
-                break;   
+                break;
             case "ORGANIZATION_TYPE":
                 user.setOrganizationType(OrganizationType.valueOf(newEntry));
                 break;
             case "LANGUAGE":
                 long lang = 0;
-                if(newEntry.equals("0")){
+                if (newEntry.equals("0")) {
                     lang = 0;
-                }else if(newEntry.equals("1")){
+                } else if (newEntry.equals("1")) {
                     lang = 1;
                 }
                 user.setLang(lang);
-                break; 
+                break;
             default:
                 break;
             }
             _userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @RequestMapping(value = Uris.USER_IMAGE_UPLOAD, method = RequestMethod.POST)
+    public ResponseEntity<?> uploadUserImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam("file") MultipartFile file) {
+        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
+            User user = _userRepository.findByName(userName);
+            String imageFolder = FileSystemInjector.getUserFolder();
+            String imageName = user.getName() + file.getOriginalFilename()
+                                                    .substring(file.getOriginalFilename()
+                                                                   .indexOf("."));
+            if (!file.isEmpty()) {
+                try {
+                    _imageHelper.storeImage(file, imageFolder, imageName, true);
+                    user.setImageName(imageName);
+                    _userRepository.save(user);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } catch (IOException e) {
+                    LOG.error("Error occured while trying to save image " + imageName + " in folder: " + imageFolder, e);
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

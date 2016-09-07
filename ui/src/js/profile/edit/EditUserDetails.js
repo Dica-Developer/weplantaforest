@@ -8,6 +8,7 @@ import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
 import EditNameItem from './EditNameItem';
+import EditImageItem from './EditImageItem';
 import EditItem from './EditItem';
 import EditDropdownItem from './EditDropdownItem';
 
@@ -66,6 +67,27 @@ export default class EditUserDetails extends Component {
     });
   }
 
+  uploadImage(file){
+    var data = new FormData();
+    data.append('userName', this.props.user.userName);
+    data.append('file', file);
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.post('http://localhost:8081/user/image/upload', data, config).then(function(response) {}).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+  }
+
   render() {
     let imageUrl;
     if (this.props.user.userName) {
@@ -83,9 +105,10 @@ export default class EditUserDetails extends Component {
             <span className="bold">Rang:&nbsp;</span>{this.props.user.rank}
           </div>
         </div>
+        <EditImageItem uploadImage={this.uploadImage.bind(this)}/>
         <EditNameItem text="Name" content={this.props.user.userName} toEdit="NAME" editUsername={this.editUsername.bind(this)} ref="name"/>
         <EditItem text="Über mich" content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)}/>
-        <EditItem text="Wohnort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)}/>
+        <EditItem text="Ort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)}/>
         <EditItem text="Organisation" content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)}/>
         <EditItem text="Webseite" content={this.props.user.homepage} toEdit="HOMEPAGE" editUser={this.editUser.bind(this)}/>
         <EditDropdownItem text="Sprache" toEdit="LANGUAGE" content={this.props.user.lang} editUser={this.editUser.bind(this)} width="100">

@@ -20,7 +20,32 @@
     padding-top: 5px;
   }
 }
+.hiddenInput {
+  visibility: hidden;
+  width: 1px;
+  height: 1px;
+}
 
+.upload {
+  span:nth-child(1) {
+    font-size: 18px;
+  }
+  span:nth-child(2) {
+    vertical-align: text-bottom;
+  }
+}
+
+.noUpload {
+  color: #D8D8D8;
+  span:nth-child(1) {
+    font-size: 18px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  span:nth-child(2) {
+    vertical-align: text-bottom;
+  }
+}
 .showLink,
 .showLink:active,
 .showLink:visited {
@@ -41,8 +66,7 @@
   span {
     margin-left: 10px;
   }
-
-  span:nth-child(2){
+  span:nth-child(2) {
     font-size: 14px;
     vertical-align: text-top;
   }
@@ -64,7 +88,7 @@
     border: none;
     background-color: #fff;
   }
-  input:focus{
+  input:focus {
     border-color: #000;
   }
 

@@ -62,7 +62,7 @@ public class ImageController {
 
         if (!file.isEmpty()) {
             try {
-                _imageHelper.storeImage(file, imageFolder, imageName);
+                _imageHelper.storeImage(file, imageFolder, imageName, false);
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (IOException e) {
                 LOG.error("Error occured while trying to save image " + imageName + " in folder: " + imageFolder, e);

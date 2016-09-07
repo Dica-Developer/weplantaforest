@@ -41,12 +41,14 @@ public class ImageHelper {
         inputStream.close();
     }
 
-    public String storeImage(MultipartFile file, String folder, String imageName) throws IOException {
+    public String storeImage(MultipartFile file, String folder, String imageName, boolean overwriteExistingImage) throws IOException {
         if (!folderExists(folder)) {
             createNewFolder(folder);
         }
-        if (imageNameExists(folder, imageName)) {
-            imageName = createNonExistingImageName(folder, imageName);
+        if (!overwriteExistingImage) {
+            if (imageNameExists(folder, imageName)) {
+                imageName = createNonExistingImageName(folder, imageName);
+            }
         }
 
         byte[] bytes = null;
@@ -62,7 +64,7 @@ public class ImageHelper {
         stream.write(bytes);
         stream.close();
         fileOutPutStreamfromFileToSave.close();
-        
+
         return imageName;
 
     }

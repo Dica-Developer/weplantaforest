@@ -69,7 +69,7 @@ public class ArticleController {
         String folder = FileSystemInjector.getArticleFolder() + "/" + articleId;
         String imageName = "main" + "." + imgType;
         try {
-            imageName = _imageHelper.storeImage(file, folder, imageName);
+            imageName = _imageHelper.storeImage(file, folder, imageName,false);
             Article articleForImage = _articleRepository.findOne(articleId);
             articleForImage.setImageFileName(imageName);
             _articleRepository.save(articleForImage);
@@ -85,7 +85,7 @@ public class ArticleController {
         String folder = FileSystemInjector.getArticleFolder() + "/" + articleId;
         String imageName = "paragraph_" + paragraphId + "." + imgType;
         try {
-            imageName = _imageHelper.storeImage(file, folder, imageName);
+            imageName = _imageHelper.storeImage(file, folder, imageName, false);
             Paragraph paragraphForImage = _paragraphRepository.findOne(paragraphId);
             paragraphForImage.setImageFileName(imageName);
             _paragraphRepository.save(paragraphForImage);
