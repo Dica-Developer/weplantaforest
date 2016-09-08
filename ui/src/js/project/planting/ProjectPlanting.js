@@ -24,13 +24,29 @@ export default class ProjectPlanting extends Component {
     this.balanceOtherSliders = this.balanceOtherSliders.bind(this);
   }
 
+  componentDidMount(){
+    for(var i = 0; i < this.props.articles.length; i++){
+      this.state.sliderValues[i] = 1;
+    }
+    this.calcOverallPrice();
+  }
+
   showDetails() {
     this.props.showDetails();
+  }
+
+  calcOverallPrice(){
+    var price = 0;
+    for(var i = 0; i < this.state.articleCount; i++){
+      price = price + this.props.articles[i].price.amount * this.state.sliderValues[i];
+    }
+    this.setState({overallPrice: price});
   }
 
   updateValue(event) {
     this.balanceArticleSliders(event.target.value);
     this.setState({treeCount: event.target.value});
+    this.calcOverallPrice();
   }
 
   balanceArticleSliders(targetValue) {
@@ -64,6 +80,7 @@ export default class ProjectPlanting extends Component {
     var rem = sumExceptMovedSlider % (this.state.articleCount - this.state.moveCounter);
     var div = Math.trunc(sumExceptMovedSlider / (this.state.articleCount - this.state.moveCounter));
     this.setArticleSliderValues(div, rem);
+    this.calcOverallPrice();
   }
 
   setArticleSliderValues(div, rem) {
@@ -72,9 +89,11 @@ export default class ProjectPlanting extends Component {
       if (!this.state.slidersMoved[i]) {
         if (remCnt < rem) {
           this.refs['a' + i].setTreeCount(div + 1);
+          this.state.sliderValues[i] = (div + 1);
           remCnt++;
         } else {
           this.refs['a' + i].setTreeCount(div);
+          this.state.sliderValues[i] = div;
         }
       }
     }
@@ -124,7 +143,7 @@ export default class ProjectPlanting extends Component {
             <input type="range" min="1" max="100" step="1" value={this.state.treeCount} onChange={this.updateValue.bind(this)}/>
           </div>
           <div className="summaryDiv">
-            <span className="overallPrice">{this.state.overallPrice}&nbsp;€</span><br/>
+            <span className="overallPrice">{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span><br/>
             <span className="overallTreeCount">{Accounting.formatNumber(this.state.treeCount, 0, ".", ",")}&nbsp;</span>
             <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
           </div>
@@ -138,7 +157,7 @@ export default class ProjectPlanting extends Component {
             <tr>
               <td></td>
               <td>
-                <span>GESAMT:&nbsp;{this.state.overallPrice}&nbsp;€</span>
+                <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span>
               </td>
               <td>
                 <a role="button">

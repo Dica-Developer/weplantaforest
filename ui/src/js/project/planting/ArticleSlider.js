@@ -12,12 +12,18 @@ export default class ArticleSlider extends Component {
   }
 
   updateValue(event) {
-    this.setState({treeCount: event.target.value});
+    this.setState({
+      treeCount: event.target.value,
+      overallPrice: this.props.article.price.amount * event.target.value
+    });
     this.props.balanceOtherSliders(event.target.value, this.props.sliderIndex);
   }
 
   setTreeCount(treeCount) {
-    this.setState({treeCount: treeCount});
+    this.setState({
+      treeCount: treeCount,
+      overallPrice: this.props.article.price.amount * treeCount
+    });
   }
 
   render() {
@@ -32,7 +38,7 @@ export default class ArticleSlider extends Component {
                 <div>
                   <span className="bold">
                     {this.props.article.treeType.name}</span><br/>
-                  Stk.&nbsp;<span className="bold">{this.props.article.price.amount}&nbsp;€</span><br/>
+                  Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.amount, 2, ".", ",")}&nbsp;€</span><br/>
                 </div>
               </td>
               <td>
