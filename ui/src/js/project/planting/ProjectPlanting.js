@@ -13,8 +13,15 @@ export default class ProjectPlanting extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      overallPrice: 10
+      overallPrice: 5,
+      treeCount: this.props.articles.length,
+      articleCount: this.props.articles.length,
+      slidersMoved: new Array(this.props.articles.length),
+      sliderValues: new Array(this.props.articles.length),
+      sliderValueSum: 0,
+      moveCounter: 0
     };
+    this.balanceOtherSliders = this.balanceOtherSliders.bind(this);
   }
 
   showDetails() {
@@ -22,31 +29,118 @@ export default class ProjectPlanting extends Component {
   }
 
   updateValue(event) {
-    this.setState({overallPrice: event.target.value});
+    this.balanceArticleSliders(event.target.value);
+    this.setState({treeCount: event.target.value});
+  }
+
+  balanceArticleSliders(targetValue) {
+    var sumExceptMovedSlider;
+    if (this.state.sliderValueSum > targetValue) {
+      this.setMovedFlagsToFalse();
+      sumExceptMovedSlider = targetValue
+    } else {
+      sumExceptMovedSlider = targetValue - this.state.sliderValueSum;
+    }
+
+    var rem = sumExceptMovedSlider % (this.state.articleCount - this.state.moveCounter);
+    var div = Math.trunc(sumExceptMovedSlider / (this.state.articleCount - this.state.moveCounter));
+    var remCnt = 0;
+    for (var i = 0; i < this.state.articleCount; i++) {
+      if (!this.state.slidersMoved[i]) {
+        if (remCnt < rem) {
+          this.refs['a' + i].setTreeCount(div + 1);
+          remCnt++;
+        } else {
+          this.refs['a' + i].setTreeCount(div);
+        }
+      }
+    }
+  }
+
+  balanceOtherSliders(sliderValue, sliderIndex) {
+    if (this.state.moveCounter == this.state.articleCount) {
+      this.setMovedFlagsToFalse();
+    }
+    this.state.slidersMoved[sliderIndex] = true;
+    this.state.sliderValues[sliderIndex] = sliderValue;
+    this.calcSliderValueSum();
+
+    var sumExceptMovedSlider;
+    if (this.state.sliderValueSum > this.state.treeCount) {
+      this.setMovedFlagsToFalse();
+      sumExceptMovedSlider = this.state.treeCount
+    } else {
+      sumExceptMovedSlider = this.state.treeCount - this.state.sliderValueSum;
+    }
+
+    var rem = sumExceptMovedSlider % (this.state.articleCount - this.state.moveCounter);
+    var div = Math.trunc(sumExceptMovedSlider / (this.state.articleCount - this.state.moveCounter));
+
+    var remCnt = 0;
+    for (var i = 0; i < this.state.articleCount; i++) {
+      if (!this.state.slidersMoved[i]) {
+        if (remCnt < rem) {
+          this.refs['a' + i].setTreeCount(div + 1);
+          remCnt++;
+        } else {
+          this.refs['a' + i].setTreeCount(div);
+        }
+      }
+    }
+    this.countMovedSliders();
+  }
+
+  calcSliderValueSum() {
+    var sum = 0;
+    for (var i = 0; i < this.state.slidersMoved.length; i++) {
+      if (this.state.slidersMoved[i]) {
+        sum = sum + parseInt(this.state.sliderValues[i]);
+      }
+    }
+    this.state.sliderValueSum = sum;
+  }
+
+  countMovedSliders() {
+    var moved = 0;
+    for (var i = 0; i < this.state.slidersMoved.length; i++) {
+      if (this.state.slidersMoved[i]) {
+        moved++;
+      }
+    }
+    this.state.moveCounter = moved;
+  }
+
+  setMovedFlagsToFalse() {
+    for (var i = 0; i < this.state.slidersMoved.length; i++) {
+      this.state.slidersMoved[i] = false;
+    }
+    this.state.moveCounter = 0;
   }
 
   render() {
+    var that = this;
     let imageUrl = 'http://localhost:8081/treeType/image/' + this.props.articles[0].treeType.imageFile + '/60/60';
     return (
       <div className="projectPlanting">
         <h2>{this.props.projectName}&nbsp;/&nbsp;
           <i>hier pflanzen</i>
         </h2>
-
         <div className="summary">
           <div>
             PREIS&nbsp;/&nbsp;STÜCKZAHL&nbsp;<span className="bold">
               GESAMT</span>
           </div>
           <div className="sliderDiv">
-            <input type="range" min="1" max="1000" step="1" stepUp="5" defaultValue="10" onChange={this.updateValue.bind(this)}/>
+            <input type="range" min="1" max="100" step="1" value={this.state.treeCount} onChange={this.updateValue.bind(this)}/>
           </div>
           <div className="summaryDiv">
-            <span className="overallPrice">{this.state.overallPrice}&nbsp;€</span>
+            <span className="overallPrice">{this.state.overallPrice}&nbsp;€</span><br/>
+            <span className="overallTreeCount">{Accounting.formatNumber(this.state.treeCount, 0, ".", ",")}&nbsp;</span>
+            <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
           </div>
         </div>
         {this.props.articles.map(function(article, i) {
-          return (<ArticleSlider article={article} key={i}/>);
+          return (<ArticleSlider article={article} key={i} ref={"a" + i} sliderIndex={i} balanceOtherSliders={that.balanceOtherSliders.bind(this)} maxValue={that.state.treeCount}/>);
         })}
 
         <table className="bottomTable">
