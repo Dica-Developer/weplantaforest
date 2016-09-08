@@ -34,27 +34,15 @@ export default class ProjectPlanting extends Component {
   }
 
   balanceArticleSliders(targetValue) {
-    var sumExceptMovedSlider;
     if (this.state.sliderValueSum > targetValue) {
       this.setMovedFlagsToFalse();
-      sumExceptMovedSlider = targetValue
-    } else {
-      sumExceptMovedSlider = targetValue - this.state.sliderValueSum;
+      this.state.moveCounter = 0;
+      this.state.sliderValueSum = 0;
     }
-
+    var sumExceptMovedSlider = targetValue - this.state.sliderValueSum;
     var rem = sumExceptMovedSlider % (this.state.articleCount - this.state.moveCounter);
     var div = Math.trunc(sumExceptMovedSlider / (this.state.articleCount - this.state.moveCounter));
-    var remCnt = 0;
-    for (var i = 0; i < this.state.articleCount; i++) {
-      if (!this.state.slidersMoved[i]) {
-        if (remCnt < rem) {
-          this.refs['a' + i].setTreeCount(div + 1);
-          remCnt++;
-        } else {
-          this.refs['a' + i].setTreeCount(div);
-        }
-      }
-    }
+    this.setArticleSliderValues(div, rem);
   }
 
   balanceOtherSliders(sliderValue, sliderIndex) {
@@ -64,6 +52,7 @@ export default class ProjectPlanting extends Component {
     this.state.slidersMoved[sliderIndex] = true;
     this.state.sliderValues[sliderIndex] = sliderValue;
     this.calcSliderValueSum();
+    this.countMovedSliders();
 
     var sumExceptMovedSlider;
     if (this.state.sliderValueSum > this.state.treeCount) {
@@ -72,10 +61,12 @@ export default class ProjectPlanting extends Component {
     } else {
       sumExceptMovedSlider = this.state.treeCount - this.state.sliderValueSum;
     }
-
     var rem = sumExceptMovedSlider % (this.state.articleCount - this.state.moveCounter);
     var div = Math.trunc(sumExceptMovedSlider / (this.state.articleCount - this.state.moveCounter));
+    this.setArticleSliderValues(div, rem);
+  }
 
+  setArticleSliderValues(div, rem) {
     var remCnt = 0;
     for (var i = 0; i < this.state.articleCount; i++) {
       if (!this.state.slidersMoved[i]) {
@@ -87,7 +78,6 @@ export default class ProjectPlanting extends Component {
         }
       }
     }
-    this.countMovedSliders();
   }
 
   calcSliderValueSum() {
