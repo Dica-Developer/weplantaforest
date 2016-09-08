@@ -13,6 +13,7 @@ export default class UserDetails extends Component {
 
   showEditUser(){
     this.props.showEditUser();
+    console.log('show edit user');
   }
 
   render() {

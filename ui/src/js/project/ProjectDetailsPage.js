@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import ProjectCarousel from './ProjectCarousel';
 import ProjectDetails from './ProjectDetails';
+import ProjectPlanting from './planting/ProjectPlanting';
 import ProjectRankingContainer from './ranking/ProjectRankingContainer';
 import RankingItem from './ranking/RankingItem';
 import TimeRankingItem from './ranking/TimeRankingItem';
@@ -31,6 +32,8 @@ export default class ProjectDetailsPage extends Component {
         },
         images: []
       },
+      articles: [],
+      detailsActive: true,
       bestTeam: {
         content: []
       },
@@ -103,6 +106,19 @@ export default class ProjectDetailsPage extends Component {
         console.error(response.config);
       }
     });
+    axios.get('http://localhost:8081/project/articles?projectName=' + this.props.params.projectName).then(function(response) {
+      var result = response.data;
+      that.setState({articles: result});
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
   }
 
   callNextPage(rankingType, page) {
@@ -147,10 +163,27 @@ export default class ProjectDetailsPage extends Component {
     });
   }
 
+  showDetails() {
+    this.setState({detailsActive: true});
+  }
+
+  showPlanting() {
+    this.setState({detailsActive: false});
+  }
+
   render() {
     var bestUserPage = this.state.bestUserPage;
     var bestTeamPage = this.state.bestTeamPage;
     var lastPlantedTreesPage = this.state.lastPlantedTreesPage;
+    var mainPart;
+
+    if (this.state.detailsActive) {
+      mainPart = <div><ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images}/>
+        <ProjectDetails project={this.state.project} showPlanting={this.showPlanting.bind(this)}/></div>;
+    } else {
+      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={this.showDetails.bind(this)} articles={this.state.articles}/>;
+    };
+
     return (
       <div className="projectPage">
         <NavBar/>
@@ -158,8 +191,7 @@ export default class ProjectDetailsPage extends Component {
         <div className="container paddingTopBottom15">
           <div className="row">
             <div className="col-md-12">
-              <ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images}/>
-              <ProjectDetails project={this.state.project}/>
+              {mainPart}
             </div>
             <div className="projectRankings">
               <div className="col-md-4">

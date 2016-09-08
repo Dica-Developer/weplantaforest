@@ -10,6 +10,10 @@ export default class ProjectDetails extends Component {
     super(props);
   }
 
+  showPlanting() {
+    this.props.showPlanting();
+  }
+
   render() {
     var percent = 0;
     if (this.props.project.projectReportData.amountOfMaximumTreesToPlant != 0) {
@@ -55,14 +59,12 @@ export default class ProjectDetails extends Component {
         <div className="description">
           <p>{this.props.project.projectReportData.description}</p>
         </div>
-  <div className="plantLinkDiv">
-        <Link to="/plant" className="plantLink">
-
+        <a role="button" onClick={this.showPlanting.bind(this)}  className="plantLink">
+          <div className="plantLinkDiv">
             <img src="/assets/images/Maus.png" alt="online pflanzen" width="50" height="50"/>
             <span className="no-link-deco">HIER PFLANZEN</span>
-
-        </Link>
-</div>
+          </div>
+        </a>
       </div>
     );
   }

@@ -9,9 +9,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
+import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectImage;
 import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +24,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +41,8 @@ public class ProjectReportController {
     private @NonNull ProjectReportRepository _projectReportRepository;
 
     private @NonNull ProjectImageRepository _projectImageRepository;
+    
+    private @NonNull ProjectArticleRepository _projectArticleRepository;
 
     private @NonNull ImageHelper _imageHelper;
 
@@ -86,7 +94,12 @@ public class ProjectReportController {
             LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
+    }
+    
+    @RequestMapping(value = Uris.PROJECT_ARTICLES, method = RequestMethod.GET)
+    @JsonView(Views.ProjectArticle.class)
+    public List<ProjectArticle> getProjectArticles(@RequestParam String projectName) {
+        return _projectArticleRepository.findByProjectName(projectName);
     }
 
 }

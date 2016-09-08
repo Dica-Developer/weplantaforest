@@ -44,10 +44,12 @@ public class ProjectArticle {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_treeType_treeTypeId", nullable = false)
+    @JsonView(Views.ProjectArticle.class)
     private TreeType treeType;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_price__priceId", nullable = false)
+    @JsonView(Views.ProjectArticle.class)
     private Price price;
 
     @Column(name = "_description", length = 20000)

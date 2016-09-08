@@ -4,6 +4,10 @@ public interface Views {
     public static interface PlantedTree {
     }
     
+    public interface ProjectArticle{
+        
+    }
+    
     public static interface ShortCart{
         
     }

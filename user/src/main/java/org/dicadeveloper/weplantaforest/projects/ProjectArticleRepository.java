@@ -9,8 +9,13 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProjectArticleRepository extends CrudRepository<ProjectArticle, Long> {
 
+    public final static String FIND_ARTICLES_BY_PROJECT_NAME_QUERY = "SELECT projectArticle FROM ProjectArticle projectArticle WHERE projectArticle.project.name = :projectName";
+    
     @Query
     public List<ProjectArticle> findByProject(@Param("project") Project project);
+    
+    @Query(value = FIND_ARTICLES_BY_PROJECT_NAME_QUERY)
+    public List<ProjectArticle> findByProjectName(@Param("projectName") String projectName);
 
     @Query
     public ProjectArticle findByProjectAndTreeType(@Param("project") Project project,
