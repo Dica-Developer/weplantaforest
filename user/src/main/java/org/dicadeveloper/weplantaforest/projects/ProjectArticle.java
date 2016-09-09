@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.treetypes.TreeType;
@@ -56,7 +57,12 @@ public class ProjectArticle {
     private String description;
 
     @Column(name = "_amount")
+    @JsonView(Views.ProjectArticle.class)
     private Long amount;
+    
+    @Transient
+    @JsonView(Views.ProjectArticle.class)
+    private Long alreadyPlanted;
 
     @OneToMany(mappedBy = "projectArticle")
     private List<Tree> trees;

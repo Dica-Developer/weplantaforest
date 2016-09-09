@@ -14,6 +14,7 @@ import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectImage;
 import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
+import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,6 +44,8 @@ public class ProjectReportController {
     private @NonNull ProjectImageRepository _projectImageRepository;
     
     private @NonNull ProjectArticleRepository _projectArticleRepository;
+    
+    private @NonNull TreeRepository _treeRepository;
 
     private @NonNull ImageHelper _imageHelper;
 
@@ -99,7 +102,11 @@ public class ProjectReportController {
     @RequestMapping(value = Uris.PROJECT_ARTICLES, method = RequestMethod.GET)
     @JsonView(Views.ProjectArticle.class)
     public List<ProjectArticle> getProjectArticles(@RequestParam String projectName) {
-        return _projectArticleRepository.findByProjectName(projectName);
+        List<ProjectArticle> articles = _projectArticleRepository.findByProjectName(projectName);
+        for(ProjectArticle article: articles){
+            article.setAlreadyPlanted(_treeRepository.countAlreadyPlantedTreesByProjectArticle(article));
+        }        
+        return articles;
     }
 
 }
