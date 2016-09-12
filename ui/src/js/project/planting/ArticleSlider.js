@@ -8,22 +8,62 @@ require("./articleSlider.less");
 export default class ArticleSlider extends Component {
   constructor(props) {
     super(props);
-    this.state = ({overallPrice: this.props.article.price.amount, treeCount: 1})
+    this.state = ({
+      overallPrice: this.props.article.price.amount,
+      treeCount: 1,
+      maximumTreesToPlant: this.props.article.amount - this.props.article.alreadyPlanted,
+      isMaxAmountReached: false,
+      isSliderBlocked: false
+    })
   }
 
   updateValue(event) {
-    this.setState({
-      treeCount: event.target.value,
-      overallPrice: this.props.article.price.amount * event.target.value
-    });
-    this.props.balanceOtherSliders(event.target.value, this.props.sliderIndex);
+    this.state.treeCount = event.target.value;
+    this.state.isSliderBlocked = true;
+    this.state.overallPrice = this.props.article.price.amount * event.target.value;
+    this.forceUpdate();
+    this.props.balanceArticleSlider(this.props.sliderIndex);
   }
 
   setTreeCount(treeCount) {
-    this.setState({
-      treeCount: treeCount,
-      overallPrice: this.props.article.price.amount * treeCount
-    });
+    var valueToSet;
+    if (treeCount >= this.state.maximumTreesToPlant) {
+      valueToSet = this.state.maximumTreesToPlant;
+      this.state.isMaxAmountReached = true;
+    } else {
+      valueToSet = treeCount;
+      this.state.isMaxAmountReached = false;
+    }
+
+    this.state.treeCount = valueToSet,
+    this.state.overallPrice = this.props.article.price.amount * valueToSet
+    this.forceUpdate();
+  }
+
+  getTreeCount() {
+    return this.state.treeCount;
+  }
+
+  isSliderBlocked() {
+    return this.state.isSliderBlocked;
+  }
+
+  unLock() {
+    this.state.isSliderBlocked = false;
+    this.forceUpdate();
+  }
+
+  lock(){
+    this.state.isSliderBlocked = true;
+    this.forceUpdate();
+  }
+
+  isMaxAmountReached() {
+    return this.state.isMaxAmountReached;
+  }
+
+  getMaximumAmountOfTreesToPlant() {
+    return this.state.maximumTreesToPlant;
   }
 
   render() {
@@ -34,7 +74,11 @@ export default class ArticleSlider extends Component {
           <tbody>
             <tr>
               <td>
-                <img src={imageUrl} className="treeImg"/>
+                <div>
+                  <img src={imageUrl} className="treeImg"/>
+                </div>
+              </td>
+              <td>
                 <div>
                   <span className="bold">
                     {this.props.article.treeType.name}</span><br/>
@@ -43,12 +87,22 @@ export default class ArticleSlider extends Component {
               </td>
               <td>
                 <div>
-                  <input type="range" min="0" max={this.props.maxValue} value={this.state.treeCount} step="1" onChange={this.updateValue.bind(this)}/>
+                  <input type="range" min="0" max={(this.props.maxValue <= this.state.maximumTreesToPlant)
+                    ? this.props.maxValue
+                    : this.state.maximumTreesToPlant} value={this.state.treeCount} step="1" onChange={this.updateValue.bind(this)}/>
                 </div>
+              </td>
+
+              <td>
                 <div>
                   <span className="price">{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span><br/>
-                  <span className="treeCount">{Accounting.formatNumber(this.state.treeCount, 0, ".", ",")}&nbsp;</span>
+                  <span className="treeCount">{Accounting.formatNumber(this.state.treeCount, 0, ".", ",")}</span>
                   <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <span>{this.state.maximumTreesToPlant}</span>
                 </div>
               </td>
             </tr>
