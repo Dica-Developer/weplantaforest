@@ -19,6 +19,9 @@ public class UserReportData {
     String imageFileName;
     
     @NonNull
+    String mail;
+    
+    @NonNull
     Long regDate;
     
     @NonNull
