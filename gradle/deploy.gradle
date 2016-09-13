@@ -1,4 +1,3 @@
-
 // TODO add start/stop/backup-mysql to deploy ?
 // use the correct app profile  
 
@@ -54,11 +53,11 @@ configure([project(':article-manager'), project(':user')]) {
         def initdScript = file("build/init.d/${project.name}")
         assert initdScript.exists()
 
-        println "Uploading $initdScript to ${remotes.server}:/tmp/init.d/"
+        logger.info "Uploading $initdScript to ${remotes.server}:/tmp/init.d/"
         execute 'mkdir -p /tmp/init.d'
         put from: initdScript, into: "/tmp/init.d/${project.name}"
 
-        println 'Diff with existing file'
+        logger.info 'Diff with existing file'
         try {
           execute "diff /tmp/init.d/${initdScript.name} /etc/init.d/${initdScript.name}"
         } catch (Exception e) {
@@ -69,7 +68,7 @@ configure([project(':article-manager'), project(':user')]) {
             """.stripMargin()
             throw new IllegalStateException(message)
         }
-        println "Service script for module '${project.name}' already up to date!"
+        logger.info "Service script for module '${project.name}' already up to date!"
       }
     }
   }
@@ -83,10 +82,10 @@ configure([project(':article-manager'), project(':user')]) {
 
         execute "mkdir -p ${projectDir}"
 
-        println "Removing old backup..."
+        logger.info "Removing old backup..."
         execute "rm -rf ${projectBackup}"
 
-        println "Backing up existing deployment..."
+        logger.info "Backing up existing deployment..."
         execute "cp -r ${projectDir} ${projectBackup}"
 
         rsync("$buildDir/install/${project.name}/", "${ipatUser}@${ipatHost}:${projectDir}/")
@@ -96,7 +95,7 @@ configure([project(':article-manager'), project(':user')]) {
 }
 
 def rsync(String from, String to) {
-  println "RSync from $from to $to"
+  logger.lifecycle "RSync from $from to $to"
   exec {
     executable "rsync"
     args '-vr', '--progress', '--delete', from, to
