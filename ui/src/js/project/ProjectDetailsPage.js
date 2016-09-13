@@ -171,6 +171,10 @@ export default class ProjectDetailsPage extends Component {
     this.setState({detailsActive: false});
   }
 
+  updatePlantBag(overallPrice, projectItems, projectName){
+    this.refs['navBar'].updatePlantBag(overallPrice, projectItems, projectName);
+  }
+
   render() {
     var bestUserPage = this.state.bestUserPage;
     var bestTeamPage = this.state.bestTeamPage;
@@ -181,12 +185,12 @@ export default class ProjectDetailsPage extends Component {
       mainPart = <div><ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images}/>
         <ProjectDetails project={this.state.project} showPlanting={this.showPlanting.bind(this)}/></div>;
     } else {
-      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={this.showDetails.bind(this)} articles={this.state.articles}/>;
+      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={this.showDetails.bind(this)} articles={this.state.articles} updatePlantBag={this.updatePlantBag.bind(this)}/>;
     };
 
     return (
       <div className="projectPage">
-        <NavBar/>
+        <NavBar ref="navBar"/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row">

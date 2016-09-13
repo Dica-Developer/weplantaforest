@@ -193,6 +193,16 @@ export default class ProjectPlanting extends Component {
     }
   }
 
+  updatePlantBag(){
+    var projectItems = {};
+    for(var i = 0; i < this.props.articles.length; i++){
+      if(this.refs['a' + i].getTreeCount() > 0){
+        projectItems[this.props.articles[i].treeType.name] = {amount: parseInt(this.refs['a' + i].getTreeCount())};
+      }
+    }
+    this.props.updatePlantBag(this.state.overallPrice, projectItems, this.props.projectName);
+  }
+
   render() {
     var that = this;
     let imageUrl = 'http://localhost:8081/treeType/image/' + this.props.articles[0].treeType.imageFile + '/60/60';
@@ -231,7 +241,7 @@ export default class ProjectPlanting extends Component {
                 <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span>
               </td>
               <td>
-                <a role="button">
+                <a role="button" onClick={this.updatePlantBag.bind(this)}>
                   <div>
                     <img src="/assets/images/Schubkarre_braun.png" alt="online pflanzen" width="50" height="50"/>
                     <span className="no-link-deco">AB IN MEINEN<br/>PFLANZKORB!</span>

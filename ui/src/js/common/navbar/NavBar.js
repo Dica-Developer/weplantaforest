@@ -3,12 +3,17 @@ import {Link} from 'react-router';
 
 import Menu from './Menu';
 import MenuItem from './MenuItem';
+import PlantBag from './PlantBag';
 import LoginMenuItem from './LoginMenuItem';
 
 require("./navbar.less");
 require("./menu.less");
 
 export default class NavBar extends Component {
+  constructor(){
+    super();
+  }
+
 
   showLeft() {
     this.refs.left.show();
@@ -17,6 +22,11 @@ export default class NavBar extends Component {
   showRight() {
     this.refs.right.show();
   }
+
+  updatePlantBag(price, projectItems, projectName){
+    this.refs["plantBag"].updatePlantBag(price, projectItems, projectName);
+  }
+
 
   render() {
     return (
@@ -68,18 +78,7 @@ export default class NavBar extends Component {
               <Link to="/plant" className="navbar-left">
                 <img className="nav-img" src="/assets/images/Schere.png" alt="Baumservice" width="59" height="50"/>
               </Link>
-              //TODO: extract in own component
-              <button className="navbar-right green-button">
-                <div className="wrapper">
-                  <div className="image-wrapper">
-                    <p className="price">300 €</p>
-                    <img className="nav-img" src="/assets/images/Schubkarre.png" alt="mein Pflanzkorb" width="60" height="30"/>
-                  </div>
-                  <div className="green-button-text">
-                    <span className="buttonText">PFLANZKORB</span>
-                  </div>
-                </div>
-              </button>
+              <PlantBag updatePlantBag={this.updatePlantBag.bind(this)} ref="plantBag"/>
             </div>
           </div>
         </nav>
