@@ -84,7 +84,7 @@ configure([project(':article-manager'), project(':user')]) {
   task prepareServiceScripts(description: 'Creates a init.d script from a template for a specific project.') << {
     assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
     def initdTemplate = rootProject.file('gradle/deploy/initd.template.sh')
-    assert initdTemplate.exists()
+    assert initdTemplate.exists(), "The file ${initdTemplate} does not exist!"
 
     copy {
       from initdTemplate
