@@ -13,40 +13,57 @@ import org.springframework.stereotype.Service;
 @Service
 public class TokenAuthenticationService {
 
-	private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
-	private static final long TEN_DAYS = 1000 * 60 * 60 * 24 * 10;
+    private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
+    private static final long TEN_DAYS = 1000 * 60 * 60 * 24 * 10;
 
-	private final TokenHandler tokenHandler;
+    private final TokenHandler tokenHandler;
 
-	@Autowired
-	public TokenAuthenticationService(@Value("${token.secret}") String secret) {
-		tokenHandler = new TokenHandler(DatatypeConverter.parseBase64Binary(secret));
-	}
+    @Autowired
+    public TokenAuthenticationService(@Value("${token.secret}") String secret) {
+        tokenHandler = new TokenHandler(DatatypeConverter.parseBase64Binary(secret));
+    }
 
-	public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
-		final User user = authentication.getDetails();
-//		user.setExpires(System.currentTimeMillis() + TEN_DAYS);
-		response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
-	}
+    public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
+        final User user = authentication.getDetails();
+        // user.setExpires(System.currentTimeMillis() + TEN_DAYS);
+        response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
+    }
 
-	public Authentication getAuthentication(HttpServletRequest request) {
-		final String token = request.getHeader(AUTH_HEADER_NAME);
-		if (token != null) {
-			final User user = tokenHandler.parseUserFromToken(token);
-			if (user != null) {
-				return new UserAuthentication(user);
-			}
-		}
-		return null;
-	}
-	
-	public boolean isAuthenticatedUser(String userToken, String userName){
-	    if (userToken != "") {
+    public Authentication getAuthentication(HttpServletRequest request) {
+        final String token = request.getHeader(AUTH_HEADER_NAME);
+        if (token != null) {
+            final User user = tokenHandler.parseUserFromToken(token);
+            if (user != null) {
+                return new UserAuthentication(user);
+            }
+        }
+        return null;
+    }
+
+    public User getUserFromToken(String userToken) {
+        if (userToken != null) {
             final User user = tokenHandler.parseUserFromToken(userToken);
-            if (user != null && user.getName().equals(userName)) {
+            return user;
+        }
+        return null;
+    }
+
+    public String getTokenFromUser(User user) {
+        if (user != null) {
+            final String token = tokenHandler.createTokenForUser(user);
+            return token;
+        }
+        return null;
+    }
+
+    public boolean isAuthenticatedUser(String userToken, String userName) {
+        if (userToken != "") {
+            final User user = tokenHandler.parseUserFromToken(userToken);
+            if (user != null && user.getName()
+                                    .equals(userName)) {
                 return true;
             }
         }
-	    return false;
-	}
+        return false;
+    }
 }

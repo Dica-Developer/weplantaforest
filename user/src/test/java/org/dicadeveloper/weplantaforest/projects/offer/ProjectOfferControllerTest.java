@@ -52,7 +52,7 @@ public class ProjectOfferControllerTest {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = true;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "da und dort";
         offer.mail = "hans.wurst@daundort.de";
         offer.owner = "Wurst Hans";
@@ -73,7 +73,7 @@ public class ProjectOfferControllerTest {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = true;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "da und dort";
         // offer.mail = "hans.wurst@daundort.de";
         offer.owner = "Wurst Hans";
@@ -94,7 +94,7 @@ public class ProjectOfferControllerTest {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = true;
-        offer.Lease = "";
+        offer.lease = "";
         // offer.location = "da und dort";
         offer.mail = "hans.wurst@daundort.de";
         offer.owner = "Wurst Hans";
@@ -115,7 +115,7 @@ public class ProjectOfferControllerTest {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = true;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "da und dort";
         offer.mail = "hans.wurst@daundort.de";
         offer.owner = "Wurst Hans";
@@ -136,7 +136,7 @@ public class ProjectOfferControllerTest {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = true;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "da und dort";
         offer.mail = "hans.wurst@daundort.de";
         // offer.owner = "Wurst Hans";

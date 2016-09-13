@@ -9,7 +9,9 @@ import java.util.Date;
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,6 +26,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import lombok.NonNull;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = WeplantaforestApplication.class)
@@ -35,19 +39,24 @@ public class ProjectOfferControllerSendMailTests {
     @Rule
     @Autowired
     public CleanDbRule _cleanDbRule;
-    
+
     @Autowired
     private DbInjecter _dbInjecter;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
+
     @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(this.webApplicationContext).build();
     }
-    
-    
+
     @Test
     public void testSendprojectOffer() throws Exception {
         ProjectOfferData offer = new ProjectOfferData();
@@ -56,7 +65,7 @@ public class ProjectOfferControllerSendMailTests {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = true;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "da und dort";
         offer.mail = "hans.wurst@daundort.de";
         offer.owner = "Wurst Hans";
@@ -65,22 +74,23 @@ public class ProjectOfferControllerSendMailTests {
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
         this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .header("X-AUTH-TOKEN", "")
                                                    .content(TestUtil.convertObjectToJsonBytes(offer)))
                     .andExpect(status().isOk());
     }
-    
+
     @Test
     public void testSendprojectOfferWithUserId() throws Exception {
         _dbInjecter.injectUser("Adam");
-        
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+
         ProjectOfferData offer = new ProjectOfferData();
-        offer.userId = 1L;
         offer.first = "Hans";
         offer.name = "Wurst";
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = true;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "da und dort";
         offer.mail = "hans.wurst@daundort.de";
         offer.owner = "Wurst Hans";
@@ -89,6 +99,7 @@ public class ProjectOfferControllerSendMailTests {
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
         this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .header("X-AUTH-TOKEN", userToken)
                                                    .content(TestUtil.convertObjectToJsonBytes(offer)))
                     .andExpect(status().isOk());
     }

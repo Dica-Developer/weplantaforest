@@ -45,7 +45,7 @@ public class ProjectOfferHelperTest {
         offer.isAfforestation = false;
         offer.isLeasing = false;
         offer.isSelling = false;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "hier";
         offer.mail = "hans@wurst.de";
         offer.owner = "Bernd Wurst";
@@ -71,7 +71,7 @@ public class ProjectOfferHelperTest {
         offer.isAfforestation = false;
         offer.isLeasing = false;
         offer.isSelling = false;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "hier";
         offer.mail = "hans@wurst.de";
         offer.owner = "Bernd Wurst";
@@ -98,7 +98,7 @@ public class ProjectOfferHelperTest {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = false;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "hier";
         offer.mail = "hans@wurst.de";
         offer.owner = "Bernd Wurst";
@@ -125,7 +125,7 @@ public class ProjectOfferHelperTest {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = false;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "hier";
         offer.mail = "hans@wurst.de";
         offer.owner = "Bernd Wurst";
@@ -152,7 +152,7 @@ public class ProjectOfferHelperTest {
         offer.isAfforestation = true;
         offer.isLeasing = false;
         offer.isSelling = true;
-        offer.Lease = "";
+        offer.lease = "";
         offer.location = "hier";
         offer.mail = "hans@wurst.de";
         offer.owner = "Bernd Wurst";
@@ -179,7 +179,7 @@ public class ProjectOfferHelperTest {
         offer.isAfforestation = true;
         offer.isLeasing = true;
         offer.isSelling = true;
-        offer.Lease = "lange";
+        offer.lease = "lange";
         offer.location = "hier";
         offer.mail = "hans@wurst.de";
         offer.owner = "Bernd Wurst";
@@ -206,7 +206,7 @@ public class ProjectOfferHelperTest {
         offer.isAfforestation = true;
         offer.isLeasing = true;
         offer.isSelling = true;
-        offer.Lease = "lange";
+        offer.lease = "lange";
         offer.location = "hier";
         offer.mail = "hans@wurst.de";
         offer.owner = "Bernd Wurst";
@@ -237,7 +237,7 @@ public class ProjectOfferHelperTest {
         offer.isAfforestation = true;
         offer.isLeasing = true;
         offer.isSelling = true;
-        offer.Lease = "lange";
+        offer.lease = "lange";
         offer.location = "hier";
         offer.mail = "hans@wurst.de";
         offer.owner = "Bernd Wurst";
