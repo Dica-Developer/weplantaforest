@@ -24,6 +24,61 @@ remotes {
   }
 }
 
+task npmInstall(type: Exec) {
+  group 'Deployment'
+
+  inputs.file project(':').file('ui/package.json')
+  outputs.dir project(':').file('ui/node_modules')
+
+  workingDir project(':').file('ui')
+  commandLine 'npm', 'install'
+}
+
+task buildUi(type: Exec) {
+  group 'Deployment'
+
+  dependsOn npmInstall
+
+  inputs.dir project(':').file('ui/src')
+  outputs.dir project(':').file('ui/dist/js')
+  outputs.dir project(':').file('ui/dist/index.html')
+
+  workingDir './ui'
+  commandLine 'npm', 'run', 'build'
+}
+
+task deployUi {
+  description 'Deploys the project to a remote server'
+  group 'Deployment'
+
+  dependsOn buildUi
+
+  doLast {
+    assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+
+    ssh.run {
+      session(remotes.server) {
+        def projectDir = "/var/www/wpaf"
+        def projectBackup = "${installationDir}/ui.backup"
+
+        logger.info "Creating project dir..."
+        execute "mkdir -p ${projectDir}"
+
+        logger.info "Removing old backup..."
+        execute "rm -rf ${projectBackup}"
+
+        logger.info "Backing up existing deployment..."
+        execute "cp -r ${projectDir} ${projectBackup}"
+
+        // chmod on project dir
+        // chown on project dir
+
+        rsync(project(':').file('ui/dist'), "${ipatUser}@${ipatHost}:${projectDir}/")
+      }
+    }
+  }
+}
+
 configure([project(':article-manager'), project(':user')]) {
 
   task prepareServiceScripts(description: 'Creates a init.d script from a template for a specific project.') << {
