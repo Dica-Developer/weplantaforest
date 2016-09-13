@@ -52,6 +52,7 @@ allprojects {
 }
 
 apply from: "${rootDir}/gradle/subProjects.gradle"
+apply from: "${rootDir}/gradle/deploy.gradle"
 
 // Only report code coverage for projects that are distributed
 def publishedProjects = subprojects.findAll {it.path != ':testkit'}
