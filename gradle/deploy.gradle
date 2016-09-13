@@ -9,8 +9,6 @@ def ipatUser = ext.properties.get("ipat.user")
 def ipatHost = ext.properties.get("ipat.host")
 def installationDir = "/home/${ipatUser}/weplantaforest"
 
-assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
-
 ssh.settings {
     retryCount = 1
     retryWaitSec = 5
@@ -27,13 +25,13 @@ remotes {
   }
 }
 
-
 configure([project(':article-manager'), project(':user')]) {
 
     task prepareServiceScripts(description: 'Creates a init.d script from a template for a specific project.') << {
+        assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
         def initdTemplate = rootProject.file('gradle/deploy/initd.template.sh')
         assert initdTemplate.exists()
-        
+
         copy {
             from initdTemplate
             into "${project.buildDir}/init.d/"
@@ -46,11 +44,11 @@ configure([project(':article-manager'), project(':user')]) {
                   .replaceAll('@@user@@', ipatUser)
                   .replaceAll('@@installationDir@@', installationDir)
             }
-        }  
-        
+        }
     }
-    
+
     task syncServiceScript(description:'Syncs the init.d script for operating the installed weplantaforest modules on a remote server', dependsOn: 'prepareServiceScripts') << {
+        assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
         ssh.run {
             session(remotes.server) {
                 def initdScript = file("build/init.d/${project.name}")
@@ -59,7 +57,7 @@ configure([project(':article-manager'), project(':user')]) {
                 println "Uploading $initdScript to ${remotes.server}:/tmp/init.d/"
                 execute 'mkdir -p /tmp/init.d'
                 put from: initdScript, into: "/tmp/init.d/${project.name}"
-                
+
                 println 'Diff with existing file'
                 try {
                     execute "diff /tmp/init.d/${initdScript.name} /etc/init.d/${initdScript.name}"
@@ -74,30 +72,28 @@ configure([project(':article-manager'), project(':user')]) {
                 println "Service script for module '${project.name}' already up to date!"
             }
         }
-    
     }
-    
-    
+
     task deploy (description:'Deploys the project to a remote server', dependsOn:'installDist') << {
+      assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
       ssh.run {
         session(remotes.server) {
           def projectDir = "${installationDir}/${project.name}"
           def projectBackup = "${installationDir}/${project.name}.backup"
-          
+
           execute "mkdir -p ${projectDir}"
-          
+
           println "Removing old backup..."
           execute "rm -rf ${projectBackup}"
-          
+
           println "Backing up existing deployment..."
           execute "cp -r ${projectDir} ${projectBackup}"
-          
+
           rsync("$buildDir/install/${project.name}/", "${ipatUser}@${ipatHost}:${projectDir}/")
         }
       }
     }
 }
-
 
 def rsync(String from, String to) {
     println "RSync from $from to $to"
