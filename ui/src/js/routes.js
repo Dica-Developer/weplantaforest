@@ -14,6 +14,7 @@ import ExplorePage from './views/ExplorePage';
 import ProjectDetailsPage from './project/ProjectDetailsPage';
 import ProfilePage from './profile/ProfilePage';
 import RankingPage from './ranking/RankingPage';
+import ProjectOfferPage from './offer/ProjectOfferPage';
 
 export default class Routes extends Component {
   render() {
@@ -26,6 +27,7 @@ export default class Routes extends Component {
         <Route path="/projects/:projectName" component={ProjectDetailsPage} />
         <Route path="/user/:userName" component={ProfilePage} />
         <Route path="/ranking" component={RankingPage} />
+        <Route path="/projectOffer" component={ProjectOfferPage} />
         <Route path="*" component={NotFoundPage} />
       </Router>
     );
