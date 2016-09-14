@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter 
 public class SelfPlantData {
 
-    String owner;
     long plantedOn;
     
     @Min(1)
@@ -19,6 +18,8 @@ public class SelfPlantData {
     
     String treeType;
     String description;
+    
+    String imageName;
     
     float longitude;
     float latitude;

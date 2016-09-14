@@ -11,9 +11,11 @@ import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -53,6 +55,12 @@ public class SelfPlantControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
+
     static long timeOfPlanting;
     static boolean entitiesInjected = false;
 
@@ -68,9 +76,9 @@ public class SelfPlantControllerTest {
             entitiesInjected = true;
         }
     }
-    
+
     @After
-    public void clear(){
+    public void clear() {
         _treeRepository.deleteAll();
     }
 
@@ -78,8 +86,9 @@ public class SelfPlantControllerTest {
     @Rollback(false)
     public void testSelfPlantStatusOk() throws Exception {
         SelfPlantData selfPlantData = new SelfPlantData();
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
-        selfPlantData.setOwner("Adam");
+        // selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(10);
         selfPlantData.setTreeType("wood");
@@ -88,6 +97,7 @@ public class SelfPlantControllerTest {
         selfPlantData.setLatitude(2.0f);
 
         mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                          .header("X-AUTH-TOKEN", userToken)
                                           .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
                .andExpect(status().isOk());
 
@@ -114,7 +124,7 @@ public class SelfPlantControllerTest {
     public void testSelfPlantStatusBadRequestCauseOfAmountHigherTen() throws Exception {
         SelfPlantData selfPlantData = new SelfPlantData();
 
-        selfPlantData.setOwner("Adam");
+        // selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(11);
         selfPlantData.setTreeType("wood");
@@ -134,7 +144,7 @@ public class SelfPlantControllerTest {
     public void testSelfPlantStatusBadRequestCauseOfAmountLowerOne() throws Exception {
         SelfPlantData selfPlantData = new SelfPlantData();
 
-        selfPlantData.setOwner("Adam");
+        // selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(0);
         selfPlantData.setTreeType("wood");

@@ -7,6 +7,7 @@ import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,9 @@ public class SelfPlantDataToTreeConverterTest {
 
     @Autowired
     private SelfPlantDataToTreeConverter _selfPlantDataToTreeConverter;
+    
+    @Autowired
+    private UserRepository _userRepository;
 
     @Test
     public void convertFromSelfPantDataToTree() {
@@ -41,7 +45,7 @@ public class SelfPlantDataToTreeConverterTest {
 
         SelfPlantData selfPlantData = new SelfPlantData();
 
-        selfPlantData.setOwner("Adam");
+//        selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(plantedOn);
         selfPlantData.setAmount(10);
         selfPlantData.setTreeType("wood");
@@ -50,7 +54,7 @@ public class SelfPlantDataToTreeConverterTest {
         selfPlantData.setLatitude(2.0f);
 
         long timeNow = System.currentTimeMillis();
-        Tree tree = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantData);
+        Tree tree = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantData, _userRepository.findOne(1L));
 
         assertThat(tree.getOwner().getName()).isEqualTo("Adam");
         assertThat(tree.getAmount()).isEqualTo(10);
