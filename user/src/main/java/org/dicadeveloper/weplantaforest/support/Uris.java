@@ -17,6 +17,8 @@ public class Uris {
     public final static String SIMPLE_DONATION = "/simpleDonateTrees";
 
     public final static String PLANT_SELF = "/plantSelf";
+    
+    public final static String UPLOAD_SELF_PLANTED_TREE_IMAGE = "/plantSelf/upload";
 
     // Co2 report url
 
@@ -67,6 +69,8 @@ public class Uris {
     public final static String TREES_BY_USER = "/trees/owner/";
 
     public final static String TREES_BY_PROJECT = "/trees/project/";
+    
+    public final static String TREE_IMAGE = "/tree/image/";
 
     // certificates
 
@@ -131,6 +135,8 @@ public class Uris {
     public final static String TEAM_DETAILS = "/team";
 
     // treeType
+    
+    public final static String TREETYPES = "/treeTypes";
 
     public final static String TREETYPE_IMAGE = "/treeType/image/";
 
