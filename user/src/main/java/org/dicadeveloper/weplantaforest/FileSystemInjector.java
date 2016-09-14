@@ -22,6 +22,7 @@ public class FileSystemInjector {
     public static String TREETYPE_DIR = "/treeTypes";
     public static String USER_DIR = "/user";
     public static String TEAM_DIR = "/teams";
+    public static String TREE_DIR = "/trees";
 
     private static String topFolder;
 
@@ -36,6 +37,7 @@ public class FileSystemInjector {
             new File(topFolder + UPLOAD_DIR + IMAGE_DIR + TREETYPE_DIR).mkdir();
             new File(topFolder + UPLOAD_DIR + IMAGE_DIR + USER_DIR).mkdir();
             new File(topFolder + UPLOAD_DIR + IMAGE_DIR + TEAM_DIR).mkdir();
+            new File(topFolder + UPLOAD_DIR + IMAGE_DIR + TREE_DIR).mkdir();
         };
     }
 
@@ -57,6 +59,10 @@ public class FileSystemInjector {
     
     public static String getTeamFolder() {
         return topFolder + UPLOAD_DIR + IMAGE_DIR + TEAM_DIR;
+    }
+    
+    public static String getTreeFolder() {
+        return topFolder + UPLOAD_DIR + IMAGE_DIR + TREE_DIR;
     }
 
 }
