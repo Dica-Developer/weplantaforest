@@ -69,7 +69,7 @@ export default class NavBar extends Component {
               <Link to="/" className="navbar-left navbar-logo">
                 <img className="nav-img" src="/assets/images/ipat_logo.png" alt="logo" width="50" height="50"/>
               </Link>
-              <Link to="/plant" className="navbar-left">
+              <Link to="/selfPlant" className="navbar-left">
                 <img className="nav-img" src="/assets/images/Spaten.png" alt="selbst pflanzen" width="25" height="50"/>
               </Link>
               <Link to="/plant" className="navbar-left">

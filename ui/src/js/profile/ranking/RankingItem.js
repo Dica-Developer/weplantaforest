@@ -13,6 +13,15 @@ export default class RankingItem extends Component {
   }
 
   render() {
+    var project;
+    if(this.props.content.projectArticle == null){
+      project = <span>Eigene Pflanzung</span>;
+    }else{
+      project =   <Link className="more" to={`/projects/` + this.props.content.projectArticle.project.name}>
+          {this.props.content.projectArticle.project.name}
+        </Link>;
+    }
+
     return (
       <div>
         <div className="rankingNumberDiv">
@@ -23,9 +32,7 @@ export default class RankingItem extends Component {
           <p >
             <span className="bold">Anzahl:&nbsp;</span>{Accounting.formatNumber(this.props.content.amount, 0, ".", ",")}<br/>
             <span className="bold">Projekt:&nbsp;</span>
-            <Link className="more" to={`/projects/` + this.props.content.projectArticle.project.name}>
-              {this.props.content.projectArticle.project.name}
-            </Link><br/>
+            {project}<br/>
             <span className="bold">Datum:&nbsp;</span>
             <span >{moment(this.props.content.plantedOn).format("DD.MM.YYYY")}</span>
           </p>

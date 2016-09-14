@@ -164,7 +164,12 @@ export default class ProfilePage extends Component {
     if (this.state.newestPlantRanking.numberOfElements != 0) {
       treePart = <UserRankingContainer callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.newestPlantRanking.first} isLastPage={this.state.newestPlantRanking.last}>
         {this.state.newestPlantRanking.content.map(function(content, i) {
-          let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60';
+          let imageUrl;
+          if(content.imagePath != null && content.imagePath != ''){
+            imageUrl = 'http://localhost:8081/tree/image/' + content.imagePath + '/60/60'
+          }else{
+             imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60'
+          }
           return (<RankingItem imageUrl={imageUrl} rankNumber={page * 10 + (i + 1)} content={content} key={i}/>);
         })}
       </UserRankingContainer>;

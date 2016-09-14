@@ -15,6 +15,7 @@ import ProjectDetailsPage from './project/ProjectDetailsPage';
 import ProfilePage from './profile/ProfilePage';
 import RankingPage from './ranking/RankingPage';
 import ProjectOfferPage from './offer/ProjectOfferPage';
+import SelfPlantPage from './selfPlant/SelfPlantPage';
 
 export default class Routes extends Component {
   render() {
@@ -28,6 +29,7 @@ export default class Routes extends Component {
         <Route path="/user/:userName" component={ProfilePage} />
         <Route path="/ranking" component={RankingPage} />
         <Route path="/projectOffer" component={ProjectOfferPage} />
+        <Route path="/selfPlant" component={SelfPlantPage} />
         <Route path="*" component={NotFoundPage} />
       </Router>
     );
