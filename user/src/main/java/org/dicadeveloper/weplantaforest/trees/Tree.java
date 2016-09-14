@@ -42,6 +42,7 @@ public class Tree implements Identifiable<Long> {
     private int amount;
 
     @Column(name = "_imagePath")
+    @JsonView(Views.PlantedTree.class)
     private String imagePath;
 
     @Column(name = "_longitude")
