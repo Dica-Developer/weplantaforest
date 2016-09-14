@@ -7,8 +7,8 @@ import {
 import NotificationSystem from 'react-notification-system';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
-import InputText from './InputText';
-import TextArea from './TextArea';
+import InputText from '../common/components/InputText';
+import TextArea from '../common/components/TextArea';
 
 export default class ProjectOffer extends Component {
 
