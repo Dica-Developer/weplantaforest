@@ -23,4 +23,8 @@ public interface Views {
     public static interface ReceiptOverview{
         
     }
+    
+    public static interface ShortTreeType{
+        
+    }
 }
