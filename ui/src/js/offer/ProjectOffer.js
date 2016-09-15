@@ -7,6 +7,7 @@ import {
 import NotificationSystem from 'react-notification-system';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
+import IconButton from '../common/components/IconButton';
 import InputText from '../common/components/InputText';
 import TextArea from '../common/components/TextArea';
 
@@ -191,14 +192,9 @@ export default class ProjectOffer extends Component {
                   </tr>
                 </tbody>
               </table>
-              <a role="button" className="mailLink" onClick={this.sendOffer.bind(this)}>
-                <div className="mailDiv">
-                  <span className="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                  <span className="no-link-deco">
-                    ANGEBOT ABSCHICKEN
-                  </span>
-                </div>
-              </a>
+              <div className="align-center">
+                <IconButton text="ANGEBOT ABSCHICKEN" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
+              </div>
             </div>
             <NotificationSystem ref="notificationSystem" style={style}/>
           </div>
