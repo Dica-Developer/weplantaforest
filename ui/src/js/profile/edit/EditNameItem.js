@@ -4,14 +4,14 @@ import NotificationSystem from 'react-notification-system';
 
 import Boostrap from 'bootstrap';
 
-import EditButton from './EditButton';
-import SaveAndUndoButton from './SaveAndUndoButton';
+import IconButton from '../../common/components/IconButton';
 
 export default class EditNameItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       content: this.props.content,
+      contentTemp: this.props.content,
       edit: false
     };
   }
@@ -34,24 +34,24 @@ export default class EditNameItem extends Component {
   }
 
   saveContent() {
-    this.setState({edit: false});
-    this.props.editUsername(this.state.content);
+    this.setState({content: this.state.contentTemp, contentTemp: this.state.contentTemp, edit: false});
+    this.props.editUsername(this.state.contentTemp);
   }
 
   undoChanges(content) {
-    this.setState({content: content, edit: false});
+    this.setState({contentTemp: this.state.content, edit: false});
   }
 
   updateContent(e) {
-    this.setState({content: e.target.value});
+    this.setState({contentTemp: e.target.value});
   }
 
   render() {
     var link;
     if (this.state.edit) {
-      link = <SaveAndUndoButton content={this.state.content} saveContent={this.saveContent.bind(this)} undoChanges={this.undoChanges.bind(this)}/>
+      link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.saveContent.bind(this)}/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
     } else {
-      link = <EditButton editContent={this.editContent.bind(this)}/>;
+      link = <IconButton text="BEARBEITEN" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }
 
     var style = {
@@ -72,7 +72,7 @@ export default class EditNameItem extends Component {
     return (
       <div className="editItem">
         <div className="left">
-          <span className="bold">{this.props.text}:&nbsp;</span><input type="text" value={this.state.content} onChange={this.updateContent.bind(this)} ref="content" disabled={!this.state.edit}/></div>
+          <span className="bold">{this.props.text}:&nbsp;</span><input type="text" value={this.state.contentTemp} onChange={this.updateContent.bind(this)} ref="content" disabled={!this.state.edit}/></div>
         <div className="right">
           {link}
         </div>

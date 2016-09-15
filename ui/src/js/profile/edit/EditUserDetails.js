@@ -11,6 +11,7 @@ import EditNameItem from './EditNameItem';
 import EditImageItem from './EditImageItem';
 import EditItem from './EditItem';
 import EditDropdownItem from './EditDropdownItem';
+import IconButton from '../../common/components/IconButton';
 
 require("./editUserDetails.less");
 
@@ -120,20 +121,15 @@ export default class EditUserDetails extends Component {
           <option value="NEIN">NEIN</option>
         </EditDropdownItem>
         <EditItem text="E-Mail" content={this.props.user.mail} toEdit="MAIL" editUser={this.editUser.bind(this)}/>
-        <EditDropdownItem text="Typ" toEdit="ORGANIZATION_TYPE" content={this.props.user.organizationType} editUser={this.editUser.bind(this)} width="180">
+        <EditDropdownItem text="Typ" toEdit="ORGANIZATION_TYPE" text={this.props.user.organizationType} editUser={this.editUser.bind(this)} width="180">
           <option value="PRIVATE">Privatperson</option>
           <option value="COMMERCIAL">Firma</option>
           <option value="NONPROFIT">Non-Profit Organisation</option>
           <option value="EDUCATIONAL">Schule</option>
         </EditDropdownItem>
-        <a role="button" className="showLink" onClick={this.showProfile.bind(this)}>
-          <div>
-            <span className="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-            <span className="no-link-deco">
-              ANSCHAUEN
-            </span>
-          </div>
-        </a>
+        <div className="align-center bottomButton">
+          <IconButton text="ANSCHAUEN" glyphIcon="glyphicon-eye-open" onClick={this.showProfile.bind(this)}/>
+        </div>
       </div>
     );
   }

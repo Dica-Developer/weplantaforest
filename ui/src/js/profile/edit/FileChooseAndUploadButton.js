@@ -1,11 +1,9 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 
 import Boostrap from 'bootstrap';
+
+import IconButton from '../../common/components/IconButton';
 
 export default class FileChooseAndUploadButton extends Component {
   constructor(props) {
@@ -20,24 +18,18 @@ export default class FileChooseAndUploadButton extends Component {
   }
 
   saveFile() {
-    this.setState({
-      file: this.refs.fileChooser.files[0]
-    });
+    this.setState({file: this.refs.fileChooser.files[0]});
     this.props.setImageName(this.refs.fileChooser.files[0].name);
   }
 
   undo() {
-    this.setState({
-      file: null
-    });
+    this.setState({file: null});
     this.props.setImageName('');
   }
 
   uploadImage() {
     this.props.uploadImage(this.state.file);
-    this.setState({
-      file: null
-    });
+    this.setState({file: null});
     this.props.setImageName('');
   }
 
@@ -45,47 +37,24 @@ export default class FileChooseAndUploadButton extends Component {
     var filePart;
     var uploadPart;
     if (this.state.file) {
-      filePart = <div className="left"><a role="button" className="link" onClick={this.undo.bind(this)}>
-          <div className="right">
-            <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            <span className="no-link-deco">
-              VERWERFEN
-            </span>
-          </div>
-        </a></div>;
-      uploadPart = <a role="button" className="link upload" onClick={this.uploadImage.bind(this)}>
-        <div className="left">
-          <span className="glyphicon glyphicon-upload" aria-hidden="true"></span>
-          <span className="no-link-deco">
-          HOCHLADEN
-          </span>
-        </div>
-      </a>;
+      filePart = <IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undo.bind(this)}/>;
+      uploadPart = <IconButton text="HOCHLADEN" glyphIcon="glyphicon-upload" onClick={this.uploadImage.bind(this)}/>;
     } else {
-      filePart =
-        <div className="left">
+      filePart = <div className="left">
           <input type="file" className="hiddenInput" ref="fileChooser" accept="image/*" onChange={this.saveFile.bind(this)}/>
-          <a role="button" className="link upload" onClick={this.chooseFile.bind(this)}>
-          <div>
-            <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
-            <span className="no-link-deco">
-              DATEI AUSWÄHLEN
-            </span>
-          </div>
-        </a>
+          <IconButton text="DATEI AUSWÄHLEN" glyphIcon="glyphicon-search" onClick={this.chooseFile.bind(this)}/>
       </div>;
       uploadPart = <div className="left noUpload">
-          <span className="glyphicon glyphicon-upload" aria-hidden="true"></span>
-          <span className="no-link-deco">
+        <span className="glyphicon glyphicon-upload" aria-hidden="true"></span>
+        <span>
           HOCHLADEN
-          </span>
-        </div>;
+        </span>
+      </div>;
     }
 
     return (
       <div>
-        {filePart}
-        {uploadPart}
+        {filePart}&nbsp; {uploadPart}
       </div>
     );
   }

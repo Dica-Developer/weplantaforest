@@ -6,6 +6,8 @@ import moment from 'moment';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
+import IconButton from '../common/components/IconButton';
+
 export default class UserDetails extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,6 @@ export default class UserDetails extends Component {
 
   showEditUser(){
     this.props.showEditUser();
-    console.log('show edit user');
   }
 
   render() {
@@ -24,12 +25,7 @@ export default class UserDetails extends Component {
 
     var editLink;
     if (this.props.user.editAllowed) {
-      editLink = <a role="button" onClick={this.showEditUser.bind(this)} className="editLink">
-        <div>
-          <img src="/assets/images/edit.jpg" alt="editieren" width="45" height="45"/>
-          <span className="no-link-deco">BEARBEITEN</span>
-        </div>
-      </a>;
+      editLink = <IconButton text="BEARBEITEN" glyphIcon="glyphicon-cog" onClick={this.showEditUser.bind(this)}/>;
     }
 
     return (
@@ -64,7 +60,9 @@ export default class UserDetails extends Component {
             </tbody>
           </table>
         </div>
-        {editLink}
+        <div className="align-center  bottomButton">
+          {editLink}
+        </div>
       </div>
     );
   }
