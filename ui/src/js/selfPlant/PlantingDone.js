@@ -19,7 +19,9 @@ export default class PlantingDone extends Component {
       <div className="col-md-12">
         <h2 className="plantingDone">Deine Pflanzung wurde erstellt!</h2>
         <br/>
-        <IconButton text="WEITERE PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-backward" onClick={this.setPlantingDone.bind(this)}/>
+        <div className="align-center">
+          <IconButton text="WEITERE PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-backward" onClick={this.setPlantingDone.bind(this)}/>
+        </div>
         <br/>
       </div>
     );

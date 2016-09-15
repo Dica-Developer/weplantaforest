@@ -191,7 +191,9 @@ export default class DoPlanting extends Component {
               </tr>
             </tbody>
           </table>
-          <IconButton text="PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
+          <div className="align-center">
+            <IconButton text="PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
+          </div>
         </div>
         <NotificationSystem ref="notificationSystem" style={style}/>
       </div>

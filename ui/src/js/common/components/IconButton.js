@@ -17,14 +17,12 @@ export default class IconButton extends Component {
   render() {
     return (
       <div className="iconButton">
-      <a role="button" onClick={this.props.onClick.bind(this)}>
-        <div>
+        <a role="button" onClick={this.props.onClick.bind(this)}>
           <span className={("glyphicon " + this.props.glyphIcon)} aria-hidden="true"></span>
           <span>
-          {this.props.text}
+            {this.props.text}
           </span>
-        </div>
-      </a>
+        </a>
       </div>
     );
   }
