@@ -8,6 +8,7 @@ import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import TextArea from '../common/components/TextArea';
 import DateField from '../common/components/DateField';
 import FileChooser from '../common/components/FileChooser';
+import IconButton from '../common/components/IconButton';
 
 export default class DoPlanting extends Component {
 
@@ -190,14 +191,7 @@ export default class DoPlanting extends Component {
               </tr>
             </tbody>
           </table>
-          <a role="button" className="sendLink" onClick={this.sendSelfPlantedTree.bind(this)}>
-            <div className="sendDiv">
-              <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
-              <span>
-                PFLANZUNG ERSTELLEN
-              </span>
-            </div>
-          </a>
+          <IconButton text="PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
         </div>
         <NotificationSystem ref="notificationSystem" style={style}/>
       </div>
