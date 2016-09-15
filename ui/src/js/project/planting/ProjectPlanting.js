@@ -4,6 +4,7 @@ import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 import {Link} from 'react-router';
 
+import IconButton from '../../common/components/IconButton';
 import ProjectSlider from './ProjectSlider';
 import ArticleSlider from './ArticleSlider';
 
@@ -251,16 +252,8 @@ export default class ProjectPlanting extends Component {
             </tr>
           </tbody>
         </table>
-
         <div className="bottom">
-          <a role="button" className="backLink" onClick={this.showDetails.bind(this)}>
-            <div className="backDiv">
-              <span className="glyphicon glyphicon-backward" aria-hidden="true"></span>
-              <span className="no-link-deco">
-                ZURÜCK ZUR BESCHREIBUNG
-              </span>
-            </div>
-          </a>
+          <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.showDetails.bind(this)}/>
         </div>
       </div>
     );
