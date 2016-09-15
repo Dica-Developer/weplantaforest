@@ -20,7 +20,7 @@ export default class ButtonBar extends Component {
                 </Link>
               </td>
               <td>
-                <Link to="/plant">
+                <Link to="/selfPlant">
                   SELBST PFLANZEN
                 </Link>
               </td>
