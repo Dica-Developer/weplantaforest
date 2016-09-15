@@ -1,9 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Link
-} from 'react-router';
+import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 export default class MenuItem extends Component {
   constructor() {
@@ -11,8 +7,16 @@ export default class MenuItem extends Component {
   }
 
   render() {
+    var link;
+    if (this.props.inactive == 'true') {
+      link = <span className="inactive">{this.props.children}</span>;
+    } else {
+      link = <Link to={this.props.hash}>
+        {this.props.children}
+      </Link>;
+    };
     return (
-      <div className="menu-item">  <Link to={this.props.hash}>
-          {this.props.children}  </Link></div>);
+      <div className="menu-item">{link}</div>
+    );
   }
 }

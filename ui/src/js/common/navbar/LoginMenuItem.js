@@ -51,6 +51,7 @@ export default class LoginMenuItem extends Component {
       }
     }).then(function(response) {
       this.handleLogin(response.headers['x-auth-token']);
+      this.props.updateComponent();
       //    window.location = '/';
     }.bind(this)).catch(function(response) {
       this.showErrorMessageAndClearInputFields();
@@ -61,6 +62,7 @@ export default class LoginMenuItem extends Component {
     localStorage.setItem('jwt', '');
     localStorage.setItem('username', '');
     this.setState({name: '', password: '', loggedIn: false})
+    this.props.updateComponent();
   }
 
   render() {

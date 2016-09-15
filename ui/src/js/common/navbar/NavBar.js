@@ -10,10 +10,16 @@ require("./navbar.less");
 require("./menu.less");
 
 export default class NavBar extends Component {
-  constructor(){
+  constructor() {
     super();
+    this.state = {
+      profileLinksInActive: 'true'
+    }
   }
 
+  componentDidMount() {
+    this.setProfileLinkIsInActive();
+  }
 
   showLeft() {
     this.refs.left.show();
@@ -23,10 +29,22 @@ export default class NavBar extends Component {
     this.refs.right.show();
   }
 
-  updatePlantBag(price, projectItems, projectName){
+  updatePlantBag(price, projectItems, projectName) {
     this.refs["plantBag"].updatePlantBag(price, projectItems, projectName);
   }
 
+  updateComponent(){
+    this.setProfileLinkIsInActive();
+    this.forceUpdate();
+  }
+
+  setProfileLinkIsInActive(){
+    if(localStorage.getItem('username') == null || localStorage.getItem('username') == ''){
+      this.setState({profileLinksInActive: 'true'});
+    }else{
+      this.setState({profileLinksInActive: 'false'});
+    }
+  }
 
   render() {
     return (
@@ -35,7 +53,6 @@ export default class NavBar extends Component {
           <MenuItem hash="first-page">PFLANZUNGEN</MenuItem>
           <MenuItem hash="/explore">PROJEKTFLÄCHEN</MenuItem>
           <MenuItem hash="third-page">FINDEN</MenuItem>
-          <MenuItem hash="4">FINDEN</MenuItem>
           <MenuItem hash="5">GUTSCHEIN</MenuItem>
           <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
           <MenuItem hash="/ranking">BESTENLISTE</MenuItem>
@@ -44,13 +61,11 @@ export default class NavBar extends Component {
           <MenuItem hash="10">FAQs</MenuItem>
         </Menu>
         <Menu ref="right" alignment="right">
-          <LoginMenuItem hash="login"></LoginMenuItem>
-          <MenuItem hash="first-page">MEIN WALD</MenuItem>
-          <MenuItem hash="second-page">MEIN PROFIL</MenuItem>
-          <MenuItem hash="third-page">MEIN TEAM</MenuItem>
-          <MenuItem hash="4">POSTFACH</MenuItem>
-          <MenuItem hash="5">TOOLS</MenuItem>
-          <MenuItem hash="6">ABONNEMENTS</MenuItem>
+          <LoginMenuItem hash="login" updateComponent={this.updateComponent.bind(this)}></LoginMenuItem>
+          <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>MEIN PROFIL</MenuItem>
+          <MenuItem hash="third-page" inactive={this.state.profileLinksInActive}>MEIN TEAM</MenuItem>
+          <MenuItem hash="4" inactive={this.state.profileLinksInActive}>POSTFACH</MenuItem>
+          <MenuItem hash="6" inactive={this.state.profileLinksInActive}>ABONNEMENTS</MenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-header">
