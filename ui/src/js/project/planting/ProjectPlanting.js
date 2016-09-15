@@ -252,7 +252,7 @@ export default class ProjectPlanting extends Component {
             </tr>
           </tbody>
         </table>
-        <div className="bottom">
+        <div className="bottom align-center">
           <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.showDetails.bind(this)}/>
         </div>
       </div>
