@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.dicadeveloper.weplantaforest.abo.Abo.Period;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +34,8 @@ public class AboController {
     private @NonNull PlantBagValidator _plantBagValidator;
 
     private @NonNull AboHelper _aboHelper;
+    
+    private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
     @RequestMapping(value = Uris.ABOS_BY_USER + "{userId}", method = RequestMethod.GET)
     @JsonView(Views.AboOverview.class)
@@ -40,9 +45,10 @@ public class AboController {
 
     @RequestMapping(value = Uris.ABO_CREATE, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> createAbo(@RequestBody AboRequestData aboRequest) {
+    public ResponseEntity<?> createAbo(@RequestHeader(value = "X-AUTH-TOKEN") String userToken,@RequestBody AboRequestData aboRequest) {
         if (_plantBagValidator.isPlantPageDataValid(aboRequest.getPlantBag())) {
-            Abo abo = _aboHelper.createAboFromAboRequest(aboRequest);
+            User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
+            Abo abo = _aboHelper.createAboFromAboRequest(aboRequest, buyer);
             _aboRepository.save(abo);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

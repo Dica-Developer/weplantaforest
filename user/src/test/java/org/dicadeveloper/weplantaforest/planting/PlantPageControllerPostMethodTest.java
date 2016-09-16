@@ -15,11 +15,13 @@ import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -66,6 +68,12 @@ public class PlantPageControllerPostMethodTest {
     @Autowired
     private ProjectArticleRepository _projectArticleRepository;
 
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
+
     static boolean entitiesInjected = false;
 
     @Before
@@ -99,12 +107,14 @@ public class PlantPageControllerPostMethodTest {
     @Test
     @Rollback(false)
     public void testDonateTreesSatusOk() throws Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
-        plantPageData.setUserId(1L);
 
         mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .header("X-AUTH-TOKEN", userToken)
                                                    .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                .andExpect(status().isOk());
 
@@ -149,14 +159,16 @@ public class PlantPageControllerPostMethodTest {
     @Test
     @Rollback(false)
     public void testDonateTreesWithMultipleEntriesSatusOk() throws Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(2L));
+
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wodo", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "doow", "Project A", plantPageData);
-        plantPageData.setUserId(2L);
 
         mockMvc.perform(post(Uris.COMPLEX_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                   .header("X-AUTH-TOKEN", userToken)
                                                    .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                .andExpect(status().isOk());
 

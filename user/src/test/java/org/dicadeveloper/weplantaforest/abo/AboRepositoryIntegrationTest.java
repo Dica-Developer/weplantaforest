@@ -13,6 +13,8 @@ import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +50,9 @@ public class AboRepositoryIntegrationTest {
     
     @Autowired
     public TreeRepository _treeRepository;
+    
+    @Autowired
+    private UserRepository _userRepository;
 
     @Test
     public void testFindAbosByUserId() {
@@ -100,11 +105,13 @@ public class AboRepositoryIntegrationTest {
         PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
         plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
         plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantBag);
-        plantBag.setUserId(1L);
+        
 
         aboRequest.plantBag = plantBag;
+        User buyer = _userRepository.findByName("Adam");
+        
 
-        Abo abo = _aboHelper.createAboFromAboRequest(aboRequest);
+        Abo abo = _aboHelper.createAboFromAboRequest(aboRequest, buyer);
 
         _aboRepository.save(abo);
 

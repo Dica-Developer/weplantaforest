@@ -11,6 +11,8 @@ import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +45,9 @@ public class PlantBagCartConverterTest {
     @Autowired
     public CartRepository _cartRepository;
 
+    @Autowired
+    private UserRepository _userRepository;
+
     static boolean entitiesInjected = false;
 
     @Before
@@ -67,11 +72,12 @@ public class PlantBagCartConverterTest {
     @Test
     @Rollback(false)
     public void testConvertFromPlantPageDataToCartOneItem() {
+        User buyer = _userRepository.findByName("Adam");
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
 
-        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData);
+        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
 
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(9.0);
@@ -93,12 +99,14 @@ public class PlantBagCartConverterTest {
     @Test
     @Rollback(false)
     public void testConvertFromPlantPageDataToCartTwoItems() {
+        User buyer = _userRepository.findByName("Adam");
+
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 100, "doow", "Project A", plantPageData);
 
-        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData);
+        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
 
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(10.0);
@@ -133,13 +141,15 @@ public class PlantBagCartConverterTest {
     @Test
     @Rollback(false)
     public void testConvertFromPlantPageDataToCartThreeItemsOneWithZeroAmount() {
+        User buyer = _userRepository.findByName("Adam");
+
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 100, "doow", "Project A", plantPageData);
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(0, 100, "wodo", "Project A", plantPageData);
 
-        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData);
+        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
 
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(10.0);
@@ -176,11 +186,13 @@ public class PlantBagCartConverterTest {
     @Test
     @Rollback(false)
     public void testSavetoDBAfterConversion() {
+        User buyer = _userRepository.findByName("Adam");
+
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
 
-        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData);
+        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
 
         _cartRepository.save(cart);
 

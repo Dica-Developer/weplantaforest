@@ -22,6 +22,7 @@ import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
@@ -87,6 +88,9 @@ public class GiftControllerTest {
 
     @Autowired
     private ProjectArticleRepository _projectArticleRepository;
+
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
 
     static boolean entitiesInjected = false;
 
@@ -158,12 +162,14 @@ public class GiftControllerTest {
     @Test
     @Rollback(false)
     public void testCreateGift() throws Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findByName("Adam"));
+
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
-        plantPageData.setUserId(4);
 
         mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .header("X-AUTH-TOKEN", userToken)
                                               .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                .andExpect(status().isOk());
 
@@ -212,14 +218,16 @@ public class GiftControllerTest {
     @Test
     @Rollback(false)
     public void testCreateGiftBadRequestCauseOfNoTreesRemaining() throws Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+
         PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
         plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
         plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
-        plantPageData.setUserId(1);
 
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, System.currentTimeMillis(), "Project A");
 
         mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .header("X-AUTH-TOKEN", userToken)
                                               .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
                .andExpect(status().isBadRequest());
     }

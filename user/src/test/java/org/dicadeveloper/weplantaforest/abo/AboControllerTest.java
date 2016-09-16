@@ -14,9 +14,11 @@ import org.dicadeveloper.weplantaforest.abo.Abo.Period;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,6 +57,12 @@ public class AboControllerTest {
     @Autowired
     private AboRepository _aboRepository;
 
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
+
     @Before
     public void setup() {
         if (!entitiesInjected) {
@@ -91,6 +99,8 @@ public class AboControllerTest {
 
     @Test
     public void testCreateAboStatusOk() throws IOException, Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findByName("Bert"));
+
         AboRequestData aboRequest = new AboRequestData();
         aboRequest.amount = 1;
         aboRequest.period = "WEEKLY";
@@ -98,17 +108,18 @@ public class AboControllerTest {
         PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
         plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
         plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantBag);
-        plantBag.setUserId(2L);
 
         aboRequest.plantBag = plantBag;
 
         mockMvc.perform(post(Uris.ABO_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                             .header("X-AUTH-TOKEN", userToken)
                                              .content(TestUtil.convertObjectToJsonBytes(aboRequest)))
                .andExpect(status().isOk());
     }
 
     @Test
     public void testCreateAboStatusBadRequestCauseOfNotEnoughTreesToPlant() throws IOException, Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findByName("Bert"));
         AboRequestData aboRequest = new AboRequestData();
         aboRequest.amount = 1;
         aboRequest.period = "WEEKLY";
@@ -116,11 +127,11 @@ public class AboControllerTest {
         PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
         plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
         plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 300, "wood", "Project A", plantBag);
-        plantBag.setUserId(2L);
 
         aboRequest.plantBag = plantBag;
 
         mockMvc.perform(post(Uris.ABO_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                             .header("X-AUTH-TOKEN", userToken)
                                              .content(TestUtil.convertObjectToJsonBytes(aboRequest)))
                .andExpect(status().isBadRequest());
     }
@@ -146,7 +157,7 @@ public class AboControllerTest {
     @Test
     public void testCancelAbo() throws IOException, Exception {
         mockMvc.perform(post(Uris.ABO_CANCEL).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                           .param("aboId", "3"))
+                                             .param("aboId", "3"))
                .andExpect(status().isOk());
 
         Abo editedAbo = _aboRepository.findOne(3L);

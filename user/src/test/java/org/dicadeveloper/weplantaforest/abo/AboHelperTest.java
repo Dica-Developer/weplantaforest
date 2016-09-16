@@ -9,6 +9,8 @@ import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,10 +36,14 @@ public class AboHelperTest {
 
     @Autowired
     private AboHelper _aboHelper;
+    
+    @Autowired
+    private UserRepository _userRepository;
 
     @Test
     @Transactional
-    public void testCreateAboFromAboRequest() {
+    public void testCreateAboFromAboRequest() {  
+        
         _dbInjecter.injectTreeType("wood", "this is wood", 0.5);
 
         _dbInjecter.injectUser("Adam");
@@ -52,11 +58,12 @@ public class AboHelperTest {
         PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
         plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
         plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantBag);
-        plantBag.setUserId(1L);
-
+       
         aboRequest.plantBag = plantBag;
 
-        Abo abo = _aboHelper.createAboFromAboRequest(aboRequest);
+        User buyer = _userRepository.findByName("Adam");
+        
+        Abo abo = _aboHelper.createAboFromAboRequest(aboRequest, buyer);
 
         assertThat(abo.getUser()
                       .getName()).isEqualTo("Adam");

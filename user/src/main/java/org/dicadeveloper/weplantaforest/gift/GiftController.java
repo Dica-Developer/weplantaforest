@@ -14,6 +14,7 @@ import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.Tree;
@@ -25,6 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +54,8 @@ public class GiftController {
     private @NonNull UserRepository _userRepository;
 
     private @NonNull CodeGenerator _codeGenerator;
+    
+    private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
 
@@ -69,10 +73,10 @@ public class GiftController {
 
     @RequestMapping(value = Uris.GIFT_CREATE, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> generateGift(@RequestBody PlantBag plantBag) {
+    public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken,@RequestBody PlantBag plantBag) {
         if (_plantBagValidator.isPlantPageDataValid(plantBag)) {
-            User consignor = _userRepository.findOne(plantBag.getUserId());
-            Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag);
+            User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
+            Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor);
 
             Gift gift = new Gift();
             gift.setConsignor(consignor);
