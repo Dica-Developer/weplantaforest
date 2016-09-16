@@ -4,6 +4,8 @@ import React, {
 import Accounting from 'accounting';
 import axios from 'axios';
 
+require("./plantBag.less");
+
 export default class PlantBag extends Component {
   constructor() {
     super();
@@ -105,12 +107,12 @@ export default class PlantBag extends Component {
 
   render() {
     return (
-      <div>
-        <button className="navbar-right green-button" onClick={this.donateTrees.bind(this)}>
+      <div className="plantBag">
+        <button onClick={this.donateTrees.bind(this)}>
           <div className="wrapper">
             <div className="image-wrapper">
               <p className="price">{Accounting.formatNumber(this.state.plantBag.price / 100, 2, ".", ",")}&nbsp;€</p>
-              <img className="nav-img" src="/assets/images/Schubkarre.png" alt="mein Pflanzkorb" width="60" height="30"/>
+              <img src="/assets/images/Schubkarre.png" alt="mein Pflanzkorb" width="60" height="30"/>
             </div>
             <div className="green-button-text">
               <span className="buttonText">PFLANZKORB</span>

@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory } from 'react-router';
 
 import Menu from './Menu';
 import MenuItem from './MenuItem';
 import PlantBag from './PlantBag';
 import LoginMenuItem from './LoginMenuItem';
+import ImageButton from '../components/ImageButton';
 
 require("./navbar.less");
 require("./menu.less");
@@ -47,6 +48,10 @@ export default class NavBar extends Component {
     }
   }
 
+  linkTo(url){
+    browserHistory.push(url);
+  }
+
   render() {
     return (
       <div>
@@ -70,31 +75,24 @@ export default class NavBar extends Component {
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-header">
-            <button className="navbar-toggle navbar-left" onClick={this.showLeft.bind(this)}>
-              <img className="nav-img" src="/assets/images/Menu.png" alt="mein Wald" width="30" height="30"/>
-              <span className="buttonText">MENU</span>
-            </button>
+            <div className="navbar-left">
+              <ImageButton text="MENU" onClick={this.showLeft.bind(this)} imagePath="/assets/images/Menu.png" imageWidth="50" imageHeight="50"/>
+            </div>
           </div>
-
           <div className="collapse navbar-collapse" id="navbarLinkBar">
-            <button className="navbar-toggle navbar-right" onClick={this.showRight.bind(this)}>
-              <img className="nav-img" src="/assets/images/MeinWald.png" alt="mein Wald" width="58" height="50"/>
-              <span className="buttonText">MEIN WALD</span>
-            </button>
+            <div className="navbar-right">
+              <ImageButton text="MEIN WALD" onClick={this.showRight.bind(this)} imagePath="/assets/images/MeinWald.png" imageWidth="58" imageHeight="50"/>
+            </div>
             <div className="container">
-              <Link to="/" className="navbar-left navbar-logo">
-                <img className="nav-img" src="/assets/images/ipat_logo.png" alt="logo" width="50" height="50"/>
-              </Link>
-              <Link to="/selfPlant" className="navbar-left">
-                <img className="nav-img" src="/assets/images/Spaten.png" alt="selbst pflanzen" width="25" height="50"/>
-              </Link>
-              <Link to="/plant" className="navbar-left">
-                <img className="nav-img" src="/assets/images/Maus.png" alt="online pflanzen" width="50" height="50"/>
-              </Link>
-              <Link to="/plant" className="navbar-left">
-                <img className="nav-img" src="/assets/images/Schere.png" alt="Baumservice" width="59" height="50"/>
-              </Link>
-              <PlantBag updatePlantBag={this.updatePlantBag.bind(this)} ref="plantBag"/>
+              <div className="navbar-left">
+                <ImageButton text="" onClick={()=>{this.linkTo('/')}} imagePath="/assets/images/ipat_logo.png" imageWidth="50" imageHeight="50"/>
+                <ImageButton text="" onClick={()=>{this.linkTo('/selfPlant')}} imagePath="/assets/images/Spaten.png" imageWidth="25" imageHeight="50"/>
+                <ImageButton text="" onClick={()=>{this.linkTo('/plant')}} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>
+                <ImageButton text="" onClick={()=>{this.linkTo('/plant')}} imagePath="/assets/images/Schere.png" imageWidth="59" imageHeight="50"/>
+              </div>
+              <div className="navbar-right">
+                <PlantBag updatePlantBag={this.updatePlantBag.bind(this)} ref="plantBag"/>
+              </div>
             </div>
           </div>
         </nav>
