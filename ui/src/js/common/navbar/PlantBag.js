@@ -75,7 +75,12 @@ export default class PlantBag extends Component {
   donateTrees() {
     this.showPlantItems();
     var that = this;
-    axios.post('http://localhost:8081/donateTrees', this.state.plantBag).then(function(response) {
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
       console.log('You paid successful');
       var emptyPlantBag = {
         price: 0,
