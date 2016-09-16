@@ -5,6 +5,7 @@ import Accounting from 'accounting';
 import {Link} from 'react-router';
 
 import IconButton from '../../common/components/IconButton';
+import ImageButton from '../../common/components/ImageButton';
 import ProjectSlider from './ProjectSlider';
 import ArticleSlider from './ArticleSlider';
 
@@ -194,11 +195,13 @@ export default class ProjectPlanting extends Component {
     }
   }
 
-  updatePlantBag(){
+  updatePlantBag() {
     var projectItems = {};
-    for(var i = 0; i < this.props.articles.length; i++){
-      if(this.refs['a' + i].getTreeCount() > 0){
-        projectItems[this.props.articles[i].treeType.name] = {amount: parseInt(this.refs['a' + i].getTreeCount())};
+    for (var i = 0; i < this.props.articles.length; i++) {
+      if (this.refs['a' + i].getTreeCount() > 0) {
+        projectItems[this.props.articles[i].treeType.name] = {
+          amount: parseInt(this.refs['a' + i].getTreeCount())
+        };
       }
     }
     this.props.updatePlantBag(this.state.overallPrice, projectItems, this.props.projectName);
@@ -232,26 +235,20 @@ export default class ProjectPlanting extends Component {
           {this.props.articles.map(function(article, i) {
             return (<ArticleSlider article={article} key={i} ref={"a" + i} balanceArticleSlider={that.balanceArticleSlider.bind(this)} maxValue={that.state.treeCount} sliderIndex={i}/>);
           })}
+          <table className="bottomTable">
+            <tbody>
+              <tr>
+                <td></td>
+                <td>
+                  <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span>
+                </td>
+                <td>
+                  <ImageButton text="AB IN MEINEN<br/>PFLANZKORB" onClick={this.updatePlantBag.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="72" imageHeight="40"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <table className="bottomTable">
-          <tbody>
-            <tr>
-              <td></td>
-              <td>
-                <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span>
-              </td>
-              <td>
-                <a role="button" onClick={this.updatePlantBag.bind(this)}>
-                  <div>
-                    <img src="/assets/images/Schubkarre_braun.png" alt="online pflanzen" width="50" height="50"/>
-                    <span className="no-link-deco">AB IN MEINEN<br/>PFLANZKORB!</span>
-                  </div>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
         <div className="bottom align-center">
           <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.showDetails.bind(this)}/>
         </div>

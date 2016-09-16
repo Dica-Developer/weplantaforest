@@ -5,6 +5,8 @@ import Accounting from 'accounting';
 import PieChart from 'react-simple-pie-chart';
 import {Link} from 'react-router';
 
+import ImageButton from '../common/components/ImageButton';
+
 export default class ProjectDetails extends Component {
   constructor(props) {
     super(props);
@@ -59,12 +61,9 @@ export default class ProjectDetails extends Component {
         <div className="description">
           <p>{this.props.project.projectReportData.description}</p>
         </div>
-        <a role="button" onClick={this.showPlanting.bind(this)}  className="plantLink">
-          <div className="plantLinkDiv">
-            <img src="/assets/images/Maus.png" alt="online pflanzen" width="50" height="50"/>
-            <span className="no-link-deco">HIER PFLANZEN</span>
-          </div>
-        </a>
+        <div className="align-center">
+          <ImageButton text="HIER PFLANZEN" onClick={this.showPlanting.bind(this)} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>
+        </div>
       </div>
     );
   }
