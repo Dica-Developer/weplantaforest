@@ -26,6 +26,15 @@ export default class PlantBag extends Component {
     this.forceUpdate();
   }
 
+  resetPlantBag(){
+    var plantBag = {
+      price: 0,
+      projects: {}
+    };
+    localStorage.setItem('plantBag', JSON.stringify(plantBag));
+    this.setState({plantBag: plantBag});
+  }
+
   updatePlantBag(price, projectItems, projectName) {
     this.state.plantBag.price = parseInt(this.state.plantBag.price) + parseInt(price * 100);
     if (projectName in this.state.plantBag.projects) {
