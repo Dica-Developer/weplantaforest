@@ -19,7 +19,16 @@ export default class ImageButton extends Component {
       <div className="imageButton">
         <a role="button" onClick={this.props.onClick.bind(this)}>
           <img src={this.props.imagePath} alt={this.props.imageAlt} width={this.props.imageWidth} height={this.props.imageHeight}/>
-          <span>{this.props.text}</span>
+          <p>
+            {this.props.text.split('<br/>').map(function(item, i) {
+              return (
+                <span key={i}>
+                {item}
+                <br/>
+                </span>
+              )}
+            )}
+            </p>
         </a>
       </div>
     );
