@@ -1,56 +1,26 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
+
+import ImageButton from '../components/ImageButton';
 
 export default class ButtonBar extends Component {
 
   constructor() {
     super();
+  }
 
+  linkTo(url){
+    browserHistory.push(url);
   }
 
   render() {
     return (
       <div className="buttonBar">
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <Link to="/">
-                  <img src="/assets/images/Spaten.png" alt="selbst pflanzen" width="25" height="50"/>
-                </Link>
-              </td>
-              <td>
-                <Link to="/selfPlant">
-                  SELBST PFLANZEN
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <Link to="/plant">
-                  <img src="/assets/images/Maus.png" alt="online pflanzen" width="50" height="50"/>
-                </Link>
-              </td>
-              <td>
-                <Link to="/plant">
-                  ONLINE PFLANZEN
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <Link to="/">
-                  <img src="/assets/images/SCHERE.png" alt="selbst pflanzen" width="50" height="50"/>
-                </Link>
-              </td>
-              <td>
-                <Link to="/plant">
-                  BAUMSERVICE
-                </Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <ImageButton text="SELBST PFLANZEN" onClick={()=>{this.linkTo('/selfPlant')}} imagePath="/assets/images/Spaten.png" imageWidth="25" imageHeight="50"/>
+        <br/>
+        <ImageButton text="ONLINE PFLANZEN" onClick={()=>{this.linkTo('/plant')}} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>
+        <br/>
+        <ImageButton text="BAUMSERVICE" onClick={()=>{this.linkTo('/plant')}} imagePath="/assets/images/Schere.png" imageWidth="59" imageHeight="50"/>
       </div>
     );
   }
