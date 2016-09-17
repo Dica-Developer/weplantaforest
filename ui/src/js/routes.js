@@ -13,6 +13,7 @@ import RankingPage from './ranking/RankingPage';
 import ProjectOfferPage from './offer/ProjectOfferPage';
 import SelfPlantPage from './selfPlant/SelfPlantPage';
 import PlantBagPage from './plantBag/PlantBagPage';
+import PaymentPage from './payment/PaymentPage';
 
 export default class Routes extends Component {
   render() {
@@ -28,6 +29,7 @@ export default class Routes extends Component {
         <Route path="/projectOffer" component={ProjectOfferPage}/>
         <Route path="/selfPlant" component={SelfPlantPage}/>
         <Route path="/plantBag" component={PlantBagPage}/>
+        <Route path="/payment" component={PaymentPage}/>
         <Route path="*" component={NotFoundPage}/>
       </Router>
     );
