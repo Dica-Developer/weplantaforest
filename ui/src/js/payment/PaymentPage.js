@@ -4,7 +4,7 @@ import React, {
 import {
   render
 } from 'react-dom';
-import Accounting from 'accounting';
+import NotificationSystem from 'react-notification-system';
 import NavBar from '../common/navbar/NavBar';
 import Footer from '../common/Footer';
 import Header from '../common/header/Header';
@@ -17,18 +17,43 @@ export default class PaymentPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      paymentOption: ''
+      paymentOption: '',
+      plantBag: JSON.parse(localStorage.getItem('plantBag'))
     };
   }
 
+
+
   setPaymentOption(option) {
-    this.setState({
-      paymentOption: option
-    });
+    if(option == 'creditcard' && (this.state.plantBag.price/100 < 15)){
+      this.refs.notificationSystem.addNotification({
+        title: 'Kreditkartenzahlung nicht möglich!',
+        position: 'tc',
+        autoDismiss: 0,
+        message: 'Kreditkartenzahlungen sind leider erst ab einem Betrag von 15€ möglich.',
+        level: 'error'
+      });
+    }else{
+      this.setState({
+        paymentOption: option
+      });
+    }
   }
 
   render() {
-    var that = this;
+    var style = {
+      Containers: {
+        DefaultStyle: {
+          zIndex: 11000
+        },
+        tc: {
+          top: '50%',
+          bottom: 'auto',
+          margin: '0 auto',
+          left: '50%'
+        }
+      }
+    };
     return (
       <div>
         <NavBar/>
@@ -65,6 +90,7 @@ export default class PaymentPage extends Component {
           </div>
         </div>
         <Footer/>
+        <NotificationSystem ref="notificationSystem" style={style}/>
       </div>);
   }
 }
