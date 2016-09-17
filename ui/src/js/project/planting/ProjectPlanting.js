@@ -200,7 +200,9 @@ export default class ProjectPlanting extends Component {
     for (var i = 0; i < this.props.articles.length; i++) {
       if (this.refs['a' + i].getTreeCount() > 0) {
         projectItems[this.props.articles[i].treeType.name] = {
-          amount: parseInt(this.refs['a' + i].getTreeCount())
+          amount: parseInt(this.refs['a' + i].getTreeCount()),
+          price: parseFloat(this.props.articles[i].price.amount),
+          imageFile: this.props.articles[i].treeType.imageFile
         };
       }
     }

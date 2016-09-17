@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 import Accounting from 'accounting';
-import axios from 'axios';
+import {browserHistory } from 'react-router';
 
 require("./plantBag.less");
 
@@ -74,41 +74,14 @@ export default class PlantBag extends Component {
     }
   }
 
-  donateTrees() {
-    this.showPlantItems();
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
-      console.log('You paid successful');
-      var emptyPlantBag = {
-        price: 0,
-        projects: {}
-      };
-      localStorage.setItem('plantBag', JSON.stringify(emptyPlantBag));
-      var emptyPlantBagTemp = JSON.parse(localStorage.getItem('plantBag'));
-      that.state.plantBag = emptyPlantBagTemp;
-      that.forceUpdate();
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-      console.error('Payment failed');
-    });
+  showPlantBagPage(){
+    browserHistory.push('/plantBag');
   }
 
   render() {
     return (
       <div className="plantBag">
-        <button onClick={this.donateTrees.bind(this)}>
+        <button onClick={this.showPlantBagPage.bind(this)}>
           <div className="wrapper">
             <div className="image-wrapper">
               <p className="price">{Accounting.formatNumber(this.state.plantBag.price / 100, 2, ".", ",")}&nbsp;€</p>
