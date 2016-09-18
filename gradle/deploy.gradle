@@ -84,7 +84,7 @@ task deployUi {
 configure([project(':article-manager'), project(':user')]) {
 
   task prepareServiceScripts(description: 'Creates a init.d script from a template for a specific project.') << {
-    assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+    assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
     def initdTemplate = rootProject.file('gradle/deploy/initd.template.sh')
     assert initdTemplate.exists(), "The file ${initdTemplate} does not exist!"
 
@@ -104,7 +104,7 @@ configure([project(':article-manager'), project(':user')]) {
   }
 
   task syncServiceScript(description:'Syncs the init.d script for operating the installed weplantaforest modules on a remote server', dependsOn: 'prepareServiceScripts') << {
-    assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+    assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
     ssh.run {
       session(remotes.server) {
         def initdScript = file("build/init.d/${project.name}")
@@ -131,7 +131,7 @@ configure([project(':article-manager'), project(':user')]) {
   }
 
   task deploy (description:'Deploys the project to a remote server', dependsOn:'installDist') << {
-    assert ipatUser!=null && ipatHost!=null && privateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+    assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
     ssh.run {
       session(remotes.server) {
         def projectDir = "${installationDir}/${project.name}"
