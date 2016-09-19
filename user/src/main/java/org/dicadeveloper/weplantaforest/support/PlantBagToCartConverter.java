@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartItem;
+import org.dicadeveloper.weplantaforest.cart.CartState;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag.SimplePlantPageItem;
@@ -36,6 +37,7 @@ public class PlantBagToCartConverter {
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
         cart.setBuyer(buyer);
+        cart.setCartState(CartState.INITIAL);
 
         Set<String> projectNames = plantPageData.getProjects()
                                                 .keySet();
