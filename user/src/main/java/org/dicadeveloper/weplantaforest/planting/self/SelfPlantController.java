@@ -45,17 +45,15 @@ public class SelfPlantController {
     private @NonNull ImageHelper _imageHelper;
 
     @RequestMapping(value = Uris.PLANT_SELF, method = RequestMethod.POST)
-    public long plantTreesByMyself(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, HttpServletResponse response, @Valid @RequestBody SelfPlantData selfPlantedTree,
+    public ResponseEntity<?> plantTreesByMyself(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @Valid @RequestBody SelfPlantData selfPlantedTree,
             BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             User owner = _tokenAuthenticationService.getUserFromToken(userToken);
             Tree tree = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantedTree, owner);
             _treeRepository.save(tree);
-            response.setStatus(200);
-            return tree.getId();
+            return new ResponseEntity<Long>(tree.getId(), HttpStatus.OK);
         } else {
-            response.setStatus(400);
-            return -1;
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
         }
     }
 

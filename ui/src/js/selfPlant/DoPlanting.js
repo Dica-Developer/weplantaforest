@@ -31,7 +31,7 @@ export default class DoPlanting extends Component {
     var that = this;
     axios.get('http://localhost:8081/treeTypes').then(function(response) {
       var result = response.data;
-      that.setState({treeTypes: result});
+      that.setState({treeTypes: result, treeType: that.state.treeTypes[0]});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
