@@ -18,9 +18,17 @@ export default class ProjectDetails extends Component {
 
   render() {
     var percent = 0;
+    var plantButton;
     if (this.props.project.projectReportData.amountOfMaximumTreesToPlant != 0) {
       percent = this.props.project.projectReportData.amountOfPlantedTrees / this.props.project.projectReportData.amountOfMaximumTreesToPlant * 100;
     }
+
+    if(this.props.project.projectReportData.active){
+      plantButton =   <ImageButton text="HIER PFLANZEN" onClick={this.showPlanting.bind(this)} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>;
+    }else{
+      plantButton = '';
+    }
+
     var formattedPercent = Accounting.formatNumber(percent, 0, ".", ",")
     return (
       <div className="projectDetails">
@@ -62,7 +70,7 @@ export default class ProjectDetails extends Component {
           <p>{this.props.project.projectReportData.description}</p>
         </div>
         <div className="align-center">
-          <ImageButton text="HIER PFLANZEN" onClick={this.showPlanting.bind(this)} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>
+          {plantButton}
         </div>
       </div>
     );
