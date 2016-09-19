@@ -163,12 +163,8 @@ export default class ProjectDetailsPage extends Component {
     });
   }
 
-  showDetails() {
-    this.setState({detailsActive: true});
-  }
-
-  showPlanting() {
-    this.setState({detailsActive: false});
+  setDetailsActive(value) {
+    this.setState({detailsActive: value});
   }
 
   updatePlantBag(overallPrice, projectItems, projectName){
@@ -183,9 +179,9 @@ export default class ProjectDetailsPage extends Component {
 
     if (this.state.detailsActive) {
       mainPart = <div><ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images}/>
-        <ProjectDetails project={this.state.project} showPlanting={this.showPlanting.bind(this)}/></div>;
+        <ProjectDetails project={this.state.project} showPlanting={()=>{this.setDetailsActive(false)}}/></div>;
     } else {
-      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={this.showDetails.bind(this)} articles={this.state.articles} updatePlantBag={this.updatePlantBag.bind(this)}/>;
+      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={()=>{this.setDetailsActive(true)}} articles={this.state.articles} updatePlantBag={this.updatePlantBag.bind(this)}/>;
     };
 
     return (

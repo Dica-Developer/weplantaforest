@@ -31,10 +31,6 @@ export default class ProjectPlanting extends Component {
     this.calcMaximumAmountOfTreesToPlant();
   }
 
-  showDetails() {
-    this.props.showDetails();
-  }
-
   calcOverallPrice() {
     var price = 0;
     for (var i = 0; i < this.props.articles.length; i++) {
@@ -252,7 +248,7 @@ export default class ProjectPlanting extends Component {
           </table>
         </div>
         <div className="bottom align-center">
-          <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.showDetails.bind(this)}/>
+          <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)}/>
         </div>
       </div>
     );
