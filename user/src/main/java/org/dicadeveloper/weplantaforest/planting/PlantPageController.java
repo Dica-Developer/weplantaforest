@@ -37,7 +37,7 @@ public class PlantPageController {
     private @NonNull PlantBagValidator _plantPageDataValidator;
 
     private @NonNull TreeRepository _treeRepository;
-    
+
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
     @RequestMapping(value = Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", method = RequestMethod.GET)
@@ -48,13 +48,12 @@ public class PlantPageController {
 
     @RequestMapping(value = Uris.COMPLEX_DONATION, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken,@RequestBody PlantBag plantPageData) {
-        if (_plantPageDataValidator.isPlantPageDataValid(plantPageData)) {
+    public ResponseEntity<Long> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) {
+        if (_plantPageDataValidator.isPlantPageDataValid(plantBag)) {
             User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
-            Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
+            Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer);
             _cartRepository.save(cart);
-
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
