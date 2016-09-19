@@ -6,7 +6,6 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
-import PlantBagItem from './PlantBagItem'
 import IconButton from '../common/components/IconButton';
 
 require("./plantBagProject.less");
@@ -45,24 +44,17 @@ export default class PlantBagProject extends Component {
     var button;
     if (this.state.showItems) {
       button = <IconButton glyphIcon="glyphicon glyphicon-chevron-down" onClick={()=>{this.showItems(false)}}/>
-      items = Object.keys(this.props.plantItems).map(function(plantItem, i) {
-        return (<PlantBagItem plantItemName={plantItem} plantBagitem={that.props.plantItems[plantItem]} key={i}/>);
-      });
       line = <div className="line"/>;
-
+      items = this.props.children;
     } else {
       button = <IconButton glyphIcon="glyphicon-chevron-right" onClick={()=>{this.showItems(true)}}/>;
-      items =  '';
+      items= '';
       line =  '';
     }
-
-
-
-
     return (
       <div className="plantBagProject">
         {button}<h3>{this.props.projectName}</h3>
-        {items}
+      {items}
         {line}
         <div className="sum">
         {Accounting.formatNumber(this.state.price, 2, ".", ",")}&nbsp;€

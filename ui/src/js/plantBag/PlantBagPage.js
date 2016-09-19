@@ -12,6 +12,7 @@ import Header from '../common/header/Header';
 import Boostrap from 'bootstrap';
 
 import PlantBagProject from './PlantBagProject';
+import PlantBagItem from './PlantBagItem'
 import IconButton from '../common/components/IconButton';
 
 require("./plantBagPage.less");
@@ -42,7 +43,11 @@ export default class PlantBagPage extends Component {
               <div className="overview">
                 {Object.keys(this.state.plantBag.projects).map(function(project, i){
                   return(
-                    <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i}/>
+                    <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i}>
+                      {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
+                       return (<PlantBagItem plantItemName={plantItem} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]} key={i}/>);
+                     })}
+                    </PlantBagProject>
                   );
                 })}
                 <div className="doubledLine" />
