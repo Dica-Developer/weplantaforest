@@ -4,9 +4,10 @@ import React, {
 import {
   render
 } from 'react-dom';
-import NotificationSystem from 'react-notification-system';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
+
+import Notification from '../common/components/Notification';
 import IconButton from '../common/components/IconButton';
 import InputText from '../common/components/InputText';
 import TextArea from '../common/components/TextArea';
@@ -86,7 +87,7 @@ export default class ProjectOffer extends Component {
       console.log('call child');
       that.props.setThankYou(true);
     }).catch(function(response) {
-      that.refs.notificationSystem.addNotification({title: 'Es ist ein Fehler aufgetreten!', position: 'tc', autoDismiss: 0, message: 'Bitte füll alle notwendigen Felder aus!', level: 'error'});
+      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', 'Bitte füll alle notwendigen Felder aus!', 'error');
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
@@ -99,20 +100,6 @@ export default class ProjectOffer extends Component {
   }
 
   render() {
-    var style = {
-      Containers: {
-        DefaultStyle: {
-          zIndex: 11000
-        },
-        tc: {
-          top: '50%',
-          bottom: 'auto',
-          margin: '0 auto',
-          left: '50%'
-        }
-      }
-
-    };
     return (
       <div className="col-md-12">
         <h2>Projektfläche anbieten</h2>
@@ -196,7 +183,7 @@ export default class ProjectOffer extends Component {
                 <IconButton text="ANGEBOT ABSCHICKEN" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
               </div>
             </div>
-            <NotificationSystem ref="notificationSystem" style={style}/>
+            <Notification ref="notification"/>
           </div>
     );
   }
