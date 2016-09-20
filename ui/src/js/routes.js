@@ -29,7 +29,7 @@ export default class Routes extends Component {
         <Route path="/projectOffer" component={ProjectOfferPage}/>
         <Route path="/selfPlant" component={SelfPlantPage}/>
         <Route path="/plantBag" component={PlantBagPage}/>
-        <Route path="/payment" component={PaymentPage}/>
+        <Route path="/payment/:cartId" component={PaymentPage}/>
         <Route path="*" component={NotFoundPage}/>
       </Router>
     );

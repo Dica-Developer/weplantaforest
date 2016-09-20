@@ -1,14 +1,13 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import NotificationSystem from 'react-notification-system';
 import NavBar from '../common/navbar/NavBar';
 import Footer from '../common/Footer';
 import Header from '../common/header/Header';
 import Boostrap from 'bootstrap';
+
+import Overview from './Overview';
+import Sepa from './Sepa';
 
 require("./paymentPage.less");
 
@@ -18,80 +17,34 @@ export default class PaymentPage extends Component {
     super(props);
     this.state = {
       paymentOption: '',
-      plantBag: JSON.parse(localStorage.getItem('plantBag'))
+      plantBag: JSON.parse(localStorage.getItem('plantBag')),
+      cartId: this.props.params.cartId
     };
   }
 
-
-
   setPaymentOption(option) {
-    if(option == 'creditcard' && (this.state.plantBag.price/100 < 15)){
-      this.refs.notificationSystem.addNotification({
-        title: 'Kreditkartenzahlung nicht möglich!',
-        position: 'tc',
-        autoDismiss: 0,
-        message: 'Kreditkartenzahlungen sind leider erst ab einem Betrag von 15€ möglich.',
-        level: 'error'
-      });
-    }else{
-      this.setState({
-        paymentOption: option
-      });
-    }
+    this.setState({paymentOption: option});
   }
 
   render() {
-    var style = {
-      Containers: {
-        DefaultStyle: {
-          zIndex: 11000
-        },
-        tc: {
-          top: '50%',
-          bottom: 'auto',
-          margin: '0 auto',
-          left: '50%'
-        }
-      }
-    };
+    var content;
+    if(this.state.paymentOption == ''){
+      content = <Overview price={this.state.plantBag.price} setPaymentOption={this.setPaymentOption.bind(this)}/>
+    }else if(this.state.paymentOption == 'sepa'){
+      content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId}/>;
+    }
     return (
       <div>
         <NavBar/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row paymentPage">
-            <div className="col-md-12">
-              <h2>Kasse</h2>
-              <div>
-              Sicher spenden für "I plant a tree". Das Senden der Daten ist mit HTTPS verschlüsselt. Bitte überprüfen sie die Richtigkeit Ihrer Angaben, denn diese finden sich in Ihrer Spendenquittung wieder. Achten sie auch unbedingt auf die richtige Syntax Ihrer Emailadresse - an diese wird die Spendenquittung versendet.
-              </div>
-              <div className="bold choose">
-                Zahlungsmethode wählen:
-              </div>
-              <div className="paymentOption">
-                <a role="button" onClick={()=>{this.setPaymentOption('sepa')}}>
-                SEPA<br/>
-                <img src="/assets/images/sepa.png" width="256" height="183"/>
-                </a>
-              </div>
-              <div className="paymentOption">
-                <a role="button" onClick={()=>{this.setPaymentOption('paypal')}}>
-                PAYPAL<br/>
-                <img src="/assets/images/paypal.png" width="256" height="183"/>
-                </a>
-              </div>
-              <div className="paymentOption">
-                <a role="button" onClick={()=>{this.setPaymentOption('creditcard')}}>
-                KREDITKARTE<br/>
-                <img src="/assets/images/visa.png" width="256" height="183"/>
-                </a>
-              </div>
-            </div>
+            {content}
           </div>
         </div>
         <Footer/>
-        <NotificationSystem ref="notificationSystem" style={style}/>
-      </div>);
+      </div>
+    );
   }
 }
 
