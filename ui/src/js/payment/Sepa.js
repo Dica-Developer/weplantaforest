@@ -6,10 +6,10 @@ import {
 } from 'react-dom';
 import axios from 'axios';
 import Accounting from 'accounting';
-import NotificationSystem from 'react-notification-system';
-import IconButton from '../common/components/IconButton';
 import Boostrap from 'bootstrap';
 
+import Notification from '../common/components/Notification';
+import IconButton from '../common/components/IconButton';
 import InputText from '../common/components/InputText';
 
 export default class Sepa extends Component {
@@ -63,13 +63,7 @@ export default class Sepa extends Component {
     axios.post('http://localhost:8081/pay', this.state, config).then(function(response) {
       console.log('You paid successful');
     }).catch(function(response) {
-      that.refs.notificationSystem.addNotification({
-        title: 'Ein Fehler ist aufgetreten',
-        position: 'tc',
-        autoDismiss: 0,
-        message: response.data,
-        level: 'error'
-      });
+      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
@@ -202,7 +196,7 @@ export default class Sepa extends Component {
         <div className="align-center">
           <IconButton glyphIcon="glyphicon-euro" text="BESTÄTIGEN" onClick={this.payPlantBag.bind(this)}/>
         </div>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification"/>
       </div>
     );
   }
