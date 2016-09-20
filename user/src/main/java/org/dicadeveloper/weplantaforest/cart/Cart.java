@@ -23,6 +23,7 @@ import javax.persistence.Transient;
 import org.dicadeveloper.weplantaforest.abo.Abo;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.event.Event;
+import org.dicadeveloper.weplantaforest.payment.PaymentData;
 import org.dicadeveloper.weplantaforest.receipt.Receipt;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.user.User;
@@ -252,5 +253,21 @@ public class Cart implements Identifiable<Long> {
                                                                    // sec since
                                                                    // 1970, not
                                                                    // msec
+    }
+    
+    public void setCallBackValuesAndStateToCallBack(PaymentData paymentData){
+        setCartState(CartState.CALLBACK);
+        setCallBackBetrag(String.valueOf(getTotalPrice().doubleValue()));
+        setCallBackEmail(paymentData.getMail());
+        setCallBackFirma(paymentData.getCompany());
+        setCallBackFirmanzusatz(paymentData.getCompanyAddon());
+        setCallBackLand(paymentData.getCountry());
+        setCallBackNachname(paymentData.getName());
+        setCallBackOrt(paymentData.getCity());
+        setCallBackPlz(paymentData.getZip());
+        setCallBackStrasse(paymentData.getStreet());
+        setCallBackTrackingcode(getId().toString());
+        setCallBackVorname(paymentData.getForename());
+        setCallBackZahlungsart(paymentData.getPaymentMethod());        
     }
 }

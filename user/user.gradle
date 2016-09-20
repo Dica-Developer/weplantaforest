@@ -36,6 +36,10 @@ dependencies{
   compile 'org.bouncycastle:bcpkix-jdk15on:1.51'
   //Base64 encoding
   compile 'commons-codec:commons-codec:1.10'
+   //http client
+  compile 'org.apache.httpcomponents:httpclient:4.2.3'
+  //apache commons
+   compile group: 'commons-io', name: 'commons-io', version: '2.5'
   
   compile('org.springframework.data:spring-data-rest-hal-browser:2.4.1.RELEASE')
   compile 'com.h2database:h2:1.4.190'

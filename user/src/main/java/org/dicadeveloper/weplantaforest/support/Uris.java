@@ -108,6 +108,8 @@ public class Uris {
     public final static String LOGIN = "/login";
 
     // payment
+    
+    public final static String PAY_PLANTBAG = "/pay";
 
     public final static String PAYMENT_SUCCESS = "/payment/success";
 
