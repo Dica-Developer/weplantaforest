@@ -29,6 +29,7 @@ export default class PlantBagPage extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
+    localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
       browserHistory.push('/payment/' + response.data);
     }).catch(function(response) {
@@ -42,14 +43,36 @@ export default class PlantBagPage extends Component {
       }
       console.error('Payment failed');
     });
+  }
 
+  removePlantBagItem(project, plantItem){
+    delete this.state.plantBag.projects[project].plantItems[plantItem];
+    this.forceUpdate();
+    if(Object.keys(this.state.plantBag.projects[project].plantItems).length === 0){
+      delete this.state.plantBag.projects[project];
+      this.forceUpdate();
+    }
+    this.calcPrice();
+    localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
+    this.refs["navbar"].updatePlantBagFromLocaleStorage();
+  }
+
+  calcPrice(){
+    var price = 0;
+    for (var project in this.state.plantBag.projects) {
+      for (var plantItem in this.state.plantBag.projects[project].plantItems) {
+        price = price + this.state.plantBag.projects[project].plantItems[plantItem].price;
+      }
+    }
+    this.state.plantBag.price = price;
+    this.forceUpdate();
   }
 
   render() {
     var that = this;
     return (
       <div>
-        <NavBar/>
+        <NavBar ref="navbar"/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row plantBagPage">
@@ -57,10 +80,14 @@ export default class PlantBagPage extends Component {
               <h2>Dein Pflanzkorb</h2>
               <div className="overview">
                 {Object.keys(this.state.plantBag.projects).map(function(project, i) {
+                  var projectPrice = 0;
+                  for (var plantItem in that.state.plantBag.projects[project].plantItems) {
+                    projectPrice = projectPrice + (that.state.plantBag.projects[project].plantItems[plantItem].amount * that.state.plantBag.projects[project].plantItems[plantItem].price);
+                  }
                   return (
-                    <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i}>
+                    <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i} price={projectPrice}>
                       {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
-                        return (<PlantBagItem plantItemName={plantItem} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]} key={i}/>);
+                        return (<PlantBagItem plantItemName={plantItem} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]}  key={i} removePlantBagItem={()=>{that.removePlantBagItem(project, plantItem)}}/>);
                       })}
                     </PlantBagProject>
                   );

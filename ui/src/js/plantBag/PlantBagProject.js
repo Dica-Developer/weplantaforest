@@ -15,20 +15,8 @@ export default class PlantBagProject extends Component {
   constructor() {
     super();
     this.state = {
-      price: 0,
       showItems: true
     }
-  }
-
-  componentDidMount() {
-    var price = 0;
-    for (var plantItem in this.props.plantItems) {
-      price = price + (this.props.plantItems[plantItem].amount * this.props.plantItems[plantItem].price);
-    }
-    price = price.toFixed(2);
-    this.setState({
-      price: price
-    });
   }
 
   showItems(value) {
@@ -57,7 +45,7 @@ export default class PlantBagProject extends Component {
       {items}
         {line}
         <div className="sum">
-        {Accounting.formatNumber(this.state.price, 2, ".", ",")}&nbsp;€
+        {Accounting.formatNumber(this.props.price/100, 2, ".", ",")}&nbsp;€
         </div>
       </div>
     );

@@ -30,6 +30,10 @@ export default class NavBar extends Component {
     this.refs.right.show();
   }
 
+  updatePlantBagFromLocaleStorage(){
+    this.refs["plantBag"].updatePlantBagFromLocaleStorage();
+  }
+
   updatePlantBag(price, projectItems, projectName) {
     this.refs["plantBag"].updatePlantBag(price, projectItems, projectName);
   }

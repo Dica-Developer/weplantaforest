@@ -37,6 +37,10 @@ export default class PlantBag extends Component {
     this.setState({plantBag: plantBag});
   }
 
+  updatePlantBagFromLocaleStorage(){
+    this.setState({plantBag: JSON.parse(localStorage.getItem('plantBag'))});
+  }
+
   updatePlantBag(price, projectItems, projectName) {
     this.state.plantBag.price = parseInt(this.state.plantBag.price) + parseInt(price);
     if (projectName in this.state.plantBag.projects) {
