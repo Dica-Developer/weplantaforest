@@ -22,9 +22,11 @@ export default class Menu extends Component {
         <div className={(this.state.visible
           ? "visible "
           : "notvisible ") + this.props.alignment}>
+        <div className="closeMenu">
           <button onClick={this.hide.bind(this)}>
             X
           </button>
+        </div>
           {this.props.children}</div>
       </div>
     );

@@ -1,34 +1,28 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
+import Notification from '../components/Notification';
+
 export default class LoginMenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       password: '',
-      showError: false,
       loggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '')
     };
-
-    this.updateName = this.updateName.bind(this);
-    this.updatePassword = this.updatePassword.bind(this);
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.showErrorMessageAndClearInputFields = this.showErrorMessageAndClearInputFields.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
   }
 
   updateName(e) {
-    this.setState({name: e.target.value, showError: false})
+    this.setState({name: e.target.value})
   }
 
   updatePassword(e) {
-    this.setState({password: e.target.value, showError: false})
+    this.setState({password: e.target.value})
   }
 
   showErrorMessageAndClearInputFields() {
-    this.setState({name: '', password: '', showError: true})
+    this.setState({name: '', password: ''})
   }
 
   handleLogin(token) {
@@ -38,7 +32,7 @@ export default class LoginMenuItem extends Component {
   }
 
   login() {
-    var error = false;
+    var that = this;
     axios({
       method: 'post',
       url: 'http://localhost:8081/api/login',
@@ -50,12 +44,12 @@ export default class LoginMenuItem extends Component {
         password: this.state.password
       }
     }).then(function(response) {
-      this.handleLogin(response.headers['x-auth-token']);
-      this.props.updateComponent();
-      //    window.location = '/';
+      that.handleLogin(response.headers['x-auth-token']);
+      that.props.updateComponent();
     }.bind(this)).catch(function(response) {
-      this.showErrorMessageAndClearInputFields();
-    }.bind(this));
+        that.setState({name: '', password: ''})
+        that.refs.notification.addNotificationAtDifferentPos('Fehler!', 'Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuche Sie es noch einmal.',  'error', 'tr');
+    });
   }
 
   logout() {
@@ -66,28 +60,32 @@ export default class LoginMenuItem extends Component {
   }
 
   render() {
+    var content;
+    if(this.state.loggedIn){
+      content = <div>
+        <div><span>{localStorage.getItem('username')}</span>
+        </div>
+        <div className="buttonDiv">
+          <button type="button" onClick={this.logout.bind(this)}>LOGOUT</button>
+        </div>
+      </div>;
+    }else{
+      content = <div className="login">
+        <input type="text" placeholder="BENUTZERNAME" value={this.state.name} onChange={this.updateName.bind(this)}/>
+        <input type="password" placeholder="PASSWORD" value={this.state.password} onChange={this.updatePassword.bind(this)}/>
+        <div className="buttonDiv">
+          <button type="submit" onClick={this.login.bind(this)}>LOGIN</button>
+        </div>
+        <div>
+          <a>Regisitrieren</a>&nbsp;&nbsp;<a>Passwort vergessen</a>
+        </div>
+      </div>;
+    }
+
     return (
       <div className="login-menu-item">
-        {this.state.loggedIn
-          ? null
-          : <input type="text" placeholder="BENUTZERNAME" value={this.state.name} onChange={this.updateName}/>}
-        {this.state.loggedIn
-          ? null
-          : <input type="password" placeholder="PASSWORD" value={this.state.password} onChange={this.updatePassword}/>}
-        {this.state.loggedIn
-          ? null
-          : <button type="submit" className="btn btn-default" onClick={this.login}>LOGIN
-          </button>}
-        {this.state.loggedIn
-          ? <span>
-              {localStorage.getItem('username')}</span>
-          : null}
-        {this.state.loggedIn
-          ? <button type="button" className="btn btn-default" onClick={this.logout}>LOGOUT</button>
-          : null}
-        {this.state.showError
-          ? <p className="validation-text">Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuchen Sie es noch einmal.</p>
-          : null}
+        {content}
+        <Notification ref="notification"/>
       </div>
     );
   }

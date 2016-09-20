@@ -13,22 +13,24 @@
     transition: -webkit-transform ease 250ms;
     transition: transform ease 250ms;
 
-    > button {
-      font-size: 30px;
-      font-weight: bold;
-      background: transparent;
-      border: 0;
-      margin-top: 10px;
+    .closeMenu {
+      > button {
+        font-size: 30px;
+        font-weight: bold;
+        background: transparent;
+        border: 0;
+        margin-top: 10px;
+      }
     }
-
     &.left {
       background: #82AB1F;
       left: @menu-width*-1;
-
-      > button {
-        float: right;
-        color: #3C191E;
-        margin-right: 10px;
+      .closeMenu {
+        text-align: right;
+        > button {
+          color: #3C191E;
+          margin-right: 10px;
+        }
       }
     }
 
@@ -44,14 +46,15 @@
       background: #3C191E;
       right: @menu-width*-1;
 
-      > button {
-        padding-bottom: 16px;
-        float: left;
-        color: #fff;
-        margin-left: 10px;
+      .closeMenu {
+        text-align: left;
+        > button {
+          padding-bottom: 16px;
+          color: #fff;
+          margin-left: 10px;
+        }
       }
     }
-
     &.visible.right {
       transform: translate3d(@menu-width*-1, 0, 0);
     }
@@ -83,35 +86,48 @@
 
     > .login-menu-item {
       background-color: #fff;
-      float: left;
-      width: 100%;
-      margin: 0;
-      padding: 10px 15px;
-      box-sizing: border-box;
       text-align: center;
+      padding-top: 10px;
 
-      > input {
-        border-style: none none dashed none;
-        border-color: #3C191E;
-        font-size: 16px;
-        width: 80%;
-        padding: 10px;
-        &:focus {
-          outline: none;
+      .buttonDiv {
+        text-align: right;
+        padding-right: 30px;
+        button {
+          margin-top: 20px;
+          margin-bottom: 20px;
         }
       }
 
-      > button {
-        margin-top: 20px;
-        margin-right: 20px;
-        float: right;
-        color: #3C191E;
+      .login {
+        margin: 0;
+        display: inline-block;
+        > input {
+          border-style: none none dashed none;
+          border-color: #3C191E;
+          font-size: 16px;
+          width: 80%;
+          padding: 10px;
+          &:focus {
+            outline: none;
+          }
+        }
+
+        a {
+          color: #000;
+          margin-bottom: 20px;
+        }
+        a:nth-of-type(1) {
+          float: left;
+          margin-left: 50px;
+        }
+        a:nth-of-type(2) {
+          float: right;
+          margin-right: 50px;
+        }
       }
 
-      .validation-text {
-        color: red;
-        text-align: left;
-        margin-top: 70px;
+      .loggedIn{
+
       }
     }
   }
