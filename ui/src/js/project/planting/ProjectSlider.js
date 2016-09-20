@@ -112,7 +112,7 @@ export default class ProjectSlider extends Component {
               </td>
               <td>
                 <div>
-                  <span className="overallPrice">{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span>
+                  <span className="overallPrice">{Accounting.formatNumber(this.state.overallPrice /100, 2, ".", ",")}&nbsp;€</span>
                   <a role="button" onClick={this.editTree.bind(this)}>
                     <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                   </a>

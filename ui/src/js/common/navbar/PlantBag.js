@@ -38,7 +38,7 @@ export default class PlantBag extends Component {
   }
 
   updatePlantBag(price, projectItems, projectName) {
-    this.state.plantBag.price = parseInt(this.state.plantBag.price) + parseInt(price * 100);
+    this.state.plantBag.price = parseInt(this.state.plantBag.price) + parseInt(price);
     if (projectName in this.state.plantBag.projects) {
       this.setPlantItems(projectItems, projectName);
     } else {

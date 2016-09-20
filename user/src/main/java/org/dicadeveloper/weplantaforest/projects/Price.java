@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.views.Views;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -41,7 +42,6 @@ public class Price {
     private ScontoType scontoType = ScontoType.NONE;
 
     @Column(name = "_amount", precision = 7, scale = 2)
-    @JsonView(Views.ProjectArticle.class)
     private BigDecimal amount = BigDecimal.ZERO;
 
     @Column(name = "_funding", precision = 7, scale = 2)
@@ -55,4 +55,10 @@ public class Price {
 
     @Transient
     private Short nrToSconto;
+    
+    @Transient
+    @JsonView(Views.ProjectArticle.class)
+    public Long getPriceAsLong(){
+        return PriceHelper.fromBigDecimalToLong(amount);
+    }
 }

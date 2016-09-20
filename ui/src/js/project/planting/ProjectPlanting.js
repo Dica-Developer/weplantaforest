@@ -34,7 +34,7 @@ export default class ProjectPlanting extends Component {
   calcOverallPrice() {
     var price = 0;
     for (var i = 0; i < this.props.articles.length; i++) {
-      price = price + this.props.articles[i].price.amount * parseInt(this.refs['a' + i].getTreeCount());
+      price = price + this.props.articles[i].price.priceAsLong * parseInt(this.refs['a' + i].getTreeCount());
     }
     this.setState({overallPrice: price});
     this.refs.projectSlider.setPrice(price);
@@ -197,7 +197,7 @@ export default class ProjectPlanting extends Component {
       if (this.refs['a' + i].getTreeCount() > 0) {
         projectItems[this.props.articles[i].treeType.name] = {
           amount: parseInt(this.refs['a' + i].getTreeCount()),
-          price: parseFloat(this.props.articles[i].price.amount),
+          price: parseInt(this.props.articles[i].price.priceAsLong),
           imageFile: this.props.articles[i].treeType.imageFile
         };
       }
@@ -238,7 +238,7 @@ export default class ProjectPlanting extends Component {
               <tr>
                 <td></td>
                 <td>
-                  <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span>
+                  <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice /100, 2, ".", ",")}&nbsp;€</span>
                 </td>
                 <td>
                   <ImageButton text="AB IN MEINEN<br/>PFLANZKORB" onClick={this.updatePlantBag.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="72" imageHeight="40"/>

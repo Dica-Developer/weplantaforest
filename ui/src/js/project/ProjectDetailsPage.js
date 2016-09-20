@@ -49,7 +49,7 @@ export default class ProjectDetailsPage extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     var that = this;
     axios.get('http://localhost:8081/projects/search/name/extended/' + encodeURIComponent(this.props.params.projectName)).then(function(response) {
       var result = response.data;

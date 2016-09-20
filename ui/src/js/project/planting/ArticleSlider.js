@@ -9,7 +9,7 @@ export default class ArticleSlider extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      overallPrice: this.props.article.price.amount,
+      overallPrice: this.props.article.price.priceAsLong,
       treeCount: 1,
       maximumTreesToPlant: this.props.article.amount - this.props.article.alreadyPlanted,
       isMaxAmountReached: false,
@@ -20,7 +20,7 @@ export default class ArticleSlider extends Component {
   updateValue(event) {
     this.state.treeCount = event.target.value;
     this.state.isSliderBlocked = true;
-    this.state.overallPrice = this.props.article.price.amount * event.target.value;
+    this.state.overallPrice = this.props.article.price.priceAsLong * event.target.value;
     this.forceUpdate();
     this.props.balanceArticleSlider(this.props.sliderIndex);
   }
@@ -36,7 +36,7 @@ export default class ArticleSlider extends Component {
     }
 
     this.state.treeCount = valueToSet,
-    this.state.overallPrice = this.props.article.price.amount * valueToSet
+    this.state.overallPrice = this.props.article.price.priceAsLong * valueToSet
     this.forceUpdate();
   }
 
@@ -82,7 +82,7 @@ export default class ArticleSlider extends Component {
                 <div>
                   <span className="bold">
                     {this.props.article.treeType.name}</span><br/>
-                  Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.amount, 2, ".", ",")}&nbsp;€</span><br/>
+                  Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong /100, 2, ".", ",")}&nbsp;€</span><br/>
                 </div>
               </td>
               <td>
@@ -95,7 +95,7 @@ export default class ArticleSlider extends Component {
 
               <td>
                 <div>
-                  <span className="price">{Accounting.formatNumber(this.state.overallPrice, 2, ".", ",")}&nbsp;€</span><br/>
+                  <span className="price">{Accounting.formatNumber(this.state.overallPrice/100, 2, ".", ",")}&nbsp;€</span><br/>
                   <span className="treeCount">{Accounting.formatNumber(this.state.treeCount, 0, ".", ",")}</span>
                   <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
                 </div>
