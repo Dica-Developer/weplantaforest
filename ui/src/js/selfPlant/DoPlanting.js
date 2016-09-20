@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-import NotificationSystem from 'react-notification-system';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 
+import Notification from '../common/components/Notification';
 import TextArea from '../common/components/TextArea';
 import DateField from '../common/components/DateField';
 import FileChooser from '../common/components/FileChooser';
@@ -102,13 +102,7 @@ export default class DoPlanting extends Component {
         });
       }
     }).catch(function(response) {
-      that.refs.notificationSystem.addNotification({
-        title: 'Es ist ein Fehler aufgetreten!',
-        position: 'tc',
-        autoDismiss: 0,
-        message: 'Bei der Verarbeitung ist ein Fehler aufgetreten! Bitte versuche es noch einmal.',
-        level: 'error'
-      });
+      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', 'Bei der Verarbeitung ist ein Fehler aufgetreten! Bitte versuche es noch einmal.', 'error');
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
@@ -121,19 +115,6 @@ export default class DoPlanting extends Component {
   }
 
   render() {
-    var style = {
-      Containers: {
-        DefaultStyle: {
-          zIndex: 11000
-        },
-        tc: {
-          top: '50%',
-          bottom: 'auto',
-          margin: '0 auto',
-          left: '50%'
-        }
-      }
-    };
     let position = [51.499807, 11.956521];
     var myIcon = L.divIcon({className: 'glyphicon glyphicon-tree-deciduous'});
     return (
@@ -195,7 +176,7 @@ export default class DoPlanting extends Component {
             <IconButton text="PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
           </div>
         </div>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification"/>
       </div>
     );
   }
