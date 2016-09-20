@@ -56,13 +56,13 @@ export default class PlantBagPage extends Component {
   }
 
   increasePlantBagItem(project, plantItem){
-    this.state.plantBag.projects[project].plantItems[plantItem].amount =  this.state.plantBag.projects[project].plantItems[plantItem].amount + 1;
+    this.state.plantBag.projects[project].plantItems[plantItem].amount++
     this.forceUpdate();
     this.calcPriceAndUpdatePlantBag();
   }
 
   decreasePlantBagItem(project, plantItem){
-    this.state.plantBag.projects[project].plantItems[plantItem].amount = this.state.plantBag.projects[project].plantItems[plantItem].amount - 1;
+    this.state.plantBag.projects[project].plantItems[plantItem].amount--;
     this.forceUpdate();
     if(this.state.plantBag.projects[project].plantItems[plantItem].amount == 0){
       delete this.state.plantBag.projects[project].plantItems[plantItem];
