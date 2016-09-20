@@ -4,8 +4,9 @@ import React, {
 import {
   render
 } from 'react-dom';
-import NotificationSystem from 'react-notification-system';
 import Boostrap from 'bootstrap';
+
+import Notification from '../common/components/Notification';
 
 export default class Overview extends Component {
 
@@ -15,32 +16,13 @@ export default class Overview extends Component {
 
   setPaymentOption(option) {
     if (option == 'creditcard' && (this.props.price / 100 < 15)) {
-      this.refs.notificationSystem.addNotification({
-        title: 'Kreditkartenzahlung nicht möglich!',
-        position: 'tc',
-        autoDismiss: 0,
-        message: 'Kreditkartenzahlungen sind leider erst ab einem Betrag von 15€ möglich.',
-        level: 'error'
-      });
+      this.refs.notification.addNotification('Kreditkartenzahlung nicht möglich!','Kreditkartenzahlungen sind leider erst ab einem Betrag von 15€ möglich.', 'error');
     } else {
       this.props.setPaymentOption(option);
     }
   }
 
   render() {
-    var style = {
-      Containers: {
-        DefaultStyle: {
-          zIndex: 11000
-        },
-        tc: {
-          top: '50%',
-          bottom: 'auto',
-          margin: '0 auto',
-          left: '50%'
-        }
-      }
-    };
     return (
       <div className="col-md-12">
         <h2>Kasse</h2>
@@ -68,7 +50,7 @@ export default class Overview extends Component {
             <img src="/assets/images/visa.png" width="256" height="183"/>
           </a>
         </div>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification"/>
       </div>
     );
   }

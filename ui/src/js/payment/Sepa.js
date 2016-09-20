@@ -77,19 +77,6 @@ export default class Sepa extends Component {
   }
 
   render() {
-    var style = {
-      Containers: {
-        DefaultStyle: {
-          zIndex: 11000
-        },
-        tc: {
-          top: '50%',
-          bottom: 'auto',
-          margin: '0 auto',
-          left: '50%'
-        }
-      }
-    };
     return (
       <div className="col-md-12">
         <h2>SEPA Lastschrift</h2>
