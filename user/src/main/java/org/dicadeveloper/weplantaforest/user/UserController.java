@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
+import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
 import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
@@ -43,6 +44,8 @@ public class UserController {
     private @NonNull Co2Repository _co2Repository;
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
+    
+    private @NonNull PasswordEncrypter _passwordEncrypter;
 
     @RequestMapping(value = Uris.USER_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
@@ -125,6 +128,9 @@ public class UserController {
                     lang = 1;
                 }
                 user.setLang(lang);
+                break;
+            case "PASSWORD":
+                user.setPassword(_passwordEncrypter.encryptPassword(newEntry));
                 break;
             default:
                 break;
