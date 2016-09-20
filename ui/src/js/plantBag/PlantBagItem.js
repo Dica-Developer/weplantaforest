@@ -28,7 +28,9 @@ export default class PlantBagItem extends Component {
           <p><span className="bold uppercase">{this.props.plantItemName}</span><br/>Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.plantBagitem.price/100, 2, ".", ",")}&nbsp;€</span></p>
         </div>
         <div>
-          <p>Anzahl:&nbsp;<span className="bold">{this.props.plantBagitem.amount}</span></p>
+          <IconButton glyphIcon="glyphicon-minus" onClick={this.props.decreasePlantBagItem.bind(this)}/>
+          <p lassName="bold">{this.props.plantBagitem.amount}</p>
+          <IconButton glyphIcon="glyphicon-plus" onClick={this.props.increasePlantBagItem.bind(this)}/>
         </div>
         <div>
           <span className="glyphicon glyphicon-share-alt" aria-hidden="true"></span>

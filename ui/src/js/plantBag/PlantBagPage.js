@@ -52,20 +52,36 @@ export default class PlantBagPage extends Component {
       delete this.state.plantBag.projects[project];
       this.forceUpdate();
     }
-    this.calcPrice();
-    localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
-    this.refs["navbar"].updatePlantBagFromLocaleStorage();
+    this.calcPriceAndUpdatePlantBag();
   }
 
-  calcPrice(){
+  increasePlantBagItem(project, plantItem){
+    this.state.plantBag.projects[project].plantItems[plantItem].amount =  this.state.plantBag.projects[project].plantItems[plantItem].amount + 1;
+    this.forceUpdate();
+    this.calcPriceAndUpdatePlantBag();
+  }
+
+  decreasePlantBagItem(project, plantItem){
+    this.state.plantBag.projects[project].plantItems[plantItem].amount = this.state.plantBag.projects[project].plantItems[plantItem].amount - 1;
+    this.forceUpdate();
+    if(this.state.plantBag.projects[project].plantItems[plantItem].amount == 0){
+      delete this.state.plantBag.projects[project].plantItems[plantItem];
+      this.forceUpdate();
+    }
+    this.calcPriceAndUpdatePlantBag();
+  }
+
+  calcPriceAndUpdatePlantBag(){
     var price = 0;
     for (var project in this.state.plantBag.projects) {
       for (var plantItem in this.state.plantBag.projects[project].plantItems) {
-        price = price + this.state.plantBag.projects[project].plantItems[plantItem].price;
+        price = price + this.state.plantBag.projects[project].plantItems[plantItem].price * this.state.plantBag.projects[project].plantItems[plantItem].amount;
       }
     }
     this.state.plantBag.price = price;
     this.forceUpdate();
+    localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
+    this.refs["navbar"].updatePlantBagFromLocaleStorage();
   }
 
   render() {
@@ -87,7 +103,7 @@ export default class PlantBagPage extends Component {
                   return (
                     <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i} price={projectPrice}>
                       {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
-                        return (<PlantBagItem plantItemName={plantItem} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]}  key={i} removePlantBagItem={()=>{that.removePlantBagItem(project, plantItem)}}/>);
+                        return (<PlantBagItem plantItemName={plantItem} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]}  key={i} removePlantBagItem={()=>{that.removePlantBagItem(project, plantItem)}} increasePlantBagItem={()=>{that.increasePlantBagItem(project, plantItem)}} decreasePlantBagItem={()=>{that.decreasePlantBagItem(project, plantItem)}}/>);
                       })}
                     </PlantBagProject>
                   );
