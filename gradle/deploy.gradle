@@ -4,6 +4,7 @@
 def userHome = System.getProperty('user.home')
 
 def ipatPrivateSshKeyFile = file(ext.properties.get("ipat.sshPrivateKeyFile", userHome + '/.ssh/id_rsa'))
+def ipatPrivateKeyPassword = ext.properties.get("ipat.sshPrivateKeyPassword")
 def ipatUser = ext.properties.get("ipat.user")
 def ipatHost = ext.properties.get("ipat.host")
 def installationDir = "/home/${ipatUser}/weplantaforest"
@@ -13,6 +14,7 @@ ssh.settings {
   logging = 'slf4j'
   dryRun = false
   jschLog = true
+  timeoutSec = 30
 }
 
 remotes {
@@ -20,6 +22,7 @@ remotes {
     host = ipatHost
     user = ipatUser
     identity = ipatPrivateSshKeyFile
+    passphrase = ipatPrivateKeyPassword
   }
 }
 
@@ -66,14 +69,10 @@ task deployUi {
         execute "mkdir -p ${projectDir}"
 
         logger.info "Removing old backup..."
-        execute "rm -r ${projectBackupDir}"
+        remove projectBackupDir
 
         logger.info "Backing up existing deployment..."
         execute "cp -r ${projectDir} ${projectBackupDir}"
-
-        // chmod on project dir
-        // chown on project dir
-        // link webserver home to project dir
 
         put from: project(':').file('ui/dist'), into: "${projectDir}"
       }
