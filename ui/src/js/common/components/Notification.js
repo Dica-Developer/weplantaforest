@@ -19,6 +19,16 @@ export default class Notification extends Component {
     });
   }
 
+  addNotificationAtDifferentPos(title, message, type, position){
+    this.refs.notificationSystem.addNotification({
+      title: title,
+      position: position,
+      autoDismiss: 0,
+      message: message,
+      level: type
+    });
+  }
+
   render() {
     var style = {
       Containers: {
