@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import NotificationSystem from 'react-notification-system';
-
 import Boostrap from 'bootstrap';
 
+import Notification from '../../common/components/Notification';
 import IconButton from '../../common/components/IconButton';
 
 export default class EditNameItem extends Component {
@@ -26,11 +25,11 @@ export default class EditNameItem extends Component {
 
   editContent() {
     this.setState({edit: true});
-    this.refs.notificationSystem.addNotification({title: 'Warnung!', position: 'tc', autoDismiss: 0, message: 'Nach einer Namensänderung wirst du automatisch ausgeloggt und auf die Startseite geleitet!', level: 'warning'});
+    this.refs.notification.addNotification('Warnung!', 'Nach einer Namensänderung wirst du automatisch ausgeloggt und auf die Startseite geleitet!',  'warning');
   }
 
   showError(message) {
-    this.refs.notificationSystem.addNotification({title: 'Es ist ein Fehler aufgetreten!', position: 'tc', autoDismiss: 0, message: message, level: 'error'});
+    this.refs.notification.addNotification('Es ist ein Fehler aufgetreten!',message,  'error');
   }
 
   saveContent() {
@@ -54,21 +53,6 @@ export default class EditNameItem extends Component {
       link = <IconButton text="BEARBEITEN" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }
 
-    var style = {
-      Containers: {
-        DefaultStyle: {
-          zIndex: 11000
-        },
-        tc: {
-          top: '50%',
-          bottom: 'auto',
-          margin: '0 auto',
-          left: '50%'
-        }
-      }
-
-    };
-
     return (
       <div className="editItem">
         <div className="left">
@@ -76,7 +60,7 @@ export default class EditNameItem extends Component {
         <div className="right">
           {link}
         </div>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification"/>
       </div>
     );
   }
