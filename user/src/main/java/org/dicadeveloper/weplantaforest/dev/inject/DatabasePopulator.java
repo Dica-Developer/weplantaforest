@@ -346,10 +346,12 @@ public class DatabasePopulator {
         String imgDest1 = FileSystemInjector.getUserFolder() + "/50.jpg";
         String imgDest2 = FileSystemInjector.getUserFolder() + "/51.jpg";
         String imgDest3 = FileSystemInjector.getUserFolder() + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg";
+        String anonymousDest = FileSystemInjector.getUserFolder() + "/anonymous.jpg";
         
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc1, imgDest1);
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc2, imgDest2);
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc3, imgDest3);
+        createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc2, anonymousDest);
               
         for(Team team : _teamRepository.findAll()){
             new File(FileSystemInjector.getTeamFolder() + "/" + team.getId()).mkdir();          
