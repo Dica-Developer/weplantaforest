@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.user;
 
+import java.util.UUID;
+
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +27,7 @@ public class UserRegstrationHelper {
         user.setLastVisit(currentTime);
         user.addRole(Role.USER);
 
-        user.setActivationKey(randomString(12, 18));
+        user.setActivationKey(UUID.randomUUID().toString());
         return user;
     }
     
@@ -37,26 +39,5 @@ public class UserRegstrationHelper {
         mailText = mailText.replace("%ipatHost%", ipatHost);
         
         return mailText;
-    }
-
-    private final static String randomString(final int lo, final int hi) {
-        final int length = random(lo, hi);
-        final char[] cs = new char[length];
-        for (int i = 0; i < cs.length; i++) {
-            cs[i] = randomChar();
-        }
-        return String.valueOf(cs);
-    }
-
-    private final static char randomChar() {
-        return (char) random('a', 'z');
-    }
-
-    private final static int random(final int lo, final int hi) {
-        return lo + random(hi - lo);
-    }
-
-    private final static int random(final int i) {
-        return (int) (Math.random() * i);
     }
 }
