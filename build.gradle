@@ -8,14 +8,9 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    classpath 'org.hidetake:gradle-ssh-plugin:1.1.3'
+    classpath 'org.hidetake:gradle-ssh-plugin:2.6.0'
     classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
-    classpath "gradle.plugin.gradle-plugins:jartest:1.0"
   }
-}
-
-plugins {
-  id 'org.hidetake.ssh' version '1.1.3'
 }
 
 apply from: "${rootDir}/gradle/banner.gradle"
@@ -28,14 +23,6 @@ repositories {
   mavenCentral()
   maven {
     url "http://repo.spring.io/milestone"
-  }
-}
-
-remotes {
-  ipatHost {
-    host = 'iplantatree.org'
-    user = 'ipat'
-    identity = file("${System.properties['user.home']}/.ssh/id_rsa")
   }
 }
 
@@ -52,6 +39,7 @@ allprojects {
 }
 
 apply from: "${rootDir}/gradle/subProjects.gradle"
+apply from: "${rootDir}/gradle/deploy.gradle"
 
 // Only report code coverage for projects that are distributed
 def publishedProjects = subprojects.findAll {it.path != ':testkit'}
