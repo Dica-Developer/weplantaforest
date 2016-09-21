@@ -33,7 +33,7 @@ task npmInstall(type: Exec) {
   outputs.dir project(':').file('ui/node_modules')
 
   workingDir project(':').file('ui')
-  commandLine 'npm', 'install'
+  commandLine npmCommand, 'install'
 }
 
 task buildUi(type: Exec) {
@@ -41,12 +41,13 @@ task buildUi(type: Exec) {
 
   dependsOn npmInstall
 
+  inputs.dir project(':').file('ui/node_modules')
   inputs.dir project(':').file('ui/src')
   outputs.dir project(':').file('ui/dist/js')
   outputs.dir project(':').file('ui/dist/index.html')
 
   workingDir project(':').file('ui')
-  commandLine 'npm', 'run', 'build'
+  commandLine npmCommand, 'run', 'build'
 }
 
 task deployUi {
