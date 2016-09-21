@@ -30,7 +30,7 @@ public class UserRegstrationHelper {
     }
     
     public String createMailText(User user, String ipatHost){
-        String activationLink = "/user/activation" + "?id=" + user.getId() + "&key=" + user.getActivationKey();
+        String activationLink = "/userActivation" + "?id=" + user.getId() + "&key=" + user.getActivationKey();
         String mailText = "Hallo %userName%,\n\nUm Deine Anmeldung fertigzustellen und I Plant A Tree zu nutzen, musst du untenstehenden Link klicken:\n%ipatHost%%activationLink%\n\nDein I Plant A Tree Team";
         mailText = mailText.replace("%activationLink%", activationLink);
         mailText = mailText.replace("%userName%", user.getName());

@@ -195,13 +195,17 @@ public class UserController {
     @RequestMapping(value = Uris.USER_ACTIVATE, method = RequestMethod.POST)
     public ResponseEntity<?> activateUser(@RequestParam long id, @RequestParam String key) {
         User user = _userRepository.findOne(id);
-        if (user.isEnabled()) {
-            return new ResponseEntity<>("Der Nutzer ist bereits aktiviert!", HttpStatus.BAD_REQUEST);
-        } else if (user.getActivationKey().equals(key)) {
-            user.setEnabled(true);
-            _userRepository.save(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
+        if (user != null) {
+            if (user.isEnabled()) {
+                return new ResponseEntity<>("Der Nutzer ist bereits aktiviert!", HttpStatus.BAD_REQUEST);
+            } else if (user.getActivationKey().equals(key)) {
+                user.setEnabled(true);
+                _userRepository.save(user);
+                return new ResponseEntity<>(user.getName(),HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Der Aktivierungslink ist ungültig!", HttpStatus.BAD_REQUEST);
+            }
+        }else{
             return new ResponseEntity<>("Der Aktivierungslink ist ungültig!", HttpStatus.BAD_REQUEST);
         }
     }
