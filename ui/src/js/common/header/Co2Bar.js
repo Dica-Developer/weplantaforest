@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Accounting from 'accounting';
 
 export default class Co2Bar extends Component {
 
@@ -25,7 +26,7 @@ export default class Co2Bar extends Component {
         <div className="tree-number">{this.state.treesCount.toLocaleString()}</div>
         <br/>
         <div className="co2-chars">CO<sub>2</sub> gebunden / Tonnen</div>
-        <div className="co2-number">{this.state.co2.toLocaleString()}</div>
+        <div className="co2-number">{Accounting.formatNumber(this.state.co2, 0, ".", ",")}</div>
       </div>
     );
   }
