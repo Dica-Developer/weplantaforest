@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {browserHistory } from 'react-router';
 
 import Notification from '../components/Notification';
+import IconButton from '../components/IconButton';
 
 export default class LoginMenuItem extends Component {
   constructor(props) {
@@ -59,6 +61,10 @@ export default class LoginMenuItem extends Component {
     this.props.updateComponent();
   }
 
+  switchToRegistrationPage(){
+    browserHistory.push('/registration');
+  }
+
   render() {
     var content;
     if(this.state.loggedIn){
@@ -66,7 +72,7 @@ export default class LoginMenuItem extends Component {
         <div><span>{localStorage.getItem('username')}</span>
         </div>
         <div className="buttonDiv">
-          <button type="button" onClick={this.logout.bind(this)}>LOGOUT</button>
+          <IconButton text="LOGOUT" glyphIcon="glyphicon-log-out" onClick={this.logout.bind(this)}/>
         </div>
       </div>;
     }else{
@@ -74,10 +80,10 @@ export default class LoginMenuItem extends Component {
         <input type="text" placeholder="BENUTZERNAME" value={this.state.name} onChange={this.updateName.bind(this)}/>
         <input type="password" placeholder="PASSWORD" value={this.state.password} onChange={this.updatePassword.bind(this)}/>
         <div className="buttonDiv">
-          <button type="submit" onClick={this.login.bind(this)}>LOGIN</button>
+          <IconButton text="LOGIN" glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
         </div>
         <div>
-          <a>Regisitrieren</a>&nbsp;&nbsp;<a>Passwort vergessen</a>
+          <a role="button" onClick={this.switchToRegistrationPage.bind(this)}>Anmelden</a>&nbsp;&nbsp;<a>Passwort vergessen</a>
         </div>
       </div>;
     }
