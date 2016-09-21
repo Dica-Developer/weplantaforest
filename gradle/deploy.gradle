@@ -62,17 +62,16 @@ task deployUi {
     ssh.run {
       session(remotes.server) {
         def projectDir = "${installationDir}/ui"
-        def webserverHome = "/var/www/wpaf"
         def projectBackupDir = "${installationDir}/ui.backup"
 
-        logger.info "Creating project dir..."
+        logger.info "Creating project dir (for the first deployment (the 0.01% case :-))..."
         execute "mkdir -p ${projectDir}"
 
-        logger.info "Removing old backup..."
-        remove projectBackupDir
-
         logger.info "Backing up existing deployment..."
-        execute "cp -r ${projectDir} ${projectBackupDir}"
+        execute "mv --backup=numbered ${projectDir} ${projectBackupDir}"
+
+        logger.info "Creating project dir after backup..."
+        execute "mkdir -p ${projectDir}"
 
         put from: project(':').file('ui/dist'), into: "${projectDir}"
       }
