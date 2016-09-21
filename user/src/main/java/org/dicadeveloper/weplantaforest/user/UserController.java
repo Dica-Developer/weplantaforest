@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
+import org.dicadeveloper.weplantaforest.common.mail.MailHelper;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
@@ -16,9 +17,11 @@ import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,8 +47,14 @@ public class UserController {
     private @NonNull Co2Repository _co2Repository;
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
-    
+
     private @NonNull PasswordEncrypter _passwordEncrypter;
+
+    private @NonNull UserRegstrationHelper _userRegistrationHelper;
+
+    private @NonNull MailHelper _mailHelper;
+
+    private @NonNull Environment _env;
 
     @RequestMapping(value = Uris.USER_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
@@ -63,8 +72,7 @@ public class UserController {
     public UserReportData getUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
         UserReportData userReportData = _userRepository.getUserDetails(userName);
         userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName));
-        userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data()
-                                                                                        .getTreesCount()));
+        userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data().getTreesCount()));
         userReportData.setEditAllowed(_tokenAuthenticationService.isAuthenticatedUser(userToken, userName));
         return userReportData;
     }
@@ -76,8 +84,7 @@ public class UserController {
             if (treeCountOfUser < user.getAmount()) {
                 rank++;
             }
-            if (user.getName()
-                    .equals(userName)) {
+            if (user.getName().equals(userName)) {
                 break;
             }
         }
@@ -147,9 +154,7 @@ public class UserController {
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
             User user = _userRepository.findByName(userName);
             String imageFolder = FileSystemInjector.getUserFolder();
-            String imageName = user.getName() + file.getOriginalFilename()
-                                                    .substring(file.getOriginalFilename()
-                                                                   .indexOf("."));
+            String imageName = user.getName() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
             if (!file.isEmpty()) {
                 try {
                     _imageHelper.storeImage(file, imageFolder, imageName, true);
@@ -165,6 +170,39 @@ public class UserController {
             }
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @RequestMapping(value = Uris.REGISTRATE_USER, method = RequestMethod.POST)
+    public ResponseEntity<?> registrateUser(@RequestBody UserRegistrationData userRegistrationData) {
+        if (_userRepository.userExists(userRegistrationData.getUsername()) == 1) {
+            return new ResponseEntity<String>("Dieser Name ist bereits vergeben!", HttpStatus.BAD_REQUEST);
+        } else {
+            User user = _userRegistrationHelper.convertUserRegDataToUser(userRegistrationData);
+            _userRepository.save(user);
+
+            String mailText = _userRegistrationHelper.createMailText(user, _env.getProperty("ipat.host"));
+
+            new Thread(new Runnable() {
+                public void run() {
+                    _mailHelper.sendAMessage("[I Plant A Tree] - Vielen Dank für Deine Registrierung", mailText, user.getMail());
+                }
+            }).start();
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = Uris.USER_ACTIVATE, method = RequestMethod.POST)
+    public ResponseEntity<?> activateUser(@RequestParam long id, @RequestParam String key) {
+        User user = _userRepository.findOne(id);
+        if (user.isEnabled()) {
+            return new ResponseEntity<>("Der Nutzer ist bereits aktiviert!", HttpStatus.BAD_REQUEST);
+        } else if (user.getActivationKey().equals(key)) {
+            user.setEnabled(true);
+            _userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Der Aktivierungslink ist ungültig!", HttpStatus.BAD_REQUEST);
         }
     }
 

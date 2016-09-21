@@ -130,6 +130,10 @@ public class Uris {
     public final static String USER_DETAILS = "/user";
     
     public final static String EDIT_USER_DETAILS = "/user/edit";
+    
+    public final static String REGISTRATE_USER = "/user/registrate";
+    
+    public final static String USER_ACTIVATE = "/user/activation";
 
     // team
     public final static String TEAM_IMAGE = "/team/image/";

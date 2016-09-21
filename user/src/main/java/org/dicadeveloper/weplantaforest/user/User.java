@@ -103,6 +103,9 @@ public class User implements Identifiable<Long>, UserDetails {
     @Column(name ="_newsletter")
     private boolean newsletter;
     
+    @Column(name = "_activationKey")
+    private String activationKey;
+    
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;

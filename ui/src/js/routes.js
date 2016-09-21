@@ -14,6 +14,7 @@ import ProjectOfferPage from './offer/ProjectOfferPage';
 import SelfPlantPage from './selfPlant/SelfPlantPage';
 import PlantBagPage from './plantBag/PlantBagPage';
 import PaymentPage from './payment/PaymentPage';
+import RegistrationPage from './registration/RegistrationPage';
 
 export default class Routes extends Component {
   render() {
@@ -30,6 +31,7 @@ export default class Routes extends Component {
         <Route path="/selfPlant" component={SelfPlantPage}/>
         <Route path="/plantBag" component={PlantBagPage}/>
         <Route path="/payment/:cartId" component={PaymentPage}/>
+        <Route path="/registration" component={RegistrationPage}/>
         <Route path="*" component={NotFoundPage}/>
       </Router>
     );

@@ -51,7 +51,21 @@ public class MailHelper{
         } catch (MessagingException e) {
             handleException(e);
         }
+    }
+    
+    public void sendAMessage(String subject, String text,String receiver) {
 
+        setParameter();
+        this.receiver = receiver;
+        createAndSetProperties();
+        createSessionAndAuthenticate();
+        
+        try {
+            Message msg = createMessage(subject, text);
+            Transport.send(msg);
+        } catch (MessagingException e) {
+            handleException(e);
+        }
     }
 
     private void setParameter() {
