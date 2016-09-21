@@ -60,7 +60,7 @@ public class Co2RepositoryIntegrationTest {
         assertThat(co2.getTreesCount()).isEqualTo(1);
         assertThat(co2.getCo2()).isEqualTo(0.1);
     }
-    
+
     @Test
     public void testGetCo2SavingByPlantingForPointInTimeForUserId() {
         long timeOfPlanting = System.currentTimeMillis();
@@ -75,5 +75,20 @@ public class Co2RepositoryIntegrationTest {
 
         assertThat(co2.getTreesCount()).isEqualTo(1);
         assertThat(co2.getCo2()).isEqualTo(0.1);
+    }
+
+    @Test
+    public void testGetCo2SavingForUserWithoutTrees() {
+        long timeOfPlanting = System.currentTimeMillis();
+        _dbInjecter.injectUser("Adam");
+
+        Co2Data co2 = _co2Repository.getAllTreesAndCo2SavingForUserName(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, "Adam");
+        Co2Data co2ForId = _co2Repository.getAllTreesAndCo2SavingForUserId(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, 1);
+         
+        
+        assertThat(co2.getTreesCount()).isEqualTo(0);
+        assertThat(co2.getCo2()).isEqualTo(0.0);
+        assertThat(co2ForId.getTreesCount()).isEqualTo(0);
+        assertThat(co2ForId.getCo2()).isEqualTo(0.0);
     }
 }
