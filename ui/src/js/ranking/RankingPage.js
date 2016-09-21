@@ -96,8 +96,8 @@ export default class RankingPage extends Component {
       <div>
         <NavBar/>
         <Header/>
-        <div className="container paddingTopBottom15 rankingPage">
-          <div classname="row">
+        <div className="container paddingTopBottom15">
+          <div className="row rankingPage">
             <div className="col-md-12">
               <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
             </div>
