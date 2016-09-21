@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
 import org.springframework.security.core.GrantedAuthority;
@@ -98,7 +99,7 @@ public class User implements Identifiable<Long>, UserDetails {
     private String homepage;
     
     @Column(name ="_lang")
-    private long lang;
+    private Language lang;
     
     @Column(name ="_newsletter")
     private boolean newsletter;

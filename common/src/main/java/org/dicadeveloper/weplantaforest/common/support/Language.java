@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public enum Language {
-    GERMAN(Locale.GERMANY, "de"), ENGLISH(Locale.ENGLISH, "en"), ITALIAN(Locale.ITALIAN, "it");
+    DEUTSCH(Locale.GERMAN, "de"), ENGLISH(Locale.ENGLISH, "en");
 
     private final Locale _locale;
 

@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.user;
 
 import java.util.UUID;
 
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class UserRegstrationHelper {
         user.setPassword(_passWordEncrypter.encryptPassword(userRegistrationData.getPassword()));
         user.setMail(userRegistrationData.getMail());
         user.setOrganizationType(OrganizationType.valueOf(userRegistrationData.getOrgType()));
-        // user.setLang(LanguageUtil.getCurrentLanguage());
+        user.setLang(Language.DEUTSCH);
         user.setEnabled(false);
         user.setBanned(false);
         user.setRegDate(currentTime);

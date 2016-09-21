@@ -114,8 +114,8 @@ export default class EditUserDetails extends Component {
         <EditItem text="Organisation" content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)}/>
         <EditItem text="Webseite" content={this.props.user.homepage} toEdit="HOMEPAGE" editUser={this.editUser.bind(this)}/>
         <EditDropdownItem text="Sprache" toEdit="LANGUAGE" content={this.props.user.lang} editUser={this.editUser.bind(this)} width="100">
-          <option value="0">DEUTSCH</option>
-          <option value="1">ENGLISCH</option>
+          <option value="DEUTSCH">DEUTSCH</option>
+          <option value="ENGLISH">ENGLISH</option>
         </EditDropdownItem>
         <EditDropdownItem text="Newsletter abbonnieren" toEdit="NEWSLETTER" content={this.props.user.newsletter} editUser={this.editUser.bind(this)} width="70">
           <option value="JA">JA</option>

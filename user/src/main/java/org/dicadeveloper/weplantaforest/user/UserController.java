@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.common.mail.MailHelper;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
@@ -128,13 +129,7 @@ public class UserController {
                 user.setOrganizationType(OrganizationType.valueOf(newEntry));
                 break;
             case "LANGUAGE":
-                long lang = 0;
-                if (newEntry.equals("0")) {
-                    lang = 0;
-                } else if (newEntry.equals("1")) {
-                    lang = 1;
-                }
-                user.setLang(lang);
+                user.setLang(Language.valueOf(newEntry));
                 break;
             case "PASSWORD":
                 user.setPassword(_passwordEncrypter.encryptPassword(newEntry));

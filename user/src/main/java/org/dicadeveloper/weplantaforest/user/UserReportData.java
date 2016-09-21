@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.user;
 
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 
 import lombok.Getter;
@@ -46,7 +47,7 @@ public class UserReportData {
     String homepage;
     
     @NonNull
-    Long lang;
+    Language lang;
     
     @NonNull
     Boolean newsletter;
@@ -57,20 +58,6 @@ public class UserReportData {
     
     public String getNewsletter(){
         return newsletter ? "JA" : "NEIN";
-    }
-    
-    public String getLang(){
-        String langString;
-        switch (lang.intValue()) {
-        case 0:
-            langString =  "DEUTSCH";
-            break;
-        default:
-            langString =  "DEUTSCH";
-            break;
-        }
-        
-        return langString;
     }
     
     long rank;

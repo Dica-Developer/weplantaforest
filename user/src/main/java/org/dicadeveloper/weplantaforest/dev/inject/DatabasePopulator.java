@@ -28,6 +28,7 @@ import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.gift.Gift;
@@ -215,10 +216,13 @@ public class DatabasePopulator {
             if (i < 5) {
                 user.setImageName("IPAT_logo_Relaunch2016_RZ_RGB.jpg");
                 user.addRole(org.dicadeveloper.weplantaforest.user.Role.ADMIN);
+                user.setLang(Language.DEUTSCH);
             } else if (i < 8) {
                 user.setImageName("50.jpg");
+                user.setLang(Language.DEUTSCH);
             } else {
                 user.setImageName("51.jpg");
+                user.setLang(Language.ENGLISH);
             }
             _userRepository.save(user);
         }
