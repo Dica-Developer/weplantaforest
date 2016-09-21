@@ -162,7 +162,7 @@ public class DatabasePopulatorTest {
 
         int imageCount = userImageFolder.listFiles().length;
 
-        assertThat(imageCount).isEqualTo(3);
+        assertThat(imageCount).isEqualTo(4);
     }
 
     @Test
