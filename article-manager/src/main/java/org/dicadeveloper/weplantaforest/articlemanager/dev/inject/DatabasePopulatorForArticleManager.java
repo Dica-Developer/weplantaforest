@@ -71,7 +71,7 @@ public class DatabasePopulatorForArticleManager {
                 Article article = new Article();
                 article.setOwner(_userRepository.findByName(DEFAULT_USERS.get(pickOne)));
                 article.setArticleType(articleType);
-                article.setLang(Language.GERMAN);
+                article.setLang(Language.DEUTSCH);
                 article.setShowFull(true);
                 article.setCreatedOn(TimeConstants.YEAR_IN_MILLISECONDS * (i + 1) * 5);
                 article.setTitle("this is article nr " + i + " from " + articleType.toString() + " article");

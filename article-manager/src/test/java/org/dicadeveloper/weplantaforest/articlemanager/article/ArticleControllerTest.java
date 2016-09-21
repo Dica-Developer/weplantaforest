@@ -1,8 +1,8 @@
 package org.dicadeveloper.weplantaforest.articlemanager.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -91,7 +91,7 @@ public class ArticleControllerTest {
         article.setArticleType(ArticleType.BLOG);
         article.setCreatedOn(1000000L);
         article.setIntro("intro bintro blablabla");
-        article.setLang(Language.GERMAN);
+        article.setLang(Language.DEUTSCH);
         article.setLastEditedOn(2000000L);
         article.setOwner(_userRepository.findByName("Adam"));
         article.setTitle("created Article!");
