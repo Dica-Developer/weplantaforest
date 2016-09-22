@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.user;
 
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     public final static String GET_USER_DETAILS_QUERY = "SELECT new org.dicadeveloper.weplantaforest.user.UserReportData(user.name, COALESCE(user.imageName, 'anonymous.jpg'),COALESCE(user.mail, ''), user.regDate, user.lastVisit, user.organizationType, COALESCE(tm.name, ''), COALESCE(user.aboutMe, ''), COALESCE(user.location, ''), COALESCE(user.organisation, ''), COALESCE(user.homepage, ''), user.lang, user.newsletter)"
             + " FROM User user LEFT JOIN user.team tm WHERE user.name = :name";
 
+    public final static String GET_USER_LANGUAGE = "SELECT user.lang FROM User user WHERE user.name = :name";
+    
     @Query
     public User findByName(@Param("name") String name);
 
@@ -19,5 +22,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query(value = GET_USER_DETAILS_QUERY)
     public UserReportData getUserDetails(@Param("name") String name);
-
+    
+    @Query(value = GET_USER_LANGUAGE)
+    public Language getUserLanguage(@Param("name") String name);
 }
