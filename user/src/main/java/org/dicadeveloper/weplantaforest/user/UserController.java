@@ -207,7 +207,7 @@ public class UserController {
             if (user.isEnabled()) {
                 message = _messageByLocaleService.getMessage("user.already.activated", user.getLang().getLocale());
                 return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-            } else if (user.getActivationKey().equals(key)) {
+            } else if (key.equals(user.getActivationKey())) {
                 user.setEnabled(true);
                 _userRepository.save(user);
                 return new ResponseEntity<>(user.getName(), HttpStatus.OK);
@@ -225,26 +225,26 @@ public class UserController {
     public String getLanguageFromUser(@RequestParam String userName) {
         return _userRepository.getUserLanguage(userName).toString();
     }
-    
+
     @RequestMapping(value = Uris.USER_PASSWORD_RESET_REQUEST, method = RequestMethod.POST)
     public ResponseEntity<?> createResetPassword(@RequestParam String userName, @RequestParam String language) {
         String responseMessage;
         User user = _userRepository.findByName(userName);
-        if(user == null){
+        if (user == null) {
             responseMessage = _messageByLocaleService.getMessage("user.not.exists", (Language.valueOf(language)).getLocale());
             return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
-        }else if (!user.isEnabled()) {
+        } else if (!user.isEnabled()) {
             responseMessage = _messageByLocaleService.getMessage("user.not.activated", (Language.valueOf(language)).getLocale());
             return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
-        }else{
+        } else {
             user.setActivationKey(UUID.randomUUID().toString());
             _userRepository.save(user);
-            
+
             String mailSubject = _messageByLocaleService.getMessage("mail.forgot.password.subject", user.getLang().getLocale());
 
             String mailTemplateText = _messageByLocaleService.getMessage("mail.forgot.password.text", user.getLang().getLocale());
             String mailText = _userHelper.createForgotPasswordMail(user, _env.getProperty("ipat.host"), mailTemplateText);
-            
+
             new Thread(new Runnable() {
                 public void run() {
                     _mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
@@ -252,7 +252,42 @@ public class UserController {
             }).start();
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        
+    }
+
+    @RequestMapping(value = Uris.USER_PASSWORD_RESET_VERIFIY_LINK, method = RequestMethod.POST)
+    public ResponseEntity<?> verifyPasswordResetLink(@RequestParam long id, @RequestParam String key, @RequestParam String language) {
+        User user = _userRepository.findOne(id);
+        String message;
+        if (user != null) {
+            if (key.equals(user.getActivationKey())) {
+                return new ResponseEntity<>(user.getName(), HttpStatus.OK);
+            } else {
+                message = _messageByLocaleService.getMessage("invalid.link", user.getLang().getLocale());
+                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            message = _messageByLocaleService.getMessage("invalid.link", (Language.valueOf(language)).getLocale());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = Uris.USER_PASSWORD_RESET, method = RequestMethod.POST)
+    public ResponseEntity<?> resetPasswordForUser(@RequestParam long id, @RequestParam String key, @RequestParam String language, @RequestParam String password) {
+        User user = _userRepository.findOne(id);
+        String message;
+        if (user != null) {
+            if (key.equals(user.getActivationKey())) {
+                user.setPassword(_passwordEncrypter.encryptPassword(password));
+                _userRepository.save(user);
+                return new ResponseEntity<>(user.getName(), HttpStatus.OK);
+            } else {
+                message = _messageByLocaleService.getMessage("invalid.link", user.getLang().getLocale());
+                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            message = _messageByLocaleService.getMessage("invalid.link", (Language.valueOf(language)).getLocale());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
