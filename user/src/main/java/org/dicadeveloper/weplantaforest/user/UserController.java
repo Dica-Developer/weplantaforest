@@ -12,6 +12,7 @@ import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.common.mail.MailHelper;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
+import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
 import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
@@ -57,6 +58,8 @@ public class UserController {
 
     private @NonNull Environment _env;
 
+    private @NonNull MessageByLocaleService _messageByLocaleService;
+
     @RequestMapping(value = Uris.USER_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getUserFolder() + "/" + imageName;
@@ -93,16 +96,16 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.EDIT_USER_DETAILS, method = RequestMethod.POST)
-    public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, HttpServletResponse response, @RequestParam String userName, @RequestParam String toEdit,
-            @RequestParam String newEntry) throws IOException {
+    public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam String toEdit, @RequestParam String newEntry)
+            throws IOException {
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
             User user = _userRepository.findByName(userName);
 
             switch (toEdit) {
             case "NAME":
                 if (_userRepository.userExists(newEntry) == 1) {
-                    response.sendError(400, "Dieser Name ist bereits vergeben!");
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    String errorMessage = _messageByLocaleService.getMessage("user.already.exists", user.getLang().getLocale());
+                    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
                 } else {
                     user.setName(newEntry);
                 }
@@ -171,16 +174,18 @@ public class UserController {
     @RequestMapping(value = Uris.REGISTRATE_USER, method = RequestMethod.POST)
     public ResponseEntity<?> registrateUser(@RequestBody UserRegistrationData userRegistrationData) {
         if (_userRepository.userExists(userRegistrationData.getUsername()) == 1) {
-            return new ResponseEntity<String>("Dieser Name ist bereits vergeben!", HttpStatus.BAD_REQUEST);
+            String errorMessage = _messageByLocaleService.getMessage("user.already.exists", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
+            return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
         } else {
             User user = _userRegistrationHelper.convertUserRegDataToUser(userRegistrationData);
             _userRepository.save(user);
 
+            String mailSubject = _messageByLocaleService.getMessage("mail.registration.subject", user.getLang().getLocale());
             String mailText = _userRegistrationHelper.createMailText(user, _env.getProperty("ipat.host"));
 
             new Thread(new Runnable() {
                 public void run() {
-                    _mailHelper.sendAMessage("[I Plant A Tree] - Vielen Dank für Deine Registrierung", mailText, user.getMail());
+                    _mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
                 }
             }).start();
             return new ResponseEntity<>(HttpStatus.OK);
@@ -188,21 +193,30 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.USER_ACTIVATE, method = RequestMethod.POST)
-    public ResponseEntity<?> activateUser(@RequestParam long id, @RequestParam String key) {
+    public ResponseEntity<?> activateUser(@RequestParam long id, @RequestParam String key, @RequestParam String language) {
         User user = _userRepository.findOne(id);
+        String message;
         if (user != null) {
             if (user.isEnabled()) {
+                message = _messageByLocaleService.getMessage("user.already.activated", user.getLang().getLocale());
                 return new ResponseEntity<>("Der Nutzer ist bereits aktiviert!", HttpStatus.BAD_REQUEST);
             } else if (user.getActivationKey().equals(key)) {
                 user.setEnabled(true);
                 _userRepository.save(user);
-                return new ResponseEntity<>(user.getName(),HttpStatus.OK);
+                return new ResponseEntity<>(user.getName(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Der Aktivierungslink ist ungültig!", HttpStatus.BAD_REQUEST);
+                message = _messageByLocaleService.getMessage("activation.key.invalid", user.getLang().getLocale());
+                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             }
-        }else{
-            return new ResponseEntity<>("Der Aktivierungslink ist ungültig!", HttpStatus.BAD_REQUEST);
+        } else {
+            message = _messageByLocaleService.getMessage("activation.key.invalid", (Language.valueOf(language)).getLocale());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(value = Uris.USER_LANGUAGE, method = RequestMethod.GET)
+    public String getLanguageFromUser(@RequestParam String userName) {
+        return _userRepository.getUserLanguage(userName).toString();
     }
 
 }

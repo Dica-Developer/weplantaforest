@@ -134,6 +134,8 @@ public class Uris {
     public final static String REGISTRATE_USER = "/user/registrate";
     
     public final static String USER_ACTIVATE = "/user/activation";
+    
+    public final static String USER_LANGUAGE = "/user/language";
 
     // team
     public final static String TEAM_IMAGE = "/team/image/";
