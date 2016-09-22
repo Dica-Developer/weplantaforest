@@ -12,6 +12,8 @@ public class UserRegstrationHelper {
 
     @Autowired
     private PasswordEncrypter _passWordEncrypter;
+    
+    
 
     public User convertUserRegDataToUser(UserRegistrationData userRegistrationData) {
         Long currentTime = System.currentTimeMillis();
@@ -32,9 +34,8 @@ public class UserRegstrationHelper {
         return user;
     }
     
-    public String createMailText(User user, String ipatHost){
+    public String createMailText(User user, String ipatHost, String mailText){
         String activationLink = "/userActivation" + "?id=" + user.getId() + "&key=" + user.getActivationKey();
-        String mailText = "Hallo %userName%,\n\nUm Deine Anmeldung fertigzustellen und I Plant A Tree zu nutzen, musst du untenstehenden Link klicken:\n%ipatHost%%activationLink%\n\nDein I Plant A Tree Team";
         mailText = mailText.replace("%activationLink%", activationLink);
         mailText = mailText.replace("%userName%", user.getName());
         mailText = mailText.replace("%ipatHost%", ipatHost);

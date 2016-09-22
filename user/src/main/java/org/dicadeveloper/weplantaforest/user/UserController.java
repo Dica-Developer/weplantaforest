@@ -17,6 +17,7 @@ import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
 import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
+import org.dicadeveloper.weplantaforest.support.CommonValidator;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -176,12 +177,17 @@ public class UserController {
         if (_userRepository.userExists(userRegistrationData.getUsername()) == 1) {
             String errorMessage = _messageByLocaleService.getMessage("user.already.exists", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
             return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
+        } else if (!CommonValidator.isValidEmailAddress(userRegistrationData.getMail())) {
+            String errorMessage = _messageByLocaleService.getMessage("invalid.mail", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
+            return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
         } else {
             User user = _userRegistrationHelper.convertUserRegDataToUser(userRegistrationData);
             _userRepository.save(user);
 
             String mailSubject = _messageByLocaleService.getMessage("mail.registration.subject", user.getLang().getLocale());
-            String mailText = _userRegistrationHelper.createMailText(user, _env.getProperty("ipat.host"));
+
+            String mailTemplateText = _messageByLocaleService.getMessage("mail.registration.text", user.getLang().getLocale());
+            String mailText = _userRegistrationHelper.createMailText(user, _env.getProperty("ipat.host"), mailTemplateText);
 
             new Thread(new Runnable() {
                 public void run() {
@@ -199,7 +205,7 @@ public class UserController {
         if (user != null) {
             if (user.isEnabled()) {
                 message = _messageByLocaleService.getMessage("user.already.activated", user.getLang().getLocale());
-                return new ResponseEntity<>("Der Nutzer ist bereits aktiviert!", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             } else if (user.getActivationKey().equals(key)) {
                 user.setEnabled(true);
                 _userRepository.save(user);
