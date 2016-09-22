@@ -7,9 +7,9 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
-import Notification from '../common/components/Notification';
-import InputText from '../common/components/InputText';
-import IconButton from '../common/components/IconButton';
+import Notification from '../../common/components/Notification';
+import InputText from '../../common/components/InputText';
+import IconButton from '../../common/components/IconButton';
 
 export default class SendRequest extends Component {
 
