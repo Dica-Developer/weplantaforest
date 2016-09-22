@@ -23,7 +23,7 @@ public class WeplantaforestApplication extends SpringBootServletInitializer {
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasenames("messages/mail-messages", "messages/validation-messages");
+        messageSource.setBasenames("classpath:messages/mail-messages", "classpath:messages/validation-messages");
         return messageSource;
     }
 }
