@@ -12,6 +12,7 @@ import EditImageItem from './EditImageItem';
 import EditItem from './EditItem';
 import EditDropdownItem from './EditDropdownItem';
 import EditPasswordItem from './EditPasswordItem';
+import Notification from '../../common/components/Notification';
 import IconButton from '../../common/components/IconButton';
 
 require("./editUserDetails.less");
@@ -32,17 +33,13 @@ export default class EditUserDetails extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=' + toEdit + "&newEntry=" + newEntry, {}, config).then(function(response) {}).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=' + toEdit + "&newEntry=" + newEntry, {}, config).then(function(response) {
+      that.refs[toEdit].saveChanges();
+    }).catch(function(response) {
+      that.refs[toEdit].undoChanges();
+      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', response.data, 'error');
     });
-    if(toEdit == 'LANGUAGE'){
+    if (toEdit == 'LANGUAGE') {
       this.props.updateLanguage(newEntry);
     }
   }
@@ -72,7 +69,7 @@ export default class EditUserDetails extends Component {
     });
   }
 
-  uploadImage(file){
+  uploadImage(file) {
     var data = new FormData();
     data.append('userName', this.props.user.userName);
     data.append('file', file);
@@ -112,29 +109,30 @@ export default class EditUserDetails extends Component {
         </div>
         <EditImageItem uploadImage={this.uploadImage.bind(this)}/>
         <EditNameItem text="Name" content={this.props.user.userName} toEdit="NAME" editUsername={this.editUsername.bind(this)} ref="name"/>
-        <EditItem text="Über mich" content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)}/>
-        <EditItem text="Ort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)}/>
-        <EditItem text="Organisation" content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)}/>
-        <EditItem text="Webseite" content={this.props.user.homepage} toEdit="HOMEPAGE" editUser={this.editUser.bind(this)}/>
-        <EditDropdownItem text="Sprache" toEdit="LANGUAGE" content={this.props.user.lang} editUser={this.editUser.bind(this)} width="100">
+        <EditItem text="Über mich" content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)} ref="ABOUTME"/>
+        <EditItem text="Ort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)} ref="LOCATION"/>
+        <EditItem text="Organisation" content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)} ref="ORGANISATION"/>
+        <EditItem text="Webseite" content={this.props.user.homepage} toEdit="HOMEPAGE" editUser={this.editUser.bind(this)} ref="HOMEPAGE"/>
+        <EditDropdownItem text="Sprache" toEdit="LANGUAGE" content={this.props.user.lang} editUser={this.editUser.bind(this)} width="100" ref="LANGUAGE">
           <option value="DEUTSCH">DEUTSCH</option>
           <option value="ENGLISH">ENGLISH</option>
         </EditDropdownItem>
-        <EditDropdownItem text="Newsletter abbonnieren" toEdit="NEWSLETTER" content={this.props.user.newsletter} editUser={this.editUser.bind(this)} width="70">
+        <EditDropdownItem text="Newsletter abbonnieren" toEdit="NEWSLETTER" content={this.props.user.newsletter} editUser={this.editUser.bind(this)} width="70" ref="NEWSLETTER">
           <option value="JA">JA</option>
           <option value="NEIN">NEIN</option>
         </EditDropdownItem>
-        <EditItem text="E-Mail" content={this.props.user.mail} toEdit="MAIL" editUser={this.editUser.bind(this)}/>
-        <EditDropdownItem text="Typ" toEdit="ORGANIZATION_TYPE" content={this.props.user.organizationType} editUser={this.editUser.bind(this)} width="180">
+        <EditItem text="E-Mail" content={this.props.user.mail} toEdit="MAIL" editUser={this.editUser.bind(this)} ref="MAIL"/>
+        <EditDropdownItem text="Typ" toEdit="ORGANIZATION_TYPE" content={this.props.user.organizationType} editUser={this.editUser.bind(this)} width="180" ref="ORGANIZATION_TYPE">
           <option value="PRIVATE">Privatperson</option>
           <option value="COMMERCIAL">Firma</option>
           <option value="NONPROFIT">Non-Profit Organisation</option>
           <option value="EDUCATIONAL">Schule</option>
         </EditDropdownItem>
-        <EditPasswordItem text="Passwort" toEdit="PASSWORD" editUser={this.editUser.bind(this)}/>
+        <EditPasswordItem text="Passwort" toEdit="PASSWORD" editUser={this.editUser.bind(this)} ref="PASSWORD"/>
         <div className="align-center bottomButton">
           <IconButton text="ANSCHAUEN" glyphIcon="glyphicon-eye-open" onClick={this.showProfile.bind(this)}/>
         </div>
+        <Notification ref="notification"/>
       </div>
     );
   }

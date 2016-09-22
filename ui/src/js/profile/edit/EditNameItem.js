@@ -37,7 +37,7 @@ export default class EditNameItem extends Component {
     this.props.editUsername(this.state.contentTemp);
   }
 
-  undoChanges(content) {
+  undoChanges() {
     this.setState({contentTemp: this.state.content, edit: false});
   }
 

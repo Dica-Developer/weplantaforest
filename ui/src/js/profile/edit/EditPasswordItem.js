@@ -26,17 +26,23 @@ export default class EditPasswordItem extends Component {
   }
 
   saveContent() {
-    if (this.state.passwordOne == this.state.passwordTwo) {
+    if (this.state.passwordOne != this.state.passwordTwo) {
+      this.refs.notification.addNotification('Passwörter stimmen nicht überein!', 'Das neu eingegebene Passwort stimmt nicht mit der Bestätigung überein!', 'error');
+    }else if(this.state.passwordOne.length < 6){
+      this.refs.notification.addNotification('Passwort zu kurz!', 'Bitte gibt mind. 6 Zeichen für dein Passwort an!', 'error');
+    } else {
       this.setState({
         edit: false
       });
       this.props.editUser(this.props.toEdit, this.state.passwordOne);
-    } else {
-      this.refs.notification.addNotification('Fehler!', 'Das neu eingegebene Passwort stimmt nicht mit der Bestätigung überein!', 'error');
     }
   }
 
-  undoChanges(content) {
+  saveChanges(){
+    
+  }
+
+  undoChanges() {
     this.setState({
       passwordOne: '',
       passwordTwo: '',

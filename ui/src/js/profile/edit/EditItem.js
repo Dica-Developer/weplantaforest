@@ -23,12 +23,15 @@ export default class EditItem extends Component {
     this.setState({edit: true});
   }
 
-  saveContent() {
-    this.setState({content: this.state.contentTemp, contentTemp: this.state.contentTemp, edit: false});
+  editUser() {
     this.props.editUser(this.props.toEdit, this.state.contentTemp);
   }
 
-  undoChanges(content) {
+  saveChanges(){
+    this.setState({content: this.state.contentTemp, contentTemp: this.state.contentTemp, edit: false});
+  }
+
+  undoChanges() {
     this.setState({contentTemp: this.state.content, edit: false});
   }
 
@@ -39,7 +42,7 @@ export default class EditItem extends Component {
   render() {
     var link;
     if (this.state.edit) {
-      link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.saveContent.bind(this)}/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
+      link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.editUser.bind(this)}/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
     } else {
       link = <IconButton text="BEARBEITEN" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }

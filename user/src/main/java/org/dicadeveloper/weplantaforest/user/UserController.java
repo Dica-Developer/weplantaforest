@@ -100,13 +100,14 @@ public class UserController {
     @RequestMapping(value = Uris.EDIT_USER_DETAILS, method = RequestMethod.POST)
     public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam String toEdit, @RequestParam String newEntry)
             throws IOException {
+        String errorMessage;
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
             User user = _userRepository.findByName(userName);
 
             switch (toEdit) {
             case "NAME":
                 if (_userRepository.userExists(newEntry) == 1) {
-                    String errorMessage = _messageByLocaleService.getMessage("user.already.exists", user.getLang().getLocale());
+                    errorMessage = _messageByLocaleService.getMessage("user.already.exists", user.getLang().getLocale());
                     return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
                 } else {
                     user.setName(newEntry);
@@ -125,7 +126,15 @@ public class UserController {
                 user.setHomepage(newEntry);
                 break;
             case "MAIL":
-                user.setMail(newEntry);
+                if (!CommonValidator.isValidEmailAddress(newEntry)) {
+                    errorMessage = _messageByLocaleService.getMessage("invalid.mail", user.getLang().getLocale());
+                    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+                } else if (_userRepository.userWithMailExists(newEntry) == 1) {
+                    errorMessage = _messageByLocaleService.getMessage("mail.already.exists", user.getLang().getLocale());
+                    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+                } else {
+                    user.setMail(newEntry);
+                }
                 break;
             case "NEWSLETTER":
                 user.setNewsletter(newEntry.equals("JA") ? true : false);
@@ -175,12 +184,16 @@ public class UserController {
 
     @RequestMapping(value = Uris.REGISTRATE_USER, method = RequestMethod.POST)
     public ResponseEntity<?> registrateUser(@RequestBody UserRegistrationData userRegistrationData) {
+        String errorMessage;
         if (_userRepository.userExists(userRegistrationData.getUsername()) == 1) {
-            String errorMessage = _messageByLocaleService.getMessage("user.already.exists", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
+            errorMessage = _messageByLocaleService.getMessage("user.already.exists", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
             return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
         } else if (!CommonValidator.isValidEmailAddress(userRegistrationData.getMail())) {
-            String errorMessage = _messageByLocaleService.getMessage("invalid.mail", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
+            errorMessage = _messageByLocaleService.getMessage("invalid.mail", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
             return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
+        } else if (_userRepository.userWithMailExists(userRegistrationData.getMail()) == 1) {
+            errorMessage = _messageByLocaleService.getMessage("mail.already.exists", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         } else {
             User user = _userHelper.convertUserRegDataToUser(userRegistrationData);
             _userRepository.save(user);
@@ -270,7 +283,7 @@ public class UserController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = Uris.USER_PASSWORD_RESET, method = RequestMethod.POST)
     public ResponseEntity<?> resetPasswordForUser(@RequestParam long id, @RequestParam String key, @RequestParam String language, @RequestParam String password) {
         User user = _userRepository.findOne(id);

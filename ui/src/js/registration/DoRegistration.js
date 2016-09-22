@@ -46,6 +46,8 @@ export default class DoRegistration extends Component {
       this.refs.notification.addNotification('Eingabefelder sind leer!', 'Bitte füllen Sie alle Eingabefelder aus!', 'error');
     } else if (this.state.passwordOne != this.state.passwordTwo) {
       this.refs.notification.addNotification('Passwörter stimmen nicht überein!', 'Das eingegebene Passwort stimmt nicht mit der Bestätigung überein!', 'error');
+    } else if(this.state.passwordOne.length < 6){
+      this.refs.notification.addNotification('Passwort zu kurz!', 'Bitte gibt mind. 6 Zeichen für dein Passwort an!', 'error');
     } else if (!this.state.acceptAgbs) {
       this.refs.notification.addNotification('Nutzungsbedingungen nicht akzeptiert!', 'Die Nutzungsbedingungen müssen akzeptiert werden!', 'error');
     } else {

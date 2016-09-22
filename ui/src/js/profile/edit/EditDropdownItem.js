@@ -43,13 +43,17 @@ export default class EditDropdownItem extends Component {
     this.setState({edit: true});
   }
 
-  saveContent() {
+  editUser(){
+    this.props.editUser(this.props.toEdit, this.state.contentTemp);
+  }
+
+  saveChanges() {
     this.state.content = this.state.contentTemp;
     this.state.contentTemp = this.state.contentTemp;
     this.state.edit = false;
     this.forceUpdate();
     this.findSelectedIndex();
-    this.props.editUser(this.props.toEdit, this.state.contentTemp);
+
   }
 
   undoChanges(content) {
@@ -66,7 +70,7 @@ export default class EditDropdownItem extends Component {
   render() {
     var link;
     if (this.state.edit) {
-      link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.saveContent.bind(this)}/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
+      link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.editUser.bind(this)}/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
     } else {
       link = <IconButton text="BEARBEITEN" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }
