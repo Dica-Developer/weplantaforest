@@ -136,6 +136,10 @@ public class Uris {
     public final static String USER_ACTIVATE = "/user/activation";
     
     public final static String USER_LANGUAGE = "/user/language";
+    
+    public final static String USER_PASSWORD_RESET_REQUEST = "/password_request";
+    
+    public final static String USER_PASSWORD_RESET = "/password_reset";
 
     // team
     public final static String TEAM_IMAGE = "/team/image/";

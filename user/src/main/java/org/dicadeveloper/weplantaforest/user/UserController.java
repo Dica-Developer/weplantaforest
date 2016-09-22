@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.user;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,7 +54,7 @@ public class UserController {
 
     private @NonNull PasswordEncrypter _passwordEncrypter;
 
-    private @NonNull UserRegstrationHelper _userRegistrationHelper;
+    private @NonNull UserHelper _userHelper;
 
     private @NonNull MailHelper _mailHelper;
 
@@ -181,13 +182,13 @@ public class UserController {
             String errorMessage = _messageByLocaleService.getMessage("invalid.mail", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
             return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
         } else {
-            User user = _userRegistrationHelper.convertUserRegDataToUser(userRegistrationData);
+            User user = _userHelper.convertUserRegDataToUser(userRegistrationData);
             _userRepository.save(user);
 
             String mailSubject = _messageByLocaleService.getMessage("mail.registration.subject", user.getLang().getLocale());
 
             String mailTemplateText = _messageByLocaleService.getMessage("mail.registration.text", user.getLang().getLocale());
-            String mailText = _userRegistrationHelper.createMailText(user, _env.getProperty("ipat.host"), mailTemplateText);
+            String mailText = _userHelper.createUserRegistrationMailText(user, _env.getProperty("ipat.host"), mailTemplateText);
 
             new Thread(new Runnable() {
                 public void run() {
@@ -223,6 +224,35 @@ public class UserController {
     @RequestMapping(value = Uris.USER_LANGUAGE, method = RequestMethod.GET)
     public String getLanguageFromUser(@RequestParam String userName) {
         return _userRepository.getUserLanguage(userName).toString();
+    }
+    
+    @RequestMapping(value = Uris.USER_PASSWORD_RESET_REQUEST, method = RequestMethod.POST)
+    public ResponseEntity<?> createResetPassword(@RequestParam String userName, @RequestParam String language) {
+        String responseMessage;
+        User user = _userRepository.findByName(userName);
+        if(user == null){
+            responseMessage = _messageByLocaleService.getMessage("user.not.exists", (Language.valueOf(language)).getLocale());
+            return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+        }else if (!user.isEnabled()) {
+            responseMessage = _messageByLocaleService.getMessage("user.not.activated", (Language.valueOf(language)).getLocale());
+            return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+        }else{
+            user.setActivationKey(UUID.randomUUID().toString());
+            _userRepository.save(user);
+            
+            String mailSubject = _messageByLocaleService.getMessage("mail.forgot.password.subject", user.getLang().getLocale());
+
+            String mailTemplateText = _messageByLocaleService.getMessage("mail.forgot.password.text", user.getLang().getLocale());
+            String mailText = _userHelper.createForgotPasswordMail(user, _env.getProperty("ipat.host"), mailTemplateText);
+            
+            new Thread(new Runnable() {
+                public void run() {
+                    _mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
+                }
+            }).start();
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        
     }
 
 }

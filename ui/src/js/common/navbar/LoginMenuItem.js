@@ -76,8 +76,8 @@ export default class LoginMenuItem extends Component {
     this.props.updateNavbar();
   }
 
-  switchToRegistrationPage(){
-    browserHistory.push('/registration');
+  linkTo(url){
+    browserHistory.push(url);
   }
 
   render() {
@@ -98,7 +98,7 @@ export default class LoginMenuItem extends Component {
           <IconButton text="LOGIN" glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
         </div>
         <div>
-          <a role="button" onClick={this.switchToRegistrationPage.bind(this)}>Anmelden</a>&nbsp;&nbsp;<a>Passwort vergessen</a>
+          <a role="button" onClick={()=>{this.linkTo('/registration')}}>Anmelden</a>&nbsp;&nbsp;<a role="button" onClick={()=>{this.linkTo('/forgotPassword')}}>Passwort vergessen</a>
         </div>
       </div>;
     }

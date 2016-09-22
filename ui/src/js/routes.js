@@ -16,6 +16,7 @@ import PlantBagPage from './plantBag/PlantBagPage';
 import PaymentPage from './payment/PaymentPage';
 import RegistrationPage from './registration/RegistrationPage';
 import ActivationPage from './activation/ActivationPage';
+import ForgotPasswordPage from './forgotPassword/ForgotPasswordPage';
 
 export default class Routes extends Component {
   render() {
@@ -34,6 +35,7 @@ export default class Routes extends Component {
         <Route path="/payment/:cartId" component={PaymentPage}/>
         <Route path="/registration" component={RegistrationPage}/>
         <Route path="/userActivation" component={ActivationPage}/>
+        <Route path="/forgotPassword" component={ForgotPasswordPage}/>
         <Route path="*" component={NotFoundPage}/>
       </Router>
     );

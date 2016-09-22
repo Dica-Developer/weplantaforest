@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserRegstrationHelper {
+public class UserHelper {
 
     @Autowired
     private PasswordEncrypter _passWordEncrypter;
@@ -34,12 +34,20 @@ public class UserRegstrationHelper {
         return user;
     }
     
-    public String createMailText(User user, String ipatHost, String mailText){
+    public String createUserRegistrationMailText(User user, String ipatHost, String mailText){
         String activationLink = "/userActivation" + "?id=" + user.getId() + "&key=" + user.getActivationKey();
         mailText = mailText.replace("%activationLink%", activationLink);
         mailText = mailText.replace("%userName%", user.getName());
         mailText = mailText.replace("%ipatHost%", ipatHost);
         
+        return mailText;
+    }
+    
+    public String createForgotPasswordMail(User user, String ipatHost, String mailText){
+        String resetLink = "/password_reset" + "?id=" + user.getId() + "&key=" + user.getActivationKey();
+        mailText = mailText.replace("%resetLink%", resetLink);
+        mailText = mailText.replace("%userName%", user.getName());
+        mailText = mailText.replace("%ipatHost%", ipatHost);
         return mailText;
     }
 }
