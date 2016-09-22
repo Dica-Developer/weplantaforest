@@ -42,6 +42,9 @@ export default class EditUserDetails extends Component {
         console.error(response.config);
       }
     });
+    if(toEdit == 'LANGUAGE'){
+      this.props.updateLanguage(newEntry);
+    }
   }
 
   editUsername(newEntry) {

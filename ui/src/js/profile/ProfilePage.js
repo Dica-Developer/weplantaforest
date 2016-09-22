@@ -37,7 +37,7 @@ export default class ProfilePage extends Component {
 
   }
 
-  componentWillMount() {
+  componentDidMount() {
     var that = this;
     var config = {
       headers: {
@@ -144,6 +144,10 @@ export default class ProfilePage extends Component {
     });
   }
 
+  updateLanguage(value){
+    this.refs['navbar'].updateLanguage(value);
+  }
+
   render() {
     var userPart;
     var teamPart;
@@ -153,7 +157,7 @@ export default class ProfilePage extends Component {
     if (!this.state.editUser) {
       userPart = <UserDetails user={this.state.user} showEditUser={this.showEditUser.bind(this)}/>;
     } else {
-      userPart = <EditUserDetails user={this.state.user} showProfile={this.showProfile.bind(this)}/>;
+      userPart = <EditUserDetails user={this.state.user} showProfile={this.showProfile.bind(this)} updateLanguage={this.updateLanguage.bind(this)}/>;
     }
 
     if (this.state.user.teamName != '') {
@@ -178,7 +182,7 @@ export default class ProfilePage extends Component {
     }
     return (
       <div className="profile">
-        <NavBar/>
+        <NavBar ref="navbar"/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row details">

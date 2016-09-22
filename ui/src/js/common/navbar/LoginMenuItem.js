@@ -28,8 +28,24 @@ export default class LoginMenuItem extends Component {
   }
 
   handleLogin(token) {
+    var that = this;
     localStorage.setItem('jwt', token);
-    localStorage.setItem('username', this.state.name)
+    localStorage.setItem('username', this.state.name);
+    this.props.updateNavbar();
+    axios.get('http://localhost:8081/user/language?userName=' + this.state.name).then(function(response) {
+      var result = response.data;
+      that.props.updateLanguage(result);
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+
     this.setState({loggedIn: true})
   }
 
@@ -47,7 +63,6 @@ export default class LoginMenuItem extends Component {
       }
     }).then(function(response) {
       that.handleLogin(response.headers['x-auth-token']);
-      that.props.updateComponent();
     }.bind(this)).catch(function(response) {
         that.setState({name: '', password: ''})
         that.refs.notification.addNotificationAtDifferentPos('Fehler!', 'Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuche Sie es noch einmal.',  'error', 'tr');
@@ -58,7 +73,7 @@ export default class LoginMenuItem extends Component {
     localStorage.setItem('jwt', '');
     localStorage.setItem('username', '');
     this.setState({name: '', password: '', loggedIn: false})
-    this.props.updateComponent();
+    this.props.updateNavbar();
   }
 
   switchToRegistrationPage(){

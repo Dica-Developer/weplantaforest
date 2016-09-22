@@ -3,9 +3,11 @@ import {Link, browserHistory } from 'react-router';
 
 import Menu from './Menu';
 import MenuItem from './MenuItem';
+import LanguageMenuItem from './LanguageMenuItem';
 import PlantBag from './PlantBag';
 import LoginMenuItem from './LoginMenuItem';
 import ImageButton from '../components/ImageButton';
+import axios from 'axios';
 
 require("./navbar.less");
 require("./menu.less");
@@ -14,12 +16,14 @@ export default class NavBar extends Component {
   constructor() {
     super();
     this.state = {
-      profileLinksInActive: 'true'
+      profileLinksInActive: 'true',
+      language: (localStorage.getItem('language') == null ? 'DEUTSCH' : localStorage.getItem('language'))
     }
   }
 
   componentDidMount() {
     this.setProfileLinkIsInActive();
+    localStorage.setItem('language', this.state.language);
   }
 
   showLeft() {
@@ -38,7 +42,20 @@ export default class NavBar extends Component {
     this.refs["plantBag"].updatePlantBag(price, projectItems, projectName);
   }
 
-  updateComponent(){
+  updateLanguage(value){
+    localStorage.setItem('language', value);
+    this.setState({language: value});
+    if(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''){
+      var config = {
+        headers: {
+          'X-AUTH-TOKEN': localStorage.getItem('jwt')
+        }
+      };
+      axios.post('http://localhost:8081/user/edit?userName=' + localStorage.getItem('username') + '&toEdit=LANGUAGE&newEntry=' + value, {}, config);
+    }
+  }
+
+  updateComponents(){
     this.setProfileLinkIsInActive();
     this.refs["plantBag"].resetPlantBag();
     this.forceUpdate();
@@ -69,9 +86,10 @@ export default class NavBar extends Component {
           <MenuItem hash="8">STATISTIKEN</MenuItem>
           <MenuItem hash="9">BLOG</MenuItem>
           <MenuItem hash="10">FAQs</MenuItem>
+          <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
         </Menu>
         <Menu ref="right" alignment="right">
-          <LoginMenuItem hash="login" updateComponent={this.updateComponent.bind(this)}></LoginMenuItem>
+          <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
           <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>MEIN PROFIL</MenuItem>
           <MenuItem hash="third-page" inactive={this.state.profileLinksInActive}>MEIN TEAM</MenuItem>
           <MenuItem hash="4" inactive={this.state.profileLinksInActive}>POSTFACH</MenuItem>

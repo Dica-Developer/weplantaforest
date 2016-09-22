@@ -60,7 +60,6 @@
     }
 
     > .menu-item {
-      float: left;
       width: 100%;
       margin: 0;
       padding: 10px 15px;
@@ -126,8 +125,37 @@
         }
       }
 
-      .loggedIn{
+    }
 
+    .language-menu-item {
+      margin-top: 15px;
+      text-align: center;
+      a,
+      a:active,
+      a:visited{
+        text-decoration: none;
+        color: #fff;
+        font-size: 16px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-style: solid;
+        border-color: #fff;
+      }
+
+      a:nth-of-type(1){
+        margin-right: 10px;
+      }
+      a:hover{
+        text-decoration: none;
+        color:  #82AB1F;
+        background-color: #fff;
+      }
+
+      .selected{
+        color:  #82AB1F;
+        background-color: #fff;
       }
     }
   }
