@@ -21,7 +21,7 @@ public class UserRegstrationHelper {
         user.setPassword(_passWordEncrypter.encryptPassword(userRegistrationData.getPassword()));
         user.setMail(userRegistrationData.getMail());
         user.setOrganizationType(OrganizationType.valueOf(userRegistrationData.getOrgType()));
-        user.setLang(Language.DEUTSCH);
+        user.setLang(Language.valueOf(userRegistrationData.getLanguage()));
         user.setEnabled(false);
         user.setBanned(false);
         user.setRegDate(currentTime);
