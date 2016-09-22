@@ -37,47 +37,6 @@ public class PaymentHelper {
 
     private final static DecimalFormat priceFormat = new DecimalFormat("#0.00");
 
-    private static Map<String, String> errorCodes = new HashMap<String, String>();
-
-    static {
-        errorCodes.put("100", "API nicht freigeschaltet");
-        errorCodes.put("101", "Vorname nicht vorhanden");
-        errorCodes.put("102", "Nachname nicht vorhanden");
-        errorCodes.put("103", "Straße nicht vorhanden");
-        errorCodes.put("104", "Land nicht vorhanden");
-        errorCodes.put("105", "Ort nicht vorhanden");
-        errorCodes.put("106", "PLZ nicht vorhanden");
-        errorCodes.put("107", "E-Mail nicht vorhanden");
-        errorCodes.put("108", "Betrag nicht vorhanden");
-        errorCodes.put("109", "Verwendungszweck nicht vorhanden");
-        errorCodes.put("110", "Quittung nicht vorhanden");
-        errorCodes.put("111", "Zahlungsart nicht vorhanden");
-        errorCodes.put("112", "Anrede nicht vorhanden");
-
-        errorCodes.put("201", "Kreditkarten-Eigentümer nicht vorhanden");
-        errorCodes.put("202", "Kreditkarten-Nummer nicht vorhanden");
-        errorCodes.put("203", "Kreditkarten-Datum");
-        errorCodes.put("204", "Kreditkarten-Datum");
-        errorCodes.put("205", "Kreditkarten-Sicherheitsnummer");
-        errorCodes.put("206", "Kreditkarten-Type");
-
-        errorCodes.put("401", "IBAN fehlerhaft");
-        errorCodes.put("402", "BIC fehlerhaft");
-
-        errorCodes.put("500", "Unbekannter Fehler // Parameter fehlen");
-        errorCodes.put("501", "Unbekannter Sender");
-        errorCodes.put("502", "Fehlerhafter Hashwert");
-        errorCodes.put("503", "Kunde nicht gefunden");
-        errorCodes.put("504", "Parameter im falschen Format");
-        errorCodes.put("506", "Unbekannter Transaktionstyp");
-        errorCodes.put("507", "Laut Pruefverfahren invalide KtoNr");
-        errorCodes.put("508", "KtoNr zu lang oder zu kurz");
-        errorCodes.put("509", "KtoNr zu lang oder zu kurz");
-
-        errorCodes.put("985", "Doppelte Spende");
-        errorCodes.put("984", "Kreditkarte abgelehnt");
-    }
-
     public String postRequest(Cart cart, PaymentData paymentData) {
         String address = _env.getProperty("bfs.url");
         try {
@@ -116,9 +75,8 @@ public class PaymentHelper {
         return result != null && result.contains("status=success");
     }
 
-    public String getErrorMessageForCode(String response) {
-        String code = response.substring(response.indexOf("&amp;code=") + 10, response.indexOf("&amp;code=") + 13);
-        return errorCodes.get(code);
+    public String getErrorCode(String response) {
+        return response.substring(response.indexOf("&amp;code=") + 10, response.indexOf("&amp;code=") + 13);
     }
 
     private Map<String, String> createParams(Cart cart, PaymentData paymentData) {

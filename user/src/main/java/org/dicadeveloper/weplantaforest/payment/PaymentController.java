@@ -2,6 +2,8 @@ package org.dicadeveloper.weplantaforest.payment;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ public class PaymentController {
 
     private @NonNull CartRepository _cartRepository;
 
+    private @NonNull MessageByLocaleService _messageByLocaleService;
+
     @RequestMapping(value = Uris.PAY_PLANTBAG, method = RequestMethod.POST)
     public ResponseEntity<?> payPlantBag(@RequestBody PaymentData paymentData) {
         Cart cartToPay = _cartRepository.findOne(paymentData.getCartId());
@@ -32,7 +36,8 @@ public class PaymentController {
             _cartRepository.save(cartToPay);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            String paymentErrorMessage = _paymentHelper.getErrorMessageForCode(paymentRequestResponse);
+            String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
+            String paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank." + errorCode, cartToPay.getBuyer().getLang().getLocale());
             return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
         }
     }

@@ -33,7 +33,7 @@ export default class Sepa extends Component {
       comment: '',
       paymentMethod: 'SEPA',
       iban: 'TE01567891011121314151',
-      bic: 'DEUTDEUTDEU',
+      bic: 'DEUTDEUTDEU'
     };
   }
 
