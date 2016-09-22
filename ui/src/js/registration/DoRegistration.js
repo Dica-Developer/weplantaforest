@@ -21,10 +21,11 @@ export default class DoRegistration extends Component {
       passwordOne: '',
       passwordTwo: '',
       mail: '',
+      language: localStorage.getItem('language'),
       orgType: 'PRIVATE',
       newsLetter: true,
       acceptAgbs: false,
-      registrated: false
+      registrated: false,
     };
   }
 
@@ -54,7 +55,8 @@ export default class DoRegistration extends Component {
         password: this.state.passwordOne,
         mail: this.state.mail,
         orgType: this.state.orgType,
-        newsLetter: this.state.newsLetter
+        newsLetter: this.state.newsLetter,
+        language: this.state.language
       };
 
       axios.post('http://localhost:8081/user/registrate', data, {}).then(function(response) {
