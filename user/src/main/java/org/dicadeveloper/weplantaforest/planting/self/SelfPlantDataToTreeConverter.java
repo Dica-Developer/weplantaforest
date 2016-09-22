@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.planting.self;
 
 import org.dicadeveloper.weplantaforest.trees.Tree;
-import org.dicadeveloper.weplantaforest.treetypes.TreeType;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
