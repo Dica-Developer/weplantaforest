@@ -17,6 +17,7 @@ import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
@@ -114,6 +115,7 @@ public class DbInjecter {
         User userDto = new User();
         userDto.setName(userName);
         userDto.setMail(mail);
+        userDto.setLang(Language.DEUTSCH);
         _userRepository.save(userDto);
     }
 
@@ -122,6 +124,7 @@ public class DbInjecter {
         userDto.setName(userName);
         userDto.setRegDate(regDate);
         userDto.setOrganizationType(OrganizationType.PRIVATE);
+        userDto.setLang(Language.DEUTSCH);
         _userRepository.save(userDto);
     }
 
@@ -131,6 +134,7 @@ public class DbInjecter {
         userDto.setRegDate(regDate);
         userDto.setLastVisit(regDate);
         userDto.setOrganizationType(organizationType);
+        userDto.setLang(Language.DEUTSCH);
         _userRepository.save(userDto);
     }
 
