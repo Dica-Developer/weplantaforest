@@ -36,9 +36,7 @@ public class ImageHelper {
     }
 
     public void writeImageToOutputStream(OutputStream toWrite, String filePath) throws FileNotFoundException, IOException {
-        FileInputStream inputStream = new FileInputStream(filePath);
         FileCopyUtils.copy(new FileInputStream(filePath), toWrite);
-        inputStream.close();
     }
 
     public String storeImage(MultipartFile file, String folder, String imageName, boolean overwriteExistingImage) throws IOException {
