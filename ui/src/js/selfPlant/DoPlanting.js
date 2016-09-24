@@ -9,6 +9,7 @@ import TextArea from '../common/components/TextArea';
 import DateField from '../common/components/DateField';
 import FileChooser from '../common/components/FileChooser';
 import IconButton from '../common/components/IconButton';
+import Captcha from '../common/components/Captcha';
 
 export default class DoPlanting extends Component {
 
@@ -75,48 +76,53 @@ export default class DoPlanting extends Component {
   }
 
   sendSelfPlantedTree() {
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.post('http://localhost:8081/plantSelf', this.state.selfPlantData, config).then(function(response) {
-      that.props.setPlantingDone(true);
-      if (that.state.imageFile != null) {
-        config = {};
-        var data = new FormData();
-        data.append('treeId', response.data);
-        data.append('file', that.state.imageFile);
+    if(localStorage.getItem('jwt') == null || localStorage.getItem('jwt') == ''){
+      this.refs.notification.addNotification('Kein authentifizierter Nutzer!', 'Um eine Pflanzung erstellen zu können, musst du als Nutzer eingeloggt sein.', 'error');
+    }else if (this.refs.captcha.validateCaptcha()) {
+      var that = this;
+      var config = {
+        headers: {
+          'X-AUTH-TOKEN': localStorage.getItem('jwt')
+        }
+      };
+      axios.post('http://localhost:8081/plantSelf', this.state.selfPlantData, config).then(function(response) {
+        that.props.setPlantingDone(true);
+        if (that.state.imageFile != null) {
+          config = {};
+          var data = new FormData();
+          data.append('treeId', response.data);
+          data.append('file', that.state.imageFile);
 
-        axios.post('http://localhost:8081/plantSelf/upload', data, config).then(function(response) {}).catch(function(response) {
+          axios.post('http://localhost:8081/plantSelf/upload', data, config).then(function(response) {}).catch(function(response) {
 
-          if (response instanceof Error) {
-            console.error('Error', response.message);
-          } else {
-            console.error(response.data);
-            console.error(response.status);
-            console.error(response.headers);
-            console.error(response.config);
-          }
-        });
-      }
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', 'Bei der Verarbeitung ist ein Fehler aufgetreten! Bitte versuche es noch einmal.', 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+            if (response instanceof Error) {
+              console.error('Error', response.message);
+            } else {
+              console.error(response.data);
+              console.error(response.status);
+              console.error(response.headers);
+              console.error(response.config);
+            }
+          });
+        }
+      }).catch(function(response) {
+        that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', 'Bei der Verarbeitung ist ein Fehler aufgetreten! Bitte versuche es noch einmal.', 'error');
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+      });
+    }
   }
 
   render() {
     let position = [51.499807, 11.956521];
     var myIcon = L.divIcon({className: 'glyphicon glyphicon-tree-deciduous'});
+
     return (
       <div className="col-md-12">
         <h2>Eigene Pflanzung erstellen</h2>
@@ -173,6 +179,7 @@ export default class DoPlanting extends Component {
             </tbody>
           </table>
           <div className="align-center">
+            <Captcha ref="captcha"/><br/>
             <IconButton text="PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
           </div>
         </div>

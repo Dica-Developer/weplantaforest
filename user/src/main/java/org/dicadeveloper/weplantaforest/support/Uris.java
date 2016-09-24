@@ -153,5 +153,9 @@ public class Uris {
     public final static String TREETYPES = "/treeTypes";
 
     public final static String TREETYPE_IMAGE = "/treeType/image/";
+    
+    //captcha
+    
+    public final static String GENERATE_CAPTCHA = "/captcha/generate";
 
 }
