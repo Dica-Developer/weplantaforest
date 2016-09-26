@@ -7,7 +7,7 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 
-import IconButton from '../common/components/IconButton';
+import IconButton from '../../common/components/IconButton';
 
 export default class ConsignorGiftItem extends Component {
   constructor(props) {

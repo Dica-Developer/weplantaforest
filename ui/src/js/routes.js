@@ -18,7 +18,7 @@ import RegistrationPage from './registration/RegistrationPage';
 import ActivationPage from './activation/ActivationPage';
 import ForgotPasswordPage from './password/forgotPassword/ForgotPasswordPage';
 import ResetPasswordPage from './password/resetPassword/ResetPasswordPage';
-import GiftOverview from './gifts/GiftOverview';
+import GiftOverview from './gifts/overview/GiftOverview';
 
 export default class Routes extends Component {
   render() {

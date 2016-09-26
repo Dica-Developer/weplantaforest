@@ -5,9 +5,9 @@ import {
   render
 } from 'react-dom';
 import axios from 'axios';
-import NavBar from '../common/navbar/NavBar';
-import Header from '../common/header/Header';
-import Footer from '../common/Footer';
+import NavBar from '../../common/navbar/NavBar';
+import Header from '../../common/header/Header';
+import Footer from '../../common/Footer';
 import Boostrap from 'bootstrap';
 
 import ConsignorGiftItem from './ConsignorGiftItem';
@@ -31,7 +31,6 @@ export default class ProjectOfferPage extends Component {
     axios.get('http://localhost:8081/gift/search/consignor?userName=' + this.state.userName).then(function(response) {
       var result = response.data;
       that.setState({consignorGifts: result});
-      console.log(result);
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -68,7 +67,6 @@ export default class ProjectOfferPage extends Component {
           <div className="row gifts">
             <div className="col-md-12">
               <h2>Gutschein-Übersicht</h2>
-
               <h3>Erstellte Gutscheine:</h3>
               {this.state.consignorGifts.map(function(gift, i) {
                 return (<ConsignorGiftItem gift={gift}  key={i}/>);
