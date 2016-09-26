@@ -31,7 +31,7 @@ export default class ProjectDetails extends Component {
         <h2>Projektfläche:&nbsp;
           <i>{this.props.project.projectReportData.projectName}</i>
         </h2>
-        <table align="center">
+        <table>
           <tbody>
             <tr>
               <td>
