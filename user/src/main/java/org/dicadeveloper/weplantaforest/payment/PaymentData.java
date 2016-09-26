@@ -8,6 +8,8 @@ import lombok.Setter;
 public class PaymentData {
     
     Long cartId;
+    Long giftId;
+    Long aboId;
 
     String company;
     String companyAddon;
