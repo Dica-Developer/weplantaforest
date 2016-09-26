@@ -54,7 +54,7 @@ public class GiftController {
     private @NonNull UserRepository _userRepository;
 
     private @NonNull CodeGenerator _codeGenerator;
-    
+
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
@@ -73,8 +73,10 @@ public class GiftController {
 
     @RequestMapping(value = Uris.GIFT_CREATE, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken,@RequestBody PlantBag plantBag) {
+    public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) {
         if (_plantBagValidator.isPlantPageDataValid(plantBag)) {
+            Long[] responseIds = new Long[2];
+            
             User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
             Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor);
 
@@ -91,8 +93,10 @@ public class GiftController {
             cart.setCode(code);
             cart.setGift(true);
             _cartRepository.save(cart);
-
-            return new ResponseEntity<>(HttpStatus.OK);
+            
+            responseIds[0] = cart.getId();
+            responseIds[1] = gift.getId();
+            return new ResponseEntity<>(responseIds, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -109,9 +113,7 @@ public class GiftController {
         PdfGiftView pdf = new PdfGiftView();
 
         try {
-            pdf.buildPdfDocument(response.getOutputStream(), gift.getConsignor()
-                                                                 .getMail(),
-                    code.getTreeCount(), splittedCode, RELATIVE_STATIC_IMAGES_PATH);
+            pdf.buildPdfDocument(response.getOutputStream(), gift.getConsignor().getMail(), code.getTreeCount(), splittedCode, RELATIVE_STATIC_IMAGES_PATH);
         } catch (Exception e) {
             LOG.error("Error occured while creating PDF!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
