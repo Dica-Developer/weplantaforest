@@ -29,7 +29,7 @@ export default class PlantBagItem extends Component {
         </div>
         <div>
           <IconButton glyphIcon="glyphicon-minus" onClick={this.props.decreasePlantBagItem.bind(this)}/>
-          <p lassName="bold">{this.props.plantBagitem.amount}</p>
+          <p className="bold">{this.props.plantBagitem.amount}</p>
           <IconButton glyphIcon="glyphicon-plus" onClick={this.props.increasePlantBagItem.bind(this)}/>
         </div>
         <div>
