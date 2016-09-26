@@ -2,6 +2,9 @@ package org.dicadeveloper.weplantaforest.payment;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.gift.Gift;
+import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class PaymentController {
 
     private @NonNull CartRepository _cartRepository;
 
+    private @NonNull GiftRepository _giftRepository;
+
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
     @RequestMapping(value = Uris.PAY_PLANTBAG, method = RequestMethod.POST)
@@ -33,6 +38,11 @@ public class PaymentController {
         if (_paymentHelper.isSuccessFull(paymentRequestResponse)) {
             cartToPay.setCallBackValuesAndStateToCallBack(paymentData);
             _cartRepository.save(cartToPay);
+            if (paymentData.getGiftId() != null) {
+                Gift giftToPay = _giftRepository.findOne(paymentData.getGiftId());
+                giftToPay.setStatus(Status.UNREDEEMED);
+                _giftRepository.save(giftToPay);
+            }
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
