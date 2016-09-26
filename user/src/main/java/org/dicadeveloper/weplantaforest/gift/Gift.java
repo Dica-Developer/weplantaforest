@@ -31,6 +31,7 @@ public class Gift {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_id")
+    @JsonView(Views.OverviewGift.class)
     private Long id;
 
     @ManyToOne

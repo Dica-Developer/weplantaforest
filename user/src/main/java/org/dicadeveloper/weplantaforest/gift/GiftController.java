@@ -24,7 +24,6 @@ import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,16 +58,16 @@ public class GiftController {
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
 
-    @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR + "{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public List<Gift> findGiftsByConsignor(@PathVariable("userId") long userId) {
-        return _giftRepository.findGiftsByConsignor(userId);
+    public List<Gift> findGiftsByConsignor(@RequestParam String userName) {
+        return _giftRepository.findGiftsByConsignor(userName);
     }
 
-    @RequestMapping(value = Uris.GIFTS_BY_RECIPIENT + "{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.GIFTS_BY_RECIPIENT, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public List<Gift> findGiftsByRecipient(@PathVariable("userId") long userId) {
-        return _giftRepository.findGiftsByRecipient(userId);
+    public List<Gift> findGiftsByRecipient(@RequestParam String userName) {
+        return _giftRepository.findGiftsByRecipient(userName);
     }
 
     @RequestMapping(value = Uris.GIFT_CREATE, method = RequestMethod.POST)

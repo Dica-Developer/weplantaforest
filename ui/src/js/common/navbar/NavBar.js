@@ -93,6 +93,7 @@ export default class NavBar extends Component {
           <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>MEIN PROFIL</MenuItem>
           <MenuItem hash="third-page" inactive={this.state.profileLinksInActive}>MEIN TEAM</MenuItem>
           <MenuItem hash="4" inactive={this.state.profileLinksInActive}>POSTFACH</MenuItem>
+          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>GUTSCHEINE</MenuItem>
           <MenuItem hash="6" inactive={this.state.profileLinksInActive}>ABONNEMENTS</MenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">

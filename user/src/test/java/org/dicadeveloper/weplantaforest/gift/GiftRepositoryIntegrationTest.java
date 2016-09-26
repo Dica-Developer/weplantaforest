@@ -53,10 +53,8 @@ public class GiftRepositoryIntegrationTest {
             _dbInjecter.injectUser("Recipient");
             _dbInjecter.injectUser("otherUser");
 
-            codeString1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW)
-                                     .getCode();
-            codeString2 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED)
-                                     .getCode();
+            codeString1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW).getCode();
+            codeString2 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED).getCode();
             codeString3 = _dbInjecter.injectGiftWithCode("Consignore", "Recipient", Status.REDEEMED);
             _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
 
@@ -68,49 +66,33 @@ public class GiftRepositoryIntegrationTest {
         Gift savedGift = _giftRepository.findGiftByCode(codeString1);
 
         assertThat(savedGift).isNotNull();
-        assertThat(savedGift.getConsignor()
-                            .getName()).isEqualTo("Consignore");
+        assertThat(savedGift.getConsignor().getName()).isEqualTo("Consignore");
         assertThat(savedGift.getRecipient()).isNull();
         assertThat(savedGift.getStatus()).isEqualTo(Status.NEW);
-        assertThat(savedGift.getCode()
-                            .getCode()).isEqualTo(codeString1);
+        assertThat(savedGift.getCode().getCode()).isEqualTo(codeString1);
 
     }
 
     @Test
     public void testFindGiftsByConsignor() {
-        List<Gift> gifts = _giftRepository.findGiftsByConsignor(1L);
+        List<Gift> gifts = _giftRepository.findGiftsByConsignor("Consignore");
 
         assertThat(gifts.size()).isEqualTo(3);
-        assertThat(gifts.get(0)
-                        .getRecipient()).isNull();
-        assertThat(gifts.get(1)
-                        .getRecipient()).isNull();
-        assertThat(gifts.get(2)
-                        .getRecipient()
-                        .getName()).isEqualTo("Recipient");
+        assertThat(gifts.get(0).getRecipient()).isNull();
+        assertThat(gifts.get(1).getRecipient()).isNull();
+        assertThat(gifts.get(2).getRecipient().getName()).isEqualTo("Recipient");
 
-        assertThat(gifts.get(0)
-                        .getCode()
-                        .getCode()).isEqualTo(codeString1);
-        assertThat(gifts.get(1)
-                        .getCode()
-                        .getCode()).isEqualTo(codeString2);
-        assertThat(gifts.get(2)
-                        .getCode()
-                        .getCode()).isEqualTo(codeString3);
+        assertThat(gifts.get(0).getCode().getCode()).isEqualTo(codeString1);
+        assertThat(gifts.get(1).getCode().getCode()).isEqualTo(codeString2);
+        assertThat(gifts.get(2).getCode().getCode()).isEqualTo(codeString3);
     }
 
     @Test
     public void testFindGiftsByRecipient() {
-        List<Gift> gifts = _giftRepository.findGiftsByRecipient(2L);
+        List<Gift> gifts = _giftRepository.findGiftsByRecipient("Recipient");
 
         assertThat(gifts.size()).isEqualTo(1);
-        assertThat(gifts.get(0)
-                        .getRecipient()
-                        .getName()).isEqualTo("Recipient");
-        assertThat(gifts.get(0)
-                        .getCode()
-                        .getCode()).isEqualTo(codeString3);
+        assertThat(gifts.get(0).getRecipient().getName()).isEqualTo("Recipient");
+        assertThat(gifts.get(0).getCode().getCode()).isEqualTo(codeString3);
     }
 }

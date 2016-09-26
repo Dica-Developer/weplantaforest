@@ -132,7 +132,7 @@ public class GiftControllerTest {
     @Test
     @Rollback(false)
     public void testFindGiftsByConsignor() throws Exception {
-        mockMvc.perform(get((Uris.GIFTS_BY_CONSIGNOR + "{id}"), 1).accept("application/json"))
+        mockMvc.perform(get(Uris.GIFTS_BY_CONSIGNOR).param("userName", "Consignore").accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
                .andExpect(jsonPath("$.[0].recipient").isEmpty())
@@ -151,7 +151,7 @@ public class GiftControllerTest {
     @Test
     @Rollback(false)
     public void testFindGiftsByRecipient() throws Exception {
-        mockMvc.perform(get((Uris.GIFTS_BY_RECIPIENT + "{id}"), 2).accept("application/json"))
+        mockMvc.perform(get((Uris.GIFTS_BY_RECIPIENT)).param("userName", "Recipient").accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
                .andExpect(jsonPath("$.[0].recipient.name").value("Recipient"))
@@ -175,7 +175,7 @@ public class GiftControllerTest {
 
         List<Cart> createdCarts = _cartRepository.findCartsByUserId(4);
         Page<Tree> createdTrees = _treeRepository.findTreesByUserId(4L, new PageRequest(0, 1));
-        List<Gift> createdGifts = _giftRepository.findGiftsByConsignor(4L);
+        List<Gift> createdGifts = _giftRepository.findGiftsByConsignor("Adam");
 
         assertThat(createdCarts.get(0)
                                .getBuyer()
@@ -277,7 +277,7 @@ public class GiftControllerTest {
                                        .getOwner()
                                        .getName()).isEqualTo("otherUser");
 
-        List<Gift> savedGiftAfterRedeem = _giftRepository.findGiftsByRecipient(3L);
+        List<Gift> savedGiftAfterRedeem = _giftRepository.findGiftsByRecipient("otherUser");
         assertThat(savedGiftAfterRedeem.get(0)
                                        .getStatus()).isEqualTo(Status.REDEEMED);
 
