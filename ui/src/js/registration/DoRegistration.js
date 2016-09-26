@@ -1,9 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
 
@@ -11,6 +7,7 @@ import Notification from '../common/components/Notification';
 import InputText from '../common/components/InputText';
 import CheckBox from '../common/components/CheckBox';
 import IconButton from '../common/components/IconButton';
+import Captcha from '../common/components/Captcha';
 
 export default class DoRegistration extends Component {
 
@@ -25,20 +22,16 @@ export default class DoRegistration extends Component {
       orgType: 'PRIVATE',
       newsLetter: true,
       acceptAgbs: false,
-      registrated: false,
+      registrated: false
     };
   }
 
   updateValue(toUpdate, value) {
-    this.setState({
-      [toUpdate]: value
-    });
+    this.setState({[toUpdate]: value});
   }
 
   updateOrgType(event) {
-    this.setState({
-      orgType: event.target.value
-    });
+    this.setState({orgType: event.target.value});
   }
 
   registrateUser() {
@@ -46,11 +39,11 @@ export default class DoRegistration extends Component {
       this.refs.notification.addNotification('Eingabefelder sind leer!', 'Bitte füllen Sie alle Eingabefelder aus!', 'error');
     } else if (this.state.passwordOne != this.state.passwordTwo) {
       this.refs.notification.addNotification('Passwörter stimmen nicht überein!', 'Das eingegebene Passwort stimmt nicht mit der Bestätigung überein!', 'error');
-    } else if(this.state.passwordOne.length < 6){
-      this.refs.notification.addNotification('Passwort zu kurz!', 'Bitte gibt mind. 6 Zeichen für dein Passwort an!', 'error');
+    } else if (this.state.passwordOne.length < 6) {
+      this.refs.notification.addNotification('Passwort zu kurz!', 'Bitte gib mind. 6 Zeichen für dein Passwort an!', 'error');
     } else if (!this.state.acceptAgbs) {
       this.refs.notification.addNotification('Nutzungsbedingungen nicht akzeptiert!', 'Die Nutzungsbedingungen müssen akzeptiert werden!', 'error');
-    } else {
+    } else if (!this.refs.captcha.validateCaptcha()) {} else {
       var that = this;
       var data = {
         username: this.state.username,
@@ -128,6 +121,7 @@ export default class DoRegistration extends Component {
             </tbody>
           </table>
           <div className="align-center">
+            <Captcha ref="captcha"/><br/>
             <IconButton text="ANMELDEN" glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)}/>
           </div>
         </div>
