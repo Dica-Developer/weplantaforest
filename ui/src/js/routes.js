@@ -33,7 +33,8 @@ export default class Routes extends Component {
         <Route path="/projectOffer" component={ProjectOfferPage}/>
         <Route path="/selfPlant" component={SelfPlantPage}/>
         <Route path="/plantBag" component={PlantBagPage}/>
-        <Route path="/payment/:cartId" component={PaymentPage}/>
+        <Route path="/payCart/:cartId" component={PaymentPage}/>
+        <Route path="/payGift/:cartId/:giftId" component={PaymentPage}/>
         <Route path="/registration" component={RegistrationPage}/>
         <Route path="/userActivation" component={ActivationPage}/>
         <Route path="/forgotPassword" component={ForgotPasswordPage}/>

@@ -18,7 +18,8 @@ export default class PaymentPage extends Component {
     this.state = {
       paymentOption: '',
       plantBag: JSON.parse(localStorage.getItem('plantBag')),
-      cartId: this.props.params.cartId
+      cartId: this.props.params.cartId,
+      giftId: this.props.params.giftId
     };
   }
 
@@ -31,7 +32,7 @@ export default class PaymentPage extends Component {
     if(this.state.paymentOption == ''){
       content = <Overview price={this.state.plantBag.price} setPaymentOption={this.setPaymentOption.bind(this)}/>
     }else if(this.state.paymentOption == 'sepa'){
-      content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId}/>;
+      content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId}/>;
     }
     return (
       <div>

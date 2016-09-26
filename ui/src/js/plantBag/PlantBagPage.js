@@ -11,6 +11,7 @@ import Boostrap from 'bootstrap';
 import PlantBagProject from './PlantBagProject';
 import PlantBagItem from './PlantBagItem'
 import IconButton from '../common/components/IconButton';
+import CheckBox from '../common/components/CheckBox';
 
 require("./plantBagPage.less");
 
@@ -19,30 +20,49 @@ export default class PlantBagPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      plantBag: JSON.parse(localStorage.getItem('plantBag'))
+      plantBag: JSON.parse(localStorage.getItem('plantBag')),
+      isGift: false
     };
   }
 
   switchTOPaymentPage() {
+    var that = this;
     var config = {
       headers: {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
-    axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
-      browserHistory.push('/payment/' + response.data);
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-      console.error('Payment failed');
-    });
+    if(this.state.isGift){
+      localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
+      axios.post('http://localhost:8081/gift/create', this.state.plantBag, config).then(function(response) {
+        browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
+      }).catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+        console.error('Payment failed');
+      });
+    }else{
+      localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
+      axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
+        browserHistory.push('/payCart/' + response.data);
+      }).catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+        console.error('Payment failed');
+      });
+    }
   }
 
   removePlantBagItem(project, plantItem){
@@ -84,6 +104,10 @@ export default class PlantBagPage extends Component {
     this.refs["navbar"].updatePlantBagFromLocaleStorage();
   }
 
+  updateValue(toUpdate, value){
+    this.setState({[toUpdate]: value});
+  }
+
   render() {
     var that = this;
     return (
@@ -113,6 +137,7 @@ export default class PlantBagPage extends Component {
                   GESAMT:&nbsp;{Accounting.formatNumber(this.state.plantBag.price / 100, 2, ".", ",")}&nbsp;€
                 </div>
                 <div className="align-right">
+                  <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text="Als Geschenkgutschein"/><br/>
                   <IconButton glyphIcon="glyphicon-euro" text="WEITER ZUR KASSE" onClick={this.switchTOPaymentPage.bind(this)}/>
                 </div>
               </div>

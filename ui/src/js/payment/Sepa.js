@@ -18,6 +18,7 @@ export default class Sepa extends Component {
     super(props);
     this.state = {
       cartId: this.props.cartId,
+      giftId: this.props.giftId,
       company: '',
       companyAddon: '',
       salutation: '',
