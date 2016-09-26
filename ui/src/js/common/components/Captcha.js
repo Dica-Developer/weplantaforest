@@ -40,8 +40,8 @@ export default class Captcha extends Component {
     var that = this;
     axios.get('http://localhost:8081/captcha/generate').then(function(response) {
       that.setState({
-        captchaToken: response.headers['captcha-token'],
-        captchaImg: response.data
+        captchaToken: response.data[0],
+        captchaImg: response.data[1]
       });
     }).catch(function(response) {
       if (response instanceof Error) {

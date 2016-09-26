@@ -25,7 +25,7 @@ class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
         response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "X-AUTH-TOKEN, Content-Type");
-        response.setHeader("Access-Control-Expose-Headers", "X-AUTH-TOKEN, CAPTCHA-TOKEN");
+        response.setHeader("Access-Control-Expose-Headers", "X-AUTH-TOKEN");
         response.setHeader("Access-Control-Max-Age", "3600");
 
         chain.doFilter(req, res);
