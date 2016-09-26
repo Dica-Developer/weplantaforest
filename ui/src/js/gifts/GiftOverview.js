@@ -68,12 +68,11 @@ export default class ProjectOfferPage extends Component {
           <div className="row gifts">
             <div className="col-md-12">
               <h2>Gutschein-Übersicht</h2>
-              <br/>
+
               <h3>Erstellte Gutscheine:</h3>
               {this.state.consignorGifts.map(function(gift, i) {
                 return (<ConsignorGiftItem gift={gift}  key={i}/>);
               })}
-              <br/>
               <h3>Eingelöste Gutscheine:</h3>
               {this.state.recipientGifts.map(function(gift, i) {
                 return (<RecipientGiftItem gift={gift}  key={i}/>);

@@ -61,7 +61,7 @@ public class GiftController {
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
     public List<Gift> findGiftsByConsignor(@RequestParam String userName) {
-        return _giftRepository.findGiftsByConsignor(userName);
+        return _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
     }
 
     @RequestMapping(value = Uris.GIFTS_BY_RECIPIENT, method = RequestMethod.GET)

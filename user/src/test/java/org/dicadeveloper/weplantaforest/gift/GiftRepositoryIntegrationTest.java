@@ -75,16 +75,14 @@ public class GiftRepositoryIntegrationTest {
 
     @Test
     public void testFindGiftsByConsignor() {
-        List<Gift> gifts = _giftRepository.findGiftsByConsignor("Consignore");
+        List<Gift> gifts = _giftRepository.findGiftsByConsignorExceptStatusNew("Consignore");
 
-        assertThat(gifts.size()).isEqualTo(3);
+        assertThat(gifts.size()).isEqualTo(2);
         assertThat(gifts.get(0).getRecipient()).isNull();
-        assertThat(gifts.get(1).getRecipient()).isNull();
-        assertThat(gifts.get(2).getRecipient().getName()).isEqualTo("Recipient");
+        assertThat(gifts.get(1).getRecipient().getName()).isEqualTo("Recipient");
 
-        assertThat(gifts.get(0).getCode().getCode()).isEqualTo(codeString1);
-        assertThat(gifts.get(1).getCode().getCode()).isEqualTo(codeString2);
-        assertThat(gifts.get(2).getCode().getCode()).isEqualTo(codeString3);
+        assertThat(gifts.get(0).getCode().getCode()).isEqualTo(codeString2);
+        assertThat(gifts.get(1).getCode().getCode()).isEqualTo(codeString3);
     }
 
     @Test

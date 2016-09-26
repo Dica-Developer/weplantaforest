@@ -16,7 +16,6 @@ import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
-import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
@@ -78,9 +77,6 @@ public class GiftControllerTest {
     private TreeRepository _treeRepository;
 
     @Autowired
-    private CodeGenerator _codeGenerator;
-
-    @Autowired
     private UserRepository _userRepository;
 
     @Autowired
@@ -136,16 +132,12 @@ public class GiftControllerTest {
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
                .andExpect(jsonPath("$.[0].recipient").isEmpty())
-               .andExpect(jsonPath("$.[0].code.code").value(codeString1))
-               .andExpect(jsonPath("$.[0].status").value("NEW"))
+               .andExpect(jsonPath("$.[0].code.code").value(codeString2))
+               .andExpect(jsonPath("$.[0].status").value("UNREDEEMED"))
                .andExpect(jsonPath("$.[1].consignor.name").value("Consignore"))
-               .andExpect(jsonPath("$.[1].recipient").isEmpty())
-               .andExpect(jsonPath("$.[1].code.code").value(codeString2))
-               .andExpect(jsonPath("$.[1].status").value("UNREDEEMED"))
-               .andExpect(jsonPath("$.[2].consignor.name").value("Consignore"))
-               .andExpect(jsonPath("$.[2].recipient.name").value("Recipient"))
-               .andExpect(jsonPath("$.[2].code.code").value(codeString3))
-               .andExpect(jsonPath("$.[2].status").value("REDEEMED"));
+               .andExpect(jsonPath("$.[1].recipient.name").value("Recipient"))
+               .andExpect(jsonPath("$.[1].code.code").value(codeString3))
+               .andExpect(jsonPath("$.[1].status").value("REDEEMED"));
     }
 
     @Test
@@ -157,62 +149,6 @@ public class GiftControllerTest {
                .andExpect(jsonPath("$.[0].recipient.name").value("Recipient"))
                .andExpect(jsonPath("$.[0].code.code").value(codeString3))
                .andExpect(jsonPath("$.[0].status").value("REDEEMED"));
-    }
-
-    @Test
-    @Rollback(false)
-    public void testCreateGift() throws Exception {
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findByName("Adam"));
-
-        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
-        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
-
-        mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                              .header("X-AUTH-TOKEN", userToken)
-                                              .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-               .andExpect(status().isOk());
-
-        List<Cart> createdCarts = _cartRepository.findCartsByUserId(4);
-        Page<Tree> createdTrees = _treeRepository.findTreesByUserId(4L, new PageRequest(0, 1));
-        List<Gift> createdGifts = _giftRepository.findGiftsByConsignor("Adam");
-
-        assertThat(createdCarts.get(0)
-                               .getBuyer()
-                               .getName()).isEqualTo("Adam");
-        assertThat(createdCarts.get(0)
-                               .getTotalPrice()
-                               .doubleValue()).isEqualTo(9.0);
-        assertThat(createdCarts.get(0)
-                               .isGift()).isEqualTo(true);
-
-        assertThat(createdTrees.getContent()
-                               .get(0)
-                               .getAmount()).isEqualTo(3);
-        assertThat(createdTrees.getContent()
-                               .get(0)
-                               .getOwner()
-                               .getName()).isEqualTo("Adam");
-        assertThat(createdTrees.getContent()
-                               .get(0)
-                               .getProjectArticle()
-                               .getArticleId()).isEqualTo(1L);
-
-        String codeFromCart = createdCarts.get(0)
-                                          .getCode()
-                                          .getCode();
-        String codeFromGift = createdCarts.get(0)
-                                          .getCode()
-                                          .getCode();
-
-        assertThat(codeFromCart).isEqualTo(codeFromGift);
-
-        assertThat(_codeGenerator.isValid(codeFromGift)).isTrue();
-
-        assertThat(createdGifts.get(0)
-                               .getStatus()).isEqualTo(Status.NEW);
-        assertThat(createdGifts.get(0)
-                               .getRecipient()).isNull();
     }
 
     @Test

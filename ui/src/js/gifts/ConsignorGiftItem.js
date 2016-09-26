@@ -20,6 +20,7 @@ export default class ConsignorGiftItem extends Component {
   render() {
     var recipient;
     var pdfButton;
+    var status;
     if (this.props.gift.recipient == null) {
       recipient = '';
     } else {
@@ -32,13 +33,19 @@ export default class ConsignorGiftItem extends Component {
       pdfButton = '';
     }
 
+    if(this.props.gift.status == 'REDEEMED'){
+      status = 'eingelöst';
+    }else{
+      status = 'nicht eingelöst';
+    }
+
     return (
       <div className="giftItem">
         <div>
           Code: {this.props.gift.code.code}
         </div>
         <div>
-          Status: {this.props.gift.status}
+          Status: {status}
         </div>
         <div>
           {recipient}
