@@ -62,7 +62,7 @@ export default class Sepa extends Component {
       }
     };
     axios.post('http://localhost:8081/pay', this.state, config).then(function(response) {
-      console.log('You paid successful');
+      that.props.setPaymentOption('paymentDone');
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
       if (response instanceof Error) {

@@ -29,10 +29,16 @@ export default class PaymentPage extends Component {
 
   render() {
     var content;
-    if(this.state.paymentOption == ''){
+    if (this.state.paymentOption == '') {
       content = <Overview price={this.state.plantBag.price} setPaymentOption={this.setPaymentOption.bind(this)}/>
-    }else if(this.state.paymentOption == 'sepa'){
-      content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId}/>;
+    } else if (this.state.paymentOption == 'sepa') {
+      content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)}/>;
+    } else if (this.state.paymentOption == 'paymentDone') {
+      content = <div className="col-md-12 align-center">
+        <h2>Zahlung erfolgreich abgeschlossen!
+        </h2>
+        Die Daten wurden an die Bank für Sozialwirtschaft übermittelt.
+      </div>;
     }
     return (
       <div>
