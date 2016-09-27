@@ -10,7 +10,7 @@ import UserDetails from './UserDetails';
 import EditUserDetails from './edit/EditUserDetails';
 import TeamDetails from './TeamDetails';
 import NoTeamAvailable from './NoTeamAvailable';
-import Tools from './Tools';
+import Tools from './tools/Tools';
 import UserRankingContainer from './ranking/UserRankingContainer';
 import RankingItem from './ranking/RankingItem';
 import NoTreesAvailable from './ranking/NoTreesAvailable';
@@ -152,6 +152,7 @@ export default class ProfilePage extends Component {
     var userPart;
     var teamPart;
     var treePart;
+    var toolsPart;
     var page = this.state.pageCount;
 
     if (!this.state.editUser) {
@@ -180,6 +181,14 @@ export default class ProfilePage extends Component {
     } else {
       treePart = <NoTreesAvailable/>;
     }
+
+    if(this.state.user.editAllowed){
+      toolsPart = <Tools/>;
+    }else{
+      toolsPart = '';
+    }
+
+
     return (
       <div className="profile">
         <NavBar ref="navbar"/>
@@ -196,9 +205,7 @@ export default class ProfilePage extends Component {
           <div className="row">
             {treePart}
           </div>
-          <div className="row tools">
-            <Tools/>
-          </div>
+          {toolsPart}
         </div>
         <Footer/>
       </div>

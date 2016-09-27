@@ -15,7 +15,7 @@ export default class Tools extends Component {
   render() {
 
     return (
-      <div>
+      <div className="row tools">
         <div className="col-md-12">
           <h2>Tools</h2>
         </div>
