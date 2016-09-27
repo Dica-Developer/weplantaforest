@@ -1,13 +1,19 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import NotificationSystem from 'react-notification-system';
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
+import Notification from '../common/components/Notification';
 import axios from 'axios';
 import NavBar from '../common/navbar/NavBar';
 import Footer from '../common/Footer';
 import Header from '../common/header/Header';
 import Boostrap from 'bootstrap';
 
-import IconButton from '../common/components/IconButton'
+import TreeItem from './TreeItem';
+import FindTrees from './FindTrees';
+import TreesFound from './TreesFound';
 
 require("./findTreePage.less");
 
@@ -16,47 +22,58 @@ export default class FindTreePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      certificateId: ''
+      treesFound: false,
+      certificateId: '',
+      trees: [],
+      certificate: {}
     };
   }
 
-  findCertificate(){
-    axios.get('http://localhost:8081/certificate/search/' + this.state.certificateId).then(function(response) {
-      console.log(response.data);
+  findCertificate(certificateId) {
+    var that = this;
+    this.setState({
+      certificateId: certificateId
+    });
+    axios.get('http://localhost:8081/certificate/search/' + certificateId).then(function(response) {
+      var result = response.data;
+      that.setState({
+        trees: result
+      });
+      axios.get('http://localhost:8081/certificate/summary/' + certificateId).then(function(response) {
+        var result = response.data;
+        that.setState({
+          certificate: result,
+          treesFound: true
+        });
+      });
     }).catch(function(response) {
-    if (response instanceof Error) {
-      console.error('Error', response.message);
-    } else {
-      console.error(response.data);
-      console.error(response.status);
-      console.error(response.headers);
-      console.error(response.config);
-    }
-    console.error('Payment failed');
-  });
+      that.refs.notification.addNotification('Zertifikat nicht vorhanden!', 'Es gibt kein Zertifikat mit dieser Nummer.', 'error');
+    });
   }
-
-  updateCertId(event){
-    this.setState({certificateId: event.target.value});
-  }
-
 
   render() {
-
+    var content;
+    if (this.state.treesFound) {
+      content = <TreesFound certificateId={this.state.certificateId} certificate={this.state.certificate}>
+                {this.state.trees.map(function(tree, i) {
+                  let imageUrl = 'http://localhost:8081/treeType/image/' + tree.treeType.imageFile + '/60/60';
+                  return (<TreeItem imageUrl={imageUrl} content={tree} key={i}/>);
+                })}
+              </TreesFound>;
+    } else {
+      content = <FindTrees findCertificate={this.findCertificate.bind(this)}/>;
+    }
     return (
       <div>
         <NavBar/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row findTree">
-            <div className="col-md-12">
-              <h2>Zertifikat finden</h2>
-                Zertifikat-Nummer: <input type="text" onBlur={this.updateCertId.bind(this)}/><br/>
-              <IconButton text="FINDEN" glyphIcon="glyphicon-search" onClick={this.findCertificate.bind(this)}/>
-            </div>
+            {content}
           </div>
         </div>
         <Footer/>
+        <Notification ref="notification"/>
       </div>
     );
   }

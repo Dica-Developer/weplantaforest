@@ -77,6 +77,8 @@ public class Uris {
     public final static String CERTIFICATE_SEARCH = "/certificate/search/";
 
     public final static String CERTIFICATE_CREATE = "/certificate/create";
+    
+    public final static String CERTIFICATE_SUMMARY = "/certificate/summary/";
 
     // carts
 

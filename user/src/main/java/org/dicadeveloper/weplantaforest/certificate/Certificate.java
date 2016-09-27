@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,9 +39,11 @@ public class Certificate {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "_creator__userId")
+    @JsonView(Views.CertificateSummary.class)
     private User creator;
 
     @Column(name = "_text", columnDefinition = "TEXT")
+    @JsonView(Views.CertificateSummary.class)
     private String text;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)

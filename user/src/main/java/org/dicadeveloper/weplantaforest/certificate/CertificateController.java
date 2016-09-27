@@ -51,7 +51,6 @@ public class CertificateController {
     @Transactional
     public ResponseEntity<List<Tree>> findTreesForCertificateNumber(@PathVariable("certificateNumber") String certificateNumber) {
         certificateNumber = certificateNumber.replace("#", "");
-
         Certificate certificate = _certificateRepository.findByNumber(certificateNumber);
 
         if (null != certificate) {
@@ -59,12 +58,25 @@ public class CertificateController {
             for (Cart cart : certificate.getCarts()) {
                 trees.addAll(cart.getTrees());
             }
-
             return new ResponseEntity<>(trees, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @RequestMapping(value = Uris.CERTIFICATE_SUMMARY + "{certificateNumber:.+}", method = RequestMethod.GET)
+    @JsonView(Views.CertificateSummary.class)
+    public ResponseEntity<Certificate> findCertificateText(@PathVariable("certificateNumber") String certificateNumber) {
+        certificateNumber = certificateNumber.replace("#", "");
+        Certificate certificate = _certificateRepository.findByNumber(certificateNumber);
+
+        if (null != certificate) {
+            return new ResponseEntity<>(certificate, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
 
     @RequestMapping(value = Uris.CERTIFICATE_CREATE, method = RequestMethod.GET, headers = "Accept=application/pdf")
     @Transactional

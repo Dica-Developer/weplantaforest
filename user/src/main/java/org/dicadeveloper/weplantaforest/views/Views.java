@@ -27,4 +27,8 @@ public interface Views {
     public static interface ShortTreeType{
         
     }
+    
+    public static interface CertificateSummary{
+        
+    }
 }
