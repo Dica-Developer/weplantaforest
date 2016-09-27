@@ -12,6 +12,7 @@ import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
@@ -55,6 +56,8 @@ public class GiftController {
     private @NonNull CodeGenerator _codeGenerator;
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
+    
+    private @NonNull MessageByLocaleService _messageByLocaleService;
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
 
@@ -75,7 +78,7 @@ public class GiftController {
     public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) {
         if (_plantBagValidator.isPlantPageDataValid(plantBag)) {
             Long[] responseIds = new Long[2];
-            
+
             User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
             Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor);
 
@@ -92,7 +95,7 @@ public class GiftController {
             cart.setCode(code);
             cart.setGift(true);
             _cartRepository.save(cart);
-            
+
             responseIds[0] = cart.getId();
             responseIds[1] = gift.getId();
             return new ResponseEntity<>(responseIds, HttpStatus.OK);
@@ -121,29 +124,36 @@ public class GiftController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = Uris.GIFT_REDEEM, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.GIFT_REDEEM, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> redeemGiftCode(@RequestParam String giftCode, @RequestParam long userId) {
-        if (_codeGenerator.isValid(giftCode)) {
-            Gift gift = _giftRepository.findGiftByCode(giftCode);
-            if (gift.getStatus() == Status.UNREDEEMED) {
-                User recipient = _userRepository.findOne(userId);
-                Cart cartToGift = _cartRepository.findCartByCode(giftCode);
+    public ResponseEntity<?> redeemGiftCode(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String giftCode) {
+        User recipient = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (recipient != null) {
+            String responseMessage;
+            if (_codeGenerator.isValid(giftCode)) {
+                Gift gift = _giftRepository.findGiftByCode(giftCode);
+                if (gift.getStatus() == Status.REDEEMED) {
+                    responseMessage = _messageByLocaleService.getMessage("gift.already.redeemed", recipient.getLang().getLocale());
+                    return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+                } else {
+                    Cart cartToGift = _cartRepository.findCartByCode(giftCode);
 
-                gift.setRecipient(recipient);
-                gift.setStatus(Status.REDEEMED);
+                    gift.setRecipient(recipient);
+                    gift.setStatus(Status.REDEEMED);
 
-                for (Tree cartTree : cartToGift.getTrees()) {
-                    cartTree.setOwner(recipient);
+                    for (Tree cartTree : cartToGift.getTrees()) {
+                        cartTree.setOwner(recipient);
+                    }
+                    _cartRepository.save(cartToGift);
+                    _giftRepository.save(gift);
+                    return new ResponseEntity<>(HttpStatus.OK);
                 }
-                _cartRepository.save(cartToGift);
-                _giftRepository.save(gift);
-                return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                responseMessage = _messageByLocaleService.getMessage("invalid.code", recipient.getLang().getLocale());
+                return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
             }
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
     }

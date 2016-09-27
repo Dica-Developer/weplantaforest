@@ -37,6 +37,7 @@ public class UserAuthentication implements Authentication {
 	    customUser.setName(user.getName());
 	    customUser.setMail(user.getMail());
 	    customUser.setRoles(user.getRoles());
+	    customUser.setLang(user.getLang());
 		return customUser;
 	}
 

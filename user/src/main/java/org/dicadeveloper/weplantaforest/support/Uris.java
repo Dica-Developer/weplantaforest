@@ -91,7 +91,7 @@ public class Uris {
 
     public final static String GIFT_PDF = "/gift/pdf";
 
-    public final static String GIFT_REDEEM = "/gift/redeem/";
+    public final static String GIFT_REDEEM = "/gift/redeem";
 
     // Abo
 

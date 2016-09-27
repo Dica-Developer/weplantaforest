@@ -80,7 +80,8 @@ export default class NavBar extends Component {
           <MenuItem hash="first-page">PFLANZUNGEN</MenuItem>
           <MenuItem hash="/explore">PROJEKTFLÄCHEN</MenuItem>
           <MenuItem hash="third-page">FINDEN</MenuItem>
-          <MenuItem hash="5">GUTSCHEIN</MenuItem>
+          <MenuItem hash="5">GUTSCHEIN ERSTELLEN</MenuItem>
+          <MenuItem hash="/gift/redeem">GUTSCHEIN EINLÖSEN</MenuItem>
           <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
           <MenuItem hash="/ranking">BESTENLISTE</MenuItem>
           <MenuItem hash="8">STATISTIKEN</MenuItem>
