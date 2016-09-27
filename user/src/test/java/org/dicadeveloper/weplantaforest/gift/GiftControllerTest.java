@@ -128,7 +128,8 @@ public class GiftControllerTest {
     @Test
     @Rollback(false)
     public void testFindGiftsByConsignor() throws Exception {
-        mockMvc.perform(get(Uris.GIFTS_BY_CONSIGNOR).param("userName", "Consignore").accept("application/json"))
+        mockMvc.perform(get(Uris.GIFTS_BY_CONSIGNOR).param("userName", "Consignore")
+                                                    .accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
                .andExpect(jsonPath("$.[0].recipient").isEmpty())
@@ -143,7 +144,8 @@ public class GiftControllerTest {
     @Test
     @Rollback(false)
     public void testFindGiftsByRecipient() throws Exception {
-        mockMvc.perform(get((Uris.GIFTS_BY_RECIPIENT)).param("userName", "Recipient").accept("application/json"))
+        mockMvc.perform(get((Uris.GIFTS_BY_RECIPIENT)).param("userName", "Recipient")
+                                                      .accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
                .andExpect(jsonPath("$.[0].recipient.name").value("Recipient"))
@@ -180,6 +182,8 @@ public class GiftControllerTest {
     @Test
     @Rollback(false)
     public void testRedeemGiftCode() throws Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(3L));
+
         Code code = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
 
         User buyer = _userRepository.findByName("Adam");
@@ -201,10 +205,10 @@ public class GiftControllerTest {
 
         _cartRepository.save(cart);
 
-        mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                             .param("giftCode", code.getCode())
-                                             .param("userId", "3")
-                                             .accept("application/json"))
+        mockMvc.perform(post(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .header("X-AUTH-TOKEN", userToken)
+                                              .param("giftCode", code.getCode())
+                                              .accept("application/json"))
                .andExpect(status().isOk());
 
         Page<Tree> savedTreeAfterRedeem = _treeRepository.findTreesByUserId(3L, new PageRequest(0, 5));
@@ -243,16 +247,18 @@ public class GiftControllerTest {
 
         _cartRepository.save(cart);
 
-        mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                             .param("giftCode", "NON VALID CODE")
-                                             .param("userId", "2")
-                                             .accept("application/json"))
+        mockMvc.perform(post(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .param("giftCode", "NON VALID CODE")
+                                              .param("userId", "2")
+                                              .accept("application/json"))
                .andExpect(status().isBadRequest());
     }
 
     @Test
     @Rollback(false)
     public void testRedeemGiftCodeBadRequestCauseOfAlreadyRedeemed() throws Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(2L));
+
         Code code = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED);
 
         User buyer = _userRepository.findByName("Adam");
@@ -274,15 +280,15 @@ public class GiftControllerTest {
 
         _cartRepository.save(cart);
 
-        mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                             .param("giftCode", code.getCode())
-                                             .param("userId", "2")
-                                             .accept("application/json"))
+        mockMvc.perform(post(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .header("X-AUTH-TOKEN", userToken)
+                                              .param("giftCode", code.getCode())
+                                              .accept("application/json"))
                .andExpect(status().isOk());
-        mockMvc.perform(get(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                             .param("giftCode", code.getCode())
-                                             .param("userId", "2")
-                                             .accept("application/json"))
+        mockMvc.perform(post(Uris.GIFT_REDEEM).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .header("X-AUTH-TOKEN", userToken)
+                                              .param("giftCode", code.getCode())
+                                              .accept("application/json"))
                .andExpect(status().isBadRequest());
     }
 

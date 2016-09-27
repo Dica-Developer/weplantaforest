@@ -108,6 +108,7 @@ public class DbInjecter {
         User userDto = new User();
         userDto.setName(userName);
         userDto.setPassword(_passwordEncrypter.encryptPassword(userName));
+        userDto.setLang(Language.DEUTSCH);
         _userRepository.save(userDto);
     }
 
