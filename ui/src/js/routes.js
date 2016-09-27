@@ -20,6 +20,7 @@ import ForgotPasswordPage from './password/forgotPassword/ForgotPasswordPage';
 import ResetPasswordPage from './password/resetPassword/ResetPasswordPage';
 import GiftOverview from './gifts/overview/GiftOverview';
 import RedeemGiftPage from './gifts/redeem/RedeemGiftPage'
+import FindTreePage from './findTree/FindTreePage';
 
 export default class Routes extends Component {
   render() {
@@ -43,6 +44,7 @@ export default class Routes extends Component {
         <Route path="/password_reset" component={ResetPasswordPage}/>
         <Route path="/gifts/:userName" component={GiftOverview}/>
         <Route path="/gift/redeem" component={RedeemGiftPage}/>
+        <Route path="/certificate/find" component={FindTreePage}/>
         <Route path="*" component={NotFoundPage}/>
       </Router>
     );
