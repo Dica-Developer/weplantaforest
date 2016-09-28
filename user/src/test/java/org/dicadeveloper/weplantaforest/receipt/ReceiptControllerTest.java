@@ -14,9 +14,11 @@ import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,9 +48,15 @@ public class ReceiptControllerTest {
 
     @Autowired
     private DbInjecter _dbInjecter;
-    
+
     @Autowired
     private CartRepository _cartRepository;
+
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -65,8 +73,10 @@ public class ReceiptControllerTest {
         _dbInjecter.injectUser("Adam");
         _dbInjecter.injectReceipt("Adam", createAndSentDate, createAndSentDate, "12345");
 
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+
         mockMvc.perform(get((Uris.RECEIPTS)).accept("application/json")
-                                            .param("ownerId", "1"))
+                                            .header("X-AUTH-TOKEN", userToken))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].receiptId").value(1))
                .andExpect(jsonPath("$.[0].invoiceNumber").value("12345"))
@@ -86,14 +96,14 @@ public class ReceiptControllerTest {
         Tree tree = _dbInjecter.injectTreeToProject("wood", "Adam", 1, createAndSentDate, "project");
 
         Cart cart = _dbInjecter.injectCartWithTrees("Adam", tree);
-        
+
         cart.setCallBackFirma("0815 Company");
         cart.setCallBackVorname("Hans");
         cart.setCallBackNachname("Wurst");
         cart.setCallBackPlz("123456");
         cart.setCallBackOrt("Musterstadt");
         cart.setTimeStamp(System.currentTimeMillis());
-        
+
         _cartRepository.save(cart);
 
         List<Cart> carts = new ArrayList<>();
