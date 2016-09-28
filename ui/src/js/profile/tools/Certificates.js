@@ -137,9 +137,11 @@ export default class Certificates extends Component {
 
   render() {
     var that = this;
-    return (
-      <div className="col-md-12">
-        <h2>Tools&nbsp;/&nbsp;Zertifikate</h2>
+    var content;
+    if(this.state.plantBags.length == 0){
+      content = <div className="content">Du hast bisher leider keine Bäume gepflanzt.</div>
+    }else{
+      content =
         <div className="content">
             Bitte wähle die Pflanzkörbe aus, die im Zertifikat erscheinen sollen:<br/>
               {this.state.plantBags.map(function(plantBag, i) {
@@ -152,7 +154,13 @@ export default class Certificates extends Component {
           <div className="align-center">
             <IconButton text="ZERTIFIKAT ERSTELLEN" glyphIcon="glyphicon-file" onClick={this.generateCertificate.bind(this)}/>
           </div>
-        </div>
+        </div>;
+    }
+
+    return (
+      <div className="col-md-12">
+        <h2>Tools&nbsp;/&nbsp;Zertifikate</h2>
+        {content}
         <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view} />
         <Notification ref="notification"/>
       </div>
