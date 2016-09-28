@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +46,8 @@ public class CertificateController {
 
     private @NonNull CartRepository _cartRepository;
 
+    private @NonNull TokenAuthenticationService _tokenAuthenticationService;
+
     private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
 
     @RequestMapping(value = Uris.CERTIFICATE_SEARCH + "{certificateNumber:.+}", method = RequestMethod.GET)
@@ -63,7 +67,7 @@ public class CertificateController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = Uris.CERTIFICATE_SUMMARY + "{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.CertificateSummary.class)
     public ResponseEntity<Certificate> findCertificateText(@PathVariable("certificateNumber") String certificateNumber) {
@@ -76,45 +80,57 @@ public class CertificateController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
 
-    @RequestMapping(value = Uris.CERTIFICATE_CREATE, method = RequestMethod.GET, headers = "Accept=application/pdf")
+    @RequestMapping(value = Uris.CERTIFICATE_CREATE, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> createCertificate(HttpServletResponse response, @RequestBody CertificateRequestData requestData) {
-        if (requestData.getCartIds() != null && requestData.getCartIds().length > 0) {
-            User user = _userRepository.findOne(requestData.getUserId());
+    public ResponseEntity<?> createCertificate(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, HttpServletResponse response, @RequestBody CertificateRequestData requestData) {
+        User user = _tokenAuthenticationService.getUserFromToken(userToken);
 
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
             Certificate certificate = new Certificate();
-
             certificate.setCreator(user);
             certificate.setText(requestData.getText());
 
             List<Cart> carts = _cartRepository.findCartsByIdIn(requestData.getCartIds());
 
-            // get tree count
-            int treeCount = 0;
             for (Cart cart : carts) {
                 certificate.addCart(cart);
-                treeCount = +cart.getTreeCount();
             }
 
             // generate certificate number
-            int certificateCountByUser = _certificateRepository.countCertificatesByUser(requestData.getUserId());
+            int certificateCountByUser = _certificateRepository.countCertificatesByUser(user.getId());
             String certificateNumber = certificate.generateAndSetNumber(certificateCountByUser);
 
             _certificateRepository.save(certificate);
+            return new ResponseEntity<>(certificateNumber, HttpStatus.OK);
+        }
+    }
 
+    @RequestMapping(value = Uris.CERTIFICATE_PDF + "{certificateNumber:.+}", method = RequestMethod.GET, headers = "Accept=application/pdf")
+    @Transactional
+    public ResponseEntity<?> getCertificatePdf(HttpServletResponse response, @PathVariable String certificateNumber) {
+        certificateNumber = certificateNumber.replace("#", "");
+        Certificate certificate = _certificateRepository.findByNumber(certificateNumber);
+
+        if (certificate == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            int treeCount = 0;
+            for (Cart cart : certificate.getCarts()) {
+                treeCount += cart.getTreeCount();
+            }
             PdfCertificateView pdf = new PdfCertificateView();
             try {
-                pdf.writePdfDataToOutputStream(response.getOutputStream(), treeCount, requestData.getText(), user.getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH);
+                pdf.writePdfDataToOutputStream(response.getOutputStream(), treeCount, certificate.getText(), certificate.getCreator().getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH);
             } catch (Exception e) {
                 LOG.error("Error occured while creating PDF!", e);
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
     }
 
 }

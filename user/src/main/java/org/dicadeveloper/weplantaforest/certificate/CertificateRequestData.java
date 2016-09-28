@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CertificateRequestData {
 
-    long userId;
     String text;
     Long[] cartIds;
     

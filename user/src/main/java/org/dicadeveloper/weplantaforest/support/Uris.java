@@ -78,11 +78,13 @@ public class Uris {
 
     public final static String CERTIFICATE_CREATE = "/certificate/create";
     
+    public final static String CERTIFICATE_PDF = "/certificate/pdf/";
+    
     public final static String CERTIFICATE_SUMMARY = "/certificate/summary/";
 
     // carts
 
-    public final static String CART_SHORT_VIEW = "/carts/search/short/";
+    public final static String CART_SHORT_VIEW = "/carts/search/short";
 
     // gifts
     public final static String GIFTS_BY_CONSIGNOR = "/gift/search/consignor";

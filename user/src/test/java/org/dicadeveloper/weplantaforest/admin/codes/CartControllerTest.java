@@ -12,8 +12,10 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +46,12 @@ public class CartControllerTest {
     private DbInjecter dbInjecter;
 
     @Autowired
+    private UserRepository _userRepository;
+
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Before
@@ -62,12 +70,15 @@ public class CartControllerTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
         dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "Project A");
 
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+
         List<Long> treeIds = new ArrayList<>();
         treeIds.add(1L);
 
         dbInjecter.injectCart("Adam", treeIds, timeOfPlanting);
 
-        this.mockMvc.perform(get(Uris.CART_SHORT_VIEW + "{userId}", 1).accept("application/json"))
+        this.mockMvc.perform(get(Uris.CART_SHORT_VIEW).accept("application/json")
+                                                      .header("X-AUTH-TOKEN", userToken))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
                     .andExpect(jsonPath("$.[0].timeStamp").value(timeOfPlanting))
@@ -93,6 +104,8 @@ public class CartControllerTest {
         dbInjecter.injectTreeToProject("wood", "Adam", 3, timeOfPlanting, "Project A");
         dbInjecter.injectTreeToProject("doow", "Adam", 4, timeOfPlanting, "Project A");
 
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+
         List<Long> treeIds = new ArrayList<>();
         treeIds.add(1L);
         treeIds.add(2L);
@@ -105,7 +118,8 @@ public class CartControllerTest {
 
         dbInjecter.injectCart("Adam", treeIds2, timeOfPlanting);
 
-        this.mockMvc.perform(get(Uris.CART_SHORT_VIEW + "{userId}", 1).accept("application/json"))
+        this.mockMvc.perform(get(Uris.CART_SHORT_VIEW).accept("application/json")
+                                                      .header("X-AUTH-TOKEN", userToken))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
                     .andExpect(jsonPath("$.[0].timeStamp").value(timeOfPlanting))

@@ -5,6 +5,7 @@ import {Link} from 'react-router';
 import Boostrap from 'bootstrap';
 
 import Overview from './Overview';
+import Certificates from './Certificates';
 
 require("./tools.less");
 
@@ -22,9 +23,17 @@ export default class Tools extends Component {
 
   render() {
     var content;
-    if(this.state.view == 'overview'){
-      content = <Overview switchTo={this.switchTo.bind(this)}/>;
+    switch(this.state.view){
+      case 'overview':
+        content = <Overview switchTo={this.switchTo.bind(this)}/>;
+        break;
+      case 'certificates':
+        content = <Certificates view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
+        break;
+      default:
+        break;
     }
+
     return (
       <div className="row tools">
         {content}

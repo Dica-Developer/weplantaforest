@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.certificate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -15,9 +16,11 @@ import org.dicadeveloper.weplantaforest.WeplantaforestApplication;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,11 +86,9 @@ public class CertificateControllerTest {
 
             Tree tree = _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "Project A");
 
-
             Tree tree1 = _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "Project A");
             Tree tree2 = _dbInjecter.injectTreeToProject("doow", "Adam", 2, timeOfPlanting, "Project A");
             Tree tree3 = _dbInjecter.injectTreeToProject("wodo", "Adam", 3, timeOfPlanting, "Project A");
-
 
             Cart cart1 = _dbInjecter.injectCartWithTrees("Adam", tree);
             Cart cart2 = _dbInjecter.injectCartWithTrees("Adam", tree1, tree2, tree3);
@@ -196,55 +197,13 @@ public class CertificateControllerTest {
 
     @Test
     @Rollback(false)
-    public void testCreateCertificate() throws Exception {
-        Long[] cartIds = { 1L };
+    public void testCreateCertificatePdf() throws Exception {
+        String certNumber = _certificateRepository.findOne(1L)
+                                                  .getNumber();
 
-        CertificateRequestData certificateRequest = new CertificateRequestData();
-        certificateRequest.userId = 1L;
-        certificateRequest.text = "blabla";
-        certificateRequest.cartIds = cartIds;
-
-        mockMvc.perform(get(Uris.CERTIFICATE_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                    .content(TestUtil.convertObjectToJsonBytes(certificateRequest))
-                                                    .accept("application/pdf"))
+        mockMvc.perform(get(Uris.CERTIFICATE_PDF + certNumber).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                              .accept("application/pdf"))
                .andExpect(status().isOk());
 
-        assertThat(_certificateRepository.count()).isEqualTo(4L);
-
-        Certificate savedCertificate = _certificateRepository.findOne(4L);
-        assertThat(savedCertificate.getCreator()
-                                   .getName()).isEqualTo("Adam");
-        assertThat(savedCertificate.getText()).isEqualTo("blabla");
-
-        String certNumber = savedCertificate.getNumber();
-
-        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumber).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].id").value(1))
-               .andExpect(jsonPath("$.[0].amount").value(1))
-               .andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[0].treeType.name").value("wood"));
-
     }
-
-    @Test
-    @Rollback(false)
-    public void testCreateCertificatePdfBadRequestCauseOfMissingCartIds() throws Exception {
-        Long userId = 1L;
-        String text = "blabla";
-        Long[] cartIds = {};
-
-        CertificateRequestData certificateRequest = new CertificateRequestData();
-        certificateRequest.userId = userId;
-        certificateRequest.text = text;
-        certificateRequest.cartIds = cartIds;
-
-        mockMvc.perform(get(Uris.CERTIFICATE_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                    .content(TestUtil.convertObjectToJsonBytes(certificateRequest))
-                                                    .accept("application/pdf"))
-               .andExpect(status().isBadRequest());
-    }
-
 }
