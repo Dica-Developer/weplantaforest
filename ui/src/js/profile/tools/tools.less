@@ -48,16 +48,31 @@
       display: inline-block;
       padding: 5px;
       margin: 5px;
-      div{
+      div {
         display: table-cell;
       }
-      div:nth-of-type(1){
+      div:nth-of-type(1) {
         vertical-align: middle;
         padding-right: 5px;
       }
       p {
         margin: 0;
       }
+    }
+
+    .receipt {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px;
+      a,
+      a:active,
+      a:visited {
+        color: #000;
+        text-decoration: none;
+      }
+    }
+    .receipt:hover{
+      background-color: #fff;
     }
   }
 }

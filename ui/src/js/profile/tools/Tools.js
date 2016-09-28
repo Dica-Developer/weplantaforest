@@ -6,6 +6,7 @@ import Boostrap from 'bootstrap';
 
 import Overview from './Overview';
 import Certificates from './Certificates';
+import Receipts from './Receipts';
 
 require("./tools.less");
 
@@ -17,18 +18,21 @@ export default class Tools extends Component {
     };
   }
 
-  switchTo(value){
+  switchTo(value) {
     this.setState({view: value})
   }
 
   render() {
     var content;
-    switch(this.state.view){
+    switch (this.state.view) {
       case 'overview':
         content = <Overview switchTo={this.switchTo.bind(this)}/>;
         break;
       case 'certificates':
         content = <Certificates view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
+        break;
+      case 'receipts':
+        content = <Receipts view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
         break;
       default:
         break;

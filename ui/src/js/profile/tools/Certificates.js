@@ -108,7 +108,6 @@ export default class Certificates extends Component {
 
       axios.post('http://localhost:8081/certificate/create',requestItem, config).then(function(response) {
         var result = response.data;
-        console.log(result);
         window.open('http://localhost:8081/certificate/pdf/' + result);
       }).catch(function(response) {
         if (response instanceof Error) {
