@@ -64,7 +64,7 @@ public class User implements Identifiable<Long>, UserDetails {
 
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "USER__ROLES", joinColumns = @JoinColumn(name = "USER__USERID") )
+    @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID") )
     @Column(name = "ELEMENT")
     private Set<Role> roles = new HashSet<Role>();
 
