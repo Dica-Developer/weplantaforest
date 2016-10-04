@@ -27,7 +27,7 @@ public class Paragraph implements Identifiable<Long> {
     @Column(name = "_title")
     private String title;
 
-    @Column(name = "_text")
+    @Column(name = "_text", columnDefinition = "TEXT")
     private String text;
     
     @Column(name = "_imageFileName")
