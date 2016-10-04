@@ -25,6 +25,11 @@ public class ImageHelper {
     private final static int maxSize = 1500;
 
     public void writeImageToOutputStream(OutputStream toWrite, String filePath, int width, int height) throws FileNotFoundException, IOException {
+       //all imageNames before the relaunch are saved without file-ending and are jpegs
+        if(!filePath.contains(".")){
+            filePath = filePath + ".jpg";
+        }
+        
         int[] sizes = { width, height };
         if (sizes[0] > maxSize || sizes[1] > maxSize) {
             sizes = scaleSize(sizes);
