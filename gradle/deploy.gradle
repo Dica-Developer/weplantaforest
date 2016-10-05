@@ -38,22 +38,38 @@ task npmInstall(type: Exec) {
 
 task buildUi(type: Exec) {
   group 'Deployment'
-
+  
   dependsOn npmInstall
-
+  
   inputs.dir project(':').file('ui/node_modules')
   inputs.dir project(':').file('ui/src')
+
   outputs.dir project(':').file('ui/dist/js')
   outputs.dir project(':').file('ui/dist/index.html')
 
   workingDir project(':').file('ui')
+  
   commandLine npmCommand, 'run', 'build'
+  
+  doLast {
+    replaceUrls('http://localhost:8081', 'http://iplantatree.org:8081') 
+  }
+}
+
+def replaceUrls(toReplace, replaceWith){
+  logger.info 'replace urls in every file in ui/dist/js from ' + toReplace + ' to ' + replaceWith
+  project(':').file('ui/dist/js').eachFileRecurse {File file ->
+    if(!file.isDirectory()){	 
+      def updatedContent = file.getText('UTF-8').replaceAll(toReplace){replaceWith}
+      file.write(updatedContent, 'UTF-8')
+    }
+  }
 }
 
 task deployUi {
   description 'Deploys the project to a remote server'
   group 'Deployment'
-
+  
   dependsOn buildUi
 
   doLast {
@@ -73,7 +89,7 @@ task deployUi {
 
         logger.info "Creating project dir after backup..."
         execute "mkdir -p ${projectDir}"
-
+		
         put from: project(':').file('ui/dist'), into: "${projectDir}"
       }
     }
@@ -141,10 +157,11 @@ configure([project(':article-manager'), project(':user')]) {
         logger.info "Removing old backup..."
         execute "rm -rf ${projectBackup}"
 
-        logger.info "Backing up existing deployment..."
+        logger.lifecycle "Backing up existing deployment..."
         execute "cp -r ${projectDir} ${projectBackup}"
 
-        rsync("$buildDir/install/${project.name}/", "${ipatUser}@${ipatHost}:${projectDir}/")
+		logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
+		put from: "$buildDir/install/${project.name}/", into: "${installationDir}"
       }
     }
   }
