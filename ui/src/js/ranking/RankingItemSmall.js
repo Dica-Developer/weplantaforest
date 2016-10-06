@@ -5,6 +5,8 @@ import {Link} from 'react-router';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
+import {htmlDecode} from '../common/language/HtmlHelper';
+
 export default class RankingItem extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ export default class RankingItem extends Component {
               </td>
               <td>
                 <Link to={`/user/` + this.props.content.name}>
-                  <span className="name">{this.props.content.name}</span>
+                  <span className="name">{htmlDecode(this.props.content.name)}</span>
                 </Link>
               </td>
               <td>

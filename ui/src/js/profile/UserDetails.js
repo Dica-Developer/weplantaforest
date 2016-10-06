@@ -7,6 +7,7 @@ import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
 import IconButton from '../common/components/IconButton';
+import {htmlDecode} from '../common/language/HtmlHelper';
 
 export default class UserDetails extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export default class UserDetails extends Component {
         <div className="imageDiv">
           <img src={imageUrl} alt="profile"/>
         </div>
-        <p className="userName">{this.props.user.userName}</p>
+        <p className="userName">{htmlDecode(this.props.user.userName)}</p>
         <div className="stats">
           <table>
             <tbody>

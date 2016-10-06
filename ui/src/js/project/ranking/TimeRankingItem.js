@@ -6,6 +6,9 @@ import Accounting from 'accounting';
 import moment from 'moment';
 import Boostrap from 'bootstrap';
 
+import {htmlDecode} from '../../common/language/HtmlHelper';
+import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
+
 require("./rankingItem.less");
 
 export default class TimeRankingItem extends Component {
@@ -17,11 +20,11 @@ export default class TimeRankingItem extends Component {
     let imageUrl = 'http://localhost:8081/' + this.props.imageFolder + '/image/' + this.props.content.treeTypeImageName + '/60/60';
     return (
       <div className="rankingItem">
-        <img className="ranking-img" src={imageUrl} title={this.props.content.treeTypeName} alt={this.props.content.treeTypeName}/>
+        <img className="ranking-img" src={imageUrl} title={this.props.content.treeTypeName} alt={getTextForSelectedLanguage(this.props.content.treeTypeName)}/>
         <div className="rankingSummary">
           <p >
             <Link to={`/user/` + this.props.content.name}>
-              <span className="name">{this.props.content.name}</span>
+              <span className="name">{htmlDecode(this.props.content.name)}</span>
             </Link><br/>
             <span className="stats">B&auml;ume gepflant:&nbsp;{this.props.content.amount}</span><br/>
             <span className="stats">Datum:</span>

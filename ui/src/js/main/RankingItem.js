@@ -11,6 +11,8 @@ import {
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
+import {htmlDecode} from '../common/language/HtmlHelper';
+
 export default class RankingItem extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ export default class RankingItem extends Component {
         <div className="rankingSummary">
           <p >
             <Link to={`/` + this.props.imageFolder +`/` + this.props.content.name}>
-              <span className="name">{this.props.content.name}</span>
+              <span className="name" >{htmlDecode(this.props.content.name)}</span>
             </Link>
             <br/>
             <span className="stats">B&auml;ume gepflant:&nbsp;{this.props.content.amount}</span><br/>
