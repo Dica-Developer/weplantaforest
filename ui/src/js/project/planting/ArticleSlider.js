@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 
+import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
+
 require("./articleSlider.less");
 
 export default class ArticleSlider extends Component {
@@ -81,7 +83,7 @@ export default class ArticleSlider extends Component {
               <td>
                 <div>
                   <span className="bold">
-                    {this.props.article.treeType.name}</span><br/>
+                    {getTextForSelectedLanguage(this.props.article.treeType.name)}</span><br/>
                   Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong /100, 2, ".", ",")}&nbsp;€</span><br/>
                 </div>
               </td>

@@ -3,6 +3,8 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+
 export default class ProjectCarousel extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +32,7 @@ export default class ProjectCarousel extends Component {
                 <div className="imageDescription">
                   <span className="date">
                     <i>{moment(slide.date).format("DD.MM.YYYY")}</i>&nbsp;/&nbsp;</span>
-                  <span className="text">{slide.description}</span>
+                  <span className="text">{getTextForSelectedLanguage(slide.description)}</span>
                 </div>
               </div>
             );

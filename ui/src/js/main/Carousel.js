@@ -4,6 +4,8 @@ import React, {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+
 export default class Carousel extends Component {
   constructor() {
     super();
@@ -48,7 +50,7 @@ export default class Carousel extends Component {
                   return (<div className={activeItem} key={index}>
                     <img src={imageUrl} width="1140" height="400" alt={slide.projectName} />
                     <div className="carousel-caption">
-                      {slide.description}
+                      {getTextForSelectedLanguage(slide.description)}
                     </div>
                   </div>);
                 })}

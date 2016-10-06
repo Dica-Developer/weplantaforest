@@ -6,6 +6,8 @@ import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
 
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+
 export default class ProjectTeaser extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,7 @@ export default class ProjectTeaser extends Component {
           <i>{this.props.content.projectName}</i>
         </h3>
         <div>
-          <p>{this.props.content.description}
+          <p>{getTextForSelectedLanguage(this.props.content.description)}
             <Link className="more" to={`/projects/` + this.props.content.projectName}>
               <i>
                 (mehr)</i>

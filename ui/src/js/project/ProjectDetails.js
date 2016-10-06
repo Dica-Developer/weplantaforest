@@ -6,6 +6,7 @@ import PieChart from 'react-simple-pie-chart';
 import {Link} from 'react-router';
 
 import ImageButton from '../common/components/ImageButton';
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
 export default class ProjectDetails extends Component {
   constructor(props) {
@@ -63,7 +64,7 @@ export default class ProjectDetails extends Component {
           </tbody>
         </table>
         <div className="description">
-          <p>{this.props.project.projectReportData.description}</p>
+          <p>{getTextForSelectedLanguage(this.props.project.projectReportData.description)}</p>
         </div>
         <div className="align-center">
           {plantButton}
