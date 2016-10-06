@@ -27,6 +27,7 @@ public class TreeType implements Identifiable<Long> {
     @Id
     @GeneratedValue
     @Column(name = "treeTypeId")
+    @JsonView({Views.ShortTreeType.class})
     private Long id;
 
     @Column(name = "_name", unique = true)

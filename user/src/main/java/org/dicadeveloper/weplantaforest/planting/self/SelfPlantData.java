@@ -16,7 +16,7 @@ public class SelfPlantData {
     @Max(10)
     int amount;
     
-    String treeType;
+    Long treeTypeId;
     String description;
     
     String imageName;

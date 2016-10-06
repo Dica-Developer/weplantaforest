@@ -11,6 +11,8 @@ import FileChooser from '../common/components/FileChooser';
 import IconButton from '../common/components/IconButton';
 import Captcha from '../common/components/Captcha';
 
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+
 export default class DoPlanting extends Component {
 
   constructor() {
@@ -21,7 +23,7 @@ export default class DoPlanting extends Component {
         description: '',
         amount: 1,
         imageName: '',
-        treeType: 'Default'
+        treeTypeId: 1
       },
       imageFile: null,
       treeTypes: []
@@ -71,7 +73,7 @@ export default class DoPlanting extends Component {
   }
 
   updateTreeType(event) {
-    this.state.selfPlantData.treeType = event.target.value;
+    this.state.selfPlantData.treeTypeId = event.target.value;
     this.forceUpdate();
   }
 
@@ -151,11 +153,11 @@ export default class DoPlanting extends Component {
                     {this.state.treeTypes.map(function(treeType, i) {
                       if (treeType.name == 'Default') {
                         return (
-                          <option value={treeType.name} key={i}>keiner der genannten</option>
+                          <option value={treeType.id} key={i}>keiner der genannten</option>
                         );
                       } else {
                         return (
-                          <option value={treeType.name} key={i}>{treeType.name}</option>
+                          <option value={treeType.id} key={i}>{getTextForSelectedLanguage(treeType.name)}</option>
                         );
                       }
                     })}

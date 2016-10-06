@@ -48,7 +48,7 @@ public class SelfPlantDataToTreeConverterTest {
 //        selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(plantedOn);
         selfPlantData.setAmount(10);
-        selfPlantData.setTreeType("wood");
+        selfPlantData.setTreeTypeId(1L);
         selfPlantData.setDescription("I planted a tree by myself in my garden.");
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);

@@ -91,7 +91,7 @@ public class SelfPlantControllerTest {
         // selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(10);
-        selfPlantData.setTreeType("wood");
+        selfPlantData.setTreeTypeId(1L);
         selfPlantData.setDescription("I planted a tree by myself in my garden.");
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
@@ -127,7 +127,7 @@ public class SelfPlantControllerTest {
         // selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(11);
-        selfPlantData.setTreeType("wood");
+        selfPlantData.setTreeTypeId(1L);
         selfPlantData.setDescription("I planted a tree by myself in my garden.");
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
@@ -147,7 +147,7 @@ public class SelfPlantControllerTest {
         // selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(timeOfPlanting);
         selfPlantData.setAmount(0);
-        selfPlantData.setTreeType("wood");
+        selfPlantData.setTreeTypeId(1L);
         selfPlantData.setDescription("I planted a tree by myself in my garden.");
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
