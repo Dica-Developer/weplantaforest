@@ -15,30 +15,22 @@ export default class RankingItem extends Component {
   render() {
     return (
       <div className="smallRankingItem">
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <div className="smallRankingNumber">{this.props.rankNumber}</div>
-              </td>
-              <td>
-                <Link to={`/user/` + this.props.content.name}>
-                  <span className="name">{htmlDecode(this.props.content.name)}</span>
-                </Link>
-              </td>
-              <td>
-                <p style={{
-                  width: this.props.percentTree + '%'
-                }}>
-                  <span className="stats">&nbsp;{Accounting.formatNumber(this.props.content.amount, 0, ".", ",")}</span>
-                  <span className="text">
-                    B&auml;ume gepflant
-                  </span><br/>
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="smallRankingNumber">{this.props.rankNumber}</div>
+        <div className="name">
+          <Link to={`/user/` + this.props.content.name}>
+            <span className="name">{htmlDecode(this.props.content.name)}</span>
+          </Link>
+        </div>
+        <div className="trees">
+          <p style={{
+            width: this.props.percentTree + '%'
+          }}>
+            <span className="stats">&nbsp;{Accounting.formatNumber(this.props.content.amount, 0, ".", ",")}</span>
+            <span className="text">
+              &nbsp;B&auml;ume gepflant
+            </span><br/>
+          </p>
+        </div>
       </div>
     );
   }

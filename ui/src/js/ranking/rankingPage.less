@@ -78,9 +78,10 @@
 
   .rankingItemLarge {
     padding-top: 15px;
-    margin-right: 25px;
+    padding-bottom: 15px;
     .rankingSummary {
-      margin-left: 170px;
+      display: inline-block;
+      width: 80%;
       border-style: none none solid none;
       border-width: 1px;
       border-color: #fff;
@@ -106,19 +107,26 @@
     }
 
     .rankingNumber {
-      float: left;
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 20px;
       min-width: 20px;
       font-size: 16px;
       font-weight: bold;
       color: #000;
       text-align: right;
-      padding-top: 25px;
-      margin-right: 25px;
+      margin-right: 15px;
       margin-left: 25px;
     }
 
+    .ranking-img-div {
+      display: inline-block;
+      width: 100px;
+      text-align: center;
+    }
+
     .ranking-img {
-      float: left;
+      vertical-align: bottom;
       border-radius: 50%;
       border-color: #b2b2b2;
       border-style: solid;
@@ -141,56 +149,38 @@
     padding-top: 5px;
     margin-right: 25px;
 
-    table {
-      width: 100%;
-      td:nth-of-type(1) {
-        width: 70px;
-      }
-      td:nth-of-type(2) {
-        width: 100px;
-        text-align: center;
-        padding-right: 30px;
-        a,
-        a:active,
-        a:visited {
-          color: #000;
-          text-decoration: none;
-        }
-        a:hover {
-          font-weight: bold;
-        }
-      }
-      td:nth-of-type(3) {
-        color: #fff;
-        p {
-          background-color: #82ab1f;
-        }
-        .stats {
-          font-weight: bold;
-        }
-        .text {
-          font-size: 12px;
-          position: absolute;
-          left: 240px;
-          padding-top: 2px;
-        }
-      }
+    .smallRankingNumber {
+      display: inline-block;
+      min-width: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      text-align: right;
+      margin-right: 15px;
+      margin-left: 25px;
+    }
 
-      p {
-        margin-bottom: 0;
+    .name {
+      display: inline-block;
+      width: 100px;
+      text-align: center;
+      a,
+      a:active,
+      a:visited {
+        color: #000;
+        text-decoration: none;
+      }
+      a:hover {
+        font-weight: bold;
+      }
+    }
+
+    .trees {
+      display: inline-block;
+      width: 80%;
+      p{
+        background-color: #82ab1f;
       }
     }
   }
-
-  .smallRankingNumber {
-    float: left;
-    min-width: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-    text-align: right;
-    margin-right: 25px;
-    margin-left: 25px;
-  }
-
 }

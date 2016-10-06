@@ -16,7 +16,9 @@ export default class RankingItem extends Component {
     return (
       <div className="rankingItemLarge">
         <div className="rankingNumber">{this.props.rankNumber}</div>
-        <img className="ranking-img" src={this.props.imageUrl} alt="logo"/>
+        <div className="ranking-img-div">
+          <img className="ranking-img" src={this.props.imageUrl} alt="logo"/>
+        </div>
         <div className="rankingSummary">
           <Link to={`/user/` + this.props.content.name}>
             <span className="name">{htmlDecode(this.props.content.name)}</span>
