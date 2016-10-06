@@ -49,9 +49,7 @@ export default class Carousel extends Component {
                   let imageUrl = 'http://localhost:8081/project/image/' + slide.projectName + '/'+ slide.projectImageFileName + '/1140/1140';
                   return (<div className={activeItem} key={index}>
                     <img src={imageUrl} width="1140" height="400" alt={slide.projectName} />
-                    <div className="carousel-caption">
-                      {getTextForSelectedLanguage(slide.description)}
-                    </div>
+                    <div className="carousel-caption" dangerouslySetInnerHTML={{__html: getTextForSelectedLanguage(slide.description)}} />
                   </div>);
                 })}
               </div>

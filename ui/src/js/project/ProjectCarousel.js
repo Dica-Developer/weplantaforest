@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+import {htmlDecode} from '../common/language/HtmlHelper';
 
 export default class ProjectCarousel extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ export default class ProjectCarousel extends Component {
                 <div className="imageDescription">
                   <span className="date">
                     <i>{moment(slide.date).format("DD.MM.YYYY")}</i>&nbsp;/&nbsp;</span>
-                  <span className="text">{getTextForSelectedLanguage(slide.description)}</span>
+                  <span className="text">{htmlDecode(getTextForSelectedLanguage(slide.description))}</span>
                 </div>
               </div>
             );

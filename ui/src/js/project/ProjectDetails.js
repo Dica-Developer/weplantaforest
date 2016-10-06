@@ -64,7 +64,7 @@ export default class ProjectDetails extends Component {
           </tbody>
         </table>
         <div className="description">
-          <p>{getTextForSelectedLanguage(this.props.project.projectReportData.description)}</p>
+          <p dangerouslySetInnerHTML={{__html: getTextForSelectedLanguage(this.props.project.projectReportData.description)}} />
         </div>
         <div className="align-center">
           {plantButton}
