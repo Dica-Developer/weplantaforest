@@ -25,10 +25,7 @@ export default class RankingItem extends Component {
           <p style={{
             width: this.props.percentTree + '%'
           }}>
-            <span className="stats">&nbsp;{Accounting.formatNumber(this.props.content.amount, 0, ".", ",")}</span>
-            <span className="text">
-              &nbsp;B&auml;ume gepflant
-            </span><br/>
+            &nbsp;{Accounting.formatNumber(this.props.content.amount, 0, ".", ",")}&nbsp;B&auml;ume&nbsp;gepflant
           </p>
         </div>
       </div>
