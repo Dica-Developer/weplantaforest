@@ -357,10 +357,12 @@ public class DatabasePopulator {
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc3, imgDest3);
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc2, anonymousDest);
               
+        int teamCnt = 1;
         for(Team team : _teamRepository.findAll()){
             new File(FileSystemInjector.getTeamFolder() + "/" + team.getId()).mkdir();          
-            String imgDest = FileSystemInjector.getTeamFolder() + "/" + team.getId() + "/team.jpg";
+            String imgDest = FileSystemInjector.getTeamFolder() + "/" + teamCnt +".jpg";
             createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc1, imgDest);
+            teamCnt++;
         }
         return this;
     }

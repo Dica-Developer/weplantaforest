@@ -1,6 +1,5 @@
 package org.dicadeveloper.weplantaforest.admin.codes;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,14 +36,12 @@ public class TeamController {
     private @NonNull TeamRepository _teamRepository;
 
     private @NonNull Co2Repository _co2Repository;
-    
+
     private @NonNull RankingRepository _rankingRepository;
 
     @RequestMapping(value = Uris.TEAM_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
-        File teamImageFolder = new File(FileSystemInjector.getTeamFolder() + "/" + imageName);
-        File imageFile = teamImageFolder.listFiles()[0];
-        String filePath = imageFile.toString();
+        String filePath = FileSystemInjector.getTeamFolder() + "/" + imageName;
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -58,10 +55,11 @@ public class TeamController {
     public TeamReportData getTeamDetails(@RequestParam String teamName) {
         TeamReportData teamReportData = _teamRepository.getTeamDetails(teamName);
         teamReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamName));
-        teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
+        teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data()
+                                                                                        .getTreesCount()));
         return teamReportData;
     }
-    
+
     private long calcTeamRank(String teamName, long treeCountOfTeam) {
         List<TreeRankedUserData> teamList = _rankingRepository.getBestTeamAsList(System.currentTimeMillis());
         long rank = 1;
@@ -69,7 +67,8 @@ public class TeamController {
             if (treeCountOfTeam < team.getAmount()) {
                 rank++;
             }
-            if (team.getName().equals(teamName)) {
+            if (team.getName()
+                    .equals(teamName)) {
                 break;
             }
         }
