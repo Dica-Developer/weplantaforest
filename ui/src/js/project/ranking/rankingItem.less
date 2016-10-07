@@ -1,22 +1,24 @@
-.rankingItem{
+.rankingItem {
   .rankingNumber {
+    display: inline-block;
+    height: 100px;
     min-width: 18px;
-    float: left;
     font-size: 16px;
     font-weight: bold;
     color: #fff;
     text-align: right;
-    padding-top: 35px;
+    vertical-align: bottom;
   }
 
   .rankingSummary {
+    height: 100px;
+    width: 220px;
+    display: inline-block;
     padding-top: 10px;
-    margin-left: 130px;
     border-style: none none solid none;
     border-width: 1px;
     border-color: #fff;
   }
-
   a,
   a:active,
   a:visited {
@@ -26,11 +28,24 @@
     font-weight: bold;
   }
 
+  .ranking-img-div {
+    height: 100px;
+    vertical-align: top;
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .align-vert-Mid {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
   .ranking-img {
-    float: left;
-    margin-right: 20px;
-    margin-left: 20px;
-    margin-top: 10px;
+    vertical-align: middle;
     border-radius: 50%;
     border-color: #fff;
     border-style: solid;

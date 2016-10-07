@@ -19,8 +19,11 @@ export default class RankingItem extends Component {
     let imageUrl = 'http://localhost:8081/' + this.props.imageFolder + '/image/' + this.props.content.imageName + '/60/60';
     return (
       <div className="rankingItem">
-        <div className="rankingNumber">{this.props.rankNumber}</div>
-        <img className="ranking-img" src={imageUrl} alt="logo"/>
+        <div className="rankingNumber">  <span className="align-vert-Mid"></span>{this.props.rankNumber}</div>
+        <div className="ranking-img-div">
+          <span className="align-vert-Mid"></span>
+          <img className="ranking-img" src={imageUrl} alt="logo"/>
+        </div>
         <div className="rankingSummary">
           <p >
             <Link to={`/` + this.props.imageFolder + `/` + this.props.content.name}>
