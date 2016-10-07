@@ -386,7 +386,7 @@ public class DatabasePopulator {
             createProjectFolder(projectName);
 
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + mainImageFileName).toPath();
-            String imageFileDest = createProjectImageDestinationPath(projectName, mainImageFileName);
+            String imageFileDest = FileSystemInjector.getImageFolderForProjects() +  "/" + mainImageFileName;
 
             createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
 
@@ -397,20 +397,17 @@ public class DatabasePopulator {
     }
 
     public DatabasePopulator copyAndRenameProjectImagesToProjectFolders() {
-        int projectCnt = 1;
-        for (Project project : _projectRepository.findAll()) {
+        for (int i = 0; i < _projectRepository.count(); i++) {
             for (int j = 1; j <= 5; j++) {
-                String projectImageName = "project" + projectCnt + "_" + j + ".jpg";
-                String projectName = project.getName();
+                String projectImageName = "project" + i + "_" + j + ".jpg";
 
                 String imageSrcName = "project" + j + ".jpg";
                 Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageSrcName).toPath();
 
-                String imageFileDest = createProjectImageDestinationPath(projectName, projectImageName);
+                String imageFileDest = FileSystemInjector.getImageFolderForProjects() + "/" + projectImageName;
 
                 createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
             }
-            projectCnt++;
         }
 
         return this;
@@ -496,10 +493,6 @@ public class DatabasePopulator {
         _receiptRepository.save(receipt);
 
         return this;
-    }
-
-    private String createProjectImageDestinationPath(String projectName, String projectImageName) {
-        return FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + projectImageName;
     }
 
     private void createProjectImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {

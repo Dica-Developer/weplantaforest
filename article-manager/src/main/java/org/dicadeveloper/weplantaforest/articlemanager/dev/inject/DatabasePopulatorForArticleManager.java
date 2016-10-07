@@ -113,10 +113,9 @@ public class DatabasePopulatorForArticleManager {
 
             String imageDestName = "article" + articleId + ".jpg";
 
-            createArticleFolder(articleId);
 
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageSrcName).toPath();
-            String imageFileDest = creatImageDestinationPath(articleId, imageDestName);
+            String imageFileDest = FileSystemInjector.getArticleFolder() + "/" + imageDestName;
 
             createImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
 
@@ -124,14 +123,6 @@ public class DatabasePopulatorForArticleManager {
         }
 
         return this;
-    }
-
-    private void createArticleFolder(long articleId) {
-        new File(FileSystemInjector.getArticleFolder() + "/" + articleId).mkdir();
-    }
-
-    private String creatImageDestinationPath(long articleId, String imageName) {
-        return FileSystemInjector.getArticleFolder() + "/" + articleId + "/" + imageName;
     }
 
     private void createImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {

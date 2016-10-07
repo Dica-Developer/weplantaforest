@@ -71,25 +71,10 @@ public class ProjectReportController {
         return projectReportExtendedData;
     }
 
-    @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public ResponseEntity<?> getProjectImage(HttpServletResponse response, @PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName) {
-        String filePath = FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + imageName;
-
-        try {
-            _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (IOException e) {
-            LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-    }
-
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getProjectImage(HttpServletResponse response, @PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName,
             @PathVariable int width, @PathVariable int height) {
-        String filePath = FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + imageName;
-
+        String filePath = FileSystemInjector.getImageFolderForProjects() + "/" + imageName;
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
             return new ResponseEntity<>(HttpStatus.OK);
