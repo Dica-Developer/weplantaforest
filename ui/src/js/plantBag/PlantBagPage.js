@@ -13,6 +13,8 @@ import PlantBagItem from './PlantBagItem'
 import IconButton from '../common/components/IconButton';
 import CheckBox from '../common/components/CheckBox';
 
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+
 require("./plantBagPage.less");
 
 export default class PlantBagPage extends Component {
@@ -127,7 +129,8 @@ export default class PlantBagPage extends Component {
                   return (
                     <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i} price={projectPrice}>
                       {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
-                        return (<PlantBagItem plantItemName={plantItem} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]}  key={i} removePlantBagItem={()=>{that.removePlantBagItem(project, plantItem)}} increasePlantBagItem={()=>{that.increasePlantBagItem(project, plantItem)}} decreasePlantBagItem={()=>{that.decreasePlantBagItem(project, plantItem)}}/>);
+                        var plantItemName = getTextForSelectedLanguage(plantItem);
+                        return (<PlantBagItem plantItemName={plantItemName} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]}  key={i} removePlantBagItem={()=>{that.removePlantBagItem(project, plantItem)}} increasePlantBagItem={()=>{that.increasePlantBagItem(project, plantItem)}} decreasePlantBagItem={()=>{that.decreasePlantBagItem(project, plantItem)}}/>);
                       })}
                     </PlantBagProject>
                   );
