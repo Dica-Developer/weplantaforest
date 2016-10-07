@@ -3,7 +3,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import {Link} from 'react-router';
 
-import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+import {getTextForSelectedLanguage, getShortText} from '../common/language/LanguageHelper';
 
 export default class ArticleTeaser extends Component {
   constructor(props) {
@@ -16,13 +16,6 @@ export default class ArticleTeaser extends Component {
       imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/380/380';
     }
 
-    var shortIntro = getTextForSelectedLanguage(this.props.content.intro);
-    if (shortIntro.length > 300) {
-      shortIntro = shortIntro.substr(0, 300);
-      shortIntro = shortIntro.substr(0, Math.min(300, shortIntro.lastIndexOf(" ")));
-    }
-    shortIntro = shortIntro + "... ";
-
     return (
       <div>
         <img src={imageUrl} alt={this.props.content.title}/>
@@ -31,7 +24,7 @@ export default class ArticleTeaser extends Component {
         </h3>
         <div className="description">
           <p dangerouslySetInnerHTML={{
-            __html: shortIntro
+            __html: getShortText(getTextForSelectedLanguage(this.props.content.intro), 300)
           }}/>
           <Link className="more" to={`/projects/` + this.props.content.projectName}>
             <i>(mehr)</i>

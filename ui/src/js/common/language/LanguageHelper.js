@@ -11,6 +11,15 @@ export function getTextForSelectedLanguage(text) {
   return text;
 };
 
+export function getShortText(text, shortenedTO){
+  if (text.length > shortenedTO) {
+    text = text.substr(0, shortenedTO);
+    text = text.substr(0, Math.min(shortenedTO, text.lastIndexOf(" ")));
+    text = text + "... ";
+  }
+  return text;
+}
+
 export {
-  getTextForSelectedLanguage
+  getTextForSelectedLanguage, getShortText
 };

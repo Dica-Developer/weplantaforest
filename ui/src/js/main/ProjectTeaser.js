@@ -6,7 +6,7 @@ import {Link} from 'react-router';
 
 import Boostrap from 'bootstrap';
 
-import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+import {getTextForSelectedLanguage, getShortText} from '../common/language/LanguageHelper';
 
 export default class ProjectTeaser extends Component {
   constructor(props) {
@@ -15,13 +15,6 @@ export default class ProjectTeaser extends Component {
 
   render() {
     let position = [this.props.content.latitude, this.props.content.longitude];
-    var shortDescription = getTextForSelectedLanguage(this.props.content.description);
-    if (shortDescription.length > 300) {
-      shortDescription = shortDescription.substr(0, 300);
-      shortDescription = shortDescription.substr(0, Math.min(300, shortDescription.lastIndexOf(" ")));
-    }
-    shortDescription = shortDescription + "... ";
-
     return (
       <div>
         <Map center={position} zoom={13}>
@@ -37,7 +30,7 @@ export default class ProjectTeaser extends Component {
         </h3>
         <div className="description">
           <p dangerouslySetInnerHTML={{
-            __html: shortDescription
+            __html: getShortText(getTextForSelectedLanguage(this.props.content.description), 300)
           }}/>
           <Link className="more" to={`/projects/` + this.props.content.projectName}>
             <i>(mehr)</i>
