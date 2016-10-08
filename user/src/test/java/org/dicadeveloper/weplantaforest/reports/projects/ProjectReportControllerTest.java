@@ -188,10 +188,8 @@ public class ProjectReportControllerTest {
     }
 
     private void createProjectFolderAndInsertImage(String projectName, String imageName) {
-        new File(FileSystemInjector.getImageFolderForProjects() + "/" + projectName).mkdir();
-
         Path imageFileSrc = new File(DatabasePopulator.DUMMY_IMAGE_FOLDER + imageName).toPath();
-        String imageFileDest = FileSystemInjector.getImageFolderForProjects() + "/" + projectName + "/" + imageName;
+        String imageFileDest = FileSystemInjector.getImageFolderForProjects() + "/" + imageName;
 
         try {
             File newImageFile = new File(imageFileDest);
