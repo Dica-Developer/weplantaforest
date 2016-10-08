@@ -101,7 +101,7 @@ public class DatabasePopulatorForArticleManager {
         return this;
     }
 
-    public DatabasePopulatorForArticleManager createArticleImageFoldersAndAddImage() {
+    public DatabasePopulatorForArticleManager addImagesToArticleFolder() {
         int articleCnt = 1;
         for (Article article : _articleRepository.findAll()) {
             if (articleCnt > 3) {

@@ -32,7 +32,7 @@ public class DataInjectorForArticleManager {
                 _databasePopulator.insertUsers()
                                   .insertArticles()
                                   .insertParagraphsToArticles()
-                                  .createArticleImageFoldersAndAddImage()
+                                  .addImagesToArticleFolder()
                                   ;
             }
         };

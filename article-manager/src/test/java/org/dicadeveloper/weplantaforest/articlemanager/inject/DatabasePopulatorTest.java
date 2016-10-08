@@ -68,19 +68,10 @@ public class DatabasePopulatorTest {
     public void testcreateProjectFoldersAndInsertMainImages() {
         _databasePopulator.insertUsers();
         _databasePopulator.insertArticles();
-        _databasePopulator.createArticleImageFoldersAndAddImage();
-        
-        File articleTopFolder = new File(FileSystemInjector.getArticleFolder());
+        _databasePopulator.addImagesToArticleFolder();
 
-        int articleFolderCount = articleTopFolder.listFiles().length;
-        
-        File[] articleFolders = articleTopFolder.listFiles();
-        
-        assertThat(_articleRepository.count()).isEqualTo(articleFolderCount);
-        
-        for(int i = 0; i < articleFolders.length; i++){
-            assertThat(articleFolders[i].listFiles().length).isEqualTo(1);
-        }
+        int articleFolderContentCount = new File(FileSystemInjector.getArticleFolder()).listFiles().length; 
+        assertThat(_articleRepository.count()).isEqualTo(articleFolderContentCount );
     }
 
 }
