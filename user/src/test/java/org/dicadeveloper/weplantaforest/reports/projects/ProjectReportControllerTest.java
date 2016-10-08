@@ -172,22 +172,6 @@ public class ProjectReportControllerTest {
     }
 
     @Test
-    public void testGetImageNonScaled() throws Exception {
-        String projectName = "Project 1 von admin";
-        String projectImageName = "project1.jpg";
-        createProjectFolderAndInsertImage(projectName, projectImageName);
-
-        mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "project1.jpg").accept("image/jpg"))
-               .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testGetImageNonScaledBadRequest() throws Exception {
-        mockMvc.perform(get(Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}", "Project 1 von admin", "wrongName.jpg").accept("image/jpg"))
-               .andExpect(status().isBadRequest());
-    }
-
-    @Test
     public void testGetImageScaled() throws Exception {
         String projectName = "Project 1 von admin";
         String projectImageName = "project1.jpg";
