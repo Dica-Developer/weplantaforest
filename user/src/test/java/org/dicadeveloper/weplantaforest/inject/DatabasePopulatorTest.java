@@ -146,12 +146,9 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertUsers();
         _databasePopulator.insertProjects();
         _databasePopulator.createProjectImageFoldersAndAddMainImages();
+        _databasePopulator.copyAndRenameProjectImagesToProjectFolders();
 
-        File projectTopFolder = new File(FileSystemInjector.getImageFolderForProjects());
-
-        int projectFolderCount = projectTopFolder.listFiles().length;
-
-        assertThat(_projectRepository.count()).isEqualTo(projectFolderCount);
+        assertThat(_projectRepository.count() * 7).isEqualTo(new File(FileSystemInjector.getImageFolderForProjects()).listFiles().length);
     }
     
     @Test
@@ -163,22 +160,6 @@ public class DatabasePopulatorTest {
         int imageCount = userImageFolder.listFiles().length;
 
         assertThat(imageCount).isEqualTo(4);
-    }
-
-    @Test
-    public void testCopyAndRenameProjectImagesToProjectFolders() {
-        _databasePopulator.insertUsers();
-        _databasePopulator.insertProjects();
-        _databasePopulator.createProjectImageFoldersAndAddMainImages();
-        _databasePopulator.copyAndRenameProjectImagesToProjectFolders();
-
-        File projectTopFolder = new File(FileSystemInjector.getImageFolderForProjects());
-
-        File[] projectFolders = projectTopFolder.listFiles();
-
-        for (int i = 0; i < projectFolders.length; i++) {
-            assertThat(projectFolders[i].listFiles().length).isEqualTo(6);
-        }
     }
 
     @Test
