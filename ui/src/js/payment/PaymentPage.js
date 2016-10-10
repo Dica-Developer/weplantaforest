@@ -46,7 +46,7 @@ export default class PaymentPage extends Component {
     }
     return (
       <div>
-        <NavBar ref="navbar"/>
+        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row paymentPage">

@@ -48,7 +48,7 @@ export default class ActivationPage extends Component {
   render() {
     return (
       <div>
-        <NavBar ref="navBar"/>
+        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row activationPage">

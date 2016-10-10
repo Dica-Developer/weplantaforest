@@ -168,7 +168,7 @@ export default class ProjectDetailsPage extends Component {
   }
 
   updatePlantBag(overallPrice, projectItems, projectName){
-    this.refs['navBar'].updatePlantBag(overallPrice, projectItems, projectName);
+    this.refs['navbar'].updatePlantBag(overallPrice, projectItems, projectName);
   }
 
   render() {
@@ -186,7 +186,7 @@ export default class ProjectDetailsPage extends Component {
 
     return (
       <div className="projectPage">
-        <NavBar ref="navBar"/>
+        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row">

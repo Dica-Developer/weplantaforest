@@ -23,29 +23,35 @@ import RedeemGiftPage from './gifts/redeem/RedeemGiftPage'
 import FindTreePage from './findTree/FindTreePage';
 
 export default class Routes extends Component {
+
+  reRender(){
+    this.forceUpdate();
+  }
+
+
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={MainPage}/>
-        <Route path="/plant" component={PlantPage}/>
-        <Route path="/plant/succcess" component={PlantSuccessPage}/>
-        <Route path="/explore" component={ExplorePage}/>
-        <Route path="/projects/:projectName" component={ProjectDetailsPage}/>
-        <Route path="/user/:userName" component={ProfilePage}/>
-        <Route path="/ranking" component={RankingPage}/>
-        <Route path="/projectOffer" component={ProjectOfferPage}/>
-        <Route path="/selfPlant" component={SelfPlantPage}/>
-        <Route path="/plantBag" component={PlantBagPage}/>
-        <Route path="/payCart/:cartId" component={PaymentPage}/>
-        <Route path="/payGift/:cartId/:giftId" component={PaymentPage}/>
-        <Route path="/registration" component={RegistrationPage}/>
-        <Route path="/userActivation" component={ActivationPage}/>
-        <Route path="/forgotPassword" component={ForgotPasswordPage}/>
-        <Route path="/password_reset" component={ResetPasswordPage}/>
-        <Route path="/gifts/:userName" component={GiftOverview}/>
-        <Route path="/gift/redeem" component={RedeemGiftPage}/>
-        <Route path="/certificate/find" component={FindTreePage}/>
-        <Route path="*" component={NotFoundPage}/>
+        <Route path="/" component={MainPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/plant" component={PlantPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/plant/succcess" component={PlantSuccessPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/explore" component={ExplorePage} reRender={this.reRender.bind(this)}/>
+        <Route path="/projects/:projectName" component={ProjectDetailsPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)}/>
+        <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/registration" component={RegistrationPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/userActivation" component={ActivationPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/forgotPassword" component={ForgotPasswordPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/password_reset" component={ResetPasswordPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/gifts/:userName" component={GiftOverview} reRender={this.reRender.bind(this)}/>
+        <Route path="/gift/redeem" component={RedeemGiftPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/certificate/find" component={FindTreePage} reRender={this.reRender.bind(this)}/>
+        <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
       </Router>
     );
   }

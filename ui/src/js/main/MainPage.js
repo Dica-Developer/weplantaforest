@@ -96,7 +96,7 @@ export default class MainPage extends Component {
   render() {
     return (
       <div>
-        <NavBar/>
+        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
         <Header/>
         <div className="container paddingTopBottom15">
           <Carousel/>

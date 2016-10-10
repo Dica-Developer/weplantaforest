@@ -94,7 +94,7 @@ export default class RankingPage extends Component {
     var maxCo2;
     return (
       <div>
-        <NavBar/>
+        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row rankingPage">

@@ -191,7 +191,7 @@ export default class ProfilePage extends Component {
 
     return (
       <div className="profile">
-        <NavBar ref="navbar"/>
+        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row details">

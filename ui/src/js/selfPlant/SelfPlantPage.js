@@ -32,7 +32,7 @@ export default class SelfPlantPage extends Component {
     };
     return (
       <div>
-        <NavBar/>
+        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
         <Header/>
         <div className="container paddingTopBottom15">
           <div className="row selfPlant">
