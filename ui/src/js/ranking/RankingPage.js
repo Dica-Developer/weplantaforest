@@ -104,12 +104,12 @@ export default class RankingPage extends Component {
             <div className="col-md-12 rankingItems">
               <h2>Bestenliste&nbsp;/&nbsp;{this.state.orgTypeDesc}</h2>
               {this.state.ranking.content.map(function(content, i) {
-                if (i == 1) {
+                if (i == 0) {
                   maxTree = content.amount;
                   maxCo2 = content.co2Saved;
                 }
 
-                if (i > 1) {
+                if (i > 0) {
                   percentTree = 100 * content.amount / maxTree;
                   percentCo2 = 100 * content.co2Saved / maxCo2;
                 }
