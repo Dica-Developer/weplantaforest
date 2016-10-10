@@ -28,6 +28,8 @@ public class Uris {
 
     // project urls
 
+    public final static String REPORT_ALL_PROJECTS = "/reports/allProjects";
+    
     public final static String REPORT_ACTIVE_PROJECTS = "/reports/activeProjects";
 
     public final static String PROJECT_SEARCH_NAME = "/projects/search/name/";

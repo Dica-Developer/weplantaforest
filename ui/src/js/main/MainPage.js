@@ -36,7 +36,7 @@ export default class MainPage extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/reports/activeProjects?page=0&size=2').then(function(response) {
+    axios.get('http://localhost:8081/reports/allProjects?page=0&size=2').then(function(response) {
       var result = response.data;
       that.setState({projects: result});
     }).catch(function(response) {

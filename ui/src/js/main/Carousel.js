@@ -14,7 +14,7 @@ export default class Carousel extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/reports/activeProjects?page=0&size=10').then(function(response) {
+    axios.get('http://localhost:8081/reports/allProjects?page=0&size=10').then(function(response) {
       var result = response.data.content;
       that.setState({slides: result});
     }).catch(function(response) {

@@ -49,9 +49,14 @@ public class ProjectReportController {
 
     private @NonNull ImageHelper _imageHelper;
 
-    @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.REPORT_ALL_PROJECTS, method = RequestMethod.GET)
     public Page<ProjectReportData> getAllProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
         return _projectReportRepository.getAllProjects(new PageRequest(page, size));
+    }
+    
+    @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
+    public List<ProjectReportData> getActiveProjects() {
+        return _projectReportRepository.getActiveProjects();
     }
 
     @RequestMapping(value = Uris.PROJECT_SEARCH_NAME + "{projectName}", method = RequestMethod.GET)
