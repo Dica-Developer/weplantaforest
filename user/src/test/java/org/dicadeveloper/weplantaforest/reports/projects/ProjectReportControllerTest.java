@@ -105,7 +105,7 @@ public class ProjectReportControllerTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 100, timeOfPlanting, "Project B");
         _dbInjecter.injectTreeToProject("doow", "Adam", 200, timeOfPlanting, "Project B");
 
-        mockMvc.perform(get(Uris.REPORT_ACTIVE_PROJECTS + "?page=0&size=10").accept("application/json"))
+        mockMvc.perform(get(Uris.REPORT_ALL_PROJECTS + "?page=0&size=10").accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.content[0].projectName").value("Project A"))
                .andExpect(jsonPath("$.content[0].projectImageFileName").value("Project A"))
