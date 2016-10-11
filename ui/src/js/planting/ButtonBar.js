@@ -22,6 +22,11 @@ export default class ButtonBar extends Component {
     this.setState({customInputVisible: false});
   }
 
+  switchToCustomPlantPage() {
+    browserHistory.push('/plant3');
+    this.setState({customInputVisible: false});
+  }
+
   switchToProposalPage(amount) {
     browserHistory.push('/plant/' + amount);
     this.setState({customAmount: '', customInputVisible: false});
@@ -86,7 +91,7 @@ export default class ButtonBar extends Component {
         <div className={"buttonDiv " + ((this.props.chosen == "customAmount")
           ? "chosen"
           : "")}>
-          <input ref="customInput" value={this.state.customAmount} type="text" placeholder="beliebig viele" onChange={this.updateCustomAmount.bind(this)} onKeyDown={this.handleCustomInputKeyDown.bind(this)} onBlur={ this.switchToProposalPageCustom.bind(this)} className={this.state.customInputVisible
+          <input ref="customInput" value={this.state.customAmount} type="text" placeholder="beliebig viele" onChange={this.updateCustomAmount.bind(this)} onKeyDown={this.handleCustomInputKeyDown.bind(this)} onBlur={this.switchToProposalPageCustom.bind(this)} className={this.state.customInputVisible
             ? ""
             : "invisible"}/>
           <a role="button" onClick={() => {
@@ -107,7 +112,9 @@ export default class ButtonBar extends Component {
         <div className={"buttonDiv " + (this.props.chosen == "custom"
           ? "chosen"
           : "")}>
-          &gt; 100(individuell)
+          <a role="button" onClick={this.switchToCustomPlantPage.bind(this)}>
+            &gt; 100(individuell)
+          </a>
         </div>
       </div>
     );
