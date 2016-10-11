@@ -16,187 +16,22 @@ export default class ProjectPlanting extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      overallPrice: 5,
+      price: 5,
       treeCount: this.props.articles.length,
       maximumAmountOfTreesToPlant: 0,
       sliderValue: this.props.articles.length,
       sliderStep: 1,
-      maxValue: 200
+      maxValue: 100
     };
-    this.balanceArticleSlider = this.balanceArticleSlider.bind(this);
-  }
-
-  componentDidMount() {
-    this.calcOverallPrice();
-    this.calcMaximumAmountOfTreesToPlant();
-  }
-
-  calcOverallPrice() {
-    var price = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      price = price + this.props.articles[i].price.priceAsLong * parseInt(this.refs['a' + i].getTreeCount());
-    }
-    this.setState({overallPrice: price});
-    this.refs.projectSlider.setPrice(price);
-    this.forceUpdate();
-  }
-
-  calcMaximumAmountOfTreesToPlant() {
-    var alreadyPlantedSum = 0;
-    var amountSum = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      alreadyPlantedSum = alreadyPlantedSum + parseInt(this.props.articles[i].alreadyPlanted);
-      amountSum = amountSum + parseInt(this.props.articles[i].amount);
-    }
-    this.setState({
-      maximumAmountOfTreesToPlant: (amountSum - alreadyPlantedSum)
-    });
-  }
-
-  setTreeCount(value) {
-    this.state.treeCount = value;
-    this.forceUpdate();
-    this.balanceArticleSliderFromProjectSlider();
-    this.calcOverallPrice();
-  }
-
-  balanceArticleSliderFromProjectSlider() {
-    var blockedSliderSum = 0;
-    var nonBlockedSliderSum = 0;
-    var maxPossibleNonBlockedSliderSum = 0;
-    var blockedCnt = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      if (this.refs['a' + i].isSliderBlocked()) {
-        blockedSliderSum = blockedSliderSum + parseInt(this.refs['a' + i].getTreeCount());
-        blockedCnt++;
-      } else {
-        nonBlockedSliderSum = nonBlockedSliderSum + parseInt(this.refs['a' + i].getTreeCount());
-        maxPossibleNonBlockedSliderSum = maxPossibleNonBlockedSliderSum + parseInt(this.refs['a' + i].getMaximumAmountOfTreesToPlant());
-      }
-    }
-
-    if (blockedSliderSum > this.state.treeCount || this.state.treeCount > maxPossibleNonBlockedSliderSum) {
-      this.unLockArticleSlider();
-      blockedCnt = 0;
-      blockedSliderSum = 0;
-    }
-
-    var sumExceptBlockedSliders = this.state.treeCount - blockedSliderSum;
-    var rem = sumExceptBlockedSliders % (this.props.articles.length - blockedCnt);
-    var div = Math.trunc(sumExceptBlockedSliders / (this.props.articles.length - blockedCnt));
-
-    this.setNonBlockedArticleSliderValues(div, rem);
-
-    var articleSumAfterSet = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      articleSumAfterSet = articleSumAfterSet + parseInt(this.refs['a' + i].getTreeCount());
-    }
-
-    if (articleSumAfterSet < this.state.treeCount) {
-      this.fillNotMaxedArticleSlider(articleSumAfterSet);
-    }
-  }
-
-  fillNotMaxedArticleSlider(articleSumAfterSet) {
-    var diff = this.state.treeCount - articleSumAfterSet;
-    var maxedCnt = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      if (this.refs['a' + i].isMaxAmountReached()) {
-        maxedCnt++;
-      }
-    }
-    var rem = diff % (this.props.articles.length - maxedCnt);
-    var div = Math.trunc(diff / (this.props.articles.length - maxedCnt));
-
-    this.setNonMaxedArticleSliderValues(div, rem);
-
-    articleSumAfterSet = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      articleSumAfterSet = articleSumAfterSet + parseInt(this.refs['a' + i].getTreeCount());
-    }
-    if (articleSumAfterSet < this.state.treeCount) {
-      this.fillNotMaxedArticleSlider(articleSumAfterSet);
-    }
-  }
-
-  balanceArticleSlider(sliderIndex) {
-    var blockedSliderSum = 0;
-    var blockedCnt = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      if (this.refs['a' + i].isSliderBlocked()) {
-        blockedSliderSum = blockedSliderSum + parseInt(this.refs['a' + i].getTreeCount());
-        blockedCnt++;
-      } else {}
-    }
-
-    if (blockedCnt == this.props.articles.length || blockedSliderSum > this.state.treeCount) {
-      this.unLockArticleSlider();
-      blockedCnt = 1;
-      this.refs['a' + sliderIndex].lock();
-      blockedSliderSum = parseInt(this.refs['a' + sliderIndex].getTreeCount());
-    }
-
-    var sumExceptBlockedSliders = this.state.treeCount - blockedSliderSum;
-    var rem = sumExceptBlockedSliders % (this.props.articles.length - blockedCnt);
-    var div = Math.trunc(sumExceptBlockedSliders / (this.props.articles.length - blockedCnt));
-    this.setNonBlockedArticleSliderValues(div, rem);
-
-    var articleSumAfterSet = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      articleSumAfterSet = articleSumAfterSet + parseInt(this.refs['a' + i].getTreeCount());
-    }
-    if (articleSumAfterSet != this.state.treeCount) {
-      this.unLockArticleSlider();
-      this.refs['a' + sliderIndex].lock();
-      this.balanceArticleSlider(sliderIndex);
-    }
-    this.calcOverallPrice();
-  }
-
-  unLockArticleSlider() {
-    for (var i = 0; i < this.props.articles.length; i++) {
-      this.refs['a' + i].unLock();
-    }
-  }
-
-  setNonBlockedArticleSliderValues(div, rem) {
-    var remCnt = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      if (!this.refs['a' + i].isSliderBlocked()) {
-        var value;
-        if (remCnt < rem) {
-          value = div + 1;
-          remCnt++;
-        } else {
-          value = div;
-        }
-        this.refs['a' + i].setTreeCount(value);
-      }
-    }
-  }
-
-  setNonMaxedArticleSliderValues(div, rem) {
-    var remCnt = 0;
-    for (var i = 0; i < this.props.articles.length; i++) {
-      if (!this.refs['a' + i].isMaxAmountReached()) {
-        var value;
-        if (remCnt < rem) {
-          value = parseInt(this.refs['a' + i].getTreeCount()) + div + 1;
-          remCnt++;
-        } else {
-          value = parseInt(this.refs['a' + i].getTreeCount()) + div;
-        }
-        this.refs['a' + i].setTreeCount(value);
-      }
-    }
+    this.balanceArticleSlidersFromArticleSlider = this.balanceArticleSlidersFromArticleSlider.bind(this);
   }
 
   updatePlantBag() {
     var projectItems = {};
     for (var i = 0; i < this.props.articles.length; i++) {
-      if (this.refs['a' + i].getTreeCount() > 0) {
+      if (this.refs['article_' + i].getSliderValue() > 0) {
         projectItems[this.props.articles[i].treeType.name] = {
-          amount: parseInt(this.refs['a' + i].getTreeCount()),
+          amount: parseInt(this.refs['article_' + i].getSliderValue()),
           price: parseInt(this.props.articles[i].price.priceAsLong),
           imageFile: this.props.articles[i].treeType.imageFile
         };
@@ -205,40 +40,143 @@ export default class ProjectPlanting extends Component {
     this.props.updatePlantBag(this.state.overallPrice, projectItems, this.props.projectName);
   }
 
+  balanceArticleSliders(value) {
+    var divisionValue = Math.trunc(value / this.props.articles.length);
+    var moduloValue = value % this.props.articles.length;
+    var moduloCnt = 0;
+    for (var project in this.props.articles) {
+      this.refs["article_" + project].updateMaxValue(value);
+      if (moduloCnt < moduloValue) {
+        this.refs["article_" + project].setSliderValue(divisionValue + 1, false);
+        moduloCnt++;
+      } else {
+        this.refs["article_" + project].setSliderValue(divisionValue, false);
+      }
+    }
+    this.setState({treeCount: value});
+    this.calcProjectPrice();
+  }
+
+  balanceArticleSlidersFromArticleSlider(sliderIndex, value) {
+    var that = this;
+    var movedCntAndSum = this.getMovedCntAndSum();
+    if (movedCntAndSum[0] == this.props.articles.length) {
+      var manualMovedSliderValueWithMaxValue = this.getManualMovedSliderValueWithMaxValueExceptCurrent(sliderIndex);
+      var diffToTreeCount = movedCntAndSum[1] - this.state.treeCount;
+
+      var valueToSet = this.refs["article_" + manualMovedSliderValueWithMaxValue].getSliderValue() - diffToTreeCount;
+      this.refs["article_" + manualMovedSliderValueWithMaxValue].setSliderValue(valueToSet, true);
+
+      var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / ((movedCntAndSum[0] - 2)));
+      var moduloValue = (this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) % (movedCntAndSum[0] - 2);
+      var moduloCnt = 0;
+      for (var project in this.props.articles) {
+        if (project != manualMovedSliderValueWithMaxValue && project != sliderIndex) {
+          if (moduloCnt < moduloValue) {
+            this.refs["article_" + project].setSliderValue(divisionValue + 1, true);
+            moduloCnt++;
+          } else {
+            this.refs["article_" + project].setSliderValue(divisionValue, true);
+          }
+        }
+      }
+    } else if (movedCntAndSum[1] > this.state.treeCount) {
+      var manualMovedSliderValueWithMaxValue = this.getManualMovedSliderValueWithMaxValueExceptCurrent(sliderIndex);
+      var diffToTreeCount = movedCntAndSum[1] - this.state.treeCount;
+      var valueToSet = this.refs["article_" + manualMovedSliderValueWithMaxValue].getSliderValue() - diffToTreeCount;
+      this.refs["article_" + manualMovedSliderValueWithMaxValue].setSliderValue(valueToSet, true);
+
+      if (movedCntAndSum[0] > 2) {
+        var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / ((movedCntAndSum[0] - 2)));
+        var moduloValue = (this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) % (movedCntAndSum[0] - 2);
+        var moduloCnt = 0;
+        for (var project in this.props.articles) {
+          if (this.refs["article_" + project].wasMovedManually() && project != sliderIndex && project != manualMovedSliderValueWithMaxValue) {
+            if (moduloCnt < moduloValue) {
+              this.refs["article_" + project].setSliderValue(divisionValue + 1, true);
+              moduloCnt++;
+            } else {
+              this.refs["article_" + project].setSliderValue(divisionValue, true);
+            }
+          }
+        }
+      }
+    } else {
+      var divisionValue = Math.trunc((this.state.treeCount - movedCntAndSum[1]) / (this.props.articles.length - movedCntAndSum[0]));
+      var moduloValue = (this.state.treeCount - movedCntAndSum[1]) % (this.props.articles.length - movedCntAndSum[0]);
+      var moduloCnt = 0;
+      for (var project in this.props.articles) {
+        if (!this.refs["article_" + project].wasMovedManually()) {
+          if (moduloCnt < moduloValue) {
+            this.refs["article_" + project].setSliderValue(divisionValue + 1, false);
+            moduloCnt++;
+          } else {
+            this.refs["article_" + project].setSliderValue(divisionValue, false);
+          }
+        }
+      }
+    }
+    this.calcProjectPrice();
+  }
+
+  getMovedCntAndSum() {
+    var result = [];
+    var movedCnt = 0;
+    var movedSum = 0;
+    for (var project in this.props.articles) {
+      if (this.refs["article_" + project].wasMovedManually()) {
+        movedCnt++;
+        movedSum = movedSum + parseInt(this.refs["article_" + project].getSliderValue());
+      }
+    }
+    result.push(movedCnt);
+    result.push(movedSum);
+
+    return result;
+  }
+
+  getManualMovedSliderValueWithMaxValueExceptCurrent(sliderIndex) {
+    var maxValue = -1;
+    var index;
+    for (var project in this.props.articles) {
+      if (project != sliderIndex && parseInt(this.refs["article_" + project].getSliderValue()) > maxValue) {
+        maxValue = parseInt(this.refs["article_" + project].getSliderValue());
+        index = project;
+      }
+    }
+    return index;
+  }
+
+  calcProjectPrice() {
+    var price = 0;
+    for (var article in this.props.articles) {
+      price = price + parseInt(this.refs["article_" + article].getPrice());
+    }
+    this.state.price = price;
+    this.forceUpdate();
+  }
+
   render() {
     var that = this;
-    let imageUrl = 'http://localhost:8081/treeType/image/' + this.props.articles[0].treeType.imageFile + '/60/60';
     return (
       <div className="projectPlanting">
         <h2>{this.props.projectName}&nbsp;/&nbsp;
           <i>hier pflanzen</i>
         </h2>
-        <ProjectSlider ref="projectSlider" maximumAmountOfTreesToPlant={this.state.maximumAmountOfTreesToPlant} setTreeCount={this.setTreeCount.bind(this)} ref="projectSlider"/>
+        <ProjectSlider ref="projectSlider" maximumAmountOfTreesToPlant={this.state.maximumAmountOfTreesToPlant} ref="projectSlider" price={this.state.price} balanceArticleSliders={this.balanceArticleSliders.bind(this)}/>
         <div className="articleDesc">
-          <table className="descTable">
-            <tbody>
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-                <td>
-                  <div>
-                    Hier kannst Du die Anzahl Deiner Bäume individuell verteilen.
-                  </div>
-                </td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+          <div>
+            Hier kannst Du die Anzahl Deiner Bäume individuell verteilen.
+          </div>
           {this.props.articles.map(function(article, i) {
-            return (<ArticleSlider article={article} key={i} ref={"a" + i} balanceArticleSlider={that.balanceArticleSlider.bind(this)} maxValue={that.state.treeCount} sliderIndex={i}/>);
+            return (<ArticleSlider article={article} key={i} ref={"article_" + i} sliderIndex={i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)}/>);
           })}
           <table className="bottomTable">
             <tbody>
               <tr>
                 <td></td>
                 <td>
-                  <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice /100, 2, ".", ",")}&nbsp;€</span>
+                  <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.price / 100, 2, ".", ",")}&nbsp;€</span>
                 </td>
                 <td>
                   <ImageButton text="AB IN MEINEN<br/>PFLANZKORB" onClick={this.updatePlantBag.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="72" imageHeight="40"/>

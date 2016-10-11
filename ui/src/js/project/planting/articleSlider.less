@@ -1,70 +1,48 @@
 
 .articleSlider {
   margin-bottom: 15px;
+  text-align: center;
+  .image {
+    text-align: center;
+    display: inline-block;
+    width: 80px;
+    .treeImg {
+      border-radius: 50%;
+      border-color: #82ab1f;
+      border-style: solid;
+      border-width: 4px;
+      background-color: #fff;
+    }
+  }
+  .treeTypeInfo {
+    text-align: left;
+    width: 100px;
+    display: inline-block;
+    margin-left: 15px;
+    span:nth-child(1) {
+      text-transform: uppercase;
+    }
+  }
+  .slider {
+    width: 70%;
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    padding-top: 3px;
+    padding-bottom: 3px;
 
-  table {
-    width: 100%;
-    td:nth-child(1) {
-      width: 10%;
-      div {
-        text-align: center;
-        .treeImg {
-          border-radius: 50%;
-          border-color: #82ab1f;
-          border-style: solid;
-          border-width: 4px;
-          background-color: #fff;
-        }
-      }
-    }
-    td:nth-child(2) {
-      width: 15%;
-      div {
-        margin-left: 15px;
-        span:nth-child(1) {
-          text-transform: uppercase;
-        }
-      }
-    }
-    td:nth-child(3) {
-      width: 58%;
-      div:nth-child(1) {
-        width: 100%;
-        border-width: 1px;
-        border-style: solid;
-        padding-top: 3px;
-        padding-bottom: 3px;
-      }
-
-    }
-    td:nth-child(4) {
-      width: 10%;
-      div:nth-child(1) {
-        height: 38px;
-        line-height: 1.3;
-        width: 100%;
-        border-width: 1px;
-        border-style: solid;
-        background-color: #e5e5e5;
-        text-align: right;
-        span:nth-child(4) {
-          margin-right: 3px;
-        }
-      }
-    }
-    td:nth-child(5) {
-      width: 7%;
-      color: #82ab1f;
-      div {
-        text-align: center;
-        border-style: solid;
-        border-color: #000;
-        height: 38px;
-        background-color: #e5e5e5;
-        border-width: 1px;
-        padding-top: 10px;
-
-      }
+  }
+  .sliderSummary {
+    display: inline-block;
+    height: 38px;
+    line-height: 1.3;
+    width: 100px;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #e5e5e5;
+    text-align: right;
+    span:nth-child(4) {
+      margin-right: 3px;
     }
   }
 
