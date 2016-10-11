@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {Router, Route, browserHistory} from 'react-router';
 
 import MainPage from './main/MainPage';
-import PlantPage from './views/PlantPage';
+import PlantPage from './planting/PlantPage';
 import PlantSuccessPage from './views/PlantSuccessPage';
 import NotFoundPage from './views/NotFoundPage';
 import ExplorePage from './views/ExplorePage';
@@ -33,7 +33,7 @@ export default class Routes extends Component {
     return (
       <Router history={browserHistory}>
         <Route path="/" component={MainPage} reRender={this.reRender.bind(this)}/>
-        <Route path="/plant" component={PlantPage} reRender={this.reRender.bind(this)}/>
+        <Route path="/plant" component={PlantPage} reRender={this.reRender.bind(this)} header="online pflanzen"/>
         <Route path="/plant/succcess" component={PlantSuccessPage} reRender={this.reRender.bind(this)}/>
         <Route path="/explore" component={ExplorePage} reRender={this.reRender.bind(this)}/>
         <Route path="/projects/:projectName" component={ProjectDetailsPage} reRender={this.reRender.bind(this)}/>
