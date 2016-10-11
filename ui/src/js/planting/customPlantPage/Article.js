@@ -54,6 +54,7 @@ export default class Article extends Component {
         </div>
         <div>
           <input type="text" value={this.state.value} onChange={this.updateAmount.bind(this)}/>
+          &nbsp;/&nbsp;{this.props.article.amount - this.props.article.alreadyPlanted}
         </div>
         <div>
           <span className="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
