@@ -113,6 +113,7 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         plantPageItem.setTreeType(treeType);
         plantPageItem.setProjectName(projectName);
         plantPageItem.setAmount(1);
+        plantPageItem.setImageFile(article.getTreeType().getImageFile());
         return plantPageItem;
     }
 

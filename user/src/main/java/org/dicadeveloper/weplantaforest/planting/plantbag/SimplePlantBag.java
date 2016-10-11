@@ -98,6 +98,8 @@ public class SimplePlantBag {
         long treePrice;
 
         String projectName;
+        
+        String imageFile;
 
     }
 

@@ -6,7 +6,7 @@ import PieChart from 'react-simple-pie-chart';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
 
-import IconButton from '../common/components/IconButton';
+import IconButton from '../../common/components/IconButton';
 import ArticleSlider from './ArticleSlider';
 
 export default class ProjectSlider extends Component {
@@ -143,8 +143,8 @@ export default class ProjectSlider extends Component {
     return this.state.articles;
   }
 
-  getPrice(){
-      return this.state.price;
+  getPrice() {
+    return this.state.price;
   }
 
   updateMaxValue(value) {
@@ -154,7 +154,7 @@ export default class ProjectSlider extends Component {
     this.setState({maxValue: maxValue});
   }
 
-  getArticleValue(article){
+  getArticleValue(article) {
     return this.refs["article_" + article].getSliderValue();
   }
 
@@ -199,6 +199,10 @@ export default class ProjectSlider extends Component {
   setSliderValue(value, movedManually) {
     this.setState({value: value, movedManually: movedManually});
     this.balanceArticleSliders(value);
+  }
+
+  setSliderValueWithoutBalancing(value, movedManually) {
+    this.setState({value: value, movedManually: movedManually});
   }
 
   switchToProjectPlantingPage() {

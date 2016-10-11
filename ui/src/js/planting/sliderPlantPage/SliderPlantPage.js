@@ -5,18 +5,21 @@ import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
 
-import NavBar from '../common/navbar/NavBar';
-import Header from '../common/header/Header';
-import Footer from '../common/Footer';
+import NavBar from '../../common/navbar/NavBar';
+import Header from '../../common/header/Header';
+import Footer from '../../common/Footer';
+import ImageButton from '../../common/components/ImageButton';
+import IconButton from '../../common/components/IconButton';
+
+import ButtonBar from '../ButtonBar';
+import BottomPart from '../BottomPart';
 
 import MainSlider from './MainSlider';
 import ProjectSlider from './ProjectSlider';
-import ImageButton from '../common/components/ImageButton';
-import IconButton from '../common/components/IconButton';
 
 require("./plantPage.less");
 
-export default class PlantPage extends Component {
+export default class SliderPlantPage extends Component {
 
   constructor() {
     super();
@@ -41,7 +44,7 @@ export default class PlantPage extends Component {
         for (var plantItem in result.plantItems) {
           for (var project in that.state.projects) {
             if (that.state.projects[project].projectName == result.plantItems[plantItem].projectName) {
-              that.refs["project_" + project].setSliderValue(that.refs["project_" + project].getSliderValue() + result.plantItems[plantItem].amount, false);
+              that.refs["project_" + project].setSliderValueWithoutBalancing(that.refs["project_" + project].getSliderValue() + result.plantItems[plantItem].amount, false);
               for (var article in that.refs["project_" + project].getArticles()) {
                 if (that.refs["project_" + project].getArticles()[article].treeType.name == result.plantItems[plantItem].treeType) {
                   that.refs["project_" + project].setArticleValue(article, result.plantItems[plantItem].amount);
@@ -206,27 +209,11 @@ export default class PlantPage extends Component {
           <div className="row plantPage">
             <div className="col-md-12">
               <h2>{this.props.route.header}</h2>
+              <ButtonBar chosen="slider"/>
               <MainSlider ref="mainSlider" balanceProjectSliders={this.balanceProjectSlidersFromMain.bind(this)}/> {this.state.projects.map(function(project, i) {
                 return (<ProjectSlider project={project} articles={project.articles} key={i} ref={"project_" + i} balanceProjectSliders={that.balanceProjectSlidersFromProjectSlider.bind(this)} sliderIndex={i}/>);
               })}
-              <table className="bottomTable">
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td>
-                      <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice / 100, 2, ".", ",")}&nbsp;€</span>
-                    </td>
-                    <td>
-                      <ImageButton text="AB IN MEINEN<br/>PFLANZKORB" onClick={this.updatePlantBag.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="72" imageHeight="40"/>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="line">Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt?
-                <br/>
-                Hier kanns Du eine&nbsp;
-                <IconButton glyphIcon="glyphicon-forward" text="PROJEKTFLÄCHE ANBIETEN" onClick={this.switchToOfferProjectPage.bind(this)}/>
-              </div>
+              <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
             </div>
           </div>
         </div>
