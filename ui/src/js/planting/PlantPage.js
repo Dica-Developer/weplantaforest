@@ -55,6 +55,26 @@ export default class PlantPage extends Component {
     });
   }
 
+  updatePlantBag() {
+    for (var project in this.state.projects) {
+      var projectItems = {};
+      var updateProject = false;
+      for (var article in this.refs["project_" + project].getArticles()) {
+        if (this.refs["project_" + project].getArticleValue(article) > 0) {
+          projectItems[this.refs["project_" + project].getArticles()[article].treeType.name] = {
+            amount: parseInt(this.refs["project_" + project].getArticleValue(article)),
+            price: parseInt(this.refs["project_" + project].getArticles()[article].price.priceAsLong),
+            imageFile: this.refs["project_" + project].getArticles()[article].treeType.imageFile
+          };
+          updateProject = true;
+        }
+      }
+      if(updateProject){
+        this.refs["navbar"].updatePlantBag(this.refs["project_" + project].getPrice(), projectItems, this.state.projects[project].projectName);
+      }
+    }
+  }
+
   calcAndSetOverallPrice() {
     var price = 0;
     for (var project in this.state.projects) {
@@ -64,8 +84,6 @@ export default class PlantPage extends Component {
     this.refs["mainSlider"].setOverallPrice(price);
     this.forceUpdate();
   }
-
-  updatePlantBag() {}
 
   balanceProjectSlidersFromMain(value) {
     var divisionValue = Math.trunc(value / this.state.projects.length);

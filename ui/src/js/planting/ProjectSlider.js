@@ -154,6 +154,10 @@ export default class ProjectSlider extends Component {
     this.setState({maxValue: maxValue});
   }
 
+  getArticleValue(article){
+    return this.refs["article_" + article].getSliderValue();
+  }
+
   setArticleValue(article, amount) {
     this.refs["article_" + article].setSliderValue(amount, false);
     this.calcProjectPrice();

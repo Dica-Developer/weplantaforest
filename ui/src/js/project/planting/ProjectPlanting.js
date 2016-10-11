@@ -37,7 +37,7 @@ export default class ProjectPlanting extends Component {
         };
       }
     }
-    this.props.updatePlantBag(this.state.overallPrice, projectItems, this.props.projectName);
+    this.props.updatePlantBag(this.state.price, projectItems, this.props.projectName);
   }
 
   balanceArticleSliders(value) {
