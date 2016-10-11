@@ -18,7 +18,8 @@ export default class ProjectSlider extends Component {
       maxValue: 10,
       articles: [],
       showArticles: false,
-      movedManually: false
+      movedManually: false,
+      price: 0
     };
     this.balanceArticleSlidersFromArticleSlider = this.balanceArticleSlidersFromArticleSlider.bind(this);
   }
@@ -99,6 +100,7 @@ export default class ProjectSlider extends Component {
         }
       }
     }
+    this.calcProjectPrice();
   }
 
   getMovedCntAndSum() {
@@ -137,8 +139,12 @@ export default class ProjectSlider extends Component {
     return this.state.value;
   }
 
-  getArticles(){
+  getArticles() {
     return this.state.articles;
+  }
+
+  getPrice(){
+      return this.state.price;
   }
 
   updateMaxValue(value) {
@@ -148,8 +154,9 @@ export default class ProjectSlider extends Component {
     this.setState({maxValue: maxValue});
   }
 
-  setArticleValue(article, amount){
+  setArticleValue(article, amount) {
     this.refs["article_" + article].setSliderValue(amount, false);
+    this.calcProjectPrice();
   }
 
   updateSliderValue(event) {
@@ -157,9 +164,7 @@ export default class ProjectSlider extends Component {
     this.state.movedManually = true;
     this.forceUpdate();
     this.props.balanceProjectSliders(this.props.sliderIndex, event.target.value);
-    if (this.state.showArticles) {
-      this.balanceArticleSliders(event.target.value);
-    }
+    this.balanceArticleSliders(event.target.value);
   }
 
   balanceArticleSliders(value) {
@@ -175,6 +180,16 @@ export default class ProjectSlider extends Component {
         this.refs["article_" + project].setSliderValue(divisionValue, false);
       }
     }
+    this.calcProjectPrice();
+  }
+
+  calcProjectPrice() {
+    var price = 0;
+    for (var article in this.state.articles) {
+      price = price + parseInt(this.refs["article_" + article].getPrice());
+    }
+    this.state.price = price;
+    this.forceUpdate();
   }
 
   setSliderValue(value, movedManually) {
@@ -237,14 +252,16 @@ export default class ProjectSlider extends Component {
         </div>
         <div className="sliderSummary">
           <div className="priceValue">
-            100&nbsp;€
+            {Accounting.formatNumber(this.state.price / 100, 2, ".", ",")}&nbsp;€
           </div>
           <div className="treeValue">
             {this.state.value}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"/>
           </div>
         </div>
-        <div className={(this.state.showArticles ? "" : "invisible")}>
-        {this.state.articles.map(function(article, i) {
+        <div className={(this.state.showArticles
+          ? ""
+          : "invisible")}>
+          {this.state.articles.map(function(article, i) {
             return (<ArticleSlider article={article} key={i} ref={"article_" + i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)} sliderIndex={i}/>);
           })}
         </div>

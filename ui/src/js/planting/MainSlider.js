@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
+import Accounting from 'accounting';
 
 export default class MainSlider extends Component {
 
   constructor() {
     super();
     this.state = {
-      value: 5
+      value: 5,
+      price: 0
     };
   }
 
@@ -26,6 +28,11 @@ export default class MainSlider extends Component {
     this.forceUpdate();
   }
 
+  setOverallPrice(value){
+    this.state.price = value;
+    this.forceUpdate();
+  }
+
   render() {
     return (
       <div className="mainSlider">
@@ -37,7 +44,7 @@ export default class MainSlider extends Component {
         </div>
         <div className="sliderSummary">
           <div className="priceValue">
-            100&nbsp;€
+              {Accounting.formatNumber(this.state.price / 100, 2, ".", ",")}&nbsp;€
           </div>
           <div className="treeValue">
             {this.state.value}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"/>

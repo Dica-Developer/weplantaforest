@@ -22,7 +22,8 @@ export default class PlantPage extends Component {
     super();
     this.state = {
       treeCount: 5,
-      projects: []
+      projects: [],
+      overallPrice: 0
     };
     this.balanceProjectSlidersFromProjectSlider = this.balanceProjectSlidersFromProjectSlider.bind(this);
   }
@@ -40,7 +41,7 @@ export default class PlantPage extends Component {
         for (var plantItem in result.plantItems) {
           for (var project in that.state.projects) {
             if (that.state.projects[project].projectName == result.plantItems[plantItem].projectName) {
-                that.refs["project_" + project].setSliderValue(that.refs["project_" + project].getSliderValue() + result.plantItems[plantItem].amount, false);
+              that.refs["project_" + project].setSliderValue(that.refs["project_" + project].getSliderValue() + result.plantItems[plantItem].amount, false);
               for (var article in that.refs["project_" + project].getArticles()) {
                 if (that.refs["project_" + project].getArticles()[article].treeType.name == result.plantItems[plantItem].treeType) {
                   that.refs["project_" + project].setArticleValue(article, result.plantItems[plantItem].amount);
@@ -49,9 +50,19 @@ export default class PlantPage extends Component {
             }
           }
         }
+        that.calcAndSetOverallPrice();
       });
     });
+  }
 
+  calcAndSetOverallPrice() {
+    var price = 0;
+    for (var project in this.state.projects) {
+      price = price + parseInt(this.refs["project_" + project].getPrice());
+    }
+    this.state.overallPrice = price;
+    this.refs["mainSlider"].setOverallPrice(price);
+    this.forceUpdate();
   }
 
   updatePlantBag() {}
@@ -70,6 +81,7 @@ export default class PlantPage extends Component {
       }
     }
     this.setState({treeCount: value});
+    this.calcAndSetOverallPrice();
   }
 
   balanceProjectSlidersFromProjectSlider(sliderIndex, value) {
@@ -131,6 +143,7 @@ export default class PlantPage extends Component {
         }
       }
     }
+    this.calcAndSetOverallPrice();
   }
 
   getMovedCntAndSum() {
@@ -193,7 +206,7 @@ export default class PlantPage extends Component {
               </table>
               <div className="line">Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt?
                 <br/>
-                Hier kanns Du eine
+                Hier kanns Du eine&nbsp;
                 <IconButton glyphIcon="glyphicon-forward" text="PROJEKTFLÄCHE ANBIETEN" onClick={this.switchToOfferProjectPage.bind(this)}/>
               </div>
             </div>

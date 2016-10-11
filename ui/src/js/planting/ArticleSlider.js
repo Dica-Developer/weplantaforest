@@ -25,7 +25,11 @@ export default class ArticleSlider extends Component {
     return this.state.value;
   }
 
-  updateMaxValue(value){
+  getPrice() {
+    return this.state.price;
+  }
+
+  updateMaxValue(value) {
     var maxValue = ((this.props.article.amount - this.props.article.alreadyPlanted) >= value
       ? value
       : (this.props.article.amount - this.props.article.alreadyPlanted));
@@ -41,7 +45,10 @@ export default class ArticleSlider extends Component {
   }
 
   setSliderValue(value, movedManually) {
-    this.setState({value: value, movedManually: movedManually});
+    this.state.value = value;
+    this.state.movedManually = movedManually;
+    this.state.price = this.props.article.price.priceAsLong * value;
+    this.forceUpdate();
   }
 
   render() {

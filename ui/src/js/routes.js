@@ -4,7 +4,6 @@ import {Router, Route, browserHistory} from 'react-router';
 
 import MainPage from './main/MainPage';
 import PlantPage from './planting/PlantPage';
-import PlantSuccessPage from './views/PlantSuccessPage';
 import NotFoundPage from './views/NotFoundPage';
 import ExplorePage from './views/ExplorePage';
 import ProjectDetailsPage from './project/ProjectDetailsPage';
@@ -34,7 +33,6 @@ export default class Routes extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={MainPage} reRender={this.reRender.bind(this)}/>
         <Route path="/plant" component={PlantPage} reRender={this.reRender.bind(this)} header="online pflanzen"/>
-        <Route path="/plant/succcess" component={PlantSuccessPage} reRender={this.reRender.bind(this)}/>
         <Route path="/explore" component={ExplorePage} reRender={this.reRender.bind(this)}/>
         <Route path="/projects/:projectName" component={ProjectDetailsPage} reRender={this.reRender.bind(this)}/>
         <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)}/>
