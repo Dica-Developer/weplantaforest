@@ -34,7 +34,7 @@ public class ReceiptController {
     
     protected final Log LOG = LogFactory.getLog(ReceiptController.class.getName());
 
-    private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
+    private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
 
     @RequestMapping(value = Uris.RECEIPTS, method = RequestMethod.GET)
     @JsonView(Views.ReceiptOverview.class)

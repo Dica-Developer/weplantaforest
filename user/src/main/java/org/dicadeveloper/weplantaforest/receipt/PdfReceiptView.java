@@ -41,6 +41,8 @@ public class PdfReceiptView {
     private final static Font textFontHint = new Font(FontFamily.HELVETICA, 6.8f, Font.NORMAL, BaseColor.BLACK);
     private final static Font textFontHintBold = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 
+    private PdfHelper pdfHelper = new PdfHelper();
+
     public void writePdfDataToOutputStream(OutputStream toWrite, String imagePath, Receipt receipt) throws Exception {
         // create pdf
         final Document doc = new Document();
@@ -57,7 +59,7 @@ public class PdfReceiptView {
 
         PdfContentByte cb = pdfWriter.getDirectContent();
         PdfHelper.createHeaderBlock(cb);
-        PdfHelper.addLogo(cb, _imagePath, 262f, 720f);
+        pdfHelper.addLogo(cb, _imagePath, 262f, 720f);
         createGeometricObjects(cb);
         PdfHelper.createAdress(cb, 75f, 710f);
         createReceiptHeaderAndTextBelow(cb);
@@ -240,8 +242,8 @@ public class PdfReceiptView {
         table.getDefaultCell()
              .setBorder(Rectangle.NO_BORDER);
 
-        final Image signatureImage = Image.getInstance(_imagePath + "/Unterschrift150.jpg");
-        final Image stampImage = Image.getInstance(_imagePath + "/stamp.jpg");
+        final Image signatureImage = Image.getInstance(getClass().getResource(_imagePath + "/Unterschrift150.jpg"));
+        final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/stamp.jpg"));
 
         PdfPCell placeDateCell = new PdfPCell();
         placeDateCell.setVerticalAlignment(Element.ALIGN_BOTTOM);
@@ -313,7 +315,7 @@ public class PdfReceiptView {
         PdfPCell lastCellRight = new PdfPCell();
         lastCellRight.setHorizontalAlignment(Element.ALIGN_LEFT);
         lastCellRight.setBorder(Rectangle.NO_BORDER);
-        lastCellRight.addElement(new Phrase(5f,new Chunk("rückliegt (BMF vom 15.12.1994 - BStBl I S. 884).", textFontHint)));
+        lastCellRight.addElement(new Phrase(5f, new Chunk("rückliegt (BMF vom 15.12.1994 - BStBl I S. 884).", textFontHint)));
 
         table.addCell(new Phrase(new Chunk("durch einen etwaigen Abzug der Zuwendungen beim Zuwendenden", textFontHint)));
         table.addCell(new Phrase(new Chunk(" ", textFontHintBold)));
@@ -322,7 +324,7 @@ public class PdfReceiptView {
         PdfPCell lastCellLeft = new PdfPCell();
         lastCellLeft.setHorizontalAlignment(Element.ALIGN_LEFT);
         lastCellLeft.setBorder(Rectangle.NO_BORDER);
-        lastCellLeft.addElement(new Phrase(5f,new Chunk("entgeht(§10b Abs. 4 EStG, §9 Abs. 3 KStG, §9 Nr.5 GewStG).", textFontHint)));
+        lastCellLeft.addElement(new Phrase(5f, new Chunk("entgeht(§10b Abs. 4 EStG, §9 Abs. 3 KStG, §9 Nr.5 GewStG).", textFontHint)));
 
         table.addCell(lastCellLeft);
         table.addCell(new Phrase(new Chunk(" ", textFontHintBold)));

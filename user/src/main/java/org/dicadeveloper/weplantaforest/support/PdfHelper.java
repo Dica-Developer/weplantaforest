@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.support;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -61,8 +62,9 @@ public class PdfHelper {
         table.writeSelectedRows(0, 1, 0, yCoord + radius, cb);
     }
 
-    public static void addLogo(PdfContentByte cb, String imagePath, float xPos, float yPos) throws MalformedURLException, IOException, DocumentException {
-        final Image logoImage = Image.getInstance(imagePath + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg");
+    public void addLogo(PdfContentByte cb, String imagePath, float xPos, float yPos) throws MalformedURLException, IOException, DocumentException {
+        URL imageUrl = getClass().getResource(imagePath + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg");
+        final Image logoImage = Image.getInstance(imageUrl);
         logoImage.setAbsolutePosition(xPos, yPos);
         logoImage.scalePercent(3f, 3f);
         cb.addImage(logoImage);

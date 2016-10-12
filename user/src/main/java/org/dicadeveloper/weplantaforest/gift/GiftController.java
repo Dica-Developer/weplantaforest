@@ -59,7 +59,7 @@ public class GiftController {
     
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
-    private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
+    private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
 
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)

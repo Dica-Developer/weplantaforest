@@ -48,7 +48,7 @@ public class CertificateController {
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
-    private final static String RELATIVE_STATIC_IMAGES_PATH = "src/main/resources/static/images/pdf";
+    private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
 
     @RequestMapping(value = Uris.CERTIFICATE_SEARCH + "{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)

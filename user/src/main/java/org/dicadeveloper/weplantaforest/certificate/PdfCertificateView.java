@@ -30,6 +30,8 @@ public class PdfCertificateView {
     
     private final static Font textFontForCircle = new Font(FontFamily.TIMES_ROMAN, 26, Font.ITALIC, BaseColor.WHITE);
 
+    PdfHelper pdfHelper = new PdfHelper();
+    
     public void writePdfDataToOutputStream(OutputStream toWrite, final int treeCount, final String text, final String name, final String number, String imagePath) throws Exception {
         // create pdf
         final Document doc = new Document();
@@ -49,7 +51,7 @@ public class PdfCertificateView {
         PdfHelper.createCircleAndText(cb, "Zertifikat", 298f, 665f, 75f, textFontForCircle, 0x9E, 0x3C, 0x59);
         createTreeCountAndCustomTextBlock(cb, text, treeCount);
         createLawTextDateAndSignatureBlock(cb, number, date);
-        PdfHelper.addLogo(cb, imagePath, 262f, 20f);
+        pdfHelper.addLogo(cb, imagePath, 262f, 20f);
 
         doc.close();
     }
@@ -138,7 +140,7 @@ public class PdfCertificateView {
         PdfPCell emptyCell = new PdfPCell();
         emptyCell.setBorder(Rectangle.NO_BORDER);
 
-        final Image signatureImage = Image.getInstance(_imagePath + "/Unterschrift150.jpg");
+        final Image signatureImage = Image.getInstance(getClass().getResource(_imagePath + "/Unterschrift150.jpg"));
 
         PdfPCell underSignatureCell = new PdfPCell();
         underSignatureCell.setBorder(Rectangle.NO_BORDER);
