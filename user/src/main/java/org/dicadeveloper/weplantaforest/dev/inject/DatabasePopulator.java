@@ -24,6 +24,7 @@ import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.CartState;
 import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
@@ -419,7 +420,7 @@ public class DatabasePopulator {
         User buyer = _userRepository.findByName(DEFAULT_USERS.get(0));
 
         cart.setBuyer(buyer);
-
+        cart.setCartState(CartState.VERIFIED);
         Tree tree = new Tree();
         ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
         tree.setAmount(2);
