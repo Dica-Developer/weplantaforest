@@ -22,7 +22,7 @@ export default class TimeRankingItem extends Component {
       <div className="rankingItem">
         <div className="ranking-img-div">
           <span className="align-vert-Mid"></span>
-          <img className="ranking-img" src={imageUrl} title={this.props.content.treeTypeName} alt={getTextForSelectedLanguage(this.props.content.treeTypeName)}/>
+          <img className="ranking-img" src={imageUrl} title={getTextForSelectedLanguage(this.props.content.treeTypeName)} alt={getTextForSelectedLanguage(this.props.content.treeTypeName)}/>
         </div>
         <div className="rankingSummary">
           <p >

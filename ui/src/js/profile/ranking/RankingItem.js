@@ -6,6 +6,7 @@ import {Link} from 'react-router';
 import Accounting from 'accounting';
 
 import Boostrap from 'bootstrap';
+import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 
 export default class RankingItem extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ export default class RankingItem extends Component {
         <div className="rankingNumberDiv">
           <p className="rankingNumber">{this.props.rankNumber}</p>
         </div>
-        <img className="ranking-img" src={this.props.imageUrl} title={this.props.content.treeType.name} alt={this.props.content.treeType.name}/>
+        <img className="ranking-img" src={this.props.imageUrl} title={getTextForSelectedLanguage(this.props.content.treeType.name)} alt={getTextForSelectedLanguage(this.props.content.treeType.name)} />
         <div className="rankingSummary">
           <p >
             <span className="bold">Anzahl:&nbsp;</span>{Accounting.formatNumber(this.props.content.amount, 0, ".", ",")}<br/>

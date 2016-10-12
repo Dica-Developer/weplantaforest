@@ -5,6 +5,7 @@ import {Link} from 'react-router';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
+import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 import {htmlDecode} from '../../common/language/HtmlHelper';
 
 require("./rankingItem.less");
@@ -22,7 +23,7 @@ export default class RankingItem extends Component {
         <div className="rankingNumber">  <span className="align-vert-Mid"></span>{this.props.rankNumber}</div>
         <div className="ranking-img-div">
           <span className="align-vert-Mid"></span>
-          <img className="ranking-img" src={imageUrl} alt="logo"/>
+          <img className="ranking-img" src={imageUrl} alt={htmlDecode(this.props.content.name) + "-logo"} />
         </div>
         <div className="rankingSummary">
           <p >

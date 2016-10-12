@@ -12,6 +12,7 @@ import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
 import {htmlDecode} from '../common/language/HtmlHelper';
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
 export default class RankingItem extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export default class RankingItem extends Component {
     let imageUrl = 'http://localhost:8081/' + this.props.imageFolder + '/image/' + this.props.content.imageName + '/60/60';
     return (
       <div >
-        <img className="ranking-img" src={imageUrl} alt="logo"/>
+        <img className="ranking-img" src={imageUrl} alt={htmlDecode(this.props.content.name) + "-logo"}/>
         <div className="rankingSummary">
           <p >
             <Link to={`/` + this.props.imageFolder +`/` + this.props.content.name}>
