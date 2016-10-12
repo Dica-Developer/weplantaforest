@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
+import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
+
 export default class PlantItem extends Component {
 
   constructor() {
@@ -18,7 +20,7 @@ export default class PlantItem extends Component {
         </div>
         <div>
           <p>
-            <span className="uppercase">{this.props.plantItem.treeType}</span><br/>Stk.&nbsp;{Accounting.formatNumber(this.props.plantItem.treePrice / 100, 2, ".", ",")}&nbsp;€
+            <span className="uppercase">{getTextForSelectedLanguage(this.props.plantItem.treeType)}</span><br/>Stk.&nbsp;{Accounting.formatNumber(this.props.plantItem.treePrice / 100, 2, ".", ",")}&nbsp;€
           </p>
         </div>
         <div>

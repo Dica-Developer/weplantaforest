@@ -11,6 +11,7 @@ import {
   Link,
   browserHistory
 } from 'react-router';
+import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 
 import Notification from '../../common/components/Notification';
 import NavBar from '../../common/navbar/NavBar';
@@ -56,7 +57,7 @@ export default class Article extends Component {
           <img src={imageUrl} />
         </div>
         <div>
-          <p><span className="bold uppercase">{this.props.article.treeType.name}</span><br/>Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong/100, 2, ".", ",")}&nbsp;€</span></p>
+          <p><span className="bold uppercase">{getTextForSelectedLanguage(this.props.article.treeType.name)}</span><br/>Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong/100, 2, ".", ",")}&nbsp;€</span></p>
         </div>
         <div>
           <input ref="amountInput" type="text" value={this.state.value} onChange={this.updateAmount.bind(this)}/>
