@@ -34,7 +34,7 @@ export default class PlantBagPage extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    if(this.state.isGift){
+    if (this.state.isGift) {
       localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
       axios.post('http://localhost:8081/gift/create', this.state.plantBag, config).then(function(response) {
         browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
@@ -49,7 +49,7 @@ export default class PlantBagPage extends Component {
         }
         console.error('Payment failed');
       });
-    }else{
+    } else {
       localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
       axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
         browserHistory.push('/payCart/' + response.data);
@@ -67,33 +67,33 @@ export default class PlantBagPage extends Component {
     }
   }
 
-  removePlantBagItem(project, plantItem){
+  removePlantBagItem(project, plantItem) {
     delete this.state.plantBag.projects[project].plantItems[plantItem];
     this.forceUpdate();
-    if(Object.keys(this.state.plantBag.projects[project].plantItems).length === 0){
+    if (Object.keys(this.state.plantBag.projects[project].plantItems).length === 0) {
       delete this.state.plantBag.projects[project];
       this.forceUpdate();
     }
     this.calcPriceAndUpdatePlantBag();
   }
 
-  increasePlantBagItem(project, plantItem){
-    this.state.plantBag.projects[project].plantItems[plantItem].amount++
+  increasePlantBagItem(project, plantItem) {
+    this.state.plantBag.projects[project].plantItems[plantItem].amount++;
     this.forceUpdate();
     this.calcPriceAndUpdatePlantBag();
   }
 
-  decreasePlantBagItem(project, plantItem){
+  decreasePlantBagItem(project, plantItem) {
     this.state.plantBag.projects[project].plantItems[plantItem].amount--;
     this.forceUpdate();
-    if(this.state.plantBag.projects[project].plantItems[plantItem].amount == 0){
+    if (this.state.plantBag.projects[project].plantItems[plantItem].amount == 0) {
       delete this.state.plantBag.projects[project].plantItems[plantItem];
       this.forceUpdate();
     }
     this.calcPriceAndUpdatePlantBag();
   }
 
-  calcPriceAndUpdatePlantBag(){
+  calcPriceAndUpdatePlantBag() {
     var price = 0;
     for (var project in this.state.plantBag.projects) {
       for (var plantItem in this.state.plantBag.projects[project].plantItems) {
@@ -106,12 +106,27 @@ export default class PlantBagPage extends Component {
     this.refs["navbar"].updatePlantBagFromLocaleStorage();
   }
 
-  updateValue(toUpdate, value){
+  updateValue(toUpdate, value) {
     this.setState({[toUpdate]: value});
   }
 
   render() {
     var that = this;
+    var overallPriceAndPayment;
+    if (this.state.plantBag.price > 0) {
+      overallPriceAndPayment = <div><div className="doubledLine"/>
+        <div className="overallPrice">
+          GESAMT:&nbsp;{Accounting.formatNumber(this.state.plantBag.price / 100, 2, ".", ",")}&nbsp;€
+        </div>
+        <div className="align-right">
+          <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text="Als Geschenkgutschein"/><br/>
+          <IconButton glyphIcon="glyphicon-euro" text="WEITER ZUR KASSE" onClick={this.switchTOPaymentPage.bind(this)}/>
+        </div>
+      </div>;
+    }else{
+      overallPriceAndPayment = <div>Es befinden sich keine Bäume in deinem Pflanzkorb.</div>;
+    }
+
     return (
       <div>
         <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
@@ -130,19 +145,18 @@ export default class PlantBagPage extends Component {
                     <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i} price={projectPrice}>
                       {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
                         var plantItemName = getTextForSelectedLanguage(plantItem);
-                        return (<PlantBagItem plantItemName={plantItemName} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]}  key={i} removePlantBagItem={()=>{that.removePlantBagItem(project, plantItem)}} increasePlantBagItem={()=>{that.increasePlantBagItem(project, plantItem)}} decreasePlantBagItem={()=>{that.decreasePlantBagItem(project, plantItem)}}/>);
+                        return (<PlantBagItem plantItemName={plantItemName} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]} key={i} removePlantBagItem={() => {
+                          that.removePlantBagItem(project, plantItem)
+                        }} increasePlantBagItem={() => {
+                          that.increasePlantBagItem(project, plantItem)
+                        }} decreasePlantBagItem={() => {
+                          that.decreasePlantBagItem(project, plantItem)
+                        }}/>);
                       })}
                     </PlantBagProject>
                   );
                 })}
-                <div className="doubledLine"/>
-                <div className="overallPrice">
-                  GESAMT:&nbsp;{Accounting.formatNumber(this.state.plantBag.price / 100, 2, ".", ",")}&nbsp;€
-                </div>
-                <div className="align-right">
-                  <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text="Als Geschenkgutschein"/><br/>
-                  <IconButton glyphIcon="glyphicon-euro" text="WEITER ZUR KASSE" onClick={this.switchTOPaymentPage.bind(this)}/>
-                </div>
+                {overallPriceAndPayment}
               </div>
             </div>
           </div>
