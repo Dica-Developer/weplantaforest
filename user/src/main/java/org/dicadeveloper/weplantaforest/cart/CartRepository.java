@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartRepository extends CrudRepository<Cart, Long> {
 
-    public final static String FIND_CARTS_BUY_USER_ID = "SELECT cart from Cart cart where cart.buyer.id = :userId AND cart.cartState = \'VERIFIED\'";
+    public final static String FIND_CARTS_BUY_USER_ID = "SELECT cart from Cart cart where cart.buyer.id = :userId";
+    
+    public final static String FIND_VERIFIED_CARTS_BUY_USER_ID = "SELECT cart from Cart cart where cart.buyer.id = :userId AND cart.cartState = \'VERIFIED\'";
     
     public final static String FIND_CART_BY_CODE = "SELECT cart from Cart cart WHERE cart.code.code = :codeString";
 
@@ -18,6 +20,9 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
 
     @Query(value = FIND_CARTS_BUY_USER_ID)
     public List<Cart> findCartsByUserId(@Param("userId") long userId);
+    
+    @Query(value = FIND_VERIFIED_CARTS_BUY_USER_ID)
+    public List<Cart> findVerifiedCartsByUserId(@Param("userId") long userId);
     
     @Query(value = FIND_CART_BY_CODE)
     public Cart findCartByCode(@Param("codeString") String codeString);

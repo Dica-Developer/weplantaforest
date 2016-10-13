@@ -35,7 +35,7 @@ public class CartController {
         if (owner == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            List<Cart> cartList = _cartRepository.findCartsByUserId(owner.getId());
+            List<Cart> cartList = _cartRepository.findVerifiedCartsByUserId(owner.getId());
             return new ResponseEntity<>(cartList, HttpStatus.OK);
         }
     }
