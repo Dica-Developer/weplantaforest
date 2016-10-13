@@ -20,9 +20,6 @@ public interface Co2Repository extends PagingAndSortingRepository<Tree, Long> {
     @Query(GET_ALL_TREES_AND_CO2_SAVING)
     Co2Data getAllTreesAndCo2Saving(@Param("time") long timeOfMeasurement);
 
-    @Query(GET_TREES_AND_CO2_SAVING_FOR_USER_ID)
-    Co2Data getAllTreesAndCo2SavingForUserId(@Param("time") long timeOfMeasurement, @Param("userId") long userId);
-
     @Query(GET_TREES_AND_CO2_SAVING_FOR_USERNAME)
     Co2Data getAllTreesAndCo2SavingForUserName(@Param("time") long timeOfMeasurement, @Param("name") String name);
     

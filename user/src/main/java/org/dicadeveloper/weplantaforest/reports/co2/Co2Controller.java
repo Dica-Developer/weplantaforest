@@ -4,6 +4,8 @@ import org.dicadeveloper.weplantaforest.CacheConfiguration;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,8 +27,9 @@ public class Co2Controller {
     }
     
     @RequestMapping(value = Uris.REPORT_CO2_FOR_USER, method = RequestMethod.GET)
-    public Co2Data getTreesAndCo2ForUser(@RequestParam("userId") long userId) {
-        return _co2Repository.getAllTreesAndCo2SavingForUserId(System.currentTimeMillis(), userId);
+    public ResponseEntity<?> getTreesAndCo2ForUser(@RequestParam("userName") String userName) {
+        Co2Data co2Data = _co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName);
+        return new ResponseEntity<>(co2Data, HttpStatus.OK);
     }
 
 }

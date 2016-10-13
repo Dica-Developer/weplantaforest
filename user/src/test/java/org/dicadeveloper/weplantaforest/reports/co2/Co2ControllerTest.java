@@ -69,7 +69,7 @@ public class Co2ControllerTest {
         dbInjecter.injectTree("wood", "Adam", 1, 30000L);
         dbInjecter.injectTree("wood", "Bert", 1, 30000L);
 
-        this.mockMvc.perform(get(Uris.REPORT_CO2_FOR_USER).param("userId", "1")
+        this.mockMvc.perform(get(Uris.REPORT_CO2_FOR_USER).param("userName", "Adam")
                                                           .accept("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.treesCount").value(1))

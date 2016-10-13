@@ -171,4 +171,10 @@ public class Uris {
     
     public final static String BANNER_CODE = "/banner/code";
 
+    //widgets
+    
+    public final static String WIDGET = "/widget";
+    
+    public final static String WIDGET_CODE = "/widget/code";
+    
 }

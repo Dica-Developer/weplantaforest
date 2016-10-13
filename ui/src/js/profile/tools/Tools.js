@@ -8,6 +8,7 @@ import Overview from './Overview';
 import Certificates from './Certificates';
 import Receipts from './Receipts';
 import Banner from './Banner';
+import Widgets from './Widgets';
 
 require("./tools.less");
 
@@ -37,7 +38,10 @@ export default class Tools extends Component {
         break;
       case 'banner':
         content = <Banner view={this.state.view} switchTo={this.switchTo.bind(this)}/>
-      break;
+        break;
+      case 'widgets':
+        content = <Widgets view={this.state.view} switchTo={this.switchTo.bind(this)}/>
+        break;
       default:
         break;
     }

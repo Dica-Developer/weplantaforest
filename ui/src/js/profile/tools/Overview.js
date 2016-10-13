@@ -22,7 +22,7 @@ export default class Overview extends Component {
         <div className="col-md-12">
           <h2>Tools</h2>
         </div>
-        <div className="col-md-3"><img src="/assets/images/certificate.jpg" alt="widgets" width="250" height="350"/>
+        <div className="col-md-3"><img src="/assets/images/widgets.png" alt="widgets" width="250" height="350"/>
           <div className="desc">
             <IconButton text="WIDGETS" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('widgets')}}/>
             <p>
