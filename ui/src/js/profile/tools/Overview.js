@@ -47,7 +47,7 @@ export default class Overview extends Component {
             </p>
           </div>
         </div>
-        <div className="col-md-3"><img src="/assets/images/receipt.jpg" alt="banner" width="250" height="350"/><br/>
+        <div className="col-md-3"><img src="/assets/images/banner.png" alt="banner" width="250" height="350"/><br/>
           <div className="desc">
             <IconButton text="BANNER" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('banner')}}/>
             <p>

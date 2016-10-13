@@ -1,17 +1,12 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link
-} from 'react-router';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
+import {Link} from 'react-router';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
 import Notification from '../../common/components/Notification';
 import IconButton from '../../common/components/IconButton';
+import RadioButton from '../../common/components/RadioButton';
 import ButtonBar from './ButtonBar';
 
 export default class Banner extends Component {
@@ -20,7 +15,6 @@ export default class Banner extends Component {
     this.state = {
       type: 'white',
       format: 'high',
-      chosen: -1,
       htmlCode: '',
       width: 100,
       height: 0
@@ -33,24 +27,24 @@ export default class Banner extends Component {
     this.generateHtmlCode();
   }
 
+  updateBannerWidth(event) {
+    this.state.width = event.target.value;
+    this.forceUpdate();
+    this.generateHtmlCode();
+  }
+
   updateType(event) {
-    this.setState({
-      type: event.target.value
-    });
+    this.state.type = event.target.value;
+    this.forceUpdate();
+    this.generateHtmlCode();
   }
 
   updateFormat(event) {
-    this.setState({
-      format: event.target.value
-    });
+    this.setState({format: event.target.value});
     if (this.state.format == 'high') {
-      this.setState({
-        width: 100
-      });
+      this.setState({width: 100});
     } else {
-      this.setState({
-        height: 100
-      });
+      this.setState({height: 100});
     }
 
   }
@@ -84,30 +78,47 @@ export default class Banner extends Component {
       banner2 = 'http://localhost:8081/banner?type=' + this.state.type + '&width=100&height=200';
       banner3 = 'http://localhost:8081/banner?type=' + this.state.type + '&width=100&height=300';
       banner4 = 'http://localhost:8081/banner?type=' + this.state.type + '&width=100&height=400';
-      bannerImages = <div className="bannerImages">
-        <div>
-          <img src={banner1} /><br/>
-          <input type="radio" name="100" checked={this.state.height == 100} id="radio-100" value="100" onChange={this.updateBannerHeight.bind(this)}/>
-          <label htmlFor="radio-100">&nbsp;100&nbsp;x&nbsp;100&nbsp;px</label>
+      bannerImages = <div className="bannerImages-high">
+        <div className="image">
+          <img src={banner1}/><br/>
+          <RadioButton id="radio-100" value="100" checked={this.state.height == 100} onChange={this.updateBannerHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;100&nbsp;px"/>
         </div>
-        <div>
-          <img src={banner2} /><br/>
-          <input type="radio" name="200" checked={this.state.height == 200} id="radio-200" value="200" onChange={this.updateBannerHeight.bind(this)}/>
-          <label htmlFor="radio-200">&nbsp;100&nbsp;x&nbsp;200&nbsp;px</label>
+        <div className="image">
+          <img src={banner2}/><br/>
+          <RadioButton id="radio-200" value="200" checked={this.state.height == 200} onChange={this.updateBannerHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;200&nbsp;px"/>
         </div>
-        <div>
-          <img src={banner3} /><br/>
-          <input type="radio" name="300" checked={this.state.height == 300} id="radio-300" value="300" onChange={this.updateBannerHeight.bind(this)}/>
-          <label htmlFor="radio-300">&nbsp;100&nbsp;x&nbsp;300&nbsp;px</label>
+        <div className="image">
+          <img src={banner3}/><br/>
+          <RadioButton id="radio-300" value="300" checked={this.state.height == 300} onChange={this.updateBannerHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;300&nbsp;px"/>
         </div>
-        <div>
-          <img src={banner4} /><br/>
-          <input type="radio" name="400" checked={this.state.height == 400} id="radio-400" value="400" onChange={this.updateBannerHeight.bind(this)} />
-          <label htmlFor="radio-400">&nbsp;100&nbsp;x&nbsp;400&nbsp;px</label>
+        <div className="image">
+          <img src={banner4}/><br/>
+          <RadioButton id="radio-400" value="400" checked={this.state.height == 400} onChange={this.updateBannerHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;400&nbsp;px"/>
         </div>
       </div>;
     } else {
-      bannerImages = '';
+      banner1 = 'http://localhost:8081/banner?type=' + this.state.type + '&width=100&height=100';
+      banner2 = 'http://localhost:8081/banner?type=' + this.state.type + '&width=200&height=100';
+      banner3 = 'http://localhost:8081/banner?type=' + this.state.type + '&width=300&height=100';
+      banner4 = 'http://localhost:8081/banner?type=' + this.state.type + '&width=400&height=100';
+      bannerImages = <div className="banner-images-cross">
+        <div className="image">
+          <RadioButton id="radio-c-100" value="100" checked={this.state.width == 100} onChange={this.updateBannerWidth.bind(this)} text="&nbsp;100&nbsp;x&nbsp;100&nbsp;px"/>
+          <img src={banner1}/><br/>
+        </div>
+        <div className="image">
+          <RadioButton id="radio-c-200" value="200" checked={this.state.width == 200} onChange={this.updateBannerWidth.bind(this)} text="&nbsp;200&nbsp;x&nbsp;100&nbsp;px"/>
+          <img src={banner2}/><br/>
+        </div>
+        <div className="image">
+          <RadioButton id="radio-c-300" value="300" checked={this.state.width == 300} onChange={this.updateBannerWidth.bind(this)} text="&nbsp;300&nbsp;x&nbsp;100&nbsp;px"/>
+          <img src={banner3}/><br/>
+        </div>
+        <div className="image">
+          <RadioButton id="radio-c-400" value="400" checked={this.state.width == 400} onChange={this.updateBannerWidth.bind(this)} text="&nbsp;400&nbsp;x&nbsp;100&nbsp;px"/>
+          <img src={banner4}/><br/>
+        </div>
+      </div>;
     }
 
     return (
@@ -115,28 +126,30 @@ export default class Banner extends Component {
         <h2>Tools&nbsp;/&nbsp;Banner</h2>
         <div className="content">
           <div className="banner">
+            {bannerImages}
             <div className="typeChoser">
-              <div><p>Farbe:&nbsp;</p>
-                <select onChange={this.updateType.bind(this)} >
+              <div>
+                <p>Farbe:&nbsp;</p>
+                <select onChange={this.updateType.bind(this)}>
                   <option value="white">weiß</option>
                   <option value="green">grün</option>
                 </select>
               </div>
-              <div><p>Format:&nbsp;</p>
-                <select onChange={this.updateFormat.bind(this)} >
+              <div>
+                <p>Format:&nbsp;</p>
+                <select onChange={this.updateFormat.bind(this)}>
                   <option value="high">hoch</option>
                   <option value="cross">quer</option>
                 </select>
               </div>
             </div>
-            {bannerImages}
             <div className="codeSnippet">
               <p>Einbettungs-Code:</p>
-              <textarea rows="4" cols="50" maxLength="250" value={this.state.htmlCode} />
+              <textarea rows="4" cols="50" maxLength="250" value={this.state.htmlCode}/>
             </div>
           </div>
         </div>
-        <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view} />
+        <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view}/>
         <Notification ref="notification"/>
       </div>
     );
