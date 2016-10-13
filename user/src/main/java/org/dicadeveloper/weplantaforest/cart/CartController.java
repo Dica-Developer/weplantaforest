@@ -28,7 +28,7 @@ public class CartController {
     @Autowired
     private TokenAuthenticationService _tokenAuthenticationService;
 
-    @RequestMapping(value = Uris.CART_SHORT_VIEW + "{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.VERIFIFIED_CART_SHORT_VIEW + "{userId}", method = RequestMethod.GET)
     @JsonView(Views.ShortCart.class)
     public ResponseEntity<List<Cart>> getShortCartsByUser(@RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
         User owner = _tokenAuthenticationService.getUserFromToken(userToken);

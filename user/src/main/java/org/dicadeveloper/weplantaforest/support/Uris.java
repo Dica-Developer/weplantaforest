@@ -86,7 +86,7 @@ public class Uris {
 
     // carts
 
-    public final static String CART_SHORT_VIEW = "/carts/search/short";
+    public final static String VERIFIFIED_CART_SHORT_VIEW = "/carts/search/short";
 
     // gifts
     public final static String GIFTS_BY_CONSIGNOR = "/gift/search/consignor";

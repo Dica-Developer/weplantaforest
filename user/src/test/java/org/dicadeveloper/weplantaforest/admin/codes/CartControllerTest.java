@@ -61,7 +61,7 @@ public class CartControllerTest {
 
     @Test
     @Transactional
-    public void testGetShortCartByUserId() throws Exception {
+    public void testGetVerifiedShortCartByUserId() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
 
         dbInjecter.injectUser("Adam");
@@ -77,7 +77,7 @@ public class CartControllerTest {
 
         dbInjecter.injectCart("Adam", treeIds, timeOfPlanting);
 
-        this.mockMvc.perform(get(Uris.CART_SHORT_VIEW).accept("application/json")
+        this.mockMvc.perform(get(Uris.VERIFIFIED_CART_SHORT_VIEW).accept("application/json")
                                                       .header("X-AUTH-TOKEN", userToken))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
@@ -88,7 +88,7 @@ public class CartControllerTest {
 
     @Test
     @Transactional
-    public void testGetShortCartsByUserId() throws Exception {
+    public void testGetVerifiedShortCartsByUserId() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
 
         dbInjecter.injectUser("Adam");
@@ -118,7 +118,7 @@ public class CartControllerTest {
 
         dbInjecter.injectCart("Adam", treeIds2, timeOfPlanting);
 
-        this.mockMvc.perform(get(Uris.CART_SHORT_VIEW).accept("application/json")
+        this.mockMvc.perform(get(Uris.VERIFIFIED_CART_SHORT_VIEW).accept("application/json")
                                                       .header("X-AUTH-TOKEN", userToken))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))

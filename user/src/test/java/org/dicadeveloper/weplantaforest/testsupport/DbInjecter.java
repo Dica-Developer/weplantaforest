@@ -13,6 +13,7 @@ import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.CartState;
 import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.code.Code;
@@ -269,7 +270,8 @@ public class DbInjecter {
         Cart cart = new Cart();
         cart.setBuyer(_userRepository.findByName(buyer));
         cart.setTimeStamp(timeStamp);
-
+        cart.setCartState(CartState.VERIFIED);
+        
         List<Tree> trees = _treeRepository.findTreesByIdIn(treeIds);
 
         for (Tree tree : trees) {
