@@ -7,6 +7,7 @@ import Boostrap from 'bootstrap';
 import Overview from './Overview';
 import Certificates from './Certificates';
 import Receipts from './Receipts';
+import Banner from './Banner';
 
 require("./tools.less");
 
@@ -34,6 +35,9 @@ export default class Tools extends Component {
       case 'receipts':
         content = <Receipts view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
         break;
+      case 'banner':
+        content = <Banner view={this.state.view} switchTo={this.switchTo.bind(this)}/>
+      break;
       default:
         break;
     }

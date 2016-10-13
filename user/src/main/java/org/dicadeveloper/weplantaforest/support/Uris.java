@@ -163,5 +163,12 @@ public class Uris {
     //captcha
     
     public final static String GENERATE_CAPTCHA = "/captcha/generate";
+    
+    
+    //banner
+    
+    public final static String BANNER = "/banner";
+    
+    public final static String BANNER_CODE = "/banner/code";
 
 }
