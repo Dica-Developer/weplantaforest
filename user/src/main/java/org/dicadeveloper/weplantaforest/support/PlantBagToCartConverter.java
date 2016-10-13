@@ -66,8 +66,7 @@ public class PlantBagToCartConverter {
         return cart;
     }
 
-    public Cart convertSimplePlantPageDataToCart(SimplePlantBag simplePlantPageData) {
-        User buyer = _userRepository.findOne(simplePlantPageData.getUserId());
+    public Cart convertSimplePlantPageDataToCart(SimplePlantBag simplePlantPageData, User buyer) {
 
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());

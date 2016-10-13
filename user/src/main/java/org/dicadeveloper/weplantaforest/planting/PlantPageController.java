@@ -49,13 +49,17 @@ public class PlantPageController {
     @RequestMapping(value = Uris.COMPLEX_DONATION, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<Long> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) {
-        if (_plantPageDataValidator.isPlantPageDataValid(plantBag)) {
-            User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
-            Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer);
-            _cartRepository.save(cart);
-            return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);
+        User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (buyer != null) {
+            if (_plantPageDataValidator.isPlantPageDataValid(plantBag)) {
+                Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer);
+                _cartRepository.save(cart);
+                return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
