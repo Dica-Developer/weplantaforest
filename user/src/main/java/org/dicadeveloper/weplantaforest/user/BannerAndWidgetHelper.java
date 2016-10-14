@@ -74,7 +74,7 @@ public class BannerAndWidgetHelper {
             }
             graphics.setFont(new Font("Georgia", Font.PLAIN, 10));
             graphics.drawString("Bäume : ", 8, 82);
-            graphics.drawString("        CO2 : ", 8, 95);
+            graphics.drawString("CO2 : ", 22, 95);
             graphics.setFont(new Font("Arial", Font.PLAIN, 10));
             graphics.drawString(co2DataForUser.getTreesCount()
                                               .toString(),
