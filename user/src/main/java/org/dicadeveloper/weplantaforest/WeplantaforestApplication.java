@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.hateoas.config.EnableEntityLinks;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableEntityLinks
 @EntityScan(basePackageClasses = { WeplantaforestApplication.class, Jsr310JpaConverters.class })
 @EnableCaching
+@EnableScheduling
 public class WeplantaforestApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
