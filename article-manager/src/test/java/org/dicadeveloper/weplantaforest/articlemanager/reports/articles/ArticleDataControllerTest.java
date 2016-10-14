@@ -98,7 +98,7 @@ public class ArticleDataControllerTest {
 
     @Test
     public void testGetImageNonScaled() throws Exception {
-        createArticleFolderAndInsertImage(1, "article1.jpg");
+        createArticleFolderAndInsertImage("article1.jpg");
 
         this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}", "1", "article1.jpg").accept("image/jpg"))
                     .andExpect(status().isOk());
@@ -112,7 +112,7 @@ public class ArticleDataControllerTest {
 
     @Test
     public void testGetImageScaled() throws Exception {
-        createArticleFolderAndInsertImage(1, "article1.jpg");
+        createArticleFolderAndInsertImage( "article1.jpg");
 
         this.mockMvc.perform(get("/article/image/{articleId}/{imageName:.+}/{width}/{height}", "1", "article1.jpg", 500, 500).accept("image/jpg"))
                     .andExpect(status().isOk());
@@ -124,11 +124,9 @@ public class ArticleDataControllerTest {
                     .andExpect(status().isBadRequest());
     }
 
-    private void createArticleFolderAndInsertImage(long articleId, String imageName) {
-        new File(FileSystemInjector.getArticleFolder() + "/" + articleId).mkdir();
-
+    private void createArticleFolderAndInsertImage(String imageName) {      
         Path imageFileSrc = new File(DatabasePopulatorForArticleManager.DUMMY_IMAGE_FOLDER + imageName).toPath();
-        String imageFileDest = FileSystemInjector.getArticleFolder() + "/" + articleId + "/" + imageName;
+        String imageFileDest = FileSystemInjector.getArticleFolder() + "/" + imageName;
 
         try {
             File newImageFile = new File(imageFileDest);
