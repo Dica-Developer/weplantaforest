@@ -58,6 +58,11 @@ public class ProjectReportController {
     public List<ProjectReportData> getActiveProjects() {
         return _projectReportRepository.getActiveProjects();
     }
+    
+    @RequestMapping(value = Uris.REPORT_INACTIVE_PROJECTS, method = RequestMethod.GET)
+    public Page<ProjectReportData> getInActiveProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
+        return _projectReportRepository.getInActiveProjects(new PageRequest(page, size));
+    }
 
     @RequestMapping(value = Uris.PROJECT_SEARCH_NAME + "{projectName}", method = RequestMethod.GET)
     public ProjectReportData getProjectDataByName(@PathVariable(value = "projectName") String projectName) {

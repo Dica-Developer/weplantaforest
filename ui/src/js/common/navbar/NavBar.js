@@ -79,7 +79,7 @@ export default class NavBar extends Component {
       <div>
         <Menu ref="left" alignment="left">
           <MenuItem hash="first-page">PFLANZUNGEN</MenuItem>
-          <MenuItem hash="/explore">PROJEKTFLÄCHEN</MenuItem>
+          <MenuItem hash="/projects">PROJEKTFLÄCHEN</MenuItem>
           <MenuItem hash="/certificate/find">FINDEN</MenuItem>
           <MenuItem hash="5">GUTSCHEIN ERSTELLEN</MenuItem>
           <MenuItem hash="/gift/redeem">GUTSCHEIN EINLÖSEN</MenuItem>

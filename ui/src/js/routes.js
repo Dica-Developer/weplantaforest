@@ -22,6 +22,7 @@ import ResetPasswordPage from './password/resetPassword/ResetPasswordPage';
 import GiftOverview from './gifts/overview/GiftOverview';
 import RedeemGiftPage from './gifts/redeem/RedeemGiftPage'
 import FindTreePage from './findTree/FindTreePage';
+import ProjectsPage from './projects/ProjectsPage'
 
 export default class Routes extends Component {
 
@@ -36,7 +37,7 @@ export default class Routes extends Component {
         <Route path="/plant/:amount" component={ProposalPlantPage} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
         <Route path="/plant2" component={SliderPlantPage} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
         <Route path="/plant3" component={CustomPlantPage} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
-        <Route path="/explore" component={ExplorePage} reRender={this.reRender.bind(this)}/>
+        <Route path="/projects" component={ProjectsPage} reRender={this.reRender.bind(this)}/>
         <Route path="/projects/:projectName" component={ProjectDetailsPage} reRender={this.reRender.bind(this)}/>
         <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)}/>
         <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>
