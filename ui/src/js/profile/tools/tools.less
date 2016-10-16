@@ -13,26 +13,40 @@
 
   .desc {
     padding-left: 5px;
+    .iconButton {
+      margin-bottom: 10px;
+    }
+    .iconButton:hover {
+      .glyphicon {
+        color: #82AB1F;
+      }
+      a {
+        color: #82AB1F;
+      }
+    }
   }
 
-  .iconButton {
-    margin-bottom: 10px;
-  }
-  .iconButton:hover {
-    .glyphicon {
-      color: #82AB1F;
-    }
-    a {
-      color: #82AB1F;
-    }
-  }
+  .buttons {
 
-  .chosen {
-    .glyphicon {
-      color: #82AB1F;
+    .iconButton {
+      margin-bottom: 10px;
     }
-    a {
-      color: #82AB1F;
+    .iconButton:hover {
+      .glyphicon {
+        color: #82AB1F;
+      }
+      a {
+        color: #82AB1F;
+      }
+    }
+
+    .chosen {
+      .glyphicon {
+        color: #82AB1F;
+      }
+      a {
+        color: #82AB1F;
+      }
     }
   }
 
@@ -94,7 +108,7 @@
         }
       }
       .bannerImages-high {
-        .image{
+        .image {
           display: inline-block;
           text-align: center;
           width: 25%;
@@ -105,7 +119,7 @@
         .image {
           display: inline-block;
           width: 50%;
-          .radioButton{
+          .radioButton {
             margin-right: 10px;
           }
         }
@@ -143,7 +157,7 @@
         }
       }
       .widgets-images-high {
-        .image{
+        .image {
           display: inline-block;
           text-align: center;
           width: 25%;
@@ -154,21 +168,39 @@
         .image {
           display: inline-block;
           width: 50%;
-          .radioButton{
+          .radioButton {
             margin-right: 10px;
           }
         }
       }
 
-      .codeSnippet {
+      .code-and-options {
         padding-top: 10px;
         border-width: 1px;
         border-style: solid none none none;
-        text-align: center;
-        p {
-          display: inline;
+        .options {
           vertical-align: top;
-          margin-right: 5px;
+          display: inline-block;
+          width: 40%;
+          text-align: center;
+          .leftRightSwitch{
+            margin-bottom: 10px;
+          }
+
+          p{
+            text-align: left;
+            margin: 0;
+          }
+        }
+        .code {
+          display: inline-block;
+          width: 60%;
+          text-align: left;
+          p {
+            display: inline;
+            vertical-align: top;
+            margin-right: 5px;
+          }
         }
       }
     }

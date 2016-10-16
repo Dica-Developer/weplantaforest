@@ -1,12 +1,6 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link
-} from 'react-router';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
+import {Link} from 'react-router';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import moment from 'moment';
@@ -14,6 +8,7 @@ import Accounting from 'accounting';
 
 import RadioButton from '../../common/components/RadioButton';
 import IconButton from '../../common/components/IconButton';
+import LeftRightSwitch from '../../common/components/LeftRightSwitch';
 import ButtonBar from './ButtonBar';
 
 export default class Widgets extends Component {
@@ -41,24 +36,18 @@ export default class Widgets extends Component {
     this.generateHtmlCode();
   }
 
-  updateType(event) {
-    this.state.type = event.target.value;
+  updateType(value) {
+    this.state.type = value;
     this.forceUpdate();
     this.generateHtmlCode();
   }
 
-  updateFormat(event) {
-    this.setState({
-      format: event.target.value
-    });
-    if (this.state.format == 'high') {
-      this.setState({
-        width: 100
-      });
+  updateFormat(value) {
+    this.setState({format: value});
+    if (value == 'high') {
+      this.setState({width: 100});
     } else {
-      this.setState({
-        height: 100
-      });
+      this.setState({height: 100});
     }
 
   }
@@ -67,9 +56,7 @@ export default class Widgets extends Component {
     var that = this;
     axios.get('http://localhost:8081/widget/code?userName=' + this.state.userName + '&type=' + this.state.type + '&width=' + this.state.width + '&height=' + this.state.height).then(function(response) {
       var result = response.data;
-      that.setState({
-        htmlCode: result
-      });
+      that.setState({htmlCode: result});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -95,46 +82,46 @@ export default class Widgets extends Component {
       widget3 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=300';
       widget4 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=400';
       widgets = <div className="widgets-images-high">
-      <div className="image">
-        <img src={widget1}/><br/>
-        <RadioButton id="radio-100" value="100" checked={this.state.height == 100} onChange={this.updateWidgetHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;100&nbsp;px"/>
-      </div>
-      <div className="image">
-        <img src={widget2}/><br/>
-        <RadioButton id="radio-200" value="200" checked={this.state.height == 200} onChange={this.updateWidgetHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;200&nbsp;px"/>
-      </div>
-      <div className="image">
-        <img src={widget3}/><br/>
-        <RadioButton id="radio-300" value="300" checked={this.state.height == 300} onChange={this.updateWidgetHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;300&nbsp;px"/>
-      </div>
-      <div className="image">
-        <img src={widget4}/><br/>
-        <RadioButton id="radio-400" value="400" checked={this.state.height == 400} onChange={this.updateWidgetHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;400&nbsp;px"/>
-      </div>
-    </div>;
+        <div className="image">
+          <img src={widget1}/><br/>
+          <RadioButton id="radio-100" value="100" checked={this.state.height == 100} onChange={this.updateWidgetHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;100&nbsp;px"/>
+        </div>
+        <div className="image">
+          <img src={widget2}/><br/>
+          <RadioButton id="radio-200" value="200" checked={this.state.height == 200} onChange={this.updateWidgetHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;200&nbsp;px"/>
+        </div>
+        <div className="image">
+          <img src={widget3}/><br/>
+          <RadioButton id="radio-300" value="300" checked={this.state.height == 300} onChange={this.updateWidgetHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;300&nbsp;px"/>
+        </div>
+        <div className="image">
+          <img src={widget4}/><br/>
+          <RadioButton id="radio-400" value="400" checked={this.state.height == 400} onChange={this.updateWidgetHeight.bind(this)} text="&nbsp;100&nbsp;x&nbsp;400&nbsp;px"/>
+        </div>
+      </div>;
     } else {
       widget1 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=100';
       widget2 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=200&height=100';
       widget3 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=300&height=100';
       widget4 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=400&height=100';
       widgets = <div className="widgets-images-cross">
-      <div className="image">
-        <RadioButton id="radio-c-100" value="100" checked={this.state.width == 100} onChange={this.updateWidgetWidth.bind(this)} text="&nbsp;100&nbsp;x&nbsp;100&nbsp;px"/>
-        <img src={widget1}/><br/>
-      </div>
-      <div className="image">
-        <RadioButton id="radio-c-200" value="200" checked={this.state.width == 200} onChange={this.updateWidgetWidth.bind(this)} text="&nbsp;200&nbsp;x&nbsp;100&nbsp;px"/>
-        <img src={widget2}/><br/>
-      </div>
-      <div className="image">
-        <RadioButton id="radio-c-300" value="300" checked={this.state.width == 300} onChange={this.updateWidgetWidth.bind(this)} text="&nbsp;300&nbsp;x&nbsp;100&nbsp;px"/>
-        <img src={widget3}/><br/>
-      </div>
-      <div className="image">
-        <RadioButton id="radio-c-400" value="400" checked={this.state.width == 400} onChange={this.updateWidgetWidth.bind(this)} text="&nbsp;400&nbsp;x&nbsp;100&nbsp;px"/>
-        <img src={widget4}/><br/>
-      </div>
-    </div>;
+        <div className="image">
+          <RadioButton id="radio-c-100" value="100" checked={this.state.width == 100} onChange={this.updateWidgetWidth.bind(this)} text="&nbsp;100&nbsp;x&nbsp;100&nbsp;px"/>
+          <img src={widget1}/><br/>
+        </div>
+        <div className="image">
+          <RadioButton id="radio-c-200" value="200" checked={this.state.width == 200} onChange={this.updateWidgetWidth.bind(this)} text="&nbsp;200&nbsp;x&nbsp;100&nbsp;px"/>
+          <img src={widget2}/><br/>
+        </div>
+        <div className="image">
+          <RadioButton id="radio-c-300" value="300" checked={this.state.width == 300} onChange={this.updateWidgetWidth.bind(this)} text="&nbsp;300&nbsp;x&nbsp;100&nbsp;px"/>
+          <img src={widget3}/><br/>
+        </div>
+        <div className="image">
+          <RadioButton id="radio-c-400" value="400" checked={this.state.width == 400} onChange={this.updateWidgetWidth.bind(this)} text="&nbsp;400&nbsp;x&nbsp;100&nbsp;px"/>
+          <img src={widget4}/><br/>
+        </div>
+      </div>;
     }
     return (
       <div className="col-md-12">
@@ -142,29 +129,20 @@ export default class Widgets extends Component {
         <div className="content">
           <div className="widgets">
             {widgets}
-            <div className="typeChoser">
-              <div>
-                <p>Farbe:&nbsp;</p>
-                <select onChange={this.updateType.bind(this)}>
-                  <option value="white">weiß</option>
-                  <option value="green">grün</option>
-                </select>
+            <div className="code-and-options">
+              <div className="options">
+                <p>weitere Optionen:</p>
+                <LeftRightSwitch leftText="weiß" rightText="grün" leftValue="white" rightValue="green" chosenValue={this.state.type} onClick={this.updateType.bind(this)}/><br/>
+                <LeftRightSwitch leftText="hoch" rightText="quer" leftValue="high" rightValue="cross" chosenValue={this.state.format} onClick={this.updateFormat.bind(this)}/>
               </div>
-              <div>
-                <p>Format:&nbsp;</p>
-                <select onChange={this.updateFormat.bind(this)}>
-                  <option value="high">hoch</option>
-                  <option value="cross">quer</option>
-                </select>
+              <div className="code">
+                <p>Einbettungs-Code:</p>
+                <textarea rows="4" cols="50" maxLength="250" value={this.state.htmlCode}/>
               </div>
-            </div>
-            <div className="codeSnippet">
-              <p>Einbettungs-Code:</p>
-              <textarea rows="4" cols="50" maxLength="250" value={this.state.htmlCode}/>
             </div>
           </div>
         </div>
-        <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view} />
+        <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view}/>
       </div>
     );
   }

@@ -11,14 +11,14 @@ import Boostrap from 'bootstrap';
 
 import IconButton from '../../common/components/IconButton';
 
-export default class Certificates extends Component {
+export default class ButtonBar extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-      <div>
+      <div className="buttons">
         <div className="col-md-4 align-center">
           <IconButton text="ÜBERSICHT" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('overview')}}/>
         </div>
