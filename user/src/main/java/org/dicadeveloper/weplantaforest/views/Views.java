@@ -34,6 +34,9 @@ public interface Views {
 
     }
 
+    /*
+     * Receipt.receiptId, Receipt.createdOn, Receipt.invoiceNumber
+     */
     public static interface ReceiptOverview {
 
     }
