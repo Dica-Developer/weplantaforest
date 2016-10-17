@@ -44,17 +44,11 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             // .headers()
             // .cacheControl();
 
-        // only for testing, concrete config has to be implemented later
-        http.authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/simplePlantProposalForTrees/2")
-            .hasRole("USER")
-            .and()
-
             // custom JSON based authentication by POST of
             // {"name":"<name>","password":"<password>"} which sets the
             // token
             // header upon authentication
-            .addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+            http.addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 
             // custom Token based authentication based on the header previously
             // given to the client
