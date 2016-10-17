@@ -50,6 +50,10 @@ public class CertificateController {
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
 
+    
+    /*
+     * returns a list of trees belonging to the certificate number
+     */
     @RequestMapping(value = Uris.CERTIFICATE_SEARCH + "{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     @Transactional
@@ -67,7 +71,9 @@ public class CertificateController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
+    /*
+     * returns the summary of the belonging certificate number(creator-name and text)
+     */
     @RequestMapping(value = Uris.CERTIFICATE_SUMMARY + "{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.CertificateSummary.class)
     public ResponseEntity<Certificate> findCertificateText(@PathVariable("certificateNumber") String certificateNumber) {
@@ -81,9 +87,12 @@ public class CertificateController {
         }
     }
 
+    /*
+     * generating an entry into table Certificate
+     */
     @RequestMapping(value = Uris.CERTIFICATE_CREATE, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> createCertificate(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, HttpServletResponse response, @RequestBody CertificateRequestData requestData) {
+    public ResponseEntity<?> createCertificate(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody CertificateRequestData requestData) {
         User user = _tokenAuthenticationService.getUserFromToken(userToken);
 
         if (user == null) {
@@ -108,6 +117,9 @@ public class CertificateController {
         }
     }
 
+    /*
+     * getting the PDF document belonging to the certificateNumber
+     */
     @RequestMapping(value = Uris.CERTIFICATE_PDF + "{certificateNumber:.+}", method = RequestMethod.GET, headers = "Accept=application/pdf")
     @Transactional
     public ResponseEntity<?> getCertificatePdf(HttpServletResponse response, @PathVariable String certificateNumber) {
