@@ -15,7 +15,7 @@ import RecipientGiftItem from './RecipientGiftItem';
 
 require("./gifts.less");
 
-export default class ProjectOfferPage extends Component {
+export default class GiftOverview extends Component {
 
   constructor(props) {
     super(props);

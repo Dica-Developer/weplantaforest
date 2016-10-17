@@ -22,6 +22,10 @@ public interface Views {
 
     }
 
+    /*
+     * Gift.id, Gift.code.code, Gift.consignor.name, Gift.recipient.name, Gift.
+     * status
+     */
     public static interface OverviewGift {
 
     }

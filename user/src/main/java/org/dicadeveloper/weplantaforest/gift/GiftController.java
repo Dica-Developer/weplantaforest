@@ -56,49 +56,59 @@ public class GiftController {
     private @NonNull CodeGenerator _codeGenerator;
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
-    
+
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
 
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public List<Gift> findGiftsByConsignor(@RequestParam String userName) {
-        return _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
+    public ResponseEntity<?> findGiftsByConsignor(@RequestParam String userName) {
+        List<Gift> gifts = _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
+        return new ResponseEntity<>(gifts, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.GIFTS_BY_RECIPIENT, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public List<Gift> findGiftsByRecipient(@RequestParam String userName) {
-        return _giftRepository.findGiftsByRecipient(userName);
+    public ResponseEntity<?> findGiftsByRecipient(@RequestParam String userName) {
+        List<Gift> gifts = _giftRepository.findGiftsByRecipient(userName);
+        return new ResponseEntity<>(gifts, HttpStatus.OK);
     }
 
+    /*
+     * inserting Gift and Cart to database and returning the
+     * cartId(responseIds[0]) and giftId(responseIds[1])
+     */
     @RequestMapping(value = Uris.GIFT_CREATE, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) {
-        if (_plantBagValidator.isPlantPageDataValid(plantBag)) {
-            Long[] responseIds = new Long[2];
+        User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (consignor != null) {
+            if (_plantBagValidator.isPlantPageDataValid(plantBag)) {
+                Long[] responseIds = new Long[2];
 
-            User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
-            Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor);
+                Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor);
 
-            Gift gift = new Gift();
-            gift.setConsignor(consignor);
-            gift.setStatus(Status.NEW);
+                Gift gift = new Gift();
+                gift.setConsignor(consignor);
+                gift.setStatus(Status.NEW);
 
-            Code code = _codeGenerator.generate(gift);
-            code.setTreeCount(cart.getTreeCount());
+                Code code = _codeGenerator.generate(gift);
+                code.setTreeCount(cart.getTreeCount());
 
-            gift.setCode(code);
-            _giftRepository.save(gift);
+                gift.setCode(code);
+                _giftRepository.save(gift);
 
-            cart.setCode(code);
-            cart.setGift(true);
-            _cartRepository.save(cart);
+                cart.setCode(code);
+                cart.setGift(true);
+                _cartRepository.save(cart);
 
-            responseIds[0] = cart.getId();
-            responseIds[1] = gift.getId();
-            return new ResponseEntity<>(responseIds, HttpStatus.OK);
+                responseIds[0] = cart.getId();
+                responseIds[1] = gift.getId();
+                return new ResponseEntity<>(responseIds, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -134,7 +144,7 @@ public class GiftController {
                 Gift gift = _giftRepository.findGiftByCode(giftCode);
                 if (gift.getStatus() == Status.REDEEMED) {
                     responseMessage = _messageByLocaleService.getMessage("gift.already.redeemed", recipient.getLang().getLocale());
-                    return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
                 } else {
                     Cart cartToGift = _cartRepository.findCartByCode(giftCode);
 
