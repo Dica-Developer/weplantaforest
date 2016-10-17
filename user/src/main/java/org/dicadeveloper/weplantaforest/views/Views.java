@@ -46,6 +46,9 @@ public interface Views {
 
     }
 
+    /*
+     * TreeType.id, TreeType.name
+     */
     public static interface ShortTreeType {
 
     }
