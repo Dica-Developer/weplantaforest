@@ -45,10 +45,7 @@ public class PaymentHelper {
 
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
             Map<String, String> params = createParams(cart, paymentData);
-            // System.out.println("creating BasicNameValuePairs");
             for (Entry<String, String> entry : params.entrySet()) {
-                // System.out.println("key: " + entry.getKey() + " | value: " +
-                // entry.getValue());
                 urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
 
@@ -57,13 +54,11 @@ public class PaymentHelper {
             HttpResponse response = httpClient.execute(httpPost);
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
             StringBuffer result = new StringBuffer();
             String line = "";
             while ((line = rd.readLine()) != null) {
                 result.append(line);
             }
-    //        System.out.println(result);
             return result.toString();
         } catch (final Exception e) {
             LOG.error("unable to do post request to '" + address + "'", e);
