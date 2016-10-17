@@ -45,6 +45,12 @@ export default class StatisticsPage extends Component {
       for (var month in result) {
         that.state.amountOfTrees[month] = result[month].amount;
       }
+      if(result.length < 12){
+        var diffTo12 = 12 - result.length;
+        for(var diffTo12; diffTo12 > 0; diffTo12--){
+          that.state.amountOfTrees[12 - diffTo12] = 0;
+        }
+      }
       that.forceUpdate();
       that.refs["barChart"].update();
     }).catch(function(response) {
