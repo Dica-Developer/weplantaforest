@@ -11,6 +11,11 @@ public interface Views {
     public static interface PlantedTree {
     }
 
+    /*
+     * ProjectArticle.alreadyPlanted, ProjectArticle.amount,
+     * ProjectArticle.price.priceAsLong, ProjectArticle.treeType.name,
+     * ProjectArticle.treeType.imageFile
+     */
     public interface ProjectArticle {
 
     }

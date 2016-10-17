@@ -42,35 +42,39 @@ public class ProjectReportController {
     private @NonNull ProjectReportRepository _projectReportRepository;
 
     private @NonNull ProjectImageRepository _projectImageRepository;
-    
+
     private @NonNull ProjectArticleRepository _projectArticleRepository;
-    
+
     private @NonNull TreeRepository _treeRepository;
 
     private @NonNull ImageHelper _imageHelper;
 
     @RequestMapping(value = Uris.REPORT_ALL_PROJECTS, method = RequestMethod.GET)
-    public Page<ProjectReportData> getAllProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
-        return _projectReportRepository.getAllProjects(new PageRequest(page, size));
+    public ResponseEntity<?> getAllProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
+        Page<ProjectReportData> projectReports = _projectReportRepository.getAllProjects(new PageRequest(page, size));
+        return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
-    public List<ProjectReportData> getActiveProjects() {
-        return _projectReportRepository.getActiveProjects();
+    public ResponseEntity<?> getActiveProjects() {
+        List<ProjectReportData> projectReports = _projectReportRepository.getActiveProjects();
+        return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = Uris.REPORT_INACTIVE_PROJECTS, method = RequestMethod.GET)
-    public Page<ProjectReportData> getInActiveProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
-        return _projectReportRepository.getInActiveProjects(new PageRequest(page, size));
+    public ResponseEntity<?> getInActiveProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
+        Page<ProjectReportData> projectReports = _projectReportRepository.getInActiveProjects(new PageRequest(page, size));
+        return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.PROJECT_SEARCH_NAME + "{projectName}", method = RequestMethod.GET)
-    public ProjectReportData getProjectDataByName(@PathVariable(value = "projectName") String projectName) {
-        return _projectReportRepository.getProjectDataByProjectName(projectName);
+    public ResponseEntity<?> getProjectDataByName(@PathVariable(value = "projectName") String projectName) {
+        ProjectReportData projectReportData = _projectReportRepository.getProjectDataByProjectName(projectName);
+        return new ResponseEntity<>(projectReportData, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.PROJECT_SEARCH_NAME + "/extended/" + "{projectName}", method = RequestMethod.GET)
-    public ProjectReportExtendedData getExtendedProjectDataByName(@PathVariable(value = "projectName") String projectName) {
+    public ResponseEntity<?> getExtendedProjectDataByName(@PathVariable(value = "projectName") String projectName) {
         ProjectReportExtendedData projectReportExtendedData = new ProjectReportExtendedData();
         ProjectReportData projectReportData = _projectReportRepository.getProjectDataByProjectName(projectName);
         List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(projectReportData.getProjectId());
@@ -78,7 +82,7 @@ public class ProjectReportController {
         projectReportExtendedData.setProjectReportData(projectReportData);
         projectReportExtendedData.setImages(images);
 
-        return projectReportExtendedData;
+        return new ResponseEntity<>(projectReportExtendedData, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
@@ -93,14 +97,14 @@ public class ProjectReportController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = Uris.PROJECT_ARTICLES, method = RequestMethod.GET)
     @JsonView(Views.ProjectArticle.class)
     public List<ProjectArticle> getProjectArticles(@RequestParam String projectName) {
         List<ProjectArticle> articles = _projectArticleRepository.findByProjectName(projectName);
-        for(ProjectArticle article: articles){
+        for (ProjectArticle article : articles) {
             article.setAlreadyPlanted(_treeRepository.countAlreadyPlantedTreesByProjectArticle(article));
-        }        
+        }
         return articles;
     }
 
