@@ -52,12 +52,11 @@ public class TeamController {
     }
 
     @RequestMapping(value = Uris.TEAM_DETAILS, method = RequestMethod.GET)
-    public TeamReportData getTeamDetails(@RequestParam String teamName) {
+    public ResponseEntity<?> getTeamDetails(@RequestParam String teamName) {
         TeamReportData teamReportData = _teamRepository.getTeamDetails(teamName);
         teamReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamName));
-        teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data()
-                                                                                        .getTreesCount()));
-        return teamReportData;
+        teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
+        return new ResponseEntity<>(teamReportData, HttpStatus.OK);
     }
 
     private long calcTeamRank(String teamName, long treeCountOfTeam) {
@@ -67,8 +66,7 @@ public class TeamController {
             if (treeCountOfTeam < team.getAmount()) {
                 rank++;
             }
-            if (team.getName()
-                    .equals(teamName)) {
+            if (team.getName().equals(teamName)) {
                 break;
             }
         }
