@@ -7,6 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,17 +25,17 @@ public class CaptchaController {
     private @NonNull CaptchaHelper _captchaHelper;
 
     @RequestMapping(value = Uris.GENERATE_CAPTCHA, method = RequestMethod.GET)
-    public String[] getCaptchaImage() {
+    public ResponseEntity<?> getCaptcha() {
         try {
             String[] response = new String[2];
             String captchaToken = UUID.randomUUID().toString().substring(0, 4).toUpperCase();
             String base64CaptchaImageString = _captchaHelper.generateCaptcha(captchaToken);
             response[0] = captchaToken;
             response[1] = base64CaptchaImageString;
-            return response;
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IOException e) {
             LOG.error("Error occured while trying to generate captcha!", e);
-            return null;
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
