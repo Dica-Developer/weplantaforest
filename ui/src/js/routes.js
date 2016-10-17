@@ -23,6 +23,7 @@ import GiftOverview from './gifts/overview/GiftOverview';
 import RedeemGiftPage from './gifts/redeem/RedeemGiftPage'
 import FindTreePage from './findTree/FindTreePage';
 import ProjectsPage from './projects/ProjectsPage'
+import StatisticsPage from './statistics/StatisticsPage';
 
 export default class Routes extends Component {
 
@@ -53,6 +54,7 @@ export default class Routes extends Component {
         <Route path="/gifts/:userName" component={GiftOverview} reRender={this.reRender.bind(this)}/>
         <Route path="/gift/redeem" component={RedeemGiftPage} reRender={this.reRender.bind(this)}/>
         <Route path="/certificate/find" component={FindTreePage} reRender={this.reRender.bind(this)}/>
+        <Route path="/statistics" component={StatisticsPage} reRender={this.reRender.bind(this)}/>
         <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
       </Router>
     );

@@ -179,4 +179,8 @@ public class Uris {
     
     public final static String WIDGET_CODE = "/widget/code";
     
+    //statistics
+    
+    public final static String TREE_STATISTIC = "/statistic/trees";
+    
 }

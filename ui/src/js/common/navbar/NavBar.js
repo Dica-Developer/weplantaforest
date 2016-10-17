@@ -85,7 +85,7 @@ export default class NavBar extends Component {
           <MenuItem hash="/gift/redeem">GUTSCHEIN EINLÖSEN</MenuItem>
           <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
           <MenuItem hash="/ranking">BESTENLISTE</MenuItem>
-          <MenuItem hash="8">STATISTIKEN</MenuItem>
+          <MenuItem hash="/statistics">STATISTIKEN</MenuItem>
           <MenuItem hash="9">BLOG</MenuItem>
           <MenuItem hash="10">FAQs</MenuItem>
           <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
