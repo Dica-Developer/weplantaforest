@@ -1,11 +1,15 @@
 package org.dicadeveloper.weplantaforest.statistics;
 
+import org.dicadeveloper.weplantaforest.user.OrganizationType;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
-public class TreeAmountStatisticData {
+@Getter
+public class TreeOrgTypeStatisticData {
+
     Long amount;
-    String label;
+    OrganizationType orgType;
+    
 }

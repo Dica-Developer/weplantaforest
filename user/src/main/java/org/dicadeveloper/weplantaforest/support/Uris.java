@@ -181,6 +181,12 @@ public class Uris {
     
     //statistics
     
-    public final static String TREE_STATISTIC = "/statistic/trees";
+    public final static String TREE_STATISTIC_PER_MONTH = "/statistic/treesPerMonth";
+
+    public final static String TREE_STATISTIC_PER_YEAR = "/statistic/treesPerYear";
     
+    public final static String TREE_STATISTIC_PER_ORGTYPE = "/statistic/treesPerOrgType";
+
+    public final static String CO2_STATISTIC = "/statistic/co2";
+
 }
