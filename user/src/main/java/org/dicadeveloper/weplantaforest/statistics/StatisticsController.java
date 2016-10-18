@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 //queries from StatisticsRepository run only on mysql, not on h2, so the belonging controller is also excluded from this profile
-@Profile({ "!h2" })
+@Profile({ "!h2", "!test" })
 public class StatisticsController {
 
     private @NonNull StatisticsRepository _statisticsRepository;

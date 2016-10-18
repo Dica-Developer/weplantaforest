@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 //queries run only on mysql, not on h2
-@Profile({"!h2"})
+@Profile({"!h2", "!test"})
 public interface StatisticsRepository extends CrudRepository<Tree, Long>{
 
     public final static String TREES_PER_YEAR_QUERY = "select new org.dicadeveloper.weplantaforest.statistics.TreeAmountStatisticData(sum(tree.amount), DATE_FORMAT(FROM_UNIXTIME(_plantedOn/1000), '%Y')) FROM Tree tree GROUP BY DATE_FORMAT(FROM_UNIXTIME(_plantedOn/1000), '%Y')";
