@@ -1,17 +1,61 @@
+@big-scren-width: 20vw;
+@small-scren-width: 100vw;
+@media (min-width: 731px) {
+  .menu {
+    > div {
+      &.visible {
+        width: @big-scren-width
+      }
+      > .menu-item {
+        width: @big-scren-width
+      }
+      > .login-menu-item {
+        width: @big-scren-width
+      }
+      .language-menu-item {
+        width: @big-scren-width
+      }
+    }
+  }
+}
+@media (max-width: 730px) {
+  .menu {
+    > div {
+      &.visible {
+        width: @small-scren-width;
+      }
+      > .menu-item {
+        width: @small-scren-width;
+      }
+      > .login-menu-item {
+        width: @small-scren-width;
+      }
+      .language-menu-item {
+        width: @small-scren-width;
+      }
+    }
+  }
+}
 
 .menu {
   display: block;
-  @menu-width: 350px;
-
   > div {
     position: absolute;
     z-index: 10001;
     top: 0;
-    width: @menu-width;
     height: 100%;
     box-sizing: border-box;
     transition: -webkit-transform ease 250ms;
     transition: transform ease 250ms;
+    padding-bottom: 9999px;
+    margin-bottom: -9999px;
+    overflow: hidden;
+
+    -webkit-transition: width 0.3s linear, opacity 0.2s linear;
+    -moz-transition: width 0.3s linear, opacity 0.2s linear;
+    -o-transition: width 0.3s linear, opacity 0.2s linear;
+    -ms-transition: width 0.3s linear, opacity 0.2s linear;
+    transition: width 0.3s linear, opacity 0.2s linear;
 
     .closeMenu {
       > button {
@@ -24,7 +68,7 @@
     }
     &.left {
       background: #82AB1F;
-      left: @menu-width*-1;
+
       .closeMenu {
         text-align: right;
         > button {
@@ -35,16 +79,17 @@
     }
 
     &.notvisible {
-      display: none;
+      width: 0;
+      opacity: 0;
     }
 
-    &.visible.left {
-      transform: translate3d(@menu-width, 0, 0);
+    &.visible {
+      opacity: 1;
     }
 
     &.right {
       background: #3C191E;
-      right: @menu-width*-1;
+      right: 0;
 
       .closeMenu {
         text-align: left;
@@ -55,19 +100,15 @@
         }
       }
     }
-    &.visible.right {
-      transform: translate3d(@menu-width*-1, 0, 0);
-    }
 
     > .menu-item {
-      width: 100%;
       margin: 0;
       padding: 10px 15px;
 
       box-sizing: border-box;
       color: #fff;
       text-align: center;
-      font-size: 20px;
+      font-size: 14px;
 
       a {
         color: #fff;
@@ -124,7 +165,6 @@
           margin-right: 50px;
         }
       }
-
     }
 
     .language-menu-item {
@@ -132,29 +172,25 @@
       text-align: center;
       a,
       a:active,
-      a:visited{
+      a:visited {
         text-decoration: none;
         color: #fff;
-        font-size: 16px;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 15px;
-        padding-bottom: 15px;
+        font-size: 14px;
+        padding: 10px 5px;
         border-style: solid;
         border-color: #fff;
       }
-
-      a:nth-of-type(1){
+      a:nth-of-type(1) {
         margin-right: 10px;
       }
-      a:hover{
+      a:hover {
         text-decoration: none;
-        color:  #82AB1F;
+        color: #82AB1F;
         background-color: #fff;
       }
 
-      .selected{
-        color:  #82AB1F;
+      .selected {
+        color: #82AB1F;
         background-color: #fff;
       }
     }
