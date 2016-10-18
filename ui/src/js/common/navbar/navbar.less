@@ -1,11 +1,80 @@
+@media(min-width: 731px) {
+  .navbar {
+    .myForrestDiv {
+      margin-left: 15px;
+    }
+    .collapse {
+      display: block!important;
+    }
+  }
+}
+@media (min-width: 281px) and (max-width: 730px) {
+  .navbar {
+    .navbar-left {
+      float: left;
+    }
+    .navbar-right {
+      float: right;
+      margin-left: 0;
+    }
+    .collapse {
+      display: none !important;
+    }
+    .container {
+      text-align: center;
+      .navbar-left {
+        float: none;
+      }
+    }
+  }
+}
+@media (max-width: 280px) {
+  .navbar {
+    .navbar-left {
+      float: left;
+    }
+    .navbar-right {
+      float: right;
+      margin-left: 0;
+    }
+    .collapse {
+      display: none !important;
+    }
+    .container {
+      text-align: center;
+      .navbar-left {
+        float: none;
+      }
+    }
+    .imageButton {
+      padding-left: 0!important;
+      padding-right: 0!important;
+    }
+  }
+}
 
 .navbar {
-  min-height: 50px;
+  height: 54px;
   margin-bottom: 0;
   border: 0;
   z-index: 10000;
+  .navbar-left,
+  .navbar-right {
+    padding-top: 12px;
+  }
+  .container {
+    height: 54px;
+    .navbar-left {
+      padding-top: 4px;
+    }
+    .navbar-right {
+      padding-top: 0;
+    }
+  }
+  .imageButton {
+    padding: 5px;
+  }
 }
-
 .list-group-item .label {
   margin-right: 5px;
 }
@@ -21,9 +90,4 @@
   .navbar-right {
     margin-right: 0;
   }
-}
-
-.navbar-collapse {
-  border: 0;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
 }

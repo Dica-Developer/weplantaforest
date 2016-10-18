@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link, browserHistory } from 'react-router';
+import {Link, browserHistory} from 'react-router';
 
 import Menu from './Menu';
 import MenuItem from './MenuItem';
@@ -17,7 +17,9 @@ export default class NavBar extends Component {
     super();
     this.state = {
       profileLinksInActive: 'true',
-      language: (localStorage.getItem('language') == null ? 'DEUTSCH' : localStorage.getItem('language'))
+      language: (localStorage.getItem('language') == null
+        ? 'DEUTSCH'
+        : localStorage.getItem('language'))
     }
   }
 
@@ -34,7 +36,7 @@ export default class NavBar extends Component {
     this.refs.right.show();
   }
 
-  updatePlantBagFromLocaleStorage(){
+  updatePlantBagFromLocaleStorage() {
     this.refs["plantBag"].updatePlantBagFromLocaleStorage();
   }
 
@@ -42,10 +44,10 @@ export default class NavBar extends Component {
     this.refs["plantBag"].updatePlantBag(price, projectItems, projectName);
   }
 
-  updateLanguage(value){
+  updateLanguage(value) {
     localStorage.setItem('language', value);
     this.setState({language: value});
-    if(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''){
+    if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') {
       var config = {
         headers: {
           'X-AUTH-TOKEN': localStorage.getItem('jwt')
@@ -56,21 +58,21 @@ export default class NavBar extends Component {
     this.props.reRender();
   }
 
-  updateComponents(){
+  updateComponents() {
     this.setProfileLinkIsInActive();
     this.refs["plantBag"].resetPlantBag();
     this.forceUpdate();
   }
 
-  setProfileLinkIsInActive(){
-    if(localStorage.getItem('username') == null || localStorage.getItem('username') == ''){
+  setProfileLinkIsInActive() {
+    if (localStorage.getItem('username') == null || localStorage.getItem('username') == '') {
       this.setState({profileLinksInActive: 'true'});
-    }else{
+    } else {
       this.setState({profileLinksInActive: 'false'});
     }
   }
 
-  linkTo(url){
+  linkTo(url) {
     browserHistory.push(url);
   }
 
@@ -99,21 +101,29 @@ export default class NavBar extends Component {
           <MenuItem hash="6" inactive={this.state.profileLinksInActive}>ABONNEMENTS</MenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
-          <div className="navbar-header">
-            <div className="navbar-left">
-              <ImageButton text="MENU" onClick={this.showLeft.bind(this)} imagePath="/assets/images/Menu.png" imageWidth="50" imageHeight="50"/>
-            </div>
+          <div className="navbar-left">
+            <ImageButton text="MENU" onClick={this.showLeft.bind(this)} imagePath="/assets/images/Menu.png" imageWidth="20" imageHeight="20"/>
           </div>
-          <div className="collapse navbar-collapse" id="navbarLinkBar">
-            <div className="navbar-right">
-              <ImageButton text="MEIN WALD" onClick={this.showRight.bind(this)} imagePath="/assets/images/MeinWald.png" imageWidth="58" imageHeight="50"/>
+          <div className="navbar-right myForrestDiv">
+            <ImageButton text="MEIN WALD" onClick={this.showRight.bind(this)} imagePath="/assets/images/MeinWald.png" imageWidth="29" imageHeight="25"/>
+          </div>
+          <div className="container">
+            <div className="navbar-left">
+              <ImageButton text="" onClick={() => {
+                this.linkTo('/')
+              }} imagePath="/assets/images/ipat_logo.png" imageWidth="35" imageHeight="35"/>
             </div>
-            <div className="container">
+            <div className="collapse navbar-collapse" id="navbarLinkBar">
               <div className="navbar-left">
-                <ImageButton text="" onClick={()=>{this.linkTo('/')}} imagePath="/assets/images/ipat_logo.png" imageWidth="50" imageHeight="50"/>
-                <ImageButton text="" onClick={()=>{this.linkTo('/selfPlant')}} imagePath="/assets/images/Spaten.png" imageWidth="25" imageHeight="50"/>
-                <ImageButton text="" onClick={()=>{this.linkTo('/plant/5')}} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>
-                <ImageButton text="" onClick={()=>{this.linkTo('/plant')}} imagePath="/assets/images/Schere.png" imageWidth="59" imageHeight="50"/>
+                <ImageButton text="" onClick={() => {
+                  this.linkTo('/selfPlant')
+                }} imagePath="/assets/images/Spaten.png" imageWidth="18" imageHeight="35"/>
+                <ImageButton text="" onClick={() => {
+                  this.linkTo('/plant/5')
+                }} imagePath="/assets/images/Maus.png" imageWidth="35" imageHeight="35"/>
+                <ImageButton text="" onClick={() => {
+                  this.linkTo('/plant')
+                }} imagePath="/assets/images/Schere.png" imageWidth="44" imageHeight="35"/>
               </div>
               <div className="navbar-right">
                 <PlantBag updatePlantBag={this.updatePlantBag.bind(this)} ref="plantBag"/>
