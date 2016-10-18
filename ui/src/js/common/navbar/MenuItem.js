@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 
 export default class MenuItem extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
 
   render() {
