@@ -47,7 +47,7 @@ export default class ProjectDetails extends Component {
       <div ref="details" className={(this.state.fade
         ? 'fadeOut'
         : 'fadeIn') + " projectDetails"}>
-        <h2>Projektfläche:&nbsp;
+        <h2>{"Projektfläche: "}
           <i>{this.props.project.projectReportData.projectName}</i>
         </h2>
         <table>
