@@ -19,9 +19,13 @@ export default class Widgets extends Component {
       format: 'high',
       htmlCode: '',
       width: 100,
-      height: 0,
+      height: 100,
       userName: localStorage.getItem('username')
     }
+  }
+
+  componentDidMount(){
+    this.generateHtmlCode();
   }
 
   updateWidgetHeight(event) {
@@ -45,9 +49,9 @@ export default class Widgets extends Component {
   updateFormat(value) {
     this.setState({format: value});
     if (value == 'high') {
-      this.setState({width: 100});
+      this.setState({width: 100, height: 100});
     } else {
-      this.setState({height: 100});
+      this.setState({width: 100, height: 100});
     }
 
   }

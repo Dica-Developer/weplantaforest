@@ -7,6 +7,7 @@ import axios from 'axios';
 import Notification from '../../common/components/Notification';
 import IconButton from '../../common/components/IconButton';
 import RadioButton from '../../common/components/RadioButton';
+import LeftRightSwitch from '../../common/components/LeftRightSwitch';
 import ButtonBar from './ButtonBar';
 
 export default class Banner extends Component {
@@ -17,8 +18,12 @@ export default class Banner extends Component {
       format: 'high',
       htmlCode: '',
       width: 100,
-      height: 0
+      height: 100
     }
+  }
+
+  componentDidMount(){
+    this.generateHtmlCode();
   }
 
   updateBannerHeight(event) {
@@ -33,20 +38,19 @@ export default class Banner extends Component {
     this.generateHtmlCode();
   }
 
-  updateType(event) {
-    this.state.type = event.target.value;
+  updateType(value) {
+    this.state.type = value;
     this.forceUpdate();
     this.generateHtmlCode();
   }
 
-  updateFormat(event) {
-    this.setState({format: event.target.value});
+  updateFormat(value) {
+    this.setState({format: value});
     if (this.state.format == 'high') {
-      this.setState({width: 100});
+      this.setState({width: 100, height: 100});
     } else {
-      this.setState({height: 100});
+      this.setState({width: 100, height: 100});
     }
-
   }
 
   generateHtmlCode() {
@@ -127,25 +131,16 @@ export default class Banner extends Component {
         <div className="content">
           <div className="banner">
             {bannerImages}
-            <div className="typeChoser">
-              <div>
-                <p>Farbe:&nbsp;</p>
-                <select onChange={this.updateType.bind(this)}>
-                  <option value="white">weiß</option>
-                  <option value="green">grün</option>
-                </select>
+            <div className="code-and-options">
+              <div className="options">
+                <p>weitere Optionen:</p>
+                <LeftRightSwitch leftText="weiß" rightText="grün" leftValue="white" rightValue="green" chosenValue={this.state.type} onClick={this.updateType.bind(this)}/><br/>
+                <LeftRightSwitch leftText="hoch" rightText="quer" leftValue="high" rightValue="cross" chosenValue={this.state.format} onClick={this.updateFormat.bind(this)}/>
               </div>
-              <div>
-                <p>Format:&nbsp;</p>
-                <select onChange={this.updateFormat.bind(this)}>
-                  <option value="high">hoch</option>
-                  <option value="cross">quer</option>
-                </select>
+              <div className="code">
+                <p>Einbettungs-Code:</p>
+                <textarea rows="4" cols="50" maxLength="250" value={this.state.htmlCode}/>
               </div>
-            </div>
-            <div className="codeSnippet">
-              <p>Einbettungs-Code:</p>
-              <textarea rows="4" cols="50" maxLength="250" value={this.state.htmlCode}/>
             </div>
           </div>
         </div>
