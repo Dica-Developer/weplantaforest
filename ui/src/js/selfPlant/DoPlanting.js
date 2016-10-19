@@ -117,7 +117,7 @@ export default class DoPlanting extends Component {
     }
   }
 
-  updateTreePositionFromMapClick(event){
+  updateTreePositionFromMapClick(event) {
     this.state.selfPlantData.latitude = parseFloat(event.latlng.lat);
     this.state.selfPlantData.longitude = parseFloat(event.latlng.lng);
     this.state.treePosition[0] = parseFloat(event.latlng.lat);
@@ -140,66 +140,78 @@ export default class DoPlanting extends Component {
     return (
       <div className="col-md-12">
         <h2>Eigene Pflanzung erstellen</h2>
-        <div className="selfPlantForm">
-          <table>
-            <tbody>
-              <tr>
-                <td>Wann:</td>
-                <td><DateField updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true"/></td>
-              </tr>
-              <tr>
-                <td>Wieviele&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:</td>
-                <td><input type="range" min="1" max="10" value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)}/>
-                  <p>&nbsp;{this.state.selfPlantData.amount}</p>
-                  <span>Bei mehr als 10 kontaktiere uns bitte, da wir einen Nachweis benötigen.</span>
-                </td>
-              </tr>
-              <tr>
-                <td>Foto:</td>
-                <td><FileChooser updateFile={this.updateImage.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>Baumart:</td>
-                <td>
-                  <select onChange={this.updateTreeType.bind(this)} ref="select">
-                    {this.state.treeTypes.map(function(treeType, i) {
-                      if (treeType.name == 'Default') {
-                        return (
-                          <option value={treeType.id} key={i}>keiner der genannten</option>
-                        );
-                      } else {
-                        return (
-                          <option value={treeType.id} key={i}>{getTextForSelectedLanguage(treeType.name)}</option>
-                        );
-                      }
-                    })}
+        <div className="selfPlantForm ">
+          <div className="desc-value">
+            <div className="desc">
+              Wann:</div>
+            <div className="value">
+              <DateField updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true"/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+            Wieviele&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:
+          </div>
+          <div className="value">
+            <input type="range" min="1" max="10" value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)}/>
+            <p>&nbsp;{this.state.selfPlantData.amount}</p>
+            <br/>
+            <span>Bei mehr als 10 kontaktiere uns bitte, da wir einen Nachweis benötigen.</span>
+          </div>
+          </div>
+          <div className="desc-value">
+          <div className="desc">
+            Foto:
+          </div>
+          <div className="value">
+            <FileChooser updateFile={this.updateImage.bind(this)}/>
+          </div>
+          </div>
+          <div className="desc-value">
+          <div className="desc">
+            Baumart:
+          </div>
+            <div className="value">
+              <select onChange={this.updateTreeType.bind(this)} ref="select">
+                {this.state.treeTypes.map(function(treeType, i) {
+                  if (treeType.name == 'Default') {
+                    return (
+                      <option value={treeType.id} key={i}>keiner der genannten</option>
+                    );
+                  } else {
+                    return (
+                      <option value={treeType.id} key={i}>{getTextForSelectedLanguage(treeType.name)}</option>
+                    );
+                  }
+                })}
 
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Wo:</td>
-                <td>
-                  <Map center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
-                    <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
-                    <Marker position={this.state.treePosition} draggable="true" ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
-                  </Map>
-                </td>
-              </tr>
-              <tr>
-                <td>Beschreibung:</td>
-                <td><TextArea toUpdate="description" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="align-center">
-            <Captcha ref="captcha"/><br/>
-            <IconButton text="PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
+              </select>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+            Wo :</div>
+          <div className="map">
+            <Map center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
+              <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
+              <Marker position={this.state.treePosition} draggable="true" ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
+            </Map>
+          </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Beschreibung:
+            </div>
+            <div className="value">
+              <TextArea toUpdate="description" updateValue={this.updateValue.bind(this)}/>
+            </div>
           </div>
         </div>
-        <Notification ref="notification"/>
-      </div>
-    );
+        <div className="align-center">
+          <Captcha ref="captcha"/ > <br/> <IconButton text = "PFLANZUNG ERSTELLEN" glyphIcon = "glyphicon-tree-deciduous" onClick = { this.sendSelfPlantedTree.bind(this)} />
+        </div>
+        <Notification ref = "notification" />
+      </div>);
   }
 }
 

@@ -1,80 +1,105 @@
+@media (min-width: 381px) and (max-width: 700px) {
+  .selfPlant {
+    .selfPlantForm {
+      .desc-value {
+        .value {
+          .dateField{
+            width: 200px!important;
+          }
+
+          input[type="range"] {
+            width: 200px!important;
+            display: inline;
+          }
+          textarea {
+            width: 200px!important;
+          }
+        }
+        .map {
+          width: 200px!important;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .selfPlant {
+    .selfPlantForm {
+      .desc-value {
+        .value {
+          .dateField{
+            width: 150px!important;
+          }
+
+          input[type="range"] {
+            width: 150px!important;
+            display: inline;
+          }
+          textarea {
+            width: 150px!important;
+          }
+        }
+        .map {
+          width: 150px!important;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
 .selfPlant {
   background: #fff;
   margin-left: 0;
   margin-right: 0;
 
   .selfPlantForm {
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    border: 1px solid #3C191E;
-    background: rgba(60, 25, 30, .5);
+    margin-left: 2vw;
+    margin-right: 2vw;
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 30px;
 
-    table {
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 15px;
-      td:nth-child(1) {
+    .desc-value {
+      margin-bottom: 5px;
+      .desc {
+        display: inline-block;
         width: 30%;
+        text-align: right;
+        vertical-align: top;
+        padding-right: 15px;
       }
-      td:nth-child(2) {
+      .value {
+        display: inline-block;
         width: 70%;
-      }
 
-      tr {
-        height: 40px;
-      }
-      tr:nth-child(1) {
-        height: 60px;
-        td:nth-child(2) {
-          div:nth-child(1){
-        //    width: 250px;
-          }
-        }
-      }
-      tr:nth-child(2) {
-        vertical-align: top;
-        height: 100px;
         input[type="range"] {
-          width: 80% !important;
-          float: left;
-        }
-        td:nth-child(2) {
-          p {
-            margin-top: 8px;
-            font-size: 20px;
-            color: #82ab1f;
-          }
-        }
-      }
-      tr:nth-child(3) {
-        vertical-align: top;
-        height: 60px;
-      }
-
-      tr:nth-child(5) {
-        vertical-align: top;
-        height: 420px;
-        .glyphicon-tree-deciduous{
-          font-size:30px;
-        }
-        .leaflet-container {
           width: 400px;
-          height: 400px;
-
+          display: inline;
+        }
+        p {
+          font-size: 18px;
+          display: inline;
+          vertical-align: top;
+          padding-top: 15px;
         }
       }
-      tr:nth-child(6){
-        vertical-align: top;
+
+      .map {
+        width: 400px;
+        display: inline-block;
+
       }
     }
   }
 
-  .plantingDone{
+  .align-center {
+    padding-bottom: 15px;
+  }
+
+  .plantingDone {
     text-align: center;
   }
 }
