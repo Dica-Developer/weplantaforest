@@ -10,6 +10,10 @@ export default class ArticleTeaser extends Component {
     super(props);
   }
 
+  linkTo(url) {
+    browserHistory.push(url);
+  }
+
   render() {
     let imageUrl = '';
     if (this.props.content.id != 0) {
@@ -18,18 +22,20 @@ export default class ArticleTeaser extends Component {
 
     return (
       <div>
-        <img src={imageUrl} alt={this.props.content.title}/>
-        <h3>
-          <i>{this.props.content.title}</i>
-        </h3>
-        <div className="description">
-          <p dangerouslySetInnerHTML={{
-            __html: getShortText(getTextForSelectedLanguage(this.props.content.intro), 300)
-          }}/>
-          <Link className="more" to={`/projects/` + this.props.content.projectName}>
-            <i>(mehr)</i>
-          </Link>
-        </div>
+        <a role="button" onClick={() => {
+          this.linkTo(`/projects/` + this.props.content.projectName)
+        }}>
+          <img src={imageUrl} alt={this.props.content.title}/>
+          <h3>
+            <i>{this.props.content.title}</i>
+          </h3>
+          <div className="description">
+            <p dangerouslySetInnerHTML={{
+              __html: getShortText(getTextForSelectedLanguage(this.props.content.intro), 300)
+            }}/>
+            <i className="more">(mehr)</i>
+          </div>
+        </a>
       </div>
     );
   }

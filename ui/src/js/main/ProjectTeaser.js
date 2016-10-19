@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
-import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
 
 import Boostrap from 'bootstrap';
 
@@ -11,6 +11,10 @@ import {getTextForSelectedLanguage, getShortText} from '../common/language/Langu
 export default class ProjectTeaser extends Component {
   constructor(props) {
     super(props);
+  }
+
+  linkTo(url) {
+    browserHistory.push(url);
   }
 
   render() {
@@ -25,17 +29,19 @@ export default class ProjectTeaser extends Component {
             </Popup>
           </Marker>
         </Map>
-        <h3>
-          <i>{this.props.content.projectName}</i>
-        </h3>
-        <div className="description">
-          <p dangerouslySetInnerHTML={{
-            __html: getShortText(getTextForSelectedLanguage(this.props.content.description), 300)
-          }}/>
-          <Link className="more" to={`/projects/` + this.props.content.projectName}>
-            <i>(mehr)</i>
-          </Link>
-        </div>
+        <a role="button" onClick={() => {
+          this.linkTo(`/projects/` + this.props.content.projectName)
+        }}>
+          <h3>
+            <i>{this.props.content.projectName}</i>
+          </h3>
+          <div className="description">
+            <p dangerouslySetInnerHTML={{
+              __html: getShortText(getTextForSelectedLanguage(this.props.content.description), 300)
+            }}/>
+          <i className="more">(mehr)</i>
+          </div>
+        </a>
       </div>
     );
   }
