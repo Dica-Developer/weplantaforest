@@ -113,7 +113,7 @@ public class MailHelper{
     }
 
     private void handleException(MessagingException mex) {
-        LOG.error("\n--Exception handling in msgsendsample.java", mex);
+        LOG.error("\n--Exception handling in MailHelper.java", mex);
         Exception ex = mex;
         do {
             if (ex instanceof SendFailedException) {
