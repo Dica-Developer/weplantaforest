@@ -1,29 +1,66 @@
+@media(min-width: 681px) {
+  .header {
+    .col-md-4:nth-child(3) {
+      float: right!important;
+      .buttonBar {
+        float: right!important;
+      }
+    }
+  }
+}
+@media (min-width: 431px) and (max-width: 680px) {
+  .header {
+    .outline-logo {
+      float: right!important;
+    }
+    .col-md-4:nth-child(3) {
+      width: 100%;
+      padding-left: 0;
+      .buttonBar {
+        width: 100%;
+      }
+    }
+  }
+}
+@media (max-width: 430px) {
+  .header {
+    text-align: center;
+    .col-md-4:nth-child(3) {
+      width: 100%;
+      padding-left: 0;
+      .buttonBar {
+        width: 100%;
+      }
+    }
+  }
+}
+
 .header {
   background: transparent;
-  padding-top: 25px;
+  padding-top: 10px;
 
   .tree-chars {
-    font-family: "Times New Roman", Times, serif;
+    font-family: Georgia,Times,Times New Roman,serif;
     color: #82AB1F;
-    font-size: 33px;
+    font-size: 20px;
   }
 
   .tree-number {
     color: #82AB1F;
-    font-size: 50px;
+    font-size: 24px;
     font-weight: bold;
   }
 
   .co2-number {
     color: #fff;
-    font-size: 50px;
+    font-size: 24px;
     font-weight: bold;
   }
 
   .co2-chars {
-    font-family: "Times New Roman", Times, serif;
+    font-family: Georgia,Times,Times New Roman,serif;
     color: #fff;
-    font-size: 33px;
+    font-size: 20px;
   }
 
   .row {
@@ -34,10 +71,12 @@
     > *:first-child {
       padding-left: 0;
       vertical-align: bottom;
+      padding-bottom: 17px;
+      padding-left: 17px;
     }
     > *:nth-child(2) {
-      vertical-align: top;
       text-align: center;
+      padding-bottom: 14px;
     }
     > *:last-child {
       vertical-align: bottom;
@@ -46,19 +85,23 @@
   }
 
   .buttonBar {
-    float: right;
+    width: 220px;
     background-color: #3C191E;
-    padding: 10px;
+    padding: 5px;
+    div {
+      width: 210px;
+      text-align: left;
+    }
     div:nth-of-type(1) {
       img {
-        margin-left: 17px;
-        margin-right: 17px;
+        margin-left: 13px;
+        margin-right: 13px;
       }
     }
     div:nth-of-type(2) {
       img {
-        margin-left: 5px;
-        margin-right: 5px;
+        margin-left: 4px;
+        margin-right: 4px;
       }
     }
   }

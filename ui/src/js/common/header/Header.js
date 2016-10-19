@@ -15,7 +15,7 @@ export default class Header extends Component {
           <div className="row">
             <div className="col-md-4"><Co2Bar/></div>
             <div className="col-md-4 outline-logo">
-              <img src="/assets/images/outline_logo.png" alt="selbst pflanzen" width="200" height="200"/></div>
+              <img src="/assets/images/outline_logo.png" alt="selbst pflanzen" width="150" height="150"/></div>
             <div className="col-md-4"><ButtonBar/></div>
           </div>
         </div>
