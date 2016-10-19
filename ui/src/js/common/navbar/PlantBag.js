@@ -1,8 +1,6 @@
-import React, {
-  Component
-} from 'react';
+import React, {Component} from 'react';
 import Accounting from 'accounting';
-import {browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
 
 require("./plantBag.less");
 
@@ -10,8 +8,18 @@ export default class PlantBag extends Component {
   constructor() {
     super();
     this.state = {
-      plantBag: {}
+      plantBag: {},
+      scale: false
     }
+    this.scalingDone = this.scalingDone.bind(this);
+  }
+
+  componentWillUnmount() {
+    const elm = this.refs.plantBag;
+    elm.removeEventListener('animationend', this.scalingDone);
+  }
+  scalingDone() {
+    this.setState({scale: false});
   }
 
   componentDidMount() {
@@ -26,9 +34,11 @@ export default class PlantBag extends Component {
     var plantBagTemp = JSON.parse(localStorage.getItem('plantBag'));
     this.state.plantBag = plantBagTemp;
     this.forceUpdate();
+    const elm = this.refs.plantBag;
+    elm.addEventListener('animationend', this.scalingDone);
   }
 
-  resetPlantBag(){
+  resetPlantBag() {
     var plantBag = {
       price: 0,
       projects: {}
@@ -37,8 +47,10 @@ export default class PlantBag extends Component {
     this.setState({plantBag: plantBag});
   }
 
-  updatePlantBagFromLocaleStorage(){
-    this.setState({plantBag: JSON.parse(localStorage.getItem('plantBag'))});
+  updatePlantBagFromLocaleStorage() {
+    this.setState({
+      plantBag: JSON.parse(localStorage.getItem('plantBag'))
+    });
   }
 
   updatePlantBag(price, projectItems, projectName) {
@@ -57,6 +69,7 @@ export default class PlantBag extends Component {
     this.forceUpdate();
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     this.showPlantItems();
+    this.setState({scale: true});
   }
 
   setPlantItems(projectItems, projectName) {
@@ -78,13 +91,15 @@ export default class PlantBag extends Component {
     }
   }
 
-  showPlantBagPage(){
+  showPlantBagPage() {
     browserHistory.push('/plantBag');
   }
 
   render() {
     return (
-      <div className="plantBag">
+      <div ref="plantBag" className={(this.state.scale
+        ? 'scale'
+        : ' ') + " plantBag"}>
         <button onClick={this.showPlantBagPage.bind(this)}>
           <div className="wrapper">
             <div className="image-wrapper">
