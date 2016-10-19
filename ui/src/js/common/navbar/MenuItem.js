@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
 
 export default class MenuItem extends Component {
   constructor() {
     super();
+  }
+
+  linkTo(url) {
+    browserHistory.push(url);
   }
 
   render() {
@@ -11,9 +15,11 @@ export default class MenuItem extends Component {
     if (this.props.inactive == 'true') {
       link = <span className="inactive">{this.props.children}</span>;
     } else {
-      link = <Link to={this.props.hash}>
+      link = <a role="button" onClick={() => {
+        this.linkTo(this.props.hash)
+      }}>
         {this.props.children}
-      </Link>;
+      </a>;
     };
     return (
       <div className="menu-item">{link}</div>
