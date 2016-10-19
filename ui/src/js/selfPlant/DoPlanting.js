@@ -26,7 +26,8 @@ export default class DoPlanting extends Component {
         treeTypeId: 1
       },
       imageFile: null,
-      treeTypes: []
+      treeTypes: [],
+      treePosition: [51.499807, 11.956521]
     };
   }
 
@@ -67,10 +68,6 @@ export default class DoPlanting extends Component {
     this.state.imageFile = file;
     this.forceUpdate();
   }
-  updateLatLng() {
-    this.state.selfPlantData.latitude = parseFloat(this.refs.marker.leafletElement._latlng.lat);
-    this.state.selfPlantData.longitude = parseFloat(this.refs.marker.leafletElement._latlng.lng);
-  }
 
   updateTreeType(event) {
     this.state.selfPlantData.treeTypeId = event.target.value;
@@ -78,9 +75,9 @@ export default class DoPlanting extends Component {
   }
 
   sendSelfPlantedTree() {
-    if(localStorage.getItem('jwt') == null || localStorage.getItem('jwt') == ''){
+    if (localStorage.getItem('jwt') == null || localStorage.getItem('jwt') == '') {
       this.refs.notification.addNotification('Kein authentifizierter Nutzer!', 'Um eine Pflanzung erstellen zu können, musst du als Nutzer eingeloggt sein.', 'error');
-    }else if (this.refs.captcha.validateCaptcha()) {
+    } else if (this.refs.captcha.validateCaptcha()) {
       var that = this;
       var config = {
         headers: {
@@ -96,7 +93,6 @@ export default class DoPlanting extends Component {
           data.append('file', that.state.imageFile);
 
           axios.post('http://localhost:8081/plantSelf/upload', data, config).then(function(response) {}).catch(function(response) {
-
             if (response instanceof Error) {
               console.error('Error', response.message);
             } else {
@@ -121,10 +117,26 @@ export default class DoPlanting extends Component {
     }
   }
 
-  render() {
-    let position = [51.499807, 11.956521];
-    var myIcon = L.divIcon({className: 'glyphicon glyphicon-tree-deciduous'});
+  updateTreePositionFromMapClick(event){
+    this.state.selfPlantData.latitude = parseFloat(event.latlng.lat);
+    this.state.selfPlantData.longitude = parseFloat(event.latlng.lng);
+    this.state.treePosition[0] = parseFloat(event.latlng.lat);
+    this.state.treePosition[1] = parseFloat(event.latlng.lng);
+    this.refs.marker.leafletElement._latlng.lat = event.latlng.lat;
+    this.refs.marker.leafletElement._latlng.lng = event.latlng.lng;
+    this.forceUpdate();
+  }
 
+  updateTreePositionFromMarkerDrag() {
+    this.state.selfPlantData.latitude = parseFloat(this.refs.marker.leafletElement._latlng.lat);
+    this.state.selfPlantData.longitude = parseFloat(this.refs.marker.leafletElement._latlng.lng);
+    this.state.treePosition[0] = parseFloat(this.refs.marker.leafletElement._latlng.lat);
+    this.state.treePosition[1] = parseFloat(this.refs.marker.leafletElement._latlng.lng);
+    this.forceUpdate();
+  }
+
+  render() {
+    var myIcon = L.divIcon({className: 'glyphicon glyphicon-tree-deciduous'});
     return (
       <div className="col-md-12">
         <h2>Eigene Pflanzung erstellen</h2>
@@ -168,9 +180,9 @@ export default class DoPlanting extends Component {
               <tr>
                 <td>Wo:</td>
                 <td>
-                  <Map center={position} zoom={5}>
+                  <Map center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
                     <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
-                    <Marker position={position} draggable="true" ref="marker" icon={myIcon} onDragEnd={this.updateLatLng.bind(this)}/>
+                    <Marker position={this.state.treePosition} draggable="true" ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
                   </Map>
                 </td>
               </tr>
