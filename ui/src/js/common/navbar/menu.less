@@ -45,17 +45,9 @@
     top: 0;
     height: 100%;
     box-sizing: border-box;
-    transition: -webkit-transform ease 250ms;
-    transition: transform ease 250ms;
     padding-bottom: 9999px;
     margin-bottom: -9999px;
     overflow: hidden;
-
-    -webkit-transition: width 0.3s linear, opacity 0.2s linear;
-    -moz-transition: width 0.3s linear, opacity 0.2s linear;
-    -o-transition: width 0.3s linear, opacity 0.2s linear;
-    -ms-transition: width 0.3s linear, opacity 0.2s linear;
-    transition: width 0.3s linear, opacity 0.2s linear;
 
     .closeMenu {
       > button {
@@ -81,10 +73,22 @@
     &.notvisible {
       width: 0;
       opacity: 0;
+
+      -webkit-transition: width 0.3s linear, opacity 0.2s linear;
+      -moz-transition: width 0.3s linear, opacity 0.2s linear;
+      -o-transition: width 0.3s linear, opacity 0.2s linear;
+      -ms-transition: width 0.3s linear, opacity 0.2s linear;
+      transition: width 0.3s linear, opacity 0.2s linear;
     }
 
     &.visible {
       opacity: 1;
+
+      -webkit-transition: width 0.2s linear, opacity 0.3s linear;
+      -moz-transition: width 0.2s linear, opacity 0.3s linear;
+      -o-transition: width 0.2s linear, opacity 0.3s linear;
+      -ms-transition: width 0.2s linear, opacity 0.3s linear;
+      transition: width 0.2s linear, opacity 0.3s linear;
     }
 
     &.right {
