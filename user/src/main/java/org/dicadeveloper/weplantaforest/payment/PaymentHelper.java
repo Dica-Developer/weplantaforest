@@ -37,6 +37,8 @@ public class PaymentHelper {
 
     private final static DecimalFormat priceFormat = new DecimalFormat("#0.00");
 
+    private final static String CONNECTION_ERROR = "connection_error";
+    
     public String postRequest(Cart cart, PaymentData paymentData) {
         String address = _env.getProperty("bfs.url");
         try {
@@ -62,13 +64,17 @@ public class PaymentHelper {
             return result.toString();
         } catch (final Exception e) {
             LOG.error("unable to do post request to '" + address + "'", e);
-        }
-        return null;
+            return CONNECTION_ERROR;
+        }      
     }
 
     public boolean isSuccessFull(String result) {
         return result != null && result.contains("status=success");
     }
+    
+    public boolean isConnectionError(String result) {
+        return result != null && result.equals(CONNECTION_ERROR);
+    }    
 
     public String getErrorCode(String response) {
         return response.substring(response.indexOf("&amp;code=") + 10, response.indexOf("&amp;code=") + 13);

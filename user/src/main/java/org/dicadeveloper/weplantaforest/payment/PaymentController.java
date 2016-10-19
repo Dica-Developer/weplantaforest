@@ -44,7 +44,10 @@ public class PaymentController {
                 _giftRepository.save(giftToPay);
             }
             return new ResponseEntity<>(HttpStatus.OK);
-        } else {
+        }else if(_paymentHelper.isConnectionError(paymentRequestResponse)){
+            String paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.connection.error", cartToPay.getBuyer().getLang().getLocale());
+            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
+        }else {  
             String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
             String paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank." + errorCode, cartToPay.getBuyer().getLang().getLocale());
             return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
