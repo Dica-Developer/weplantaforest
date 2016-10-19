@@ -21,9 +21,23 @@ export default class ProjectPlanting extends Component {
       maximumAmountOfTreesToPlant: 0,
       sliderValue: this.props.articles.length,
       sliderStep: 1,
-      maxValue: 100
+      maxValue: 100,
+      fade: false
     };
     this.balanceArticleSlidersFromArticleSlider = this.balanceArticleSlidersFromArticleSlider.bind(this);
+    this.fadingDone = this.fadingDone.bind(this);
+  }
+
+  componentDidMount() {
+    const elm = this.refs.planting;
+    elm.addEventListener('animationend', this.fadingDone);
+  }
+  componentWillUnmount() {
+    const elm = this.refs.planting;
+    elm.removeEventListener('animationend', this.fadingDone);
+  }
+  fadingDone() {
+    this.setState({fade: false});
   }
 
   updatePlantBag() {
@@ -159,7 +173,9 @@ export default class ProjectPlanting extends Component {
   render() {
     var that = this;
     return (
-      <div className="projectPlanting">
+      <div ref="planting" className={(this.state.fade
+        ? 'fadeOut'
+        : 'fadeIn') + " projectPlanting"}>
         <h2>{this.props.projectName}&nbsp;/&nbsp;
           <i>hier pflanzen</i>
         </h2>

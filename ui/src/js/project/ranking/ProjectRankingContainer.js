@@ -1,10 +1,6 @@
 import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 
 require("./projectRankingContainer.less");
@@ -12,19 +8,36 @@ require("./projectRankingContainer.less");
 export default class ProjectRankingContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fade: false
+    };
+    this.fadingDone = this.fadingDone.bind(this);
+  }
 
+  componentDidMount() {
+    const elm = this.refs.ranking;
+    elm.addEventListener('animationend', this.fadingDone);
+  }
+  componentWillUnmount() {
+    const elm = this.refs.ranking;
+    elm.removeEventListener('animationend', this.fadingDone);
+  }
+  fadingDone() {
+    this.setState({fade: false});
   }
 
   callNextPage() {
-    if(!this.props.isLastPage){
+    if (!this.props.isLastPage) {
       this.props.callNextPage(this.props.rankingType, this.props.page);
     }
+    this.setState({fade: true});
   }
 
   callPreviousPage() {
-    if(!this.props.isFirstPage){
+    if (!this.props.isFirstPage) {
       this.props.callPreviousPage(this.props.rankingType, this.props.page);
     }
+    this.setState({fade: true});
   }
 
   render() {
@@ -47,15 +60,17 @@ export default class ProjectRankingContainer extends Component {
         </h2>
         <a className="pagingLink" role="button" onClick={this.callPreviousPage.bind(this)}>
           <div>
-          <span className={"glyphicon " + topIcon}></span>
+            <span className={"glyphicon " + topIcon}></span>
           </div>
         </a>
-        <div className="rankingWrapper">
+        <div ref="ranking" className={(this.state.fade
+          ? 'fadeOut'
+          : 'fadeIn') + " rankingWrapper"}>
           {this.props.children}
         </div>
         <a className="pagingLink" role="button" onClick={this.callNextPage.bind(this)}>
           <div>
-          <span className={"glyphicon " + bottomIcon}></span>
+            <span className={"glyphicon " + bottomIcon}></span>
           </div>
         </a>
       </div>

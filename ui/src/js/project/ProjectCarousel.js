@@ -9,17 +9,31 @@ import {htmlDecode} from '../common/language/HtmlHelper';
 export default class ProjectCarousel extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fade: false
+    };
+    this.fadingDone = this.fadingDone.bind(this);
   }
 
   componentDidMount() {
-    var that = this;
+    const elm = this.refs.carousel;
+    elm.addEventListener('animationend', this.fadingDone);
+  }
+  componentWillUnmount() {
+    const elm = this.refs.carousel;
+    elm.removeEventListener('animationend', this.fadingDone);
+  }
+  fadingDone() {
+    this.setState({fade: false});
   }
 
   render() {
     var projectName = this.props.projectName;
 
     return (
-      <div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
+      <div ref="carousel" id="carousel-example-generic" className={(this.state.fade
+        ? 'fadeOut'
+        : 'fadeIn') + " carousel slide"} data-ride="carousel">
         <div className="carousel-inner" role="listbox">
           {this.props.slides.map(function(slide, index) {
             var activeItem = 'item';

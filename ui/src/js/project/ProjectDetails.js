@@ -11,6 +11,22 @@ import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 export default class ProjectDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fade: false
+    };
+    this.fadingDone = this.fadingDone.bind(this);
+  }
+
+  componentDidMount() {
+    const elm = this.refs.details;
+    elm.addEventListener('animationend', this.fadingDone);
+  }
+  componentWillUnmount() {
+    const elm = this.refs.details;
+    elm.removeEventListener('animationend', this.fadingDone);
+  }
+  fadingDone() {
+    this.setState({fade: false});
   }
 
   render() {
@@ -20,15 +36,17 @@ export default class ProjectDetails extends Component {
       percent = this.props.project.projectReportData.amountOfPlantedTrees / this.props.project.projectReportData.amountOfMaximumTreesToPlant * 100;
     }
 
-    if(this.props.project.projectReportData.active){
-      plantButton =   <ImageButton text="HIER PFLANZEN" onClick={this.props.showPlanting.bind(this)} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>;
-    }else{
+    if (this.props.project.projectReportData.active) {
+      plantButton = <ImageButton text="HIER PFLANZEN" onClick={this.props.showPlanting.bind(this)} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>;
+    } else {
       plantButton = '';
     }
 
     var formattedPercent = Accounting.formatNumber(percent, 0, ".", ",")
     return (
-      <div className="projectDetails">
+      <div ref="details" className={(this.state.fade
+        ? 'fadeOut'
+        : 'fadeIn') + " projectDetails"}>
         <h2>Projektfläche:&nbsp;
           <i>{this.props.project.projectReportData.projectName}</i>
         </h2>
@@ -64,7 +82,9 @@ export default class ProjectDetails extends Component {
           </tbody>
         </table>
         <div className="description">
-          <p dangerouslySetInnerHTML={{__html: getTextForSelectedLanguage(this.props.project.projectReportData.description)}} />
+          <p dangerouslySetInnerHTML={{
+            __html: getTextForSelectedLanguage(this.props.project.projectReportData.description)
+          }}/>
         </div>
         <div className="align-center">
           {plantButton}
