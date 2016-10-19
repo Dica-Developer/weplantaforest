@@ -42,7 +42,9 @@ export default class PlantBagProject extends Component {
     return (
       <div className="plantBagProject">
         {button}<h3>{this.props.projectName}</h3>
-      {items}
+      <div className={this.state.showItems ? "visible" : "not-visible"}>
+        {this.props.children}
+      </div>
         {line}
         <div className="sum">
         {Accounting.formatNumber(this.props.price/100, 2, ".", ",")}&nbsp;€
