@@ -11,6 +11,53 @@ export default class PlantBagItem extends Component {
 
   constructor() {
     super();
+    this.state = {
+      decreaseInterval: null,
+      increaseInterval: null,
+      descreaseDown: false,
+      increaseDown: false,
+      intervalDuration: 0
+    }
+  }
+
+  startDecreasing() {
+    this.props.decreasePlantBagItem();
+    var that = this;
+    this.state.descreaseDown = true;
+    setTimeout(function() {
+      that.state.decreaseInterval = setInterval(function() {
+        if (that.state.descreaseDown) {
+          that.props.decreasePlantBagItem();
+          that.forceUpdate();
+        } else {
+          clearInterval(that.state.decreaseInterval);
+        }
+      }, 200);
+    }, 750);
+  }
+
+  stopDecreasing() {
+    this.setState({descreaseDown: false});
+  }
+
+  startIncreasing() {
+    this.props.increasePlantBagItem();
+    var that = this;
+    this.state.increaseDown = true;
+    setTimeout(function() {
+      that.state.increaseInterval = setInterval(function() {
+        if (that.state.increaseDown) {
+          that.props.increasePlantBagItem();
+          that.forceUpdate();
+        } else {
+          clearInterval(that.state.increaseInterval);
+        }
+      }, 200);
+    }, 750);
+  }
+
+  stopIncreasing() {
+    this.setState({increaseDown: false});
   }
 
   render() {
@@ -26,9 +73,13 @@ export default class PlantBagItem extends Component {
           </p>
         </div>
         <div className="customizer">
-          <IconButton glyphIcon="glyphicon-minus" onClick={this.props.decreasePlantBagItem.bind(this)}/>
+          <a role="button" onMouseDown={this.startDecreasing.bind(this)} onMouseUp={this.stopDecreasing.bind(this)}>
+            <span className={("glyphicon glyphicon-minus")} aria-hidden="true"></span>
+          </a>
           <span className="bold">{this.props.plantBagitem.amount}</span>
-          <IconButton glyphIcon="glyphicon-plus" onClick={this.props.increasePlantBagItem.bind(this)}/>
+          <a role="button" onMouseDown={this.startIncreasing.bind(this)} onMouseUp={this.stopIncreasing.bind(this)}>
+            <span className={("glyphicon glyphicon-plus")} aria-hidden="true"></span>
+          </a>
         </div>
         <div className="result-arrow">
           <span className="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
