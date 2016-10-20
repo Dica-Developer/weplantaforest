@@ -69,6 +69,22 @@ export default class Project extends Component {
     return (
       <div className="project">
         <h2>{this.props.project.projectName}</h2>
+          <div className="plantItemDesc bold">
+            <div>
+              <p>
+{"Baumtyp & Preis/Stk."}
+              </p>
+            </div>
+            <div>
+              Anzahl
+            </div>
+            <div>
+              {"  / verfügbar"}
+            </div>
+            <div>
+              Preis gesamt
+            </div>
+          </div>
         {this.state.articles.map(function(article, i) {
             return (<Article article={article} key={i} ref={"article_" + i} sliderIndex={i} updatePrice={that.props.updatePrice.bind(this)}/>);
           })}
