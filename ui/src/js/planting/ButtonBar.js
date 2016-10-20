@@ -88,32 +88,29 @@ export default class ButtonBar extends Component {
             10 Bäume
           </a>
         </div>
-        <div className={"buttonDiv " + ((this.props.chosen == "customAmount")
+        <div className={"buttonDiv " + (this.props.chosen == "50"
           ? "chosen"
           : "")}>
-          <input ref="customInput" value={this.state.customAmount} type="text" placeholder="beliebig viele" onChange={this.updateCustomAmount.bind(this)} onKeyDown={this.handleCustomInputKeyDown.bind(this)} onBlur={this.switchToProposalPageCustom.bind(this)} className={this.state.customInputVisible
-            ? ""
-            : "invisible"}/>
           <a role="button" onClick={() => {
-            this.setCustomInputVisible(this.state.customAmount)
-          }} className={this.state.customInputVisible
-            ? "invisible"
-            : ""}>
-            beliebig viele
+            this.switchToProposalPage('50')
+          }}>
+            50 Bäume
           </a>
         </div>
-        <div className={"buttonDiv " + (this.props.chosen == "slider"
+        <div className={"buttonDiv " + (this.props.chosen == "100"
           ? "chosen"
           : "")}>
-          <a role="button" onClick={this.switchToSliderPlantPage.bind(this)}>
-            &lt; 100(individuell)
+          <a role="button" onClick={() => {
+            this.switchToProposalPage('100')
+          }}>
+            100 Bäume
           </a>
         </div>
         <div className={"buttonDiv " + (this.props.chosen == "custom"
           ? "chosen"
           : "")}>
           <a role="button" onClick={this.switchToCustomPlantPage.bind(this)}>
-            &gt; 100(individuell)
+            individuell
           </a>
         </div>
       </div>
