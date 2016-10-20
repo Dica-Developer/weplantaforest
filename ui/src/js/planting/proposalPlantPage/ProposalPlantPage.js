@@ -27,13 +27,25 @@ export default class ProposalPlantPage extends Component {
       overallPrice: 0,
       isGift: false,
       isAbo: false,
-      amount: -1
+      amount: -1,
+      slideIn: false
     };
+    this.slidingDone = this.slidingDone.bind(this);
+  }
+
+  componentWillUnmount() {
+    const elm = this.refs.planting;
+    elm.removeEventListener('animationend', this.slidingDone);
+  }
+  slidingDone() {
+    this.setState({slideIn: false});
   }
 
   componentDidMount() {
     this.setState({isGift: this.props.route.isGift, isAbo: this.props.route.isAbo, amount: this.props.params.amount});
     this.getPlantProposal(this.props.params.amount);
+    const elm = this.refs.planting;
+    elm.addEventListener('animationend', this.slidingDone);
   }
 
   updatePlantBag() {
@@ -51,6 +63,8 @@ export default class ProposalPlantPage extends Component {
 
   getPlantProposal(value) {
     var that = this;
+    this.setState({slideIn: true});
+
     axios.get('http://localhost:8081/simplePlantProposalForTrees/' + value).then(function(response) {
       var result = response.data;
       that.setState({trees: result});
@@ -62,17 +76,22 @@ export default class ProposalPlantPage extends Component {
       this.getPlantProposal(this.props.params.amount);
       this.setState({amount: this.props.params.amount});
     }
+
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   render() {
     var chosen;
-    if (this.props.params.amount == "1" || this.props.params.amount == "5" || this.props.params.amount == "10") {
+    if (this.props.params.amount == "1" || this.props.params.amount == "5" || this.props.params.amount == "10" || this.props.params.amount == "50" || this.props.params.amount == "100") {
       chosen = this.props.params.amount;
     } else {
       chosen = "customAmount";
     }
     return (
-      <div>
+      <div >
         <NavBar ref="navbar" reRender={this.props.route.reRender.bind(this)}/>
         <Header/>
         <div className="container paddingTopBottom15">
@@ -98,7 +117,9 @@ export default class ProposalPlantPage extends Component {
                   Preis gesamt
                 </div>
               </div>
-              <div className="align-center">
+              <div ref="planting" className={(this.state.slideIn
+                ? 'slideIn '
+                : ' ') + "align-center plantItems"}>
                 {this.state.trees.plantItems.map(function(plantItem, i) {
                   return (<PlantItem plantItem={plantItem} key={i}/>);
                 })}

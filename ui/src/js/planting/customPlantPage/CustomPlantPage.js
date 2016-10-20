@@ -31,15 +31,28 @@ export default class CustomPlantPage extends Component {
       projects: [],
       overallPrice: 0,
       isGift: false,
-      isAbo: false
+      isAbo: false,
+      slideIn: false
     };
     this.updatePrice = this.updatePrice.bind(this);
+      this.slidingDone = this.slidingDone.bind(this);
+  }
+
+  componentWillUnmount() {
+    const elm = this.refs.planting;
+    elm.removeEventListener('animationend', this.slidingDone);
+  }
+  slidingDone() {
+    this.setState({slideIn: false});
   }
 
   componentDidMount() {
+    const elm = this.refs.planting;
+    elm.addEventListener('animationend', this.slidingDone);
     this.setState({
       isGift: this.props.route.isGift,
-      isAbo: this.props.route.isAbo
+      isAbo: this.props.route.isAbo,
+      slideIn: true
     });
     var that = this;
     axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
@@ -91,9 +104,13 @@ export default class CustomPlantPage extends Component {
             <div className="col-md-12">
               <h2>{this.props.route.header}</h2>
               <ButtonBar chosen="custom"/>
+              <div ref="planting" className={(this.state.slideIn
+                ? 'slideIn '
+                : ' ')  + "plantItems"}>
               {this.state.projects.map(function(project, i) {
                 return (<Project key={i} project={project} ref={"project_" + i} updatePrice={that.updatePrice.bind(this)}/>);
                 })}
+              </div>
               <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
             </div>
           </div>

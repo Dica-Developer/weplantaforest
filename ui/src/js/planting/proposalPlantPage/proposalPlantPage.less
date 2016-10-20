@@ -13,6 +13,79 @@
     }
   }
 
+  .plantItems {
+    overflow: hidden;
+  }
+
+  .slideIn {
+    -webkit-animation: slide-in 2s;
+    /* Safari 4+ */
+    -moz-animation: slide-in 2s;
+    /* Fx 5+ */
+    -o-animation: slide-in 2s;
+    animation: slide-in 2s;
+  }
+  @keyframes slide-in {
+    from {
+      max-height: 500px;
+    }
+    10% {
+      max-height: 0;
+    }
+    20% {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+      max-height: 500px;
+    }
+  }
+  @-webkit-keyframes slide-in {
+    from {
+      max-height: 500px;
+    }
+    10% {
+      opacity: 0;
+    }
+    20% {
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      max-height: 500px;
+    }
+  }
+  @-moz-keyframes slide-in {
+    from {
+      max-height: 500px;
+    }
+    10% {
+      opacity: 0;
+    }
+    20% {
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      max-height: 500px;
+    }
+  }
+  @-o-keyframes slide-in {
+    from {
+      max-height: 500px;
+    }
+    10% {
+      opacity: 0;
+    }
+    20% {
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      max-height: 500px;
+    }
+  }
+
   .plantItem {
     margin-top: 10px;
 
