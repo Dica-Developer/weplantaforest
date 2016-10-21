@@ -88,6 +88,10 @@ export default class PlantBagPage extends Component {
     this.forceUpdate();
     if (this.state.plantBag.projects[project].plantItems[plantItem].amount == 0) {
       delete this.state.plantBag.projects[project].plantItems[plantItem];
+      if (Object.keys(this.state.plantBag.projects[project].plantItems).length === 0) {
+        delete this.state.plantBag.projects[project];
+        this.forceUpdate();
+      }
       this.forceUpdate();
     }
     this.calcPriceAndUpdatePlantBag();

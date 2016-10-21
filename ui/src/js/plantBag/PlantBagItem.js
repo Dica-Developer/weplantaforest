@@ -26,13 +26,13 @@ export default class PlantBagItem extends Component {
     this.state.descreaseDown = true;
     setTimeout(function() {
       that.state.decreaseInterval = setInterval(function() {
-        if (that.state.descreaseDown) {
+        if (that.state.descreaseDown && that.props.plantBagitem.amount != 1) {
           that.props.decreasePlantBagItem();
           that.forceUpdate();
         } else {
           clearInterval(that.state.decreaseInterval);
         }
-      }, 200);
+      }, 100);
     }, 750);
   }
 
@@ -52,7 +52,7 @@ export default class PlantBagItem extends Component {
         } else {
           clearInterval(that.state.increaseInterval);
         }
-      }, 200);
+      }, 100);
     }, 750);
   }
 
