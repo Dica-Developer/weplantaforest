@@ -33,6 +33,15 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         increaseAmountOfItemWithHighestMargeIfNeeded(articleWithHighestMarge);
         return simplePlantPageData;
     }
+    
+    public SimplePlantBag createPlantProposalForAmountOfTrees(String projectName, long targetAmountOfTrees) {
+        initialize(projectName, targetAmountOfTrees);
+        ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge();
+        addItemWithHighestMarge(articleWithHighestMarge);
+        addFurtherItems();
+        increaseAmountOfItemWithHighestMargeIfNeeded(articleWithHighestMarge);
+        return simplePlantPageData;
+    }
 
     private void initialize(long targetAmountOfTrees) {
         simplePlantPageData = new SimplePlantBag();
@@ -40,6 +49,14 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         simplePlantPageData.setPlantItems(simplePlantPageItems);
         simplePlantPageData.setTargetAmountOfTrees(targetAmountOfTrees);
         projectArticles = createListOfAllAvailableProjectArticles();
+    }
+
+    private void initialize(String projectName, long targetAmountOfTrees) {
+        simplePlantPageData = new SimplePlantBag();
+        List<SimplePlantPageItem> simplePlantPageItems = new ArrayList<>();
+        simplePlantPageData.setPlantItems(simplePlantPageItems);
+        simplePlantPageData.setTargetAmountOfTrees(targetAmountOfTrees);
+        projectArticles = createListOfAllAvailableProjectArticles(projectName);
     }
 
     private void addItemWithHighestMarge(ProjectArticle article) {

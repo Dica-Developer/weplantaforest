@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import ProjectCarousel from './ProjectCarousel';
 import ProjectDetails from './ProjectDetails';
-import ProjectPlanting from './planting/ProjectPlanting';
+import ProjectPlanting from './planting/ProjectPlantingWithoutSlider';
 import ProjectRankingContainer from './ranking/ProjectRankingContainer';
 import RankingItem from './ranking/RankingItem';
 import TimeRankingItem from './ranking/TimeRankingItem';
@@ -181,7 +181,7 @@ export default class ProjectDetailsPage extends Component {
       mainPart = <div><ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images}/>
         <ProjectDetails project={this.state.project} showPlanting={()=>{this.setDetailsActive(false)}}/></div>;
     } else {
-      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={()=>{this.setDetailsActive(true)}} articles={this.state.articles} updatePlantBag={this.updatePlantBag.bind(this)}/>;
+      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={()=>{this.setDetailsActive(true)}} articles={this.state.articles} updatePlantBag={this.updatePlantBag.bind(this)} amount="5"/>;
     };
 
     return (

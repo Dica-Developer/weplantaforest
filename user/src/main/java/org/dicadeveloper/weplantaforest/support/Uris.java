@@ -14,6 +14,8 @@ public class Uris {
 
     public final static String SIMPLE_PROPOSAL_FOR_TREE = "/simplePlantProposalForTrees/";
 
+    public final static String SIMPLE_PROPOSAL_FOR_TREE_AND_PROJECT = "/simplePlantProposalForTrees/project";
+    
     public final static String SIMPLE_DONATION = "/simpleDonateTrees";
 
     public final static String PLANT_SELF = "/plantSelf";

@@ -25,9 +25,7 @@ public abstract class AbstractPlantBagHelper {
 
     protected List<ProjectArticle> projectArticles;
 
-    protected AbstractPlantBagHelper(ProjectRepository projectRepository,
-            ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository,
-            TreeRepository treeRepository) {
+    protected AbstractPlantBagHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         _projectRepository = projectRepository;
         _projectArticleRepository = projectArticleRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -47,9 +45,7 @@ public abstract class AbstractPlantBagHelper {
         double maxMarge = 0.0;
 
         for (ProjectArticle projectArticle : projectArticles) {
-            double articleMarge = projectArticle.getPrice()
-                                                .getMarge()
-                                                .doubleValue();
+            double articleMarge = projectArticle.getPrice().getMarge().doubleValue();
             if (articleMarge > maxMarge) {
                 maxMarge = articleMarge;
                 article = projectArticle;
@@ -68,6 +64,19 @@ public abstract class AbstractPlantBagHelper {
                 if (areThereTreesRemaining(article)) {
                     projectArticles.add(article);
                 }
+            }
+        }
+        return projectArticles;
+    }
+
+    protected List<ProjectArticle> createListOfAllAvailableProjectArticles(String projectName) {
+        List<ProjectArticle> projectArticles = new ArrayList<>();
+        // only the active Projects
+
+        for (ProjectArticle article : _projectArticleRepository.findByProjectName(projectName)) {
+            // add only articles, where there are remaining trees to plant
+            if (areThereTreesRemaining(article)) {
+                projectArticles.add(article);
             }
         }
         return projectArticles;

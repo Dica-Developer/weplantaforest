@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
@@ -46,6 +47,12 @@ public class SimplePlantPageController {
         return simplePlantPageDataHelper.createPlantProposalForAmountOfTrees(amountOfTrees);
     }
 
+    @RequestMapping(value = Uris.SIMPLE_PROPOSAL_FOR_TREE_AND_PROJECT, method = RequestMethod.GET)
+    @Transactional
+    public SimplePlantBag getCartProposalForAmountOfTrees(@RequestParam String projectName, @RequestParam long amountOfTrees) {
+        return simplePlantPageDataHelper.createPlantProposalForAmountOfTrees(projectName, amountOfTrees);
+    }
+
     @RequestMapping(value = Uris.SIMPLE_DONATION, method = RequestMethod.POST)
     public ResponseEntity<?> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody SimplePlantBag plantPageData) {
         User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
@@ -57,7 +64,7 @@ public class SimplePlantPageController {
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
