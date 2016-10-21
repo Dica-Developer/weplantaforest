@@ -1,22 +1,15 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
-import {
-  Link
-} from 'react-router';
+import {Link} from 'react-router';
 import axios from 'axios';
 
 import IconButton from '../../common/components/IconButton';
 import ImageButton from '../../common/components/ImageButton';
 
-import ButtonBar from './ButtonBar';
-import BottomPart from '../../planting/BottomPart';
-import PlantItem from './PlantItem';
+import PlantProposal from './PlantProposal';
+import PlantCustom from './PlantCustom';
 
 require("./projectPlanting.less");
 
@@ -24,63 +17,36 @@ export default class ProjectPlantingWithoutSlider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trees: {
-        plantItems: []
-      },
-      overallPrice: 0,
       isGift: false,
       isAbo: false,
       amount: 5,
-      slideIn: false,
-      fade: false
+      fade: false,
+      trees: {
+        plantItems: []
+      }
     };
     this.fadingDone = this.fadingDone.bind(this);
-    this.slidingDone = this.slidingDone.bind(this);
   }
 
   componentDidMount() {
     const elm = this.refs.planting;
-    const elm2 = this.refs.plantItems;
     elm.addEventListener('animationend', this.fadingDone);
-    elm2.addEventListener('animationend', this.slidingDone);
     this.getPlantProposal(this.props.amount);
   }
   componentWillUnmount() {
     const elm = this.refs.planting;
-    const elm2 = this.refs.plantItems;
     elm.removeEventListener('animationend', this.fadingDone);
-    elm2.removeEventListener('animationend', this.slidingDone);
   }
   fadingDone() {
-    this.setState({
-      fade: false
-    });
-  }
-  slidingDone() {
-    this.setState({
-      slideIn: false
-    });
+    this.setState({fade: false});
   }
 
-  updatePlantBag() {
-    for (var plantItem in this.state.trees.plantItems) {
-      var price = this.state.trees.plantItems[plantItem].amount * this.state.trees.plantItems[plantItem].treePrice;
-      var projectItems = {};
-      projectItems[this.state.trees.plantItems[plantItem].treeType] = {
-        amount: parseInt(this.state.trees.plantItems[plantItem].amount),
-        price: parseInt(this.state.trees.plantItems[plantItem].treePrice),
-        imageFile: this.state.trees.plantItems[plantItem].imageFile
-      };
-      this.props.updatePlantBag(price, projectItems, this.state.trees.plantItems[plantItem].projectName);
-    }
+  updatePlantBag(price, projectItems, projectName) {
+    this.props.updatePlantBag(price, projectItems, projectName);
   }
 
   getPlantProposal(value) {
     var that = this;
-    this.setState({
-      slideIn: true
-    });
-
     axios.get('http://localhost:8081/simplePlantProposalForTrees/project?projectName=' + this.props.projectName + "&amountOfTrees=" + value).then(function(response) {
       var result = response.data;
       that.setState({
@@ -90,14 +56,22 @@ export default class ProjectPlantingWithoutSlider extends Component {
   }
 
   setAmount(value) {
-    this.setState({
-      amount: value
-    });
-    this.getPlantProposal(value);
+    this.setState({amount: value});
+    if(value != "custom" ){
+      this.getPlantProposal(value);
+      if(this.refs["proposal"] != null){
+        this.refs["proposal"].slideIn();
+      }
+    }
   }
 
   render() {
-
+    var plantContent;
+    if(this.state.amount != "custom"){
+      plantContent = <PlantProposal ref="proposal" projectName={this.props.projectName} trees={this.state.trees} amount={this.state.amount} setAmount={this.setAmount.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)}/>;
+    }else{
+      plantContent = <PlantCustom projectName={this.props.projectName} articles={this.props.articles} updatePlantBag={this.updatePlantBag.bind(this)} amount={this.state.amount} setAmount={this.setAmount.bind(this)}/>;
+    }
     return (
       <div ref="planting" className={(this.state.fade
         ? 'fadeOut'
@@ -105,31 +79,7 @@ export default class ProjectPlantingWithoutSlider extends Component {
         <h2>{this.props.projectName}&nbsp;/&nbsp;
           <i>hier pflanzen</i>
         </h2>
-        <div>
-          <ButtonBar chosen={this.state.amount} setAmount={this.setAmount.bind(this)}/>
-            <div className="plantItemDesc align-center bold plantItemDesc">
-              <div>
-                <p>
-                  Baumtyp<br/>Preis&nbsp;/&nbsp;Stk.
-                </p>
-              </div>
-              <div>
-                Anzahl
-              </div>
-              <div></div>
-              <div>
-                Preis gesamt
-              </div>
-            </div>
-            <div ref="plantItems" className={(this.state.slideIn
-              ? 'slideIn '
-              : ' ') + "align-center plantItems"}>
-                {this.state.trees.plantItems.map(function(plantItem, i) {
-                  return (<PlantItem plantItem={plantItem} key={i}/>);
-                })}
-            </div>
-            <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.trees.actualPrice}/>
-          </div>
+        {plantContent}
         <div className="bottom align-center">
           <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)}/>
         </div>

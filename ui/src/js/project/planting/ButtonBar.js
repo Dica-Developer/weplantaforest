@@ -13,8 +13,6 @@ export default class ButtonBar extends Component {
     super();
   }
 
-  switchToCustomPlantPage() {}
-
   render() {
     return (
       <div className="buttonBar">
@@ -67,7 +65,9 @@ export default class ButtonBar extends Component {
         <div className={"buttonDiv " + (this.props.chosen == "custom"
           ? "chosen"
           : "")}>
-          <a role="button" onClick={this.switchToCustomPlantPage.bind(this)}>
+          <a role="button" onClick={() => {
+            this.props.setAmount("custom")
+          }}>
             individuell
           </a>
         </div>
