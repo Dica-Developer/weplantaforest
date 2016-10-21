@@ -21,6 +21,8 @@ import Footer from '../../common/Footer';
 import ButtonBar from '../ButtonBar';
 import BottomPart from '../BottomPart';
 
+require("./article.less");
+
 export default class Article extends Component {
 
   constructor() {
