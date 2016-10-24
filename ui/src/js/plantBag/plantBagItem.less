@@ -1,53 +1,101 @@
+@media (max-width: 500px) {
+  .plantBagItem {
+    font-size: 12px;
+    .image {
+      width: 50px!important;
+      img {
+        border-width: 2px!important;
+        width: 40px!important;
+        height: 40px!important;
+      }
+    }
+    .treeTypeInfo {
+      margin-left: 15px !important;
+      width: 100px!important;
+    }
+    .customizer {
+      width: 60px!important;
+    }
+    .result-arrow {
+      width: 30px!important;
+      font-size: 14px!important;
+    }
+    .result {
+      width: 90px!important;
+    }
+  }
+}
+@media (max-width: 375px) {
+  .plantBagItem {
+    font-size: 10px;
+    .image {
+      display: none!important;
+    }
+    .treeTypeInfo {
+      margin-left: 5px !important;
+      width: 80px!important;
+    }
+    .customizer {
+      width: 50px!important;
+    }
+    .result-arrow {
+      width: 30px!important;
+      font-size: 14px!important;
+    }
+    .result {
+      width: 80px!important;
+    }
+  }
+}
+
 .plantBagItem {
   margin-top: 15px;
 
   div {
     display: inline-block;
   }
-  .image{
+  .image {
     width: 70px;
     text-align: center;
   }
-  .treeTypeInfo{
+  .treeTypeInfo {
     width: 120px;
     margin-left: 25px;
     vertical-align: middle;
   }
-  .customizer{
+  .customizer {
     width: 100px;
     text-align: center;
     vertical-align: middle;
-
-    div:nth-of-type(1){
+    div:nth-of-type(1) {
       margin-right: 5px;
     }
-    div:nth-of-type(2){
+    div:nth-of-type(2) {
       margin-left: 10px;
     }
   }
-
   a,
-  a:visited,
-  a:active {
+  a:active,
+  a:visited {
     margin: 5px;
     color: #000;
     text-align: center;
     text-decoration: none;
   }
 
-  .result-arrow{
+  .result-arrow {
     text-align: center;
     width: 40px;
     font-size: 20px;
   }
 
-  .result{
+  .result {
     width: 105px;
     text-align: right;
     line-height: 60px;
     vertical-align: middle;
 
-    p{
+    p {
       display: inline;
       margin-right: 10px;
     }
