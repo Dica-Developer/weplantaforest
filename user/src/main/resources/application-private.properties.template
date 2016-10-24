@@ -1,6 +1,5 @@
 #Mail
 smtp.host=
-smtp.port=
 mail.sender=
 mail.password=
 mail.receiver=

@@ -33,7 +33,6 @@ public class MailHelper{
     String from;
     String password;
     String host;
-    String port;
     String receiver;
     boolean debug;
 
@@ -72,7 +71,6 @@ public class MailHelper{
         from = _env.getProperty("mail.sender");
         password = _env.getProperty("mail.password");
         host = _env.getProperty("smtp.host");
-        port = _env.getProperty("smtp.port");
         receiver = _env.getProperty("mail.receiver");
         debug = _env.getProperty("mail.debug").equals("true");
     }
@@ -80,7 +78,6 @@ public class MailHelper{
     private void createAndSetProperties() {
         props = new Properties();
         props.put("mail.smtp.host", host);
-        props.put("mail.smtp.port", port);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.ssl", "true");
         props.put("mail.smtp.auth", "true");
