@@ -167,8 +167,8 @@ export default class ProjectDetailsPage extends Component {
     this.setState({detailsActive: value});
   }
 
-  updatePlantBag(overallPrice, projectItems, projectName){
-    this.refs['navbar'].updatePlantBag(overallPrice, projectItems, projectName);
+  updatePlantBag(overallPrice, projectItems, projectName) {
+    this.props.route.updatePlantBag(overallPrice, projectItems, projectName);
   }
 
   render() {
@@ -179,46 +179,45 @@ export default class ProjectDetailsPage extends Component {
 
     if (this.state.detailsActive) {
       mainPart = <div><ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images}/>
-        <ProjectDetails project={this.state.project} showPlanting={()=>{this.setDetailsActive(false)}}/></div>;
+        <ProjectDetails project={this.state.project} showPlanting={() => {
+          this.setDetailsActive(false)
+        }}/></div>;
     } else {
-      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={()=>{this.setDetailsActive(true)}} articles={this.state.articles} updatePlantBag={this.updatePlantBag.bind(this)} amount="5"/>;
+      mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={() => {
+        this.setDetailsActive(true)
+      }} articles={this.state.articles} updatePlantBag={this.updatePlantBag.bind(this)} amount="5"/>;
     };
 
     return (
-      <div className="projectPage">
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row">
-            <div className="col-md-12">
-              {mainPart}
+      <div className="container paddingTopBottom15 projectPage">
+        <div className="row">
+          <div className="col-md-12">
+            {mainPart}
+          </div>
+          <div className="projectRankings">
+            <div className="col-md-4">
+              <ProjectRankingContainer title="Beste Teams im Projekt" rankingType="bestTeam" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestTeam.first} isLastPage={this.state.bestTeam.last}>
+                {this.state.bestTeam.content.map(function(content, i) {
+                  return (<RankingItem content={content} imageFolder="team" key={i} rankNumber={bestTeamPage * 5 + (i + 1)}/>);
+                })}
+              </ProjectRankingContainer>
             </div>
-            <div className="projectRankings">
-              <div className="col-md-4">
-                <ProjectRankingContainer title="Beste Teams im Projekt" rankingType="bestTeam" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestTeam.first} isLastPage={this.state.bestTeam.last}>
-                  {this.state.bestTeam.content.map(function(content, i) {
-                    return (<RankingItem content={content} imageFolder="team" key={i} rankNumber={bestTeamPage * 5 + (i + 1)}/>);
-                  })}
-                </ProjectRankingContainer>
-              </div>
-              <div className="col-md-4">
-                <ProjectRankingContainer title="Beste Pflanzer im Projekt" rankingType="bestUser" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestUser.first} isLastPage={this.state.bestUser.last}>
-                  {this.state.bestUser.content.map(function(content, i) {
-                    return (<RankingItem content={content} imageFolder="user" key={i} rankNumber={bestUserPage * 5 + (i + 1)}/>);
-                  })}
-                </ProjectRankingContainer>
-              </div>
-              <div className="col-md-4">
-                <ProjectRankingContainer title="Neueste Pflanzungen im Projekt" rankingType="lastPlantedTrees" page={lastPlantedTreesPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.lastPlantedTrees.first} isLastPage={this.state.lastPlantedTrees.last}>
-                  {this.state.lastPlantedTrees.content.map(function(content, i) {
-                    return (<TimeRankingItem content={content} imageFolder="treeType" key={i}/>);
-                  })}
-                </ProjectRankingContainer>
-              </div>
+            <div className="col-md-4">
+              <ProjectRankingContainer title="Beste Pflanzer im Projekt" rankingType="bestUser" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestUser.first} isLastPage={this.state.bestUser.last}>
+                {this.state.bestUser.content.map(function(content, i) {
+                  return (<RankingItem content={content} imageFolder="user" key={i} rankNumber={bestUserPage * 5 + (i + 1)}/>);
+                })}
+              </ProjectRankingContainer>
+            </div>
+            <div className="col-md-4">
+              <ProjectRankingContainer title="Neueste Pflanzungen im Projekt" rankingType="lastPlantedTrees" page={lastPlantedTreesPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.lastPlantedTrees.first} isLastPage={this.state.lastPlantedTrees.last}>
+                {this.state.lastPlantedTrees.content.map(function(content, i) {
+                  return (<TimeRankingItem content={content} imageFolder="treeType" key={i}/>);
+                })}
+              </ProjectRankingContainer>
             </div>
           </div>
         </div>
-        <Footer/>
       </div>
     );
   }

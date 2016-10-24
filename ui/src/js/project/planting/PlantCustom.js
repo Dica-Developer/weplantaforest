@@ -62,12 +62,9 @@ export default class PlantCustom extends Component {
   }
 
   updatePrice() {
-    console.log('updating price');
     var price = 0;
     for (var article in this.props.articles) {
-      console.log('article amount for ' + article + ": " + this.refs["article_" + article].getAmount());
       if(this.refs["article_" + article].getAmount() != null && this.refs["article_" + article].getAmount() > 0){
-        console.log('adding + ' + this.refs["article_" + article].getAmount() + " * " + this.props.articles[article].price.priceAsLong + " to " + price);
         price = price + parseInt(this.refs["article_" + article].getAmount()) * parseInt(this.props.articles[article].price.priceAsLong);
       }
     }

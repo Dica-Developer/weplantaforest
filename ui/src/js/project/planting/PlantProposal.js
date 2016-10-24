@@ -40,13 +40,13 @@ export default class PlantProposal extends Component {
   }
 
   updatePlantBag() {
-    for (var plantItem in this.state.trees.plantItems) {
-      var price = this.state.trees.plantItems[plantItem].amount * this.state.trees.plantItems[plantItem].treePrice;
+    for (var plantItem in this.props.trees.plantItems) {
+      var price = this.props.trees.plantItems[plantItem].amount * this.props.trees.plantItems[plantItem].treePrice;
       var projectItems = {};
-      projectItems[this.state.trees.plantItems[plantItem].treeType] = {
-        amount: parseInt(this.state.trees.plantItems[plantItem].amount),
-        price: parseInt(this.state.trees.plantItems[plantItem].treePrice),
-        imageFile: this.state.trees.plantItems[plantItem].imageFile
+      projectItems[this.props.trees.plantItems[plantItem].treeType] = {
+        amount: parseInt(this.props.trees.plantItems[plantItem].amount),
+        price: parseInt(this.props.trees.plantItems[plantItem].treePrice),
+        imageFile: this.props.trees.plantItems[plantItem].imageFile
       };
       this.props.updatePlantBag(price, projectItems, this.props.projectName);
     }
@@ -83,7 +83,7 @@ export default class PlantProposal extends Component {
               return (<PlantItem plantItem={plantItem} key={i}/>);
             })}
           </div>
-          <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.trees.actualPrice}/>
+          <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.props.trees.actualPrice}/>
         </div>
     );
   }

@@ -86,41 +86,36 @@ export default class ProjectsPage extends Component {
     }
 
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row projectsPage">
-            <div className="col-md-12">
-              <h2>Projektflächen</h2>
-              <div className="active-projects">
-                <h3>laufende Projekte</h3>
-                  {this.state.activeProjects.map(function(project, i) {
-                    return (<ActiveProject project={project} key={i} />);
-                  })}
-                <div className="align-center border-top">
-                  {moreCompletedProjectsButton}
-                </div>
+      <div className="container paddingTopBottom15">
+        <div className="row projectsPage">
+          <div className="col-md-12">
+            <h2>Projektflächen</h2>
+            <div className="active-projects">
+              <h3>laufende Projekte</h3>
+                {this.state.activeProjects.map(function(project, i) {
+                  return (<ActiveProject project={project} key={i} />);
+                })}
+              <div className="align-center border-top">
+                {moreCompletedProjectsButton}
               </div>
-              <div className="completed-projects">
-                <h3>abgeschlossene Projekte</h3>
-                  {this.state.completedProjects.content.map(function(project, i) {
-                    return (<CompletedProject project={project} key={i} />);
-                  })}
-                <div className="align-center border-top">
-                  {moreCompletedProjectsButton}
-                </div>
+            </div>
+            <div className="completed-projects">
+              <h3>abgeschlossene Projekte</h3>
+                {this.state.completedProjects.content.map(function(project, i) {
+                  return (<CompletedProject project={project} key={i} />);
+                })}
+              <div className="align-center border-top">
+                {moreCompletedProjectsButton}
               </div>
-              <div className="bottom">Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt?
-                <br/>
-                Hier kanns Du eine&nbsp;
-                <IconButton glyphIcon="glyphicon-forward" text="PROJEKTFLÄCHE ANBIETEN" onClick={this.switchToOfferProjectPage.bind(this)}/>
-              </div>
+            </div>
+            <div className="bottom">Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt?
+              <br/>
+              Hier kanns Du eine&nbsp;
+              <IconButton glyphIcon="glyphicon-forward" text="PROJEKTFLÄCHE ANBIETEN" onClick={this.switchToOfferProjectPage.bind(this)}/>
             </div>
           </div>
         </div>
-      <Footer/>
-    </div>
+      </div>
     );
   }
 }

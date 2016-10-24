@@ -93,42 +93,36 @@ export default class RankingPage extends Component {
     var maxTree;
     var maxCo2;
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row rankingPage">
-            <div className="col-md-12">
-              <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
-            </div>
-            <div className="col-md-12 rankingItems">
-              <h2>Bestenliste&nbsp;/&nbsp;{this.state.orgTypeDesc}</h2>
-              {this.state.ranking.content.map(function(content, i) {
-                if (i == 0) {
-                  maxTree = content.amount;
-                  maxCo2 = content.co2Saved;
-                }
-
-                if (i > 0) {
-                  percentTree = 100 * content.amount / maxTree;
-                  percentCo2 = 100 * content.co2Saved / maxCo2;
-                }
-                var imageUrl;
-                if (orgTypeDesc != 'Teams') {
-                  imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
-                } else {
-                  imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
-                }
-                if (i < 10) {
-                  return (<RankingItemLarge imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);
-                }else{
-                  return(<RankingItemSmall content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
-                }
-              })}
-            </div>
+      <div className="container paddingTopBottom15">
+        <div className="row rankingPage">
+          <div className="col-md-12">
+            <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
+          </div>
+          <div className="col-md-12 rankingItems">
+            <h2>Bestenliste&nbsp;/&nbsp;{this.state.orgTypeDesc}</h2>
+            {this.state.ranking.content.map(function(content, i) {
+              if (i == 0) {
+                maxTree = content.amount;
+                maxCo2 = content.co2Saved;
+              }
+              if (i > 0) {
+                percentTree = 100 * content.amount / maxTree;
+                percentCo2 = 100 * content.co2Saved / maxCo2;
+              }
+              var imageUrl;
+              if (orgTypeDesc != 'Teams') {
+                imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+              } else {
+                imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
+              }
+              if (i < 10) {
+                return (<RankingItemLarge imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);
+              }else{
+                return(<RankingItemSmall content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
+              }
+            })}
           </div>
         </div>
-        <Footer/>
       </div>
     );
   }

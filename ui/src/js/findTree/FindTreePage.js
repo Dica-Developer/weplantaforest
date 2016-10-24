@@ -64,15 +64,10 @@ export default class FindTreePage extends Component {
       content = <FindTrees findCertificate={this.findCertificate.bind(this)}/>;
     }
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row findTree">
-            {content}
-          </div>
+      <div className="container paddingTopBottom15">
+        <div className="row findTree">
+          {content}
         </div>
-        <Footer/>
         <Notification ref="notification"/>
       </div>
     );

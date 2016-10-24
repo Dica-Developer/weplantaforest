@@ -111,15 +111,10 @@ export default class RedeemGiftPage extends Component {
         </div>;
     }
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row giftRedeem">
-            {content}
-          </div>
+      <div className="container paddingTopBottom15">
+        <div className="row giftRedeem">
+          {content}
         </div>
-        <Footer/>
         <Notification ref="notification"/>
       </div>
     );

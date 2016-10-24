@@ -34,15 +34,10 @@ export default class ProjectOfferPage extends Component {
     }
 
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row projectOffer">
-            {content}
-          </div>
+      <div className="container paddingTopBottom15">
+        <div className="row projectOffer">
+          {content}
         </div>
-        <Footer/>
       </div>
     );
   }

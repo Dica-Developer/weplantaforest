@@ -38,16 +38,11 @@ export default class ForgotPasswordPage extends Component {
       content = <SendRequest setResetted={this.setResetted.bind(this)}/>
     }
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row forgotPasswordPage">
-            {content}
-          </div>
+      <div className="container paddingTopBottom15">
+        <div className="row forgotPasswordPage">
+          {content}
         </div>
-      <Footer/>
-    </div>
+      </div>
     );
   }
 }

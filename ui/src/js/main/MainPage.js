@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
-import NavBar from '../common/navbar/NavBar';
-import Header from '../common/header/Header';
-import Footer from '../common/Footer';
-
 import Carousel from './Carousel';
 import ArticleTeaser from './ArticleTeaser';
 import ProjectTeaser from './ProjectTeaser';
@@ -95,9 +91,6 @@ export default class MainPage extends Component {
 
   render() {
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
         <div className="container paddingTopBottom15">
           <Carousel/>
           <div className="teaser">
@@ -133,8 +126,6 @@ export default class MainPage extends Component {
             </div>
           </div>
         </div>
-        <Footer/>
-      </div>
     );
   }
 }

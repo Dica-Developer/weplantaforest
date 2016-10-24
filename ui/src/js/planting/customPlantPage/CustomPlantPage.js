@@ -79,7 +79,7 @@ export default class CustomPlantPage extends Component {
         }
       }
       if(updateProject){
-        this.refs["navbar"].updatePlantBag(this.refs["project_" + project].getPrice(), projectItems, this.state.projects[project].projectName);
+        this.props.route.updatePlantBag(this.refs["project_" + project].getPrice(), projectItems, this.state.projects[project].projectName);
       }
     }
   }
@@ -96,26 +96,21 @@ export default class CustomPlantPage extends Component {
   render() {
     var that = this;
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.route.reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row customPlantPage">
-            <div className="col-md-12">
-              <h2>{this.props.route.header}</h2>
-              <ButtonBar chosen="custom"/>
-              <div ref="planting" className={(this.state.slideIn
-                ? 'slideIn '
-                : ' ')  + "plantItems"}>
+      <div className="container paddingTopBottom15">
+        <div className="row customPlantPage">
+          <div className="col-md-12">
+            <h2>{this.props.route.header}</h2>
+            <ButtonBar chosen="custom"/>
+            <div ref="planting" className={(this.state.slideIn
+              ? 'slideIn '
+              : ' ')  + "plantItems"}>
               {this.state.projects.map(function(project, i) {
                 return (<Project key={i} project={project} ref={"project_" + i} updatePrice={that.updatePrice.bind(this)}/>);
-                })}
-              </div>
-              <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
+              })}
             </div>
+            <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
           </div>
         </div>
-        <Footer/>
       </div>
     );
   }

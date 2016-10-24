@@ -190,24 +190,19 @@ export default class ProfilePage extends Component {
 
 
     return (
-      <div className="profile">
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row details">
-            <div className="col-md-6 ">
-              {userPart}
-            </div>
-            <div className="col-md-6">
-              {teamPart}
-            </div>
+      <div className="container paddingTopBottom15 profile">
+        <div className="row details">
+          <div className="col-md-6 ">
+            {userPart}
           </div>
-          <div className="row">
-            {treePart}
+          <div className="col-md-6">
+            {teamPart}
           </div>
-          {toolsPart}
         </div>
-        <Footer/>
+        <div className="row">
+          {treePart}
+        </div>
+        {toolsPart}
       </div>
     );
   }

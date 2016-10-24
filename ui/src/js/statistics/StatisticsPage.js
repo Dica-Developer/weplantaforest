@@ -27,22 +27,16 @@ export default class StatisticsPage extends Component {
 
   render() {
     return (
-
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row statisticsPage">
-            <div className="col-md-12">
-              <h2>Statistiken</h2>
-              <TreesPerYear />
-              <TreesPerOrgType />
-              <TreesPerMonth />
-              <Co2PerYear />
-            </div>
+      <div className="container paddingTopBottom15">
+        <div className="row statisticsPage">
+          <div className="col-md-12">
+            <h2>Statistiken</h2>
+            <TreesPerYear />
+            <TreesPerOrgType />
+            <TreesPerMonth />
+            <Co2PerYear />
           </div>
         </div>
-        <Footer/>
       </div>
     );
   }

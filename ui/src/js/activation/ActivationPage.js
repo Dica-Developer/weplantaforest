@@ -47,9 +47,6 @@ export default class ActivationPage extends Component {
 
   render() {
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
         <div className="container paddingTopBottom15">
           <div className="row activationPage">
             <div className="col-md-12">
@@ -58,8 +55,6 @@ export default class ActivationPage extends Component {
             </div>
           </div>
         </div>
-      <Footer/>
-    </div>
     );
   }
 }

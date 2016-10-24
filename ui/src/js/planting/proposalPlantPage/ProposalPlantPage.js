@@ -57,7 +57,7 @@ export default class ProposalPlantPage extends Component {
         price: parseInt(this.state.trees.plantItems[plantItem].treePrice),
         imageFile: this.state.trees.plantItems[plantItem].imageFile
       };
-      this.refs["navbar"].updatePlantBag(price, projectItems, this.state.trees.plantItems[plantItem].projectName);
+      this.props.route.updatePlantBag(price, projectItems, this.state.trees.plantItems[plantItem].projectName);
     }
   }
 
@@ -91,44 +91,39 @@ export default class ProposalPlantPage extends Component {
       chosen = "customAmount";
     }
     return (
-      <div >
-        <NavBar ref="navbar" reRender={this.props.route.reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row proposalPlantPage">
-            <div className="col-md-12">
-              <h2>{this.props.route.header}</h2>
-              <ButtonBar chosen={chosen}/>
-              <div className="plantItem align-center bold plantItemDesc">
-                <div></div>
-                <div>
-                  <p>
-                    Baumtyp<br/>Preis&nbsp;/&nbsp;Stk.
-                  </p>
-                </div>
-                <div>
-                  Anzahl
-                </div>
-                <div>
-                  Projektfläche
-                </div>
-                <div></div>
-                <div>
-                  Preis gesamt
-                </div>
+      <div className="container paddingTopBottom15">
+        <div className="row proposalPlantPage">
+          <div className="col-md-12">
+            <h2>{this.props.route.header}</h2>
+            <ButtonBar chosen={chosen}/>
+            <div className="plantItem align-center bold plantItemDesc">
+              <div></div>
+              <div>
+                <p>
+                  Baumtyp<br/>Preis&nbsp;/&nbsp;Stk.
+                </p>
               </div>
-              <div ref="planting" className={(this.state.slideIn
-                ? 'slideIn '
-                : ' ') + "align-center plantItems"}>
-                {this.state.trees.plantItems.map(function(plantItem, i) {
-                  return (<PlantItem plantItem={plantItem} key={i}/>);
-                })}
+              <div>
+                Anzahl
               </div>
-              <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.trees.actualPrice}/>
+              <div>
+                Projektfläche
+              </div>
+              <div></div>
+              <div>
+                Preis gesamt
+              </div>
             </div>
+            <div ref="planting" className={(this.state.slideIn
+              ? 'slideIn '
+              : ' ') + "align-center plantItems"}>
+              {this.state.trees.plantItems.map(function(plantItem, i) {
+                return (<PlantItem plantItem={plantItem} key={i}/>);
+              })}
+            </div>
+            <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.trees.actualPrice}/>
           </div>
         </div>
-        <Footer/>
       </div>
     );
   }

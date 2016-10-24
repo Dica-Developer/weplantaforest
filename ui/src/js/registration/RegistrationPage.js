@@ -37,15 +37,10 @@ export default class RegistrationPage extends Component {
     }
 
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row registrationPage">
-            {content}
-          </div>
+      <div className="container paddingTopBottom15">
+        <div className="row registrationPage">
+          {content}
         </div>
-        <Footer/>
       </div>
     );
   }

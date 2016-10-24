@@ -202,22 +202,17 @@ export default class SliderPlantPage extends Component {
   render() {
     var that = this;
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.route.reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row plantPage">
-            <div className="col-md-12">
-              <h2>{this.props.route.header}</h2>
-              <ButtonBar chosen="slider"/>
-              <MainSlider ref="mainSlider" balanceProjectSliders={this.balanceProjectSlidersFromMain.bind(this)}/> {this.state.projects.map(function(project, i) {
-                return (<ProjectSlider project={project} articles={project.articles} key={i} ref={"project_" + i} balanceProjectSliders={that.balanceProjectSlidersFromProjectSlider.bind(this)} sliderIndex={i}/>);
-              })}
-              <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
-            </div>
+      <div className="container paddingTopBottom15">
+        <div className="row plantPage">
+          <div className="col-md-12">
+            <h2>{this.props.route.header}</h2>
+            <ButtonBar chosen="slider"/>
+            <MainSlider ref="mainSlider" balanceProjectSliders={this.balanceProjectSlidersFromMain.bind(this)}/> {this.state.projects.map(function(project, i) {
+              return (<ProjectSlider project={project} articles={project.articles} key={i} ref={"project_" + i} balanceProjectSliders={that.balanceProjectSlidersFromProjectSlider.bind(this)} sliderIndex={i}/>);
+            })}
+            <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
           </div>
         </div>
-        <Footer/>
       </div>
     );
   }

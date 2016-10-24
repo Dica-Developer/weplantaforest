@@ -132,41 +132,36 @@ export default class PlantBagPage extends Component {
     }
 
     return (
-      <div>
-        <NavBar ref="navbar" reRender={this.props.routes[0].reRender.bind(this)}/>
-        <Header/>
-        <div className="container paddingTopBottom15">
-          <div className="row plantBagPage">
-            <div className="col-md-12">
-              <h2>Dein Pflanzkorb</h2>
-              <div className="overview">
-                {Object.keys(this.state.plantBag.projects).map(function(project, i) {
-                  var projectPrice = 0;
-                  for (var plantItem in that.state.plantBag.projects[project].plantItems) {
-                    projectPrice = projectPrice + (that.state.plantBag.projects[project].plantItems[plantItem].amount * that.state.plantBag.projects[project].plantItems[plantItem].price);
-                  }
-                  return (
-                    <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i} price={projectPrice}>
-                      {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
-                        var plantItemName = getTextForSelectedLanguage(plantItem);
-                        return (<PlantBagItem plantItemName={plantItemName} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]} key={i} removePlantBagItem={() => {
-                          that.removePlantBagItem(project, plantItem)
-                        }} increasePlantBagItem={() => {
-                          that.increasePlantBagItem(project, plantItem)
-                        }} decreasePlantBagItem={() => {
-                          that.decreasePlantBagItem(project, plantItem)
-                        }}/>);
-                      })}
-                    </PlantBagProject>
-                  );
-                })}
-                {overallPriceAndPayment}
-              </div>
+      <div className="container paddingTopBottom15">
+        <div className="row plantBagPage">
+          <div className="col-md-12">
+            <h2>Dein Pflanzkorb</h2>
+            <div className="overview">
+              {Object.keys(this.state.plantBag.projects).map(function(project, i) {
+                var projectPrice = 0;
+                for (var plantItem in that.state.plantBag.projects[project].plantItems) {
+                  projectPrice = projectPrice + (that.state.plantBag.projects[project].plantItems[plantItem].amount * that.state.plantBag.projects[project].plantItems[plantItem].price);
+                }
+                return (
+                  <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i} price={projectPrice}>
+                    {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
+                      var plantItemName = getTextForSelectedLanguage(plantItem);
+                      return (<PlantBagItem plantItemName={plantItemName} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]} key={i} removePlantBagItem={() => {
+                        that.removePlantBagItem(project, plantItem)
+                      }} increasePlantBagItem={() => {
+                        that.increasePlantBagItem(project, plantItem)
+                      }} decreasePlantBagItem={() => {
+                        that.decreasePlantBagItem(project, plantItem)
+                      }}/>);
+                    })}
+                  </PlantBagProject>
+                );
+              })}
+              {overallPriceAndPayment}
             </div>
           </div>
         </div>
-        <Footer/>
-      </div>
+        </div>
     );
   }
 }
