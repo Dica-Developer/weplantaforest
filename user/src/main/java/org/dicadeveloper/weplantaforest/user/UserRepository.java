@@ -1,6 +1,8 @@
 package org.dicadeveloper.weplantaforest.user;
 
 import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +18,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     public final static String GET_USER_LANGUAGE = "SELECT user.lang FROM User user WHERE user.name = :name";
     
+    public final static String GET_TEAM_MEMBER_QUERY = "SELECT user FROM User user WHERE user.team.name = :teamName";
+            
     @Query
     public User findByName(@Param("name") String name);
 
@@ -30,4 +34,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     
     @Query(value = GET_USER_LANGUAGE)
     public Language getUserLanguage(@Param("name") String name);
+    
+    @Query(value = GET_TEAM_MEMBER_QUERY)
+    public Page<User> getTeamMember(@Param("teamName") String teamName, Pageable page);
+
 }

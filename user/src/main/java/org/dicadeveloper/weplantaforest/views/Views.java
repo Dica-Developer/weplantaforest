@@ -59,4 +59,11 @@ public interface Views {
     public static interface CertificateSummary {
 
     }
+    
+    /*
+     * User.name, User.imageName
+     */
+    public static interface TeamMember {
+        
+    }
 }

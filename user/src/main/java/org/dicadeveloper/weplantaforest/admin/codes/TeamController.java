@@ -13,7 +13,13 @@ import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
 import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.support.Uris;
+import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +42,8 @@ public class TeamController {
     private @NonNull ImageHelper _imageHelper;
 
     private @NonNull TeamRepository _teamRepository;
+    
+    private @NonNull UserRepository _userRepository;
 
     private @NonNull Co2Repository _co2Repository;
 
@@ -57,6 +67,13 @@ public class TeamController {
         teamReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamName));
         teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
         return new ResponseEntity<>(teamReportData, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = Uris.TEAM_MEMBER, method = RequestMethod.GET)
+    @JsonView(Views.TeamMember.class)
+    public ResponseEntity<?> getTeamMember(@RequestParam String teamName, @Param("page") int page, @Param("size") int size) {
+        Page<User> teamMember = _userRepository.getTeamMember(teamName, new PageRequest(page, size));
+        return new ResponseEntity<>(teamMember, HttpStatus.OK);
     }
 
     private long calcTeamRank(String teamName, long treeCountOfTeam) {

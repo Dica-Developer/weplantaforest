@@ -53,7 +53,7 @@ public class User implements Identifiable<Long>, UserDetails {
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class, Views.CertificateSummary.class })
+    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class, Views.CertificateSummary.class, Views.TeamMember.class })
     private String name;
 
     @Column(name = "_password")
@@ -84,6 +84,7 @@ public class User implements Identifiable<Long>, UserDetails {
     private OrganizationType organizationType;
 
     @Column(name = "_imageName")
+    @JsonView({Views.TeamMember.class })
     private String imageName;
 
     @Column(name = "_aboutme")
