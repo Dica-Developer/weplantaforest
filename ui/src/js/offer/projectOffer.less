@@ -1,31 +1,73 @@
+@media (max-width: 750px) {
+  .projectOffer {
+    .offerForm {
+      width: 100%!important;
+    }
+  }
+}
+@media (max-width: 610px) {
+  .projectOffer {
+      font-size: 12px;
+    .col-md-12{
+      padding-left: 5px!important;
+      padding-right: 5px!important;
+    }
+    .offerForm {
+
+        table {
+          width: 98%!important;
+          textarea{
+            width: 200px!important;
+          }
+          input[type=text]{
+            width: 200px!important;
+          }
+          td:nth-child(1){
+            width: 50%!important;
+          }
+
+          td:nth-child(2){
+              width: 50%!important;
+          }
+        }
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .projectOffer {
+    .offerForm {
+      font-size: 10px;
+        table {
+          textarea{
+            width: 120px!important;
+          }
+          input[type=text]{
+            width: 120px!important;
+          }
+        }
+    }
+  }
+}
+
 .projectOffer {
   background: #fff;
   margin-left: 0;
   margin-right: 0;
 
-  h2 {
-    font-family: Georgia,Times,Times New Roman,serif;
-  }
-  p {
-    font-size: 16px;
-  }
-
-  .bold {
-    font-weight: bold;
-  }
-
   .offerForm {
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 15px;
-    width: 70%;
+    width: 80%;
     border: 1px solid #3C191E;
     background: rgba(60, 25, 30, .5);
     padding-top: 15px;
     margin-bottom: 30px;
 
+
     table {
-      width: 80%;
+      width: 90%;
       margin-bottom: 15px;
       margin-left: auto;
       margin-right: auto;
@@ -35,7 +77,9 @@
       }
 
       td:nth-child(1){
-        width: 30%
+        width: 30%;
+        text-align: right;
+        padding-right: 5px;
       }
 
       td:nth-child(2){
