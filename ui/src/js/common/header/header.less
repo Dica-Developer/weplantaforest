@@ -1,16 +1,13 @@
-@media(min-width: 681px) {
-  .header {
-    .col-md-4:nth-child(3) {
-      .buttonBar {
-        float: right!important;
-      }
-    }
-  }
-}
-@media (min-width: 431px) and (max-width: 680px) {
+@media (min-width: 436px) and (max-width: 680px) {
   .header {
     .outline-logo {
       float: right!important;
+    }
+    .col-md-4:nth-child(1) {
+      width: 66.66%;
+    }
+    .col-md-4:nth-child(2) {
+      width: 33.33%;
     }
     .col-md-4:nth-child(3) {
       width: 100%;
@@ -21,13 +18,16 @@
     }
   }
 }
-@media (max-width: 430px) {
+@media (max-width: 435px) {
   .header {
     text-align: center;
+    .col-md-4 {
+      width: 100%!important;
+    }
     .col-md-4:nth-child(3) {
-      width: 100%;
       padding-left: 0;
       .buttonBar {
+        float:none;
         width: 100%;
       }
     }
@@ -66,6 +66,7 @@
     > * {
       float: none;
       display: inline-block;
+      width: 33.33%;
     }
     > *:first-child {
       padding-left: 0;
@@ -87,6 +88,7 @@
     width: 220px;
     background-color: #3C191E;
     padding: 5px;
+    float: right;
     div {
       width: 210px;
       text-align: left;
