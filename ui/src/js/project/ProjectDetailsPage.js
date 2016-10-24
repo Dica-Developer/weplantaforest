@@ -9,9 +9,10 @@ import axios from 'axios';
 import ProjectCarousel from './ProjectCarousel';
 import ProjectDetails from './ProjectDetails';
 import ProjectPlanting from './planting/ProjectPlantingWithoutSlider';
-import ProjectRankingContainer from './ranking/ProjectRankingContainer';
-import RankingItem from './ranking/RankingItem';
-import TimeRankingItem from './ranking/TimeRankingItem';
+import SmallRankingContainer from '../common/ranking/SmallRankingContainer';
+import RankingItem from '../common/ranking/RankingItem';
+import RankingContentNameAmountCo2 from '../common/ranking/content/NameAmountCo2';
+import RankingContentNameAmountDate from '../common/ranking/content/NameAmountDate';
 
 require("./projectPage.less");
 
@@ -196,25 +197,43 @@ export default class ProjectDetailsPage extends Component {
           </div>
           <div className="projectRankings">
             <div className="col-md-4">
-              <ProjectRankingContainer title="Beste Teams im Projekt" rankingType="bestTeam" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestTeam.first} isLastPage={this.state.bestTeam.last}>
+              <SmallRankingContainer title="Beste Teams im Projekt" rankingType="bestTeam" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestTeam.first} isLastPage={this.state.bestTeam.last}>
                 {this.state.bestTeam.content.map(function(content, i) {
-                  return (<RankingItem content={content} imageFolder="team" key={i} rankNumber={bestTeamPage * 5 + (i + 1)}/>);
+                  let imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
+                  let linkTo = '/team/' + content.name;
+                  return (
+                    <RankingItem content={content} key={i} rankNumber={bestTeamPage * 5 + (i + 1)} imageUrl={imageUrl} showRankNumber="true" linkTo={linkTo}>
+                      <RankingContentNameAmountCo2 content={content}/>
+                    </RankingItem>
+                  );
                 })}
-              </ProjectRankingContainer>
+              </SmallRankingContainer>
             </div>
             <div className="col-md-4">
-              <ProjectRankingContainer title="Beste Pflanzer im Projekt" rankingType="bestUser" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestUser.first} isLastPage={this.state.bestUser.last}>
+              <SmallRankingContainer title="Beste Pflanzer im Projekt" rankingType="bestUser" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestUser.first} isLastPage={this.state.bestUser.last}>
                 {this.state.bestUser.content.map(function(content, i) {
-                  return (<RankingItem content={content} imageFolder="user" key={i} rankNumber={bestUserPage * 5 + (i + 1)}/>);
+                  let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                  let linkTo = '/user/' + content.name;
+                  return (
+                    <RankingItem content={content} key={i} rankNumber={bestUserPage * 5 + (i + 1)} imageUrl={imageUrl} showRankNumber="true" linkTo={linkTo}>
+                      <RankingContentNameAmountCo2 content={content}/>
+                    </RankingItem>
+                  );
                 })}
-              </ProjectRankingContainer>
+              </SmallRankingContainer>
             </div>
             <div className="col-md-4">
-              <ProjectRankingContainer title="Neueste Pflanzungen im Projekt" rankingType="lastPlantedTrees" page={lastPlantedTreesPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.lastPlantedTrees.first} isLastPage={this.state.lastPlantedTrees.last}>
+              <SmallRankingContainer title="Neueste Pflanzungen im Projekt" rankingType="lastPlantedTrees" page={lastPlantedTreesPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.lastPlantedTrees.first} isLastPage={this.state.lastPlantedTrees.last}>
                 {this.state.lastPlantedTrees.content.map(function(content, i) {
-                  return (<TimeRankingItem content={content} imageFolder="treeType" key={i}/>);
+                  let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeTypeImageName + '/60/60';
+                  let linkTo = '/user/' + content.name;
+                  return (
+                    <RankingItem imageUrl={imageUrl} key={i} linkTo={linkTo}>
+                      <RankingContentNameAmountDate name={content.name} amount={content.amount} plantedOn={content.plantedOn}/>
+                    </RankingItem>
+                  );
                 })}
-              </ProjectRankingContainer>
+              </SmallRankingContainer>
             </div>
           </div>
         </div>

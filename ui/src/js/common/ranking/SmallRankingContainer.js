@@ -3,9 +3,9 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 
-require("./projectRankingContainer.less");
+require("./smallRankingContainer.less");
 
-export default class ProjectRankingContainer extends Component {
+export default class SmallRankingContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,21 +54,21 @@ export default class ProjectRankingContainer extends Component {
       bottomIcon = "glyphicon-minus";
     };
     return (
-      <div className="projectRankingContainer">
+      <div className="smallRankingContainer">
         <h2>
           <i>{this.props.title}</i>
         </h2>
-        <a className="pagingLink" role="button" onClick={this.callPreviousPage.bind(this)}>
+        <a className={(this.props.withPaging ? "pagingLink" : "no-display")} role="button" onClick={this.callPreviousPage.bind(this)}>
           <div>
             <span className={"glyphicon " + topIcon}></span>
           </div>
         </a>
         <div ref="ranking" className={(this.state.fade
           ? 'fadeOut'
-          : 'fadeIn') + " rankingWrapper"}>
+          : 'fadeIn') + (this.props.withPaging ? " rankingWrapper" : " ")}>
           {this.props.children}
         </div>
-        <a className="pagingLink" role="button" onClick={this.callNextPage.bind(this)}>
+        <a className={(this.props.withPaging ? "pagingLink" : "no-display")} role="button" onClick={this.callNextPage.bind(this)}>
           <div>
             <span className={"glyphicon " + bottomIcon}></span>
           </div>

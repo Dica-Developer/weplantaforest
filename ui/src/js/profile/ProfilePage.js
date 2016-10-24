@@ -11,9 +11,10 @@ import EditUserDetails from './edit/EditUserDetails';
 import TeamDetails from './TeamDetails';
 import NoTeamAvailable from './NoTeamAvailable';
 import Tools from './tools/Tools';
-import UserRankingContainer from './ranking/UserRankingContainer';
-import RankingItem from './ranking/RankingItem';
-import NoTreesAvailable from './ranking/NoTreesAvailable';
+import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
+import RankingItem from '../common/ranking/RankingItem';
+import RankingItemContent from '../common/ranking/content/AmountProjectDate';
+import NoTreesAvailable from '../common/ranking/NoTreesAvailable';
 
 require("./profile.less");
 
@@ -73,7 +74,7 @@ export default class ProfilePage extends Component {
       }
     });
 
-    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=0&size=10').then(function(response) {
+    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=0&size=15').then(function(response) {
       var result = response.data;
       that.setState({newestPlantRanking: result});
     }).catch(function(response) {
@@ -102,7 +103,7 @@ export default class ProfilePage extends Component {
 
   callPage(page) {
     var that = this;
-    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=' + page + '&size=10').then(function(response) {
+    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=' + page + '&size=15').then(function(response) {
       var result = response.data;
       that.setState({newestPlantRanking: result});
     }).catch(function(response) {
@@ -144,7 +145,7 @@ export default class ProfilePage extends Component {
     });
   }
 
-  updateLanguage(value){
+  updateLanguage(value) {
     this.refs['navbar'].updateLanguage(value);
   }
 
@@ -167,27 +168,31 @@ export default class ProfilePage extends Component {
       teamPart = <NoTeamAvailable/>;
     }
     if (this.state.newestPlantRanking.numberOfElements != 0) {
-      treePart = <UserRankingContainer callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.newestPlantRanking.first} isLastPage={this.state.newestPlantRanking.last}>
+      treePart = <LargeRankingContainer styleClass="ranking" callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.newestPlantRanking.first} isLastPage={this.state.newestPlantRanking.last}>
         {this.state.newestPlantRanking.content.map(function(content, i) {
           let imageUrl;
-          if(content.imagePath != null && content.imagePath != ''){
+          if (content.imagePath != null && content.imagePath != '') {
             imageUrl = 'http://localhost:8081/tree/image/' + content.imagePath + '/60/60'
-          }else{
-             imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60'
+          } else {
+            imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60'
           }
-          return (<RankingItem imageUrl={imageUrl} rankNumber={page * 10 + (i + 1)} content={content} key={i}/>);
+          let linkTo = '/projects/' + content.projectArticle.project.name;
+          return (
+            <RankingItem imageUrl={imageUrl} rankNumber={page * 15 + (i + 1)} content={content} key={i} showRankNumber={true} showName={false} linkTo={linkTo}>
+              <RankingItemContent content={content}/>
+            </RankingItem>
+          );
         })}
-      </UserRankingContainer>;
+      </LargeRankingContainer >;
     } else {
       treePart = <NoTreesAvailable/>;
     }
 
-    if(this.state.user.editAllowed){
+    if (this.state.user.editAllowed) {
       toolsPart = <Tools/>;
-    }else{
+    } else {
       toolsPart = '';
     }
-
 
     return (
       <div className="container paddingTopBottom15 profile">
