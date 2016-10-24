@@ -125,9 +125,9 @@ export default class NavBar extends Component {
                   this.linkTo('/plant')
                 }} imagePath="/assets/images/Schere.png" imageWidth="44" imageHeight="35"/>
               </div>
-              <div className="navbar-right">
-                <PlantBag updatePlantBag={this.updatePlantBag.bind(this)} ref="plantBag"/>
-              </div>
+            </div>
+            <div className="navbar-right">
+              <PlantBag updatePlantBag={this.updatePlantBag.bind(this)} ref="plantBag"/>
             </div>
           </div>
         </nav>
