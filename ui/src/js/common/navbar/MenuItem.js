@@ -7,6 +7,7 @@ export default class MenuItem extends Component {
   }
 
   linkTo(url) {
+    this.props.hide();
     browserHistory.push(url);
   }
 

@@ -6,12 +6,10 @@ export default class Menu extends Component {
     this.state = {
       visible: false
     };
-    this.hide = this.hide.bind(this);
   }
 
   show() {
     this.setState({visible: true});
-    document.addEventListener("click", this.hide);
   }
 
   test() {
@@ -19,11 +17,11 @@ export default class Menu extends Component {
   }
 
   hide() {
-    document.removeEventListener("click", this.hide);
     this.setState({visible: false});
   }
 
   render() {
+    const childrenWithProps = React.Children.map(this.props.children, (child) => React.cloneElement(child, {hide: this.hide.bind(this)}));
     return (
       <div className="menu">
         <div className={(this.state.visible
@@ -34,7 +32,8 @@ export default class Menu extends Component {
               X
             </button>
           </div>
-          {this.props.children}</div>
+          {childrenWithProps}
+        </div>
       </div>
     );
   }
