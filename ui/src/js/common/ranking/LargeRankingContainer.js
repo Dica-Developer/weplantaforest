@@ -8,18 +8,37 @@ require("./largeRankingContainer.less");
 export default class LargeRankingContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fade: false
+
+    };
+    this.fadingDone = this.fadingDone.bind(this);
+  }
+
+  componentDidMount() {
+    const elm = this.refs.ranking;
+    elm.addEventListener('animationend', this.fadingDone);
+  }
+  componentWillUnmount() {
+    const elm = this.refs.ranking;
+    elm.removeEventListener('animationend', this.fadingDone);
+  }
+  fadingDone() {
+    this.setState({fade: false});
   }
 
   callNextPage() {
     if (!this.props.isLastPage) {
       this.props.callNextPage();
     }
+    this.setState({fade: true});
   }
 
   callPreviousPage() {
     if (!this.props.isFirstPage) {
       this.props.callPreviousPage();
     }
+    this.setState({fade: true});
   }
 
   render() {
@@ -39,12 +58,14 @@ export default class LargeRankingContainer extends Component {
 
     return (
       <div className={"largeRankingContainer " + this.props.styleClass}>
-      <div className="row">
-        <div className="col-md-12">
-          <h2>Pflanzungen</h2>
+        <div className="row">
+          <div className="col-md-12">
+            <h2>Pflanzungen</h2>
+          </div>
         </div>
-      </div>
-        <div className="row rankingWrapper">
+        <div ref="ranking" className={(this.state.fade
+          ? 'fadeOut'
+          : 'fadeIn') + " row rankingWrapper"}>
           <div className="col-md-4">
             <a className="pagingLink left" role="button" onClick={this.callPreviousPage.bind(this)}>
               <span className={"glyphicon " + leftIcon}></span>
@@ -63,9 +84,9 @@ export default class LargeRankingContainer extends Component {
             })}
           </div>
           <div className="col-md-4">
-          <a className="pagingLink right" role="button" onClick={this.callNextPage.bind(this)}>
-            <span className={"glyphicon " + rightIcon}></span>
-          </a>
+            <a className="pagingLink right" role="button" onClick={this.callNextPage.bind(this)}>
+              <span className={"glyphicon " + rightIcon}></span>
+            </a>
             {this.props.children.map(function(child, i) {
               if (i >= 10) {
                 return (child);
