@@ -42,7 +42,7 @@ export default class PlantBagProject extends Component {
     return (
       <div className="plantBagProject">
         {button}<h3>{this.props.projectName}</h3>
-      <div className={this.state.showItems ? "visible" : "not-visible"}>
+      <div className={this.state.showItems ? "sliding-out" : "sliding-in"}>
         {this.props.children}
       </div>
         {line}
