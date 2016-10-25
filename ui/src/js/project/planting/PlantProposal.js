@@ -20,23 +20,13 @@ export default class PlantProposal extends Component {
         plantItems: []
       },
       overallPrice: 0,
-      slideIn: true
+      amount: 0,
+      slideIn: false
     };
-    this.slidingDone = this.slidingDone.bind(this);
   }
 
-  componentDidMount() {
-    const elm2 = this.refs.plantItems;
-    elm2.addEventListener('animationend', this.slidingDone);
-  }
-  componentWillUnmount() {
-    const elm2 = this.refs.plantItems;
-    elm2.removeEventListener('animationend', this.slidingDone);
-  }
-  slidingDone() {
-    this.setState({
-      slideIn: false
-    });
+  componentDidMount(){
+    this.getPlantProposal(this.props.amount);
   }
 
   updatePlantBag() {
@@ -52,10 +42,29 @@ export default class PlantProposal extends Component {
     }
   }
 
-  slideIn(value) {
-    this.setState({
-      slideIn: true
-    });
+  getPlantProposal(value) {
+    var that = this;
+    this.setState({slideIn: true});
+    axios.get('http://localhost:8081/simplePlantProposalForTrees/project?projectName=' + this.props.projectName + "&amountOfTrees=" + value).then(function(response) {
+      var result = response.data;
+      that.sleep(500);
+      that.setState({
+        trees: result,
+        slideIn: false
+      });
+    })
+  }
+
+  componentDidUpdate() {
+    if (this.state.amount != this.props.amount) {
+      this.setState({amount: this.props.amount});
+      this.getPlantProposal(this.props.amount);
+    }
+  }
+
+  sleep(milliseconds) {
+    var e = new Date().getTime() + (milliseconds);
+    while (new Date().getTime() <= e) {}
   }
 
   render() {
@@ -77,13 +86,13 @@ export default class PlantProposal extends Component {
             </div>
           </div>
           <div ref="plantItems" className={(this.state.slideIn
-            ? 'slideIn '
-            : ' ') + "align-center plantItems"}>
-            {this.props.trees.plantItems.map(function(plantItem, i) {
+            ? 'sliding-in '
+            : 'sliding-out ') + "align-center plantItems"}>
+            {this.state.trees.plantItems.map(function(plantItem, i) {
               return (<PlantItem plantItem={plantItem} key={i}/>);
             })}
           </div>
-          <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.props.trees.actualPrice}/>
+          <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.trees.actualPrice}/>
         </div>
     );
   }
