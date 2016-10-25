@@ -11,6 +11,8 @@ import {
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 
+import IconButton from '../common/components/IconButton';
+
 export default class ButtonBar extends Component {
 
   constructor(props) {
@@ -31,50 +33,22 @@ export default class ButtonBar extends Component {
 
   render() {
     return (
-      <div className="linkTableDiv">
-          <table className="linkTable">
-            <tbody>
-              <tr>
-              <td>
-                <button type="button" className="btn btn-default btn-circle" onClick={this.loadAllUser.bind(this)}>
-                  <i className="glyphicon glyphicon-forward"></i>
-                  <span>ALLE</span>
-                </button>
-              </td>
-              <td>
-                <button type="submit" className="btn btn-default btn-circle" onClick={this.loadOrgTypeRanking.bind(this, 'PRIVATE', 'PrivatPersonen')}>
-                  <i className="glyphicon glyphicon-forward"></i>
-                  <span>PRIVAT</span>
-                </button>
-              </td>
-              <td>
-                <button type="button" className="btn btn-default btn-circle" onClick={this.loadOrgTypeRanking.bind(this, 'COMMERCIAL', 'Firmen')}>
-                  <i className="glyphicon glyphicon-forward"></i>
-                  <span>FIRMA</span>
-                </button>
-              </td>
-              <td>
-                <button type="button" className="btn btn-default btn-circle" onClick={this.loadOrgTypeRanking.bind(this, 'NONPROFIT', 'Non-Profit Organisationen')}>
-                  <i className="glyphicon glyphicon-forward"></i>
-                  <span>NON-PROFIT ORG.</span>
-                </button>
-              </td>
-              <td>
-                <button type="button" className="btn btn-default btn-circle" onClick={this.loadOrgTypeRanking.bind(this, 'EDUCATIONAL', 'Schulen')}>
-                  <i className="glyphicon glyphicon-forward"></i>
-                  <span>SCHULEN</span>
-                </button>
-              </td>
-              <td>
-                <button type="button" className="btn btn-default btn-circle" onClick={this.loadBestTeams.bind(this)}>
-                  <i className="glyphicon glyphicon-forward"></i>
-                  <span>TEAMS</span>
-                </button>
-              </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div className="buttonBar">
+        <IconButton text="ALLE" onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward"/>
+        <IconButton text="PRIVAT" onClick={() => {
+          this.loadOrgTypeRanking('PRIVATE', 'PrivatPersonen')
+          }}  glyphIcon="glyphicon-forward"/>
+        <IconButton text="FIRMEN" onClick={() => {
+          this.loadOrgTypeRanking('COMMERCIAL', 'Firmen')
+          }}  glyphIcon="glyphicon-forward"/>
+        <IconButton text="NON-PROFIT ORG." onClick={() => {
+          this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen')
+          }}  glyphIcon="glyphicon-forward"/>
+        <IconButton text="SCHULEN" onClick={() => {
+          this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen')
+          }}  glyphIcon="glyphicon-forward"/>
+        <IconButton text="TEAMS" onClick={this.loadBestTeams.bind(this)}  glyphIcon="glyphicon-forward"/>
+      </div>
     );
   }
 }

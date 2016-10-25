@@ -12,7 +12,7 @@ body {
 
 .container {
   background-color: #3C191E;
-  animation: fade-in-keyframes 3s;
+  animation: fade-in-keyframes 2s;
 }
 .paddingTopBottom15 {
   padding-top: 15px;
@@ -91,4 +91,26 @@ h4 {
   to {
     opacity: 0;
   }
+}
+
+.sliding-out {
+  max-height: 3000px;
+  opacity: 1;
+
+  -webkit-transition: max-height 0.5s ease-in, opacity 0.6s linear;
+  -moz-transition: max-height 0.5s ease-in, opacity 0.6s linear;
+  -o-transition: max-height 0.5s ease-in, opacity 0.6s linear;
+  -ms-transition: max-height 0.5s ease-in, opacity 0.6s linear;
+  transition: max-height 0.5s ease-in, opacity 0.6s linear;
+}
+
+.sliding-in {
+  max-height: 0;
+  opacity: 0;
+
+  -webkit-transition: max-height 0.5s linear, opacity 0.4s linear;
+  -moz-transition: max-height 0.5s linear, opacity 0.4s linear;
+  -o-transition: max-height 0.5s linear, opacity 0.4s linear;
+  -ms-transition: max-height 0.5s linear, opacity 0.4s linear;
+  transition: max-height 0.5s linear, opacity 0.4s linear;
 }

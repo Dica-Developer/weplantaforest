@@ -21,7 +21,8 @@ export default class RankingPage extends Component {
         content: []
 
       },
-      orgTypeDesc: 'Alle'
+      orgTypeDesc: 'Alle',
+      slideIn: false
     };
   }
 
@@ -30,10 +31,12 @@ export default class RankingPage extends Component {
   }
 
   loadAllUser() {
+    this.setState({slideIn: true})
     var that = this;
     axios.get('http://localhost:8081/ranking/bestUser?page=0&size=25').then(function(response) {
       var result = response.data;
-      that.setState({ranking: result});
+      that.sleep(500);
+      that.setState({ranking: result, slideIn: false});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -48,11 +51,12 @@ export default class RankingPage extends Component {
   }
 
   loadBestTeams() {
-    this.setState({orgTypeDesc: 'Teams'})
+    this.setState({orgTypeDesc: 'Teams', slideIn: true})
     var that = this;
     axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=25').then(function(response) {
       var result = response.data;
-      that.setState({ranking: result});
+      that.sleep(500);
+      that.setState({ranking: result, slideIn: false});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -67,11 +71,12 @@ export default class RankingPage extends Component {
   }
 
   loadOrgTypeRanking(orgType, orgTypeDesc) {
-    this.setState({orgTypeDesc: orgTypeDesc})
+    this.setState({orgTypeDesc: orgTypeDesc, slideIn: true})
     var that = this;
     axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=25').then(function(response) {
       var result = response.data;
-      that.setState({ranking: result});
+      that.sleep(500);
+      that.setState({ranking: result, slideIn: false});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -82,7 +87,11 @@ export default class RankingPage extends Component {
         console.error(response.config);
       }
     });
+  }
 
+  sleep(milliseconds) {
+    var e = new Date().getTime() + (milliseconds);
+    while (new Date().getTime() <= e) {}
   }
 
   render() {
@@ -98,7 +107,9 @@ export default class RankingPage extends Component {
           <div className="col-md-12">
             <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
           </div>
-          <div className="col-md-12 rankingItems">
+          <div ref="ranking" className={(this.state.slideIn
+            ? 'sliding-in '
+            : 'sliding-out ') + "col-md-12 rankingItems"}>
             <h2>Bestenliste&nbsp;/&nbsp;{this.state.orgTypeDesc}</h2>
             {this.state.ranking.content.map(function(content, i) {
               if (i == 0) {
@@ -117,8 +128,8 @@ export default class RankingPage extends Component {
               }
               if (i < 10) {
                 return (<RankingItemLarge imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);
-              }else{
-                return(<RankingItemSmall content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
+              } else {
+                return (<RankingItemSmall content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
               }
             })}
           </div>
