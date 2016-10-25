@@ -21,7 +21,7 @@ export default class ProjectTeaser extends Component {
     let position = [this.props.content.latitude, this.props.content.longitude];
     return (
       <div>
-        <Map center={position} zoom={13}>
+        <Map center={position} zoom={13} scrollWheelZoom={false}>
           <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
           <Marker position={position}>
             <Popup>
