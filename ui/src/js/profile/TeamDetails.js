@@ -4,6 +4,7 @@ import {render} from 'react-dom';
 import {Link} from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
+import {htmlDecode} from '../common/language/HtmlHelper';
 
 import Boostrap from 'bootstrap';
 
@@ -51,7 +52,7 @@ export default class TeamDetails extends Component {
         </div>
         <div className="teamDesc">
           <p>
-            <i>{this.props.team.description}</i>
+            <i>{htmlDecode(this.props.team.description)}</i>
           </p>
         </div>
         <table>
