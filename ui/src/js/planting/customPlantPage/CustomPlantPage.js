@@ -1,16 +1,9 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
-import {
-  Link,
-  browserHistory
-} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 
 import NavBar from '../../common/navbar/NavBar';
 import Header from '../../common/header/Header';
@@ -35,31 +28,14 @@ export default class CustomPlantPage extends Component {
       slideIn: false
     };
     this.updatePrice = this.updatePrice.bind(this);
-      this.slidingDone = this.slidingDone.bind(this);
-  }
-
-  componentWillUnmount() {
-    const elm = this.refs.planting;
-    elm.removeEventListener('animationend', this.slidingDone);
-  }
-  slidingDone() {
-    this.setState({slideIn: false});
   }
 
   componentDidMount() {
-    const elm = this.refs.planting;
-    elm.addEventListener('animationend', this.slidingDone);
-    this.setState({
-      isGift: this.props.route.isGift,
-      isAbo: this.props.route.isAbo,
-      slideIn: true
-    });
+    this.setState({isGift: this.props.route.isGift, isAbo: this.props.route.isAbo, slideIn: true});
     var that = this;
     axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
       var result = response.data;
-      that.setState({
-        projects: result
-      });
+      that.setState({projects: result, slideIn: false});
       that.forceUpdate();
     });
   }
@@ -78,15 +54,15 @@ export default class CustomPlantPage extends Component {
           updateProject = true;
         }
       }
-      if(updateProject){
+      if (updateProject) {
         this.props.route.updatePlantBag(this.refs["project_" + project].getPrice(), projectItems, this.state.projects[project].projectName);
       }
     }
   }
 
-  updatePrice(){
+  updatePrice() {
     var price = 0;
-    for(var project in this.state.projects){
+    for (var project in this.state.projects) {
       price = price + parseInt(this.refs["project_" + project].getPrice());
     }
     this.state.overallPrice = price;
@@ -102,8 +78,8 @@ export default class CustomPlantPage extends Component {
             <h2>{this.props.route.header}</h2>
             <ButtonBar chosen="custom"/>
             <div ref="planting" className={(this.state.slideIn
-              ? 'slideIn '
-              : ' ')  + "plantItems"}>
+              ? 'sliding-in '
+              : 'sliding-out ') + "plantItems"}>
               {this.state.projects.map(function(project, i) {
                 return (<Project key={i} project={project} ref={"project_" + i} updatePrice={that.updatePrice.bind(this)}/>);
               })}

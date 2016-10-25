@@ -30,22 +30,11 @@ export default class ProposalPlantPage extends Component {
       amount: -1,
       slideIn: false
     };
-    this.slidingDone = this.slidingDone.bind(this);
-  }
-
-  componentWillUnmount() {
-    const elm = this.refs.planting;
-    elm.removeEventListener('animationend', this.slidingDone);
-  }
-  slidingDone() {
-    this.setState({slideIn: false});
   }
 
   componentDidMount() {
     this.setState({isGift: this.props.route.isGift, isAbo: this.props.route.isAbo, amount: this.props.params.amount});
     this.getPlantProposal(this.props.params.amount);
-    const elm = this.refs.planting;
-    elm.addEventListener('animationend', this.slidingDone);
   }
 
   updatePlantBag() {
@@ -64,23 +53,23 @@ export default class ProposalPlantPage extends Component {
   getPlantProposal(value) {
     var that = this;
     this.setState({slideIn: true});
-
     axios.get('http://localhost:8081/simplePlantProposalForTrees/' + value).then(function(response) {
+      that.sleep(500);
       var result = response.data;
-      that.setState({trees: result});
+      that.setState({trees: result, slideIn: false});
     })
   }
 
   componentDidUpdate() {
     if (this.state.amount != this.props.params.amount) {
-      this.getPlantProposal(this.props.params.amount);
       this.setState({amount: this.props.params.amount});
+      this.getPlantProposal(this.props.params.amount);
     }
-
   }
 
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  sleep(milliseconds) {
+    var e = new Date().getTime() + (milliseconds);
+    while (new Date().getTime() <= e) {}
   }
 
   render() {
@@ -114,9 +103,9 @@ export default class ProposalPlantPage extends Component {
                 Preis gesamt
               </div>
             </div>
-            <div ref="planting" className={(this.state.slideIn
-              ? 'slideIn '
-              : ' ') + "align-center plantItems"}>
+            <div className={(this.state.slideIn
+              ? 'sliding-in '
+              : 'sliding-out ') + "plantItems align-center"}>
               {this.state.trees.plantItems.map(function(plantItem, i) {
                 return (<PlantItem plantItem={plantItem} key={i}/>);
               })}
