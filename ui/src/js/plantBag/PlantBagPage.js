@@ -107,7 +107,7 @@ export default class PlantBagPage extends Component {
     this.state.plantBag.price = price;
     this.forceUpdate();
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
-    this.refs["navbar"].updatePlantBagFromLocaleStorage();
+    this.props.route.updatePlantBag();
   }
 
   updateValue(toUpdate, value) {

@@ -32,12 +32,16 @@ import TeamPage from './team/TeamPage';
 
 export default class Routes extends Component {
 
-  reRender(){
+  reRender() {
     this.forceUpdate();
   }
 
-  updatePlantBag(price, projectItems, projectName){
+  updatePlantBag(price, projectItems, projectName) {
     this.refs["navbar"].updatePlantBag(price, projectItems, projectName);
+  }
+
+  updatePlantBagFromLocaleStorage() {
+    this.refs["navbar"].updatePlantBagFromLocaleStorage();
   }
 
   render() {
@@ -55,7 +59,7 @@ export default class Routes extends Component {
           <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)}/>
           <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)}/>
-          <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)}  updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)}/>
           <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)}/>
           <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)}/>
           <Route path="/registration" component={RegistrationPage} reRender={this.reRender.bind(this)}/>
