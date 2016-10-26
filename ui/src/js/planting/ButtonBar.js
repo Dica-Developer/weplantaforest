@@ -11,49 +11,21 @@ export default class ButtonBar extends Component {
 
   constructor() {
     super();
-    this.state = {
-      customAmount: '',
-      customInputVisible: false
-    }
-  }
-
-  switchToSliderPlantPage() {
-    browserHistory.push('/plant2');
-    this.setState({customInputVisible: false});
   }
 
   switchToCustomPlantPage() {
-    browserHistory.push('/plant3');
-    this.setState({customInputVisible: false});
+    if (JSON.parse(localStorage.getItem('isGift'))) {
+      browserHistory.push('/plantGift2');
+    } else {
+      browserHistory.push('/plant3');
+    }
   }
 
   switchToProposalPage(amount) {
-    browserHistory.push('/plant/' + amount);
-    this.setState({customAmount: '', customInputVisible: false});
-  }
-
-  updateCustomAmount(event) {
-    this.setState({customAmount: event.target.value});
-  }
-  setCustomInputVisible() {
-    this.setState({customInputVisible: true});
-  }
-
-  componentDidUpdate() {
-    if (this.state.customInputVisible) {
-      this.refs.customInput.focus();
-    }
-  }
-
-  handleCustomInputKeyDown(event) {
-    if (event.keyCode == 13 && this.state.customAmount != '') {
-      browserHistory.push('/plant/' + this.state.customAmount);
-    }
-  }
-
-  switchToProposalPageCustom() {
-    if (this.state.customAmount != '') {
-      browserHistory.push('/plant/' + this.state.customAmount);
+    if (JSON.parse(localStorage.getItem('isGift'))) {
+      browserHistory.push('/plantGift/' + amount);
+    } else {
+      browserHistory.push('/plant/' + amount);
     }
   }
 

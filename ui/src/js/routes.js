@@ -36,12 +36,16 @@ export default class Routes extends Component {
     this.forceUpdate();
   }
 
-  updatePlantBag(price, projectItems, projectName) {
-    this.refs["navbar"].updatePlantBag(price, projectItems, projectName);
+  updatePlantBag(price, projectItems, projectName, isGift) {
+    this.refs["navbar"].updatePlantBag(price, projectItems, projectName, isGift);
   }
 
   updatePlantBagFromLocaleStorage() {
     this.refs["navbar"].updatePlantBagFromLocaleStorage();
+  }
+
+  updateNavbarComponents() {
+    this.refs["navbar"].updateComponents();
   }
 
   render() {
@@ -53,15 +57,17 @@ export default class Routes extends Component {
           <Route path="/" component={MainPage} reRender={this.reRender.bind(this)}/>
           <Route path="/plant/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
           <Route path="/plant3" component={CustomPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
+          <Route path="/plantGift/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="Gutschein erstellen" isGift={true} isAbo={false}/>
+          <Route path="/plantGift2" component={CustomPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="Gutschein erstellen" isGift={true} isAbo={false}/>
           <Route path="/projects" component={ProjectsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projects/:projectName" component={ProjectDetailsPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)}/>
           <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)}/>
           <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)}/>
           <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)}/>
-          <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)}  updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)}/>
-          <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)}/>
-          <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)}/>
+          <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)}/>
+          <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)}/>
           <Route path="/registration" component={RegistrationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/userActivation" component={ActivationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/forgotPassword" component={ForgotPasswordPage} reRender={this.reRender.bind(this)}/>

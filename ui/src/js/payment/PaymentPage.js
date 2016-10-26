@@ -5,6 +5,7 @@ import NavBar from '../common/navbar/NavBar';
 import Footer from '../common/Footer';
 import Header from '../common/header/Header';
 import Boostrap from 'bootstrap';
+import {browserHistory} from 'react-router';
 
 import Overview from './Overview';
 import Sepa from './Sepa';
@@ -27,12 +28,17 @@ export default class PaymentPage extends Component {
     this.setState({paymentOption: option});
   }
 
-  updateNavbar(){
-    this.refs["navbar"].updateComponents();
+  updateNavbar() {
+    this.props.route.updateComponents();
+  }
+
+  switchToGiftOverview() {
+    browserHistory.push('/gifts/' + localStorage.getItem('username'));
   }
 
   render() {
     var content;
+    var giftText = '';
     if (this.state.paymentOption == '') {
       content = <Overview price={this.state.plantBag.price} setPaymentOption={this.setPaymentOption.bind(this)}/>
     } else if (this.state.paymentOption == 'sepa') {
@@ -43,11 +49,19 @@ export default class PaymentPage extends Component {
         </h2>
         Die Daten wurden an die Bank für Sozialwirtschaft übermittelt.
       </div>;
+      if (JSON.parse(localStorage.getItem('isGift'))) {
+        giftText = <div className="gift-text align-center">
+          Deinen Gutschein-Code findest du
+          <a role="button" onClick={this.switchToGiftOverview.bind(this)}> hier</a>
+        </div>
+      }
     }
+
     return (
       <div className="container paddingTopBottom15">
         <div className="row paymentPage">
           {content}
+          {giftText}
         </div>
       </div>
     );

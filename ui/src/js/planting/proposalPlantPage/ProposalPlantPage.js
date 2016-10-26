@@ -25,15 +25,14 @@ export default class ProposalPlantPage extends Component {
         plantItems: []
       },
       overallPrice: 0,
-      isGift: false,
-      isAbo: false,
       amount: -1,
       slideIn: false
     };
   }
 
   componentDidMount() {
-    this.setState({isGift: this.props.route.isGift, isAbo: this.props.route.isAbo, amount: this.props.params.amount});
+    localStorage.setItem('isGift', this.props.route.isGift);
+    this.setState({amount: this.props.params.amount});
     this.getPlantProposal(this.props.params.amount);
   }
 
@@ -46,7 +45,7 @@ export default class ProposalPlantPage extends Component {
         price: parseInt(this.state.trees.plantItems[plantItem].treePrice),
         imageFile: this.state.trees.plantItems[plantItem].imageFile
       };
-      this.props.route.updatePlantBag(price, projectItems, this.state.trees.plantItems[plantItem].projectName);
+      this.props.route.updatePlantBag(price, projectItems, this.state.trees.plantItems[plantItem].projectName, this.props.route.isGift);
     }
   }
 

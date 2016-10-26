@@ -40,7 +40,8 @@ export default class NavBar extends Component {
     this.refs["plantBag"].updatePlantBagFromLocaleStorage();
   }
 
-  updatePlantBag(price, projectItems, projectName) {
+  updatePlantBag(price, projectItems, projectName, isGift) {
+    localStorage.setItem('isGift', isGift);
     this.refs["plantBag"].updatePlantBag(price, projectItems, projectName);
   }
 
@@ -83,7 +84,7 @@ export default class NavBar extends Component {
           <MenuItem hash="first-page">PFLANZUNGEN</MenuItem>
           <MenuItem hash="/projects">PROJEKTFLÄCHEN</MenuItem>
           <MenuItem hash="/certificate/find">FINDEN</MenuItem>
-          <MenuItem hash="5">GUTSCHEIN ERSTELLEN</MenuItem>
+          <MenuItem hash="/plantGift/5">GUTSCHEIN ERSTELLEN</MenuItem>
           <MenuItem hash="/gift/redeem">GUTSCHEIN EINLÖSEN</MenuItem>
           <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
           <MenuItem hash="/ranking">BESTENLISTE</MenuItem>

@@ -23,15 +23,14 @@ export default class CustomPlantPage extends Component {
     this.state = {
       projects: [],
       overallPrice: 0,
-      isGift: false,
-      isAbo: false,
       slideIn: false
     };
     this.updatePrice = this.updatePrice.bind(this);
   }
 
   componentDidMount() {
-    this.setState({isGift: this.props.route.isGift, isAbo: this.props.route.isAbo, slideIn: true});
+    localStorage.setItem('isGift', this.props.route.isGift);
+    this.setState({slideIn: true});
     var that = this;
     axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
       var result = response.data;
@@ -55,7 +54,7 @@ export default class CustomPlantPage extends Component {
         }
       }
       if (updateProject) {
-        this.props.route.updatePlantBag(this.refs["project_" + project].getPrice(), projectItems, this.state.projects[project].projectName);
+        this.props.route.updatePlantBag(this.refs["project_" + project].getPrice(), projectItems, this.state.projects[project].projectName, this.props.route.isGift);
       }
     }
   }

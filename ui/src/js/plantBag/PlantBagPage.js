@@ -23,7 +23,7 @@ export default class PlantBagPage extends Component {
     super(props);
     this.state = {
       plantBag: JSON.parse(localStorage.getItem('plantBag')),
-      isGift: false
+      isGift: JSON.parse(localStorage.getItem('isGift'))
     };
   }
 
@@ -52,7 +52,7 @@ export default class PlantBagPage extends Component {
     } else {
       localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
       axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
-        browserHistory.push('/payCart/' + response.data);
+      browserHistory.push('/payCart/' + response.data);
       }).catch(function(response) {
         if (response instanceof Error) {
           console.error('Error', response.message);
@@ -112,6 +112,9 @@ export default class PlantBagPage extends Component {
 
   updateValue(toUpdate, value) {
     this.setState({[toUpdate]: value});
+    if(toUpdate == "isGift"){
+      localStorage.setItem('isGift', value);
+    }
   }
 
   render() {
