@@ -11,11 +11,14 @@ import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.message.BasicNameValuePair;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -38,11 +41,21 @@ public class PaymentHelper {
     private final static DecimalFormat priceFormat = new DecimalFormat("#0.00");
 
     private final static String CONNECTION_ERROR = "connection_error";
-    
+
     public String postRequest(Cart cart, PaymentData paymentData) {
         String address = _env.getProperty("bfs.url");
         try {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
+            CloseableHttpClient httpClient;
+            // on staging and production the requests has to be routed
+            // through a proxy
+            if (_env.getProperty("proxy.host") != null) {
+                HttpHost proxy = new HttpHost(_env.getProperty("proxy.host"), Integer.parseInt(_env.getProperty("proxy.port")));
+                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
+                httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
+            } else {
+                httpClient = HttpClients.custom().build();
+            }
+
             HttpPost httpPost = new HttpPost(address);
 
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
@@ -61,20 +74,21 @@ public class PaymentHelper {
             while ((line = rd.readLine()) != null) {
                 result.append(line);
             }
+            httpClient.close();
             return result.toString();
         } catch (final Exception e) {
             LOG.error("unable to do post request to '" + address + "'", e);
             return CONNECTION_ERROR;
-        }      
+        }
     }
 
     public boolean isSuccessFull(String result) {
         return result != null && result.contains("status=success");
     }
-    
+
     public boolean isConnectionError(String result) {
         return result != null && result.equals(CONNECTION_ERROR);
-    }    
+    }
 
     public String getErrorCode(String response) {
         return response.substring(response.indexOf("&amp;code=") + 10, response.indexOf("&amp;code=") + 13);
