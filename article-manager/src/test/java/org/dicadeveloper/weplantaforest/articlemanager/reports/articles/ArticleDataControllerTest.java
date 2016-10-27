@@ -80,23 +80,6 @@ public class ArticleDataControllerTest {
     }
 
     @Test
-    public void testGetParagraphsByArticleTitle() throws Exception {
-
-        long createdOn = System.currentTimeMillis();
-
-        _dbInjecter.injectUser("Adam");
-
-        Article article = _dbInjecter.injectArticle("title", "article blablabla", ArticleType.BLOG, "Adam", createdOn);
-        _dbInjecter.injectParagraphToArticle(article, "1st paragraph title", "1st paragraph blablablalba");
-        _dbInjecter.injectParagraphToArticle(article, "2nd paragraph title", "2nd paragraph blablablalba");
-
-        this.mockMvc.perform(get("/reports/article/{articleId}", 1).accept("application/json"))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[0].paragraphTitle").value("1st paragraph title"))
-                    .andExpect(jsonPath("$.[0].paragraphText").value("1st paragraph blablablalba"));
-    }
-
-    @Test
     public void testGetImageNonScaled() throws Exception {
         createArticleFolderAndInsertImage("article1.jpg");
 
