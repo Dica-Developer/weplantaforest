@@ -88,7 +88,7 @@ export default class NavBar extends Component {
           <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
           <MenuItem hash="/ranking">BESTENLISTE</MenuItem>
           <MenuItem hash="/statistics">STATISTIKEN</MenuItem>
-          <MenuItem hash="9">BLOG</MenuItem>
+          <MenuItem hash="/blog">BLOG</MenuItem>
           <MenuItem hash="10">FAQs</MenuItem>
           <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
         </Menu>

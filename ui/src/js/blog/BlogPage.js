@@ -24,7 +24,7 @@ class Paragraph extends Component {
       titlePart= '';
     }
 
-    if (this.props.content.imageFileName != '') {
+    if (this.props.content.imageFileName != null && this.props.content.imageFileName != '') {
       imageUrl = 'http://localhost:8082/article/image/' + this.props.articleId + '/' + this.props.content.imageFileName + '/400/400';
       imagePart = <div className="article-img">
         <img src={imageUrl}/>
@@ -96,7 +96,7 @@ export default class BlogPage extends Component {
         <div className="row">
           <div className={"col-md-12"}>
             <h3>{this.state.article.title}</h3>
-            {moment(this.state.article.createdOn).format("DD.MM.YYYY")}&nbsp;von&nbsp;
+            {moment(this.state.article.createdOn).format("DD.MM.YYYY")}{" von "}
             <a role="button" onClick= { () => { browserHistory.push('/user/' + this.state.article.owner.name) }}>
               {this.state.article.owner.name}</a>
             <br/>
