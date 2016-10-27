@@ -30,6 +30,7 @@ import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.hibernate.annotations.Cascade;
 import org.springframework.hateoas.Identifiable;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -67,7 +68,7 @@ public class Cart implements Identifiable<Long> {
     @Column(name = "_cartState")
     private CartState cartState;
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     private List<CartItem> cartItems = new ArrayList<CartItem>();
 
