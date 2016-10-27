@@ -75,7 +75,6 @@ export default class BlogOverviewPage extends Component {
   }
 
   render() {
-    console.log(this.state.articles);
     return (
       <div className="container paddingTopBottom15 ">
         <div className="row blogOverviewPage">

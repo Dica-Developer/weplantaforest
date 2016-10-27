@@ -86,7 +86,6 @@ export default class BlogPage extends Component {
 
   render() {
     var that = this;
-    console.log(this.state.article);
     let articleImageUrl = '';
     if (this.state.article.imageFileName != '') {
       articleImageUrl = 'http://localhost:8082/article/image/' + this.props.params.articleId + '/' + this.state.article.imageFileName + '/600/600';
