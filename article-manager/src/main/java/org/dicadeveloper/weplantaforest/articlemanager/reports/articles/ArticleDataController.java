@@ -1,15 +1,16 @@
 package org.dicadeveloper.weplantaforest.articlemanager.reports.articles;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.ParagraphRepository;
+import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +46,9 @@ public class ArticleDataController {
     }
 
     @RequestMapping(value = "/reports/article/{articleId}", method = RequestMethod.GET)
-    public List<ArticleContentData> getParagraphsByArticleTitle(@PathVariable long articleId) {
-        return _articleDataRepository.getParagraphsByArticleId(articleId);
+    @JsonView({ Views.UserArticleView.class })
+    public Article getArticle(@PathVariable long articleId) {
+        return _articleDataRepository.findOne(articleId);
     }
 
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")

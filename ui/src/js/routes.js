@@ -29,6 +29,7 @@ import FindTreePage from './findTree/FindTreePage';
 import ProjectsPage from './projects/ProjectsPage'
 import StatisticsPage from './statistics/StatisticsPage';
 import TeamPage from './team/TeamPage';
+import BlogPage from './blog/BlogPage';
 
 export default class Routes extends Component {
 
@@ -77,6 +78,7 @@ export default class Routes extends Component {
           <Route path="/certificate/find" component={FindTreePage} reRender={this.reRender.bind(this)}/>
           <Route path="/statistics" component={StatisticsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/team/:teamName" component={TeamPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/blog/:articleId" component={BlogPage} reRender={this.reRender.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
         </Router>
         <Footer/>

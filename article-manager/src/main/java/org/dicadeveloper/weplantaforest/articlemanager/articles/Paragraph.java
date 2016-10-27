@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,12 +28,15 @@ public class Paragraph implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "_title")
+    @JsonView({ Views.UserArticleView.class})
     private String title;
 
     @Column(name = "_text", columnDefinition = "TEXT")
+    @JsonView({ Views.UserArticleView.class})
     private String text;
     
     @Column(name = "_imageFileName")
+    @JsonView({ Views.UserArticleView.class})
     private String imageFileName;
 
     @OneToOne(fetch = FetchType.LAZY)

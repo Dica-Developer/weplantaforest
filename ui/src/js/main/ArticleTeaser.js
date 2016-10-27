@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
 
 import {getTextForSelectedLanguage, getShortText} from '../common/language/LanguageHelper';
 
@@ -23,7 +23,7 @@ export default class ArticleTeaser extends Component {
     return (
       <div>
         <a role="button" onClick={() => {
-          this.linkTo(`/projects/` + this.props.content.projectName)
+          this.linkTo(`/blog/` + this.props.content.id)
         }}>
           <img src={imageUrl} alt={this.props.content.title}/>
           <h3>
