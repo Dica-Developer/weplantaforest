@@ -52,6 +52,7 @@ task buildUi(type: Exec) {
   commandLine npmCommand, 'run', 'build'
   
   doLast {
+	replaceUrls('http://localhost:8080', 'http://iplantatree.org:81') 
     replaceUrls('http://localhost', 'http://iplantatree.org') 
   }
 }
