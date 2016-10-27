@@ -1,7 +1,11 @@
 package org.dicadeveloper.weplantaforest.planting;
 
+import java.util.Locale;
+
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagHelper;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
@@ -10,6 +14,7 @@ import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,27 +45,49 @@ public class PlantPageController {
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
+    private @NonNull UserHelper _userHelper;
+    
+    private @NonNull MessageByLocaleService _messageByLocaleService;
+
+    private final static String ANONYMOUS_TOKEN = "anonym-user";
+
     @RequestMapping(value = Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", method = RequestMethod.GET)
     @Transactional
     public PlantBag getCartProposal(@PathVariable long targetedPrice) {
         return plantPageDataHelper.createPlantProposalForTargetPrice(targetedPrice);
     }
 
+   
     @RequestMapping(value = Uris.COMPLEX_DONATION, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<Long> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) {
-        User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (buyer != null) {
-            if (_plantPageDataValidator.isPlantPageDataValid(plantBag)) {
+    public ResponseEntity<Long> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) {       
+        String message;
+        if (_plantPageDataValidator.isPlantPageDataValid(plantBag)) {
+            User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
+            if (buyer == null) {
+                if (userToken.equals(ANONYMOUS_TOKEN)) {
+                    buyer = _userHelper.createAnonymous();
+                    if (buyer == null) {
+                        message = _messageByLocaleService.getMessage("no.anonymous.created", Language.DEUTSCH.getLocale());
+                        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }else{
+                        Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer);
+                        _cartRepository.save(cart);
+                        return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);
+                    }
+                }else {
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+            } else{
                 Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer);
                 _cartRepository.save(cart);
-                return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);                
             }
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            // TODO: add validation messages to PlantBagValidation results
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
     }
 
 }
