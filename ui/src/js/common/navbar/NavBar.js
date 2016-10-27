@@ -60,8 +60,8 @@ export default class NavBar extends Component {
   }
 
   updateComponents() {
+    this.props.reRender();
     this.setProfileLinkIsInActive();
-    this.refs["plantBag"].resetPlantBag();
     this.forceUpdate();
   }
 

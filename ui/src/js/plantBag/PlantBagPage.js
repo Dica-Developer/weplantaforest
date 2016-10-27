@@ -12,6 +12,7 @@ import PlantBagProject from './PlantBagProject';
 import PlantBagItem from './PlantBagItem'
 import IconButton from '../common/components/IconButton';
 import CheckBox from '../common/components/CheckBox';
+import Notification from '../common/components/Notification';
 
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
@@ -23,48 +24,74 @@ export default class PlantBagPage extends Component {
     super(props);
     this.state = {
       plantBag: JSON.parse(localStorage.getItem('plantBag')),
-      isGift: JSON.parse(localStorage.getItem('isGift'))
+      isGift: JSON.parse(localStorage.getItem('isGift')),
+      isAnonymUser: false
     };
   }
 
   switchTOPaymentPage() {
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+    if ((localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') || this.state.isAnonymUser) {
+      var that = this;
+      var config;
+      if(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''){
+        config = {
+          headers: {
+            'X-AUTH-TOKEN': localStorage.getItem('jwt')
+          }
+        };
+      }else{
+        config = {
+          headers: {
+            'X-AUTH-TOKEN': 'anonym-user'
+          }
+        };
       }
-    };
-    if (this.state.isGift) {
-      localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
-      axios.post('http://localhost:8081/gift/create', this.state.plantBag, config).then(function(response) {
-        browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
-      }).catch(function(response) {
-        if (response instanceof Error) {
-          console.error('Error', response.message);
-        } else {
-          console.error(response.data);
-          console.error(response.status);
-          console.error(response.headers);
-          console.error(response.config);
+      if (this.state.isGift) {
+        if(!this.state.isAnonymUser){
+          this.createGift(config);
+        }else{
+          this.refs.notification.addNotification('Kein Nutzer angemeldet!', "Anonymen Nutzern ist es leider nicht gestattet, Gutscheine zu erstellen.", 'error');
         }
-        console.error('Payment failed');
-      });
+      } else {
+        this.createCart(config);
+      }
     } else {
-      localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
-      axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
-      browserHistory.push('/payCart/' + response.data);
-      }).catch(function(response) {
-        if (response instanceof Error) {
-          console.error('Error', response.message);
-        } else {
-          console.error(response.data);
-          console.error(response.status);
-          console.error(response.headers);
-          console.error(response.config);
-        }
-        console.error('Payment failed');
-      });
+      this.refs.notification.addNotification('Kein Nutzer angemeldet!', "Um eine Pflanzung zu tätigen muss ein Nutzer angemeldet sein oder du musst den Haken bei 'als anonymer Nutzer pflanzen' setzen.", 'error');
     }
+  }
+
+  createGift(config){
+    localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
+    axios.post('http://localhost:8081/gift/create', this.state.plantBag, config).then(function(response) {
+      browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+      console.error('Payment failed');
+    });
+  }
+
+  createCart(config){
+    localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
+    axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
+      browserHistory.push('/payCart/' + response.data);
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+      console.error('Payment failed');
+    });
   }
 
   removePlantBagItem(project, plantItem) {
@@ -112,7 +139,7 @@ export default class PlantBagPage extends Component {
 
   updateValue(toUpdate, value) {
     this.setState({[toUpdate]: value});
-    if(toUpdate == "isGift"){
+    if (toUpdate == "isGift") {
       localStorage.setItem('isGift', value);
     }
   }
@@ -127,10 +154,13 @@ export default class PlantBagPage extends Component {
         </div>
         <div className="align-right">
           <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text="Als Geschenkgutschein"/><br/>
+          <div className={((localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') ? "no-display": "") + " align-right" }>
+            <CheckBox toUpdate="isAnonymUser" value={this.state.isAnonymUser} updateValue={this.updateValue.bind(this)} text="als anonymer Nutzer pflanzen"/><br/>
+          </div>
           <IconButton glyphIcon="glyphicon-euro" text="WEITER ZUR KASSE" onClick={this.switchTOPaymentPage.bind(this)}/>
         </div>
       </div>;
-    }else{
+    } else {
       overallPriceAndPayment = <div>Es befinden sich keine Bäume in deinem Pflanzkorb.</div>;
     }
 
@@ -164,7 +194,8 @@ export default class PlantBagPage extends Component {
             </div>
           </div>
         </div>
-        </div>
+        <Notification ref="notification"/>
+      </div>
     );
   }
 }
