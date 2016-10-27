@@ -9,6 +9,7 @@ import {browserHistory} from 'react-router';
 
 import Overview from './Overview';
 import Sepa from './Sepa';
+import CreditCard from './CreditCard';
 
 require("./paymentPage.less");
 
@@ -43,6 +44,8 @@ export default class PaymentPage extends Component {
       content = <Overview price={this.state.plantBag.price} setPaymentOption={this.setPaymentOption.bind(this)}/>
     } else if (this.state.paymentOption == 'sepa') {
       content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)} updateNavbar={this.updateNavbar.bind(this)}/>;
+    }else if (this.state.paymentOption == 'creditcard') {
+      content = <CreditCard price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)} updateNavbar={this.updateNavbar.bind(this)}/>;
     } else if (this.state.paymentOption == 'paymentDone') {
       content = <div className="col-md-12 align-center">
         <h2>Zahlung erfolgreich abgeschlossen!

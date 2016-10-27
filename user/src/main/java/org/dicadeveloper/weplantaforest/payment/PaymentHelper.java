@@ -42,7 +42,7 @@ public class PaymentHelper {
 
     private final static String CONNECTION_ERROR = "connection_error";
 
-    public String postRequest(Cart cart, PaymentData paymentData) {
+    public String postRequestSepa(Cart cart, PaymentData paymentData) {
         String address = _env.getProperty("bfs.url");
         try {
             CloseableHttpClient httpClient;
@@ -59,9 +59,49 @@ public class PaymentHelper {
             HttpPost httpPost = new HttpPost(address);
 
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-            Map<String, String> params = createParams(cart, paymentData);
+            Map<String, String> params = createParamsSepa(cart, paymentData);
             for (Entry<String, String> entry : params.entrySet()) {
                 urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+            }
+
+            httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
+
+            HttpResponse response = httpClient.execute(httpPost);
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer result = new StringBuffer();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+            httpClient.close();
+            return result.toString();
+        } catch (final Exception e) {
+            LOG.error("unable to do post request to '" + address + "'", e);
+            return CONNECTION_ERROR;
+        }
+    }
+    
+    public String postRequestCC(Cart cart, PaymentData paymentData) {
+        String address = _env.getProperty("bfs.url");
+        try {
+            CloseableHttpClient httpClient;
+            // on staging and production the requests has to be routed
+            // through a proxy
+            if (_env.getProperty("proxy.host") != null) {
+                HttpHost proxy = new HttpHost(_env.getProperty("proxy.host"), Integer.parseInt(_env.getProperty("proxy.port")));
+                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
+                httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
+            } else {
+                httpClient = HttpClients.custom().build();
+            }
+
+            HttpPost httpPost = new HttpPost(address);
+
+            List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+            Map<String, String> params = createParamsCC(cart, paymentData);
+            for (Entry<String, String> entry : params.entrySet()) {
+               urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
 
             httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
@@ -85,6 +125,10 @@ public class PaymentHelper {
     public boolean isSuccessFull(String result) {
         return result != null && result.contains("status=success");
     }
+    
+    public boolean isSuccessFullCC(String result) {
+        return result != null && result.startsWith("<!DOCTYPE html PUBLIC");
+    }
 
     public boolean isConnectionError(String result) {
         return result != null && result.equals(CONNECTION_ERROR);
@@ -94,7 +138,7 @@ public class PaymentHelper {
         return response.substring(response.indexOf("&amp;code=") + 10, response.indexOf("&amp;code=") + 13);
     }
 
-    private Map<String, String> createParams(Cart cart, PaymentData paymentData) {
+    private Map<String, String> createParamsSepa(Cart cart, PaymentData paymentData) {
         Map<String, String> params = new HashMap<>();
 
         // mandatory parameters
@@ -118,6 +162,47 @@ public class PaymentHelper {
         params.put("zahlungsart", paymentData.getPaymentMethod());
         params.put("sepa_data[iban]", paymentData.getIban());
         params.put("sepa_data[bic]", paymentData.getBic());
+
+        // optional parameters
+        params.put("ret_success_url", Uris.PAYMENT_SUCCESS);
+        params.put("ret_error_url", Uris.PAYMENT_ERROR);
+        params.put("trackingcode", "Cart-ID: " + cart.getId());
+
+        if (null != paymentData.getCompany() && !paymentData.getCompany().isEmpty()) {
+            params.put("firma", paymentData.getCompany());
+        }
+        if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon().isEmpty()) {
+            params.put("firma_zusatz", paymentData.getCompanyAddon());
+        }
+        if (null != paymentData.getComment() && !paymentData.getComment().isEmpty()) {
+            params.put("kommentar", paymentData.getComment());
+        }
+
+        return params;
+    }
+    
+    private Map<String, String> createParamsCC(Cart cart, PaymentData paymentData) {
+        Map<String, String> params = new HashMap<>();
+
+        // mandatory parameters
+        params.put("charset", DEFAULT_ENCODING);
+        params.put("oid", _env.getProperty("bfs.oid"));
+
+        String formattedPrice = priceFormat.format(cart.getTotalPrice().doubleValue()).toString();
+        formattedPrice = formattedPrice.replace(",", ".");
+        params.put("betrag", formattedPrice);
+
+        params.put("anrede", paymentData.getSalutation().toString());
+        params.put("vorname", paymentData.getForename());
+        params.put("nachname", paymentData.getName());
+        params.put("strasse", paymentData.getStreet());
+        params.put("land", paymentData.getCountry());
+        params.put("ort", paymentData.getCity());
+        params.put("plz", paymentData.getZip());
+        params.put("email", paymentData.getMail());
+        params.put("verwendungszweck", "Spende I Plant A Tree");
+        params.put("quittung", paymentData.getReceipt());
+        params.put("zahlungsart", paymentData.getPaymentMethod());
 
         // optional parameters
         params.put("ret_success_url", Uris.PAYMENT_SUCCESS);

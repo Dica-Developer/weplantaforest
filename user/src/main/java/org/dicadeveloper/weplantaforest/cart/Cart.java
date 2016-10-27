@@ -270,4 +270,19 @@ public class Cart implements Identifiable<Long> {
         setCallBackVorname(paymentData.getForename());
         setCallBackZahlungsart(paymentData.getPaymentMethod());        
     }
+    
+    public void setCallBackValues(PaymentData paymentData){
+        setCallBackBetrag(String.valueOf(getTotalPrice().doubleValue()));
+        setCallBackEmail(paymentData.getMail());
+        setCallBackFirma(paymentData.getCompany());
+        setCallBackFirmanzusatz(paymentData.getCompanyAddon());
+        setCallBackLand(paymentData.getCountry());
+        setCallBackNachname(paymentData.getName());
+        setCallBackOrt(paymentData.getCity());
+        setCallBackPlz(paymentData.getZip());
+        setCallBackStrasse(paymentData.getStreet());
+        setCallBackTrackingcode(getId().toString());
+        setCallBackVorname(paymentData.getForename());
+        setCallBackZahlungsart(paymentData.getPaymentMethod());        
+    }
 }

@@ -31,6 +31,8 @@ import StatisticsPage from './statistics/StatisticsPage';
 import TeamPage from './team/TeamPage';
 import BlogPage from './blog/BlogPage';
 import BlogOverviewPage from './blog/BlogOverviewPage';
+import SuccessCC from './payment/SuccessCC';
+import ErrorCC from './payment/ErrorCC';
 
 export default class Routes extends Component {
 
@@ -81,6 +83,8 @@ export default class Routes extends Component {
           <Route path="/team/:teamName" component={TeamPage} reRender={this.reRender.bind(this)}/>
           <Route path="/blog/:articleId" component={BlogPage} reRender={this.reRender.bind(this)}/>
           <Route path="/blog" component={BlogOverviewPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/payCC/succes/:cartId" component={SuccessCC} reRender={this.reRender.bind(this)}/>
+          <Route path="/payCC/error/:cartId" component={ErrorCC} reRender={this.reRender.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
         </Router>
         <Footer/>

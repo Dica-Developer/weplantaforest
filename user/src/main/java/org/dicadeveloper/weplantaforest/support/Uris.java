@@ -122,6 +122,10 @@ public class Uris {
     // payment
     
     public final static String PAY_PLANTBAG = "/pay";
+    
+    public final static String VALIDATE_CC_DATA = "/validateCC";
+    
+    public final static String SUBMIT_CC_PAYED_PLANTBAG = "/submitPlantBag";
 
     public final static String PAYMENT_SUCCESS = "/payment/success";
 
