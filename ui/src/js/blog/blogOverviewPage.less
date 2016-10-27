@@ -9,30 +9,44 @@
     border-width: 1px;
     padding-bottom: 10px;
 
-    h4{
+    h4 {
       margin-bottom: 0;
     }
-    span{
+    span {
       font-size: 12px;
+    }
+    a,
+    a:active,
+    a:hover,
+    a:visited {
+      color: #000;
+      text-decoration: none;
     }
     .article-content {
       padding-top: 10px;
+      overflow: hidden;
+
       img {
+        float: left;
+        margin-right: 10px;
         max-width: 100%;
         height: auto;
       }
-      p{
-        display: inline;
+      p {
         vertical-align: top;
-        margin-left: 10px;
       }
     }
   }
-  a,
-  a:active,
-  a:hover,
-  a:visited {
+
+  .pagingLink {
+    margin-top: 10px;
+    display: block;
     color: #000;
-    text-decoration: none;
+    font-size: 20px;
+    opacity: 0.5;
+    text-align: center;
+  }
+  .pagingLink:hover {
+    opacity: 1;
   }
 }

@@ -51,13 +51,24 @@ export default class BlogOverviewPage extends Component {
     this.state = {
       articles: {
         content: []
-      }
+      },
+      entryCount: 5
     }
   }
 
   componentDidMount() {
-    var that = this;
-    axios.get('http://localhost:8082/articles/BLOG?page=0&size=5').then(function(response) {
+    this.callArticleEntries();
+  }
+
+  callMoreArticleEntries(){
+    this.state.entryCount = this.state.entryCount + 5;
+    this.forceUpdate();
+    this.callArticleEntries();
+  }
+
+  callArticleEntries(){
+        var that = this;
+    axios.get('http://localhost:8082/articles/BLOG?page=0&size=' + this.state.entryCount).then(function(response) {
       var result = response.data;
       that.setState({
         articles: result
@@ -83,6 +94,11 @@ export default class BlogOverviewPage extends Component {
             {this.state.articles.content.map(function(article, i) {
               return (<Article content={article} key={i}/>);
             })}
+            <a className={(this.state.articles.last ? "no-display" : "pagingLink")} role="button" onClick={this.callMoreArticleEntries.bind(this)}>
+              <div>
+                <span className={"glyphicon glyphicon-menu-down"}></span>
+              </div>
+            </a>
           </div>
         </div>
       </div>
