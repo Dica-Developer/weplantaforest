@@ -20,7 +20,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     public final static String GET_TEAM_MEMBER_QUERY = "SELECT user FROM User user WHERE user.team.name = :teamName";
 
-    public final static String COUNT_ANONYM_USER_QUERY = "SELECT count(user) FROM User user WHERE user.name like \'Anonymous\'";
+    public final static String COUNT_ANONYM_USER_QUERY = "SELECT count(user) FROM User user WHERE user.name like \'Anonymous%\'";
 
     @Query
     public User findByName(@Param("name") String name);

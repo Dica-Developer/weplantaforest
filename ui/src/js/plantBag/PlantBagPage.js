@@ -33,13 +33,13 @@ export default class PlantBagPage extends Component {
     if ((localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') || this.state.isAnonymUser) {
       var that = this;
       var config;
-      if(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''){
+      if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') {
         config = {
           headers: {
             'X-AUTH-TOKEN': localStorage.getItem('jwt')
           }
         };
-      }else{
+      } else {
         config = {
           headers: {
             'X-AUTH-TOKEN': 'anonym-user'
@@ -47,9 +47,9 @@ export default class PlantBagPage extends Component {
         };
       }
       if (this.state.isGift) {
-        if(!this.state.isAnonymUser){
+        if (!this.state.isAnonymUser) {
           this.createGift(config);
-        }else{
+        } else {
           this.refs.notification.addNotification('Kein Nutzer angemeldet!', "Anonymen Nutzern ist es leider nicht gestattet, Gutscheine zu erstellen.", 'error');
         }
       } else {
@@ -60,11 +60,12 @@ export default class PlantBagPage extends Component {
     }
   }
 
-  createGift(config){
+  createGift(config) {
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     axios.post('http://localhost:8081/gift/create', this.state.plantBag, config).then(function(response) {
       browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
     }).catch(function(response) {
+      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
@@ -77,11 +78,12 @@ export default class PlantBagPage extends Component {
     });
   }
 
-  createCart(config){
+  createCart(config) {
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
       browserHistory.push('/payCart/' + response.data);
     }).catch(function(response) {
+      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
@@ -154,7 +156,9 @@ export default class PlantBagPage extends Component {
         </div>
         <div className="align-right">
           <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text="Als Geschenkgutschein"/><br/>
-          <div className={((localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') ? "no-display": "") + " align-right" }>
+          <div className={((localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '')
+            ? "no-display"
+            : "") + " align-right"}>
             <CheckBox toUpdate="isAnonymUser" value={this.state.isAnonymUser} updateValue={this.updateValue.bind(this)} text="als anonymer Nutzer pflanzen"/><br/>
           </div>
           <IconButton glyphIcon="glyphicon-euro" text="WEITER ZUR KASSE" onClick={this.switchTOPaymentPage.bind(this)}/>

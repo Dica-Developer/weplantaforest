@@ -6,7 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -80,7 +79,7 @@ public class UserHelper {
         boolean userSaved = false;
         int tryCount = 1;
         while (!userSaved && tryCount <= 100) {
-            if (_userRepository.findByName(userName) == null) {
+            if (_userRepository.userExists(userName) == 0) {
                 _userRepository.save(user);
                 userSaved = true;
                 return user;
@@ -90,7 +89,7 @@ public class UserHelper {
                 userName = ANONYMOUS + (anonymousCount + 1 + tryCount);
                 user.setName(userName);
                 tryCount++;
-            }            
+            }
         }
         LOG.error("unable to save anonymous user after 100 tries.");
         return null;
