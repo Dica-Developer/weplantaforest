@@ -33,6 +33,7 @@ import BlogPage from './blog/BlogPage';
 import BlogOverviewPage from './blog/BlogOverviewPage';
 import SuccessCC from './payment/SuccessCC';
 import ErrorCC from './payment/ErrorCC';
+import Co2Calculator from './co2/Co2Calculator';
 
 export default class Routes extends Component {
 
@@ -85,6 +86,7 @@ export default class Routes extends Component {
           <Route path="/blog" component={BlogOverviewPage} reRender={this.reRender.bind(this)}/>
           <Route path="/payCC/succes/:cartId" component={SuccessCC} reRender={this.reRender.bind(this)}/>
           <Route path="/payCC/error/:cartId" component={ErrorCC} reRender={this.reRender.bind(this)}/>
+          <Route path="/co2Calculator" component={Co2Calculator} reRender={this.reRender.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
         </Router>
         <Footer/>
