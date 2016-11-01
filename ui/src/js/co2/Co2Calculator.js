@@ -299,7 +299,7 @@ export default class Co2Calculator extends Component {
         </div>
         <div className="row ">
           <div className="col-md-6">
-            Wohnfläche in km:
+            Wohnfläche in m²:
           </div>
           <div className="col-md-6">
             <input ref="living-space" type="text"></input>
