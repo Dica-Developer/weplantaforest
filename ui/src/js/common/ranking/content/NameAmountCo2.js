@@ -29,7 +29,7 @@ export default class NameAmountCo2 extends Component {
           <span className="name">{htmlDecode(this.props.content.name)}</span>
           <br/>
           <span className="stats">B&auml;ume gepflant:&nbsp;{this.props.content.amount}</span><br/>
-          <span className="stats">CO<sub>2</sub>&nbsp;gebunden:</span>
+          <span className="stats">CO<sub>2</sub>&nbsp;gebunden:&nbsp;</span>
           <span className="stats">{co2Rounded}&nbsp;t</span>
         </p>
       </div>
