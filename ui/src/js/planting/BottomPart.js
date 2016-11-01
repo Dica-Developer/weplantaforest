@@ -16,6 +16,7 @@ export default class BottomPart extends Component {
     browserHistory.push('/projectOffer');
   }
 
+
   render() {
     return (
       <div className="bottomPart">
@@ -24,7 +25,7 @@ export default class BottomPart extends Component {
             <span>GESAMT:&nbsp;{Accounting.formatNumber(this.props.overallPrice / 100, 2, ".", ",")}&nbsp;€</span>
           </div>
           <div className="plantBagButton">
-            <ImageButton text="AB IN MEINEN<br/>PFLANZKORB" onClick={this.props.updatePlantBag.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="54" imageHeight="30"/>
+            <ImageButton text="AB IN MEINEN<br/>PFLANZKORB" onClick={this.props.updatePlantBag.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="50" imageHeight="25"/>
           </div>
         </div>
         <div className="line">Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt?
