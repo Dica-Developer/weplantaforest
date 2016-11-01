@@ -42,6 +42,8 @@ public class PaymentHelper {
 
     private final static String CONNECTION_ERROR = "connection_error";
 
+    private final static String UNDEFINED_ERROR = "Es ist ein Fehler aufgetreten. Bitte Versuchen Sie es erneut.";
+
     public String postRequestSepa(Cart cart, PaymentData paymentData) {
         String address = _env.getProperty("bfs.url");
         try {
@@ -51,24 +53,29 @@ public class PaymentHelper {
             if (_env.getProperty("proxy.host") != null) {
                 HttpHost proxy = new HttpHost(_env.getProperty("proxy.host"), Integer.parseInt(_env.getProperty("proxy.port")));
                 DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-                httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
+                httpClient = HttpClients.custom()
+                                        .setRoutePlanner(routePlanner)
+                                        .build();
             } else {
-                httpClient = HttpClients.custom().build();
+                httpClient = HttpClients.custom()
+                                        .build();
             }
 
             HttpPost httpPost = new HttpPost(address);
 
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
             Map<String, String> params = createParamsSepa(cart, paymentData);
+            params = replaceUmlauts(params);
             for (Entry<String, String> entry : params.entrySet()) {
                 urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-            }
+           }
 
             httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
 
             HttpResponse response = httpClient.execute(httpPost);
 
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity()
+                                                                                 .getContent()));
             StringBuffer result = new StringBuffer();
             String line = "";
             while ((line = rd.readLine()) != null) {
@@ -81,7 +88,7 @@ public class PaymentHelper {
             return CONNECTION_ERROR;
         }
     }
-    
+
     public String postRequestCC(Cart cart, PaymentData paymentData) {
         String address = _env.getProperty("bfs.url");
         try {
@@ -91,24 +98,29 @@ public class PaymentHelper {
             if (_env.getProperty("proxy.host") != null) {
                 HttpHost proxy = new HttpHost(_env.getProperty("proxy.host"), Integer.parseInt(_env.getProperty("proxy.port")));
                 DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-                httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
+                httpClient = HttpClients.custom()
+                                        .setRoutePlanner(routePlanner)
+                                        .build();
             } else {
-                httpClient = HttpClients.custom().build();
+                httpClient = HttpClients.custom()
+                                        .build();
             }
 
             HttpPost httpPost = new HttpPost(address);
 
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
             Map<String, String> params = createParamsCC(cart, paymentData);
+            params = replaceUmlauts(params);
             for (Entry<String, String> entry : params.entrySet()) {
-               urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+                urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
 
             httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
 
             HttpResponse response = httpClient.execute(httpPost);
 
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity()
+                                                                                 .getContent()));
             StringBuffer result = new StringBuffer();
             String line = "";
             while ((line = rd.readLine()) != null) {
@@ -125,13 +137,17 @@ public class PaymentHelper {
     public boolean isSuccessFull(String result) {
         return result != null && result.contains("status=success");
     }
-    
+
     public boolean isSuccessFullCC(String result) {
         return result != null && result.startsWith("<!DOCTYPE html PUBLIC");
     }
 
     public boolean isConnectionError(String result) {
         return result != null && result.equals(CONNECTION_ERROR);
+    }
+
+    public boolean isUndefinedError(String result) {
+        return result != null && result.equals(UNDEFINED_ERROR);
     }
 
     public String getErrorCode(String response) {
@@ -145,11 +161,14 @@ public class PaymentHelper {
         params.put("charset", DEFAULT_ENCODING);
         params.put("oid", _env.getProperty("bfs.oid"));
 
-        String formattedPrice = priceFormat.format(cart.getTotalPrice().doubleValue()).toString();
+        String formattedPrice = priceFormat.format(cart.getTotalPrice()
+                                                       .doubleValue())
+                                           .toString();
         formattedPrice = formattedPrice.replace(",", ".");
         params.put("betrag", formattedPrice);
 
-        params.put("anrede", paymentData.getSalutation().toString());
+        params.put("anrede", paymentData.getSalutation()
+                                        .toString());
         params.put("vorname", paymentData.getForename());
         params.put("nachname", paymentData.getName());
         params.put("strasse", paymentData.getStreet());
@@ -168,19 +187,22 @@ public class PaymentHelper {
         params.put("ret_error_url", Uris.PAYMENT_ERROR);
         params.put("trackingcode", "Cart-ID: " + cart.getId());
 
-        if (null != paymentData.getCompany() && !paymentData.getCompany().isEmpty()) {
+        if (null != paymentData.getCompany() && !paymentData.getCompany()
+                                                            .isEmpty()) {
             params.put("firma", paymentData.getCompany());
         }
-        if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon().isEmpty()) {
+        if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon()
+                                                                 .isEmpty()) {
             params.put("firma_zusatz", paymentData.getCompanyAddon());
         }
-        if (null != paymentData.getComment() && !paymentData.getComment().isEmpty()) {
+        if (null != paymentData.getComment() && !paymentData.getComment()
+                                                            .isEmpty()) {
             params.put("kommentar", paymentData.getComment());
         }
 
         return params;
     }
-    
+
     private Map<String, String> createParamsCC(Cart cart, PaymentData paymentData) {
         Map<String, String> params = new HashMap<>();
 
@@ -188,11 +210,14 @@ public class PaymentHelper {
         params.put("charset", DEFAULT_ENCODING);
         params.put("oid", _env.getProperty("bfs.oid"));
 
-        String formattedPrice = priceFormat.format(cart.getTotalPrice().doubleValue()).toString();
+        String formattedPrice = priceFormat.format(cart.getTotalPrice()
+                                                       .doubleValue())
+                                           .toString();
         formattedPrice = formattedPrice.replace(",", ".");
         params.put("betrag", formattedPrice);
 
-        params.put("anrede", paymentData.getSalutation().toString());
+        params.put("anrede", paymentData.getSalutation()
+                                        .toString());
         params.put("vorname", paymentData.getForename());
         params.put("nachname", paymentData.getName());
         params.put("strasse", paymentData.getStreet());
@@ -209,17 +234,37 @@ public class PaymentHelper {
         params.put("ret_error_url", Uris.PAYMENT_ERROR);
         params.put("trackingcode", "Cart-ID: " + cart.getId());
 
-        if (null != paymentData.getCompany() && !paymentData.getCompany().isEmpty()) {
+        if (null != paymentData.getCompany() && !paymentData.getCompany()
+                                                            .isEmpty()) {
             params.put("firma", paymentData.getCompany());
         }
-        if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon().isEmpty()) {
+        if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon()
+                                                                 .isEmpty()) {
             params.put("firma_zusatz", paymentData.getCompanyAddon());
         }
-        if (null != paymentData.getComment() && !paymentData.getComment().isEmpty()) {
+        if (null != paymentData.getComment() && !paymentData.getComment()
+                                                            .isEmpty()) {
             params.put("kommentar", paymentData.getComment());
         }
 
         return params;
+    }
+
+    private Map<String, String> replaceUmlauts(Map<String, String> params) {
+        Map<String, String> replacedUmlautParamMap = new HashMap<String, String>();
+        for (Entry<String, String> entry : params.entrySet()) {
+            String replacedParamValue = entry.getValue()
+                                             .replaceAll("ß", "ss")
+                                             .replaceAll("ä", "ae")
+                                             .replaceAll("Ä", "Ae")
+                                             .replaceAll("ö", "oe")
+                                             .replaceAll("Ö", "Oe")
+                                             .replaceAll("ö", "oe")
+                                             .replaceAll("ü", "ue")
+                                             .replaceAll("Ü", "Ue");
+            replacedUmlautParamMap.put(entry.getKey(), replacedParamValue);
+        }
+        return replacedUmlautParamMap;
     }
 
 }

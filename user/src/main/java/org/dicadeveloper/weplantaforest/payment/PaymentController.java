@@ -36,7 +36,7 @@ public class PaymentController {
     public ResponseEntity<?> payPlantBag(@RequestBody PaymentData paymentData) {
         Cart cartToPay = _cartRepository.findOne(paymentData.getCartId());
         String paymentRequestResponse = _paymentHelper.postRequestSepa(cartToPay, paymentData);
-
+        String paymentErrorMessage;
         if (_paymentHelper.isSuccessFull(paymentRequestResponse)) {
             cartToPay.setCallBackValuesAndStateToCallBack(paymentData);
             _cartRepository.save(cartToPay);
@@ -47,11 +47,14 @@ public class PaymentController {
             }
             return new ResponseEntity<>(HttpStatus.OK);
         } else if (_paymentHelper.isConnectionError(paymentRequestResponse)) {
-            String paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.connection.error", cartToPay.getBuyer().getLang().getLocale());
+            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.connection.error", cartToPay.getBuyer().getLang().getLocale());
+            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
+        } else if (_paymentHelper.isUndefinedError(paymentRequestResponse)) {
+            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.undefined.error", cartToPay.getBuyer().getLang().getLocale());
             return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
         } else {
             String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
-            String paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank." + errorCode, cartToPay.getBuyer().getLang().getLocale());
+            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank." + errorCode, cartToPay.getBuyer().getLang().getLocale());
             return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
         }
     }
@@ -60,17 +63,20 @@ public class PaymentController {
     public ResponseEntity<?> validatePlantBagCC(@RequestBody PaymentData paymentData) {
         Cart cartToPay = _cartRepository.findOne(paymentData.getCartId());
         String paymentRequestResponse = _paymentHelper.postRequestCC(cartToPay, paymentData);
-
+        String paymentErrorMessage;
         if (_paymentHelper.isSuccessFullCC(paymentRequestResponse)) {
             cartToPay.setCallBackValues(paymentData);
             _cartRepository.save(cartToPay);
             return new ResponseEntity<>(HttpStatus.OK);
         } else if (_paymentHelper.isConnectionError(paymentRequestResponse)) {
-            String paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.connection.error", cartToPay.getBuyer().getLang().getLocale());
+            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.connection.error", cartToPay.getBuyer().getLang().getLocale());
             return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
-        } else {
+        }  else if (_paymentHelper.isUndefinedError(paymentRequestResponse)) {
+            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.undefined.error", cartToPay.getBuyer().getLang().getLocale());
+            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
+        }else {
             String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
-            String paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank." + errorCode, cartToPay.getBuyer().getLang().getLocale());
+            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank." + errorCode, cartToPay.getBuyer().getLang().getLocale());
             return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
         }
     }
