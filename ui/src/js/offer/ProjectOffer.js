@@ -186,9 +186,19 @@ export default class ProjectOffer extends Component {
               <TextArea toUpdate="comment" updateValue={this.updateValue.bind(this)}/>
             </div>
           </div>
-          <div className="align-center">
-            <Captcha ref="captcha"/><br/>
-            <IconButton text="ANGEBOT ABSCHICKEN" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
+          <div className="desc-value">
+            <div className="desc">
+              </div>
+            <div className="value">
+              <Captcha ref="captcha"/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              </div>
+            <div className="value">
+              <IconButton text="ANGEBOT ABSCHICKEN" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
+            </div>
           </div>
         </div>
         <Notification ref="notification"/>

@@ -207,8 +207,19 @@ export default class DoPlanting extends Component {
             </div>
           </div>
         </div>
-        <div className="align-center">
-          <Captcha ref="captcha"/ > <br/> <IconButton text = "PFLANZUNG ERSTELLEN" glyphIcon = "glyphicon-tree-deciduous" onClick = { this.sendSelfPlantedTree.bind(this)} />
+        <div className="desc-value">
+          <div className="desc">
+            </div>
+          <div className="value">
+            <Captcha ref="captcha"/>
+          </div>
+        </div>
+        <div className="desc-value">
+          <div className="desc">
+            </div>
+          <div className="value">
+            <IconButton text = "PFLANZUNG ERSTELLEN" glyphIcon = "glyphicon-tree-deciduous" onClick = { this.sendSelfPlantedTree.bind(this)} />
+          </div>
         </div>
         <Notification ref = "notification" />
       </div>);
