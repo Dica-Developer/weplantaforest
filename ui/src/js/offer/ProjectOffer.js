@@ -100,70 +100,91 @@ export default class ProjectOffer extends Component {
         <br/>
         <p className="bold">Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.</p>
         <div className="offerForm">
-          <table>
-            <tbody>
-              <tr>
-                <td>Name:</td>
-                <td><InputText toUpdate="first" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>Vorname:</td>
-                <td><InputText toUpdate="name" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>E-Mail:</td>
-                <td><InputText toUpdate="mail" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td colSpan="2"></td>
-              </tr>
-              <tr>
-                <td>Ort der Fläche:</td>
-                <td><InputText toUpdate="location" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>Größe der Fläche:</td>
-                <td><InputText toUpdate="size" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>Eigentümer:</td>
-                <td><InputText toUpdate="owner" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>Aufforstung:</td>
-                <td>
-                  <input type="radio" name="afforestation" checked={this.state.isAfforestation} value="1" onChange={this.updateAfforestation.bind(this)}/>&nbsp; möglich&nbsp;&nbsp;
-                  <input type="radio" name="afforestation" checked={!this.state.isAfforestation} value="0" onChange={this.updateAfforestation.bind(this)}/>&nbsp; nicht möglich</td>
-              </tr>
-              <tr>
-                <td>Nutzen der Fläche:</td>
-                <td>Wie wurde die Fläche vorher genutzt bzw. wird sie heute genutzt?
-                  <br/><TextArea toUpdate="purpose" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>Verkauf:</td>
-                <td>
-                  Steht die Fläche zum Verkauf?<br/>
-                  <input type="radio" name="selling" checked={this.state.isSelling} value="1" onChange={this.updateSelling.bind(this)}/>&nbsp; ja&nbsp;&nbsp;
-                  <input type="radio" name="selling" checked={!this.state.isSelling} value="0" onChange={this.updateSelling.bind(this)}/>&nbsp; nein</td>
-              </tr>
-              <tr>
-                <td>Pachtverträge:</td>
-                <td>
-                  Sind Pachtverträge abgeschlossen?<br/>
-                  <input type="radio" name="leasing" checked={this.state.isLeasing} value="1" onChange={this.updateLeasing.bind(this)}/>&nbsp; ja&nbsp;&nbsp;
-                  <input type="radio" name="leasing" checked={!this.state.isLeasing} value="0" onChange={this.updateLeasing.bind(this)}/>&nbsp; nein
-                  <br/>
-                  Wenn ja, wie lange laufen diese noch?<br/>
-                  <InputText toUpdate="lease" updateValue={this.updateValue.bind(this)}/><br/>
-                </td>
-              </tr>
-              <tr>
-                <td>Bemerkungen:</td>
-                <td><TextArea toUpdate="comment" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="desc-value">
+            <div className="desc">
+              Name:</div>
+            <div className="value">
+              <InputText toUpdate="first" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Vorname:</div>
+            <div className="value">
+              <InputText toUpdate="name" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              E-Mail:</div>
+            <div className="value">
+              <InputText toUpdate="mail" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Ort der Fläche:</div>
+            <div className="value">
+              <InputText toUpdate="location" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Größe der Fläche:</div>
+            <div className="value">
+              <InputText toUpdate="size" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Eigentümer:</div>
+            <div className="value">
+              <InputText toUpdate="owner" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Aufforstung:</div>
+            <div className="value">
+              <input type="radio" name="afforestation" checked={this.state.isAfforestation} value="1" onChange={this.updateAfforestation.bind(this)}/>&nbsp; möglich&nbsp;&nbsp;
+              <input type="radio" name="afforestation" checked={!this.state.isAfforestation} value="0" onChange={this.updateAfforestation.bind(this)}/>&nbsp; nicht möglich
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Nutzen der Fläche:</div>
+            <div className="value">
+              Wie wurde die Fläche bisher genutzt?<br/>
+              <TextArea toUpdate="purpose" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Verkauf:</div>
+            <div className="value">
+              Steht die Fläche zum Verkauf?<br/>
+              <input type="radio" name="selling" checked={this.state.isSelling} value="1" onChange={this.updateSelling.bind(this)}/>&nbsp; ja&nbsp;&nbsp;
+              <input type="radio" name="selling" checked={!this.state.isSelling} value="0" onChange={this.updateSelling.bind(this)}/>&nbsp; nein
+            </div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Pachtverträge:</div>
+            <div className="value">
+              Sind Pachtverträge abgeschlossen?<br/>
+              <input type="radio" name="leasing" checked={this.state.isLeasing} value="1" onChange={this.updateLeasing.bind(this)}/>&nbsp; ja&nbsp;&nbsp;
+              <input type="radio" name="leasing" checked={!this.state.isLeasing} value="0" onChange={this.updateLeasing.bind(this)}/>&nbsp; nein
+              <br/>
+              Wenn ja, wie lange laufen diese noch?<br/>
+              <InputText toUpdate="lease" updateValue={this.updateValue.bind(this)}/></div>
+          </div>
+          <div className="desc-value">
+            <div className="desc">
+              Bemerkungen:</div>
+            <div className="value">
+              <TextArea toUpdate="comment" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          </div>
           <div className="align-center">
             <Captcha ref="captcha"/><br/>
             <IconButton text="ANGEBOT ABSCHICKEN" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
