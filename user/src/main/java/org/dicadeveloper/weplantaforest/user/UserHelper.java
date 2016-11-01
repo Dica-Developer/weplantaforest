@@ -75,6 +75,7 @@ public class UserHelper {
         user.setOrganizationType(OrganizationType.PRIVATE);
         user.addRole(Role.USER);
         user.setActivationKey(randomString);
+        user.setLang(Language.DEUTSCH);
 
         boolean userSaved = false;
         int tryCount = 1;
