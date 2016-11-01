@@ -2,7 +2,7 @@
   .article {
     font-size: 12px;
     div {
-      vertical-align: top!important;
+      height: 40px!important;
     }
     div:nth-of-type(1) {
       display: none!important;
@@ -30,7 +30,7 @@
     }
   }
   .articleDesc {
-  font-size: 12px;
+    font-size: 12px;
     div {
       display: inline-block;
     }
@@ -52,7 +52,7 @@
   .article {
     font-size: 10px;
     div {
-      vertical-align: top!important;
+      height: 30px!important;
     }
     div:nth-of-type(1) {
       display: none!important;
@@ -77,7 +77,7 @@
     }
   }
   .articleDesc {
-  font-size: 10px;
+    font-size: 10px;
     div {
       display: inline-block;
     }
@@ -98,12 +98,23 @@
 
 .article {
   margin-bottom: 5px;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+
   div {
-    display: inline-block;
+    display: table-cell;
+    vertical-align: middle;
+    height: 78px;
+    padding-bottom: 10px;
   }
   .image {
     width: 80px;
     text-align: center;
+  }
+  div:not(:first-child) {
+    border-style: none none solid none;
+    border-width: 1px;
   }
   div:nth-of-type(2) {
     margin-left: 15px;
@@ -111,18 +122,18 @@
     text-align: left;
   }
   div:nth-of-type(3) {
-    width: 135px;
+    width: 140px;
     input {
       width: 80px;
     }
   }
   div:nth-of-type(4) {
     margin-left: 25px;
-    width: 50px;
+    width: 80px;
     font-size: 20px;
   }
   div:nth-of-type(5) {
-    width: 80px;
+    width: 90px;
     text-align: right;
   }
 
@@ -138,18 +149,22 @@
 .articleDesc {
   margin-top: 15px;
   margin-bottom: 15px;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+
   div {
-    display: inline-block,;
+    display: table-cell;
   }
   div:nth-of-type(1) {
     width: 215px;
   }
   div:nth-of-type(2) {
-    width: 84px;
+    width: 75px;
     text-align: right;
   }
   div:nth-of-type(3) {
-    width: 76px;
+    width: 85px;
   }
   div:nth-of-type(4) {
     width: 135px;
