@@ -37,7 +37,7 @@ export default class ProjectDetails extends Component {
     }
 
     if (this.props.project.projectReportData.active) {
-      plantButton = <ImageButton text="HIER PFLANZEN" onClick={this.props.showPlanting.bind(this)} imagePath="/assets/images/Maus.png" imageWidth="50" imageHeight="50"/>;
+      plantButton = <ImageButton text="HIER PFLANZEN" onClick={this.props.showPlanting.bind(this)} imagePath="/assets/images/Maus.png" imageWidth="35" imageHeight="35"/>;
     } else {
       plantButton = '';
     }
