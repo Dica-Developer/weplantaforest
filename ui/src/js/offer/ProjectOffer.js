@@ -8,6 +8,7 @@ import IconButton from '../common/components/IconButton';
 import InputText from '../common/components/InputText';
 import TextArea from '../common/components/TextArea';
 import Captcha from '../common/components/Captcha';
+import RadioButton from '../common/components/RadioButton';
 
 export default class ProjectOffer extends Component {
 
@@ -146,8 +147,8 @@ export default class ProjectOffer extends Component {
             <div className="desc">
               Aufforstung:</div>
             <div className="value">
-              <input type="radio" name="afforestation" checked={this.state.isAfforestation} value="1" onChange={this.updateAfforestation.bind(this)}/>&nbsp; möglich&nbsp;&nbsp;
-              <input type="radio" name="afforestation" checked={!this.state.isAfforestation} value="0" onChange={this.updateAfforestation.bind(this)}/>&nbsp; nicht möglich
+              <RadioButton id="radio-c-1" value="1" checked={this.state.isAfforestation} onChange={this.updateAfforestation.bind(this)} text="&nbsp; möglich&nbsp;&nbsp;"/>
+              <RadioButton id="radio-c-0" value="0" checked={!this.state.isAfforestation} onChange={this.updateAfforestation.bind(this)} text="&nbsp; nicht möglich"/>
             </div>
           </div>
           <div className="desc-value">
@@ -163,8 +164,8 @@ export default class ProjectOffer extends Component {
               Verkauf:</div>
             <div className="value">
               Steht die Fläche zum Verkauf?<br/>
-              <input type="radio" name="selling" checked={this.state.isSelling} value="1" onChange={this.updateSelling.bind(this)}/>&nbsp; ja&nbsp;&nbsp;
-              <input type="radio" name="selling" checked={!this.state.isSelling} value="0" onChange={this.updateSelling.bind(this)}/>&nbsp; nein
+              <RadioButton id="radio-selling-1" value="1" checked={this.state.isSelling} onChange={this.updateSelling.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
+              <RadioButton id="radio-selling-0" value="0" checked={!this.state.isSelling} onChange={this.updateSelling.bind(this)} text="&nbsp; nein"/>
             </div>
           </div>
           <div className="desc-value">
@@ -172,8 +173,8 @@ export default class ProjectOffer extends Component {
               Pachtverträge:</div>
             <div className="value">
               Sind Pachtverträge abgeschlossen?<br/>
-              <input type="radio" name="leasing" checked={this.state.isLeasing} value="1" onChange={this.updateLeasing.bind(this)}/>&nbsp; ja&nbsp;&nbsp;
-              <input type="radio" name="leasing" checked={!this.state.isLeasing} value="0" onChange={this.updateLeasing.bind(this)}/>&nbsp; nein
+              <RadioButton id="radio-leasing-1" value="1" checked={this.state.isLeasing} onChange={this.updateLeasing.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
+              <RadioButton id="radio-leasing-0" value="0" checked={!this.state.isLeasing} onChange={this.updateLeasing.bind(this)} text="&nbsp; nein"/>
               <br/>
               Wenn ja, wie lange laufen diese noch?<br/>
               <InputText toUpdate="lease" updateValue={this.updateValue.bind(this)}/></div>
