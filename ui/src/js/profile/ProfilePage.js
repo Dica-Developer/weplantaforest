@@ -150,6 +150,7 @@ export default class ProfilePage extends Component {
   }
 
   render() {
+    var that = this;
     var userPart;
     var teamPart;
     var treePart;
@@ -176,7 +177,12 @@ export default class ProfilePage extends Component {
           } else {
             imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60'
           }
-          let linkTo = '/projects/' + content.projectArticle.project.name;
+          var linkTo;
+          if(content.projectArticle != null){
+            linkTo = '/projects/' + content.projectArticle.project.name;
+          }else{
+            linkTo = '/user/' + that.props.params.userName;
+          }
           return (
             <RankingItem imageUrl={imageUrl} rankNumber={page * 15 + (i + 1)} content={content} key={i} showRankNumber={true} showName={false} linkTo={linkTo}>
               <RankingItemContent content={content}/>
