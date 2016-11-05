@@ -70,6 +70,7 @@ export default class CreditCard extends Component {
   render() {
     return (
       <div className="col-md-12">
+        <h2>Kreditkartenzahlung</h2>
         <div className="dataInputFrom">
           <table>
             <tbody>
