@@ -31,10 +31,8 @@ export default class SelfPlantPage extends Component {
       content = <DoPlanting setPlantingDone={this.setPlantingDone.bind(this)}/>;
     };
     return (
-      <div className="container paddingTopBottom15">
-        <div className="row selfPlant">
-          {content}
-        </div>
+      <div className="container paddingTopBottom15 selfPlant">
+        {content}
       </div>
     );
   }

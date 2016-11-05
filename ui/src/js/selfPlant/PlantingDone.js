@@ -16,6 +16,7 @@ export default class PlantingDone extends Component {
 
   render() {
     return (
+      <div className="row">
       <div className="col-md-12">
         <h2 className="plantingDone">Deine Pflanzung wurde erstellt!</h2>
         <br/>
@@ -23,6 +24,7 @@ export default class PlantingDone extends Component {
           <IconButton text="WEITERE PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-backward" onClick={this.setPlantingDone.bind(this)}/>
         </div>
         <br/>
+      </div>
       </div>
     );
   }
