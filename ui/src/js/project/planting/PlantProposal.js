@@ -74,7 +74,7 @@ export default class PlantProposal extends Component {
           <div className="plantItemDesc align-center bold plantItemDesc ">
             <div>
               <p>
-                Baumtyp<br/>Preis&nbsp;/&nbsp;Stk.
+                Baumtyp&nbsp;&&nbsp;Preis/Stk.
               </p>
             </div>
             <div>

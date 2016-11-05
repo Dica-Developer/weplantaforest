@@ -30,7 +30,6 @@ export default class PlantItem extends Component {
           {this.props.plantItem.projectName}
         </div>
         <div>
-          <span className="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
         </div>
         <div>
           {Accounting.formatNumber(this.props.plantItem.treePrice * this.props.plantItem.amount / 100, 2, ".", ",")}&nbsp;€
