@@ -4,6 +4,8 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 
+import IconButton from '../common/components/IconButton';
+
 require("./co2Calculator.less");
 
 export default class Co2Calculator extends Component {
@@ -140,6 +142,7 @@ export default class Co2Calculator extends Component {
               <option value={0.94}>ja</option>
               <option value={1}>nein</option>
             </select>
+            <button className="calcButton" onClick={this.calcFoodResult.bind(this)}>berechnen</button>
           </div>
         </div>
         <div className="row ">
@@ -149,7 +152,6 @@ export default class Co2Calculator extends Component {
               : "no-display"}>
               {"Ergebnis:"}
             </div>
-            <button onClick={this.calcFoodResult.bind(this)}>berechnen</button>
           </div>
           <div className="col-md-6">
             <div className={this.state.foodResult != 0
@@ -199,6 +201,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6">
             <input ref="range" type="text"></input>
+            <button className="calcButton" onClick={this.calcMobilityResult.bind(this)}>berechnen</button>
           </div>
         </div>
         <div className="row ">
@@ -209,7 +212,6 @@ export default class Co2Calculator extends Component {
               {"Ergebnis:"}
               <br/> {"Produktionsemission: "}
             </div>
-            <button onClick={this.calcMobilityResult.bind(this)}>berechnen</button>
           </div>
           <div className="col-md-6">
             <div className={this.state.mobilityResult != 0
@@ -223,7 +225,7 @@ export default class Co2Calculator extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <div className="line"></div>
+            <div className="dashed-line"></div>
           </div>
         </div>
         <div className="row ">
@@ -232,6 +234,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6">
             <input ref="flight-range" type="text"></input>
+            <button className="calcButton" onClick={this.calcFlightResult.bind(this)}>berechnen</button>
           </div>
         </div>
         <div className="row ">
@@ -241,7 +244,6 @@ export default class Co2Calculator extends Component {
               : "no-display"}>
               {"Ergebnis:"}
             </div>
-            <button onClick={this.calcFlightResult.bind(this)}>berechnen</button>
           </div>
           <div className="col-md-6">
             <div className={this.state.flightResult != 0
@@ -339,6 +341,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6">
             <input ref="power-consumption" type="text"></input>
+            <button className="calcButton" onClick={this.calcHomeResult.bind(this)}>berechnen</button>
           </div>
         </div>
         <div className="row ">
@@ -348,7 +351,6 @@ export default class Co2Calculator extends Component {
               : "no-display"}>
               {"Ergebnis:"}
             </div>
-            <button onClick={this.calcHomeResult.bind(this)}>berechnen</button>
           </div>
           <div className="col-md-6">
             <div className={this.state.homeResult != 0
@@ -367,7 +369,7 @@ export default class Co2Calculator extends Component {
         <div className="row ">
           <div className="col-md-12">
             <h3>Gesamtergebnis</h3>
-            <button onClick={this.calcOverallResult.bind(this)}>berechnen</button>
+            <button className="calcButton" onClick={this.calcOverallResult.bind(this)}>berechnen</button>
             <div className={this.state.homeResult != 0
               ? "bold overall-result"
               : "no-display"}>
