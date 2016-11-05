@@ -16,8 +16,23 @@ export default class PlantBagItem extends Component {
       increaseInterval: null,
       descreaseDown: false,
       increaseDown: false,
-      intervalDuration: 0
+      intervalDuration: 0,
+      scaleResult: false
     }
+    this.scalingDone = this.scalingDone.bind(this);
+  }
+
+  componentWillUnmount() {
+    const elm = this.refs.result;
+    elm.removeEventListener('animationend', this.scalingDone);
+  }
+  scalingDone() {
+    this.setState({scaleResult: false});
+  }
+
+  componentDidMount(){
+    const elm = this.refs.result;
+    elm.addEventListener('animationend', this.scalingDone);
   }
 
   startDecreasing() {
@@ -28,12 +43,14 @@ export default class PlantBagItem extends Component {
       that.state.decreaseInterval = setInterval(function() {
         if (that.state.descreaseDown && that.props.plantBagitem.amount != 1) {
           that.props.decreasePlantBagItem();
+          that.setState({scaleResult: true});
           that.forceUpdate();
         } else {
           clearInterval(that.state.decreaseInterval);
         }
       }, 100);
     }, 750);
+    this.setState({scaleResult: true});
   }
 
   stopDecreasing() {
@@ -48,12 +65,14 @@ export default class PlantBagItem extends Component {
       that.state.increaseInterval = setInterval(function() {
         if (that.state.increaseDown) {
           that.props.increasePlantBagItem();
+          that.setState({scaleResult: true});
           that.forceUpdate();
         } else {
           clearInterval(that.state.increaseInterval);
         }
       }, 100);
     }, 750);
+    this.setState({scaleResult: true});
   }
 
   stopIncreasing() {
@@ -82,9 +101,10 @@ export default class PlantBagItem extends Component {
           </a>
         </div>
         <div className="result-arrow">
-          <span className="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
         </div>
-        <div className="result">
+        <div ref="result" className={(this.state.scaleResult
+          ? 'scaleResult'
+          : ' ')  + " result"}>
           <p className="bold">{Accounting.formatNumber(this.props.plantBagitem.amount * this.props.plantBagitem.price / 100, 2, ".", ",")}&nbsp;€</p>
           <IconButton glyphIcon="glyphicon-trash" onClick={this.props.removePlantBagItem.bind(this)}/>
         </div>
