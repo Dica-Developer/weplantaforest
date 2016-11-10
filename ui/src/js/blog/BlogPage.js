@@ -87,8 +87,14 @@ export default class BlogPage extends Component {
   render() {
     var that = this;
     let articleImageUrl = '';
+    var imageDesc;
     if (this.state.article.imageFileName != '') {
       articleImageUrl = 'http://localhost:8082/article/image/' + this.props.params.articleId + '/' + this.state.article.imageFileName + '/600/600';
+    }
+    if(this.state.article.imageDescription != null){
+      imageDesc = <p className="img-desc">{this.state.article.imageDescription}</p>;
+    }else{
+      imageDesc = '';
     }
     return (
       <div className="container paddingTopBottom15 blogPage">
@@ -104,7 +110,10 @@ export default class BlogPage extends Component {
               __html: getTextForSelectedLanguage(this.state.article.intro)
             }}/>
             <div className="article-img">
-              <img src={articleImageUrl}/>
+              <div className="article-img-div">
+                <img src={articleImageUrl}/>
+                {imageDesc}
+              </div>
             </div>
             {this.state.article.paragraphs.map(function(paragraph, i) {
               return (<Paragraph articleId={that.props.params.articleId} content={paragraph} key={i}/>);

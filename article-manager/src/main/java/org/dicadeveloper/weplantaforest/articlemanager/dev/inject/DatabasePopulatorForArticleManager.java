@@ -77,6 +77,7 @@ public class DatabasePopulatorForArticleManager {
                 article.setTitle("this is article nr " + i + " from " + articleType.toString() + " article");
                 article.setIntro("this is an article about " + articleType.toString());
                 article.setImageFileName("article" + articleCount + ".jpg");
+                article.setImageDescription("imageDesc for article" + articleCount);
                 _articleRepository.save(article);
                 articleCount++;
             }

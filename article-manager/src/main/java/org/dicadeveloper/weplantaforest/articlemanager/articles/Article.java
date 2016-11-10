@@ -66,6 +66,10 @@ public class Article implements Identifiable<Long> {
     @JsonView({ Views.UserArticleView.class})
     private String imageFileName;
 
+    @Column(name = "_imageCopyrights")
+    @JsonView({ Views.UserArticleView.class})
+    private String imageDescription;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_owner__userId", nullable = false)
     @JsonView({ Views.UserArticleView.class})
