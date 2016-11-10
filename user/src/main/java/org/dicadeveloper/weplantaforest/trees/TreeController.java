@@ -51,9 +51,9 @@ public class TreeController {
         return _treeRepository.findAll(new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
 
-    @RequestMapping(value = Uris.TREES_BY_USER + "{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.TREES_BY_USER, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
-    public Page<Tree> findTreesByOwnerId(@PathVariable("userName") String userName, @Param("page") int page, @Param("size") int size) {
+    public Page<Tree> findTreesByOwnerId(@Param("userName") String userName, @Param("page") int page, @Param("size") int size) {
         return _treeRepository.findTreesByUserName(userName, new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
     

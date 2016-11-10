@@ -74,7 +74,7 @@ export default class ProfilePage extends Component {
       }
     });
 
-    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=0&size=15').then(function(response) {
+    axios.get('http://localhost:8081/trees/owner?userName=' + encodeURIComponent(this.props.params.userName) + '&page=0&size=15').then(function(response) {
       var result = response.data;
       that.setState({newestPlantRanking: result});
     }).catch(function(response) {
@@ -103,7 +103,7 @@ export default class ProfilePage extends Component {
 
   callPage(page) {
     var that = this;
-    axios.get('http://localhost:8081/trees/owner/' + this.props.params.userName + '?page=' + page + '&size=15').then(function(response) {
+    axios.get('http://localhost:8081/trees/owner?userName=' + encodeURIComponent(this.props.params.userName) + '&page=' + page + '&size=15').then(function(response) {
       var result = response.data;
       that.setState({newestPlantRanking: result});
     }).catch(function(response) {
