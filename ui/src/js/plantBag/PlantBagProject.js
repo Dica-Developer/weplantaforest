@@ -28,26 +28,19 @@ export default class PlantBagProject extends Component {
   render() {
     var that = this;
     var items;
-    var line;
     var button;
     if (this.state.showItems) {
       button = <IconButton glyphIcon="glyphicon glyphicon-chevron-down" onClick={()=>{this.showItems(false)}}/>
-      line = <div className="line"/>;
       items = this.props.children;
     } else {
       button = <IconButton glyphIcon="glyphicon-chevron-right" onClick={()=>{this.showItems(true)}}/>;
       items= '';
-      line =  '';
     }
     return (
       <div className="plantBagProject">
         {button}<h3>{this.props.projectName}</h3>
-      <div className={this.state.showItems ? "sliding-out" : "sliding-in"}>
-        {this.props.children}
-      </div>
-        {line}
-        <div className="sum">
-        {Accounting.formatNumber(this.props.price/100, 2, ".", ",")}&nbsp;€
+        <div className={this.state.showItems ? "sliding-out" : "sliding-in"}>
+          {this.props.children}
         </div>
       </div>
     );
