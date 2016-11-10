@@ -23,7 +23,7 @@ export default class TreesPerOrgType extends Component {
         scaleOverride: true,
         scaleSteps: 6,
         scaleStepWidth: 5000,
-        tooltipTemplate: "<%= label %> blabla- <%= value %>"
+        tooltipTemplate: "<%= value %>"
       }
     }
   }

@@ -28,7 +28,8 @@ export default class Co2PerYear extends Component {
         scaleSteps: 5,
         scaleStepWidth: 5000,
         datasetFill: false,
-        responsive: true
+        responsive: true,
+        tooltipTemplate: "<%= value %>"
       }
     }
   }

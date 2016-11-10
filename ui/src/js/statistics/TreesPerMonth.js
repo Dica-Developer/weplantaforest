@@ -32,7 +32,8 @@ export default class TreesPerMonth extends Component {
         scaleOverride: true,
         scaleSteps: 2,
         scaleStepWidth: 5000,
-        responsive: true
+        responsive: true,
+        tooltipTemplate: "<%= value %>"
       }
     }
   }

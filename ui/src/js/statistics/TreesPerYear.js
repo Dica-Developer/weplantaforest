@@ -30,6 +30,7 @@ export default class TreesPerYear extends Component {
         scaleStepWidth: 10000,
         responsive: true,
         barValueSpacing : 3,
+        tooltipTemplate: "<%= value %>"
       },
       options2: {
         scaleLineColor: "rgb(130, 171, 31)",
@@ -39,7 +40,8 @@ export default class TreesPerYear extends Component {
         scaleStepWidth: 50000,
         pointDotRadius: 2,
         datasetFill: false,
-        responsive: true
+        responsive: true,
+        tooltipTemplate: "<%= value %>"
       }
 
     }
