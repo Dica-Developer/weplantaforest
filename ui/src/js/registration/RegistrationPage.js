@@ -38,9 +38,7 @@ export default class RegistrationPage extends Component {
 
     return (
       <div className="container paddingTopBottom15">
-        <div className="row registrationPage">
-          {content}
-        </div>
+        {content}
       </div>
     );
   }

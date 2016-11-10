@@ -74,54 +74,76 @@ export default class DoRegistration extends Component {
   render() {
 
     return (
-      <div className="col-md-12">
-        <h2>Anmelden</h2>
-        <div className="registrationForm">
-          <table>
-            <tbody>
-              <tr>
-                <td>Benutzername:</td>
-                <td><InputText toUpdate="username" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>Passwort:</td>
-                <td><InputText toUpdate="passwordOne" updateValue={this.updateValue.bind(this)} type="password"/></td>
-              </tr>
-              <tr>
-                <td>Passwort(Bestätigen):</td>
-                <td><InputText toUpdate="passwordTwo" updateValue={this.updateValue.bind(this)} type="password"/></td>
-              </tr>
-              <tr>
-                <td>E-Mail:</td>
-                <td><InputText toUpdate="mail" updateValue={this.updateValue.bind(this)}/></td>
-              </tr>
-              <tr>
-                <td>Type:</td>
-                <td>
-                  <select onChange={this.updateOrgType.bind(this)}>
-                    <option value="PRIVATE">Privatperson</option>
-                    <option value="COMMERCIAL">Firma</option>
-                    <option value="NONPROFIT">Non-Profit Organisation</option>
-                    <option value="EDUCATIONAL">Schule</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td><CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text="Ich möchte den monatlichen Newsletter erhalten."/></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td><CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text="Ich akzeptiere die Nutzungsbedingungen."/></td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="align-center">
-            <Captcha ref="captcha"/><br/>
+      <div className="registrationPage">
+        <div className="row">
+          <div className="col-md-12">
+            <h2>Anmelden</h2>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5">
+            Benutzername:
+          </div>
+          <div className="col-md-7">
+            <InputText toUpdate="username" updateValue={this.updateValue.bind(this)}/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5">
+            Passwort:
+          </div>
+          <div className="col-md-7">
+            <InputText toUpdate="passwordOne" updateValue={this.updateValue.bind(this)} type="password"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5">
+            Passwort(Bestätigen):
+          </div>
+          <div className="col-md-7">
+            <InputText toUpdate="passwordTwo" updateValue={this.updateValue.bind(this)} type="password"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5">
+            E-Mail:
+          </div>
+          <div className="col-md-7">
+            <InputText toUpdate="mail" updateValue={this.updateValue.bind(this)}/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5">
+            Typ:
+          </div>
+          <div className="col-md-7">
+            <select onChange={this.updateOrgType.bind(this)}>
+              <option value="PRIVATE">Privatperson</option>
+              <option value="COMMERCIAL">Firma</option>
+              <option value="NONPROFIT">Non-Profit Organisation</option>
+              <option value="EDUCATIONAL">Schule</option>
+            </select>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5"></div>
+          <div className="col-md-7">
+            <CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text="Ich möchte den monatlichen Newsletter erhalten."/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5"></div>
+          <div className="col-md-7">
+            <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text="Ich akzeptiere die Nutzungsbedingungen."/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12 align-center">
+            <Captcha ref="captcha"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12 align-center">
             <IconButton text="ANMELDEN" glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)}/>
           </div>
         </div>
