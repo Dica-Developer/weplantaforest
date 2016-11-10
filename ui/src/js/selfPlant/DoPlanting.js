@@ -186,18 +186,22 @@ export default class DoPlanting extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-md-12 white-line">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-1">
             Beschreibung:
           </div>
-          <div className="col-md-10">
+          <div className="col-md-11">
             <TextArea toUpdate="description" updateValue={this.updateValue.bind(this)}/>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-md-1">
             Wo:
           </div>
-          <div className="col-md-10">
+          <div className="col-md-11">
             <Map center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
               <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
               <Marker position={this.state.treePosition} draggable="true" ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
