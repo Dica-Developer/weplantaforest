@@ -22,6 +22,12 @@ public class UserDetailsService implements org.springframework.security.core.use
             throw new UsernameNotFoundException("user not found");
         }
         detailsChecker.check(user);
+        updateLastVisit(user);
         return user;
+    }
+    
+    private void updateLastVisit(User user){
+        user.setLastVisit(System.currentTimeMillis());
+        userRepo.save(user);
     }
 }
