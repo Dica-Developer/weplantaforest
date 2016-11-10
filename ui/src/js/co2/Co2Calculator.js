@@ -24,22 +24,37 @@ export default class Co2Calculator extends Component {
 
   calcFoodResult() {
     var result = parseFloat(this.refs["feeding"].value) * parseFloat(this.refs["food-amount"].value) * parseFloat(this.refs["food-local"].value) * parseFloat(this.refs["food-frozen"].value) * parseFloat(this.refs["food-saison"].value) * parseFloat(this.refs["food-bio"].value);
+    if(isNaN(result)){
+      result = 0;
+    }
     this.setState({foodResult: result});
   }
 
   calcMobilityResult() {
     var mobilityResult = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * parseFloat(this.refs["range"].value);
     var mobilityProduction = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * 30000;
+    if(isNaN(mobilityResult)){
+      mobilityResult = 0;
+    }
+    if(isNaN(mobilityProduction)){
+      mobilityProduction = 0;
+    }
     this.setState({mobilityResult: mobilityResult, mobilityProduction: mobilityProduction});
   }
 
   calcFlightResult() {
     var flightResult = 0.38 * parseFloat(this.refs["flight-range"].value);
+    if(isNaN(flightResult)){
+      flightResult = 0;
+    }
     this.setState({flightResult: flightResult});
   }
 
   calcHomeResult(){
     var homeResult = parseFloat(this.refs["house-type"].value) * parseFloat(this.refs["living-space"].value) * parseFloat(this.refs["energy-type"].value) / parseFloat(this.refs["house-member-count"].value) + parseFloat(this.refs["power-type"].value) * parseFloat(this.refs["power-consumption"].value) /  parseFloat(this.refs["house-member-count"].value) ;
+    if(isNaN(homeResult)){
+      homeResult = 0;
+    }
     this.setState({homeResult: homeResult});
   }
 
