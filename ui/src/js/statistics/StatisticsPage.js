@@ -21,21 +21,43 @@ export default class StatisticsPage extends Component {
 
   constructor() {
     super();
-    this.state = {
-    }
+    this.state = {}
   }
 
   render() {
     return (
       <div className="container paddingTopBottom15">
-        <div className="row statisticsPage">
-          <div className="col-md-12">
-            <h2>Statistiken</h2>
-            <TreesPerYear />
-            <TreesPerOrgType />
-            <TreesPerMonth />
-            <Co2PerYear />
+        <div className="statisticsPage">
+          <div className="row">
+            <div className="col-md-12">
+              <h2>Statistiken</h2>
+            </div>
           </div>
+          <div className="row">
+            <div className="col-md-12">
+              <h4>Gepflanzte Bäume</h4>
+            </div>
+          </div>
+          <TreesPerYear/>
+          <div className="row">
+            <div className="col-md-12">
+              <h4>Gebundenes CO<sub>2</sub></h4>
+            </div>
+          </div>
+          <Co2PerYear/>
+          <div className="row">
+            <div className="col-md-12">
+              <h4>Gepflanzte Bäume pro Spendertyp</h4>
+            </div>
+          </div>
+          <TreesPerOrgType/>
+            <div className="row">
+              <div className="col-md-12">
+                <h4>Gepflanzte Bäume pro Monat</h4>
+              </div>
+            </div>
+          <TreesPerMonth/>
+
         </div>
       </div>
     );

@@ -1,16 +1,43 @@
 .statisticsPage {
-  margin-left: 0;
-  margin-right: 0;
-  background-color: #fff;
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-bottom: 20px;
+    background-color: #e5e5e5;
+  }
+
   h4 {
     text-align: left;
   }
 
-  select{
+  select {
     margin-bottom: 10px;
   }
 
   .tree-chart {
     text-align: center;
+    .col-md-3 {
+      text-align: right;
+    }
   }
+  .pie-chart {
+    .pie-legend {
+      text-align: left;
+      li:nth-of-type(1) {
+        color: rgb(50, 171, 31);
+      }
+      li:nth-of-type(2) {
+        color: rgb(70, 100, 31);
+      }
+      li:nth-of-type(3) {
+        color: rgb(10, 50, 31);
+      }
+      li:nth-of-type(4) {
+        color: rgb(130, 171, 100);
+      }
+    }
+  }
+
 }

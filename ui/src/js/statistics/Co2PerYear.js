@@ -27,7 +27,8 @@ export default class Co2PerYear extends Component {
         scaleOverride: true,
         scaleSteps: 5,
         scaleStepWidth: 5000,
-        datasetFill: false
+        datasetFill: false,
+        responsive: true
       }
     }
   }
@@ -91,9 +92,12 @@ export default class Co2PerYear extends Component {
     };
     var that = this;
     return (
-      <div className="tree-chart">
-        <h4>gebundenes Co2</h4>
-        <Line ref="barChart" data={chartData} options={this.state.options}/>
+      <div className="row tree-chart">
+        <div className="col-md-3" />
+        <div className="col-md-6">
+          <Line ref="barChart" data={chartData} options={this.state.options}/>
+        </div>
+        <div className="col-md-3" />
       </div>
     );
   }

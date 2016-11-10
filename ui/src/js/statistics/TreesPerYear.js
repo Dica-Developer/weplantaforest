@@ -27,7 +27,9 @@ export default class TreesPerYear extends Component {
         scaleShowGridLines: true,
         scaleOverride: true,
         scaleSteps: 3,
-        scaleStepWidth: 10000
+        scaleStepWidth: 10000,
+        responsive: true,
+        barValueSpacing : 3,
       },
       options2: {
         scaleLineColor: "rgb(130, 171, 31)",
@@ -36,7 +38,8 @@ export default class TreesPerYear extends Component {
         scaleSteps: 4,
         scaleStepWidth: 50000,
         pointDotRadius: 2,
-        datasetFill: false
+        datasetFill: false,
+        responsive: true
       }
 
     }
@@ -45,6 +48,9 @@ export default class TreesPerYear extends Component {
   componentDidMount() {
     this.getAllYearFrom2007();
     this.updateChartForYear();
+    for(var year in this.state.labels){
+      console.log(this.state.labels[year]);
+    }
   }
 
   updateChartForYear() {
@@ -104,10 +110,13 @@ export default class TreesPerYear extends Component {
     };
     var that = this;
     return (
-      <div className="tree-chart">
-        <h4>gepflanzte Bäume</h4>
-        <Bar ref="barChart" data={chartData} options={this.state.options}/>
-        <Line ref="barChart2" data={chartData2} options={this.state.options2}/>
+      <div className="row tree-chart">
+        <div className="col-md-6">
+          <Bar ref="barChart" data={chartData} options={this.state.options}/>
+        </div>
+        <div className="col-md-6">
+          <Line ref="barChart2" data={chartData2} options={this.state.options2}/>
+        </div>
       </div>
     );
   }

@@ -1,16 +1,10 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 
-import {
-  Bar
-} from 'react-chartjs';
+import {Bar} from 'react-chartjs';
 
 export default class TreesPerMonth extends Component {
 
@@ -37,7 +31,8 @@ export default class TreesPerMonth extends Component {
         scaleShowGridLines: true,
         scaleOverride: true,
         scaleSteps: 2,
-        scaleStepWidth: 5000
+        scaleStepWidth: 5000,
+        responsive: true
       }
     }
   }
@@ -103,28 +98,37 @@ export default class TreesPerMonth extends Component {
         "November",
         "Dezember"
       ],
-      datasets: [{
-        label: 'gepflanzte Bäume',
-        data: this.state.amountOfTrees,
-        fillColor: "rgb(130, 171, 31)",
-        borderWidth: 1
-      }]
+      datasets: [
+        {
+          label: 'gepflanzte Bäume',
+          data: this.state.amountOfTrees,
+          fillColor: "rgb(130, 171, 31)",
+          borderWidth: 1
+        }
+      ]
     };
     var that = this;
     return (
-      <div className="tree-chart">
-        <h4>gepflanzte Bäume pro Monat</h4>
-        Jahr:&nbsp;<select ref="year" onChange={this.updateYear.bind(this)} >
-                  {this.state.years.map(function(year, i) {
-                    if(i + 1 == that.state.years.length){
-                      return ( <option key={i} value={year} selected>{year}</option>);
-                    }else{
-                      return ( <option key={i} value={year}>{year}</option>);
-                    }
-                  })}
-                </select>
-                <br/>
-        <Bar ref="barChart" data={chartData} options={this.state.options}/>
+      <div className="row tree-chart">
+        <div className="col-md-3">
+          Jahr:&nbsp;<select ref="year" onChange={this.updateYear.bind(this)}>
+            {this.state.years.map(function(year, i) {
+              if (i + 1 == that.state.years.length) {
+                return (
+                  <option key={i} value={year} selected>{year}</option>
+                );
+              } else {
+                return (
+                  <option key={i} value={year}>{year}</option>
+                );
+              }
+            })}
+          </select>
+        </div>
+        <div className="col-md-6">
+          <Bar ref="barChart" data={chartData} options={this.state.options}/>
+        </div>
+        <div className="col-md-3" />
       </div>
     );
   }
