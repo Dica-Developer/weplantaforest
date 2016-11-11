@@ -169,7 +169,7 @@ export default class ProjectDetailsPage extends Component {
   }
 
   updatePlantBag(overallPrice, projectItems, projectName) {
-    this.props.route.updatePlantBag(overallPrice, projectItems, projectName);
+    this.props.route.updatePlantBag(overallPrice, projectItems, projectName, false);
   }
 
   render() {
