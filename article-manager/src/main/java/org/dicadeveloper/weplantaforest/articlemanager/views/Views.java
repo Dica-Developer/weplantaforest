@@ -8,4 +8,8 @@ public interface Views {
     public static interface UserArticleView {
         
     }
+    
+    public static interface UserFaqView{
+        
+    }
 }

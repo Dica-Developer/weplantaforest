@@ -90,7 +90,7 @@ export default class NavBar extends Component {
           <MenuItem hash="/co2Calculator">CO<sub>2</sub>-RECHNER</MenuItem>
           <MenuItem hash="/statistics">STATISTIKEN</MenuItem>
           <MenuItem hash="/blog">BLOG</MenuItem>
-          <MenuItem hash="10">FAQs</MenuItem>
+          <MenuItem hash="/faq">FAQs</MenuItem>
           <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
         </Menu>
         <Menu ref="right" alignment="right">

@@ -55,11 +55,11 @@ public class Article implements Identifiable<Long> {
     private boolean showFull;
 
     @Column(name = "_title")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserFaqView.class})
     private String title;
 
     @Column(name = "_intro", columnDefinition = "TEXT")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserFaqView.class})
     private String intro;
 
     @Column(name = "_imageFileName")

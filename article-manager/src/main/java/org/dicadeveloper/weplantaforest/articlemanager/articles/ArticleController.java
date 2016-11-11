@@ -6,7 +6,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +46,7 @@ public class ArticleController {
                     paragraph.setArticle(article);
                 }
             }
-            
+
             _articleRepository.save(article);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
@@ -49,7 +54,7 @@ public class ArticleController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = "/article/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteeArticle(@RequestParam Long articleId) {
         try {
@@ -62,14 +67,13 @@ public class ArticleController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
 
     @RequestMapping(value = "/article/upload/image", method = RequestMethod.POST)
     public ResponseEntity<?> uploadArticleImage(@RequestParam Long articleId, @RequestParam String imgType, @RequestParam("file") MultipartFile file) {
         String folder = FileSystemInjector.getArticleFolder() + "/" + articleId;
         String imageName = "main" + "." + imgType;
         try {
-            imageName = _imageHelper.storeImage(file, folder, imageName,false);
+            imageName = _imageHelper.storeImage(file, folder, imageName, false);
             Article articleForImage = _articleRepository.findOne(articleId);
             articleForImage.setImageFileName(imageName);
             _articleRepository.save(articleForImage);
@@ -94,6 +98,13 @@ public class ArticleController {
             LOG.error("Error occured while uploading paragraph image for article!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "/article/faq", method = RequestMethod.GET)
+    @JsonView(Views.UserFaqView.class)
+    public ResponseEntity<?> getFaq(@RequestParam String language) {
+        List<Article> faq = _articleRepository.getArticlesByType(ArticleType.FAQ, Language.valueOf(language));
+        return new ResponseEntity<>(faq, HttpStatus.OK);
     }
 
 }
