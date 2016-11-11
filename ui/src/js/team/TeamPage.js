@@ -27,7 +27,9 @@ export default class TeamPage extends Component {
         content: []
       },
       pageCount: 0,
-      teamMember: []
+      teamMember: {
+        content: []
+      }
     };
   }
 
@@ -38,7 +40,7 @@ export default class TeamPage extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.get('http://localhost:8081/team?teamName=' + this.props.params.teamName).then(function(response) {
+    axios.get('http://localhost:8081/team?teamName=' + encodeURIComponent(this.props.params.teamName)).then(function(response) {
       var result = response.data;
       that.setState({team: result});
     }).catch(function(response) {
@@ -52,7 +54,7 @@ export default class TeamPage extends Component {
       }
     });
 
-    axios.get('http://localhost:8081/trees/team/' + this.props.params.teamName + '?page=0&size=15').then(function(response) {
+    axios.get('http://localhost:8081/trees/team?teamName=' + encodeURIComponent(this.props.params.teamName) + '&page=0&size=15').then(function(response) {
       var result = response.data;
       that.setState({newestPlantRanking: result});
     }).catch(function(response) {
@@ -65,7 +67,7 @@ export default class TeamPage extends Component {
         console.error(response.config);
       }
     });
-    axios.get('http://localhost:8081/team/member?teamName=' + this.props.params.teamName ).then(function(response) {
+    axios.get('http://localhost:8081/team/member?teamName=' + encodeURIComponent(this.props.params.teamName) +'&page=0&size=5' ).then(function(response) {
       var result = response.data;
       that.setState({teamMember: result});
     }).catch(function(response) {

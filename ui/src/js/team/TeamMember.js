@@ -5,7 +5,7 @@ import {browserHistory} from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
 
-
+import {htmlDecode} from '../common/language/HtmlHelper';
 import Boostrap from 'bootstrap';
 
 class Member extends Component {
@@ -26,7 +26,7 @@ class Member extends Component {
             <img src={imageUrl}/>
           </div>
           <div className="name">
-            {this.props.member.name}
+            {htmlDecode(this.props.member.name)}
           </div>
         </a>
       </div>
@@ -43,7 +43,7 @@ export default class TeamMember extends Component {
     return (
       <div className="teamMember">
         <h2>Mitglieder</h2>
-        {this.props.teamMember.map(function(member, i) {
+        {this.props.teamMember.content.map(function(member, i) {
           return (<Member member={member} key={i}/>);
         })}
       </div>

@@ -24,7 +24,7 @@ export default class TeamDetails extends Component {
         <div className="imageDiv">
           <img src={teamImageUrl} alt="profile"/>
         </div>
-        <p className="teamName">{this.props.team.teamName}</p>
+        <p className="teamName">{htmlDecode(this.props.team.teamName)}</p>
         <div className="stats">
           <table>
             <tbody>
@@ -39,7 +39,7 @@ export default class TeamDetails extends Component {
                 <td>
                   <span className="bold">B&auml;ume gepflanzt:&nbsp;</span>{Accounting.formatNumber(this.props.team.co2Data.treesCount, 0, ".", ",")}</td>
                 <td>
-                  <span className="bold">Teamleiter:&nbsp;</span>{this.props.team.adminName}</td>
+                  <span className="bold">Teamleiter:&nbsp;</span>{htmlDecode(this.props.team.adminName)}</td>
               </tr>
               <tr>
                 <td>

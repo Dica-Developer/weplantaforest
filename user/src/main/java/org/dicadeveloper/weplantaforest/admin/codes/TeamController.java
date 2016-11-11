@@ -19,7 +19,6 @@ import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,7 +70,7 @@ public class TeamController {
     
     @RequestMapping(value = Uris.TEAM_MEMBER, method = RequestMethod.GET)
     @JsonView(Views.TeamMember.class)
-    public ResponseEntity<?> getTeamMember(@RequestParam String teamName, @Param("page") int page, @Param("size") int size) {
+    public ResponseEntity<?> getTeamMember(@RequestParam String teamName, @RequestParam("page") int page, @RequestParam("size") int size) {
         Page<User> teamMember = _userRepository.getTeamMember(teamName, new PageRequest(page, size));
         return new ResponseEntity<>(teamMember, HttpStatus.OK);
     }

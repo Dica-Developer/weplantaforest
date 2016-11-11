@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -47,25 +48,25 @@ public class TreeController {
 
     @RequestMapping(value = Uris.TREES, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
-    public Page<Tree> list(@Param("page") int page, @Param("size") int size) {
+    public Page<Tree> list(@RequestParam("page") int page, @RequestParam("size") int size) {
         return _treeRepository.findAll(new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
 
     @RequestMapping(value = Uris.TREES_BY_USER, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
-    public Page<Tree> findTreesByOwnerId(@Param("userName") String userName, @Param("page") int page, @Param("size") int size) {
+    public Page<Tree> findTreesByOwnerId(@RequestParam("userName") String userName, @RequestParam("page") int page, @RequestParam("size") int size) {
         return _treeRepository.findTreesByUserName(userName, new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
     
-    @RequestMapping(value = Uris.TREES_BY_TEAM + "{teamName}", method = RequestMethod.GET)
+    @RequestMapping(value = Uris.TREES_BY_TEAM, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
-    public Page<Tree> findTreesByTeamName(@PathVariable("teamName") String teamName, @Param("page") int page, @Param("size") int size) {
+    public Page<Tree> findTreesByTeamName(@RequestParam("teamName") String teamName, @RequestParam("page") int page, @RequestParam("size") int size) {
         return _treeRepository.findTreesByTeamName(teamName, new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
 
     @RequestMapping(value = Uris.TREES_BY_PROJECT + "{projectId}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
-    public Page<Tree> findTreesByProjectId(@PathVariable("projectId") long projectId, @Param("page") int page, @Param("size") int size) {
+    public Page<Tree> findTreesByProjectId(@PathVariable("projectId") long projectId, @RequestParam("page") int page, @RequestParam("size") int size) {
         return _treeRepository.findTreesByProjectId(projectId, new PageRequest(page, size, new Sort(new Order(Direction.DESC, "plantedOn"))));
     }
     
