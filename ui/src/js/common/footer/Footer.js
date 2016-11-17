@@ -42,7 +42,7 @@ export default class Footer extends Component {
             <div className="row">
               <div className="col-md-4">
                 <a role="button" onClick={() => {
-                  this.linkTo('/')
+                  this.linkTo('/imprint')
                 }}>
                   IMPRESSUM
                 </a>
