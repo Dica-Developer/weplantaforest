@@ -37,6 +37,8 @@ import Co2Calculator from './co2/Co2Calculator';
 import FAQ from './faq/FaqView';
 import HelpUs from './common/footer/pages/HelpUs';
 import Links from './common/footer/pages/Links';
+import Disclaimer from './common/footer/pages/Disclaimer';
+
 
 export default class Routes extends Component {
 
@@ -93,6 +95,7 @@ export default class Routes extends Component {
           <Route path="/faq" component={FAQ} reRender={this.reRender.bind(this)}/>
           <Route path="/helpUs" component={HelpUs} reRender={this.reRender.bind(this)}/>
           <Route path="/links" component={Links} reRender={this.reRender.bind(this)}/>
+          <Route path="/disclaimer" component={Disclaimer} reRender={this.reRender.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
         </Router>
         <Footer/>

@@ -31,7 +31,7 @@ export default class Footer extends Component {
               </div>
               <div className="col-md-4">
                 <a role="button" onClick={() => {
-                  this.linkTo('/')
+                  this.linkTo('/disclaimer')
                 }}>
                   AGB
                 </a>
