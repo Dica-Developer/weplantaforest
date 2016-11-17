@@ -22,7 +22,7 @@ export default class FaqView extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8082/article/faq?language=' + localStorage.getItem('language')).then(function(response) {
+    axios.get('http://localhost:8082/articles?articleType=FAQ&language=' + localStorage.getItem('language')).then(function(response) {
       that.setState({
         faqs: response.data
       });
@@ -60,7 +60,7 @@ export default class FaqView extends Component {
           <div className="row">
             <div className="col-md-4">
             {this.state.faqs.map(function(question, i) {
-              return ( <div><a href={"#question-" + i} className="question" onClick={() => {
+              return ( <div key={i}><a href={"#question-" + i} className="question" onClick={() => {
                   that.scrollTo("#question-" + i)
                 }}>{question.title}</a></div>);
             })}
@@ -68,7 +68,7 @@ export default class FaqView extends Component {
             <div className="col-md-8">
               <div className="answers">
                 {this.state.faqs.map(function(question, i) {
-                return ( <div><a name={"#question-" + i} className="box-question" >{question.title}</a><p className="box-answer" dangerouslySetInnerHTML={{
+                return ( <div key={i}><a name={"#question-" + i} className="box-question" >{question.title}</a><p className="box-answer" dangerouslySetInnerHTML={{
                   __html: question.intro
                 }}></p></div>);
                 })}

@@ -68,7 +68,7 @@ export default class BlogOverviewPage extends Component {
 
   callArticleEntries(){
         var that = this;
-    axios.get('http://localhost:8082/articles/BLOG?page=0&size=' + this.state.entryCount).then(function(response) {
+    axios.get('http://localhost:8082/articlesPaged?articleType=BLOG&language=' + localStorage.getItem('language') +'&page=0&size=' + this.state.entryCount).then(function(response) {
       var result = response.data;
       that.setState({
         articles: result
