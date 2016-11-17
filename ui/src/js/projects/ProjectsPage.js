@@ -10,9 +10,6 @@ import {
   browserHistory
 } from 'react-router';
 
-import NavBar from '../common/navbar/NavBar';
-import Header from '../common/header/Header';
-import Footer from '../common/Footer';
 import IconButton from '../common/components/IconButton';
 
 import CompletedProject from './CompletedProject';

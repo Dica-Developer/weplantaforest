@@ -5,10 +5,6 @@ import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
 
-import NavBar from '../../common/navbar/NavBar';
-import Header from '../../common/header/Header';
-import Footer from '../../common/Footer';
-
 import PlantItem from './PlantItem';
 
 import ButtonBar from '../ButtonBar';

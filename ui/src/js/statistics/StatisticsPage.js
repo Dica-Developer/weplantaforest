@@ -6,10 +6,6 @@ import moment from 'moment';
 
 import {Bar, Line} from 'react-chartjs';
 
-import NavBar from '../common/navbar/NavBar';
-import Header from '../common/header/Header';
-import Footer from '../common/Footer';
-
 import TreesPerMonth from './TreesPerMonth';
 import TreesPerYear from './TreesPerYear';
 import TreesPerOrgType from './TreesPerOrgType';

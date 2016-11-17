@@ -6,9 +6,6 @@ import {
   render
 } from 'react-dom';
 import Boostrap from 'bootstrap';
-import NavBar from '../../common/navbar/NavBar';
-import Header from '../../common/header/Header';
-import Footer from '../../common/Footer';
 
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';

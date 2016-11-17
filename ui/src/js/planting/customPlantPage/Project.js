@@ -12,10 +12,6 @@ import {
   browserHistory
 } from 'react-router';
 
-import NavBar from '../../common/navbar/NavBar';
-import Header from '../../common/header/Header';
-import Footer from '../../common/Footer';
-
 import ButtonBar from '../ButtonBar';
 import BottomPart from '../BottomPart';
 

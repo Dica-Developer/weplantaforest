@@ -3,9 +3,6 @@ import {render} from 'react-dom';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
 import Accounting from 'accounting';
-import NavBar from '../common/navbar/NavBar';
-import Footer from '../common/Footer';
-import Header from '../common/header/Header';
 import Boostrap from 'bootstrap';
 
 import PlantBagProject from './PlantBagProject';

@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import NotificationSystem from 'react-notification-system';
-import NavBar from '../common/navbar/NavBar';
-import Footer from '../common/Footer';
-import Header from '../common/header/Header';
 import Boostrap from 'bootstrap';
 import {browserHistory} from 'react-router';
 

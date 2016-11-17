@@ -7,9 +7,6 @@ import {Link, browserHistory} from 'react-router';
 import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 
 import Notification from '../../common/components/Notification';
-import NavBar from '../../common/navbar/NavBar';
-import Header from '../../common/header/Header';
-import Footer from '../../common/Footer';
 
 import ButtonBar from '../ButtonBar';
 import BottomPart from '../BottomPart';

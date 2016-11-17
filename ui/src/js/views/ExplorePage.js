@@ -4,8 +4,6 @@ import React, {
 import {
   render
 } from 'react-dom';
-import NavBar from '../common/navbar/NavBar';
-import Footer from '../common/Footer';
 import Projects from '../components/Projects';
 import Boostrap from 'bootstrap';
 
@@ -13,11 +11,9 @@ export default class ExplorePage extends Component {
   render() {
     return (
       <div>
-        <NavBar/>
         <div className="container">
           <Projects />
         </div>
-        <Footer/>
       </div>);
   }
 }

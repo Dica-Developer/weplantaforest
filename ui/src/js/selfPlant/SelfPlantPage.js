@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
-import NavBar from '../common/navbar/NavBar';
-import Header from '../common/header/Header';
-import Footer from '../common/Footer';
 
 import DoPlanting from './DoPlanting';
 import PlantingDone from './PlantingDone';

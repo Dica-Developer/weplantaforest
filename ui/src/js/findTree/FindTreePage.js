@@ -6,9 +6,6 @@ import {
 } from 'react-dom';
 import Notification from '../common/components/Notification';
 import axios from 'axios';
-import NavBar from '../common/navbar/NavBar';
-import Footer from '../common/Footer';
-import Header from '../common/header/Header';
 import Boostrap from 'bootstrap';
 
 import TreeItem from './TreeItem';

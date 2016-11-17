@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import axios from 'axios';
-import NavBar from '../common/navbar/NavBar';
-import Header from '../common/header/Header';
-import Footer from '../common/Footer';
 import Boostrap from 'bootstrap';
 
 import ButtonBar from './ButtonBar';
