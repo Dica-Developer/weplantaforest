@@ -9,6 +9,10 @@ public interface Views {
         
     }
     
+   public static interface UserArticleShortView {
+        
+    }
+    
     public static interface UserFaqView{
         
     }

@@ -33,6 +33,7 @@ public class Article implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_articleId")
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
     private Long id;
 
     @Column(name = "_createdOn")
@@ -55,15 +56,15 @@ public class Article implements Identifiable<Long> {
     private boolean showFull;
 
     @Column(name = "_title")
-    @JsonView({ Views.UserArticleView.class, Views.UserFaqView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
     private String title;
 
     @Column(name = "_intro", columnDefinition = "TEXT")
-    @JsonView({ Views.UserArticleView.class, Views.UserFaqView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
     private String intro;
 
     @Column(name = "_imageFileName")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
     private String imageFileName;
 
     @Column(name = "_imageCopyrights")
