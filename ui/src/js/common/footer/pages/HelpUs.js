@@ -49,13 +49,13 @@ export default class HelpUs extends Component {
             <div className="col-md-12">
               <div>
                 {this.state.helpUs.map(function(help, i) {
-                return ( <div key={i}><a  >{help.title}</a><p dangerouslySetInnerHTML={{
+                return ( <div key={i}><p className="title">{help.title}</p><p dangerouslySetInnerHTML={{
                   __html: help.intro
                 }}></p></div>);
                 })}
               </div>
             </div>
-          </div>  
+          </div>
         </div>
     );
   }
