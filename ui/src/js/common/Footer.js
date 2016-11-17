@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
 
 require("./footer.less");
 
 export default class Footer extends Component {
+
+  linkTo(url) {
+    browserHistory.push(url);
+  }
+
   render() {
     return (
       <div className='row footer'>
@@ -11,45 +16,56 @@ export default class Footer extends Component {
           <div className="col-md-4">
             <div className="row">
               <div className="col-md-4">
-                <Link to="/">
+                <a role="button" onClick={() => {
+                  this.linkTo('/helpUs')
+                }}>
                   HILF UNS
-                </Link>
+                </a>
               </div>
               <div className="col-md-4">
-                <Link to="/">
+                <a role="button" onClick={() => {
+                  this.linkTo('/')
+                }}>
                   LINKS
-                </Link>
+                </a>
               </div>
               <div className="col-md-4">
-                <Link to="/">
+                <a role="button" onClick={() => {
+                  this.linkTo('/')
+                }}>
                   AGB
-                </Link>
+                </a>
               </div>
             </div>
           </div>
           <div className="col-md-4">
             <div className="row">
               <div className="col-md-4">
-                <Link to="/">
-                IMPRESSUM
-                </Link>
+                <a role="button" onClick={() => {
+                  this.linkTo('/')
+                }}>
+                  IMPRESSUM
+                </a>
               </div>
               <div className="col-md-4">
-                <Link to="/">
+                <a role="button" onClick={() => {
+                  this.linkTo('/')
+                }}>
                   KONTAKT
-                </Link>
+                </a>
               </div>
               <div className="col-md-4">
-                <Link to="/">
+                <a role="button" onClick={() => {
+                  this.linkTo('/')
+                }}>
                   SITEMAP
-                </Link>
+                </a>
               </div>
             </div>
           </div>
           <div className="col-md-4">
             <p className="copyRight">Copyright © 2007-2016 I Plant A Tree. Alle Rechte vorbehalten.</p>
           </div>
-
         </div>
       </div>
     );
