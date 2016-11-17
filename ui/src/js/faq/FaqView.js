@@ -27,9 +27,6 @@ export default class FaqView extends Component {
         faqs: response.data
       });
     }).catch(function(response) {
-      that.setState({
-        headLine: response.data
-      });
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
