@@ -63,10 +63,10 @@ export default class Links extends Component {
             <div className="col-md-12">
               <div>
                 {this.state.links.map(function(link, i) {
-                  return ( <div key={i}><p className="title">{link.title}</p><p dangerouslySetInnerHTML={{
+                  return ( <div key={i} ><p className="title">{link.title}</p><p dangerouslySetInnerHTML={{
                     __html: link.intro}}></p>
                     {link.paragraphs.map(function(paragraph, j) {
-                      return (<div key={j}><p className="title">{paragraph.title}</p><p dangerouslySetInnerHTML={{
+                      return (<div key={j} className="link"><p className="link-title">{paragraph.title}</p><p dangerouslySetInnerHTML={{
                         __html: paragraph.text}}></p></div>);
                     })}
                 </div>);
