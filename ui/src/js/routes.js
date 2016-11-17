@@ -4,7 +4,7 @@ import {Router, Route, browserHistory} from 'react-router';
 
 import NavBar from './common/navbar/NavBar';
 import Header from './common/header/Header';
-import Footer from './common/Footer';
+import Footer from './common/footer/Footer';
 
 import MainPage from './main/MainPage';
 import ProposalPlantPage from './planting/proposalPlantPage/ProposalPlantPage';
@@ -35,7 +35,7 @@ import SuccessCC from './payment/SuccessCC';
 import ErrorCC from './payment/ErrorCC';
 import Co2Calculator from './co2/Co2Calculator';
 import FAQ from './faq/FaqView';
-import HelpUs from './helpUs/HelpUs';
+import HelpUs from './common/footer/pages/HelpUs';
 
 export default class Routes extends Component {
 
