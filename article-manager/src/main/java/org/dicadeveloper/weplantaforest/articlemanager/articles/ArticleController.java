@@ -3,6 +3,8 @@ package org.dicadeveloper.weplantaforest.articlemanager.articles;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
@@ -11,8 +13,11 @@ import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -100,11 +105,49 @@ public class ArticleController {
         }
     }
 
-    @RequestMapping(value = "/article/faq", method = RequestMethod.GET)
-    @JsonView(Views.UserFaqView.class)
-    public ResponseEntity<?> getFaq(@RequestParam String language) {
-        List<Article> faq = _articleRepository.getArticlesByType(ArticleType.FAQ, Language.valueOf(language));
-        return new ResponseEntity<>(faq, HttpStatus.OK);
+    @RequestMapping(value = "/articles", method = RequestMethod.GET)
+    @JsonView(Views.UserArticleShortView.class)
+    public ResponseEntity<?> getArticlesByType(@RequestParam ArticleType articleType, @RequestParam String language) {
+        List<Article> articles = _articleRepository.getArticlesByType(articleType, Language.valueOf(language));
+        return new ResponseEntity<>(articles, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/articlesPaged", method = RequestMethod.GET)
+    @JsonView({ Views.UserArticleShortView.class })
+    public ResponseEntity<?> getArticlesByType(@RequestParam ArticleType articleType, @RequestParam String language, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+        Page<Article> articles =  _articleRepository.getArticlesByType(articleType, Language.valueOf(language), new PageRequest(page, size));
+        return new ResponseEntity<>(articles, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/reports/article/{articleId}", method = RequestMethod.GET)
+    @JsonView({ Views.UserArticleView.class })
+    public Article getArticle(@PathVariable long articleId) {
+        return _articleRepository.findOne(articleId);
+    }
+    
+    @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
+    public ResponseEntity<?> getArticleImage(HttpServletResponse response, @PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName) {
+        String filePath = FileSystemInjector.getArticleFolder() + "/" + imageName;
+        try {
+            _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
+    public ResponseEntity<?> getArticleImage(HttpServletResponse response, @PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName,
+            @PathVariable int width, @PathVariable int height) {
+        String filePath = FileSystemInjector.getArticleFolder() + "/" + imageName;
+        try {
+            _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
