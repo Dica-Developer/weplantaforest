@@ -19,7 +19,9 @@ export default class RankingPage extends Component {
 
       },
       orgTypeDesc: 'Alle',
-      slideIn: false
+      chosenOrgType: 'PRIVATE',
+      slideIn: false,
+      rankingEntries: 25
     };
   }
 
@@ -30,7 +32,7 @@ export default class RankingPage extends Component {
   loadAllUser() {
     this.setState({slideIn: true})
     var that = this;
-    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=25').then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
       that.sleep(500);
       that.setState({ranking: result, slideIn: false});
@@ -50,7 +52,7 @@ export default class RankingPage extends Component {
   loadBestTeams() {
     this.setState({orgTypeDesc: 'Teams', slideIn: true})
     var that = this;
-    axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=25').then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
       that.sleep(500);
       that.setState({ranking: result, slideIn: false});
@@ -68,9 +70,9 @@ export default class RankingPage extends Component {
   }
 
   loadOrgTypeRanking(orgType, orgTypeDesc) {
-    this.setState({orgTypeDesc: orgTypeDesc, slideIn: true})
+    this.setState({orgTypeDesc: orgTypeDesc, chosenOrgType: orgType, slideIn: true})
     var that = this;
-    axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=25').then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
       that.sleep(500);
       that.setState({ranking: result, slideIn: false});
@@ -89,6 +91,18 @@ export default class RankingPage extends Component {
   sleep(milliseconds) {
     var e = new Date().getTime() + (milliseconds);
     while (new Date().getTime() <= e) {}
+  }
+
+  callMoreRankingEntries(){
+    this.state.rankingEntries = this.state.rankingEntries + 25;
+    this.forceUpdate();
+    if(this.state.orgTypeDesc == 'Alle'){
+      this.loadAllUser();
+    }else if(this.state.orgTypeDesc == 'Teams'){
+      this.loadBestTeams();
+    }else{
+      this.loadOrgTypeRanking(this.state.chosenOrgType, this.state.orgTypeDesc);
+    }
   }
 
   render() {
@@ -129,6 +143,15 @@ export default class RankingPage extends Component {
                 return (<RankingItemSmall content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
               }
             })}
+          </div>
+        </div>
+        <div className="row rankingPage">
+          <div className={"col-md-12 "}>
+            <a className={(this.state.ranking.last ? "no-display" : "pagingLink")} role="button" onClick={this.callMoreRankingEntries.bind(this)}>
+              <div>
+                <span className={"glyphicon glyphicon-menu-down"}></span>
+              </div>
+            </a>
           </div>
         </div>
       </div>
