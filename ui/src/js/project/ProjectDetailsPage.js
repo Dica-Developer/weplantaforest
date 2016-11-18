@@ -163,6 +163,7 @@ export default class ProjectDetailsPage extends Component {
 
   setDetailsActive(value) {
     this.setState({detailsActive: value});
+    window.scrollTo(0, 0);
   }
 
   updatePlantBag(overallPrice, projectItems, projectName) {
