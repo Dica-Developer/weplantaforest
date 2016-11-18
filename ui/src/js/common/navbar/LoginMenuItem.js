@@ -34,7 +34,9 @@ export default class LoginMenuItem extends Component {
     this.props.updateNavbar();
     axios.get('http://localhost:8081/user/language?userName=' + this.state.name).then(function(response) {
       var result = response.data;
-      that.props.updateLanguage(result);
+      if(localStorage.getItem('language') != result){
+        that.props.updateLanguage(result);        
+      }
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
