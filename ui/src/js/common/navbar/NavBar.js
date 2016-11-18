@@ -56,7 +56,7 @@ export default class NavBar extends Component {
       };
       axios.post('http://localhost:8081/user/edit?userName=' + localStorage.getItem('username') + '&toEdit=LANGUAGE&newEntry=' + value, {}, config);
     }
-    this.props.reRender();
+    location.reload();
   }
 
   updateComponents() {
