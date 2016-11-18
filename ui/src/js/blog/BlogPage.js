@@ -25,7 +25,7 @@ class Paragraph extends Component {
     }
 
     if (this.props.content.imageFileName != null && this.props.content.imageFileName != '') {
-      imageUrl = 'http://localhost:8082/article/image/' + this.props.articleId + '/' + this.props.content.imageFileName + '/400/400';
+      imageUrl = 'http://localhost:8082/article/image/' + this.props.articleId + '/' + this.props.content.imageFileName + '/1140/755';
       imagePart = <div className="article-img">
         <img src={imageUrl}/>
       </div>;
@@ -89,7 +89,7 @@ export default class BlogPage extends Component {
     let articleImageUrl = '';
     var imageDesc;
     if (this.state.article.imageFileName != '') {
-      articleImageUrl = 'http://localhost:8082/article/image/' + this.props.params.articleId + '/' + this.state.article.imageFileName + '/600/600';
+      articleImageUrl = 'http://localhost:8082/article/image/' + this.props.params.articleId + '/' + this.state.article.imageFileName + '/1140/755';
     }
     if(this.state.article.imageDescription != null){
       imageDesc = <p className="img-desc">{this.state.article.imageDescription}</p>;

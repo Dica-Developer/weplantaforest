@@ -27,11 +27,11 @@ class Article extends Component {
   }
 
   render() {
-    let imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/150/150';
+    let imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/380/230';
     return (
       <div className="article-entry">
         <a role="button" onClick={this.switchToBlogEntry.bind(this)}>
-          <h4>{getTextForSelectedLanguage(this.props.content.title)}</h4>
+          <h3>{getTextForSelectedLanguage(this.props.content.title)}</h3>
           <span>{moment(this.props.content.createdOn).format("DD.MM.YYYY")}{" von "}{this.props.content.ownerName}</span>
           <div className="article-content">
             <img src={imageUrl}/>
@@ -91,9 +91,16 @@ export default class BlogOverviewPage extends Component {
         <div className="row blogOverviewPage">
           <div className={"col-md-12 "}>
             <h2>Blog</h2>
-            {this.state.articles.content.map(function(article, i) {
-              return (<Article content={article} key={i}/>);
-            })}
+
+          </div>
+        </div>
+        <div className="row blogOverviewPage">
+          {this.state.articles.content.map(function(article, i) {
+            return (<div className="col-md-4" key={i}><Article content={article} /></div>);
+          })}
+        </div>
+        <div className="row blogOverviewPage">
+          <div className={"col-md-12 "}>
             <a className={(this.state.articles.last ? "no-display" : "pagingLink")} role="button" onClick={this.callMoreArticleEntries.bind(this)}>
               <div>
                 <span className={"glyphicon glyphicon-menu-down"}></span>
