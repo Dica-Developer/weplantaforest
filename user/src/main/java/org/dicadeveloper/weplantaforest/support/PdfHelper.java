@@ -14,11 +14,12 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
 public class PdfHelper {
 
-    public static void createHeaderBlock(PdfContentByte cb) throws DocumentException, IOException {
+    public static void createHeaderBlock(PdfContentByte cb, int pageNumber, int pageSize) throws DocumentException, IOException {
         cb.saveState();
         cb.setColorFill(BaseColor.BLACK);
         cb.rectangle(0.0f, 822.0f, 595.0f, 20.0f);
@@ -38,7 +39,11 @@ public class PdfHelper {
         table.addCell(new Phrase(new Chunk("WALD 1.1 gGmbH", textFont)));
         table.addCell(new Phrase(new Chunk("[ Spendenkonto 222 888 ]", textFont)));
         table.addCell(new Phrase(new Chunk("www.iplantatree.org", textFont)));
-        table.addCell(new Phrase(new Chunk(" ", textFont)));
+        
+        PdfPCell pageCell = new PdfPCell(new Phrase(new Chunk("Seite " + pageNumber + " von " + pageSize, textFont)));
+        pageCell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+        pageCell.setBorder(PdfPCell.NO_BORDER);
+        table.addCell(pageCell);
         table.writeSelectedRows(0, 1, 0, 842, cb);
     }
 

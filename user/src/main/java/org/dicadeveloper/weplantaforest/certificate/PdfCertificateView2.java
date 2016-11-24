@@ -47,7 +47,7 @@ public class PdfCertificateView2 {
         doc.open();
 
         PdfContentByte cb = pdfWriter.getDirectContent();
-        PdfHelper.createHeaderBlock(cb);
+        PdfHelper.createHeaderBlock(cb,1,1);
         PdfHelper.createCircleAndText(cb, "Zertifikat", 298f, 665f, 75f, textFontForCircle, 0x9E, 0x3C, 0x59);
         createTreeCountAndCustomTextBlock(cb, text, treeCount);
         createLawTextDateAndSignatureBlock(cb, number, date);

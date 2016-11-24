@@ -40,7 +40,7 @@ public class PdfGiftView {
 
         PdfContentByte cb = pdfWriter.getDirectContent();
 
-        PdfHelper.createHeaderBlock(cb);
+        PdfHelper.createHeaderBlock(cb,1,1);
         PdfHelper.createCircleAndText(cb, "Gutschein", 298f, 705f, 75, textFontForCircle, 0x7F, 0xAD, 0x09);
 
         createBlueBlock(cb, treeCount);
