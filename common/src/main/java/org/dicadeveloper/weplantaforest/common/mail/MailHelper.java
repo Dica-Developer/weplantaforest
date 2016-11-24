@@ -19,11 +19,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.HtmlUtils;
 
 import lombok.NonNull;
 
 @Component
-public class MailHelper{
+public class MailHelper {
     protected final Log LOG = LogFactory.getLog(MailHelper.class.getName());
 
     @Autowired
@@ -51,16 +52,16 @@ public class MailHelper{
             handleException(e);
         }
     }
-    
-    public void sendAMessage(String subject, String text,String receiver) {
+
+    public void sendAMessage(String subject, String text, String receiver) {
 
         setParameter();
         this.receiver = receiver;
         createAndSetProperties();
         createSessionAndAuthenticate();
-        
+
         try {
-            Message msg = createMessage(subject, text);
+            MimeMessage msg = createMessage(subject, text);
             Transport.send(msg);
         } catch (MessagingException e) {
             handleException(e);
@@ -72,7 +73,8 @@ public class MailHelper{
         password = _env.getProperty("mail.password");
         host = _env.getProperty("smtp.host");
         receiver = _env.getProperty("mail.receiver");
-        debug = _env.getProperty("mail.debug").equals("true");
+        debug = _env.getProperty("mail.debug")
+                    .equals("true");
     }
 
     private void createAndSetProperties() {
@@ -96,15 +98,18 @@ public class MailHelper{
         session.setDebug(debug);
     }
 
-    private Message createMessage(String subject, String text) throws MessagingException {
+    private MimeMessage createMessage(String subject, String text) throws MessagingException {
         // create a message
-        Message msg = new MimeMessage(session);
+        subject = HtmlUtils.htmlUnescape(subject);
+        text = HtmlUtils.htmlUnescape(text);
+        
+        MimeMessage msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(from));
         InternetAddress address = new InternetAddress(receiver);
         msg.setRecipient(Message.RecipientType.TO, address);
-        msg.setSubject(subject);
+        msg.setSubject(subject, "UTF-8");
         msg.setSentDate(new Date());
-        msg.setText(text);
+        msg.setText(text, "UTF-8");
 
         return msg;
     }
