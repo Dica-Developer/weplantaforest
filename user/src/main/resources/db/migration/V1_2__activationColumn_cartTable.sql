@@ -1,0 +1,1 @@
+ALTER TABLE Cart ADD _activation_key varchar(50);
