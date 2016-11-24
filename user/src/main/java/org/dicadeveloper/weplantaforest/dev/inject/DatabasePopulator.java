@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.transaction.Transactional;
 
@@ -54,11 +55,14 @@ import org.dicadeveloper.weplantaforest.user.OrganizationType;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Verify;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
+
+import lombok.NonNull;
 
 /**
  * Provides the functionality to easily populate the database with test data.
@@ -70,7 +74,8 @@ public class DatabasePopulator {
 
     private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
 
-    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gabor", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert", "Claus", "Django", "Emil","Mr NoTree");
+    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gab&uuml;r", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert",
+            "Claus", "Django", "Emil", "Mr NoTree");
 
     public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
@@ -89,6 +94,8 @@ public class DatabasePopulator {
     private AboRepository _aboRepository;
     private PasswordEncrypter _passwordEncrypter;
     private ReceiptRepository _receiptRepository;
+    @Autowired
+    private @NonNull Environment _env;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
@@ -194,9 +201,9 @@ public class DatabasePopulator {
                     break;
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
-                treeType.setImageFile( treeTypeName +".jpeg");
+                treeType.setImageFile(treeTypeName + ".jpeg");
                 _treeTypeRepository.save(treeType);
-               
+
             }
         });
         return this;
@@ -214,6 +221,7 @@ public class DatabasePopulator {
             user.setLastVisit(timeNoew - TimeConstants.WEEK_IN_MILLISECONDS);
             user.addRole(org.dicadeveloper.weplantaforest.user.Role.USER);
             user.setOrganizationType(OrganizationType.PRIVATE);
+            user.setMail(_env.getProperty("mail.receiver"));
             if (i < 5) {
                 user.setImageName("IPAT_logo_Relaunch2016_RZ_RGB.jpg");
                 user.addRole(org.dicadeveloper.weplantaforest.user.Role.ADMIN);
@@ -233,20 +241,20 @@ public class DatabasePopulator {
     public DatabasePopulator insertTrees(int count) {
         Iterator<ProjectArticle> cyclingProjectArticles = Iterators.cycle(loadProjectArticles());
         long timeOfPlant = System.currentTimeMillis();
-        
+
         ProjectArticle articleToPlant = cyclingProjectArticles.next();
         for (int i = 0; i < count; i++) {
-            if(i > 0 && i%15 == 0){
+            if (i > 0 && i % 15 == 0) {
                 articleToPlant = cyclingProjectArticles.next();
             }
-            
+
             Tree treeDto = new Tree();
             treeDto.setAmount(i % 20 + 1);
             treeDto.setLatitude(i);
             treeDto.setLongitude(i);
             treeDto.setTreeType(articleToPlant.getTreeType());
             treeDto.setPlantedOn(timeOfPlant - i * 100000000L);
-            treeDto.setOwner(_userRepository.findByName(DEFAULT_USERS.get(i%15)));
+            treeDto.setOwner(_userRepository.findByName(DEFAULT_USERS.get(i % 15)));
             treeDto.setProjectArticle(articleToPlant);
             _treeRepository.save(treeDto);
         }
@@ -269,16 +277,16 @@ public class DatabasePopulator {
         return this;
     }
 
-//    private Iterable<User> loadUsers() {
-//        Verify.verify(_userRepository.count() > 0, "No Users set up!");
-//        return _userRepository.findAll();
-//
-//    }
-//
-//    private Iterable<TreeType> loadTreeTypes() {
-//        Verify.verify(_treeTypeRepository.count() > 0, "No TreeTypes set up!");
-//        return _treeTypeRepository.findAll();
-//    }
+    // private Iterable<User> loadUsers() {
+    // Verify.verify(_userRepository.count() > 0, "No Users set up!");
+    // return _userRepository.findAll();
+    //
+    // }
+    //
+    // private Iterable<TreeType> loadTreeTypes() {
+    // Verify.verify(_treeTypeRepository.count() > 0, "No TreeTypes set up!");
+    // return _treeTypeRepository.findAll();
+    // }
 
     private Iterable<ProjectArticle> loadProjectArticles() {
         Verify.verify(_projectArticleRepository.count() > 0, "No ProjectArticles set up!");
@@ -323,7 +331,7 @@ public class DatabasePopulator {
             team.setName("Team " + (i + 1));
             team.setAdmin(admin);
             team.setTimeStamp(10000000L * (i + 1));
-            team.setDescription("Can i introduce you: the phenomenal " + "Team " + (i + 1)+ "!!!");
+            team.setDescription("Can i introduce you: the phenomenal " + "Team " + (i + 1) + "!!!");
 
             List<User> teamMember = new ArrayList<User>();
             teamMember.add(_userRepository.findByName(DEFAULT_USERS.get(i + 5)));
@@ -352,29 +360,29 @@ public class DatabasePopulator {
         String imgDest2 = FileSystemInjector.getUserFolder() + "/51.jpg";
         String imgDest3 = FileSystemInjector.getUserFolder() + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg";
         String anonymousDest = FileSystemInjector.getUserFolder() + "/anonymous.jpg";
-        
+
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc1, imgDest1);
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc2, imgDest2);
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc3, imgDest3);
         createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc2, anonymousDest);
-              
+
         int teamCnt = 1;
-        for(Team team : _teamRepository.findAll()){
-            new File(FileSystemInjector.getTeamFolder() + "/" + team.getId()).mkdir();          
-            String imgDest = FileSystemInjector.getTeamFolder() + "/" + teamCnt +".jpg";
+        for (Team team : _teamRepository.findAll()) {
+            new File(FileSystemInjector.getTeamFolder() + "/" + team.getId()).mkdir();
+            String imgDest = FileSystemInjector.getTeamFolder() + "/" + teamCnt + ".jpg";
             createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc1, imgDest);
             teamCnt++;
         }
         return this;
     }
-    
-    public DatabasePopulator addTreeTypeImages(){
+
+    public DatabasePopulator addTreeTypeImages() {
         DEFAULT_TREE_TYPES.forEach((treeTypeName) -> {
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + treeTypeName + ".jpeg").toPath();
             String imgDest = FileSystemInjector.getTreeTypeFolder() + "/" + treeTypeName + ".jpeg";
             createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imgDest);
         });
-        
+
         return this;
     }
 
@@ -387,7 +395,7 @@ public class DatabasePopulator {
             createProjectFolder(projectName);
 
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + mainImageFileName).toPath();
-            String imageFileDest = FileSystemInjector.getImageFolderForProjects() +  "/" + mainImageFileName;
+            String imageFileDest = FileSystemInjector.getImageFolderForProjects() + "/" + mainImageFileName;
 
             createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
 
@@ -476,7 +484,9 @@ public class DatabasePopulator {
         return this;
     }
 
-    public DatabasePopulator insertReceipt() {
+    @Transactional
+    public DatabasePopulator insertReceipts() {
+        // receipt with one cart
         Receipt receipt = new Receipt();
         receipt.setInvoiceNumber("10001/2016");
         receipt.setOwner(_userRepository.findOne(1L));
@@ -493,7 +503,49 @@ public class DatabasePopulator {
         receipt.addCart(cart);
         _receiptRepository.save(receipt);
 
+        // receipt with two carts
+        createReceiptWithMoreCarts();
         return this;
+    }
+
+    private void createReceiptWithMoreCarts() {
+
+        for (int i = 1; i <= 100; i++) {
+            User buyer = _userRepository.findByName(DEFAULT_USERS.get(1));
+
+            Receipt receipt = new Receipt();
+            receipt.setInvoiceNumber("1000" + i + 1 + "/2016");
+            receipt.setOwner(buyer);
+
+            for (int j = 0; j <= i; j++) {
+                Cart cart = new Cart();
+
+                cart.setBuyer(buyer);
+                cart.setCartState(CartState.VERIFIED);
+                cart.setCallBackFirma("0815 Company");
+                cart.setCallBackVorname("Hans");
+                cart.setCallBackNachname("Wurst");
+                cart.setCallBackPlz("123456");
+                cart.setCallBackOrt("Musterstadt");
+                cart.setTimeStamp(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(5) * j);
+
+                Tree tree = new Tree();
+                ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
+                tree.setAmount(2);
+                tree.setProjectArticle(projectArticle);
+                tree.setTreeType(projectArticle.getTreeType());
+                tree.setOwner(buyer);
+
+                CartItem cartItem = new CartItem();
+                cartItem.setTree(tree);
+
+                cart.addCartItem(cartItem);
+
+                _cartRepository.save(cart);
+                receipt.addCart(cart);
+            }
+            _receiptRepository.save(receipt);
+        }
     }
 
     private void createProjectImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {

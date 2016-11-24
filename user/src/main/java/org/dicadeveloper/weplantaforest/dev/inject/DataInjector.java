@@ -49,7 +49,7 @@ public class DataInjector {
                                       .insertCartAndCertificateToCart()
                                       .insertGifts()
                                       .insertAbo()
-                                      .insertReceipt()
+                                      .insertReceipts()
                                       .addUserAndTeamImages()
                                       .addTreeTypeImages();
                     LOG.info("Finished injecting " + treeCount + " trees ");
