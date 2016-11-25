@@ -79,7 +79,6 @@ export default class NavBar extends Component {
   }
 
   render() {
-        console.log("isAdmin: " + localStorage.getItem('isAdmin'));
     return (
       <div>
         <Menu ref="left" alignment="left">

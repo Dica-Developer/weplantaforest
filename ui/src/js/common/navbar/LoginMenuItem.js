@@ -54,13 +54,9 @@ export default class LoginMenuItem extends Component {
       }
     };
 
-    console.log('calling isAdmin');
     axios.get('http://localhost:8081/isAdmin', config).then(function(response) {
       var result = response.data;
-      console.log('isAdmin called: ' + result);
-
       localStorage.setItem('isAdmin', result);
-      console.log('localstorage: ' + localStorage.getItem('isAdmin'));
       that.props.updateNavbar();
     }).catch(function(response) {
       if (response instanceof Error) {
