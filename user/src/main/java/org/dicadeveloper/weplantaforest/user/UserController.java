@@ -78,7 +78,8 @@ public class UserController {
     public UserReportData getUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
         UserReportData userReportData = _userRepository.getUserDetails(userName);
         userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName));
-        userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data().getTreesCount()));
+        userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data()
+                                                                                        .getTreesCount()));
         userReportData.setEditAllowed(_tokenAuthenticationService.isAuthenticatedUser(userToken, userName));
         return userReportData;
     }
@@ -90,7 +91,8 @@ public class UserController {
             if (treeCountOfUser < user.getAmount()) {
                 rank++;
             }
-            if (user.getName().equals(userName)) {
+            if (user.getName()
+                    .equals(userName)) {
                 break;
             }
         }
@@ -107,7 +109,8 @@ public class UserController {
             switch (toEdit) {
             case "NAME":
                 if (_userRepository.userExists(newEntry) == 1) {
-                    errorMessage = _messageByLocaleService.getMessage("user.already.exists", user.getLang().getLocale());
+                    errorMessage = _messageByLocaleService.getMessage("user.already.exists", user.getLang()
+                                                                                                 .getLocale());
                     return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
                 } else {
                     user.setName(newEntry);
@@ -127,10 +130,12 @@ public class UserController {
                 break;
             case "MAIL":
                 if (!CommonValidator.isValidEmailAddress(newEntry)) {
-                    errorMessage = _messageByLocaleService.getMessage("invalid.mail", user.getLang().getLocale());
+                    errorMessage = _messageByLocaleService.getMessage("invalid.mail", user.getLang()
+                                                                                          .getLocale());
                     return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
                 } else if (_userRepository.userWithMailExists(newEntry) == 1) {
-                    errorMessage = _messageByLocaleService.getMessage("mail.already.exists", user.getLang().getLocale());
+                    errorMessage = _messageByLocaleService.getMessage("mail.already.exists", user.getLang()
+                                                                                                 .getLocale());
                     return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
                 } else {
                     user.setMail(newEntry);
@@ -163,7 +168,9 @@ public class UserController {
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
             User user = _userRepository.findByName(userName);
             String imageFolder = FileSystemInjector.getUserFolder();
-            String imageName = user.getName() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+            String imageName = user.getName() + file.getOriginalFilename()
+                                                    .substring(file.getOriginalFilename()
+                                                                   .indexOf("."));
             if (!file.isEmpty()) {
                 try {
                     _imageHelper.storeImage(file, imageFolder, imageName, true);
@@ -186,21 +193,26 @@ public class UserController {
     public ResponseEntity<?> registrateUser(@RequestBody UserRegistrationData userRegistrationData) {
         String errorMessage;
         if (_userRepository.userExists(userRegistrationData.getUsername()) == 1) {
-            errorMessage = _messageByLocaleService.getMessage("user.already.exists", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
+            errorMessage = _messageByLocaleService.getMessage("user.already.exists", Language.valueOf(userRegistrationData.getLanguage())
+                                                                                             .getLocale());
             return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
         } else if (!CommonValidator.isValidEmailAddress(userRegistrationData.getMail())) {
-            errorMessage = _messageByLocaleService.getMessage("invalid.mail", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
+            errorMessage = _messageByLocaleService.getMessage("invalid.mail", Language.valueOf(userRegistrationData.getLanguage())
+                                                                                      .getLocale());
             return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
         } else if (_userRepository.userWithMailExists(userRegistrationData.getMail()) == 1) {
-            errorMessage = _messageByLocaleService.getMessage("mail.already.exists", Language.valueOf(userRegistrationData.getLanguage()).getLocale());
+            errorMessage = _messageByLocaleService.getMessage("mail.already.exists", Language.valueOf(userRegistrationData.getLanguage())
+                                                                                             .getLocale());
             return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         } else {
             User user = _userHelper.convertUserRegDataToUser(userRegistrationData);
             _userRepository.save(user);
 
-            String mailSubject = _messageByLocaleService.getMessage("mail.registration.subject", user.getLang().getLocale());
+            String mailSubject = _messageByLocaleService.getMessage("mail.registration.subject", user.getLang()
+                                                                                                     .getLocale());
 
-            String mailTemplateText = _messageByLocaleService.getMessage("mail.registration.text", user.getLang().getLocale());
+            String mailTemplateText = _messageByLocaleService.getMessage("mail.registration.text", user.getLang()
+                                                                                                       .getLocale());
             String mailText = _userHelper.createUserRegistrationMailText(user, _env.getProperty("ipat.host"), mailTemplateText);
 
             new Thread(new Runnable() {
@@ -218,14 +230,16 @@ public class UserController {
         String message;
         if (user != null) {
             if (user.isEnabled()) {
-                message = _messageByLocaleService.getMessage("user.already.activated", user.getLang().getLocale());
+                message = _messageByLocaleService.getMessage("user.already.activated", user.getLang()
+                                                                                           .getLocale());
                 return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             } else if (key.equals(user.getActivationKey())) {
                 user.setEnabled(true);
                 _userRepository.save(user);
                 return new ResponseEntity<>(user.getName(), HttpStatus.OK);
             } else {
-                message = _messageByLocaleService.getMessage("activation.key.invalid", user.getLang().getLocale());
+                message = _messageByLocaleService.getMessage("activation.key.invalid", user.getLang()
+                                                                                           .getLocale());
                 return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             }
         } else {
@@ -236,7 +250,8 @@ public class UserController {
 
     @RequestMapping(value = Uris.USER_LANGUAGE, method = RequestMethod.GET)
     public String getLanguageFromUser(@RequestParam String userName) {
-        return _userRepository.getUserLanguage(userName).toString();
+        return _userRepository.getUserLanguage(userName)
+                              .toString();
     }
 
     @RequestMapping(value = Uris.USER_PASSWORD_RESET_REQUEST, method = RequestMethod.POST)
@@ -250,12 +265,15 @@ public class UserController {
             responseMessage = _messageByLocaleService.getMessage("user.not.activated", (Language.valueOf(language)).getLocale());
             return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
         } else {
-            user.setActivationKey(UUID.randomUUID().toString());
+            user.setActivationKey(UUID.randomUUID()
+                                      .toString());
             _userRepository.save(user);
 
-            String mailSubject = _messageByLocaleService.getMessage("mail.forgot.password.subject", user.getLang().getLocale());
+            String mailSubject = _messageByLocaleService.getMessage("mail.forgot.password.subject", user.getLang()
+                                                                                                        .getLocale());
 
-            String mailTemplateText = _messageByLocaleService.getMessage("mail.forgot.password.text", user.getLang().getLocale());
+            String mailTemplateText = _messageByLocaleService.getMessage("mail.forgot.password.text", user.getLang()
+                                                                                                          .getLocale());
             String mailText = _userHelper.createForgotPasswordMail(user, _env.getProperty("ipat.host"), mailTemplateText);
 
             new Thread(new Runnable() {
@@ -275,7 +293,8 @@ public class UserController {
             if (key.equals(user.getActivationKey())) {
                 return new ResponseEntity<>(user.getName(), HttpStatus.OK);
             } else {
-                message = _messageByLocaleService.getMessage("invalid.link", user.getLang().getLocale());
+                message = _messageByLocaleService.getMessage("invalid.link", user.getLang()
+                                                                                 .getLocale());
                 return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             }
         } else {
@@ -294,13 +313,20 @@ public class UserController {
                 _userRepository.save(user);
                 return new ResponseEntity<>(user.getName(), HttpStatus.OK);
             } else {
-                message = _messageByLocaleService.getMessage("invalid.link", user.getLang().getLocale());
+                message = _messageByLocaleService.getMessage("invalid.link", user.getLang()
+                                                                                 .getLocale());
                 return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             }
         } else {
             message = _messageByLocaleService.getMessage("invalid.link", (Language.valueOf(language)).getLocale());
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(value = Uris.IS_USER_ADMIN, method = RequestMethod.GET)
+    public ResponseEntity<?> isAdmin(@RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
+        boolean isAdmin = _tokenAuthenticationService.isAdmin(userToken);
+        return new ResponseEntity<>(isAdmin, HttpStatus.OK);
     }
 
 }

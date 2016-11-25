@@ -6,6 +6,7 @@ import MenuItem from './MenuItem';
 import LanguageMenuItem from './LanguageMenuItem';
 import PlantBag from './PlantBag';
 import LoginMenuItem from './LoginMenuItem';
+import BackOfficeMenuItem from './BackOfficeMenuItem';
 import ImageButton from '../components/ImageButton';
 import axios from 'axios';
 
@@ -78,6 +79,7 @@ export default class NavBar extends Component {
   }
 
   render() {
+        console.log("isAdmin: " + localStorage.getItem('isAdmin'));
     return (
       <div>
         <Menu ref="left" alignment="left">
@@ -98,6 +100,7 @@ export default class NavBar extends Component {
           <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>MEIN PROFIL</MenuItem>
           <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>GUTSCHEINE</MenuItem>
           <MenuItem hash="6" inactive={this.state.profileLinksInActive}>ABONNEMENTS</MenuItem>
+          <BackOfficeMenuItem hash="/backOffice">BACKOFFICE</BackOfficeMenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-left">

@@ -66,4 +66,13 @@ public class TokenAuthenticationService {
         }
         return false;
     }
+    
+
+    public boolean isAdmin(String userToken) {
+        if (userToken != "") {
+            final User user = tokenHandler.parseUserFromToken(userToken);
+            return user.isAdmin();
+        }
+        return false;
+    }
 }

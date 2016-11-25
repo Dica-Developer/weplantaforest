@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
 
 import Notification from '../components/Notification';
 import IconButton from '../components/IconButton';
@@ -31,11 +31,11 @@ export default class LoginMenuItem extends Component {
     var that = this;
     localStorage.setItem('jwt', token);
     localStorage.setItem('username', this.state.name);
-    this.props.updateNavbar();
+
     axios.get('http://localhost:8081/user/language?userName=' + this.state.name).then(function(response) {
       var result = response.data;
-      if(localStorage.getItem('language') != result){
-        that.props.updateLanguage(result);        
+      if (localStorage.getItem('language') != result) {
+        that.props.updateLanguage(result);
       }
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -48,7 +48,33 @@ export default class LoginMenuItem extends Component {
       }
     });
 
-    this.setState({loggedIn: true})
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+
+    console.log('calling isAdmin');
+    axios.get('http://localhost:8081/isAdmin', config).then(function(response) {
+      var result = response.data;
+      console.log('isAdmin called: ' + result);
+
+      localStorage.setItem('isAdmin', result);
+      console.log('localstorage: ' + localStorage.getItem('isAdmin'));
+      that.props.updateNavbar();
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+
+    this.setState({loggedIn: true});
+    this.props.updateNavbar();
   }
 
   login() {
@@ -66,33 +92,35 @@ export default class LoginMenuItem extends Component {
     }).then(function(response) {
       that.handleLogin(response.headers['x-auth-token']);
     }.bind(this)).catch(function(response) {
-        that.setState({name: '', password: ''})
-        that.refs.notification.addNotificationAtDifferentPos('Fehler!', 'Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuche Sie es noch einmal.',  'error', 'tr');
+      that.setState({name: '', password: ''})
+      that.refs.notification.addNotificationAtDifferentPos('Fehler!', 'Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuche Sie es noch einmal.', 'error', 'tr');
     });
   }
 
   logout() {
     localStorage.setItem('jwt', '');
     localStorage.setItem('username', '');
+    localStorage.setItem('isAdmin', false);
     this.setState({name: '', password: '', loggedIn: false})
     this.props.updateNavbar();
   }
 
-  linkTo(url){
+  linkTo(url) {
     browserHistory.push(url);
   }
 
   render() {
     var content;
-    if(this.state.loggedIn){
+    if (this.state.loggedIn) {
       content = <div>
-        <div><span>{localStorage.getItem('username')}</span>
+        <div>
+          <span>{localStorage.getItem('username')}</span>
         </div>
         <div className="buttonDiv">
           <IconButton text="LOGOUT" glyphIcon="glyphicon-log-out" onClick={this.logout.bind(this)}/>
         </div>
       </div>;
-    }else{
+    } else {
       content = <div className="login">
         <input type="text" placeholder="BENUTZERNAME" value={this.state.name} onChange={this.updateName.bind(this)}/>
         <input type="password" placeholder="PASSWORD" value={this.state.password} onChange={this.updatePassword.bind(this)}/>
@@ -100,7 +128,11 @@ export default class LoginMenuItem extends Component {
           <IconButton text="LOGIN" glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
         </div>
         <div>
-          <a role="button" onClick={()=>{this.linkTo('/registration')}}>Anmelden</a>&nbsp;&nbsp;<a role="button" onClick={()=>{this.linkTo('/forgotPassword')}}>Passwort vergessen</a>
+          <a role="button" onClick={() => {
+            this.linkTo('/registration')
+          }}>Anmelden</a>&nbsp;&nbsp;<a role="button" onClick={() => {
+        this.linkTo('/forgotPassword')
+      }}>Passwort vergessen</a>
         </div>
       </div>;
     }

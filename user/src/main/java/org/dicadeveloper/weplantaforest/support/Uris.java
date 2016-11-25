@@ -158,6 +158,8 @@ public class Uris {
     public final static String USER_PASSWORD_RESET_VERIFIY_LINK = "/password_reset_verify";
     
     public final static String USER_PASSWORD_RESET = "/password_reset";
+    
+    public final static String IS_USER_ADMIN = "/isAdmin";
 
     // team
     public final static String TEAM_IMAGE = "/team/image/";
