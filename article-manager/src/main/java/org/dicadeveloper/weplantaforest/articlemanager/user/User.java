@@ -30,7 +30,7 @@ public class User implements Identifiable<Long> {
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
     private String name;
 
     @Column(name = "_enabled", nullable = false)

@@ -73,7 +73,7 @@ public class Article implements Identifiable<Long> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_owner__userId", nullable = false)
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
     private User owner;
 
     @Column(name = "_visible")

@@ -32,7 +32,7 @@ class Article extends Component {
       <div className="article-entry">
         <a role="button" onClick={this.switchToBlogEntry.bind(this)}>
           <h3>{getTextForSelectedLanguage(this.props.content.title)}</h3>
-          <span>{moment(this.props.content.createdOn).format("DD.MM.YYYY")}{" von "}{this.props.content.ownerName}</span>
+          <span>{moment(this.props.content.createdOn).format("DD.MM.YYYY")}{" von "}{this.props.content.owner.name}</span>
           <div className="article-content">
             <img src={imageUrl}/>
             <p dangerouslySetInnerHTML={{
