@@ -33,7 +33,8 @@ public class DatabasePopulatorForArticleManager {
 
     protected final Log LOG = LogFactory.getLog(DatabasePopulatorForArticleManager.class.getName());
 
-    private final static List<String> DEFAULT_USERS = ImmutableList.of("articleManager", "blogManager", "newsManager", "knowledgeManager");
+    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gab&uuml;r", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert",
+            "Claus", "Django", "Emil", "Mr NoTree");
 
     public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
@@ -75,9 +76,10 @@ public class DatabasePopulatorForArticleManager {
                 article.setShowFull(true);
                 article.setCreatedOn(TimeConstants.YEAR_IN_MILLISECONDS * (i + 1) * 5);
                 article.setTitle("this is article nr " + i + " from " + articleType.toString() + " article");
-                article.setIntro("this is an article about " + articleType.toString());
+                article.setIntro("<p>this is an article about " + articleType.toString() + "</p>");
                 article.setImageFileName("article" + articleCount + ".jpg");
                 article.setImageDescription("imageDesc for article" + articleCount);
+                article.setVisible(true);
                 _articleRepository.save(article);
                 articleCount++;
             }
@@ -111,9 +113,7 @@ public class DatabasePopulatorForArticleManager {
 
             long articleId = article.getId();
             String imageSrcName = "article" + articleCnt + ".jpg";
-
             String imageDestName = "article" + articleId + ".jpg";
-
 
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageSrcName).toPath();
             String imageFileDest = FileSystemInjector.getArticleFolder() + "/" + imageDestName;
