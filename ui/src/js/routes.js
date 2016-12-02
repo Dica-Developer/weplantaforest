@@ -40,6 +40,9 @@ import Links from './common/footer/pages/Links';
 import Disclaimer from './common/footer/pages/Disclaimer';
 import Imprint from './common/footer/pages/Imprint';
 import BackOfficeOverview from './backOffice/BackOfficeOverview';
+import ArticleManager from './backOffice/articleManager/ArticleManager';
+import ArticleCreater from './backOffice/articleManager/ArticleCreater';
+import ArticleEditor from './backOffice/articleManager/ArticleEditor';
 
 export default class Routes extends Component {
 
@@ -99,6 +102,9 @@ export default class Routes extends Component {
           <Route path="/disclaimer" component={Disclaimer} reRender={this.reRender.bind(this)}/>
           <Route path="/imprint" component={Imprint} reRender={this.reRender.bind(this)}/>
           <Route path="/backOffice" component={BackOfficeOverview} reRender={this.reRender.bind(this)}/>
+          <Route path="/article-manager" component={ArticleManager} reRender={this.reRender.bind(this)}/>
+          <Route path="/article-create" component={ArticleCreater} reRender={this.reRender.bind(this)}/>
+          <Route path="/article-edit/:articleId" component={ArticleEditor} reRender={this.reRender.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
         </Router>
         <Footer/>
