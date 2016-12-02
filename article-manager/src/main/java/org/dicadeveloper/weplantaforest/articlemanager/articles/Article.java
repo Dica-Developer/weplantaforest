@@ -33,54 +33,56 @@ public class Article implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_articleId")
-    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class})
     private Long id;
 
     @Column(name = "_createdOn")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class})
     private Long createdOn;
 
     @Column(name = "_lastEditedOn")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleOverview.class})
     private Long lastEditedOn;
 
     @Column(name = "_articleType")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class})
     private ArticleType articleType;
 
     @Column(name = "_lang", nullable = false)
+    @JsonView({Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class})
     private Language lang;
 
     @Column(name = "_showFull", nullable = false)
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
     private boolean showFull;
 
     @Column(name = "_title")
-    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class})
     private String title;
 
     @Column(name = "_intro", columnDefinition = "TEXT")
-    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class})
     private String intro;
 
     @Column(name = "_imageFileName")
-    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class, Views.BackofficeArticleView.class})
     private String imageFileName;
 
     @Column(name = "_imageCopyrights")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
     private String imageDescription;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_owner__userId", nullable = false)
-    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class})
+    @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class})
     private User owner;
 
     @Column(name = "_visible")
+    @JsonView(Views.BackofficeArticleView.class)
     private boolean visible;
 
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
     private List<Paragraph> paragraphs;
 
 }

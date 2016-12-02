@@ -25,19 +25,24 @@ public class Paragraph implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_paragraphId")
+    @JsonView(Views.BackofficeArticleView.class)
     private Long id;
 
     @Column(name = "_title")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
     private String title;
 
     @Column(name = "_text", columnDefinition = "TEXT")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
     private String text;
     
     @Column(name = "_imageFileName")
-    @JsonView({ Views.UserArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
     private String imageFileName;
+    
+    @Column(name = "_imageCopyrights")
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
+    private String imageDescription;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_article__articleId", nullable = false)
