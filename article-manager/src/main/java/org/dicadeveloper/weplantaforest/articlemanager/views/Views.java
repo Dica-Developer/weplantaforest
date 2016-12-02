@@ -16,4 +16,12 @@ public interface Views {
     public static interface UserFaqView{
         
     }
+    
+    public static interface BackofficeArticleOverview{
+        
+    }
+    public static interface BackofficeArticleView{
+        
+    }
+
 }
