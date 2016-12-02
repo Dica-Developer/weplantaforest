@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.articlemanager.articles;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.articlemanager.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.articlemanager.articles.Article.ArticleType;
+import org.dicadeveloper.weplantaforest.articlemanager.user.UserRepository;
 import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.common.support.Language;
@@ -38,29 +40,57 @@ public class ArticleController {
 
     private @NonNull ArticleRepository _articleRepository;
 
+    private @NonNull UserRepository _userRepository;
+
     private @NonNull ParagraphRepository _paragraphRepository;
 
     private @NonNull ImageHelper _imageHelper;
 
-    @RequestMapping(value = "/article/create", method = RequestMethod.POST)
-    public ResponseEntity<?> createArticle(@RequestBody Article article) {
+    @RequestMapping(value = "backOffice/article/create", method = RequestMethod.POST)
+    @JsonView(Views.BackofficeArticleView.class)
+    public ResponseEntity<?> createArticle(@RequestParam String userName, @RequestBody Article article) {
         try {
+            article.setCreatedOn(System.currentTimeMillis());
+            article.setLastEditedOn(System.currentTimeMillis());
+            article.setOwner(_userRepository.findByName(userName));
+            _articleRepository.save(article);
 
             if (article.getParagraphs() != null) {
                 for (Paragraph paragraph : article.getParagraphs()) {
                     paragraph.setArticle(article);
+                    _paragraphRepository.save(paragraph);
                 }
             }
-
-            _articleRepository.save(article);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(article, HttpStatus.OK);
         } catch (Exception e) {
             LOG.error("Error occured while saving article!", e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(-1, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(value = "/article/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/backOffice/article/edit", method = RequestMethod.POST)
+    @JsonView(Views.BackofficeArticleView.class)
+    public ResponseEntity<?> editArticle(@RequestParam String userName, @RequestBody Article article) {
+        try {
+            article.setLastEditedOn(System.currentTimeMillis());
+            article.setOwner(_userRepository.findByName(article.getOwner()
+                                                               .getName()));
+            _articleRepository.save(article);
+
+            if (article.getParagraphs() != null) {
+                for (Paragraph paragraph : article.getParagraphs()) {
+                    paragraph.setArticle(article);
+                    _paragraphRepository.save(paragraph);
+                }
+            }
+            return new ResponseEntity<>(article, HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.error("Error occured while saving article!", e);
+            return new ResponseEntity<>(-1, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "backOffice/article/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteeArticle(@RequestParam Long articleId) {
         try {
             List<Paragraph> paragraphs = _paragraphRepository.getParagraphsByArticleId(articleId);
@@ -74,9 +104,11 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/article/upload/image", method = RequestMethod.POST)
-    public ResponseEntity<?> uploadArticleImage(@RequestParam Long articleId, @RequestParam String imgType, @RequestParam("file") MultipartFile file) {
-        String folder = FileSystemInjector.getArticleFolder() + "/" + articleId;
-        String imageName = "main" + "." + imgType;
+    public ResponseEntity<?> uploadArticleImage(@RequestParam Long articleId, @RequestParam("file") MultipartFile file) {
+        String folder = FileSystemInjector.getArticleFolder();
+        String imageName = "article_" + articleId + "_main" + file.getOriginalFilename()
+                                                                  .substring(file.getOriginalFilename()
+                                                                                 .indexOf("."));
         try {
             imageName = _imageHelper.storeImage(file, folder, imageName, false);
             Article articleForImage = _articleRepository.findOne(articleId);
@@ -90,11 +122,13 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/paragraph/upload/image", method = RequestMethod.POST)
-    public ResponseEntity<?> uploadParagraphImage(@RequestParam Long articleId, @RequestParam Long paragraphId, @RequestParam String imgType, @RequestParam("file") MultipartFile file) {
-        String folder = FileSystemInjector.getArticleFolder() + "/" + articleId;
-        String imageName = "paragraph_" + paragraphId + "." + imgType;
+    public ResponseEntity<?> uploadParagraphImage(@RequestParam Long articleId, @RequestParam Long paragraphId, @RequestParam("file") MultipartFile file) {
+        String folder = FileSystemInjector.getArticleFolder();
+        String imageName = "article_" + articleId + "_paragraph_" + paragraphId + file.getOriginalFilename()
+                                                                                      .substring(file.getOriginalFilename()
+                                                                                                     .indexOf("."));
         try {
-            imageName = _imageHelper.storeImage(file, folder, imageName, false);
+            imageName = _imageHelper.storeImage(file, folder, imageName, true);
             Paragraph paragraphForImage = _paragraphRepository.findOne(paragraphId);
             paragraphForImage.setImageFileName(imageName);
             _paragraphRepository.save(paragraphForImage);
@@ -103,6 +137,20 @@ public class ArticleController {
             LOG.error("Error occured while uploading paragraph image for article!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "/backOffice/articles", method = RequestMethod.GET)
+    @JsonView(Views.BackofficeArticleOverview.class)
+    public ResponseEntity<?> getAllArticles() {
+        Iterable<Article> allArticles = _articleRepository.findAll();
+        return new ResponseEntity<>(allArticles, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/backOffice/article", method = RequestMethod.GET)
+    @JsonView(Views.BackofficeArticleView.class)
+    public ResponseEntity<?> getArticleForBackoffice(@RequestParam long articleId) {
+        Article article = _articleRepository.findOne(articleId);
+        return new ResponseEntity<>(article, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/articles", method = RequestMethod.GET)
@@ -115,7 +163,7 @@ public class ArticleController {
     @RequestMapping(value = "/articlesPaged", method = RequestMethod.GET)
     @JsonView({ Views.UserArticleShortView.class })
     public ResponseEntity<?> getArticlesByType(@RequestParam ArticleType articleType, @RequestParam String language, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
-        Page<Article> articles =  _articleRepository.getArticlesByType(articleType, Language.valueOf(language), new PageRequest(page, size));
+        Page<Article> articles = _articleRepository.getArticlesByType(articleType, Language.valueOf(language), new PageRequest(page, size));
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
@@ -124,7 +172,7 @@ public class ArticleController {
     public Article getArticle(@PathVariable long articleId) {
         return _articleRepository.findOne(articleId);
     }
-    
+
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getArticleImage(HttpServletResponse response, @PathVariable(value = "articleId") String articleId, @PathVariable(value = "imageName") String imageName) {
         String filePath = FileSystemInjector.getArticleFolder() + "/" + imageName;
@@ -148,6 +196,15 @@ public class ArticleController {
             LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(value = "/articleTypes", method = RequestMethod.GET)
+    public ResponseEntity<?> getArticleTypes() {
+        List<String> articleTypes = new ArrayList<>();
+        for (ArticleType articleType : ArticleType.values()) {
+            articleTypes.add(articleType.toString());
+        }
+        return new ResponseEntity<>(articleTypes, HttpStatus.OK);
     }
 
 }
