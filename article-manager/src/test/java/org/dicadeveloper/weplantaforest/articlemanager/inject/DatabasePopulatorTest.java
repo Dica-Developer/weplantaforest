@@ -46,7 +46,7 @@ public class DatabasePopulatorTest {
     @Test
     public void testInsertUsers() throws Exception {
         _databasePopulator.insertUsers();
-        assertThat(_userRepository.count()).isEqualTo(4);
+        assertThat(_userRepository.count()).isEqualTo(16);
     }
 
     @Test

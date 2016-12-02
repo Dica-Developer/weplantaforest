@@ -105,8 +105,9 @@ public class ArticleControllerTest {
         paragraphs.add(paragraph);
         article.setParagraphs(paragraphs);
 
-        mockMvc.perform(post("/article/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(article)))
+        mockMvc.perform(post("/backOffice/article/create").contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                                                        .param("userName", "Adam")
+                                                                        .content(TestUtil.convertObjectToJsonBytes(article)))
                .andExpect(status().isOk());
 
         assertThat(_articleRepository.count()).isEqualTo(1L);
@@ -126,8 +127,8 @@ public class ArticleControllerTest {
         assertThat(_articleRepository.count()).isEqualTo(1L);
         assertThat(_paragraphRepository.count()).isEqualTo(1L);
 
-        mockMvc.perform(delete("/article/delete").contentType(MediaType.APPLICATION_JSON)
-                                                 .param("articleId", "1"))
+        mockMvc.perform(delete("/backOffice/article/delete").contentType(MediaType.APPLICATION_JSON)
+                                                            .param("articleId", "1"))
                .andExpect(status().isOk());
 
         assertThat(_articleRepository.count()).isEqualTo(0);
@@ -140,20 +141,18 @@ public class ArticleControllerTest {
         _dbInjecter.injectArticle("title", "intro", ArticleType.BLOG, "manager", 1000000L);
 
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/images/" + "article1.jpg");
-        MockMultipartFile image = new MockMultipartFile("file", fileInputStream);
-
+        MockMultipartFile image = new MockMultipartFile("file", "file.jpg","image/jpg", fileInputStream);
         MediaType mediaType = new MediaType("multipart", "form-data");
 
         mockMvc.perform(MockMvcRequestBuilders.fileUpload("/article/upload/image")
-                                              .file(image)
+                                              .file(image)                                         
                                               .contentType(mediaType)
-                                              .param("articleId", "1")
-                                              .param("imgType", "jpg"))
+                                              .param("articleId", "1"))
                .andExpect(status().isOk());
 
         assertThat(_articleRepository.findOne(1L)
-                                     .getImageFileName()).isEqualTo("main.jpg");
-        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getArticleFolder() + "/1"));
+                                     .getImageFileName()).isEqualTo("article_1_main.jpg");
+        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getArticleFolder()));
 
     }
 
@@ -164,7 +163,7 @@ public class ArticleControllerTest {
         _dbInjecter.injectParagraphToArticle(article, "paragraph title", "paragraph text");
 
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/images/" + "article1.jpg");
-        MockMultipartFile image = new MockMultipartFile("file", fileInputStream);
+        MockMultipartFile image = new MockMultipartFile("file", "file.jpg","image/jpg", fileInputStream);
 
         MediaType mediaType = new MediaType("multipart", "form-data");
 
@@ -172,12 +171,11 @@ public class ArticleControllerTest {
                                               .file(image)
                                               .contentType(mediaType)
                                               .param("articleId", "1")
-                                              .param("paragraphId", "1")
-                                              .param("imgType", "jpg"))
+                                              .param("paragraphId", "1"))
                .andExpect(status().isOk());
         assertThat(_paragraphRepository.findOne(1L)
-                                       .getImageFileName()).isEqualTo("paragraph_1.jpg");
+                                       .getImageFileName()).isEqualTo("article_1_paragraph_1.jpg");
 
-        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getArticleFolder() + "/1"));
+        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getArticleFolder()));
     }
 }

@@ -46,7 +46,7 @@ public class ArticleController {
 
     private @NonNull ImageHelper _imageHelper;
 
-    @RequestMapping(value = "backOffice/article/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/backOffice/article/create", method = RequestMethod.POST)
     @JsonView(Views.BackofficeArticleView.class)
     public ResponseEntity<?> createArticle(@RequestParam String userName, @RequestBody Article article) {
         try {
@@ -90,7 +90,7 @@ public class ArticleController {
         }
     }
 
-    @RequestMapping(value = "backOffice/article/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/backOffice/article/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteeArticle(@RequestParam Long articleId) {
         try {
             List<Paragraph> paragraphs = _paragraphRepository.getParagraphsByArticleId(articleId);
