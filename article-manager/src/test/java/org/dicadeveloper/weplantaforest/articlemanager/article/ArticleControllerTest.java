@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.articlemanager.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -127,7 +126,7 @@ public class ArticleControllerTest {
         assertThat(_articleRepository.count()).isEqualTo(1L);
         assertThat(_paragraphRepository.count()).isEqualTo(1L);
 
-        mockMvc.perform(delete("/backOffice/article/delete").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/backOffice/article/delete").contentType(MediaType.APPLICATION_JSON)
                                                             .param("articleId", "1"))
                .andExpect(status().isOk());
 
