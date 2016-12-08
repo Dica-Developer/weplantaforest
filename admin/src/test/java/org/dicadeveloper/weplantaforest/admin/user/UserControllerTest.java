@@ -51,18 +51,10 @@ public class UserControllerTest {
         _dbInjecter.injectUser("Bert");
         _dbInjecter.injectUser("Claus");
 
-        mockMvc.perform(get("/users").accept("application/json")
-                                     .param("page", "0")
-                                     .param("size", "5"))
+        mockMvc.perform(get("/users").accept("application/json"))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.totalElements").value(3))
-               .andExpect(jsonPath("$.totalPages").value(1))
-               .andExpect(jsonPath("$.numberOfElements").value(3))
-               .andExpect(jsonPath("$.last").value(true))
-               .andExpect(jsonPath("$.first").value(true))
-
-               .andExpect(jsonPath("$.content[0].name").value("Adam"))
-               .andExpect(jsonPath("$.content[1].name").value("Bert"))
-               .andExpect(jsonPath("$.content[2].name").value("Claus"));
+               .andExpect(jsonPath("$.[0].name").value("Adam"))
+               .andExpect(jsonPath("$.[1].name").value("Bert"))
+               .andExpect(jsonPath("$.[2].name").value("Claus"));
     }
 }

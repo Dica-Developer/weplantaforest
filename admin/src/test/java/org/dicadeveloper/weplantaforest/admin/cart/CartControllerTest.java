@@ -65,7 +65,7 @@ public class CartControllerTest {
 
     @Test
     @Transactional
-    public void testGetAllUser() throws Exception {
+    public void testGetAllCarts() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
 
         _dbInjecter.injectUser("Adam");
@@ -81,17 +81,9 @@ public class CartControllerTest {
 
         _dbInjecter.injectCart("Adam", treeIdList);
 
-        mockMvc.perform(get(Uris.CARTS).accept("application/json")
-                                       .param("page", "0")
-                                       .param("size", "5"))
+        mockMvc.perform(get(Uris.CARTS).accept("application/json"))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.totalElements").value(1))
-               .andExpect(jsonPath("$.totalPages").value(1))
-               .andExpect(jsonPath("$.numberOfElements").value(1))
-               .andExpect(jsonPath("$.last").value(true))
-               .andExpect(jsonPath("$.first").value(true))
-
-               .andExpect(jsonPath("$.content[0].buyer.name").value("Adam"));
+               .andExpect(jsonPath("$.[0].buyer.name").value("Adam"));
     }
 
     @Test
