@@ -59,6 +59,7 @@ public class Cart implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "_timeStamp")
+    @JsonView(Views.OverviewCart.class)
     private Long timeStamp;
 
     @Enumerated(EnumType.STRING)
@@ -66,9 +67,8 @@ public class Cart implements Identifiable<Long> {
     @JsonView(Views.OverviewCart.class)
     private CartState cartState;
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
-    @JsonView(Views.OverviewCart.class)
     private List<CartItem> cartItems = new ArrayList<CartItem>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -93,12 +93,14 @@ public class Cart implements Identifiable<Long> {
     private String callBackTimestamp;
 
     @Column(name = "_callBackFirma", length = 256)
+    @JsonView(Views.OverviewCart.class)
     private String callBackFirma;
 
     @Column(name = "_callBackBanktransactionid", length = 32)
     private String callBackBanktransactionid;
 
     @Column(name = "_callBackVorname", length = 128)
+    @JsonView(Views.OverviewCart.class)
     private String callBackVorname;
 
     @Column(name = "_callBackPlz", length = 16)
@@ -108,6 +110,7 @@ public class Cart implements Identifiable<Long> {
     private String callBackStatus;
 
     @Column(name = "_callBackNachname", length = 128)
+    @JsonView(Views.OverviewCart.class)
     private String callBackNachname;
 
     @Column(name = "_callBackOrt", length = 128)
@@ -208,6 +211,7 @@ public class Cart implements Identifiable<Long> {
     }
 
     @Transient
+    @JsonView(Views.OverviewCart.class)
     public int getTreeCount() {
         int count = 0;
         for (Tree tree : getTrees()) {
@@ -217,6 +221,7 @@ public class Cart implements Identifiable<Long> {
     }
 
     @Transient
+    @JsonView(Views.OverviewCart.class)
     public BigDecimal getTotalPrice() {
         BigDecimal total = new BigDecimal(0.00);
         for (final CartItem item : cartItems) {
@@ -239,18 +244,11 @@ public class Cart implements Identifiable<Long> {
     public List<Tree> getTrees() {
         final List<Tree> trees = new ArrayList<Tree>();
         for (final CartItem item : cartItems) {
-            trees.add(item.getTree());
+            if (item.getTree() != null) {
+                trees.add(item.getTree());
+            }
         }
         return trees;
     }
 
-    public Date getCallBackTimestampAsDate() {
-        if (callBackTimestamp == null) {
-            return null;
-        }
-        return new Date(Long.parseLong(callBackTimestamp) * 1000); // its php,
-                                                                   // sec since
-                                                                   // 1970, not
-                                                                   // msec
-    }
 }
