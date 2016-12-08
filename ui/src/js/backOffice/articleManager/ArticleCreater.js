@@ -111,7 +111,7 @@ export default class ArticleCreater extends Component {
         title: '',
         articleType: 'HOME',
         intro: '',
-        paragraphs: [],
+        paragraphs: [{}],
         lang: 'DEUTSCH',
         visible: false,
         imageFileName: '',
@@ -173,8 +173,8 @@ export default class ArticleCreater extends Component {
   createArticle() {
     var that = this;
     if (this.state.imageFile != null) {
-      for (var paragraph = 0; paragraph < this.state.paragraphCount; paragraph++) {
-        this.state.article.paragraphs.push(this.refs["paragraph_" + paragraph].getParagraph());
+      for (var paragraph = 0; paragraph < this.state.article.paragraphs.length; paragraph++) {
+        this.state.article.paragraphs[paragraph] = this.refs["paragraph_" + paragraph].getParagraph();
       }
 
       axios.post('http://localhost:8082/backOffice/article/create?userName=' + localStorage.getItem('username'), this.state.article, {}).then(function(response) {
@@ -239,16 +239,11 @@ export default class ArticleCreater extends Component {
   }
 
   addParagraph() {
-    this.state.paragraphCount++;
+    this.state.article.paragraphs.push({});
     this.forceUpdate();
   }
 
   render() {
-    var paragraphObjects = [];
-    for (var paragraph = 0; paragraph < this.state.paragraphCount; paragraph++) {
-      paragraphObjects.push(paragraph);
-    }
-
     return (
       <div className="container paddingTopBottom15 article-manager">
         <div className="row ">
@@ -322,8 +317,8 @@ export default class ArticleCreater extends Component {
             <InputText toUpdate="imageDescription" updateValue={this.updateValue.bind(this)}/>
           </div>
         </div>
-        {paragraphObjects.map(function(paragraph, i) {
-          return (<Paragraph ref={"paragraph_" + paragraph} key={i}/>);
+        {this.state.article.paragraphs.map(function(paragraph, i) {
+          return (<Paragraph ref={"paragraph_" + i} key={i}/>);
         })}
         <div className="row">
           <div className="col-md-12 align-right">
