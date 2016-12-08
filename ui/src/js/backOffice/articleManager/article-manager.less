@@ -8,56 +8,68 @@
     padding-right: 4vw;
   }
 
-  .settings-row{
-    .col-md-2:nth-of-type(2n+1){
+  .settings-row {
+    .col-md-2:nth-of-type(2n+1) {
       text-align: right;
     }
   }
-  .content-row{
-    .title{
-      input{
+  .content-row {
+    .title {
+      input {
         width: 100%;
       }
     }
-    .col-md-2{
+    .col-md-2 {
       text-align: right;
     }
   }
-  .image-row{
-    .col-md-2{
+  .image-row {
+    .col-md-2 {
       text-align: right;
     }
-    input{
+    input {
       width: 50%;
     }
   }
 
-  .react-grid-Container{
+  .notification-warning{
+      height: 100px!important;
+  }
+
+  .delete-confirmation {
+    margin-top: 10px;
+    button {
+      width: 90px;
+    }
+    button:nth-child(1) {
+      margin-right: 15px;
+    }
+  }
+
+  .react-grid-Container {
     background: #fff;
     border-style: solid;
     border-width: 1px;
 
-    .react-grid-Header{
+    .react-grid-Header {
       background: #737373;
       color: #fff;
     }
-    .react-grid-HeaderCell{
+    .react-grid-HeaderCell {
       font-weight: bold;
-      border-style: none solid none none ;
+      border-style: none solid none none;
       border-width: 1px;
       padding: 5px;
     }
-    .react-grid-Cell{
-      border-style: none solid none none ;
+    .react-grid-Cell {
+      border-style: none solid none none;
       border-width: 1px;
       padding-left: 10px;
       padding-top: 8px;
     }
-
-    .react-grid-Row:nth-child(2n+1){
+    .react-grid-Row:nth-child(2n+1) {
       background-color: #e5e5e5;
     }
-
 
   }
 }

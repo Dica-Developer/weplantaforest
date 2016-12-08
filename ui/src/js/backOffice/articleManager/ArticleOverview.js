@@ -7,6 +7,7 @@ import ReactDataGrid from 'react-data-grid';
 import {Toolbar, Data} from 'react-data-grid/addons';
 
 import IconButton from '../../common/components/IconButton';
+import NotificationSystem from 'react-notification-system';
 
 export default class ArticleOverview extends Component {
 
@@ -53,6 +54,10 @@ export default class ArticleOverview extends Component {
   }
 
   componentDidMount() {
+    this.loadArticles();
+  }
+
+  loadArticles() {
     var that = this;
     axios.get('http://localhost:8082/backOffice/articles').then(function(response) {
       var result = response.data;
@@ -68,6 +73,7 @@ export default class ArticleOverview extends Component {
         console.error(response.config);
       }
     });
+
   }
 
   createRows(articles) {
@@ -90,18 +96,63 @@ export default class ArticleOverview extends Component {
       edit: <IconButton glyphIcon="glyphicon-pencil" text="" onClick={() => {
         this.edit(article.id)
       }}/>,
-      delete: <IconButton glyphIcon="glyphicon-trash" text="" onClick={this.delete.bind(this)}/>,
+      delete: this.createDeleteButton(article.id),
       isScrolling: false
     };
     return row;
+  }
+
+  createDeleteButton(id) {
+    return <IconButton glyphIcon="glyphicon-trash" text="" onClick={() => {
+      this.createDeleteConfirmation(id)
+    }}/>;
   }
 
   edit(id) {
     browserHistory.push("article-edit/" + id)
   }
 
-  delete() {
-    console.log("delete");
+  createDeleteConfirmation(id) {
+    this.refs.notificationSystem.addNotification({
+      title: 'Achtung!',
+      position: 'tc',
+      autoDismiss: 0,
+      message: 'Artikel mit ID ' + id + ' wird gelöscht!',
+      level: 'warning',
+      children: (
+        <div className="delete-confirmation align-center">
+          <button>Abbrechen</button>
+          <button onClick={() => {
+            this.delete(id)
+          }}>OK</button>
+        </div>
+      )
+    });
+  }
+
+  delete(id) {
+    var that = this;
+    axios.post('http://localhost:8082/backOffice/article/delete?articleId=' + id, {}, {}).then(function(response) {
+      that.loadArticles();
+      that.refs.notificationSystem.addNotification({
+        title: 'geschafft!',
+        position: 'tc',
+        autoDismiss: 0,
+        message: 'artikel mit id ' + id + ' wurde gelöscht!',
+        level: 'success'
+      });
+
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+
   }
 
   getRows() {
@@ -138,6 +189,19 @@ export default class ArticleOverview extends Component {
   }
 
   render() {
+    var style = {
+      Containers: {
+        DefaultStyle: {
+          zIndex: 11000
+        },
+        tc: {
+          top: '50%',
+          bottom: 'auto',
+          margin: '0 auto',
+          left: '50%'
+        }
+      }
+    };
     return (
       <div>
         <div className="row ">
@@ -152,6 +216,7 @@ export default class ArticleOverview extends Component {
             } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
           </div>
         </div>
+        <NotificationSystem ref="notificationSystem" style={style}/>
       </div>
     );
   }
