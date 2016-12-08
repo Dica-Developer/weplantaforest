@@ -5,4 +5,8 @@ public interface Views {
     public static interface OverviewCart {
 
     }
+    
+    public static interface OverviewUser{
+        
+    }
 }

@@ -172,7 +172,7 @@ public class DatabasePopulator {
             user.setName(DEFAULT_USERS.get(i));
             user.setEnabled(true);
             user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
-            user.setMail(_env.getProperty("mail.receiver"));
+            user.setMail(DEFAULT_USERS.get(i) + "@" + DEFAULT_USERS.get(i) + ".de");
             _userRepository.save(user);
         }
         return this;

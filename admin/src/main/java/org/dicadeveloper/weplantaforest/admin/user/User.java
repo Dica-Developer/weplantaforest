@@ -28,22 +28,26 @@ public class User implements Identifiable<Long> {
     @Id
     @GeneratedValue
     @Column(name = "_userId")
+    @JsonView(Views.OverviewUser.class)
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView(Views.OverviewCart.class)
+    @JsonView({Views.OverviewCart.class, Views.OverviewUser.class})
     private String name;
     
     @Column(name ="_password")
     private String password;
 
     @Column(name = "_email", length = 500)
+    @JsonView(Views.OverviewUser.class)
     private String mail;
 
     @Column(name = "_enabled", nullable = false)
+    @JsonView(Views.OverviewUser.class)
     private boolean enabled = false;
 
     @Column(name = "_banned", nullable = false)
+    @JsonView(Views.OverviewUser.class)
     private boolean banned = false;
 
     @Column(name = "_regDate")

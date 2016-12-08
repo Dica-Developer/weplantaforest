@@ -29,4 +29,16 @@ public class Uris {
     //plant
     
     public final static String PLANT_FOR_USER = "/plantForUser";
+    
+    //user
+    
+    public final static String USERS = "/users";
+    
+    public final static String USERNAME_CHANGE ="/user/changeName";
+    
+    public final static String MAIL_CHANGE ="/user/changeMail";
+    
+    public final static String ACTIVE_CHANGE ="/user/changeActiveFlag";
+    
+    public final static String BANNED_CHANGE ="/user/changeBannedFlag";
 }
