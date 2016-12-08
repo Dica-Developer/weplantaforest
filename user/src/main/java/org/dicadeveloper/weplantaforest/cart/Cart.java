@@ -30,7 +30,6 @@ import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.hibernate.annotations.Cascade;
 import org.springframework.hateoas.Identifiable;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -241,7 +240,9 @@ public class Cart implements Identifiable<Long> {
     public List<Tree> getTrees() {
         final List<Tree> trees = new ArrayList<Tree>();
         for (final CartItem item : cartItems) {
-            trees.add(item.getTree());
+            if(item.getTree() != null){
+                trees.add(item.getTree());                
+            }
         }
         return trees;
     }
