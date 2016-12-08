@@ -8,8 +8,6 @@ import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +30,8 @@ public class CartController {
 
     @RequestMapping(value = Uris.CARTS, method = RequestMethod.GET)
     @JsonView(Views.OverviewCart.class)
-    public Page<Cart> getAllCarts(@RequestParam int page, @RequestParam int size) {
-        return _cartRepository.findAllCarts(new PageRequest(page, size));
+    public Iterable<Cart> getAllCarts() {
+        return _cartRepository.findAll();
     }
 
     @RequestMapping(value = Uris.CHANGE_CART_STATE, method = RequestMethod.POST)
