@@ -11,6 +11,19 @@ export function getTextForSelectedLanguage(text) {
   return text;
 };
 
+export function getTextForLanguage(text, language) {
+  if (text.includes('<mlpr>')) {
+    if (language === 'DEUTSCH') {
+      text = text.substr(text.indexOf('GERMAN<equ>') + 11);
+      text = text.substr(0, text.indexOf('<sep>ENGLISH'));
+    } else if (language === 'ENGLISH') {
+      text = text.substr(text.indexOf('ENGLISH<equ>') + 12);
+      text = text.substr(0, text.indexOf('<sep>ITALIAN'))
+    }
+  }
+  return text;
+};
+
 export function getShortText(text, shortenedTO){
   if (text.length > shortenedTO) {
     text = text.substr(0, shortenedTO);
@@ -20,6 +33,10 @@ export function getShortText(text, shortenedTO){
   return text;
 }
 
+export function createMultiLanguageEntry(germanText, englishText){
+  return '<mlpr>GERMAN<equ>' + germanText + '<sep>ENGLISH<equ>' + englishText + '<sep>ITALIAN';
+}
+
 export {
-  getTextForSelectedLanguage, getShortText
+  getTextForSelectedLanguage, getTextForLanguage, getShortText, createMultiLanguageEntry
 };
