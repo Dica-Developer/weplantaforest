@@ -31,7 +31,7 @@ public class TreeController {
         if (_projectArticleRepository.exists(projectArticleId)) {
             ProjectArticle article = _projectArticleRepository.findOne(projectArticleId);
             Long articleAmount = article.getAmount();
-            Long alreadyPlanted = _treeRepository.countAlreadyPlantedTreesByProjectArticle(article);
+            Long alreadyPlanted = _treeRepository.countAlreadyPlantedTreesByProjectArticleId(projectArticleId);
             Long treesRemaining = articleAmount - alreadyPlanted;
 
             User userToPlantFor = _userRepository.findOne(userId);
