@@ -1,6 +1,11 @@
 package org.dicadeveloper.weplantaforest.admin.dev;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +14,7 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.cart.Cart;
 import org.dicadeveloper.weplantaforest.admin.cart.CartItem;
 import org.dicadeveloper.weplantaforest.admin.cart.CartRepository;
@@ -19,6 +25,8 @@ import org.dicadeveloper.weplantaforest.admin.project.PriceRepository;
 import org.dicadeveloper.weplantaforest.admin.project.Project;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectArticle;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectArticleRepository;
+import org.dicadeveloper.weplantaforest.admin.project.ProjectImage;
+import org.dicadeveloper.weplantaforest.admin.project.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectRepository;
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
@@ -58,13 +66,14 @@ public class DatabasePopulator {
     private ProjectArticleRepository _projectArticleRepository;
     private CartRepository _cartRepository;
     private PriceRepository _priceRepository;
+    private ProjectImageRepository _projectImageRepository;
 
     @Autowired
     private @NonNull Environment _env;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
-            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, CartRepository cartRepository) {
+            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, CartRepository cartRepository, ProjectImageRepository projectImageRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -72,6 +81,7 @@ public class DatabasePopulator {
         _projectArticleRepository = projectArticleRepository;
         _cartRepository = cartRepository;
         _priceRepository = priceRepository;
+        _projectImageRepository = projectImageRepository;
     }
 
     public DatabasePopulator insertProjects() {
@@ -82,12 +92,14 @@ public class DatabasePopulator {
             project.setName(projectName);
             project.setManager(_userRepository.findByName(DEFAULT_USERS.get(i)));
             project.setDescription(
-                    "dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
+                    "<mlpr>GERMAN<equ><p>Projektbeschreibung</p><sep>ENGLISH<equ><p>project description</p><sep>ITALIAN<equ>projecto descriptiones<sep>");
             project.setImageFileName("project" + (i + 1) + ".jpg");
             if (i < 5) {
                 project.setShopActive(false);
+                project.setVisible(false);
             } else {
                 project.setShopActive(true);
+                project.setVisible(true);
             }
             switch (i) {
             case 0:
@@ -133,6 +145,22 @@ public class DatabasePopulator {
             }
             _projectRepository.save(project);
         }
+        return this;
+    }
+    
+    public DatabasePopulator insertProjectImages() {
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 5; j++) {
+                ProjectImage projectImage = new ProjectImage();
+                projectImage.setTitle("image " + j);
+                projectImage.setDescription(" image description " + j);
+                projectImage.setImageFileName("project" + i + "_" + j + ".jpg");
+                projectImage.setDate(100000000L * j);
+                projectImage.setProject(_projectRepository.findOne((long) i));
+                _projectImageRepository.save(projectImage);
+            }
+        }
+
         return this;
     }
 
@@ -262,6 +290,46 @@ public class DatabasePopulator {
         }
 
         return this;
+    }
+    
+    public DatabasePopulator addMainImagesToProjectFolder() {
+        for (int i = 1; i <= _projectRepository.count(); i++) {
+            String mainImageFileName = "project" + i + ".jpg";
+
+            Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + mainImageFileName).toPath();
+            String imageFileDest = FileSystemInjector.getImageFolderForProjects() + "/" + mainImageFileName;
+
+            createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
+        }
+
+        return this;
+    }
+
+    public DatabasePopulator addProjectImages() {
+        for (int i = 0; i < _projectRepository.count(); i++) {
+            for (int j = 1; j <= 5; j++) {
+                String projectImageName = "project" + i + "_" + j + ".jpg";
+
+                String imageSrcName = "project" + j + ".jpg";
+                Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageSrcName).toPath();
+
+                String imageFileDest = FileSystemInjector.getImageFolderForProjects() + "/" + projectImageName;
+
+                createProjectImageFileAndCopySrcFileIntoIt(imageFileSrc, imageFileDest);
+            }
+        }
+
+        return this;
+    }
+    
+    private void createProjectImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {
+        try {
+            File newImageFile = new File(destPath);
+            newImageFile.createNewFile();
+            Files.copy(srcPath, newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e1) {
+            LOG.error("Error occured while copying " + srcPath.toString() + " to " + destPath + "!");
+        }
     }
 
 }
