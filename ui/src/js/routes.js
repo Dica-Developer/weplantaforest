@@ -45,6 +45,8 @@ import ArticleCreater from './backOffice/articleManager/ArticleCreater';
 import ArticleEditor from './backOffice/articleManager/ArticleEditor';
 import CartOverview from './backOffice/cartManager/CartOverview';
 import UserOverview from './backOffice/userManager/UserOverview';
+import ProjectOverview from './backOffice/projectManager/ProjectOverview';
+import ProjectEditor from './backOffice/projectManager/ProjectEditor';
 
 export default class Routes extends Component {
 
@@ -109,6 +111,8 @@ export default class Routes extends Component {
           <Route path="/article-edit/:articleId" component={ArticleEditor} reRender={this.reRender.bind(this)}/>
           <Route path="/cart-manager" component={CartOverview} reRender={this.reRender.bind(this)}/>
           <Route path="/user-manager" component={UserOverview} reRender={this.reRender.bind(this)}/>
+          <Route path="/project-manager" component={ProjectOverview} reRender={this.reRender.bind(this)}/>
+          <Route path="/project-edit/:projectId" component={ProjectEditor} reRender={this.reRender.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
         </Router>
         <Footer/>
