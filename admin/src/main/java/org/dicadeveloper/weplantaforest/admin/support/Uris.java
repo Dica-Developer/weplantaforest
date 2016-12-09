@@ -10,6 +10,16 @@ public class Uris {
     
     //projects
     
+    public final static String PROJECTS = "/projects";
+    
+    public final static String PROJECT = "/project";
+    
+    public final static String ARTICLES = "/project/articles";
+    
+    public final static String IMAGES = "/project/images";
+    
+    public final static String PROJECT_EDIT = "/project/edit";
+    
     public final static String PROJECT_CREATE = "/project/create";
     
     public final static String PROJECT_DELETE = "/project/delete";
