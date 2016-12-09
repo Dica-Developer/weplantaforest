@@ -13,7 +13,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.user.User;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,36 +34,35 @@ public class Project implements Identifiable<Long> {
     @Id
     @GeneratedValue
     @Column(name = "_plantId")
+    @JsonView({Views.ProjectNameAndId.class, Views.ProjectData.class})
     private Long id;
 
     @Column(name = "_name", length = 255)
+    @JsonView({Views.ProjectNameAndId.class, Views.ProjectData.class})
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")
+    @JsonView(Views.ProjectData.class)
     private String description;
 
     @Column(name = "_longitude")
+    @JsonView(Views.ProjectData.class)
     private Float longitude;
 
     @Column(name = "_latitude")
+    @JsonView(Views.ProjectData.class)
     private Float latitude;
 
-    @Column(name = "_zoom")
-    private Integer zoom;
-
-    @Column(name = "_shopOpening")
-    private Long shopOpening;
-
-    @Column(name = "_shopClosing")
-    private Long shopClosing;
-
     @Column(name = "_shopActive")
+    @JsonView(Views.ProjectData.class)
     private Boolean shopActive;
 
     @Column(name = "_visible")
+    @JsonView(Views.ProjectData.class)
     private Boolean visible;
 
     @Column(name = "_mainImageFileName", length = 255)
+    @JsonView(Views.ProjectData.class)
     private String imageFileName;
 
     /**
@@ -72,9 +74,11 @@ public class Project implements Identifiable<Long> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_manager__userId", nullable = false)
+    @JsonView(Views.ProjectData.class)
     private User manager;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+ //   @Cascade(CascadeType.ALL)
     private List<ProjectArticle> articles;
     
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)

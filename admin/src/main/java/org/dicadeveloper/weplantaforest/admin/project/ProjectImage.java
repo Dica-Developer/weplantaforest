@@ -10,6 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.dicadeveloper.weplantaforest.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +30,7 @@ public class ProjectImage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_imageId")
+    @JsonView(Views.ProjectImage.class)
     private Long imageId;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -33,15 +38,19 @@ public class ProjectImage {
     private Project project;
 
     @Column(name = "_title")
+    @JsonView(Views.ProjectImage.class)
     private String title;
 
     @Column(name = "_text", columnDefinition = "TEXT")
+    @JsonView(Views.ProjectImage.class)
     private String description;
 
     @Column(name = "_file")
+    @JsonView(Views.ProjectImage.class)
     private String imageFileName;
 
     @Column(name = "_date")
+    @JsonView(Views.ProjectImage.class)
     private Long date;
 
 }

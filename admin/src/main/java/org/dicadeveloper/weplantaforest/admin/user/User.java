@@ -28,11 +28,11 @@ public class User implements Identifiable<Long> {
     @Id
     @GeneratedValue
     @Column(name = "_userId")
-    @JsonView(Views.OverviewUser.class)
+    @JsonView({Views.OverviewUser.class, Views.ProjectData.class})
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView({Views.OverviewCart.class, Views.OverviewUser.class})
+    @JsonView({Views.OverviewCart.class, Views.OverviewUser.class, Views.ProjectData.class})
     private String name;
     
     @Column(name ="_password")

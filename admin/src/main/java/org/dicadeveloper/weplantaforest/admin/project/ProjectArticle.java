@@ -15,6 +15,10 @@ import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
+import org.dicadeveloper.weplantaforest.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,26 +36,31 @@ public class ProjectArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_articleId")
+    @JsonView(Views.ProjectArticle.class)
     private Long articleId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_plant__plantId", nullable = false)
+    @JsonIgnore
     private Project project;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_treeType_treeTypeId", nullable = false)
+    @JsonView(Views.ProjectArticle.class)
     private TreeType treeType;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_price__priceId", nullable = false)
+    @JsonView(Views.ProjectArticle.class)
+//    @Cascade(CascadeType.ALL)
     private Price price;
 
-    @Column(name = "_description", length = 20000)
-    private String description;
 
     @Column(name = "_amount")
+    @JsonView(Views.ProjectArticle.class)
     private Long amount;
 
     @OneToMany(mappedBy = "projectArticle")
+    @JsonIgnore
     private List<Tree> trees;
 }

@@ -6,7 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +27,11 @@ public class TreeType implements Identifiable<Long> {
     @Id
     @GeneratedValue
     @Column(name = "treeTypeId")
+    @JsonView(Views.ProjectArticle.class)
     private Long id;
 
     @Column(name = "_name", unique = true)
+    @JsonView(Views.ProjectArticle.class)
     private String name;
 
     @Column(name = "_description")

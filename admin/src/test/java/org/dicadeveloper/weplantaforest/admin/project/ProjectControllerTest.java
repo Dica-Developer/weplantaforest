@@ -158,7 +158,6 @@ public class ProjectControllerTest {
 
         projectArticle.setAmount(100L);
         projectArticle.setTreeType(_treeTypeRepository.findOne(1L));
-        projectArticle.setDescription("article for project");
         projectArticle.setPrice(price);
 
         assertThat(_projectRepository.findOne(1L)
@@ -172,8 +171,6 @@ public class ProjectControllerTest {
         List<ProjectArticle> projectArticles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
 
         assertThat(projectArticles.size()).isEqualTo(1);
-        assertThat(projectArticles.get(0)
-                                  .getDescription()).isEqualTo("article for project");
     }
 
     @Test
@@ -194,7 +191,6 @@ public class ProjectControllerTest {
 
         projectArticle.setAmount(100L);
         projectArticle.setTreeType(_treeTypeRepository.findOne(1L));
-        projectArticle.setDescription("article for project");
         projectArticle.setPrice(price);
 
         assertThat(_projectRepository.findOne(1L)
@@ -208,14 +204,11 @@ public class ProjectControllerTest {
         List<ProjectArticle> projectArticles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
 
         assertThat(projectArticles.size()).isEqualTo(1);
-        assertThat(projectArticles.get(0)
-                                  .getDescription()).isEqualTo("article for project");
 
         ProjectArticle projectArticle2 = new ProjectArticle();
 
         projectArticle2.setAmount(100L);
         projectArticle2.setTreeType(_treeTypeRepository.findOne(2L));
-        projectArticle2.setDescription("2nd article for project");
         projectArticle2.setPrice(price);
 
         mockMvc.perform(post(Uris.PROJECT_ADD_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -226,8 +219,6 @@ public class ProjectControllerTest {
         List<ProjectArticle> projectArticlesAfter2ndAddition = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
 
         assertThat(projectArticlesAfter2ndAddition.size()).isEqualTo(2);
-        assertThat(projectArticlesAfter2ndAddition.get(1)
-                                                  .getDescription()).isEqualTo("2nd article for project");
 
     }
 
