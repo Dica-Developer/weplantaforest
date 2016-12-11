@@ -1,22 +1,20 @@
 package org.dicadeveloper.weplantaforest.admin.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
-import org.dicadeveloper.weplantaforest.admin.project.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.admin.treeType.TreeTypeRepository;
@@ -143,87 +141,6 @@ public class ProjectControllerTest {
 
     @Test
     @Transactional
-    public void testAddProjectArticle() throws Exception {
-        _dbInjecter.injectUser("manager");
-        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
-
-        ProjectArticle projectArticle = new ProjectArticle();
-        Price price = new Price();
-
-        price.setAmount(new BigDecimal(2.0));
-        price.setScontoType(ScontoType.NONE);
-        price.setMarge(new BigDecimal(1.0));
-        _priceRepository.save(price);
-
-        projectArticle.setAmount(100L);
-        projectArticle.setTreeType(_treeTypeRepository.findOne(1L));
-        projectArticle.setPrice(price);
-
-        assertThat(_projectRepository.findOne(1L)
-                                     .getArticles()).isNull();
-
-        mockMvc.perform(post(Uris.PROJECT_ADD_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                      .content(TestUtil.convertObjectToJsonBytes(projectArticle))
-                                                      .param("projectId", "1"))
-               .andExpect(status().isOk());
-
-        List<ProjectArticle> projectArticles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
-
-        assertThat(projectArticles.size()).isEqualTo(1);
-    }
-
-    @Test
-    @Transactional
-    public void testAddProjectArticleTwoTimes() throws Exception {
-        _dbInjecter.injectUser("manager");
-        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
-        _dbInjecter.injectTreeType("big wood", "big wood desc", 0.5);
-
-        ProjectArticle projectArticle = new ProjectArticle();
-        Price price = new Price();
-
-        price.setAmount(new BigDecimal(2.0));
-        price.setScontoType(ScontoType.NONE);
-        price.setMarge(new BigDecimal(1.0));
-        _priceRepository.save(price);
-
-        projectArticle.setAmount(100L);
-        projectArticle.setTreeType(_treeTypeRepository.findOne(1L));
-        projectArticle.setPrice(price);
-
-        assertThat(_projectRepository.findOne(1L)
-                                     .getArticles()).isNull();
-
-        mockMvc.perform(post(Uris.PROJECT_ADD_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                      .content(TestUtil.convertObjectToJsonBytes(projectArticle))
-                                                      .param("projectId", "1"))
-               .andExpect(status().isOk());
-
-        List<ProjectArticle> projectArticles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
-
-        assertThat(projectArticles.size()).isEqualTo(1);
-
-        ProjectArticle projectArticle2 = new ProjectArticle();
-
-        projectArticle2.setAmount(100L);
-        projectArticle2.setTreeType(_treeTypeRepository.findOne(2L));
-        projectArticle2.setPrice(price);
-
-        mockMvc.perform(post(Uris.PROJECT_ADD_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                      .content(TestUtil.convertObjectToJsonBytes(projectArticle2))
-                                                      .param("projectId", "1"))
-               .andExpect(status().isOk());
-
-        List<ProjectArticle> projectArticlesAfter2ndAddition = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
-
-        assertThat(projectArticlesAfter2ndAddition.size()).isEqualTo(2);
-
-    }
-
-    @Test
-    @Transactional
     public void testRemoveProjectArticle() throws Exception {
         _dbInjecter.injectUser("manager");
         _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
@@ -242,23 +159,6 @@ public class ProjectControllerTest {
         List<ProjectArticle> articlesAfterRemove = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
 
         assertThat(articlesAfterRemove.size()).isEqualTo(0);
-    }
-
-    @Test
-    @Transactional
-    public void testRemoveProjectArticleBadRequestCauseOfWrongArticleId() throws Exception {
-        _dbInjecter.injectUser("manager");
-        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
-        _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
-
-        List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
-
-        assertThat(articles.size()).isEqualTo(1);
-
-        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                         .param("articleId", "2"))
-               .andExpect(status().isBadRequest());
     }
 
     @Test
