@@ -30,6 +30,10 @@ public class Uris {
     
     public final static String PROJECT_IMAGE_UPLOAD = "/project/image/upload";
     
+    public final static String PROJECT_IMAGE_CREATE_EDIT = "/project/image/createEdit";
+    
+    public final static String PROJECT_IMAGE_DELETE = "/project/image/delete";
+    
     // carts
     
     public final static String CARTS = "/carts";

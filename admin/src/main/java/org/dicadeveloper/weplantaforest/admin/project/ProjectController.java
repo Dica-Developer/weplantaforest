@@ -36,7 +36,7 @@ public class ProjectController {
     private @NonNull ProjectImageRepository _projectImageRepository;
 
     private @NonNull PriceRepository _priceRepository;
-    
+
     private @NonNull TreeRepository _treeRepository;
 
     private @NonNull ImageHelper _imageHelper;
@@ -138,7 +138,7 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_REMOVE_ARTICLE, method = RequestMethod.POST)
     public ResponseEntity<?> removeArticle(@RequestParam Long articleId) {
         if (_treeRepository.countAlreadyPlantedTreesByProjectArticleId(articleId) > 0) {
-            return new ResponseEntity<>("Du kannst diesen Projektartikel nicht löschen, da davon schon Bäume gepflanzt wurden.",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Du kannst diesen Projektartikel nicht löschen, da davon schon Bäume gepflanzt wurden.", HttpStatus.BAD_REQUEST);
         } else {
             _projectArticleRepository.delete(articleId);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -146,37 +146,60 @@ public class ProjectController {
         }
     }
 
-    @RequestMapping(value = Uris.PROJECT_IMAGE_UPLOAD, method = RequestMethod.POST)
+    @RequestMapping(value = Uris.PROJECT_IMAGE_CREATE_EDIT, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> addProjectImage(@RequestParam String projectName, @RequestParam String title, @RequestParam String description, @RequestParam String imgType, @RequestParam Long date,
-            @RequestParam("file") MultipartFile file) {
-        String folder = FileSystemInjector.getImageFolderForProjects() + "/" + projectName;
-        String imageName = projectName + "." + imgType;
-
-        Project project = _projectRepository.findByName(projectName);
+    public ResponseEntity<?> addProjectImage(@RequestBody ProjectImageRequest projectImageRequest) {
+        Project project = _projectRepository.findOne(projectImageRequest.getProjectId());
+        
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        if (!file.isEmpty()) {
-            try {
-                imageName = _imageHelper.storeImage(file, folder, imageName, false);
-
-                ProjectImage projectImage = new ProjectImage();
-                projectImage.setDescription(description);
-                projectImage.setImageFileName(imageName);
-                projectImage.setProject(project);
-                projectImage.setTitle(title);
-                projectImage.setDate(date);
-
-                _projectImageRepository.save(projectImage);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } catch (IOException e) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else{
+            ProjectImage projectImage;
+            if(projectImageRequest.getImageId() != null){
+                projectImage = _projectImageRepository.findOne(projectImageRequest.getImageId());
+                projectImage.setTitle(projectImageRequest.getTitle());
+                projectImage.setDescription(projectImageRequest.getDescription());
+            }else{
+                projectImage = new ProjectImage(projectImageRequest.getTitle(), projectImageRequest.getDescription(),System.currentTimeMillis());             
             }
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            projectImage.setProject(project);
+            _projectImageRepository.save(projectImage);
+            return new ResponseEntity<>(projectImage.getImageId(), HttpStatus.OK);            
         }
     }
+    
 
+    @RequestMapping(value = Uris.PROJECT_IMAGE_UPLOAD, method = RequestMethod.POST)
+    @Transactional
+    public ResponseEntity<?> uploadUserImage(@RequestParam Long imageId, @RequestParam("file") MultipartFile file) {
+            ProjectImage projectImage =  _projectImageRepository.findOne(imageId);
+            String imageFolder = FileSystemInjector.getImageFolderForProjects();
+            String imageName ;
+            if(projectImage.getImageFileName() != null){
+                imageName = projectImage.getImageFileName();
+            }else{
+                imageName = "project_" + projectImage.getProject().getId() + "image_1";
+            }
+            if (!file.isEmpty()) {
+                try {
+                    imageName = _imageHelper.storeImage(file, imageFolder, imageName, false);
+                    projectImage.setImageFileName(imageName);
+                    _projectImageRepository.save(projectImage);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } catch (IOException e) {        
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+  
+    }
+    
+    @RequestMapping(value = Uris.PROJECT_IMAGE_DELETE, method = RequestMethod.POST)
+    public ResponseEntity<?> removeProjectImage(@RequestParam Long projectImageId, @RequestParam String imageFileName) {
+        _projectImageRepository.delete(projectImageId);
+        //TODO: delete image file on filesystem
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
