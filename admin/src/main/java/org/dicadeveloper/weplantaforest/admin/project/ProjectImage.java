@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -25,7 +26,14 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @Table(name = "PlantImage")
+@NoArgsConstructor
 public class ProjectImage {
+    
+    public ProjectImage(String title, String description, Long date){
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
