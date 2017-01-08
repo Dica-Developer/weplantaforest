@@ -47,7 +47,7 @@ export default class ProjectOverview extends Component {
   }
 
   createProject() {
-
+    browserHistory.push('/project-edit/new');
   }
 
   editProject(id) {
