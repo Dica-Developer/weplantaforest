@@ -153,7 +153,7 @@ public class DatabasePopulator {
             for (int j = 1; j <= 5; j++) {
                 ProjectImage projectImage = new ProjectImage();
                 projectImage.setTitle("image " + j);
-                projectImage.setDescription(" image description " + j);
+                projectImage.setDescription("<mlpr>GERMAN<equ>Bildbeschreibung " + j  +"<sep>ENGLISH<equ>image description " + j  +"<sep>ITALIAN<equ>projecto descriptiones<sep>");
                 projectImage.setImageFileName("project" + i + "_" + j + ".jpg");
                 projectImage.setDate(100000000L * j);
                 projectImage.setProject(_projectRepository.findOne((long) i));
