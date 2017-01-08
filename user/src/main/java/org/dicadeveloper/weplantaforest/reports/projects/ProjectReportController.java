@@ -85,8 +85,8 @@ public class ProjectReportController {
         return new ResponseEntity<>(projectReportExtendedData, HttpStatus.OK);
     }
 
-    @RequestMapping(value = Uris.PROJECT_IMAGE + "{projectName}/{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public ResponseEntity<?> getProjectImage(HttpServletResponse response, @PathVariable(value = "projectName") String projectName, @PathVariable(value = "imageName") String imageName,
+    @RequestMapping(value = Uris.PROJECT_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
+    public ResponseEntity<?> getProjectImage(HttpServletResponse response, @PathVariable(value = "imageName") String imageName,
             @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getImageFolderForProjects() + "/" + imageName;
         try {
