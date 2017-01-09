@@ -17,7 +17,6 @@ import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
-import org.dicadeveloper.weplantaforest.admin.treeType.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -68,12 +67,6 @@ public class ProjectControllerTest {
 
     @Autowired
     private ProjectImageRepository _projectImageRepository;
-
-    @Autowired
-    private TreeTypeRepository _treeTypeRepository;
-
-    @Autowired
-    private PriceRepository _priceRepository;
 
     @Before
     public void setup() {
@@ -169,6 +162,18 @@ public class ProjectControllerTest {
         assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
                                           .size()).isEqualTo(0);
 
+        ProjectImageRequest projectImageRequest = new ProjectImageRequest(null, "title", "<mlpr>GERMAN<equ>Beschreibung<sep>ENGLISH<equ>description<sep>ITALIAN<equ>Oak tree<sep>", 1L);
+
+        String projectImageRequestAsJson = TestUtil.getJsonStringFromObject(projectImageRequest);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(Uris.PROJECT_IMAGE_CREATE_EDIT)
+                                              .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                              .content(projectImageRequestAsJson))
+               .andExpect(status().isOk());
+
+        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
+                                          .size()).isEqualTo(1);
+
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/images/" + "test.jpg");
         MockMultipartFile image = new MockMultipartFile("file", fileInputStream);
 
@@ -177,16 +182,12 @@ public class ProjectControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.PROJECT_IMAGE_UPLOAD)
                                               .file(image)
                                               .contentType(mediaType)
-                                              .param("projectName", "project 1")
-                                              .param("title", "first pic")
-                                              .param("description", "first pic desc")
-                                              .param("imgType", "jpg")
-                                              .param("date", "1000000000000"))
+                                              .param("imageId", "1"))
                .andExpect(status().isOk());
 
         assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
                                           .size()).isEqualTo(1);
 
-        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getImageFolderForProjects() + "/project 1"));
+        TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getImageFolderForProjects()));
     }
 }

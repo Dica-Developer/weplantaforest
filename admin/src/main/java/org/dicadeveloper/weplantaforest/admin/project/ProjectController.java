@@ -148,7 +148,7 @@ public class ProjectController {
 
     @RequestMapping(value = Uris.PROJECT_IMAGE_CREATE_EDIT, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> addProjectImage(@RequestBody ProjectImageRequest projectImageRequest) {
+    public ResponseEntity<?> createEditProjectImageData(@RequestBody ProjectImageRequest projectImageRequest) {
         Project project = _projectRepository.findOne(projectImageRequest.getProjectId());
         
         if (project == null) {
