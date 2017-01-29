@@ -63,6 +63,7 @@ export default class BackOfficeOverview extends Component {
             <BackofficeLink text="Cart-Manager" url="/cart-manager" glyphIcon="glyphicon-shopping-cart"/>
             <BackofficeLink text="Projekt-Manager" url="/project-manager" glyphIcon="glyphicon-tags"/>
             <BackofficeLink text="User-Manager" url="/user-manager" glyphIcon="glyphicon-user"/>
+            <BackofficeLink text="TreeType-Manager" url="/treeType-manager" glyphIcon="glyphicon-leaf"/>
             <BackofficeLink text="Plant-Manager" url="/plant-manager" glyphIcon="glyphicon-tree-deciduous"/>
             <BackofficeLink text="Event-Manager" url="/event-manager" glyphIcon="glyphicon-list-alt"/>
           </div>

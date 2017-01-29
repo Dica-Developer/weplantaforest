@@ -4,9 +4,13 @@ public class Uris {
 
     //treetypes
     
-    public final static String TREETYPE_CREATE = "/treeType/create";
+    public final static String TREETYPES = "/treeTypes";
     
-    public final static String TREETYPE_IMAGE_UPLOAD = "/treeType/upload/image/";
+    public final static String TREETYPE_SAVE = "/treeType/save";
+    
+    public final static String TREETYPE_DELETE = "/treeType/delete";
+    
+    public final static String TREETYPE_IMAGE_UPLOAD = "/treeType/imageUpload";
     
     //projects
     

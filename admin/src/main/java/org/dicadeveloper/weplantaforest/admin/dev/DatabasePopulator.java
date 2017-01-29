@@ -52,7 +52,7 @@ public class DatabasePopulator {
 
     protected final Log LOG = LogFactory.getLog(DatabasePopulator.class.getName());
 
-    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("Buche", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
+    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("<mlpr>GERMAN<equ>Buche<sep>ENGLISH<equ>Beech Tree<sep>ITALIAN<equ>Beech Tree<sep>", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
 
     private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gab&uuml;r", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert",
             "Claus", "Django", "Emil", "Mr NoTree");

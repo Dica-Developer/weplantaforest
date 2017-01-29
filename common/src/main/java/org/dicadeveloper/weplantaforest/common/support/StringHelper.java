@@ -37,5 +37,15 @@ public class StringHelper {
     public static boolean isEmpty(final String queryString) {
         return queryString == null || queryString.trim().length() == 0;
     }
+    
+    public static String getTextForLanguage(String text, String lang){
+        if(text.contains("<mlpr>")){
+            if(lang.equals("de")){
+                text = text.substring(text.indexOf("GERMAN<equ>") + 11);
+                text = text.substring(0, text.indexOf("<sep>ENGLISH"));
+            }
+        }
+       return text;
+    }
 
 }
