@@ -5,6 +5,8 @@ import org.dicadeveloper.weplantaforest.security.StatelessAuthenticationFilter;
 import org.dicadeveloper.weplantaforest.security.StatelessLoginFilter;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.security.UserDetailsService;
+import org.dicadeveloper.weplantaforest.support.Uris;
+import org.dicadeveloper.weplantaforest.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,15 +46,22 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             // .headers()
             // .cacheControl();
 
-            // custom JSON based authentication by POST of
-            // {"name":"<name>","password":"<password>"} which sets the
-            // token
-            // header upon authentication
-            http.addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+        // custom JSON based authentication by POST of
+        // {"name":"<name>","password":"<password>"} which sets the
+        // token
+        // header upon authentication
+        http
+            // didn't get this to work
+            .authorizeRequests()
+            .antMatchers(HttpMethod.POST, Uris.PLANT_FOR_USER + "**")
+            .hasRole(Role.ADMIN.getIdentifier())
+            .and()
+            .addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 
             // custom Token based authentication based on the header previously
             // given to the client
             .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Bean
