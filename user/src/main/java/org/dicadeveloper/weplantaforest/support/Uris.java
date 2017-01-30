@@ -21,6 +21,8 @@ public class Uris {
     public final static String PLANT_SELF = "/plantSelf";
     
     public final static String UPLOAD_SELF_PLANTED_TREE_IMAGE = "/plantSelf/upload";
+    
+    public final static String PLANT_FOR_USER = "/plantForUser/";
 
     // Co2 report url
 

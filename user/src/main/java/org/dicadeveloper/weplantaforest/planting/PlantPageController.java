@@ -15,6 +15,7 @@ import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserHelper;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,8 @@ public class PlantPageController {
     private @NonNull UserHelper _userHelper;
     
     private @NonNull MessageByLocaleService _messageByLocaleService;
+    
+    private @NonNull UserRepository _userRepsoitory;
 
     private final static String ANONYMOUS_TOKEN = "anonym-user";
 
@@ -80,6 +83,25 @@ public class PlantPageController {
                 }
             } else{
                 Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer);
+                _cartRepository.save(cart);
+                return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);                
+            }
+        } else {
+            // TODO: add validation messages to PlantBagValidation results
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+    
+    @RequestMapping(value = Uris.PLANT_FOR_USER , method = RequestMethod.POST)
+    @Transactional
+    public ResponseEntity<Long> plantForUser(@RequestBody PlantForUserRequest plantForUserRequest) {       
+        if (_plantPageDataValidator.isPlantPageDataValid(plantForUserRequest.getPlantBag())) {
+            User buyer = _userRepsoitory.findOne(plantForUserRequest.getUserId());
+            if (buyer == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else{
+                Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantForUserRequest.getPlantBag(), buyer);
                 _cartRepository.save(cart);
                 return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);                
             }
