@@ -48,6 +48,7 @@ import UserOverview from './backOffice/userManager/UserOverview';
 import ProjectOverview from './backOffice/projectManager/ProjectOverview';
 import ProjectEditor from './backOffice/projectManager/ProjectEditor';
 import TreeTypeOverview from './backOffice/treeTypeManager/TreeTypeOverview';
+import PlantManager from './backOffice/plantManager/PlantManager';
 
 export default class Routes extends Component {
 
@@ -115,7 +116,8 @@ export default class Routes extends Component {
           <Route path="/project-manager" component={ProjectOverview} reRender={this.reRender.bind(this)}/>
           <Route path="/project-edit/:projectId" component={ProjectEditor} reRender={this.reRender.bind(this)}/>
           <Route path="/treeType-manager" component={TreeTypeOverview} reRender={this.reRender.bind(this)}/>
-          <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/plant-manager" component={PlantManager} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)}/>
+          <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} isGift={false} isAbo={false}/>
         </Router>
         <Footer/>
       </div>
