@@ -19,9 +19,11 @@ export default class PlantBagPage extends Component {
 
   constructor(props) {
     super(props);
+    var isGift = (localStorage.getItem('isGift')  === 'undefined') ? false : JSON.parse(localStorage.getItem('isGift'));
+    var plantBag = (localStorage.getItem('plantBag')  === 'undefined') ? {projects: []} : JSON.parse(localStorage.getItem('plantBag'));
     this.state = {
-      plantBag: JSON.parse(localStorage.getItem('plantBag')),
-      isGift: JSON.parse(localStorage.getItem('isGift')),
+      plantBag: plantBag,
+      isGift: isGift,
       isAnonymUser: false
     };
   }
