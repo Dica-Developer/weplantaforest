@@ -112,10 +112,16 @@ export default class PlantManager extends Component {
       plantBag: plantBag
     };
 
-    axios.post('http://localhost:8081/plantForUser/' , request, {}).then(function(response) {
+    var config = {
+          headers: {
+            'X-AUTH-TOKEN': localStorage.getItem('jwt')
+          }
+        };
+
+    axios.post('http://localhost:8081/plantForUser/' , request, config).then(function(response) {
       that.refs.notification.addNotification('Bäume wurden für den Nutzer gepflant!', '', 'success');
     }).catch(function(response) {
-      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
+      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', '', 'error');
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
@@ -225,7 +231,8 @@ export default class PlantManager extends Component {
                 })}
               </div>
             </div>
-            <div className="col-md-12 plant-div">
+            <div className="col-md-4"></div>
+            <div className="col-md-8 plant-div">
               <div className="price">
                 <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice / 100, 2, ".", ",")}&nbsp;€</span>
               </div>
