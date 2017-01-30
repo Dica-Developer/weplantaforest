@@ -8,7 +8,6 @@ import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.common.support.StringHelper;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -67,9 +66,15 @@ public class TreeTypeController {
     @Transactional
     public ResponseEntity<?> uploadUserImage(@RequestParam Long treeTypeId, @RequestParam("file") MultipartFile file) {
         TreeType treeType = _treeTypeRepository.findOne(treeTypeId);
-        String fileEnding = file.getOriginalFilename()
-                                .substring(file.getOriginalFilename()
-                                               .indexOf("."));
+        String fileEnding;
+        if (file.getOriginalFilename()
+                .length() > 0) {
+            fileEnding = file.getOriginalFilename()
+                             .substring(file.getOriginalFilename()
+                                            .indexOf("."));
+        } else {
+            fileEnding = ".png";
+        }
 
         String imageFolder = FileSystemInjector.getTreeTypeFolder();
         String imageName = StringHelper.getTextForLanguage(treeType.getName(), "de") + fileEnding;
