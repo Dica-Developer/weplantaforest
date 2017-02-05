@@ -9,6 +9,8 @@ def ipatUser = ext.properties.get("ipat.user")
 def ipatHost = ext.properties.get("ipat.host")
 def installationDir = "/home/${ipatUser}/weplantaforest"
 
+import org.apache.tools.ant.filters.*;
+
 ssh.settings {
   retryCount = 0
   logging = 'slf4j'
@@ -97,7 +99,7 @@ task deployUi {
   }
 }
 
-configure([project(':article-manager'), project(':user')]) {
+configure([project(':article-manager'), project(':user'), project(':admin')]) {
 
   task prepareServiceScripts(description: 'Creates a init.d script from a template for a specific project.') << {
     assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
@@ -116,6 +118,8 @@ configure([project(':article-manager'), project(':user')]) {
           .replaceAll('@@user@@', ipatUser)
           .replaceAll('@@installationDir@@', installationDir)
       }
+	  filter(FixCrLfFilter.class,
+         eol:FixCrLfFilter.CrLf.newInstance("lf"))
     }
   }
 
