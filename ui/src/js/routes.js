@@ -49,6 +49,7 @@ import ProjectOverview from './backOffice/projectManager/ProjectOverview';
 import ProjectEditor from './backOffice/projectManager/ProjectEditor';
 import TreeTypeOverview from './backOffice/treeTypeManager/TreeTypeOverview';
 import PlantManager from './backOffice/plantManager/PlantManager';
+import SliderImageManager from './backOffice/SliderImageManager/SliderImageManager';
 
 export default class Routes extends Component {
 
@@ -72,7 +73,6 @@ export default class Routes extends Component {
     return (
       <div>
         <NavBar ref="navbar" reRender={this.reRender.bind(this)}/>
-        <Header/>
         <Router history={browserHistory}>
           <Route path="/" component={MainPage} reRender={this.reRender.bind(this)}/>
           <Route path="/plant/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
@@ -117,6 +117,7 @@ export default class Routes extends Component {
           <Route path="/project-edit/:projectId" component={ProjectEditor} reRender={this.reRender.bind(this)}/>
           <Route path="/treeType-manager" component={TreeTypeOverview} reRender={this.reRender.bind(this)}/>
           <Route path="/plant-manager" component={PlantManager} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)}/>
+          <Route path="/slider-image-manager" component={SliderImageManager} reRender={this.reRender.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} isGift={false} isAbo={false}/>
         </Router>
         <Footer/>
