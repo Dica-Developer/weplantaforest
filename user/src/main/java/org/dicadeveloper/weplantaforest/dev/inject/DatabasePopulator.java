@@ -35,6 +35,8 @@ import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.mainSliderImage.MainSliderImage;
+import org.dicadeveloper.weplantaforest.mainSliderImage.MainSliderImageRepository;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
@@ -94,6 +96,8 @@ public class DatabasePopulator {
     private AboRepository _aboRepository;
     private PasswordEncrypter _passwordEncrypter;
     private ReceiptRepository _receiptRepository;
+    private MainSliderImageRepository _mainSliderImageRepository;
+
     @Autowired
     private @NonNull Environment _env;
 
@@ -101,7 +105,7 @@ public class DatabasePopulator {
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository,
             CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator, AboRepository aboRepository,
-            PasswordEncrypter passwordEncrypter, ReceiptRepository receiptRepository) {
+            PasswordEncrypter passwordEncrypter, ReceiptRepository receiptRepository, MainSliderImageRepository mainSliderImageRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -117,6 +121,7 @@ public class DatabasePopulator {
         _aboRepository = aboRepository;
         _passwordEncrypter = passwordEncrypter;
         _receiptRepository = receiptRepository;
+        _mainSliderImageRepository = mainSliderImageRepository;
     }
 
     public DatabasePopulator insertProjects() {
@@ -545,6 +550,26 @@ public class DatabasePopulator {
                 receipt.addCart(cart);
             }
             _receiptRepository.save(receipt);
+        }
+    }
+
+    public void createMainSliderImages() {
+        for (int i = 1; i <= 4; i++) {
+            MainSliderImage image = new MainSliderImage();
+            
+            String imageFileName = "main_image" + i + ".jpg";
+            image.setImageFileName(imageFileName);
+            _mainSliderImageRepository.save(image);
+           
+            Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageFileName).toPath();
+            String imageFileDest = FileSystemInjector.getMainImageFolder() + "/" + imageFileName;
+            File newImageFile = new File(imageFileDest);
+            try {
+                newImageFile.createNewFile();
+                Files.copy(imageFileSrc, newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                LOG.error("Error occured while copying " + imageFileSrc.toString() + " to " + imageFileSrc + "!");
+            }
         }
     }
 
