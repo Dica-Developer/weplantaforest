@@ -50,7 +50,7 @@ export default class PlantManager extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8084/users').then(function(response) {
+    axios.get('http://localhost:8083/users').then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({

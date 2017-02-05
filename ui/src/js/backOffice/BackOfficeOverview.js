@@ -66,6 +66,7 @@ export default class BackOfficeOverview extends Component {
             <BackofficeLink text="TreeType-Manager" url="/treeType-manager" glyphIcon="glyphicon-leaf"/>
             <BackofficeLink text="Plant-Manager" url="/plant-manager" glyphIcon="glyphicon-tree-deciduous"/>
             <BackofficeLink text="Event-Manager" url="/event-manager" glyphIcon="glyphicon-list-alt"/>
+            <BackofficeLink text="Sliderimage-Manager" url="/slider-image-manager" glyphIcon="glyphicon-picture"/>
           </div>
         </div>
     );

@@ -84,7 +84,7 @@ export default class CartOverview extends Component {
 
   loadCarts() {
     var that = this;
-    axios.get('http://localhost:8084/carts').then(function(response) {
+    axios.get('http://localhost:8083/carts').then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({
@@ -165,7 +165,7 @@ export default class CartOverview extends Component {
 
   changeStatusOfCart(id, cartState) {
     var that = this;
-    axios.post('http://localhost:8084/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, {}).then(function(response) {
+    axios.post('http://localhost:8083/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, {}).then(function(response) {
       for(var cart in that.state.carts){
         if(that.state.carts[cart].id == id){
           that.state.carts[cart].cartState = cartState;

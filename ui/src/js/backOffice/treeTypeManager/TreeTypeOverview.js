@@ -72,13 +72,13 @@ class TreeType extends Component {
     var description = createMultiLanguageEntry(this.state.descriptionDe, this.state.descriptionEn);
     this.state.treeType.name = name;
     this.state.treeType.description = description;
-    axios.post('http://localhost:8084/treeType/save', this.state.treeType, {}).then(function(response) {
+    axios.post('http://localhost:8083/treeType/save', this.state.treeType, {}).then(function(response) {
         if (that.state.imageFile != null) {
           var treeTypeId = response.data;
           var treeTypeImageFile = new FormData();
           treeTypeImageFile.append('treeTypeId', treeTypeId);
           treeTypeImageFile.append('file', that.state.imageFile);
-          axios.post('http://localhost:8084/treeType/imageUpload', treeTypeImageFile, {}).then(function(response) {
+          axios.post('http://localhost:8083/treeType/imageUpload', treeTypeImageFile, {}).then(function(response) {
             that.refs.notification.addNotification('Geschafft!', 'Baumtyp wurde gespeichert.', 'success');
           }).catch(function(response) {
               that.refs.notification.addNotification('Fehler!', response.data, 'error');
@@ -112,7 +112,7 @@ updateTreeType(treeType) {
 deleteTreeType() {
   if (this.state.treeType.id != null) {
     var that = this;
-    axios.post('http://localhost:8084/treeType/delete?TreeTypeId=' + this.state.treeType.id, {}, {}).then(function(response) {
+    axios.post('http://localhost:8083/treeType/delete?TreeTypeId=' + this.state.treeType.id, {}, {}).then(function(response) {
       that.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
       that.props.removeTreeType(that.props.index);
     }).catch(function(response) {
@@ -244,7 +244,7 @@ export default class TreeTypeOverview extends Component {
 
   loadTreeTypes() {
     var that = this;
-    axios.get('http://localhost:8084/treeTypes').then(function(response) {
+    axios.get('http://localhost:8083/treeTypes').then(function(response) {
       that.setState({
         treeTypes: response.data
       });

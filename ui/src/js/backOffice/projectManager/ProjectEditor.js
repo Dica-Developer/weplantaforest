@@ -60,7 +60,7 @@ class ProjectImage extends Component {
   deleteProjectImage() {
     if (this.props.projectImage.imageId != null) {
       var that = this;
-      axios.post('http://localhost:8084/project/image/delete?projectImageId=' + this.props.projectImage.imageId + "&imageFileName=" + this.state.requestData.projectImage.imageFileName, {}, {}).then(function(response) {
+      axios.post('http://localhost:8083/project/image/delete?projectImageId=' + this.props.projectImage.imageId + "&imageFileName=" + this.state.requestData.projectImage.imageFileName, {}, {}).then(function(response) {
         that.props.removeProjectImage(that.props.arrayIndex);
         that.refs.notification.addNotification('Geschafft!', 'Bild wurde gelöscht.', 'success');
       }).catch(function(response) {
@@ -107,13 +107,13 @@ class ProjectImage extends Component {
       projectId: this.state.projectId
     };
 
-    axios.post('http://localhost:8084/project/image/createEdit', projectImageData, {}).then(function(response) {
+    axios.post('http://localhost:8083/project/image/createEdit', projectImageData, {}).then(function(response) {
       if (that.state.file != null) {
         var imageId = response.data;
         var projectImageFile = new FormData();
         projectImageFile.append('imageId', imageId);
         projectImageFile.append('file', that.state.file);
-        axios.post('http://localhost:8084/project/image/upload', projectImageFile, {}).then(function(response) {
+        axios.post('http://localhost:8083/project/image/upload', projectImageFile, {}).then(function(response) {
           that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
         }).catch(function(response) {
           that.refs.notification.addNotification('Fehler!', response.data, 'error');
@@ -297,7 +297,7 @@ class ProjectArticle extends Component {
   deleteProjectArticle() {
     if (this.state.article.articleId != null) {
       var that = this;
-      axios.post('http://localhost:8084/project/article/remove?articleId=' + this.state.article.articleId, {}, {}).then(function(response) {
+      axios.post('http://localhost:8083/project/article/remove?articleId=' + this.state.article.articleId, {}, {}).then(function(response) {
         that.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
         that.props.removeProjectArticle(that.props.arrayIndex);
 
@@ -447,19 +447,19 @@ export default class ProjectEditor extends Component {
 
   loadProject() {
     var that = this;
-    axios.get('http://localhost:8084/project?projectId=' + encodeURIComponent(this.props.params.projectId)).then(function(response) {
+    axios.get('http://localhost:8083/project?projectId=' + encodeURIComponent(this.props.params.projectId)).then(function(response) {
       var result = response.data;
       var descriptionDe = getTextForLanguage(result.description, 'DEUTSCH');
       var descriptionEn = getTextForLanguage(result.description, 'ENGLISH');
       that.setState({project: result, descriptionDe: descriptionDe, descriptionEn: descriptionEn});
       that.refs["editor_de"].refreshEditor();
       that.refs["editor_en"].refreshEditor();
-      axios.get('http://localhost:8084/project/articles?projectId=' + encodeURIComponent(that.props.params.projectId)).then(function(response) {
+      axios.get('http://localhost:8083/project/articles?projectId=' + encodeURIComponent(that.props.params.projectId)).then(function(response) {
         var result = response.data;
         that.state.project["articles"] = result;
         that.forceUpdate();
       });
-      axios.get('http://localhost:8084/project/images?projectId=' + encodeURIComponent(that.props.params.projectId)).then(function(response) {
+      axios.get('http://localhost:8083/project/images?projectId=' + encodeURIComponent(that.props.params.projectId)).then(function(response) {
         var result = response.data;
         that.state.project["images"] = result;
         that.forceUpdate();
@@ -539,7 +539,7 @@ export default class ProjectEditor extends Component {
     var that = this;
     var description = createMultiLanguageEntry(this.state.descriptionDe, this.state.descriptionEn);
     this.state.project.description = description;
-    axios.post('http://localhost:8084/project/edit', this.state.project, {}).then(function(response) {
+    axios.post('http://localhost:8083/project/edit', this.state.project, {}).then(function(response) {
       that.refs.notification.addNotification('Geschafft!', 'Projekt wurde aktualisiert.', 'success');
     }).catch(function(response) {
       that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data, 'error');
