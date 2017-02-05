@@ -23,6 +23,7 @@ public class FileSystemInjector {
     public static String USER_DIR = "/user";
     public static String TEAM_DIR = "/teams";
     public static String TREE_DIR = "/trees";
+    public static String MAIN_IMAGE_DIR = "/mainSlider";
 
     private static String topFolder;
 
@@ -38,6 +39,7 @@ public class FileSystemInjector {
             new File(topFolder + UPLOAD_DIR + IMAGE_DIR + USER_DIR).mkdir();
             new File(topFolder + UPLOAD_DIR + IMAGE_DIR + TEAM_DIR).mkdir();
             new File(topFolder + UPLOAD_DIR + IMAGE_DIR + TREE_DIR).mkdir();
+            new File(topFolder + UPLOAD_DIR + IMAGE_DIR + MAIN_IMAGE_DIR).mkdir();
         };
     }
 
@@ -52,17 +54,21 @@ public class FileSystemInjector {
     public static String getTreeTypeFolder() {
         return topFolder + UPLOAD_DIR + IMAGE_DIR + TREETYPE_DIR;
     }
-    
+
     public static String getUserFolder() {
         return topFolder + UPLOAD_DIR + IMAGE_DIR + USER_DIR;
     }
-    
+
     public static String getTeamFolder() {
         return topFolder + UPLOAD_DIR + IMAGE_DIR + TEAM_DIR;
     }
-    
+
     public static String getTreeFolder() {
         return topFolder + UPLOAD_DIR + IMAGE_DIR + TREE_DIR;
+    }
+    
+    public static String getMainImageFolder() {
+        return topFolder + UPLOAD_DIR + IMAGE_DIR + MAIN_IMAGE_DIR;
     }
 
 }

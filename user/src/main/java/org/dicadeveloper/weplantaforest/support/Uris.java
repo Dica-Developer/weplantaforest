@@ -203,4 +203,11 @@ public class Uris {
 
     public final static String CO2_STATISTIC = "/statistic/co2";
 
+    //main slider images
+    
+    public final static String MAIN_SLIDER_IMAGES = "/mainSliderImages";
+    
+    public final static String MAIN_SLIDER_IMAGE = "/mainSliderImage/";
+
+    
 }
