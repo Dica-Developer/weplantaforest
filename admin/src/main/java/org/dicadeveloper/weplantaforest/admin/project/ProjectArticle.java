@@ -30,7 +30,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @EqualsAndHashCode
-@Table(name = "plantarticle")
+@Table(name = "PlantArticle")
 public class ProjectArticle {
 
     @Id
