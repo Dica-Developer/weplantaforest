@@ -42,7 +42,9 @@ public class DataInjector {
                                       .insertCarts()
                                       .insertProjectImages()
                                       .addMainImagesToProjectFolder()
-                                      .addProjectImages();
+                                      .addProjectImages()
+                                      .createMainSliderImages();
+                    ;
                     LOG.info("Finished injecting " + treeCount + " trees ");
                 } else {
                     LOG.info("No entities will be injected.");

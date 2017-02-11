@@ -28,6 +28,8 @@ import org.dicadeveloper.weplantaforest.admin.project.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectImage;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectRepository;
+import org.dicadeveloper.weplantaforest.admin.slider.MainSliderImage;
+import org.dicadeveloper.weplantaforest.admin.slider.MainSliderImageRepository;
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
 import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
@@ -67,13 +69,14 @@ public class DatabasePopulator {
     private CartRepository _cartRepository;
     private PriceRepository _priceRepository;
     private ProjectImageRepository _projectImageRepository;
+    private MainSliderImageRepository _mainSliderImageRepository;
 
     @Autowired
     private @NonNull Environment _env;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
-            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, CartRepository cartRepository, ProjectImageRepository projectImageRepository) {
+            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, CartRepository cartRepository, ProjectImageRepository projectImageRepository, MainSliderImageRepository mainSliderImageRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -82,6 +85,8 @@ public class DatabasePopulator {
         _cartRepository = cartRepository;
         _priceRepository = priceRepository;
         _projectImageRepository = projectImageRepository;
+        _mainSliderImageRepository = mainSliderImageRepository;
+
     }
 
     public DatabasePopulator insertProjects() {
@@ -320,6 +325,26 @@ public class DatabasePopulator {
         }
 
         return this;
+    }
+    
+    public void createMainSliderImages() {
+        for (int i = 1; i <= 4; i++) {
+            MainSliderImage image = new MainSliderImage();
+            
+            String imageFileName = "main_image" + i + ".jpg";
+            image.setImageFileName(imageFileName);
+            _mainSliderImageRepository.save(image);
+           
+            Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageFileName).toPath();
+            String imageFileDest = FileSystemInjector.getMainImageFolder() + "/" + imageFileName;
+            File newImageFile = new File(imageFileDest);
+            try {
+                newImageFile.createNewFile();
+                Files.copy(imageFileSrc, newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                LOG.error("Error occured while copying " + imageFileSrc.toString() + " to " + imageFileDest + "!");
+            }
+        }
     }
     
     private void createProjectImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {

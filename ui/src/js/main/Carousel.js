@@ -14,8 +14,8 @@ export default class Carousel extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/reports/allProjects?page=0&size=10').then(function(response) {
-      var result = response.data.content;
+    axios.get('http://localhost:8081/mainSliderImages').then(function(response) {
+      var result = response.data;
       that.setState({slides: result});
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -49,14 +49,11 @@ export default class Carousel extends Component {
             if (0 === index) {
               activeItem = 'item active';
             }
-            let imageUrl = 'http://localhost:8081/project/image/' + slide.projectName + '/' + slide.projectImageFileName + '/1140/1140';
+            let imageUrl = 'http://localhost:8081/mainSliderImage/' + slide.imageFileName + '/1140/640';
 
             return (
               <div className={activeItem} key={index}>
-                <img src={imageUrl} width="1140" height="400" alt={slide.projectName}/>
-                <div className="carousel-caption" dangerouslySetInnerHTML={{
-                  __html: getShortText(getTextForSelectedLanguage(slide.description), 100)
-                }}/>
+                <img src={imageUrl} width="1140" height="400" />
               </div>
             );
           })}

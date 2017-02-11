@@ -59,4 +59,12 @@ public class Uris {
     public final static String ACTIVE_CHANGE ="/user/changeActiveFlag";
     
     public final static String BANNED_CHANGE ="/user/changeBannedFlag";
+    
+    //main slider
+    public final static String SAVE_MAIN_SLIDER_IMAGE = "/mainSliderImage/save";
+    
+    public final static String SAVE_MAIN_SLIDER_IMAGE_UPLOAD = "/mainSliderImage/upload";
+    
+    public final static String DELETE_MAIN_SLIDER_IMAGE = "/mainSliderImage/delete";
+
 }
