@@ -514,7 +514,3 @@ export function htmlDecode(s) {
     })
   }
 }
-
-export {
-  htmlDecode
-};

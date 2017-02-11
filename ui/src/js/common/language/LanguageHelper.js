@@ -36,7 +36,3 @@ export function getShortText(text, shortenedTO){
 export function createMultiLanguageEntry(germanText, englishText){
   return '<mlpr>GERMAN<equ>' + germanText + '<sep>ENGLISH<equ>' + englishText + '<sep>ITALIAN';
 }
-
-export {
-  getTextForSelectedLanguage, getTextForLanguage, getShortText, createMultiLanguageEntry
-};
