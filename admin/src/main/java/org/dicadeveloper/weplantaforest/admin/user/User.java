@@ -86,6 +86,16 @@ public class User implements Identifiable<Long> {
     public boolean hasRole(Role role){
         return roles.contains(role);
     }
+    
+    @JsonView(Views.OverviewUser.class)
+    public boolean isAdmin(){
+        return roles.contains(Role.ADMIN);
+    }
+    
+    @JsonView(Views.OverviewUser.class)
+    public boolean isArticleManager(){
+        return roles.contains(Role.ARTICLE_MANAGER);
+    }
 
     @Override
     public String toString() {
