@@ -32,12 +32,13 @@ import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
+import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.mainSliderImage.MainSliderImage;
 import org.dicadeveloper.weplantaforest.mainSliderImage.MainSliderImageRepository;
-import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.projects.Price;
 import org.dicadeveloper.weplantaforest.projects.Price.ScontoType;
 import org.dicadeveloper.weplantaforest.projects.PriceRepository;
@@ -224,12 +225,12 @@ public class DatabasePopulator {
             user.setEnabled(true);
             user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
             user.setLastVisit(timeNoew - TimeConstants.WEEK_IN_MILLISECONDS);
-            user.addRole(org.dicadeveloper.weplantaforest.user.Role.USER);
+            user.addRole(Role.USER);
             user.setOrganizationType(OrganizationType.PRIVATE);
             user.setMail(_env.getProperty("mail.receiver"));
             if (i < 5) {
                 user.setImageName("IPAT_logo_Relaunch2016_RZ_RGB.jpg");
-                user.addRole(org.dicadeveloper.weplantaforest.user.Role.ADMIN);
+                user.addRole(Role.ADMIN);
                 user.setLang(Language.DEUTSCH);
             } else if (i < 8) {
                 user.setImageName("50.jpg");

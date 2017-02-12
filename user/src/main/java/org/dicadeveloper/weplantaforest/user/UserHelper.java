@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

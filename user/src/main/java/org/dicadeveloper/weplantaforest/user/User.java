@@ -22,6 +22,7 @@ import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
 import org.springframework.security.core.GrantedAuthority;

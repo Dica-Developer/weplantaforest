@@ -1,12 +1,12 @@
 package org.dicadeveloper.weplantaforest;
 
+import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.security.StatelessAuthenticationFilter;
 import org.dicadeveloper.weplantaforest.security.StatelessLoginFilter;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.security.UserDetailsService;
 import org.dicadeveloper.weplantaforest.support.Uris;
-import org.dicadeveloper.weplantaforest.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

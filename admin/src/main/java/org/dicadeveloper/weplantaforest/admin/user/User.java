@@ -1,7 +1,15 @@
 package org.dicadeveloper.weplantaforest.admin.user;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -9,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.team.Team;
+import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
 
@@ -59,6 +68,24 @@ public class User implements Identifiable<Long> {
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;
+    
+    @Enumerated(EnumType.ORDINAL)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID") )
+    @Column(name = "ELEMENT")
+    private Set<Role> roles = new HashSet<Role>();
+    
+    public void addRole(final Role role) {
+        roles.add(role);
+    }
+
+    public void removeRole(final Role role) {
+        roles.remove(role);
+    }
+    
+    public boolean hasRole(Role role){
+        return roles.contains(role);
+    }
 
     @Override
     public String toString() {
