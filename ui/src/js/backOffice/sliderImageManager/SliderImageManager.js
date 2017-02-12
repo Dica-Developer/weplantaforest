@@ -60,6 +60,22 @@ class SliderImage extends Component {
     this.forceUpdate();
   }
 
+  updateImageFromParent(image){
+    var imageFileName = image.imageFileName == ''
+      ? ''
+      : image.imageFileName.substr(0, image.imageFileName.indexOf('.'));
+    var fileEnding = image.imageFileName == ''
+      ? ''
+      : image.imageFileName.substr(image.imageFileName.indexOf('.'));
+    this.state = {
+      file: null,
+      imageFileName: imageFileName,
+      imageId: image.imageId,
+      fileSrc: null,
+      fileEnding: fileEnding
+    };
+  }
+
   deleteImageConfirmation() {
     this.refs.notificationSystem.addNotification({
       title: 'Achtung!',
@@ -83,21 +99,11 @@ class SliderImage extends Component {
       var that = this;
       axios.delete('http://localhost:8083/mainSliderImage/delete?imageId=' + this.state.imageId).then(function(response) {
         that.props.removeImage(that.props.arrayIndex);
-        that.refs.notification.addNotification('Geschafft!', 'Bild wurde gelöscht.', 'success');
       }).catch(function(response) {
         that.refs.notification.addNotification('Fehler!', response.data, 'error');
-        if (response instanceof Error) {
-          console.error('Error', response.message);
-        } else {
-          console.error(response.data);
-          console.error(response.status);
-          console.error(response.headers);
-          console.error(response.config);
-        }
       });
     } else {
       this.props.removeImage(this.props.arrayIndex);
-      this.refs.notification.addNotification('Geschafft!', 'Bild wurde gelöscht.', 'success');
     }
   }
 
@@ -108,7 +114,6 @@ class SliderImage extends Component {
       imageId: this.state.imageId,
       imageFileName: imageFileName
     };
-
     axios.post('http://localhost:8083/mainSliderImage/save', imageData, {}).then(function(response) {
       if (that.state.file != null) {
         var imageId = response.data;
@@ -189,14 +194,6 @@ export default class SliderImageManager extends Component {
       var result = response.data;
       that.setState({slides: result});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
     });
 
   }
@@ -206,6 +203,7 @@ export default class SliderImageManager extends Component {
     for (var image in this.state.slides) {
       this.refs["image_" + image].updateImageFromParent(this.state.slides[image]);
     }
+    this.refs.notification.addNotification('Geschafft!', 'Bild wurde gelöscht.', 'success');
     this.forceUpdate();
   }
 
@@ -251,6 +249,7 @@ export default class SliderImageManager extends Component {
             <IconButton glyphIcon="glyphicon-plus" text="BILD HINZUFÜGEN" onClick={this.addImage.bind(this)}/>
           </div>
         </div>
+        <Notification ref="notification"/>
       </div>
     );
   }
