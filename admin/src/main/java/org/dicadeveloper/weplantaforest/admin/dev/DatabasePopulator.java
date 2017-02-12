@@ -37,6 +37,7 @@ import org.dicadeveloper.weplantaforest.admin.treeType.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
+import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -206,6 +207,12 @@ public class DatabasePopulator {
             user.setEnabled(true);
             user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
             user.setMail(DEFAULT_USERS.get(i) + "@" + DEFAULT_USERS.get(i) + ".de");
+            if (i < 5) {
+                user.addRole(Role.ADMIN);
+            }else if(i >=5 && i < 8){
+                user.addRole(Role.ARTICLE_MANAGER);
+            }
+            user.addRole(Role.USER);
             _userRepository.save(user);
         }
         return this;
