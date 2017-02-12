@@ -39,7 +39,7 @@ class MailChanger extends Component {
 
   updateMail() {
     var that = this;
-    axios.post('http://localhost:8084/user/changeMail?userId=' + this.props.id + '&newMail=' + this.state.newMail, {}, {}).then(function(response) {
+    axios.post('http://localhost:8083/user/changeMail?userId=' + this.props.id + '&newMail=' + this.state.newMail, {}, {}).then(function(response) {
       that.props.closeEditBox(that.props.id, that.state.newMail);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
@@ -84,7 +84,7 @@ class UserNameChanger extends Component {
 
   updateUsername() {
     var that = this;
-    axios.post('http://localhost:8084/user/changeName?userId=' + this.props.id + '&newUsername=' + this.state.newUsername, {}, {}).then(function(response) {
+    axios.post('http://localhost:8083/user/changeName?userId=' + this.props.id + '&newUsername=' + this.state.newUsername, {}, {}).then(function(response) {
       that.props.closeEditBox(that.props.id, that.state.newUsername);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
@@ -139,17 +139,28 @@ export default class UserOverview extends Component {
       }, {
         key: 'editMail',
         name: '',
-        width: 30
+        width: 30,
+        filterable: true
       }, {
         key: 'active',
         name: 'aktiv',
         width: 70,
-        filterable: true
+        filterable: false
       }, {
         key: 'banned',
         name: 'gebannt',
         width: 70,
-        filterable: true
+        filterable: false
+      }, {
+        key: 'admin',
+        name: 'Admin',
+        width: 70,
+        filterable: false
+      }, {
+        key: 'articleManager',
+        name: 'Art.-Man.',
+        width: 70,
+        filterable: false
       }],
       rows: [],
       filters: {}
@@ -162,7 +173,7 @@ export default class UserOverview extends Component {
 
   loadUser() {
     var that = this;
-    axios.get('http://localhost:8084/users').then(function(response) {
+    axios.get('http://localhost:8083/users').then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({
@@ -170,14 +181,7 @@ export default class UserOverview extends Component {
         rows: rows
       });
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.addNotification('Fehler beim Laden der Nutzer!', response.data, 'error');
     });
   }
 
@@ -198,7 +202,9 @@ export default class UserOverview extends Component {
       mail: user.mail,
       editMail: this.createEditButtonForMail(user.id, user.mail),
       active: this.createActiveIcon(user.id, user.enabled),
-      banned: this.createBannedIcon(user.id, user.banned)
+      banned: this.createBannedIcon(user.id, user.banned),
+      admin: this.createAdminIcon(user.id, user.admin),
+      articleManager: this.createArticleManagerIcon(user.id, user.articleManager)
     };
     return row;
   }
@@ -235,6 +241,30 @@ export default class UserOverview extends Component {
     }else{
       return <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
         this.changeBannedFlagForUser(id,true)
+      }}/>;
+    }
+  }
+
+  createAdminIcon(id, isAdmin){
+    if(isAdmin){
+      return <IconButton glyphIcon="glyphicon-ok" text="" onClick={() => {
+        this.changeAdminRoleForUser(id,false)
+      }}/>;
+    }else{
+      return <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
+        this.changeAdminRoleForUser(id,true)
+      }}/>;
+    }
+  }
+
+  createArticleManagerIcon(id, isArticleManager){
+    if(isArticleManager){
+      return <IconButton glyphIcon="glyphicon-ok" text="" onClick={() => {
+        this.changeArticleManagerRoleForUser(id,false)
+      }}/>;
+    }else{
+      return <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
+        this.changeArticleManagerRoleForUser(id,true)
       }}/>;
     }
   }
@@ -316,37 +346,59 @@ export default class UserOverview extends Component {
     this.forceUpdate();
   }
 
+  updateAdminIcon(id, shouldBeAdmin) {
+    for (var row in this.state.rows) {
+      if (this.state.rows[row].id == id) {
+        this.state.rows[row].admin = this.createAdminIcon(id, shouldBeAdmin);
+        break;
+      }
+    }
+    this.forceUpdate();
+  }
+
+  updateArticleManagerIcon(id, shouldBeArticleManager) {
+    for (var row in this.state.rows) {
+      if (this.state.rows[row].id == id) {
+        this.state.rows[row].articleManager = this.createArticleManagerIcon(id, shouldBeArticleManager);
+        break;
+      }
+    }
+    this.forceUpdate();
+  }
+
   changeActiveFlagForUser(id, active){
     var that = this;
-    axios.post('http://localhost:8084/user/changeActiveFlag?userId=' + id + '&activeFlag=' + active, {}, {}).then(function(response) {
+    axios.post('http://localhost:8083/user/changeActiveFlag?userId=' + id + '&activeFlag=' + active, {}, {}).then(function(response) {
       that.updateActiveIcon(id, active);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
     });
   }
 
   changeBannedFlagForUser(id, banned){
     var that = this;
-    axios.post('http://localhost:8084/user/changeBannedFlag?userId=' + id + '&bannedFlag=' + banned, {}, {}).then(function(response) {
+    axios.post('http://localhost:8083/user/changeBannedFlag?userId=' + id + '&bannedFlag=' + banned, {}, {}).then(function(response) {
       that.updateBannedIcon(id, banned);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    });
+  }
+
+  changeAdminRoleForUser(id, shouldBeAdmin){
+    var that = this;
+    axios.post('http://localhost:8083/user/editAdminRole?userId=' + id + '&shouldBeAdmin=' + shouldBeAdmin, {}, {}).then(function(response) {
+      that.updateAdminIcon(id, shouldBeAdmin);
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
+    });
+  }
+
+  changeArticleManagerRoleForUser(id, shouldBeArticleManager){
+    var that = this;
+    axios.post('http://localhost:8083/user/editArticleManagerRole?userId=' + id + '&shouldBeArticleManager=' + shouldBeArticleManager, {}, {}).then(function(response) {
+      that.updateArticleManagerIcon(id, shouldBeArticleManager);
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
     });
   }
 
