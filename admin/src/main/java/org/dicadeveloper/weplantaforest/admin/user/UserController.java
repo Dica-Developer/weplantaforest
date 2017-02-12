@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.admin.user;
 
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
+import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,4 +83,39 @@ public class UserController {
             return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
         }
     }
+    
+    @RequestMapping(value = Uris.ROLE_ADMIN_CHANGE, method = RequestMethod.POST)
+    public ResponseEntity<?> updateAdminRole(@RequestParam long userId, @RequestParam boolean shouldBeAdmin){
+        User user = _userRepository.findOne(userId);
+        if (user != null) {
+               if(shouldBeAdmin && !user.hasRole(Role.ADMIN)){
+                   user.addRole(Role.ADMIN);                   
+               }else if(!shouldBeAdmin && user.hasRole(Role.ADMIN)){
+                   user.removeRole(Role.ADMIN);
+               }
+               _userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);            
+        }else{
+            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
+        }        
+    }
+    
+    @RequestMapping(value = Uris.ROLE_ARTICLE_MANAGER_CHANGE, method = RequestMethod.POST)
+    public ResponseEntity<?> updateArticleManagerRole(@RequestParam long userId, @RequestParam boolean shouldBeArticleManager){
+        User user = _userRepository.findOne(userId);
+        if (user != null) {
+               if(shouldBeArticleManager && !user.hasRole(Role.ARTICLE_MANAGER)){
+                   user.addRole(Role.ARTICLE_MANAGER);                   
+               }else if(!shouldBeArticleManager && user.hasRole(Role.ARTICLE_MANAGER)){
+                   user.removeRole(Role.ARTICLE_MANAGER);
+               }
+               _userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);            
+        }else{
+            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
+        }
+        
+    }
+    
+    
 }
