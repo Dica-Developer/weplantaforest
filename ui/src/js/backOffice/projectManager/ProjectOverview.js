@@ -29,7 +29,7 @@ export default class ProjectOverview extends Component {
 
   loadProjects() {
     var that = this;
-    axios.get('http://localhost:8084/projects').then(function(response) {
+    axios.get('http://localhost:8083/projects').then(function(response) {
       var result = response.data;
       that.setState({
         projects: result
