@@ -73,6 +73,7 @@ export default class Routes extends Component {
     return (
       <div>
         <NavBar ref="navbar" reRender={this.reRender.bind(this)}/>
+        <Header/>
         <Router history={browserHistory}>
           <Route path="/" component={MainPage} reRender={this.reRender.bind(this)}/>
           <Route path="/plant/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
