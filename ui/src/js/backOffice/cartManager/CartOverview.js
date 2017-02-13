@@ -1,23 +1,15 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
+import {browserHistory} from 'react-router';
 import moment from 'moment';
 import ReactDataGrid from 'react-data-grid';
-import {
-  Toolbar,
-  Data
-} from 'react-data-grid/addons';
+import {Toolbar, Data} from 'react-data-grid/addons';
 
 import IconButton from '../../common/components/IconButton';
 import NotificationSystem from 'react-notification-system';
+import Notification from '../../common/components/Notification';
 
 require("./cartOverview.less");
 
@@ -27,52 +19,63 @@ export default class CartOverview extends Component {
     super();
     this.state = {
       carts: [],
-      columns: [{
-        key: 'id',
-        name: 'ID',
-        width: 40,
-        filterable: true
-      }, {
-        key: 'user',
-        name: 'User',
-        width: 120,
-        filterable: true
-      }, {
-        key: 'price',
-        name: 'Preis (€)',
-        width: 90,
-        filterable: true
-      }, {
-        key: 'status',
-        name: 'Status',
-        width: 120,
-        filterable: true
-      }, {
-        key: 'timestamp',
-        name: 'Erstellt am',
-        width: 100,
-        filterable: true
-      }, {
-        key: 'firstName',
-        name: 'Vorname',
-        width: 150,
-        filterable: true
-      }, {
-        key: 'lastName',
-        name: 'Nachname',
-        width: 150,
-        filterable: true
-      }, {
-        key: 'company',
-        name: 'Firma',
-        width: 200,
-        filterable: true
-      }, {
-        key: 'stateChange',
-        name: '',
-        width: 100,
-        filterablte: false
-      }],
+      columns: [
+        {
+          key: 'id',
+          name: 'ID',
+          width: 40,
+          filterable: true,
+          sortable: true
+        }, {
+          key: 'user',
+          name: 'User',
+          width: 120,
+          filterable: true,
+          sortable: true
+        }, {
+          key: 'price',
+          name: 'Preis (€)',
+          width: 90,
+          filterable: true,
+          sortable: true
+        }, {
+          key: 'status',
+          name: 'Status',
+          width: 120,
+          filterable: true,
+          sortable: true
+        }, {
+          key: 'timestamp',
+          name: 'Erstellt am',
+          width: 100,
+          filterable: true,
+          sortable: true
+        }, {
+          key: 'firstName',
+          name: 'Vorname',
+          width: 150,
+          filterable: true,
+          sortable: true
+        }, {
+          key: 'lastName',
+          name: 'Nachname',
+          width: 150,
+          filterable: true,
+          sortable: true
+        }, {
+          key: 'company',
+          name: 'Firma',
+          width: 200,
+          filterable: true,
+          sortable: true
+        }, {
+          key: 'stateChange',
+          name: 'Actions',
+          width: 100,
+          filterablte: false,
+          sortable: true
+        }
+      ],
       rows: [],
       filters: {}
     }
@@ -87,19 +90,9 @@ export default class CartOverview extends Component {
     axios.get('http://localhost:8083/carts').then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
-      that.setState({
-        carts: result,
-        rows: rows
-      });
+      that.setState({carts: result, rows: rows});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.addNotification('Fehler beim Laden der Pflanzkörbe!', response.data, 'error');
     });
   }
 
@@ -113,13 +106,15 @@ export default class CartOverview extends Component {
   }
 
   createRow(cart) {
-    var user = cart.buyer == null ? '' : cart.buyer.name;
+    var user = cart.buyer == null
+      ? ''
+      : cart.buyer.name;
     var row = {
       id: cart.id,
       user: user,
       price: cart.totalPrice,
       status: cart.cartState,
-      timestamp: {moment(cart.timeStamp).format("DD.MM.YYYY")},
+      timestamp: moment(cart.timeStamp).format("DD.MM.YYYY"),
       firstName: cart.callBackVorname,
       lastName: cart.callBackNachname,
       company: cart.callBackFirma,
@@ -130,19 +125,19 @@ export default class CartOverview extends Component {
   createStateChangeButtons(id, cartState) {
     if (cartState == 'CALLBACK') {
       return <div className="state-change-buttons">
-              <IconButton glyphIcon="glyphicon-ok" text="" onClick={() => {
-                this.changeStatusOfCart(id, 'VERIFIED')
-              }}/>
-              <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
-                this.createDiscardConfirmation(id)
-              }}/>
-            </div>;
-    }else if(cartState == 'VERIFIED'){
+        <IconButton glyphIcon="glyphicon-ok" text="" onClick={() => {
+          this.changeStatusOfCart(id, 'VERIFIED')
+        }}/>
+        <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
+          this.createDiscardConfirmation(id)
+        }}/>
+      </div>;
+    } else if (cartState == 'VERIFIED') {
       return <div className="state-change-buttons">
-              <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
-                this.createDiscardConfirmation(id)
-              }}/>
-            </div>;
+        <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
+          this.createDiscardConfirmation(id)
+        }}/>
+      </div>;
     }
   }
 
@@ -167,14 +162,14 @@ export default class CartOverview extends Component {
   changeStatusOfCart(id, cartState) {
     var that = this;
     axios.post('http://localhost:8083/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, {}).then(function(response) {
-      for(var cart in that.state.carts){
-        if(that.state.carts[cart].id == id){
+      for (var cart in that.state.carts) {
+        if (that.state.carts[cart].id == id) {
           that.state.carts[cart].cartState = cartState;
           break;
         }
       }
-      for(var row in that.state.rows){
-        if(that.state.rows[row].id == id){
+      for (var row in that.state.rows) {
+        if (that.state.rows[row].id == id) {
           that.state.rows[row].status = cartState;
           that.state.rows[row].stateChange = that.createStateChangeButtons(id, cartState);
           break;
@@ -182,22 +177,12 @@ export default class CartOverview extends Component {
       }
       that.forceUpdate();
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Status vom Pflanzkorb mit der ID ' + id + "auf "+ cartState +" ist folgender Fehler aufgetreten:" + response.data, 'error');
     });
   }
 
   getRows() {
-    return Data.Selectors.getRows({
-      rows: this.state.rows,
-      filters: this.state.filters
-    });
+    return Data.Selectors.getRows({rows: this.state.rows, filters: this.state.filters});
   }
 
   rowGetter(i) {
@@ -216,15 +201,32 @@ export default class CartOverview extends Component {
     } else {
       delete newFilters[filter.column.key];
     }
-    this.setState({
-      filters: newFilters
-    });
+    this.setState({filters: newFilters});
+  }
+
+  handleGridSort(sortColumn, sortDirection) {
+    var sortedRows = this.state.rows;
+    const comparer = (a, b) => {
+      if (sortDirection === 'ASC') {
+        return (a[sortColumn] > b[sortColumn])
+          ? 1
+          : -1;
+      } else if (sortDirection === 'DESC') {
+        return (a[sortColumn] < b[sortColumn])
+          ? 1
+          : -1;
+      }
+    };
+
+    const rows = sortDirection === 'NONE'
+      ? ' '
+      : sortedRows.sort(comparer);
+
+    this.setState(rows: sortedRows);
   }
 
   onClearFilters() {
-    this.setState({
-      filters: {}
-    });
+    this.setState({filters: {}});
   }
 
   getEmptyRowView() {
@@ -256,12 +258,13 @@ export default class CartOverview extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <ReactDataGrid columns={this.state.columns} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} minHeight={800} toolbar={< Toolbar enableFilter = {
+            <ReactDataGrid columns={this.state.columns} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
               true
             } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
           </div>
         </div>
         <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification"/>
       </div>
     );
   }
