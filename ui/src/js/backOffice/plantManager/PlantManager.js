@@ -18,6 +18,7 @@ import ImageButton from '../../common/components/ImageButton';
 import Notification from '../../common/components/Notification';
 import BottomPart from '../../planting/BottomPart';
 import Project from '../../planting/customPlantPage/Project';
+import {getConfig} from '../../common/RestHelper';
 
 require("./plantManager.less");
 
@@ -50,7 +51,8 @@ export default class PlantManager extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8083/users').then(function(response) {
+    var config = getConfig();
+    axios.get('http://localhost:8083/users', config).then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({
@@ -58,19 +60,14 @@ export default class PlantManager extends Component {
         rows: rows
       });
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.addNotification('Fehler beim Laden der Nutzer!', response.data + response.message, 'error');
     });
     axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
       var result = response.data;
       that.setState({projects: result});
       that.forceUpdate();
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Fehler beim Laden der aktiven Projekte!', response.data + response.message, 'error');
     });
   }
 
@@ -112,25 +109,11 @@ export default class PlantManager extends Component {
       plantBag: plantBag
     };
 
-    var config = {
-          headers: {
-            'X-AUTH-TOKEN': localStorage.getItem('jwt')
-          }
-        };
-
+    var config = getConfig();
     axios.post('http://localhost:8081/plantForUser/' , request, config).then(function(response) {
       that.refs.notification.addNotification('Bäume wurden für den Nutzer gepflant!', '', 'success');
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', '', 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-      console.error('Payment failed');
     });
   }
 

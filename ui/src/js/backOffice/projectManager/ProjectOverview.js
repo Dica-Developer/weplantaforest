@@ -11,6 +11,8 @@ import {
 } from 'react-router';
 
 import IconButton from '../../common/components/IconButton';
+import {getConfig} from '../../common/RestHelper';
+import NotificationSystem from 'react-notification-system';
 
 require("./projectOverview.less");
 
@@ -29,20 +31,14 @@ export default class ProjectOverview extends Component {
 
   loadProjects() {
     var that = this;
-    axios.get('http://localhost:8083/projects').then(function(response) {
+    var config = getConfig();
+    axios.get('http://localhost:8083/projects', config).then(function(response) {
       var result = response.data;
       that.setState({
         projects: result
       });
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.addNotification('Fehler beim Laden der Projekte!', response.data + response.message, 'error');
     });
   }
 

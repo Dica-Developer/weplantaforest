@@ -10,6 +10,7 @@ import {Toolbar, Data} from 'react-data-grid/addons';
 import IconButton from '../../common/components/IconButton';
 import NotificationSystem from 'react-notification-system';
 import Notification from '../../common/components/Notification';
+import {getConfig} from '../../common/RestHelper';
 
 require("./cartOverview.less");
 
@@ -87,7 +88,8 @@ export default class CartOverview extends Component {
 
   loadCarts() {
     var that = this;
-    axios.get('http://localhost:8083/carts').then(function(response) {
+    var config = getConfig();
+    axios.get('http://localhost:8083/carts', config).then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({carts: result, rows: rows});

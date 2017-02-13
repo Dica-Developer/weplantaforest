@@ -18,6 +18,7 @@ import {
 
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
+import {getConfig} from '../../common/RestHelper';
 
 require("./userOverview.less");
 
@@ -39,7 +40,8 @@ class MailChanger extends Component {
 
   updateMail() {
     var that = this;
-    axios.post('http://localhost:8083/user/changeMail?userId=' + this.props.id + '&newMail=' + this.state.newMail, {}, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/user/changeMail?userId=' + this.props.id + '&newMail=' + this.state.newMail, {}, config).then(function(response) {
       that.props.closeEditBox(that.props.id, that.state.newMail);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
@@ -84,7 +86,8 @@ class UserNameChanger extends Component {
 
   updateUsername() {
     var that = this;
-    axios.post('http://localhost:8083/user/changeName?userId=' + this.props.id + '&newUsername=' + this.state.newUsername, {}, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/user/changeName?userId=' + this.props.id + '&newUsername=' + this.state.newUsername, {}, config).then(function(response) {
       that.props.closeEditBox(that.props.id, that.state.newUsername);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
@@ -173,7 +176,8 @@ export default class UserOverview extends Component {
 
   loadUser() {
     var that = this;
-    axios.get('http://localhost:8083/users').then(function(response) {
+    var config = getConfig();
+    axios.get('http://localhost:8083/users', config).then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({
@@ -368,7 +372,8 @@ export default class UserOverview extends Component {
 
   changeActiveFlagForUser(id, active){
     var that = this;
-    axios.post('http://localhost:8083/user/changeActiveFlag?userId=' + id + '&activeFlag=' + active, {}, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/user/changeActiveFlag?userId=' + id + '&activeFlag=' + active, {}, config).then(function(response) {
       that.updateActiveIcon(id, active);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
@@ -377,7 +382,8 @@ export default class UserOverview extends Component {
 
   changeBannedFlagForUser(id, banned){
     var that = this;
-    axios.post('http://localhost:8083/user/changeBannedFlag?userId=' + id + '&bannedFlag=' + banned, {}, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/user/changeBannedFlag?userId=' + id + '&bannedFlag=' + banned, {}, config).then(function(response) {
       that.updateBannedIcon(id, banned);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
@@ -386,7 +392,8 @@ export default class UserOverview extends Component {
 
   changeAdminRoleForUser(id, shouldBeAdmin){
     var that = this;
-    axios.post('http://localhost:8083/user/editAdminRole?userId=' + id + '&shouldBeAdmin=' + shouldBeAdmin, {}, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/user/editAdminRole?userId=' + id + '&shouldBeAdmin=' + shouldBeAdmin, {}, config).then(function(response) {
       that.updateAdminIcon(id, shouldBeAdmin);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
@@ -395,7 +402,8 @@ export default class UserOverview extends Component {
 
   changeArticleManagerRoleForUser(id, shouldBeArticleManager){
     var that = this;
-    axios.post('http://localhost:8083/user/editArticleManagerRole?userId=' + id + '&shouldBeArticleManager=' + shouldBeArticleManager, {}, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/user/editArticleManagerRole?userId=' + id + '&shouldBeArticleManager=' + shouldBeArticleManager, {}, config).then(function(response) {
       that.updateArticleManagerIcon(id, shouldBeArticleManager);
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');

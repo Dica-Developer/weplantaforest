@@ -16,6 +16,7 @@ import IconButton from '../../common/components/IconButton';
 import FileChooser from '../../common/components/FileChooser';
 import Notification from '../../common/components/Notification';
 import NotificationSystem from 'react-notification-system';
+import {getConfig} from '../../common/RestHelper';
 
 require("./treeTypeOverview.less");
 
@@ -72,30 +73,23 @@ class TreeType extends Component {
     var description = createMultiLanguageEntry(this.state.descriptionDe, this.state.descriptionEn);
     this.state.treeType.name = name;
     this.state.treeType.description = description;
-    axios.post('http://localhost:8083/treeType/save', this.state.treeType, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/treeType/save', this.state.treeType, config).then(function(response) {
         if (that.state.imageFile != null) {
           var treeTypeId = response.data;
           var treeTypeImageFile = new FormData();
           treeTypeImageFile.append('treeTypeId', treeTypeId);
           treeTypeImageFile.append('file', that.state.imageFile);
-          axios.post('http://localhost:8083/treeType/imageUpload', treeTypeImageFile, {}).then(function(response) {
+          axios.post('http://localhost:8083/treeType/imageUpload', treeTypeImageFile, config).then(function(response) {
             that.refs.notification.addNotification('Geschafft!', 'Baumtyp wurde gespeichert.', 'success');
           }).catch(function(response) {
-              that.refs.notification.addNotification('Fehler!', response.data, 'error');
+              that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
           });
         } else {
           that.refs.notification.addNotification('Geschafft!', 'Baumtyp wurde gespeichert.', 'success');
         }
     }).catch(function(response) {
-    that.refs.notification.addNotification('Fehler!', response.data, 'error');
-    if (response instanceof Error) {
-      console.error('Error', response.message);
-    } else {
-      console.error(response.data);
-      console.error(response.status);
-      console.error(response.headers);
-      console.error(response.config);
-    }
+    that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
   });
 }
 
@@ -112,19 +106,12 @@ updateTreeType(treeType) {
 deleteTreeType() {
   if (this.state.treeType.id != null) {
     var that = this;
-    axios.post('http://localhost:8083/treeType/delete?TreeTypeId=' + this.state.treeType.id, {}, {}).then(function(response) {
+    var config = getConfig();
+    axios.delete('http://localhost:8083/treeType/delete?TreeTypeId=' + this.state.treeType.id, {}, config).then(function(response) {
       that.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
       that.props.removeTreeType(that.props.index);
     }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler!', response.data, 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
     });
   } else {
     this.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
@@ -244,20 +231,14 @@ export default class TreeTypeOverview extends Component {
 
   loadTreeTypes() {
     var that = this;
-    axios.get('http://localhost:8083/treeTypes').then(function(response) {
+    var config = getConfig();
+    axios.get('http://localhost:8083/treeTypes', config).then(function(response) {
       that.setState({
         treeTypes: response.data
       });
       that.forceUpdate();
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.addNotification('Fehler beim Laden der Baumtypen!', response.data + response.message, 'error');
     });
   }
 
