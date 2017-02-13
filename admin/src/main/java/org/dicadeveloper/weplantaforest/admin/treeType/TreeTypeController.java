@@ -46,7 +46,7 @@ public class TreeTypeController {
         }
     }
 
-    @RequestMapping(value = Uris.TREETYPE_DELETE, method = RequestMethod.POST)
+    @RequestMapping(value = Uris.TREETYPE_DELETE, method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteTreeType(@RequestParam Long TreeTypeId) {
 
         try {
