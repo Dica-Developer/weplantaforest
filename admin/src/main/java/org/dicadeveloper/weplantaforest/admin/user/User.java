@@ -1,6 +1,9 @@
 package org.dicadeveloper.weplantaforest.admin.user;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -17,10 +20,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.team.Team;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
@@ -32,19 +40,24 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Table(name = "User")
-public class User implements Identifiable<Long> {
+public class User implements Identifiable<Long>, UserDetails {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3845260664014536983L;
 
     @Id
     @GeneratedValue
     @Column(name = "_userId")
-    @JsonView({Views.OverviewUser.class, Views.ProjectData.class})
+    @JsonView({ Views.OverviewUser.class, Views.ProjectData.class })
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView({Views.OverviewCart.class, Views.OverviewUser.class, Views.ProjectData.class})
+    @JsonView({ Views.OverviewCart.class, Views.OverviewUser.class, Views.ProjectData.class })
     private String name;
-    
-    @Column(name ="_password")
+
+    @Column(name = "_password")
     private String password;
 
     @Column(name = "_email", length = 500)
@@ -62,19 +75,46 @@ public class User implements Identifiable<Long> {
     @Column(name = "_regDate")
     private Long regDate;
 
+    @Column(name = "_lastVisit")
+    private Long lastVisit;
+
     @Column(name = "_organisationType")
     private int organizationType;
+    
+    @Column(name = "_imageName")
+    private String imageName;
+    
+    @Column(name = "_aboutme")
+    private String aboutMe;
+
+    @Column(name = "_location")
+    private String location;
+
+    @Column(name = "_organisation")
+    private String organisation;
+    
+    @Column(name ="_homepage")
+    private String homepage;
+    
+    @Column(name ="_lang")
+    private Language lang;
+    
+    @Column(name ="_newsletter")
+    private boolean newsletter;
+    
+    @Column(name = "_activationKey")
+    private String activationKey;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     private Team team;
-    
+
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID") )
     @Column(name = "ELEMENT")
     private Set<Role> roles = new HashSet<Role>();
-    
+
     public void addRole(final Role role) {
         roles.add(role);
     }
@@ -82,23 +122,53 @@ public class User implements Identifiable<Long> {
     public void removeRole(final Role role) {
         roles.remove(role);
     }
-    
-    public boolean hasRole(Role role){
+
+    public boolean hasRole(Role role) {
         return roles.contains(role);
     }
-    
+
     @JsonView(Views.OverviewUser.class)
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
-    
+
     @JsonView(Views.OverviewUser.class)
-    public boolean isArticleManager(){
+    public boolean isArticleManager() {
         return roles.contains(Role.ARTICLE_MANAGER);
+    }
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getIdentifier()));
+        }
+        return authorities;
     }
 
     @Override
     public String toString() {
         return "'" + name + "'(" + mail + ")[" + id + "]";
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return banned;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 }
