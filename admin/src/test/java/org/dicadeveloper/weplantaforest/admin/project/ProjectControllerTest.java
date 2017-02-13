@@ -72,9 +72,6 @@ public class ProjectControllerTest {
     @Autowired
     private TokenAuthenticationService _tokenAuthenticationService;
 
-    @Autowired
-    private UserRepository _userRepository;
-
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
