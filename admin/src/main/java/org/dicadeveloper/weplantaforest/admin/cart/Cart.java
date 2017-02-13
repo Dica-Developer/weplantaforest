@@ -225,7 +225,9 @@ public class Cart implements Identifiable<Long> {
     public BigDecimal getTotalPrice() {
         BigDecimal total = new BigDecimal(0.00);
         for (final CartItem item : cartItems) {
-            total = total.add(item.getTotalPrice());
+            if(item.getTotalPrice() != null){
+                total = total.add(item.getTotalPrice());                
+            }
         }
         return total;
     }
