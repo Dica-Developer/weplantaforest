@@ -163,7 +163,8 @@ export default class CartOverview extends Component {
 
   changeStatusOfCart(id, cartState) {
     var that = this;
-    axios.post('http://localhost:8083/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, config).then(function(response) {
       for (var cart in that.state.carts) {
         if (that.state.carts[cart].id == id) {
           that.state.carts[cart].cartState = cartState;
