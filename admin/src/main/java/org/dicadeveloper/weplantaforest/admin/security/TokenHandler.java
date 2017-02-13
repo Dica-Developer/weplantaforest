@@ -12,6 +12,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.dicadeveloper.weplantaforest.admin.user.User;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class TokenHandler {
@@ -49,6 +50,16 @@ public final class TokenHandler {
         }
         return null;
     }
+    
+    public String createTokenForUser(User user) {
+        byte[] userBytes = toJSON(user);
+        byte[] hash = createHmac(userBytes);
+        final StringBuilder sb = new StringBuilder(170);
+        sb.append(toBase64(userBytes));
+        sb.append(SEPARATOR);
+        sb.append(toBase64(hash));
+        return sb.toString();
+    }
 
 
     private User fromJSON(final byte[] userBytes) {
@@ -58,6 +69,19 @@ public final class TokenHandler {
             throw new IllegalStateException(e);
         }
     }
+    
+    private byte[] toJSON(User user) {
+        try {
+            return new ObjectMapper().writeValueAsBytes(user);
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private String toBase64(byte[] content) {
+        return DatatypeConverter.printBase64Binary(content);
+    }
+
 
     private byte[] fromBase64(String content) {
         return DatatypeConverter.parseBase64Binary(content);

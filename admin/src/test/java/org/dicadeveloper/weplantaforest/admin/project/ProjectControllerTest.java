@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
+import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
@@ -68,6 +69,12 @@ public class ProjectControllerTest {
     @Autowired
     private ProjectImageRepository _projectImageRepository;
 
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
+
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
@@ -86,8 +93,10 @@ public class ProjectControllerTest {
         project.setShopActive(true);
         project.setVisible(true);
         project.setManager(_userRepository.findByName("ProjectManager"));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
-        mockMvc.perform(post(Uris.PROJECT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(Uris.PROJECT_CREATE).header("X-AUTH-TOKEN", userToken)
+                                                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                  .content(TestUtil.convertObjectToJsonBytes(project)))
                .andExpect(status().isOk());
 
@@ -106,8 +115,10 @@ public class ProjectControllerTest {
         project.setLongitude(2.0f);
         project.setShopActive(true);
         project.setVisible(true);
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
-        mockMvc.perform(post(Uris.PROJECT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(Uris.PROJECT_CREATE).header("X-AUTH-TOKEN", userToken)
+                                                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                  .content(TestUtil.convertObjectToJsonBytes(project)))
                .andExpect(status().is5xxServerError());
     }
@@ -123,8 +134,10 @@ public class ProjectControllerTest {
         assertThat(_projectRepository.count()).isEqualTo(1L);
         assertThat(_projectArticleRepository.count()).isEqualTo(1L);
         assertThat(_projectImageRepository.count()).isEqualTo(1L);
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
-        mockMvc.perform(delete(Uris.PROJECT_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        mockMvc.perform(delete(Uris.PROJECT_DELETE).header("X-AUTH-TOKEN", userToken)
+                                                   .contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                    .param("id", "1"))
                .andExpect(status().isOk());
         assertThat(_projectRepository.count()).isEqualTo(0);
@@ -139,12 +152,14 @@ public class ProjectControllerTest {
         _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
         _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
         _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
 
         assertThat(articles.size()).isEqualTo(1);
 
-        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).header("X-AUTH-TOKEN", userToken)
+                                                         .contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                          .param("articleId", "1")
                                                          .param("projectId", "1"))
                .andExpect(status().isOk());
@@ -158,6 +173,7 @@ public class ProjectControllerTest {
     public void testAddProjectImage() throws Exception {
         _dbInjecter.injectUser("manager");
         _dbInjecter.injectProject("project 1", "manager", "desc", true, 1.0f, 1.0f);
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
                                           .size()).isEqualTo(0);
@@ -167,6 +183,7 @@ public class ProjectControllerTest {
         String projectImageRequestAsJson = TestUtil.getJsonStringFromObject(projectImageRequest);
 
         mockMvc.perform(MockMvcRequestBuilders.post(Uris.PROJECT_IMAGE_CREATE_EDIT)
+                                              .header("X-AUTH-TOKEN", userToken)
                                               .contentType(TestUtil.APPLICATION_JSON_UTF8)
                                               .content(projectImageRequestAsJson))
                .andExpect(status().isOk());
@@ -181,6 +198,7 @@ public class ProjectControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.PROJECT_IMAGE_UPLOAD)
                                               .file(image)
+                                              .header("X-AUTH-TOKEN", userToken)
                                               .contentType(mediaType)
                                               .param("imageId", "1"))
                .andExpect(status().isOk());

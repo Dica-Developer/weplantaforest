@@ -1,12 +1,11 @@
 package org.dicadeveloper.weplantaforest.admin.cart;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
+import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
+import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.junit.Before;
@@ -51,12 +52,18 @@ public class CartControllerTest {
 
     @Autowired
     private DbInjecter _dbInjecter;
-    
+
     @Autowired
     private CartRepository _cartRepository;
-    
+
     @Autowired
     private TreeRepository _treeRepository;
+
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
 
     @Before
     public void setup() {
@@ -75,13 +82,15 @@ public class CartControllerTest {
         _dbInjecter.injectProjectArticle("wood", "project", 1.0);
 
         _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "project");
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         List<Long> treeIdList = new ArrayList<>();
         treeIdList.add(1L);
 
         _dbInjecter.injectCart("Adam", treeIdList);
 
-        mockMvc.perform(get(Uris.CARTS).accept("application/json"))
+        mockMvc.perform(get(Uris.CARTS).header("X-AUTH-TOKEN", userToken)
+                                       .accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].buyer.name").value("Adam"));
     }
@@ -98,28 +107,30 @@ public class CartControllerTest {
         _dbInjecter.injectProjectArticle("wood", "project", 1.0);
 
         _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "project");
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         List<Long> treeIdList = new ArrayList<>();
         treeIdList.add(1L);
 
         _dbInjecter.injectCart("Adam", treeIdList);
-        
+
         Cart cartBeforeChangedState = _cartRepository.findOne(1L);
-        
+
         assertThat(cartBeforeChangedState.getCartState()).isNull();
 
-        mockMvc.perform(post(Uris.CHANGE_CART_STATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken)
+                                                    .contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("cartId", "1")
                                                     .param("cartState", "VERIFIED"))
                .andExpect(status().isOk());
-        
+
         Cart cartAfterChangedState = _cartRepository.findOne(1L);
-        
+
         assertThat(_cartRepository.count()).isEqualTo(1);
         assertThat(cartAfterChangedState.getCartState()).isEqualTo(CartState.VERIFIED);
 
     }
-    
+
     @Test
     @Transactional
     public void testChangeCartStateToDiscarded() throws Exception {
@@ -137,28 +148,33 @@ public class CartControllerTest {
         treeIdList.add(1L);
 
         _dbInjecter.injectCart("Adam", treeIdList);
-        
-        Cart cartBeforeChangedState = _cartRepository.findOne(1L);
-        
-        assertThat(cartBeforeChangedState.getCartState()).isNull();
-        
-        assertThat(_treeRepository.count()).isEqualTo(1);
 
-        mockMvc.perform(post(Uris.CHANGE_CART_STATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        Cart cartBeforeChangedState = _cartRepository.findOne(1L);
+
+        assertThat(cartBeforeChangedState.getCartState()).isNull();
+
+        assertThat(_treeRepository.count()).isEqualTo(1);
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+
+        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken)
+                                                    .contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("cartId", "1")
                                                     .param("cartState", "DISCARDED"))
                .andExpect(status().isOk());
-        
+
         Cart cartAfterChangedState = _cartRepository.findOne(1L);
-        
+
         assertThat(_cartRepository.count()).isEqualTo(1);
         assertThat(cartAfterChangedState.getCartState()).isEqualTo(CartState.DISCARDED);
         assertThat(_treeRepository.count()).isEqualTo(0);
     }
-    
+
     @Test
     public void testChangeCartStateBadRequestCauseOfNonExistingCartId() throws Exception {
-     mockMvc.perform(post(Uris.CHANGE_CART_STATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+
+        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken)
+                                                    .contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("cartId", "1")
                                                     .param("cartState", "VERIFIED"))
                .andExpect(status().isBadRequest());

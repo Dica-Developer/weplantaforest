@@ -11,7 +11,10 @@ import java.io.IOException;
 
 import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
+import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
+import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.junit.After;
@@ -52,10 +55,23 @@ public class TreeTypeControllerTest {
 
     @Autowired
     private TreeTypeRepository _treeTypeRepository;
+    
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
+    
+    @Autowired
+    private DbInjecter _dbInjecter;
+    
+    String userToken = null;
 
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
+        _dbInjecter.injectUser("Adam");
+        userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));        
     }
 
     @After
@@ -72,7 +88,7 @@ public class TreeTypeControllerTest {
         treeType.setAnnualCo2SavingInTons(0.5);
         treeType.setInfoLink("www.abc.de");
 
-        mockMvc.perform(post(Uris.TREETYPE_SAVE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(Uris.TREETYPE_SAVE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                 .content(TestUtil.convertObjectToJsonBytes(treeType)))
                .andExpect(status().isOk());
 
@@ -91,7 +107,7 @@ public class TreeTypeControllerTest {
         MediaType mediaType = new MediaType("multipart", "form-data");
 
         mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.TREETYPE_IMAGE_UPLOAD)
-                                              .file(image)
+                                              .file(image).header("X-AUTH-TOKEN", userToken)
                                               .contentType(mediaType)
                                               .param("treeTypeId", "1"))
                .andExpect(status().isOk());

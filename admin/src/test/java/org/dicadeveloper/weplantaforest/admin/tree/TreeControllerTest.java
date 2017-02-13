@@ -6,8 +6,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication;
+import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.junit.Before;
@@ -46,10 +48,18 @@ public class TreeControllerTest {
 
     @Autowired
     private TreeRepository _treeRepository;
+    
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
+    
 
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
+        
     }
 
     @Test
@@ -59,8 +69,9 @@ public class TreeControllerTest {
 
         _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle("wood", "project", 100, 1.0, 0.5);
-
-        mockMvc.perform(post(Uris.PLANT_FOR_USER).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+       
+        mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("userId", "1")
                                                     .param("projectArticleId", "1")
                                                     .param("amount", "10"))
@@ -85,8 +96,9 @@ public class TreeControllerTest {
 
         _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle("wood", "project", 100, 1.0, 0.5);
-
-        mockMvc.perform(post(Uris.PLANT_FOR_USER).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        
+        mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("userId", "1")
                                                     .param("projectArticleId", "2")
                                                     .param("amount", "10"))
@@ -101,8 +113,9 @@ public class TreeControllerTest {
         _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle("wood", "project", 100, 1.0, 0.5);
         _dbInjecter.injectTreeToProject("wood", "Adam", 91, System.currentTimeMillis(), "project");
-
-        mockMvc.perform(post(Uris.PLANT_FOR_USER).contentType(TestUtil.APPLICATION_JSON_UTF8)
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        
+        mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("userId", "1")
                                                     .param("projectArticleId", "1")
                                                     .param("amount", "10"))

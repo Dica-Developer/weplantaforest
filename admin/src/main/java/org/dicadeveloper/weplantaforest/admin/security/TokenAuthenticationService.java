@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.admin.security;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
 import org.dicadeveloper.weplantaforest.admin.user.User;
@@ -24,6 +23,7 @@ public class TokenAuthenticationService {
     public TokenAuthenticationService(@Value("${token.secret}") String secret) {
         tokenHandler = new TokenHandler(DatatypeConverter.parseBase64Binary(secret));
     }
+    
 
     public Authentication getAuthentication(HttpServletRequest request) {
         final String token = request.getHeader(AUTH_HEADER_NAME);
@@ -32,6 +32,14 @@ public class TokenAuthenticationService {
             if (user != null) {
                 return new UserAuthentication(user);
             }
+        }
+        return null;
+    }
+    
+    public String getTokenFromUser(User user) {
+        if (user != null) {
+            final String token = tokenHandler.createTokenForUser(user);
+            return token;
         }
         return null;
     }
