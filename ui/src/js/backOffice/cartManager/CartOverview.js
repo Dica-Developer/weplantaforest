@@ -9,7 +9,7 @@ import axios from 'axios';
 import {
   browserHistory
 } from 'react-router';
-
+import moment from 'moment';
 import ReactDataGrid from 'react-data-grid';
 import {
   Toolbar,
@@ -113,12 +113,13 @@ export default class CartOverview extends Component {
   }
 
   createRow(cart) {
+    var user = cart.buyer == null ? '' : cart.buyer.name;
     var row = {
       id: cart.id,
-      user: cart.buyer.name,
+      user: user,
       price: cart.totalPrice,
       status: cart.cartState,
-      timestamp: cart.timeStamp,
+      timestamp: {moment(cart.timeStamp).format("DD.MM.YYYY")},
       firstName: cart.callBackVorname,
       lastName: cart.callBackNachname,
       company: cart.callBackFirma,
