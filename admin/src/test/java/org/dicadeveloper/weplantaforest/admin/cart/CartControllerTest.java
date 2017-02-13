@@ -171,6 +171,7 @@ public class CartControllerTest {
 
     @Test
     public void testChangeCartStateBadRequestCauseOfNonExistingCartId() throws Exception {
+        _dbInjecter.injectUser("Adam");
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken)
