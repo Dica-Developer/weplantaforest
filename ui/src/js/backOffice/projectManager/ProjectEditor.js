@@ -59,10 +59,10 @@ class ProjectImage extends Component {
   }
 
   deleteProjectImage() {
-    if (this.props.projectImage.imageId != null) {
+    if (this.state.imageId != null) {
       var that = this;
       var config = getConfig();
-      axios.post('http://localhost:8083/project/image/delete?projectImageId=' + this.props.projectImage.imageId + "&imageFileName=" + this.state.requestData.projectImage.imageFileName, {}, config).then(function(response) {
+      axios.post('http://localhost:8083/project/image/delete?projectImageId=' + this.state.imageId + "&imageFileName=" + this.state.imageFileName, {}, config).then(function(response) {
         that.props.removeProjectImage(that.props.arrayIndex);
         that.refs.notification.addNotification('Geschafft!', 'Bild wurde gelöscht.', 'success');
       }).catch(function(response) {
@@ -486,9 +486,7 @@ export default class ProjectEditor extends Component {
   }
 
   updateProjectPositionFromMapClick(event) {
-    console.log(this.refs.map);
     this.state.zoom = this.refs.map.leafletElement._animateToZoom;
-
     this.state.project.latitude = parseFloat(event.latlng.lat);
     this.state.project.longitude = parseFloat(event.latlng.lng);
     this.forceUpdate();
