@@ -107,7 +107,7 @@ deleteTreeType() {
   if (this.state.treeType.id != null) {
     var that = this;
     var config = getConfig();
-    axios.delete('http://localhost:8083/treeType/delete?TreeTypeId=' + this.state.treeType.id, {}, config).then(function(response) {
+    axios.delete('http://localhost:8083/treeType/delete?TreeTypeId=' + this.state.treeType.id, config).then(function(response) {
       that.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
       that.props.removeTreeType(that.props.index);
     }).catch(function(response) {
@@ -183,7 +183,7 @@ render() {
             }}/>
           </div>
           <div className="col-md-2">Info-Link</div>
-          <div className="col-md-4"><input type="text" value={this.state.treeType.infoLink} onChange={(event) => {
+          <div className="col-md-4"><input type="text" value={this.state.treeType.infoLink == null ? '' : this.state.treeType.infoLink} onChange={(event) => {
             this.updateInfoLink(event.target.value)
           }}/></div>
           <div className="col-md-2">geb. CO<sub>2</sub>/Jahr</div>
