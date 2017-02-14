@@ -88,19 +88,18 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_EDIT, method = RequestMethod.POST)
     public ResponseEntity<?> editProject(@RequestBody Project project) {
         try {
-            _projectRepository.save(project);
+            project = _projectRepository.save(project);
             if (project.getArticles() != null) {
                 for (ProjectArticle article : project.getArticles()) {
                     Price updatedPrice = article.getPrice();
                     if (updatedPrice != null) {
                         _priceRepository.save(updatedPrice);
                     }
-
                     article.setProject(project);
                     _projectArticleRepository.save(article);
                 }
             }
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(project.getId(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
