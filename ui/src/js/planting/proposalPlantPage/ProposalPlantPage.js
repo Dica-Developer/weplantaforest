@@ -4,6 +4,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
+import $ from 'jquery';
 
 import PlantItem from './PlantItem';
 
@@ -24,12 +25,17 @@ export default class ProposalPlantPage extends Component {
       amount: -1,
       slideIn: false
     };
+    this.toggleDiv = this.toggleDiv.bind(this)
   }
 
   componentDidMount() {
     localStorage.setItem('isGift', this.props.route.isGift);
     this.setState({amount: this.props.params.amount});
     this.getPlantProposal(this.props.params.amount);
+  }
+
+  toggleDiv() {
+    $(this.refs['plantItems']).slideToggle(800)
   }
 
   updatePlantBag() {
@@ -47,11 +53,13 @@ export default class ProposalPlantPage extends Component {
 
   getPlantProposal(value) {
     var that = this;
-    this.setState({slideIn: true});
+    this.toggleDiv();
     axios.get('http://localhost:8081/simplePlantProposalForTrees/' + value).then(function(response) {
-      that.sleep(500);
       var result = response.data;
-      that.setState({trees: result, slideIn: false});
+      setTimeout(function(){
+        that.setState({trees: result});
+        that.toggleDiv();
+       }, 1000);
     })
   }
 
@@ -98,9 +106,7 @@ export default class ProposalPlantPage extends Component {
                 Preis gesamt
               </div>
             </div>
-            <div className={(this.state.slideIn
-              ? 'sliding-in '
-              : 'sliding-out ') + "plantItems align-center"}>
+            <div ref="plantItems" className={"plantItems align-center"}>
               {this.state.trees.plantItems.map(function(plantItem, i) {
                 return (<PlantItem plantItem={plantItem} key={i}/>);
               })}
