@@ -8,6 +8,7 @@ import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
 import NotificationSystem from 'react-notification-system';
 import FileChooser from '../../common/components/FileChooser';
+import {getConfig} from '../../common/RestHelper';
 
 require("./sliderImageManager.less");
 
@@ -97,7 +98,8 @@ class SliderImage extends Component {
   deleteImage() {
     if (this.state.imageId != null) {
       var that = this;
-      axios.delete('http://localhost:8083/mainSliderImage/delete?imageId=' + this.state.imageId).then(function(response) {
+      var config = getConfig();
+      axios.delete('http://localhost:8083/mainSliderImage/delete?imageId=' + this.state.imageId, config).then(function(response) {
         that.props.removeImage(that.props.arrayIndex);
       }).catch(function(response) {
         that.refs.notification.addNotification('Fehler!', response.data, 'error');
@@ -114,13 +116,14 @@ class SliderImage extends Component {
       imageId: this.state.imageId,
       imageFileName: imageFileName
     };
-    axios.post('http://localhost:8083/mainSliderImage/save', imageData, {}).then(function(response) {
+    var config = getConfig();
+    axios.post('http://localhost:8083/mainSliderImage/save', imageData, config).then(function(response) {
       if (that.state.file != null) {
         var imageId = response.data;
         var imageFile = new FormData();
         imageFile.append('imageId', imageId);
         imageFile.append('file', that.state.file);
-        axios.post('http://localhost:8083/mainSliderImage/upload', imageFile, {}).then(function(response) {
+        axios.post('http://localhost:8083/mainSliderImage/upload', imageFile, config).then(function(response) {
           that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
         }).catch(function(response) {
           that.refs.notification.addNotification('Fehler!', response.data, 'error');
