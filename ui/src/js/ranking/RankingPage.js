@@ -33,7 +33,7 @@ export default class RankingPage extends Component {
   }
 
   toggleDiv() {
-    $(this.refs['ranking']).slideToggle()
+    $(this.refs['ranking']).slideToggle(800)
   }
 
   loadAllUser() {
@@ -41,23 +41,21 @@ export default class RankingPage extends Component {
     this.toggleDiv();
     axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
-      that.setState({ranking: result});
+      that.setState({ranking: result, orgTypeDesc: 'Alle'});
       setTimeout(function(){
          that.toggleDiv();
        }, 1000);
     }).catch(function(response) {
       this.refs.notification.addNotification('Fehler beim Laden der besten Nutzer!', '', 'error');
     });
-    this.setState({orgTypeDesc: 'Alle'})
   }
 
   loadBestTeams() {
-    this.setState({orgTypeDesc: 'Teams'})
     var that = this;
     this.toggleDiv();
     axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
-      that.setState({ranking: result});
+      that.setState({ranking: result, orgTypeDesc: 'Teams'});
       setTimeout(function(){
          that.toggleDiv();
        }, 1000);
@@ -68,12 +66,11 @@ export default class RankingPage extends Component {
   }
 
   loadOrgTypeRanking(orgType, orgTypeDesc) {
-    this.setState({orgTypeDesc: orgTypeDesc, chosenOrgType: orgType})
     var that = this;
     this.toggleDiv();
     axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
-      that.setState({ranking: result});
+      that.setState({ranking: result, orgTypeDesc: orgTypeDesc, chosenOrgType: orgType});
       setTimeout(function(){
          that.toggleDiv();
        }, 1000);
