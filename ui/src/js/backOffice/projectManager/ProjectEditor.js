@@ -89,6 +89,10 @@ class ProjectImage extends Component {
     this.forceUpdate();
   }
 
+  updateProjectId(projectId){
+    this.setState({projectId: projectId});
+  }
+
   createEditImage() {
     var that = this;
     var title = createMultiLanguageEntry(this.state.titleDe, this.state.titleEn);
@@ -102,23 +106,27 @@ class ProjectImage extends Component {
     };
 
     var config = getConfig();
-    axios.post('http://localhost:8083/project/image/createEdit', projectImageData, config).then(function(response) {
-      if (that.state.file != null) {
-        var imageId = response.data;
-        var projectImageFile = new FormData();
-        projectImageFile.append('imageId', imageId);
-        projectImageFile.append('file', that.state.file);
-        axios.post('http://localhost:8083/project/image/upload', projectImageFile, config).then(function(response) {
-          that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
-        }).catch(function(response) {
-          that.refs.notification.addNotification('Fehler!', response.data+ response.message, 'error');
-        });
-      } else {
-        that.refs.notification.addNotification('Geschafft!', 'Daten wurden geupdatet!', 'success');
-      }
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
-    });
+    if(this.state.projectId != null){
+      axios.post('http://localhost:8083/project/image/createEdit', projectImageData, config).then(function(response) {
+        if (that.state.file != null) {
+          var imageId = response.data;
+          var projectImageFile = new FormData();
+          projectImageFile.append('imageId', imageId);
+          projectImageFile.append('file', that.state.file);
+          axios.post('http://localhost:8083/project/image/upload', projectImageFile, config).then(function(response) {
+            that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
+          }).catch(function(response) {
+            that.refs.notification.addNotification('Fehler!', response.data+ response.message, 'error');
+          });
+        } else {
+          that.refs.notification.addNotification('Geschafft!', 'Daten wurden geupdatet!', 'success');
+        }
+      }).catch(function(response) {
+        that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
+      });
+    }else{
+        that.refs.notification.addNotification('Projekt ist noch nicht gespeichert!','Bitte speicher erst das Projekt ab, bevor du dazu ein Bild hochladen willst', 'error');
+    }
   }
 
   updateImage(imageName, file) {
@@ -504,7 +512,13 @@ export default class ProjectEditor extends Component {
     this.state.project.description = description;
     var config = getConfig();
     axios.post('http://localhost:8083/project/edit', this.state.project, config).then(function(response) {
+      var projectId = response.data;
+      that.state.project.id = projectId;
+      for (var image in that.state.project.images) {
+        that.refs["image_" + image].updateProjectId(projectId);
+      }
       that.refs.notification.addNotification('Geschafft!', 'Projekt wurde aktualisiert.', 'success');
+      that.forceUpdate();
     }).catch(function(response) {
       that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
     });
@@ -537,7 +551,8 @@ export default class ProjectEditor extends Component {
       description: '',
       imageFileName: '',
       title: '',
-      imageId: null
+      imageId: null,
+      projectId: this.state.project.projectId
     };
     this.state.project.images.push(image);
     this.forceUpdate();
