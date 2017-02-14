@@ -124,12 +124,14 @@ export default class UserOverview extends Component {
         key: 'id',
         name: 'ID',
         width: 40,
-        filterable: true
+        filterable: true,
+        sortable: true
       }, {
         key: 'username',
         name: 'User Name',
         width: 300,
-        filterable: true
+        filterable: true,
+        sortable: true
       }, {
         key: 'editName',
         name: '',
@@ -138,32 +140,38 @@ export default class UserOverview extends Component {
         key: 'mail',
         name: 'EMail',
         width: 400,
-        filterable: true
+        filterable: true,
+        sortable: true
       }, {
         key: 'editMail',
         name: '',
         width: 30,
-        filterable: true
+        filterable: true,
+        sortable: true
       }, {
         key: 'active',
         name: 'aktiv',
         width: 70,
-        filterable: false
+        filterable: false,
+        sortable: true
       }, {
         key: 'banned',
         name: 'gebannt',
         width: 70,
-        filterable: false
+        filterable: false,
+        sortable: true
       }, {
         key: 'admin',
         name: 'Admin',
         width: 70,
-        filterable: false
+        filterable: false,
+        sortable: true
       }, {
         key: 'articleManager',
         name: 'Art.-Man.',
         width: 70,
-        filterable: false
+        filterable: false,
+        sortable: true
       }],
       rows: [],
       filters: {}
@@ -426,6 +434,27 @@ export default class UserOverview extends Component {
     return this.getRows().length;
   }
 
+  handleGridSort(sortColumn, sortDirection) {
+    var sortedRows = this.state.rows;
+    const comparer = (a, b) => {
+      if (sortDirection === 'ASC') {
+        return (a[sortColumn] > b[sortColumn])
+          ? 1
+          : -1;
+      } else if (sortDirection === 'DESC') {
+        return (a[sortColumn] < b[sortColumn])
+          ? 1
+          : -1;
+      }
+    };
+
+    const rows = sortDirection === 'NONE'
+      ? ' '
+      : sortedRows.sort(comparer);
+
+    this.setState(rows: sortedRows);
+  }
+
   handleFilterChange(filter) {
     var newFilters = Object.assign({}, this.state.filters);
     if (filter.filterTerm) {
@@ -473,7 +502,7 @@ export default class UserOverview extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <ReactDataGrid columns={this.state.columns} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} minHeight={800} toolbar={< Toolbar enableFilter = {
+            <ReactDataGrid columns={this.state.columns} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
               true
             } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
           </div>
