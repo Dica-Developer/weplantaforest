@@ -124,6 +124,7 @@ class SliderImage extends Component {
         imageFile.append('imageId', imageId);
         imageFile.append('file', that.state.file);
         axios.post('http://localhost:8083/mainSliderImage/upload', imageFile, config).then(function(response) {
+          that.updateImageData(response.data);
           that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
         }).catch(function(response) {
           that.refs.notification.addNotification('Fehler!', response.data, 'error');
@@ -136,13 +137,30 @@ class SliderImage extends Component {
     });
   }
 
+  updateImageData(image){
+    var imageFileName = image.imageFileName == ''
+      ? ''
+      : image.imageFileName.substr(0, image.imageFileName.indexOf('.'));
+    var fileEnding = image.imageFileName == ''
+      ? ''
+      : image.imageFileName.substr(image.imageFileName.indexOf('.'));
+    this.state = {
+      imageFileName: imageFileName,
+      imageId: image.imageId,
+      fileSrc: null,
+      fileEnding: fileEnding
+    };
+  }
+
   render() {
     var image;
     if (this.state.file != null) {
       image = <img src={this.state.fileSrc} height="320" width="570"/>;
-    } else {
-      let imageUrl = 'http://localhost:8081/mainSliderImage/' + this.state.imageFileName + '/570/320'
+    } else if(this.state.imageId != null){
+      let imageUrl = 'http://localhost:8081/mainSliderImage/' + this.state.imageFileName + this.state.fileEnding + '/570/320'
       image = <img src={imageUrl}/>;
+    }else {
+      image = '';
     }
     var style = {
       Containers: {
