@@ -6,7 +6,7 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 
-require("./RadioButton.less");
+require('./radioButton.less');
 
 export default class RadioButton extends Component {
 

@@ -14,7 +14,7 @@ import ReactDataGrid from 'react-data-grid';
 import {
   Toolbar,
   Data
-} from 'react-data-grid/addons';
+} from 'react-data-grid';
 
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
