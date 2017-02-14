@@ -278,6 +278,7 @@ export default class TreeTypeOverview extends Component {
               <IconButton glyphIcon="glyphicon-plus" text="BAUMTYP HINZUFÜGEN" onClick={this.addTreeType.bind(this)}/>
             </div>
           </div>
+          <Notification ref="notification"/>
         </div>
     );
   }
