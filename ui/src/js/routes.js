@@ -49,7 +49,7 @@ import ProjectOverview from './backOffice/projectManager/ProjectOverview';
 import ProjectEditor from './backOffice/projectManager/ProjectEditor';
 import TreeTypeOverview from './backOffice/treeTypeManager/TreeTypeOverview';
 import PlantManager from './backOffice/plantManager/PlantManager';
-import SliderImageManager from './backOffice/SliderImageManager/SliderImageManager';
+import SliderImageManager from './backOffice/sliderImageManager/SliderImageManager';
 
 export default class Routes extends Component {
 
