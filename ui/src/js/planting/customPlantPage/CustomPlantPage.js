@@ -4,6 +4,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
+import $ from 'jquery';
 
 import ButtonBar from '../ButtonBar';
 import BottomPart from '../BottomPart';
@@ -22,17 +23,26 @@ export default class CustomPlantPage extends Component {
       slideIn: false
     };
     this.updatePrice = this.updatePrice.bind(this);
+    this.toggleDiv = this.toggleDiv.bind(this)
+
   }
 
   componentDidMount() {
     localStorage.setItem('isGift', this.props.route.isGift);
-    this.setState({slideIn: true});
+    this.toggleDiv();
     var that = this;
     axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
       var result = response.data;
-      that.setState({projects: result, slideIn: false});
-      that.forceUpdate();
+      setTimeout(function() {
+        that.setState({projects: result});
+        that.forceUpdate();
+        that.toggleDiv();
+      }, 1000);
     });
+  }
+
+  toggleDiv() {
+    $(this.refs['planting']).slideToggle(800)
   }
 
   updatePlantBag() {
@@ -72,9 +82,7 @@ export default class CustomPlantPage extends Component {
           <div className="col-md-12">
             <h2>{this.props.route.header}</h2>
             <ButtonBar chosen="custom"/>
-            <div ref="planting" className={(this.state.slideIn
-              ? 'sliding-in '
-              : 'sliding-out ') + "plantItems"}>
+            <div ref="planting" className={"plantItems"}>
               {this.state.projects.map(function(project, i) {
                 return (<Project key={i} project={project} ref={"project_" + i} updatePrice={that.updatePrice.bind(this)}/>);
               })}
