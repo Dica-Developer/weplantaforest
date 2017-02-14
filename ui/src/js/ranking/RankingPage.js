@@ -6,6 +6,8 @@ import Boostrap from 'bootstrap';
 import ButtonBar from './ButtonBar';
 import RankingItemLarge from './RankingItemLarge';
 import RankingItemSmall from './RankingItemSmall';
+import Notification from '../common/components/Notification';
+import $ from 'jquery';
 
 require("./rankingPage.less");
 
@@ -23,84 +25,71 @@ export default class RankingPage extends Component {
       slideIn: false,
       rankingEntries: 25
     };
+    this.toggleDiv = this.toggleDiv.bind(this)
   }
 
   componentDidMount() {
     this.loadAllUser();
   }
 
+  toggleDiv() {
+    $(this.refs['ranking']).slideToggle()
+  }
+
   loadAllUser() {
-    this.setState({slideIn: true})
     var that = this;
+    this.toggleDiv();
     axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
-      that.sleep(500);
-      that.setState({ranking: result, slideIn: false});
+      that.setState({ranking: result});
+      setTimeout(function(){
+         that.toggleDiv();
+       }, 1000);
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      this.refs.notification.addNotification('Fehler beim Laden der besten Nutzer!', '', 'error');
     });
     this.setState({orgTypeDesc: 'Alle'})
   }
 
   loadBestTeams() {
-    this.setState({orgTypeDesc: 'Teams', slideIn: true})
+    this.setState({orgTypeDesc: 'Teams'})
     var that = this;
+    this.toggleDiv();
     axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
-      that.sleep(500);
-      that.setState({ranking: result, slideIn: false});
+      that.setState({ranking: result});
+      setTimeout(function(){
+         that.toggleDiv();
+       }, 1000);
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      this.refs.notification.addNotification('Fehler beim Laden der besten Teams!', '', 'error');
     });
 
   }
 
   loadOrgTypeRanking(orgType, orgTypeDesc) {
-    this.setState({orgTypeDesc: orgTypeDesc, chosenOrgType: orgType, slideIn: true})
+    this.setState({orgTypeDesc: orgTypeDesc, chosenOrgType: orgType})
     var that = this;
+    this.toggleDiv();
     axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
-      that.sleep(500);
-      that.setState({ranking: result, slideIn: false});
+      that.setState({ranking: result});
+      setTimeout(function(){
+         that.toggleDiv();
+       }, 1000);
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      this.refs.notification.addNotification('Fehler beim Laden der Rangliste!', '', 'error');
     });
   }
 
-  sleep(milliseconds) {
-    var e = new Date().getTime() + (milliseconds);
-    while (new Date().getTime() <= e) {}
-  }
-
-  callMoreRankingEntries(){
+  callMoreRankingEntries() {
     this.state.rankingEntries = this.state.rankingEntries + 25;
     this.forceUpdate();
-    if(this.state.orgTypeDesc == 'Alle'){
+    if (this.state.orgTypeDesc == 'Alle') {
       this.loadAllUser();
-    }else if(this.state.orgTypeDesc == 'Teams'){
+    } else if (this.state.orgTypeDesc == 'Teams') {
       this.loadBestTeams();
-    }else{
+    } else {
       this.loadOrgTypeRanking(this.state.chosenOrgType, this.state.orgTypeDesc);
     }
   }
@@ -113,47 +102,50 @@ export default class RankingPage extends Component {
     var maxTree;
     var maxCo2;
     return (
-      <div className="container paddingTopBottom15">
-        <div className="row rankingPage">
-          <div className="col-md-12">
-            <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
+      <div className="container paddingTopBottom15 ">
+        <div className="rankingPage">
+          <div className="row">
+            <div className="col-md-12">
+              <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
+            </div>
+            <div ref="ranking" className={"col-md-12 rankingItems"}>
+              <h2>Bestenliste&nbsp;/&nbsp;{this.state.orgTypeDesc}</h2>
+              {this.state.ranking.content.map(function(content, i) {
+                if (i == 0) {
+                  maxTree = content.amount;
+                  maxCo2 = content.co2Saved;
+                }
+                if (i > 0) {
+                  percentTree = 100 * content.amount / maxTree;
+                  percentCo2 = 100 * content.co2Saved / maxCo2;
+                }
+                var imageUrl;
+                if (orgTypeDesc != 'Teams') {
+                  imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                } else {
+                  imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
+                }
+                if (i < 10) {
+                  return (<RankingItemLarge imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);
+                } else {
+                  return (<RankingItemSmall content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
+                }
+              })}
+            </div>
           </div>
-          <div ref="ranking" className={(this.state.slideIn
-            ? 'sliding-in '
-            : 'sliding-out ') + "col-md-12 rankingItems"}>
-            <h2>Bestenliste&nbsp;/&nbsp;{this.state.orgTypeDesc}</h2>
-            {this.state.ranking.content.map(function(content, i) {
-              if (i == 0) {
-                maxTree = content.amount;
-                maxCo2 = content.co2Saved;
-              }
-              if (i > 0) {
-                percentTree = 100 * content.amount / maxTree;
-                percentCo2 = 100 * content.co2Saved / maxCo2;
-              }
-              var imageUrl;
-              if (orgTypeDesc != 'Teams') {
-                imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
-              } else {
-                imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
-              }
-              if (i < 10) {
-                return (<RankingItemLarge imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);
-              } else {
-                return (<RankingItemSmall content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
-              }
-            })}
+          <div className="row">
+            <div className={"col-md-12 "}>
+              <a className={(this.state.ranking.last
+                ? "no-display"
+                : "pagingLink")} role="button" onClick={this.callMoreRankingEntries.bind(this)}>
+                <div>
+                  <span className={"glyphicon glyphicon-menu-down"}></span>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
-        <div className="row rankingPage">
-          <div className={"col-md-12 "}>
-            <a className={(this.state.ranking.last ? "no-display" : "pagingLink")} role="button" onClick={this.callMoreRankingEntries.bind(this)}>
-              <div>
-                <span className={"glyphicon glyphicon-menu-down"}></span>
-              </div>
-            </a>
-          </div>
-        </div>
+        <Notification ref="notification"/>
       </div>
     );
   }
