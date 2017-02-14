@@ -71,6 +71,22 @@ public class ImageHelper {
         return imageName;
 
     }
+    
+    public boolean deleteImage(String imageFolder, String fileName){
+        if (folderExists(imageFolder)) {
+            File file = new File(imageFolder + "/" + fileName);
+            LOG.info(String.format("Deleting image [%s] in folder [%s]",fileName, imageFolder)); 
+            if(file.delete()){
+                return true;
+            }else{
+                LOG.error("Image couldn't be deleted");
+                return false;
+            }
+        }else{
+            LOG.error(String.format("Image couldn't be deleted, cause the folder (%s) does not exist.", imageFolder)); 
+            return false;
+        }
+    }
 
     private int[] scaleSize(int[] sizes) {
         if (sizes[0] >= sizes[1]) {
