@@ -18,8 +18,6 @@ public class ScheduledTasks {
 
     private static final Log LOG = LogFactory.getLog(ScheduledTasks.class.getName());
 
-    private final static long DAY_IN_MILLISECONDS = 86400000;
-
     private final static long FOUR_HOURS_IN_MILLISECONDS = 14400000;
 
     @Autowired

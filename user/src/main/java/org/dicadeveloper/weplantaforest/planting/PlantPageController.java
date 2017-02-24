@@ -1,7 +1,5 @@
 package org.dicadeveloper.weplantaforest.planting;
 
-import java.util.Locale;
-
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.support.Language;

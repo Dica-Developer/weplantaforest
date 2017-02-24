@@ -4,7 +4,6 @@ import org.flywaydb.core.Flyway;
 import org.junit.rules.ExternalResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Component;
 @SpringBootTest
 public class CleanDbRule extends ExternalResource {
     public final static String X = "";
-    @Autowired
-    private ApplicationContext _applicationContext;
 
     @Autowired(required = false)
     private Flyway _flyway;
