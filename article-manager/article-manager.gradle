@@ -32,6 +32,7 @@ dependencies{
   runtime('com.h2database:h2:1.4.190')
   runtime('mysql:mysql-connector-java')
 
+  testCompile('org.springframework.boot:spring-boot-test:' + springBootVersion)
   testCompile group: 'junit', name: 'junit', version: '4.12'
   testCompile group: 'org.assertj', name: 'assertj-core', version: '1.7.1'
   testCompile('com.jayway.jsonpath:json-path:2.1.0')
