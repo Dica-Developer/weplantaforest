@@ -8,7 +8,7 @@ buildscript {
 }
 
 dependencies {
-  compile('org.projectlombok:lombok:1.16.6')   
+  compile('org.projectlombok:lombok:1.16.12')
   compile 'com.google.code.findbugs:findbugs:3.0.1'
   compile 'org.springframework:spring-web:4.2.6.RELEASE'
   compile 'org.springframework:spring-context-support:4.1.8.RELEASE'

@@ -3,7 +3,7 @@ package org.dicadeveloper.weplantaforest.common.testSupport;
 import org.flywaydb.core.Flyway;
 import org.junit.rules.ExternalResource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * Cleans (mysql) database between tests.
  */
 @Component
-@IntegrationTest
+@SpringBootTest
 public class CleanDbRule extends ExternalResource {
     public final static String X = "";
     @Autowired
