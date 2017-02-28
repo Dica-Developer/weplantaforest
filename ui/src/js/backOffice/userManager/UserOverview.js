@@ -14,7 +14,7 @@ import ReactDataGrid from 'react-data-grid';
 import {
   Toolbar,
   Data
-} from 'react-data-grid';
+} from 'react-data-grid-addons';
 
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
@@ -120,6 +120,7 @@ export default class UserOverview extends Component {
     super();
     this.state = {
       users: [],
+      titles: ['ID', 'User name', '', 'EMail', '', 'aktiv', 'gebannt', 'Admin', 'Art.-Man.'],
       columns: [{
         key: 'id',
         name: 'ID',
@@ -135,7 +136,7 @@ export default class UserOverview extends Component {
       }, {
         key: 'editName',
         name: '',
-        width: 30
+        width: 40
       }, {
         key: 'mail',
         name: 'EMail',
@@ -502,7 +503,7 @@ export default class UserOverview extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <ReactDataGrid columns={this.state.columns} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
+            <ReactDataGrid columns={this.state.columns} titles={this.state.titles} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
               true
             } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
           </div>

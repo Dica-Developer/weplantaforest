@@ -5,7 +5,7 @@ import axios from 'axios';
 import {browserHistory} from 'react-router';
 import moment from 'moment';
 import ReactDataGrid from 'react-data-grid';
-import {Toolbar, Data} from 'react-data-grid';
+import {Toolbar, Data} from 'react-data-grid-addons';
 
 import IconButton from '../../common/components/IconButton';
 import NotificationSystem from 'react-notification-system';

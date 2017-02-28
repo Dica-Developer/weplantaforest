@@ -22,7 +22,7 @@
     "react-bootstrap": "^0.30.7",
     "react-bootstrap-date-picker": "^3.9.0",
     "react-chartjs": "^0.8.0",
-    "react-data-grid": "^2.0.8",
+    "react-data-grid-addons": "^2.0.8",
     "react-dom": "^15.4.2",
     "react-faux-dom": "^2.7.1",
     "react-leaflet": "^0.11.5",
