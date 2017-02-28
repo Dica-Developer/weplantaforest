@@ -28,3 +28,4 @@ application-private.properties
 ui/dist/js/
 /ui/dist/index.html
 application-staging-secret.properties
+.java.tags
