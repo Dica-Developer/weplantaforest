@@ -16,11 +16,11 @@ export default class ButtonBar extends Component {
   render() {
     return (
       <div className="buttonBar">
-        <ImageButton text="SELBST PFLANZEN" onClick={()=>{this.linkTo('/selfPlant')}} imagePath="/assets/images/Spaten.png" imageWidth="18" imageHeight="35"/>
+        <ImageButton text="SELBST PFLANZEN" onClick={()=>{this.linkTo('/selfPlant')}} imagePath="/assets/images/Spaten.png" imageWidth="35" imageHeight="35"/>
         <br/>
         <ImageButton text="ONLINE PFLANZEN" onClick={()=>{this.linkTo('/plant/5')}} imagePath="/assets/images/Maus.png" imageWidth="35" imageHeight="35"/>
         <br/>
-        <ImageButton text="BAUMSERVICE" onClick={()=>{this.linkTo('/plant')}} imagePath="/assets/images/Schere.png" imageWidth="44" imageHeight="35"/>
+        <ImageButton text="BAUMSERVICE" onClick={()=>{this.linkTo('/plant')}} imagePath="/assets/images/Schere.png" imageWidth="35" imageHeight="35"/>
       </div>
     );
   }

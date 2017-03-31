@@ -26,9 +26,9 @@ export default class ArticleTeaser extends Component {
           this.linkTo(`/blog/` + this.props.content.id)
         }}>
           <img src={imageUrl} alt={this.props.content.title}/>
-          <h3>
-            <i>{this.props.content.title}</i>
-          </h3>
+          <h2>
+            {this.props.content.title}
+          </h2>
           <div className="description">
             <p dangerouslySetInnerHTML={{
               __html: getShortText(getTextForSelectedLanguage(this.props.content.intro), 300)

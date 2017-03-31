@@ -5,16 +5,25 @@
   }
 }
 
+/* Sticky footer */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   padding-top: 68px;
-//  background: #3C191E;
+  //  background: #516C49;
   background-image: url("../../dist/assets/images/background_normal 2016122.jpg") ;
+  /* Margin bottom by footer height */
+  margin-bottom: 70px;
 }
 
 .container {
   background-color: #3C191E;
   animation: fade-in-keyframes 1s;
 }
+
 .paddingTopBottom15 {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -168,21 +177,21 @@ h5 {
 }
 @-webkit-keyframes scaleResult{
   from { transform: none; }
-	50% { transform: scale(1.1); }
-	to { transform: none; }
+  50% { transform: scale(1.1); }
+  to { transform: none; }
 }
 @-moz-keyframes scaleResult{
   from { transform: none; }
-	50% { transform: scale(1.1); }
-	to { transform: none; }
+  50% { transform: scale(1.1); }
+  to { transform: none; }
 }
 @-o-keyframes scaleResult{
   from { transform: none; }
-  	50% { transform: scale(1.1); }
-  	to { transform: none; }
+  50% { transform: scale(1.1); }
+  to { transform: none; }
 }
 @keyframes scaleResult{
   from { transform: none; }
-	50% { transform: scale(1.1); }
-	to { transform: none; }
+  50% { transform: scale(1.1); }
+  to { transform: none; }
 }

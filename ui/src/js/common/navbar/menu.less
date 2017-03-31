@@ -51,6 +51,7 @@
     overflow: hidden;
 
     .closeMenu {
+      height: 54px;
       > button {
         font-size: 30px;
         font-weight: bold;
@@ -72,6 +73,10 @@
 
       a:hover {
         color: #3C191E;
+      }
+
+      .menu-item {
+        text-align: left;
       }
     }
 
@@ -111,20 +116,24 @@
       a:hover {
         color: #82ab1f;
       }
+
+      .menu-item{
+        text-align: right;
+      }
     }
 
     > .menu-item {
       margin: 0;
-      padding: 10px 15px;
+      padding: 10px 30px;
 
       box-sizing: border-box;
       color: #fff;
-      text-align: center;
       font-size: 14px;
 
       a {
         color: #fff;
         text-decoration: none;
+
       }
 
 
@@ -178,8 +187,9 @@
     }
 
     .language-menu-item {
+      text-align: left;
+      padding: 10px 30px;
       margin-top: 15px;
-      text-align: center;
       a,
       a:active,
       a:visited {
@@ -206,3 +216,5 @@
     }
   }
 }
+
+

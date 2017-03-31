@@ -55,9 +55,8 @@ export default class SmallRankingContainer extends Component {
     };
     return (
       <div className="smallRankingContainer">
-        <h2>
-          <i>{this.props.title}</i>
-        </h2>
+        <h3>{this.props.title}
+        </h3>
         <a className={(this.props.withPaging ? "pagingLink" : "no-display")} role="button" onClick={this.callPreviousPage.bind(this)}>
           <div>
             <span className={"glyphicon " + topIcon}></span>

@@ -118,13 +118,13 @@ export default class NavBar extends Component {
               <div className="navbar-left">
                 <ImageButton text="" onClick={() => {
                   this.linkTo('/selfPlant')
-                }} imagePath="/assets/images/Spaten.png" imageWidth="18" imageHeight="35"/>
+                }} imagePath="/assets/images/Spaten.png" imageWidth="35" imageHeight="35"/>
                 <ImageButton text="" onClick={() => {
                   this.linkTo('/plant/5')
                 }} imagePath="/assets/images/Maus.png" imageWidth="35" imageHeight="35"/>
                 <ImageButton text="" onClick={() => {
                   this.linkTo('/plant')
-                }} imagePath="/assets/images/Schere.png" imageWidth="44" imageHeight="35"/>
+                }} imagePath="/assets/images/Schere.png" imageWidth="35" imageHeight="35"/>
               </div>
             </div>
             <div className="navbar-right">
