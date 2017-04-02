@@ -93,7 +93,7 @@ public class PlantPageController {
     
     @RequestMapping(value = Uris.PLANT_FOR_USER , method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<Long> plantForUser(@RequestBody PlantForUserRequest plantForUserRequest) {       
+    public ResponseEntity<Long> plantForUser(@RequestBody PlantForUserRequest plantForUserRequest) {      
         if (_plantPageDataValidator.isPlantPageDataValid(plantForUserRequest.getPlantBag())) {
             User buyer = _userRepsoitory.findOne(plantForUserRequest.getUserId());
             if (buyer == null) {
@@ -107,7 +107,17 @@ public class PlantPageController {
             // TODO: add validation messages to PlantBagValidation results
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
+    
+    @RequestMapping(value = Uris.VALIDATE_PLANTBAG , method = RequestMethod.GET)
+    public ResponseEntity<?> validatePlantBag(@RequestBody PlantBag plantBag){
+        if (_plantPageDataValidator.isPlantPageDataValid(plantBag)) {
+            return new ResponseEntity<>( HttpStatus.OK);                
+        }else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    
 
 }
