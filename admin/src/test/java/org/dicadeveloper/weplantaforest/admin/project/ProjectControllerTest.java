@@ -17,6 +17,8 @@ import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
+import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -119,10 +121,10 @@ public class ProjectControllerTest {
 
     @Test
     public void testDeleteProject() throws Exception {
-        _dbInjecter.injectUser("manager");
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
-        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
+        User manager = _dbInjecter.injectUser("manager");
+        TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        Project project = _dbInjecter.injectProject("project", manager, "desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle(treeType, project, 10, 1.0, 1.0);
         _dbInjecter.injectProjectImage("title", "desc", 1L, 1000000L);
 
         assertThat(_projectRepository.count()).isEqualTo(1L);
@@ -142,10 +144,10 @@ public class ProjectControllerTest {
     @Test
     @Transactional
     public void testRemoveProjectArticle() throws Exception {
-        _dbInjecter.injectUser("manager");
-        _dbInjecter.injectProject("project", "manager", "desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
-        _dbInjecter.injectProjectArticle("wood", "project", 10, 1.0, 1.0);
+        User manager = _dbInjecter.injectUser("manager");
+        Project project = _dbInjecter.injectProject("project", manager, "desc", true, 1.0f, 1.0f);
+        TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        _dbInjecter.injectProjectArticle(treeType, project, 10, 1.0, 1.0);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
@@ -165,8 +167,8 @@ public class ProjectControllerTest {
 
     @Test
     public void testAddProjectImage() throws Exception {
-        _dbInjecter.injectUser("manager");
-        _dbInjecter.injectProject("project 1", "manager", "desc", true, 1.0f, 1.0f);
+        User manager = _dbInjecter.injectUser("manager");
+        _dbInjecter.injectProject("project 1", manager, "desc", true, 1.0f, 1.0f);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)

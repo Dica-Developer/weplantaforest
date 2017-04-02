@@ -5,9 +5,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import org.dicadeveloper.weplantaforest.admin.project.Project;
 import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
+import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -61,11 +64,11 @@ public class TreeControllerTest {
 
     @Test
     public void testPlantTreeForUser() throws Exception {
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        User adam = _dbInjecter.injectUser("Adam");
+        TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
 
-        _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "project", 100, 1.0, 0.5);
+        Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
        
         mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -88,11 +91,11 @@ public class TreeControllerTest {
     
     @Test
     public void testPlantTreeForUserBadRequestCauseOfWrongProjectArticleId() throws Exception {
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        User adam = _dbInjecter.injectUser("Adam");
+        TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
 
-        _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "project", 100, 1.0, 0.5);
+        Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
         
         mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -104,12 +107,12 @@ public class TreeControllerTest {
     
     @Test
     public void testPlantTreeForUserBadRequestCauseOfNotEnoughTreesRemaining() throws Exception {
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        User adam = _dbInjecter.injectUser("Adam");
+        TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
 
-        _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "project", 100, 1.0, 0.5);
-        _dbInjecter.injectTreeToProject("wood", "Adam", 91, System.currentTimeMillis(), "project");
+        Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
+        _dbInjecter.injectTreeToProject(treeType, adam, 91, System.currentTimeMillis(), project);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
         
         mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
