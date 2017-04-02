@@ -195,7 +195,7 @@ public class DbInjecter {
         Cart cart = new Cart();
         cart.setBuyer(buyer);
 
-        Tree tree = _treeRepository.findTreeById(treeId);
+        Tree tree = _treeRepository.findOne(treeId);
 
         CartItem cartItem = new CartItem();
         cartItem.setBasePricePerPiece(new BigDecimal(1.0));
