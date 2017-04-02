@@ -164,7 +164,7 @@ public class User implements Identifiable<Long>, UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return banned;
+        return enabled;
     }
 
     @Override
