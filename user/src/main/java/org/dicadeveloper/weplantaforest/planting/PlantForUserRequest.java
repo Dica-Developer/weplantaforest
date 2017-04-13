@@ -9,12 +9,14 @@ import lombok.NonNull;
 @Getter
 @AllArgsConstructor
 public class PlantForUserRequest {
-    
-    public PlantForUserRequest(){
-        
+
+    public PlantForUserRequest() {
+
     }
 
+    private long amountOfPlantBags;
+
     private long userId;
-    
+
     private @NonNull PlantBag plantBag;
 }
