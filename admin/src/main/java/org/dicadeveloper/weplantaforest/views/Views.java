@@ -25,4 +25,8 @@ public interface Views {
     public static interface ProjectImage{
         
     }
+    
+    public static interface Event{
+        
+    }
 }
