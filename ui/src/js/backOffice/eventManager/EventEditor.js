@@ -65,6 +65,7 @@ export default class EventEditor extends Component {
         eventt: result
       });
       that.refs.codegenerator.setEventId(result.id);
+      that.refs.codegenerator.setUserId(result.user.id);
     });
   }
 
@@ -154,6 +155,7 @@ export default class EventEditor extends Component {
         that.setState({
           eventt: result
         });
+        that.refs.codegenerator.setUserId(result.user.id);
         that.refs.notification.addNotification('Geschafft!', 'Event wurde aktualisiert.', 'success');
         that.forceUpdate();
       }).catch(function(response) {
@@ -167,6 +169,7 @@ export default class EventEditor extends Component {
           eventt: result
         });
         that.refs.codegenerator.setEventId(result.id);
+        that.refs.codegenerator.setUserId(result.user.id);
         that.refs.notification.addNotification('Geschafft!', 'Event wurde erzeugt.', 'success');
         that.forceUpdate();
       }).catch(function(response) {
@@ -206,7 +209,7 @@ export default class EventEditor extends Component {
             <IconButton glyphIcon="glyphicon-floppy-open" text="EVENT SPEICHERN" onClick={this.saveEvent.bind(this)}/>
           </div>
         </div>
-        <CodeGenerator ref="codegenerator" updatePlantBag={this.updatePlantBag.bind(this)}/>
+        <CodeGenerator ref="codegenerator" updatePlantBag={this.updatePlantBag.bind(this)} loadCodesForEvent={this.loadCodesForEvent.bind(this)}/>
         <CodeOverview ref="codes" codes={this.state.codes}/>
         <Notification ref="notification"/>
       </div>
