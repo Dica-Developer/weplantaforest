@@ -46,5 +46,19 @@ public class Code {
     @JoinColumn(name ="_cart__cartId")
     @JsonView(Views.CodeOverview.class)
     private Cart cart;
+    
+    //TODO: think about to remove these columns, i don't think they are really necessary
+    //only initialized here with default values to avoid constraint violations from the db
+    @Column(name ="_year",nullable = false)
+    private int year = 0;
+
+    @Column(name ="_month",nullable = false)
+    private int month = 0;
+
+    @Column(name ="_number",nullable = false)
+    private int number = 0;
+    
+    @Column(name ="_evaluated",nullable = false)
+    private boolean evaluated = false;
 
 }
