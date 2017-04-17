@@ -51,6 +51,7 @@ import TreeTypeOverview from './backOffice/treeTypeManager/TreeTypeOverview';
 import PlantManager from './backOffice/plantManager/PlantManager';
 import SliderImageManager from './backOffice/sliderImageManager/SliderImageManager';
 import EventOverview from './backOffice/eventManager/EventOverview';
+import EventEditor from './backOffice/eventManager/EventEditor';
 
 export default class Routes extends Component {
 
@@ -121,6 +122,7 @@ export default class Routes extends Component {
           <Route path="/plant-manager" component={PlantManager} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)}/>
           <Route path="/slider-image-manager" component={SliderImageManager} reRender={this.reRender.bind(this)}/>
           <Route path="/event-manager" component={EventOverview} reRender={this.reRender.bind(this)}/>
+          <Route path="/event/:eventId" component={EventEditor} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} isGift={false} isAbo={false}/>
         </Router>
         <Footer/>
