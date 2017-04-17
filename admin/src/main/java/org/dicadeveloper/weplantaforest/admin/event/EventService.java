@@ -83,10 +83,13 @@ public class EventService {
         IpatPreconditions.checkNotNull(event, ErrorCodes.CART_IS_NULL);
         Code code = _codeService.generateCode();
         code.setEvent(event);
-        _codeRepository.save(code);
+        code = _codeRepository.save(code);
         cart.setEvent(event);
         cart.setCode(code);
         _cartRepository.save(cart);
+        //TODO: think about to remove one of both references
+        code.setCart(cart);
+        _codeRepository.save(code);
     }
 
 }
