@@ -46,11 +46,11 @@ export default class EventOverview extends Component {
   }
 
   createEvent() {
-    browserHistory.push('/event-edit/new');
+    browserHistory.push('/event/new');
   }
 
   editEvent(id) {
-    browserHistory.push('/event-edit/' + id);
+    browserHistory.push('/event/' + id);
   }
 
   render() {
