@@ -103,6 +103,8 @@ export default class PlantManager extends Component {
     this.updatePlantBag();
     var plantBag = JSON.parse(localStorage.getItem('plantBag'));
     var request = {
+      amountOfPlantBags: 1,
+      cartState: 'VERIFIED',
       userId: this.state.selectedUserId,
       plantBag: plantBag
     };
