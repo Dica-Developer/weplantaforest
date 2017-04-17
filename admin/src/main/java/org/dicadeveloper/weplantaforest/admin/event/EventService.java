@@ -37,10 +37,15 @@ public class EventService {
         return _eventRepository.save(event);
     }
 
-    @Transactional
-    public void delete(Long eventId) throws IpatException {
+    public Event getEvent(Long eventId) throws IpatException {        
         Event event = _eventRepository.findOne(eventId);
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_IS_NULL);
+        return event;
+    }
+
+    @Transactional
+    public void delete(Long eventId) throws IpatException {
+        Event event = getEvent(eventId);
         List<Cart> cartsForEvent = _cartRepository.findByEvent(event);
         List<Code> codesForEvent = _codeRepository.findByEvent(event);
         for (Cart cart : cartsForEvent) {
