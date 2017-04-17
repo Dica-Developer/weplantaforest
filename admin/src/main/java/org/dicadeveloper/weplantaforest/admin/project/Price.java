@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import org.dicadeveloper.weplantaforest.views.Views;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 
 import com.fasterxml.jackson.annotation.JsonView;
 

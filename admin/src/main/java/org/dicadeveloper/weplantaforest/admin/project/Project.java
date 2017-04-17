@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.user.User;
-import org.dicadeveloper.weplantaforest.views.Views;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonView;

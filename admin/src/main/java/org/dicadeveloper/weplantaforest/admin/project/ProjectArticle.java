@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
-import org.dicadeveloper.weplantaforest.views.Views;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
