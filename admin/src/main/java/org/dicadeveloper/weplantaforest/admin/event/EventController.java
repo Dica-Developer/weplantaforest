@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.admin.event;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.admin.code.Code;
@@ -7,6 +9,8 @@ import org.dicadeveloper.weplantaforest.admin.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.admin.errorhandling.IpatException;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,5 +71,11 @@ public class EventController {
     @JsonView(Views.CodeOverview.class)
     public Iterable<Code> getCodesForEvent(@PathVariable Long eventId) {
         return _codeRepository.findByEventId(eventId);
+    }
+    
+    @PostMapping(value = REQUEST_URL + "/codes/{eventId}")
+    public ResponseEntity<?> createEvent(@PathVariable Long eventId, @RequestBody List<Long> cartIds) throws IpatException {
+        eventService.generateCodes(eventId, cartIds);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
