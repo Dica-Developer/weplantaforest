@@ -1,8 +1,8 @@
 package org.dicadeveloper.weplantaforest.admin.user;
 
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.dicadeveloper.weplantaforest.common.user.Role;
-import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     @JsonView(Views.OverviewUser.class)
     public Iterable<User> getAllUser() {
-        return _userRepository.findAll();
+        return _userRepository.findAllByOrderByNameAsc();
     }
 
     @RequestMapping(value = Uris.USERNAME_CHANGE, method = RequestMethod.POST)
