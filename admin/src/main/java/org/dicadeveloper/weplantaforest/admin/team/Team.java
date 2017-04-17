@@ -15,7 +15,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.admin.user.User;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,11 +35,13 @@ public class Team implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_teamId")
+    @JsonView({Views.EventDetails.class, Views.TeamOverview.class})
     private Long id;
 
     private Long _timeStamp;
 
     @Column(name = "_name", nullable = false, unique = true, length = 256)
+    @JsonView({Views.EventDetails.class, Views.TeamOverview.class})
     private String name;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
