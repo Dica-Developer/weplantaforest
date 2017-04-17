@@ -20,9 +20,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.team.Team;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.user.Role;
-import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.hateoas.Identifiable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -50,11 +50,11 @@ public class User implements Identifiable<Long>, UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "_userId")
-    @JsonView({ Views.OverviewUser.class, Views.ProjectData.class })
+    @JsonView({ Views.OverviewUser.class, Views.ProjectData.class, Views.EventDetails.class})
     private Long id;
 
     @Column(unique = true, name = "_name")
-    @JsonView({ Views.OverviewCart.class, Views.OverviewUser.class, Views.ProjectData.class })
+    @JsonView({ Views.OverviewCart.class, Views.OverviewUser.class, Views.ProjectData.class, Views.EventDetails.class })
     private String name;
 
     @Column(name = "_password")
