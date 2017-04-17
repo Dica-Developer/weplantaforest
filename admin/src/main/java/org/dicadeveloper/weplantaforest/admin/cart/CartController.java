@@ -6,7 +6,7 @@ import java.util.List;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
-import org.dicadeveloper.weplantaforest.views.Views;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
