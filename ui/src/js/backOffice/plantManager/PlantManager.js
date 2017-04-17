@@ -1,24 +1,18 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 
 import ReactDataGrid from 'react-data-grid';
-import {
-  Toolbar,
-  Data
-} from 'react-data-grid';
+import {Toolbar, Data} from 'react-data-grid';
 
 import ImageButton from '../../common/components/ImageButton';
 import Notification from '../../common/components/Notification';
 import BottomPart from '../../planting/BottomPart';
 import Project from '../../planting/customPlantPage/Project';
 import {getConfig} from '../../common/RestHelper';
+import VirtualizedSelect from 'react-virtualized-select';
 
 require("./plantManager.less");
 
@@ -28,40 +22,22 @@ export default class PlantManager extends Component {
     super();
     this.state = {
       users: [],
-      columns: [
-        {
-          key: 'checkbox',
-          name: ' ',
-          width: 100,
-          filterable: false
-        },{
-        key: 'user',
-        name: 'User',
-        width: 200,
-        filterable: true
-      }],
-      rows: [],
-      filters: {},
       selectedUserId: null,
       projects: [],
-      overallPrice: 0
+      overallPrice: 0,
+      restConfig: getConfig()
     };
     this.updatePrice = this.updatePrice.bind(this);
   }
 
   componentDidMount() {
     var that = this;
-    var config = getConfig();
-    axios.get('http://localhost:8083/users', config).then(function(response) {
-      var result = response.data;
-      var rows = that.createRows(result);
-      that.setState({
-        users: result,
-        rows: rows
-      });
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der Nutzer!', response.data + response.message, 'error');
-    });
+    this.loadUser()
+    this.loadProjects();
+  }
+
+  loadProjects(){
+    var that = this;
     axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
       var result = response.data;
       that.setState({projects: result});
@@ -69,6 +45,28 @@ export default class PlantManager extends Component {
     }).catch(function(response) {
       that.refs.notification.addNotification('Fehler beim Laden der aktiven Projekte!', response.data + response.message, 'error');
     });
+  }
+
+  loadUser() {
+    var that = this;
+    axios.get('http://localhost:8083/users', this.state.restConfig).then(function(response) {
+      var result = response.data;
+      that.createValueLabelPairsForUser(result);
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Fehler beim Laden der Nutzer!', response.data + response.message, 'error');
+    });
+  }
+
+  createValueLabelPairsForUser(users) {
+    var options = [];
+    for (var user in users) {
+      var option = {
+        value: users[user].id,
+        label: users[user].name
+      };
+      options.push(option);
+    }
+    this.setState({users: options});
   }
 
   updatePrice() {
@@ -100,7 +98,7 @@ export default class PlantManager extends Component {
     }
   }
 
-  plantForUser(){
+  plantForUser() {
     var that = this;
     this.updatePlantBag();
     var plantBag = JSON.parse(localStorage.getItem('plantBag'));
@@ -110,120 +108,45 @@ export default class PlantManager extends Component {
     };
 
     var config = getConfig();
-    axios.post('http://localhost:8081/plantForUser/' , request, config).then(function(response) {
+    axios.post('http://localhost:8081/plantForUser/', request, config).then(function(response) {
       that.refs.notification.addNotification('Bäume wurden für den Nutzer gepflant!', '', 'success');
     }).catch(function(response) {
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', '', 'error');
     });
   }
 
-
-  createRows(users) {
-    var rows = [];
-    for (var user in users) {
-      var row = this.createRow(users[user]);
-      rows.push(row);
-    }
-    return rows;
-  }
-
-  createRow(user) {
-    var row = {
-      checkbox: this.createCheckbox(user.id),
-      user: user.name
-    };
-    return row;
-  }
-
-  createCheckbox(id){
-    return <div className="checkbox">
-              <input type="checkbox"  onClick={() => {
-                this.selectUser(id)
-              }}/>
-            </div>;
-  }
-
-  selectUser(id){
-    this.setState({selectedUserId: id});
-  }
-
-  getRows() {
-    return Data.Selectors.getRows({
-      rows: this.state.rows,
-      filters: this.state.filters
-    });
-  }
-
-  rowGetter(i) {
-    var rows = this.getRows();
-    return rows[i];
-  }
-
-  getSize() {
-    return this.getRows().length;
-  }
-
-  handleFilterChange(filter) {
-    var newFilters = Object.assign({}, this.state.filters);
-    if (filter.filterTerm) {
-      newFilters[filter.column.key] = filter;
-    } else {
-      delete newFilters[filter.column.key];
-    }
-    this.setState({
-      filters: newFilters
-    });
-  }
-
-  onClearFilters() {
-    this.setState({
-      filters: {}
-    });
-  }
-
-  getEmptyRowView() {
-    return (
-      <div>Nothing to show</div>
-    );
+  selectUser(user) {
+    this.setState({selectedUserId: user.id});
   }
 
   render() {
     var that = this;
     return (
-        <div className="container paddingTopBottom15 plantManager">
-          <div className="row ">
-            <h2>Plantmanager</h2>
-            <div className="col-md-4">
-              <ReactDataGrid
-                columns={this.state.columns}
-                rowGetter={this.rowGetter.bind(this)}
-                rowsCount={this.getSize()}
-                minHeight={220}
-                toolbar={< Toolbar enableFilter = {
-                true
-              } /> }
-                onAddFilter={this.handleFilterChange.bind(this)}
-                onClearFilters={this.onClearFilters.bind(this)}
-                emptyRowsView={this.getEmptyRowView.bind(this)}
-                />
-            </div>
-            <div className="col-md-8">
-              <div>
-                {this.state.projects.map(function(project, i) {
-                  return (<Project key={i} project={project} ref={"project_" + i} updatePrice={that.updatePrice.bind(this)}/>);
-                })}
-              </div>
-            </div>
-            <div className="col-md-4"></div>
-            <div className="col-md-8 plant-div">
-              <div className="price">
-                <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice / 100, 2, ".", ",")}&nbsp;€</span>
-              </div>
-              <ImageButton text="PFLANZEN" onClick={this.plantForUser.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="50" imageHeight="25"/>
+      <div className="container paddingTopBottom15 plantManager">
+        <div className="row ">
+          <h2>Plantmanager</h2>
+          <div className="col-md-4">
+            <label className="select-label">User</label>
+          </div>
+          <div className="col-md-8">
+            <VirtualizedSelect name="user-select" value={this.state.selectedUserId} options={this.state.users} onChange={this.selectUser.bind(this)}/>
+          </div>
+          <div className="col-md-12">
+            <div>
+              {this.state.projects.map(function(project, i) {
+                return (<Project key={i} project={project} ref={"project_" + i} updatePrice={that.updatePrice.bind(this)}/>);
+              })}
             </div>
           </div>
-          <Notification ref="notification"/>
+          <div className="col-md-12 plant-div">
+            <div className="price">
+              <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice / 100, 2, ".", ",")}&nbsp;€</span>
+            </div>
+            <ImageButton text="PFLANZEN" onClick={this.plantForUser.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="50" imageHeight="25"/>
+          </div>
         </div>
+        <Notification ref="notification"/>
+      </div>
     );
   }
 }
