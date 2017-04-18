@@ -10,9 +10,9 @@ import org.dicadeveloper.weplantaforest.admin.cart.CartState;
 import org.dicadeveloper.weplantaforest.admin.code.Code;
 import org.dicadeveloper.weplantaforest.admin.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.admin.code.CodeService;
-import org.dicadeveloper.weplantaforest.admin.errorhandling.ErrorCodes;
-import org.dicadeveloper.weplantaforest.admin.errorhandling.IpatException;
-import org.dicadeveloper.weplantaforest.admin.errorhandling.IpatPreconditions;
+import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

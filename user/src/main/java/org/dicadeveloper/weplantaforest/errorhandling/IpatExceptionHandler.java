@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin.errorhandling;
+package org.dicadeveloper.weplantaforest.errorhandling;
 
 import javax.servlet.http.HttpServletResponse;
 

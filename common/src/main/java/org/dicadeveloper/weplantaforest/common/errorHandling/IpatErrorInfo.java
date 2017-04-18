@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin.errorhandling;
+package org.dicadeveloper.weplantaforest.common.errorHandling;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
