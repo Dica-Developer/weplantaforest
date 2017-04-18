@@ -17,6 +17,7 @@ import {
   Toolbar,
   Data
 } from 'react-data-grid-addons';
+import createFilterOptions from 'react-select-fast-filter-options';
 
 import CodeOverview from './CodeOverview';
 import CodeGenerator from './CodeGenerator';
@@ -108,7 +109,8 @@ export default class EventEditor extends Component {
       options.push(option);
     }
     this.setState({
-      users: options
+      users: options,
+      usersFilter: createFilterOptions({ options })
     });
   }
 
@@ -134,13 +136,11 @@ export default class EventEditor extends Component {
   updateUserForEvent(user) {
     this.state.eventt.user.id = user.value;
     this.state.eventt.user.name = user.label;
-    this.forceUpdate();
   }
 
   updateTeamForEvent(team) {
     this.state.eventt.team.id = team.value;
     this.state.eventt.team.name = team.label;
-    this.forceUpdate();
   }
 
   updatePlantBag(price, projectItems, projectName){
@@ -195,7 +195,7 @@ export default class EventEditor extends Component {
         <div className="row">
           <div className="col-md-4"><label className="select-label">User</label></div>
           <div className="col-md-8">
-            <VirtualizedSelect name="user-select" value={this.state.eventt.user.id} options={this.state.users} onChange={this.updateUserForEvent.bind(this)}/>
+            <VirtualizedSelect autosize="false" name="user-select" value={this.state.eventt.user.id} filterOptions={this.state.usersFilter} options={this.state.users} onChange={this.updateUserForEvent.bind(this)}/>
           </div>
         </div>
         <div className="row">
