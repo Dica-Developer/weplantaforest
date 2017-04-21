@@ -20,6 +20,8 @@ import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
+import org.dicadeveloper.weplantaforest.event.Event;
+import org.dicadeveloper.weplantaforest.event.EventRepository;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
@@ -92,6 +94,9 @@ public class DbInjecter {
     @Autowired
     private ReceiptRepository _receiptRepository;
 
+    @Autowired
+    private EventRepository _eventRepository;
+
     public void injectProject(String pName, String mName, String desc, boolean shopActive, float latitude, float longitude) {
         Project project = new Project();
         String projectName = pName;
@@ -105,12 +110,12 @@ public class DbInjecter {
         _projectRepository.save(project);
     }
 
-    public void injectUser(String userName) {
+    public User injectUser(String userName) {
         User userDto = new User();
         userDto.setName(userName);
         userDto.setPassword(_passwordEncrypter.encryptPassword(userName));
         userDto.setLang(Language.DEUTSCH);
-        _userRepository.save(userDto);
+        return _userRepository.save(userDto);
     }
 
     public void injectUser(String userName, String mail) {
@@ -148,7 +153,7 @@ public class DbInjecter {
         _treeTypeRepository.save(treeTypeDto);
     }
 
-    public void injectTree(String treeType, String owner, int amount, long timeOfPlanting) {
+    public Tree injectTree(String treeType, String owner, int amount, long timeOfPlanting) {
         Tree tree = new Tree();
         tree.setLatitude(0);
         tree.setLongitude(0);
@@ -157,8 +162,7 @@ public class DbInjecter {
         tree.setPlantedOn(new Date(timeOfPlanting).getTime());
         tree.setSubmittedOn(new Date(timeOfPlanting).getTime());
         tree.setOwner(_userRepository.findByName(owner));
-        _treeRepository.save(tree);
-
+        return _treeRepository.save(tree);
     }
 
     public Tree injectTreeToProject(String treeType, String owner, int amount, long timeOfPlanting, String pName) {
@@ -206,18 +210,27 @@ public class DbInjecter {
         _projectArticleRepository.save(plantArticle);
     }
 
-    public void injectTeam(String tName, String admin) {
+    public Team injectTeam(String tName, String admin) {
         Team team = new Team();
         team.setName(tName);
         team.setAdmin(_userRepository.findByName(admin));
-        _teamRepository.save(team);
+        team = _teamRepository.save(team);
         addUserToTeam(tName, admin);
+        return team;
     }
 
     public void addUserToTeam(String tName, String userName) {
         User user = _userRepository.findByName(userName);
         user.setTeam(_teamRepository.findByName(tName));
         _userRepository.save(user);
+    }
+
+    public Event injectEvent(String eventName, User user, Team team) {
+        Event event = new Event();
+        event.setName(eventName);
+        event.setUser(user);
+        event.setTeam(team);
+        return _eventRepository.save(event);
     }
 
     public void injectProjectImage(String imageTitle, String text, String imageFileName, long date, String projectName) {
@@ -271,7 +284,7 @@ public class DbInjecter {
         cart.setBuyer(_userRepository.findByName(buyer));
         cart.setTimeStamp(timeStamp);
         cart.setCartState(CartState.VERIFIED);
-        
+
         List<Tree> trees = _treeRepository.findTreesByIdIn(treeIds);
 
         for (Tree tree : trees) {
@@ -279,10 +292,7 @@ public class DbInjecter {
             cartItem.setTree(tree);
             cartItem.setBasePricePerPiece(new BigDecimal(1.0));
 
-            double totalPrice = cartItem.getBasePricePerPiece()
-                                        .doubleValue()
-                    * cartItem.getTree()
-                              .getAmount();
+            double totalPrice = cartItem.getBasePricePerPiece().doubleValue() * cartItem.getTree().getAmount();
 
             cartItem.setTotalPrice(new BigDecimal(totalPrice));
             cart.addCartItem(cartItem);
@@ -329,8 +339,7 @@ public class DbInjecter {
         gift.setStatus(giftStatus);
         _giftRepository.save(gift);
 
-        return gift.getCode()
-                   .getCode();
+        return gift.getCode().getCode();
     }
 
     public Code injectGiftWithCode(String consignor, Status giftStatus) {
@@ -364,7 +373,7 @@ public class DbInjecter {
 
         _receiptRepository.save(receipt);
     }
-    
+
     public void injectReceipt(String owner, long createdOn, long sentOn, String invoiceNumber, List<Cart> carts) {
         Receipt receipt = new Receipt();
         receipt.setOwner(_userRepository.findByName(owner));
