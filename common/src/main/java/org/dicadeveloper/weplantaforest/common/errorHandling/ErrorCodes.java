@@ -17,6 +17,8 @@ public class ErrorCodes {
     public final static String CART_ALREADY_REDEEMED = "CART_ALREADY_REDEEMED";
     
     public final static String CODE_ALREADY_REDEEMED = "CODE_ALREADY_REDEEMED";
+
+    public final static String GIFT_NOT_PAID = "GIFT_NOT_PAID";
     
     public final static String INVALID_CODE = "INVALID_CODE";
     
@@ -29,4 +31,6 @@ public class ErrorCodes {
     public final static String CART_TO_EVENT_CODE_IS_NULL = "CART_TO_EVENT_CODE_IS_NULL";
     
     public final static String ERROR_WHILE_CREATING_PDF_FOR_GIFT = "ERROR_WHILE_CREATING_PDF_FOR_GIFT";
+    
+    public final static String PLANTBAG_IS_INVALID = "PLANTBAG_IS_INVALID";
 }
