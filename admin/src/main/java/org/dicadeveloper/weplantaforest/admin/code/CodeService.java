@@ -21,7 +21,7 @@ public class CodeService {
             if (null == _codeRepository.findByCode(codeString)) {
                 code.setCode(codeString);
                 codeSaved = true;
-                return code;
+                return _codeRepository.save(code);
             }
         }
         throw new IpatException(ErrorCodes.COULD_NOT_GENERATE_CODE);
