@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.event.Event;
 import org.dicadeveloper.weplantaforest.gift.Gift;
+import org.dicadeveloper.weplantaforest.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +30,7 @@ public class Code {
     private Long id;
 
     @Column(name ="_code",unique = true, nullable = false)
+    @JsonView(Views.OverviewGift.class)
     private String code;
 
     @ManyToOne(optional = true)
