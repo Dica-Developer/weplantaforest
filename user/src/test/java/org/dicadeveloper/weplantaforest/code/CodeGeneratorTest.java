@@ -46,7 +46,7 @@ public class CodeGeneratorTest {
     @Test
     public void generateCodeForGift() {
         Gift gift = new Gift();
-
+        gift = _giftRepository.save(gift);
         Code code = _codegenerator.generate(gift);
 
         gift.setCode(code);
@@ -66,7 +66,7 @@ public class CodeGeneratorTest {
     @Test
     public void generateCodeForGiftWithNumber() {
         Gift gift = new Gift();
-
+        gift = _giftRepository.save(gift);
         Code code = _codegenerator.generate(gift, 2016, 1, 4);
 
         gift.setCode(code);
@@ -118,7 +118,7 @@ public class CodeGeneratorTest {
         int codeCount = 100;
 
         Event event = new Event();
-
+        event = _eventRepository.save(event);
         List<Code> codes = _codegenerator.generate(event, codeCount, 2);
 
         event.setCodes(codes);
@@ -150,7 +150,7 @@ public class CodeGeneratorTest {
         int codeCount2 = 10;
 
         Event event = new Event();
-
+        event = _eventRepository.save(event);
         List<Code> codes = _codegenerator.generate(event, codeCount, 2);
 
         event.setCodes(codes);
@@ -186,7 +186,7 @@ public class CodeGeneratorTest {
         int codeCount = 100;
 
         Event event = new Event();
-
+        event = _eventRepository.save(event);
         List<Code> codes = _codegenerator.generate(event, codeCount, 2.0f);
 
         event.setCodes(codes);
@@ -218,7 +218,7 @@ public class CodeGeneratorTest {
         int codeCount2 = 10;
 
         Event event = new Event();
-
+        event = _eventRepository.save(event);
         List<Code> codes = _codegenerator.generate(event, codeCount, 2.0f);
 
         event.setCodes(codes);
