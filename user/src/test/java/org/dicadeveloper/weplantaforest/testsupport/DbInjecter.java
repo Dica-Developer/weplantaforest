@@ -273,10 +273,7 @@ public class DbInjecter {
 
             cart.addCartItem(cartItem);
         }
-        _cartRepository.save(cart);
-
-        return cart;
-
+        return _cartRepository.save(cart);
     }
 
     public void injectCart(String buyer, List<Long> treeIds, long timeStamp) {
