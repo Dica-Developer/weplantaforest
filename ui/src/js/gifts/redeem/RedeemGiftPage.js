@@ -33,9 +33,11 @@ export default class RedeemGiftPage extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.post('http://localhost:8081/gift/redeem?giftCode=' + this.state.code, {}, config).then(function(response) {
-      that.setState({isRedeemed: true});
+    axios.post('http://localhost:8081/code/redeem?codeString=' + this.state.code, {}, config).then(function(response) {
+      // that.setState({isRedeemed: true});
+      that.refs.notification.addNotification('Der Gutschein wurde eingelöst!', 'Die Bäume wurden dir gut geschrieben', 'error');
     }).catch(function(response) {
+      console.error(response);
       that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
     });
   }
