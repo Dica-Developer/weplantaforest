@@ -342,6 +342,7 @@ public class DbInjecter {
     public Code injectGiftWithCode(String consignor, Status giftStatus) {
         Gift gift = new Gift();
         gift.setConsignor(_userRepository.findByName(consignor));
+        gift = _giftRepository.save(gift);
 
         Code code = _codeGenerator.generate(gift);
         gift.setCode(code);
