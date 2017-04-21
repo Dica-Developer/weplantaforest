@@ -26,17 +26,19 @@ export default class ActiveProject extends Component {
     if (this.props.project.amountOfMaximumTreesToPlant != 0) {
       percent = this.props.project.amountOfPlantedTrees / this.props.project.amountOfMaximumTreesToPlant * 100;
     }
-    var formattedPercent = Accounting.formatNumber(percent, 0, ".", ",")
     return (
       <div className="project">
         <div className="projectName">
         {this.props.project.projectName}
         </div>
-        <div className="full">
-          {formattedPercent}%&nbsp;bepflanzt
-        </div>
         <div className="amount-of-trees">
-          {this.props.project.amountOfPlantedTrees}&nbsp;von&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen
+           <p style={{
+            width: percent + '%'
+          }}>
+          </p>         
+          <div className="text">
+          {this.props.project.amountOfPlantedTrees}&nbsp;von&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen&nbsp;gepflanzt
+          </div>
         </div>
         <div className="link">
           <IconButton text="ANSCHAUEN" glyphIcon="glyphicon-forward" onClick={this.switchToProjectPage.bind(this)}/>

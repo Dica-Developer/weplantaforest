@@ -25,10 +25,7 @@ export default class CompletedProject extends Component {
         {this.props.project.projectName}
         </div>
         <div className="full">
-          100% bepflanzt
-        </div>
-        <div className="amount-of-trees">
-          {this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäume
+          vollständig&nbsp;bepflanzt&nbsp;mit&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen
         </div>
         <div className="link">
           <IconButton text="ANSCHAUEN" glyphIcon="glyphicon-forward" onClick={this.switchToProjectPage.bind(this)}/>
