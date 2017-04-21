@@ -25,7 +25,7 @@ export default class CompletedProject extends Component {
         {this.props.project.projectName}
         </div>
         <div className="full">
-          erfolgreich u. vollständig bepflanzt
+          100% bepflanzt
         </div>
         <div className="amount-of-trees">
           {this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäume
