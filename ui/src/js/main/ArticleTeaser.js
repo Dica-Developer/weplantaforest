@@ -31,9 +31,8 @@ export default class ArticleTeaser extends Component {
           </h2>
           <div className="description">
             <p dangerouslySetInnerHTML={{
-              __html: getShortText(getTextForSelectedLanguage(this.props.content.intro), 300)
+              __html: getTextForSelectedLanguage(this.props.content.intro)
             }}/>
-            <i className="more">(mehr)</i>
           </div>
         </a>
       </div>

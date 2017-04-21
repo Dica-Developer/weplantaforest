@@ -39,7 +39,6 @@ export default class ProjectTeaser extends Component {
             <p dangerouslySetInnerHTML={{
               __html: getShortText(getTextForSelectedLanguage(this.props.content.description), 300)
             }}/>
-          <i className="more">(mehr)</i>
           </div>
         </a>
       </div>
