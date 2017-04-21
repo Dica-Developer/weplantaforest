@@ -82,7 +82,7 @@ export default class NavBar extends Component {
     return (
       <div>
         <Menu ref="left" alignment="left">
-          <MenuItem hash="/projects">PROJEKTFLÄCHEN</MenuItem>
+          <MenuItem hash="/projects">PROJEKTE</MenuItem>
           <MenuItem hash="/certificate/find">FINDEN</MenuItem>
           <MenuItem hash="/plantGift/5">GUTSCHEIN ERSTELLEN</MenuItem>
           <MenuItem hash="/gift/redeem">GUTSCHEIN EINLÖSEN</MenuItem>
@@ -124,7 +124,7 @@ export default class NavBar extends Component {
                 }} imagePath="/assets/images/Maus.png" imageWidth="35" imageHeight="35"/>
                 <ImageButton text="" onClick={() => {
                   this.linkTo('/plant')
-                }} imagePath="/assets/images/Schere.png" imageWidth="35" imageHeight="35"/>
+                }} imagePath="/assets/images/Schere.png" imageWidth="42" imageHeight="35"/>
               </div>
             </div>
             <div className="navbar-right">
