@@ -33,7 +33,6 @@ public class CodeGenerator {
         final List<Code> codes = new ArrayList<Code>();
         for (int i = from; i < to; i++) {
             Code code = generate(event, year, month, i);
-            code.setTreeCount(treeCount);
             codes.add(code);
         }
         return codes;
@@ -56,7 +55,6 @@ public class CodeGenerator {
         final List<Code> codes = new ArrayList<Code>();
         for (int i = from; i < to; i++) {
             Code code = generate(event, year, month, i);
-            code.setPrice(price);
             codes.add(code);
         }
 
@@ -77,7 +75,7 @@ public class CodeGenerator {
     }
 
     private Code generate(final Event event, final Gift gift, int year, final int month, int number) {
-        final Code code = new Code();
+        Code code = new Code();
         code.setEvent(event);
         code.setGift(gift);
         code.setYear(year);
@@ -90,17 +88,17 @@ public class CodeGenerator {
             final String codeString = CodeHelper.generateCodeString();
             if (null == _codeRepository.findByCode(codeString)) {
                 code.setCode(codeString);
+                code = _codeRepository.save(code);
                 codeSaved = true;
             }
         }
-
         return code;
     }
 
     public boolean isValid(final String code) {
-        if(CodeHelper.isValid(code)){
+        if (CodeHelper.isValid(code)) {
             return _codeRepository.findByCode(code) != null;
-        }else{
+        } else {
             return false;
         }
     }
