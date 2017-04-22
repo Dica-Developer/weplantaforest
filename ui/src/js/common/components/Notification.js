@@ -6,6 +6,7 @@ import {
 } from 'react-dom';
 import NotificationSystem from 'react-notification-system';
 import Boostrap from 'bootstrap';
+import MultiLineErrorObject from './MultiLineErrorObject';
 
 export default class Notification extends Component {
 
@@ -14,8 +15,21 @@ export default class Notification extends Component {
       title: title,
       position: 'tc',
       autoDismiss: 0,
-      message: message,
+      message:  message,
       level: type
+    });
+  }
+
+  addMultilineNotification(title, multilines, type){
+    this.refs.notificationSystem.addNotification({
+      title: title,
+      position: 'tc',
+      autoDismiss: 0,
+      message:  '',
+      level: type,
+      children: (
+        <MultiLineErrorObject lines={multilines}/>
+      )
     });
   }
 

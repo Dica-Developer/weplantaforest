@@ -9,6 +9,7 @@ import Boostrap from 'bootstrap';
 
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
+import {getConfig} from '../../common/RestHelper';
 
 require("./giftRedeem.less");
 
@@ -28,17 +29,11 @@ export default class RedeemGiftPage extends Component {
   redeemGift() {
     var that = this;
     this.createGiftCodeString();
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
+    var config = getConfig();
     axios.post('http://localhost:8081/code/redeem?codeString=' + this.state.code, {}, config).then(function(response) {
-      // that.setState({isRedeemed: true});
-      that.refs.notification.addNotification('Der Gutschein wurde eingelöst!', 'Die Bäume wurden dir gut geschrieben', 'error');
+      that.refs.notification.addNotification('Der Gutschein wurde eingelöst!', 'Die Bäume wurden dir gut geschrieben', 'success');
     }).catch(function(response) {
-      console.error(response);
-      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
+      that.refs.notification.addMultilineNotification('Ein Fehler ist aufgetreten!',response.data.errorInfos, 'error');
     });
   }
 
