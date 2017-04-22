@@ -26,7 +26,7 @@ import org.dicadeveloper.weplantaforest.admin.event.Event;
 import org.dicadeveloper.weplantaforest.admin.receipt.Receipt;
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.user.User;
-import org.dicadeveloper.weplantaforest.views.Views;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.hibernate.annotations.Cascade;
 import org.springframework.hateoas.Identifiable;
 
@@ -55,7 +55,7 @@ public class Cart implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_cartId")
-    @JsonView(Views.OverviewCart.class)
+    @JsonView({Views.OverviewCart.class, Views.CodeOverview.class})
     private Long id;
 
     @Column(name = "_timeStamp")
@@ -64,7 +64,7 @@ public class Cart implements Identifiable<Long> {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "_cartState")
-    @JsonView(Views.OverviewCart.class)
+    @JsonView({Views.OverviewCart.class, Views.CodeOverview.class})
     private CartState cartState;
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)

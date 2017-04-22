@@ -24,7 +24,7 @@ export default class CartOverview extends Component {
         {
           key: 'id',
           name: 'ID',
-          width: 40,
+          width: 60,
           filterable: true,
           sortable: true
         }, {

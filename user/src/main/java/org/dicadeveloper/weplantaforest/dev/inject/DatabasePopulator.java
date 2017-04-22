@@ -470,7 +470,6 @@ public class DatabasePopulator {
             gift.setRecipient(_userRepository.findByName(DEFAULT_USERS.get(9 - i)));
             _giftRepository.save(gift);
             Code code = _codeGenerator.generate(gift);
-            code.setTreeCount(1);
             gift.setCode(code);
             gift.setStatus(Status.REDEEMED);
             _giftRepository.save(gift);

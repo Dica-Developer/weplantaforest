@@ -2,8 +2,7 @@ package org.dicadeveloper.weplantaforest.admin.cart;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.dicadeveloper.weplantaforest.admin.event.Event;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -24,7 +23,5 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     @Query(value = FIND_CART_BY_CODE)
     public Cart findCartByCode(@Param("codeString") String codeString);
 
-    @Query(value = "SELECT cart FROM Cart cart")
-    public Page<Cart> findAllCarts(Pageable page);
-
+    public List<Cart> findByEvent(@Param("event") Event event);
 }

@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.admin.user;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +27,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
         
     @Query(value ="SELECT user FROM User user")
     public Page<User> findAllUser(Pageable page);
+    
+    @Query
+    public List<User> findAllByOrderByNameAsc();
 }

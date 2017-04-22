@@ -10,10 +10,9 @@ import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.certificate.PdfCertificateView;
 import org.dicadeveloper.weplantaforest.certificate.PdfCertificateView2;
-import org.dicadeveloper.weplantaforest.code.Code;
-import org.dicadeveloper.weplantaforest.gift.Gift;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
-import org.dicadeveloper.weplantaforest.gift.PdfGiftView;
+import org.dicadeveloper.weplantaforest.gift.GiftService;
 import org.dicadeveloper.weplantaforest.receipt.PdfReceiptView;
 import org.dicadeveloper.weplantaforest.receipt.Receipt;
 import org.dicadeveloper.weplantaforest.receipt.ReceiptRepository;
@@ -36,6 +35,8 @@ import lombok.RequiredArgsConstructor;
 public class DummyPdfController {
 
     private @NonNull GiftRepository _giftRepository;
+    
+    private @NonNull GiftService _giftService;
 
     private @NonNull UserRepository _userRepository;
 
@@ -50,21 +51,8 @@ public class DummyPdfController {
     private final static String RELATIVE_STATIC_IMAGES_PATH_CERTIFICATE = "src/main/resources/static/images/pdf";
 
     @RequestMapping(value = "/gift/pdf/test", method = RequestMethod.GET, headers = "Accept=application/pdf")
-    public ResponseEntity<?> createGiftPdf(HttpServletResponse response) {
-        Gift gift = _giftRepository.findOne(1L);
-        Code code = gift.getCode();
-
-        String codeString = code.getCode();
-        String[] splittedCode = codeString.split("-");
-
-        PdfGiftView pdf = new PdfGiftView();
-
-        try {
-            pdf.buildPdfDocument(response.getOutputStream(), gift.getConsignor().getMail(), code.getTreeCount(), splittedCode, RELATIVE_STATIC_IMAGES_PATH_GIFT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public ResponseEntity<?> createGiftPdf(HttpServletResponse response) throws IpatException {
+        _giftService.createGiftPdf(1L, response);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

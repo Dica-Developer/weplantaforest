@@ -1,7 +1,11 @@
 package org.dicadeveloper.weplantaforest.planting;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.CartState;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
@@ -93,21 +97,36 @@ public class PlantPageController {
     
     @RequestMapping(value = Uris.PLANT_FOR_USER , method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<Long> plantForUser(@RequestBody PlantForUserRequest plantForUserRequest) {       
+    public ResponseEntity<List<Long>> plantForUser(@RequestBody PlantForUserRequest plantForUserRequest) {      
         if (_plantPageDataValidator.isPlantPageDataValid(plantForUserRequest.getPlantBag())) {
             User buyer = _userRepsoitory.findOne(plantForUserRequest.getUserId());
             if (buyer == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             } else{
-                Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantForUserRequest.getPlantBag(), buyer);
-                _cartRepository.save(cart);
-                return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);                
+                List<Long> cartIds = new ArrayList<>();
+                for(int i = 0; i < plantForUserRequest.getAmountOfPlantBags(); i++){
+                    Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantForUserRequest.getPlantBag(), buyer);
+                    cart.setCartState(CartState.valueOf(plantForUserRequest.getCartState()));
+                    cart = _cartRepository.save(cart);
+                    cartIds.add(cart.getId());
+                }
+                return new ResponseEntity<List<Long>>(cartIds, HttpStatus.OK);                
             }
         } else {
             // TODO: add validation messages to PlantBagValidation results
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
+    
+    @RequestMapping(value = Uris.VALIDATE_PLANTBAG , method = RequestMethod.POST)
+    public ResponseEntity<?> validatePlantBag(@RequestBody PlantBag plantBag){
+        if (_plantPageDataValidator.isPlantPageDataValid(plantBag)) {
+            return new ResponseEntity<>( HttpStatus.OK);                
+        }else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    
 
 }

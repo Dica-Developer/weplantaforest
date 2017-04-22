@@ -19,6 +19,7 @@
     "leaflet": "^0.7.7",
     "moment": "^2.15.0",
     "react": "^15.4.2",
+    "react-addons-shallow-compare": "^15.5.2",
     "react-bootstrap": "^0.30.7",
     "react-bootstrap-date-picker": "^3.9.0",
     "react-chartjs": "^0.8.0",
@@ -29,8 +30,12 @@
     "react-notification-system": "^0.2.10",
     "react-router": "^2.4.1",
     "react-router-component": "^0.32.2",
+    "react-select": "^1.0.0-rc.3",
+    "react-select-fast-filter-options": "^0.2.1",
     "react-simple-pie-chart": "^0.4.0",
     "react-tinymce": "^0.5.1",
+    "react-virtualized": "^9.7.3",
+    "react-virtualized-select": "^2.4.0",
     "url-loader": "^0.5.7"
   },
   "devDependencies": {

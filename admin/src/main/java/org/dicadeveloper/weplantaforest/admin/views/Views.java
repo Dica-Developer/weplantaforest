@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.views;
+package org.dicadeveloper.weplantaforest.admin.views;
 
 public interface Views {
 
@@ -23,6 +23,22 @@ public interface Views {
     }
     
     public static interface ProjectImage{
+        
+    }
+    
+    public static interface EventOverview{
+        
+    }
+    
+    public static interface EventDetails extends EventOverview{
+        
+    }
+    
+    public static interface TeamOverview {
+        
+    }
+    
+    public static interface CodeOverview{
         
     }
 }

@@ -12,10 +12,13 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.dicadeveloper.weplantaforest.admin.project.Project;
 import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
+import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
+import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -72,13 +75,13 @@ public class CartControllerTest {
     public void testGetAllCarts() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
 
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        User adam = _dbInjecter.injectUser("Adam");
+        TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
 
-        _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "project", 1.0);
+        Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle(treeType, project, 1.0);
 
-        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "project");
+        _dbInjecter.injectTreeToProject(treeType, adam, 1, timeOfPlanting, project);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         List<Long> treeIdList = new ArrayList<>();
@@ -86,10 +89,7 @@ public class CartControllerTest {
 
         _dbInjecter.injectCart("Adam", treeIdList);
 
-        mockMvc.perform(get(Uris.CARTS).header("X-AUTH-TOKEN", userToken)
-                                       .accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].buyer.name").value("Adam"));
+        mockMvc.perform(get(Uris.CARTS).header("X-AUTH-TOKEN", userToken).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].buyer.name").value("Adam"));
     }
 
     @Test
@@ -97,13 +97,13 @@ public class CartControllerTest {
     public void testChangeCartStateToVerfied() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
 
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        User adam = _dbInjecter.injectUser("Adam");
+        TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
 
-        _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "project", 1.0);
+        Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle(treeType, project, 1.0);
 
-        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "project");
+        _dbInjecter.injectTreeToProject(treeType, adam, 1, timeOfPlanting, project);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
         List<Long> treeIdList = new ArrayList<>();
@@ -115,11 +115,8 @@ public class CartControllerTest {
 
         assertThat(cartBeforeChangedState.getCartState()).isNull();
 
-        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken)
-                                                    .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                    .param("cartId", "1")
-                                                    .param("cartState", "VERIFIED"))
-               .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("cartId", "1").param("cartState", "VERIFIED"))
+                .andExpect(status().isOk());
 
         Cart cartAfterChangedState = _cartRepository.findOne(1L);
 
@@ -133,13 +130,13 @@ public class CartControllerTest {
     public void testChangeCartStateToDiscarded() throws Exception {
         long timeOfPlanting = System.currentTimeMillis();
 
-        _dbInjecter.injectUser("Adam");
-        _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
+        User adam = _dbInjecter.injectUser("Adam");
+        TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
 
-        _dbInjecter.injectProject("project", "Adam", "project desc", true, 1.0f, 1.0f);
-        _dbInjecter.injectProjectArticle("wood", "project", 1.0);
+        Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
+        _dbInjecter.injectProjectArticle(treeType, project, 1.0);
 
-        _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "project");
+        _dbInjecter.injectTreeToProject(treeType, adam, 1, timeOfPlanting, project);
 
         List<Long> treeIdList = new ArrayList<>();
         treeIdList.add(1L);
@@ -153,11 +150,8 @@ public class CartControllerTest {
         assertThat(_treeRepository.count()).isEqualTo(1);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
-        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken)
-                                                    .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                    .param("cartId", "1")
-                                                    .param("cartState", "DISCARDED"))
-               .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("cartId", "1").param("cartState", "DISCARDED"))
+                .andExpect(status().isOk());
 
         Cart cartAfterChangedState = _cartRepository.findOne(1L);
 
@@ -171,11 +165,8 @@ public class CartControllerTest {
         _dbInjecter.injectUser("Adam");
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
 
-        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken)
-                                                    .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                    .param("cartId", "1")
-                                                    .param("cartState", "VERIFIED"))
-               .andExpect(status().isBadRequest());
+        mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("cartId", "1").param("cartState", "VERIFIED"))
+                .andExpect(status().isBadRequest());
     }
 
 }

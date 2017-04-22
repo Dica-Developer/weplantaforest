@@ -33,15 +33,6 @@ public class Code {
     @JsonView(Views.OverviewGift.class)
     private String code;
 
-    @Column(name ="_year",nullable = false)
-    private int year;
-
-    @Column(name ="_month",nullable = false)
-    private int month;
-
-    @Column(name ="_number",nullable = false)
-    private int number;
-
     @ManyToOne(optional = true)
     @JoinColumn(name ="_event__id")
     private Event event;
@@ -49,17 +40,30 @@ public class Code {
     @OneToOne(optional = true)
     @JoinColumn(name ="_gift__id")
     private Gift gift;
-
-    @Column(name ="_treeCount")
-    private int treeCount;
-
-    @Column(name ="_amount")
-    private float price;
-
-    @Column(name ="_evaluated",nullable = false)
-    private boolean evaluated = false;
-
+    
     @OneToOne(optional = true)
     @JoinColumn(name ="_cart__cartId")
     private Cart cart;
+    
+    @Column(name ="_evaluated",nullable = false)
+    private boolean evaluated = false;
+    public boolean isGiftCode(){
+        return this.gift != null;
+    }
+    
+    public boolean isEventCode(){
+        return this.event != null;
+    }
+    
+    //TODO: think about to remove these columns, i don't think they are really necessary
+    //only initialized here with default values to avoid constraint violations from the db
+    @Column(name ="_year",nullable = false)
+    private int year = 0;
+
+    @Column(name ="_month",nullable = false)
+    private int month = 0;
+
+    @Column(name ="_number",nullable = false)
+    private int number = 0;
+    
 }

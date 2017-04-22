@@ -7,18 +7,15 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
-import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
-import org.dicadeveloper.weplantaforest.gift.Gift.Status;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
-import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
@@ -45,6 +42,8 @@ public class GiftController {
 
     private @NonNull GiftRepository _giftRepository;
 
+    private @NonNull GiftService _giftService;
+
     private @NonNull PlantBagValidator _plantBagValidator;
 
     private @NonNull PlantBagToCartConverter plantBagToCartConverter;
@@ -59,20 +58,16 @@ public class GiftController {
 
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
-    private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
-
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public ResponseEntity<?> findGiftsByConsignor(@RequestParam String userName) {
-        List<Gift> gifts = _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
-        return new ResponseEntity<>(gifts, HttpStatus.OK);
+    public List<Gift> findGiftsByConsignor(@RequestParam String userName) {
+        return _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
     }
 
     @RequestMapping(value = Uris.GIFTS_BY_RECIPIENT, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public ResponseEntity<?> findGiftsByRecipient(@RequestParam String userName) {
-        List<Gift> gifts = _giftRepository.findGiftsByRecipient(userName);
-        return new ResponseEntity<>(gifts, HttpStatus.OK);
+    public List<Gift> findGiftsByRecipient(@RequestParam String userName) {
+        return _giftRepository.findGiftsByRecipient(userName);
     }
 
     /*
@@ -81,91 +76,20 @@ public class GiftController {
      */
     @RequestMapping(value = Uris.GIFT_CREATE, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) {
+    public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
         User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
         if (consignor != null) {
-            if (_plantBagValidator.isPlantPageDataValid(plantBag)) {
-                Long[] responseIds = new Long[2];
-
-                Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor);
-
-                Gift gift = new Gift();
-                gift.setConsignor(consignor);
-                gift.setStatus(Status.NEW);
-
-                Code code = _codeGenerator.generate(gift);
-                code.setTreeCount(cart.getTreeCount());
-
-                gift.setCode(code);
-                _giftRepository.save(gift);
-
-                cart.setCode(code);
-                cart.setGift(true);
-                _cartRepository.save(cart);
-
-                responseIds[0] = cart.getId();
-                responseIds[1] = gift.getId();
-                return new ResponseEntity<>(responseIds, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+            _giftService.generateGift(consignor, plantBag);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @RequestMapping(value = Uris.GIFT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
-    public ResponseEntity<?> createGiftPdf(HttpServletResponse response, @RequestParam long giftId) {
-        Gift gift = _giftRepository.findOne(giftId);
-        Code code = gift.getCode();
-
-        String codeString = code.getCode();
-        String[] splittedCode = codeString.split("-");
-
-        PdfGiftView pdf = new PdfGiftView();
-
-        try {
-            pdf.buildPdfDocument(response.getOutputStream(), gift.getConsignor().getMail(), code.getTreeCount(), splittedCode, RELATIVE_STATIC_IMAGES_PATH);
-        } catch (Exception e) {
-            LOG.error("Error occured while creating PDF!", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public ResponseEntity<?> createGiftPdf(HttpServletResponse response, @RequestParam long giftId) throws IpatException {
+        _giftService.createGiftPdf(giftId, response);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(value = Uris.GIFT_REDEEM, method = RequestMethod.POST)
-    @Transactional
-    public ResponseEntity<?> redeemGiftCode(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String giftCode) {
-        User recipient = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (recipient != null) {
-            String responseMessage;
-            if (_codeGenerator.isValid(giftCode)) {
-                Gift gift = _giftRepository.findGiftByCode(giftCode);
-                if (gift.getStatus() == Status.REDEEMED) {
-                    responseMessage = _messageByLocaleService.getMessage("gift.already.redeemed", recipient.getLang().getLocale());
-                    return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
-                } else {
-                    Cart cartToGift = _cartRepository.findCartByCode(giftCode);
-
-                    gift.setRecipient(recipient);
-                    gift.setStatus(Status.REDEEMED);
-
-                    for (Tree cartTree : cartToGift.getTrees()) {
-                        cartTree.setOwner(recipient);
-                    }
-                    _cartRepository.save(cartToGift);
-                    _giftRepository.save(gift);
-                    return new ResponseEntity<>(HttpStatus.OK);
-                }
-            } else {
-                responseMessage = _messageByLocaleService.getMessage("invalid.code", recipient.getLang().getLocale());
-                return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-
     }
 
 }
