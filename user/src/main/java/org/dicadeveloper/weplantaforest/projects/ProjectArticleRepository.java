@@ -24,5 +24,9 @@ public interface ProjectArticleRepository extends CrudRepository<ProjectArticle,
     @Query(value = "SELECT article.articleId from ProjectArticle article where article.project.name = :projectName and article.treeType.name = :treeTypeName")
     public Long findArticleIdByProjectAndTreeType(@Param("projectName") String projectName,
             @Param("treeTypeName") String treeTypeName);
+    
+    @Query(value = "SELECT article from ProjectArticle article where article.project.name = :projectName and article.treeType.name = :treeTypeName")
+    public ProjectArticle findArticleByProjectAndTreeType(@Param("projectName") String projectName,
+            @Param("treeTypeName") String treeTypeName);
 
 }

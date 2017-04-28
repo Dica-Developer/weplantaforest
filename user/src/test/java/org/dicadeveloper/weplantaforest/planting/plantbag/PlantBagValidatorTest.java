@@ -1,7 +1,12 @@
 package org.dicadeveloper.weplantaforest.planting.plantbag;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
+import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatErrorInfo;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantBagBuilder;
@@ -59,6 +64,7 @@ public class PlantBagValidatorTest {
             _dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
             _dbInjecter.injectProjectArticle("wood", "Project B", 10, 1.0, 0.5);
             _dbInjecter.injectProjectArticle("doow", "Project B", 10, 1.0, 0.5);
+            _dbInjecter.injectProjectArticle("wood", "Project C", 1, 1.0, 0.5);
 
             entitiesInjected = true;
         }
@@ -80,15 +86,15 @@ public class PlantBagValidatorTest {
         assertThat(validation).isTrue();
     }
 
-//    @Test
-//    public void testValidatePlantPageDataWithOneArticleToTruee() {
-//        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-//                                           .createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
-//                                           .build();
-//        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
-//
-//        assertEquals(0, errorInfos.size());
-//    }
+    @Test
+    public void testValidatePlantPageDataWithOneArticleToTruee() {
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
+                                           .build();
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+
+        assertEquals(0, errorInfos.size());
+    }
 
     @Test
     public void testValidatePlantPageDataWithTwoArticlesToTrue() {
@@ -101,16 +107,16 @@ public class PlantBagValidatorTest {
         assertThat(validation).isTrue();
     }
 
-//    @Test
-//    public void testValidatePlantPageDataWithTwoArticlesToTruee() {
-//        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-//                                           .createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
-//                                           .createPlantItemAndAddToPlantBag(10, 100, "doow", "Project A")
-//                                           .build();
-//
-//        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
-//        assertEquals(0, errorInfos.size());
-//    }
+    @Test
+    public void testValidatePlantPageDataWithTwoArticlesToTruee() {
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
+                                           .createPlantItemAndAddToPlantBag(10, 100, "doow", "Project A")
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+        assertEquals(0, errorInfos.size());
+    }
 
     @Test
     public void plantBag() {
@@ -121,71 +127,103 @@ public class PlantBagValidatorTest {
         assertThat(validation).isFalse();
     }
 
-//    @Test
-//    public void testValidatePlantPageDataWithOneArticleToooManyTrees() {
-//        String project = "Project A";
-//        String treeType = "wood";
-//        Integer wantedToPlant = 11;
-//        Integer treesRemaining = 10;
-//        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag(project)
-//                                           .createPlantItemAndAddToPlantBag(wantedToPlant, 100, treeType, project)
-//                                           .build();
-//
-//        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
-//        assertEquals(1, errorInfos.size());
-//
-//        IpatErrorInfo error = errorInfos.get(0);
-//        assertEquals(ErrorCodes.NOT_ENOUGH_TREES, error.getErrorCode());
-//        assertEquals(project, error.getErrorParams()[0]);
-//        assertEquals(treeType, error.getErrorParams()[1]);
-//        assertEquals(wantedToPlant.toString(), error.getErrorParams()[2]);
-//        assertEquals(treesRemaining.toString(), error.getErrorParams()[3]);
-//    }
+    @Test
+    public void testValidatePlantPageDataWithOneArticleToooManyTrees() {
+        String project = "Project A";
+        String treeType = "wood";
+        Integer wantedToPlant = 11;
+        Integer treesRemaining = 10;
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag(project)
+                                           .createPlantItemAndAddToPlantBag(wantedToPlant, 100, treeType, project)
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+        assertEquals(1, errorInfos.size());
+
+        IpatErrorInfo error = errorInfos.get(0);
+        assertEquals(ErrorCodes.NOT_ENOUGH_TREES, error.getErrorCode());
+        assertEquals(project, error.getErrorParams()[0]);
+        assertEquals(treeType, error.getErrorParams()[1]);
+        assertEquals(wantedToPlant.toString(), error.getErrorParams()[2]);
+        assertEquals(treesRemaining.toString(), error.getErrorParams()[3]);
+    }
 
     @Test
     public void testValidatePlantPageDataWithTwoArticlesToFalse() {
         PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                           .createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
+                                           .createPlantItemAndAddToPlantBag(5, 100, "doow", "Project A")
                                            .createPlantItemAndAddToPlantBag(11, 100, "wood", "Project A")
                                            .build();
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantBag);
         assertThat(validation).isFalse();
     }
 
-//    @Test
-//    public void testValidatePlantPageDataWithTwoArticlesTooManyArticles() {
-//        String project = "Project A";
-//        String treeType = "wood";
-//        Integer wantedToPlant = 11;
-//        Integer treesRemaining = 10;
-//        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag(project)
-//                                           .createPlantItemAndAddToPlantBag(5, 100, "doow", project)
-//                                           .createPlantItemAndAddToPlantBag(wantedToPlant, 100, treeType, project)
-//                                           .build();
-//
-//        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
-//        assertEquals(1, errorInfos.size());
-//
-//        IpatErrorInfo error = errorInfos.get(0);
-//        assertEquals(ErrorCodes.NOT_ENOUGH_TREES, error.getErrorCode());
-//        assertEquals(project, error.getErrorParams()[0]);
-//        assertEquals(treeType, error.getErrorParams()[1]);
-//        assertEquals(wantedToPlant.toString(), error.getErrorParams()[2]);
-//        assertEquals(treesRemaining.toString(), error.getErrorParams()[3]);
-//    }
+    @Test
+    public void testValidatePlantPageDataWithTwoArticlesTooManyArticles() {
+        String project = "Project A";
+        String treeType = "wood";
+        Integer wantedToPlant = 11;
+        Integer treesRemaining = 10;
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag(project)
+                                           .createPlantItemAndAddToPlantBag(5, 100, "doow", project)
+                                           .createPlantItemAndAddToPlantBag(wantedToPlant, 100, treeType, project)
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+        assertEquals(1, errorInfos.size());
+
+        IpatErrorInfo error = errorInfos.get(0);
+        assertEquals(ErrorCodes.NOT_ENOUGH_TREES, error.getErrorCode());
+        assertEquals(project, error.getErrorParams()[0]);
+        assertEquals(treeType, error.getErrorParams()[1]);
+        assertEquals(wantedToPlant.toString(), error.getErrorParams()[2]);
+        assertEquals(treesRemaining.toString(), error.getErrorParams()[3]);
+    }
 
     @Test
     public void testValidatePlantPageDataWithTwoProjectsAndTwoArticlesToFalse() {
         PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .initializeProjectDataAndAddToPlantBag("Project B")
                                            .createPlantItemAndAddToPlantBag(0, 100, "wood", "Project A")
-                                           .createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
-                                           .createPlantItemAndAddToPlantBag(6, 100, "wood", "Project A")
-                                           .createPlantItemAndAddToPlantBag(12, 100, "wood", "Project A")
+                                           .createPlantItemAndAddToPlantBag(5, 100, "doow", "Project A")
+                                           .createPlantItemAndAddToPlantBag(6, 100, "wood", "Project B")
+                                           .createPlantItemAndAddToPlantBag(12, 100, "doow", "Project B")
                                            .build();
 
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantBag);
 
         assertThat(validation).isFalse();
+    }
+
+    @Test
+    public void testValidatePlantPageDataWithTwoProjectsAndTwoArticlesToFalsee() {
+        Integer wantedToPlantB = 12;
+        Integer wantedToPlantA = 15;
+        Integer treesRemaining = 10;
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .initializeProjectDataAndAddToPlantBag("Project B")
+                                           .createPlantItemAndAddToPlantBag(15, 100, "wood", "Project A")
+                                           .createPlantItemAndAddToPlantBag(5, 100, "doow", "Project B")
+                                           .createPlantItemAndAddToPlantBag(6, 100, "wood", "Project B")
+                                           .createPlantItemAndAddToPlantBag(wantedToPlantB, 100, "doow", "Project B")
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+        assertEquals(2, errorInfos.size());
+
+        IpatErrorInfo error = errorInfos.get(0);
+        assertEquals(ErrorCodes.NOT_ENOUGH_TREES, error.getErrorCode());
+        assertEquals("Project A", error.getErrorParams()[0]);
+        assertEquals("wood", error.getErrorParams()[1]);
+        assertEquals(wantedToPlantA.toString(), error.getErrorParams()[2]);
+        assertEquals(treesRemaining.toString(), error.getErrorParams()[3]);
+
+        error = errorInfos.get(1);
+        assertEquals(ErrorCodes.NOT_ENOUGH_TREES, error.getErrorCode());
+        assertEquals("Project B", error.getErrorParams()[0]);
+        assertEquals("doow", error.getErrorParams()[1]);
+        assertEquals(wantedToPlantB.toString(), error.getErrorParams()[2]);
+        assertEquals(treesRemaining.toString(), error.getErrorParams()[3]);
     }
 
     @Test
@@ -202,6 +240,19 @@ public class PlantBagValidatorTest {
     }
 
     @Test
+    public void testValidatePlantPageDataWithOneArticleAndAlreadyPlantedTreesToTruee() {
+        _dbInjecter.injectTreeToProject("wood", "Adam", 6, timeOfPlanting, "Project A");
+
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project A")
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+
+        assertEquals(0, errorInfos.size());
+    }
+
+    @Test
     public void testValidatePlantPageDataWithOneArticleAndAlreadyPlantedTreesToFalse() {
         _dbInjecter.injectTreeToProject("wood", "Adam", 7, timeOfPlanting, "Project A");
 
@@ -212,6 +263,29 @@ public class PlantBagValidatorTest {
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantBag);
 
         assertThat(validation).isFalse();
+    }
+
+    @Test
+    public void testValidatePlantPageDataWithOneArticleAndAlreadyPlantedTreesToFalsee() {
+        _dbInjecter.injectTreeToProject("wood", "Adam", 7, timeOfPlanting, "Project A");
+
+        Integer wantedToPlant = 4;
+        Integer treesRemaining = 3;
+
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .createPlantItemAndAddToPlantBag(wantedToPlant, 100, "wood", "Project A")
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+
+        assertEquals(1, errorInfos.size());
+
+        IpatErrorInfo error = errorInfos.get(0);
+        assertEquals(ErrorCodes.NOT_ENOUGH_TREES, error.getErrorCode());
+        assertEquals("Project A", error.getErrorParams()[0]);
+        assertEquals("wood", error.getErrorParams()[1]);
+        assertEquals(wantedToPlant.toString(), error.getErrorParams()[2]);
+        assertEquals(treesRemaining.toString(), error.getErrorParams()[3]);
     }
 
     @Test
@@ -226,6 +300,21 @@ public class PlantBagValidatorTest {
     }
 
     @Test
+    public void testValidatePlantPageDataWithNonExistingProjecte() {
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project NonExisting")
+                                           .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project NonExisting")
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+
+        assertEquals(1, errorInfos.size());
+
+        IpatErrorInfo error = errorInfos.get(0);
+        assertEquals(ErrorCodes.PROJECT_DOES_NOT_EXISTS, error.getErrorCode());
+        assertEquals("Project NonExisting", error.getErrorParams()[0]);
+    }
+
+    @Test
     public void testValidatePlantPageDataWithNonActiveProject() {
         PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project C")
                                                 .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project C")
@@ -237,6 +326,20 @@ public class PlantBagValidatorTest {
     }
 
     @Test
+    public void testValidatePlantPageDataWithNonActiveProjecte() {
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project C")
+                                           .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project C")
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+        assertEquals(1, errorInfos.size());
+
+        IpatErrorInfo error = errorInfos.get(0);
+        assertEquals(ErrorCodes.PROJECT_NOT_ACTIVE, error.getErrorCode());
+        assertEquals("Project C", error.getErrorParams()[0]);
+    }
+
+    @Test
     public void testValidatePlantPageDataWithNonExistingArticle() {
         PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project D")
                                                 .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project D")
@@ -245,6 +348,21 @@ public class PlantBagValidatorTest {
         boolean validation = _plantPageDataValidator.isPlantPageDataValid(plantPageData);
 
         assertThat(validation).isFalse();
+    }
+    
+    @Test
+    public void testValidatePlantPageDataWithNonExistingArticlee() {
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project D")
+                                           .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project D")
+                                           .build();
+
+        List<IpatErrorInfo> errorInfos = _plantPageDataValidator.validatePlantBag(plantBag);
+        assertEquals(1, errorInfos.size());
+
+        IpatErrorInfo error = errorInfos.get(0);
+        assertEquals(ErrorCodes.ARTICLE_DOES_NOT_EXISTS, error.getErrorCode());
+        assertEquals("Project D", error.getErrorParams()[0]);
+        assertEquals("wood", error.getErrorParams()[1]);
     }
 
 }
