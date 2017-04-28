@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
@@ -59,7 +61,7 @@ public class UserHelper {
         return mailText;
     }
 
-    public User createAnonymous() {
+    public User createAnonymous() throws IpatException{
         User user = null;
         final long currentTimeMillis = System.currentTimeMillis();
         final String randomString = UUID.randomUUID().toString();
@@ -94,6 +96,6 @@ public class UserHelper {
             }
         }
         LOG.error("unable to save anonymous user after 100 tries.");
-        return null;
+        throw new IpatException(ErrorCodes.NO_ANONYMOUS_CREATED);
     }
 }
