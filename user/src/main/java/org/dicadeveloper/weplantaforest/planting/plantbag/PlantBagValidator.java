@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatErrorInfo;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -21,19 +22,15 @@ public class PlantBagValidator extends AbstractPlantBagValidator {
         super(treeRepository, projectArticleRepository, projectRepository);
     }
 
-    public boolean isPlantPageDataValid(PlantBag plantPageData) {
-        Set<String> projectNames = plantPageData.getProjects()
-                                                .keySet();
-        return projectsExist(projectNames) && projectsAreActive(projectNames) && articlesExist(plantPageData) && areThereEnoughTreesRemaining(plantPageData);
-    }
-
-    public List<IpatErrorInfo> validatePlantBag(PlantBag plantBag) {
+    public void validatePlantBag(PlantBag plantBag) throws IpatException {
         Set<String> projectNames = plantBag.getProjects()
                                            .keySet();
         checkProjects(plantBag, projectNames);
-        List<IpatErrorInfo> returnedErrors = this.errorInfos;
-        this.errorInfos = new ArrayList<IpatErrorInfo>();
-        return returnedErrors;
+        if (errorInfos.size() > 0) {
+            List<IpatErrorInfo> returnedErrors = this.errorInfos;
+            this.errorInfos = new ArrayList<IpatErrorInfo>();
+            throw new IpatException(returnedErrors);
+        }
     }
 
     private void checkProjects(PlantBag plantBag, Set<String> projectNames) {
@@ -69,47 +66,6 @@ public class PlantBagValidator extends AbstractPlantBagValidator {
                                                 .getAmount();
             areThereEnoughTreesRemainingForThisArticleTemp(article, wantedToPlant, projectName, articleName);
         }
-    }
-
-    private boolean articlesExist(PlantBag plantPageData) {
-        Set<String> projectNames = plantPageData.getProjects()
-                                                .keySet();
-
-        for (String projectName : projectNames) {
-            Set<String> articleNames = plantPageData.getProjects()
-                                                    .get(projectName)
-                                                    .getPlantItems()
-                                                    .keySet();
-            for (String articleName : articleNames) {
-                if (!articleExists(projectName, articleName)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean areThereEnoughTreesRemaining(PlantBag plantPageData) {
-        Set<String> projectNames = plantPageData.getProjects()
-                                                .keySet();
-
-        for (String projectName : projectNames) {
-            Set<String> plantItemNames = plantPageData.getProjects()
-                                                      .get(projectName)
-                                                      .getPlantItems()
-                                                      .keySet();
-            for (String articleName : plantItemNames) {
-                Long wantedToPlant = (long) plantPageData.getProjects()
-                                                         .get(projectName)
-                                                         .getPlantItems()
-                                                         .get(articleName)
-                                                         .getAmount();
-                if (!isThereEnoughTreesRemainingForThisArticle(projectName, articleName, wantedToPlant)) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
 }

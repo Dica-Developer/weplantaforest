@@ -43,7 +43,7 @@ public class GiftService {
 
     @Transactional
     public Gift generateGift(User consignor, PlantBag plantBag) throws IpatException {
-        IpatPreconditions.checkArgument(_plantBagValidator.isPlantPageDataValid(plantBag), ErrorCodes.PLANTBAG_IS_INVALID);
+        _plantBagValidator.validatePlantBag(plantBag);
         Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor);
 
         Gift gift = new Gift();

@@ -3,6 +3,7 @@ package org.dicadeveloper.weplantaforest.abo;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.abo.Abo.Period;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -34,7 +35,7 @@ public class AboController {
     private @NonNull PlantBagValidator _plantBagValidator;
 
     private @NonNull AboHelper _aboHelper;
-    
+
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
     @RequestMapping(value = Uris.ABOS_BY_USER + "{userId}", method = RequestMethod.GET)
@@ -45,15 +46,12 @@ public class AboController {
 
     @RequestMapping(value = Uris.ABO_CREATE, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> createAbo(@RequestHeader(value = "X-AUTH-TOKEN") String userToken,@RequestBody AboRequestData aboRequest) {
-        if (_plantBagValidator.isPlantPageDataValid(aboRequest.getPlantBag())) {
-            User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
-            Abo abo = _aboHelper.createAboFromAboRequest(aboRequest, buyer);
-            _aboRepository.save(abo);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> createAbo(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody AboRequestData aboRequest) throws IpatException{
+        _plantBagValidator.validatePlantBag(aboRequest.getPlantBag());
+        User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
+        Abo abo = _aboHelper.createAboFromAboRequest(aboRequest, buyer);
+        _aboRepository.save(abo);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
