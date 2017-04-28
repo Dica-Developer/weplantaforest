@@ -32,12 +32,12 @@ public class PlantBagToCartConverter {
         _userRepository = userRepository;
     }
 
-    public Cart convertPlantPageDataToCart(PlantBag plantPageData, User buyer) {
+    public Cart convertPlantPageDataToCart(PlantBag plantPageData, User buyer, CartState cartState) {
 
         Cart cart = new Cart();
         cart.setTimeStamp(System.currentTimeMillis());
         cart.setBuyer(buyer);
-        cart.setCartState(CartState.INITIAL);
+        cart.setCartState(cartState);
 
         Set<String> projectNames = plantPageData.getProjects()
                                                 .keySet();

@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.CartState;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeGenerator;
 import org.dicadeveloper.weplantaforest.code.CodeRepository;
@@ -44,7 +45,7 @@ public class GiftService {
     @Transactional
     public Gift generateGift(User consignor, PlantBag plantBag) throws IpatException {
         _plantBagValidator.validatePlantBag(plantBag);
-        Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor);
+        Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor, CartState.INITIAL);
 
         Gift gift = new Gift();
         gift.setConsignor(consignor);

@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.CartState;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
@@ -76,7 +77,7 @@ public class PlantBagCartConverterTest {
                                                 .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
                                                 .build();
 
-        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
+        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer, CartState.INITIAL);
 
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(9.0);
@@ -105,7 +106,7 @@ public class PlantBagCartConverterTest {
                                                 .createPlantItemAndAddToPlantBag(1, 100, "doow", "Project A")
                                                 .build();
 
-        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
+        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer, CartState.INITIAL);
 
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(10.0);
@@ -148,7 +149,7 @@ public class PlantBagCartConverterTest {
                                                 .createPlantItemAndAddToPlantBag(0, 100, "wodo", "Project A")
                                                 .build();
 
-        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
+        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer, CartState.INITIAL);
 
         assertThat(cart.getTotalPrice()
                        .doubleValue()).isEqualTo(10.0);
@@ -191,7 +192,7 @@ public class PlantBagCartConverterTest {
                                                 .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
                                                 .build();
 
-        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
+        Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer, CartState.INITIAL);
 
         _cartRepository.save(cart);
 

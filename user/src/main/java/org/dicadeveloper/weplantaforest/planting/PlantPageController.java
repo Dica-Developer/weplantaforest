@@ -1,13 +1,13 @@
 package org.dicadeveloper.weplantaforest.planting;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.CartService;
 import org.dicadeveloper.weplantaforest.cart.CartState;
+import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
-import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
 import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagHelper;
@@ -55,7 +55,7 @@ public class PlantPageController {
 
     private @NonNull UserRepository _userRepsoitory;
 
-    private final static String ANONYMOUS_TOKEN = "anonym-user";
+    private @NonNull CartService _cartService;
 
     @RequestMapping(value = Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", method = RequestMethod.GET)
     @Transactional
@@ -66,27 +66,12 @@ public class PlantPageController {
     @RequestMapping(value = Uris.COMPLEX_DONATION, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<Long> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
-        String message;
-        _plantPageDataValidator.validatePlantBag(plantBag);
-        User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (buyer == null) {
-            if (userToken.equals(ANONYMOUS_TOKEN)) {
-                buyer = _userHelper.createAnonymous();
-                if (buyer == null) {
-                    message = _messageByLocaleService.getMessage("no.anonymous.created", Language.DEUTSCH.getLocale());
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                } else {
-                    Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer);
-                    _cartRepository.save(cart);
-                    return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);
-                }
-            } else {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
+        User buyer = _tokenAuthenticationService.getBuyer(userToken);
+        if (buyer != null) {
+            long cartId = _cartService.createCartAndSave(plantBag, buyer, CartState.INITIAL);
+            return new ResponseEntity<Long>(cartId, HttpStatus.OK);
         } else {
-            Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer);
-            _cartRepository.save(cart);
-            return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
     }
@@ -94,20 +79,12 @@ public class PlantPageController {
     @RequestMapping(value = Uris.PLANT_FOR_USER, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<List<Long>> plantForUser(@RequestBody PlantForUserRequest plantForUserRequest) throws IpatException {
-        _plantPageDataValidator.validatePlantBag(plantForUserRequest.getPlantBag());
         User buyer = _userRepsoitory.findOne(plantForUserRequest.getUserId());
-        if (buyer == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            List<Long> cartIds = new ArrayList<>();
-            for (int i = 0; i < plantForUserRequest.getAmountOfPlantBags(); i++) {
-                Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantForUserRequest.getPlantBag(), buyer);
-                cart.setCartState(CartState.valueOf(plantForUserRequest.getCartState()));
-                cart = _cartRepository.save(cart);
-                cartIds.add(cart.getId());
-            }
-            return new ResponseEntity<List<Long>>(cartIds, HttpStatus.OK);
-        }
+        IpatPreconditions.checkNotNull(buyer, ErrorCodes.USER_NOT_FOUND);
+        _plantPageDataValidator.validatePlantBag(plantForUserRequest.getPlantBag());
+        List<Long> cartIds = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()), (int) plantForUserRequest.getAmountOfPlantBags());
+        return new ResponseEntity<List<Long>>(cartIds, HttpStatus.OK);
+
     }
 
     @RequestMapping(value = Uris.VALIDATE_PLANTBAG, method = RequestMethod.POST)

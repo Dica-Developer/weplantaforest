@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.abo;
 
 import org.dicadeveloper.weplantaforest.abo.Abo.Period;
 import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartState;
 import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class AboHelper {
         abo.setPeriod(Period.valueOf(aboRequest.getPeriod()));
         abo.setTimeStamp(createdOn);
         
-        Cart cart = _plantBagToCartConverter.convertPlantPageDataToCart(aboRequest.getPlantBag(), buyer);
+        Cart cart = _plantBagToCartConverter.convertPlantPageDataToCart(aboRequest.getPlantBag(), buyer, CartState.INITIAL);
         cart.setAbo(abo);
         
         abo.setCurrentCart(cart);
