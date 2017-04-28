@@ -9,8 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IpatErrorInfo {
 
+    public IpatErrorInfo(String errorCode, String... textParams) {
+        this.errorCode = errorCode;
+        this.errorParams = textParams;
+    }
+
     String errorCode;
-        
+
     private Object[] errorParams;
-    
+
 }

@@ -33,4 +33,20 @@ public class ErrorCodes {
     public final static String ERROR_WHILE_CREATING_PDF_FOR_GIFT = "ERROR_WHILE_CREATING_PDF_FOR_GIFT";
     
     public final static String PLANTBAG_IS_INVALID = "PLANTBAG_IS_INVALID";
+    
+    //Plantbag
+    
+    public final static String PROJECT_DOES_NOT_EXISTS = "PROJECT_DOES_NOT_EXISTS";
+    
+    public final static String PROJECT_NOT_ACTIVE = "PROJECT_NOT_ACTIVE";
+    
+    public final static String ARTICLE_DOES_NOT_EXISTS = "ARTICLE_DOES_NOT_EXISTS";
+    
+    public final static String NOT_ENOUGH_TREES = "ARTICLE_DOES_NOT_EXISTS";
+    
+    // User 
+    
+    public final static String NO_ANONYMOUS_CREATED = "NO_ANONYMOUS_CREATED";
+    
+    public final static String USER_NOT_FOUND = "USER_NOT_FOUND";
 }
