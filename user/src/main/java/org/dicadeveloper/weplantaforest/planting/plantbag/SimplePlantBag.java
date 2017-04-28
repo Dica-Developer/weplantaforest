@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.planting.plantbag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class SimplePlantBag {
 
     long actualPrice;
 
-    List<SimplePlantPageItem> plantItems;
+    List<SimplePlantPageItem> plantItems = new ArrayList<>();
 
     protected long getDiffToTargetAmount() {
         calcAndSetActualAmountOfTrees();

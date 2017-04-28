@@ -10,7 +10,7 @@ import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
-import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.testsupport.PlantBagBuilder;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
@@ -44,12 +44,14 @@ public class AboRepositoryIntegrationTest {
 
     @Autowired
     public CartRepository _cartRepository;
-    
+
     @Autowired
     public TreeRepository _treeRepository;
-    
+
     @Autowired
     private UserRepository _userRepository;
+
+    PlantBagBuilder plantBagBuilder = new PlantBagBuilder();
 
     @Test
     public void testFindAbosByUserId() {
@@ -99,14 +101,12 @@ public class AboRepositoryIntegrationTest {
         aboRequest.amount = 1;
         aboRequest.period = "WEEKLY";
 
-        PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
-        plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
-        plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantBag);
-        
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
+                                           .build();
 
         aboRequest.plantBag = plantBag;
         User buyer = _userRepository.findByName("Adam");
-        
 
         Abo abo = _aboHelper.createAboFromAboRequest(aboRequest, buyer);
 

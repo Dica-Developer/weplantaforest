@@ -13,7 +13,7 @@ import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
-import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.testsupport.PlantBagBuilder;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
@@ -56,15 +56,17 @@ public class GiftServiceTest {
     @Autowired
     private TreeRepository _treeRepository;
 
+    PlantBagBuilder plantBagBuilder = new PlantBagBuilder();
+
     @Test
     public void testACreateGift() {
         User consignor = _dbInjecter.injectUser("Adam");
         _dbInjecter.injectTreeType("wood", "this is a wood", 0.5);
         _dbInjecter.injectProject("Project A", "Adam", "this is a project", true, 0, 0);
         _dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 0.5);
-        PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
-        plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
-        plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(5, 5, "wood", "Project A", plantBag);
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .createPlantItemAndAddToPlantBag(5, 5, "wood", "Project A")
+                                           .build();
         try {
             _giftService.generateGift(consignor, plantBag);
         } catch (IpatException e) {
@@ -82,21 +84,25 @@ public class GiftServiceTest {
         Code code = _codeRepository.findOne(1L);
         Tree tree = _treeRepository.findOne(1L);
         assertEquals(5, tree.getAmount());
-        assertEquals("Adam", tree.getOwner().getName());
+        assertEquals("Adam", tree.getOwner()
+                                 .getName());
         Gift gift = _giftRepository.findOne(1L);
         gift.setStatus(Status.UNREDEEMED);
         _giftRepository.save(gift);
         try {
             _giftService.redeemGiftCode(recipient, code.getCode());
         } catch (IpatException e) {
-            fail(String.format("No Exception expected, when redeeming a gift code.\nerrorCode: %s", e.getErrorInfos().get(0).getErrorCode()));
+            fail(String.format("No Exception expected, when redeeming a gift code.\nerrorCode: %s", e.getErrorInfos()
+                                                                                                     .get(0)
+                                                                                                     .getErrorCode()));
         }
-        
+
         gift = _giftRepository.findOne(1L);
         assertEquals(Status.REDEEMED, gift.getStatus());
         tree = _treeRepository.findOne(1L);
         assertEquals(5, tree.getAmount());
-        assertEquals("Recipient", tree.getOwner().getName());
+        assertEquals("Recipient", tree.getOwner()
+                                      .getName());
     }
 
 }

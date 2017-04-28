@@ -14,14 +14,14 @@ public class PlantBag {
     long targetPrice;
     long actualPrice;
 
-    HashMap<String, ProjectData> projects;
+    HashMap<String, ProjectData> projects = new HashMap<String, ProjectData>();
 
     @Getter
     @Setter
     @NoArgsConstructor
     public static class ProjectData {
 
-        HashMap<String, PlantItem> plantItems;
+        HashMap<String, PlantItem> plantItems = new HashMap<String, PlantItem>();
 
         @NoArgsConstructor
         @Getter

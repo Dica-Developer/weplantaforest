@@ -16,7 +16,7 @@ import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
-import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.testsupport.PlantBagBuilder;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
@@ -60,6 +60,8 @@ public class AboControllerTest {
     @Autowired
     private UserRepository _userRepository;
 
+    PlantBagBuilder plantBagBuilder = new PlantBagBuilder();
+
     @Before
     public void setup() {
         if (!entitiesInjected) {
@@ -102,9 +104,9 @@ public class AboControllerTest {
         aboRequest.amount = 1;
         aboRequest.period = "WEEKLY";
 
-        PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
-        plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
-        plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantBag);
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
+                                           .build();
 
         aboRequest.plantBag = plantBag;
 
@@ -121,9 +123,9 @@ public class AboControllerTest {
         aboRequest.amount = 1;
         aboRequest.period = "WEEKLY";
 
-        PlantBag plantBag = PlantPageDataCreater.initializePlantPageData();
-        plantBag = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantBag, "Project A");
-        plantBag = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(11, 300, "wood", "Project A", plantBag);
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                           .createPlantItemAndAddToPlantBag(11, 300, "wood", "Project A")
+                                           .build();
 
         aboRequest.plantBag = plantBag;
 

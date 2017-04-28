@@ -9,7 +9,7 @@ import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
-import org.dicadeveloper.weplantaforest.testsupport.PlantPageDataCreater;
+import org.dicadeveloper.weplantaforest.testsupport.PlantBagBuilder;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
@@ -47,6 +47,8 @@ public class PlantBagCartConverterTest {
 
     static boolean entitiesInjected = false;
 
+    PlantBagBuilder plantBagBuilder = new PlantBagBuilder();
+
     @Before
     public void setup() {
         if (!entitiesInjected) {
@@ -70,9 +72,9 @@ public class PlantBagCartConverterTest {
     @Rollback(false)
     public void testConvertFromPlantPageDataToCartOneItem() {
         User buyer = _userRepository.findByName("Adam");
-        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
-        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
+        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                                .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
+                                                .build();
 
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
 
@@ -98,10 +100,10 @@ public class PlantBagCartConverterTest {
     public void testConvertFromPlantPageDataToCartTwoItems() {
         User buyer = _userRepository.findByName("Adam");
 
-        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
-        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 100, "doow", "Project A", plantPageData);
+        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                                .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
+                                                .createPlantItemAndAddToPlantBag(1, 100, "doow", "Project A")
+                                                .build();
 
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
 
@@ -140,11 +142,11 @@ public class PlantBagCartConverterTest {
     public void testConvertFromPlantPageDataToCartThreeItemsOneWithZeroAmount() {
         User buyer = _userRepository.findByName("Adam");
 
-        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
-        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(1, 100, "doow", "Project A", plantPageData);
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(0, 100, "wodo", "Project A", plantPageData);
+        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                                .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
+                                                .createPlantItemAndAddToPlantBag(1, 100, "doow", "Project A")
+                                                .createPlantItemAndAddToPlantBag(0, 100, "wodo", "Project A")
+                                                .build();
 
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
 
@@ -185,9 +187,9 @@ public class PlantBagCartConverterTest {
     public void testSavetoDBAfterConversion() {
         User buyer = _userRepository.findByName("Adam");
 
-        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
-        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
+        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
+                                                .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
+                                                .build();
 
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer);
 
