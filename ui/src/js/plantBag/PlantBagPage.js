@@ -10,6 +10,7 @@ import PlantBagItem from './PlantBagItem'
 import IconButton from '../common/components/IconButton';
 import CheckBox from '../common/components/CheckBox';
 import Notification from '../common/components/Notification';
+import LoadingSpinner from '../common/components/LoadingSpinner';
 
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
@@ -19,8 +20,14 @@ export default class PlantBagPage extends Component {
 
   constructor(props) {
     super(props);
-    var isGift = (localStorage.getItem('isGift')  === 'undefined') ? false : JSON.parse(localStorage.getItem('isGift'));
-    var plantBag = (localStorage.getItem('plantBag')  === 'undefined') ? {projects: []} : JSON.parse(localStorage.getItem('plantBag'));
+    var isGift = (localStorage.getItem('isGift') === 'undefined')
+      ? false
+      : JSON.parse(localStorage.getItem('isGift'));
+    var plantBag = (localStorage.getItem('plantBag') === 'undefined')
+      ? {
+        projects: []
+      }
+      : JSON.parse(localStorage.getItem('plantBag'));
     this.state = {
       plantBag: plantBag,
       isGift: isGift,
@@ -60,38 +67,28 @@ export default class PlantBagPage extends Component {
   }
 
   createGift(config) {
+    this.refs["spinner"].showSpinner();
+    var that = this;
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     axios.post('http://localhost:8081/gift/create', this.state.plantBag, config).then(function(response) {
+      that.refs["spinner"].hideSpinner();
       browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
     }).catch(function(response) {
-      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-      console.error('Payment failed');
+      that.refs["spinner"].hideSpinner();
+      that.refs.notification.handleError(error);
     });
   }
 
   createCart(config) {
+    this.refs["spinner"].showSpinner();
+    var that = this;
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
+      that.refs["spinner"].hideSpinner();
       browserHistory.push('/payCart/' + response.data);
     }).catch(function(response) {
-      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-      console.error('Payment failed');
+      that.refs["spinner"].hideSpinner();
+      that.refs.notification.handleError(error);
     });
   }
 
@@ -197,6 +194,7 @@ export default class PlantBagPage extends Component {
             </div>
           </div>
         </div>
+        <LoadingSpinner ref="spinner"/>
         <Notification ref="notification"/>
       </div>
     );
