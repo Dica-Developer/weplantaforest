@@ -138,6 +138,7 @@ public class Cart implements Identifiable<Long> {
     private String callBackMethod;
 
     @Column(name = "_callBackZahlungsart", length = 32)
+    @JsonView(Views.OverviewCart.class)
     private String callBackZahlungsart;
 
     @Column(name = "_callBackFirmanzusatz", length = 256)
