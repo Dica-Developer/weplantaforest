@@ -49,4 +49,24 @@ public class ErrorCodes {
     public final static String NO_ANONYMOUS_CREATED = "NO_ANONYMOUS_CREATED";
     
     public final static String USER_NOT_FOUND = "USER_NOT_FOUND";
+    
+    public final static String USER_ALREADY_EXISTS = "USER_ALREADY_EXISTS";
+    
+    public final static String USER_ALREADY_ACTIVATED = "USER_ALREADY_ACTIVATED";
+    
+    public final static String USER_NOT_ACTIVATED = "USER_NOT_ACTIVATED";
+    
+    public final static String INVALID_MAIL = "INVALID_MAIL";
+    
+    public final static String MAIL_ALREADY_EXISTS = "MAIL_ALREADY_EXISTS";
+    
+    public final static String INVALID_ACTIVATION_KEY = "INVALID_ACTIVATION_KEY";
+    
+    // Files
+    
+    public final static String EMPTY_FILE = "EMPTY_FILE";
+    
+    //
+    
+    public final static String SERVER_ERROR = "SERVER_ERROR";
 }
