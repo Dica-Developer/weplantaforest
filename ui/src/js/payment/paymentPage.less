@@ -4,6 +4,13 @@
   background-color: #fff;
   padding-bottom: 25px;
 
+  .row {
+    background-color: #fff;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 10px;
+  }
+
   .choose {
     font-size: 18px;
     margin-top: 25px;
@@ -25,25 +32,27 @@
     }
   }
 
-  .dataInputFrom {
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    background-color: #e5e5e5;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin-bottom: 30px;
-
-    table {
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 15px;
-
-      tr {
-        height: 40px;
+  .payment-data {
+    .row {
+      .col-md-6:nth-child(2n + 1) {
+        text-align: right;
+      }
+      .col-md-6:nth-child(2n + 2) {
+        text-align: left;
       }
     }
+    .payment-row {
+      text-align: right!important;
+    }
+    .payment-info {
+      padding: 15px;
+      font-size: 24px;
+      min-height: 500px;
+      background-color: #82ab1f;
+      color: #ffffff;
+    }
+
+
   }
 
   .gift-text {
