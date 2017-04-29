@@ -70,6 +70,12 @@ export default class CartOverview extends Component {
           filterable: true,
           sortable: true
         }, {
+          key: 'paymentType',
+          name: 'Zahlungsart',
+          width: 40,
+          filterablte: true,
+          sortable: true
+        }, {
           key: 'stateChange',
           name: 'Actions',
           width: 100,
@@ -120,6 +126,7 @@ export default class CartOverview extends Component {
       firstName: cart.callBackVorname,
       lastName: cart.callBackNachname,
       company: cart.callBackFirma,
+      paymentType: cart.callBackZahlungsart,
       stateChange: this.createStateChangeButtons(cart.id, cart.cartState)
     };
     return row;
