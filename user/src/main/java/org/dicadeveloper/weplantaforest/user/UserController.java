@@ -1,24 +1,20 @@
 package org.dicadeveloper.weplantaforest.user;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.common.mail.MailHelper;
-import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;
-import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
-import org.dicadeveloper.weplantaforest.support.CommonValidator;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -54,7 +50,7 @@ public class UserController {
 
     private @NonNull PasswordEncrypter _passwordEncrypter;
 
-    private @NonNull UserHelper _userHelper;
+    private @NonNull UserService _userService;
 
     private @NonNull MailHelper _mailHelper;
 
@@ -76,87 +72,16 @@ public class UserController {
 
     @RequestMapping(value = Uris.USER_DETAILS, method = RequestMethod.GET)
     public UserReportData getUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
-        UserReportData userReportData = _userRepository.getUserDetails(userName);
-        userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName));
-        userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data()
-                                                                                        .getTreesCount()));
-        userReportData.setEditAllowed(_tokenAuthenticationService.isAuthenticatedUser(userToken, userName));
+        boolean isEditAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, userName);
+        UserReportData userReportData = _userService.getUserDetails(userName, isEditAllowed);
         return userReportData;
-    }
-
-    private long calcUserRank(String userName, long treeCountOfUser) {
-        List<TreeRankedUserData> userList = _rankingRepository.getBestUserList(System.currentTimeMillis());
-        long rank = 1;
-        for (TreeRankedUserData user : userList) {
-            if (treeCountOfUser < user.getAmount()) {
-                rank++;
-            }
-            if (user.getName()
-                    .equals(userName)) {
-                break;
-            }
-        }
-        return rank;
     }
 
     @RequestMapping(value = Uris.EDIT_USER_DETAILS, method = RequestMethod.POST)
     public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam String toEdit, @RequestParam String newEntry)
-            throws IOException {
-        String errorMessage;
+            throws IpatException {
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
-            User user = _userRepository.findByName(userName);
-
-            switch (toEdit) {
-            case "NAME":
-                if (_userRepository.userExists(newEntry) == 1) {
-                    errorMessage = _messageByLocaleService.getMessage("user.already.exists", user.getLang()
-                                                                                                 .getLocale());
-                    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-                } else {
-                    user.setName(newEntry);
-                }
-                break;
-            case "ABOUTME":
-                user.setAboutMe(newEntry);
-                break;
-            case "LOCATION":
-                user.setLocation(newEntry);
-                break;
-            case "ORGANISATION":
-                user.setOrganisation(newEntry);
-                break;
-            case "HOMEPAGE":
-                user.setHomepage(newEntry);
-                break;
-            case "MAIL":
-                if (!CommonValidator.isValidEmailAddress(newEntry)) {
-                    errorMessage = _messageByLocaleService.getMessage("invalid.mail", user.getLang()
-                                                                                          .getLocale());
-                    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-                } else if (_userRepository.userWithMailExists(newEntry) == 1) {
-                    errorMessage = _messageByLocaleService.getMessage("mail.already.exists", user.getLang()
-                                                                                                 .getLocale());
-                    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-                } else {
-                    user.setMail(newEntry);
-                }
-                break;
-            case "NEWSLETTER":
-                user.setNewsletter(newEntry.equals("JA") ? true : false);
-                break;
-            case "ORGANIZATION_TYPE":
-                user.setOrganizationType(OrganizationType.valueOf(newEntry));
-                break;
-            case "LANGUAGE":
-                user.setLang(Language.valueOf(newEntry));
-                break;
-            case "PASSWORD":
-                user.setPassword(_passwordEncrypter.encryptPassword(newEntry));
-                break;
-            default:
-                break;
-            }
-            _userRepository.save(user);
+            _userService.editUser(userName, toEdit, newEntry);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -164,88 +89,25 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.USER_IMAGE_UPLOAD, method = RequestMethod.POST)
-    public ResponseEntity<?> uploadUserImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadUserImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam("file") MultipartFile file) throws IpatException {
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
-            User user = _userRepository.findByName(userName);
-            String imageFolder = FileSystemInjector.getUserFolder();
-            String imageName = user.getName() + file.getOriginalFilename()
-                                                    .substring(file.getOriginalFilename()
-                                                                   .indexOf("."));
-            if (!file.isEmpty()) {
-                try {
-                    _imageHelper.storeImage(file, imageFolder, imageName, true);
-                    user.setImageName(imageName);
-                    _userRepository.save(user);
-                    return new ResponseEntity<>(HttpStatus.OK);
-                } catch (IOException e) {
-                    LOG.error("Error occured while trying to save image " + imageName + " in folder: " + imageFolder, e);
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+            _userService.uploadUserImage(userName, file);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @RequestMapping(value = Uris.REGISTRATE_USER, method = RequestMethod.POST)
-    public ResponseEntity<?> registrateUser(@RequestBody UserRegistrationData userRegistrationData) {
-        String errorMessage;
-        if (_userRepository.userExists(userRegistrationData.getUsername()) == 1) {
-            errorMessage = _messageByLocaleService.getMessage("user.already.exists", Language.valueOf(userRegistrationData.getLanguage())
-                                                                                             .getLocale());
-            return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
-        } else if (!CommonValidator.isValidEmailAddress(userRegistrationData.getMail())) {
-            errorMessage = _messageByLocaleService.getMessage("invalid.mail", Language.valueOf(userRegistrationData.getLanguage())
-                                                                                      .getLocale());
-            return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
-        } else if (_userRepository.userWithMailExists(userRegistrationData.getMail()) == 1) {
-            errorMessage = _messageByLocaleService.getMessage("mail.already.exists", Language.valueOf(userRegistrationData.getLanguage())
-                                                                                             .getLocale());
-            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-        } else {
-            User user = _userHelper.convertUserRegDataToUser(userRegistrationData);
-            _userRepository.save(user);
-
-            String mailSubject = _messageByLocaleService.getMessage("mail.registration.subject", user.getLang()
-                                                                                                     .getLocale());
-
-            String mailTemplateText = _messageByLocaleService.getMessage("mail.registration.text", user.getLang()
-                                                                                                       .getLocale());
-            String mailText = _userHelper.createUserRegistrationMailText(user, _env.getProperty("ipat.host"), mailTemplateText);
-
-            new Thread(new Runnable() {
-                public void run() {
-                    _mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
-                }
-            }).start();
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+    public ResponseEntity<?> registrateUser(@RequestBody UserRegistrationData userRegistrationData) throws IpatException {
+        _userService.registrateUser(userRegistrationData);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.USER_ACTIVATE, method = RequestMethod.POST)
-    public ResponseEntity<?> activateUser(@RequestParam long id, @RequestParam String key, @RequestParam String language) {
-        User user = _userRepository.findOne(id);
-        String message;
-        if (user != null) {
-            if (user.isEnabled()) {
-                message = _messageByLocaleService.getMessage("user.already.activated", user.getLang()
-                                                                                           .getLocale());
-                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-            } else if (key.equals(user.getActivationKey())) {
-                user.setEnabled(true);
-                _userRepository.save(user);
-                return new ResponseEntity<>(user.getName(), HttpStatus.OK);
-            } else {
-                message = _messageByLocaleService.getMessage("activation.key.invalid", user.getLang()
-                                                                                           .getLocale());
-                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            message = _messageByLocaleService.getMessage("activation.key.invalid", (Language.valueOf(language)).getLocale());
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> activateUser(@RequestParam long id, @RequestParam String key, @RequestParam String language) throws IpatException {
+        _userService.activateUser(id, key);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.USER_LANGUAGE, method = RequestMethod.GET)
@@ -255,72 +117,21 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.USER_PASSWORD_RESET_REQUEST, method = RequestMethod.POST)
-    public ResponseEntity<?> createResetPassword(@RequestParam String userName, @RequestParam String language) {
-        String responseMessage;
-        User user = _userRepository.findByName(userName);
-        if (user == null) {
-            responseMessage = _messageByLocaleService.getMessage("user.not.exists", (Language.valueOf(language)).getLocale());
-            return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
-        } else if (!user.isEnabled()) {
-            responseMessage = _messageByLocaleService.getMessage("user.not.activated", (Language.valueOf(language)).getLocale());
-            return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
-        } else {
-            user.setActivationKey(UUID.randomUUID()
-                                      .toString());
-            _userRepository.save(user);
-
-            String mailSubject = _messageByLocaleService.getMessage("mail.forgot.password.subject", user.getLang()
-                                                                                                        .getLocale());
-
-            String mailTemplateText = _messageByLocaleService.getMessage("mail.forgot.password.text", user.getLang()
-                                                                                                          .getLocale());
-            String mailText = _userHelper.createForgotPasswordMail(user, _env.getProperty("ipat.host"), mailTemplateText);
-
-            new Thread(new Runnable() {
-                public void run() {
-                    _mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
-                }
-            }).start();
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+    public ResponseEntity<?> createResetPassword(@RequestParam String userName, @RequestParam String language) throws IpatException {
+        _userService.createPasswordResetMail(userName);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.USER_PASSWORD_RESET_VERIFIY_LINK, method = RequestMethod.POST)
-    public ResponseEntity<?> verifyPasswordResetLink(@RequestParam long id, @RequestParam String key, @RequestParam String language) {
-        User user = _userRepository.findOne(id);
-        String message;
-        if (user != null) {
-            if (key.equals(user.getActivationKey())) {
-                return new ResponseEntity<>(user.getName(), HttpStatus.OK);
-            } else {
-                message = _messageByLocaleService.getMessage("invalid.link", user.getLang()
-                                                                                 .getLocale());
-                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            message = _messageByLocaleService.getMessage("invalid.link", (Language.valueOf(language)).getLocale());
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> verifyPasswordResetLink(@RequestParam long id, @RequestParam String key, @RequestParam String language) throws IpatException {
+        String userName = _userService.verifiyPasswordResetLink(id, key);
+        return new ResponseEntity<>(userName, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.USER_PASSWORD_RESET, method = RequestMethod.POST)
-    public ResponseEntity<?> resetPasswordForUser(@RequestParam long id, @RequestParam String key, @RequestParam String language, @RequestParam String password) {
-        User user = _userRepository.findOne(id);
-        String message;
-        if (user != null) {
-            if (key.equals(user.getActivationKey())) {
-                user.setPassword(_passwordEncrypter.encryptPassword(password));
-                _userRepository.save(user);
-                return new ResponseEntity<>(user.getName(), HttpStatus.OK);
-            } else {
-                message = _messageByLocaleService.getMessage("invalid.link", user.getLang()
-                                                                                 .getLocale());
-                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            message = _messageByLocaleService.getMessage("invalid.link", (Language.valueOf(language)).getLocale());
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> resetPasswordForUser(@RequestParam long id, @RequestParam String key, @RequestParam String language, @RequestParam String password) throws IpatException {
+        String userName = _userService.resetPasswordForUser(id, key, password);
+        return new ResponseEntity<>(userName, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.IS_USER_ADMIN, method = RequestMethod.GET)

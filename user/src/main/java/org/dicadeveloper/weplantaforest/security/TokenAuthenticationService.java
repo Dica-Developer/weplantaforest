@@ -6,7 +6,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.user.User;
-import org.dicadeveloper.weplantaforest.user.UserHelper;
+import org.dicadeveloper.weplantaforest.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -23,10 +23,10 @@ public class TokenAuthenticationService {
 
     private final TokenHandler tokenHandler;
     
-    private @NonNull UserHelper _userHelper;
+    private @NonNull UserService _userHelper;
 
     @Autowired
-    public TokenAuthenticationService(@Value("${token.secret}") String secret, UserHelper userHelper) {
+    public TokenAuthenticationService(@Value("${token.secret}") String secret, UserService userHelper) {
         tokenHandler = new TokenHandler(DatatypeConverter.parseBase64Binary(secret));
         this._userHelper = userHelper;
     }

@@ -17,7 +17,7 @@ import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
-import org.dicadeveloper.weplantaforest.user.UserHelper;
+import org.dicadeveloper.weplantaforest.user.UserService;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +49,7 @@ public class PlantPageController {
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
-    private @NonNull UserHelper _userHelper;
+    private @NonNull UserService _userHelper;
 
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
