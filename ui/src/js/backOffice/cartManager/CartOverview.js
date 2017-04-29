@@ -73,7 +73,7 @@ export default class CartOverview extends Component {
           key: 'paymentType',
           name: 'Zahlungsart',
           width: 40,
-          filterablte: true,
+          filterable: true,
           sortable: true
         }, {
           key: 'stateChange',
