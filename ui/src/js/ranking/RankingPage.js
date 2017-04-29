@@ -7,6 +7,7 @@ import ButtonBar from './ButtonBar';
 import RankingItemLarge from './RankingItemLarge';
 import RankingItemSmall from './RankingItemSmall';
 import Notification from '../common/components/Notification';
+import LoadingSpinner from '../common/components/LoadingSpinner';
 import $ from 'jquery';
 
 require("./rankingPage.less");
@@ -29,6 +30,7 @@ export default class RankingPage extends Component {
   }
 
   componentDidMount() {
+    this.refs["spinner"].showSpinner();
     this.loadAllUser();
   }
 
@@ -42,9 +44,11 @@ export default class RankingPage extends Component {
     axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
       setTimeout(function(){
+         that.refs["spinner"].hideSpinner();
          that.setState({ranking: result, orgTypeDesc: 'Alle'});
          that.toggleDiv();
        }, 1000);
+
     }).catch(function(response) {
       this.refs.notification.addNotification('Fehler beim Laden der besten Nutzer!', '', 'error');
     });
@@ -142,6 +146,7 @@ export default class RankingPage extends Component {
             </div>
           </div>
         </div>
+        <LoadingSpinner ref="spinner"/>
         <Notification ref="notification"/>
       </div>
     );
