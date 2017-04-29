@@ -3,6 +3,9 @@ package org.dicadeveloper.weplantaforest.payment;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.cart.CartState;
+import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
@@ -33,10 +36,12 @@ public class PaymentController {
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
     @RequestMapping(value = Uris.PAY_PLANTBAG, method = RequestMethod.POST)
-    public ResponseEntity<?> payPlantBag(@RequestBody PaymentData paymentData) {
+    public ResponseEntity<?> payPlantBag(@RequestBody PaymentData paymentData) throws IpatException {
         Cart cartToPay = _cartRepository.findOne(paymentData.getCartId());
+        IpatPreconditions.checkNotNull(cartToPay, ErrorCodes.CART_IS_NULL);
         String paymentRequestResponse = _paymentHelper.postRequestSepa(cartToPay, paymentData);
-        String paymentErrorMessage;
+        IpatPreconditions.checkArgument(!_paymentHelper.isConnectionError(paymentRequestResponse), ErrorCodes.BANK_CONNECTION_ERROR);
+        IpatPreconditions.checkArgument(!_paymentHelper.isUndefinedError(paymentRequestResponse), ErrorCodes.BANK_UNDEFINED_ERROR);
         if (_paymentHelper.isSuccessFull(paymentRequestResponse)) {
             cartToPay.setCallBackValuesAndStateToCallBack(paymentData);
             _cartRepository.save(cartToPay);
@@ -46,56 +51,42 @@ public class PaymentController {
                 _giftRepository.save(giftToPay);
             }
             return new ResponseEntity<>(HttpStatus.OK);
-        } else if (_paymentHelper.isConnectionError(paymentRequestResponse)) {
-            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.connection.error", cartToPay.getBuyer().getLang().getLocale());
-            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
-        } else if (_paymentHelper.isUndefinedError(paymentRequestResponse)) {
-            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.undefined.error", cartToPay.getBuyer().getLang().getLocale());
-            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
         } else {
             String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
-            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank." + errorCode, cartToPay.getBuyer().getLang().getLocale());
-            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
+            throw new IpatException(PaymentHelper.BANK_ERRORS.get("BANK_" + errorCode));
         }
     }
 
     @RequestMapping(value = Uris.VALIDATE_CC_DATA, method = RequestMethod.POST)
-    public ResponseEntity<?> validatePlantBagCC(@RequestBody PaymentData paymentData) {
+    public ResponseEntity<?> validatePlantBagCC(@RequestBody PaymentData paymentData) throws IpatException {
         Cart cartToPay = _cartRepository.findOne(paymentData.getCartId());
+        IpatPreconditions.checkNotNull(cartToPay, ErrorCodes.CART_IS_NULL);
         String paymentRequestResponse = _paymentHelper.postRequestCC(cartToPay, paymentData);
-        String paymentErrorMessage;
+        IpatPreconditions.checkArgument(!_paymentHelper.isConnectionError(paymentRequestResponse), ErrorCodes.BANK_CONNECTION_ERROR);
+        IpatPreconditions.checkArgument(!_paymentHelper.isUndefinedError(paymentRequestResponse), ErrorCodes.BANK_UNDEFINED_ERROR);
         if (_paymentHelper.isSuccessFullCC(paymentRequestResponse)) {
             cartToPay.setCallBackValues(paymentData);
             _cartRepository.save(cartToPay);
             return new ResponseEntity<>(HttpStatus.OK);
-        } else if (_paymentHelper.isConnectionError(paymentRequestResponse)) {
-            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.connection.error", cartToPay.getBuyer().getLang().getLocale());
-            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
-        }  else if (_paymentHelper.isUndefinedError(paymentRequestResponse)) {
-            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank.undefined.error", cartToPay.getBuyer().getLang().getLocale());
-            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
-        }else {
+        } else {
             String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
-            paymentErrorMessage = _messageByLocaleService.getMessage("sozialbank." + errorCode, cartToPay.getBuyer().getLang().getLocale());
-            return new ResponseEntity<String>(paymentErrorMessage, HttpStatus.BAD_REQUEST);
+            throw new IpatException(PaymentHelper.BANK_ERRORS.get("BANK_" + errorCode));
         }
     }
 
     @RequestMapping(value = Uris.SUBMIT_CC_PAYED_PLANTBAG, method = RequestMethod.POST)
-    public ResponseEntity<?> submitCCpayedPlantBag(@RequestParam long cartId) {
+    public ResponseEntity<?> submitCCpayedPlantBag(@RequestParam long cartId) throws IpatException{
         Cart cartToSubmit = _cartRepository.findOne(cartId);
-        if (cartToSubmit != null) {
-            cartToSubmit.setCartState(CartState.CALLBACK);
-            _cartRepository.save(cartToSubmit);
-            if (cartToSubmit.getCode() != null) {
-                Gift giftToSubmit = _giftRepository.findGiftByCode(cartToSubmit.getCode().getCode());
-                giftToSubmit.setStatus(Status.UNREDEEMED);
-                _giftRepository.save(giftToSubmit);
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        IpatPreconditions.checkNotNull(cartToSubmit, ErrorCodes.CART_IS_NULL);
+        cartToSubmit.setCartState(CartState.CALLBACK);
+        _cartRepository.save(cartToSubmit);
+        if (cartToSubmit.getCode() != null) {
+            Gift giftToSubmit = _giftRepository.findGiftByCode(cartToSubmit.getCode()
+                                                                           .getCode());
+            giftToSubmit.setStatus(Status.UNREDEEMED);
+            _giftRepository.save(giftToSubmit);
         }
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
