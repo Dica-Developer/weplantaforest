@@ -2,6 +2,8 @@ package org.dicadeveloper.weplantaforest.payment;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,13 +38,50 @@ public class PaymentHelper {
     @Autowired
     private @NonNull Environment _env;
 
-    public static final String DEFAULT_ENCODING = "UTF8";
+    public static final String DEFAULT_ENCODING = "UTF-8";
 
     private final static DecimalFormat priceFormat = new DecimalFormat("#0.00");
 
     private final static String CONNECTION_ERROR = "connection_error";
 
     private final static String UNDEFINED_ERROR = "Es ist ein Fehler aufgetreten. Bitte Versuchen Sie es erneut.";
+
+    public static Map<String, String> BANK_ERRORS = new HashMap<String, String>();
+
+    static {
+        BANK_ERRORS.put("BANK_100", "BANK_NO_API");
+        BANK_ERRORS.put("BANK_101", "BANK_NO_FIRSTNAME");
+        BANK_ERRORS.put("BANK_102", "BANK_NO_NAME");
+        BANK_ERRORS.put("BANK_103", "BANK_NO_STREET");
+        BANK_ERRORS.put("BANK_104", "BANK_NO_COUNTRY");
+        BANK_ERRORS.put("BANK_105", "BANK_NO_CITY");
+        BANK_ERRORS.put("BANK_106", "BANK_NO_ZIP");
+        BANK_ERRORS.put("BANK_107", "BANK_NO_MAIL");
+        BANK_ERRORS.put("BANK_108", "BANK_NO_VALUE");
+        BANK_ERRORS.put("BANK_109", "BANK_NO_USAGE");
+        BANK_ERRORS.put("BANK_110", "BANK_NO_QUITTUNG");
+        BANK_ERRORS.put("BANK_111", "BANK_NO_PAYMENT_TYPE");
+        BANK_ERRORS.put("BANK_112", "BANK_NO_SALUTATION");
+        BANK_ERRORS.put("BANK_201", "BANK_NO_CC_OWNER");
+        BANK_ERRORS.put("BANK_202", "BANK_NO_CC_NR");
+        BANK_ERRORS.put("BANK_203", "BANK_NO_CC_DATE");
+        BANK_ERRORS.put("BANK_204", "BANK_NO_CC_DATE");
+        BANK_ERRORS.put("BANK_205", "BANK_NO_SECURITY_NUMBER");
+        BANK_ERRORS.put("BANK_206", "BANK_NO_CC_TYPE");
+        BANK_ERRORS.put("BANK_401", "BANK_INVALID_IBAN");
+        BANK_ERRORS.put("BANK_402", "BANK_INVALID_BIC");
+        BANK_ERRORS.put("BANK_500", "BANK_UNKNOWN_ERROR");
+        BANK_ERRORS.put("BANK_501", "BANK_UNKNOWN_EMITTER");
+        BANK_ERRORS.put("BANK_502", "BANK_INVALID_HASH");
+        BANK_ERRORS.put("BANK_503", "BANK_CUSTOMER_NOT_FOUND");
+        BANK_ERRORS.put("BANK_504", "BANK_INVALID_ÜARAM_FORMAT");
+        BANK_ERRORS.put("BANK_506", "BANK_UNKNOWN_TRANSACTION_TYPE");
+        BANK_ERRORS.put("BANK_507", "BANK_INVALID_ACCOUNT");
+        BANK_ERRORS.put("BANK_508", "BANK_ACCOUNT_NR_TOO_LONG");
+        BANK_ERRORS.put("BANK_509", "BANK_ACCOUNT_NR_TOO_SHORT");
+        BANK_ERRORS.put("BANK_984", "BANK_DOUBLED_DONATION");
+        BANK_ERRORS.put("BANK_985", "BANK_CC_DENIED");
+    }
 
     public String postRequestSepa(Cart cart, PaymentData paymentData) {
         String address = _env.getProperty("bfs.url");
@@ -64,11 +103,10 @@ public class PaymentHelper {
             HttpPost httpPost = new HttpPost(address);
 
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-            Map<String, String> params = createParamsSepa(cart, paymentData);
-            params = replaceUmlauts(params);
+            Map<String, String> params = createParams(cart, paymentData);
             for (Entry<String, String> entry : params.entrySet()) {
                 urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-           }
+            }
 
             httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
 
@@ -110,7 +148,6 @@ public class PaymentHelper {
 
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
             Map<String, String> params = createParamsCC(cart, paymentData);
-            params = replaceUmlauts(params);
             for (Entry<String, String> entry : params.entrySet()) {
                 urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
@@ -154,7 +191,7 @@ public class PaymentHelper {
         return response.substring(response.indexOf("&amp;code=") + 10, response.indexOf("&amp;code=") + 13);
     }
 
-    private Map<String, String> createParamsSepa(Cart cart, PaymentData paymentData) {
+    private Map<String, String> createParams(Cart cart, PaymentData paymentData) {
         Map<String, String> params = new HashMap<>();
 
         // mandatory parameters
@@ -165,39 +202,46 @@ public class PaymentHelper {
                                                        .doubleValue())
                                            .toString();
         formattedPrice = formattedPrice.replace(",", ".");
-        params.put("betrag", formattedPrice);
+        try {
+            params.put("betrag", URLEncoder.encode(formattedPrice, DEFAULT_ENCODING));
 
-        params.put("anrede", paymentData.getSalutation()
-                                        .toString());
-        params.put("vorname", paymentData.getForename());
-        params.put("nachname", paymentData.getName());
-        params.put("strasse", paymentData.getStreet());
-        params.put("land", paymentData.getCountry());
-        params.put("ort", paymentData.getCity());
-        params.put("plz", paymentData.getZip());
-        params.put("email", paymentData.getMail());
-        params.put("verwendungszweck", "Spende I Plant A Tree");
-        params.put("quittung", paymentData.getReceipt());
-        params.put("zahlungsart", paymentData.getPaymentMethod());
-        params.put("sepa_data[iban]", paymentData.getIban());
-        params.put("sepa_data[bic]", paymentData.getBic());
+            params.put("anrede", URLEncoder.encode(paymentData.getSalutation()
+                                                              .toString(), DEFAULT_ENCODING));
+            params.put("vorname", URLEncoder.encode(paymentData.getForename(), DEFAULT_ENCODING));
+            params.put("nachname", URLEncoder.encode(paymentData.getName(), DEFAULT_ENCODING));
+            params.put("strasse", URLEncoder.encode(paymentData.getStreet(), DEFAULT_ENCODING));
+            params.put("land", URLEncoder.encode(paymentData.getCountry(), DEFAULT_ENCODING));
+            params.put("ort", URLEncoder.encode(paymentData.getCity(), DEFAULT_ENCODING));
+            params.put("plz", URLEncoder.encode(paymentData.getZip(), DEFAULT_ENCODING));
+            params.put("email", URLEncoder.encode(paymentData.getMail(), DEFAULT_ENCODING));
 
-        // optional parameters
-        params.put("ret_success_url", Uris.PAYMENT_SUCCESS);
-        params.put("ret_error_url", Uris.PAYMENT_ERROR);
-        params.put("trackingcode", "Cart-ID: " + cart.getId());
+            params.put("verwendungszweck", "Spende I Plant A Tree");
+            params.put("quittung", URLEncoder.encode(paymentData.getReceipt(), DEFAULT_ENCODING));
+            params.put("zahlungsart", URLEncoder.encode(paymentData.getPaymentMethod(), DEFAULT_ENCODING));
+            params.put("sepa_data[iban]", URLEncoder.encode(paymentData.getIban(), DEFAULT_ENCODING));
+            params.put("sepa_data[bic]", URLEncoder.encode(paymentData.getBic(), DEFAULT_ENCODING));
 
-        if (null != paymentData.getCompany() && !paymentData.getCompany()
-                                                            .isEmpty()) {
-            params.put("firma", paymentData.getCompany());
-        }
-        if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon()
-                                                                 .isEmpty()) {
-            params.put("firma_zusatz", paymentData.getCompanyAddon());
-        }
-        if (null != paymentData.getComment() && !paymentData.getComment()
-                                                            .isEmpty()) {
-            params.put("kommentar", paymentData.getComment());
+            // optional parameters
+            params.put("ret_success_url", Uris.PAYMENT_SUCCESS);
+            params.put("ret_error_url", Uris.PAYMENT_ERROR);
+            params.put("trackingcode", "Cart-ID: " + cart.getId());
+
+            if (null != paymentData.getCompany() && !paymentData.getCompany()
+                                                                .isEmpty()) {
+                params.put("firma", URLEncoder.encode(paymentData.getCompany(), DEFAULT_ENCODING));
+            }
+            if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon()
+                                                                     .isEmpty()) {
+                params.put("firma_zusatz", URLEncoder.encode(paymentData.getCompanyAddon(), DEFAULT_ENCODING));
+            }
+            if (null != paymentData.getComment() && !paymentData.getComment()
+                                                                .isEmpty()) {
+                params.put("kommentar", URLEncoder.encode(paymentData.getComment(), DEFAULT_ENCODING));
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
         return params;
@@ -214,57 +258,45 @@ public class PaymentHelper {
                                                        .doubleValue())
                                            .toString();
         formattedPrice = formattedPrice.replace(",", ".");
-        params.put("betrag", formattedPrice);
 
-        params.put("anrede", paymentData.getSalutation()
-                                        .toString());
-        params.put("vorname", paymentData.getForename());
-        params.put("nachname", paymentData.getName());
-        params.put("strasse", paymentData.getStreet());
-        params.put("land", paymentData.getCountry());
-        params.put("ort", paymentData.getCity());
-        params.put("plz", paymentData.getZip());
-        params.put("email", paymentData.getMail());
-        params.put("verwendungszweck", "Spende I Plant A Tree");
-        params.put("quittung", paymentData.getReceipt());
-        params.put("zahlungsart", paymentData.getPaymentMethod());
+        try {
+            params.put("betrag", URLEncoder.encode(formattedPrice, DEFAULT_ENCODING));
 
-        // optional parameters
-        params.put("ret_success_url", Uris.PAYMENT_SUCCESS);
-        params.put("ret_error_url", Uris.PAYMENT_ERROR);
-        params.put("trackingcode", "Cart-ID: " + cart.getId());
+            params.put("anrede", URLEncoder.encode(paymentData.getSalutation()
+                                                              .toString(), DEFAULT_ENCODING));
+            params.put("vorname", URLEncoder.encode(paymentData.getForename(), DEFAULT_ENCODING));
+            params.put("nachname", URLEncoder.encode(paymentData.getName(), DEFAULT_ENCODING));
+            params.put("strasse", URLEncoder.encode(paymentData.getStreet(), DEFAULT_ENCODING));
+            params.put("land", URLEncoder.encode(paymentData.getCountry(), DEFAULT_ENCODING));
+            params.put("ort", URLEncoder.encode(paymentData.getCity(), DEFAULT_ENCODING));
+            params.put("plz", URLEncoder.encode(paymentData.getZip(), DEFAULT_ENCODING));
+            params.put("email", URLEncoder.encode(paymentData.getMail(), DEFAULT_ENCODING));
+            params.put("verwendungszweck", "Spende I Plant A Tree");
+            params.put("quittung", URLEncoder.encode(paymentData.getReceipt(), DEFAULT_ENCODING));
+            params.put("zahlungsart", URLEncoder.encode(paymentData.getPaymentMethod(), DEFAULT_ENCODING));
 
-        if (null != paymentData.getCompany() && !paymentData.getCompany()
-                                                            .isEmpty()) {
-            params.put("firma", paymentData.getCompany());
+            // optional parameters
+            params.put("ret_success_url", URLEncoder.encode(Uris.PAYMENT_SUCCESS, DEFAULT_ENCODING));
+            params.put("ret_error_url", URLEncoder.encode(Uris.PAYMENT_ERROR, DEFAULT_ENCODING));
+            params.put("trackingcode", URLEncoder.encode("Cart-ID: " + cart.getId(), DEFAULT_ENCODING));
+
+            if (null != paymentData.getCompany() && !paymentData.getCompany()
+                                                                .isEmpty()) {
+                params.put("firma", URLEncoder.encode(paymentData.getCompany(), DEFAULT_ENCODING));
+            }
+            if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon()
+                                                                     .isEmpty()) {
+                params.put("firma_zusatz", URLEncoder.encode(paymentData.getCompanyAddon(), DEFAULT_ENCODING));
+            }
+            if (null != paymentData.getComment() && !paymentData.getComment()
+                                                                .isEmpty()) {
+                params.put("kommentar", URLEncoder.encode(paymentData.getComment(), DEFAULT_ENCODING));
+            }
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon()
-                                                                 .isEmpty()) {
-            params.put("firma_zusatz", paymentData.getCompanyAddon());
-        }
-        if (null != paymentData.getComment() && !paymentData.getComment()
-                                                            .isEmpty()) {
-            params.put("kommentar", paymentData.getComment());
-        }
-
         return params;
-    }
-
-    private Map<String, String> replaceUmlauts(Map<String, String> params) {
-        Map<String, String> replacedUmlautParamMap = new HashMap<String, String>();
-        for (Entry<String, String> entry : params.entrySet()) {
-            String replacedParamValue = entry.getValue()
-                                             .replaceAll("ß", "ss")
-                                             .replaceAll("ä", "ae")
-                                             .replaceAll("Ä", "Ae")
-                                             .replaceAll("ö", "oe")
-                                             .replaceAll("Ö", "Oe")
-                                             .replaceAll("ö", "oe")
-                                             .replaceAll("ü", "ue")
-                                             .replaceAll("Ü", "Ue");
-            replacedUmlautParamMap.put(entry.getKey(), replacedParamValue);
-        }
-        return replacedUmlautParamMap;
     }
 
 }
