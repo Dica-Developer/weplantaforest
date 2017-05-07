@@ -22,9 +22,10 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired) )
-//queries from StatisticsRepository run only on mysql, not on h2, so the belonging controller is also excluded from this profile
-//@Profile({ "!h2", "!test" })
-@Profile({"production", "mysql", "staging"})
+// queries from StatisticsRepository run only on mysql, not on h2, so the
+// belonging controller is also excluded from this profile
+// @Profile({ "!h2", "!test" })
+@Profile({ "production", "mysql", "staging" })
 public class StatisticsController {
 
     private @NonNull StatisticsRepository _statisticsRepository;
@@ -35,7 +36,8 @@ public class StatisticsController {
         List<TreeAmountStatisticData> orderedList = new ArrayList<>();
         for (Integer i = 1; i <= 12; i++) {
             for (TreeAmountStatisticData entry : treeStatistic) {
-                if (entry.getLabel().equals(i.toString())) {
+                if (entry.getLabel()
+                         .equals(i.toString())) {
                     orderedList.add(entry);
                 }
             }
@@ -53,7 +55,8 @@ public class StatisticsController {
 
         for (Integer i = 2007; i <= 2007 + years; i++) {
             for (TreeAmountStatisticData entry : treeStatistic) {
-                if (entry.getLabel().equals(i.toString())) {
+                if (entry.getLabel()
+                         .equals(i.toString())) {
                     orderedList.add(entry);
                 }
             }
@@ -66,24 +69,38 @@ public class StatisticsController {
         List<TreeOrgTypeStatisticData> treeStatistic = _statisticsRepository.getTreesPerOrgType();
         return new ResponseEntity<>(treeStatistic, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = Uris.CO2_STATISTIC, method = RequestMethod.GET)
     public ResponseEntity<?> getCo2Statistic() {
         List<Co2StatisticData> co2Statistic = _statisticsRepository.getCo2PerYear(System.currentTimeMillis());
+        List<TreeAmountStatisticData> treeStatistic = _statisticsRepository.getTreesPerYear();
         List<Co2StatisticData> orderedList = new ArrayList<>();
         Calendar year2007 = new GregorianCalendar(2007, 1, 1);
         int years = getDiffYears(year2007, new Date(System.currentTimeMillis()));
 
         for (Integer i = 2007; i <= 2007 + years; i++) {
+            double amountOfCo2TillThisYear = 0;
             for (Co2StatisticData entry : co2Statistic) {
-                if (entry.getLabel().equals(i.toString())) {
+                if (entry.getLabel()
+                         .equals(i.toString())) {
+                    for (TreeAmountStatisticData treeData : treeStatistic) {
+                        int year = new Integer(treeData.getLabel());
+                        if (i > year) {
+                            long amountOfTrees = treeData.getAmount();
+                            int diffOfYears = i - year;
+                            amountOfCo2TillThisYear += diffOfYears * amountOfTrees * 0.015;
+                        }
+                    }
+                    double valueThisYear = entry.getCo2();
+                    valueThisYear += amountOfCo2TillThisYear;
+                    entry.setCo2(valueThisYear);
                     orderedList.add(entry);
+                    amountOfCo2TillThisYear = 0;
                 }
             }
         }
         return new ResponseEntity<>(orderedList, HttpStatus.OK);
     }
-
 
     private int getDiffYears(Calendar first, Date last) {
         Calendar b = getCalendar(last);

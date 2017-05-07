@@ -25,7 +25,7 @@ export default class Co2PerYear extends Component {
         scaleLineColor: "rgb(81, 168, 190)",
         scaleShowGridLines: true,
         scaleOverride: true,
-        scaleSteps: 5,
+        scaleSteps: 4,
         scaleStepWidth: 5000,
         datasetFill: false,
         responsive: true,
@@ -44,12 +44,8 @@ export default class Co2PerYear extends Component {
     axios.get('http://localhost:8081/statistic/co2').then(function(response) {
       var result = response.data;
       for (var year in result) {
-//        console.log("value for " + year + ": " + result[year].co2);
-        if (year == 0) {
-          that.state.amountOfCo2[year] = parseFloat(result[year].co2);
-        } else {
-          that.state.amountOfCo2[year] = parseFloat(that.state.amountOfCo2[year - 1]) + parseFloat(result[year].co2);
-        }
+      //  console.log("value for " + year + ": " + result[year].co2);
+        that.state.amountOfCo2[year] = parseFloat(result[year].co2);
         that.forceUpdate();
       }
       that.forceUpdate();
