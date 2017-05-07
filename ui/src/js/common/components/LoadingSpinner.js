@@ -16,11 +16,11 @@ export default class LoadingSpinner extends Component {
     super(props);
   }
 
-  showSpinner(value) {
+  showSpinner() {
     $(this.refs['spinner']).fadeIn(400);
   }
 
-  hideSpinner(value) {
+  hideSpinner() {
       $(this.refs['spinner']).fadeOut(400);
   }
 

@@ -10,6 +10,7 @@ import {Toolbar, Data} from 'react-data-grid-addons';
 import IconButton from '../../common/components/IconButton';
 import NotificationSystem from 'react-notification-system';
 import Notification from '../../common/components/Notification';
+import LoadingSpinner from '../../common/components/LoadingSpinner';
 import {getConfig} from '../../common/RestHelper';
 
 require("./cartOverview.less");
@@ -93,12 +94,14 @@ export default class CartOverview extends Component {
   }
 
   loadCarts() {
+    this.refs["spinner"].showSpinner();
     var that = this;
     var config = getConfig();
     axios.get('http://localhost:8083/carts', config).then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({carts: result, rows: rows});
+      that.refs["spinner"].hideSpinner();
     }).catch(function(response) {
       that.refs.notification.addNotification('Fehler beim Laden der Pflanzkörbe!', response.data, 'error');
     });
@@ -273,6 +276,7 @@ export default class CartOverview extends Component {
             } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
           </div>
         </div>
+        <LoadingSpinner ref="spinner"/>
         <NotificationSystem ref="notificationSystem" style={style}/>
         <Notification ref="notification"/>
       </div>
