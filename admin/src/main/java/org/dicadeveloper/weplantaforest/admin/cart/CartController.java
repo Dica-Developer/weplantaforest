@@ -3,6 +3,8 @@ package org.dicadeveloper.weplantaforest.admin.cart;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.tree.TreeRepository;
@@ -10,6 +12,7 @@ import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +35,13 @@ public class CartController {
     @JsonView(Views.OverviewCart.class)
     public Iterable<Cart> getAllCarts() {
         return _cartRepository.findAll();
+    }
+
+    @RequestMapping(value = "/cart/{cartId}")
+    @Transactional
+    @JsonView(Views.CartDetails.class)
+    public Cart getCartDetails(@PathVariable(value = "cartId") Long cartId) {
+        return _cartRepository.findOne(cartId);
     }
 
     @RequestMapping(value = Uris.CHANGE_CART_STATE, method = RequestMethod.POST)
