@@ -6,6 +6,10 @@ public interface Views {
 
     }
     
+    public static interface CartDetails{
+        
+    }
+    
     public static interface OverviewUser{
         
     }
@@ -41,4 +45,6 @@ public interface Views {
     public static interface CodeOverview{
         
     }
+    
+    
 }
