@@ -41,7 +41,7 @@ public class ProjectArticle {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_plant__plantId", nullable = false)
-    @JsonIgnore
+    @JsonView({ Views.CartDetails.class })
     private Project project;
 
     @OneToOne(fetch = FetchType.EAGER)

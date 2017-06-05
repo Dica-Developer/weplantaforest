@@ -55,11 +55,11 @@ public class Cart implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_cartId")
-    @JsonView({Views.OverviewCart.class, Views.CodeOverview.class})
+    @JsonView({Views.OverviewCart.class, Views.CodeOverview.class, Views.CartDetails.class})
     private Long id;
 
     @Column(name = "_timeStamp")
-    @JsonView(Views.OverviewCart.class)
+    @JsonView({Views.OverviewCart.class, Views.CartDetails.class})
     private Long timeStamp;
 
     @Enumerated(EnumType.STRING)
@@ -69,6 +69,7 @@ public class Cart implements Identifiable<Long> {
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
+    @JsonView({Views.CartDetails.class})
     private List<CartItem> cartItems = new ArrayList<CartItem>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -212,7 +213,7 @@ public class Cart implements Identifiable<Long> {
     }
 
     @Transient
-    @JsonView(Views.OverviewCart.class)
+    @JsonView({Views.OverviewCart.class, Views.CartDetails.class})
     public int getTreeCount() {
         int count = 0;
         for (Tree tree : getTrees()) {
@@ -222,7 +223,7 @@ public class Cart implements Identifiable<Long> {
     }
 
     @Transient
-    @JsonView(Views.OverviewCart.class)
+    @JsonView({Views.OverviewCart.class, Views.CartDetails.class})
     public BigDecimal getTotalPrice() {
         BigDecimal total = new BigDecimal(0.00);
         for (final CartItem item : cartItems) {

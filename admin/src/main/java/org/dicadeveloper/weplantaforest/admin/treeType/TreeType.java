@@ -31,7 +31,7 @@ public class TreeType implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "_name", unique = true)
-    @JsonView(Views.ProjectArticle.class)
+    @JsonView({Views.ProjectArticle.class, Views.CartDetails.class})
     private String name;
 
     @Column(name = "_description", columnDefinition = "TEXT")

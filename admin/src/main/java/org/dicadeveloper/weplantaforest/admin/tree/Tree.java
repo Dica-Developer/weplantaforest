@@ -13,7 +13,10 @@ import javax.persistence.Table;
 import org.dicadeveloper.weplantaforest.admin.project.ProjectArticle;
 import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
 import org.dicadeveloper.weplantaforest.admin.user.User;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,6 +37,7 @@ public class Tree implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "_amount")
+    @JsonView({ Views.CartDetails.class })
     private int amount;
 
     @Column(name = "_imagePath")
@@ -41,7 +45,7 @@ public class Tree implements Identifiable<Long> {
 
     @Column(name = "_longitude")
     private float longitude;
- 
+
     @Column(name = "_latitude")
     private float latitude;
 
@@ -51,7 +55,7 @@ public class Tree implements Identifiable<Long> {
     @Column(name = "_plantedOn")
     private long plantedOn;
 
-    @Column(name ="_desc", columnDefinition = "TEXT")
+    @Column(name = "_desc", columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
@@ -60,9 +64,11 @@ public class Tree implements Identifiable<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
     @JoinColumn(name = "_treeType_treeTypeId")
+    @JsonView({ Views.CartDetails.class })
     private TreeType treeType;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_plantArticle__articleId")
+    @JsonView({ Views.CartDetails.class })
     private ProjectArticle projectArticle;
 }

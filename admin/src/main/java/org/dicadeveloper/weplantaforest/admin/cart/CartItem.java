@@ -13,8 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.admin.tree.Tree;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.hibernate.annotations.Cascade;
 import org.springframework.hateoas.Identifiable;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,19 +32,23 @@ public class CartItem implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_cartItemId")
+    @JsonView({ Views.CartDetails.class })
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @JoinColumn(name = "_treeId")
+    @JsonView({ Views.CartDetails.class })
     private Tree tree;
 
     @Column(name = "_plantArticleId")
     private Long projectArticleId;
 
     @Column(name = "_amount")
+    @JsonView({ Views.CartDetails.class })
     private int amount;
 
+    @JsonView({ Views.CartDetails.class })
     @Column(name = "_basePricePerPiece", precision = 7, scale = 2)
     private BigDecimal basePricePerPiece = BigDecimal.ZERO;
 
@@ -52,6 +59,7 @@ public class CartItem implements Identifiable<Long> {
     private BigDecimal fundingPerPiece = BigDecimal.ZERO;
 
     @Column(name = "_totalPrice", precision = 7, scale = 2)
+    @JsonView({ Views.CartDetails.class })
     private BigDecimal totalPrice = BigDecimal.ZERO;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -60,11 +68,7 @@ public class CartItem implements Identifiable<Long> {
 
     private void calcAndSetTotalPrice() {
         if (tree != null) {
-            double totalPrice = tree.getAmount() * (tree.getProjectArticle()
-                                                        .getPrice()
-                                                        .getAmount()
-                                                        .doubleValue()
-                    - scontoPerPiece.doubleValue() - fundingPerPiece.doubleValue());
+            double totalPrice = tree.getAmount() * (this.basePricePerPiece.doubleValue() - scontoPerPiece.doubleValue() - fundingPerPiece.doubleValue());
             this.totalPrice = new BigDecimal(totalPrice);
         } else {
             this.totalPrice = BigDecimal.ZERO;
@@ -87,8 +91,8 @@ public class CartItem implements Identifiable<Long> {
         this.amount = tree.getAmount();
         calcAndSetTotalPrice();
     }
-    
-    public void removeTree(){
+
+    public void removeTree() {
         this.tree = null;
     }
 

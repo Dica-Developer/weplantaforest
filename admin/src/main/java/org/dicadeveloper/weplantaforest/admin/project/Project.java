@@ -16,6 +16,7 @@ import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.springframework.hateoas.Identifiable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
@@ -38,7 +39,7 @@ public class Project implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "_name", length = 255)
-    @JsonView({Views.ProjectNameAndId.class, Views.ProjectData.class})
+    @JsonView({Views.ProjectNameAndId.class, Views.ProjectData.class,Views.CartDetails.class})
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")
@@ -79,6 +80,7 @@ public class Project implements Identifiable<Long> {
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
  //   @Cascade(CascadeType.ALL)
+    @JsonIgnoreProperties("project")
     private List<ProjectArticle> articles;
     
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
