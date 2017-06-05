@@ -13,11 +13,112 @@ import NotificationSystem from 'react-notification-system';
 import Notification from '../../common/components/Notification';
 import LoadingSpinner from '../../common/components/LoadingSpinner';
 import {getConfig} from '../../common/RestHelper';
+import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 
 require("./cartOverview.less");
 
-export default class CartOverview extends Component {
+class CartDetails extends Component {
+  constructor(props) {
+    super(props);
+  }
 
+  componentDidMount() {}
+
+  render() {
+    var cartItems = 'no cartitems available';
+    var display = 'none';
+    if (this.props.details.cartItems) {
+      cartItems = <CartItems cartItems={this.props.details.cartItems}/>;
+      display = 'block';
+    }
+    var x = this.props.x - 665;
+    var y = this.props.y + 25;
+    return (
+      <div style={{
+        display: display,
+        position: 'absolute',
+        left: x,
+        top: y,
+        width: '650px'
+      }} className="cart-details">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="row">
+              <div className="col-md-3">
+                <strong>Datum:</strong>
+              </div>
+              <div className="col-md-9">
+                {moment(this.props.details.timeStamp).format("DD.MM.YYYY")}
+              </div>
+              <div className="col-md-3">
+                <strong>Anzahl Bäume:</strong>
+              </div>
+              <div className="col-md-9">
+                {this.props.details.treeCount}
+              </div>
+              <div className="col-md-3">
+                <strong>Preis:</strong>
+              </div>
+              <div className="col-md-9">
+                {Accounting.formatNumber(this.props.details.totalPrice, 2, ".", ",")}
+              </div>
+            </div>
+            {cartItems}
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+class CartItems extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {}
+
+  render() {
+    return (
+      <div className="cart-items">
+        <div className="row">
+          <div className="col-md-3">
+            <strong>Baum-Art</strong>
+          </div>
+          <div className="col-md-3">
+            <strong>Projekt</strong>
+          </div>
+          <div className="col-md-2 align-center">
+            <strong>Anzahl</strong>
+          </div>
+          <div className="col-md-2 align-center">
+            <strong>Preis/Stk</strong>
+          </div>
+          <div className="col-md-2">
+          </div>
+        </div>
+        {this.props.cartItems.map(function(cartItem, i) {
+          var treeTypeName = 'Baum wurde entfernt';
+          var project = 'unbekannt';
+          if (cartItem.tree) {
+            treeTypeName = getTextForSelectedLanguage(cartItem.tree.treeType.name);
+            project = cartItem.tree.projectArticle.project.name;
+          }
+          return (
+            <div className="row" key={i}>
+              <div className="col-md-3">{treeTypeName}</div>
+              <div className="col-md-3">{project}</div>
+              <div className="col-md-2 align-center">{cartItem.amount}</div>
+              <div className="col-md-2 align-center">{Accounting.formatNumber(cartItem.basePricePerPiece, 2, ".", ",")}</div>
+              <div className="col-md-2"><strong>=> </strong>{Accounting.formatNumber(cartItem.totalPrice, 2, ".", ",")}</div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+}
+export default class CartOverview extends Component {
   constructor() {
     super();
     this.state = {
@@ -78,15 +179,23 @@ export default class CartOverview extends Component {
           filterable: true,
           sortable: true
         }, {
+          key: 'details',
+          name: 'Details',
+          width: 50,
+          filterable: false,
+          sortable: false
+        }, {
           key: 'stateChange',
           name: 'Actions',
           width: 100,
-          filterablte: false,
-          sortable: true
+          filterable: false,
+          sortable: false
         }
       ],
       rows: [],
-      filters: {}
+      filters: {},
+      restConfig: getConfig(),
+      cartDetails: {}
     }
   }
 
@@ -97,8 +206,7 @@ export default class CartOverview extends Component {
   loadCarts() {
     this.refs["spinner"].showSpinner();
     var that = this;
-    var config = getConfig();
-    axios.get('http://localhost:8083/carts', config).then(function(response) {
+    axios.get('http://localhost:8083/carts', this.state.restConfig).then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({carts: result, rows: rows});
@@ -106,6 +214,22 @@ export default class CartOverview extends Component {
     }).catch(function(response) {
       that.refs.notification.addNotification('Fehler beim Laden der Pflanzkörbe!', response.data, 'error');
     });
+  }
+
+  getCartDetails(id, event) {
+    var that = this;
+    var x = event.pageX;
+    var y = event.pageY;
+    axios.get('http://localhost:8083/cart/' + id, this.state.restConfig).then(function(response) {
+      var result = response.data;
+      that.setState({cartDetails: result, x: x, y: y  })
+    }).catch(function(response) {
+      that.refs.notification.addNotification("Fehler beim Laden des Pflanzkorbes " + id + "!", response.data, 'error');
+    });
+  }
+
+  hideCartDetails(event){
+    this.setState({cartDetails: {} });
   }
 
   createRows(carts) {
@@ -131,10 +255,22 @@ export default class CartOverview extends Component {
       lastName: cart.callBackNachname,
       company: cart.callBackFirma,
       paymentType: cart.callBackZahlungsart,
+      details: this.createDetailIcon(cart.id),
       stateChange: this.createStateChangeButtons(cart.id, cart.cartState)
     };
     return row;
   }
+
+  createDetailIcon(id) {
+    return <div className="edit-icon">
+      <span className="glyphicon glyphicon-list-alt" aria-hidden="true" onMouseOver={(event) => {
+        this.getCartDetails(id, event)
+      }} onMouseLeave={(event) => {
+        this.hideCartDetails( event)
+      }}></span>
+    </div>;
+  }
+
   createStateChangeButtons(id, cartState) {
     if (cartState == 'CALLBACK') {
       return <div className="state-change-buttons">
@@ -191,7 +327,7 @@ export default class CartOverview extends Component {
       }
       that.forceUpdate();
     }).catch(function(response) {
-      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Status vom Pflanzkorb mit der ID ' + id + "auf "+ cartState +" ist folgender Fehler aufgetreten:" + response.data, 'error');
+      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Status vom Pflanzkorb mit der ID ' + id + "auf " + cartState + " ist folgender Fehler aufgetreten:" + response.data, 'error');
     });
   }
 
@@ -236,7 +372,7 @@ export default class CartOverview extends Component {
       ? ' '
       : sortedRows.sort(comparer);
 
-    this.setState(rows: sortedRows);
+    this.setState(rows : sortedRows);
   }
 
   onClearFilters() {
@@ -263,6 +399,7 @@ export default class CartOverview extends Component {
         }
       }
     };
+
     return (
       <div className="container paddingTopBottom15 cartOverview">
         <div className="row ">
@@ -277,6 +414,7 @@ export default class CartOverview extends Component {
             } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
           </div>
         </div>
+        <CartDetails details={this.state.cartDetails} x={this.state.x} y={this.state.y}/>
         <LoadingSpinner ref="spinner"/>
         <NotificationSystem ref="notificationSystem" style={style}/>
         <Notification ref="notification"/>
@@ -284,5 +422,3 @@ export default class CartOverview extends Component {
     );
   }
 }
-
-/* vim: set softtabstop=2:shiftwidth=2:expandtab */
