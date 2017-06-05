@@ -18,6 +18,7 @@ import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.springframework.hateoas.Identifiable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
@@ -44,12 +45,14 @@ public class Team implements Identifiable<Long> {
     @JsonView({Views.EventDetails.class, Views.TeamOverview.class})
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     private List<User> members = new ArrayList<User>();
 
     @Column(/* length = ModifiedMySql5InnoDbDialect.LENGTH_FOR_TEXT_TYPE, */ columnDefinition = "TEXT")
     private String _description;
 
+    @JsonIgnore
     @OneToOne(optional = false)
     @JoinColumn(name = "_admin__userId")
     private User admin;
