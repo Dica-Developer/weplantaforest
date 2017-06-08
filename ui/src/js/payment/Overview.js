@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
+import Accounting from 'accounting';
 
 import Notification from '../common/components/Notification';
 
@@ -11,11 +12,61 @@ export default class Overview extends Component {
   }
 
   setPaymentOption(option) {
-    if (option == 'creditcard' && (this.props.price / 100 < 15)) {
+    if (option == 'creditcard' && (this.props.price < 1500)) {
       this.refs.notification.addNotification('Kreditkartenzahlung nicht möglich!', 'Kreditkartenzahlungen sind leider erst ab einem Betrag von 15€ möglich.', 'error');
     } else {
       this.props.setPaymentOption(option);
     }
+  }
+
+  renderPaypalButton() {
+    let that = this;
+    paypal.Button.render({
+      env: 'sandbox', // sandbox | production
+
+      style: {
+        label: 'checkout', // checkout | credit | pay
+        size:  'responsive',    // small | medium | responsive
+        shape: 'rect',     // pill | rect
+        color: 'silver'      // gold | blue | silver
+      },
+      // PayPal Client IDs - replace with your own
+      // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+      client: {
+        sandbox: 'AQIg9TONrZNfKMgZ3F7OroWWqx3yQMGXjQubo2uvgiZTq9TsA7ReOhMGAzNJC4BVeoPwLd6XgezKGGfU',
+        production: '<insert production client id>'
+      },
+
+      // Show the buyer a 'Pay Now' button in the checkout flow
+      commit: true,
+
+      // payment() is called when the button is clicked
+      payment: function(data, actions) {
+
+        // Make a call to the REST api to create the payment
+        return actions.payment.create({
+          transactions: [
+            {
+              amount: { total: Accounting.formatNumber(that.props.price / 100, 2, ',', '.'), currency: 'EUR' }
+            }
+          ]
+        });
+      },
+
+      // onAuthorize() is called when the buyer approves the payment
+      onAuthorize: function(data, actions) {
+
+        // Make a call to the REST api to execute the payment
+        return actions.payment.execute().then(function() {
+          window.alert('Payment Complete!');
+        });
+      }
+
+    }, '#paypal-button-container');
+  }
+
+  componentDidMount() {
+    this.renderPaypalButton();
   }
 
   render() {
@@ -38,12 +89,8 @@ export default class Overview extends Component {
             </a>
           </div>
           <div className="paymentOption">
-            <a role="button" onClick={() => {
-              this.setPaymentOption('paypal')
-            }}>
-              PAYPAL<br/>
-              <img src="/assets/images/paypal.png" width="256" height="183"/>
-            </a>
+            <div id="paypal-button-container">
+            </div>
           </div>
           <div className="paymentOption">
             <a role="button" onClick={() => {
