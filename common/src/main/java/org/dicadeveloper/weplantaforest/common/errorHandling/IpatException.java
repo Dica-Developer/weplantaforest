@@ -19,7 +19,7 @@ public class IpatException extends Exception{/**
     
     
     public IpatException(String errorCode){
-        IpatErrorInfo errorInfo = new IpatErrorInfo(errorCode, null);
+        IpatErrorInfo errorInfo = new IpatErrorInfo(errorCode);
         errorInfos = new ArrayList<IpatErrorInfo>();
         errorInfos.add(errorInfo);
     }
