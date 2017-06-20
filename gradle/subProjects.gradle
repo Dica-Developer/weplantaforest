@@ -23,6 +23,7 @@ subprojects {
       force 'org.springframework:spring-context:4.2.6.RELEASE'
       force 'org.springframework:spring-expression:4.2.6.RELEASE'
       force 'org.springframework:spring-aop:4.2.6.RELEASE'
+      force 'commons-logging:commons-logging:1.2'
       cacheDynamicVersionsFor 10*60, 'seconds'
       cacheChangingModulesFor 0, 'seconds'
     }
