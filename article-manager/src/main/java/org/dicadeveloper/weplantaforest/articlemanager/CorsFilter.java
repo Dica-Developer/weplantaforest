@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin;
+package org.dicadeveloper.weplantaforest.articlemanager;
 
 import java.io.IOException;
 
