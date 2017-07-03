@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 
 import {Router, Route, browserHistory} from 'react-router';
 
+import counterpart from 'counterpart';
+import Translate from 'react-translate-component';
+
 import NavBar from './common/navbar/NavBar';
 import Header from './common/header/Header';
 import Footer from './common/footer/Footer';
@@ -55,6 +58,8 @@ import EventEditor from './backOffice/eventManager/EventEditor';
 
 export default class Routes extends Component {
 
+  componentDidMount() {}
+
   reRender() {
     this.forceUpdate();
   }
@@ -71,10 +76,21 @@ export default class Routes extends Component {
     this.refs["navbar"].updateComponents();
   }
 
+  switchLocale(locale) {
+    counterpart.setLocale(locale);
+    location.reload();
+  }
+
   render() {
+    counterpart.registerTranslations('de', require('counterpart/locales/de'));
+    counterpart.registerTranslations('en', require('./locales/en'));
+    counterpart.registerTranslations('de', require('./locales/de'));
+    counterpart.setLocale(localStorage.getItem('language') == "ENGLISH"
+      ? 'en'
+      : 'de');
     return (
       <div>
-        <NavBar ref="navbar" reRender={this.reRender.bind(this)}/>
+        <NavBar ref="navbar" reRender={this.reRender.bind(this)} switchLocale={this.switchLocale}/>
         <Header/>
         <Router history={browserHistory}>
           <Route path="/" component={MainPage} reRender={this.reRender.bind(this)}/>
@@ -127,6 +143,5 @@ export default class Routes extends Component {
         </Router>
         <Footer/>
       </div>
-    );
-  }
+    );}
 };
