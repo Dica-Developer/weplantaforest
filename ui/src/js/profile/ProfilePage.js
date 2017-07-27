@@ -7,7 +7,6 @@ import UserDetails from './UserDetails';
 import EditUserDetails from './edit/EditUserDetails';
 import TeamDetails from './TeamDetails';
 import NoTeamAvailable from './NoTeamAvailable';
-import Tools from './tools/Tools';
 import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
 import RankingItem from '../common/ranking/RankingItem';
 import RankingItemContent from '../common/ranking/content/AmountProjectDate';
@@ -151,7 +150,6 @@ export default class ProfilePage extends Component {
     var userPart;
     var teamPart;
     var treePart;
-    var toolsPart;
     var page = this.state.pageCount;
 
     if (!this.state.editUser) {
@@ -191,12 +189,6 @@ export default class ProfilePage extends Component {
       treePart = <NoTreesAvailable/>;
     }
 
-    if (this.state.user.editAllowed) {
-      toolsPart = <Tools/>;
-    } else {
-      toolsPart = '';
-    }
-
     return (
       <div className="container paddingTopBottom15 profile">
         <div className="row details">
@@ -210,7 +202,6 @@ export default class ProfilePage extends Component {
         <div className="row">
           {treePart}
         </div>
-        {toolsPart}
       </div>
     );
   }

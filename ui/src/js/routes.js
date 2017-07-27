@@ -17,6 +17,7 @@ import NotFoundPage from './views/NotFoundPage';
 import ExplorePage from './views/ExplorePage';
 import ProjectDetailsPage from './project/ProjectDetailsPage';
 import ProfilePage from './profile/ProfilePage';
+import ToolsPage from './profile/ToolsPage';
 import RankingPage from './ranking/RankingPage';
 import ProjectOfferPage from './offer/ProjectOfferPage';
 import SelfPlantPage from './selfPlant/SelfPlantPage';
@@ -101,6 +102,7 @@ export default class Routes extends Component {
           <Route path="/projects" component={ProjectsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projects/:projectName" component={ProjectDetailsPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)}/>
           <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)}/>
+          <Route path="/tools/:username" component={ToolsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)}/>
           <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)}/>
