@@ -101,6 +101,8 @@ export default class NavBar extends Component {
         <Menu ref="right" alignment="right">
           <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
           <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>MEIN PROFIL</MenuItem>
+          <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>TOOLS</MenuItem>
+          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>QUITTUNGEN</MenuItem>
           <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>GUTSCHEINE</MenuItem>
           <MenuItem hash="6" inactive={this.state.profileLinksInActive}>ABONNEMENTS</MenuItem>
           <BackOfficeMenuItem hash="/backOffice">BACKOFFICE</BackOfficeMenuItem>

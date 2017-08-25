@@ -39,14 +39,6 @@ export default class Overview extends Component {
             </p>
           </div>
         </div>
-        <div className="col-md-3"><img src="/assets/images/receipt.jpg" alt="receipt" width="250" height="350"/><br/>
-          <div className="desc">
-            <IconButton text="QUITTUNGEN" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('receipts')}}/>
-            <p>
-              <span className="bold">Ganz offiziell!</span><br/>Hier kannst Du Deine Spenden als PDF-Dokumente einsehen und herunterladen.
-            </p>
-          </div>
-        </div>
         <div className="col-md-3"><img src="/assets/images/banner.png" alt="banner" width="250" height="350"/><br/>
           <div className="desc">
             <IconButton text="BANNER" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('banner')}}/>

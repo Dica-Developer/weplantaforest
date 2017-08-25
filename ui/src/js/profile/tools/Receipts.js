@@ -12,10 +12,6 @@ import axios from 'axios';
 import moment from 'moment';
 import Accounting from 'accounting';
 
-import Notification from '../../common/components/Notification';
-import IconButton from '../../common/components/IconButton';
-import ButtonBar from './ButtonBar';
-
 class Receipt extends Component {
   constructor(props) {
     super(props);
@@ -76,16 +72,16 @@ export default class Receipts extends Component {
 
 
     return (
-      <div className="col-md-12">
-        <h2>Tools&nbsp;/&nbsp;Spendenquittungen</h2>
-        <div className="content">
+      <div className="row receipts">
+        <div className="col-md-12">
+          <h2>Tools&nbsp;/&nbsp;Spendenquittungen</h2>
+        </div>
+        <div className="col-md-12">
           {text}<br/>
           {this.state.receipts.map(function(receipt, i) {
             return (<Receipt key={i} receipt={receipt}/>);
           })}
         </div>
-        <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view} />
-        <Notification ref="notification"/>
       </div>
     );
   }
