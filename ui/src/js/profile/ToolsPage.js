@@ -37,12 +37,6 @@ export default class ToolsPage extends Component {
     var toolsPart;
     var page = this.state.pageCount;
 
-    if (this.state.user.editAllowed) {
-      toolsPart = <Tools/>;
-    } else {
-      toolsPart = '';
-    }
-
     toolsPart = <Tools/>;
 
     return (
