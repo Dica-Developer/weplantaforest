@@ -27,6 +27,14 @@ export default class Tools extends Component {
         content = <Receipts view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
         break;
       default:
+        content = <div className="container paddingTopBottom15">
+                    <div className="row receipts">
+                      <div className="col-md-12">
+                        <h2>Tools&nbsp;/&nbsp;Spendenquittungen</h2>
+                      </div>
+                      <div className="col-md-12">Bisher haben Sie leider keine Spendenquittungen</div>
+                    </div>
+                  </div>
         break;
     }
 
