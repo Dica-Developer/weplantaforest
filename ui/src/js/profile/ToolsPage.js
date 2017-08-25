@@ -28,23 +28,6 @@ export default class ToolsPage extends Component {
     this.setState({pageCount: newPage});
   }
 
-  callPage(page) {
-    var that = this;
-    axios.get('http://localhost:8081/trees/owner?userName=' + encodeURIComponent(this.props.params.userName) + '&page=' + page + '&size=15').then(function(response) {
-      var result = response.data;
-      that.setState({newestPlantRanking: result});
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
-  }
-
   updateLanguage(value) {
     this.refs['navbar'].updateLanguage(value);
   }
