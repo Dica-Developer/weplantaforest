@@ -16,22 +16,6 @@ export default class ToolsPage extends Component {
     };
   }
 
-  callNextPage() {
-    var newPage = this.state.pageCount + 1;
-    this.callPage(newPage);
-    this.setState({pageCount: newPage});
-  }
-
-  callPreviousPage() {
-    var newPage = this.state.pageCount - 1;
-    this.callPage(newPage);
-    this.setState({pageCount: newPage});
-  }
-
-  updateLanguage(value) {
-    this.refs['navbar'].updateLanguage(value);
-  }
-
   render() {
     var that = this;
     var toolsPart;
