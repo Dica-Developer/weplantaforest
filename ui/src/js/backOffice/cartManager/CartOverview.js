@@ -404,7 +404,7 @@ export default class CartOverview extends Component {
       <div className="container paddingTopBottom15 cartOverview">
         <div className="row ">
           <div className="col-md-12">
-            <h2>Pflanzkorbübersicht</h2>
+            <h2>Carts</h2>
           </div>
         </div>
         <div className="row ">

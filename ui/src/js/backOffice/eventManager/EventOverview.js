@@ -59,7 +59,7 @@ export default class EventOverview extends Component {
       <div className="container paddingTopBottom15 eventOverview">
           <div className="row ">
             <div className="col-md-12">
-              <h2>Event-Übersicht</h2>
+              <h2>Events</h2>
             </div>
           </div>
           <div className="row">
