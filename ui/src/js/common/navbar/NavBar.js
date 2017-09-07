@@ -91,8 +91,6 @@ export default class NavBar extends Component {
           <MenuItem hash="/certificate/find">ZERTIFIKAT FINDEN</MenuItem>
           <MenuItem hash="/co2Calculator">CO<sub>2</sub>-RECHNER</MenuItem>
           <MenuItem hash="/statistics">ZAHLEN & FAKTEN</MenuItem>
-          <MenuItem hash="/plantGift/5">GUTSCHEIN ERSTELLEN</MenuItem>
-          <MenuItem hash="/gift/redeem">GUTSCHEIN EINLÖSEN</MenuItem>
           <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
           <MenuItem hash="/blog">BLOG</MenuItem>
           <MenuItem hash="/faq">FAQs</MenuItem>
