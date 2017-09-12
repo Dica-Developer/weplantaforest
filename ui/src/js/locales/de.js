@@ -32,7 +32,6 @@ module.exports = {
     plant_online: "ONLINE PFLANZEN",
     tree_service: "BAUMSERVICE"
   },
-  errors: {
-    USER_NOT_FOUND: "Nutzer nicht gefunden."
-  }
+  USER_NOT_FOUND: "Nutzer nicht gefunden.",
+  INVALID_ACTIVATION_KEY: "Der Aktivierungs-Link ist ungültig."
 };

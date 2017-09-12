@@ -30,7 +30,6 @@ module.exports = {
     plant_online: "PLANT ONLINE",
     tree_service: "TREESERVICE"
   },
-  errors: {
-    USER_NOT_FOUND: "User not found."
-  }
+    USER_NOT_FOUND: "User not found.",
+    INVALID_ACTIVATION_KEY: "The activation link is invalid."
 };

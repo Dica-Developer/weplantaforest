@@ -14,7 +14,7 @@ export default class MultiLineErrorObject extends Component {
     return (
       <div>
       {this.props.lines.map(function(line, i) {
-        return (<div key={i}>{counterpart.translate("errors." + line.errorCode)}</div>);
+        return (<div key={i}>{counterpart.translate(line.errorCode)}</div>);
       })}
       </div>
     );
