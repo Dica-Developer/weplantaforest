@@ -29,5 +29,8 @@ module.exports = {
     plant_self: "PLANTED BYSELF",
     plant_online: "PLANT ONLINE",
     tree_service: "TREESERVICE"
+  },
+  errors: {
+    USER_NOT_FOUND: "User not found."
   }
 };

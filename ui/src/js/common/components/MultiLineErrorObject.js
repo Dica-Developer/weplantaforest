@@ -5,6 +5,8 @@ import {
   render
 } from 'react-dom';
 import Boostrap from 'bootstrap';
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
 
 export default class MultiLineErrorObject extends Component {
 
@@ -12,7 +14,7 @@ export default class MultiLineErrorObject extends Component {
     return (
       <div>
       {this.props.lines.map(function(line, i) {
-        return (<div key={i}>{line.errorCode}</div>);
+        return (<div key={i}>{counterpart.translate("errors." + line.errorCode)}</div>);
       })}
       </div>
     );

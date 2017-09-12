@@ -31,5 +31,8 @@ module.exports = {
     plant_self: "SELBST PFLANZEN",
     plant_online: "ONLINE PFLANZEN",
     tree_service: "BAUMSERVICE"
+  },
+  errors: {
+    USER_NOT_FOUND: "Nutzer nicht gefunden."
   }
 };
