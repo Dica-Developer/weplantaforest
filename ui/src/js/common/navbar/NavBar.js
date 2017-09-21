@@ -87,13 +87,11 @@ export default class NavBar extends Component {
       <div>
         <Menu ref="left" alignment="left">
           <MenuItem hash="/projects">PROJEKTE</MenuItem>
-          <MenuItem hash="/certificate/find">FINDEN</MenuItem>
-          <MenuItem hash="/plantGift/5">GUTSCHEIN ERSTELLEN</MenuItem>
-          <MenuItem hash="/gift/redeem">GUTSCHEIN EINLÖSEN</MenuItem>
-          <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
           <MenuItem hash="/ranking">BESTENLISTE</MenuItem>
+          <MenuItem hash="/certificate/find">ZERTIFIKAT FINDEN</MenuItem>
           <MenuItem hash="/co2Calculator">CO<sub>2</sub>-RECHNER</MenuItem>
-          <MenuItem hash="/statistics">STATISTIKEN</MenuItem>
+          <MenuItem hash="/statistics">ZAHLEN & FAKTEN</MenuItem>
+          <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
           <MenuItem hash="/blog">BLOG</MenuItem>
           <MenuItem hash="/faq">FAQs</MenuItem>
           <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
@@ -102,9 +100,9 @@ export default class NavBar extends Component {
           <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
           <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>MEIN PROFIL</MenuItem>
           <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>TOOLS</MenuItem>
-          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>QUITTUNGEN</MenuItem>
           <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>GUTSCHEINE</MenuItem>
           <MenuItem hash="6" inactive={this.state.profileLinksInActive}>ABONNEMENTS</MenuItem>
+          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>SPENDENQUITTUNGEN</MenuItem>
           <BackOfficeMenuItem hash="/backOffice">BACKOFFICE</BackOfficeMenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">

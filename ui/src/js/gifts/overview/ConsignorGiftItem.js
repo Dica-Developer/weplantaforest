@@ -24,7 +24,7 @@ export default class ConsignorGiftItem extends Component {
     if (this.props.gift.recipient == null) {
       recipient = '';
     } else {
-      recipient = <span>Eingelöst von: {this.props.gift.recipient.name}</span>;
+      recipient = <span>{this.props.gift.recipient.name}</span>;
     }
 
     if(this.props.gift.status == 'UNREDEEMED'){
@@ -42,10 +42,10 @@ export default class ConsignorGiftItem extends Component {
     return (
       <div className="giftItem">
         <div>
-          Code: {this.props.gift.code.code}
+          {this.props.gift.code.code}
         </div>
         <div>
-          Status: {status}
+          {status}
         </div>
         <div>
           {recipient}

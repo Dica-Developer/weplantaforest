@@ -62,10 +62,29 @@ export default class GiftOverview extends Component {
           <div className="col-md-12">
             <h2>Gutschein-Übersicht</h2>
             <h3>Erstellte Gutscheine:</h3>
+            <div className="giftItem">
+              <div>
+                Code:
+              </div>
+              <div>
+                Status:
+              </div>
+              <div>
+                Eingelöst von:
+              </div>
+            </div>
               {this.state.consignorGifts.map(function(gift, i) {
                 return (<ConsignorGiftItem gift={gift}  key={i}/>);
               })}
             <h3>Eingelöste Gutscheine:</h3>
+            <div className="giftItem">
+              <div>
+                Code:
+              </div>
+              <div>
+                Erstellt von:
+              </div>
+            </div>
               {this.state.recipientGifts.map(function(gift, i) {
                 return (<RecipientGiftItem gift={gift}  key={i}/>);
               })}

@@ -12,10 +12,10 @@ export default class RecipientGiftItem extends Component {
     return (
       <div className="giftItem">
         <div>
-          Code: {this.props.gift.code.code}
+          {this.props.gift.code.code}
         </div>
         <div>
-        Erstellt von: {this.props.gift.consignor.name}
+          {this.props.gift.consignor.name}
         </div>
       </div>
     );
