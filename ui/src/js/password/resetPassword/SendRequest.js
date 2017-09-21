@@ -6,6 +6,8 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
 
 import Notification from '../../common/components/Notification';
 import InputText from '../../common/components/InputText';
@@ -30,7 +32,7 @@ export default class SendRequest extends Component {
       var headLine = 'Passwortänderung für ' + response.data;
       that.setState({headLine: headLine, linkValid: true});
     }).catch(function(response) {
-      that.setState({headLine: response.data, linkValid: false})
+      that.setState({headLine: counterpart.translate(response.data.errorInfos[0].errorCode), linkValid: false})
     });
   }
 
@@ -50,7 +52,8 @@ export default class SendRequest extends Component {
       axios.post('http://localhost:8081/password_reset' + this.props.search + '&language=' + localStorage.getItem('language') + '&password=' + this.state.passwordOne).then(function(response) {
         that.props.setResetted();
       }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler beim Zurücksetzen des Passworts!', response.data, 'error');
+        // that.refs.notification.addNotification('Fehler beim Zurücksetzen des Passworts!', response.data, 'error');
+        that.refs.notification.handleError(response);
       });
     }
   }
