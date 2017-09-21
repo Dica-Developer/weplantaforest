@@ -31,5 +31,7 @@ module.exports = {
     plant_self: "SELBST PFLANZEN",
     plant_online: "ONLINE PFLANZEN",
     tree_service: "BAUMSERVICE"
-  }
+  },
+  USER_NOT_FOUND: "Nutzer nicht gefunden.",
+  INVALID_ACTIVATION_KEY: "Der Aktivierungs-Link ist ungültig."
 };

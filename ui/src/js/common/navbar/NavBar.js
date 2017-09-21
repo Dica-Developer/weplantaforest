@@ -109,7 +109,7 @@ export default class NavBar extends Component {
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-left">
-            <ImageButton text="MENU" onClick={this.showLeft.bind(this)} imagePath="/assets/images/Menu.png" imageWidth="20" imageHeight="20"/>
+            <ImageButton text="MENÜ" onClick={this.showLeft.bind(this)} imagePath="/assets/images/Menu.png" imageWidth="20" imageHeight="20"/>
           </div>
           <div className="navbar-right myForrestDiv">
             <ImageButton text="MEIN WALD" onClick={this.showRight.bind(this)} imagePath="/assets/images/MeinWald.png" imageWidth="29" imageHeight="25"/>

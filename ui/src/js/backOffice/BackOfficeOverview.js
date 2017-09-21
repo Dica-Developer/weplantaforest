@@ -59,14 +59,14 @@ export default class BackOfficeOverview extends Component {
             </div>
           </div>
           <div className="row ">
-            <BackofficeLink text="Artikel-Manager" url="/article-manager" glyphIcon="glyphicon-text-size"/>
-            <BackofficeLink text="Cart-Manager" url="/cart-manager" glyphIcon="glyphicon-shopping-cart"/>
-            <BackofficeLink text="Projekt-Manager" url="/project-manager" glyphIcon="glyphicon-tags"/>
-            <BackofficeLink text="User-Manager" url="/user-manager" glyphIcon="glyphicon-user"/>
-            <BackofficeLink text="TreeType-Manager" url="/treeType-manager" glyphIcon="glyphicon-leaf"/>
-            <BackofficeLink text="Plant-Manager" url="/plant-manager" glyphIcon="glyphicon-tree-deciduous"/>
-            <BackofficeLink text="Event-Manager" url="/event-manager" glyphIcon="glyphicon-list-alt"/>
-            <BackofficeLink text="Sliderimage-Manager" url="/slider-image-manager" glyphIcon="glyphicon-picture"/>
+            <BackofficeLink text="Blog" url="/article-manager" glyphIcon="glyphicon-text-size"/>
+            <BackofficeLink text="Carts" url="/cart-manager" glyphIcon="glyphicon-shopping-cart"/>
+            <BackofficeLink text="Projekte" url="/project-manager" glyphIcon="glyphicon-tags"/>
+            <BackofficeLink text="User" url="/user-manager" glyphIcon="glyphicon-user"/>
+            <BackofficeLink text="Baumarten" url="/treeType-manager" glyphIcon="glyphicon-leaf"/>
+            <BackofficeLink text="Pflanzen" url="/plant-manager" glyphIcon="glyphicon-tree-deciduous"/>
+            <BackofficeLink text="Events" url="/event-manager" glyphIcon="glyphicon-list-alt"/>
+            <BackofficeLink text="Slider" url="/slider-image-manager" glyphIcon="glyphicon-picture"/>
           </div>
         </div>
     );

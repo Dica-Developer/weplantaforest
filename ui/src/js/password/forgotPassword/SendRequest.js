@@ -32,7 +32,7 @@ export default class SendRequest extends Component {
       axios.post('http://localhost:8081/password_request?userName=' + this.state.name + '&language=' + localStorage.getItem('language')).then(function(response) {
         that.props.setResetted();
       }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler bei der Anfrage!', response.data, 'error');
+        that.refs.notification.handleError( response);
       });
     } else {
       this.refs.notification.addNotification('Keinen Nutzernamen angegeben!', 'Den Nutzernamen müsstest du schon angeben.', 'error');
