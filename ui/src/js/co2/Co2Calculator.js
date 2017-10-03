@@ -14,6 +14,7 @@ export default class Co2Calculator extends Component {
     super();
     this.state = {
       foodResult: 0,
+      calcButtonActive: false,
       mobilityResult: 0,
       mobilityProduction: 0,
       flightResult: 0,
@@ -28,6 +29,7 @@ export default class Co2Calculator extends Component {
       result = 0;
     }
     this.setState({foodResult: result});
+    this.setState({calcButtonActive: true});
   }
 
   calcMobilityResult() {
@@ -72,22 +74,18 @@ export default class Co2Calculator extends Component {
     var result1 = 0;
     return (
       <div className="container paddingTopBottom15 co2Calculator">
-        <div className="row ">
-          <div className="col-md-12">
+        <div className="row">
+          <div className="col-md-12 item-align-start">
             <h2>CO<sub>2</sub>-Rechner</h2>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-12">
-            <h3>Ernährung</h3>
+          <div className="col-md-12 item-align-start">
+            <h3>1. Ernährung</h3>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Wie setzt sich Deine Ernährung zusammen?
+          <div className="col-md-6 item-align-start">
+            <p>Wie setzt sich Deine Ernährung zusammen?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="feeding" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="feeding" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={1}>vegan</option>
               <option value={1.167}>vegetarisch</option>
@@ -96,71 +94,58 @@ export default class Co2Calculator extends Component {
               <option value={2.167}>fleischbetont</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Wieviel isst du gewöhnlich?
+          <div className="col-md-6 item-align-start">
+            <p>Wieviel isst du gewöhnlich?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="food-amount" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="food-amount" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={1}>wenig</option>
               <option value={1.25}>normal</option>
               <option value={1.625}>viel</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Kaufst Du meistens regional?
+          <div className="col-md-6 item-align-start">
+            <p>Kaufst Du meistens regional?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="food-local" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="food-local" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={1}>ja</option>
               <option value={1.111}>nein</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Wie oft isst Du Tiefkühlprodukte?
+          <div className="col-md-6 item-align-start">
+            <p>Wie oft isst Du Tiefkühlprodukte?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="food-frozen" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="food-frozen" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={1}>nie</option>
               <option value={1.1}>selten</option>
               <option value={1.2}>oft</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Achtest Du auf die Saisonalität der Produkte?
+          <div className="col-md-6 item-align-start">
+            <p>Achtest Du auf die Saisonalität der Produkte?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="food-saison" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="food-saison" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={0.95}>ja</option>
               <option value={1}>nein</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Isst Du meistens Bio?
+          <div className="col-md-6 item-align-start">
+            <p>Isst Du meistens Bio?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="food-bio" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="food-bio" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={0.94}>ja</option>
               <option value={1}>nein</option>
             </select>
-            <button className="calcButton" onClick={this.calcFoodResult.bind(this)}>berechnen</button>
           </div>
-        </div>
-        <div className="row ">
           <div className="col-md-6">
             <div className={this.state.foodResult != 0
               ? "bold"
@@ -168,18 +153,13 @@ export default class Co2Calculator extends Component {
               {"Ergebnis:"}
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 results">
             <div className={this.state.foodResult != 0
               ? "bold"
               : "no-display"}>
               {Accounting.formatNumber(this.state.foodResult, 3, ".", ",")}
               {" kg CO"}<sub>2</sub>
             </div>
-          </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-12">
-            <div className="line"></div>
           </div>
         </div>
         <div className="row ">
@@ -216,7 +196,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6">
             <input ref="range" type="text"></input>
-            <button className="calcButton" onClick={this.calcMobilityResult.bind(this)}>berechnen</button>
+            <button disabled onClick={this.calcMobilityResult.bind(this)}>berechnen</button>
           </div>
         </div>
         <div className="row ">
@@ -236,11 +216,6 @@ export default class Co2Calculator extends Component {
               {" kg CO"}<sub>2</sub><br/> {Accounting.formatNumber(this.state.mobilityProduction, 3, ".", ",")}
               {" kg CO"}<sub>2</sub>
             </div>
-          </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-12">
-            <div className="dashed-line"></div>
           </div>
         </div>
         <div className="row ">
@@ -267,11 +242,6 @@ export default class Co2Calculator extends Component {
               {Accounting.formatNumber(this.state.flightResult, 3, ".", ",")}
               {" kg CO"}<sub>2</sub>
             </div>
-          </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-12">
-            <div className="line"></div>
           </div>
         </div>
         <div className="row ">
@@ -374,11 +344,6 @@ export default class Co2Calculator extends Component {
               {Accounting.formatNumber(this.state.homeResult, 3, ".", ",")}
               {" kg CO"}<sub>2</sub>
             </div>
-          </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-12">
-            <div className="line"></div>
           </div>
         </div>
         <div className="row ">
