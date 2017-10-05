@@ -26,7 +26,7 @@ export default class FindTrees extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <h2>Zertifikat finden</h2>
+        <h2>PFLANZUNGEN FINDEN</h2>
           Zertifikat-Nummer: <input type="text" onBlur={this.updateCertId.bind(this)}/>
         <IconButton text="FINDEN" glyphIcon="glyphicon-search" onClick={()=>{this.props.findCertificate(this.state.certificateId)}}/>
       </div>

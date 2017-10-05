@@ -88,7 +88,7 @@ export default class NavBar extends Component {
         <Menu ref="left" alignment="left">
           <MenuItem hash="/projects">PROJEKTE</MenuItem>
           <MenuItem hash="/ranking">BESTENLISTE</MenuItem>
-          <MenuItem hash="/certificate/find">ZERTIFIKAT FINDEN</MenuItem>
+          <MenuItem hash="/certificate/find">PFLANZUNGEN FINDEN</MenuItem>
           <MenuItem hash="/co2Calculator">CO<sub>2</sub>-RECHNER</MenuItem>
           <MenuItem hash="/statistics">ZAHLEN & FAKTEN</MenuItem>
           <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
