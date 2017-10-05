@@ -86,7 +86,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start">
             <select className="form-control" ref="feeding" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
-              <option value={0} disabled>bitte auswählen</option>
+              <option value={0}>bitte auswählen</option>
               <option value={1}>vegan</option>
               <option value={1.167}>vegetarisch</option>
               <option value={1.334}>fleischreduziert</option>
@@ -99,7 +99,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start">
             <select className="form-control" ref="food-amount" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
-              <option value={0} disabled>bitte auswählen</option>
+              <option value={0}>bitte auswählen</option>
               <option value={1}>wenig</option>
               <option value={1.25}>normal</option>
               <option value={1.625}>viel</option>
@@ -110,7 +110,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start">
             <select className="form-control" ref="food-local" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
-              <option value={0} disabled>bitte auswählen</option>
+              <option value={0}>bitte auswählen</option>
               <option value={1}>ja</option>
               <option value={1.111}>nein</option>
             </select>
@@ -120,7 +120,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start">
             <select className="form-control" ref="food-frozen" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
-              <option value={0} disabled>bitte auswählen</option>
+              <option value={0}>bitte auswählen</option>
               <option value={1}>nie</option>
               <option value={1.1}>selten</option>
               <option value={1.2}>oft</option>
@@ -131,7 +131,7 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start">
             <select className="form-control" ref="food-saison" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
-              <option value={0} disabled>bitte auswählen</option>
+              <option value={0}>bitte auswählen</option>
               <option value={0.95}>ja</option>
               <option value={1}>nein</option>
             </select>
@@ -141,19 +141,19 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start">
             <select className="form-control" ref="food-bio" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
-              <option value={0} disabled>bitte auswählen</option>
+              <option value={0}>bitte auswählen</option>
               <option value={0.94}>ja</option>
               <option value={1}>nein</option>
             </select>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 item-align-start results">
             <div className={this.state.foodResult != 0
               ? "bold"
               : "no-display"}>
               {"Ergebnis:"}
             </div>
           </div>
-          <div className="col-md-6 results">
+          <div className="col-md-6 item-align-start results">
             <div className={this.state.foodResult != 0
               ? "bold"
               : "no-display"}>
@@ -162,17 +162,15 @@ export default class Co2Calculator extends Component {
             </div>
           </div>
         </div>
-        <div className="row ">
-          <div className="col-md-12">
-            <h3>Mobilität</h3>
+        <div className="row">
+          <div className="col-md-12 item-align-start">
+            <h3>2. Mobilität</h3>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Welchen Kraftstoff benutzt Dein Auto?
+          <div className="col-md-6 item-align-start">
+            <p>Welchen Kraftstoff benutzt Dein Auto?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="fuel" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="fuel" defaultValue={0}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={2.33}>Benzin</option>
               <option value={2.64}>Diesel</option>
@@ -181,26 +179,22 @@ export default class Co2Calculator extends Component {
               <option value={0.6}>Elektro</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Wie hoch ist dessen Verbrauch auf 100km?(bitte ohne EInheit angeben)
+          <div className="col-md-6 item-align-start">
+            <p>Wie hoch ist dessen Verbrauch auf 100km?(bitte ohne Einheit angeben)?</p>
           </div>
-          <div className="col-md-6">
-            <input ref="consumption" type="text"></input>
+          <div className="col-md-6 item-align-start">
+            <input className="form-control" ref="consumption" type="text"></input>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Wieviele km bist du gefahren?
+          <div className="col-md-6 item-align-start">
+            <p>Wieviele km bist du gefahren?</p>
           </div>
-          <div className="col-md-6">
-            <input ref="range" type="text"></input>
-            <button disabled onClick={this.calcMobilityResult.bind(this)}>berechnen</button>
+          <div className="col-md-6 item-align-start">
+            <input className="form-control" ref="range" type="text"></input>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
+          <div className="col-md-12 item-align-start">
+            <button className="btn" onClick={this.calcMobilityResult.bind(this)}>berechnen</button>
+          </div>
+          <div className="col-md-6 item-align-start results">
             <div className={this.state.mobilityResult != 0
               ? "bold"
               : "no-display"}>
@@ -208,7 +202,7 @@ export default class Co2Calculator extends Component {
               <br/> {"Produktionsemission: "}
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 item-align-start results">
             <div className={this.state.mobilityResult != 0
               ? "bold"
               : "no-display"}>
@@ -217,25 +211,23 @@ export default class Co2Calculator extends Component {
               {" kg CO"}<sub>2</sub>
             </div>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Wieviele km bist du geflogen?
+          <div className="col-md-6 item-align-start">
+            <p>Wieviele km bist du geflogen?</p>
           </div>
-          <div className="col-md-6">
-            <input ref="flight-range" type="text"></input>
-            <button className="calcButton" onClick={this.calcFlightResult.bind(this)}>berechnen</button>
+          <div className="col-md-6 item-align-start">
+            <input className="form-control" ref="flight-range" type="text"></input>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
+          <div className="col-md-12 item-align-start">
+            <button className="btn" onClick={this.calcFlightResult.bind(this)}>berechnen</button>
+          </div>
+          <div className="col-md-6 item-align-start results">
             <div className={this.state.flightResult != 0
               ? "bold"
               : "no-display"}>
               {"Ergebnis:"}
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 item-align-start results">
             <div className={this.state.flightResult != 0
               ? "bold"
               : "no-display"}>
@@ -244,17 +236,15 @@ export default class Co2Calculator extends Component {
             </div>
           </div>
         </div>
-        <div className="row ">
-          <div className="col-md-12">
-            <h3>Wohnen</h3>
+        <div className="row">
+          <div className="col-md-12 item-align-start">
+            <h3>3. Wohnen</h3>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            In welcher Hausart wohnst Du?
+          <div className="col-md-6 item-align-start">
+            <p>In welcher Hausart wohnst Du?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="house-type" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="house-type" defaultValue={0}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={280}>Einfamilienhaus unsaniert</option>
               <option value={170}>Einfamilienhaus saniert</option>
@@ -267,13 +257,11 @@ export default class Co2Calculator extends Component {
               <option value={95}>Reihenhaus isoliert</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Welchen Energieträger nutzt du?
+          <div className="col-md-6 item-align-start">
+            <p>Welchen Energieträger nutzt du?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="energy-type" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="energy-type" defaultValue={0}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={0.13}>Fernwärme</option>
               <option value={0.24}>Gas</option>
