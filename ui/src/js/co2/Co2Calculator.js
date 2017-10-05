@@ -185,12 +185,16 @@ export default class Co2Calculator extends Component {
           <div className="col-md-6 item-align-start">
             <input className="form-control" ref="consumption" type="text"></input>
           </div>
+        </div>
+        <div className="row">
           <div className="col-md-6 item-align-start">
             <p>Wieviele km bist du gefahren?</p>
           </div>
           <div className="col-md-6 item-align-start">
             <input className="form-control" ref="range" type="text"></input>
           </div>
+        </div>
+        <div className="row">
           <div className="col-md-12 item-align-start">
             <button className="btn" onClick={this.calcMobilityResult.bind(this)}>berechnen</button>
           </div>
@@ -310,14 +314,14 @@ export default class Co2Calculator extends Component {
           <div className="col-md-12 item-align-start">
             <button className="btn" onClick={this.calcHomeResult.bind(this)}>berechnen</button>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 item-align-start results">
             <div className={this.state.homeResult != 0
               ? "bold"
               : "no-display"}>
               {"Ergebnis:"}
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 item-align-start results">
             <div className={this.state.homeResult != 0
               ? "bold"
               : "no-display"}>
@@ -333,7 +337,7 @@ export default class Co2Calculator extends Component {
           <div className="col-md-12 item-align-start">
             <button className="btn" onClick={this.calcOverallResult.bind(this)}>berechnen</button>
           </div>
-          <div className="col-md-12 item-align-start">
+          <div className="col-md-12 item-align-start results">
             <div className={this.state.homeResult != 0
               ? "bold overall-result"
               : "no-display"}>
