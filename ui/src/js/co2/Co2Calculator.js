@@ -271,53 +271,45 @@ export default class Co2Calculator extends Component {
               <option value={0.481}>Braunkohle</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Wohnfläche in m²:
+          <div className="col-md-6 item-align-start">
+            <p>Wohnfläche in m²:</p>
           </div>
-          <div className="col-md-6">
-            <input ref="living-space" type="text"></input>
+          <div className="col-md-6 item-align-start">
+            <input className="form-control" ref="living-space" type="text"></input>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Wieviele Personen leben in dem Haushalt?
+          <div className="col-md-6 item-align-start">
+            <p>Wieviele Personen leben in dem Haushalt?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="house-member-count" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="house-member-count" defaultValue={0}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={1}>1</option>
               <option value={1.55}>2</option>
               <option value={1.954}>3</option>
               <option value={2.252}>4</option>
               <option value={2.629}>5</option>
-              <option value={2.882}>6 oder meht</option>
+              <option value={2.882}>6 oder mehr</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Welche Stromart benutzt Du?
+          <div className="col-md-6 item-align-start">
+            <p>Welche Stromart benutzt Du?</p>
           </div>
-          <div className="col-md-6">
-            <select ref="power-type" defaultValue={0}>
+          <div className="col-md-6 item-align-start">
+            <select className="form-control" ref="power-type" defaultValue={0}>
               <option value={0} disabled>bitte auswählen</option>
               <option value={0.04}>Ökostrom</option>
               <option value={0.59}>Strommix</option>
             </select>
           </div>
-        </div>
-        <div className="row ">
-          <div className="col-md-6">
-            Stromverbrauch in kWh:
+          <div className="col-md-6 item-align-start">
+            <p>Stromverbrauch in kWh:</p>
           </div>
-          <div className="col-md-6">
-            <input ref="power-consumption" type="text"></input>
-            <button className="calcButton" onClick={this.calcHomeResult.bind(this)}>berechnen</button>
+          <div className="col-md-6 item-align-start">
+            <input className="form-control" ref="power-consumption" type="text"></input>
           </div>
-        </div>
-        <div className="row ">
+          <div className="col-md-12 item-align-start">
+            <button className="btn" onClick={this.calcHomeResult.bind(this)}>berechnen</button>
+          </div>
           <div className="col-md-6">
             <div className={this.state.homeResult != 0
               ? "bold"
@@ -334,10 +326,14 @@ export default class Co2Calculator extends Component {
             </div>
           </div>
         </div>
-        <div className="row ">
-          <div className="col-md-12">
+        <div className="row">
+          <div className="col-md-12 item-align-start">
             <h3>Gesamtergebnis</h3>
-            <button className="calcButton" onClick={this.calcOverallResult.bind(this)}>berechnen</button>
+          </div>
+          <div className="col-md-12 item-align-start">
+            <button className="btn" onClick={this.calcOverallResult.bind(this)}>berechnen</button>
+          </div>
+          <div className="col-md-12 item-align-start">
             <div className={this.state.homeResult != 0
               ? "bold overall-result"
               : "no-display"}>
