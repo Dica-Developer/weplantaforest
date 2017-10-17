@@ -28,41 +28,38 @@ export default class PlantBagPage extends Component {
         projects: []
       }
       : JSON.parse(localStorage.getItem('plantBag'));
+    let isAnonymUser = !(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '');
     this.state = {
       plantBag: plantBag,
       isGift: isGift,
-      isAnonymUser: false
+      isAnonymUser: isAnonymUser
     };
   }
 
   switchTOPaymentPage() {
-    if ((localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') || this.state.isAnonymUser) {
-      var that = this;
-      var config;
-      if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') {
-        config = {
-          headers: {
-            'X-AUTH-TOKEN': localStorage.getItem('jwt')
-          }
-        };
-      } else {
-        config = {
-          headers: {
-            'X-AUTH-TOKEN': 'anonym-user'
-          }
-        };
-      }
-      if (this.state.isGift) {
-        if (!this.state.isAnonymUser) {
-          this.createGift(config);
-        } else {
-          this.refs.notification.addNotification('Kein Nutzer angemeldet!', "Anonymen Nutzern ist es leider nicht gestattet, Gutscheine zu erstellen.", 'error');
+    var that = this;
+    var config;
+    if (!this.state.isAnonymUser) {
+      config = {
+        headers: {
+          'X-AUTH-TOKEN': localStorage.getItem('jwt')
         }
+      };
+    } else {
+      config = {
+        headers: {
+          'X-AUTH-TOKEN': 'anonym-user'
+        }
+      };
+    }
+    if (this.state.isGift) {
+      if (!this.state.isAnonymUser) {
+        this.createGift(config);
       } else {
-        this.createCart(config);
+        this.refs.notification.addNotification('Kein Nutzer angemeldet!', "Anonymen Nutzern ist es leider nicht gestattet, Gutscheine zu erstellen.", 'error');
       }
     } else {
-      this.refs.notification.addNotification('Kein Nutzer angemeldet!', "Um eine Pflanzung zu tätigen muss ein Nutzer angemeldet sein oder du musst den Haken bei 'als anonymer Nutzer pflanzen' setzen.", 'error');
+      this.createCart(config);
     }
   }
 
@@ -152,11 +149,6 @@ export default class PlantBagPage extends Component {
         </div>
         <div className="align-right">
           <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text="Als Geschenkgutschein"/><br/>
-          <div className={((localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '')
-            ? "no-display"
-            : "") + " align-right"}>
-            <CheckBox toUpdate="isAnonymUser" value={this.state.isAnonymUser} updateValue={this.updateValue.bind(this)} text="als anonymer Nutzer pflanzen"/><br/>
-          </div>
           <IconButton glyphIcon="glyphicon-euro" text="WEITER ZUR KASSE" onClick={this.switchTOPaymentPage.bind(this)}/>
         </div>
       </div>;
@@ -169,6 +161,12 @@ export default class PlantBagPage extends Component {
         <div className="row plantBagPage">
           <div className="col-md-12">
             <h2>Dein Pflanzkorb</h2>
+            <div className={"panel panel-warning " + (!this.state.isAnonymUser
+              ? "no-display"
+              : "")}>
+              <div className="panel-heading">Du bis nicht eingeloggt</div>
+              <div className="panel-body">Du bist nicht als registrierter User eingeloggt. Deine Pflanzung geschieht anonym.</div>
+            </div>
             <div className="overview">
               {Object.keys(this.state.plantBag.projects).map(function(project, i) {
                 var projectPrice = 0;
