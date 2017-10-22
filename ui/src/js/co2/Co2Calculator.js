@@ -28,8 +28,7 @@ export default class Co2Calculator extends Component {
     if(isNaN(result)){
       result = 0;
     }
-    this.setState({foodResult: result});
-    this.setState({calcButtonActive: true});
+    this.setState({foodResult: result, calcButtonActive: true});
   }
 
   calcMobilityResult() {
