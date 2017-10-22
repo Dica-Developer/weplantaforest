@@ -86,26 +86,25 @@ export default class NavBar extends Component {
     return (
       <div>
         <Menu ref="left" alignment="left">
-          <MenuItem hash="/projects">PROJEKTE</MenuItem>
-          <MenuItem hash="/certificate/find">FINDEN</MenuItem>
-          <MenuItem hash="/plantGift/5">GUTSCHEIN ERSTELLEN</MenuItem>
-          <MenuItem hash="/gift/redeem">GUTSCHEIN EINLÖSEN</MenuItem>
-          <MenuItem hash="/projectOffer">FLÄCHE ANBIETEN</MenuItem>
-          <MenuItem hash="/ranking">BESTENLISTE</MenuItem>
-          <MenuItem hash="/co2Calculator">CO<sub>2</sub>-RECHNER</MenuItem>
-          <MenuItem hash="/statistics">STATISTIKEN</MenuItem>
-          <MenuItem hash="/blog">BLOG</MenuItem>
+          <MenuItem hash="/projects">Projekte</MenuItem>
+          <MenuItem hash="/ranking">Bestenliste</MenuItem>
+          <MenuItem hash="/certificate/find">Pflanzungen finden</MenuItem>
+          <MenuItem hash="/co2Calculator">CO<sub>2</sub>-Rechner</MenuItem>
+          <MenuItem hash="/statistics">Zahlen & Fakten</MenuItem>
+          <MenuItem hash="/projectOffer">Fläche anbieten</MenuItem>
+          <MenuItem hash="/blog">Blog</MenuItem>
           <MenuItem hash="/faq">FAQs</MenuItem>
           <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
         </Menu>
         <Menu ref="right" alignment="right">
           <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
-          <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>MEIN PROFIL</MenuItem>
-          <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>TOOLS</MenuItem>
-          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>QUITTUNGEN</MenuItem>
-          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>GUTSCHEINE</MenuItem>
-          <MenuItem hash="6" inactive={this.state.profileLinksInActive}>ABONNEMENTS</MenuItem>
-          <BackOfficeMenuItem hash="/backOffice">BACKOFFICE</BackOfficeMenuItem>
+          <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Mein Profil</MenuItem>
+          <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Tools</MenuItem>
+          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Gutscheinübersicht</MenuItem>
+          <MenuItem hash={"/plantGift/5"} inactive={this.state.profileLinksInActive}>Gutschein erstellen</MenuItem>
+          <MenuItem hash={"/gift/redeem"} inactive={this.state.profileLinksInActive}>Gutschein einlösen</MenuItem>
+          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Spendenquittungen</MenuItem>
+          <BackOfficeMenuItem hash="/backOffice">Backoffice</BackOfficeMenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-left">

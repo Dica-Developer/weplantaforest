@@ -105,9 +105,9 @@ export default class ProjectsPage extends Component {
                 {moreCompletedProjectsButton}
               </div>
             </div>
-            <div className="bottom">Dir stehen Flächen zur Verfügung?
-              <br/>
-              <IconButton glyphIcon="glyphicon-forward" text="PROJEKTFLÄCHE ANBIETEN" onClick={this.switchToOfferProjectPage.bind(this)}/>
+            <div className="bottom">
+            <p>Dir stehen Flächen zur Verfügung?</p>
+              <IconButton glyphIcon="glyphicon-forward" text="Projektfläche anbieten" onClick={this.switchToOfferProjectPage.bind(this)}/>
             </div>
           </div>
         </div>

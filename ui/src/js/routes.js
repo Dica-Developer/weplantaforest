@@ -29,7 +29,7 @@ import ActivationPage from './activation/ActivationPage';
 import ForgotPasswordPage from './password/forgotPassword/ForgotPasswordPage';
 import ResetPasswordPage from './password/resetPassword/ResetPasswordPage';
 import GiftOverview from './gifts/overview/GiftOverview';
-import RedeemGiftPage from './gifts/redeem/RedeemGiftPage'
+import RedeemGiftPage from './gifts/redeem/RedeemGiftPage';
 import FindTreePage from './findTree/FindTreePage';
 import ProjectsPage from './projects/ProjectsPage'
 import StatisticsPage from './statistics/StatisticsPage';
