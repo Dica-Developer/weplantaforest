@@ -16,9 +16,9 @@ export default class Footer extends Component {
           <div className="row">
             <div className="col-md-2">
               <a role="button" onClick={() => {
-                this.linkTo('/helpUs')
+                this.linkTo('/aboutUs')
               }}>
-                HILF UNS
+                ÜBER UNS
               </a>
             </div>
             <div className="col-md-2">
@@ -47,13 +47,6 @@ export default class Footer extends Component {
                 this.linkTo('/')
               }}>
                 KONTAKT
-              </a>
-            </div>
-            <div className="col-md-2">
-              <a role="button" onClick={() => {
-                this.linkTo('/')
-              }}>
-                SITEMAP
               </a>
             </div>
           </div>

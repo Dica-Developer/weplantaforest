@@ -40,7 +40,7 @@ import SuccessCC from './payment/SuccessCC';
 import ErrorCC from './payment/ErrorCC';
 import Co2Calculator from './co2/Co2Calculator';
 import FAQ from './faq/FaqView';
-import HelpUs from './common/footer/pages/HelpUs';
+import AboutUs from './common/footer/pages/AboutUs';
 import Links from './common/footer/pages/Links';
 import Disclaimer from './common/footer/pages/Disclaimer';
 import Imprint from './common/footer/pages/Imprint';
@@ -126,7 +126,7 @@ export default class Routes extends Component {
           <Route path="/payCC/error/:cartId" component={ErrorCC} reRender={this.reRender.bind(this)}/>
           <Route path="/co2Calculator" component={Co2Calculator} reRender={this.reRender.bind(this)}/>
           <Route path="/faq" component={FAQ} reRender={this.reRender.bind(this)}/>
-          <Route path="/helpUs" component={HelpUs} reRender={this.reRender.bind(this)}/>
+          <Route path="/AboutUs" component={AboutUs} reRender={this.reRender.bind(this)}/>
           <Route path="/links" component={Links} reRender={this.reRender.bind(this)}/>
           <Route path="/disclaimer" component={Disclaimer} reRender={this.reRender.bind(this)}/>
           <Route path="/imprint" component={Imprint} reRender={this.reRender.bind(this)}/>
