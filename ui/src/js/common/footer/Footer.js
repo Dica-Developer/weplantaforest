@@ -11,8 +11,8 @@ export default class Footer extends Component {
 
   render() {
     return (
-      <div className='row footer'>
-        <div className='container '>
+      <div className="row footer">
+        <div className="container">
           <div className="row">
             <div className="col-md-2">
               <a role="button" onClick={() => {
@@ -23,14 +23,14 @@ export default class Footer extends Component {
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
-                this.linkTo('/links')
+                this.linkTo('/privacy')
               }}>
-                LINKS
+                DATENSCHUTZ
               </a>
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
-                this.linkTo('/disclaimer')
+                this.linkTo('/terms')
               }}>
                 AGB
               </a>
@@ -44,9 +44,16 @@ export default class Footer extends Component {
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
-                this.linkTo('/')
+                this.linkTo('/kontakt')
               }}>
                 KONTAKT
+              </a>
+            </div>
+            <div className="col-md-2">
+              <a role="button" onClick={() => {
+                this.linkTo('/social')
+              }}>
+                SOCIAL
               </a>
             </div>
           </div>
