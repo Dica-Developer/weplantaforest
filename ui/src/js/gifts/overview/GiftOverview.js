@@ -95,7 +95,7 @@ export default class GiftOverview extends Component {
                 return (<RecipientGiftItem gift={gift}  key={i}/>);
               })}
           </div>
-          <div className="col-md-12">
+          <div className="col-md-12 createGift">
             <h2>Gutschein erstellen</h2>
             <IconButton text="Gutschein erstellen" glyphIcon="glyphicon-gift" onClick={() => {
               this.linkTo('/plantGift/5')
