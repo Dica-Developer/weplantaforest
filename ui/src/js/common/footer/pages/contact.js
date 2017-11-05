@@ -5,10 +5,36 @@ import {
   render
 } from 'react-dom';
 import Boostrap from 'bootstrap';
+import axios from 'axios';
 
 require("./contact.less");
 
 export default class Contact extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      contact: []
+    }
+  }
+
+  componentDidMount() {
+    var that = this;
+    axios.get('http://localhost:8082/articles?articleType=CONTACT&language=' + localStorage.getItem('language')).then(function(response) {
+      var result = response.data;
+      that.setState({contact: result});
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+  }
+
   render() {
     var that = this;
     return (
@@ -16,6 +42,17 @@ export default class Contact extends Component {
           <div className="row">
             <div className="col-md-12">
               <h2>Kontakt</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div>
+                {this.state.contact.map(function(contact, i) {
+                  return ( <div key={i} ><p className="title">{contact.title}</p><p dangerouslySetInnerHTML={{
+                    __html: contact.intro}}></p>
+                </div>);
+                })}
+              </div>
             </div>
           </div>
           <div className="row">
