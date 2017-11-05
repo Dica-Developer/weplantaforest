@@ -9,6 +9,7 @@ import Boostrap from 'bootstrap';
 
 import ConsignorGiftItem from './ConsignorGiftItem';
 import RecipientGiftItem from './RecipientGiftItem';
+import RedeemGiftContent from '../RedeemGiftContent';
 
 require("./gifts.less");
 
@@ -89,6 +90,9 @@ export default class GiftOverview extends Component {
                 return (<RecipientGiftItem gift={gift}  key={i}/>);
               })}
           </div>
+        </div>
+        <div className="row">
+          <RedeemGiftContent></RedeemGiftContent>
         </div>
       </div>
     );
