@@ -19,8 +19,14 @@ export default class Social extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12">
-
+            <div className="col-md-4">
+              FACEBOOK
+            </div>
+            <div className="col-md-4">
+              TWITTER
+            </div>
+            <div className="col-md-4">
+              YOUTUBE
             </div>
           </div>
         </div>
