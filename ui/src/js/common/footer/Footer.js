@@ -44,7 +44,7 @@ export default class Footer extends Component {
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
-                this.linkTo('/kontakt')
+                this.linkTo('/contact')
               }}>
                 KONTAKT
               </a>

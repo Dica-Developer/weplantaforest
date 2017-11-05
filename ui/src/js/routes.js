@@ -47,6 +47,7 @@ import Privacy from './common/footer/pages/Privacy';
 import Terms from './common/footer/pages/Terms';
 import Imprint from './common/footer/pages/Imprint';
 import Contact from './common/footer/pages/Contact';
+import Social from './common/footer/pages/Social';
 import BackOfficeOverview from './backOffice/BackOfficeOverview';
 import ArticleManager from './backOffice/articleManager/ArticleManager';
 import ArticleCreater from './backOffice/articleManager/ArticleCreater';
@@ -135,6 +136,7 @@ export default class Routes extends Component {
           <Route path="/privacy" component={Privacy} reRender={this.reRender.bind(this)}/>
           <Route path="/imprint" component={Imprint} reRender={this.reRender.bind(this)}/>
           <Route path="/contact" component={Contact} reRender={this.reRender.bind(this)}/>
+          <Route path="/social" component={Social} reRender={this.reRender.bind(this)}/>
           <Route path="/terms" component={Terms} reRender={this.reRender.bind(this)}/>
           <Route path="/backOffice" component={BackOfficeOverview} reRender={this.reRender.bind(this)}/>
           <Route path="/article-manager" component={ArticleManager} reRender={this.reRender.bind(this)}/>
