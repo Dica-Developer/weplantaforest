@@ -101,8 +101,6 @@ export default class NavBar extends Component {
           <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Mein Profil</MenuItem>
           <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Tools</MenuItem>
           <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Gutscheinübersicht</MenuItem>
-          <MenuItem hash={"/plantGift/5"} inactive={this.state.profileLinksInActive}>Gutschein erstellen</MenuItem>
-          <MenuItem hash={"/gift/redeem"} inactive={this.state.profileLinksInActive}>Gutschein einlösen</MenuItem>
           <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Spendenquittungen</MenuItem>
           <BackOfficeMenuItem hash="/backOffice">Backoffice</BackOfficeMenuItem>
         </Menu>

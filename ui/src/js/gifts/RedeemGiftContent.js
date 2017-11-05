@@ -99,7 +99,7 @@ export default class RedeemGiftContent extends Component {
             <input type="text" size="4" maxLength="4" ref="part3" onBlur={(event)=>{this.updateInput('part3', event)}}/>&nbsp;-&nbsp;
             <input type="text" size="4" maxLength="4" ref="part4" onBlur={(event)=>{this.updateInput('part4', event)}}/>
             <br/><br/>
-            <IconButton text="GUTSCHEIN EINLÖSEN" glyphIcon="glyphicon-gift" onClick={this.redeemGift.bind(this)}/>
+            <IconButton text="Gutschein einlösen" glyphIcon="glyphicon-gift" onClick={this.redeemGift.bind(this)}/>
             <br/><br/>
         </div>
       ;

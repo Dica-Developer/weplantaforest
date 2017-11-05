@@ -4,12 +4,14 @@ import React, {
 import {
   render
 } from 'react-dom';
+import {browserHistory} from 'react-router';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
 
 import ConsignorGiftItem from './ConsignorGiftItem';
 import RecipientGiftItem from './RecipientGiftItem';
 import RedeemGiftContent from '../RedeemGiftContent';
+import IconButton from '../../common/components/IconButton';
 
 require("./gifts.less");
 
@@ -55,8 +57,11 @@ export default class GiftOverview extends Component {
     });
   }
 
-  render() {
+  linkTo(url) {
+    browserHistory.push(url);
+  }
 
+  render() {
     return (
       <div className="container paddingTopBottom15">
         <div className="row gifts">
@@ -90,9 +95,13 @@ export default class GiftOverview extends Component {
                 return (<RecipientGiftItem gift={gift}  key={i}/>);
               })}
           </div>
-        </div>
-        <div className="row">
-          <RedeemGiftContent></RedeemGiftContent>
+          <div className="col-md-12">
+            <h2>Gutschein erstellen</h2>
+            <IconButton text="Gutschein erstellen" glyphIcon="glyphicon-gift" onClick={() => {
+              this.linkTo('/plantGift/5')
+            }}/>
+          </div>
+          <RedeemGiftContent />
         </div>
       </div>
     );
