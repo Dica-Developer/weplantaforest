@@ -46,6 +46,10 @@ export default class NavBar extends Component {
     this.refs["plantBag"].updatePlantBag(price, projectItems, projectName);
   }
 
+  resetPlantBag(){
+    this.refs["plantBag"].resetPlantBag();
+  }
+
   updateLanguage(value) {
     localStorage.setItem('language', value);
     this.setState({language: value});

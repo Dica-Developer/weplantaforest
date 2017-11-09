@@ -34,31 +34,19 @@ export default class PaymentPage extends Component {
     browserHistory.push('/gifts/' + localStorage.getItem('username'));
   }
 
+  resetPlantBag(){
+    this.props.route.resetPlantBag();
+  }
+
   render() {
     var content;
     var giftText = '';
     if (this.state.paymentOption == '') {
       content = <Overview price={this.state.plantBag.price} setPaymentOption={this.setPaymentOption.bind(this)}/>
     } else if (this.state.paymentOption == 'sepa') {
-      content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)} updateNavbar={this.updateNavbar.bind(this)}/>;
+      content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)} updateNavbar={this.updateNavbar.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>;
     } else if (this.state.paymentOption == 'creditcard') {
-      content = <CreditCard price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)} updateNavbar={this.updateNavbar.bind(this)}/>;
-    } else if (this.state.paymentOption == 'paymentDone') {
-      content = <div>
-        <div className="col-md-12 align-center">
-          <h2>Zahlung erfolgreich abgeschlossen!
-          </h2>
-          Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:
-        </div>
-
-      </div>;
-      if (JSON.parse(localStorage.getItem('isGift'))) {
-        giftText = <div className="gift-text align-center">
-          Deinen Gutschein-Code findest du
-          <a role="button" onClick={this.switchToGiftOverview.bind(this)}>
-            hier</a>
-        </div>
-      }
+      content = <CreditCard price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)} updateNavbar={this.updateNavbar.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>;
     }
 
     return (

@@ -82,6 +82,10 @@ export default class Routes extends Component {
     this.refs["navbar"].updateComponents();
   }
 
+  resetPlantBag() {
+    this.refs["navbar"].resetPlantBag();
+  }
+
   switchLocale(locale) {
     counterpart.setLocale(locale);
     location.reload();
@@ -113,8 +117,8 @@ export default class Routes extends Component {
           <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)}/>
           <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)}/>
           <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)}/>
-          <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)}/>
-          <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)}/>
+          <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>
+          <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>
           <Route path="/registration" component={RegistrationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/userActivation" component={ActivationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/forgotPassword" component={ForgotPasswordPage} reRender={this.reRender.bind(this)}/>
@@ -155,5 +159,6 @@ export default class Routes extends Component {
         </Router>
         <Footer/>
       </div>
-    );}
+    );
+  }
 };

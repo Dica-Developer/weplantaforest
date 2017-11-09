@@ -70,6 +70,7 @@ export default class Sepa extends Component {
       $(that.refs['payment-row']).fadeOut(200);
       that.refs["spinner"].hideSpinner();
       that.refs.notification.addNotification('Zahlung erfolgreich abgeschlossen!', 'Vielen Dank für deine Spende.', 'success');
+      that.props.resetPlantBag();
       that.setState({paymentDone: true});
     }).catch(function(error) {
       that.refs["spinner"].hideSpinner();

@@ -45,6 +45,7 @@ export default class PlantBag extends Component {
     };
     localStorage.setItem('plantBag', JSON.stringify(plantBag));
     this.setState({plantBag: plantBag});
+    this.forceUpdate();
   }
 
   updatePlantBagFromLocaleStorage() {
