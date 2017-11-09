@@ -5,11 +5,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -104,6 +107,22 @@ public class TeamControllerTest {
 				.content(TestUtil.convertObjectToJsonBytes(team)).accept("application/json")
 				.header("X-AUTH-TOKEN", userToken)).andExpect(status().isForbidden());
 
+	}
+	
+	@Test
+	@Rollback(false)
+	public void testDJoinTeam() throws Exception {
+		User user = _userRepository.findByName("TeamMember");
+		String userToken = _tokenAuthenticationService.getTokenFromUser(user);
+		assertThat(user.getTeam()).isNull();
+		
+		mockMvc.perform(post(Uris.TEAM_JOIN).contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.param("teamId", "1").accept("application/json")
+				.header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk());
+		
+		user = _userRepository.findByName("TeamMember");
+		assertThat(user.getTeam()).isNotNull();
+		assertThat(user.getTeam().getName()).isEqualTo("new team");
 	}
 
 }

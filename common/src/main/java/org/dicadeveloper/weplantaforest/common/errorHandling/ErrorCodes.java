@@ -65,7 +65,9 @@ public class ErrorCodes {
     // Team
     
     public final static String TEAM_NAME_ALREADY_EXISTS = "TEAM_NAME_ALREADY_EXISTS";
-    
+
+    public final static String TEAM_NOT_FOUND = "TEAM_NOT_FOUND";
+
     // Files
     
     public final static String EMPTY_FILE = "EMPTY_FILE";

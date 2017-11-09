@@ -111,5 +111,19 @@ public class TeamController {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 	}
+	
+	@RequestMapping(value = Uris.TEAM_JOIN, method = RequestMethod.POST)
+	public ResponseEntity<?> joinTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId)
+			throws IpatException {
+		User user = _tokenAuthenticationService.getUserFromToken(userToken);
+		if (user != null) {
+			_teamService.joinTeam(user, teamId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+	}
+	
+	
 
 }
