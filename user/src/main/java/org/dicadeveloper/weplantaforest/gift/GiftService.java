@@ -43,7 +43,8 @@ public class GiftService {
     private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
 
     @Transactional
-    public Gift generateGift(User consignor, PlantBag plantBag) throws IpatException {
+    public Long[] generateGift(User consignor, PlantBag plantBag) throws IpatException {
+    	Long[] ids = new Long[2];
         _plantBagValidator.validatePlantBag(plantBag);
         Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor, CartState.INITIAL);
 
@@ -62,7 +63,10 @@ public class GiftService {
         
         code.setCart(cart);
         _codeRepository.save(code);
-        return gift;
+        
+        ids[0] = cart.getId();
+        ids[1] = gift.getId();
+        return ids;
     }
 
     @Transactional

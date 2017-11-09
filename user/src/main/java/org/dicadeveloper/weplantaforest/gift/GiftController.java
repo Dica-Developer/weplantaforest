@@ -79,8 +79,8 @@ public class GiftController {
     public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
         User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
         if (consignor != null) {
-            _giftService.generateGift(consignor, plantBag);
-            return new ResponseEntity<>(HttpStatus.OK);
+        	Long[] responseIds  = _giftService.generateGift(consignor, plantBag);            
+            return new ResponseEntity<>(responseIds, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
