@@ -17,6 +17,11 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
     public final static String FIND_BEST_USER_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData(tree.owner.name, sum(tree.amount), sum(tree.amount * tree.treeType.annualCo2SavingInTons * ((:time - tree.plantedOn) / 3.1536E10)), tree.owner.imageName) "
             + "FROM Tree as tree WHERE NOT tree.owner.name LIKE \'Anonymous%\' GROUP BY tree.owner ORDER BY sum(tree.amount) desc";
 
+    public final static String FIND_BEST_USER_QUERY_FOR_LAST_YEAR = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData(tree.owner.name, sum(tree.amount), sum(tree.amount * tree.treeType.annualCo2SavingInTons * ((:time - tree.plantedOn) / 3.1536E10)), tree.owner.imageName) "
+            + "FROM Tree as tree WHERE NOT tree.owner.name LIKE \'Anonymous%\' AND tree.plantedOn > (:time - 3.1536E10) GROUP BY tree.owner ORDER BY sum(tree.amount) desc";
+    
+    public final static String COUNT_BEST_USER_QUERY_FOR_LAST_YEAR = "SELECT count(distinct tree.owner.name) from Tree as tree where NOT tree.owner.name LIKE \'Anonymous%\' AND tree.plantedOn > (:time - 3.1536E10) AND :time = :time";
+    
     public final static String COUNT_BEST_USER_QUERY = "SELECT count(distinct tree.owner.name) from Tree as tree where NOT tree.owner.name LIKE \'Anonymous%\' AND :time = :time";
 
     public final static String FIND_LAST_CREATED_USER_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedUserData(user.name, user.regDate)"
@@ -53,6 +58,9 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
     
     @Query(value = FIND_BEST_USER_QUERY, countQuery = COUNT_BEST_USER_QUERY)
     Page<TreeRankedUserData> getBestUser(@Param("time") long timeOfMeasurement, Pageable page);
+    
+    @Query(value = FIND_BEST_USER_QUERY_FOR_LAST_YEAR, countQuery = COUNT_BEST_USER_QUERY_FOR_LAST_YEAR)
+    Page<TreeRankedUserData> getBestUserForLastYear(@Param("time") long timeOfMeasurement, Pageable page);
 
     @Query(value = FIND_BEST_USER_QUERY, countQuery = COUNT_BEST_USER_QUERY)
     @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)

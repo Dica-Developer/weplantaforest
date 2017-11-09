@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
@@ -25,8 +26,12 @@ public class RankingController {
 
     // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_USER, method = RequestMethod.GET)
-    public Page<TreeRankedUserData> getBestUser(@Param(value = "page") int page, @Param(value = "size") int size) {
-        return _rankingRepository.getBestUser(System.currentTimeMillis(), new PageRequest(page, size));
+    public Page<TreeRankedUserData> getBestUser(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size, @RequestParam(value = "lastYear") boolean lastYear) {
+    	if(lastYear){
+            return _rankingRepository.getBestUserForLastYear(System.currentTimeMillis(), new PageRequest(page, size));
+    	}else{
+            return _rankingRepository.getBestUser(System.currentTimeMillis(), new PageRequest(page, size));    		
+    	}
     }
 
     @RequestMapping(value = Uris.RANKING_LAST_CREATED_USER, method = RequestMethod.GET)

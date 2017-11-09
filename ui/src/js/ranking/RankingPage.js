@@ -4,6 +4,7 @@ import axios from 'axios';
 import Boostrap from 'bootstrap';
 
 import ButtonBar from './ButtonBar';
+import LeftRightSwitch from '../common/components/LeftRightSwitch';
 import RankingItemLarge from './RankingItemLarge';
 import RankingItemSmall from './RankingItemSmall';
 import Notification from '../common/components/Notification';
@@ -24,7 +25,8 @@ export default class RankingPage extends Component {
       orgTypeDesc: 'Alle',
       chosenOrgType: 'PRIVATE',
       slideIn: false,
-      rankingEntries: 25
+      rankingEntries: 25,
+      onlyLastYear: false
     };
     this.toggleDiv = this.toggleDiv.bind(this)
   }
@@ -41,13 +43,13 @@ export default class RankingPage extends Component {
   loadAllUser() {
     var that = this;
     this.toggleDiv();
-    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries).then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
-      setTimeout(function(){
-         that.refs["spinner"].hideSpinner();
-         that.setState({ranking: result, orgTypeDesc: 'Alle'});
-         that.toggleDiv();
-       }, 1000);
+      setTimeout(function() {
+        that.refs["spinner"].hideSpinner();
+        that.setState({ranking: result, orgTypeDesc: 'Alle'});
+        that.toggleDiv();
+      }, 1000);
 
     }).catch(function(response) {
       this.refs.notification.addNotification('Fehler beim Laden der besten Nutzer!', '', 'error');
@@ -59,10 +61,10 @@ export default class RankingPage extends Component {
     this.toggleDiv();
     axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
-      setTimeout(function(){
-         that.setState({ranking: result, orgTypeDesc: 'Teams'});
-         that.toggleDiv();
-       }, 1000);
+      setTimeout(function() {
+        that.setState({ranking: result, orgTypeDesc: 'Teams'});
+        that.toggleDiv();
+      }, 1000);
     }).catch(function(response) {
       this.refs.notification.addNotification('Fehler beim Laden der besten Teams!', '', 'error');
     });
@@ -74,10 +76,10 @@ export default class RankingPage extends Component {
     this.toggleDiv();
     axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries).then(function(response) {
       var result = response.data;
-      setTimeout(function(){
-         that.setState({ranking: result, orgTypeDesc: orgTypeDesc, chosenOrgType: orgType});
-         that.toggleDiv();
-       }, 1000);
+      setTimeout(function() {
+        that.setState({ranking: result, orgTypeDesc: orgTypeDesc, chosenOrgType: orgType});
+        that.toggleDiv();
+      }, 1000);
     }).catch(function(response) {
       this.refs.notification.addNotification('Fehler beim Laden der Rangliste!', '', 'error');
     });
@@ -86,6 +88,16 @@ export default class RankingPage extends Component {
   callMoreRankingEntries() {
     this.state.rankingEntries = this.state.rankingEntries + 25;
     this.forceUpdate();
+    this.loadRanking();
+  }
+
+  updateLastYearFlag(value) {
+    this.state.onlyLastYear = value;
+    this.forceUpdate();
+    this.loadRanking();
+  }
+
+  loadRanking() {
     if (this.state.orgTypeDesc == 'Alle') {
       this.loadAllUser();
     } else if (this.state.orgTypeDesc == 'Teams') {
@@ -106,9 +118,14 @@ export default class RankingPage extends Component {
       <div className="container paddingTopBottom15 ">
         <div className="rankingPage">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-2 center-switch">
+              <LeftRightSwitch leftText="alle" rightText="letztes Jahr" leftValue={false} rightValue={true} chosenValue={this.state.onlyLastYear} onClick={this.updateLastYearFlag.bind(this)}/>
+            </div>
+            <div className="col-md-10">
               <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
             </div>
+          </div>
+          <div className="row">
             <div ref="ranking" className={"col-md-12 rankingItems"}>
               <h2>Bestenliste&nbsp;/&nbsp;{this.state.orgTypeDesc}</h2>
               {this.state.ranking.content.map(function(content, i) {
