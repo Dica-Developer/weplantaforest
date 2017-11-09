@@ -129,67 +129,78 @@ export default class CartOverview extends Component {
           name: 'ID',
           width: 60,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: false
         }, {
           key: 'user',
           name: 'User',
           width: 120,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: true
         }, {
           key: 'price',
           name: 'Preis (€)',
           width: 90,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: true
         }, {
           key: 'status',
           name: 'Status',
           width: 120,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: true
         }, {
           key: 'timestamp',
           name: 'Erstellt am',
           width: 100,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: true
         }, {
           key: 'firstName',
           name: 'Vorname',
           width: 150,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: true
         }, {
           key: 'lastName',
           name: 'Nachname',
           width: 150,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: true
         }, {
           key: 'company',
           name: 'Firma',
           width: 200,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: true
         }, {
           key: 'paymentType',
           name: 'Zahlungsart',
           width: 40,
           filterable: true,
-          sortable: true
+          sortable: true,
+          visible: true
         }, {
           key: 'details',
           name: 'Details',
           width: 50,
           filterable: false,
-          sortable: false
+          sortable: false,
+          visible: true
         }, {
           key: 'stateChange',
           name: 'Actions',
           width: 100,
           filterable: false,
-          sortable: false
+          sortable: false,
+          visible: true
         }
       ],
       rows: [],
@@ -400,6 +411,8 @@ export default class CartOverview extends Component {
       }
     };
 
+    const cols = this.state.columns.filter(column => column.visible === true);
+
     return (
       <div className="container paddingTopBottom15 cartOverview">
         <div className="row ">
@@ -409,7 +422,7 @@ export default class CartOverview extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <ReactDataGrid columns={this.state.columns} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
+            <ReactDataGrid columns={cols} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
               true
             } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
           </div>
