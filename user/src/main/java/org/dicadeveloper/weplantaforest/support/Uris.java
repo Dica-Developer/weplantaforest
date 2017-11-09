@@ -171,6 +171,8 @@ public class Uris {
     public final static String TEAM_DETAILS = "/team";
     
     public final static String TEAM_MEMBER = "/team/member";
+    
+    public final static String TEAM_CREATE = "/team/create";
 
     // treeType
     

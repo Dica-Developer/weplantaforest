@@ -62,6 +62,10 @@ public class ErrorCodes {
     
     public final static String INVALID_ACTIVATION_KEY = "INVALID_ACTIVATION_KEY";
     
+    // Team
+    
+    public final static String TEAM_NAME_ALREADY_EXISTS = "TEAM_NAME_ALREADY_EXISTS";
+    
     // Files
     
     public final static String EMPTY_FILE = "EMPTY_FILE";

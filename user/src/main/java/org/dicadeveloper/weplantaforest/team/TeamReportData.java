@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin.codes;
+package org.dicadeveloper.weplantaforest.team;
 
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 

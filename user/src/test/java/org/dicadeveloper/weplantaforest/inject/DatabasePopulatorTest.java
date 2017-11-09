@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.abo.AboRepository;
-import org.dicadeveloper.weplantaforest.admin.codes.TeamRepository;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
@@ -18,6 +17,7 @@ import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
+import org.dicadeveloper.weplantaforest.team.TeamRepository;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.user.UserRepository;

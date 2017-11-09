@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 
 import javax.transaction.Transactional;
 
-import org.dicadeveloper.weplantaforest.admin.codes.Team;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.cart.CartState;
@@ -14,6 +13,7 @@ import org.dicadeveloper.weplantaforest.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.common.code.CodeHelper;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.team.Team;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
