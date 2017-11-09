@@ -34,7 +34,7 @@ public class CartController {
     @RequestMapping(value = Uris.CARTS, method = RequestMethod.GET)
     @JsonView(Views.OverviewCart.class)
     public Iterable<Cart> getAllCarts() {
-        return _cartRepository.findAll();
+        return _cartRepository.findAllByOrderByIdDesc();
     }
 
     @RequestMapping(value = "/cart/{cartId}")
