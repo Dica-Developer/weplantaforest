@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
 import {htmlDecode} from '../common/language/HtmlHelper';
@@ -11,6 +11,10 @@ import Boostrap from 'bootstrap';
 export default class TeamDetails extends Component {
   constructor(props) {
     super(props);
+  }
+
+  switchToTeamPage() {
+    browserHistory.push('/team/' + this.props.team.teamName);
   }
 
   render() {
@@ -24,7 +28,7 @@ export default class TeamDetails extends Component {
         <div className="imageDiv">
           <img src={teamImageUrl} alt="profile"/>
         </div>
-        <p className="userName">{htmlDecode(this.props.team.teamName)}</p>
+        <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{htmlDecode(this.props.team.teamName)}</p>
         <div className="stats">
           <table>
             <tbody>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
 import {htmlDecode} from '../common/language/HtmlHelper';
