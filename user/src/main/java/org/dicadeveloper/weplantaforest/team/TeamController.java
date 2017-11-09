@@ -124,6 +124,18 @@ public class TeamController {
 		}
 	}
 	
+	@RequestMapping(value = Uris.TEAM_LEAVE, method = RequestMethod.POST)
+	public ResponseEntity<?> leaveTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken)
+			throws IpatException {
+		User user = _tokenAuthenticationService.getUserFromToken(userToken);
+		if (user != null) {
+			_teamService.leaveTeam(user);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+	}
+	
 	
 
 }

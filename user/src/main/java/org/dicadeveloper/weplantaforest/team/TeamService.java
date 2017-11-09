@@ -37,4 +37,9 @@ public class TeamService {
 		user.setTeam(team);
 		_userRepository.save(user);
 	}
+	
+	public void leaveTeam(User user) throws IpatException {
+		user.setTeam(null);
+		_userRepository.save(user);
+	}
 }

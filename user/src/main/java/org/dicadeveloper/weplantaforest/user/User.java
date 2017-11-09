@@ -111,6 +111,7 @@ public class User implements Identifiable<Long>, UserDetails {
     
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
+    @JsonIgnore
     private Team team;
 
     public void addRole(final Role role) {

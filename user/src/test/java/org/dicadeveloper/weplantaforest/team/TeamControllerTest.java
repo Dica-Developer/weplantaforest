@@ -124,5 +124,20 @@ public class TeamControllerTest {
 		assertThat(user.getTeam()).isNotNull();
 		assertThat(user.getTeam().getName()).isEqualTo("new team");
 	}
+	
+	@Test
+	@Rollback(false)
+	public void testELeaveTeam() throws Exception {
+		User user = _userRepository.findByName("TeamMember");
+		String userToken = _tokenAuthenticationService.getTokenFromUser(user);
+		assertThat(user.getTeam()).isNotNull();
+		assertThat(user.getTeam().getName()).isEqualTo("new team");
+
+		mockMvc.perform(post(Uris.TEAM_LEAVE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json")
+				.header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk());
+
+		user = _userRepository.findByName("TeamMember");
+		assertThat(user.getTeam()).isNull();
+	}
 
 }
