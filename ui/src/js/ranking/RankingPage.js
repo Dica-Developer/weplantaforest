@@ -40,15 +40,19 @@ export default class RankingPage extends Component {
     $(this.refs['ranking']).slideToggle(800)
   }
 
-  loadAllUser() {
+  loadAllUser(withToggle) {
     var that = this;
-    this.toggleDiv();
+    if(withToggle){
+      this.toggleDiv();
+    }
     axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
       setTimeout(function() {
         that.refs["spinner"].hideSpinner();
         that.setState({ranking: result, orgTypeDesc: 'Alle'});
-        that.toggleDiv();
+        if(withToggle){
+          that.toggleDiv();
+        }
       }, 1000);
 
     }).catch(function(response) {
@@ -56,14 +60,18 @@ export default class RankingPage extends Component {
     });
   }
 
-  loadBestTeams() {
+  loadBestTeams(withToggle) {
     var that = this;
-    this.toggleDiv();
+    if(withToggle){
+      this.toggleDiv();
+    }
     axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
       setTimeout(function() {
         that.setState({ranking: result, orgTypeDesc: 'Teams'});
-        that.toggleDiv();
+        if(withToggle){
+          that.toggleDiv();
+        }
       }, 1000);
     }).catch(function(response) {
       this.refs.notification.addNotification('Fehler beim Laden der besten Teams!', '', 'error');
@@ -71,14 +79,18 @@ export default class RankingPage extends Component {
 
   }
 
-  loadOrgTypeRanking(orgType, orgTypeDesc) {
+  loadOrgTypeRanking(orgType, orgTypeDesc, withToggle) {
     var that = this;
-    this.toggleDiv();
+    if(withToggle){
+      this.toggleDiv();
+    }
     axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
       setTimeout(function() {
         that.setState({ranking: result, orgTypeDesc: orgTypeDesc, chosenOrgType: orgType});
-        that.toggleDiv();
+        if(withToggle){
+          that.toggleDiv();
+        }
       }, 1000);
     }).catch(function(response) {
       this.refs.notification.addNotification('Fehler beim Laden der Rangliste!', '', 'error');
@@ -88,22 +100,22 @@ export default class RankingPage extends Component {
   callMoreRankingEntries() {
     this.state.rankingEntries = this.state.rankingEntries + 25;
     this.forceUpdate();
-    this.loadRanking();
+    this.loadRanking(false);
   }
 
   updateLastYearFlag(value) {
     this.state.onlyLastYear = value;
     this.forceUpdate();
-    this.loadRanking();
+    this.loadRanking(true);
   }
 
-  loadRanking() {
+  loadRanking(withToggle) {
     if (this.state.orgTypeDesc == 'Alle') {
-      this.loadAllUser();
+      this.loadAllUser(withToggle);
     } else if (this.state.orgTypeDesc == 'Teams') {
-      this.loadBestTeams();
+      this.loadBestTeams(withToggle);
     } else {
-      this.loadOrgTypeRanking(this.state.chosenOrgType, this.state.orgTypeDesc);
+      this.loadOrgTypeRanking(this.state.chosenOrgType, this.state.orgTypeDesc, withToggle);
     }
   }
 

@@ -20,15 +20,15 @@ export default class ButtonBar extends Component {
   }
 
   loadAllUser(){
-    this.props.loadAllUser();
+    this.props.loadAllUser(true);
   }
 
   loadOrgTypeRanking(orgType, orgTypeDesc){
-    this.props.loadOrgTypeRanking(orgType, orgTypeDesc);
+    this.props.loadOrgTypeRanking(orgType, orgTypeDesc, true);
   }
 
   loadBestTeams(){
-    this.props.loadBestTeams();
+    this.props.loadBestTeams(true);
   }
 
   render() {
