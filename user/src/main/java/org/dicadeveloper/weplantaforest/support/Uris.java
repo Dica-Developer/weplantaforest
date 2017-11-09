@@ -177,6 +177,8 @@ public class Uris {
     public final static String TEAM_JOIN = "/team/join";
     
     public final static String TEAM_LEAVE = "/team/leave";
+    
+    public final static String TEAM_DELETE = "/team/delete";
 
     // treeType
     

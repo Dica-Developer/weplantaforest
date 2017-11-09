@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.team;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
@@ -41,5 +43,19 @@ public class TeamService {
 	public void leaveTeam(User user) throws IpatException {
 		user.setTeam(null);
 		_userRepository.save(user);
+	}
+	
+	public void deleteTeam(User user, Long teamId) throws IpatException {
+		Team team = _teamRepository.findOne(teamId);
+		IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
+		boolean isAdminOfTeam = user.getId().equals(team.getAdmin().getId());
+		IpatPreconditions.checkArgument(isAdminOfTeam, ErrorCodes.NO_ADMIN_OF_TEAM);
+		
+		List<User> teamMember = _userRepository.getAllTeamMember(teamId);
+		for(User member: teamMember){
+			member.setTeam(null);
+			_userRepository.save(member);
+		}
+		_teamRepository.delete(teamId);
 	}
 }
