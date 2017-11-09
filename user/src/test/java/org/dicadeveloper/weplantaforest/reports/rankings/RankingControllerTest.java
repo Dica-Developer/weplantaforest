@@ -90,7 +90,7 @@ public class RankingControllerTest {
     public void testGetBestUser() throws Exception {
         _dbInjecter.injectTree("wood", "Bert", 10, timeOfPlanting);
 
-        mockMvc.perform(get(Uris.RANKING_BEST_USER + "?page=0&size=10").accept("application/json"))
+        mockMvc.perform(get(Uris.RANKING_BEST_USER + "?page=0&size=10&lastYear=false").accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.content[0].name").value("Bert"))
                .andExpect(jsonPath("$.content[0].amount").value(10))
@@ -114,7 +114,7 @@ public class RankingControllerTest {
         _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
-        mockMvc.perform(get(Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}?page=0&size=10", OrganizationType.PRIVATE).accept("application/json"))
+        mockMvc.perform(get(Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}?page=0&size=10&lastYear=false", OrganizationType.PRIVATE).accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.totalElements").value(2))
                .andExpect(jsonPath("$.content[0].name").value("Adam"))
@@ -153,7 +153,7 @@ public class RankingControllerTest {
         _dbInjecter.injectTree("wood", "Dirk3", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
 
-        mockMvc.perform(get(Uris.RANKING_BEST_TEAM + "?page=0&size=10").accept("application/json"))
+        mockMvc.perform(get(Uris.RANKING_BEST_TEAM + "?page=0&size=10&lastYear=false").accept("application/json"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.totalElements").value(1))
                .andExpect(jsonPath("$.content[0].name").value("avengers"))
