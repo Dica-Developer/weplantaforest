@@ -41,8 +41,12 @@ public class RankingController {
 
     // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}", method = RequestMethod.GET)
-    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable OrganizationType organizationType, @Param(value = "page") int page, @Param(value = "size") int size) {
-        return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(page, size));
+    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable OrganizationType organizationType, @Param(value = "page") int page, @Param(value = "size") int size, @RequestParam(value = "lastYear") boolean lastYear) {
+    	if(lastYear){
+        	return _rankingRepository.getBestUserFromOrganizationTypeForLastYear(System.currentTimeMillis(), organizationType, new PageRequest(page, size));
+    	}else{
+        	return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, new PageRequest(page, size));    		
+    	}
     }
 
     @RequestMapping(value = Uris.RANKING_LAST_PLANTED_TREES, method = RequestMethod.GET)
@@ -52,8 +56,12 @@ public class RankingController {
 
     // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_TEAM, method = RequestMethod.GET)
-    public Page<TreeRankedUserData> getBestTeams(@Param(value = "page") int page, @Param(value = "size") int size) {
-        return _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(page, size));
+    public Page<TreeRankedUserData> getBestTeams(@Param(value = "page") int page, @Param(value = "size") int size, @RequestParam(value = "lastYear") boolean lastYear) {
+    	if(lastYear){
+    		return _rankingRepository.getBestTeamsForLastYear(System.currentTimeMillis(), new PageRequest(page, size));
+    	}else{
+            return _rankingRepository.getBestTeams(System.currentTimeMillis(), new PageRequest(page, size));    		
+    	}
     }
 
     @RequestMapping(value = Uris.RANKING_BEST_USER_FOR_TIMERANGE + "{timeRange}", method = RequestMethod.GET)

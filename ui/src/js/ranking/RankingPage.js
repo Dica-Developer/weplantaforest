@@ -59,7 +59,7 @@ export default class RankingPage extends Component {
   loadBestTeams() {
     var that = this;
     this.toggleDiv();
-    axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries).then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
       setTimeout(function() {
         that.setState({ranking: result, orgTypeDesc: 'Teams'});
@@ -74,7 +74,7 @@ export default class RankingPage extends Component {
   loadOrgTypeRanking(orgType, orgTypeDesc) {
     var that = this;
     this.toggleDiv();
-    axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries).then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
       setTimeout(function() {
         that.setState({ranking: result, orgTypeDesc: orgTypeDesc, chosenOrgType: orgType});
