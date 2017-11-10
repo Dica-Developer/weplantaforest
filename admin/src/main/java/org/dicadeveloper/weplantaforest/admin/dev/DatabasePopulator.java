@@ -282,6 +282,7 @@ public class DatabasePopulator {
             User buyer = _userRepository.findByName(DEFAULT_USERS.get(i % 10));
 
             cart.setBuyer(buyer);
+            cart.setTimeStamp(1000000000L * i);
             cart.setCartState(CartState.values()[i % 5]);
             cart.setCallBackVorname(DEFAULT_USERS.get(i % 10));
             cart.setCallBackNachname("Nachname");
