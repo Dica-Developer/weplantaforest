@@ -46,6 +46,10 @@ export default class TeamDetails extends Component {
     });
   }
 
+  editTeam(){
+    this.props.editTeam(true);
+  }
+
   render() {
     let teamImageUrl;
     if (this.props.team.teamName) {
@@ -54,7 +58,7 @@ export default class TeamDetails extends Component {
 
     let buttons = '';
     if (this.props.isTeamAdmin) {
-      buttons = <IconButton text="Team löschen" glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/>;
+      buttons = <div><IconButton text="Team bearbeiten" glyphIcon="glyphicon-cog" onClick={this.editTeam.bind(this)}/> <IconButton text="Team löschen" glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/></div>;
     }
 
     var style = {

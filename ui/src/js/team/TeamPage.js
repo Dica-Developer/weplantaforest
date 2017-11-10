@@ -11,6 +11,7 @@ import {
 } from 'react-router';
 
 import TeamDetails from './TeamDetails';
+import EditTeamDetails from './EditTeamDetails';
 import TeamMember from './TeamMember';
 import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
 import RankingItem from '../common/ranking/RankingItem';
@@ -35,7 +36,8 @@ export default class TeamPage extends Component {
       teamMember: {
         content: []
       },
-      isTeamAdmin: false
+      isTeamAdmin: false,
+      edit: false
     };
   }
 
@@ -46,22 +48,7 @@ export default class TeamPage extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.get('http://localhost:8081/team?teamName=' + encodeURIComponent(this.props.params.teamName)).then(function(response) {
-      var result = response.data;
-      that.setState({
-        team: result
-      });
-      that.checkIfTeamAdmin();
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+    this.loadTeamDetails();
 
     axios.get('http://localhost:8081/trees/team?teamName=' + encodeURIComponent(this.props.params.teamName) + '&page=0&size=15').then(function(response) {
       var result = response.data;
@@ -94,6 +81,26 @@ export default class TeamPage extends Component {
       }
     });
 
+  }
+
+  loadTeamDetails() {
+    var that = this;
+    axios.get('http://localhost:8081/team?teamName=' + encodeURIComponent(this.props.params.teamName)).then(function(response) {
+      var result = response.data;
+      that.setState({
+        team: result
+      });
+      that.checkIfTeamAdmin();
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
   }
 
   checkIfTeamAdmin() {
@@ -153,7 +160,7 @@ export default class TeamPage extends Component {
         console.error(response.config);
       }
     });
-  }  
+  }
 
   deleteTeam() {
     var that = this;
@@ -176,10 +183,22 @@ export default class TeamPage extends Component {
       }
     });
   }
+  editTeam(value) {
+    this.setState({
+      edit: value
+    })
+  }
 
   render() {
+    var teamDetails;
     var treePart;
     var page = this.state.pageCount;
+
+    if (this.state.edit) {
+      teamDetails = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}/>;
+    } else {
+      teamDetails = <TeamDetails team={this.state.team} isTeamAdmin={this.state.isTeamAdmin} deleteTeam={this.deleteTeam.bind(this)} editTeam={this.editTeam.bind(this)}/>;
+    }
 
     if (this.state.newestPlantRanking.numberOfElements != 0) {
       treePart = <LargeRankingContainer styleClass="teamRanking" callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.newestPlantRanking.first} isLastPage={this.state.newestPlantRanking.last}>
@@ -205,7 +224,7 @@ export default class TeamPage extends Component {
       <div className="container paddingTopBottom15 teamPage">
         <div className="row details">
           <div className="col-md-6 ">
-            <TeamDetails team={this.state.team} isTeamAdmin={this.state.isTeamAdmin} deleteTeam={this.deleteTeam.bind(this)}/>
+            {teamDetails}
           </div>
           <div className="col-md-6">
             <TeamMember teamMember={this.state.teamMember}/>

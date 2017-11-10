@@ -168,7 +168,11 @@ public class Uris {
     // team
     public final static String TEAM_IMAGE = "/team/image/";
     
+    public final static String TEAM_IMAGE_UPLOAD = "/team/image/upload";
+    
     public final static String TEAM_DETAILS = "/team";
+    
+    public final static String EDIT_TEAM_DETAILS = "/team/edit";
     
     public final static String TEAM_MEMBER = "/team/member";
     

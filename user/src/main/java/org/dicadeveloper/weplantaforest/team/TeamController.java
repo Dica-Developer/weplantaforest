@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -69,6 +70,17 @@ public class TeamController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@RequestMapping(value = Uris.TEAM_IMAGE_UPLOAD, method = RequestMethod.POST)
+    public ResponseEntity<?> uploadTeamImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId, @RequestParam("file") MultipartFile file) throws IpatException {
+		User user = _tokenAuthenticationService.getUserFromToken(userToken);
+		if (_teamService.isTeamAdmin(user.getId(), teamId)) {
+            _teamService.uploadTeamImage(teamId, file);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
 
 	@RequestMapping(value = Uris.TEAM_DETAILS, method = RequestMethod.GET)
 	public ResponseEntity<?> getTeamDetails(@RequestParam String teamName) {
@@ -77,6 +89,18 @@ public class TeamController {
 		teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
 		return new ResponseEntity<>(teamReportData, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = Uris.EDIT_TEAM_DETAILS, method = RequestMethod.POST)
+    public ResponseEntity<?> editTeamDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId, @RequestParam String toEdit, @RequestParam String newEntry)
+            throws IpatException {
+		User user = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (_teamService.isTeamAdmin(user.getId(), teamId)) {
+        	_teamService.editTeam(teamId, toEdit, newEntry);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
 
 	@RequestMapping(value = Uris.TEAM_MEMBER, method = RequestMethod.GET)
 	@JsonView(Views.TeamMember.class)
