@@ -61,7 +61,7 @@ export default class MainPage extends Component {
       }
     });
 
-    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=5').then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=5&lastYear=false').then(function(response) {
       var result = response.data;
       that.setState({bestUserRanking: result});
     }).catch(function(response) {
@@ -75,7 +75,7 @@ export default class MainPage extends Component {
       }
     });
 
-    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=5').then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestOrgType/COMMERCIAL?page=0&size=5&lastYear=false').then(function(response) {
       var result = response.data;
       that.setState({bestCompanyRanking: result});
     }).catch(function(response) {
