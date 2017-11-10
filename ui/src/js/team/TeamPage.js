@@ -37,6 +37,7 @@ export default class TeamPage extends Component {
         content: []
       },
       isTeamAdmin: false,
+      isTeamMember: false,
       edit: false
     };
   }
@@ -65,21 +66,7 @@ export default class TeamPage extends Component {
         console.error(response.config);
       }
     });
-    axios.get('http://localhost:8081/team/member?teamName=' + encodeURIComponent(this.props.params.teamName) + '&page=0&size=5').then(function(response) {
-      var result = response.data;
-      that.setState({
-        teamMember: result
-      });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+    this.loadTeamMember();
 
   }
 
@@ -91,6 +78,26 @@ export default class TeamPage extends Component {
         team: result
       });
       that.checkIfTeamAdmin();
+      that.checkIfTeamMember();
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+  }
+
+  loadTeamMember() {
+    var that = this;
+    axios.get('http://localhost:8081/team/member?teamName=' + encodeURIComponent(this.props.params.teamName) + '&page=0&size=5').then(function(response) {
+      var result = response.data;
+      that.setState({
+        teamMember: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -114,6 +121,31 @@ export default class TeamPage extends Component {
       var result = response.data;
       that.setState({
         isTeamAdmin: result
+      });
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+  }
+
+  checkIfTeamMember() {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.get('http://localhost:8081/team/isMember?teamId=' + this.state.team.teamId, config).then(function(response) {
+      var result = response.data;
+      console.log(result);
+      that.setState({
+        isTeamMember: result
       });
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -183,6 +215,29 @@ export default class TeamPage extends Component {
       }
     });
   }
+
+  joinTeam() {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.post('http://localhost:8081/team/join?teamId=' + this.state.team.teamId, {}, config).then(function(response) {
+      that.refs.notification.addNotification('Team beigetreten', 'Du bist dem Team beigetreten.', 'success');
+      that.loadTeamMember();
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+  }
+
   editTeam(value) {
     this.setState({
       edit: value
@@ -197,7 +252,7 @@ export default class TeamPage extends Component {
     if (this.state.edit) {
       teamDetails = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}/>;
     } else {
-      teamDetails = <TeamDetails team={this.state.team} isTeamAdmin={this.state.isTeamAdmin} deleteTeam={this.deleteTeam.bind(this)} editTeam={this.editTeam.bind(this)}/>;
+      teamDetails = <TeamDetails team={this.state.team} isTeamAdmin={this.state.isTeamAdmin} isTeamMember={this.state.isTeamMember} deleteTeam={this.deleteTeam.bind(this)} editTeam={this.editTeam.bind(this)} joinTeam={this.joinTeam.bind(this)}/>;
     }
 
     if (this.state.newestPlantRanking.numberOfElements != 0) {

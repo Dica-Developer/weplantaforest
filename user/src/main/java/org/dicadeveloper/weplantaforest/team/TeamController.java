@@ -183,5 +183,17 @@ public class TeamController {
 			return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 	}
+	
+	@RequestMapping(value = Uris.TEAM_IS_MEMBER, method = RequestMethod.GET)
+	public ResponseEntity<?> isMember(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId)
+			throws IpatException {
+		User user = _tokenAuthenticationService.getUserFromToken(userToken);
+		if (user != null) {
+			boolean isMember = _teamService.isTeamMember(user.getId(), teamId);
+			return new ResponseEntity<>(isMember, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false, HttpStatus.OK);
+		}
+	}
 
 }

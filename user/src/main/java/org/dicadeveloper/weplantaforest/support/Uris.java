@@ -185,6 +185,8 @@ public class Uris {
     public final static String TEAM_DELETE = "/team/delete";
     
     public final static String TEAM_IS_ADMIN = "/team/isAdmin";
+    
+    public final static String TEAM_IS_MEMBER = "/team/isMember";
 
     // treeType
     

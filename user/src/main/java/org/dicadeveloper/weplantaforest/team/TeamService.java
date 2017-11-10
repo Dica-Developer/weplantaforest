@@ -58,6 +58,16 @@ public class TeamService {
 		return team.getAdmin().getId().equals(userId);
 	}
 
+	public boolean isTeamMember(Long userId, Long teamId) {
+		List<User> members = _userRepository.getAllTeamMember(teamId);
+		for (User member : members) {
+			if (member.getId().equals(userId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void deleteTeam(User user, Long teamId) throws IpatException {
 		Team team = _teamRepository.findOne(teamId);
 		IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
@@ -86,8 +96,8 @@ public class TeamService {
 		}
 
 	}
-	
-	public void editTeam(Long teamId, String toEdit, String newEntry){
+
+	public void editTeam(Long teamId, String toEdit, String newEntry) {
 		Team team = _teamRepository.findOne(teamId);
 		switch (toEdit) {
 		case "descirption":
