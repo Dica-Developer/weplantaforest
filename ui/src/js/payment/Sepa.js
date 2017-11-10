@@ -1,16 +1,24 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
 import axios from 'axios';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 import $ from 'jquery';
+import {
+  browserHistory
+} from 'react-router';
 
 import Notification from '../common/components/Notification';
 import LoadingSpinner from '../common/components/LoadingSpinner';
 import IconButton from '../common/components/IconButton';
 import InputText from '../common/components/InputText';
-import {getConfig} from '../common/RestHelper';
-
+import {
+  getConfig
+} from '../common/RestHelper';
 
 export default class Sepa extends Component {
 
@@ -51,7 +59,9 @@ export default class Sepa extends Component {
     var val = value;
     var obj = this.state.paymentData;
     obj[key] = val;
-    this.setState({paymentData: obj});
+    this.setState({
+      paymentData: obj
+    });
   }
 
   updateSalutation(event) {
@@ -59,7 +69,9 @@ export default class Sepa extends Component {
     var val = event.target.value;
     var obj = this.state.paymentData;
     obj[key] = val;
-    this.setState({paymentData: obj});
+    this.setState({
+      paymentData: obj
+    });
   }
 
   payPlantBag() {
@@ -71,18 +83,28 @@ export default class Sepa extends Component {
       that.refs["spinner"].hideSpinner();
       that.refs.notification.addNotification('Zahlung erfolgreich abgeschlossen!', 'Vielen Dank für deine Spende.', 'success');
       that.props.resetPlantBag();
-      that.setState({paymentDone: true});
+      that.setState({
+        paymentDone: true
+      });
     }).catch(function(error) {
       that.refs["spinner"].hideSpinner();
       that.refs.notification.handleError(error);
     });
   }
 
+  switchToGiftOverview() {
+    browserHistory.push('/gifts/' + localStorage.getItem('username'));
+  }
+
   render() {
     var header = '';
     if (this.state.paymentDone) {
-      header = <div>
-        <h2>Zahlung erfolgreich abgeschlossen!</h2>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+      header = <div><h2>Zahlung erfolgreich abgeschlossen!</h2>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+      if (JSON.parse(localStorage.getItem('isGift'))) {
+        header = <div><h2>Zahlung erfolgreich abgeschlossen!</h2>Deinen Gutschein-Code findest du<a role="button" onClick={this.switchToGiftOverview.bind(this)}> hier</a><br/>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+      }else{
+        header = <div><h2>Zahlung erfolgreich abgeschlossen!</h2>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+      }
     } else {
       header = <h2>SEPA Lastschrift</h2>;
     };
