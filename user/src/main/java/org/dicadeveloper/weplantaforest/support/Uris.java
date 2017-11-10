@@ -218,6 +218,10 @@ public class Uris {
     public final static String MAIN_SLIDER_IMAGES = "/mainSliderImages";
     
     public final static String MAIN_SLIDER_IMAGE = "/mainSliderImage/";
+    
+    //contact
+    
+    public final static String CONTACT = "/contact";
 
     
 }

@@ -18,7 +18,7 @@ export default class Contact extends Component {
     this.state = {
       contact: [],
       form: {
-        reason: '',
+        reason: 'Frage',
         name: '',
         mail: '',
         phone: '',
@@ -48,7 +48,12 @@ export default class Contact extends Component {
 
   submit() {
     if (this.validateForm()) {
-      //send message here
+      var that = this;
+      axios.post('http://localhost:8081/contact', this.state.form).then(function(response) {
+        that.refs.notification.addNotification('Kontakt-Anfrage wurde versandt!', 'Die Kontaktanfrage wurde erfolgreich übermittelt. Wir werden uns bald bei dir melden!', 'success');
+      }).catch(function(response) {
+        that.refs.notification.addNotification('Bei der Übermittlung ist ein Fehler aufgetreten!', 'Bitte versuche es noch einmal.', 'error');
+      });
     } else {
       this.refs.notification.addNotification('Fehler!', 'Bitte füll alle notwendigen(mit einem * markierte) Felder aus!', 'error');
     }
@@ -90,9 +95,9 @@ export default class Contact extends Component {
             <div className="form-group">
               <label htmlFor="contact_type">Ihr Anliegen:</label>
                 <select className="form-control" id="contact_type" defaultValue={0} onChange={(e) => this.updateValue('reason', e)}>
-                  <option value={0}>Frage</option>
-                  <option value={1}>Presse & Media</option>
-                  <option value={2}>Kooperation</option>
+                  <option value={'Frage'}>Frage</option>
+                  <option value={'Presse & Media'}>Presse & Media</option>
+                  <option value={'Kooperation'}>Kooperation</option>
                 </select>
             </div>
             <div className="form-group">
