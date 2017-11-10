@@ -33,14 +33,16 @@ public class TeamService {
 		return team;
 	}
 	
-	public void joinTeam(User user,Long teamId) throws IpatException {
+	public void joinTeam(Long userId,Long teamId) throws IpatException {
+		User user = _userRepository.findOne(userId);
 		Team team = _teamRepository.findOne(teamId);
 		IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
 		user.setTeam(team);
 		_userRepository.save(user);
 	}
 	
-	public void leaveTeam(User user) throws IpatException {
+	public void leaveTeam(Long userId) throws IpatException {
+		User user = _userRepository.findOne(userId);
 		user.setTeam(null);
 		_userRepository.save(user);
 	}

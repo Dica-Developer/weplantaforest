@@ -1,5 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
@@ -11,6 +15,7 @@ import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
 import RankingItem from '../common/ranking/RankingItem';
 import RankingItemContent from '../common/ranking/content/AmountProjectDate';
 import NoTreesAvailable from '../common/ranking/NoTreesAvailable';
+import Notification from '../common/components/Notification';
 
 require("./profile.less");
 
@@ -43,11 +48,15 @@ export default class ProfilePage extends Component {
     };
     axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(this.props.params.userName), config).then(function(response) {
       var result = response.data;
-      that.setState({user: result});
+      that.setState({
+        user: result
+      });
       if (that.state.user.teamName != '') {
         axios.get('http://localhost:8081/team?teamName=' + that.state.user.teamName).then(function(response) {
           var result = response.data;
-          that.setState({team: result});
+          that.setState({
+            team: result
+          });
         }).catch(function(response) {
           if (response instanceof Error) {
             console.error('Error', response.message);
@@ -72,7 +81,9 @@ export default class ProfilePage extends Component {
 
     axios.get('http://localhost:8081/trees/owner?userName=' + encodeURIComponent(this.props.params.userName) + '&page=0&size=15').then(function(response) {
       var result = response.data;
-      that.setState({newestPlantRanking: result});
+      that.setState({
+        newestPlantRanking: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -88,20 +99,26 @@ export default class ProfilePage extends Component {
   callNextPage() {
     var newPage = this.state.pageCount + 1;
     this.callPage(newPage);
-    this.setState({pageCount: newPage});
+    this.setState({
+      pageCount: newPage
+    });
   }
 
   callPreviousPage() {
     var newPage = this.state.pageCount - 1;
     this.callPage(newPage);
-    this.setState({pageCount: newPage});
+    this.setState({
+      pageCount: newPage
+    });
   }
 
   callPage(page) {
     var that = this;
     axios.get('http://localhost:8081/trees/owner?userName=' + encodeURIComponent(this.props.params.userName) + '&page=' + page + '&size=15').then(function(response) {
       var result = response.data;
-      that.setState({newestPlantRanking: result});
+      that.setState({
+        newestPlantRanking: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -115,12 +132,16 @@ export default class ProfilePage extends Component {
   }
 
   showEditUser() {
-    this.setState({editUser: true});
+    this.setState({
+      editUser: true
+    });
   }
 
   showProfile() {
     var that = this;
-    this.setState({editUser: false});
+    this.setState({
+      editUser: false
+    });
     var config = {
       headers: {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
@@ -128,7 +149,9 @@ export default class ProfilePage extends Component {
     };
     axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(this.props.params.userName), config).then(function(response) {
       var result = response.data;
-      that.setState({user: result});
+      that.setState({
+        user: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -145,6 +168,22 @@ export default class ProfilePage extends Component {
     this.refs['navbar'].updateLanguage(value);
   }
 
+  leaveTeam() {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.post('http://localhost:8081/team/leave', {}, config).then(function(response) {
+      that.state.user.teamName = '';
+      that.refs.notification.addNotification('Team verlassen', 'Du hast dein Team verlassen, deine Mitglieder werden dich vermissen.', 'success');
+      that.forceUpdate();
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Team verlassen fehlgeschlagen', 'Beim verlassen des Teams ist ein Fehler aufgetreten, bitte versuche es noch einmal.', 'error');
+    });
+  }
+
   render() {
     var that = this;
     var userPart;
@@ -159,7 +198,7 @@ export default class ProfilePage extends Component {
     }
 
     if (this.state.user.teamName != '') {
-      teamPart = <TeamDetails team={this.state.team}/>;
+      teamPart = <TeamDetails team={this.state.team} leaveTeam={this.leaveTeam.bind(this)}/>;
     } else {
       teamPart = <NoTeamAvailable/>;
     }
@@ -202,6 +241,7 @@ export default class ProfilePage extends Component {
         <div className="row">
           {treePart}
         </div>
+        <Notification ref="notification"/>
       </div>
     );
   }

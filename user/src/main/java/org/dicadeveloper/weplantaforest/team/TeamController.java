@@ -117,7 +117,7 @@ public class TeamController {
 			throws IpatException {
 		User user = _tokenAuthenticationService.getUserFromToken(userToken);
 		if (user != null) {
-			_teamService.joinTeam(user, teamId);
+			_teamService.joinTeam(user.getId(), teamId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -129,7 +129,7 @@ public class TeamController {
 			throws IpatException {
 		User user = _tokenAuthenticationService.getUserFromToken(userToken);
 		if (user != null) {
-			_teamService.leaveTeam(user);
+			_teamService.leaveTeam(user.getId());
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);

@@ -1,10 +1,20 @@
 import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Link, browserHistory} from 'react-router';
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
+import {
+  Link,
+  browserHistory
+} from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
-import {htmlDecode} from '../common/language/HtmlHelper';
+import {
+  htmlDecode
+} from '../common/language/HtmlHelper';
+import IconButton from '../common/components/IconButton';
 
 import Boostrap from 'bootstrap';
 
@@ -15,6 +25,11 @@ export default class TeamDetails extends Component {
 
   switchToTeamPage() {
     browserHistory.push('/team/' + this.props.team.teamName);
+  }
+
+  leaveTeam() {
+    var that = this;
+    this.props.leaveTeam();
   }
 
   render() {
@@ -59,42 +74,9 @@ export default class TeamDetails extends Component {
             <i>{htmlDecode(this.props.team.description)}</i>
           </p>
         </div>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <Link to="/" className="teamLink">
-                  <div className="imgDiv">
-                    <img src="/assets/images/mail.jpg" alt="mail" width="65" height="45"/>
-                  </div>
-                  <div className="textDiv1Line">
-                    <div>RUNDMAIL</div>
-                  </div>
-                </Link>
-              </td>
-              <td>
-                <Link to="/" className="teamLink">
-                  <div className="imgDiv">
-                    <img src="/assets/images/message.jpg" alt="message" width="45" height="45"/>
-                  </div>
-                  <div className="textDiv2Lines">
-                    <div>NACHRICHT<br/>SCHREIBEN</div>
-                  </div>
-                </Link>
-              </td>
-              <td>
-                <Link to="/" className="teamLink">
-                  <div className="imgDiv">
-                    <img src="/assets/images/leave.jpg" alt="leave" width="45" height="45"/>
-                  </div>
-                  <div className="textDiv2Lines">
-                    <div>TEAM<br/>VERLASSEN</div>
-                  </div>
-                </Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="align-center teamButtons">
+          <IconButton text="Team verlassen" glyphIcon="glyphicons-unshare" onClick={this.leaveTeam.bind(this)}/>
+        </div>
       </div>
     );
   }
