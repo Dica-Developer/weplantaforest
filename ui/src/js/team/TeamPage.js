@@ -225,6 +225,7 @@ export default class TeamPage extends Component {
     };
     axios.post('http://localhost:8081/team/join?teamId=' + this.state.team.teamId, {}, config).then(function(response) {
       that.refs.notification.addNotification('Team beigetreten', 'Du bist dem Team beigetreten.', 'success');
+      that.setState({isTeamMember: true});
       that.loadTeamMember();
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -235,6 +236,23 @@ export default class TeamPage extends Component {
         console.error(response.headers);
         console.error(response.config);
       }
+    });
+  }
+
+  leaveTeam() {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.post('http://localhost:8081/team/leave', {}, config).then(function(response) {
+      that.refs.notification.addNotification('Team verlassen', 'Du hast dein Team verlassen, deine Mitglieder werden dich vermissen.', 'success');
+      that.loadTeamMember();
+      that.setState({isTeamMember: false});
+      that.forceUpdate();
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Team verlassen fehlgeschlagen', 'Beim verlassen des Teams ist ein Fehler aufgetreten, bitte versuche es noch einmal.', 'error');
     });
   }
 
@@ -252,7 +270,7 @@ export default class TeamPage extends Component {
     if (this.state.edit) {
       teamDetails = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}/>;
     } else {
-      teamDetails = <TeamDetails team={this.state.team} isTeamAdmin={this.state.isTeamAdmin} isTeamMember={this.state.isTeamMember} deleteTeam={this.deleteTeam.bind(this)} editTeam={this.editTeam.bind(this)} joinTeam={this.joinTeam.bind(this)}/>;
+      teamDetails = <TeamDetails team={this.state.team} isTeamAdmin={this.state.isTeamAdmin} isTeamMember={this.state.isTeamMember} deleteTeam={this.deleteTeam.bind(this)} editTeam={this.editTeam.bind(this)} joinTeam={this.joinTeam.bind(this)} leaveTeam={this.leaveTeam.bind(this)}/>;
     }
 
     if (this.state.newestPlantRanking.numberOfElements != 0) {

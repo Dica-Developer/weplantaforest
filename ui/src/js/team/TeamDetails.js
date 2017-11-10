@@ -54,6 +54,10 @@ export default class TeamDetails extends Component {
     this.props.joinTeam();
   }
 
+  leaveTeam(){
+    this.props.leaveTeam();
+  }
+
   render() {
     let teamImageUrl;
     if (this.props.team.teamName) {
@@ -65,6 +69,8 @@ export default class TeamDetails extends Component {
       buttons = <div><IconButton text="Team bearbeiten" glyphIcon="glyphicon-cog" onClick={this.editTeam.bind(this)}/> <IconButton text="Team löschen" glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/></div>;
     }else if(!this.props.isTeamMember){
       buttons = <div><IconButton text="Team beitreten" glyphIcon="glyphicon-share-alt" onClick={this.joinTeam.bind(this)}/></div>;
+    }else if(this.props.isTeamMember){
+      buttons = <div><IconButton text="Team verlassen" glyphIcon="glyphicon-remove" onClick={this.leaveTeam.bind(this)}/></div>;
     }
 
     var style = {
