@@ -147,5 +147,17 @@ public class TeamController {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 	}
+	
+	@RequestMapping(value = Uris.TEAM_IS_ADMIN, method = RequestMethod.GET)
+	public ResponseEntity<?> isAdmin(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId)
+			throws IpatException {
+		User user = _tokenAuthenticationService.getUserFromToken(userToken);
+		if (user != null) {
+			boolean isAdmin = _teamService.isTeamAdmin(user.getId(), teamId);
+			return new ResponseEntity<>(isAdmin, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false, HttpStatus.OK);
+		}
+	}
 
 }

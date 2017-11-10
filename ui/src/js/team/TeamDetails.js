@@ -1,10 +1,21 @@
 import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Link, browserHistory} from 'react-router';
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
+import {
+  Link,
+  browserHistory
+} from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
-import {htmlDecode} from '../common/language/HtmlHelper';
+import {
+  htmlDecode
+} from '../common/language/HtmlHelper';
+import IconButton from '../common/components/IconButton';
+import NotificationSystem from 'react-notification-system';
 
 import Boostrap from 'bootstrap';
 
@@ -13,11 +24,52 @@ export default class TeamDetails extends Component {
     super(props);
   }
 
+  deleteTeam() {
+    this.props.deleteTeam();
+  }
+
+  createDeleteConfirmation(){
+    this.refs.notificationSystem.addNotification({
+      title: 'Du bist im Begriff dein Team zu löschen!',
+      position: 'tc',
+      autoDismiss: 0,
+      message: 'Möchtest du dein Team wirklich löschen?',
+      level: 'warning',
+      children: (
+        <div className="delete-confirmation align-center">
+          <button>Nein</button>
+          <button onClick={() => {
+            this.deleteTeam()
+          }}>Ja</button>
+        </div>
+      )
+    });
+  }
+
   render() {
     let teamImageUrl;
     if (this.props.team.teamName) {
       teamImageUrl = 'http://localhost:8081/team/image/' + this.props.team.teamId + '/150/150';
     }
+
+    let buttons = '';
+    if (this.props.isTeamAdmin) {
+      buttons = <IconButton text="Team löschen" glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/>;
+    }
+
+    var style = {
+      Containers: {
+        DefaultStyle: {
+          zIndex: 11000
+        },
+        tc: {
+          top: '50%',
+          bottom: 'auto',
+          margin: '0 auto',
+          left: '50%'
+        }
+      }
+    };
     return (
       <div >
         <h2>Team</h2>
@@ -55,42 +107,10 @@ export default class TeamDetails extends Component {
             <i>{htmlDecode(this.props.team.description)}</i>
           </p>
         </div>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <Link to="/" className="teamLink">
-                  <div className="imgDiv">
-                    <img src="/assets/images/mail.jpg" alt="mail" width="65" height="45"/>
-                  </div>
-                  <div className="textDiv1Line">
-                    <div>RUNDMAIL</div>
-                  </div>
-                </Link>
-              </td>
-              <td>
-                <Link to="/" className="teamLink">
-                  <div className="imgDiv">
-                    <img src="/assets/images/message.jpg" alt="message" width="45" height="45"/>
-                  </div>
-                  <div className="textDiv2Lines">
-                    <div>NACHRICHT<br/>SCHREIBEN</div>
-                  </div>
-                </Link>
-              </td>
-              <td>
-                <Link to="/" className="teamLink">
-                  <div className="imgDiv">
-                    <img src="/assets/images/leave.jpg" alt="leave" width="45" height="45"/>
-                  </div>
-                  <div className="textDiv2Lines">
-                    <div>TEAM<br/>VERLASSEN</div>
-                  </div>
-                </Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="align-center teamButtons">
+          {buttons}
+        </div>
+        <NotificationSystem ref="notificationSystem" style={style}/>
       </div>
     );
   }

@@ -75,7 +75,7 @@ export default class TeamDetails extends Component {
           </p>
         </div>
         <div className="align-center teamButtons">
-          <IconButton text="Team verlassen" glyphIcon="glyphicons-unshare" onClick={this.leaveTeam.bind(this)}/>
+          <IconButton text="Team verlassen" glyphIcon="glyphicon-remove" onClick={this.leaveTeam.bind(this)}/>
         </div>
       </div>
     );

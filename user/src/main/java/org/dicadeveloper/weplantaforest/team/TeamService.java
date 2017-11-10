@@ -47,6 +47,11 @@ public class TeamService {
 		_userRepository.save(user);
 	}
 	
+	public boolean isTeamAdmin(Long userId, Long teamId){
+		Team team = _teamRepository.findOne(teamId);
+		return team.getAdmin().getId().equals(userId);
+	}
+	
 	public void deleteTeam(User user, Long teamId) throws IpatException {
 		Team team = _teamRepository.findOne(teamId);
 		IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
