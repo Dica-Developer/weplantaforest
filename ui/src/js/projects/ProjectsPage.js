@@ -87,7 +87,7 @@ export default class ProjectsPage extends Component {
         <div className="row projectsPage">
           <div className="col-md-12">
             <h2>Projekte</h2>
-            <div className="active-projects">
+            <div className="projects">
               <h3>laufende</h3>
                 {this.state.activeProjects.map(function(project, i) {
                   return (<ActiveProject project={project} key={i} />);
@@ -96,7 +96,9 @@ export default class ProjectsPage extends Component {
                 {moreCompletedProjectsButton}
               </div>
             </div>
-            <div className="completed-projects">
+          </div>
+          <div className="col-md-12">
+            <div className="projects">
               <h3>abgeschlossene</h3>
                 {this.state.completedProjects.content.map(function(project, i) {
                   return (<CompletedProject project={project} key={i} />);
@@ -105,8 +107,8 @@ export default class ProjectsPage extends Component {
                 {moreCompletedProjectsButton}
               </div>
             </div>
-            <div className="bottom">
-            <p>Dir stehen Flächen zur Verfügung?</p>
+            <div className="bottom col-md-12">
+              <p>Dir stehen Flächen zur Verfügung?</p>
               <IconButton glyphIcon="glyphicon-forward" text="Projektfläche anbieten" onClick={this.switchToOfferProjectPage.bind(this)}/>
             </div>
           </div>
