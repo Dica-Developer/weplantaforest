@@ -1,21 +1,18 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import {browserHistory} from 'react-router';
 
 import IconButton from '../common/components/IconButton';
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
 export default class CompletedProject extends Component {
   constructor() {
     super();
   }
 
-  switchToProjectPage(){
-    browserHistory.push('/projects/'+ this.props.project.projectName);
+  switchToProjectPage() {
+    browserHistory.push('/projects/' + this.props.project.projectName);
   }
 
   render() {
@@ -23,13 +20,15 @@ export default class CompletedProject extends Component {
     return (
       <div className="project col-md-4">
         <div className="projectImage">
-        <img src={imageUrl} width="279px" height="150px" />
-        </div>  
+          <img src={imageUrl} width="279px" height="150px"/>
+        </div>
         <div className="projectName">
           {this.props.project.projectName}
         </div>
         <div className="projectDescription">
-          {this.props.project.description}
+          <p dangerouslySetInnerHTML={{
+            __html: getTextForSelectedLanguage(this.props.project.description)
+          }}/>
         </div>
         <div className="full">
           vollständig&nbsp;bepflanzt&nbsp;mit&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen

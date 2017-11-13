@@ -1,16 +1,11 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
-import {
-  browserHistory
-} from 'react-router';
+import {browserHistory} from 'react-router';
 import Accounting from 'accounting';
 
 import IconButton from '../common/components/IconButton';
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
 export default class ActiveProject extends Component {
   constructor() {
@@ -30,21 +25,22 @@ export default class ActiveProject extends Component {
     return (
       <div className="project col-md-4">
         <div className="projectImage">
-          <img src={imageUrl} width="279px" height="150px" />
-        </div>        
+          <img src={imageUrl} width="279px" height="150px"/>
+        </div>
         <div className="projectName">
           {this.props.project.projectName}
         </div>
         <div className="projectDescription">
-          {this.props.project.description}
+          <p dangerouslySetInnerHTML={{
+            __html: getTextForSelectedLanguage(this.props.project.description)
+          }}/>
         </div>
         <div className="amount-of-trees">
-           <p style={{
+          <p style={{
             width: percent + '%'
-          }}>
-          </p>         
+          }}></p>
           <div className="text">
-          {this.props.project.amountOfPlantedTrees}&nbsp;von&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen&nbsp;gepflanzt
+            {this.props.project.amountOfPlantedTrees}&nbsp;von&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen&nbsp;gepflanzt
           </div>
         </div>
         <div className="link">
