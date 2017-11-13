@@ -19,10 +19,17 @@ export default class CompletedProject extends Component {
   }
 
   render() {
+    let imageUrl = 'http://localhost:8081/project/image/' + this.props.project.projectImageFileName + '/1140/1140';
     return (
-      <div className="project">
+      <div className="project col-md-4">
+        <div className="projectImage">
+        <img src={imageUrl} width="279px" height="150px" />
+        </div>  
         <div className="projectName">
-        {this.props.project.projectName}
+          {this.props.project.projectName}
+        </div>
+        <div className="projectDescription">
+          {this.props.project.description}
         </div>
         <div className="full">
           vollständig&nbsp;bepflanzt&nbsp;mit&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen
