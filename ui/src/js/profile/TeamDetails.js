@@ -11,6 +11,10 @@ import {
 } from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
+import NotificationSystem from 'react-notification-system';
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 import {
   htmlDecode
 } from '../common/language/HtmlHelper';
@@ -27,6 +31,24 @@ export default class TeamDetails extends Component {
     browserHistory.push('/team/' + this.props.team.teamName);
   }
 
+  createLeaveConfirmation(){
+    this.refs.notificationSystem.addNotification({
+      title: counterpart.translate('TEAM_LEAVE_CONFIRMATION_TITLE'),
+      position: 'tc',
+      autoDismiss: 0,
+      message: counterpart.translate('ARE_YOU_SURE'),
+      level: 'warning',
+      children: (
+        <div className="delete-confirmation align-center">
+          <button>Nein</button>
+          <button onClick={() => {
+            this.leaveTeam()
+          }}>Ja</button>
+        </div>
+      )
+    });
+  }
+
   leaveTeam() {
     var that = this;
     this.props.leaveTeam();
@@ -37,6 +59,20 @@ export default class TeamDetails extends Component {
     if (this.props.team.teamName) {
       teamImageUrl = 'http://localhost:8081/team/image/' + this.props.team.teamId + '/150/150';
     }
+
+    var style = {
+      Containers: {
+        DefaultStyle: {
+          zIndex: 11000
+        },
+        tc: {
+          top: '50%',
+          bottom: 'auto',
+          margin: '0 auto',
+          left: '50%'
+        }
+      }
+    };
     return (
       <div >
         <h2>Team</h2>
@@ -75,8 +111,9 @@ export default class TeamDetails extends Component {
           </p>
         </div>
         <div className="align-center teamButtons">
-          <IconButton text="Team verlassen" glyphIcon="glyphicon-remove" onClick={this.leaveTeam.bind(this)}/>
+          <IconButton text={counterpart.translate('TEAM_LEAVE')} glyphIcon="glyphicon-remove"  onClick={this.createLeaveConfirmation.bind(this)}/>
         </div>
+        <NotificationSystem ref="notificationSystem" style={style}/>
       </div>
     );
   }

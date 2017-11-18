@@ -16,6 +16,8 @@ import {
 } from '../common/language/HtmlHelper';
 import IconButton from '../common/components/IconButton';
 import NotificationSystem from 'react-notification-system';
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
 
 import Boostrap from 'bootstrap';
 
@@ -30,16 +32,34 @@ export default class TeamDetails extends Component {
 
   createDeleteConfirmation(){
     this.refs.notificationSystem.addNotification({
-      title: 'Du bist im Begriff dein Team zu löschen!',
+      title: counterpart.translate('TEAM_DELETE_CONFIRMATION_TITLE'),
       position: 'tc',
       autoDismiss: 0,
-      message: 'Möchtest du dein Team wirklich löschen?',
+      message: counterpart.translate('ARE_YOU_SURE'),
       level: 'warning',
       children: (
         <div className="delete-confirmation align-center">
           <button>Nein</button>
           <button onClick={() => {
             this.deleteTeam()
+          }}>Ja</button>
+        </div>
+      )
+    });
+  }
+
+  createLeaveConfirmation(){
+    this.refs.notificationSystem.addNotification({
+      title: counterpart.translate('TEAM_LEAVE_CONFIRMATION_TITLE'),
+      position: 'tc',
+      autoDismiss: 0,
+      message: counterpart.translate('ARE_YOU_SURE'),
+      level: 'warning',
+      children: (
+        <div className="delete-confirmation align-center">
+          <button>Nein</button>
+          <button onClick={() => {
+            this.leaveTeam()
           }}>Ja</button>
         </div>
       )
@@ -66,11 +86,11 @@ export default class TeamDetails extends Component {
 
     let buttons = '';
     if (this.props.isTeamAdmin) {
-      buttons = <div><IconButton text="Team bearbeiten" glyphIcon="glyphicon-cog" onClick={this.editTeam.bind(this)}/> <IconButton text="Team löschen" glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/></div>;
+      buttons = <div><IconButton text={counterpart.translate('TEAM_EDIT')} glyphIcon="glyphicon-cog" onClick={this.editTeam.bind(this)}/> <IconButton text="Team löschen" glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/></div>;
     }else if(!this.props.isTeamMember){
-      buttons = <div><IconButton text="Team beitreten" glyphIcon="glyphicon-share-alt" onClick={this.joinTeam.bind(this)}/></div>;
+      buttons = <div><IconButton text={counterpart.translate('TEAM_JOIN')} glyphIcon="glyphicon-share-alt" onClick={this.joinTeam.bind(this)}/></div>;
     }else if(this.props.isTeamMember){
-      buttons = <div><IconButton text="Team verlassen" glyphIcon="glyphicon-remove" onClick={this.leaveTeam.bind(this)}/></div>;
+      buttons = <div><IconButton text={counterpart.translate('TEAM_LEAVE')} glyphIcon="glyphicon-remove" onClick={this.createLeaveConfirmation.bind(this)}/></div>;
     }
 
     var style = {

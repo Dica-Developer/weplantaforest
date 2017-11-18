@@ -1,31 +1,4 @@
 module.exports = {
-  // example: {
-  //   switch_language: 'Sprache ändern: ',
-  //
-  //   languages: {
-  //     en: 'Englisch',
-  //     de: 'Deutsch'
-  //   },
-  //
-  //   headline: 'Personenliste',
-  //
-  //   person_age_sentence: {
-  //     zero: '%(firstName)s ist nicht mal ein Jahr alt.',
-  //     one: '%(firstName)s ist genau ein Jahr alt.',
-  //     other: '%(firstName)s ist %(count)s Jahre alt.'
-  //   },
-  //
-  //   seconds_passed: {
-  //     zero: 'Seit dem Aufruf dieser Webseite ist <b>noch keine Sekunde</b> vergangen.',
-  //     one: 'Seit dem Aufruf dieser Webseite ist <b>eine Sekunde</b> vergangen.',
-  //     other: 'Seit dem Aufruf dieser Webseite sind <b>%(count)s Sekunden</b> vergangen.'
-  //   },
-  //
-  //   locale_prop_text: 'Dieser deutsche Text sollte eigentlich niemals angezeigt werden, da hier das "locale" prop <i>explizit</i> auf "en" gesetzt wurde.',
-  //
-  //   click_me: 'Klick mich!',
-  //   you_clicked_on: 'Du hast auf %(what)s geklickt.'
-  // },
 
   buttonbar: {
     plant_self: "SELBST PFLANZEN",
@@ -33,5 +6,14 @@ module.exports = {
     tree_service: "BAUMSERVICE"
   },
   USER_NOT_FOUND: "Nutzer nicht gefunden.",
-  INVALID_ACTIVATION_KEY: "Der Aktivierungs-Link ist ungültig."
+  INVALID_ACTIVATION_KEY: "Der Aktivierungs-Link ist ungültig.",
+
+  TEAM_EDIT: "Team bearbeiten",
+  TEAM_JOIN: "Team beitreten",
+  TEAM_LEAVE: "Team verlassen",
+
+  TEAM_DELETE_CONFIRMATION_TITLE: "Du bist im Begriff dein Team zu löschen!",
+  TEAM_LEAVE_CONFIRMATION_TITLE: "Du bist im Begriff dein Team zu verlassen!",
+
+  ARE_YOU_SURE: "Bist du sicher, dass du das machen möchtest?"
 };
