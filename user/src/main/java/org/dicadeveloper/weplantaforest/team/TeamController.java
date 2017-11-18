@@ -127,9 +127,9 @@ public class TeamController {
 	@RequestMapping(value = Uris.TEAM_CREATE, method = RequestMethod.POST)
 	public ResponseEntity<?> createTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody Team team)
 			throws IpatException {
-		User user = _tokenAuthenticationService.getUserFromToken(userToken);
+	    User user = _tokenAuthenticationService.getUserFromToken(userToken);
 		if (user != null) {
-			_teamService.createTeam(team, user);
+			_teamService.createTeam(team, user.getId());
 			return new ResponseEntity<>(team.getName(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);

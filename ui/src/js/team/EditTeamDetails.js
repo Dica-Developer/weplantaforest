@@ -60,7 +60,7 @@ export default class EditTeamDetails extends Component {
       }
     };
     axios.post('http://localhost:8081/team/edit?teamId=' + this.props.team.teamId + '&toEdit=' + toEditGlobal + "&newEntry=" + newEntry, {}, config).then(function(response) {
-      that.refs.notification.addNotification(counterpart.translate('EDIT_SUCCES_TITLE'), counterpart.translate('EDIT_SUCCES_MESSAGE'), 'success');
+      // that.refs.notification.addNotification(counterpart.translate('EDIT_SUCCES_TITLE'), counterpart.translate('EDIT_SUCCES_MESSAGE'), 'success');
       if (toEditGlobal === 'name'){
         that.props.teamNameChangedAction(newEntry);
       }else{
@@ -72,19 +72,6 @@ export default class EditTeamDetails extends Component {
   }
 
   render() {
-    var style = {
-      Containers: {
-        DefaultStyle: {
-          zIndex: 11000
-        },
-        tc: {
-          top: '50%',
-          bottom: 'auto',
-          margin: '0 auto',
-          left: '50%'
-        }
-      }
-    };
     return (
       <div>
         <div className="row">
@@ -99,7 +86,7 @@ export default class EditTeamDetails extends Component {
           </div>
           <div className="col-md-12 form-group">
             <label htmlFor="team_description">{counterpart.translate('TEAM_DESCRIPTION')}:</label>
-            <textarea className="form-control" rows="10" id="team_description" onBlur={(e) => this.editTeam('descirption', e)} defaultValue={this.props.team.description}/>
+            <textarea className="form-control" rows="10" id="team_description" onBlur={(e) => this.editTeam('description', e)} defaultValue={this.props.team.description}/>
           </div>
           <div className="col-md-12">
             <EditImageItem uploadImage={this.uploadImage.bind(this)}/>

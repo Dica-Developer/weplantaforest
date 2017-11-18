@@ -11,6 +11,7 @@ import counterpart from 'counterpart';
 
 import UserDetails from './UserDetails';
 import EditUserDetails from './edit/EditUserDetails';
+import CreateTeam from '../team/CreateTeam';
 import TeamDetails from '../team/TeamDetails';
 import EditTeamDetails from '../team/EditTeamDetails';
 import NoTeamAvailable from './NoTeamAvailable';
@@ -32,6 +33,7 @@ export default class ProfilePage extends Component {
       },
       editUser: false,
       editTeam: false,
+      createTeam: false,
       team: {
         co2Data: {}
       },
@@ -88,21 +90,23 @@ export default class ProfilePage extends Component {
 
   loadTeamDetails() {
     var that = this;
-    axios.get('http://localhost:8081/team?teamName=' + that.state.user.teamName).then(function(response) {
-      var result = response.data;
-      that.setState({
-        team: result
+    if (this.state.user.teamName && this.state.user.teamName != '') {
+      axios.get('http://localhost:8081/team?teamName=' + this.state.user.teamName).then(function(response) {
+        var result = response.data;
+        that.setState({
+          team: result
+        });
+      }).catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
       });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+    }
   }
 
   callNextPage() {
@@ -181,18 +185,36 @@ export default class ProfilePage extends Component {
     this.setState({
       editTeam: value
     })
+    if (!value) {
+      this.reloadTeam();
+    }
   }
 
-  switchTeamPartToNoTeam(){
+  switchTeamPartToNoTeam() {
     this.state.user.teamName = '';
+    this.state.team = {co2Data: {}};
     this.forceUpdate();
-    that.refs.notification.addNotification(counterpart.translate('TEAM_DELETED_TITLE'), counterpart.translate('TEAM_DELETED_MESSAGE'), 'success');
+    this.refs.notification.addNotification(counterpart.translate('TEAM_DELETED_TITLE'), counterpart.translate('TEAM_DELETED_MESSAGE'), 'success');
   }
 
-  reloadTeamAfterNameHasChanged(teamName){
+  reloadTeam(teamName) {
     this.state.user.teamName = teamName;
     this.forceUpdate();
     this.loadTeamDetails();
+  }
+
+  openCreateTeamPart() {
+    this.setState({
+      createTeam: true
+    });
+  }
+
+  teamCreated(teamName) {
+    this.setState({
+      createTeam: false
+    });
+    this.reloadTeam(teamName);
+    this.refs.notification.addNotification(counterpart.translate('CREATE_TEAM_SUCCESS_TITLE'), counterpart.translate('CREATE_TEAM_SUCCESS_MESSAGE'), 'success');
   }
 
   render() {
@@ -211,9 +233,11 @@ export default class ProfilePage extends Component {
     if (this.state.user.teamName != '' && !this.state.editTeam) {
       teamPart = <TeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} deleteAction={this.switchTeamPartToNoTeam.bind(this)}/>;
     } else if (this.state.user.teamName != '' && this.state.editTeam) {
-      teamPart = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}  teamNameChangedAction={this.reloadTeamAfterNameHasChanged.bind(this)}/>;
-    } else if (this.state.user.teamName === '') {
-      teamPart = <NoTeamAvailable/>;
+      teamPart = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}  teamNameChangedAction={this.reloadTeam.bind(this)}/>;
+    } else if (this.state.user.teamName === '' && this.state.createTeam) {
+      teamPart = <CreateTeam teamCreatedAction={this.teamCreated.bind(this)}/>;
+    } else if (this.state.user.teamName === '' && !this.state.createTeam) {
+      teamPart = <NoTeamAvailable openCreateTeamPart={this.openCreateTeamPart.bind(this)}/>;
     }
 
     if (this.state.newestPlantRanking.numberOfElements != 0) {

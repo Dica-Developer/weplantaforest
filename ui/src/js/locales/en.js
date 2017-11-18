@@ -8,10 +8,14 @@ module.exports = {
   INVALID_ACTIVATION_KEY: "The activation link is invalid.",
 
   TEAM_NAME: "Team Name",
+  TEAM_CREATE: "create Team",
   TEAM_EDIT: "edit Team",
   TEAM_JOIN: "join Team",
   TEAM_LEAVE: "leave Team",
   TEAM_DESCRIPTION: "Team description",
+
+  CREATE_TEAM_SUCCESS_TITLE: "Team created",
+  CREATE_TEAM_SUCCESS_MESSAGE: "Your team was created. Other User can join now.",
 
   TEAM_DELETE_CONFIRMATION_TITLE: "You are going to delete your team!",
   TEAM_LEAVE_CONFIRMATION_TITLE: "You are going to leave your team!",
