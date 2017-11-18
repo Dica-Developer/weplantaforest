@@ -40,14 +40,14 @@ import SuccessCC from './payment/SuccessCC';
 import ErrorCC from './payment/ErrorCC';
 import Co2Calculator from './co2/Co2Calculator';
 import FAQ from './faq/FaqView';
-import AboutUs from './common/footer/pages/AboutUs';
+import AboutUs from './common/footer/pages/aboutUs';
 import Links from './common/footer/pages/Links';
 import Disclaimer from './common/footer/pages/Disclaimer';
-import Privacy from './common/footer/pages/Privacy';
-import Terms from './common/footer/pages/Terms';
+import Privacy from './common/footer/pages/privacy';
+import Terms from './common/footer/pages/terms';
 import Imprint from './common/footer/pages/Imprint';
-import Contact from './common/footer/pages/Contact';
-import Social from './common/footer/pages/Social';
+import Contact from './common/footer/pages/contact';
+import Social from './common/footer/pages/social';
 import BackOfficeOverview from './backOffice/BackOfficeOverview';
 import ArticleManager from './backOffice/articleManager/ArticleManager';
 import ArticleCreater from './backOffice/articleManager/ArticleCreater';
@@ -61,6 +61,7 @@ import PlantManager from './backOffice/plantManager/PlantManager';
 import SliderImageManager from './backOffice/sliderImageManager/SliderImageManager';
 import EventOverview from './backOffice/eventManager/EventOverview';
 import EventEditor from './backOffice/eventManager/EventEditor';
+
 
 export default class Routes extends Component {
 
