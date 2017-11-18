@@ -103,10 +103,12 @@ public class TeamService {
 		case "descirption":
 			team.setDescription(newEntry);
 			break;
-
+		case "name":
+		    team.setName(newEntry);
 		default:
 			break;
-		}
+		}		
 		_teamRepository.save(team);
 	}
+	
 }

@@ -15,6 +15,7 @@ import {
   htmlDecode
 } from '../common/language/HtmlHelper';
 import IconButton from '../common/components/IconButton';
+import Notification from '../common/components/Notification';
 import NotificationSystem from 'react-notification-system';
 import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
@@ -24,13 +25,146 @@ import Boostrap from 'bootstrap';
 export default class TeamDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isTeamAdmin: false,
+      isTeamMember: false
+    }
+    if(this.props.team.teamId){
+      this.checkIfTeamAdmin(this.props.team.teamId);
+      this.checkIfTeamMember(this.props.team.teamId);
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.team.teamId){
+      this.checkIfTeamAdmin(nextProps.team.teamId);
+      this.checkIfTeamMember(nextProps.team.teamId);
+    }
+  }
+
+
+  switchToTeamPage() {
+    browserHistory.push('/team/' + this.props.team.teamName);
+  }
+
+  checkIfTeamAdmin(teamId) {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.get('http://localhost:8081/team/isAdmin?teamId=' + teamId, config).then(function(response) {
+      var result = response.data;
+      that.setState({
+        isTeamAdmin: result
+      });
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+  }
+
+  checkIfTeamMember(teamId) {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.get('http://localhost:8081/team/isMember?teamId=' + teamId, config).then(function(response) {
+      var result = response.data;
+      that.setState({
+        isTeamMember: result
+      });
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
   }
 
   deleteTeam() {
-    this.props.deleteTeam();
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.delete('http://localhost:8081/team/delete?teamId=' + this.props.team.teamId, config).then(function(response) {
+      that.props.deleteAction();
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
   }
 
-  createDeleteConfirmation(){
+  editTeam() {
+    this.props.editTeam(true);
+  }
+
+  joinTeam() {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.post('http://localhost:8081/team/join?teamId=' + this.props.team.teamId, {}, config).then(function(response) {
+      that.refs.notification.addNotification('Team beigetreten', 'Du bist dem Team beigetreten.', 'success');
+      that.setState({
+        isTeamMember: true
+      });
+      that.loadTeamMember();
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    })
+  }
+
+  leaveTeam() {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.post('http://localhost:8081/team/leave', {}, config).then(function(response) {
+      that.refs.notification.addNotification('Team verlassen', 'Du hast dein Team verlassen, deine Mitglieder werden dich vermissen.', 'success');
+      that.loadTeamMember();
+      that.setState({
+        isTeamMember: false
+      });
+      that.forceUpdate();
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Team verlassen fehlgeschlagen', 'Beim verlassen des Teams ist ein Fehler aufgetreten, bitte versuche es noch einmal.', 'error');
+    });
+  }
+
+  createDeleteConfirmation() {
     this.refs.notificationSystem.addNotification({
       title: counterpart.translate('TEAM_DELETE_CONFIRMATION_TITLE'),
       position: 'tc',
@@ -39,16 +173,16 @@ export default class TeamDetails extends Component {
       level: 'warning',
       children: (
         <div className="delete-confirmation align-center">
-          <button>Nein</button>
-          <button onClick={() => {
-            this.deleteTeam()
-          }}>Ja</button>
-        </div>
+              <button>Nein</button>
+              <button onClick={() => {
+                this.deleteTeam()
+              }}>Ja</button>
+            </div>
       )
     });
   }
 
-  createLeaveConfirmation(){
+  createLeaveConfirmation() {
     this.refs.notificationSystem.addNotification({
       title: counterpart.translate('TEAM_LEAVE_CONFIRMATION_TITLE'),
       position: 'tc',
@@ -57,25 +191,13 @@ export default class TeamDetails extends Component {
       level: 'warning',
       children: (
         <div className="delete-confirmation align-center">
-          <button>Nein</button>
-          <button onClick={() => {
-            this.leaveTeam()
-          }}>Ja</button>
-        </div>
+              <button>Nein</button>
+              <button onClick={() => {
+                this.leaveTeam()
+              }}>Ja</button>
+            </div>
       )
     });
-  }
-
-  editTeam(){
-    this.props.editTeam(true);
-  }
-
-  joinTeam(){
-    this.props.joinTeam();
-  }
-
-  leaveTeam(){
-    this.props.leaveTeam();
   }
 
   render() {
@@ -85,11 +207,11 @@ export default class TeamDetails extends Component {
     }
 
     let buttons = '';
-    if (this.props.isTeamAdmin) {
+    if (this.state.isTeamAdmin) {
       buttons = <div><IconButton text={counterpart.translate('TEAM_EDIT')} glyphIcon="glyphicon-cog" onClick={this.editTeam.bind(this)}/> <IconButton text="Team löschen" glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/></div>;
-    }else if(!this.props.isTeamMember){
+    } else if (!this.state.isTeamMember) {
       buttons = <div><IconButton text={counterpart.translate('TEAM_JOIN')} glyphIcon="glyphicon-share-alt" onClick={this.joinTeam.bind(this)}/></div>;
-    }else if(this.props.isTeamMember){
+    } else if (this.state.isTeamMember) {
       buttons = <div><IconButton text={counterpart.translate('TEAM_LEAVE')} glyphIcon="glyphicon-remove" onClick={this.createLeaveConfirmation.bind(this)}/></div>;
     }
 
@@ -112,7 +234,7 @@ export default class TeamDetails extends Component {
         <div className="imageDiv">
           <img src={teamImageUrl} alt="profile"/>
         </div>
-        <p className="teamName">{htmlDecode(this.props.team.teamName)}</p>
+        <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{htmlDecode(this.props.team.teamName)}</p>
         <div className="stats">
           <table>
             <tbody>
@@ -147,6 +269,7 @@ export default class TeamDetails extends Component {
           {buttons}
         </div>
         <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification"/>
       </div>
     );
   }

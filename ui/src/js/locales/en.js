@@ -7,12 +7,25 @@ module.exports = {
   USER_NOT_FOUND: "User not found.",
   INVALID_ACTIVATION_KEY: "The activation link is invalid.",
 
+  TEAM_NAME: "Team Name",
   TEAM_EDIT: "edit Team",
   TEAM_JOIN: "join Team",
   TEAM_LEAVE: "leave Team",
+  TEAM_DESCRIPTION: "Team description",
 
   TEAM_DELETE_CONFIRMATION_TITLE: "You are going to delete your team!",
   TEAM_LEAVE_CONFIRMATION_TITLE: "You are going to leave your team!",
 
-  ARE_YOU_SURE: "Are you sure you want to do this?"
+  TEAM_DELETED_TITLE: "Team deleted",
+  TEAM_DELETED_MESSAGE: "Your team was deleted.",
+
+  YOUR_ARE_ROUTED_TO_PROFILE: "You will routed to your profile now",
+  PAGE_WILL_RELOAD: "To affect the changes the page will reload now.",
+
+  EDIT_SUCCES_TITLE: "Changes adopted",
+  EDIT_SUCCES_MESSAGE: "Your changes were saved successfully.",
+
+  ARE_YOU_SURE: "Are you sure you want to do this?",
+
+  ERROR_OCCURED: "An error occured!"
 };
