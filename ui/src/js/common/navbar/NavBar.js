@@ -17,7 +17,7 @@ export default class NavBar extends Component {
   constructor() {
     super();
     this.state = {
-      profileLinksInActive: 'true',
+      isLoggedIn: false,
       language: (localStorage.getItem('language') == null
         ? 'DEUTSCH'
         : localStorage.getItem('language'))
@@ -25,7 +25,7 @@ export default class NavBar extends Component {
   }
 
   componentDidMount() {
-    this.setProfileLinkIsInActive();
+    this.isLoggedIn();
     localStorage.setItem('language', this.state.language);
   }
 
@@ -70,15 +70,15 @@ export default class NavBar extends Component {
 
   updateComponents() {
     this.props.reRender();
-    this.setProfileLinkIsInActive();
+    this.isLoggedIn();
     this.forceUpdate();
   }
 
-  setProfileLinkIsInActive() {
+  isLoggedIn() {
     if (localStorage.getItem('username') == null || localStorage.getItem('username') == '') {
-      this.setState({profileLinksInActive: 'true'});
+      this.setState({isLoggedIn: false});
     } else {
-      this.setState({profileLinksInActive: 'false'});
+      this.setState({isLoggedIn: true});
     }
   }
 
@@ -103,10 +103,10 @@ export default class NavBar extends Component {
         </Menu>
         <Menu ref="right" alignment="right">
           <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
-          <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Mein Profil</MenuItem>
-          <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Tools</MenuItem>
-          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Gutscheinübersicht</MenuItem>
-          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Spendenquittungen</MenuItem>
+          <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Mein Profil</MenuItem>
+          <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Tools</MenuItem>
+          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Gutscheinübersicht</MenuItem>
+          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Spendenquittungen</MenuItem>
           <BackOfficeMenuItem hash="/backOffice">Backoffice</BackOfficeMenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
