@@ -1,6 +1,11 @@
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 import axios from 'axios';
-import {browserHistory} from 'react-router';
+import {
+  browserHistory
+} from 'react-router';
+import Accounting from 'accounting';
 
 import Notification from '../components/Notification';
 import IconButton from '../components/IconButton';
@@ -11,20 +16,36 @@ export default class LoginMenuItem extends Component {
     this.state = {
       name: '',
       password: '',
-      loggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '')
+      loggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''),
+      userDetails: {
+        co2Data: {}
+      }
     };
   }
 
+  componentDidMount() {
+    if (localStorage.getItem('username') && localStorage.getItem('username') != '') {
+      this.loadUserDetails();
+    }
+  }
+
   updateName(e) {
-    this.setState({name: e.target.value})
+    this.setState({
+      name: e.target.value
+    })
   }
 
   updatePassword(e) {
-    this.setState({password: e.target.value})
+    this.setState({
+      password: e.target.value
+    })
   }
 
   showErrorMessageAndClearInputFields() {
-    this.setState({name: '', password: ''})
+    this.setState({
+      name: '',
+      password: ''
+    })
   }
 
   handleLogin(token) {
@@ -37,6 +58,7 @@ export default class LoginMenuItem extends Component {
       if (localStorage.getItem('language') != result) {
         that.props.updateLanguage(result);
       }
+      that.isAdmin();
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -48,15 +70,50 @@ export default class LoginMenuItem extends Component {
       }
     });
 
+  }
+
+  isAdmin() {
+    var that = this;
     var config = {
       headers: {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-
     axios.get('http://localhost:8081/isAdmin', config).then(function(response) {
       var result = response.data;
       localStorage.setItem('isAdmin', result);
+      that.setState({
+        loggedIn: true,
+        name: '',
+        password: ''
+      });
+      that.loadUserDetails();
+    }).catch(function(response) {
+      if (response instanceof Error) {
+        console.error('Error', response.message);
+      } else {
+        console.error(response.data);
+        console.error(response.status);
+        console.error(response.headers);
+        console.error(response.config);
+      }
+    });
+
+  }
+
+  loadUserDetails() {
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    axios.get('http://localhost:8081/user?userName=' + localStorage.getItem('username'), config).then(function(response) {
+      var result = response.data;
+      that.setState({
+        userDetails: result
+      });
+      localStorage.setItem('userDetails', JSON.stringify(result));
       that.props.updateNavbar();
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -68,9 +125,6 @@ export default class LoginMenuItem extends Component {
         console.error(response.config);
       }
     });
-
-    this.setState({loggedIn: true});
-    this.props.updateNavbar();
   }
 
   login() {
@@ -88,7 +142,10 @@ export default class LoginMenuItem extends Component {
     }).then(function(response) {
       that.handleLogin(response.headers['x-auth-token']);
     }.bind(this)).catch(function(response) {
-      that.setState({name: '', password: ''})
+      that.setState({
+        name: '',
+        password: ''
+      })
       that.refs.notification.addNotificationAtDifferentPos('Fehler!', 'Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuche Sie es noch einmal.', 'error', 'tr');
     });
   }
@@ -97,7 +154,12 @@ export default class LoginMenuItem extends Component {
     localStorage.setItem('jwt', '');
     localStorage.setItem('username', '');
     localStorage.setItem('isAdmin', false);
-    this.setState({name: '', password: '', loggedIn: false})
+    localStorage.setItem('userDetails', '');
+    this.setState({
+      name: '',
+      password: '',
+      loggedIn: false
+    })
     this.props.updateNavbar();
   }
 
@@ -108,12 +170,24 @@ export default class LoginMenuItem extends Component {
   render() {
     var content;
     if (this.state.loggedIn) {
-      content = <div>
+      let imageUrl = 'http://localhost:8081/user/image/' + this.state.userDetails.imageFileName + '/50/50'
+
+      content = <div className="login-user-details">
         <div>
-          <span>{localStorage.getItem('username')}</span>
+          <img src={imageUrl} alt="profile"/>
         </div>
-        <div className="buttonDiv">
-          <IconButton text="LOGOUT" glyphIcon="glyphicon-log-out" onClick={this.logout.bind(this)}/>
+        <div>
+          <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
+          <label>{localStorage.getItem('username')}</label>
+          <br/>
+          <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+          <label>{this.state.userDetails.co2Data.treesCount}</label>
+          <br/>
+          <span className="glyphicon glyphicon glyphicon-cloud" aria-hidden="true"></span>
+          <label>{Accounting.formatNumber(this.state.userDetails.co2Data.co2, 0, ".", ",")} tCO<sub>2</sub></label>
+        </div>
+        <div className="logout-div">
+          <a onClick={this.logout.bind(this)}>logout</a>
         </div>
       </div>;
     } else {
@@ -126,7 +200,7 @@ export default class LoginMenuItem extends Component {
         <div>
           <a role="button" onClick={() => {
             this.linkTo('/registration')
-          }}>Anmelden</a>&nbsp;&nbsp;<a role="button" onClick={() => {
+          }}>Anmelden</a><a role="button" onClick={() => {
         this.linkTo('/forgotPassword')
       }}>Passwort vergessen</a>
         </div>
