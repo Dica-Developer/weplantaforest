@@ -93,9 +93,15 @@ export default class NavBar extends Component {
         }
       });
     } else {
+      let userDetails;
+      if(localStorage.getItem('userDetails') && localStorage.getItem('userDetails') != ''){
+        userDetails = JSON.parse(localStorage.getItem('userDetails'));
+      }else{
+        userDetails = {co2Data: {}};
+      }
       this.setState({
         isLoggedIn: true,
-        userDetails: JSON.parse(localStorage.getItem('userDetails'))
+        userDetails: userDetails
       });
     }
   }

@@ -169,7 +169,7 @@ export default class LoginMenuItem extends Component {
 
   render() {
     var content;
-    if (this.state.loggedIn) {
+    if (localStorage.getItem('username') && localStorage.getItem('username') != '') {
       let imageUrl = 'http://localhost:8081/user/image/' + this.state.userDetails.imageFileName + '/50/50'
 
       content = <div className="login-user-details">
