@@ -9,6 +9,8 @@ import axios from 'axios';
 import {
   browserHistory
 } from 'react-router';
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
 
 import TeamDetails from './TeamDetails';
 import EditTeamDetails from './EditTeamDetails';
@@ -18,6 +20,7 @@ import RankingItem from '../common/ranking/RankingItem';
 import RankingItemContent from '../common/ranking/content/AmountProjectDate';
 import NoTreesAvailable from '../common/ranking/NoTreesAvailable';
 import Notification from '../common/components/Notification';
+import NotificationSystem from 'react-notification-system';
 
 require("./team.less");
 
@@ -36,8 +39,6 @@ export default class TeamPage extends Component {
       teamMember: {
         content: []
       },
-      isTeamAdmin: false,
-      isTeamMember: false,
       edit: false
     };
   }
@@ -67,7 +68,6 @@ export default class TeamPage extends Component {
       }
     });
     this.loadTeamMember();
-
   }
 
   loadTeamDetails() {
@@ -77,8 +77,6 @@ export default class TeamPage extends Component {
       that.setState({
         team: result
       });
-      that.checkIfTeamAdmin();
-      that.checkIfTeamMember();
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -97,55 +95,6 @@ export default class TeamPage extends Component {
       var result = response.data;
       that.setState({
         teamMember: result
-      });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
-  }
-
-  checkIfTeamAdmin() {
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.get('http://localhost:8081/team/isAdmin?teamId=' + this.state.team.teamId, config).then(function(response) {
-      var result = response.data;
-      that.setState({
-        isTeamAdmin: result
-      });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
-  }
-
-  checkIfTeamMember() {
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.get('http://localhost:8081/team/isMember?teamId=' + this.state.team.teamId, config).then(function(response) {
-      var result = response.data;
-      console.log(result);
-      that.setState({
-        isTeamMember: result
       });
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -194,72 +143,31 @@ export default class TeamPage extends Component {
     });
   }
 
-  deleteTeam() {
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.delete('http://localhost:8081/team/delete?teamId=' + this.state.team.teamId, config).then(function(response) {
-      that.refs.notification.addNotification('Team gelöscht', 'Dein Team wurde so eben gelöscht.', 'success');
-      // browserHistory.push('/')
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
-  }
-
-  joinTeam() {
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.post('http://localhost:8081/team/join?teamId=' + this.state.team.teamId, {}, config).then(function(response) {
-      that.refs.notification.addNotification('Team beigetreten', 'Du bist dem Team beigetreten.', 'success');
-      that.setState({isTeamMember: true});
-      that.loadTeamMember();
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
-  }
-
-  leaveTeam() {
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.post('http://localhost:8081/team/leave', {}, config).then(function(response) {
-      that.refs.notification.addNotification('Team verlassen', 'Du hast dein Team verlassen, deine Mitglieder werden dich vermissen.', 'success');
-      that.loadTeamMember();
-      that.setState({isTeamMember: false});
-      that.forceUpdate();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Team verlassen fehlgeschlagen', 'Beim verlassen des Teams ist ein Fehler aufgetreten, bitte versuche es noch einmal.', 'error');
-    });
-  }
-
   editTeam(value) {
     this.setState({
       edit: value
     })
+  }
+
+  createDeleteSuccessMessageAndSwitchToProfile() {
+    this.refs.notificationSystem.addNotification({
+      title: counterpart.translate('TEAM_DELETED_TITLE'),
+      position: 'tc',
+      autoDismiss: 0,
+      message: counterpart.translate('TEAM_DELETED_MESSAGE') + "\n" + counterpart.translate('YOUR_ARE_ROUTED_TO_PROFILE'),
+      level: 'success',
+      children: (
+        <div className="delete-confirmation align-center">
+              <button onClick={() => {
+                browserHistory.push('/user/' + localStorage.getItem('username'));
+              }}>OK</button>
+            </div>
+      )
+    });
+  }
+
+  createSuccessMessageAndReloadPage(teamName){
+    browserHistory.push('/team/' + teamName);
   }
 
   render() {
@@ -268,9 +176,9 @@ export default class TeamPage extends Component {
     var page = this.state.pageCount;
 
     if (this.state.edit) {
-      teamDetails = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}/>;
+      teamDetails = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)} teamNameChangedAction={this.createSuccessMessageAndReloadPage.bind(this)}/>;
     } else {
-      teamDetails = <TeamDetails team={this.state.team} isTeamAdmin={this.state.isTeamAdmin} isTeamMember={this.state.isTeamMember} deleteTeam={this.deleteTeam.bind(this)} editTeam={this.editTeam.bind(this)} joinTeam={this.joinTeam.bind(this)} leaveTeam={this.leaveTeam.bind(this)}/>;
+      teamDetails = <TeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} deleteAction={this.createDeleteSuccessMessageAndSwitchToProfile.bind(this)}/>;
     }
 
     if (this.state.newestPlantRanking.numberOfElements != 0) {
@@ -293,6 +201,20 @@ export default class TeamPage extends Component {
       treePart = <NoTreesAvailable/>;
     }
 
+    var style = {
+      Containers: {
+        DefaultStyle: {
+          zIndex: 11000
+        },
+        tc: {
+          top: '50%',
+          bottom: 'auto',
+          margin: '0 auto',
+          left: '50%'
+        }
+      }
+    };
+
     return (
       <div className="container paddingTopBottom15 teamPage">
         <div className="row details">
@@ -306,6 +228,7 @@ export default class TeamPage extends Component {
         <div className="row">
           {treePart}
         </div>
+        <NotificationSystem ref="notificationSystem" style={style}/>
         <Notification ref="notification"/>
       </div>
     );

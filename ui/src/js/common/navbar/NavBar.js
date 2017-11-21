@@ -1,11 +1,17 @@
-import React, {Component} from 'react';
-import {Link, browserHistory} from 'react-router';
+import React, {
+  Component
+} from 'react';
+import {
+  Link,
+  browserHistory
+} from 'react-router';
 
 import Menu from './Menu';
 import MenuItem from './MenuItem';
 import LanguageMenuItem from './LanguageMenuItem';
 import PlantBag from './PlantBag';
 import LoginMenuItem from './LoginMenuItem';
+import UserDetails from './UserDetails';
 import BackOfficeMenuItem from './BackOfficeMenuItem';
 import ImageButton from '../components/ImageButton';
 import axios from 'axios';
@@ -17,15 +23,18 @@ export default class NavBar extends Component {
   constructor() {
     super();
     this.state = {
-      profileLinksInActive: 'true',
-      language: (localStorage.getItem('language') == null
-        ? 'DEUTSCH'
-        : localStorage.getItem('language'))
+      isLoggedIn: false,
+      language: (localStorage.getItem('language') == null ?
+        'DEUTSCH' :
+        localStorage.getItem('language')),
+      userDetails: {
+        co2Data: {}
+      }
     }
   }
 
   componentDidMount() {
-    this.setProfileLinkIsInActive();
+    this.isLoggedIn();
     localStorage.setItem('language', this.state.language);
   }
 
@@ -46,13 +55,15 @@ export default class NavBar extends Component {
     this.refs["plantBag"].updatePlantBag(price, projectItems, projectName);
   }
 
-  resetPlantBag(){
+  resetPlantBag() {
     this.refs["plantBag"].resetPlantBag();
   }
 
   updateLanguage(value) {
     localStorage.setItem('language', value);
-    this.setState({language: value});
+    this.setState({
+      language: value
+    });
     if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '') {
       var config = {
         headers: {
@@ -69,16 +80,29 @@ export default class NavBar extends Component {
   }
 
   updateComponents() {
+    this.isLoggedIn();
     this.props.reRender();
-    this.setProfileLinkIsInActive();
-    this.forceUpdate();
   }
 
-  setProfileLinkIsInActive() {
+  isLoggedIn() {
     if (localStorage.getItem('username') == null || localStorage.getItem('username') == '') {
-      this.setState({profileLinksInActive: 'true'});
+      this.setState({
+        isLoggedIn: false,
+        userDetails: {
+          co2Data: {}
+        }
+      });
     } else {
-      this.setState({profileLinksInActive: 'false'});
+      let userDetails;
+      if(localStorage.getItem('userDetails') && localStorage.getItem('userDetails') != ''){
+        userDetails = JSON.parse(localStorage.getItem('userDetails'));
+      }else{
+        userDetails = {co2Data: {}};
+      }
+      this.setState({
+        isLoggedIn: true,
+        userDetails: userDetails
+      });
     }
   }
 
@@ -87,10 +111,24 @@ export default class NavBar extends Component {
   }
 
   render() {
+    let myForrestButton;
+    let userDetails;
+    if (this.state.isLoggedIn) {
+      myForrestButton = <div className="navbar-right myForrestDiv">
+        <ImageButton text="MEIN WALD" onClick={this.showRight.bind(this)} imagePath="/assets/images/MeinWald.png" imageWidth="29" imageHeight="25"/>
+      </div>;
+      userDetails = <UserDetails user={this.state.userDetails} updateNavbar={this.updateComponents.bind(this)}/>;
+    } else {
+      myForrestButton = '';
+      userDetails = <div className="user-details logged-out"> <a className="pull left" onClick={this.showRight.bind(this)}>Login</a>  <a className="pull right" onClick={() => {
+        this.linkTo('/registration')
+      }}>Anmelden</a></div>;
+    }
+
     return (
       <div>
         <Menu ref="left" alignment="left">
-          <MenuItem hash="/projects">Projekte</MenuItem>
+          <MenuItem hash="/projects">Projektübersicht</MenuItem>
           <MenuItem hash="/ranking">Bestenliste</MenuItem>
           <MenuItem hash="/certificate/find">Pflanzungen finden</MenuItem>
           <MenuItem hash={"/gift/redeem"}>Gutschein einlösen</MenuItem>
@@ -103,19 +141,17 @@ export default class NavBar extends Component {
         </Menu>
         <Menu ref="right" alignment="right">
           <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
-          <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Mein Profil</MenuItem>
-          <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Tools</MenuItem>
-          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Gutscheinübersicht</MenuItem>
-          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={this.state.profileLinksInActive}>Spendenquittungen</MenuItem>
+          <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Mein Profil</MenuItem>
+          <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Tools</MenuItem>
+          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Gutscheinübersicht</MenuItem>
+          <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Spendenquittungen</MenuItem>
           <BackOfficeMenuItem hash="/backOffice">Backoffice</BackOfficeMenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-left">
             <ImageButton text="MENÜ" onClick={this.showLeft.bind(this)} imagePath="/assets/images/Menu.png" imageWidth="20" imageHeight="20"/>
           </div>
-          <div className="navbar-right myForrestDiv">
-            <ImageButton text="MEIN WALD" onClick={this.showRight.bind(this)} imagePath="/assets/images/MeinWald.png" imageWidth="29" imageHeight="25"/>
-          </div>
+          {myForrestButton}
           <div className="container">
             <div className="navbar-left">
               <ImageButton text="" onClick={() => {
@@ -136,6 +172,7 @@ export default class NavBar extends Component {
               </div>
             </div>
             <div className="navbar-right">
+              {userDetails}
               <PlantBag updatePlantBag={this.updatePlantBag.bind(this)} ref="plantBag"/>
             </div>
           </div>

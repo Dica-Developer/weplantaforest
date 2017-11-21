@@ -6,10 +6,14 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
 
 import UserDetails from './UserDetails';
 import EditUserDetails from './edit/EditUserDetails';
-import TeamDetails from './TeamDetails';
+import CreateTeam from '../team/CreateTeam';
+import TeamDetails from '../team/TeamDetails';
+import EditTeamDetails from '../team/EditTeamDetails';
 import NoTeamAvailable from './NoTeamAvailable';
 import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
 import RankingItem from '../common/ranking/RankingItem';
@@ -28,6 +32,8 @@ export default class ProfilePage extends Component {
         co2Data: {}
       },
       editUser: false,
+      editTeam: false,
+      createTeam: false,
       team: {
         co2Data: {}
       },
@@ -52,21 +58,7 @@ export default class ProfilePage extends Component {
         user: result
       });
       if (that.state.user.teamName != '') {
-        axios.get('http://localhost:8081/team?teamName=' + that.state.user.teamName).then(function(response) {
-          var result = response.data;
-          that.setState({
-            team: result
-          });
-        }).catch(function(response) {
-          if (response instanceof Error) {
-            console.error('Error', response.message);
-          } else {
-            console.error(response.data);
-            console.error(response.status);
-            console.error(response.headers);
-            console.error(response.config);
-          }
-        });
+        that.loadTeamDetails();
       }
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -94,6 +86,27 @@ export default class ProfilePage extends Component {
         console.error(response.config);
       }
     });
+  }
+
+  loadTeamDetails() {
+    var that = this;
+    if (this.state.user.teamName && this.state.user.teamName != '') {
+      axios.get('http://localhost:8081/team?teamName=' + this.state.user.teamName).then(function(response) {
+        var result = response.data;
+        that.setState({
+          team: result
+        });
+      }).catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+      });
+    }
   }
 
   callNextPage() {
@@ -168,20 +181,40 @@ export default class ProfilePage extends Component {
     this.refs['navbar'].updateLanguage(value);
   }
 
-  leaveTeam() {
-    var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.post('http://localhost:8081/team/leave', {}, config).then(function(response) {
-      that.state.user.teamName = '';
-      that.refs.notification.addNotification('Team verlassen', 'Du hast dein Team verlassen, deine Mitglieder werden dich vermissen.', 'success');
-      that.forceUpdate();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Team verlassen fehlgeschlagen', 'Beim verlassen des Teams ist ein Fehler aufgetreten, bitte versuche es noch einmal.', 'error');
+  editTeam(value) {
+    this.setState({
+      editTeam: value
+    })
+    if (!value) {
+      this.reloadTeam();
+    }
+  }
+
+  switchTeamPartToNoTeam() {
+    this.state.user.teamName = '';
+    this.state.team = {co2Data: {}};
+    this.forceUpdate();
+    this.refs.notification.addNotification(counterpart.translate('TEAM_DELETED_TITLE'), counterpart.translate('TEAM_DELETED_MESSAGE'), 'success');
+  }
+
+  reloadTeam(teamName) {
+    this.state.user.teamName = teamName;
+    this.forceUpdate();
+    this.loadTeamDetails();
+  }
+
+  openCreateTeamPart() {
+    this.setState({
+      createTeam: true
     });
+  }
+
+  teamCreated(teamName) {
+    this.setState({
+      createTeam: false
+    });
+    this.reloadTeam(teamName);
+    this.refs.notification.addNotification(counterpart.translate('CREATE_TEAM_SUCCESS_TITLE'), counterpart.translate('CREATE_TEAM_SUCCESS_MESSAGE'), 'success');
   }
 
   render() {
@@ -197,11 +230,16 @@ export default class ProfilePage extends Component {
       userPart = <EditUserDetails user={this.state.user} showProfile={this.showProfile.bind(this)} updateLanguage={this.updateLanguage.bind(this)}/>;
     }
 
-    if (this.state.user.teamName != '') {
-      teamPart = <TeamDetails team={this.state.team} leaveTeam={this.leaveTeam.bind(this)}/>;
-    } else {
-      teamPart = <NoTeamAvailable/>;
+    if (this.state.user.teamName != '' && !this.state.editTeam) {
+      teamPart = <TeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} deleteAction={this.switchTeamPartToNoTeam.bind(this)}/>;
+    } else if (this.state.user.teamName != '' && this.state.editTeam) {
+      teamPart = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}  teamNameChangedAction={this.reloadTeam.bind(this)}/>;
+    } else if (this.state.user.teamName === '' && this.state.createTeam) {
+      teamPart = <CreateTeam teamCreatedAction={this.teamCreated.bind(this)}/>;
+    } else if (this.state.user.teamName === '' && !this.state.createTeam) {
+      teamPart = <NoTeamAvailable openCreateTeamPart={this.openCreateTeamPart.bind(this)}/>;
     }
+
     if (this.state.newestPlantRanking.numberOfElements != 0) {
       treePart = <LargeRankingContainer styleClass="ranking" callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.newestPlantRanking.first} isLastPage={this.state.newestPlantRanking.last}>
         {this.state.newestPlantRanking.content.map(function(content, i) {

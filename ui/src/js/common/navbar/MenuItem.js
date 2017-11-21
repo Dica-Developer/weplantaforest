@@ -13,7 +13,7 @@ export default class MenuItem extends Component {
 
   render() {
     var link;
-    if (this.props.inactive == 'true') {
+    if (this.props.inactive) {
       link = <span className="inactive">{this.props.children}</span>;
     } else {
       link = <a role="button" onClick={() => {

@@ -31,11 +31,15 @@ public class TeamService {
 
 	private @NonNull ImageHelper _imageHelper;
 
-	public Team createTeam(Team team, User user) throws IpatException {
+	public Team createTeam(Team team, Long userId) throws IpatException {
+	    User admin = _userRepository.findOne(userId);
 		boolean teamNameDoesNotExists = _teamRepository.findByName(team.getName()) == null;
 		IpatPreconditions.checkArgument(teamNameDoesNotExists, ErrorCodes.TEAM_NAME_ALREADY_EXISTS);
-		team.setAdmin(user);
+		team.setAdmin(admin);
+		team.setTimeStamp(System.currentTimeMillis());
 		_teamRepository.save(team);
+		admin.setTeam(team);
+		_userRepository.save(admin);
 		return team;
 	}
 
@@ -100,13 +104,15 @@ public class TeamService {
 	public void editTeam(Long teamId, String toEdit, String newEntry) {
 		Team team = _teamRepository.findOne(teamId);
 		switch (toEdit) {
-		case "descirption":
+		case "description":
 			team.setDescription(newEntry);
 			break;
-
+		case "name":
+		    team.setName(newEntry);
 		default:
 			break;
-		}
+		}		
 		_teamRepository.save(team);
 	}
+	
 }
