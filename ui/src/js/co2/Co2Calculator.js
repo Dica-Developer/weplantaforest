@@ -14,10 +14,13 @@ export default class Co2Calculator extends Component {
     super();
     this.state = {
       foodResult: 0,
-      foodMessage: 'Bitte füllen Sie alle Felder aus.',
+      foodMessage: 'Bitte füllen Sie alle Felder zur Berechnung aus.',
       mobilityResult: 0,
+      mobilityMessage: 'Bitte füllen Sie alle Felder zur Berechnung aus.',
       mobilityProduction: 0,
+      mobilityProductionMessage: 'Bitte füllen Sie alle Felder zur Berechnung aus.',
       flightResult: 0,
+      flightMessage: 'Bitte füllen Sie alle Felder zur Berechnung aus.',
       homeResult: 0,
       overallResult: 0,
     }
@@ -31,30 +34,27 @@ export default class Co2Calculator extends Component {
     var foodSaisonResult = parseFloat(this.refs["food-saison"].value);
     var foodBioResult = parseFloat(this.refs["food-bio"].value);
     var foodResult = feedingResult * foodAmountResult * foodLocalResult * foodFrozenResult * foodSaisonResult * foodBioResult;
-    if(isNaN(foodResult)){
-      foodResult = 0;
+    if(feedingResult !== 0 && foodAmountResult !== 0 && foodLocalResult !== 0 && foodFrozenResult !== 0 && foodSaisonResult !== 0 && foodBioResult !== 0){
+      this.setState({foodMessage: ''});
+      this.setState({foodResult: foodResult});
     }
-    this.setState({foodResult: foodResult});
   }
 
   calcMobilityResult() {
     var mobilityResult = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * parseFloat(this.refs["range"].value);
     var mobilityProduction = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * 30000;
-    if(isNaN(mobilityResult)){
-      mobilityResult = 0;
+    if(mobilityResult !== 0 && mobilityProduction !== 0) {
+      this.setState({mobilityMessage: '', mobilityProductionMessage: ''});
+      this.setState({mobilityResult: mobilityResult, mobilityProduction: mobilityProduction});
     }
-    if(isNaN(mobilityProduction)){
-      mobilityProduction = 0;
-    }
-    this.setState({mobilityResult: mobilityResult, mobilityProduction: mobilityProduction});
   }
 
   calcFlightResult() {
     var flightResult = 0.38 * parseFloat(this.refs["flight-range"].value);
-    if(isNaN(flightResult)){
-      flightResult = 0;
+    if(flightResult !== 0) {
+      this.setState({flightMessage: ''});
+      this.setState({flightResult: flightResult});
     }
-    this.setState({flightResult: flightResult});
   }
 
   calcHomeResult(){
@@ -166,9 +166,10 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
-              {Accounting.formatNumber(this.state.foodResult, 3, ".", ",")}
-              {" kg CO"}<sub>2</sub>
               {this.state.foodMessage}
+              {this.state.foodResult !== 0 &&
+                <span>{Accounting.formatNumber(this.state.foodResult, 3, ".", ",")} kg CO<sub>2</sub></span>
+              }
             </div>
           </div>
         </div>
@@ -213,9 +214,14 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
-              {Accounting.formatNumber(this.state.mobilityResult, 3, ".", ",")}
-              {" kg CO"}<sub>2</sub><br/> {Accounting.formatNumber(this.state.mobilityProduction, 3, ".", ",")}
-              {" kg CO"}<sub>2</sub>
+              {this.state.mobilityMessage}<br />
+              {this.state.mobilityProductionMessage}
+                {this.state.mobilityResult !== 0 &&
+                  <span>{Accounting.formatNumber(this.state.mobilityResult, 3, ".", ",")} kg CO<sub>2</sub></span>
+                }<br />
+                {this.state.mobilityProduction !== 0 &&
+                  <span>{Accounting.formatNumber(this.state.mobilityProduction, 3, ".", ",")} kg CO<sub>2</sub></span>
+                }
             </div>
           </div>
           <div className="col-md-6 item-align-start">
@@ -231,8 +237,10 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
-              {Accounting.formatNumber(this.state.flightResult, 3, ".", ",")}
-              {" kg CO"}<sub>2</sub>
+            {this.state.flightMessage}
+            {this.state.flightResult !== 0 &&
+              <span>{Accounting.formatNumber(this.state.flightResult, 3, ".", ",")} kg CO<sub>2</sub></span>
+            }
             </div>
           </div>
         </div>
