@@ -22,69 +22,75 @@ export default class Co2Calculator extends Component {
       flightResult: 0,
       flightMessage: 'Bitte füllen Sie alle Felder zur Berechnung aus.',
       homeResult: 0,
+      homeMessage: 'Bitte füllen Sie alle Felder zur Berechnung aus.',
       overallResult: 0,
+      overallMessage: '-'
     }
   }
 
   calcFoodResult() {
-    var feedingResult = parseFloat(this.refs["feeding"].value);
-    var foodAmountResult = parseFloat(this.refs["food-amount"].value);
-    var foodLocalResult = parseFloat(this.refs["food-local"].value);
-    var foodFrozenResult = parseFloat(this.refs["food-frozen"].value);
-    var foodSaisonResult = parseFloat(this.refs["food-saison"].value);
-    var foodBioResult = parseFloat(this.refs["food-bio"].value);
-    var foodResult = feedingResult * foodAmountResult * foodLocalResult * foodFrozenResult * foodSaisonResult * foodBioResult;
+    let feedingResult = parseFloat(this.refs["feeding"].value);
+    let foodAmountResult = parseFloat(this.refs["food-amount"].value);
+    let foodLocalResult = parseFloat(this.refs["food-local"].value);
+    let foodFrozenResult = parseFloat(this.refs["food-frozen"].value);
+    let foodSaisonResult = parseFloat(this.refs["food-saison"].value);
+    let foodBioResult = parseFloat(this.refs["food-bio"].value);
+    let foodResult = feedingResult * foodAmountResult * foodLocalResult * foodFrozenResult * foodSaisonResult * foodBioResult;
     if(feedingResult !== 0 && foodAmountResult !== 0 && foodLocalResult !== 0 && foodFrozenResult !== 0 && foodSaisonResult !== 0 && foodBioResult !== 0){
       this.setState({foodMessage: ''});
       this.setState({foodResult: foodResult});
+      this.calcOverallResult();
     }
   }
 
   calcMobilityResult() {
-    var mobilityResult = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * parseFloat(this.refs["range"].value);
-    var mobilityProduction = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * 30000;
+    let mobilityResult = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * parseFloat(this.refs["range"].value);
+    let mobilityProduction = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * 30000;
     if(mobilityResult !== 0 && mobilityProduction !== 0) {
       this.setState({mobilityMessage: '', mobilityProductionMessage: ''});
       this.setState({mobilityResult: mobilityResult, mobilityProduction: mobilityProduction});
+      this.calcOverallResult();
     }
   }
 
   calcFlightResult() {
-    var flightResult = 0.38 * parseFloat(this.refs["flight-range"].value);
+    let flightResult = 0.38 * parseFloat(this.refs["flight-range"].value);
     if(flightResult !== 0) {
       this.setState({flightMessage: ''});
       this.setState({flightResult: flightResult});
+      this.calcOverallResult();
     }
   }
 
   calcHomeResult(){
-    var houseTypeResult = parseFloat(this.refs["house-type"].value);
-    var livingSpaceResult = parseFloat(this.refs["living-space"].value);
-    var energyTypeResult = parseFloat(this.refs["energy-type"].value);
-    var houseMemberCountResult = parseFloat(this.refs["house-member-count"].value);
-    var powerTypeResult = parseFloat(this.refs["power-type"].value);
-    var powerConsumptionResult = parseFloat(this.refs["power-consumption"].value);
-    var homeResult = houseTypeResult * livingSpaceResult * energyTypeResult / houseMemberCountResult + powerTypeResult * powerConsumptionResult / houseMemberCountResult;
-/*     var homeResult = parseFloat(this.refs["house-type"].value) * parseFloat(this.refs["living-space"].value) * parseFloat(this.refs["energy-type"].value) / parseFloat(this.refs["house-member-count"].value) + parseFloat(this.refs["power-type"].value) * parseFloat(this.refs["power-consumption"].value) /  parseFloat(this.refs["house-member-count"].value); */
-
-    if(isNaN(homeResult)){
-      homeResult = 0;
+    let houseTypeResult = parseFloat(this.refs["house-type"].value);
+    let livingSpaceResult = parseFloat(this.refs["living-space"].value);
+    let energyTypeResult = parseFloat(this.refs["energy-type"].value);
+    let houseMemberCountResult = parseFloat(this.refs["house-member-count"].value);
+    let powerTypeResult = parseFloat(this.refs["power-type"].value);
+    let powerConsumptionResult = parseFloat(this.refs["power-consumption"].value);
+    let homeResult = houseTypeResult * livingSpaceResult * energyTypeResult / houseMemberCountResult + powerTypeResult * powerConsumptionResult / houseMemberCountResult;
+    if(houseTypeResult !== 0 && livingSpaceResult !== 0 && energyTypeResult !== 0 && houseMemberCountResult !== 0 && powerTypeResult !== 0 && powerConsumptionResult !== 0) {
+      this.setState({homeMessage: ''});
+      this.setState({homeResult: homeResult});
+      this.calcOverallResult();
     }
-    this.setState({homeResult: homeResult});
   }
 
   calcOverallResult(){
-    this.calcFoodResult();
-    this.calcMobilityResult();
-    this.calcFlightResult();
-    this.calcHomeResult();
-    this.forceUpdate();
-    this.state.overallResult = this.state.foodResult + this.state.mobilityResult + this.state.mobilityProduction + this.state.flightResult + this.state.homeResult;
-    this.forceUpdate();
+    let foodResult = parseFloat(this.state.foodResult);
+    let mobilityResult = parseFloat(this.state.mobilityResult);
+    let mobilityProduction = parseFloat(this.state.mobilityProduction);
+    let flightResult = parseFloat(this.state.flightResult);
+    let homeResult = parseFloat(this.state.homeResult);
+    let overallResult = foodResult + mobilityResult + mobilityProduction + flightResult + homeResult;
+    if(overallResult !== 0) {
+      this.setState({overallMessage: ''});
+      this.setState({overallResult: overallResult});      
+    }
   }
 
   render() {
-    var result1 = 0;
     return (
       <div className="container paddingTopBottom15 co2Calculator">
         <div className="row">
@@ -237,10 +243,10 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
-            {this.state.flightMessage}
-            {this.state.flightResult !== 0 &&
-              <span>{Accounting.formatNumber(this.state.flightResult, 3, ".", ",")} kg CO<sub>2</sub></span>
-            }
+              {this.state.flightResult}
+              {this.state.flightMessage !== 0 &&
+                <span>{Accounting.formatNumber(this.state.flightResult, 3, ".", ",")} kg CO<sub>2</sub></span>
+              }
             </div>
           </div>
         </div>
@@ -252,7 +258,7 @@ export default class Co2Calculator extends Component {
             <p>In welcher Hausart wohnst Du?</p>
           </div>
           <div className="col-md-6 item-align-start">
-            <select className="form-control" ref="house-type" defaultValue={0}>
+            <select className="form-control" ref="house-type" defaultValue={0} onChange={this.calcHomeResult.bind(this)}>
               <option value={0}>bitte auswählen</option>
               <option value={280}>Einfamilienhaus unsaniert</option>
               <option value={170}>Einfamilienhaus saniert</option>
@@ -269,7 +275,7 @@ export default class Co2Calculator extends Component {
             <p>Welchen Energieträger nutzt Du?</p>
           </div>
           <div className="col-md-6 item-align-start">
-            <select className="form-control" ref="energy-type" defaultValue={0}>
+            <select className="form-control" ref="energy-type" defaultValue={0} onChange={this.calcHomeResult.bind(this)}>
               <option value={0}>bitte auswählen</option>
               <option value={0.13}>Fernwärme</option>
               <option value={0.24}>Gas</option>
@@ -283,13 +289,13 @@ export default class Co2Calculator extends Component {
             <p>Wohnfläche in m²:*</p>
           </div>
           <div className="col-md-6 item-align-start">
-            <input className="form-control" ref="living-space" type="text"></input>
+            <input className="form-control" ref="living-space" type="text" placeholder="Bitte geben Sie die Wohnfläche ein." onBlur={this.calcHomeResult.bind(this)}></input>
           </div>
           <div className="col-md-6 item-align-start">
             <p>Wieviele Personen leben in dem Haushalt?</p>
           </div>
           <div className="col-md-6 item-align-start">
-            <select className="form-control" ref="house-member-count" defaultValue={0}>
+            <select className="form-control" ref="house-member-count" defaultValue={0} onChange={this.calcHomeResult.bind(this)}>
               <option value={0}>bitte auswählen</option>
               <option value={1}>1</option>
               <option value={1.55}>2</option>
@@ -303,7 +309,7 @@ export default class Co2Calculator extends Component {
             <p>Welche Stromart benutzt Du?</p>
           </div>
           <div className="col-md-6 item-align-start">
-            <select className="form-control" ref="power-type" defaultValue={0}>
+            <select className="form-control" ref="power-type" defaultValue={0} onChange={this.calcHomeResult.bind(this)}>
               <option value={0}>bitte auswählen</option>
               <option value={0.04}>Ökostrom</option>
               <option value={0.59}>Strommix</option>
@@ -313,34 +319,32 @@ export default class Co2Calculator extends Component {
             <p>Stromverbrauch in kWh:*</p>
           </div>
           <div className="col-md-6 item-align-start">
-            <input className="form-control" ref="power-consumption" type="text"></input>
+            <input className="form-control" ref="power-consumption" type="text" placeholder="Bitte geben Sie den Stromverbrauch ein." onBlur={this.calcHomeResult.bind(this)}></input>
           </div>
           <div className="col-md-6 item-align-start results">
-            <div className={this.state.homeResult != 0
-              ? "bold"
-              : "no-display"}>
+            <div className="bold">
               {"Ergebnis:"}
             </div>
           </div>
           <div className="col-md-6 item-align-start results">
-            <div className={this.state.homeResult != 0
-              ? "bold"
-              : "no-display"}>
-              {Accounting.formatNumber(this.state.homeResult, 3, ".", ",")}
-              {" kg CO"}<sub>2</sub>
+            <div className="bold">
+              {this.state.homeMessage}
+              {this.state.homeResult !== 0 &&
+                <span>{Accounting.formatNumber(this.state.homeResult, 3, ".", ",")} kg CO<sub>2</sub></span>
+              }
             </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row overall-result">
           <div className="col-md-12 item-align-start">
             <h3>Gesamtergebnis</h3>
           </div>
           <div className="col-md-12 item-align-start results">
-            <div className={this.state.homeResult != 0
-              ? "bold overall-result"
-              : "no-display"}>
-              {Accounting.formatNumber(this.state.overallResult, 3, ".", ",")}
-              {" kg CO"}<sub>2</sub>
+            <div className="bold">
+              {this.state.overallMessage}
+              {this.state.overallResult !== 0 &&
+                <span>{Accounting.formatNumber(this.state.overallResult, 3, ".", ",")} kg CO<sub>2</sub></span>
+              }
             </div>
           </div>
         </div>
