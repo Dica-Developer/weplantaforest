@@ -1,5 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
@@ -36,9 +40,10 @@ export default class Co2Calculator extends Component {
     let foodSaisonResult = parseFloat(this.refs["food-saison"].value);
     let foodBioResult = parseFloat(this.refs["food-bio"].value);
     let foodResult = feedingResult * foodAmountResult * foodLocalResult * foodFrozenResult * foodSaisonResult * foodBioResult;
-    if(feedingResult !== 0 && foodAmountResult !== 0 && foodLocalResult !== 0 && foodFrozenResult !== 0 && foodSaisonResult !== 0 && foodBioResult !== 0){
-      this.setState({foodMessage: ''});
-      this.setState({foodResult: foodResult});
+    if (feedingResult !== 0 && foodAmountResult !== 0 && foodLocalResult !== 0 && foodFrozenResult !== 0 && foodSaisonResult !== 0 && foodBioResult !== 0) {
+      this.state.foodMessage = '';
+      this.state.foodResult = foodResult;
+      this.forceUpdate();
       this.calcOverallResult();
     }
   }
@@ -46,47 +51,57 @@ export default class Co2Calculator extends Component {
   calcMobilityResult() {
     let mobilityResult = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * parseFloat(this.refs["range"].value);
     let mobilityProduction = 0.01 * parseFloat(this.refs["fuel"].value) * parseFloat(this.refs["consumption"].value) * 30000;
-    if(mobilityResult !== 0 && mobilityProduction !== 0) {
-      this.setState({mobilityMessage: '', mobilityProductionMessage: ''});
-      this.setState({mobilityResult: mobilityResult, mobilityProduction: mobilityProduction});
+    if (mobilityResult !== 0 && mobilityProduction !== 0) {
+      this.state.mobilityMessage = '';
+      this.state.mobilityProductionMessage = '';
+      this.state.mobilityResult = mobilityResult;
+      this.state.mobilityProduction = mobilityProduction;
+      this.forceUpdate();
       this.calcOverallResult();
     }
   }
 
   calcFlightResult() {
     let flightResult = 0.38 * parseFloat(this.refs["flight-range"].value);
-    if(flightResult !== 0) {
-      this.setState({flightMessage: ''});
-      this.setState({flightResult: flightResult});
+    if (flightResult !== 0) {
+      this.state.flightMessage = '';
+      this.state.flightResult = flightResult;
+      this.forceUpdate();
       this.calcOverallResult();
     }
   }
 
-  calcHomeResult(){
+  calcHomeResult() {
     let houseTypeResult = parseFloat(this.refs["house-type"].value);
     let livingSpaceResult = parseFloat(this.refs["living-space"].value);
     let energyTypeResult = parseFloat(this.refs["energy-type"].value);
     let houseMemberCountResult = parseFloat(this.refs["house-member-count"].value);
     let powerTypeResult = parseFloat(this.refs["power-type"].value);
     let powerConsumptionResult = parseFloat(this.refs["power-consumption"].value);
+
     let homeResult = houseTypeResult * livingSpaceResult * energyTypeResult / houseMemberCountResult + powerTypeResult * powerConsumptionResult / houseMemberCountResult;
-    if(houseTypeResult !== 0 && livingSpaceResult !== 0 && energyTypeResult !== 0 && houseMemberCountResult !== 0 && powerTypeResult !== 0 && powerConsumptionResult !== 0) {
-      this.setState({homeMessage: ''});
-      this.setState({homeResult: homeResult});
+    if (!isNaN(houseTypeResult) && !isNaN(livingSpaceResult)  && !isNaN(energyTypeResult)  && !isNaN(houseMemberCountResult) && !isNaN(powerTypeResult) && !isNaN(powerConsumptionResult)) {
+      this.state.homeMessage = '';
+      this.state.homeResult = homeResult;
+      this.forceUpdate();
       this.calcOverallResult();
     }
   }
 
-  calcOverallResult(){
+  calcOverallResult() {
     let foodResult = parseFloat(this.state.foodResult);
     let mobilityResult = parseFloat(this.state.mobilityResult);
     let mobilityProduction = parseFloat(this.state.mobilityProduction);
     let flightResult = parseFloat(this.state.flightResult);
     let homeResult = parseFloat(this.state.homeResult);
     let overallResult = foodResult + mobilityResult + mobilityProduction + flightResult + homeResult;
-    if(overallResult !== 0) {
-      this.setState({overallMessage: ''});
-      this.setState({overallResult: overallResult});      
+    if (overallResult !== 0) {
+      this.setState({
+        overallMessage: ''
+      });
+      this.setState({
+        overallResult: overallResult
+      });
     }
   }
 
@@ -319,7 +334,7 @@ export default class Co2Calculator extends Component {
             <p>Stromverbrauch in kWh:*</p>
           </div>
           <div className="col-md-6 item-align-start">
-            <input className="form-control" ref="power-consumption" type="text" placeholder="Bitte geben Sie den Stromverbrauch ein." onBlur={this.calcHomeResult.bind(this)}></input>
+            <input className="form-control" ref="power-consumption" placeholder="Bitte geben Sie den Stromverbrauch ein." onBlur={this.calcHomeResult.bind(this)}></input>
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
