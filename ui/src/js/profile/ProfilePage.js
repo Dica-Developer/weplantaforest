@@ -192,7 +192,9 @@ export default class ProfilePage extends Component {
 
   switchTeamPartToNoTeam() {
     this.state.user.teamName = '';
-    this.state.team = {co2Data: {}};
+    this.state.team = {
+      co2Data: {}
+    };
     this.forceUpdate();
     this.refs.notification.addNotification(counterpart.translate('TEAM_DELETED_TITLE'), counterpart.translate('TEAM_DELETED_MESSAGE'), 'success');
   }
@@ -217,6 +219,10 @@ export default class ProfilePage extends Component {
     this.refs.notification.addNotification(counterpart.translate('CREATE_TEAM_SUCCESS_TITLE'), counterpart.translate('CREATE_TEAM_SUCCESS_MESSAGE'), 'success');
   }
 
+  teamLeft(){
+    this.state.user.teamName = ''; this.forceUpdate();
+  }
+
   render() {
     var that = this;
     var userPart;
@@ -231,7 +237,7 @@ export default class ProfilePage extends Component {
     }
 
     if (this.state.user.teamName != '' && !this.state.editTeam) {
-      teamPart = <TeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} deleteAction={this.switchTeamPartToNoTeam.bind(this)}/>;
+      teamPart = <TeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} deleteAction={this.switchTeamPartToNoTeam.bind(this)} loadTeamMember={this.teamLeft.bind(this)}/>;
     } else if (this.state.user.teamName != '' && this.state.editTeam) {
       teamPart = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}  teamNameChangedAction={this.reloadTeam.bind(this)}/>;
     } else if (this.state.user.teamName === '' && this.state.createTeam) {

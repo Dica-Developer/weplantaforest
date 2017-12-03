@@ -176,9 +176,9 @@ export default class TeamPage extends Component {
     var page = this.state.pageCount;
 
     if (this.state.edit) {
-      teamDetails = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)} teamNameChangedAction={this.createSuccessMessageAndReloadPage.bind(this)}/>;
+      teamDetails = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)} teamNameChangedAction={this.createSuccessMessageAndReloadPage.bind(this)} />;
     } else {
-      teamDetails = <TeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} deleteAction={this.createDeleteSuccessMessageAndSwitchToProfile.bind(this)}/>;
+      teamDetails = <TeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} deleteAction={this.createDeleteSuccessMessageAndSwitchToProfile.bind(this)} loadTeamMember={this.loadTeamMember.bind(this)}/>;
     }
 
     if (this.state.newestPlantRanking.numberOfElements != 0) {

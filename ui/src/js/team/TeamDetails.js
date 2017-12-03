@@ -132,7 +132,7 @@ export default class TeamDetails extends Component {
       that.setState({
         isTeamMember: true
       });
-      that.loadTeamMember();
+      that.props.loadTeamMember();
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -154,12 +154,13 @@ export default class TeamDetails extends Component {
     };
     axios.post('http://localhost:8081/team/leave', {}, config).then(function(response) {
       that.refs.notification.addNotification('Team verlassen', 'Du hast dein Team verlassen, deine Mitglieder werden dich vermissen.', 'success');
-      that.loadTeamMember();
+      that.props.loadTeamMember();
       that.setState({
         isTeamMember: false
       });
       that.forceUpdate();
     }).catch(function(response) {
+      console.error(response);
       that.refs.notification.addNotification('Team verlassen fehlgeschlagen', 'Beim verlassen des Teams ist ein Fehler aufgetreten, bitte versuche es noch einmal.', 'error');
     });
   }
