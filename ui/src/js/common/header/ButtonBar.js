@@ -3,7 +3,7 @@ import {Link, browserHistory} from 'react-router';
 import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
 
-import ImageButton from '../components/ImageButton';
+import SvgButton from '../components/SvgButton';
 
 export default class ButtonBar extends Component {
 
@@ -18,17 +18,17 @@ export default class ButtonBar extends Component {
   render() {
     return (
       <div className="buttonBar">
-        <ImageButton text={counterpart.translate('buttonbar.plant_self')} onClick={() => {
+        <SvgButton text={counterpart.translate('buttonbar.plant_self')} buttonType="shovel" onClick={() => {
           this.linkTo('/selfPlant')
-        }} imagePath="/assets/images/Spaten.png" imageWidth="35" imageHeight="35"/>
+        }} />
         <br/>
-        <ImageButton text={counterpart.translate('buttonbar.plant_online')} onClick={() => {
+        <SvgButton text={counterpart.translate('buttonbar.plant_online')} buttonType="mouse" onClick={() => {
           this.linkTo('/plant/5')
-        }} imagePath="/assets/images/Maus.png" imageWidth="35" imageHeight="35"/>
+        }} />
         <br/>
-        <ImageButton text={counterpart.translate('buttonbar.tree_service')} onClick={() => {
+        <SvgButton text={counterpart.translate('buttonbar.tree_service')} buttonType="secateurs" onClick={() => {
           this.linkTo('/plant')
-        }} imagePath="/assets/images/Schere.png" imageWidth="35" imageHeight="35"/>
+        }} />
       </div>
     );
   }

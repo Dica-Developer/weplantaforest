@@ -1,0 +1,31 @@
+.svgButton {
+  display: inline-block;
+  position: relative;
+  padding: 5px 10px 5px 10px;
+  p {
+    display: inline-block;
+    margin: 2px 0px 0px 40px;
+    padding: 7px 0px 7px 0px;
+  }
+  a,
+  a:active,
+  a:visited {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    svg {
+      position: absolute;
+      display: inline-block;
+      fill: #fff;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    a {
+      color: #82ab1f;
+      svg {
+        fill: #82ab1f;
+      }
+    }
+  }
+}
