@@ -5,7 +5,7 @@ import Accounting from 'accounting';
 import {Link} from 'react-router';
 
 import IconButton from '../../common/components/IconButton';
-import ImageButton from '../../common/components/ImageButton';
+import SvgButton from '../../common/components/SvgButton';
 import ProjectSlider from './ProjectSlider';
 import ArticleSlider from './ArticleSlider';
 
@@ -195,7 +195,7 @@ export default class ProjectPlanting extends Component {
                   <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.price / 100, 2, ".", ",")}&nbsp;€</span>
                 </td>
                 <td>
-                  <ImageButton text="AB IN MEINEN<br/>PFLANZKORB" onClick={this.updatePlantBag.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="72" imageHeight="40"/>
+                  <SvgButton text="AB IN MEINEN<br/>PFLANZKORB" buttonType="barrow" onClick={this.updatePlantBag.bind(this)} />
                 </td>
               </tr>
             </tbody>

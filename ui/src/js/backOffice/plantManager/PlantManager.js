@@ -7,7 +7,7 @@ import Accounting from 'accounting';
 import ReactDataGrid from 'react-data-grid';
 import {Toolbar, Data} from 'react-data-grid';
 
-import ImageButton from '../../common/components/ImageButton';
+import SvgButton from '../../common/components/SvgButton';
 import Notification from '../../common/components/Notification';
 import BottomPart from '../../planting/BottomPart';
 import Project from '../../planting/customPlantPage/Project';
@@ -144,7 +144,7 @@ export default class PlantManager extends Component {
             <div className="price">
               <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice / 100, 2, ".", ",")}&nbsp;€</span>
             </div>
-            <ImageButton text="PFLANZEN" onClick={this.plantForUser.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="50" imageHeight="25"/>
+            <SvgButton text="PFLANZEN" buttonType="barrow" onClick={this.plantForUser.bind(this)} />
           </div>
         </div>
         <Notification ref="notification"/>

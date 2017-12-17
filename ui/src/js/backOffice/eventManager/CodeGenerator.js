@@ -7,7 +7,7 @@ import Accounting from 'accounting';
 import {
   getConfig
 } from '../../common/RestHelper';
-import ImageButton from '../../common/components/ImageButton';
+import SvgButton from '../../common/components/SvgButton';
 import Project from '../../planting/customPlantPage/Project';
 import Notification from '../../common/components/Notification';
 
@@ -161,7 +161,7 @@ export default class CodeGenerator extends Component {
             <div className="price">
               <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice / 100, 2, ".", ",")}&nbsp;€</span>
             </div>
-            <ImageButton text="CODES GENERIEREN" onClick={this.generateCodes.bind(this)} imagePath="/assets/images/Schubkarre_braun.png" imageWidth="50" imageHeight="25"/>
+            <SvgButton text="CODES GENERIEREN" buttonType="barrow" onClick={this.generateCodes.bind(this)} />
           </div>
         </div>
         <Notification ref="notification"/>
