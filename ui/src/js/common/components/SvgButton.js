@@ -48,7 +48,7 @@ export default class svgButton extends Component {
     }
     if (buttonType === 'trees') {
       buttonSvg =
-      <svg width="35" height="35" viewBox="0 0 150 128">
+      <svg width="29" height="25" viewBox="0 0 150 128">
       <title>Wald</title>
         <g transform="matrix(1,0,0,1,-17.5023,-28.8185)">
           <g transform="matrix(0.913495,0,0,0.913495,9.82892,8.01363)">
@@ -70,7 +70,7 @@ export default class svgButton extends Component {
     }
     if (buttonType === 'hamburger') {
       buttonSvg =
-      <svg width="35" height="35" viewBox="0 0 70 50">
+      <svg width="20" height="20" viewBox="0 0 70 50">
       <title>Hamburger Menu</title>
         <g transform="matrix(1,0,0,1,-10.5,-20.5)">
           <g transform="matrix(2.5,0,0,2.5,5.5,5.5)">
