@@ -78,14 +78,26 @@ export default class Overview extends Component {
 
         // Make a call to the REST api to execute the payment
         return actions.payment.execute().then(function(response) {
-          //TODO: map relevant attributes into paymentData Object
-          //response.payer
-          //response.transactions[0].related_resources[0].sale.id
-          console.log(response);
-          // window.alert('Payment Complete!');
-          // that.refs.notification.addNotification('Zahlung erfolgreich abgeschlossen!', 'Vielen Dank für deine Spende.', 'success');
-          // that.props.resetPlantBag();
-          axios.post('http://localhost:8081/submitPaypalPlantBag?cartId=' + that.props.cartId, {}, {}).then(function(response) {
+          let paymentData = {
+            cartId: that.props.cartId,
+            giftId: that.props.giftId,
+            company: '',
+            companyAddon: '',
+            salutation: '',
+            title: '',
+            forename: response.payer.payer_info.first_name,
+            name: response.payer.payer_info.last_name,
+            street: response.payer.payer_info.shipping_address.line1 + response.payer.payer_info.shipping_address.line2,
+            country: response.payer.payer_info.shipping_address.country_code,
+            city: response.payer.payer_info.shipping_address.city,
+            zip: response.payer.payer_info.shipping_address.postal_code,
+            mail: response.payer.payer_info.email,
+            comment: '',
+            paymentMethod: 'PP',
+            transactionId: response.transactions[0].related_resources[0].sale.id
+          };
+
+          axios.post('http://localhost:8081/submitPaypalPlantBag', paymentData, {}).then(function(response) {
             that.refs.notification.addNotification('Zahlung erfolgreich abgeschlossen!', 'Vielen Dank für deine Spende.', 'success');
             that.props.resetPlantBag();
           }).catch(function(response) {

@@ -29,6 +29,7 @@ public class PaymentData {
     String comment;
     
     String paymentMethod;
+    String transactionId;
     String iban;
     String bic;
     
