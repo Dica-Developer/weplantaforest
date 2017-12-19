@@ -89,5 +89,23 @@ public class PaymentController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+    
+    @RequestMapping(value = Uris.SUBMIT_PAYPAL_PAYED_PLANTBAG, method = RequestMethod.POST)
+    public ResponseEntity<?> submitPaypalPayedPlantBag(@RequestParam long cartId) throws IpatException{
+        Cart cartToSubmit = _cartRepository.findOne(cartId);
+        IpatPreconditions.checkNotNull(cartToSubmit, ErrorCodes.CART_IS_NULL);
+        cartToSubmit.setCartState(CartState.CALLBACK);
+        cartToSubmit.setCallBackZahlungsart("PP");
+        _cartRepository.save(cartToSubmit);
+        if (cartToSubmit.getCode() != null) {
+            Gift giftToSubmit = _giftRepository.findGiftByCode(cartToSubmit.getCode()
+                                                                           .getCode());
+            giftToSubmit.setStatus(Status.UNREDEEMED);
+            _giftRepository.save(giftToSubmit);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    
 
 }

@@ -130,6 +130,8 @@ public class Uris {
     public final static String VALIDATE_CC_DATA = "/validateCC";
     
     public final static String SUBMIT_CC_PAYED_PLANTBAG = "/submitPlantBag";
+    
+    public final static String SUBMIT_PAYPAL_PAYED_PLANTBAG = "/submitPaypalPlantBag";
 
     public final static String PAYMENT_SUCCESS = "/payment/success";
 
