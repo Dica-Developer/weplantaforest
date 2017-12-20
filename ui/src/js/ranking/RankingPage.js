@@ -139,7 +139,7 @@ export default class RankingPage extends Component {
           </div>
           <div className="row">
             <div ref="ranking" className={"col-md-12 rankingItems"}>
-              <h2>Bestenliste&nbsp;/&nbsp;{this.state.orgTypeDesc}</h2>
+              <h1>Beste Unternehmen&nbsp;/&nbsp;{this.state.orgTypeDesc}</h1>
               {this.state.ranking.content.map(function(content, i) {
                 if (i == 0) {
                   maxTree = content.amount;

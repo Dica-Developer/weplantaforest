@@ -36,7 +36,7 @@ export default class ButtonBar extends Component {
       <div className="buttonBar">
         <IconButton text="ALLE" onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward"/>
         <IconButton text="PRIVAT" onClick={() => {
-          this.loadOrgTypeRanking('PRIVATE', 'PrivatPersonen')
+          this.loadOrgTypeRanking('PRIVATE', 'Beste Privatpersonen')
           }}  glyphIcon="glyphicon-forward"/>
         <IconButton text="FIRMEN" onClick={() => {
           this.loadOrgTypeRanking('COMMERCIAL', 'Firmen')

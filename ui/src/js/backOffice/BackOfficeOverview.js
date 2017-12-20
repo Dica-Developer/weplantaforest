@@ -55,7 +55,7 @@ export default class BackOfficeOverview extends Component {
       <div className="container paddingTopBottom15 backOfficeOverview">
           <div className="row ">
             <div className="col-md-12">
-              <h2>Backoffice</h2>
+              <h1>Backoffice</h1>
             </div>
           </div>
           <div className="row ">
