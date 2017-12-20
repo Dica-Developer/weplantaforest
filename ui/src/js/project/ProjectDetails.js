@@ -86,7 +86,7 @@ export default class ProjectDetails extends Component {
             __html: getTextForSelectedLanguage(this.props.project.projectReportData.description)
           }}/>
         </div>
-        <div className="align-center">
+        <div className="align-center spacing">
           {plantButton}
         </div>
       </div>
