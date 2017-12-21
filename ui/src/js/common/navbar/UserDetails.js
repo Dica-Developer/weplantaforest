@@ -7,7 +7,6 @@ import LanguageMenuItem from './LanguageMenuItem';
 import PlantBag from './PlantBag';
 import LoginMenuItem from './LoginMenuItem';
 import BackOfficeMenuItem from './BackOfficeMenuItem';
-import ImageButton from '../components/ImageButton';
 import axios from 'axios';
 
 require("./userDetails.less");

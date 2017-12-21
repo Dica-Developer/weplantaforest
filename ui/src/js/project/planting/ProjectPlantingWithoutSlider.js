@@ -6,7 +6,6 @@ import {Link} from 'react-router';
 import axios from 'axios';
 
 import IconButton from '../../common/components/IconButton';
-import ImageButton from '../../common/components/ImageButton';
 
 import PlantProposal from './PlantProposal';
 import PlantCustom from './PlantCustom';
