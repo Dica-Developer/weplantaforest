@@ -5,7 +5,6 @@ import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
 
-import ImageButton from '../../common/components/ImageButton';
 import IconButton from '../../common/components/IconButton';
 
 import ButtonBar from '../ButtonBar';

@@ -13,7 +13,7 @@ import PlantBag from './PlantBag';
 import LoginMenuItem from './LoginMenuItem';
 import UserDetails from './UserDetails';
 import BackOfficeMenuItem from './BackOfficeMenuItem';
-import ImageButton from '../components/ImageButton';
+import SvgButton from '../components/SvgButton';
 import axios from 'axios';
 
 require("./navbar.less");
@@ -115,7 +115,7 @@ export default class NavBar extends Component {
     let userDetails;
     if (this.state.isLoggedIn) {
       myForrestButton = <div className="navbar-right myForrestDiv">
-        <ImageButton text="MEIN WALD" onClick={this.showRight.bind(this)} imagePath="/assets/images/MeinWald.png" imageWidth="29" imageHeight="25"/>
+        <SvgButton text="MEIN WALD" buttonType="trees" onClick={this.showRight.bind(this)} />
       </div>;
       userDetails = <UserDetails user={this.state.userDetails} updateNavbar={this.updateComponents.bind(this)}/>;
     } else {
@@ -149,26 +149,26 @@ export default class NavBar extends Component {
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-left">
-            <ImageButton text="MENÜ" onClick={this.showLeft.bind(this)} imagePath="/assets/images/Menu.png" imageWidth="20" imageHeight="20"/>
+            <SvgButton text="MENÜ" buttonType="hamburger" onClick={this.showLeft.bind(this)} />
           </div>
           {myForrestButton}
           <div className="container">
             <div className="navbar-left">
-              <ImageButton text="" onClick={() => {
+              <SvgButton text="" buttonType="ipatlogo" onClick={() => {
                 this.linkTo('/')
-              }} imagePath="/assets/images/ipat_logo.png" imageWidth="35" imageHeight="35"/>
+              }} />
             </div>
             <div className="collapse navbar-collapse" id="navbarLinkBar">
               <div className="navbar-left">
-                <ImageButton text="" onClick={() => {
+                <SvgButton text="" buttonType="shovel" onClick={() => {
                   this.linkTo('/selfPlant')
-                }} imagePath="/assets/images/Spaten.png" imageWidth="35" imageHeight="35"/>
-                <ImageButton text="" onClick={() => {
+                }} />
+                <SvgButton text="" buttonType="mouse" onClick={() => {
                   this.linkTo('/plant/5')
-                }} imagePath="/assets/images/Maus.png" imageWidth="35" imageHeight="35"/>
-                <ImageButton text="" onClick={() => {
+                }} />
+                <SvgButton text="" buttonType="secateurs" onClick={() => {
                   this.linkTo('/plant')
-                }} imagePath="/assets/images/Schere.png" imageWidth="42" imageHeight="35"/>
+                }} />
               </div>
             </div>
             <div className="navbar-right">

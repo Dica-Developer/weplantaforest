@@ -5,7 +5,7 @@ import Accounting from 'accounting';
 import PieChart from 'react-simple-pie-chart';
 import {Link} from 'react-router';
 
-import ImageButton from '../common/components/ImageButton';
+import SvgButton from '../common/components/SvgButton';
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
 export default class ProjectDetails extends Component {
@@ -37,7 +37,7 @@ export default class ProjectDetails extends Component {
     }
 
     if (this.props.project.projectReportData.active) {
-      plantButton = <ImageButton text="HIER PFLANZEN" onClick={this.props.showPlanting.bind(this)} imagePath="/assets/images/Maus.png" imageWidth="35" imageHeight="35"/>;
+      plantButton = <SvgButton text="HIER PFLANZEN" buttonType="mouse" onClick={this.props.showPlanting.bind(this)} />;
     } else {
       plantButton = '';
     }
