@@ -36,17 +36,17 @@ export default class Overview extends Component {
         shape: 'rect', // pill | rect
         color: 'silver', // gold | blue | silver | black
         tagline: false,
-        fundingicons: false, // optional
+        fundingicons: true, // optional
       },
       // Options:
       // - paypal.FUNDING.CARD
       // - paypal.FUNDING.CREDIT
       // - paypal.FUNDING.ELV
 
-      // funding: {
-      //   allowed: [paypal.FUNDING.CARD, paypal.FUNDING.CREDIT],
-      //   disallowed: []
-      // },
+      funding: {
+        allowed: [paypal.FUNDING.CARD],
+        disallowed: [paypal.FUNDING.ELV]
+      },
 
       // PayPal Client IDs - replace with your own
       // Create a PayPal app: https://developer.paypal.com/developer/applications/create
@@ -78,6 +78,7 @@ export default class Overview extends Component {
 
         // Make a call to the REST api to execute the payment
         return actions.payment.execute().then(function(response) {
+          //TODO: implement if/elso for paypal or creditcard payment and set paymentMethod 'PP' or 'KK'
           let paymentData = {
             cartId: that.props.cartId,
             giftId: that.props.giftId,
@@ -97,7 +98,7 @@ export default class Overview extends Component {
             transactionId: response.transactions[0].related_resources[0].sale.id
           };
 
-          axios.post('http://localhost:8081/submitPaypalPlantBag', paymentData, {}).then(function(response) {
+          axios.post('http://localhost:8081/pay', paymentData, {}).then(function(response) {
             that.refs.notification.addNotification('Zahlung erfolgreich abgeschlossen!', 'Vielen Dank für deine Spende.', 'success');
             that.props.resetPlantBag();
           }).catch(function(response) {
