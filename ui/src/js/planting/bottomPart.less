@@ -1,73 +1,71 @@
-@media (max-width: 480px) {
-  .bottomPart {
-    .button-and-price {
-      .price {
-        margin-top: 10px;
-        vertical-align: top;
-        span {
-          font-size: 16px!important;
-        }
-      }
-      .plantBagButton {
-        text-align: right;
-        font-size: 12px;
-        height: 40px;
-        div {
-          padding: 5px !important;
-        }
-        img {
-          margin-top: 6px;
-          width: 36px;
-          height: 20px;
-        }
-        p {
-          margin-left: 5px;
-          margin-bottom: 0;
-        }
-      }
-    }
-    .line {
-      font-size: 12px!important;
-    }
-  }
-
-}
-@media (max-width: 360px) {
-  .bottomPart {
-    .button-and-price {
-      .price {
-        span {
-          font-size: 12px!important;
-        }
-        margin-right: 10px!important;
-      }
-    }
-  }
-}
+// @media (max-width: 480px) {
+//   .bottomPart {
+//     .button-and-price {
+//       .price {
+//         margin-top: 10px;
+//         vertical-align: top;
+//
+//         span {
+//           font-size: 16px!important;
+//         }
+//       }
+//     }
+//
+//     .line {
+//       font-size: 12px!important;
+//     }
+//   }
+//
+// }
+// @media (max-width: 360px) {
+//   .bottomPart {
+//     .button-and-price {
+//       .price {
+//         span {
+//           font-size: 12px!important;
+//         }
+//         margin-right: 10px !important;
+//       }
+//     }
+//   }
+// }
 
 .bottomPart {
   .button-and-price {
     text-align: right;
     margin-top: 25px;
     margin-bottom: 25px;
+
     .price {
       display: inline-block;
-
       margin-right: 25px;
+
       span {
         font-size: 24px;
         font-weight: bold;
         color: #82ab1f;
       }
     }
+
     .plantBagButton {
+      color: red;
       display: inline-block;
-      img {
-        vertical-align: top;
-        margin-top: 5px;
+
+      .svgButton {
+        background-color: #4F3A2C;
+
+        a{
+          div:nth-child(1){
+            text-align: left;
+            svg{
+              margin-top: 5px;
+            }
+          }
+        }
       }
     }
   }
+
   .line {
     text-align: center;
     border-width: 1px;
