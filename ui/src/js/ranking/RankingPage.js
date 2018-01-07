@@ -148,6 +148,7 @@ export default class RankingPage extends Component {
               <LeftRightSwitch leftText="alle" rightText="letztes Jahr" leftValue={false} rightValue={true} chosenValue={this.state.onlyLastYear} onClick={this.updateLastYearFlag.bind(this)}/>
             </div>
               <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
+              <hr />
           </div>
           <div className="row">
             <div ref="ranking" className={"col-md-12 rankingItems"}>
