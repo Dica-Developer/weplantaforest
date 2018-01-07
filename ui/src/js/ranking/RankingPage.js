@@ -1,5 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
 
@@ -42,15 +46,18 @@ export default class RankingPage extends Component {
 
   loadAllUser(withToggle) {
     var that = this;
-    if(withToggle){
+    if (withToggle) {
       this.toggleDiv();
     }
     axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
       setTimeout(function() {
         that.refs["spinner"].hideSpinner();
-        that.setState({ranking: result, orgTypeDesc: 'Alle'});
-        if(withToggle){
+        that.setState({
+          ranking: result,
+          orgTypeDesc: 'Alle'
+        });
+        if (withToggle) {
           that.toggleDiv();
         }
       }, 1000);
@@ -62,14 +69,17 @@ export default class RankingPage extends Component {
 
   loadBestTeams(withToggle) {
     var that = this;
-    if(withToggle){
+    if (withToggle) {
       this.toggleDiv();
     }
     axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
       setTimeout(function() {
-        that.setState({ranking: result, orgTypeDesc: 'Teams'});
-        if(withToggle){
+        that.setState({
+          ranking: result,
+          orgTypeDesc: 'Teams'
+        });
+        if (withToggle) {
           that.toggleDiv();
         }
       }, 1000);
@@ -81,14 +91,18 @@ export default class RankingPage extends Component {
 
   loadOrgTypeRanking(orgType, orgTypeDesc, withToggle) {
     var that = this;
-    if(withToggle){
+    if (withToggle) {
       this.toggleDiv();
     }
     axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
       var result = response.data;
       setTimeout(function() {
-        that.setState({ranking: result, orgTypeDesc: orgTypeDesc, chosenOrgType: orgType});
-        if(withToggle){
+        that.setState({
+          ranking: result,
+          orgTypeDesc: orgTypeDesc,
+          chosenOrgType: orgType
+        });
+        if (withToggle) {
           that.toggleDiv();
         }
       }, 1000);
@@ -133,9 +147,7 @@ export default class RankingPage extends Component {
             <div className="col-md-2 center-switch">
               <LeftRightSwitch leftText="alle" rightText="letztes Jahr" leftValue={false} rightValue={true} chosenValue={this.state.onlyLastYear} onClick={this.updateLastYearFlag.bind(this)}/>
             </div>
-            <div className="col-md-10">
               <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
-            </div>
           </div>
           <div className="row">
             <div ref="ranking" className={"col-md-12 rankingItems"}>
