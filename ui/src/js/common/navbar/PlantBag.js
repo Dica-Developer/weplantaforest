@@ -107,7 +107,7 @@ export default class PlantBag extends Component {
               <p className="price">{Accounting.formatNumber(this.state.plantBag.price / 100, 2, ".", ",")}&nbsp;€</p>
               <img src="/assets/images/barrow.svg" alt="mein Pflanzkorb" width="50" height="25"/>
             </div>
-            <div className="green-button-text">
+            <div className="plantBag-button-text">
               <span className="buttonText">PFLANZKORB</span>
             </div>
           </div>

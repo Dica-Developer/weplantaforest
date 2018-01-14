@@ -12,6 +12,7 @@ import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 
 import IconButton from '../common/components/IconButton';
+import CircleButton from '../common/components/CircleButton';
 
 export default class ButtonBar extends Component {
 
@@ -33,21 +34,23 @@ export default class ButtonBar extends Component {
 
   render() {
     return (
-      <div className="buttonBar">
-        <IconButton text="ALLE" onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward"/>
-        <IconButton text="PRIVAT" onClick={() => {
-          this.loadOrgTypeRanking('PRIVATE', 'PrivatPersonen')
-          }}  glyphIcon="glyphicon-forward"/>
-        <IconButton text="FIRMEN" onClick={() => {
-          this.loadOrgTypeRanking('COMMERCIAL', 'Firmen')
-          }}  glyphIcon="glyphicon-forward"/>
-        <IconButton text="NON-PROFIT ORG." onClick={() => {
-          this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen')
-          }}  glyphIcon="glyphicon-forward"/>
-        <IconButton text="SCHULEN" onClick={() => {
-          this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen')
-          }}  glyphIcon="glyphicon-forward"/>
-        <IconButton text="TEAMS" onClick={this.loadBestTeams.bind(this)}  glyphIcon="glyphicon-forward"/>
+      <div className="buttonBar row">
+        <div className="col-md-10">
+          <CircleButton text="ALLE" onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward"/>
+          <CircleButton text="PRIVAT" onClick={() => {
+            this.loadOrgTypeRanking('PRIVATE', 'Beste Privatpersonen')
+            }} glyphIcon="glyphicon-forward" />
+          <CircleButton text="FIRMEN" onClick={() => {
+            this.loadOrgTypeRanking('COMMERCIAL', 'Firmen')
+            }} glyphIcon="glyphicon-forward" />
+          <CircleButton text="NON-PROFIT ORG." onClick={() => {
+            this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen')
+            }} glyphIcon="glyphicon-forward" />
+          <CircleButton text="SCHULEN" onClick={() => {
+            this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen')
+            }} glyphIcon="glyphicon-forward" />
+          <CircleButton text="TEAMS" onClick={this.loadBestTeams.bind(this)} glyphIcon="glyphicon-forward" />
+        </div>
       </div>
     );
   }

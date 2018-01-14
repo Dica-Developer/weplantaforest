@@ -90,8 +90,7 @@ export default class BlogOverviewPage extends Component {
       <div className="container paddingTopBottom15 ">
         <div className="row blogOverviewPage">
           <div className={"col-md-12 "}>
-            <h2>Blog</h2>
-
+            <h1>Blog</h1>
           </div>
         </div>
         <div className="row blogOverviewPage">

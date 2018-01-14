@@ -192,17 +192,18 @@ export default class LoginMenuItem extends Component {
       </div>;
     } else {
       content = <div className="login">
-        <input type="text" placeholder="BENUTZERNAME" value={this.state.name} onChange={this.updateName.bind(this)}/>
-        <input type="password" placeholder="PASSWORD" value={this.state.password} onChange={this.updatePassword.bind(this)}/>
-        <div className="buttonDiv">
-          <IconButton text="LOGIN" glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
-        </div>
-        <div>
+        <input type="text" placeholder="Benutzername" value={this.state.name} onChange={this.updateName.bind(this)}/>
+        <input type="password" placeholder="Passwort" value={this.state.password} onChange={this.updatePassword.bind(this)}/>
+        <div className="login-interact">
+          <a role="button" onClick={() => {
+            this.linkTo('/forgotPassword')
+          }}>Passwort vergessen?</a>
           <a role="button" onClick={() => {
             this.linkTo('/registration')
-          }}>Anmelden</a><a role="button" onClick={() => {
-        this.linkTo('/forgotPassword')
-      }}>Passwort vergessen</a>
+          }}>Neu registrieren</a>
+        </div>
+        <div className="buttonDiv">
+          <IconButton text="LOGIN" glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
         </div>
       </div>;
     }
