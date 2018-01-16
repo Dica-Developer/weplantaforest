@@ -8,7 +8,7 @@ import Boostrap from 'bootstrap';
 
 require("./circleButton.less");
 
-export default class IconButton extends Component {
+export default class CircleButton extends Component {
 
   constructor() {
     super();
