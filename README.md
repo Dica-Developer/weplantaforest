@@ -7,7 +7,7 @@
 [![Coverage Status](http://img.shields.io/coveralls/Dica-Developer/weplantaforest/master.svg?style=flat-square&label=Test%20Coverage)](https://coveralls.io/r/Dica-Developer/weplantaforest?branch=master)
 [![Code Climate](https://img.shields.io/codeclimate/github/Dica-Developer/weplantaforest.svg?style=flat-square)](https://codeclimate.com/github/Dica-Developer/weplantaforest)
 [![BCH compliance](https://bettercodehub.com/edge/badge/Dica-Developer/weplantaforest?branch=master)](https://bettercodehub.com/)
-[![WATCHING YOUR NODE.JS DEPENDENCIES.](https://david-dm.org/Dica-Developer/weplantaforest.svg)]
+[![WATCHING YOUR NODE.JS DEPENDENCIES.](https://david-dm.org/Dica-Developer/weplantaforest.svg)](https://david-dm.org/)
 
 
 ### Dev Requirements
