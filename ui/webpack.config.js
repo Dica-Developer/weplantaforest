@@ -5,7 +5,6 @@ var JS_FILE_NAME = inDev ? 'js/[name].bundle.js' : 'js/[name].[hash].js';
 
 module.exports = (function() {
   var config = {
-    'modulesDirectories': ['node_modules']
   };
 
   // Define entry points
@@ -31,13 +30,13 @@ module.exports = (function() {
     loaders: [{
       test: /\.js?$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: 'babel-loader',
       query: {
         presets: ['react', 'es2015']
       }
     }, {
       test: /\.less$/,
-      loader: "style!css!less"
+      loader: "style-loader!css-loader!less-loader"
     }, {
       test: /\.(png|jpg)$/,
       include: /dist/,
@@ -49,7 +48,7 @@ module.exports = (function() {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendor', JS_FILE_NAME),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: JS_FILE_NAME }),
     new HtmlWebpackPlugin({
       'template': __dirname + '/src/index.html',
       'inject': 'body',
