@@ -30,3 +30,4 @@ ui/dist/js/
 application-staging-secret.properties
 .java.tags
 .jsx.tags
+package-lock.json
