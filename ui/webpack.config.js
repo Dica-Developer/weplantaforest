@@ -61,8 +61,7 @@ module.exports = (function() {
   } else {
     config.devtool = 'source-map';
     config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin(),
-      new webpack.optimize.DedupePlugin()
+      new webpack.optimize.UglifyJsPlugin()
     );
   }
 
