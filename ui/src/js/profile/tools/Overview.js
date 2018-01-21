@@ -22,7 +22,7 @@ export default class Overview extends Component {
         <div className="col-md-12">
           <h2>Tools</h2>
         </div>
-        <div className="col-md-3"><img src="/assets/images/widgets.png" alt="widgets" width="250" height="350"/>
+        <div className="col-md-4"><img src="/assets/images/widgets.png" alt="widgets" width="250" height="350"/>
           <div className="desc">
             <IconButton text="WIDGETS" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('widgets')}}/>
             <p>
@@ -31,7 +31,7 @@ export default class Overview extends Component {
             </p>
           </div>
         </div>
-        <div className="col-md-3"><img src="/assets/images/certificate.jpg" alt="certificate" width="250" height="350"/>
+        <div className="col-md-4"><img src="/assets/images/certificate.jpg" alt="certificate" width="250" height="350"/>
           <div className="desc">
             <IconButton text="ZERTIFIKATE" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('certificates')}}/>
             <p>
@@ -39,7 +39,7 @@ export default class Overview extends Component {
             </p>
           </div>
         </div>
-        <div className="col-md-3"><img src="/assets/images/banner.png" alt="banner" width="250" height="350"/><br/>
+        <div className="col-md-4"><img src="/assets/images/banner.png" alt="banner" width="250" height="350"/><br/>
           <div className="desc">
             <IconButton text="BANNER" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('banner')}}/>
             <p>
