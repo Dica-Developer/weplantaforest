@@ -47,7 +47,7 @@ task buildUi(type: Exec) {
   inputs.dir project(':').file('ui/src')
 
   outputs.dir project(':').file('ui/dist/js')
-  outputs.dir project(':').file('ui/dist/index.html')
+  outputs.file project(':').file('ui/dist/index.html')
 
   workingDir project(':').file('ui')
   
