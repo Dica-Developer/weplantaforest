@@ -171,8 +171,8 @@ configure([project(':article-manager'), project(':user'), project(':admin')]) {
           execute "cp -r ${projectDir} ${projectBackup}"
 
           logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
-          rsync("$buildDir/install/${project.name}/bin/", "${ipatUser}@${ipatHost}:${projectDir}/bin/")
-          rsync("$buildDir/install/${project.name}/lib/", "${ipatUser}@${ipatHost}:${projectDir}/lib/")
+          rsync("${project.name}/build/install/${project.name}/bin/", "${ipatUser}@${ipatHost}:${projectDir}/bin/")
+          rsync("${project.name}/build/install/${project.name}/lib/", "${ipatUser}@${ipatHost}:${projectDir}/lib/")
         }
       }
     }
