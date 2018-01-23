@@ -192,10 +192,10 @@ render() {
           }}/></div>
           <div className="col-md-2">Bild:
           </div>
-          <div className="col-md-8">
+          <div className="col-md-7">
           {image}
           </div>
-          <div className="col-md-2"><div className="col-md-4"><FileChooser updateFile={this.updateImage.bind(this)}/></div>
+          <div className="col-md-3"><div><FileChooser updateFile={this.updateImage.bind(this)}/></div>
           </div>
           <div className="col-md-12 align-right buttons">
             <IconButton glyphIcon="glyphicon-floppy-open" text="SPEICHERN" onClick={this.save.bind(this)}/>
