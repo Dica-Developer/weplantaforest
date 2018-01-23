@@ -5,7 +5,7 @@
       background-color: #4F3A2C;
       height: 70px;
       font-size: 18px;
-      padding: 10px 10px 0 10px;
+      padding: 10px 10px 0;
 
       .date {
         font-family: Georgia,Times,Times New Roman,serif;
@@ -73,7 +73,25 @@
     }
 
     .spacing {
-      margin: 30px 0px 20px 0px;
+      margin: 30px 0 20px;
+
+      .svgButton {
+        border-radius: 0;
+        background-color: #4F3A2C;
+        border: 0;
+
+        a {
+          div {
+            text-align: left;
+
+            svg {
+              border-radius: 0;
+              height: 35px;
+              border: 0;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -86,15 +104,17 @@
       padding-bottom: 1000px;
       margin-bottom: -1000px;
     }
+
     > div:nth-of-type(1) {
       background-color: #51a8be;
     }
+
     > div:nth-of-type(2) {
       background-color: #737373;
     }
+
     > div:nth-of-type(3) {
       background-color: #813d59;
     }
   }
-
 }
