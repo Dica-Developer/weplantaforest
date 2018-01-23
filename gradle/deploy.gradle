@@ -82,18 +82,16 @@ task deployUi {
     ssh.run {
       session(remotes.server) {
         def projectDir = "${installationDir}/ui"
-        def projectBackupDir = "${installationDir}/ui.backup"
+        def projectBackup = "${installationDir}/ui.backup"
 
         logger.info "Creating project dir (for the first deployment (the 0.01% case :-))..."
         execute "mkdir -p ${projectDir}"
 
         logger.info "Backing up existing deployment..."
-        execute "mv --backup=numbered ${projectDir} ${projectBackupDir}"
+        execute "cp -r ${projectDir}/dist/ ${projectBackup}"
 
-        logger.info "Creating project dir after backup..."
-        execute "mkdir -p ${projectDir}"
-		
-        put from: project(':').file('ui/dist'), into: "${projectDir}"
+        logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
+        rsync("ui/dist/", "${ipatUser}@${ipatHost}:${projectDir}/dist/")
       }
     }
   }
