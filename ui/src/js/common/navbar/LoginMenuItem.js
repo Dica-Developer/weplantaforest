@@ -198,12 +198,14 @@ export default class LoginMenuItem extends Component {
           <a role="button" onClick={() => {
             this.linkTo('/forgotPassword')
           }}>Passwort vergessen?</a>
-          <a role="button" onClick={() => {
-            this.linkTo('/registration')
-          }}>Neu registrieren</a>
         </div>
         <div className="buttonDiv">
           <IconButton text="LOGIN" glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
+        </div>
+        <div className="login-interact">
+          <a role="button" onClick={() => {
+            this.linkTo('/registration')
+          }}>Neu registrieren</a>
         </div>
       </div>;
     }
