@@ -87,121 +87,107 @@ export default class ProjectOffer extends Component {
 
   render() {
     return (
-      <div className="col-md-12">
-        <h2>Projektfläche anbieten</h2>
-        <p>Wir würden gern Flächen kaufen, um sie zu langfristig, gemeinnützig, nachhaltig betriebenen Wäldern umzuwandeln. Wir suchen Flächen, die:</p>
-        <ul>
-          <li>für eine Aufforstung in Frage kommen, für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen)</li>
-          <li>zwischen 2 und 20 Hektar groß sind, im Idealfall an einer Straße / Fahrradweg liegen und gut von Publikum eingesehen werden können</li>
-          <li>über einen Kauf oder Schenkung an I Plant A Tree gebunden werden können</li>
-          <li>idealerweise Mischflächen sind, wo bereits Wald steht, aber noch anliegende Flächen aufgeforstet werden können</li>
-          <li>möglichst in den neuen Bundesländern liegen (am besten in Sachsen-Anhalt, Sachsen, Thüringen und rund um Berlin) - aber wir suchen auch in anderen Bundesländern, in Abhängigkeit vom Preis</li>
-          <li>nach Möglichkeit maximal 4.000 Euro/ha kosten</li>
-        </ul>
-        <br/>
-        <p className="bold">Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.</p>
-        <div className="offerForm">
-          <div className="desc-value">
-            <div className="desc">
-              Name:</div>
-            <div className="value">
-              <InputText toUpdate="first" updateValue={this.updateValue.bind(this)}/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Vorname:</div>
-            <div className="value">
-              <InputText toUpdate="name" updateValue={this.updateValue.bind(this)}/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              E-Mail:</div>
-            <div className="value">
-              <InputText toUpdate="mail" updateValue={this.updateValue.bind(this)}/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Ort der Fläche:</div>
-            <div className="value">
-              <InputText toUpdate="location" updateValue={this.updateValue.bind(this)}/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Größe der Fläche:</div>
-            <div className="value">
-              <InputText toUpdate="size" updateValue={this.updateValue.bind(this)}/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Eigentümer:</div>
-            <div className="value">
-              <InputText toUpdate="owner" updateValue={this.updateValue.bind(this)}/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Aufforstung:</div>
-            <div className="value">
-              <RadioButton id="radio-c-1" value="1" checked={this.state.isAfforestation} onChange={this.updateAfforestation.bind(this)} text="&nbsp; möglich&nbsp;&nbsp;"/>
-              <RadioButton id="radio-c-0" value="0" checked={!this.state.isAfforestation} onChange={this.updateAfforestation.bind(this)} text="&nbsp; nicht möglich"/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Nutzen der Fläche:</div>
-            <div className="value">
-              Wie wurde die Fläche bisher genutzt?<br/>
-              <TextArea toUpdate="purpose" updateValue={this.updateValue.bind(this)}/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Verkauf:</div>
-            <div className="value">
-              Steht die Fläche zum Verkauf?<br/>
-              <RadioButton id="radio-selling-1" value="1" checked={this.state.isSelling} onChange={this.updateSelling.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
-              <RadioButton id="radio-selling-0" value="0" checked={!this.state.isSelling} onChange={this.updateSelling.bind(this)} text="&nbsp; nein"/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Pachtverträge:</div>
-            <div className="value">
-              Sind Pachtverträge abgeschlossen?<br/>
-              <RadioButton id="radio-leasing-1" value="1" checked={this.state.isLeasing} onChange={this.updateLeasing.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
-              <RadioButton id="radio-leasing-0" value="0" checked={!this.state.isLeasing} onChange={this.updateLeasing.bind(this)} text="&nbsp; nein"/>
-              <br/>
-              Wenn ja, wie lange laufen diese noch?<br/>
-              <InputText toUpdate="lease" updateValue={this.updateValue.bind(this)}/></div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              Bemerkungen:</div>
-            <div className="value">
-              <TextArea toUpdate="comment" updateValue={this.updateValue.bind(this)}/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              </div>
-            <div className="value">
-              <Captcha ref="captcha"/>
-            </div>
-          </div>
-          <div className="desc-value">
-            <div className="desc">
-              </div>
-            <div className="value">
-              <IconButton text="ANGEBOT ABSCHICKEN" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
-            </div>
+      <div className="projectOffer container">
+        <div className="row">
+          <div className="col-md-12 item-align-start">
+            <h1>Projektfläche anbieten</h1>
+            <p>Wir würden gern Flächen kaufen, um sie zu langfristig, gemeinnützig, nachhaltig betriebenen Wäldern umzuwandeln. Wir suchen Flächen, die:</p>
+            <ul>
+              <li>für eine Aufforstung in Frage kommen, für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen)</li>
+              <li>zwischen 2 und 20 Hektar groß sind, im Idealfall an einer Straße / Fahrradweg liegen und gut von Publikum eingesehen werden können</li>
+              <li>über einen Kauf oder Schenkung an I Plant A Tree gebunden werden können</li>
+              <li>idealerweise Mischflächen sind, wo bereits Wald steht, aber noch anliegende Flächen aufgeforstet werden können</li>
+              <li>möglichst in den neuen Bundesländern liegen (am besten in Sachsen-Anhalt, Sachsen, Thüringen und rund um Berlin) - aber wir suchen auch in anderen Bundesländern, in Abhängigkeit vom Preis</li>
+              <li>nach Möglichkeit maximal 4.000 Euro/ha kosten</li>
+            </ul>
+            <h3>Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.</h3>
           </div>
         </div>
-        <Notification ref="notification"/>
+        <div className="row">
+          <div className="col-md-6 item-align-start">
+            <p>Name:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <InputText cssclass="form-control" toUpdate="first" updateValue={this.updateValue.bind(this)}/>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <p>Vorname:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <InputText cssclass="form-control" toUpdate="name" updateValue={this.updateValue.bind(this)}/>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <p>E-Mail:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <InputText cssclass="form-control" toUpdate="mail" updateValue={this.updateValue.bind(this)}/>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <p>Ort der Fläche:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <InputText cssclass="form-control" toUpdate="location" updateValue={this.updateValue.bind(this)}/>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <p>Eigentümer:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <InputText cssclass="form-control" toUpdate="owner" updateValue={this.updateValue.bind(this)}/>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <p>Aufforstung:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <RadioButton className="form-control" id="radio-c-1" value="1" checked={this.state.isAfforestation} onChange={this.updateAfforestation.bind(this)} text="&nbsp; möglich&nbsp;&nbsp;"/>
+            <RadioButton className="form-control" id="radio-c-0" value="0" checked={!this.state.isAfforestation} onChange={this.updateAfforestation.bind(this)} text="&nbsp; nicht möglich"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 item-align-start">
+            <p>Nutzen der Fläche:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            Wie wurde die Fläche bisher genutzt?<br/>
+            <TextArea className="form-control" toUpdate="purpose" updateValue={this.updateValue.bind(this)}/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 item-align-start">
+            <p>Pachtverträge:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            Sind Pachtverträge abgeschlossen?<br/>
+            <RadioButton className="form-control" id="radio-leasing-1" value="1" checked={this.state.isLeasing} onChange={this.updateLeasing.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
+            <RadioButton className="form-control" id="radio-leasing-0" value="0" checked={!this.state.isLeasing} onChange={this.updateLeasing.bind(this)} text="&nbsp; nein"/>
+          </div>
+          <div className="col-md-6 item-align-start">&nbsp;</div>
+          <div className="col-md-6 item-align-start">
+            Wenn ja, wie lange laufen diese noch?<br/>
+            <InputText cssclass="form-control" toUpdate="lease" updateValue={this.updateValue.bind(this)}/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 item-align-start">
+            <p>Bemerkungen:</p>
+          </div>
+          <div className="col-md-6 item-align-start">
+            <TextArea className="form-control" toUpdate="comment" updateValue={this.updateValue.bind(this)}/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 item-align-start">&nbsp;</div>
+          <div className="col-md-6 item-align-start">
+            <Captcha ref="captcha"/>
+          </div>
+          <div className="col-md-6 item-align-start">&nbsp;</div>
+          <div className="col-md-6 item-align-start">
+            <IconButton text="Angebot abschicken" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
+          </div>
+          <div className="col-md-6 item-align-start">&nbsp;</div>
+          <div className="col-md-6 item-align-start">
+            <Notification ref="notification"/>
+          </div>
+        </div>
       </div>
     );
   }
