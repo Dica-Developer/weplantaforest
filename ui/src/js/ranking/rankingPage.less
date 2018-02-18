@@ -1,6 +1,8 @@
+@import '../../less/basecolors.less';
+
 .rankingPage {
   min-height: 830px;
-  background: #ffffff;
+  background: @base-background-color;
   margin-left: 0;
   margin-right: 0;
 
@@ -58,11 +60,11 @@
         color: #000;
       }
       p:nth-of-type(1) {
-        background-color: #82ab1f;
+        background-color: @accent-color;
         margin-bottom: 2px;
       }
       p:nth-of-type(2) {
-        background-color: #51a8be;
+        background-color: @accent-complement-color;
         max-width: 100%!important;
       }
     }
@@ -131,7 +133,7 @@
         text-decoration: none;
       }
       a:hover {
-        color: #82ab1f;
+        color: @accent-color;
       }
     }
 
@@ -139,7 +141,7 @@
       display: inline-block;
       width: 75%;
       p {
-        background-color: #82ab1f;
+        background-color: @accent-color;
       }
     }
   }

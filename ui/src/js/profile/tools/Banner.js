@@ -127,7 +127,7 @@ export default class Banner extends Component {
 
     return (
       <div className="col-md-12">
-        <h2>Tools&nbsp;/&nbsp;Banner</h2>
+        <h1>Tools&nbsp;/&nbsp;Banner</h1>
         <div className="content">
           <div className="banner">
             {bannerImages}

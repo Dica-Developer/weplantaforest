@@ -159,7 +159,7 @@ export default class Certificates extends Component {
 
     return (
       <div className="col-md-12">
-        <h2>Tools&nbsp;/&nbsp;Zertifikate</h2>
+        <h1>Tools&nbsp;/&nbsp;Zertifikate</h1>
         {content}
         <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view} />
         <Notification ref="notification"/>

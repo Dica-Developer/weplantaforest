@@ -26,12 +26,12 @@ export default class UserDetails extends Component {
 
     var editLink;
     if (this.props.user.editAllowed) {
-      editLink = <IconButton text="BEARBEITEN" glyphIcon="glyphicon-cog" onClick={this.showEditUser.bind(this)}/>;
+      editLink = <IconButton text="Bearbeiten" glyphIcon="glyphicon-cog" onClick={this.showEditUser.bind(this)}/>;
     }
 
     return (
       <div>
-        <h2>Profil</h2>
+        <h1>Profil</h1>
         <div className="imageDiv">
           <img src={imageUrl} alt="profile"/>
         </div>
@@ -61,7 +61,7 @@ export default class UserDetails extends Component {
             </tbody>
           </table>
         </div>
-        <div className="align-center  bottomButton">
+        <div className="align-center bottomButton">
           {editLink}
         </div>
       </div>

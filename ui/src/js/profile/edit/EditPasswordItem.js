@@ -73,7 +73,7 @@ export default class EditPasswordItem extends Component {
       link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.saveContent.bind(this)}/><br/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
     } else {
       passwordPart = '••••••';
-      link = <IconButton text="BEARBEITEN" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
+      link = <IconButton text="bearbeiten" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }
 
     return (

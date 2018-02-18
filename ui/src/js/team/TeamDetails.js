@@ -231,7 +231,7 @@ export default class TeamDetails extends Component {
     };
     return (
       <div >
-        <h2>Team</h2>
+        <h1>Team</h1>
         <div className="imageDiv">
           <img src={teamImageUrl} alt="profile"/>
         </div>

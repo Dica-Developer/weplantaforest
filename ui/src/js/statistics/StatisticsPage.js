@@ -26,30 +26,30 @@ export default class StatisticsPage extends Component {
         <div className="statisticsPage">
           <div className="row">
             <div className="col-md-12">
-              <h2>Statistiken</h2>
+              <h1>Statistiken</h1>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
-              <h4>Gepflanzte Bäume</h4>
+              <h2>Gepflanzte Bäume</h2>
             </div>
           </div>
           <TreesPerYear/>
           <div className="row">
             <div className="col-md-12">
-              <h4>Gebundenes CO<sub>2</sub></h4>
+              <h2>Gebundenes CO<sub>2</sub></h2>
             </div>
           </div>
           <Co2PerYear/>
           <div className="row">
             <div className="col-md-12">
-              <h4>Gepflanzte Bäume pro Spendertyp</h4>
+              <h2>Gepflanzte Bäume pro Spendertyp</h2>
             </div>
           </div>
           <TreesPerOrgType/>
             <div className="row">
               <div className="col-md-12">
-                <h4>Gepflanzte Bäume pro Monat</h4>
+                <h2>Gepflanzte Bäume pro Monat</h2>
               </div>
             </div>
           <TreesPerMonth/>

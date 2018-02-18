@@ -129,7 +129,7 @@ export default class Widgets extends Component {
     }
     return (
       <div className="col-md-12">
-        <h2>Tools&nbsp;/&nbsp;Widgets</h2>
+        <h1>Tools&nbsp;/&nbsp;Widgets</h1>
         <div className="content">
           <div className="widgets">
             {widgets}

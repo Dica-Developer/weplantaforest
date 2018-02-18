@@ -77,7 +77,7 @@ export default class Contact extends Component {
       <div className="container paddingTopBottom15 contact">
           <div className="row">
             <div className="col-md-12">
-              <h2>Kontakt</h2>
+              <h1>Kontakt</h1>
             </div>
           </div>
           <div className="row">

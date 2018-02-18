@@ -19,7 +19,7 @@ class Paragraph extends Component {
     var textPart;
     let imageUrl = '';
     if (this.props.content.title != '') {
-      titlePart = <h4>{getTextForSelectedLanguage(this.props.content.title)}</h4>;
+      titlePart = <h2>{getTextForSelectedLanguage(this.props.content.title)}</h2>;
     }else{
       titlePart= '';
     }
@@ -100,7 +100,7 @@ export default class BlogPage extends Component {
       <div className="container paddingTopBottom15 blogPage">
         <div className="row">
           <div className={"col-md-12"}>
-            <h3>{this.state.article.title}</h3>
+            <h1>{this.state.article.title}</h1>
             {moment(this.state.article.createdOn).format("DD.MM.YYYY")}{" von "}
             <a role="button" onClick= { () => { browserHistory.push('/user/' + this.state.article.owner.name) }}>
               {this.state.article.owner.name}</a>

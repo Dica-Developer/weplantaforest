@@ -19,7 +19,7 @@ export default class TextArea extends Component {
   render() {
     return (
       <div>
-        <textarea rows="4" cols="50" onBlur={this.updateValue.bind(this)}/>
+        <textarea className={this.props.cssclass} rows="4" cols="50" onBlur={this.updateValue.bind(this)}/>
       </div>
     );
   }

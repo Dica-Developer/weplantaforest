@@ -42,7 +42,7 @@ export default class aboutUs extends Component {
       <div className="container paddingTopBottom15 aboutUs">
           <div className="row">
             <div className="col-md-12">
-              <h2>Über uns</h2>
+              <h1>Über uns</h1>
             </div>
           </div>
           <div className="row">
