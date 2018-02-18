@@ -41,7 +41,7 @@ export default class ArticleManager extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <IconButton glyphIcon="glyphicon-plus"  text="ARTIKEL ERSTELLEN" onClick={this.switchToArticleCreater.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-plus" text="Artikel erstellen" onClick={this.switchToArticleCreater.bind(this)}/>
           </div>
         </div>
         <ArticleOverview />
