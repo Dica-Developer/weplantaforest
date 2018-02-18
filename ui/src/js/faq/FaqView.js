@@ -51,7 +51,7 @@ export default class FaqView extends Component {
       <div className="container paddingTopBottom15 faq">
           <div className="row">
             <div className="col-md-12">
-              <h2>Häufig gestellte Fragen</h2>
+              <h1>Häufig gestellte Fragen</h1>
             </div>
           </div>
           <div className="row">

@@ -60,7 +60,7 @@ export default class LargeRankingContainer extends Component {
       <div className={"largeRankingContainer " + this.props.styleClass}>
         <div className="row">
           <div className="col-md-12">
-            <h2>Pflanzungen</h2>
+            <h1>Pflanzungen</h1>
           </div>
         </div>
         <div ref="ranking" className={(this.state.fade

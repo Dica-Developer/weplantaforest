@@ -48,7 +48,7 @@ export default class FileChooser extends Component {
     return (
       <div>
         <input type="file" className="hiddenInput" ref="fileChooser" accept="image/*" onChange={this.saveFile.bind(this)}/>
-        <IconButton text="DATEI AUSWÄHLEN" glyphIcon="glyphicon-search" onClick={this.chooseFile.bind(this)}/>
+        <IconButton text="Datei auswählen" glyphIcon="glyphicon-search" onClick={this.chooseFile.bind(this)}/>
         {trashButton}
       </div>
     );

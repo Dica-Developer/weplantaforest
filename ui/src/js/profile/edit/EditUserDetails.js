@@ -98,7 +98,7 @@ export default class EditUserDetails extends Component {
     return (
       <div>
         <div className="editUserDetails" onClick={this.clearErrorMessage}>
-          <h2>Profil bearbeiten</h2>
+          <h1>Profil bearbeiten</h1>
           <img src={imageUrl} alt="profile"/>
           <div className="summary">
             <span className="name">{this.props.user.userName}</span><br/>
@@ -130,7 +130,7 @@ export default class EditUserDetails extends Component {
         </EditDropdownItem>
         <EditPasswordItem text="Passwort" toEdit="PASSWORD" editUser={this.editUser.bind(this)} ref="PASSWORD"/>
         <div className="align-center bottomButton">
-          <IconButton text="ANSCHAUEN" glyphIcon="glyphicon-eye-open" onClick={this.showProfile.bind(this)}/>
+          <IconButton text="anschauen" glyphIcon="glyphicon-eye-open" onClick={this.showProfile.bind(this)}/>
         </div>
         <Notification ref="notification"/>
       </div>

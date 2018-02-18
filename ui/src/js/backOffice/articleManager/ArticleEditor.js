@@ -403,7 +403,7 @@ export default class ArticleEditor extends Component {
           </div>
         </div>
         <div className="row align-center">
-          <IconButton glyphIcon="glyphicon-floppy-open" text="ARTIKEL BEARBEITEN" onClick={this.editArticle.bind(this)}/>
+          <IconButton glyphIcon="glyphicon-floppy-open" text="ARTIKEL bearbeiten" onClick={this.editArticle.bind(this)}/>
         </div>
         <Notification ref="notification"/>
       </div>
