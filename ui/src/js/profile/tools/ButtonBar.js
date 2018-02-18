@@ -19,19 +19,16 @@ export default class ButtonBar extends Component {
   render() {
     return (
       <div className="buttons">
-        <div className="col-md-4 align-center">
+        <div className="col-md-3 align-center">
           <IconButton text="ÜBERSICHT" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('overview')}}/>
         </div>
-        <div className={"col-md-2 " + (this.props.chosen == "widgets" ? "chosen" : "")}>
+        <div className={"col-md-3 " + (this.props.chosen == "widgets" ? "chosen" : "")}>
           <IconButton text="WIDGETS" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('widgets')}}/>
         </div>
-        <div className={"col-md-2 " + (this.props.chosen == "certificates" ? "chosen" : "")}>
+        <div className={"col-md-3 " + (this.props.chosen == "certificates" ? "chosen" : "")}>
           <IconButton text="ZERTIFIKATE" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('certificates')}}/>
         </div>
-        <div className={"col-md-2 " + (this.props.chosen == "receipts" ? "chosen" : "")}>
-          <IconButton text="QUITTUNGEN" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('receipts')}}/>
-        </div>
-        <div className={"col-md-2 " + (this.props.chosen == "banner" ? "chosen" : "")}>
+        <div className={"col-md-3 " + (this.props.chosen == "banner" ? "chosen" : "")}>
           <IconButton text="BANNER" glyphIcon="glyphicon-forward" onClick={()=>{this.props.switchTo('banner')}}/>
         </div>
       </div>

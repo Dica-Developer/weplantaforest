@@ -20,7 +20,7 @@ export default class Overview extends Component {
     return (
       <div>
         <div className="col-md-12">
-          <h2>Tools</h2>
+          <h1>Tools</h1>
         </div>
         <div className="col-md-4"><img src="/assets/images/widgets.png" alt="widgets" width="250" height="350"/>
           <div className="desc">

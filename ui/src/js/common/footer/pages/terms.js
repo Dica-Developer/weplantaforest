@@ -56,7 +56,7 @@ export default class Terms extends Component {
       <div className="container paddingTopBottom15 terms">
           <div className="row">
             <div className="col-md-12">
-              <h2>AGB</h2>
+              <h1>AGB</h1>
             </div>
           </div>
           <div className="row">

@@ -41,7 +41,7 @@ export default class Imprint extends Component {
       <div className="container paddingTopBottom15 imprint">
           <div className="row">
             <div className="col-md-12">
-              <h2>Impressum</h2>
+              <h1>Impressum</h1>
             </div>
           </div>
           <div className="row">
