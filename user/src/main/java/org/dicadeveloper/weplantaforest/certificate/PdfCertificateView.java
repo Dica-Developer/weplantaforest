@@ -33,7 +33,7 @@ public class PdfCertificateView {
 
     PdfHelper pdfHelper = new PdfHelper();
 
-    public void writePdfDataToOutputStream(OutputStream toWrite, Map<String, String> pdfTexts, String imagePath) throws Exception {
+    public void writePdfDataToOutputStream(OutputStream toWrite, Map<String, String> pdfTexts, String imagePath, String languageShortname) throws Exception {
         // create pdf
         final Document doc = new Document();
         final PdfWriter pdfWriter = PdfWriter.getInstance(doc, toWrite);
@@ -48,44 +48,13 @@ public class PdfCertificateView {
         doc.open();
 
         PdfContentByte cb = pdfWriter.getDirectContent();
-        createHeaderBlock(cb, pdfTexts);
+        pdfHelper.createHeaderBlock(cb, pdfTexts);
         createTreeCountAndCustomTextBlock(cb, pdfTexts);
         createLawTextDateAndSignatureBlock(cb, pdfTexts, date);
-        pdfHelper.createCertificateImage(cb, imagePath, 165f, 550f);
+        pdfHelper.createCertificateImage(cb, imagePath, languageShortname, 165f, 550f);
         pdfHelper.addLogo(cb, imagePath, 262f, 20f);
 
         doc.close();
-    }
-    
-    private void createHeaderBlock(PdfContentByte cb, Map<String, String> pdfTexts) throws DocumentException, IOException {
-        cb.saveState();
-        cb.setColorFill(new BaseColor(79, 58, 44));
-        cb.rectangle(0.0f, 822.0f, 595.0f, 20.0f);
-        cb.fill();
-        cb.stroke();
-        cb.restoreState();
-
-        Font textFont = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
-
-        PdfPTable table = new PdfPTable(4);
-        float[] rows = { 100f, 100f, 100f, 295f };
-        table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.BOX);
-        table.getDefaultCell()
-             .setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.getDefaultCell()
-             .setVerticalAlignment(Element.ALIGN_MIDDLE);
-        table.getDefaultCell()
-             .setFixedHeight(20);
-        System.out.println(pdfTexts.get("certificate.header_company"));
-        table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_company"), textFont)));
-        table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_account"), textFont)));
-        table.addCell(new Phrase(new Chunk("blablablabla", textFont)));
-//        table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_homepage"), textFont)));
-
-        table.writeSelectedRows(0, 1, 0, 842, cb);
-//        table.writeSelectedRows(0, 1, 50, 400, cb);
     }
 
     private void createTreeCountAndCustomTextBlock(PdfContentByte cb, Map<String, String> pdfTexts) throws DocumentException {
@@ -138,8 +107,8 @@ public class PdfCertificateView {
 
     private void createLawTextDateAndSignatureBlock(PdfContentByte cb, Map<String, String> pdfTexts, String date) throws DocumentException, MalformedURLException, IOException {
         Font textFont = new Font(FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
-        Font textFontBold = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
-        Font textFontSmall = new Font(FontFamily.HELVETICA, 6, Font.NORMAL, BaseColor.BLACK);
+        Font textFontBold = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+        Font textFontSmall = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
 
         PdfPTable table = new PdfPTable(2);
         float[] rows = { 247.5f, 247.5f };
@@ -147,7 +116,7 @@ public class PdfCertificateView {
         table.getDefaultCell()
              .setBorder(Rectangle.BOTTOM);
         table.getDefaultCell()
-             .setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+             .setHorizontalAlignment(Element.ALIGN_LEFT);
         table.getDefaultCell()
              .setVerticalAlignment(Element.ALIGN_TOP);
 

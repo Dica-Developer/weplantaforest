@@ -34,7 +34,9 @@ public class CertificateService {
                                                .getName());
         pdfTexts.put("certificateNumber", certificateNumber);
         try {
-            pdf.writePdfDataToOutputStream(response.getOutputStream(), pdfTexts, RELATIVE_STATIC_IMAGES_PATH);
+            pdf.writePdfDataToOutputStream(response.getOutputStream(), pdfTexts, RELATIVE_STATIC_IMAGES_PATH, certificate.getCreator()
+                                                                                                                         .getLang()
+                                                                                                                         .getShortName());
         } catch (Exception e) {
             throw e;
         }

@@ -20,7 +20,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 
 public class PdfHelper {
 
-    public void createHeaderBlock(PdfContentByte cb, int pageNumber, int pageSize, Map<String, String> pdfTexts) throws DocumentException, IOException {
+    public void createHeaderBlock(PdfContentByte cb, Map<String, String> pdfTexts) throws DocumentException, IOException {
         cb.saveState();
         cb.setColorFill(new BaseColor(79, 58, 44));
         cb.rectangle(0.0f, 822.0f, 595.0f, 20.0f);
@@ -44,6 +44,7 @@ public class PdfHelper {
         table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_company"), textFont)));
         table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_account"), textFont)));
         table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_homepage"), textFont)));
+        table.addCell(new Phrase(new Chunk("", textFont)));
 
         table.writeSelectedRows(0, 1, 0, 842, cb);
     }
@@ -80,8 +81,8 @@ public class PdfHelper {
         table.writeSelectedRows(0, 1, 0, 842, cb);
     }
 
-    public void createCertificateImage(PdfContentByte cb, String imagePath, float xPos, float yPos) throws DocumentException, IOException {
-        URL imageUrl = getClass().getResource(imagePath + "/IPAT_Zertifikat_DE.jpg");
+    public void createCertificateImage(PdfContentByte cb, String imagePath, String language, float xPos, float yPos) throws DocumentException, IOException {
+        URL imageUrl = getClass().getResource(imagePath + "/IPAT_Zertifikat_" + language +".jpg");
         final Image logoImage = Image.getInstance(imageUrl);
         logoImage.setAbsolutePosition(xPos, yPos);
         logoImage.scalePercent(70f, 70f);
