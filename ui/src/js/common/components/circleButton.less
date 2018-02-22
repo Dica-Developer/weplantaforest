@@ -1,3 +1,5 @@
+@import '../../../less/basecolors.less';
+
 .circleButton {
   display: inline-block;
   margin: 15px 35px 0px 0px;
@@ -10,7 +12,7 @@
       height: 24px;
       padding: 4px 0px 0px 3px;
       border-radius: 50%;
-      color: #fff;
+      color: @base-background-color;
       background-color: #000;
     }
     span.label,
@@ -18,19 +20,19 @@
       color: #000;
       text-align: center;
       text-decoration: none;
-      background-color: #fff;
+      background-color: @base-background-color;
       padding: 6px;
       font-size: 14px; 
     }
   }
   a:hover {
     span.circle {
-      background-color: #82ab1f;
-      color: #fff;
+      background-color: @accent-color;
+      color: @base-background-color;
     }
     span.label {
-      background-color: #fff;
-      color: #82ab1f;
+      background-color: @base-background-color;
+      color: @accent-color;
     }
   }
 }
