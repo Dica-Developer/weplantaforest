@@ -66,8 +66,8 @@ export default class GiftOverview extends Component {
       <div className="container paddingTopBottom15">
         <div className="row gifts">
           <div className="col-md-12">
-            <h2>Gutschein-Übersicht</h2>
-            <h3>Erstellte Gutscheine:</h3>
+            <h1>Gutschein-Übersicht</h1>
+            <h2>Erstellte Gutscheine:</h2>
             <div className="giftItem">
               <div>
                 Code:
@@ -82,7 +82,7 @@ export default class GiftOverview extends Component {
               {this.state.consignorGifts.map(function(gift, i) {
                 return (<ConsignorGiftItem gift={gift}  key={i}/>);
               })}
-            <h3>Eingelöste Gutscheine:</h3>
+            <h2>Eingelöste Gutscheine:</h2>
             <div className="giftItem">
               <div>
                 Code:
@@ -97,7 +97,7 @@ export default class GiftOverview extends Component {
           </div>
           <div className="col-md-12 createGift">
             <h2>Gutschein erstellen</h2>
-            <IconButton text="Gutschein erstellen" glyphIcon="glyphicon-gift" onClick={() => {
+            <IconButton className="iconButton" text="Gutschein erstellen" glyphIcon="glyphicon-gift" onClick={() => {
               this.linkTo('/plantGift/5')
             }}/>
           </div>

@@ -93,14 +93,14 @@ export default class RedeemGiftContent extends Component {
       content =
       <div>
           <h2>Gutschein einlösen</h2>
-            Bitte gib hier Deinen 16 stelligen Gutschein-Code ein:<br/><br/>
-            <input type="text" size="4" maxLength="4" ref="part1" onBlur={(event)=>{this.updateInput('part1', event)}} onPaste={this.trimAndSetValuesIfPossible.bind(this)}/>&nbsp;-&nbsp;
-            <input type="text" size="4" maxLength="4" ref="part2" onBlur={(event)=>{this.updateInput('part2', event)}} />&nbsp;-&nbsp;
-            <input type="text" size="4" maxLength="4" ref="part3" onBlur={(event)=>{this.updateInput('part3', event)}}/>&nbsp;-&nbsp;
-            <input type="text" size="4" maxLength="4" ref="part4" onBlur={(event)=>{this.updateInput('part4', event)}}/>
-            <br/><br/>
-            <IconButton text="Gutschein einlösen" glyphIcon="glyphicon-gift" onClick={this.redeemGift.bind(this)}/>
-            <br/><br/>
+            <p>Bitte gib hier Deinen 16 stelligen Gutschein-Code ein:</p>
+            <div className="inputWrapper">
+              <input type="text" size="4" maxLength="4" ref="part1" onBlur={(event)=>{this.updateInput('part1', event)}} onPaste={this.trimAndSetValuesIfPossible.bind(this)}/>&nbsp;-&nbsp;
+              <input type="text" size="4" maxLength="4" ref="part2" onBlur={(event)=>{this.updateInput('part2', event)}} />&nbsp;-&nbsp;
+              <input type="text" size="4" maxLength="4" ref="part3" onBlur={(event)=>{this.updateInput('part3', event)}}/>&nbsp;-&nbsp;
+              <input type="text" size="4" maxLength="4" ref="part4" onBlur={(event)=>{this.updateInput('part4', event)}}/>
+            </div>
+            <IconButton className="iconButton" text="Gutschein einlösen" glyphIcon="glyphicon-gift" onClick={this.redeemGift.bind(this)}/>
         </div>
       ;
     }
