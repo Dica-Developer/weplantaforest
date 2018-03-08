@@ -74,7 +74,7 @@ export default class Receipts extends Component {
     return (
       <div className="row receipts">
         <div className="col-md-12">
-          <h2>Spendenquittungen</h2>
+          <h1>Spendenquittungen</h1>
         </div>
         <div className="col-md-12">
           {text}<br/>

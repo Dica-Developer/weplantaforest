@@ -15,7 +15,7 @@ export default class Social extends Component {
       <div className="container paddingTopBottom15 social">
           <div className="row">
             <div className="col-md-12">
-              <h2>Social</h2>
+              <h1>Social</h1>
             </div>
           </div>
           <div className="row">

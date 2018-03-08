@@ -615,7 +615,7 @@ export default class ProjectEditor extends Component {
       <div className="container paddingTopBottom15 projectEditor">
         <div className="row ">
           <div className="col-md-12">
-            <h2>Projekt-Editor</h2>
+            <h1>Projekt-Editor</h1>
           </div>
         </div>
         <div className="row project-data">

@@ -30,7 +30,7 @@ export default class TreesFound extends Component {
       <div className="col-md-12">
         <div className="align-center">
           <div className="foundTreesHead">
-            <h2>Zertifikat&nbsp;#{this.props.certificateId}</h2>
+            <h1>Zertifikat&nbsp;#{this.props.certificateId}</h1>
             von:&nbsp;<Link to={`/user/` + this.props.certificate.creator.name}>
               {this.props.certificate.creator.name}
             </Link><br/>

@@ -86,7 +86,7 @@ export default class ProposalPlantPage extends Component {
       <div className="container paddingTopBottom15">
         <div className="row proposalPlantPage">
           <div className="col-md-12">
-            <h2>{this.props.route.header}</h2>
+            <h1>{this.props.route.header}</h1>
             <ButtonBar chosen={chosen}/>
             <div className="align-center bold plantItemDesc">
               <div></div>

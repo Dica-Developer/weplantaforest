@@ -88,7 +88,7 @@ export default class ProjectsPage extends Component {
           <div className="col-md-12">
             <h1>Projektübersicht</h1>
             <div className="projects">
-              <h2>laufende Projekte</h2>
+              <h1>laufende Projekte</h1>
                 {this.state.activeProjects.map(function(project, i) {
                   return (<ActiveProject project={project} key={i} />);
                 })}
@@ -99,7 +99,7 @@ export default class ProjectsPage extends Component {
           </div>
           <div className="col-md-12">
             <div className="projects">
-              <h2>abgeschlossene Projekte</h2>
+              <h1>abgeschlossene Projekte</h1>
                 {this.state.completedProjects.content.map(function(project, i) {
                   return (<CompletedProject project={project} key={i} />);
                 })}

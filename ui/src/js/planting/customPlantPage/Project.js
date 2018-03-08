@@ -65,7 +65,7 @@ export default class Project extends Component {
     var that = this;
     return (
       <div className="project">
-        <h2>{this.props.project.projectName}</h2>
+        <h1>{this.props.project.projectName}</h1>
           <ArticleDesc />
         {this.state.articles.map(function(article, i) {
             return (<Article article={article} key={i} ref={"article_" + i} sliderIndex={i} updatePrice={that.props.updatePrice.bind(this)}/>);

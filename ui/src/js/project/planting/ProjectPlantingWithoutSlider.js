@@ -39,9 +39,9 @@ export default class ProjectPlantingWithoutSlider extends Component {
     }
     return (
       <div className=" projectPlanting">
-        <h2>{this.props.projectName}&nbsp;/&nbsp;
+        <h1>{this.props.projectName}&nbsp;/&nbsp;
           <i>hier pflanzen</i>
-        </h2>
+        </h1>
         {plantContent}
         <div className="bottom align-center">
           <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)}/>

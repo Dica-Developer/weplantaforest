@@ -99,14 +99,14 @@ export default class Sepa extends Component {
   render() {
     var header = '';
     if (this.state.paymentDone) {
-      header = <div><h2>Zahlung erfolgreich abgeschlossen!</h2>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+      header = <div><h1>Zahlung erfolgreich abgeschlossen!</h1>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
       if (JSON.parse(localStorage.getItem('isGift'))) {
-        header = <div><h2>Zahlung erfolgreich abgeschlossen!</h2>Deinen Gutschein-Code findest du<a role="button" onClick={this.switchToGiftOverview.bind(this)}> hier</a><br/>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+        header = <div><h1>Zahlung erfolgreich abgeschlossen!</h1>Deinen Gutschein-Code findest du<a role="button" onClick={this.switchToGiftOverview.bind(this)}> hier</a><br/>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
       }else{
-        header = <div><h2>Zahlung erfolgreich abgeschlossen!</h2>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+        header = <div><h1>Zahlung erfolgreich abgeschlossen!</h1>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
       }
     } else {
-      header = <h2>SEPA Lastschrift</h2>;
+      header = <h1>SEPA Lastschrift</h1>;
     };
 
     return (

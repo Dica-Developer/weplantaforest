@@ -46,7 +46,7 @@ export default class ActivationPage extends Component {
         <div className="container paddingTopBottom15">
           <div className="row activationPage">
             <div className="col-md-12">
-              <h2>{this.state.headLine}</h2>
+              <h1>{this.state.headLine}</h1>
               {this.state.text}
             </div>
           </div>

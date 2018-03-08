@@ -78,7 +78,7 @@ export default class CreditCard extends Component {
       <div className="payment-data">
         <div className="row">
           <div className="col-md-12">
-            <h2>Kreditkartenzahlung</h2>
+            <h1>Kreditkartenzahlung</h1>
           </div>
         </div>
         <div className="row">

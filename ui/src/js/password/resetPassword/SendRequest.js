@@ -77,7 +77,7 @@ export default class SendRequest extends Component {
 
     return (
       <div className="col-md-12">
-        <h2>{headLine}</h2>
+        <h1>{headLine}</h1>
           {inputForm}
         <Notification ref="notification"/>
       </div>

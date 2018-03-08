@@ -80,7 +80,7 @@ export default class CustomPlantPage extends Component {
       <div className="container paddingTopBottom15">
         <div className="row customPlantPage">
           <div className="col-md-12">
-            <h2>{this.props.route.header}</h2>
+            <h1>{this.props.route.header}</h1>
             <ButtonBar chosen="custom"/>
             <div ref="planting" className={"plantItems"}>
               {this.state.projects.map(function(project, i) {

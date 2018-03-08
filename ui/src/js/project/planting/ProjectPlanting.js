@@ -176,9 +176,9 @@ export default class ProjectPlanting extends Component {
       <div ref="planting" className={(this.state.fade
         ? 'fadeOut'
         : 'fadeIn') + " projectPlanting"}>
-        <h2>{this.props.projectName}&nbsp;/&nbsp;
+        <h1>{this.props.projectName}&nbsp;/&nbsp;
           <i>hier pflanzen</i>
-        </h2>
+        </h1>
         <ProjectSlider ref="projectSlider" maximumAmountOfTreesToPlant={this.state.maximumAmountOfTreesToPlant} ref="projectSlider" price={this.state.price} balanceArticleSliders={this.balanceArticleSliders.bind(this)}/>
         <div className="articleDesc">
           <div>

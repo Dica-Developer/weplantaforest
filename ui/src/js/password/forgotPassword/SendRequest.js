@@ -42,7 +42,7 @@ export default class SendRequest extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <h2>Passwort vergessen</h2>
+        <h1>Passwort vergessen</h1>
         <div className="form">
           Bitte gib deinen Nutzernamen an <br/>und wir schicken dir an die angegebene E-Mail Adresse einen Link,<br/>womit du dein Passwort zurücksetzen kannst.
           <br/>

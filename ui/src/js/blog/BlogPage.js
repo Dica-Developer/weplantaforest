@@ -19,7 +19,7 @@ class Paragraph extends Component {
     var textPart;
     let imageUrl = '';
     if (this.props.content.title != '') {
-      titlePart = <h2>{getTextForSelectedLanguage(this.props.content.title)}</h2>;
+      titlePart = <h1>{getTextForSelectedLanguage(this.props.content.title)}</h1>;
     }else{
       titlePart= '';
     }

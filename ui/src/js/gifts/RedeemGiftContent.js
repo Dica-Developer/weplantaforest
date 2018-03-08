@@ -88,11 +88,11 @@ export default class RedeemGiftContent extends Component {
   render() {
     var content;
     if (this.state.isRedeemed) {
-      content = <h2>Der Gutschein wurde eingelöst! Die Bäume wurden dir gutgeschrieben.</h2>;
+      content = <h1>Der Gutschein wurde eingelöst! Die Bäume wurden dir gutgeschrieben.</h1>;
     } else {
       content =
       <div>
-          <h2>Gutschein einlösen</h2>
+          <h1>Gutschein einlösen</h1>
             <p>Bitte gib hier Deinen 16 stelligen Gutschein-Code ein:</p>
             <div className="inputWrapper">
               <input type="text" size="4" maxLength="4" ref="part1" onBlur={(event)=>{this.updateInput('part1', event)}} onPaste={this.trimAndSetValuesIfPossible.bind(this)}/>&nbsp;-&nbsp;

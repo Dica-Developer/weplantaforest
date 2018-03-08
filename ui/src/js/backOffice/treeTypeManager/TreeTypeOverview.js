@@ -267,7 +267,7 @@ export default class TreeTypeOverview extends Component {
       <div className="container paddingTopBottom15 treeTypeOverview">
         <div className="row ">
           <div className="col-md-12">
-            <h2>Baumarten</h2>
+            <h1>Baumarten</h1>
           </div>
         </div>
           {this.state.treeTypes.map(function(treeType, i) {

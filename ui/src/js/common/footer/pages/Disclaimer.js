@@ -56,7 +56,7 @@ export default class Disclaimer extends Component {
       <div className="container paddingTopBottom15 disclaimer">
           <div className="row">
             <div className="col-md-12">
-              <h2>Haftungsauschluss</h2>
+              <h1>Haftungsauschluss</h1>
             </div>
           </div>
           <div className="row">

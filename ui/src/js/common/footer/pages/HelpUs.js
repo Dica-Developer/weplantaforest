@@ -42,7 +42,7 @@ export default class HelpUs extends Component {
       <div className="container paddingTopBottom15 helpUs">
           <div className="row">
             <div className="col-md-12">
-              <h2>Hilf uns</h2>
+              <h1>Hilf uns</h1>
             </div>
           </div>
           <div className="row">

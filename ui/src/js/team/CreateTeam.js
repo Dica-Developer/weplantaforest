@@ -57,7 +57,7 @@ export default class CreateTeam extends Component {
       <div>
         <div className="row">
           <div className="col-md-12">
-            <h2>{counterpart.translate('TEAM_CREATE')}</h2>
+            <h1>{counterpart.translate('TEAM_CREATE')}</h1>
           </div>
         </div>
         <div className="row">

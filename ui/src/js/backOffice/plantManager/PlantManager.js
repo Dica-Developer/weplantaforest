@@ -126,7 +126,7 @@ export default class PlantManager extends Component {
     return (
       <div className="container paddingTopBottom15 plantManager">
         <div className="row ">
-          <h2>Pflanzen</h2>
+          <h1>Pflanzen</h1>
           <div className="col-md-4">
             <label className="select-label">User</label>
           </div>

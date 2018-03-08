@@ -11,7 +11,7 @@ export default class RequestSent extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <h2>Dein Passwort wurde zurück gesetzt!</h2>
+        <h1>Dein Passwort wurde zurück gesetzt!</h1>
       </div>
     );
   }

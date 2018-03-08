@@ -14,7 +14,7 @@ export default class LoadingItem extends Component {
   render() {
     return (
       <div className="loadingItem">
-        <h2>Daten werden geladen...</h2>
+        <h1>Daten werden geladen...</h1>
         <div>
           <span className="glyphicon glyphicon-refresh spinning"></span>
         </div>
