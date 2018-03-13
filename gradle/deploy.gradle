@@ -38,6 +38,15 @@ task npmInstall(type: Exec) {
   commandLine npmCommand, 'install'
 }
 
+task cleanBuildUi() {
+  group 'Deployment'
+
+  doLast {
+    project(':').file('ui/dist/js').deleteDir()
+    project(':').file('ui/dist/index.html').delete()
+  }
+}
+
 task buildUi(type: Exec) {
   group 'Deployment'
   
@@ -72,8 +81,10 @@ def replaceUrls(toReplace, replaceWith){
 task deployUi {
   description 'Deploys the project to a remote server'
   group 'Deployment'
-  
+
+  dependsOn cleanBuildUi
   dependsOn buildUi
+  buildUi.mustRunAfter cleanBuildUi
 
   doLast {
     assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
@@ -92,6 +103,9 @@ task deployUi {
 
         logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
         rsync("ui/dist/", "${ipatUser}@${ipatHost}:${projectDir}/dist/")
+
+        logger.lifecycle "chown on directory ${projectDir}/dist"
+        execute "chmod -R ugo+r ${projectDir}/dist/"
       }
     }
   }
