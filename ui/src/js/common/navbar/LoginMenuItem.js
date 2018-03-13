@@ -18,6 +18,7 @@ export default class LoginMenuItem extends Component {
       password: '',
       loggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''),
       userDetails: {
+        imageFileName: 'default',
         co2Data: {}
       }
     };
