@@ -48,7 +48,7 @@ public class PdfCertificateView2 {
 
         PdfContentByte cb = pdfWriter.getDirectContent();
         PdfHelper.createHeaderBlock(cb,1,1);
-        PdfHelper.createCircleAndText(cb, "Zertifikat", 298f, 665f, 75f, textFontForCircle, 0x9E, 0x3C, 0x59);
+//        pdfHelper.createCertificateImage(cb, imagePath, 665f, 116f);
         createTreeCountAndCustomTextBlock(cb, text, treeCount);
         createLawTextDateAndSignatureBlock(cb, number, date);
         pdfHelper.addLogo(cb, _imagePath, 262f, 20f);

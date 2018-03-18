@@ -47,6 +47,8 @@ public class CertificateController {
     private @NonNull CartRepository _cartRepository;
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
+    
+    private @NonNull CertificateService _certificateSerivce;
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
 
@@ -129,15 +131,10 @@ public class CertificateController {
         if (certificate == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            int treeCount = 0;
-            for (Cart cart : certificate.getCarts()) {
-                treeCount += cart.getTreeCount();
-            }
-            PdfCertificateView pdf = new PdfCertificateView();
             try {
-                pdf.writePdfDataToOutputStream(response.getOutputStream(), treeCount, certificate.getText(), certificate.getCreator().getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH);
+                _certificateSerivce.generatePdf(certificate, response, certificateNumber);
             } catch (Exception e) {
-                LOG.error("Error occured while creating PDF!", e);
+                e.printStackTrace();
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return new ResponseEntity<>(HttpStatus.OK);
