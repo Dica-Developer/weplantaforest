@@ -85,7 +85,7 @@ export default class CreditCard extends Component {
           <div className="col-md-6">
             <div className="row">
               <div className="col-md-6">
-                <label className="input-label">Firma</label>
+                <label className="input-label">Unternehmen</label>
               </div>
               <div className="col-md-6">
                 <InputText toUpdate="company" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
@@ -93,7 +93,7 @@ export default class CreditCard extends Component {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="input-label">Firmenzusatz</label>
+                <label className="input-label">Unternehmenszusatz</label>
               </div>
               <div className="col-md-6">
                 <InputText toUpdate="companyAddon" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>

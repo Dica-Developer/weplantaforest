@@ -20,10 +20,10 @@ export default class ProjectOfferPage extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <h2 className="thanks">Vielen Dank für das Anbieten einer Projektfläche!</h2>
+        <h2 className="thanks">Vielen Dank für das Anbieten einer Projekt!</h2>
         <br/>
         <div className="align-center">
-          <IconButton text="WEITERES ANGEBOT ABGEBEN" glyphIcon="glyphicon-backward" onClick={this.setThankYou.bind(this)}/>
+          <IconButton text="Weiteres Angebot abgeben" glyphIcon="glyphicon-backward" onClick={this.setThankYou.bind(this)}/>
         </div>
         <br/>
       </div>

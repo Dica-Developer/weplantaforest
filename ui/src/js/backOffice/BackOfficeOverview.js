@@ -59,7 +59,7 @@ export default class BackOfficeOverview extends Component {
             </div>
           </div>
           <div className="row ">
-            <BackofficeLink text="Blog" url="/article-manager" glyphIcon="glyphicon-text-size"/>
+            <BackofficeLink text="Content" url="/article-manager" glyphIcon="glyphicon-text-size"/>
             <BackofficeLink text="Carts" url="/cart-manager" glyphIcon="glyphicon-shopping-cart"/>
             <BackofficeLink text="Projekte" url="/project-manager" glyphIcon="glyphicon-tags"/>
             <BackofficeLink text="User" url="/user-manager" glyphIcon="glyphicon-user"/>

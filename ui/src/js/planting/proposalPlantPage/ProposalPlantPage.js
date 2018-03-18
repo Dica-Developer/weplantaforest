@@ -99,7 +99,7 @@ export default class ProposalPlantPage extends Component {
                 Anzahl
               </div>
               <div>
-                Projektfläche
+                Projekt
               </div>
               <div></div>
               <div>

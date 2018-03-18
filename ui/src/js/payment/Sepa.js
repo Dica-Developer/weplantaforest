@@ -128,7 +128,7 @@ export default class Sepa extends Component {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="input-label">Firmenzusatz</label>
+                <label className="input-label">Unternehmenzusatz</label>
               </div>
               <div className="col-md-6">
                 <InputText toUpdate="companyAddon" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>

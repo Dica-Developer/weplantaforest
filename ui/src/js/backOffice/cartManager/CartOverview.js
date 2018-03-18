@@ -175,7 +175,7 @@ export default class CartOverview extends Component {
           visible: true
         }, {
           key: 'company',
-          name: 'Firma',
+          name: 'Unternehmen',
           width: 200,
           filterable: true,
           sortable: true,

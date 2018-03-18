@@ -90,7 +90,7 @@ export default class ProjectOffer extends Component {
       <div className="projectOffer container">
         <div className="row">
           <div className="col-md-12 item-align-start">
-            <h1>Projektfläche anbieten</h1>
+            <h1>Projekt anbieten</h1>
             <p>Wir würden gern Flächen kaufen, um sie zu langfristig, gemeinnützig, nachhaltig betriebenen Wäldern umzuwandeln. Wir suchen Flächen, die:</p>
             <ul>
               <li>für eine Aufforstung in Frage kommen, für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen)</li>
