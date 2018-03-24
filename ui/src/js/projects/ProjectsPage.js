@@ -86,7 +86,7 @@ export default class ProjectsPage extends Component {
       <div className="container paddingTopBottom15">
         <div className="row projectsPage">
           <div className="col-md-12">
-            <h1>Projektübersicht</h1>
+            <h1>Projekte</h1>
             <div className="projects">
               <h2>laufende Projekte</h2>
                 {this.state.activeProjects.map(function(project, i) {
