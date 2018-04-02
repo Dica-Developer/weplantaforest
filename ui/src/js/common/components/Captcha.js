@@ -68,12 +68,12 @@ export default class Captcha extends Component {
   render() {
     return (
       <div className="captcha">
-        <img src={"data:image/jpg;base64," + this.state.captchaImg}/>
-        <br/>
-        Bitte hier die 4 Zeichen<br/>aus dem Bild eingeben:
-        <br/>
-        <input type="text" value={this.state.userInput} onChange={this.updateUserInput.bind(this)}/>
-        <IconButton glyphIcon="glyphicon-refresh" onClick={this.updateCaptchaToken.bind(this)}/>
+        <img className="captchaImage" src={"data:image/jpg;base64," + this.state.captchaImg}/>
+        <p>Bitte hier die 4 Zeichen aus dem Bild eingeben:</p>
+        <div className="inputWrapper">
+          <input type="text" className="form-control inputField" value={this.state.userInput} onChange={this.updateUserInput.bind(this)}/>
+          <IconButton glyphIcon="glyphicon-refresh" onClick={this.updateCaptchaToken.bind(this)}/>
+        </div>
         <Notification ref="notification"/>
       </div>
     );

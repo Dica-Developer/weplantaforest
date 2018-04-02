@@ -5,9 +5,7 @@
     img{
       width: 150px;
       height: 52px;
-    }
-    input{
-      width: 150px!important;
+      margin-bottom: 15px;
     }
   }
 }
@@ -16,11 +14,19 @@
   display: inline-block;
   margin-top: 10px;
   margin-bottom: 10px;
-  padding: 10px;
   background-color: @base-background-color;
-  input {
-    margin: 10px;
-    width: 200px;
+
+  .captchaImage {
+    margin-bottom: 15px;
+  }
+
+  .inputWrapper {
+    .inputField {
+      display: inline-block;
+      margin: 10px 10px 10px 0px;
+      width: 200px;
+      padding-left: 0px;
+    }
   }
 
   .iconButton{
