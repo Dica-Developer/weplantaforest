@@ -32,8 +32,6 @@ export default class NavBar extends Component {
   render() {
     return (
       <div className="user-details">
-        <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
-        <label>{this.props.user.userName}</label>
         <a className="logout-link" onClick={this.logout.bind(this)} className="pull-right">logout</a>
       </div>
     );
