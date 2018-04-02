@@ -18,15 +18,6 @@ export default class ProjectOffer extends Component {
       first: '',
       name: '',
       mail: '',
-      location: '',
-      size: '',
-      size: '',
-      owner: '',
-      isAfforestation: false,
-      purpose: '',
-      isSelling: false,
-      isLeasing: false,
-      lease: '',
       comment: ''
     };
   }
@@ -102,89 +93,23 @@ export default class ProjectOffer extends Component {
             </ul>
             <h3>Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.</h3>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6 item-align-start">
-            <p>Name:</p>
+          <div className="form-group">
+              <label htmlFor="firstname_familyname">Vorname Nachname*:</label>
+              <InputText cssclass="form-control" toUpdate="name" id="firstname_familyname" updateValue={this.updateValue.bind(this)}/>
+            </div>
+          <div className="form-group">
+              <label htmlFor="e_mail">E-Mail*:</label>
+              <InputText cssclass="form-control" id="e_mail" toUpdate="name" updateValue={this.updateValue.bind(this)}/>
           </div>
-          <div className="col-md-6 item-align-start">
-            <InputText cssclass="form-control" toUpdate="first" updateValue={this.updateValue.bind(this)}/>
+          <div className="form-group">
+              <label htmlFor="message">Nachricht*:</label>
+              <TextArea cssclass="form-control" id="message" toUpdate="comment" updateValue={this.updateValue.bind(this)}/>
           </div>
-          <div className="col-md-6 item-align-start">
-            <p>Vorname:</p>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <InputText cssclass="form-control" toUpdate="name" updateValue={this.updateValue.bind(this)}/>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <p>E-Mail:</p>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <InputText cssclass="form-control" toUpdate="mail" updateValue={this.updateValue.bind(this)}/>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <p>Ort der Fläche:</p>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <InputText cssclass="form-control" toUpdate="location" updateValue={this.updateValue.bind(this)}/>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <p>Eigentümer:</p>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <InputText cssclass="form-control" toUpdate="owner" updateValue={this.updateValue.bind(this)}/>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <p>Aufforstung:</p>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <RadioButton className="form-control" id="radio-c-1" value="1" checked={this.state.isAfforestation} onChange={this.updateAfforestation.bind(this)} text="&nbsp; möglich&nbsp;&nbsp;"/>
-            <RadioButton className="form-control" id="radio-c-0" value="0" checked={!this.state.isAfforestation} onChange={this.updateAfforestation.bind(this)} text="&nbsp; nicht möglich"/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6 item-align-start">
-            <p>Nutzen der Fläche:</p>
-          </div>
-          <div className="col-md-6 item-align-start">
-            Wie wurde die Fläche bisher genutzt?<br/>
-            <TextArea className="form-control" toUpdate="purpose" updateValue={this.updateValue.bind(this)}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6 item-align-start">
-            <p>Pachtverträge:</p>
-          </div>
-          <div className="col-md-6 item-align-start">
-            Sind Pachtverträge abgeschlossen?<br/>
-            <RadioButton className="form-control" id="radio-leasing-1" value="1" checked={this.state.isLeasing} onChange={this.updateLeasing.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
-            <RadioButton className="form-control" id="radio-leasing-0" value="0" checked={!this.state.isLeasing} onChange={this.updateLeasing.bind(this)} text="&nbsp; nein"/>
-          </div>
-          <div className="col-md-6 item-align-start">&nbsp;</div>
-          <div className="col-md-6 item-align-start">
-            Wenn ja, wie lange laufen diese noch?<br/>
-            <InputText cssclass="form-control" toUpdate="lease" updateValue={this.updateValue.bind(this)}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6 item-align-start">
-            <p>Bemerkungen:</p>
-          </div>
-          <div className="col-md-6 item-align-start">
-            <TextArea className="form-control" toUpdate="comment" updateValue={this.updateValue.bind(this)}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6 item-align-start">&nbsp;</div>
-          <div className="col-md-6 item-align-start">
+          <div className="col-md-12 item-align-start">
             <Captcha ref="captcha"/>
           </div>
-          <div className="col-md-6 item-align-start">&nbsp;</div>
-          <div className="col-md-6 item-align-start">
+          <div className="col-md-12 item-align-start">
             <IconButton text="Angebot abschicken" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
-          </div>
-          <div className="col-md-6 item-align-start">&nbsp;</div>
-          <div className="col-md-6 item-align-start">
             <Notification ref="notification"/>
           </div>
         </div>
