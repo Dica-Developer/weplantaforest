@@ -42,7 +42,7 @@ export default class TeamMember extends Component {
   render() {
     return (
       <div className="teamMember">
-        <h2>Mitglieder</h2>
+        <h1>Mitglieder</h1>
         {this.props.teamMember.content.map(function(member, i) {
           return (<Member member={member} key={i}/>);
         })}

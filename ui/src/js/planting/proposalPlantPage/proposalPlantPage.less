@@ -1,3 +1,5 @@
+@import '../../../less/basecolors.less';
+
 @media (max-width: 630px) {
   .proposalPlantPage {
     .col-md-12 {
@@ -96,7 +98,7 @@
   }
 }
 .proposalPlantPage {
-  background-color: #fff;
+  background-color: @base-background-color;
   margin-left: 0;
   margin-right: 0;
   h2 {
@@ -199,10 +201,10 @@
 
     img {
       border-radius: 50%;
-      border-color: #82ab1f;
+      border-color: @accent-color;
       border-style: solid;
       border-width: 4px;
-      background-color: #fff;
+      background-color: @base-background-color;
     }
   }
 

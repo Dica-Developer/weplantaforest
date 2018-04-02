@@ -126,7 +126,7 @@ export default class Overview extends Component {
     return (
       <div className="row">
         <div className="col-md-12">
-          <h2>Kasse</h2>
+          <h1>Kasse</h1>
           <div>
             Sicher spenden für "I plant a tree". Das Senden der Daten ist mit HTTPS verschlüsselt. Bitte überprüfen sie die Richtigkeit Ihrer Angaben, denn diese finden sich in Ihrer Spendenquittung wieder. Achten sie auch unbedingt auf die richtige Syntax Ihrer Emailadresse - an diese wird die Spendenquittung versendet.
           </div>

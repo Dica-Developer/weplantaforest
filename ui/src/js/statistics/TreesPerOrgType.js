@@ -16,7 +16,7 @@ export default class TreesPerOrgType extends Component {
         1, 1, 1, 1
       ],
       labels: [
-        'PrivatPerson', 'Firmen', 'Non-Profit Organisationen', 'Schulen'
+        'PrivatPerson', 'Unternehmen', 'Non-Profit Organisationen', 'Schulen'
       ],
       options: {
         scaleShowGridLines: true,

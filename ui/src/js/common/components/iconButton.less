@@ -1,3 +1,5 @@
+@import '../../../less/basecolors.less';
+
 .iconButton {
   display: inline-block;
   a,
@@ -7,11 +9,11 @@
     text-decoration: none;
     border-radius: 3px;
     span:nth-child(1) {
-      color: #ffffff;
+      color: @base-background-color;
       margin-right: 5px;
     }
-    background-color: #4F3A2C;
-    color: #ffffff;
+    background-color: @primary-color;
+    color: @base-background-color;
     padding: 6px;
     font-size: 14px; 
   }

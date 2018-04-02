@@ -1,3 +1,5 @@
+@import '../../../less/basecolors.less';
+
 @media (min-width: 436px) and (max-width: 680px) {
   .header {
     .outline-logo {
@@ -40,25 +42,25 @@
 
   .tree-chars {
     font-family: Georgia,Times,Times New Roman,serif;
-    color: #fff;
+    color: @base-background-color;
     font-size: 3em;
   }
 
   .tree-number {
-    color: #fff;
+    color: @base-background-color;
     font-size: 3em;
     font-weight: bold;
   }
 
   .co2-number {
-    color: #fff;
+    color: @base-background-color;
     font-size: 1.3em;
     font-weight: bold;
   }
 
   .co2-chars {
     font-family: Georgia,Times,Times New Roman,serif;
-    color: #fff;
+    color: @base-background-color;
     font-size: 1.3em;
   }
 
@@ -87,7 +89,7 @@
   .buttonBar {
     width: 199px;
 
-    background-color: #4F3A2C;
+    background-color: @primary-color;
     padding: 0;
     float: right;
     div {

@@ -77,7 +77,7 @@ export default class DoRegistration extends Component {
       <div className="registrationPage">
         <div className="row">
           <div className="col-md-12">
-            <h2>Anmelden</h2>
+            <h1>Anmelden</h1>
           </div>
         </div>
         <div className="row">

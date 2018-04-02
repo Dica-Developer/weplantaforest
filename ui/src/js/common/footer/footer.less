@@ -1,34 +1,23 @@
-@media (max-width: 994px) {
-  .footer {
-    .col-md-2 {
-      width: 100%!important;
-    }
-  }
-}
+@import '../../../less/basecolors.less';
 
 .footer {
-  background-color: #4F3A2C;
+  background-color: @primary-color;
   left: 0;
   right: 0;
   width: 100%;
   margin: 0;
   position: absolute;
   bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 70px;
-
-
-  .col-md-2{
-    text-align: center;
-  }
 
   a {
     color: #ded8d9;
     font-size: 14px;
+    display: block;
+    margin-bottom: 7px;
+    text-align: left;
   }
   a:hover {
-    color: #fff;
+    color: @base-background-color;
     text-decoration: none;
   }
   a:active,
@@ -37,7 +26,8 @@
   }
 
   .container {
-    padding-top: 27px;
+    padding-top: 25px;
+    padding-bottom: 18px;
   }
 }
 

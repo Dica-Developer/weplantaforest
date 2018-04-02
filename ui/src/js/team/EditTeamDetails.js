@@ -76,7 +76,7 @@ export default class EditTeamDetails extends Component {
       <div>
         <div className="row">
           <div className="col-md-12">
-            <h2>{counterpart.translate('TEAM_EDIT')}</h2>
+            <h1>{counterpart.translate('TEAM_EDIT')}</h1>
           </div>
         </div>
         <div className="row">

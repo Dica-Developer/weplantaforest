@@ -32,9 +32,9 @@ export default class ProjectTeaser extends Component {
         <a role="button" onClick={() => {
           this.linkTo(`/projects/` + this.props.content.projectName)
         }}>
-          <h2>
+          <h1>
             {this.props.content.projectName}
-          </h2>
+          </h1>
           <div className="description">
             <p dangerouslySetInnerHTML={{
               __html: getShortText(getTextForSelectedLanguage(this.props.content.description), 300)

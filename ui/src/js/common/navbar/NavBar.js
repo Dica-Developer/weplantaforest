@@ -128,7 +128,7 @@ export default class NavBar extends Component {
     return (
       <div>
         <Menu ref="left" alignment="left">
-          <MenuItem hash="/projects">Projektübersicht</MenuItem>
+          <MenuItem hash="/projects">Projekte</MenuItem>
           <MenuItem hash="/ranking">Beste Unternehmen</MenuItem>
           <MenuItem hash="/certificate/find">Pflanzungen finden</MenuItem>
           <MenuItem hash={"/gift/redeem"}>Gutschein einlösen</MenuItem>
@@ -143,7 +143,7 @@ export default class NavBar extends Component {
           <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
           <MenuItem hash={"/user/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Mein Profil</MenuItem>
           <MenuItem hash={"/tools/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Tools</MenuItem>
-          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Gutscheinübersicht</MenuItem>
+          <MenuItem hash={"/gifts/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Gutscheine</MenuItem>
           <MenuItem hash={"/receipts/" + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Spendenquittungen</MenuItem>
           <BackOfficeMenuItem hash="/backOffice">Backoffice</BackOfficeMenuItem>
         </Menu>

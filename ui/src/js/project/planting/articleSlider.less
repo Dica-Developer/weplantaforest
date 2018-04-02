@@ -1,3 +1,4 @@
+@import '../../less/basecolors.less';
 
 .articleSlider {
   margin-bottom: 15px;
@@ -8,10 +9,10 @@
     width: 80px;
     .treeImg {
       border-radius: 50%;
-      border-color: #82ab1f;
+      border-color: @accent-color;
       border-style: solid;
       border-width: 4px;
-      background-color: #fff;
+      background-color: @base-background-color;
     }
   }
   .treeTypeInfo {
@@ -147,7 +148,7 @@
     height: 30px;
     cursor: pointer;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.01), 0 0 1px rgba(13, 13, 13, 0.01);
-    background: #82ab1f;
+    background: @accent-color;
     border-radius: 0;
     border: 0 solid rgba(1, 1, 1, 0);
   }
@@ -163,14 +164,14 @@
     margin-top: 0;
   }
   input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #82ab1f;
+    background: @accent-color;
   }
   input[type=range]::-moz-range-track {
     width: 100%;
     height: 30px;
     cursor: pointer;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.01), 0 0 1px rgba(13, 13, 13, 0.01);
-    background: #82ab1f;
+    background: @accent-color;
     border-radius: 0;
     border: 0 solid rgba(1, 1, 1, 0);
   }
@@ -198,7 +199,7 @@
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.01), 0 0 1px rgba(13, 13, 13, 0.01);
   }
   input[type=range]::-ms-fill-upper {
-    background: #82ab1f;
+    background: @accent-color;
     border: 0 solid rgba(1, 1, 1, 0);
     border-radius: 0;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.01), 0 0 1px rgba(13, 13, 13, 0.01);
@@ -213,10 +214,10 @@
     height: 30px;
   }
   input[type=range]:focus::-ms-fill-lower {
-    background: #82ab1f;
+    background: @accent-color;
   }
   input[type=range]:focus::-ms-fill-upper {
-    background: #82ab1f;
+    background: @accent-color;
   }
 
 }
@@ -230,9 +231,9 @@
 .treeCount {
   font-size: 14px;
   font-weight: bold;
-  color: #82ab1f;
+  color: @accent-color;
 }
 
 .glyphicon-tree-deciduous {
-  color: #82ab1f;
+  color: @accent-color;
 }

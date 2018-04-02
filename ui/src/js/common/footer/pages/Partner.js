@@ -7,22 +7,22 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
-require("./helpUs.less");
+require("./partner.less");
 
-export default class HelpUs extends Component {
+export default class Partner extends Component {
 
   constructor() {
     super();
     this.state = {
-      helpUs: []
+      partner: []
     }
   }
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8082/articles?articleType=HELP_US&language=' + localStorage.getItem('language')).then(function(response) {
+    axios.get('http://localhost:8082/articles?articleType=PARTNER&language=' + localStorage.getItem('language')).then(function(response) {
       that.setState({
-        helpUs: response.data
+        partner: response.data
       });
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -39,18 +39,18 @@ export default class HelpUs extends Component {
   render() {
     var that = this;
     return (
-      <div className="container paddingTopBottom15 helpUs">
+      <div className="container paddingTopBottom15 partner">
           <div className="row">
             <div className="col-md-12">
-              <h1>Hilf uns</h1>
+              <h1>Partner</h1>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
               <div>
-                {this.state.helpUs.map(function(help, i) {
-                return ( <div key={i}><p className="title">{help.title}</p><p dangerouslySetInnerHTML={{
-                  __html: help.intro
+                {this.state.partner.map(function(about, i) {
+                return ( <div key={i}><p className="title">{about.title}</p><p dangerouslySetInnerHTML={{
+                  __html: about.intro
                 }}></p></div>);
                 })}
               </div>

@@ -261,7 +261,7 @@ export default class SliderImageManager extends Component {
       <div className="container paddingTopBottom15 sliderImageManager">
         <div className="row ">
           <div className="col-md-12">
-            <h2>Slider</h2>
+            <h1>Slider</h1>
           </div>
         </div>
         {sliderImages}

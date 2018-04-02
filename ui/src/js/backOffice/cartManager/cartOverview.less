@@ -1,6 +1,8 @@
+@import '../../../less/basecolors.less';
+
 .cartOverview {
   .row {
-    background-color: #e5e5e5;
+    background-color: @base-background-color;
     margin-left: 0;
     margin-right: 0;
     padding-bottom: 10px;
@@ -16,7 +18,7 @@
       font-size: 22px;
     }
     .glyphicon-ok {
-      color: #82ab1f!important;
+      color: @accent-color!important;
     }
     .glyphicon-remove {
       color: red!important;
@@ -41,9 +43,9 @@
     z-index: 10002;
     border-style: solid;
     border-width: 3px;
-    border-color: #82ab1f;
+    border-color: @accent-color;
     .row{
-      background-color: #ffffff;
+      background-color: @base-background-color;
       .col-md-12{
         padding: 0;
       }

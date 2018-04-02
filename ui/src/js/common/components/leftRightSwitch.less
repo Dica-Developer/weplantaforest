@@ -1,25 +1,27 @@
+@import '../../../less/basecolors.less';
+
 .leftRightSwitch{
   display: inline-block;
   .buttonDiv {
-    background-color: #fff;
+    background-color: @base-background-color;
     font-size: 14px;
     display: inline-block;
     width: 60px;
-    color: #82ab1f;
+    color: @accent-color;
     border-style: solid;
     border-width: 1px;
-    border-color: #82ab1f;
+    border-color: @accent-color;
     text-align: center;
     a,
     a:active,
     a:visited {
-      color: #82ab1f;
+      color: @accent-color;
       text-decoration: none;
     }
 
     input {
       text-align: center;
-      color: #82ab1f;
+      color: @accent-color;
       width: 100%;
       margin-right: 5px;
       padding: 0;
@@ -27,18 +29,18 @@
     }
   }
   .buttonDiv:hover {
-    background-color: #82ab1f;
-    color: #fff;
+    background-color: @accent-color;
+    color: @base-background-color;
     a {
-      color: #fff;
+      color: @base-background-color;
     }
   }
 
   .chosen {
-    background-color: #82ab1f;
-    color: #fff;
+    background-color: @accent-color;
+    color: @base-background-color;
     a {
-      color: #fff;
+      color: @base-background-color;
     }
   }
 }

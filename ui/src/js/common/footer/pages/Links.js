@@ -56,7 +56,7 @@ export default class Links extends Component {
       <div className="container paddingTopBottom15 links">
           <div className="row">
             <div className="col-md-12">
-              <h2>Links</h2>
+              <h1>Links</h1>
             </div>
           </div>
           <div className="row">

@@ -30,7 +30,7 @@ export default class Tools extends Component {
         content = <div className="container paddingTopBottom15">
                     <div className="row receipts">
                       <div className="col-md-12">
-                        <h2>Tools&nbsp;/&nbsp;Spendenquittungen</h2>
+                        <h1>Tools&nbsp;/&nbsp;Spendenquittungen</h1>
                       </div>
                       <div className="col-md-12">Bisher haben Sie leider keine Spendenquittungen</div>
                     </div>

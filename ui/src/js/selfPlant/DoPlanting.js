@@ -141,7 +141,7 @@ export default class DoPlanting extends Component {
       <div>
         <div className="row">
           <div className="col-md-12">
-            <h2>Eigene Pflanzung erstellen</h2>
+            <h1>Eigene Pflanzung erstellen</h1>
           </div>
         </div>
         <div className="row">

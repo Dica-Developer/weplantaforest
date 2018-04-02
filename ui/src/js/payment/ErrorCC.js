@@ -17,7 +17,7 @@ export default class ErrorCC extends Component {
     var content;
     if(this.state.submitted){
       content = <div className="col-md-12">
-        <h2>Zahlung erfolgreich abgeschlossen!</h2>
+        <h1>Zahlung erfolgreich abgeschlossen!</h1>
           Vielen Dank für deine Spende!
       </div>;
     }else{

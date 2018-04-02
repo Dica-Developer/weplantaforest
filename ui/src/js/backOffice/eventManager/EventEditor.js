@@ -185,7 +185,7 @@ export default class EventEditor extends Component {
       <div className="container paddingTopBottom15 eventEditor">
         <div className="row ">
           <div className="col-md-12">
-            <h2>Event-Editor</h2>
+            <h1>Event-Editor</h1>
           </div>
         </div>
         <div className="row">

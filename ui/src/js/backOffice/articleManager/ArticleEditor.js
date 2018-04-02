@@ -314,7 +314,7 @@ export default class ArticleEditor extends Component {
       <div className="container paddingTopBottom15 article-manager">
         <div className="row ">
           <div className="col-md-12">
-            <h2>Artikel bearbeiten</h2>
+            <h1>Artikel bearbeiten</h1>
           </div>
         </div>
         <div className="row settings-row">

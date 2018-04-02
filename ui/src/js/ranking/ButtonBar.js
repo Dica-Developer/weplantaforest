@@ -40,8 +40,8 @@ export default class ButtonBar extends Component {
           <CircleButton text="PRIVAT" onClick={() => {
             this.loadOrgTypeRanking('PRIVATE', 'Beste Privatpersonen')
             }} glyphIcon="glyphicon-forward" />
-          <CircleButton text="FIRMEN" onClick={() => {
-            this.loadOrgTypeRanking('COMMERCIAL', 'Firmen')
+          <CircleButton text="Unternehmen" onClick={() => {
+            this.loadOrgTypeRanking('COMMERCIAL', 'Unternehmen')
             }} glyphIcon="glyphicon-forward" />
           <CircleButton text="NON-PROFIT ORG." onClick={() => {
             this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen')

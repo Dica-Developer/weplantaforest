@@ -248,7 +248,7 @@ export default class ArticleCreater extends Component {
       <div className="container paddingTopBottom15 article-manager">
         <div className="row ">
           <div className="col-md-12">
-            <h2>Artikel erstellen</h2>
+            <h1>Artikel erstellen</h1>
           </div>
         </div>
         <div className="row settings-row">

@@ -24,7 +24,7 @@ export default class NoTeamAvailable extends Component {
   render() {
     return (
       <div>
-        <h2>Du bist noch keinem Team beigetreten! Hast du keine Freunde!?</h2>
+        <h1>Du bist noch keinem Team beigetreten! Hast du keine Freunde!?</h1>
         <p>(Hier wäre noch eine Beschreibung gut, was da wirklich hin soll)</p>
         <div className="row align-center bottomButton">
           <IconButton text={counterpart.translate('TEAM_CREATE')} glyphIcon="glyphicon glyphicon-plus" onClick={this.goToCreateTeam.bind(this)}/>

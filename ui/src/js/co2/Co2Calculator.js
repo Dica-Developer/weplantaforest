@@ -110,10 +110,10 @@ export default class Co2Calculator extends Component {
       <div className="container paddingTopBottom15 co2Calculator">
         <div className="row">
           <div className="col-md-12 item-align-start">
-            <h2>CO<sub>2</sub>-Rechner</h2>
+            <h1>CO<sub>2</sub>-Rechner</h1>
           </div>
           <div className="col-md-12 item-align-start">
-            <h3>1. Ernährung</h3>
+            <h2>1. Ernährung</h2>
           </div>
           <div className="col-md-6 item-align-start">
             <p>Wie setzt sich Deine Ernährung zusammen?</p>
@@ -196,7 +196,7 @@ export default class Co2Calculator extends Component {
         </div>
         <div className="row">
           <div className="col-md-12 item-align-start">
-            <h3>2. Mobilität</h3>
+            <h2>2. Mobilität</h2>
           </div>
           <div className="col-md-6 item-align-start">
             <p>Welchen Kraftstoff benutzt Dein Auto?</p>
@@ -267,7 +267,7 @@ export default class Co2Calculator extends Component {
         </div>
         <div className="row">
           <div className="col-md-12 item-align-start">
-            <h3>3. Wohnen</h3>
+            <h2>3. Wohnen</h2>
           </div>
           <div className="col-md-6 item-align-start">
             <p>In welcher Hausart wohnst Du?</p>

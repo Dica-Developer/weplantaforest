@@ -498,7 +498,7 @@ export default class UserOverview extends Component {
       <div className="container paddingTopBottom15 userOverview">
         <div className="row ">
           <div className="col-md-12">
-            <h2>User</h2>
+            <h1>User</h1>
           </div>
         </div>
         <div className="row ">

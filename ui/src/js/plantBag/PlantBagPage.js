@@ -160,7 +160,7 @@ export default class PlantBagPage extends Component {
       <div className="container paddingTopBottom15">
         <div className="row plantBagPage">
           <div className="col-md-12">
-            <h2>Dein Pflanzkorb</h2>
+            <h1>Dein Pflanzkorb</h1>
             <div className={"panel panel-warning " + (!this.state.isAnonymUser
               ? "no-display"
               : "")}>

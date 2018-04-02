@@ -7,22 +7,22 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
-require("./helpUs.less");
+require("./award.less");
 
-export default class HelpUs extends Component {
+export default class Award extends Component {
 
   constructor() {
     super();
     this.state = {
-      helpUs: []
+      award: []
     }
   }
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8082/articles?articleType=HELP_US&language=' + localStorage.getItem('language')).then(function(response) {
+    axios.get('http://localhost:8082/articles?articleType=AWARD&language=' + localStorage.getItem('language')).then(function(response) {
       that.setState({
-        helpUs: response.data
+        award: response.data
       });
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -39,18 +39,18 @@ export default class HelpUs extends Component {
   render() {
     var that = this;
     return (
-      <div className="container paddingTopBottom15 helpUs">
+      <div className="container paddingTopBottom15 award">
           <div className="row">
             <div className="col-md-12">
-              <h1>Hilf uns</h1>
+              <h1>Auszeichnungen</h1>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
               <div>
-                {this.state.helpUs.map(function(help, i) {
-                return ( <div key={i}><p className="title">{help.title}</p><p dangerouslySetInnerHTML={{
-                  __html: help.intro
+                {this.state.award.map(function(about, i) {
+                return ( <div key={i}><p className="title">{about.title}</p><p dangerouslySetInnerHTML={{
+                  __html: about.intro
                 }}></p></div>);
                 })}
               </div>

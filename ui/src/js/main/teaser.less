@@ -1,10 +1,12 @@
+@import '../../less/basecolors.less';
+
 .teaser {
   padding-left: 15px;
   padding-right: 15px;
 
   h2 {
     padding-left: 20px;
-    color: #fff;
+    color: @base-background-color;
     font-family: Georgia,Times,Times New Roman,serif;
   }
  
@@ -52,12 +54,12 @@
   }
 
   .more{
-    color: #fff;
+    color: @base-background-color;
   }
 
   .firstRow {
     .col-md-4:nth-child(3) {
-      background-color: #51a8be;
+      background-color: @accent-complement-color;
     }
   }
   .secondRow {

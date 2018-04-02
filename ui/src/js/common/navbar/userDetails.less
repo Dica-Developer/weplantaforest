@@ -1,8 +1,10 @@
+@import '../../../less/basecolors.less';
+
 .user-details {
   display: inline-block;
   height: 54px;
   width: 196px;
-  padding: 15px 15px 0px 15px;
+  padding: 15px 20px 0px 20px;
   vertical-align: top;
   border-style: solid;
   border-width: 1px;
@@ -16,14 +18,14 @@
   label {
     font-size: 1em;
     font-weight: 400;
-    color: #ffffff;
+    color: @base-background-color;
     margin-bottom: 0;
     padding-top: 2px;
   }
 
   //tree count
   label:nth-of-type(2) {
-    color: #82AB1F;
+    color: @accent-color;
   }
 
   //user icon
@@ -34,18 +36,18 @@
 
   //tree icon
   span:nth-of-type(1) {
-    color: #ffffff;
+    color: @base-background-color;
   }
 
   a{
     margin-top: 1px;
     text-decoration: none;
     cursor: pointer;
-    color: #ffffff;
+    color: @base-background-color;
   }
 
   a:hover {
-    color: #82AB1F;
+    color: @accent-color;
   }
 
 }

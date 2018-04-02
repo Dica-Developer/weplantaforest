@@ -87,19 +87,21 @@ export default class BlogOverviewPage extends Component {
 
   render() {
     return (
-      <div className="container paddingTopBottom15 ">
-        <div className="row blogOverviewPage">
-          <div className={"col-md-12 "}>
+      <div className="container paddingTopBottom15 blogOverviewPage">
+        <div className="row">
+          <div className={"col-md-12"}>
             <h1>Blog</h1>
           </div>
         </div>
-        <div className="row blogOverviewPage">
+        <div className="row">
           {this.state.articles.content.map(function(article, i) {
-            return (<div className="col-md-4" key={i}><Article content={article} /></div>);
+            return (
+              <div className="col-md-4" key={i}><Article content={article} /></div>
+            );
           })}
         </div>
-        <div className="row blogOverviewPage">
-          <div className={"col-md-12 "}>
+        <div className="row">
+          <div className={"col-md-12"}>
             <a className={(this.state.articles.last ? "no-display" : "pagingLink")} role="button" onClick={this.callMoreArticleEntries.bind(this)}>
               <div>
                 <span className={"glyphicon glyphicon-menu-down"}></span>

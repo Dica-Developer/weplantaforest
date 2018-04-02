@@ -1,3 +1,5 @@
+@import '../../../less/basecolors.less';
+
 .userOverview {
   .row {
     background-color: #e5e5e5;
@@ -30,7 +32,7 @@
     font-size: 20px;
   }
   .glyphicon-ok{
-    color: #82ab1f!important;
+    color: @accent-color!important;
   }
   .glyphicon-remove{
     color: red!important;
@@ -54,14 +56,14 @@
   }
 
   .react-grid-Container {
-    background: #fff;
+    background: @base-background-color;
     border-style: solid;
     border-width: 1px;
     max-width: 100%;
 
     .react-grid-Header {
       background: #737373;
-      color: #fff;
+      color: @base-background-color;
     }
     .react-grid-HeaderCell {
       font-weight: bold;

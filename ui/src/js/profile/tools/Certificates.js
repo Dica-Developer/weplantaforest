@@ -152,7 +152,7 @@ export default class Certificates extends Component {
             <textarea ref="certTextarea" rows="4" cols="50" maxLength="250" onChange={this.updateCertificateText.bind(this)} defaultValue="Mein ganz spezieller Beitrag zur Rettung unseres Planeten."/>
             <br/>({this.state.certificateTextLength}/250)
           <div className="align-center">
-            <IconButton text="ZERTIFIKAT ERSTELLEN" glyphIcon="glyphicon-file" onClick={this.generateCertificate.bind(this)}/>
+            <IconButton text="Zertifikat erstellen" glyphIcon="glyphicon-file" onClick={this.generateCertificate.bind(this)}/>
           </div>
         </div>;
     }

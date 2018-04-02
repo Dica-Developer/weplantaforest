@@ -1,3 +1,5 @@
+@import '../../../less/basecolors.less';
+
 .svgButton {
   display: inline-block;
   position: relative;
@@ -11,20 +13,20 @@
   a:active,
   a:visited {
     display: block;
-    color: #fff;
+    color: @base-background-color;
     text-decoration: none;
     svg {
       position: absolute;
       display: inline-block;
-      fill: #fff;
+      fill: @base-background-color;
     }
   }
   &:hover {
     cursor: pointer;
     a {
-      color: #82ab1f;
+      color: @accent-color;
       svg {
-        fill: #82ab1f;
+        fill: @accent-color;
       }
     }
   }

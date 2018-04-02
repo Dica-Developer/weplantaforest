@@ -201,7 +201,7 @@ export default class SliderPlantPage extends Component {
       <div className="container paddingTopBottom15">
         <div className="row plantPage">
           <div className="col-md-12">
-            <h2>{this.props.route.header}</h2>
+            <h1>{this.props.route.header}</h1>
             <ButtonBar chosen="slider"/>
             <MainSlider ref="mainSlider" balanceProjectSliders={this.balanceProjectSlidersFromMain.bind(this)}/> {this.state.projects.map(function(project, i) {
               return (<ProjectSlider project={project} articles={project.articles} key={i} ref={"project_" + i} balanceProjectSliders={that.balanceProjectSlidersFromProjectSlider.bind(this)} sliderIndex={i}/>);

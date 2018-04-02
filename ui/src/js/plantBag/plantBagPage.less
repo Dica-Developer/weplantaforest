@@ -1,3 +1,5 @@
+@import '../../less/basecolors.less';
+
 @media (max-width: 500px) {
   .plantBagPage{
     .col-md-12{
@@ -25,12 +27,12 @@
 }
 
 .plantBagPage{
-  background: #fff;
+  background: @base-background-color;
   margin-left: 0;
   margin-right: 0;
 
   h3{
-    color: #82AB1F;
+    color: @accent-color;
   }
 
   .overview{
@@ -54,7 +56,7 @@
     text-align: right;
     font-size: 24px;
     font-weight: bold;
-    color: #82ab1f;
+    color: @accent-color;
   }
 
 

@@ -11,7 +11,7 @@ export default class Footer extends Component {
 
   render() {
     return (
-      <div className="row footer">
+      <div className="footer">
         <div className="container">
           <div className="row">
             <div className="col-md-2">
@@ -20,6 +20,47 @@ export default class Footer extends Component {
               }}>
                 ÜBER UNS
               </a>
+              <a role="button" onClick={() => {
+                this.linkTo('/faq')
+              }}>
+                FAQ
+              </a>
+            </div>
+            <div className="col-md-2">
+              <a role="button" onClick={() => {
+                this.linkTo('/partner')
+              }}>
+                PARTNER
+              </a>
+              <a role="button" onClick={() => {
+                this.linkTo('/award')
+              }}>
+                AUSZEICHNUNGEN
+              </a>
+            </div>
+            <div className="col-md-2">
+              <a role="button" onClick={() => {
+                this.linkTo('/blog')
+              }}>
+                BLOG
+              </a>
+              <a role="button" onClick={() => {
+                this.linkTo('/social')
+              }}>
+                SOCIAL
+              </a>
+            </div>
+            <div className="col-md-2">
+              <a role="button" onClick={() => {
+                this.linkTo('/statistics')
+              }}>
+                ZAHLEN & FAKTEN
+              </a>
+              <a role="button" onClick={() => {
+                this.linkTo('/aboutUs')
+              }}>
+                FINANZEN
+              </a>
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
@@ -27,8 +68,6 @@ export default class Footer extends Component {
               }}>
                 DATENSCHUTZ
               </a>
-            </div>
-            <div className="col-md-2">
               <a role="button" onClick={() => {
                 this.linkTo('/terms')
               }}>
@@ -37,23 +76,14 @@ export default class Footer extends Component {
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
-                this.linkTo('/imprint')
-              }}>
-                IMPRESSUM
-              </a>
-            </div>
-            <div className="col-md-2">
-              <a role="button" onClick={() => {
                 this.linkTo('/contact')
               }}>
                 KONTAKT
               </a>
-            </div>
-            <div className="col-md-2">
               <a role="button" onClick={() => {
-                this.linkTo('/social')
+                this.linkTo('/imprint')
               }}>
-                SOCIAL
+                IMPRESSUM
               </a>
             </div>
           </div>

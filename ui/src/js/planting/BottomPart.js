@@ -31,7 +31,7 @@ export default class BottomPart extends Component {
         <div className="line">Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt?
           <br/>
           Hier kannst Du eine&nbsp;
-          <IconButton glyphIcon="glyphicon-forward" text="PROJEKTFLÄCHE ANBIETEN" onClick={this.switchToOfferProjectPage.bind(this)}/>
+          <IconButton glyphIcon="glyphicon-forward" text="Projekt anbieten" onClick={this.switchToOfferProjectPage.bind(this)}/>
         </div>
       </div>
     );
