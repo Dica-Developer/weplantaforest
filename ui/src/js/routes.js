@@ -41,13 +41,15 @@ import ErrorCC from './payment/ErrorCC';
 import Co2Calculator from './co2/Co2Calculator';
 import FAQ from './faq/FaqView';
 import AboutUs from './common/footer/pages/aboutUs';
+import Award from './common/footer/pages/Award';
 import Links from './common/footer/pages/Links';
 import Disclaimer from './common/footer/pages/Disclaimer';
-import Privacy from './common/footer/pages/privacy';
-import Terms from './common/footer/pages/terms';
+import Privacy from './common/footer/pages/Privacy';
+import Terms from './common/footer/pages/Terms';
 import Imprint from './common/footer/pages/Imprint';
-import Contact from './common/footer/pages/contact';
-import Social from './common/footer/pages/social';
+import Contact from './common/footer/pages/Contact';
+import Social from './common/footer/pages/Social';
+import Partner from './common/footer/pages/Partner';
 import BackOfficeOverview from './backOffice/BackOfficeOverview';
 import ArticleManager from './backOffice/articleManager/ArticleManager';
 import ArticleCreater from './backOffice/articleManager/ArticleCreater';
@@ -136,11 +138,13 @@ export default class Routes extends Component {
           <Route path="/co2Calculator" component={Co2Calculator} reRender={this.reRender.bind(this)}/>
           <Route path="/faq" component={FAQ} reRender={this.reRender.bind(this)}/>
           <Route path="/AboutUs" component={AboutUs} reRender={this.reRender.bind(this)}/>
+          <Route path="/award" component={Award} reRender={this.reRender.bind(this)}/>
           <Route path="/links" component={Links} reRender={this.reRender.bind(this)}/>
           <Route path="/disclaimer" component={Disclaimer} reRender={this.reRender.bind(this)}/>
           <Route path="/privacy" component={Privacy} reRender={this.reRender.bind(this)}/>
           <Route path="/imprint" component={Imprint} reRender={this.reRender.bind(this)}/>
           <Route path="/contact" component={Contact} reRender={this.reRender.bind(this)}/>
+          <Route path="/partner" component={Partner} reRender={this.reRender.bind(this)}/>
           <Route path="/social" component={Social} reRender={this.reRender.bind(this)}/>
           <Route path="/terms" component={Terms} reRender={this.reRender.bind(this)}/>
           <Route path="/backOffice" component={BackOfficeOverview} reRender={this.reRender.bind(this)}/>

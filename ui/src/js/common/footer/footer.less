@@ -1,13 +1,5 @@
 @import '../../../less/basecolors.less';
 
-@media (max-width: 994px) {
-  .footer {
-    .col-md-2 {
-      width: 100%!important;
-    }
-  }
-}
-
 .footer {
   background-color: @primary-color;
   left: 0;
@@ -16,18 +8,13 @@
   margin: 0;
   position: absolute;
   bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 70px;
-
-
-  .col-md-2{
-    text-align: center;
-  }
 
   a {
     color: #ded8d9;
     font-size: 14px;
+    display: block;
+    margin-bottom: 7px;
+    text-align: left;
   }
   a:hover {
     color: @base-background-color;
@@ -39,7 +26,8 @@
   }
 
   .container {
-    padding-top: 27px;
+    padding-top: 25px;
+    padding-bottom: 18px;
   }
 }
 
