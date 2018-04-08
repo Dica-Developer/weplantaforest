@@ -27,7 +27,7 @@ export default class ButtonBar extends Component {
         }} />
         <br/>
         <SvgButton text={counterpart.translate('buttonbar.tree_service')} buttonType="secateurs" onClick={() => {
-          this.linkTo('/plant')
+          this.linkTo('/treeService')
         }} />
       </div>
     );
