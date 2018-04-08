@@ -145,31 +145,26 @@ export default class DoPlanting extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-1">
-            Wann:
+          <div className="form-group col-md-6">
+            <label htmlFor="when">Wann:</label>
+            <DateField id="when" updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true"/>
           </div>
-          <div className="col-md-5">
-            <DateField updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true"/>
-          </div>
-          <div className="col-md-1">
-            Wieviele&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:</div>
-          <div className="col-md-5"><input className="tree-slider" type="range" min="1" max="10" value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)}/>
+          <div className="form-group col-md-6">
+            <label htmlFor="howmuch">Wieviele&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:</label>
+            <input className="tree-slider" type="range" min="1" max="10" value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)}/>
             <p className="tree-amount">&nbsp;{this.state.selfPlantData.amount}</p>
             <br/>
             <span>Bei mehr als 10 kontaktiere uns bitte, da wir einen Nachweis benötigen.</span>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-1">
-            Foto:
+          <div className="form-group col-md-6">
+            <label htmlFor="photo">Foto:</label>
+            <FileChooser id="photo" updateFile={this.updateImage.bind(this)}/>
           </div>
-          <div className="col-md-5">
-            <FileChooser updateFile={this.updateImage.bind(this)}/>
-          </div>
-          <div className="col-md-1">
-            Baumart:</div>
-          <div className="col-md-5">
-            <select onChange={this.updateTreeType.bind(this)} ref="select">
+          <div className="form-group col-md-6">
+            <label htmlFor="treeType">Baumart:</label>
+            <select id="treeType" className="form-control" onChange={this.updateTreeType.bind(this)} ref="select">
               {this.state.treeTypes.map(function(treeType, i) {
                 if (treeType.name == 'Default') {
                   return (
@@ -181,40 +176,31 @@ export default class DoPlanting extends Component {
                   );
                 }
               })}
-
             </select>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12 white-line">
+          <div className="form-group col-md-12">
+            <label htmlFor="description">Beschreibung:</label>
+            <TextArea ide="description" toUpdate="description" updateValue={this.updateValue.bind(this)}/>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-1">
-            Beschreibung:
-          </div>
-          <div className="col-md-11">
-            <TextArea toUpdate="description" updateValue={this.updateValue.bind(this)}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-1">
-            Wo:
-          </div>
-          <div className="col-md-11">
-            <Map center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
+          <div className="form-group col-md-12">
+            <label htmlFor="where">Wo:</label>
+            <Map id="where" center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
               <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
               <Marker position={this.state.treePosition} draggable="true" ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
             </Map>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12 align-center">
+          <div className="col-md-12 align-left">
             <Captcha ref="captcha"/>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12 align-center">
+          <div className="col-md-12 align-left">
           <IconButton text="PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
           </div>
         </div>
