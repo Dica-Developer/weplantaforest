@@ -28,7 +28,6 @@ import org.dicadeveloper.weplantaforest.admin.tree.Tree;
 import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.hibernate.annotations.Cascade;
-import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -44,7 +43,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class Cart implements Identifiable<Long> {
+public class Cart {
 
     public static class Editor extends PropertyEditorSupport {
         @Override

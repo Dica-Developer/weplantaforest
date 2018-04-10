@@ -16,7 +16,6 @@ import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
-import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -31,7 +30,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Team implements Identifiable<Long> {
+public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

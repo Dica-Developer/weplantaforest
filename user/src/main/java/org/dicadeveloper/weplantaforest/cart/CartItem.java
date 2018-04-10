@@ -14,7 +14,6 @@ import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.hibernate.annotations.Cascade;
-import org.springframework.hateoas.Identifiable;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CartItem implements Identifiable<Long> {
+public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

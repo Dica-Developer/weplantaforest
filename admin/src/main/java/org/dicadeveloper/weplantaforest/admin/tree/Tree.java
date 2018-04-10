@@ -14,7 +14,6 @@ import org.dicadeveloper.weplantaforest.admin.project.ProjectArticle;
 import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
 import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
-import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -29,7 +28,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Table(name = "Tree")
-public class Tree implements Identifiable<Long> {
+public class Tree {
 
     @Id
     @GeneratedValue
