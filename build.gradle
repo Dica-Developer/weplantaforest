@@ -26,6 +26,31 @@ repositories {
   }
 }
 
+// start - check early and fail on dependency resolution during configuration
+def afterEvaluation = false
+gradle.projectsEvaluated {
+    afterEvaluation = true
+}
+
+allprojects { project ->
+  configurations.all { configuration ->
+    configuration.incoming.beforeResolve {
+      if (!afterEvaluation) {
+        logger.warn("Configuration $configuration.name of project $project.name is being resolved at configuration time.")
+      }
+    }
+  }
+}
+// end - check early and fail on dependency resolution during configuration
+
+subprojects { sub ->
+  sub.configurations.all {
+    resolutionStrategy {
+      failOnVersionConflict()
+    }
+  }
+}
+
 version = '0.1'
 
 task testReport(type: TestReport, group: 'Build') {
