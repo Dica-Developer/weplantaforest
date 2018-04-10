@@ -23,7 +23,6 @@ import org.dicadeveloper.weplantaforest.admin.team.Team;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.user.Role;
-import org.springframework.hateoas.Identifiable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,7 +39,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Table(name = "User")
-public class User implements Identifiable<Long>, UserDetails {
+public class User {
 
     /**
      * 

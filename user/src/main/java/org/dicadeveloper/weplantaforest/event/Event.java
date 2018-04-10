@@ -17,7 +17,6 @@ import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.team.Team;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.hibernate.annotations.Cascade;
-import org.springframework.hateoas.Identifiable;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +24,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Event implements Identifiable<Long> {
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
-import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -30,7 +29,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @Table(name = "Plant")
-public class Project implements Identifiable<Long> {
+public class Project {
 
     @Id
     @GeneratedValue
