@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
-import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -22,7 +21,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Table(name = "User")
-public class User implements Identifiable<Long> {
+public class User {
 
     @Id
     @GeneratedValue

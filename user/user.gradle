@@ -26,7 +26,6 @@ dependencies{
   compile('org.springframework.boot:spring-boot-starter-web:' + springBootVersion)
   compile('org.springframework.boot:spring-boot-starter-security:' + springBootVersion)
   compile('org.springframework.boot:spring-boot-starter-validation:' + springBootVersion)
-  compile 'org.springframework:spring-context-support:4.1.8.RELEASE'
   compile group: 'com.google.guava', name: 'guava', version: '19.0'
   //DB migrations
   compile 'org.flywaydb:flyway-core:4.1.0'

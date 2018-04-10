@@ -39,7 +39,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Table(name = "User")
-public class User {
+public class User implements UserDetails {
 
     /**
      * 

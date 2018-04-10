@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
-import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -20,7 +19,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Paragraph implements Identifiable<Long> {
+public class Paragraph {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

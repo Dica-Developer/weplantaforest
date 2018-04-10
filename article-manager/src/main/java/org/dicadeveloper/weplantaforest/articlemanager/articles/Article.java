@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import org.dicadeveloper.weplantaforest.articlemanager.user.User;
 import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
 import org.dicadeveloper.weplantaforest.common.support.Language;
-import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -25,7 +24,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Article implements Identifiable<Long> {
+public class Article {
     public enum ArticleType {
         HOME, WHAT_WE_DO, NEWS, PARTNER, HELP_US, FAQ, LINKS, ABOUT_US, DISCLAIMER, KNOWLEDGEBASE, OUR_GOALS, OUR_CODEX, THE_IDEA, THE_TEAM, JOBS, IMPRESS, PRESS, NEWSLETTER, FINANCIALS, BLOG, PRIVACY, TERMS, CONTACT, TREE_SERVICE, AWARD;
     }
