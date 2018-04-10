@@ -75,11 +75,19 @@ public class Abo {
     private Cart currentCart;
 
     public Date getTimeStampAsDate() {
-        return new Date(timeStamp);
+        Date result = null;
+        if (null != last) {
+            result = new Date(timeStamp);
+        }
+        return result;
     }
 
     public Date getLastAsDate() {
-        return new Date(last);
+        Date result = null;
+        if (null != last) {
+            result = new Date(last);
+        }
+        return result;
     }
 
     public void addParam(final Param param) {
