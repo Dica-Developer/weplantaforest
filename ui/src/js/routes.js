@@ -40,7 +40,7 @@ import SuccessCC from './payment/SuccessCC';
 import ErrorCC from './payment/ErrorCC';
 import Co2Calculator from './co2/Co2Calculator';
 import FAQ from './faq/FaqView';
-import AboutUs from './common/footer/pages/aboutUs';
+import AboutUs from './common/footer/pages/AboutUs';
 import Award from './common/footer/pages/Award';
 import Links from './common/footer/pages/Links';
 import Disclaimer from './common/footer/pages/Disclaimer';
