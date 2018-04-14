@@ -7,6 +7,8 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import IconButton from '../../components/IconButton';
+import Captcha from '../../../common/components/Captcha';
 import Notification from '../../components/Notification';
 
 require("./contact.less");
@@ -116,8 +118,11 @@ export default class Contact extends Component {
               <label htmlFor="personal_message">Ihre Nachricht*:</label>
               <textarea className="form-control" rows="10" id="personal_message" placeholder="Bitte geben Sie Ihre Nachricht ein." onBlur={(e) => this.updateValue('message', e)}/>
             </div>
+            <div className="col-md-12 item-align-start">
+              <Captcha ref="captcha"/>
+            </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-default" onClick={this.submit.bind(this)}>Absenden</button>
+              <IconButton text="Abschicken" glyphIcon="glyphicon-envelope" onClick={this.submit.bind(this)}/>
             </div>
           </div>
           <Notification ref="notification"/>
