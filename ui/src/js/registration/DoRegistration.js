@@ -77,7 +77,7 @@ export default class DoRegistration extends Component {
       <div className="registrationPage">
         <div className="row">
           <div className="col-md-12">
-            <h1>Anmelden</h1>
+            <h1>Registrieren</h1>
           </div>
         </div>
         <div className="row">
@@ -144,7 +144,7 @@ export default class DoRegistration extends Component {
         </div>
         <div className="row">
           <div className="col-md-12 align-center">
-            <IconButton text="ANMELDEN" glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)}/>
+            <IconButton text="Registrieren" glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)}/>
           </div>
         </div>
         <Notification ref="notification"/>

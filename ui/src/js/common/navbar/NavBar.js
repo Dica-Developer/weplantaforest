@@ -122,7 +122,7 @@ export default class NavBar extends Component {
       myForrestButton = '';
       userDetails = <div className="user-details logged-out"> <a className="pull left" onClick={this.showRight.bind(this)}>Login</a>  <a className="pull right" onClick={() => {
         this.linkTo('/registration')
-      }}>Anmelden</a></div>;
+      }}>Registrieren</a></div>;
     }
 
     return (

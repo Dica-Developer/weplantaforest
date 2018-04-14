@@ -206,7 +206,7 @@ export default class LoginMenuItem extends Component {
         <div className="login-interact">
           <a role="button" onClick={() => {
             this.linkTo('/registration')
-          }}>Neu registrieren</a>
+          }}>Registrieren</a>
         </div>
       </div>;
     }
