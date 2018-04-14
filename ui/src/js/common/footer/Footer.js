@@ -57,7 +57,7 @@ export default class Footer extends Component {
                 ZAHLEN & FAKTEN
               </a>
               <a role="button" onClick={() => {
-                this.linkTo('/aboutUs')
+                this.linkTo('/financials')
               }}>
                 FINANZEN
               </a>

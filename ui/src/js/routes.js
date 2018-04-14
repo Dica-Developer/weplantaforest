@@ -44,6 +44,7 @@ import AboutUs from './common/footer/pages/AboutUs';
 import Award from './common/footer/pages/Award';
 import Links from './common/footer/pages/Links';
 import Disclaimer from './common/footer/pages/Disclaimer';
+import Financial from './common/footer/pages/Financial';
 import Privacy from './common/footer/pages/Privacy';
 import TreeService from './common/footer/pages/TreeService';
 import Terms from './common/footer/pages/Terms';
@@ -142,6 +143,7 @@ export default class Routes extends Component {
           <Route path="/award" component={Award} reRender={this.reRender.bind(this)}/>
           <Route path="/links" component={Links} reRender={this.reRender.bind(this)}/>
           <Route path="/disclaimer" component={Disclaimer} reRender={this.reRender.bind(this)}/>
+          <Route path="/financials" component={Financial} reRender={this.reRender.bind(this)}/>
           <Route path="/privacy" component={Privacy} reRender={this.reRender.bind(this)}/>
           <Route path="/treeService" component={TreeService} reRender={this.reRender.bind(this)}/>
           <Route path="/imprint" component={Imprint} reRender={this.reRender.bind(this)}/>
