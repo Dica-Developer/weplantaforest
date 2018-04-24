@@ -89,7 +89,6 @@ public class PlantBagValidatorTest {
                                 .getErrorCode();
             fail("plantBag should be valid\nerrorCode:" + errorCode);
         }
-
     }
 
     @Test
