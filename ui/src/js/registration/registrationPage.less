@@ -1,52 +1,46 @@
 @import '../../less/basecolors.less';
 
 .registrationPage {
-  background: #cccccc;
+  background: @base-background-color;
 
   .row {
     margin-left: 0;
     margin-right: 0;
     padding-left: 4vw;
     padding-right: 4vw;
-    padding-bottom: 20px;
+    padding-bottom: 25px;
   }
 
-  .col-md-5 {
-    text-align: right;
+  .col-md-12 {
+    padding: 0px;
+  }
+
+  .checkBox {
+    margin: 0px 0px 5px 0px;
   }
 
   .registrationForm {
     margin-left: auto;
     margin-right: auto;
     width: 70%;
-    background-color: #e5e5e5;
+    background-color: @base-background-color;
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 30px;
-
-    table {
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 15px;
-      td:nth-child(1) {
-        width: 30%;
-      }
-      td:nth-child(2) {
-        width: 70%;
-      }
-
-      tr {
-        height: 40px;
-      }
-    }
   }
 
-  .registrationDone {
-    text-align: center;
-    div {
-      padding-top: 25px;
-      padding-bottom: 25px;
-    }
+}
+
+.registrationDone {
+  background: @base-background-color;
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-bottom: 25px;
+  }
+  .col-md-12 {
+    padding: 0px;
   }
 }
