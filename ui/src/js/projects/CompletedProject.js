@@ -18,9 +18,9 @@ export default class CompletedProject extends Component {
   render() {
     let imageUrl = 'http://localhost:8081/project/image/' + this.props.project.projectImageFileName + '/1140/1140';
     return (
-      <div className="project col-md-4">
+      <div className="project col-md-4" onClick={this.switchToProjectPage.bind(this)}>
         <div className="projectImage">
-          <img src={imageUrl} width="279px" height="150px"/>
+          <img src={imageUrl} width="279px" height="186px"/>
         </div>
         <div className="projectName">
           {this.props.project.projectName}
@@ -32,9 +32,6 @@ export default class CompletedProject extends Component {
         </div>
         <div className="full">
           vollständig&nbsp;bepflanzt&nbsp;mit&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen
-        </div>
-        <div className="link">
-          <IconButton text="Anschauen" glyphIcon="glyphicon-forward" onClick={this.switchToProjectPage.bind(this)}/>
         </div>
       </div>
     );
