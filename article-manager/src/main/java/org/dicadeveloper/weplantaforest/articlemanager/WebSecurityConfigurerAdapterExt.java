@@ -48,7 +48,8 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
         // {"name":"<name>","password":"<password>"} which sets the
         // token
         // header upon authentication
-        http.authorizeRequests()
+        http
+        .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/backOffice/**")
             .hasAnyRole(Role.ADMIN.getIdentifier(), Role.ARTICLE_MANAGER.getIdentifier())
             // .hasRole(Role.ADMIN.getIdentifier())
@@ -63,10 +64,6 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.POST, "/**/upload/**")
-            .hasAnyRole(Role.ADMIN.getIdentifier(), Role.ARTICLE_MANAGER.getIdentifier())
-            .and()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/backOffice/article")
             .hasAnyRole(Role.ADMIN.getIdentifier(), Role.ARTICLE_MANAGER.getIdentifier())
             .and()
 
