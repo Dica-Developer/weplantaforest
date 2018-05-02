@@ -10,6 +10,7 @@ import FileChooser from '../../common/components/FileChooser';
 import RadioButton from '../../common/components/RadioButton';
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
+import {getConfig} from '../../common/RestHelper';
 
 class Paragraph extends Component {
   constructor() {
@@ -172,18 +173,19 @@ export default class ArticleCreater extends Component {
 
   createArticle() {
     var that = this;
+    var restConfig = getConfig();
     if (this.state.imageFile != null) {
       for (var paragraph = 0; paragraph < this.state.article.paragraphs.length; paragraph++) {
         this.state.article.paragraphs[paragraph] = this.refs["paragraph_" + paragraph].getParagraph();
       }
 
-      axios.post('http://localhost:8082/backOffice/article/create?userName=' + localStorage.getItem('username'), this.state.article, {}).then(function(response) {
+      axios.post('http://localhost:8082/backOffice/article/create?userName=' + localStorage.getItem('username'), this.state.article, restConfig).then(function(response) {
         var article = response.data;
         var data = new FormData();
         data.append('articleId', article.id);
         data.append('file', that.state.imageFile);
 
-        axios.post('http://localhost:8082/article/upload/image', data, {}).then(function(response) {}).catch(function(response) {
+        axios.post('http://localhost:8082/article/upload/image', data, restConfig).then(function(response) {}).catch(function(response) {
           that.refs.notification.addNotification('Oh nein!', 'Beim Hochladen des Bildes für den Artikel ist ein Fehler aufgetreten.', 'error');
           if (response instanceof Error) {
             console.error('Error', response.message);
@@ -202,7 +204,7 @@ export default class ArticleCreater extends Component {
             data.append('paragraphId', paragraphId);
             data.append('file', that.refs["paragraph_" + paragraph].getImageFile());
 
-            axios.post('http://localhost:8082/paragraph/upload/image', data, {}).then(function(response) {}).catch(function(response) {
+            axios.post('http://localhost:8082/paragraph/upload/image', data, restConfig).then(function(response) {}).catch(function(response) {
               that.refs.notification.addNotification('Oh nein!', 'Beim Hochladen des Bildes für den Paragraphen Nr. ' + paragraph + ' ist ein Fehler aufgetreten.', 'error');
               if (response instanceof Error) {
                 console.error('Error', response.message);

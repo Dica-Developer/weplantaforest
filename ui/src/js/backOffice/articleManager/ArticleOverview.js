@@ -8,6 +8,7 @@ import {Toolbar, Data} from 'react-data-grid-addons';
 
 import IconButton from '../../common/components/IconButton';
 import NotificationSystem from 'react-notification-system';
+import {getConfig} from '../../common/RestHelper';
 
 export default class ArticleOverview extends Component {
 
@@ -59,7 +60,8 @@ export default class ArticleOverview extends Component {
 
   loadArticles() {
     var that = this;
-    axios.get('http://localhost:8082/backOffice/articles').then(function(response) {
+    var restConfig = getConfig();
+    axios.get('http://localhost:8082/backOffice/articles', restConfig).then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({articles: result, rows: rows});
@@ -132,7 +134,8 @@ export default class ArticleOverview extends Component {
 
   delete(id) {
     var that = this;
-    axios.post('http://localhost:8082/backOffice/article/delete?articleId=' + id, {}, {}).then(function(response) {
+    var restConfig = getConfig();
+    axios.delete('http://localhost:8082/backOffice/article?articleId=' + id, restConfig).then(function(response) {
       that.loadArticles();
       that.refs.notificationSystem.addNotification({
         title: 'geschafft!',

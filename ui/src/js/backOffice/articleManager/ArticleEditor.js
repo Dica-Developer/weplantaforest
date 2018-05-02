@@ -11,6 +11,7 @@ import RadioButton from '../../common/components/RadioButton';
 import IconButton from '../../common/components/IconButton';
 import TextEditor from '../../common/components/TextEditor';
 import Notification from '../../common/components/Notification';
+import {getConfig} from '../../common/RestHelper';
 
 class Paragraph extends Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class Paragraph extends Component {
       paragraph: this.props.paragraph
     }
   }
-
 
   updateValue(toUpdate, value) {
     this.state.paragraph[toUpdate] = value;
@@ -43,7 +43,7 @@ class Paragraph extends Component {
     return this.state.paragraph;
   }
 
-  getImageFile(){
+  getImageFile() {
     return this.state.imageFile;
   }
 
@@ -56,7 +56,7 @@ class Paragraph extends Component {
     } else {
       imgContent = '';
     }
-    if(this.state.paragraph.imageDescription == null){
+    if (this.state.paragraph.imageDescription == null) {
       this.state.paragraph.imageDescription = '';
     }
 
@@ -147,12 +147,13 @@ export default class ArticleEditor extends Component {
       }
     });
 
-    axios.get('http://localhost:8082/backOffice/article?articleId=' + encodeURIComponent(this.props.params.articleId)).then(function(response) {
+    var restConfig = getConfig();
+    axios.get('http://localhost:8082/backOffice/article?articleId=' + encodeURIComponent(this.props.params.articleId), restConfig).then(function(response) {
       var result = response.data;
       that.setState({article: result});
-      if(result.paragraphs.length == 0){
+      if (result.paragraphs.length == 0) {
         that.setState({paragraphCount: 1});
-      }else{
+      } else {
         that.setState({paragraphCount: result.paragraphs.length});
       }
       that.setArticleTypeSelection();
@@ -226,6 +227,7 @@ export default class ArticleEditor extends Component {
 
   editArticle() {
     var that = this;
+    var restConfig = getConfig();
     this.state.article.paragraphs = [];
     this.forceUpdate();
 
@@ -233,7 +235,7 @@ export default class ArticleEditor extends Component {
       this.state.article.paragraphs.push(this.refs["paragraph_" + paragraph].getParagraph());
     }
 
-    axios.post('http://localhost:8082/backOffice/article/edit?userName=' + localStorage.getItem('username'), this.state.article, {}).then(function(response) {
+    axios.post('http://localhost:8082/backOffice/article/edit?userName=' + localStorage.getItem('username'), this.state.article, restConfig).then(function(response) {
       var article = response.data;
       if (that.state.articleImageChanged) {
         var data = new FormData();
@@ -252,14 +254,14 @@ export default class ArticleEditor extends Component {
         });
       }
       for (var paragraph = 0; paragraph < that.state.paragraphCount; paragraph++) {
-        if(that.refs["paragraph_" + paragraph].getImageFile() != null){
+        if (that.refs["paragraph_" + paragraph].getImageFile() != null) {
           var paragraphId = article.paragraphs[paragraph].id;
           var data = new FormData();
           data.append('articleId', article.id);
           data.append('paragraphId', paragraphId);
           data.append('file', that.refs["paragraph_" + paragraph].getImageFile());
 
-          axios.post('http://localhost:8082/paragraph/upload/image', data, {}).then(function(response) {}).catch(function(response) {
+          axios.post('http://localhost:8082/paragraph/upload/image', data, restConfig).then(function(response) {}).catch(function(response) {
             that.refs.notification.addNotification('Oh nein!', 'Beim Hochladen des Bildes für den Artikel ist ein Fehler aufgetreten.', 'error');
             if (response instanceof Error) {
               console.error('Error', response.message);
@@ -384,15 +386,15 @@ export default class ArticleEditor extends Component {
           </div>
         </div>
         {paragraphObjects.map(function(p, i) {
-          if(i < that.state.article.paragraphs.length){
-            return (<Paragraph ref={"paragraph_" + i } key={i} articleId={that.state.article.id} paragraphNumber={i + 1} paragraph={that.state.article.paragraphs[i]}/>);
-          }else{
+          if (i < that.state.article.paragraphs.length) {
+            return (<Paragraph ref={"paragraph_" + i} key={i} articleId={that.state.article.id} paragraphNumber={i + 1} paragraph={that.state.article.paragraphs[i]}/>);
+          } else {
             var paragraph = {
               id: null,
               title: '',
               text: '',
               imageFileName: '',
-              imageDescription: '',
+              imageDescription: ''
             };
             return (<Paragraph ref={"paragraph_" + i} key={i} articleId={that.state.article.id} paragraphNumber={i + 1} paragraph={paragraph}/>);
           }
