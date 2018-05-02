@@ -124,7 +124,7 @@ export default class MainPage extends Component {
               <ArticleTeaser content={this.state.teaser.content[1]}/>
             </div>
             <div className="col-md-4">
-              <RankingContainer title="Beste Unternehmen">
+              <RankingContainer title="Bestenliste">
                 {this.state.bestCompanyRanking.content.map(function(content, i) {
                   let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
                   let linkTo = '/user/' + content.name;
