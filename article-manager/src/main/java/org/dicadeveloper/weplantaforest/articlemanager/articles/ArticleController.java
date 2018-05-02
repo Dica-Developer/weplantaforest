@@ -90,7 +90,7 @@ public class ArticleController {
         }
     }
 
-    @RequestMapping(value = "/backOffice/article/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/backOffice/article", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteeArticle(@RequestParam Long articleId) {
         try {
             List<Paragraph> paragraphs = _paragraphRepository.getParagraphsByArticleId(articleId);
