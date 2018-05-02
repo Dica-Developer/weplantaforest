@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,15 +31,18 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @Table(name = "User")
 public class User implements UserDetails {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue
@@ -69,6 +73,30 @@ public class User implements UserDetails {
 
     @Column(name = "_organisationType")
     private int organizationType;
+    
+    @Column(name = "_imageName")
+    private String imageName;
+    
+    @Column(name = "_aboutme")
+    private String aboutMe;
+
+    @Column(name = "_location")
+    private String location;
+
+    @Column(name = "_organisation")
+    private String organisation;
+    
+    @Column(name ="_homepage")
+    private String homepage;
+    
+    @Column(name ="_lang")
+    private Language lang;
+    
+    @Column(name ="_newsletter")
+    private boolean newsletter;
+    
+    @Column(name = "_activationKey")
+    private String activationKey;
     
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(fetch = FetchType.EAGER)
