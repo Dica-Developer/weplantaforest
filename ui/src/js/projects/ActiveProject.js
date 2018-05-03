@@ -23,9 +23,9 @@ export default class ActiveProject extends Component {
     }
     let imageUrl = 'http://localhost:8081/project/image/' + this.props.project.projectImageFileName + '/1140/1140';
     return (
-      <div className="project col-md-4">
+      <div className="project col-md-4" onClick={this.switchToProjectPage.bind(this)}>
         <div className="projectImage">
-          <img src={imageUrl} width="279px" height="150px"/>
+          <img src={imageUrl} width="279px" height="186px"/>
         </div>
         <div className="projectName">
           {this.props.project.projectName}
@@ -39,12 +39,16 @@ export default class ActiveProject extends Component {
           <p style={{
             width: percent + '%'
           }}></p>
-          <div className="text">
-            {this.props.project.amountOfPlantedTrees}&nbsp;von&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen&nbsp;gepflanzt
-          </div>
         </div>
-        <div className="link">
-          <IconButton text="Anschauen" glyphIcon="glyphicon-forward" onClick={this.switchToProjectPage.bind(this)}/>
+        <div className="amount-of-trees-description">
+          <div className="planted">
+            Bereits gepflanzt:<br/>
+            {this.props.project.amountOfPlantedTrees}
+          </div>
+          <div className="goal">
+            Ziel:<br/>
+            {this.props.project.amountOfMaximumTreesToPlant}
+          </div>
         </div>
       </div>
     );

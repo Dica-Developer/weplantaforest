@@ -36,20 +36,20 @@ export default class ButtonBar extends Component {
     return (
       <div className="buttonBar row">
         <div className="col-md-10">
-          <CircleButton text="ALLE" onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward"/>
-          <CircleButton text="PRIVAT" onClick={() => {
-            this.loadOrgTypeRanking('PRIVATE', 'Beste Privatpersonen')
+          <CircleButton text="Alle" onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward"/>
+          <CircleButton text="Privat" onClick={() => {
+            this.loadOrgTypeRanking('PRIVATE', 'Privatpersonen')
             }} glyphIcon="glyphicon-forward" />
           <CircleButton text="Unternehmen" onClick={() => {
             this.loadOrgTypeRanking('COMMERCIAL', 'Unternehmen')
             }} glyphIcon="glyphicon-forward" />
-          <CircleButton text="NON-PROFIT ORG." onClick={() => {
+          <CircleButton text="Non-Profit Org." onClick={() => {
             this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen')
             }} glyphIcon="glyphicon-forward" />
-          <CircleButton text="SCHULEN" onClick={() => {
+          <CircleButton text="Schulen" onClick={() => {
             this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen')
             }} glyphIcon="glyphicon-forward" />
-          <CircleButton text="TEAMS" onClick={this.loadBestTeams.bind(this)} glyphIcon="glyphicon-forward" />
+          <CircleButton text="Teams" onClick={this.loadBestTeams.bind(this)} glyphIcon="glyphicon-forward" />
         </div>
       </div>
     );

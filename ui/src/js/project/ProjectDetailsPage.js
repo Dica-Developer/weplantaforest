@@ -196,7 +196,7 @@ export default class ProjectDetailsPage extends Component {
         </div>
         <div className="row projectRankings">
           <div className="col-md-4">
-            <SmallRankingContainer title="Beste Teams im Projekt" withPaging={true} rankingType="bestTeam" page={bestTeamPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestTeam.first} isLastPage={this.state.bestTeam.last}>
+            <SmallRankingContainer title="Beste Teams" withPaging={true} rankingType="bestTeam" page={bestTeamPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestTeam.first} isLastPage={this.state.bestTeam.last}>
               {this.state.bestTeam.content.map(function(content, i) {
                 let imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
                 let linkTo = '/team/' + content.name;
@@ -209,7 +209,7 @@ export default class ProjectDetailsPage extends Component {
             </SmallRankingContainer>
           </div>
           <div className="col-md-4">
-            <SmallRankingContainer title="Beste Pflanzer im Projekt" withPaging={true} rankingType="bestUser" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestUser.first} isLastPage={this.state.bestUser.last}>
+            <SmallRankingContainer title="Beste Pflanzer" withPaging={true} rankingType="bestUser" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestUser.first} isLastPage={this.state.bestUser.last}>
               {this.state.bestUser.content.map(function(content, i) {
                 let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
                 let linkTo = '/user/' + content.name;
@@ -222,7 +222,7 @@ export default class ProjectDetailsPage extends Component {
             </SmallRankingContainer>
           </div>
           <div className="col-md-4">
-            <SmallRankingContainer title="Neueste Pflanzungen im Projekt" withPaging={true} rankingType="lastPlantedTrees" page={lastPlantedTreesPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.lastPlantedTrees.first} isLastPage={this.state.lastPlantedTrees.last}>
+            <SmallRankingContainer title="Neueste Pflanzungen" withPaging={true} rankingType="lastPlantedTrees" page={lastPlantedTreesPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.lastPlantedTrees.first} isLastPage={this.state.lastPlantedTrees.last}>
               {this.state.lastPlantedTrees.content.map(function(content, i) {
                 let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeTypeImageName + '/60/60';
                 let linkTo = '/user/' + content.name;

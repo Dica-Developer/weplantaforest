@@ -122,14 +122,14 @@ export default class NavBar extends Component {
       myForrestButton = '';
       userDetails = <div className="user-details logged-out"> <a className="pull left" onClick={this.showRight.bind(this)}>Login</a>  <a className="pull right" onClick={() => {
         this.linkTo('/registration')
-      }}>Anmelden</a></div>;
+      }}>Registrieren</a></div>;
     }
 
     return (
       <div>
         <Menu ref="left" alignment="left">
           <MenuItem hash="/projects">Projekte</MenuItem>
-          <MenuItem hash="/ranking">Beste Unternehmen</MenuItem>
+          <MenuItem hash="/ranking">Bestenliste</MenuItem>
           <MenuItem hash="/certificate/find">Pflanzungen finden</MenuItem>
           <MenuItem hash={"/gift/redeem"}>Gutschein einlösen</MenuItem>
           <MenuItem hash="/co2Calculator">CO<sub>2</sub>-Rechner</MenuItem>

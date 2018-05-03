@@ -104,17 +104,15 @@ export default class BlogPage extends Component {
             {moment(this.state.article.createdOn).format("DD.MM.YYYY")}{" von "}
             <a role="button" onClick= { () => { browserHistory.push('/user/' + this.state.article.owner.name) }}>
               {this.state.article.owner.name}</a>
-            <br/>
-            <br/>
-            <p dangerouslySetInnerHTML={{
-              __html: getTextForSelectedLanguage(this.state.article.intro)
-            }}/>
             <div className="article-img">
               <div className="article-img-div">
                 <img src={articleImageUrl}/>
                 {imageDesc}
               </div>
             </div>
+            <p dangerouslySetInnerHTML={{
+              __html: getTextForSelectedLanguage(this.state.article.intro)
+            }}/>
             {this.state.article.paragraphs.map(function(paragraph, i) {
               return (<Paragraph articleId={that.props.params.articleId} content={paragraph} key={i}/>);
             })}

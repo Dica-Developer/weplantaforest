@@ -77,74 +77,46 @@ export default class DoRegistration extends Component {
       <div className="registrationPage">
         <div className="row">
           <div className="col-md-12">
-            <h1>Anmelden</h1>
+            <h1>Registrieren</h1>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-5">
-            Benutzername:
+          <div className="form-group">
+            <label htmlFor="username">Benutzername:</label>
+              <InputText cssclass="form-control" placeholderText="Bitte geben Sie Ihren Benutzernamen ein." id="username" toUpdate="username" updateValue={this.updateValue.bind(this)}/>
           </div>
-          <div className="col-md-7">
-            <InputText toUpdate="username" updateValue={this.updateValue.bind(this)}/>
+          <div className="form-group">
+            <label htmlFor="passwordOne">Passwort:</label>
+              <InputText cssclass="form-control" placeholderText="Bitte geben Sie ein Passwort ein." id="passwordOne" toUpdate="passwordOne" updateValue={this.updateValue.bind(this)} type="password"/>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-5">
-            Passwort:
+          <div className="form-group">
+            <label htmlFor="passwordTwo">Passwort bestätigen:</label>
+              <InputText cssclass="form-control" placeholderText="Bitte bestätigen Sie Ihr Passwort." id="passwordTwo" toUpdate="passwordTwo" updateValue={this.updateValue.bind(this)} type="password"/>
           </div>
-          <div className="col-md-7">
-            <InputText toUpdate="passwordOne" updateValue={this.updateValue.bind(this)} type="password"/>
+          <div className="form-group">
+            <label htmlFor="mail">E-Mail:</label>
+              <InputText cssclass="form-control" placeholderText="Bitte geben Sie eine gültige E-Mailadresse ein." id="mail" toUpdate="mail" updateValue={this.updateValue.bind(this)} />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-5">
-            Passwort(Bestätigen):
+          <div className="form-group">
+            <label htmlFor="type">Typ:</label>
+              <select id="type" className="form-control" onChange={this.updateOrgType.bind(this)}>
+                <option value="PRIVATE">Privatperson</option>
+                <option value="COMMERCIAL">Firma</option>
+                <option value="NONPROFIT">Non-Profit Organisation</option>
+                <option value="EDUCATIONAL">Schule</option>
+              </select>
           </div>
-          <div className="col-md-7">
-            <InputText toUpdate="passwordTwo" updateValue={this.updateValue.bind(this)} type="password"/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-5">
-            E-Mail:
-          </div>
-          <div className="col-md-7">
-            <InputText toUpdate="mail" updateValue={this.updateValue.bind(this)}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-5">
-            Typ:
-          </div>
-          <div className="col-md-7">
-            <select onChange={this.updateOrgType.bind(this)}>
-              <option value="PRIVATE">Privatperson</option>
-              <option value="COMMERCIAL">Firma</option>
-              <option value="NONPROFIT">Non-Profit Organisation</option>
-              <option value="EDUCATIONAL">Schule</option>
-            </select>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-5"></div>
-          <div className="col-md-7">
+          <div className="col-md-12 align-left checkBox">
             <CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text="Ich möchte den monatlichen Newsletter erhalten."/>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-5"></div>
-          <div className="col-md-7">
+          <div className="col-md-12 align-left checkBox">
             <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text="Ich akzeptiere die Nutzungsbedingungen."/>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12 align-center">
+          <div className="col-md-12 align-left">
             <Captcha ref="captcha"/>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12 align-center">
-            <IconButton text="ANMELDEN" glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)}/>
+          <div className="col-md-12 align-left">
+            <IconButton text="Registrieren" glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)}/>
           </div>
         </div>
         <Notification ref="notification"/>
