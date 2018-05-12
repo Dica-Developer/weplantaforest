@@ -36,7 +36,7 @@ export default class ArticleManager extends Component {
       <div className="container paddingTopBottom15 article-manager">
         <div className="row ">
           <div className="col-md-12">
-            <h1>Blog</h1>
+            <h1>Content</h1>
           </div>
         </div>
         <div className="row ">
