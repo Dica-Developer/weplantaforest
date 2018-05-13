@@ -43,7 +43,7 @@ export default class ProjectCarousel extends Component {
             let imageUrl = 'http://localhost:8081/project/image/' + slide.imageFileName + '/1140/1140';
             return (
               <div className={activeItem} key={index}>
-                <img src={imageUrl} width="1140" height="400" alt={slide.imageFileName}/>
+                <img src={imageUrl} width="1140" height="570" alt={slide.imageFileName}/>
                 <div className="imageDescription">
                   <span className="date">
                     <i>{moment(slide.date).format("DD.MM.YYYY")}</i>&nbsp;/&nbsp;</span>
