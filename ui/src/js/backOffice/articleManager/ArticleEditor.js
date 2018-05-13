@@ -301,7 +301,7 @@ export default class ArticleEditor extends Component {
 
   render() {
     var that = this;
-    var articleImgUrl = 'http://localhost:8082/article/image/' + this.state.article.id + '/' + this.state.article.imageFileName + '/380/380';
+    var articleImgUrl = 'http://localhost:8082/article/image/' + this.state.article.id + '/' + this.state.article.imageFileName + '/380/253';
     var imageContent;
     if (!this.state.articleImageChanged && this.state.article.id != 0) {
       imageContent = <img src={articleImgUrl}/>;

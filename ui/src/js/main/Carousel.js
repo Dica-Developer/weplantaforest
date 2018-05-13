@@ -49,11 +49,11 @@ export default class Carousel extends Component {
             if (0 === index) {
               activeItem = 'item active';
             }
-            let imageUrl = 'http://localhost:8081/mainSliderImage/' + slide.imageFileName + '/1140/640';
+            let imageUrl = 'http://localhost:8081/mainSliderImage/' + slide.imageFileName + '/1140/570';
 
             return (
               <div className={activeItem} key={index}>
-                <img src={imageUrl} width="1140" height="400" />
+                <img src={imageUrl} width="1140" height="570" />
               </div>
             );
           })}

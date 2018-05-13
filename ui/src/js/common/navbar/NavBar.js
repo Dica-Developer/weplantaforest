@@ -153,13 +153,11 @@ export default class NavBar extends Component {
           </div>
           {myForrestButton}
           <div className="container">
-            <div className="navbar-left">
-              <SvgButton text="" buttonType="ipatlogo" onClick={() => {
-                this.linkTo('/')
-              }} />
-            </div>
             <div className="collapse navbar-collapse" id="navbarLinkBar">
               <div className="navbar-left">
+                <SvgButton text="" buttonType="ipatlogo" onClick={() => {
+                  this.linkTo('/')
+                }} />
                 <SvgButton text="" buttonType="shovel" onClick={() => {
                   this.linkTo('/selfPlant')
                 }} />

@@ -17,7 +17,7 @@ export default class ArticleTeaser extends Component {
   render() {
     let imageUrl = '';
     if (this.props.content.id != 0) {
-      imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/380/380';
+      imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/380/253';
     }
 
     return (
@@ -25,7 +25,7 @@ export default class ArticleTeaser extends Component {
         <a role="button" onClick={() => {
           this.linkTo(`/blog/` + this.props.content.id)
         }}>
-          <img src={imageUrl} alt={this.props.content.title}/>
+          <img src={imageUrl} alt={this.props.content.title} width="380" height="253" />
           <h1>
             {this.props.content.title}
           </h1>
