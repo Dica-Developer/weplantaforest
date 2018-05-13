@@ -16,11 +16,11 @@ export default class CompletedProject extends Component {
   }
 
   render() {
-    let imageUrl = 'http://localhost:8081/project/image/' + this.props.project.projectImageFileName + '/1140/1140';
+    let imageUrl = 'http://localhost:8081/project/image/' + this.props.project.projectImageFileName + '/279/186';
     return (
       <div className="project col-md-4" onClick={this.switchToProjectPage.bind(this)}>
         <div className="projectImage">
-          <img src={imageUrl} width="279px" height="186px"/>
+          <img src={imageUrl} />
         </div>
         <div className="projectName">
           {this.props.project.projectName}

@@ -21,11 +21,11 @@ export default class ActiveProject extends Component {
     if (this.props.project.amountOfMaximumTreesToPlant != 0) {
       percent = this.props.project.amountOfPlantedTrees / this.props.project.amountOfMaximumTreesToPlant * 100;
     }
-    let imageUrl = 'http://localhost:8081/project/image/' + this.props.project.projectImageFileName + '/1140/1140';
+    let imageUrl = 'http://localhost:8081/project/image/' + this.props.project.projectImageFileName + '/279/186';
     return (
       <div className="project col-md-4" onClick={this.switchToProjectPage.bind(this)}>
         <div className="projectImage">
-          <img src={imageUrl} width="279px" height="186px"/>
+          <img src={imageUrl} />
         </div>
         <div className="projectName">
           {this.props.project.projectName}

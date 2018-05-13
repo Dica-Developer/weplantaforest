@@ -27,14 +27,14 @@ class Article extends Component {
   }
 
   render() {
-    let imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/380/230';
+    let imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/300/200';
     return (
       <div className="article-entry">
         <a role="button" onClick={this.switchToBlogEntry.bind(this)}>
           <h3>{getTextForSelectedLanguage(this.props.content.title)}</h3>
           <span>{moment(this.props.content.createdOn).format("DD.MM.YYYY")}{" von "}{this.props.content.owner.name}</span>
           <div className="article-content">
-            <img src={imageUrl}/>
+            <img src={imageUrl} />
             <p dangerouslySetInnerHTML={{
               __html: getTextForSelectedLanguage(this.props.content.intro)
             }}/>

@@ -1,6 +1,7 @@
 @import '../../less/basecolors.less';
 
 .blogOverviewPage {
+
   .row {
     background-color: @base-background-color;
     margin-left: 0;
@@ -10,11 +11,18 @@
     padding-right: 4vw;
   }
 
+  .col-md-4 {
+    padding: 0;
+    width: 310px;
+  }
+
   .article-entry {
     border-style: none none solid none;
     border-width: 1px;
     padding-bottom: 10px;
-    width: 316px;
+    width: 300px;
+    height: 500px;
+    margin: 0;
 
     h4 {
       margin-bottom: 0;
@@ -35,9 +43,9 @@
 
       img {
         float: left;
-        margin-right: 10px;
         max-width: 100%;
-        height: auto;
+        width: 300px;
+        height: 200px;
         margin-bottom: 15px;
       }
       p {

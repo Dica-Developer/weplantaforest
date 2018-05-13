@@ -17,7 +17,7 @@ export default class ArticleTeaser extends Component {
   render() {
     let imageUrl = '';
     if (this.props.content.id != 0) {
-      imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/380/380';
+      imageUrl = 'http://localhost:8082/article/image/' + this.props.content.id + '/' + this.props.content.imageFileName + '/380/253';
     }
 
     return (
