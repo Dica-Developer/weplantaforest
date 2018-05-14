@@ -30,7 +30,7 @@ export default class RankingPage extends Component {
       chosenOrgType: 'PRIVATE',
       slideIn: false,
       rankingEntries: 25,
-      onlyLastYear: false
+      onlyLastYear: true
     };
     this.toggleDiv = this.toggleDiv.bind(this)
   }
