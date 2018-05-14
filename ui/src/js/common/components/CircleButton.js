@@ -16,7 +16,7 @@ export default class CircleButton extends Component {
 
   render() {
     return (
-      <div className="circleButton">
+      <div className={"circleButton " + this.props.className}>
         <a role="button" onClick={this.props.onClick.bind(this)}>
           <span className={("glyphicon " + this.props.glyphIcon) + " circle"} aria-hidden="true"></span>
           <span className="label">
