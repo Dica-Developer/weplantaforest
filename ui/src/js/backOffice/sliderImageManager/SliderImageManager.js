@@ -61,7 +61,7 @@ class SliderImage extends Component {
     this.forceUpdate();
   }
 
-  updateImageFromParent(image){
+  updateImageFromParent(image) {
     var imageFileName = image.imageFileName == ''
       ? ''
       : image.imageFileName.substr(0, image.imageFileName.indexOf('.'));
@@ -117,27 +117,31 @@ class SliderImage extends Component {
       imageFileName: imageFileName
     };
     var config = getConfig();
-    axios.post('http://localhost:8083/mainSliderImage/save', imageData, config).then(function(response) {
-      if (that.state.file != null) {
-        var imageId = response.data;
-        var imageFile = new FormData();
-        imageFile.append('imageId', imageId);
-        imageFile.append('file', that.state.file);
-        axios.post('http://localhost:8083/mainSliderImage/upload', imageFile, config).then(function(response) {
-          that.updateImageData(response.data);
-          that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
-        }).catch(function(response) {
-          that.refs.notification.addNotification('Fehler!', response.data, 'error');
-        });
-      } else {
-        that.refs.notification.addNotification('Geschafft!', 'Daten wurden geupdatet!', 'success');
-      }
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler!', response.data, 'error');
-    });
+    if (imageData.imageFileName != '.jpg') {
+      axios.post('http://localhost:8083/mainSliderImage/save', imageData, config).then(function(response) {
+        if (that.state.file != null) {
+          var imageId = response.data;
+          var imageFile = new FormData();
+          imageFile.append('imageId', imageId);
+          imageFile.append('file', that.state.file);
+          axios.post('http://localhost:8083/mainSliderImage/upload', imageFile, config).then(function(response) {
+            that.updateImageData(response.data);
+            that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
+          }).catch(function(response) {
+            that.refs.notification.addNotification('Fehler!', response.data, 'error');
+          });
+        } else {
+          that.refs.notification.addNotification('Geschafft!', 'Daten wurden geupdatet!', 'success');
+        }
+      }).catch(function(response) {
+        that.refs.notification.addNotification('Fehler!', response.data, 'error');
+      });
+    } else {
+      that.refs.notification.addNotification('Fehler!', 'Bitte gib einen Dateinamen an!', 'error');
+    }
   }
 
-  updateImageData(image){
+  updateImageData(image) {
     var imageFileName = image.imageFileName == ''
       ? ''
       : image.imageFileName.substr(0, image.imageFileName.indexOf('.'));
@@ -156,10 +160,10 @@ class SliderImage extends Component {
     var image;
     if (this.state.file != null) {
       image = <img src={this.state.fileSrc} height="320" width="570"/>;
-    } else if(this.state.imageId != null){
+    } else if (this.state.imageId != null) {
       let imageUrl = 'http://localhost:8081/mainSliderImage/' + this.state.imageFileName + this.state.fileEnding + '/570/320'
       image = <img src={imageUrl}/>;
-    }else {
+    } else {
       image = '';
     }
     var style = {
@@ -214,8 +218,7 @@ export default class SliderImageManager extends Component {
     axios.get('http://localhost:8081/mainSliderImages').then(function(response) {
       var result = response.data;
       that.setState({slides: result});
-    }).catch(function(response) {
-    });
+    }).catch(function(response) {});
 
   }
 
