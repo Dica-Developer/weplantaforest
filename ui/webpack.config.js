@@ -21,9 +21,6 @@ const config = {
       template: path.resolve(__dirname, 'src', 'index.html'),
       inject: 'body',
       minify: false
-    }),
-    new webpack.SourceMapDevToolPlugin({
-      noSources: true
     })
   ],
   module: {
@@ -60,7 +57,7 @@ const config = {
       }
     ]
   },
-  //  devtool = inDev ? 'cheap-module-eval-source-map' : 'source-map',
+  devtool: inDev ? 'eval' : 'nosources-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     port: 8080,
