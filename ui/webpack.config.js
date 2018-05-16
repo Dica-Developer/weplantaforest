@@ -10,17 +10,25 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: inDev ? 'http://localhost:8080/' : '/',
-    filename: 'js/' + JS_FILE_NAME
+    filename: path.join('js', JS_FILE_NAME)
   },
   optimization: {
     runtimeChunk: true,
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: "all"
+        }
+      }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'I Plant A Tree',
       template: path.resolve(__dirname, 'src', 'index.html'),
       inject: 'body',
-      minify: false
+      minify: true
     })
   ],
   module: {
@@ -61,11 +69,16 @@ const config = {
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     port: 8080,
+    compress: true,
+    hot: true,
+    inline: true,
+    historyApiFallback: true,
+    progress: true,
     stats: {
       modules: false,
       cached: false,
       colors: true,
-      chunk: false
+      chunk: true
     }
   }
 }

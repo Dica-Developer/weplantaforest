@@ -62,8 +62,8 @@
     "node": ">=5.5.0"
   },
   "scripts": {
-    "build": "webpack ..mode=production",
-    "dev": "webpack-dev-server --mode=dev --compress --hot --inline --progress --history-api-fallback",
+    "build": "webpack --mode=production",
+    "dev": "webpack-dev-server --mode=dev",
     "lint": "eslint ./src --ext .js"
   }
 }
