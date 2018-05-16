@@ -63,7 +63,7 @@
   },
   "scripts": {
     "build": "webpack --mode=production",
-    "dev": "webpack-dev-server --mode=dev",
+    "dev": "webpack-dev-server --mode=development",
     "lint": "eslint ./src --ext .js"
   }
 }
