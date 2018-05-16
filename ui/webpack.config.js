@@ -28,7 +28,7 @@ const config = {
       title: 'I Plant A Tree',
       template: path.resolve(__dirname, 'src', 'index.html'),
       inject: 'body',
-      minify: true
+      minify: false
     })
   ],
   module: {
