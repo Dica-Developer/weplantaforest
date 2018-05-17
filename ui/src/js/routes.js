@@ -38,7 +38,7 @@ import BlogPage from './blog/BlogPage';
 import BlogOverviewPage from './blog/BlogOverviewPage';
 import SuccessCC from './payment/SuccessCC';
 import ErrorCC from './payment/ErrorCC';
-import Co2Calculator from './co2/Co2Calculator';
+import LoadableCo2Calculator from './co2/LoadableCo2Calculator';
 import FAQ from './faq/FaqView';
 import AboutUs from './common/footer/pages/AboutUs';
 import Award from './common/footer/pages/Award';
@@ -137,7 +137,7 @@ export default class Routes extends Component {
           <Route path="/blog" component={BlogOverviewPage} reRender={this.reRender.bind(this)}/>
           <Route path="/payCC/succes/:cartId" component={SuccessCC} reRender={this.reRender.bind(this)}/>
           <Route path="/payCC/error/:cartId" component={ErrorCC} reRender={this.reRender.bind(this)}/>
-          <Route path="/co2Calculator" component={Co2Calculator} reRender={this.reRender.bind(this)}/>
+          <Route path="/co2Calculator" component={LoadableCo2Calculator} reRender={this.reRender.bind(this)}/>
           <Route path="/faq" component={FAQ} reRender={this.reRender.bind(this)}/>
           <Route path="/AboutUs" component={AboutUs} reRender={this.reRender.bind(this)}/>
           <Route path="/award" component={Award} reRender={this.reRender.bind(this)}/>
