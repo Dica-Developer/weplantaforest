@@ -1,16 +1,12 @@
-var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var DashboardPlugin = require('webpack-dashboard/plugin');
 var path = require('path');
-var inDev = process.env.NODE_ENV === 'development';
-var JS_FILE_NAME = inDev ? '[name].dev.js' : '[name].[hash].js';
 
 const config = {
-  mode: 'production',
   entry: path.resolve(__dirname, 'src', 'js', 'app.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: inDev ? 'http://localhost:8080/' : '/',
-    filename: path.join('js', JS_FILE_NAME)
+    pathinfo: true
   },
   optimization: {
     runtimeChunk: true,
@@ -65,7 +61,6 @@ const config = {
       }
     ]
   },
-  devtool: inDev ? 'eval' : 'nosources-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     port: 8080,
@@ -75,8 +70,8 @@ const config = {
     historyApiFallback: true,
     progress: true,
     stats: {
-      modules: false,
-      cached: false,
+      modules: true,
+      cached: true,
       colors: true,
       chunk: true
     }

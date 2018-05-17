@@ -56,14 +56,16 @@
     "less-loader": "^4.0.5",
     "style-loader": "^0.19.1",
     "webpack": "^4.8.1",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dashboard": "^1.1.1",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.2"
   },
   "engines": {
     "node": ">=5.5.0"
   },
   "scripts": {
-    "build": "webpack --mode=production",
-    "dev": "webpack-dev-server --mode=development",
+    "build": "webpack --mode=production --config webpack.prod.js",
+    "dev": "webpack-dev-server --mode=development --config webpack.dev.js",
     "lint": "eslint ./src --ext .js"
   }
 }
