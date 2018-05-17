@@ -91,4 +91,7 @@ export default class Footer extends Component {
       </div>
     );
   }
-} / * vim : set softtabstop = 2 : shiftwidth = 2 : expandtab * /
+}
+
+/* vim : set softtabstop = 2 : shiftwidth = 2 : expandtab */
+

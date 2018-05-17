@@ -20,7 +20,7 @@ export default class ButtonBar extends Component {
     super(props);
   }
 
-  loadAllUser(){
+  loadAllUser() {
     this.props.loadAllUser(true);
   }
 
@@ -38,16 +38,16 @@ export default class ButtonBar extends Component {
         <div className="col-md-10">
           <CircleButton text="Alle" onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward"/>
           <CircleButton text="Privat" onClick={() => {
-            this.loadOrgTypeRanking('PRIVATE', 'Privatpersonen')
+            this.loadOrgTypeRanking('PRIVATE', 'Privatpersonen');
             }} glyphIcon="glyphicon-forward" />
           <CircleButton text="Unternehmen" onClick={() => {
-            this.loadOrgTypeRanking('COMMERCIAL', 'Unternehmen')
+            this.loadOrgTypeRanking('COMMERCIAL', 'Unternehmen');
             }} glyphIcon="glyphicon-forward" />
           <CircleButton text="Non-Profit Org." onClick={() => {
-            this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen')
+            this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen');
             }} glyphIcon="glyphicon-forward" />
           <CircleButton text="Schulen" onClick={() => {
-            this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen')
+            this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen');
             }} glyphIcon="glyphicon-forward" />
           <CircleButton text="Teams" onClick={this.loadBestTeams.bind(this)} glyphIcon="glyphicon-forward" />
         </div>

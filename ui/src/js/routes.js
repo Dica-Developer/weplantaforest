@@ -31,7 +31,7 @@ import ResetPasswordPage from './password/resetPassword/ResetPasswordPage';
 import GiftOverview from './gifts/overview/GiftOverview';
 import RedeemGiftPage from './gifts/redeem/RedeemGiftPage';
 import FindTreePage from './findTree/FindTreePage';
-import ProjectsPage from './projects/ProjectsPage'
+import ProjectsPage from './projects/ProjectsPage';
 import StatisticsPage from './statistics/StatisticsPage';
 import TeamPage from './team/TeamPage';
 import BlogPage from './blog/BlogPage';
@@ -76,19 +76,19 @@ export default class Routes extends Component {
   }
 
   updatePlantBag(price, projectItems, projectName, isGift) {
-    this.refs["navbar"].updatePlantBag(price, projectItems, projectName, isGift);
+    this.refs['navbar'].updatePlantBag(price, projectItems, projectName, isGift);
   }
 
   updatePlantBagFromLocaleStorage() {
-    this.refs["navbar"].updatePlantBagFromLocaleStorage();
+    this.refs['navbar'].updatePlantBagFromLocaleStorage();
   }
 
   updateNavbarComponents() {
-    this.refs["navbar"].updateComponents();
+    this.refs['navbar'].updateComponents();
   }
 
   resetPlantBag() {
-    this.refs["navbar"].resetPlantBag();
+    this.refs['navbar'].resetPlantBag();
   }
 
   switchLocale(locale) {
@@ -100,7 +100,7 @@ export default class Routes extends Component {
     counterpart.registerTranslations('de', require('counterpart/locales/de'));
     counterpart.registerTranslations('en', require('./locales/en'));
     counterpart.registerTranslations('de', require('./locales/de'));
-    counterpart.setLocale(localStorage.getItem('language') == "ENGLISH"
+    counterpart.setLocale(localStorage.getItem('language') == 'ENGLISH'
       ? 'en'
       : 'de');
     return (
