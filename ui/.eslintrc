@@ -24,10 +24,6 @@
   "plugins": [
     "react"
   ],
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
-  },
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 6,
