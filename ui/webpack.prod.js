@@ -4,7 +4,6 @@ var path = require('path');
 
 const config = merge(common, {
   mode: 'production',
-  entry: path.resolve(__dirname, 'src', 'js', 'app.js'),
   output: {
     filename: path.join('js', '[name].[hash].js'),
     publicPath: '/'

@@ -6,7 +6,6 @@ var path = require('path');
 
 const config = merge(common, {
   mode: 'development',
-  entry: path.resolve(__dirname, 'src', 'js', 'app.js'),
   output: {
     filename: path.join('js', '[name].dev.js'),
     publicPath: 'http://localhost:8080/'
