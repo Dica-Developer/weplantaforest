@@ -9,7 +9,7 @@ import NavBar from './common/navbar/NavBar';
 import Header from './common/header/Header';
 import Footer from './common/footer/Footer';
 
-import MainPage from './main/MainPage';
+import LoadableMainPage from './main/LoadableMainPage';
 import ProposalPlantPage from './planting/proposalPlantPage/ProposalPlantPage';
 import SliderPlantPage from './planting/sliderPlantPage/SliderPlantPage';
 import CustomPlantPage from './planting/customPlantPage/CustomPlantPage';
@@ -108,7 +108,7 @@ export default class Routes extends Component {
         <NavBar ref="navbar" reRender={this.reRender.bind(this)} switchLocale={this.switchLocale}/>
         <Header/>
         <Router history={browserHistory}>
-          <Route path="/" component={MainPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/" component={LoadableMainPage} reRender={this.reRender.bind(this)}/>
           <Route path="/plant/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
           <Route path="/plant3" component={CustomPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
           <Route path="/plantGift/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="Gutschein erstellen" isGift={true} isAbo={false}/>
