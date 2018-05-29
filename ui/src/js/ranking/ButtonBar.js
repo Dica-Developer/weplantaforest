@@ -13,8 +13,8 @@ export default class ButtonBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      "clickedIndex": 0
-    }
+      'clickedIndex': 0
+    };
   }
 
   loadAllUser() {
@@ -41,22 +41,22 @@ export default class ButtonBar extends Component {
             ? 'circleButtonActive'
             : ''}/>
           <CircleButton text="Privat" onClick={() => {
-            this.loadOrgTypeRanking('PRIVATE', 'Privatpersonen', 1)
+            this.loadOrgTypeRanking('PRIVATE', 'Privatpersonen', 1);
           }} glyphIcon="glyphicon-forward" className={clickedIndex == 1
             ? 'circleButtonActive'
             : ''}/>
           <CircleButton text="Unternehmen" onClick={() => {
-            this.loadOrgTypeRanking('COMMERCIAL', 'Unternehmen', 2)
+            this.loadOrgTypeRanking('COMMERCIAL', 'Unternehmen', 2);
           }} glyphIcon="glyphicon-forward" className={clickedIndex == 2
             ? 'circleButtonActive'
             : ''}/>
           <CircleButton text="Non-Profit Org." onClick={() => {
-            this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen', 3)
+            this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen', 3);
           }} glyphIcon="glyphicon-forward" className={clickedIndex == 3
             ? 'circleButtonActive'
             : ''}/>
           <CircleButton text="Schulen" onClick={() => {
-            this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen', 4)
+            this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen', 4);
           }} glyphIcon="glyphicon-forward" className={clickedIndex == 4
             ? 'circleButtonActive'
             : ''}/>
