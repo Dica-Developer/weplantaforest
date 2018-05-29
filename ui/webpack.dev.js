@@ -1,7 +1,6 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
-// still not working with webpack 4
-// var DashboardPlugin = require('webpack-dashboard/plugin');
+var DashboardPlugin = require('webpack-dashboard/plugin');
 var path = require('path');
 
 const config = merge(common, {
@@ -15,11 +14,9 @@ const config = merge(common, {
     minimize: false
   },
   plugins: [
-    //new DashboardPlugin({ port: 8080 })
+    new DashboardPlugin()
   ],
-  // eval should be fastest for dev but dashboard seems not to like it
-  //devtool: 'eval' : 'nosources-source-map',
-  devtool: 'source-map',
+  devtool: 'eval',
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     port: 8080,
