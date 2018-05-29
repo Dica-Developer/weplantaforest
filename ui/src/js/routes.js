@@ -52,7 +52,7 @@ import Imprint from './common/footer/pages/Imprint';
 import Contact from './common/footer/pages/Contact';
 import Social from './common/footer/pages/Social';
 import Partner from './common/footer/pages/Partner';
-import BackOfficeOverview from './backOffice/BackOfficeOverview';
+import LoadableBackOfficeOverview from './backOffice/LoadableBackOfficeOverview';
 import ArticleManager from './backOffice/articleManager/ArticleManager';
 import ArticleCreater from './backOffice/articleManager/ArticleCreater';
 import ArticleEditor from './backOffice/articleManager/ArticleEditor';
