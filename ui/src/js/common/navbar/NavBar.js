@@ -183,7 +183,11 @@ export default class NavBar extends Component {
           link={<a href='/privacy'>Weitere Informationen</a>}
           onAccept={() => {}}
           cookie="user-has-accepted-cookies"
-          dismissOnScroll={false} />
+          dismissOnScroll={false}
+          styles={{
+            banner: { backgroundColor: '#737373' }
+          }}
+          />
       </div>
     );
   }
