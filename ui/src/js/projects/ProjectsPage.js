@@ -109,7 +109,7 @@ export default class ProjectsPage extends Component {
             </div>
             <div className="bottom col-md-12">
               <p>Dir stehen Flächen zur Verfügung?</p>
-              <IconButton glyphIcon="glyphicon-forward" text="Projekt anbieten" onClick={this.switchToOfferProjectPage.bind(this)}/>
+              <IconButton glyphIcon="glyphicon-forward" text="Fläche anbieten" onClick={this.switchToOfferProjectPage.bind(this)}/>
             </div>
           </div>
         </div>
