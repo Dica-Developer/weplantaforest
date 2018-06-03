@@ -22,6 +22,7 @@ export default class DoRegistration extends Component {
       orgType: 'PRIVATE',
       newsLetter: true,
       acceptAgbs: false,
+      acceptGDPR: false,
       registrated: false
     };
   }
@@ -43,6 +44,8 @@ export default class DoRegistration extends Component {
       this.refs.notification.addNotification('Passwort zu kurz!', 'Bitte gib mind. 6 Zeichen für dein Passwort an!', 'error');
     } else if (!this.state.acceptAgbs) {
       this.refs.notification.addNotification('Nutzungsbedingungen nicht akzeptiert!', 'Die Nutzungsbedingungen müssen akzeptiert werden!', 'error');
+    } else if (!this.state.acceptGDPR) {
+      this.refs.notification.addNotification('Datenschutzerklärung nicht akzeptiert!', 'Die Datenschutzerklärung müssen akzeptiert werden!', 'error');
     } else if (!this.refs.captcha.validateCaptcha()) {} else {
       var that = this;
       var data = {
@@ -101,16 +104,19 @@ export default class DoRegistration extends Component {
             <label htmlFor="type">Typ:</label>
               <select id="type" className="form-control" onChange={this.updateOrgType.bind(this)}>
                 <option value="PRIVATE">Privatperson</option>
-                <option value="COMMERCIAL">Firma</option>
+                <option value="COMMERCIAL">Unternehmen</option>
                 <option value="NONPROFIT">Non-Profit Organisation</option>
                 <option value="EDUCATIONAL">Schule</option>
               </select>
           </div>
           <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text="Ich möchte den monatlichen Newsletter erhalten."/>
+            <CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text="Ich möchte den Newsletter erhalten."/>
           </div>
           <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text="Ich akzeptiere die Nutzungsbedingungen."/>
+            <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text="Ich habe die <a href='/terms' target='_blank'>Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere diese." />
+          </div>
+          <div className="col-md-12 align-left checkBox">
+            <CheckBox toUpdate="acceptGDPR" value={this.state.acceptGDPR} updateValue={this.updateValue.bind(this)} text="Ich habe die <a href='/privacy' target='_blank'>Datenschutzerklärung</a> gelesen und akzeptiere diese." />
           </div>
           <div className="col-md-12 align-left">
             <Captcha ref="captcha"/>

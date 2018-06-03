@@ -135,10 +135,8 @@ export default class NavBar extends Component {
           <MenuItem hash="/certificate/find">Pflanzungen finden</MenuItem>
           <MenuItem hash={'/gift/redeem'}>Gutschein einlösen</MenuItem>
           <MenuItem hash="/co2Calculator">CO<sub>2</sub>-Rechner</MenuItem>
-          <MenuItem hash="/statistics">Zahlen & Fakten</MenuItem>
           <MenuItem hash="/projectOffer">Fläche anbieten</MenuItem>
           <MenuItem hash="/blog">Blog</MenuItem>
-          <MenuItem hash="/faq">FAQs</MenuItem>
           <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
         </Menu>
         <Menu ref="right" alignment="right">
