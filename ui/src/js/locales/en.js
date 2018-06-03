@@ -1,6 +1,6 @@
 module.exports = {
   buttonbar: {
-    plant_self: 'PLANTED BYSELF',
+    plant_self: 'PLANTED YOURSELF',
     plant_online: 'PLANT ONLINE',
     tree_service: 'TREESERVICE'
   },

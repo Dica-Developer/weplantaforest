@@ -140,7 +140,7 @@ export default class Routes extends Component {
           <Route path="/co2Calculator" component={LoadableCo2Calculator} reRender={this.reRender.bind(this)}/>
           <Route path="/faq" component={FAQ} reRender={this.reRender.bind(this)}/>
           <Route path="/AboutUs" component={AboutUs} reRender={this.reRender.bind(this)}/>
-          <Route path="/award" component={Award} reRender={this.reRender.bind(this)}/>
+          <Route path="/awards" component={Award} reRender={this.reRender.bind(this)}/>
           <Route path="/links" component={Links} reRender={this.reRender.bind(this)}/>
           <Route path="/disclaimer" component={Disclaimer} reRender={this.reRender.bind(this)}/>
           <Route path="/financials" component={Financial} reRender={this.reRender.bind(this)}/>

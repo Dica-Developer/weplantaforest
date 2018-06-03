@@ -33,7 +33,7 @@ export default class Footer extends Component {
                 PARTNER
               </a>
               <a role="button" onClick={() => {
-                this.linkTo('/award');
+                this.linkTo('/awards');
               }}>
                 AUSZEICHNUNGEN
               </a>
