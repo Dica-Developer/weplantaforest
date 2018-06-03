@@ -6,6 +6,8 @@ import {
   browserHistory
 } from 'react-router';
 
+import CookieBanner from 'react-cookie-banner';
+
 import Menu from './Menu';
 import MenuItem from './MenuItem';
 import LanguageMenuItem from './LanguageMenuItem';
@@ -175,6 +177,13 @@ export default class NavBar extends Component {
             </div>
           </div>
         </nav>
+        <CookieBanner
+          message="Wir benutzen Cookies um die Nutzerfreundlichkeit der Webseite zu verbessen. Durch Deinen Besuch stimmst Du dem zu."
+          buttonMessage="Verstanden"
+          link={<a href='/privacy'>Weitere Informationen</a>}
+          onAccept={() => {}}
+          cookie="user-has-accepted-cookies"
+          dismissOnScroll={false} />
       </div>
     );
   }
