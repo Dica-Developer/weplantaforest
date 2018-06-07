@@ -6,6 +6,10 @@ module.exports = {
   },
   USER_NOT_FOUND: 'User not found.',
   INVALID_ACTIVATION_KEY: 'The activation link is invalid.',
+  USER_ALREADY_EXISTS: 'Username already exists.',
+  MAIL_ALREADY_EXISTS: 'Mail adress already exists.',
+  INVALID_MAIL: 'Mail is invalid.',
+
 
   TEAM_NAME: 'Team Name',
   TEAM_CREATE: 'create Team',

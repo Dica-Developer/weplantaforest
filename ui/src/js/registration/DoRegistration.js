@@ -60,16 +60,8 @@ export default class DoRegistration extends Component {
       axios.post('http://localhost:8081/user/registrate', data, {}).then(function(response) {
         console.log('registration succescull!');
         that.props.setRegistrated();
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
-        if (response instanceof Error) {
-          console.error('Error', response.message);
-        } else {
-          console.error(response.data);
-          console.error(response.status);
-          console.error(response.headers);
-          console.error(response.config);
-        }
+      }).catch(error => {
+        that.refs.notification.handleError(error.response);
       });
     }
   }
@@ -86,37 +78,37 @@ export default class DoRegistration extends Component {
         <div className="row">
           <div className="form-group">
             <label htmlFor="username">Benutzername:</label>
-              <InputText cssclass="form-control" placeholderText="Bitte geben Sie Ihren Benutzernamen ein." id="username" toUpdate="username" updateValue={this.updateValue.bind(this)}/>
+            <InputText cssclass="form-control" placeholderText="Bitte geben Sie Ihren Benutzernamen ein." id="username" toUpdate="username" updateValue={this.updateValue.bind(this)}/>
           </div>
           <div className="form-group">
             <label htmlFor="passwordOne">Passwort:</label>
-              <InputText cssclass="form-control" placeholderText="Bitte geben Sie ein Passwort ein." id="passwordOne" toUpdate="passwordOne" updateValue={this.updateValue.bind(this)} type="password"/>
+            <InputText cssclass="form-control" placeholderText="Bitte geben Sie ein Passwort ein." id="passwordOne" toUpdate="passwordOne" updateValue={this.updateValue.bind(this)} type="password"/>
           </div>
           <div className="form-group">
             <label htmlFor="passwordTwo">Passwort bestätigen:</label>
-              <InputText cssclass="form-control" placeholderText="Bitte bestätigen Sie Ihr Passwort." id="passwordTwo" toUpdate="passwordTwo" updateValue={this.updateValue.bind(this)} type="password"/>
+            <InputText cssclass="form-control" placeholderText="Bitte bestätigen Sie Ihr Passwort." id="passwordTwo" toUpdate="passwordTwo" updateValue={this.updateValue.bind(this)} type="password"/>
           </div>
           <div className="form-group">
             <label htmlFor="mail">E-Mail:</label>
-              <InputText cssclass="form-control" placeholderText="Bitte geben Sie eine gültige E-Mailadresse ein." id="mail" toUpdate="mail" updateValue={this.updateValue.bind(this)} />
+            <InputText cssclass="form-control" placeholderText="Bitte geben Sie eine gültige E-Mailadresse ein." id="mail" toUpdate="mail" updateValue={this.updateValue.bind(this)}/>
           </div>
           <div className="form-group">
             <label htmlFor="type">Typ:</label>
-              <select id="type" className="form-control" onChange={this.updateOrgType.bind(this)}>
-                <option value="PRIVATE">Privatperson</option>
-                <option value="COMMERCIAL">Unternehmen</option>
-                <option value="NONPROFIT">Non-Profit Organisation</option>
-                <option value="EDUCATIONAL">Schule</option>
-              </select>
+            <select id="type" className="form-control" onChange={this.updateOrgType.bind(this)}>
+              <option value="PRIVATE">Privatperson</option>
+              <option value="COMMERCIAL">Unternehmen</option>
+              <option value="NONPROFIT">Non-Profit Organisation</option>
+              <option value="EDUCATIONAL">Schule</option>
+            </select>
           </div>
           <div className="col-md-12 align-left checkBox">
             <CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text="Ich möchte den Newsletter erhalten."/>
           </div>
           <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text="Ich habe die <a href='/terms' target='_blank'>Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere diese." />
+            <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text="Ich habe die <a href='/terms' target='_blank'>Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere diese."/>
           </div>
           <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="acceptGDPR" value={this.state.acceptGDPR} updateValue={this.updateValue.bind(this)} text="Ich habe die <a href='/privacy' target='_blank'>Datenschutzerklärung</a> gelesen und akzeptiere diese." />
+            <CheckBox toUpdate="acceptGDPR" value={this.state.acceptGDPR} updateValue={this.updateValue.bind(this)} text="Ich habe die <a href='/privacy' target='_blank'>Datenschutzerklärung</a> gelesen und akzeptiere diese."/>
           </div>
           <div className="col-md-12 align-left">
             <Captcha ref="captcha"/>

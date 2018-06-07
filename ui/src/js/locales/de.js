@@ -6,6 +6,9 @@ module.exports = {
   },
   USER_NOT_FOUND: 'Nutzer nicht gefunden.',
   INVALID_ACTIVATION_KEY: 'Der Aktivierungs-Link ist ungültig.',
+  USER_ALREADY_EXISTS: 'Der Nutzername ist bereits vergeben.',
+  MAIL_ALREADY_EXISTS: 'Die E-Mail Adresse ist bereits vergeben.',
+  INVALID_MAIL: 'Die E-Mail Adresse ist ungültig.',
 
   TEAM_NAME: 'Team Name',
   TEAM_CREATE: 'Team erstellen',
