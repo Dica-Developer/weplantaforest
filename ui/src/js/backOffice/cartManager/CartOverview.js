@@ -224,6 +224,7 @@ export default class CartOverview extends Component {
       that.refs['spinner'].hideSpinner();
     }).catch(function(response) {
       that.refs.notification.addNotification('Fehler beim Laden der Pflanzkörbe!', response.data, 'error');
+      that.refs['spinner'].hideSpinner();
     });
   }
 
@@ -366,16 +367,33 @@ export default class CartOverview extends Component {
   }
 
   handleGridSort(sortColumn, sortDirection) {
+    console.log(sortColumn);
     var sortedRows = this.state.rows;
+
     const comparer = (a, b) => {
-      if (sortDirection === 'ASC') {
-        return (a[sortColumn] > b[sortColumn])
-          ? 1
-          : -1;
-      } else if (sortDirection === 'DESC') {
-        return (a[sortColumn] < b[sortColumn])
-          ? 1
-          : -1;
+      if(sortColumn == 'timestamp'){
+        let aInMillis = Date.parse(moment(a[sortColumn], 'DD.MM.YYYY'));
+        let bInMillis = Date.parse(moment(b[sortColumn], 'DD.MM.YYYY'))
+        if (sortDirection === 'ASC') {
+          return (aInMillis > bInMillis)
+            ? 1
+            : -1;
+        } else if (sortDirection === 'DESC') {
+          return (aInMillis < bInMillis)
+            ? 1
+            : -1;
+        }
+        return 1;
+      }else{
+        if (sortDirection === 'ASC') {
+          return (a[sortColumn] > b[sortColumn])
+            ? 1
+            : -1;
+        } else if (sortDirection === 'DESC') {
+          return (a[sortColumn] < b[sortColumn])
+            ? 1
+            : -1;
+        }
       }
     };
 
@@ -384,6 +402,10 @@ export default class CartOverview extends Component {
       : sortedRows.sort(comparer);
 
     this.setState({rows : sortedRows});
+  }
+
+  sortByDateString(){
+
   }
 
   onClearFilters() {
