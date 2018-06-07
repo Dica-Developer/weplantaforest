@@ -241,7 +241,7 @@ export default class ArticleEditor extends Component {
         var data = new FormData();
         data.append('articleId', article.id);
         data.append('file', that.state.imageFile);
-        axios.post('http://localhost:8082/article/upload/image', data, {}).then(function(response) {}).catch(function(response) {
+        axios.post('http://localhost:8082/article/upload/image', data, restConfig).then(function(response) {}).catch(function(response) {
           that.refs.notification.addNotification('Oh nein!', 'Beim Hochladen des Bildes für den Artikel ist ein Fehler aufgetreten.', 'error');
           if (response instanceof Error) {
             console.error('Error', response.message);
