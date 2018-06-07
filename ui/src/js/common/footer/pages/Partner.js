@@ -1,9 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
@@ -14,16 +10,14 @@ export default class Partner extends Component {
   constructor() {
     super();
     this.state = {
-      partner: []
+      partners: []
     };
   }
 
   componentDidMount() {
     var that = this;
     axios.get('http://localhost:8082/articles?articleType=PARTNER&language=' + localStorage.getItem('language')).then(function(response) {
-      that.setState({
-        partner: response.data
-      });
+      that.setState({partners: response.data});
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -40,23 +34,35 @@ export default class Partner extends Component {
     var that = this;
     return (
       <div className="container paddingTopBottom15 partner">
-          <div className="row">
-            <div className="col-md-12">
-              <h1>Partner</h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div>
-                {this.state.partner.map(function(about, i) {
-                return ( <div key={i}><p className="title">{about.title}</p><p dangerouslySetInnerHTML={{
-                  __html: about.intro
-                }}></p></div>);
-                })}
-              </div>
-            </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1>Partner</h1>
           </div>
         </div>
+
+        {this.state.partners.map(function(partner, i) {
+          console.log(partner);
+          let imageUrl = 'http://localhost:8082/article/image/' + partner.id + '/' + partner.imageFileName + '/200/200';
+            return (
+              <div>
+                <div className="row display-flex">
+                  <div className="col-sm-3 image-middle-wrapper">
+                    <img src={imageUrl}/>
+                  </div>
+                  <div className="col-sm-9">
+                    <p className="title">{partner.title}</p>
+                    <p dangerouslySetInnerHTML={{
+                      __html: partner.intro
+                    }}></p>
+                  </div>
+                </div>
+                <div className="row">
+                  <hr/>
+                </div>
+              </div>
+            );
+        })}
+      </div>
     );
   }
 }
