@@ -3,6 +3,9 @@ import {render} from 'react-dom';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 import Notification from '../common/components/Notification';
 import InputText from '../common/components/InputText';
 import CheckBox from '../common/components/CheckBox';
@@ -37,15 +40,15 @@ export default class DoRegistration extends Component {
 
   registrateUser() {
     if (this.state.passwordOne.length == 0 || this.state.username.length == 0 || this.state.mail.length == 0) {
-      this.refs.notification.addNotification('Eingabefelder sind leer!', 'Bitte füllen Sie alle Eingabefelder aus!', 'error');
+      this.refs.notification.addNotification(counterpart.translate('FIELDS_EMPTY.title'), counterpart.translate('FIELDS_EMPTY.text'), 'error');
     } else if (this.state.passwordOne != this.state.passwordTwo) {
-      this.refs.notification.addNotification('Passwörter stimmen nicht überein!', 'Das eingegebene Passwort stimmt nicht mit der Bestätigung überein!', 'error');
+      this.refs.notification.addNotification(counterpart.translate('PASSWORDS_DO_NOT_MATCH.title'), counterpart.translate('PASSWORDS_DO_NOT_MATCH.text'), 'error');
     } else if (this.state.passwordOne.length < 6) {
-      this.refs.notification.addNotification('Passwort zu kurz!', 'Bitte gib mind. 6 Zeichen für dein Passwort an!', 'error');
+      this.refs.notification.addNotification(counterpart.translate('PASSWORD_TOO_SHORT.title'), counterpart.translate('PASSWORD_TOO_SHORT.text'), 'error');
     } else if (!this.state.acceptAgbs) {
-      this.refs.notification.addNotification('Nutzungsbedingungen nicht akzeptiert!', 'Die Nutzungsbedingungen müssen akzeptiert werden!', 'error');
+      this.refs.notification.addNotification(counterpart.translate('ACCEPT_AGBS.title'), counterpart.translate('ACCEPT_AGBS.text'), 'error');
     } else if (!this.state.acceptGDPR) {
-      this.refs.notification.addNotification('Datenschutzerklärung nicht akzeptiert!', 'Die Datenschutzerklärung müssen akzeptiert werden!', 'error');
+      this.refs.notification.addNotification(counterpart.translate('ACCEPT_DSGVO.title'), counterpart.translate('ACCEPT_DSGVO.text'), 'error');
     } else if (!this.refs.captcha.validateCaptcha()) {} else {
       var that = this;
       var data = {

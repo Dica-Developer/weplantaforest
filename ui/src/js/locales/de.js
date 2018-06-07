@@ -34,5 +34,26 @@ module.exports = {
 
   ARE_YOU_SURE: 'Bist du sicher, dass du das machen möchtest?',
 
-  ERROR_OCCURED: 'Es ist ein Fehler aufgetreten!'
+  ERROR_OCCURED: 'Es ist ein Fehler aufgetreten!',
+
+  FIELDS_EMPTY: {
+    title: 'Eingabefelder sind leer!',
+    text: 'Bitte füllen Sie alle Eingabefelder aus!'
+  },
+  PASSWORDS_DO_NOT_MATCH: {
+    title: 'Passwörter stimmen nicht überein!',
+    text: 'Das eingegebene Passwort stimmt nicht mit der Bestätigung überein!'
+  },
+  PASSWORD_TOO_SHORT: {
+    title: 'Passwort zu kurz!',
+    text: 'Bitte gib mind. 6 Zeichen für dein Passwort an!'
+  },
+  ACCEPT_AGBS: {
+    title: 'Nutzungsbedingungen nicht akzeptiert!',
+    text: 'Die Nutzungsbedingungen müssen akzeptiert werden!'
+  },
+  ACCEPT_DSGVO: {
+    title: 'Datenschutzerklärung nicht akzeptiert!',
+    text: 'Die Datenschutzerklärung muss akzeptiert werden!'
+  }
 };

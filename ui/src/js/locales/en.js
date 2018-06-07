@@ -35,5 +35,26 @@ module.exports = {
 
   ARE_YOU_SURE: 'Are you sure you want to do this?',
 
-  ERROR_OCCURED: 'An error occured!'
+  ERROR_OCCURED: 'An error occured!',
+
+  FIELDS_EMPTY: {
+    title: 'Input fields are empty!',
+    text: 'Please fill all input fields!'
+  },
+  PASSWORDS_DO_NOT_MATCH: {
+    title: 'Passwords do not match!',
+    text: 'The inserted password does not match with the confirmation!'
+  },
+  PASSWORD_TOO_SHORT: {
+    title: 'Password too short!',
+    text: 'Please enter at least 6 chracters for your password!'
+  },
+  ACCEPT_AGBS: {
+    title: 'Nutzungsbedingungen nicht akzeptiert!',
+    text: 'Die Nutzungsbedingungen müssen akzeptiert werden!'
+  },
+  ACCEPT_DSGVO: {
+    text: 'Datenschutzerklärung nicht akzeptiert!',
+    text: 'Die Datenschutzerklärung muss akzeptiert werden!'
+  }
 };
