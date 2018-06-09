@@ -31,4 +31,3 @@ application-staging-secret.properties
 .java.tags
 .jsx.tags
 package-lock.json
-application.properties
