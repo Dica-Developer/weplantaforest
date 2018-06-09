@@ -14,15 +14,15 @@ export default class Award extends Component {
   constructor() {
     super();
     this.state = {
-      award: []
+      awards: []
     };
   }
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8082/articles?articleType=AWARD&language=' + localStorage.getItem('language')).then(function(response) {
+    axios.get('http://localhost:8082/articles?articleType=AWARDS&language=' + localStorage.getItem('language')).then(function(response) {
       that.setState({
-        award: response.data
+        awards: response.data
       });
     }).catch(function(response) {
       if (response instanceof Error) {
@@ -40,23 +40,34 @@ export default class Award extends Component {
     var that = this;
     return (
       <div className="container paddingTopBottom15 award">
-          <div className="row">
-            <div className="col-md-12">
-              <h1>Auszeichnungen</h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div>
-                {this.state.award.map(function(about, i) {
-                return ( <div key={i}><p className="title">{about.title}</p><p dangerouslySetInnerHTML={{
-                  __html: about.intro
-                }}></p></div>);
-                })}
-              </div>
-            </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1>Auszeichnungen</h1>
           </div>
         </div>
+        {this.state.awards.map(function(award, i) {
+          let imageUrl = 'http://localhost:8082/article/image/' + award.id + '/' + award.imageFileName + '/200/200';
+            return (
+              <div>
+                <div className="row display-flex">
+                  <div className="col-sm-3 image-middle-wrapper">
+                    <img src={imageUrl}/>
+                  </div>
+                  <div className="col-sm-9">
+                    <p className="title">{award.title}</p>
+                    <p dangerouslySetInnerHTML={{
+                      __html: award.intro
+                    }}></p>
+                  </div>
+                </div>
+                <div className="row">
+                  <hr/>
+                </div>
+              </div>
+            );
+        })}
+
+      </div>
     );
   }
 }
