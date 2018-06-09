@@ -8,14 +8,34 @@
     padding-bottom: 10px;
   }
 
-  .cart-details{
+  .react-grid-Row {
+    height: 25px!important;
+    font-size: 12px;
+
+    .react-grid-Cell {
+      padding-left: 5px;
+      height: 25px!important;
+    }
+  }
+
+  .react-grid-HeaderRow {
+    font-size: 12px;
+
+    .react-grid-HeaderCell {
+      padding-left: 5px;
+    }
+  }
+
+  .cart-details {
     z-index: 10002;
     border-style: solid;
     border-width: 3px;
     border-color: @accent-color;
-    .row{
+
+    .row {
       background-color: @base-background-color;
-      .col-md-12{
+
+      .col-md-12 {
         padding: 0;
       }
     }

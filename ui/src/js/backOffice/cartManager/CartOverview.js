@@ -141,7 +141,7 @@ export default class CartOverview extends Component {
         }, {
           key: 'price',
           name: 'Preis (€)',
-          width: 90,
+          width: 80,
           filterable: true,
           sortable: true,
           visible: true
@@ -176,14 +176,14 @@ export default class CartOverview extends Component {
         }, {
           key: 'company',
           name: 'Unternehmen',
-          width: 200,
+          width: 150,
           filterable: true,
           sortable: true,
           visible: true
         }, {
           key: 'paymentType',
           name: 'Zahlungsart',
-          width: 40,
+          width: 80,
           filterable: true,
           sortable: true,
           visible: true
@@ -197,7 +197,7 @@ export default class CartOverview extends Component {
         }, {
           key: 'stateChange',
           name: 'Change Cartstate',
-          width: 100,
+          width: 150,
           filterable: false,
           sortable: false,
           visible: true
