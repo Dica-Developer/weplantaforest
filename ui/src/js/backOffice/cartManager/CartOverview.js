@@ -201,6 +201,9 @@ export default class CartOverview extends Component {
           filterable: false,
           sortable: false,
           visible: true
+        }, {
+          key: 'timeStampValue',
+          visible: false
         }
       ],
       rows: [],
@@ -268,7 +271,8 @@ export default class CartOverview extends Component {
       company: cart.callBackFirma,
       paymentType: cart.callBackZahlungsart,
       details: this.createDetailIcon(cart.id),
-      stateChange: this.createStateChangeButtons(cart.id, cart.cartState)
+      stateChange: this.createStateChangeButtons(cart.id, cart.cartState),
+      timeStampValue: cart.timeStamp
     };
     return row;
   }
@@ -367,19 +371,16 @@ export default class CartOverview extends Component {
   }
 
   handleGridSort(sortColumn, sortDirection) {
-    console.log(sortColumn);
     var sortedRows = this.state.rows;
 
     const comparer = (a, b) => {
       if(sortColumn == 'timestamp'){
-        let aInMillis = Date.parse(moment(a[sortColumn], 'DD.MM.YYYY'));
-        let bInMillis = Date.parse(moment(b[sortColumn], 'DD.MM.YYYY'))
         if (sortDirection === 'ASC') {
-          return (aInMillis > bInMillis)
+          return (a.timeStampValue > b.timeStampValue)
             ? 1
             : -1;
         } else if (sortDirection === 'DESC') {
-          return (aInMillis < bInMillis)
+          return (a.timeStampValue < b.timeStampValue)
             ? 1
             : -1;
         }
