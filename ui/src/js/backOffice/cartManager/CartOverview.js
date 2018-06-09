@@ -196,7 +196,7 @@ export default class CartOverview extends Component {
           visible: true
         }, {
           key: 'stateChange',
-          name: 'Actions',
+          name: 'Change Cartstate',
           width: 100,
           filterable: false,
           sortable: false,
@@ -271,7 +271,7 @@ export default class CartOverview extends Component {
       company: cart.callBackFirma,
       paymentType: cart.callBackZahlungsart,
       details: this.createDetailIcon(cart.id),
-      stateChange: this.createStateChangeButtons(cart.id, cart.cartState),
+      stateChange: this.createStateChangeDropdown(cart.id),
       timeStampValue: cart.timeStamp
     };
     return row;
@@ -287,44 +287,19 @@ export default class CartOverview extends Component {
     </div>;
   }
 
-  createStateChangeButtons(id, cartState) {
-    if (cartState == 'CALLBACK') {
-      return <div className="state-change-buttons">
-        <IconButton glyphIcon="glyphicon-ok" text="" onClick={() => {
-          this.changeStatusOfCart(id, 'VERIFIED');
-        }}/>
-        <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
-          this.createDiscardConfirmation(id);
-        }}/>
-      </div>;
-    } else if (cartState == 'VERIFIED') {
-      return <div className="state-change-buttons">
-        <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
-          this.createDiscardConfirmation(id);
-        }}/>
-      </div>;
-    }
+  createStateChangeDropdown(id) {
+    return <div>
+            <select onChange={(event) => this.changeStatusOfCart(id, event)}>
+              <option></option>
+              <option value="CALLBACK">CALLBACK</option>
+              <option value="VERIFIED">VERIFIED</option>
+              <option value="DISCARDED">DISCARDED</option>
+            </select>
+          </div>;
   }
 
-  createDiscardConfirmation(id) {
-    this.refs.notificationSystem.addNotification({
-      title: 'Achtung!',
-      position: 'tc',
-      autoDismiss: 0,
-      message: 'Dadurch werden die darin enthaltenen Bäume gelöscht!',
-      level: 'warning',
-      children: (
-        <div className="delete-confirmation align-center">
-          <button>Abbrechen</button>
-          <button onClick={() => {
-            this.changeStatusOfCart(id, 'DISCARDED');
-          }}>OK</button>
-        </div>
-      )
-    });
-  }
-
-  changeStatusOfCart(id, cartState) {
+  changeStatusOfCart(id, event) {
+    let cartState = event.target.value;
     var that = this;
     var config = getConfig();
     axios.post('http://localhost:8083/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, config).then(function(response) {
@@ -337,7 +312,6 @@ export default class CartOverview extends Component {
       for (var row in that.state.rows) {
         if (that.state.rows[row].id == id) {
           that.state.rows[row].status = cartState;
-          that.state.rows[row].stateChange = that.createStateChangeButtons(id, cartState);
           break;
         }
       }
