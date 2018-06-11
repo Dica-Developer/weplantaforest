@@ -140,4 +140,13 @@ public class UserController {
         return new ResponseEntity<>(isAdmin, HttpStatus.OK);
     }
 
+    @RequestMapping(value = Uris.ANONYMIZE, method = RequestMethod.POST)
+    public ResponseEntity<?> anonymizeUser(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) throws IpatException {
+        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
+            _userService.anonymizeUser(userName);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
 }

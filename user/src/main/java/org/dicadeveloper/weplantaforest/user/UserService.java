@@ -1,7 +1,9 @@
 package org.dicadeveloper.weplantaforest.user;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.logging.Log;
@@ -94,9 +96,8 @@ public class UserService {
         final long currentTimeMillis = System.currentTimeMillis();
         final String randomString = UUID.randomUUID()
                                         .toString();
-        final long anonymousCount = _userRepository.countAnonymUser();
 
-        String userName = ANONYMOUS + (anonymousCount + 1);
+        String userName = createAnonymousUserName();
 
         user = new User();
         user.setName(userName);
@@ -108,19 +109,23 @@ public class UserService {
         user.addRole(Role.USER);
         user.setActivationKey(randomString);
         user.setLang(Language.DEUTSCH);
-
+        
+        return user;
+    }
+    
+    private String createAnonymousUserName() throws IpatException{
+        long anonymousCount = _userRepository.countAnonymUser();
+        String userName = ANONYMOUS + (anonymousCount + 1);
+        
         boolean userSaved = false;
         int tryCount = 1;
         while (!userSaved && tryCount <= 100) {
             if (_userRepository.userExists(userName) == 0) {
-                _userRepository.save(user);
-                userSaved = true;
-                return user;
+                return userName;
             } else {
                 // if such a user already exists, try again with the same name
                 // added by one(100tries)
                 userName = ANONYMOUS + (anonymousCount + 1 + tryCount);
-                user.setName(userName);
                 tryCount++;
             }
         }
@@ -290,5 +295,26 @@ public class UserService {
             }
         }
         return rank;
+    }
+    
+    public User anonymizeUser(String userName) throws IpatException {
+        User user = _userRepository.findByName(userName);
+        user.setName(createAnonymousUserName());
+        user.setAboutMe("");
+        user.setEnabled(false);
+        user.setHomepage("");
+        user.setImageName("");
+        user.setLocation("");
+        user.setMail("");
+        user.setNewsletter(false);
+        user.setOrganisation("");
+        user.setOrganizationType(OrganizationType.PRIVATE);
+        user.setTeam(null);
+        Set<Role> roles = new HashSet<Role>();
+        roles.add(Role.USER);
+        user.setRoles(roles);
+        _userRepository.save(user);        
+        
+        return user;
     }
 }

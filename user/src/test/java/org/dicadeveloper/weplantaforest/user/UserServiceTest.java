@@ -3,6 +3,8 @@ package org.dicadeveloper.weplantaforest.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
@@ -451,6 +453,21 @@ public class UserServiceTest {
         assertEquals(OrganizationType.COMMERCIAL.getDescription(), userData.getOrganizationType());
         assertEquals(Language.ENGLISH, userData.getLang());
         
+    }
+    
+    @Test
+    public void testQAnonymizeUser() {
+        _dbInjecter.injectUser("Adam", "adam@iplantatree.de");
+        
+        User user = null;
+        try {
+            user = _userService.anonymizeUser("Adam");
+        } catch (IpatException e) {
+            
+        }
+        
+        assertThat(user.getName(), containsString("Anonymous"));
+        assertEquals(user.getMail(), "");
     }
 
 }

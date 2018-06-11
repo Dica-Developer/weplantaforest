@@ -167,6 +167,8 @@ public class Uris {
     
     public final static String IS_USER_ADMIN = "/isAdmin";
 
+    public final static String ANONYMIZE = "/user/anonymize";
+
     // team
     public final static String TEAM_IMAGE = "/team/image/";
     
