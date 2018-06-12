@@ -7,6 +7,9 @@ import {
 } from 'react-router';
 import Accounting from 'accounting';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 import Notification from '../components/Notification';
 import IconButton from '../components/IconButton';
 
@@ -147,7 +150,7 @@ export default class LoginMenuItem extends Component {
         name: '',
         password: ''
       });
-      that.refs.notification.addNotificationAtDifferentPos('Fehler!', 'Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuche Sie es noch einmal.', 'error', 'tr');
+      that.refs.notification.addNotificationAtDifferentPos(counterpart.translate('ERROR'), counterpart.translate('WRONG_USERNAME_PASSWORD'), 'error', 'tr');
     });
   }
 
@@ -166,6 +169,12 @@ export default class LoginMenuItem extends Component {
 
   linkTo(url) {
     browserHistory.push(url);
+  }
+
+  handleKeyPress(event) {
+    if (event.key == 'Enter') {
+      this.login();
+    }
   }
 
   render() {
@@ -193,20 +202,20 @@ export default class LoginMenuItem extends Component {
       </div>;
     } else {
       content = <div className="login">
-        <input type="text" placeholder="Benutzername" value={this.state.name} onChange={this.updateName.bind(this)}/>
-        <input type="password" placeholder="Passwort" value={this.state.password} onChange={this.updatePassword.bind(this)}/>
+        <input type="text" placeholder={counterpart.translate('USERNAME')} value={this.state.name} onChange={this.updateName.bind(this)} onKeyPress={this.handleKeyPress.bind(this)}/>
+        <input type="password" placeholder={counterpart.translate('PASSWORD')} value={this.state.password} onChange={this.updatePassword.bind(this)} onKeyPress={this.handleKeyPress.bind(this)}/>
         <div className="login-interact">
           <a role="button" onClick={() => {
             this.linkTo('/forgotPassword');
-          }}>Passwort vergessen?</a>
+          }}>{counterpart.translate('FORGOT_PASSWORD')}</a>
         </div>
         <div className="buttonDiv">
-          <IconButton text="LOGIN" glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
+          <IconButton text={counterpart.translate('LOGIN')} glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
         </div>
         <div className="login-interact">
           <a role="button" onClick={() => {
             this.linkTo('/registration');
-          }}>Registrieren</a>
+          }}>{counterpart.translate('REGISTRATE')}</a>
         </div>
       </div>;
     }

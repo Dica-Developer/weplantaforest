@@ -4,6 +4,15 @@ module.exports = {
     plant_online: 'ONLINE PFLANZEN',
     tree_service: 'BAUMSERVICE'
   },
+  USERNAME: 'Benutzername',
+  PASSWORD: 'Passwort',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'logout',
+  FORGOT_PASSWORD: 'Passwort vergessen?',
+  REGISTRATE: 'Registrieren',
+
+  ERROR: 'Ein Fehler ist aufgetreten!',
+  WRONG_USERNAME_PASSWORD: 'Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuche Sie es noch einmal.',
   USER_NOT_FOUND: 'Nutzer nicht gefunden.',
   INVALID_ACTIVATION_KEY: 'Der Aktivierungs-Link ist ungültig.',
   USER_ALREADY_EXISTS: 'Der Nutzername ist bereits vergeben.',
