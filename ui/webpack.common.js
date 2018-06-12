@@ -12,8 +12,16 @@ const config = {
     runtimeChunk: true,
     splitChunks: {
       cacheGroups: {
+        vendorsreact: {
+          test: /[\\/]node_modules[\\/]react.*[\\/]/,
+          chunks: "all"
+        },
+        vendorsmoment: {
+          test: /[\\/]node_modules[\\/]m.*[\\/]/,
+          chunks: "all"
+        },
         vendors: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /[\\/]node_modules[\\/][^rm].*[\\/]/,
           chunks: "all"
         }
       }
