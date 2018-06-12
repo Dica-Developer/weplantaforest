@@ -96,6 +96,10 @@ export default class Routes extends Component {
     location.reload();
   }
 
+  showLoginSlide() {
+    this.refs['navbar'].showRight();
+  }
+
   render() {
     counterpart.registerTranslations('de', require('counterpart/locales/de'));
     counterpart.registerTranslations('en', require('./locales/en'));
@@ -127,7 +131,7 @@ export default class Routes extends Component {
           <Route path="/registration" component={RegistrationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/userActivation" component={ActivationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/forgotPassword" component={ForgotPasswordPage} reRender={this.reRender.bind(this)}/>
-          <Route path="/password_reset" component={ResetPasswordPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/password_reset" component={ResetPasswordPage} reRender={this.reRender.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)}/>
           <Route path="/gifts/:userName" component={GiftOverview} reRender={this.reRender.bind(this)}/>
           <Route path="/gift/redeem" component={RedeemGiftPage} reRender={this.reRender.bind(this)}/>
           <Route path="/certificate/find" component={FindTreePage} reRender={this.reRender.bind(this)}/>

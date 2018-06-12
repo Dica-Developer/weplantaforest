@@ -24,6 +24,7 @@ export default class ResetPasswordPage extends Component {
     this.setState({
       isResetted: true
     });
+    this.props.route.showLoginSlide();
   }
 
   render() {
