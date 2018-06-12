@@ -53,7 +53,7 @@ import Contact from './common/footer/pages/Contact';
 import Social from './common/footer/pages/Social';
 import Partner from './common/footer/pages/Partner';
 import LoadableBackOfficeOverview from './backOffice/LoadableBackOfficeOverview';
-import ArticleManager from './backOffice/articleManager/ArticleManager';
+import LoadableArticleManager from './backOffice/articleManager/LoadableArticleManager';
 import ArticleCreater from './backOffice/articleManager/ArticleCreater';
 import ArticleEditor from './backOffice/articleManager/ArticleEditor';
 import CartOverview from './backOffice/cartManager/CartOverview';
@@ -156,7 +156,7 @@ export default class Routes extends Component {
           <Route path="/social" component={Social} reRender={this.reRender.bind(this)}/>
           <Route path="/terms" component={Terms} reRender={this.reRender.bind(this)}/>
           <Route path="/backOffice" component={LoadableBackOfficeOverview} reRender={this.reRender.bind(this)}/>
-          <Route path="/article-manager" component={ArticleManager} reRender={this.reRender.bind(this)}/>
+          <Route path="/article-manager" component={LoadableArticleManager} reRender={this.reRender.bind(this)}/>
           <Route path="/article-create" component={ArticleCreater} reRender={this.reRender.bind(this)}/>
           <Route path="/article-edit/:articleId" component={ArticleEditor} reRender={this.reRender.bind(this)}/>
           <Route path="/cart-manager" component={CartOverview} reRender={this.reRender.bind(this)}/>
