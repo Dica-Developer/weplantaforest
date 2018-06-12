@@ -10,7 +10,7 @@ import {
   browserHistory
 } from 'react-router';
 
-require('./backOfficeOverview.less');
+import './backOfficeOverview.less';
 
 class BackofficeLink extends Component {
   constructor(props) {

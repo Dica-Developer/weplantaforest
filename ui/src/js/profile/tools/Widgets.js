@@ -3,7 +3,6 @@ import {render} from 'react-dom';
 import {Link} from 'react-router';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-import moment from 'moment';
 import Accounting from 'accounting';
 
 import RadioButton from '../../common/components/RadioButton';

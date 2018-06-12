@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, {
   Component
 } from 'react';
@@ -7,7 +6,6 @@ import {
 } from 'react-dom';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
-import moment from 'moment';
 import {browserHistory} from 'react-router';
 import {
   getTextForSelectedLanguage

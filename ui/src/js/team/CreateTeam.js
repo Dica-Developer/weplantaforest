@@ -9,7 +9,6 @@ import {
   Link,
   browserHistory
 } from 'react-router';
-import moment from 'moment';
 import Accounting from 'accounting';
 import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
