@@ -457,7 +457,7 @@ public class UserServiceTest {
     
     @Test
     public void testQAnonymizeUser() {
-        _dbInjecter.injectUser("Adam", "adam@iplantatree.de");
+        _dbInjecter.injectUser("UserToAnonymize", "userToAnonymize@iplantatree.de");
         
         User user = null;
         try {
