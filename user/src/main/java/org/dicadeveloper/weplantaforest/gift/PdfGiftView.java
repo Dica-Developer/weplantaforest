@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.gift;
 
 import java.io.OutputStream;
+import java.util.Map;
 
 import org.dicadeveloper.weplantaforest.support.PdfHelper;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -26,10 +27,10 @@ public class PdfGiftView {
     private final String ENTER_CODE_URL = Uris.HOST + Uris.GIFT_REDEEM;
 
     private final static Font textFontForCircle = new Font(FontFamily.TIMES_ROMAN, 26, Font.ITALIC, BaseColor.WHITE);
-    
+
     PdfHelper pdfHelper = new PdfHelper();
 
-    public void buildPdfDocument(OutputStream toWrite, final String name, final int treeCount, String[] codeFragments, String imagePath) throws Exception {
+    public void buildPdfDocument(OutputStream toWrite, Map<String, String> pdfTexts, String[] codeFragments, String imagePath) throws Exception {
         // create pdf
         final Document doc = new Document();
         final PdfWriter pdfWriter = PdfWriter.getInstance(doc, toWrite);
@@ -40,17 +41,38 @@ public class PdfGiftView {
 
         PdfContentByte cb = pdfWriter.getDirectContent();
 
-        PdfHelper.createHeaderBlock(cb,1,1);
-//        pdfHelper.createCertificateImage(cb, imagePath, 665f, 116f);
+        PdfHelper.createHeaderBlock(cb, 1, 1);
 
-        createBlueBlock(cb, treeCount);
-        createGreyBlock(cb, codeFragments);
+        createHeaderCircle(cb, pdfTexts);        
+        createBlueBlock(cb, pdfTexts);
+        createGreyBlock(cb, pdfTexts, codeFragments);
 
         pdfHelper.addLogo(cb, _imagePath, 262f, 35f);
         doc.close();
     }
+    
+    private void createHeaderCircle(PdfContentByte cb, Map<String, String> pdfTexts) throws DocumentException {
+        cb.saveState();
+        cb.setRGBColorFill(0x82, 0xAB, 0x1f);
+        cb.circle(297.5, 700, 80);
+        cb.fill();
+        cb.stroke();
+        cb.restoreState();
+        
+        Font textFont = new Font(FontFamily.TIMES_ROMAN, 22, Font.ITALIC, BaseColor.WHITE);
+        PdfPTable tableForHeaderCircleText = new PdfPTable(1);
+        float[] rows = { 160f };
+        tableForHeaderCircleText.setTotalWidth(rows);
+        tableForHeaderCircleText.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        tableForHeaderCircleText.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+        tableForHeaderCircleText.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        tableForHeaderCircleText.getDefaultCell().setFixedHeight(40);
+        
+        tableForHeaderCircleText.addCell(new Phrase(new Chunk(pdfTexts.get("gift.gift"), textFont)));
+        tableForHeaderCircleText.writeSelectedRows(0, 1, 217.5f, 725f, cb);
+    }
 
-    private void createBlueBlock(PdfContentByte cb, int treeCount) throws DocumentException {
+    private void createBlueBlock(PdfContentByte cb, Map<String, String> pdfTexts) throws DocumentException {
         cb.saveState();
         cb.setRGBColorFill(0x64, 0xA7, 0xBD);
         cb.rectangle(0.0f, 375.0f, 595.0f, 200.0f);
@@ -69,8 +91,7 @@ public class PdfGiftView {
         tableForTreeCount.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         tableForTreeCount.getDefaultCell().setFixedHeight(40);
 
-        Integer treeCountAsObject = treeCount;
-        tableForTreeCount.addCell(new Phrase(new Chunk(treeCountAsObject.toString(), textFontTreeCount)));
+        tableForTreeCount.addCell(new Phrase(new Chunk(pdfTexts.get("treeCount"), textFontTreeCount)));
 
         tableForTreeCount.writeSelectedRows(0, 1, 50f, 575f, cb);
 
@@ -84,10 +105,10 @@ public class PdfGiftView {
         tableForWhiteText.getDefaultCell().setFixedHeight(40);
 
         Phrase phraseForTreesPlantForYou = new Phrase();
-        if (treeCount == 1) {
-            phraseForTreesPlantForYou.add(new Chunk("Baum wurde für Sie gepflanzt!", textFont));
+        if (Integer.valueOf(pdfTexts.get("treeCount")) == 1) {
+            phraseForTreesPlantForYou.add(new Chunk(pdfTexts.get("gift.planted_tree"), textFont));
         } else {
-            phraseForTreesPlantForYou.add(new Chunk("Bäume wurden für Sie gepflanzt!", textFont));
+            phraseForTreesPlantForYou.add(new Chunk(pdfTexts.get("gift.planted_trees"), textFont));
         }
 
         PdfPCell longTextCell = new PdfPCell();
@@ -98,9 +119,7 @@ public class PdfGiftView {
         longTextCell.setBorderColor(BaseColor.WHITE);
         longTextCell.setFixedHeight(65);
 
-        Paragraph longText = new Paragraph(new Chunk(
-                "Mit diesem Gutschein können sie Ihre Pflanzung in Augenschein nehmen und mehr über die naturnahen Aufforstungsprojekte bei \"I Plant A Tree\" erfahren. Ihre Bäume wachsen auf ehemals brachliegenden Flächen und sind Teil neu entstehender Wälder.",
-                textFont));
+        Paragraph longText = new Paragraph(new Chunk(pdfTexts.get("gift.main_text"), textFont));
         longText.setLeading(15f);
 
         longTextCell.addElement(longText);
@@ -116,12 +135,12 @@ public class PdfGiftView {
         tableForHowItWorks.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         tableForHowItWorks.getDefaultCell().setFixedHeight(40);
 
-        tableForHowItWorks.addCell(new Phrase(new Chunk("Und so einfach funktioniert's:", textBlack)));
+        tableForHowItWorks.addCell(new Phrase(new Chunk(pdfTexts.get("gift.how_it_works"), textBlack)));
 
         tableForHowItWorks.writeSelectedRows(0, 2, 50f, 425f, cb);
     }
 
-    private void createGreyBlock(PdfContentByte cb, String[] codeFragments) throws DocumentException {
+    private void createGreyBlock(PdfContentByte cb, Map<String, String> pdfTexts, String[] codeFragments) throws DocumentException {
         cb.saveState();
         cb.setRGBColorFill(0x73, 0x73, 0x75);
         cb.rectangle(0.0f, 125.0f, 595.0f, 250.0f);
@@ -167,21 +186,19 @@ public class PdfGiftView {
 
         PdfPCell instructionCell = createInstructionCell();
         Phrase instructionOne = new Phrase();
-        instructionOne.add(new Chunk("Rufen Sie mit Ihrem Internetnrowser folgende Webadresse auf:\n", textFont));
+        instructionOne.add(new Chunk(pdfTexts.get("gift.call_url") + "\n", textFont));
         instructionOne.add(new Chunk(ENTER_CODE_URL, textFontBold));
         instructionCell.addElement(instructionOne);
 
         PdfPCell instructionCell2 = createInstructionCell();
         Phrase instruction2 = new Phrase();
-        instruction2.add(new Chunk("Geben Sie den angefügten Benutzercode ein:\n", textFont));
+        instruction2.add(new Chunk(pdfTexts.get("gift.insert_code") + "\n", textFont));
         instruction2.add(new Chunk(codeFragments[0] + " " + codeFragments[1] + " " + codeFragments[2] + " " + codeFragments[3], textFontBold));
         instructionCell2.addElement(instruction2);
 
         PdfPCell instructionCell3 = createInstructionCell();
         Paragraph instruction3 = new Paragraph();
-        instruction3.add(new Chunk(
-                "Jetzt nur noch anmelden und Ihre Bäume werden Ihnen automatisch gutgeschrieben. Sie können sich von nun an jederzeit bei \"I Plant A Tree\" einloggen, um das Gedeihen Ihrer Setzlinge und die Entwicklung der Projektflächen mitzuverfolgen. Selbstverständlich können Sie auch noch weitere Bäume in einer Vielzahl von Projekten pflanzen und das ganz einfach per Mausklick.",
-                textFont));
+        instruction3.add(new Chunk(pdfTexts.get("gift.now_login"), textFont));
         instruction3.setLeading(12f);
         instructionCell3.addElement(instruction3);
 
@@ -192,7 +209,7 @@ public class PdfGiftView {
         greetingCell.setBorder(Rectangle.NO_BORDER);
 
         Phrase greeting = new Phrase();
-        greeting.add(new Chunk("Wir wünschen Ihnen viel Spaß mit Ihren Bäumen und freuen uns auf Ihren Besuch.", textFont));
+        greeting.add(new Chunk(pdfTexts.get("gift.have_fun"), textFont));
         greetingCell.addElement(greeting);
 
         table.addCell(numberCell);
