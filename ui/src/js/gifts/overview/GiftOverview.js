@@ -53,6 +53,13 @@ export default class GiftOverview extends Component {
     return (
       <div className="container paddingTopBottom15">
         <div className="row gifts">
+          <div className="col-md-12 createGift">
+            <h1>{counterpart.translate('CREATE_GIFT')}</h1>
+            <IconButton className="iconButton" text={counterpart.translate('CREATE_GIFT')} glyphIcon="glyphicon-gift" onClick={() => {
+              this.linkTo('/plantGift/5');
+            }}/>
+          </div>
+          <RedeemGiftContent />
           <div className="col-md-12">
             <h1>{counterpart.translate('GIFT_OVERVIEW')}</h1>
             <h2>{counterpart.translate('CREATED_GIFTS')}:</h2>
@@ -83,13 +90,6 @@ export default class GiftOverview extends Component {
                 return (<RecipientGiftItem gift={gift}  key={i}/>);
               })}
           </div>
-          <div className="col-md-12 createGift">
-            <h2>{counterpart.translate('CREATE_GIFT')}</h2>
-            <IconButton className="iconButton" text={counterpart.translate('CREATE_GIFT')} glyphIcon="glyphicon-gift" onClick={() => {
-              this.linkTo('/plantGift/5');
-            }}/>
-          </div>
-          <RedeemGiftContent />
         </div>
         <Notification ref="notification"/>
       </div>
