@@ -9,6 +9,7 @@ import {Toolbar, Data} from 'react-data-grid-addons';
 import IconButton from '../../common/components/IconButton';
 import NotificationSystem from 'react-notification-system';
 import {getConfig} from '../../common/RestHelper';
+import Notification from '../../common/components/Notification';
 
 export default class ArticleOverview extends Component {
 
@@ -18,19 +19,14 @@ export default class ArticleOverview extends Component {
       articles: [],
       columns: [
         {
-          key: 'id',
-          name: 'ID',
-          width: 40,
-          filterable: true
-        }, {
           key: 'title',
           name: 'Titel',
-          width: 585,
+          width: 400,
           filterable: true
         }, {
           key: 'type',
           name: 'Typ',
-          width: 150,
+          width: 200,
           filterable: true
         }, {
           key: 'owner',
@@ -66,14 +62,7 @@ export default class ArticleOverview extends Component {
       var rows = that.createRows(result);
       that.setState({articles: result, rows: rows});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.handleError(error.response);
     });
 
   }
@@ -91,7 +80,6 @@ export default class ArticleOverview extends Component {
 
   createRow(article) {
     var row = {
-      id: article.id,
       type: article.articleType,
       title: article.title,
       owner: article.owner.name,
@@ -146,14 +134,7 @@ export default class ArticleOverview extends Component {
       });
 
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.handleError(error.response);
     });
 
   }
@@ -220,6 +201,7 @@ export default class ArticleOverview extends Component {
           </div>
         </div>
         <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification"/>
       </div>
     );
   }
