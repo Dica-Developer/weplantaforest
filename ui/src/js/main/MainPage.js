@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import counterpart from 'counterpart';
 
 import Carousel from './Carousel';
 import ArticleTeaser from './ArticleTeaser';
@@ -77,8 +78,8 @@ export default class MainPage extends Component {
               <ArticleTeaser content={this.state.teaser.content[0]}/>
             </div>
             <div className="col-md-4">
-              <RankingContainer title="Beste Pflanzer">
-                {this.state.bestUserRanking.content.map(function(content, i) {
+              <RankingContainer title={counterpart.translate('BEST_COMPANIES')}>
+                {this.state.bestCompanyRanking.content.map(function(content, i) {
                   let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
                   let linkTo = '/user/' + content.name;
                   return (
@@ -88,7 +89,7 @@ export default class MainPage extends Component {
                   );
                 })}
               </RankingContainer>
-            </div>
+          </div>
           </div>
           <div className="row secondRow">
             <div className="col-md-4">
@@ -98,8 +99,8 @@ export default class MainPage extends Component {
               <ArticleTeaser content={this.state.teaser.content[1]}/>
             </div>
             <div className="col-md-4">
-              <RankingContainer title="Bestenliste">
-                {this.state.bestCompanyRanking.content.map(function(content, i) {
+              <RankingContainer title={counterpart.translate('BEST_PRIVATES')}>
+                {this.state.bestUserRanking.content.map(function(content, i) {
                   let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
                   let linkTo = '/user/' + content.name;
                   return (

@@ -87,5 +87,8 @@ module.exports = {
   NOT_REDEEMED: 'not redeemed',
   CODE: 'Code',
   STATE: 'State',
-  REDEEMED_BY: 'Redeemed by'
+  REDEEMED_BY: 'Redeemed by',
+
+  BEST_COMPANIES: 'Best companies',
+  BEST_PRIVATES: 'Best private persons'
 };

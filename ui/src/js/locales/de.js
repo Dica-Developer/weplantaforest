@@ -87,5 +87,8 @@ module.exports = {
   NOT_REDEEMED: 'nicht eingelöst',
   CODE: 'Code',
   STATE: 'Status',
-  REDEEMED_BY: 'Eingelöst von'
+  REDEEMED_BY: 'Eingelöst von',
+
+  BEST_COMPANIES: 'Beste Unternehmen',
+  BEST_PRIVATES: 'Beste Privatpersonen'
 };
