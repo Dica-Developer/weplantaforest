@@ -18,6 +18,7 @@ module.exports = {
   USER_ALREADY_EXISTS: 'Der Nutzername ist bereits vergeben.',
   MAIL_ALREADY_EXISTS: 'Die E-Mail Adresse ist bereits vergeben.',
   INVALID_MAIL: 'Die E-Mail Adresse ist ungültig.',
+  INVALID_CODE: 'Der Code ist ungültig.',
 
   TEAM_NAME: 'Team Name',
   TEAM_CREATE: 'Team erstellen',
@@ -71,5 +72,20 @@ module.exports = {
   RUNNING_PROJECTS: 'laufende Projekte',
   FINISHED_PROJECTS: 'abgeschlossene Projekte',
   AREA_QUESTION: 'Dir stehen Flächen zur Verfügung?',
-  OFFER_AREA: 'Fläche anbieten'
+  OFFER_AREA: 'Fläche anbieten',
+  GIFT_OVERVIEW: 'Gutschein-Übersicht',
+  CREATED_GIFTS: 'Erstelle Gutscheine',
+  REDEEMED_GIFTS: 'Eingelöste Gutscheine',
+  CREATED_BY: 'Erstellt von',
+  CREATE_GIFT: 'Gutschein erstellen',
+  GIFT_REDEEMED: 'Der Gutschein wurde eingelöst!',
+  TREES_ACCOUNTED: 'Die Bäume wurden dir gutgeschrieben.',
+  REDEEM_GIFT: 'Gutschein einlösen',
+  ENTER_GIFT_CODE: 'Bitte gib hier Deinen 16 stelligen Gutschein-Code ein',
+  GENERATE_PDF: 'PDF generieren',
+  REDEEMED: 'eingelöst',
+  NOT_REDEEMED: 'nicht eingelöst',
+  CODE: 'Code',
+  STATE: 'Status',
+  REDEEMED_BY: 'Eingelöst von'
 };

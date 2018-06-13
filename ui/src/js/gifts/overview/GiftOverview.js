@@ -7,11 +7,13 @@ import {
 import {browserHistory} from 'react-router';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import ConsignorGiftItem from './ConsignorGiftItem';
 import RecipientGiftItem from './RecipientGiftItem';
 import RedeemGiftContent from '../RedeemGiftContent';
 import IconButton from '../../common/components/IconButton';
+import Notification from '../../common/components/Notification';
 
 require('./gifts.less');
 
@@ -32,28 +34,14 @@ export default class GiftOverview extends Component {
       var result = response.data;
       that.setState({consignorGifts: result});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.handleError(error.response);
     });
 
     axios.get('http://localhost:8081/gift/search/recipient?userName=' + this.state.userName).then(function(response) {
       var result = response.data;
       that.setState({recipientGifts: result});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    that.refs.notification.handleError(error.response);
     });
   }
 
@@ -66,29 +54,29 @@ export default class GiftOverview extends Component {
       <div className="container paddingTopBottom15">
         <div className="row gifts">
           <div className="col-md-12">
-            <h1>Gutschein-Übersicht</h1>
-            <h2>Erstellte Gutscheine:</h2>
+            <h1>{counterpart.translate('GIFT_OVERVIEW')}</h1>
+            <h2>{counterpart.translate('CREATED_GIFTS')}:</h2>
             <div className="giftItem">
               <div>
-                Code:
+                {counterpart.translate('CODE')}:
               </div>
               <div>
-                Status:
+                {counterpart.translate('STATE')}:
               </div>
               <div>
-                Eingelöst von:
+                {counterpart.translate('REDEEMED_BY')}:
               </div>
             </div>
               {this.state.consignorGifts.map(function(gift, i) {
                 return (<ConsignorGiftItem gift={gift}  key={i}/>);
               })}
-            <h2>Eingelöste Gutscheine:</h2>
+            <h2>{counterpart.translate('REDEEMED_GIFTS')}:</h2>
             <div className="giftItem">
               <div>
-                Code:
+                {counterpart.translate('CODE')}:
               </div>
               <div>
-                Erstellt von:
+                {counterpart.translate('CREATED_BY')}:
               </div>
             </div>
               {this.state.recipientGifts.map(function(gift, i) {
@@ -96,13 +84,14 @@ export default class GiftOverview extends Component {
               })}
           </div>
           <div className="col-md-12 createGift">
-            <h2>Gutschein erstellen</h2>
-            <IconButton className="iconButton" text="Gutschein erstellen" glyphIcon="glyphicon-gift" onClick={() => {
+            <h2>{counterpart.translate('CREATE_GIFT')}</h2>
+            <IconButton className="iconButton" text={counterpart.translate('CREATE_GIFT')} glyphIcon="glyphicon-gift" onClick={() => {
               this.linkTo('/plantGift/5');
             }}/>
           </div>
           <RedeemGiftContent />
         </div>
+        <Notification ref="notification"/>
       </div>
     );
   }

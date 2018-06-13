@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import NotificationSystem from 'react-notification-system';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
+
 import MultiLineErrorObject from './MultiLineErrorObject';
 
 export default class Notification extends Component {
@@ -27,7 +29,7 @@ export default class Notification extends Component {
 
   handleError(error) {
     if (error.data.errorInfos) {
-      this.addMultilineNotification('Ein Fehler ist aufgetreten!', error.data.errorInfos, 'error');
+      this.addMultilineNotification(counterpart.translate('ERROR'), error.data.errorInfos, 'error');
     } else {
       //TODO: implement some kind of error report possibility
       this.refs.notificationSystem.addNotification({title: 'Ein unerwarter Fehler ist aufgetreten!', position: 'tc', autoDismiss: 0, message: '', level: 'error'});

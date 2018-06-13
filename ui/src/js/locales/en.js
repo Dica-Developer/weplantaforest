@@ -18,6 +18,7 @@ module.exports = {
   USER_ALREADY_EXISTS: 'Username already exists.',
   MAIL_ALREADY_EXISTS: 'Mail adress already exists.',
   INVALID_MAIL: 'Mail is invalid.',
+  INVALID_CODE: 'The code is invalid',
 
   TEAM_NAME: 'Team Name',
   TEAM_CREATE: 'create Team',
@@ -70,6 +71,21 @@ module.exports = {
   PROJECTS: 'Projects',
   RUNNING_PROJECTS: 'running projects',
   FINISHED_PROJECTS: 'finished projects',
-  AREA_QUESTION: 'DO you have areas to plant for?',
-  OFFER_AREA: 'Offer area'
+  AREA_QUESTION: 'Do you have areas to plant for?',
+  OFFER_AREA: 'Offer area',
+  GIFT_OVERVIEW: 'Gift overview',
+  CREATED_GIFTS: 'Created gifts',
+  REDEEMED_GIFTS: 'Redeemed gifts',
+  CREATED_BY: 'Created by',
+  CREATE_GIFT: 'Create gift',
+  GIFT_REDEEMED: 'The gift was redeemed!',
+  TREES_ACCOUNTED: 'The trees were credited for you.',
+  REDEEM_GIFT: 'Redeem gift',
+  ENTER_GIFT_CODE: 'Enter the gift code here',
+  GENERATE_PDF: 'generate PDF',
+  REDEEMED: 'redeemed',
+  NOT_REDEEMED: 'not redeemed',
+  CODE: 'Code',
+  STATE: 'State',
+  REDEEMED_BY: 'Redeemed by'
 };

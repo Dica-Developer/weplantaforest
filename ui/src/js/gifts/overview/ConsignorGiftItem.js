@@ -6,6 +6,7 @@ import {
   render
 } from 'react-dom';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import IconButton from '../../common/components/IconButton';
 
@@ -28,15 +29,15 @@ export default class ConsignorGiftItem extends Component {
     }
 
     if(this.props.gift.status == 'UNREDEEMED'){
-      pdfButton = <IconButton text="PDF generieren" glyphIcon="glyphicon-file" onClick={this.generateGiftPdf.bind(this)}/>;
+      pdfButton = <IconButton text={counterpart.translate('GENERATE_PDF')} glyphIcon="glyphicon-file" onClick={this.generateGiftPdf.bind(this)}/>;
     }else{
       pdfButton = '';
     }
 
     if(this.props.gift.status == 'REDEEMED'){
-      status = 'eingelöst';
+      status = counterpart.translate('REDEEMED');
     }else{
-      status = 'nicht eingelöst';
+      status = counterpart.translate('NOT_REDEEMED');
     }
 
     return (
