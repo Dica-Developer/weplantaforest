@@ -26,11 +26,11 @@ public class TreeType {
     @Id
     @GeneratedValue
     @Column(name = "treeTypeId")
-    @JsonView(Views.ProjectArticle.class)
+    @JsonView({Views.ProjectArticle.class, Views.TreesByUser.class})
     private Long id;
 
     @Column(name = "_name", unique = true)
-    @JsonView({Views.ProjectArticle.class, Views.CartDetails.class})
+    @JsonView({Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
     private String name;
 
     @Column(name = "_description", columnDefinition = "TEXT")

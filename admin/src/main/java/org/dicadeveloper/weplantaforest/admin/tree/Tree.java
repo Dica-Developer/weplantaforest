@@ -33,10 +33,11 @@ public class Tree {
     @Id
     @GeneratedValue
     @Column(name = "_treeId")
+    @JsonView({ Views.TreesByUser.class })
     private Long id;
 
     @Column(name = "_amount")
-    @JsonView({ Views.CartDetails.class })
+    @JsonView({ Views.CartDetails.class, Views.TreesByUser.class })
     private int amount;
 
     @Column(name = "_imagePath")
@@ -63,7 +64,7 @@ public class Tree {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
     @JoinColumn(name = "_treeType_treeTypeId")
-    @JsonView({ Views.CartDetails.class })
+    @JsonView({ Views.CartDetails.class, Views.TreesByUser.class  })
     private TreeType treeType;
 
     @OneToOne(fetch = FetchType.LAZY)

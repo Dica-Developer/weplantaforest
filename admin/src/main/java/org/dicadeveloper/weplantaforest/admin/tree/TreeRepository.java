@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.admin.tree;
 
 import java.util.List;
 
+import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +37,6 @@ public interface TreeRepository extends PagingAndSortingRepository<Tree, Long> {
     public Page<Tree> findTreesByProjectId(@Param("projectId") Long projectId, Pageable page);
     
     public List<Tree> findTreesByIdIn(@Param("id") List<Long> ids);
+    
+    public List<Tree> findByOwner(User user);
 }

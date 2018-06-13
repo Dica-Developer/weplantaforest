@@ -47,6 +47,10 @@ public class Uris {
     //plant
     
     public final static String PLANT_FOR_USER = "/plantForUser";
+
+    public final static String TRANSFORM_TREES = "/transformTrees";
+    
+    public final static String TREES_BY_USER = "/trees";
     
     //user
     
