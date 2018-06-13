@@ -33,6 +33,14 @@ export function getShortText(text, shortenedTO){
   return text;
 }
 
+export function getFirstParagraph(text){
+  if(text && text.includes('<p>')){
+    text = text.substr(3);
+    text = text.substr(0, (text.indexOf('</p>')))
+  }
+  return text
+}
+
 export function createMultiLanguageEntry(germanText, englishText){
   return '<mlpr>GERMAN<equ>' + germanText + '<sep>ENGLISH<equ>' + englishText + '<sep>ITALIAN';
 }

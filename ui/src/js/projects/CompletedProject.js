@@ -4,7 +4,7 @@ import Boostrap from 'bootstrap';
 import {browserHistory} from 'react-router';
 
 import IconButton from '../common/components/IconButton';
-import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+import {getTextForSelectedLanguage, getFirstParagraph} from '../common/language/LanguageHelper';
 
 export default class CompletedProject extends Component {
   constructor() {
@@ -27,7 +27,7 @@ export default class CompletedProject extends Component {
         </div>
         <div className="projectDescription">
           <p dangerouslySetInnerHTML={{
-            __html: getTextForSelectedLanguage(this.props.project.description)
+            __html: getFirstParagraph(getTextForSelectedLanguage(this.props.project.description))
           }}/>
         </div>
         <div className="full">
