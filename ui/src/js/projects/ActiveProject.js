@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import {browserHistory} from 'react-router';
 import Accounting from 'accounting';
+import counterpart from 'counterpart';
 
 import IconButton from '../common/components/IconButton';
 import {getTextForSelectedLanguage, getFirstParagraph} from '../common/language/LanguageHelper';
@@ -42,11 +43,11 @@ export default class ActiveProject extends Component {
         </div>
         <div className="amount-of-trees-description">
           <div className="planted">
-            Bereits gepflanzt:<br/>
+            {counterpart.translate('ALREADY_PLANTED')}:<br/>
             {this.props.project.amountOfPlantedTrees}
           </div>
           <div className="goal">
-            Ziel:<br/>
+            {counterpart.translate('GOAL')}:<br/>
             {this.props.project.amountOfMaximumTreesToPlant}
           </div>
         </div>

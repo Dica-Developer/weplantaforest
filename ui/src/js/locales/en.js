@@ -64,5 +64,12 @@ module.exports = {
   ACCEPT_DSGVO: {
     text: 'Datenschutzerklärung nicht akzeptiert!',
     text: 'Die Datenschutzerklärung muss akzeptiert werden!'
-  }
+  },
+  ALREADY_PLANTED: 'Already Planted',
+  GOAL: 'Goal',
+  PROJECTS: 'Projects',
+  RUNNING_PROJECTS: 'running projects',
+  FINISHED_PROJECTS: 'finished projects',
+  AREA_QUESTION: 'DO you have areas to plant for?',
+  OFFER_AREA: 'Offer area'
 };

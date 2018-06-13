@@ -9,6 +9,7 @@ import axios from 'axios';
 import {
   browserHistory
 } from 'react-router';
+import counterpart from 'counterpart';
 
 import IconButton from '../common/components/IconButton';
 
@@ -86,9 +87,9 @@ export default class ProjectsPage extends Component {
       <div className="container paddingTopBottom15">
         <div className="row projectsPage">
           <div className="col-md-12">
-            <h1>Projekte</h1>
+            <h1>{counterpart.translate('PROJECTS')}</h1>
             <div className="projects">
-              <h2>laufende Projekte</h2>
+              <h2>{counterpart.translate('RUNNING_PROJECTS')}</h2>
                 {this.state.activeProjects.map(function(project, i) {
                   return (<ActiveProject project={project} key={i} />);
                 })}
@@ -99,17 +100,17 @@ export default class ProjectsPage extends Component {
           </div>
           <div className="col-md-12">
             <div className="projects">
-              <h2>abgeschlossene Projekte</h2>
+              <h2>{counterpart.translate('FINISHED_PROJECTS')}</h2>
                 {this.state.completedProjects.content.map(function(project, i) {
-                  return (<CompletedProject project={project} key={i} />);
+                  return (<ActiveProject project={project} key={i} />);
                 })}
               <div className="align-center border-top">
                 {moreCompletedProjectsButton}
               </div>
             </div>
             <div className="bottom col-md-12">
-              <p>Dir stehen Flächen zur Verfügung?</p>
-              <IconButton glyphIcon="glyphicon-forward" text="Fläche anbieten" onClick={this.switchToOfferProjectPage.bind(this)}/>
+              <p>{counterpart.translate('AREA_QUESTION')}</p>
+              <IconButton glyphIcon="glyphicon-forward" text={counterpart.translate('OFFER_AREA')} onClick={this.switchToOfferProjectPage.bind(this)}/>
             </div>
           </div>
         </div>
