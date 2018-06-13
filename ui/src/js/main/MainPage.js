@@ -7,6 +7,8 @@ import ProjectTeaser from './ProjectTeaser';
 import RankingContainer from '../common/ranking/SmallRankingContainer';
 import RankingItem from '../common/ranking/RankingItem';
 import RankingItemContent from '../common/ranking/content/NameAmountCo2';
+import Notification from '../common/components/Notification';
+
 
 require('./teaser.less');
 
@@ -37,56 +39,28 @@ export default class MainPage extends Component {
       var result = response.data;
       that.setState({projects: result});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.handleError(error.response);
     });
 
     axios.get('http://localhost:8082/articlesPaged?articleType=BLOG&language=DEUTSCH&page=0&size=2').then(function(response) {
       var result = response.data;
       that.setState({teaser: result});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.handleError(error.response);
     });
 
     axios.get('http://localhost:8081/ranking/bestUser?page=0&size=5&lastYear=false').then(function(response) {
       var result = response.data;
       that.setState({bestUserRanking: result});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.handleError(error.response);
     });
 
     axios.get('http://localhost:8081/ranking/bestOrgType/COMMERCIAL?page=0&size=5&lastYear=false').then(function(response) {
       var result = response.data;
       that.setState({bestCompanyRanking: result});
     }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.handleError(error.response);
     });
   }
 
@@ -138,6 +112,7 @@ export default class MainPage extends Component {
             </div>
           </div>
         </div>
+        <Notification ref="notification"/>
       </div>
     );
   }
