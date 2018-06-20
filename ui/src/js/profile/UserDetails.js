@@ -40,7 +40,7 @@ export default class UserDetails extends Component {
       title: 'Achtung!',
       position: 'tc',
       autoDismiss: 0,
-      message: 'Dadurch wird dein User anonymisiert! Diese Aktion kann nicht rückgängig gemacht werden!',
+      message: 'Dadurch werden deine personenbezogenen Daten gelöscht und dein Profil ist nicht mehr zugänglich. Diese Aktion kann nicht rückgängig gemacht werden!',
       level: 'warning',
       children: (
         <div className="delete-confirmation align-center">
@@ -61,7 +61,7 @@ export default class UserDetails extends Component {
       localStorage.setItem('isAdmin', false);
       localStorage.setItem('userDetails', '');
       browserHistory.push('/');
-      window.location.reload(); 
+      window.location.reload();
     }).catch(function(response) {
       that.refs.notification.addNotification('Bei der Aktion ist ein Fehler aufgetreten!', 'Bitte wende dich über das Kontaktformular an uns, damit das Anonymisieren deines Accounts durchgeführt werden kann.', 'error');
     });
