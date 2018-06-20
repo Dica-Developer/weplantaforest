@@ -300,6 +300,14 @@ export default class CartOverview extends Component {
 
   changeStatusOfCart(id, event) {
     let cartState = event.target.value;
+    if(cartState != 'DISCARDED'){
+      this.callSatusRequest(id, cartState)
+    }else{
+      this.createDiscardConfirmation(id);
+    }
+  }
+
+  callSatusRequest(id, cartState) {
     var that = this;
     var config = getConfig();
     axios.post('http://localhost:8083/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, config).then(function(response) {
@@ -318,6 +326,24 @@ export default class CartOverview extends Component {
       that.forceUpdate();
     }).catch(function(response) {
       that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Status vom Pflanzkorb mit der ID ' + id + 'auf ' + cartState + ' ist folgender Fehler aufgetreten:' + response.data, 'error');
+    });
+  }
+
+  createDiscardConfirmation(id) {
+    this.refs.notificationSystem.addNotification({
+      title: 'Achtung!',
+      position: 'tc',
+      autoDismiss: 0,
+      message: 'Dadurch werden die Bäume zu diesem Pflanzkorb entfernt! Diese Aktion kann nicht rückgängig gemacht werden!',
+      level: 'warning',
+      children: (
+        <div className="delete-confirmation align-center">
+        <button>Abbrechen</button>
+        <button onClick={() => {
+          this.callSatusRequest(id, 'DISCARDED');
+        }}>OK</button>
+      </div>
+      )
     });
   }
 
