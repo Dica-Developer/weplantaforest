@@ -3,10 +3,9 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {browserHistory} from 'react-router';
-
 import Boostrap from 'bootstrap';
 
-import {getTextForSelectedLanguage, getShortText} from '../common/language/LanguageHelper';
+import {getTextForSelectedLanguage, getFirstParagraph} from '../common/language/LanguageHelper';
 
 export default class ProjectTeaser extends Component {
   constructor(props) {
@@ -37,7 +36,7 @@ export default class ProjectTeaser extends Component {
           </h1>
           <div className="description">
             <p dangerouslySetInnerHTML={{
-              __html: getShortText(getTextForSelectedLanguage(this.props.content.description), 300)
+              __html: getFirstParagraph(getTextForSelectedLanguage(this.props.content.description))
             }}/>
           </div>
         </a>
