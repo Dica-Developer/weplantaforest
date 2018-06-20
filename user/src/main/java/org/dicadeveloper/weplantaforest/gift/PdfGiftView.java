@@ -47,7 +47,7 @@ public class PdfGiftView {
         createBlueBlock(cb, pdfTexts);
         createGreyBlock(cb, pdfTexts, codeFragments);
 
-        pdfHelper.addLogo(cb, _imagePath, 266f, 35f);
+        pdfHelper.addLogo(cb, _imagePath, 262f, 35f);
         doc.close();
     }
     
