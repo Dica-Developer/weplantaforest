@@ -50,7 +50,7 @@ export default class MainPage extends Component {
       that.refs.notification.handleError(error.response);
     });
 
-    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=5&lastYear=false').then(function(response) {
+    axios.get('http://localhost:8081/ranking/bestOrgType/PRIVATE?page=0&size=5&lastYear=false').then(function(response) {
       var result = response.data;
       that.setState({bestUserRanking: result});
     }).catch(function(response) {
