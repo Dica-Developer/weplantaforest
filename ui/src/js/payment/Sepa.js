@@ -125,10 +125,6 @@ export default class Sepa extends Component {
               <InputText id="company" cssclass="form-control" toUpdate="company" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
             <div className="form-group">
-              <label htmlFor="company-addon">Unternehmenzusatz</label>
-              <InputText id="company-addon"  cssclass="form-control" toUpdate="companyAddon" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-            </div>
-            <div className="form-group">
               <label htmlFor="salutation">Anrede</label>
               <select id="salutation" className="form-control" onChange={this.updateSalutation.bind(this)} ref="select" disabled={this.state.paymentDone}>
                 <option value="" disabled>Bitte auswählen</option>
@@ -157,19 +153,25 @@ export default class Sepa extends Component {
               <br/>
               <label>Deutschland ({this.state.paymentData.country})</label>
             </div>
-            <div className="form-group">
-              <label htmlFor="city">Ort *</label>
-              <InputText id="city" cssclass="form-control" toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="zip">PLZ *</label>
-              <InputText id="zip"  cssclass="form-control" toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="zip">PLZ *</label>
+                  <InputText id="zip"  cssclass="form-control" toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="city">Ort *</label>
+                  <InputText id="city" cssclass="form-control" toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                </div>
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="mail">E-Mail *</label>
               <InputText id="mail" cssclass="form-control" toUpdate="mail" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="form-group">
+            <div className="form-group amount">
               <label>Betrag: </label>&nbsp;
               <span className="bold">{Accounting.formatNumber(this.props.price / 100, 2, '.', ',')}&nbsp;€</span>
             </div>
@@ -178,8 +180,8 @@ export default class Sepa extends Component {
               <InputText id="iban" cssclass="form-control" toUpdate="iban" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
             <div className="form-group">
-                <label htmlFor="iban">BIC *</label>
-                <InputText id="iban" cssclass="form-control" toUpdate="bic" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+              <label htmlFor="iban">BIC *</label>
+              <InputText id="iban" cssclass="form-control" toUpdate="bic" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
           </div>
         </div>
