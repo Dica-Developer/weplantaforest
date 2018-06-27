@@ -52,7 +52,7 @@ export default class BlogOverviewPage extends Component {
       articles: {
         content: []
       },
-      entryCount: 5
+      entryCount: 6
     };
   }
 
@@ -61,7 +61,7 @@ export default class BlogOverviewPage extends Component {
   }
 
   callMoreArticleEntries(){
-    this.state.entryCount = this.state.entryCount + 5;
+    this.state.entryCount = this.state.entryCount + 3;
     this.forceUpdate();
     this.callArticleEntries();
   }
