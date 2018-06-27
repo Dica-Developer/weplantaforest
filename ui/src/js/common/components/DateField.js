@@ -5,7 +5,7 @@ import {
   render
 } from 'react-dom';
 import Boostrap from 'bootstrap';
-import DatePicker from 'react-bootstrap-date-picker';
+import DatePicker from 'react-16-bootstrap-date-picker';
 
 import Notification from './Notification';
 
