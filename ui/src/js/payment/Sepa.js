@@ -42,8 +42,10 @@ export default class Sepa extends Component {
         receipt: 'sofort',
         comment: '',
         paymentMethod: 'SEPA',
-        iban: 'TE01567891011121314151',
-        bic: 'DEUTDEUTDEU'
+        // iban: 'TE01567891011121314151',
+        // bic: 'DEUTDEUTDEU'
+        iban: '',
+        bic: ''
       },
       paymentDone: false
     };
@@ -117,127 +119,67 @@ export default class Sepa extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Firma</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="company" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+        <div className="col-md-12">
+            <div className="form-group">
+              <label htmlFor="company">Unternehmen</label>
+              <InputText id="company" cssclass="form-control" toUpdate="company" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Unternehmenzusatz</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="companyAddon" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+            <div className="form-group">
+              <label htmlFor="company-addon">Unternehmenzusatz</label>
+              <InputText id="company-addon"  cssclass="form-control" toUpdate="companyAddon" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Anrede</label>
-              </div>
-              <div className="col-md-6">
-                <select onChange={this.updateSalutation.bind(this)} ref="select" disabled={this.state.paymentDone}>
-                  <option value="" disabled>Bitte auswählen</option>
-                  <option value="1">Herr</option>
-                  <option value="2">Frau</option>
-                </select>
-              </div>
+            <div className="form-group">
+              <label htmlFor="salutation">Anrede</label>
+              <select id="salutation" className="form-control" onChange={this.updateSalutation.bind(this)} ref="select" disabled={this.state.paymentDone}>
+                <option value="" disabled>Bitte auswählen</option>
+                <option value="1">Herr</option>
+                <option value="2">Frau</option>
+              </select>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Titel</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="title" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+            <div className="form-group">
+              <label htmlFor="title">Titel</label>
+              <InputText id="title" cssclass="form-control" toUpdate="title" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Vorname *</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="forename" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+            <div className="form-group">
+              <label htmlFor="forename">Vorname *</label>
+              <InputText id="forename"  cssclass="form-control" toUpdate="forename" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Nachname *</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="name" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+            <div className="form-group">
+              <label htmlFor="name">Nachname *</label>
+              <InputText id="name" cssclass="form-control" toUpdate="name" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Straße *</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="street" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+            <div className="form-group">
+              <label htmlFor="street">Straße *</label>
+              <InputText id="street" cssclass="form-control" toUpdate="street" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Land</label>
-              </div>
-              <div className="col-md-6">
-                Deutschland ({this.state.paymentData.country})
-              </div>
+            <div className="form-group">
+              <label>Land</label>
+              <br/>
+              <label>Deutschland ({this.state.paymentData.country})</label>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Ort *</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+            <div className="form-group">
+              <label htmlFor="city">Ort *</label>
+              <InputText id="city" cssclass="form-control" toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">PLZ *</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+            <div className="form-group">
+              <label htmlFor="zip">PLZ *</label>
+              <InputText id="zip"  cssclass="form-control" toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">E-Mail *</label>
-              </div>
-              <div className="col-md-6">
-                <InputText toUpdate="mail" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-              </div>
+            <div className="form-group">
+              <label htmlFor="mail">E-Mail *</label>
+              <InputText id="mail" cssclass="form-control" toUpdate="mail" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">Betrag</label>
-              </div>
-              <div className="col-md-6">
-                <span className="bold">{Accounting.formatNumber(this.props.price / 100, 2, '.', ',')}&nbsp;€</span>
-              </div>
+            <div className="form-group">
+              <label>Betrag: </label>&nbsp;
+              <span className="bold">{Accounting.formatNumber(this.props.price / 100, 2, '.', ',')}&nbsp;€</span>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">IBAN *</label>
-              </div>
-              <div className="col-md-6">
-                {this.state.paymentData.iban}
-              </div>
+            <div className="form-group">
+              <label htmlFor="iban">IBAN *</label>
+              <InputText id="iban" cssclass="form-control" toUpdate="iban" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label className="input-label">BIC *</label>
-              </div>
-              <div className="col-md-6">
-                {this.state.paymentData.bic}
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="payment-info">
-              Hier ist noch platz für einen Text, Bild oder irgendwas anderes.
+            <div className="form-group">
+                <label htmlFor="iban">BIC *</label>
+                <InputText id="iban" cssclass="form-control" toUpdate="bic" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
           </div>
         </div>
