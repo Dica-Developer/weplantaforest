@@ -16,6 +16,8 @@ import org.dicadeveloper.weplantaforest.articlemanager.user.User;
 import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
 import org.dicadeveloper.weplantaforest.common.support.Language;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
@@ -26,15 +28,32 @@ import lombok.Setter;
 @Setter
 public class Article {
     public enum ArticleType {
-        HOME(true), WHAT_WE_DO(false), NEWS(false), PARTNER(true), HELP_US(false), FAQ(true), LINKS(false), ABOUT_US(true), DISCLAIMER(false), KNOWLEDGEBASE(false), OUR_GOALS(false), OUR_CODEX(false), THE_IDEA(false), THE_TEAM(false), JOBS(false), IMPRESS(true), PRESS(false), NEWSLETTER(false), FINANCIALS(true), BLOG(true), PRIVACY(true), TERMS(true), CONTACT(true), TREE_SERVICE(true), AWARDS(true);
+        HOME(false, ""), WHAT_WE_DO(false, ""), NEWS(false, ""), PARTNER(true, "Partner"), HELP_US(false, ""), FAQ(true, "FAQ"), LINKS(false, ""), ABOUT_US(true, "über uns"), DISCLAIMER(false, ""), KNOWLEDGEBASE(false, ""), OUR_GOALS(false, ""), OUR_CODEX(false, ""), THE_IDEA(false, ""), THE_TEAM(false, ""), JOBS(false, ""), IMPRESS(true, "Impressum"), PRESS(false, ""), NEWSLETTER(false, ""), FINANCIALS(true, "Finanzen"), BLOG(true, "Blog"), PRIVACY(true, "Datenschutz"), TERMS(true, "AGB"), CONTACT(true, "Kontakt"), TREE_SERVICE(true, "Baumservice"), AWARDS(true, "Auszeichnungen");
         private boolean isUsed;
+        private String description;
         
-        ArticleType(boolean isUsed) {
+        ArticleType(boolean isUsed, String description) {
             this.isUsed = isUsed;
+            this.description = description;
         }
         
         public boolean isUsed() {
             return this.isUsed;
+        }
+                
+        @JsonValue
+        public String getDescription() {
+            return this.description;
+        }
+        
+        @JsonCreator
+        public static ArticleType fromText(String text){
+            for(ArticleType r : ArticleType.values()){
+                if(r.getDescription().equals(text)){
+                    return r;
+                }
+            }
+            throw new IllegalArgumentException();
         }
     }
 
