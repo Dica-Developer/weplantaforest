@@ -190,7 +190,7 @@ export default class DoPlanting extends Component {
             <label htmlFor="where">Wo:</label>
             <Map id="where" center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
               <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
-              <Marker position={this.state.treePosition} draggable="true" ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
+              <Marker position={this.state.treePosition} draggable={true} ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
             </Map>
           </div>
         </div>
