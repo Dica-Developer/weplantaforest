@@ -50,8 +50,6 @@ public class ArticleController {
     @JsonView(Views.BackofficeArticleView.class)
     public ResponseEntity<?> createArticle(@RequestParam String userName, @RequestBody Article article) {
         try {
-            article.setCreatedOn(System.currentTimeMillis());
-            article.setLastEditedOn(System.currentTimeMillis());
             article.setOwner(_userRepository.findByName(userName));
             _articleRepository.save(article);
 

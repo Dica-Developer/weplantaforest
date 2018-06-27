@@ -13,11 +13,17 @@ require('./dateField.less');
 
 export default class DateField extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       value: new Date().toISOString()
     };
+  }
+
+  componentWillReceiveProps(){
+    if(this.props.date){
+      this.setState({value: new Date(this.props.date).toISOString()});
+    }
   }
 
   updateValue(value) {
@@ -60,7 +66,6 @@ export default class DateField extends Component {
   }
 
   render() {
-
     return (
       <div className="dateField">
         <DatePicker value={this.state.value} onChange={this.updateValue.bind(this)} onClear={this.resetDate.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>

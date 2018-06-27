@@ -11,6 +11,7 @@ import RadioButton from '../../common/components/RadioButton';
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
 import {getConfig} from '../../common/RestHelper';
+import DateField from '../../common/components/DateField';
 
 class Paragraph extends Component {
   constructor() {
@@ -245,6 +246,11 @@ export default class ArticleCreater extends Component {
     this.forceUpdate();
   }
 
+  updateCreationDate(value) {
+    this.state.article.createdOn = value;
+    this.forceUpdate();
+  }
+
   render() {
     return (
       <div className="container paddingTopBottom15 article-manager">
@@ -287,8 +293,14 @@ export default class ArticleCreater extends Component {
           <div className="col-md-2">
             Titel:
           </div>
-          <div className="col-md-10 title">
+          <div className="col-md-5 title">
             <InputText toUpdate="title" updateValue={this.updateValue.bind(this)}/>
+          </div>
+          <div className="col-md-1">
+            Datum:
+          </div>
+          <div className="col-md-4">
+            <DateField id="when" updateDateValue={this.updateCreationDate.bind(this)} noFuture="true"/>
           </div>
         </div>
         <div className="row content-row">

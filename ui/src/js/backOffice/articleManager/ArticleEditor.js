@@ -12,6 +12,7 @@ import IconButton from '../../common/components/IconButton';
 import TextEditor from '../../common/components/TextEditor';
 import Notification from '../../common/components/Notification';
 import {getConfig} from '../../common/RestHelper';
+import DateField from '../../common/components/DateField';
 
 class Paragraph extends Component {
   constructor(props) {
@@ -299,6 +300,11 @@ export default class ArticleEditor extends Component {
     this.forceUpdate();
   }
 
+  updateCreationDate(value) {
+    this.state.article.createdOn = value;
+    this.forceUpdate();
+  }
+
   render() {
     var that = this;
     var articleImgUrl = 'http://localhost:8082/article/image/' + this.state.article.id + '/' + this.state.article.imageFileName + '/380/253';
@@ -353,10 +359,16 @@ export default class ArticleEditor extends Component {
           <div className="col-md-2">
             Titel:
           </div>
-          <div className="col-md-10 title">
+          <div className="col-md-5 title">
             <input type="text" value={this.state.article.title} onChange={(event) => {
               this.updateValue('title', event.target.value);
             }}/>
+          </div>
+          <div className="col-md-1">
+            Datum:
+          </div>
+          <div className="col-md-4">
+            <DateField id="when" updateDateValue={this.updateCreationDate.bind(this)} noFuture="true" date={this.state.article.createdOn}/>
           </div>
         </div>
         <div className="row content-row">

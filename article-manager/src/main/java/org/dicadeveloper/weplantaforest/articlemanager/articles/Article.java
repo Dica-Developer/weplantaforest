@@ -45,7 +45,7 @@ public class Article {
     private Long id;
 
     @Column(name = "_createdOn")
-    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class, Views.UserArticleShortView.class})
     private Long createdOn;
 
     @Column(name = "_lastEditedOn")
