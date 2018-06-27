@@ -202,7 +202,9 @@ public class ArticleController {
     public ResponseEntity<?> getArticleTypes() {
         List<String> articleTypes = new ArrayList<>();
         for (ArticleType articleType : ArticleType.values()) {
-            articleTypes.add(articleType.toString());
+            if(articleType.isUsed()) {
+                articleTypes.add(articleType.toString());                
+            }
         }
         return new ResponseEntity<>(articleTypes, HttpStatus.OK);
     }

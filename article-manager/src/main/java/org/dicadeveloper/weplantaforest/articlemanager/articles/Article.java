@@ -26,7 +26,16 @@ import lombok.Setter;
 @Setter
 public class Article {
     public enum ArticleType {
-        HOME, WHAT_WE_DO, NEWS, PARTNER, HELP_US, FAQ, LINKS, ABOUT_US, DISCLAIMER, KNOWLEDGEBASE, OUR_GOALS, OUR_CODEX, THE_IDEA, THE_TEAM, JOBS, IMPRESS, PRESS, NEWSLETTER, FINANCIALS, BLOG, PRIVACY, TERMS, CONTACT, TREE_SERVICE, AWARDS;
+        HOME(true), WHAT_WE_DO(false), NEWS(false), PARTNER(true), HELP_US(false), FAQ(true), LINKS(false), ABOUT_US(true), DISCLAIMER(false), KNOWLEDGEBASE(false), OUR_GOALS(false), OUR_CODEX(false), THE_IDEA(false), THE_TEAM(false), JOBS(false), IMPRESS(true), PRESS(false), NEWSLETTER(false), FINANCIALS(true), BLOG(true), PRIVACY(true), TERMS(true), CONTACT(true), TREE_SERVICE(true), AWARDS(true);
+        private boolean isUsed;
+        
+        ArticleType(boolean isUsed) {
+            this.isUsed = isUsed;
+        }
+        
+        public boolean isUsed() {
+            return this.isUsed;
+        }
     }
 
     @Id
