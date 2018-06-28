@@ -1,0 +1,1 @@
+UPDATE Cart set _receiptSent = true WHERE _receipt__receiptId IS NOT NULL;
