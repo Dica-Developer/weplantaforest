@@ -15,11 +15,12 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     public final static String FIND_VERIFIED_CARTS_BUY_USER_ID = "SELECT cart from Cart cart where cart.buyer.id = :userId AND cart.cartState = \'VERIFIED\'";
     
     public final static String FIND_CART_BY_CODE = "SELECT cart from Cart cart WHERE cart.code.code = :codeString";
-    
-    
+        
     //14400000 --> older than 4 hours
     public final static String FIND_INITIAL_CARTS_OLDER_THAN_FOUR_HOURS = "SELECT cart FROM Cart cart WHERE ((:time - cart.timeStamp) > 14400000) AND cart.cartState = \'INITIAL\'";
 
+    public final static String FIND_RECEIPTABLE_CARTS = "select * from Cart where _cartState = 'VERIFIED' AND _receipt__receiptId IS NULL AND _receiptable is TRUE AND ((UNIX_TIMESTAMP() * 1000) - _timeStamp) > (4.838 * POWER(10, 9))";
+    
     public List<Cart> findCartsByIdIn(@Param("id") Long[] ids);
 
     @Query(value = FIND_CARTS_BUY_USER_ID)
@@ -33,5 +34,8 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     
     @Query(value = FIND_INITIAL_CARTS_OLDER_THAN_FOUR_HOURS)
     public List<Cart> findInitialCartsOlderThanFourHours(@Param("time") long timeOfMeasurement);
+    
+    @Query(value = FIND_RECEIPTABLE_CARTS, nativeQuery = true)
+    public List<Cart> findReceiptableCarts();
 
 }

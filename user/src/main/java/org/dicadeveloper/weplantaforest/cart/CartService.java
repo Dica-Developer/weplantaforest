@@ -1,7 +1,9 @@
 package org.dicadeveloper.weplantaforest.cart;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
@@ -34,6 +36,22 @@ public class CartService {
             cartIds.add(cartId);
         }
         return cartIds;
+    }    
+    
+    public Map<String, List<Cart>> groupCartsByUser(List<Cart> carts){
+        Map<String, List<Cart>> userCartMap = new HashMap<>();
+        for(Cart cart : carts) {
+            String userName = cart.getBuyer().getUsername();
+            if(userCartMap.containsKey(userName)) {
+                userCartMap.get(userName).add(cart);
+            }else {
+                List<Cart> newCartList = new ArrayList<>();
+                newCartList.add(cart);
+                userCartMap.put(userName, newCartList);
+            }
+        }
+        return userCartMap;
     }
+    
 
 }

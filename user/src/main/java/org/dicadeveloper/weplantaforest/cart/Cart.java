@@ -70,7 +70,7 @@ public class Cart {
 	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
 	private List<CartItem> cartItems = new ArrayList<CartItem>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "_buyer__userId")
 	private User buyer;
 
@@ -149,6 +149,12 @@ public class Cart {
 	@OneToOne(optional = true)
 	@JoinColumn(name = "_code__id")
 	private Code code;
+	
+    @Column(name = "_receiptable")
+    private boolean receiptable;
+
+    @Column(name = "_receiptSent")
+    private boolean receiptSent;
 
 	@Transient
 	private boolean gift = false;

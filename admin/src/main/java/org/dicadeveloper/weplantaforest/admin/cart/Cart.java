@@ -156,6 +156,12 @@ public class Cart {
     @JoinColumn(name = "_code__id")
     private Code code;
 
+    @Column(name = "_receiptable")
+    private boolean receiptable;
+
+    @Column(name = "_receiptSent")
+    private boolean receiptSent;
+
     @Transient
     private boolean gift = false;
 

@@ -1,14 +1,20 @@
 package org.dicadeveloper.weplantaforest.scheduling;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.cart.CartService;
 import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeRepository;
+import org.dicadeveloper.weplantaforest.receipt.Receipt;
+import org.dicadeveloper.weplantaforest.receipt.ReceiptRepository;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,6 +27,8 @@ public class ScheduledTasks {
     private static final Log LOG = LogFactory.getLog(ScheduledTasks.class.getName());
 
     private final static long FOUR_HOURS_IN_MILLISECONDS = 14400000;
+    
+    private final static long DAY_IN_MILLISECONDS = 86400000;
 
     @Autowired
     private @NonNull CartRepository _cartRepository;
@@ -30,11 +38,12 @@ public class ScheduledTasks {
 
     @Autowired
     private @NonNull CodeRepository _codeRepostiory;
-    //
-    // @Scheduled(fixedRate = DAY_IN_MILLISECONDS)
-    // public void checkAbos() {
-    //
-    // }
+    
+    @Autowired
+    private @NonNull CartService _cartService;
+    
+    @Autowired
+    private @NonNull ReceiptRepository _receiptRepository;
 
     @Scheduled(fixedRate = FOUR_HOURS_IN_MILLISECONDS)
     private void cleanUpInitialCarts() {
@@ -52,6 +61,25 @@ public class ScheduledTasks {
         }
         _cartRepository.delete(carts);
         LOG.info("deleted initial carts(" + carts.size() + ") and their trees");
-
+    }
+    
+    @Scheduled(fixedRate = DAY_IN_MILLISECONDS)
+    private void checkCartsForReceipts() {
+        List<Cart> carts = _cartRepository.findReceiptableCarts();
+        
+        if(carts != null && carts.size() > 0) {
+            Map<String, List<Cart>> userCartMap = _cartService.groupCartsByUser(carts);
+            for(String userName: userCartMap.keySet()) {
+                User owner = userCartMap.get(userName).get(0).getBuyer();
+                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                Receipt receipt = new Receipt();
+                //this save is to get the id, which is needed to create the invoiceNumber
+                _receiptRepository.save(receipt);
+                receipt.setOwner(owner);
+                receipt.setInvoiceNumber(receipt.getReceiptId() + "/" + currentYear);
+                receipt.setCarts(userCartMap.get(userName));
+                _receiptRepository.save(receipt);
+            }
+        }
     }
 }
