@@ -46,11 +46,15 @@ public class ReceiptService {
         User user = _userRepository.findOne(userId);
         try {
             pdf.writePdfDataToOutputStream(fos, RELATIVE_STATIC_IMAGES_PATH, receipt);
-            String mailSubject = _messageByLocaleService.getMessage("mail.receipt.subject", Locale.GERMAN);
-            String mailTemplateText = _messageByLocaleService.getMessage("mail.receipt.text", Locale.GERMAN);
-            mailTemplateText = mailTemplateText.replace("%userName%", user.getName());
-            _mailHelper.sendAMessageWithAttachement(mailSubject, mailTemplateText, user.getMail(), pdfFile);
-            pdfFile.delete();
+            new Thread(new Runnable() {
+                public void run() {
+                    String mailSubject = _messageByLocaleService.getMessage("mail.receipt.subject", Locale.GERMAN);
+                    String mailTemplateText = _messageByLocaleService.getMessage("mail.receipt.text", Locale.GERMAN);
+                    mailTemplateText = mailTemplateText.replace("%userName%", user.getName());
+                    _mailHelper.sendAMessageWithAttachement(mailSubject, mailTemplateText, user.getMail(), pdfFile);
+                    pdfFile.delete();
+                }
+            }).start();
         } catch (Exception e) {
             LOG.error("Error occured while creating PDF for receipt with id " + receiptId + "!\n", e);
         }
