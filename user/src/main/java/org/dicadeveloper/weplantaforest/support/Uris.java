@@ -97,7 +97,7 @@ public class Uris {
     // carts
 
     public final static String VERIFIFIED_CART_SHORT_VIEW = "/carts/search/short";
-
+        
     // gifts
     public final static String GIFTS_BY_CONSIGNOR = "/gift/search/consignor";
 
@@ -142,6 +142,8 @@ public class Uris {
     public final static String RECEIPTS = "/receipts";
 
     public final static String RECEIPT_PDF = "/receipt/pdf";
+    
+    public final static String RECEIPT_SEND = "/receipt/send";    
 
     // user
 

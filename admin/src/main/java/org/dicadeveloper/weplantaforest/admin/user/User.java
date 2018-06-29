@@ -49,7 +49,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "_userId")
-    @JsonView({ Views.OverviewUser.class, Views.ProjectData.class, Views.EventDetails.class})
+    @JsonView({ Views.OverviewUser.class, Views.ProjectData.class, Views.EventDetails.class, Views.OverviewCart.class})
     private Long id;
 
     @Column(unique = true, name = "_name")

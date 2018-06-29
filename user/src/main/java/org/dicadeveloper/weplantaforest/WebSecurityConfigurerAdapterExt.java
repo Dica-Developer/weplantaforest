@@ -53,7 +53,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
         http
             // didn't get this to work
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST, Uris.PLANT_FOR_USER + "**")
+            .antMatchers(HttpMethod.POST, Uris.PLANT_FOR_USER + "**", Uris.RECEIPT_SEND + "**")
             .hasRole(Role.ADMIN.getIdentifier())
             .and()
             .addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)

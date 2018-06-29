@@ -1,18 +1,25 @@
 package org.dicadeveloper.weplantaforest.common.mail;
 
+import java.io.File;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -62,6 +69,34 @@ public class MailHelper {
 
         try {
             MimeMessage msg = createMessage(subject, text);
+            Transport.send(msg);
+        } catch (MessagingException e) {
+            handleException(e);
+        }
+    }
+    
+    public void sendAMessageWithAttachement(String subject, String text, String receiver, File file) {
+
+        setParameter();
+        this.receiver = receiver;
+        createAndSetProperties();
+        createSessionAndAuthenticate();
+
+        try {
+            MimeMessage msg = createMessage(subject, text);
+            Multipart multipart = new MimeMultipart();
+
+            MimeBodyPart textBodyPart = new MimeBodyPart();
+            textBodyPart.setText(text);
+
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            DataSource ds = new FileDataSource(file);
+            messageBodyPart.setDataHandler(new DataHandler(ds));
+            messageBodyPart.setFileName(file.getName());
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(textBodyPart);
+            msg.setContent(multipart);
+            
             Transport.send(msg);
         } catch (MessagingException e) {
             handleException(e);

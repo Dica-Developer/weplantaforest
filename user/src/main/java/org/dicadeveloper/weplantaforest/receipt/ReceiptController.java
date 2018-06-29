@@ -13,6 +13,7 @@ import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 public class ReceiptController {
 
     private @NonNull ReceiptRepository _receiptRepository;
+    
+    private @NonNull ReceiptService _receiptService;
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
     
@@ -59,9 +62,13 @@ public class ReceiptController {
             LOG.error("Error occured while creating PDF for receipt with id " + receiptId + "!\n", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         return new ResponseEntity<>(HttpStatus.OK);
-
+    }
+    
+    @PostMapping(value = Uris.RECEIPT_SEND)
+    public ResponseEntity<?> sendReceipt(@RequestParam Long userId, @RequestParam Long receiptId) {
+        _receiptService.sendReceiptMail(userId, receiptId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

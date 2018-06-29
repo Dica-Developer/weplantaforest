@@ -211,6 +211,13 @@ export default class CartOverview extends Component {
           sortable: false,
           visible: true
         }, {
+          key: 'sendReceipt',
+          name: 'Quittung verschicken',
+          width: 120,
+          filterable: false,
+          sortable: false,
+          visible: true
+        }, {
           key: 'timeStampValue',
           visible: false
         }
@@ -300,9 +307,27 @@ export default class CartOverview extends Component {
       details: this.createDetailIcon(cart.id),
       receiptable: this.createReceiptCheckbox(cart.id, cart.receiptable, cart.receipt),
       stateChange: this.createStateChangeDropdown(cart.id),
+      sendReceipt: this.createSendReceiptButton(cart.buyer.id, cart.receipt),
       timeStampValue: cart.timeStamp
     };
     return row;
+  }
+
+  createSendReceiptButton(userId, receipt) {
+    if(receipt && receipt._receiptId){
+      return <div><IconButton text="" glyphIcon="glyphicon-envelope" onClick={() => this.sendReceipt(userId, receipt._receiptId)}/></div>;
+    }else{
+      return <div></div>;
+    }
+  }
+
+  sendReceipt(userId, receiptId){
+    var that = this;
+    axios.post('http://localhost:8081/receipt/send?userId=' + userId + '&receiptId=' + receiptId, {}, this.state.restConfig).then(function(response) {
+      that.refs.notification.addNotification("Mail versandt!", "Die Quittung wurde an den User verschickt!", "success");
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Quittungsflags vom Pflanzkorb mit der ID ' + id + 'auf ' + value + ' ist folgender Fehler aufgetreten:' + response.data, 'error');
+    });
   }
 
   createReceiptCheckbox(id, value, receipt){
