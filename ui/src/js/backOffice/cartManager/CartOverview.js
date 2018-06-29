@@ -306,12 +306,29 @@ export default class CartOverview extends Component {
   }
 
   createReceiptCheckbox(id, value, receipt){
-    return <div className="align-center"><input type="checkbox" value={value} checked={value} onChange={(event) => this.changeReceiptableFlag(id, event)} disabled={receipt}/></div>;
+    return <div className="align-center"><input type="checkbox" checked={value} onChange={(event) => this.changeReceiptableFlag(id, event, receipt)} disabled={receipt}/></div>;
   }
 
-  changeReceiptableFlag(id, event){
-    console.log('changing receiptable to '+ event.target.value);
-    //TODO: implement rest request
+  changeReceiptableFlag(id, event, receipt){
+    let value = event.target.checked;
+    var that = this;
+    axios.post('http://localhost:8083/cart/receiptable?cartId=' + id + '&receiptable=' + value, {}, this.state.restConfig).then(function(response) {
+      for (var cart in that.state.carts) {
+        if (that.state.carts[cart].id == id) {
+          that.state.carts[cart].receiptable = value;
+          break;
+        }
+      }
+      for (var row in that.state.rows) {
+        if (that.state.rows[row].id == id) {
+          that.state.rows[row].receiptable = that.createReceiptCheckbox(id, value, receipt);
+          break;
+        }
+      }
+      that.forceUpdate();
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Quittungsflags vom Pflanzkorb mit der ID ' + id + 'auf ' + value + ' ist folgender Fehler aufgetreten:' + response.data, 'error');
+    });
   }
 
   createDetailIcon(id) {

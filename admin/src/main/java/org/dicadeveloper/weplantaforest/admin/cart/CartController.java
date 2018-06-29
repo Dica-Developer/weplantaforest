@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,6 +46,12 @@ public class CartController {
     @JsonView(Views.CartDetails.class)
     public Cart getCartDetails(@PathVariable(value = "cartId") Long cartId) {
         return _cartRepository.findOne(cartId);
+    }
+    
+    @PostMapping(value = "/cart/receiptable")
+    @JsonView(Views.OverviewCart.class)
+    public Cart setReceiptable(@RequestParam Long cartId, @RequestParam boolean receiptable) {
+        return _cartService.setReceiptable(cartId, receiptable);
     }
 
     @RequestMapping(value = Uris.CHANGE_CART_STATE, method = RequestMethod.POST)

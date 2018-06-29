@@ -29,6 +29,13 @@ public class CartService {
         results = entityManager.createNativeQuery(createQueryString(cartRequest), Cart.class).getResultList();
         return results;
     }
+    
+    public Cart setReceiptable(Long cartId, boolean receiptable) {
+        Cart cart = _cartRepository.findOne(cartId);
+        cart.setReceiptable(receiptable);
+        _cartRepository.save(cart);
+        return cart;
+    }
         
     private String createQueryString(CartRequest cartRequest) {
         String query = "SELECT * FROM Cart ";
