@@ -481,32 +481,46 @@ export default class CartOverview extends Component {
         </div>
         <div className="row ">
           <div className="col-md-3">
-            <Select
-               name="form-field-name"
-               value={this.state.cartRequest.cartStates}
-               onChange={this.handleStateSelection.bind(this)}
-               multi={true}
-               options={[
-                 { value: 'VERIFIED', label: 'Verified' },
-                 { value: 'CALLBACK', label: 'Callback' },
-                 { value: 'INITIAL', label: 'Initial' },
-                 { value: 'DISCARDED', label: 'Discarded' },
-                 { value: 'GENERATED', label: 'Generated' },
-               ]} />
+            <div className="form-group">
+              <label htmlFor="status">Stati:</label>
+              <Select id="status"
+                 name="form-field-name"
+                 value={this.state.cartRequest.cartStates}
+                 onChange={this.handleStateSelection.bind(this)}
+                 multi={true}
+                 options={[
+                   { value: 'VERIFIED', label: 'Verified' },
+                   { value: 'CALLBACK', label: 'Callback' },
+                   { value: 'INITIAL', label: 'Initial' },
+                   { value: 'DISCARDED', label: 'Discarded' },
+                   { value: 'GENERATED', label: 'Generated' },
+                 ]} />
+            </div>
           </div>
           <div className="col-md-3">
-            <DateField id="from" updateDateValue={this.updateFrom.bind(this)} noFuture="false" date={this.state.cartRequest.from}/>
+            <div className="form-group">
+              <label htmlFor="from">Von:</label>
+              <DateField id="from" updateDateValue={this.updateFrom.bind(this)} noFuture="false" date={this.state.cartRequest.from}/>
+            </div>
           </div>
           <div className="col-md-3">
-            <DateField id="to" updateDateValue={this.updateTo.bind(this)} noFuture="false" date={this.state.cartRequest.to}/>
+            <div className="form-group">
+              <label htmlFor="to">Bis:</label>
+              <DateField id="to" updateDateValue={this.updateTo.bind(this)} noFuture="false" date={this.state.cartRequest.to}/>
+            </div>
           </div>
           <div className="col-md-3">
             <IconButton text="Lade Pflanzkörbe" glyphIcon="glyphicon-refresh" onClick={this.loadCarts.bind(this)}/>
+            <br/>
+            <br/>
+            <label >Ergebnisse:</label>&nbsp;{this.state.carts.length}
           </div>
+        </div>
+        <div className="row ">
           <div className="col-md-12">
             <ReactDataGrid columns={cols} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
-              true
-            } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
+                true
+              } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
           </div>
         </div>
         <CartDetails details={this.state.cartDetails} x={this.state.x} y={this.state.y}/>
