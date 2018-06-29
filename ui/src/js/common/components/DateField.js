@@ -58,7 +58,7 @@ export default class DateField extends Component {
 
   validateNoFutureValue(value) {
     var dateNow = new Date();
-    if (value.getFullYear() <= dateNow.getFullYear() && value.getMonth() <= dateNow.getMonth() && value.getDate() <= dateNow.getDate()) {
+    if (value.getTime() <= dateNow.getTime()) {
       return true;
     } else {
       return false;
