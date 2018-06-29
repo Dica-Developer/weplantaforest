@@ -178,7 +178,7 @@ export default class CartOverview extends Component {
         }, {
           key: 'company',
           name: 'Unternehmen',
-          width: 120,
+          width: 100,
           filterable: true,
           sortable: true,
           visible: true
@@ -213,7 +213,7 @@ export default class CartOverview extends Component {
         }, {
           key: 'sendReceipt',
           name: 'Quittung verschicken',
-          width: 120,
+          width: 140,
           filterable: false,
           sortable: false,
           visible: true
@@ -527,17 +527,6 @@ export default class CartOverview extends Component {
     this.forceUpdate();
   }
 
-  onRowsSelected (rows) {
-    this.setState({selectedIndexes: this.state.selectedIndexes.concat(rows.map(r => r.rowIdx))});
-    console.log(this.state.selectedIndexes);
-  };
-
-  onRowsDeselected (rows) {
-    let rowIndexes = rows.map(r => r.rowIdx);
-    this.setState({selectedIndexes: this.state.selectedIndexes.filter(i => rowIndexes.indexOf(i) === -1 )});
-    console.log(this.state.selectedIndexes);
-  };
-
   render() {
     var style = {
       Containers: {
@@ -614,15 +603,6 @@ export default class CartOverview extends Component {
               onAddFilter={this.handleFilterChange.bind(this)}
               onClearFilters={this.onClearFilters.bind(this)}
               emptyRowsView={this.getEmptyRowView.bind(this)}
-              rowSelection={{
-                showCheckbox: true,
-                enableShiftSelect: true,
-                onRowsSelected: this.onRowsSelected.bind(this),
-                onRowsDeselected: this.onRowsDeselected.bind(this),
-                selectBy: {
-                 indexes: this.state.selectedIndexes
-                }
-              }}
             />
           </div>
         </div>
