@@ -13,9 +13,11 @@ import org.dicadeveloper.weplantaforest.code.Code;
 import org.dicadeveloper.weplantaforest.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.receipt.Receipt;
 import org.dicadeveloper.weplantaforest.receipt.ReceiptRepository;
+import org.dicadeveloper.weplantaforest.receipt.ReceiptService;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,12 @@ public class ScheduledTasks {
     
     @Autowired
     private @NonNull ReceiptRepository _receiptRepository;
+    
+    @Autowired
+    private @NonNull ReceiptService _receiptService;
+    
+    @Autowired
+    private @NonNull Environment _env;
 
     @Scheduled(fixedRate = FOUR_HOURS_IN_MILLISECONDS)
     private void cleanUpInitialCarts() {
@@ -65,6 +73,7 @@ public class ScheduledTasks {
     
     @Scheduled(fixedRate = DAY_IN_MILLISECONDS)
     private void checkCartsForReceipts() {
+        boolean sendMails = _env.getProperty("send.mails") == "true" ? true : false;
         List<Cart> carts = _cartRepository.findReceiptableCarts();
         
         if(carts != null && carts.size() > 0) {
@@ -79,6 +88,9 @@ public class ScheduledTasks {
                 receipt.setInvoiceNumber(receipt.getReceiptId() + "/" + currentYear);
                 receipt.setCarts(userCartMap.get(userName));
                 _receiptRepository.save(receipt);
+                if(sendMails) {
+                    _receiptService.sendReceiptMail(owner.getId(), receipt.getReceiptId());
+                }
             }
         }
     }

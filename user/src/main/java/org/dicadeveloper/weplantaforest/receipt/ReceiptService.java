@@ -7,6 +7,8 @@ import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dicadeveloper.weplantaforest.cart.Cart;
+import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.mail.MailHelper;
 import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
 import org.dicadeveloper.weplantaforest.user.User;
@@ -24,6 +26,8 @@ public class ReceiptService {
     private @NonNull ReceiptRepository _receiptRepository;
 
     private @NonNull UserRepository _userRepository;
+    
+    private @NonNull CartRepository _cartRepository;
 
     private @NonNull MailHelper _mailHelper;
 
@@ -53,6 +57,14 @@ public class ReceiptService {
                     mailTemplateText = mailTemplateText.replace("%userName%", user.getName());
                     _mailHelper.sendAMessageWithAttachement(mailSubject, mailTemplateText, user.getMail(), pdfFile);
                     pdfFile.delete();
+                    receipt.setSentOn(System.currentTimeMillis());
+                    _receiptRepository.save(receipt);
+                    if(receipt.getCarts() != null && receipt.getCarts().size() > 0) {
+                        for(Cart cart: receipt.getCarts()) {
+                            cart.setReceiptSent(true);
+                            _cartRepository.save(cart);
+                        }
+                    }
                 }
             }).start();
         } catch (Exception e) {
