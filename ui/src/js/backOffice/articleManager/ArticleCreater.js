@@ -4,6 +4,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
 import TinyMCE from 'react-tinymce';
+import DatePicker from 'react-16-bootstrap-date-picker';
 
 import InputText from '../../common/components/InputText';
 import FileChooser from '../../common/components/FileChooser';
@@ -11,7 +12,6 @@ import RadioButton from '../../common/components/RadioButton';
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
 import {getConfig} from '../../common/RestHelper';
-import DateField from '../../common/components/DateField';
 
 class Paragraph extends Component {
   constructor() {
@@ -117,7 +117,8 @@ export default class ArticleCreater extends Component {
         lang: 'DEUTSCH',
         visible: false,
         imageFileName: '',
-        imageDescription: ''
+        imageDescription: '',
+        createdOn: new Date().getTime()
       },
       paragraphCount: 1
     };
@@ -247,7 +248,12 @@ export default class ArticleCreater extends Component {
   }
 
   updateCreationDate(value) {
-    this.state.article.createdOn = value;
+    this.state.article.createdOn = Date.parse(value);
+    this.forceUpdate();
+  }
+
+  resetCreationDate() {
+    this.state.article.createdOn = null;
     this.forceUpdate();
   }
 
@@ -300,7 +306,7 @@ export default class ArticleCreater extends Component {
             Datum:
           </div>
           <div className="col-md-4">
-            <DateField id="when" updateDateValue={this.updateCreationDate.bind(this)} noFuture="true"/>
+            <DatePicker value={new Date(this.state.article.createdOn).toISOString()} onChange={this.updateCreationDate.bind(this)} onClear={this.resetCreationDate.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
           </div>
         </div>
         <div className="row content-row">

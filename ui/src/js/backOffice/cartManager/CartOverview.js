@@ -7,9 +7,9 @@ import {browserHistory} from 'react-router';
 import moment from 'moment';
 import ReactDataGrid from 'react-data-grid';
 import {Toolbar, Data} from 'react-data-grid-addons';
+import DatePicker from 'react-16-bootstrap-date-picker';
 
 import IconButton from '../../common/components/IconButton';
-import DateField from '../../common/components/DateField';
 import NotificationSystem from 'react-notification-system';
 import Notification from '../../common/components/Notification';
 import LoadingSpinner from '../../common/components/LoadingSpinner';
@@ -215,7 +215,9 @@ export default class CartOverview extends Component {
       cartRequest: {
         cartStates: [
           'CALLBACK'
-        ]
+        ],
+        from: 0,
+        to: 0
       }
     };
   }
@@ -446,12 +448,22 @@ export default class CartOverview extends Component {
   }
 
   updateFrom(value){
-    this.state.cartRequest.from = value;
+    this.state.cartRequest.from = Date.parse(value);
+    this.forceUpdate();
+  }
+
+  resetFrom(){
+    this.state.cartRequest.from = null;
     this.forceUpdate();
   }
 
   updateTo(value) {
-    this.state.cartRequest.to = value;
+    this.state.cartRequest.to = Date.parse(value);
+    this.forceUpdate();
+  }
+
+  resetTo(){
+    this.state.cartRequest.to = null;
     this.forceUpdate();
   }
 
@@ -500,13 +512,13 @@ export default class CartOverview extends Component {
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="from">Von:</label>
-              <DateField id="from" updateDateValue={this.updateFrom.bind(this)} noFuture="false" date={this.state.cartRequest.from}/>
+              <DatePicker value={new Date(this.state.cartRequest.from).toISOString()} onChange={this.updateFrom.bind(this)} onClear={this.resetFrom.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
             </div>
           </div>
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="to">Bis:</label>
-              <DateField id="to" updateDateValue={this.updateTo.bind(this)} noFuture="false" date={this.state.cartRequest.to}/>
+              <DatePicker value={new Date(this.state.cartRequest.to).toISOString()} onChange={this.updateTo.bind(this)} onClear={this.resetTo.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
             </div>
           </div>
           <div className="col-md-3">
