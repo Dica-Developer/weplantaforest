@@ -150,6 +150,7 @@ public class Cart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_receipt__receiptId")
+    @JsonView(Views.OverviewCart.class)
     private Receipt receipt;
 
     @OneToOne(optional = true)
@@ -157,9 +158,11 @@ public class Cart {
     private Code code;
 
     @Column(name = "_receiptable")
+    @JsonView(Views.OverviewCart.class)
     private boolean receiptable;
 
     @Column(name = "_receiptSent")
+    @JsonView(Views.OverviewCart.class)
     private boolean receiptSent;
 
     @Transient

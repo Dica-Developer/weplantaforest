@@ -143,42 +143,42 @@ export default class CartOverview extends Component {
         }, {
           key: 'price',
           name: 'Preis (€)',
-          width: 80,
+          width: 60,
           filterable: true,
           sortable: true,
           visible: true
         }, {
           key: 'status',
           name: 'Status',
-          width: 120,
+          width: 100,
           filterable: true,
           sortable: true,
           visible: true
         }, {
           key: 'timestamp',
           name: 'Erstellt am',
-          width: 100,
+          width: 80,
           filterable: true,
           sortable: true,
           visible: true
         }, {
           key: 'firstName',
           name: 'Vorname',
-          width: 150,
+          width: 100,
           filterable: true,
           sortable: true,
           visible: true
         }, {
           key: 'lastName',
           name: 'Nachname',
-          width: 150,
+          width: 100,
           filterable: true,
           sortable: true,
           visible: true
         }, {
           key: 'company',
           name: 'Unternehmen',
-          width: 150,
+          width: 120,
           filterable: true,
           sortable: true,
           visible: true
@@ -197,9 +197,16 @@ export default class CartOverview extends Component {
           sortable: false,
           visible: true
         }, {
+          key: 'receiptable',
+          name: 'Quittung',
+          width: 60,
+          filterable: false,
+          sortable: false,
+          visible: true
+        }, {
           key: 'stateChange',
-          name: 'Change Cartstate',
-          width: 150,
+          name: 'Status wechseln',
+          width: 120,
           filterable: false,
           sortable: false,
           visible: true
@@ -290,10 +297,20 @@ export default class CartOverview extends Component {
       company: cart.callBackFirma,
       paymentType: cart.callBackZahlungsart,
       details: this.createDetailIcon(cart.id),
+      receiptable: this.createReceiptCheckbox(cart.id, cart.receiptable, cart.receipt),
       stateChange: this.createStateChangeDropdown(cart.id),
       timeStampValue: cart.timeStamp
     };
     return row;
+  }
+
+  createReceiptCheckbox(id, value, receipt){
+    return <div className="align-center"><input type="checkbox" value={value} checked={value} onChange={(event) => this.changeReceiptableFlag(id, event)} disabled={receipt}/></div>;
+  }
+
+  changeReceiptableFlag(id, event){
+    console.log('changing receiptable to '+ event.target.value);
+    //TODO: implement rest request
   }
 
   createDetailIcon(id) {

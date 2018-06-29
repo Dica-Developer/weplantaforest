@@ -15,12 +15,16 @@ import javax.persistence.OneToMany;
 
 import org.dicadeveloper.weplantaforest.admin.cart.Cart;
 import org.dicadeveloper.weplantaforest.admin.user.User;
+import org.dicadeveloper.weplantaforest.admin.views.Views;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class Receipt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.OverviewCart.class)
     private Long _receiptId;
 
     @Column(unique = true)
