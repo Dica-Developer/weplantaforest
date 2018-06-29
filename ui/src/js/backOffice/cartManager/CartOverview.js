@@ -9,11 +9,13 @@ import ReactDataGrid from 'react-data-grid';
 import {Toolbar, Data} from 'react-data-grid-addons';
 
 import IconButton from '../../common/components/IconButton';
+import DateField from '../../common/components/DateField';
 import NotificationSystem from 'react-notification-system';
 import Notification from '../../common/components/Notification';
 import LoadingSpinner from '../../common/components/LoadingSpinner';
 import {getConfig} from '../../common/RestHelper';
 import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
+import Select from 'react-select';
 
 require('./cartOverview.less');
 
@@ -209,18 +211,33 @@ export default class CartOverview extends Component {
       rows: [],
       filters: {},
       restConfig: getConfig(),
-      cartDetails: {}
+      cartDetails: {},
+      cartRequest: {
+        cartStates: [
+          'CALLBACK'
+        ]
+      }
     };
   }
 
   componentDidMount() {
+    let to = new Date();
+    let from;
+    if(to.getMonth() < 3){
+        from = new Date(to.getFullYear() - 1, 12 - (3 - to.getMonth()));
+    }else{
+      from = new Date(to.getFullYear(), to.getMonth() - 2);
+    }
+    this.state.cartRequest.from = from.getTime();
+    this.state.cartRequest.to = to.getTime();
+    this.forceUpdate();
     this.loadCarts();
   }
 
   loadCarts() {
     this.refs['spinner'].showSpinner();
     var that = this;
-    axios.get('http://localhost:8083/carts', this.state.restConfig).then(function(response) {
+    axios.post('http://localhost:8083/carts',this.state.cartRequest ,this.state.restConfig).then(function(response) {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({carts: result, rows: rows});
@@ -419,6 +436,25 @@ export default class CartOverview extends Component {
     );
   }
 
+  handleStateSelection(objects){
+    let states = [];
+    for(let elm of objects){
+      states.push(elm.value);
+    }
+    this.state.cartRequest.cartStates = states;
+    this.forceUpdate();
+  }
+
+  updateFrom(value){
+    this.state.cartRequest.from = value;
+    this.forceUpdate();
+  }
+
+  updateTo(value) {
+    this.state.cartRequest.to = value;
+    this.forceUpdate();
+  }
+
   render() {
     var style = {
       Containers: {
@@ -435,7 +471,7 @@ export default class CartOverview extends Component {
     };
 
     const cols = this.state.columns.filter(column => column.visible === true);
-
+    let selectedOption = 'one';
     return (
       <div className="container paddingTopBottom15 cartOverview">
         <div className="row ">
@@ -444,6 +480,29 @@ export default class CartOverview extends Component {
           </div>
         </div>
         <div className="row ">
+          <div className="col-md-3">
+            <Select
+               name="form-field-name"
+               value={this.state.cartRequest.cartStates}
+               onChange={this.handleStateSelection.bind(this)}
+               multi={true}
+               options={[
+                 { value: 'VERIFIED', label: 'Verified' },
+                 { value: 'CALLBACK', label: 'Callback' },
+                 { value: 'INITIAL', label: 'Initial' },
+                 { value: 'DISCARDED', label: 'Discarded' },
+                 { value: 'GENERATED', label: 'Generated' },
+               ]} />
+          </div>
+          <div className="col-md-3">
+            <DateField id="from" updateDateValue={this.updateFrom.bind(this)} noFuture="false" date={this.state.cartRequest.from}/>
+          </div>
+          <div className="col-md-3">
+            <DateField id="to" updateDateValue={this.updateTo.bind(this)} noFuture="false" date={this.state.cartRequest.to}/>
+          </div>
+          <div className="col-md-3">
+            <IconButton text="Lade Pflanzkörbe" glyphIcon="glyphicon-refresh" onClick={this.loadCarts.bind(this)}/>
+          </div>
           <div className="col-md-12">
             <ReactDataGrid columns={cols} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
               true
