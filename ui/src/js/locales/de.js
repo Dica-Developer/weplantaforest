@@ -1,13 +1,49 @@
 module.exports = {
-  buttonbar: {
-    plant_self: 'SELBST PFLANZEN',
-    plant_online: 'ONLINE PFLANZEN',
-    tree_service: 'BAUMSERVICE'
+  BUTTONBAR: {
+    PLANT_SELF: 'SELBST PFLANZEN',
+    PLANT_ONLINE: 'ONLINE PFLANZEN',
+    TREE_SERVICE: 'BAUMSERVICE'
   },
+  NAVBAR: {
+    PROJECTS: 'Projekte',
+    LEAGUE_TABLES: 'Bestenliste',
+    FIND_PLANTINGS: 'Pflanzungen finden',
+    REDEEM_VOUCHER: 'Gutschein einlösen',
+    CO2_CALCULATOR: 'CO2-Calculator',
+    OFFER_ACREAGE: 'Fläche anbieten',
+    BLOG: 'Blog',
+    MY_FOREST: 'MEIN WALD',
+    MY_PROFIL: 'Mein Profil',
+    TOOLS: 'Tools',
+    VOUCHERS: 'Gutscheine',
+    CONTRIBUTION_RECEIPTS: 'Spendenquittungen',
+    BACKOFFICE: 'Backoffice',
+    MENU: 'MENÜ',
+    COOKIE_MESSAGE: 'Wir benutzen Cookies um die Nutzerfreundlichkeit der Webseite zu verbessen. Durch Deinen Besuch stimmst Du dem zu.',
+    UNDERSTOOD: 'Verstanden',
+    FURTHER_INFORMATION: 'Weitere Informationen'
+  },
+
+  JANUARY: 'Januar',
+  FEBRUARY: 'Februar',
+  MARCH: 'März',
+  APRIL: 'April',
+  MAY: 'Mai',
+  JUNE: 'Juni',
+  JULY: 'Juli',
+  AUGUST: 'August',
+  SEPTEMBER: 'September',
+  OCTOBER: 'Oktober',
+  NOVEMBER: 'November',
+  DECEMBER: 'Dezember',
+
+  PLANTED_TREES: 'gepflanzte Bäume',
+  CO2_BOUND: 'CO2 gebunden / Tonnen',
+
   USERNAME: 'Benutzername',
   PASSWORD: 'Passwort',
-  LOGIN: 'LOGIN',
-  LOGOUT: 'logout',
+  LOGIN: 'Login',
+  LOGOUT: 'Logout',
   FORGOT_PASSWORD: 'Passwort vergessen?',
   REGISTRATE: 'Registrieren',
 
@@ -89,6 +125,16 @@ module.exports = {
   STATE: 'Status',
   REDEEMED_BY: 'Eingelöst von',
 
+  PRIVATEPERSON: 'PrivatPerson',
+  COMPANY: 'Unternehmen',
+  NGO: 'Non-Profit Organisation',
+  SCHOOL: 'Schule',
+
   BEST_COMPANIES: 'Beste Unternehmen',
-  BEST_PRIVATES: 'Beste Privatpersonen'
+  BEST_PRIVATES: 'Beste Privatpersonen',
+
+  FACTS_FIGURES: 'Zahlen & Fakten',
+  TREESPLANTED_PERDONORTYPE: 'Gepflanzte Bäume pro Spendertyp',
+  TREESPLANTED_PERMONTH: 'Gepflanzte Bäume pro Monat'
+
 };

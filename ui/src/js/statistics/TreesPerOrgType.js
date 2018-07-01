@@ -6,6 +6,9 @@ import moment from 'moment';
 
 import {Pie} from 'react-chartjs';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 export default class TreesPerOrgType extends Component {
 
   constructor() {
@@ -16,7 +19,7 @@ export default class TreesPerOrgType extends Component {
         1, 1, 1, 1
       ],
       labels: [
-        'PrivatPerson', 'Unternehmen', 'Non-Profit Organisationen', 'Schulen'
+        counterpart.translate('PRIVATEPERSON'), counterpart.translate('COMPANY'), counterpart.translate('NGO'), counterpart.translate('SCHOOL')
       ],
       options: {
         scaleShowGridLines: true,

@@ -6,6 +6,9 @@ import moment from 'moment';
 
 import {Bar} from 'react-chartjs';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 export default class TreesPerMonth extends Component {
 
   constructor() {
@@ -86,22 +89,22 @@ export default class TreesPerMonth extends Component {
   render() {
     var chartData = {
       labels: [
-        'Januar',
-        'Februar',
-        'März',
-        'April',
-        'Mai',
-        'Juni',
-        'Juli',
-        'August',
-        'September',
-        'Oktober',
-        'November',
-        'Dezember'
+        counterpart.translate('JANUARY'),
+        counterpart.translate('FEBRUARY'),
+        counterpart.translate('MARCH'),
+        counterpart.translate('APRIL'),
+        counterpart.translate('MAY'),
+        counterpart.translate('JUNE'),
+        counterpart.translate('JULY'),
+        counterpart.translate('AUGUST'),
+        counterpart.translate('SEPTEMBER'),
+        counterpart.translate('OCTOBER'),
+        counterpart.translate('NOVEMBER'),
+        counterpart.translate('DECEMBER'),
       ],
       datasets: [
         {
-          label: 'gepflanzte Bäume',
+          label: counterpart.translate('CO2_BOUND'),
           data: this.state.amountOfTrees,
           fillColor: 'rgb(130, 171, 31)',
           borderWidth: 1

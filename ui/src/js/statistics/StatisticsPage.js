@@ -10,6 +10,9 @@ import TreesPerYear from './TreesPerYear';
 import TreesPerOrgType from './TreesPerOrgType';
 import Co2PerYear from './Co2PerYear';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 require('./statisticsPage.less');
 
 export default class StatisticsPage extends Component {
@@ -25,30 +28,30 @@ export default class StatisticsPage extends Component {
         <div className="statisticsPage">
           <div className="row">
             <div className="col-md-12">
-              <h1>Statistiken</h1>
+              <h1>{counterpart.translate('FACTS_FIGURES')}</h1>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
-              <h2>Gepflanzte Bäume</h2>
+              <h2>{counterpart.translate('PLANTED_TREES')}</h2>
             </div>
           </div>
           <TreesPerYear/>
           <div className="row">
             <div className="col-md-12">
-              <h2>Gebundenes CO<sub>2</sub></h2>
+              <h2>{counterpart.translate('CO2_BOUND')}</h2>
             </div>
           </div>
           <Co2PerYear/>
           <div className="row">
             <div className="col-md-12">
-              <h2>Gepflanzte Bäume pro Spendertyp</h2>
+              <h2>{counterpart.translate('TREESPLANTED_PERDONORTYPE')}</h2>
             </div>
           </div>
           <TreesPerOrgType/>
             <div className="row">
               <div className="col-md-12">
-                <h2>Gepflanzte Bäume pro Monat</h2>
+                <h2>{counterpart.translate('TREESPLANTED_PERMONTH')}</h2>
               </div>
             </div>
           <TreesPerMonth/>

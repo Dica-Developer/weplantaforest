@@ -12,6 +12,9 @@ import {
   Line
 } from 'react-chartjs';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 export default class Co2PerYear extends Component {
 
   constructor() {
@@ -81,7 +84,7 @@ export default class Co2PerYear extends Component {
     var chartData = {
       labels: this.state.labels,
       datasets: [{
-        label: 'gepflanzte Bäume',
+        label: counterpart.translate('PLANTED_TREES'),
         data: this.state.amountOfCo2,
         fillColor: 'rgb(81, 168, 190)',
         borderWidth: 1
