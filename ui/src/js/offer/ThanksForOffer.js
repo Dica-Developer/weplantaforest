@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import IconButton from '../common/components/IconButton';
 
@@ -20,10 +21,10 @@ export default class ProjectOfferPage extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <h2 className="thanks">Vielen Dank für das Anbieten einer Projekt!</h2>
+        <h2 className="thanks">{counterpart.translate('THANKS_FOR_OFFER')}</h2>
         <br/>
         <div className="align-center">
-          <IconButton text="Weiteres Angebot abgeben" glyphIcon="glyphicon-backward" onClick={this.setThankYou.bind(this)}/>
+          <IconButton text={counterpart.translate('ONE_MORE_OFFER')} glyphIcon="glyphicon-backward" onClick={this.setThankYou.bind(this)}/>
         </div>
         <br/>
       </div>

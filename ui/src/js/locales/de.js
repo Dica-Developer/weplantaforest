@@ -113,7 +113,7 @@ module.exports = {
   CREATED_GIFTS: 'Erstelle Gutscheine',
   REDEEMED_GIFTS: 'Eingelöste Gutscheine',
   CREATED_BY: 'Erstellt von',
-  CREATE_GIFT: 'Gutschein erstellen',
+  CREATE_GIFT: 'Geschenkgutschein erstellen',
   GIFT_REDEEMED: 'Der Gutschein wurde eingelöst!',
   TREES_ACCOUNTED: 'Die Bäume wurden dir gutgeschrieben.',
   REDEEM_GIFT: 'Gutschein einlösen',
@@ -191,6 +191,8 @@ module.exports = {
     TEXT_7: 'nach Möglichkeit maximal 4.000 Euro/ha kosten. Seit 2017, schauen wir uns gern auch Flächen rund um Hamburg und in Mecklenburg-Vorpommern an.',
     TEXT_8: 'Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.'
   },
+  THANKS_FOR_OFFER: 'Vielen Dank für das Angebot!',
+  ONE_MORE_OFFER: 'Weiters Angebot abgeben'
 
   FIRST_AND_LASTNAME: 'Vorname Nachname',
   FIRST_AND_LASTNAME_PLACEHOLDER: 'Bitte geben Sie Ihren Vor- und Nachnamen ein.',
