@@ -6,8 +6,7 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-
-
+import counterpart from 'counterpart';
 
 require('./faq.less');
 
@@ -23,6 +22,7 @@ export default class FaqView extends Component {
   componentDidMount() {
     var that = this;
     axios.get('http://localhost:8082/articles?articleType=FAQ&language=' + localStorage.getItem('language')).then(function(response) {
+      that.sortByNumberIntTitle(response.data);
       that.setState({
         faqs: response.data
       });
@@ -38,12 +38,23 @@ export default class FaqView extends Component {
     });
   }
 
-  scrollTo(hash) {
-    location.hash = '#' + hash;
-     window.scrollTo(window.scrollX, window.scrollY - 330);
+  sortByNumberIntTitle(data) {
+    for (let entry of data) {
+      let index = entry.title.substring(0, entry.title.indexOf('.'));
+      if (index == '') {
+        index = 0;
+      }
+      entry.index = parseInt(index);
+    }
+    data.sort(function(a, b) {
+      return (a.index > b.index) ? 1 : ((b.index > a.index) ? -1 : 0);
+    });
   }
 
-
+  scrollTo(hash) {
+    location.hash = '#' + hash;
+    window.scrollTo(window.scrollX, window.scrollY - 330);
+  }
 
   render() {
     var that = this;
@@ -51,23 +62,31 @@ export default class FaqView extends Component {
       <div className="container paddingTopBottom15 faq">
           <div className="row">
             <div className="col-md-12">
-              <h1>Häufig gestellte Fragen</h1>
+              <h1>{counterpart.translate('FAQ')}</h1>
             </div>
           </div>
           <div className="row">
             <div className="col-md-4">
             {this.state.faqs.map(function(question, i) {
-              return ( <div key={i}><a href={'#question-' + i} className="question" onClick={() => {
-                  that.scrollTo('#question-' + i);
-                }}>{question.title}</a></div>);
+              if(question.index != 0){
+                return ( <div key={i}><a href={'#question-' + i} className="question" onClick={() => {
+                    that.scrollTo('#question-' + i);
+                  }}>{question.title}</a></div>);
+              }else{
+                return '';
+              }
             })}
             </div>
             <div className="col-md-8">
               <div className="answers">
                 {this.state.faqs.map(function(question, i) {
-                return ( <div key={i}><a name={'#question-' + i} className="box-question" >{question.title}</a><p className="box-answer" dangerouslySetInnerHTML={{
-                  __html: question.intro
-                }}></p></div>);
+                    if(question.index != 0){
+                      return ( <div key={i}><a name={'#question-' + i} className="box-question" >{question.title}</a><p className="box-answer" dangerouslySetInnerHTML={{
+                        __html: question.intro
+                      }}></p></div>);
+                    }else{
+                      return '';
+                    }
                 })}
               </div>
             </div>

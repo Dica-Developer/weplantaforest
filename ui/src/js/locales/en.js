@@ -227,6 +227,8 @@ module.exports = {
   OTHER: 'Other',
 
   CHOOSE_FILE: 'Choose file',
-  DISCARD: 'Discard'
+  DISCARD: 'Discard',
+
+  FAQ: 'Frequently asked questions'
 
 };
