@@ -11,6 +11,7 @@ import {
   Link,
   browserHistory
 } from 'react-router';
+import counterpart from 'counterpart';
 
 require('./article.less');
 
@@ -21,17 +22,17 @@ export default class ArticleDesc extends Component {
       <div className="articleDesc bold">
         <div>
           <p>
-{'Baumtyp & Preis/Stk.'}
+            {counterpart.translate('TREETYPE')}<br/>{counterpart.translate('PRICE_PER_ITEM')}
           </p>
         </div>
         <div>
-          Anzahl
+          {counterpart.translate('NUMBER')}
         </div>
         <div>
-          {'  / verfügbar'}
+          &nbsp;/&nbsp;{counterpart.translate('AVAILABLE')}
         </div>
         <div>
-          Preis gesamt
+          {counterpart.translate('SUB_TOTAL')}
         </div>
       </div>
     );

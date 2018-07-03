@@ -5,6 +5,7 @@ import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
 import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
+import counterpart from 'counterpart';
 
 import Notification from '../../common/components/Notification';
 
@@ -52,7 +53,7 @@ export default class Article extends Component {
       this.props.updatePrice();
       this.forceUpdate();
     } else {
-      this.refs.notification.addNotification('Zu viele Bäume!', 'Von diesem Baum sind leider nur noch ' + (this.props.article.amount - this.props.article.alreadyPlanted) + ' übrig.', 'error');
+      this.refs.notification.addNotification(counterpart.translate('TOO_MANY_TREES.TITLE'), counterpart.translate('TOO_MANY_TREES.TEXT_1') + (this.props.article.amount - this.props.article.alreadyPlanted) + counterpart.translate('TOO_MANY_TREES.TEXT_2'), 'error');
       this.refs.amountInput.value = this.state.amount;
     }
     this.setState({scaleResult: true});
@@ -67,7 +68,7 @@ export default class Article extends Component {
         </div>
         <div>
           <p>
-            <span className="bold uppercase">{getTextForSelectedLanguage(this.props.article.treeType.name)}</span><br/>Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong / 100, 2, '.', ',')}&nbsp;€</span>
+            <span className="bold uppercase">{getTextForSelectedLanguage(this.props.article.treeType.name)}</span><br/><span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong / 100, 2, '.', ',')}&nbsp;€</span>
           </p>
         </div>
         <div>

@@ -4,6 +4,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
+import counterpart from 'counterpart';
 
 import SvgButton from '../common/components/SvgButton';
 import IconButton from '../common/components/IconButton';
@@ -22,17 +23,16 @@ export default class BottomPart extends Component {
       <div className="bottomPart">
         <div className="button-and-price">
           <div className="price">
-            <span>GESAMT:&nbsp;{Accounting.formatNumber(this.props.overallPrice / 100, 2, '.', ',')}&nbsp;€</span>
+            <span>{counterpart.translate('PRICE_TOTAL')}:&nbsp;{Accounting.formatNumber(this.props.overallPrice / 100, 2, '.', ',')}&nbsp;€</span>
           </div>
           <div className="plantBagButton">
-            <SvgButton text="AB IN MEINEN<br/>PFLANZKORB" buttonType="barrow" onClick={this.props.updatePlantBag.bind(this)} />
+            <SvgButton text=  {counterpart.translate('PUT_INTO_PLANTBAG')} buttonType="barrow" onClick={this.props.updatePlantBag.bind(this)} />
           </div>
         </div>
-        <div className="line">Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt?
-          Hier kannst Du ein
+        <div className="line">{counterpart.translate('YOU_HAVE_AREA_TO_PLANT_FOR')}
         </div>
         <div className="iconButtonWrapper">
-          <IconButton className="iconButton" glyphIcon="glyphicon-forward" text="Projekt anbieten" onClick={this.switchToOfferProjectPage.bind(this)}/>
+          <IconButton className="iconButton" glyphIcon="glyphicon-forward" text={counterpart.translate('NAVBAR.OFFER_ACREAGE')} onClick={this.switchToOfferProjectPage.bind(this)}/>
         </div>
       </div>
     );

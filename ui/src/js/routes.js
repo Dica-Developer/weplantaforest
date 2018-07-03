@@ -114,8 +114,8 @@ export default class Routes extends Component {
         <Header/>
         <Router history={browserHistory}>
           <Route path="/" component={LoadableMainPage} reRender={this.reRender.bind(this)}/>
-          <Route path="/plant/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
-          <Route path="/plant3" component={CustomPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="online pflanzen" isGift={false} isAbo={false}/>
+          <Route path="/plant/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header={counterpart.translate('PLANT_ONLINE')} isGift={false} isAbo={false}/>
+          <Route path="/plant3" component={CustomPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header={counterpart.translate('PLANT_ONLINE')} isGift={false} isAbo={false}/>
           <Route path="/plantGift/:amount" component={ProposalPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="Gutschein erstellen" isGift={true} isAbo={false}/>
           <Route path="/plantGift2" component={CustomPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header="Gutschein erstellen" isGift={true} isAbo={false}/>
           <Route path="/projects" component={ProjectsPage} reRender={this.reRender.bind(this)}/>

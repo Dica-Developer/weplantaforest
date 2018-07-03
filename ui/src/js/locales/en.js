@@ -159,6 +159,26 @@ module.exports = {
 
   FACTS_FIGURES: 'Facts & Figures',
   TREESPLANTED_PERDONORTYPE: 'Trees planted per donor type',
-  TREESPLANTED_PERMONTH: 'Trees planted per month'
+  TREESPLANTED_PERMONTH: 'Trees planted per month',
+
+  TREETYPE: 'Tree type',
+  PRICE_PER_ITEM: 'Price / Item',
+  NUMBER: 'Amount',
+  AVAILABLE: 'available',
+  PROJECT: 'Project',
+  SUB_TOTAL: 'Subtotal',
+  PRICE_TOTAL: 'Total Price',
+  TREE: 'Tree',
+  TREES: 'Trees',
+  CUSTOM: 'Custom',
+  PLANT_ONLINE_TEXT: 'Here you can choose between preselected planting carts of trees. By clicking on "custom" you can compile your own selection.',
+  PLANT_ONLINE: 'Plant online',
+  YOU_HAVE_AREA_TO_PLANT_FOR: 'You have areas to plant for and are interested, that they will be planted by I Plant a Tree? Here you can',
+  PUT_INTO_PLANTBAG: 'PUT INTO<br/>PLANTBAG',
+  TOO_MANY_TREES: {
+    TITLE: 'Too many trees!',
+    TEXT_1: 'There are only ',
+    TEXT_2: ' trees left from this treetype.'
+  }
 
 };

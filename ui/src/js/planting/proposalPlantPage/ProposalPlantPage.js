@@ -5,6 +5,7 @@ import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
 import $ from 'jquery';
+import counterpart from 'counterpart';
 
 import PlantItem from './PlantItem';
 
@@ -92,18 +93,18 @@ export default class ProposalPlantPage extends Component {
               <div></div>
               <div>
                 <p>
-                  Baumtyp<br/>Preis&nbsp;/&nbsp;Stk.
+                  {counterpart.translate('TREETYPE')}<br/>{counterpart.translate('PRICE_PER_ITEM')}
                 </p>
               </div>
               <div>
-                Anzahl
+                {counterpart.translate('NUMBER')}
               </div>
               <div>
-                Projekt
+                {counterpart.translate('PROJECT')}
               </div>
               <div></div>
               <div>
-                Preis gesamt
+                {counterpart.translate('SUB_TOTAL')}
               </div>
             </div>
             <div ref="plantItems" className={'plantItems align-center'}>

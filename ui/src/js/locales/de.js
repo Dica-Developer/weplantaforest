@@ -159,6 +159,26 @@ module.exports = {
 
   FACTS_FIGURES: 'Zahlen & Fakten',
   TREESPLANTED_PERDONORTYPE: 'Gepflanzte Bäume pro Spendertyp',
-  TREESPLANTED_PERMONTH: 'Gepflanzte Bäume pro Monat'
+  TREESPLANTED_PERMONTH: 'Gepflanzte Bäume pro Monat',
+
+  TREETYPE: 'Baumtyp',
+  PRICE_PER_ITEM: 'Preis / Stk.',
+  NUMBER: 'Anzahl',
+  AVAILABLE: 'verfügbar',
+  PROJECT: 'Projekt',
+  SUB_TOTAL: 'Zwischensumme',
+  PRICE_TOTAL: 'Gesamtpreis',
+  TREE: 'Baum',
+  TREES: 'Bäume',
+  CUSTOM: 'individuell',
+  PLANT_ONLINE_TEXT: 'Lass dir von uns einen Vorschlag generieren oder bestimme selber, wo du wieviele Bäume pflanzen möchtest.',
+  PLANT_ONLINE: 'Online Pflanzen',
+  YOU_HAVE_AREA_TO_PLANT_FOR: 'Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt? Hier kannst Du ein',
+  PUT_INTO_PLANTBAG: 'AB IN MEINEN<br/>PFLANZKORB',
+  TOO_MANY_TREES: {
+    TITLE: 'Zu viele Bäume!',
+    TEXT_1: 'Von diesem Baum sind leider nur noch ',
+    TEXT_2: ' übrig.'
+  }
 
 };
