@@ -5,6 +5,7 @@ import {
   render
 } from 'react-dom';
 import axios from 'axios';
+import counterpart from 'counterpart';
 
 import Notification from './Notification';
 import IconButton from './IconButton';
@@ -57,7 +58,7 @@ export default class Captcha extends Component {
 
   validateCaptcha() {
     if (this.state.captchaToken != this.state.userInput) {
-      this.refs.notification.addNotification('Captcha ungültig!', 'Der eingegebene Text stimmt nicht mit den Zeichen im Bild überein', 'error');
+      this.refs.notification.addNotification(counterpart.translate('CAPTCHA_ERROR.TITLE'), counterpart.translate('CAPTCHA_ERROR.TEXT'), 'error');
       this.updateCaptchaToken();
       return false;
     } else {
@@ -69,7 +70,7 @@ export default class Captcha extends Component {
     return (
       <div className="captcha">
         <img className="captchaImage" src={'data:image/jpg;base64,' + this.state.captchaImg}/>
-        <p>Bitte hier die 4 Zeichen aus dem Bild eingeben:</p>
+        <p>{counterpart.translate('CAPTCHA_HINT')}:</p>
         <div className="inputWrapper">
           <input type="text" className="form-control inputField" value={this.state.userInput} onChange={this.updateUserInput.bind(this)}/>
           <IconButton glyphIcon="glyphicon-refresh" onClick={this.updateCaptchaToken.bind(this)}/>

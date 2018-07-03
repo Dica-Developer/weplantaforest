@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import Notification from '../common/components/Notification';
 import IconButton from '../common/components/IconButton';
@@ -81,35 +82,35 @@ export default class ProjectOffer extends Component {
       <div className="projectOffer container">
         <div className="row">
           <div className="col-md-12 item-align-start">
-            <h1>Fläche anbieten</h1>
-            <p>Wir würden gern Flächen kaufen, um sie zu langfristig, gemeinnützig, nachhaltig betriebenen Wäldern umzuwandeln. Wir suchen Flächen, die:</p>
+            <h1>{counterpart.translate('NAVBAR.OFFER_ACREAGE')}</h1>
+            <p>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_1')}</p>
             <ul>
-              <li>für eine Aufforstung in Frage kommen, für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen)</li>
-              <li>zwischen 2 und 20 Hektar groß sind, im Idealfall an einer Straße / Fahrradweg liegen und gut von Publikum eingesehen werden können</li>
-              <li>über einen Kauf oder Schenkung an I Plant A Tree gebunden werden können</li>
-              <li>idealerweise Mischflächen sind, wo bereits Wald steht, aber noch anliegende Flächen aufgeforstet werden können</li>
-              <li>möglichst in den neuen Bundesländern liegen (am besten in Sachsen-Anhalt, Sachsen, Thüringen und rund um Berlin) - aber wir suchen auch in anderen Bundesländern, in Abhängigkeit vom Preis</li>
-              <li>nach Möglichkeit maximal 4.000 Euro/ha kosten</li>
+              <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_2')}</li>
+              <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_3')}</li>
+              <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_4')}</li>
+              <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_5')}</li>
+              <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_6')}</li>
+              <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_7')}</li>
             </ul>
-            <h3>Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.</h3>
+            <h3>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_8')}</h3>
           </div>
           <div className="form-group">
-              <label htmlFor="firstname_familyname">Vorname Nachname*:</label>
-              <InputText cssclass="form-control" toUpdate="name" id="firstname_familyname" placeholderText="Bitte geben Sie Ihren Vor- und Nachnamen ein." updateValue={this.updateValue.bind(this)}/>
+              <label htmlFor="firstname_familyname">{counterpart.translate('FIRST_AND_LASTNAME')} *:</label>
+              <InputText cssclass="form-control" toUpdate="name" id="firstname_familyname" placeholderText={counterpart.translate('FIRST_AND_LASTNAME_PLACEHOLDER')} updateValue={this.updateValue.bind(this)}/>
             </div>
           <div className="form-group">
-              <label htmlFor="e_mail">E-Mailadresse*:</label>
-              <InputText cssclass="form-control" id="e_mail" toUpdate="name" placeholderText="Bitte geben Sie Ihre E-mailadresse ein." updateValue={this.updateValue.bind(this)}/>
+              <label htmlFor="e_mail">{counterpart.translate('MAIL')} *:</label>
+              <InputText cssclass="form-control" id="e_mail" toUpdate="name" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} updateValue={this.updateValue.bind(this)}/>
           </div>
           <div className="form-group">
-              <label htmlFor="message">Nachricht*:</label>
-              <TextArea cssclass="form-control" id="message" toUpdate="comment" placeholderText="Bitte geben Sie Ihre Nachricht ein." updateValue={this.updateValue.bind(this)}/>
+              <label htmlFor="message">{counterpart.translate('MESSAGE')} *:</label>
+              <TextArea cssclass="form-control" id="message" toUpdate="comment" placeholderText={counterpart.translate('MESSAGE_PLACEHOLDER')} updateValue={this.updateValue.bind(this)}/>
           </div>
           <div className="col-md-12 item-align-start">
             <Captcha ref="captcha"/>
           </div>
           <div className="col-md-12 item-align-start">
-            <IconButton text="Angebot abschicken" glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
+            <IconButton text={counterpart.translate('SEND_OFFER')} glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
             <Notification ref="notification"/>
           </div>
         </div>

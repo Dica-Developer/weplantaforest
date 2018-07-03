@@ -179,6 +179,29 @@ module.exports = {
     TITLE: 'Zu viele Bäume!',
     TEXT_1: 'Von diesem Baum sind leider nur noch ',
     TEXT_2: ' übrig.'
+  },
+
+  OFFER_ACREAGE_TEXTS: {
+    TEXT_1: 'Wir würden gern Flächen kaufen, um sie zu langfristig, gemeinnützig, nachhaltig betriebenen Wäldern umzuwandeln. Wir suchen Flächen, die:',
+    TEXT_2: 'für eine Aufforstung in Frage kommen, für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen)',
+    TEXT_3: 'zwischen 2 und 20 Hektar groß sind, im Idealfall an einer Straße / Fahrradweg liegen und gut von Publikum eingesehen werden können',
+    TEXT_4: 'über einen Kauf oder Schenkung an I Plant A Tree gebunden werden können',
+    TEXT_5: 'idealerweise Mischflächen sind, wo bereits Wald steht, aber noch anliegende Flächen aufgeforstet werden können (Aufforstungsgnehmigung ist oft wahrscheinlicher)',
+    TEXT_6: 'möglichst in den neuen Bundesländern liegen (am besten in Sachsen-Anhalt, Sachsen, Thüringen und rund um Berlin) - aber wir suchen auch in anderen Bundesländern, in Abhängigkeit vom Preis',
+    TEXT_7: 'nach Möglichkeit maximal 4.000 Euro/ha kosten. Seit 2017, schauen wir uns gern auch Flächen rund um Hamburg und in Mecklenburg-Vorpommern an.',
+    TEXT_8: 'Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.'
+  },
+
+  FIRST_AND_LASTNAME: 'Vorname Nachname',
+  FIRST_AND_LASTNAME_PLACEHOLDER: 'Bitte geben Sie Ihren Vor- und Nachnamen ein.',
+  MAIL_PLACEHOLDER: 'Bitte geben Sie Ihre E-mailadresse ein.',
+  MESSAGE: 'Nachricht',
+  MESSAGE_PLACEHOLDER: 'Bitte geben Sie Ihre Nachricht ein.',
+  SEND_OFFER: 'Angebot abschicken',
+  CAPTCHA_HINT: 'Bitte hier die 4 Zeichen aus dem Bild eingeben',
+  CAPTCHA_ERROR: {
+    TITLE: 'Captcha ungültig!',
+    TEXT: 'Der eingegebene Text stimmt nicht mit den Zeichen im Bild überein.'
   }
 
 };

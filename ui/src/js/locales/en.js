@@ -179,6 +179,29 @@ module.exports = {
     TITLE: 'Too many trees!',
     TEXT_1: 'There are only ',
     TEXT_2: ' trees left from this treetype.'
+  },
+
+  OFFER_ACREAGE_TEXTS: {
+    TEXT_1: 'We would like to acquire acreages to grow new forests and run them long-term on a non-profit, sustainable basis. We are looking for acreages providing the following criteria. Acreages should:',
+    TEXT_2: 'be afforestable - we should be able to get an afforestation permission from the local authorities ( no protected dry grass land or orchards)',
+    TEXT_3: '2-20 hectares in size, located on a street / bike path in the ideal case and can easily be seen by the public',
+    TEXT_4: 'be transferable to I Plant A Tree through a purchase or donation',
+    TEXT_5: 'ideally are mixed areas where some forest already in place, but with attached, neighboring surfaces that can be afforested (afforestation permission more likely)',
+    TEXT_6: 'be located ideally in the new federal states of Germany (the best in Saxony-Anhalt, Saxony, Thuringia and around Berlin) - but we also seek acreages outside, depending on price',
+    TEXT_7: 'cost at maximum 4,000 € / ha. Since 2017, we also would like to have acreages around Hamburg and in Mecklenburg-Western Pomerania.',
+    TEXT_8: 'Please fill in the required fields. We will contact you as soon as possible.'
+  },
+
+  FIRST_AND_LASTNAME: 'Firstname Lastname',
+  FIRST_AND_LASTNAME_PLACEHOLDER: 'Please insert first and lastname.',
+  MAIL_PLACEHOLDER: 'Please insert your email adress.',
+  MESSAGE: 'Message',
+  MESSAGE_PLACEHOLDER: 'Please insert yourt message.',
+  SEND_OFFER: 'Send offer',
+  CAPTCHA_HINT: 'Please insert here the 4 characters from the picture',
+  CAPTCHA_ERROR: {
+    TITLE: 'Invalid Captcha!',
+    TEXT: 'The inserted text does not match the characters from the picture.'
   }
 
 };
