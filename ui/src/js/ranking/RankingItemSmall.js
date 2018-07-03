@@ -4,6 +4,7 @@ import {render} from 'react-dom';
 import {Link} from 'react-router';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import {htmlDecode} from '../common/language/HtmlHelper';
 
@@ -13,6 +14,7 @@ export default class RankingItem extends Component {
   }
 
   render() {
+    let text = Accounting.formatNumber(this.props.content.amount, 0, '.', ',') + counterpart.translate('PLANTED_TREES');
     return (
       <div className="smallRankingItem">
         <div className="smallRankingNumber">{this.props.rankNumber}</div>
@@ -23,9 +25,10 @@ export default class RankingItem extends Component {
         </div>
         <div className="trees">
           <p style={{
-            width: this.props.percentTree + '%'
+            width: this.props.percentTree + '%',
+            'white-space': 'nowrap'
           }}>
-            &nbsp;{Accounting.formatNumber(this.props.content.amount, 0, '.', ',')}&nbsp;B&auml;ume&nbsp;gepflanzt
+            &nbsp;{text}
           </p>
         </div>
       </div>

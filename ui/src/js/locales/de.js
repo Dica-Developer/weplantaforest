@@ -192,7 +192,7 @@ module.exports = {
     TEXT_8: 'Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.'
   },
   THANKS_FOR_OFFER: 'Vielen Dank für das Angebot!',
-  ONE_MORE_OFFER: 'Weiters Angebot abgeben'
+  ONE_MORE_OFFER: 'Weiters Angebot abgeben',
 
   FIRST_AND_LASTNAME: 'Vorname Nachname',
   FIRST_AND_LASTNAME_PLACEHOLDER: 'Bitte geben Sie Ihren Vor- und Nachnamen ein.',
@@ -204,6 +204,16 @@ module.exports = {
   CAPTCHA_ERROR: {
     TITLE: 'Captcha ungültig!',
     TEXT: 'Der eingegebene Text stimmt nicht mit den Zeichen im Bild überein.'
+  },
+
+  RANKING_TYPES: {
+    ALL: 'Alle',
+    PRIVATE: 'Privat',
+    COMMERCIAL: 'Unternehmen',
+    NONPROFIT: 'NGO\'S',
+    EDUCATIONAL: 'Schulen',
+    TEAMS: 'Teams',
+    LAST_YEAR: 'Letztes Jahr'
   }
 
 };

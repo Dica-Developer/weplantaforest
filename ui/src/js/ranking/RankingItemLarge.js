@@ -4,6 +4,7 @@ import {render} from 'react-dom';
 import {Link} from 'react-router';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import {htmlDecode} from '../common/language/HtmlHelper';
 
@@ -29,7 +30,7 @@ export default class RankingItem extends Component {
           }}>
             <span className="stats">&nbsp;{Accounting.formatNumber(this.props.content.amount, 0, '.', ',')}</span>
             <span className="text">
-              B&auml;ume gepflanzt
+              {counterpart.translate('PLANTED_TREES')}
             </span><br/>
           </p>
           <p style={{
@@ -37,7 +38,7 @@ export default class RankingItem extends Component {
           }}>
             <span className="stats">&nbsp;{Accounting.formatNumber(this.props.content.co2Saved, 1, '.', ',')}&nbsp;</span>
             <span className="text">
-              Tonnen CO<sub>2</sub>&nbsp;gebunden
+              {counterpart.translate('CO2_BOUND')}
             </span>
           </p>
         </div>

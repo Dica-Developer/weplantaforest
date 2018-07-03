@@ -6,6 +6,7 @@ import {
 } from 'react-dom';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import ButtonBar from './ButtonBar';
 import LeftRightSwitch from '../common/components/LeftRightSwitch';
@@ -26,8 +27,8 @@ export default class RankingPage extends Component {
         content: []
 
       },
-      orgTypeDesc: 'Alle',
-      chosenOrgType: 'PRIVATE',
+      orgTypeDesc: counterpart.translate('RANKING_TYPES.ALL'),
+      chosenOrgType: counterpart.translate('RANKING_TYPES.PRIVATE'),
       slideIn: false,
       rankingEntries: 25,
       onlyLastYear: true
@@ -55,7 +56,7 @@ export default class RankingPage extends Component {
         that.refs['spinner'].hideSpinner();
         that.setState({
           ranking: result,
-          orgTypeDesc: 'Alle'
+          orgTypeDesc: counterpart.translate('RANKING_TYPES.ALL')
         });
         if (withToggle) {
           that.toggleDiv();
@@ -77,7 +78,7 @@ export default class RankingPage extends Component {
       setTimeout(function() {
         that.setState({
           ranking: result,
-          orgTypeDesc: 'Teams'
+          orgTypeDesc: counterpart.translate('RANKING_TYPES.TEAMS')
         });
         if (withToggle) {
           that.toggleDiv();
@@ -89,7 +90,7 @@ export default class RankingPage extends Component {
 
   }
 
-  loadOrgTypeRanking(orgType, orgTypeDesc, withToggle) {
+  loadOrgTypeRanking(orgType, withToggle) {
     var that = this;
     if (withToggle) {
       this.toggleDiv();
@@ -99,7 +100,7 @@ export default class RankingPage extends Component {
       setTimeout(function() {
         that.setState({
           ranking: result,
-          orgTypeDesc: orgTypeDesc,
+          orgTypeDesc: counterpart.translate('RANKING_TYPES.' + orgType),
           chosenOrgType: orgType
         });
         if (withToggle) {
@@ -124,7 +125,7 @@ export default class RankingPage extends Component {
   }
 
   loadRanking(withToggle) {
-    if (this.state.orgTypeDesc == 'Alle') {
+    if (this.state.orgTypeDesc == 'Alle' || this.state.orgTypeDesc == 'All') {
       this.loadAllUser(withToggle);
     } else if (this.state.orgTypeDesc == 'Teams') {
       this.loadBestTeams(withToggle);
@@ -145,7 +146,7 @@ export default class RankingPage extends Component {
         <div className="rankingPage">
           <div className="row">
             <div className="col-md-2 center-switch">
-              <LeftRightSwitch leftText="alle" rightText="letztes Jahr" leftValue={false} rightValue={true} chosenValue={this.state.onlyLastYear} onClick={this.updateLastYearFlag.bind(this)}/>
+              <LeftRightSwitch leftText={counterpart.translate('RANKING_TYPES.ALL')} rightText={counterpart.translate('RANKING_TYPES.LAST_YEAR')} leftValue={false} rightValue={true} chosenValue={this.state.onlyLastYear} onClick={this.updateLastYearFlag.bind(this)}/>
             </div>
               <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
               <hr />

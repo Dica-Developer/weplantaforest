@@ -4,6 +4,7 @@ import {render} from 'react-dom';
 import {Link} from 'react-router';
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
+import counterpart from 'counterpart';
 
 import IconButton from '../common/components/IconButton';
 import CircleButton from '../common/components/CircleButton';
@@ -37,30 +38,30 @@ export default class ButtonBar extends Component {
     return (
       <div className="buttonBar row">
         <div className="col-md-10">
-          <CircleButton text="Alle" onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward" className={clickedIndex == 0
+          <CircleButton text={counterpart.translate('RANKING_TYPES.ALL')} onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward" className={clickedIndex == 0
             ? 'circleButtonActive'
             : ''}/>
-          <CircleButton text="Privat" onClick={() => {
-            this.loadOrgTypeRanking('PRIVATE', 'Privatpersonen', 1);
+          <CircleButton text={counterpart.translate('RANKING_TYPES.PRIVATE')} onClick={() => {
+            this.loadOrgTypeRanking('PRIVATE', 1);
           }} glyphIcon="glyphicon-forward" className={clickedIndex == 1
             ? 'circleButtonActive'
             : ''}/>
-          <CircleButton text="Unternehmen" onClick={() => {
-            this.loadOrgTypeRanking('COMMERCIAL', 'Unternehmen', 2);
+          <CircleButton text={counterpart.translate('RANKING_TYPES.COMMERCIAL')} onClick={() => {
+            this.loadOrgTypeRanking('COMMERCIAL', 2);
           }} glyphIcon="glyphicon-forward" className={clickedIndex == 2
             ? 'circleButtonActive'
             : ''}/>
-          <CircleButton text="Non-Profit Org." onClick={() => {
-            this.loadOrgTypeRanking('NONPROFIT', 'Non-Profit Organisationen', 3);
+          <CircleButton text={counterpart.translate('RANKING_TYPES.NONPROFIT')} onClick={() => {
+            this.loadOrgTypeRanking('NONPROFIT', 3);
           }} glyphIcon="glyphicon-forward" className={clickedIndex == 3
             ? 'circleButtonActive'
             : ''}/>
-          <CircleButton text="Schulen" onClick={() => {
-            this.loadOrgTypeRanking('EDUCATIONAL', 'Schulen', 4);
+          <CircleButton text={counterpart.translate('RANKING_TYPES.EDUCATIONAL')} onClick={() => {
+            this.loadOrgTypeRanking('EDUCATIONAL', 4);
           }} glyphIcon="glyphicon-forward" className={clickedIndex == 4
             ? 'circleButtonActive'
             : ''}/>
-          <CircleButton text="Teams" onClick={this.loadBestTeams.bind(this)} glyphIcon="glyphicon-forward" className={clickedIndex == 5
+          <CircleButton text={counterpart.translate('RANKING_TYPES.TEAMS')} onClick={this.loadBestTeams.bind(this)} glyphIcon="glyphicon-forward" className={clickedIndex == 5
             ? 'circleButtonActive'
             : ''}/>
         </div>

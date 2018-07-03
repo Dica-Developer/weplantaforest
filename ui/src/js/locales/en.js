@@ -192,7 +192,7 @@ module.exports = {
     TEXT_8: 'Please fill in the required fields. We will contact you as soon as possible.'
   },
   THANKS_FOR_OFFER: 'Thanks for the offer!',
-  ONE_MORE_OFFER: 'Offer another acreage'
+  ONE_MORE_OFFER: 'Offer another acreage',
 
   FIRST_AND_LASTNAME: 'Firstname Lastname',
   FIRST_AND_LASTNAME_PLACEHOLDER: 'Please insert first and lastname.',
@@ -206,6 +206,14 @@ module.exports = {
     TEXT: 'The inserted text does not match the characters from the picture.'
   },
 
-  CREATE_GIFT: 'Create gift voucher'
+  RANKING_TYPES: {
+    ALL: 'All',
+    PRIVATE: 'Private',
+    COMMERCIAL: 'Companies',
+    NONPROFIT: 'NGO\'S',
+    EDUCATIONAL: 'Schools',
+    TEAMS: 'Teams',
+    LAST_YEAR: 'Last year'
+  }
 
 };
