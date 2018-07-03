@@ -12,6 +12,9 @@ import {
   browserHistory
 } from 'react-router';
 import counterpart from 'counterpart';
+import {
+  CountryDropdown
+} from 'react-country-region-selector';
 
 import Notification from '../common/components/Notification';
 import LoadingSpinner from '../common/components/LoadingSpinner';
@@ -99,13 +102,18 @@ export default class Sepa extends Component {
     browserHistory.push('/gifts/' + localStorage.getItem('username'));
   }
 
+  selectCountry(val) {
+    this.state.paymentData.country = val;
+    this.forceUpdate();
+  }
+
   render() {
     var header = '';
     if (this.state.paymentDone) {
       header = <div><h1>{counterpart.translate('PAYMENT_SUCCESSFUL')}</h1>{counterpart.translate('FOLLOWING_DATA_TRANSFERED')}:</div>;
       if (JSON.parse(localStorage.getItem('isGift'))) {
         header = <div><h1>{counterpart.translate('PAYMENT_SUCCESSFUL')}</h1>{counterpart.translate('YOU_FIND_YOUR_GIFT_CODE')}<a role="button" onClick={this.switchToGiftOverview.bind(this)}> {counterpart.translate('HERE')}</a><br/>{counterpart.translate('FOLLOWING_DATA_TRANSFERED')}:</div>;
-      }else{
+      } else {
         header = <div><h1>{counterpart.translate('PAYMENT_SUCCESSFUL')}</h1>{counterpart.translate('FOLLOWING_DATA_TRANSFERED')}:</div>;
       }
     } else {
@@ -115,9 +123,11 @@ export default class Sepa extends Component {
     return (
       <div className="payment-data">
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-2"></div>
+          <div className="col-md-8">
             {header}
           </div>
+          <div className="col-md-2"></div>
         </div>
         <div className="row">
           <div className="col-md-2"></div>
@@ -177,9 +187,8 @@ export default class Sepa extends Component {
               </div>
             </div>
             <div className="form-group">
-              <label>{counterpart.translate('COUNTRY')}</label>
-              <br/>
-              <label>Deutschland ({this.state.paymentData.country})</label>
+              <label htmlFor="country">{counterpart.translate('COUNTRY')}</label>
+              <CountryDropdown id="country" value={this.state.paymentData.country} onChange={(val) => this.selectCountry(val)} classes="form-control" valueType="short"/>
             </div>
             <div className="form-group">
               <label htmlFor="mail">{counterpart.translate('MAIL')} *</label>
