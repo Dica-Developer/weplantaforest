@@ -214,6 +214,19 @@ module.exports = {
     EDUCATIONAL: 'Schools',
     TEAMS: 'Teams',
     LAST_YEAR: 'Last year'
-  }
+  },
+
+  CREATE_PLANTING: 'Create planting',
+  WHEN: 'When',
+  FOTO: 'Photo',
+  SHORT_DESCRIPTION: 'Short Description',
+  WHERE: 'Where',
+  HOW_MANY: 'How many',
+  HOW_MANY_HINT: 'If you planted more than 10 trees, please contact us. We would need some proof. ',
+  PLANTING_CREATED: 'Your planting was created.',
+  OTHER: 'Other',
+
+  CHOOSE_FILE: 'Choose file',
+  DISCARD: 'Discard'
 
 };

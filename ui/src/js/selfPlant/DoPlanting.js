@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import counterpart from 'counterpart';
 
 import Notification from '../common/components/Notification';
 import TextArea from '../common/components/TextArea';
@@ -141,38 +142,38 @@ export default class DoPlanting extends Component {
       <div>
         <div className="row">
           <div className="col-md-12">
-            <h1>Eigene Pflanzung erstellen</h1>
+            <h1>{counterpart.translate('CREATE_PLANTING')}</h1>
           </div>
         </div>
         <div className="row">
           <div className="form-group col-md-6">
-            <label htmlFor="when">Wann:</label>
+            <label htmlFor="when">{counterpart.translate('WHEN')}:</label>
             <DateField id="when" updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true"/>
           </div>
           <div className="form-group col-md-6">
-            <label htmlFor="howmuch">Wieviele&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:</label>
+            <label htmlFor="howmuch">{counterpart.translate('HOW_MANY')}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:</label>
             <input className="tree-slider" type="range" min="1" max="10" value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)}/>
             <p className="tree-amount">&nbsp;{this.state.selfPlantData.amount}</p>
             <br/>
-            <span>Bei mehr als 10 kontaktiere uns bitte, da wir einen Nachweis benötigen.</span>
+            <span>{counterpart.translate('HOW_MANY_HINT')}</span>
           </div>
         </div>
         <div className="row">
           <div className="form-group col-md-6">
-            <label htmlFor="photo">Foto:</label>
+            <label htmlFor="photo">{counterpart.translate('FOTO')}:</label>
             <FileChooser id="photo" updateFile={this.updateImage.bind(this)}/>
           </div>
           <div className="form-group col-md-6">
-            <label htmlFor="treeType">Baumart:</label>
+            <label htmlFor="treeType">{counterpart.translate('TREETYPE')}:</label>
             <select id="treeType" className="form-control" onChange={this.updateTreeType.bind(this)} ref="select">
               {this.state.treeTypes.map(function(treeType, i) {
-                if (treeType.name == 'Default') {
+                if (treeType.name != 'Default') {
                   return (
-                    <option value={treeType.id} key={i}>keiner der genannten</option>
+                    <option value={treeType.id} key={i}>{getTextForSelectedLanguage(treeType.name)}</option>
                   );
                 } else {
                   return (
-                    <option value={treeType.id} key={i}>{getTextForSelectedLanguage(treeType.name)}</option>
+                    <option value={treeType.id} key={i}>{counterpart.translate('OTHER')}</option>
                   );
                 }
               })}
@@ -181,13 +182,13 @@ export default class DoPlanting extends Component {
         </div>
         <div className="row">
           <div className="form-group col-md-12">
-            <label htmlFor="description">Beschreibung:</label>
+            <label htmlFor="description">{counterpart.translate('SHORT_DESCRIPTION')}:</label>
             <TextArea ide="description" toUpdate="description" updateValue={this.updateValue.bind(this)}/>
           </div>
         </div>
         <div className="row">
           <div className="form-group col-md-12">
-            <label htmlFor="where">Wo:</label>
+            <label htmlFor="where">{counterpart.translate('WHERE')}:</label>
             <Map id="where" center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
               <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
               <Marker position={this.state.treePosition} draggable={true} ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
@@ -201,7 +202,7 @@ export default class DoPlanting extends Component {
         </div>
         <div className="row">
           <div className="col-md-12 align-left">
-          <IconButton text="PFLANZUNG ERSTELLEN" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
+          <IconButton text={counterpart.translate('CREATE_PLANTING')} glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
           </div>
         </div>
         <Notification ref="notification"/>

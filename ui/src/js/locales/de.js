@@ -214,6 +214,19 @@ module.exports = {
     EDUCATIONAL: 'Schulen',
     TEAMS: 'Teams',
     LAST_YEAR: 'Letztes Jahr'
-  }
+  },
+
+  CREATE_PLANTING: 'Eigene Pfanzung erstellen',
+  WHEN: 'Wann',
+  FOTO: 'Foto',
+  SHORT_DESCRIPTION: 'Kurze Beschreibung',
+  WHERE: 'Wo',
+  HOW_MANY: 'Wieviele',
+  HOW_MANY_HINT: 'Bei mehr als 10 kontaktiere uns bitte, da wir einen Nachweis benötigen.',
+  PLANTING_CREATED: 'Deine Pflanzung wurde erstellt.',
+  OTHER: 'Sonstige',
+
+  CHOOSE_FILE: 'Datei auswählen',
+  DISCARD: 'Verwerfen'
 
 };
