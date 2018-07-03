@@ -11,6 +11,7 @@ import $ from 'jquery';
 import {
   browserHistory
 } from 'react-router';
+import counterpart from 'counterpart';
 
 import Notification from '../common/components/Notification';
 import LoadingSpinner from '../common/components/LoadingSpinner';
@@ -83,7 +84,7 @@ export default class Sepa extends Component {
     axios.post('http://localhost:8081/pay', this.state.paymentData, config).then(function(response) {
       $(that.refs['payment-row']).fadeOut(200);
       that.refs['spinner'].hideSpinner();
-      that.refs.notification.addNotification('Zahlung erfolgreich abgeschlossen!', 'Vielen Dank für deine Spende.', 'success');
+      that.refs.notification.addNotification(counterpart.translate('PAYMENT_SUCCESSFUL'), counterpart.translate('THANKS_FOR_DONATION'), 'success');
       that.props.resetPlantBag();
       that.setState({
         paymentDone: true
@@ -101,14 +102,14 @@ export default class Sepa extends Component {
   render() {
     var header = '';
     if (this.state.paymentDone) {
-      header = <div><h1>Zahlung erfolgreich abgeschlossen!</h1>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+      header = <div><h1>{counterpart.translate('PAYMENT_SUCCESSFUL')}</h1>{counterpart.translate('FOLLOWING_DATA_TRANSFERED')}:</div>;
       if (JSON.parse(localStorage.getItem('isGift'))) {
-        header = <div><h1>Zahlung erfolgreich abgeschlossen!</h1>Deinen Gutschein-Code findest du<a role="button" onClick={this.switchToGiftOverview.bind(this)}> hier</a><br/>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+        header = <div><h1>{counterpart.translate('PAYMENT_SUCCESSFUL')}</h1>{counterpart.translate('YOU_FIND_YOUR_GIFT_CODE')}<a role="button" onClick={this.switchToGiftOverview.bind(this)}> {counterpart.translate('HERE')}</a><br/>{counterpart.translate('FOLLOWING_DATA_TRANSFERED')}:</div>;
       }else{
-        header = <div><h1>Zahlung erfolgreich abgeschlossen!</h1>Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt:</div>;
+        header = <div><h1>{counterpart.translate('PAYMENT_SUCCESSFUL')}</h1>{counterpart.translate('FOLLOWING_DATA_TRANSFERED')}:</div>;
       }
     } else {
-      header = <h1>SEPA Lastschrift</h1>;
+      header = <h1>{counterpart.translate('SEPA_DEBIT')}</h1>;
     };
 
     return (
@@ -119,77 +120,92 @@ export default class Sepa extends Component {
           </div>
         </div>
         <div className="row">
-        <div className="col-md-12">
+          <div className="col-md-2"></div>
+          <div className="col-md-8">
             <div className="form-group">
-              <label htmlFor="company">Unternehmen</label>
+              <label htmlFor="company">{counterpart.translate('COMPANY')}</label>
               <InputText id="company" cssclass="form-control" toUpdate="company" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="salutation">Anrede</label>
-              <select id="salutation" className="form-control" onChange={this.updateSalutation.bind(this)} ref="select" disabled={this.state.paymentDone}>
-                <option value="" disabled>Bitte auswählen</option>
-                <option value="1">Herr</option>
-                <option value="2">Frau</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="title">Titel</label>
-              <InputText id="title" cssclass="form-control" toUpdate="title" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="forename">Vorname *</label>
-              <InputText id="forename"  cssclass="form-control" toUpdate="forename" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="name">Nachname *</label>
-              <InputText id="name" cssclass="form-control" toUpdate="name" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="street">Straße *</label>
-              <InputText id="street" cssclass="form-control" toUpdate="street" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-            </div>
-            <div className="form-group">
-              <label>Land</label>
-              <br/>
-              <label>Deutschland ({this.state.paymentData.country})</label>
             </div>
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="zip">PLZ *</label>
+                <label htmlFor="salutation">{counterpart.translate('SALUTATION')}</label>
+                <select id="salutation" className="form-control" onChange={this.updateSalutation.bind(this)} ref="select" disabled={this.state.paymentDone}>
+                  <option value="" disabled>{counterpart.translate('SELECT')}</option>
+                  <option value="1">{counterpart.translate('MR')}</option>
+                  <option value="2">{counterpart.translate('MRS')}</option>
+                </select>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                <label htmlFor="title">{counterpart.translate('TITLE')}</label>
+                <InputText id="title" cssclass="form-control" toUpdate="title" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="forename">{counterpart.translate('FIRSTNAME')} *</label>
+                  <InputText id="forename"  cssclass="form-control" toUpdate="forename" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="name">{counterpart.translate('LASTNAME')} *</label>
+                  <InputText id="name" cssclass="form-control" toUpdate="name" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                </div>
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="street">{counterpart.translate('STREET_AND_NR')} *</label>
+              <InputText id="street" cssclass="form-control" toUpdate="street" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="zip">{counterpart.translate('ZIP')} *</label>
                   <InputText id="zip"  cssclass="form-control" toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="city">Ort *</label>
+                  <label htmlFor="city">{counterpart.translate('CITY')} *</label>
                   <InputText id="city" cssclass="form-control" toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="mail">E-Mail *</label>
+              <label>{counterpart.translate('COUNTRY')}</label>
+              <br/>
+              <label>Deutschland ({this.state.paymentData.country})</label>
+            </div>
+            <div className="form-group">
+              <label htmlFor="mail">{counterpart.translate('MAIL')} *</label>
               <InputText id="mail" cssclass="form-control" toUpdate="mail" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
-            <div className="form-group amount">
-              <label>Betrag: </label>&nbsp;
-              <span className="bold">{Accounting.formatNumber(this.props.price / 100, 2, '.', ',')}&nbsp;€</span>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="iban">{counterpart.translate('IBAN')} *</label>
+                  <InputText id="iban" cssclass="form-control" toUpdate="iban" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="bic">{counterpart.translate('BIC')} *</label>
+                  <InputText id="bic" cssclass="form-control" toUpdate="bic" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                </div>
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="iban">IBAN *</label>
-              <InputText id="iban" cssclass="form-control" toUpdate="iban" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="iban">BIC *</label>
-              <InputText id="iban" cssclass="form-control" toUpdate="bic" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+            <div className="form-group amount align-center">
+              <label>{counterpart.translate('AMOUNT')}: </label>&nbsp;
+              <span className="bold">{Accounting.formatNumber(this.props.price / 100, 2, '.', ',')}&nbsp;€</span><br/>
+              <IconButton glyphIcon="glyphicon-euro" text={counterpart.translate('CONFIRM')} onClick={this.payPlantBag.bind(this)}/>
             </div>
           </div>
-        </div>
-        <div ref="payment-row" className="row">
-          <div className="col-md-6 payment-row">
-            <IconButton glyphIcon="glyphicon-euro" text="BESTÄTIGEN" onClick={this.payPlantBag.bind(this)}/>
-          </div>
-          <div className="col-md-6"></div>
+          <div className="col-md-2"></div>
         </div>
         <LoadingSpinner ref="spinner"/>
         <Notification ref="notification"/>

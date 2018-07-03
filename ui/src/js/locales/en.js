@@ -90,5 +90,29 @@ module.exports = {
   REDEEMED_BY: 'Redeemed by',
 
   BEST_COMPANIES: 'Best companies',
-  BEST_PRIVATES: 'Best private persons'
+  BEST_PRIVATES: 'Best private persons',
+
+  PAYMENT_SUCCESSFUL: 'Payment successfull!',
+  THANKS_FOR_DONATION: 'Thanks for your donation.',
+  FOLLOWING_DATA_TRANSFERED: 'The following data were transfered to the \'Bank für Sozialwirtschaft\'',
+  YOU_FIND_YOUR_GIFT_CODE: 'You find your gift code',
+  HERE: 'here',
+  SEPA_DEBIT: 'SEPA debit',
+  COMPANY: 'Company',
+  SALUTATION: 'Salutation',
+  SELECT: 'Please select',
+  MR: 'Mr',
+  MRS: 'Mrs',
+  TITLE: 'Title',
+  FIRSTNAME: 'First name',
+  LASTNAME: 'Last name',
+  STREET_AND_NR: 'Street and No.',
+  ZIP: 'ZIP code',
+  CITY: 'City',
+  COUNTRY: 'Country',
+  MAIL: 'E-Mail',
+  AMOUNT: 'Amount',
+  IBAN: 'IBAN',
+  BIC: 'BIC',
+  CONFIRM: 'CONFIRM'
 };

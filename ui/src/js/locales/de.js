@@ -90,5 +90,29 @@ module.exports = {
   REDEEMED_BY: 'Eingelöst von',
 
   BEST_COMPANIES: 'Beste Unternehmen',
-  BEST_PRIVATES: 'Beste Privatpersonen'
+  BEST_PRIVATES: 'Beste Privatpersonen',
+
+  PAYMENT_SUCCESSFUL: 'Zahlung erfolgreich abgeschlossen!',
+  THANKS_FOR_DONATION: 'Vielen Dank für deine Spende.',
+  FOLLOWING_DATA_TRANSFERED: 'Folgende Daten wurden an die Bank für Sozialwirtschaft übermittelt',
+  YOU_FIND_YOUR_GIFT_CODE: 'Deinen Gutschein-Code findest du',
+  HERE: 'hier',
+  SEPA_DEBIT: 'SEPA Lastschrift',
+  COMPANY: 'Unternehmen',
+  SALUTATION: 'Anrede',
+  SELECT: 'Bitte auswählen',
+  MR: 'Herr',
+  MRS: 'Frau',
+  TITLE: 'Titel',
+  FIRSTNAME: 'Vorname',
+  LASTNAME: 'Nachname',
+  STREET_AND_NR: 'Straße und Hausnummer',
+  ZIP: 'PLZ',
+  CITY: 'Ort',
+  COUNTRY: 'Land',
+  MAIL: 'E-Mail',
+  AMOUNT: 'Betrag',
+  IBAN: 'IBAN',
+  BIC: 'BIC',
+  CONFIRM: 'BESTÄTIGEN'
 };
