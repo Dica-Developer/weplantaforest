@@ -155,7 +155,7 @@ module.exports = {
   AMOUNT: 'Betrag',
   IBAN: 'IBAN',
   BIC: 'BIC',
-  CONFIRM: 'BESTÄTIGEN'
+  CONFIRM: 'BESTÄTIGEN',
 
   FACTS_FIGURES: 'Zahlen & Fakten',
   TREESPLANTED_PERDONORTYPE: 'Gepflanzte Bäume pro Spendertyp',

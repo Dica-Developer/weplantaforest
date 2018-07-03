@@ -155,7 +155,7 @@ module.exports = {
   AMOUNT: 'Amount',
   IBAN: 'IBAN',
   BIC: 'BIC',
-  CONFIRM: 'CONFIRM'
+  CONFIRM: 'CONFIRM',
 
   FACTS_FIGURES: 'Facts & Figures',
   TREESPLANTED_PERDONORTYPE: 'Trees planted per donor type',
