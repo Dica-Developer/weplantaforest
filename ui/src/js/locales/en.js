@@ -1,13 +1,49 @@
 module.exports = {
-  buttonbar: {
-    plant_self: 'PLANTED YOURSELF',
-    plant_online: 'PLANT ONLINE',
-    tree_service: 'TREESERVICE'
+  BUTTONBAR: {
+    PLANT_SELF: 'PLANTED YOURSELF',
+    PLANT_ONLINE: 'PLANT ONLINE',
+    TREE_SERVICE: 'TREESERVICE'
   },
+  NAVBAR: {
+    PROJECTS: 'Projects',
+    LEAGUE_TABLES: 'League tables',
+    FIND_PLANTINGS: 'Find plantings',
+    REDEEM_VOUCHER: 'Redeem voucher',
+    CO2_CALCULATOR: 'CO2-Calculator',
+    OFFER_ACREAGE: 'Offer acreage',
+    BLOG: 'Blog',
+    MY_FOREST: 'MY FOREST',
+    MY_PROFIL: 'My profil',
+    TOOLS: 'Tools',
+    VOUCHERS: 'Vouchers',
+    CONTRIBUTION_RECEIPTS: 'Contribution receipts',
+    BACKOFFICE: 'Backoffice',
+    MENU: 'MENU',
+    COOKIE_MESSAGE: 'We use cookies to improve the user-friendliness of the website. By your visit you agree to this.',
+    UNDERSTOOD: 'I got it',
+    FURTHER_INFORMATION: 'Further Information'
+  },
+
+  JANUARY: 'January',
+  FEBRUARY: 'February',
+  MARCH: 'March',
+  APRIL: 'April',
+  MAY: 'May',
+  JUNE: 'June',
+  JULY: 'July',
+  AUGUST: 'August',
+  SEPTEMBER: 'September',
+  OCTOBER: 'October',
+  NOVEMBER: 'November',
+  DECEMBER: 'December',
+
+  PLANTED_TREES: 'Planted trees',
+  CO2_BOUND: 'CO2 bound / tons',
+
   USERNAME: 'Username',
   PASSWORD: 'Password',
-  LOGIN: 'LOGIN',
-  LOGOUT: 'logout',
+  LOGIN: 'Login',
+  LOGOUT: 'Logout',
   FORGOT_PASSWORD: 'Forgot password?',
   REGISTRATE: 'Sign Up',
 
@@ -89,6 +125,11 @@ module.exports = {
   STATE: 'State',
   REDEEMED_BY: 'Redeemed by',
 
+  PRIVATEPERSON: 'PrivatePerson',
+  COMPANY: 'Company',
+  NGO: 'Non-profit organization',
+  SCHOOL: 'School',
+
   BEST_COMPANIES: 'Best companies',
   BEST_PRIVATES: 'Best private persons',
 
@@ -115,4 +156,9 @@ module.exports = {
   IBAN: 'IBAN',
   BIC: 'BIC',
   CONFIRM: 'CONFIRM'
+
+  FACTS_FIGURES: 'Facts & Figures',
+  TREESPLANTED_PERDONORTYPE: 'Trees planted per donor type',
+  TREESPLANTED_PERMONTH: 'Trees planted per month'
+
 };

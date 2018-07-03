@@ -13,6 +13,9 @@ import {
   Line
 } from 'react-chartjs';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 export default class TreesPerYear extends Component {
 
   constructor() {
@@ -95,7 +98,7 @@ export default class TreesPerYear extends Component {
     var chartData = {
       labels: this.state.labels,
       datasets: [{
-        label: 'gepflanzte Bäume',
+        label: counterpart.translate('PLANTED_TREES'),
         data: this.state.amountOfTrees,
         fillColor: 'rgb(130, 171, 31)',
         borderWidth: 1
@@ -104,7 +107,7 @@ export default class TreesPerYear extends Component {
     var chartData2 = {
       labels: this.state.labels,
       datasets: [{
-        label: 'gepflanzte Bäume',
+        label: counterpart.translate('PLANTED_TREES'),
         data: this.state.amountOfTreesSummed,
         fillColor: 'rgb(130, 171, 31)',
         borderWidth: 1

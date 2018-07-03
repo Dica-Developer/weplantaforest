@@ -18,6 +18,9 @@ import BackOfficeMenuItem from './BackOfficeMenuItem';
 import SvgButton from '../components/SvgButton';
 import axios from 'axios';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 require('./navbar.less');
 require('./menu.less');
 
@@ -117,39 +120,39 @@ export default class NavBar extends Component {
     let userDetails;
     if (this.state.isLoggedIn) {
       myForrestButton = <div className="navbar-right myForrestDiv">
-        <SvgButton text="MEIN WALD" buttonType="trees" onClick={this.showRight.bind(this)} />
+        <SvgButton text={counterpart.translate('NAVBAR.MY_FOREST')} buttonType="trees" onClick={this.showRight.bind(this)} />
       </div>;
       userDetails = <UserDetails user={this.state.userDetails} updateNavbar={this.updateComponents.bind(this)}/>;
     } else {
       myForrestButton = '';
       userDetails = <div className="user-details logged-out"> <a className="pull left" onClick={this.showRight.bind(this)}>Login</a>  <a className="pull right" onClick={() => {
         this.linkTo('/registration');
-      }}>Registrieren</a></div>;
+      }}>{counterpart.translate('REGISTRATE')}</a></div>;
     }
 
     return (
       <div>
         <Menu ref="left" alignment="left">
-          <MenuItem hash="/projects">Projekte</MenuItem>
-          <MenuItem hash="/ranking">Bestenliste</MenuItem>
-          <MenuItem hash="/certificate/find">Pflanzungen finden</MenuItem>
-          <MenuItem hash={'/gift/redeem'}>Gutschein einlösen</MenuItem>
-          <MenuItem hash="/co2Calculator">CO<sub>2</sub>-Rechner</MenuItem>
-          <MenuItem hash="/projectOffer">Fläche anbieten</MenuItem>
-          <MenuItem hash="/blog">Blog</MenuItem>
+          <MenuItem hash="/projects">{counterpart.translate('NAVBAR.PROJECTS')}</MenuItem>
+          <MenuItem hash="/ranking">{counterpart.translate('NAVBAR.LEAGUE_TABLES')}</MenuItem>
+          <MenuItem hash="/certificate/find">{counterpart.translate('NAVBAR.FIND_PLANTINGS')}</MenuItem>
+          <MenuItem hash={'/gift/redeem'}>{counterpart.translate('NAVBAR.REDEEM_VOUCHER')}</MenuItem>
+          <MenuItem hash="/co2Calculator">{counterpart.translate('NAVBAR.CO2_CALCULATOR')}</MenuItem>
+          <MenuItem hash="/projectOffer">{counterpart.translate('NAVBAR.OFFER_ACREAGE')}</MenuItem>
+          <MenuItem hash="/blog">{counterpart.translate('NAVBAR.BLOG')}</MenuItem>
           <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
         </Menu>
         <Menu ref="right" alignment="right">
           <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
-          <MenuItem hash={'/user/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Mein Profil</MenuItem>
-          <MenuItem hash={'/tools/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Tools</MenuItem>
-          <MenuItem hash={'/gifts/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Gutscheine</MenuItem>
-          <MenuItem hash={'/receipts/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>Spendenquittungen</MenuItem>
-          <BackOfficeMenuItem hash="/backOffice">Backoffice</BackOfficeMenuItem>
+          <MenuItem hash={'/user/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.MY_PROFIL')}</MenuItem>
+          <MenuItem hash={'/tools/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.TOOLS')}</MenuItem>
+          <MenuItem hash={'/gifts/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.VOUCHERS')}</MenuItem>
+          <MenuItem hash={'/receipts/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.CONTRIBUTION_RECEIPTS')}</MenuItem>
+          <BackOfficeMenuItem hash="/backOffice">{counterpart.translate('NAVBAR.BACKOFFICE')}</BackOfficeMenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
           <div className="navbar-left">
-            <SvgButton text="MENÜ" buttonType="hamburger" onClick={this.showLeft.bind(this)} />
+            <SvgButton text={counterpart.translate('NAVBAR.MENU')} buttonType="hamburger" onClick={this.showLeft.bind(this)} />
           </div>
           {myForrestButton}
           <div className="container">
@@ -176,9 +179,9 @@ export default class NavBar extends Component {
           </div>
         </nav>
         <CookieBanner
-          message="Wir benutzen Cookies um die Nutzerfreundlichkeit der Webseite zu verbessen. Durch Deinen Besuch stimmst Du dem zu."
-          buttonMessage="Verstanden"
-          link={<a href='/privacy'>Weitere Informationen</a>}
+          message={counterpart.translate('NAVBAR.COOKIE_MESSAGE')}
+          buttonMessage={counterpart.translate('NAVBAR.UNDERSTOOD')}
+          link={<a href='/privacy'>{counterpart.translate('NAVBAR.FURTHER_INFORMATION')}</a>}
           onAccept={() => {}}
           cookie="user-has-accepted-cookies"
           dismissOnScroll={false}
