@@ -19,7 +19,7 @@ import {
 } from '../common/language/HtmlHelper';
 import IconButton from '../common/components/IconButton';
 
-import EditImageItem from '../profile/edit/EditImageItem';
+
 import EditItem from '../profile/edit/EditItem';
 import Notification from '../common/components/Notification';
 
@@ -89,7 +89,7 @@ export default class EditTeamDetails extends Component {
             <textarea className="form-control" rows="10" id="team_description" onBlur={(e) => this.editTeam('description', e)} defaultValue={this.props.team.description}/>
           </div>
           <div className="col-md-12">
-            <EditImageItem uploadImage={this.uploadImage.bind(this)}/>
+
           </div>
         </div>
         <div className="row align-center bottomButton">

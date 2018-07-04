@@ -7,8 +7,8 @@ import moment from 'moment';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
+import FileChooseAndUploadButton from './FileChooseAndUploadButton';
 import EditNameItem from './EditNameItem';
-import EditImageItem from './EditImageItem';
 import EditItem from './EditItem';
 import EditDropdownItem from './EditDropdownItem';
 import EditPasswordItem from './EditPasswordItem';
@@ -91,15 +91,10 @@ export default class EditUserDetails extends Component {
   }
 
   render() {
-    let imageUrl;
-    if (this.props.user.userName) {
-      imageUrl = 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/80/80';
-    }
     return (
       <div>
         <div className="editUserDetails" onClick={this.clearErrorMessage}>
           <h1>Profil bearbeiten</h1>
-          <img src={imageUrl} alt="profile"/>
           <div className="summary">
             <span className="name">{this.props.user.userName}</span><br/>
             <span className="bold">Mitglied seit:&nbsp;</span>{moment(this.props.user.regDate).format('DD.MM.YYYY')}<br/>
@@ -107,7 +102,7 @@ export default class EditUserDetails extends Component {
             <span className="bold">Rang:&nbsp;</span>{this.props.user.rank}
           </div>
         </div>
-        <EditImageItem uploadImage={this.uploadImage.bind(this)}/>
+        <FileChooseAndUploadButton imageFileName={this.props.user.imageFileName}/>
         <EditNameItem text="Name" content={this.props.user.userName} toEdit="NAME" editUsername={this.editUsername.bind(this)} ref="name"/>
         <EditItem text="Über mich" content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)} ref="ABOUTME"/>
         <EditItem text="Ort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)} ref="LOCATION"/>

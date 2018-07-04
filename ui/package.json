@@ -24,6 +24,7 @@
     "react-data-grid-addons": "^4.0.8",
     "react-dom": "^16.4.1",
     "react-faux-dom": "^2.7.1",
+    "react-fileupload-progress": "^0.4.1",
     "react-interpolate-component": "^0.11.0",
     "react-leaflet": "^2.0.0-rc.1",
     "react-loadable": "^5.4.0",

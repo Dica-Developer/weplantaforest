@@ -1,7 +1,12 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-
+import React, {
+  Component
+} from 'react';
+import {
+  render
+} from 'react-dom';
+import FileUploadProgress from 'react-fileupload-progress';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import IconButton from '../../common/components/IconButton';
 
@@ -9,52 +14,77 @@ export default class FileChooseAndUploadButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null
-    };
+      fileName: '',
+      imageHash: 0
+    }
   }
 
-  chooseFile() {
-    this.refs.fileChooser.click();
+  beforeSend(req) {
+    req.setRequestHeader('X-AUTH-TOKEN', localStorage.getItem('jwt'));
+    return req
   }
 
-  saveFile() {
-    this.setState({file: this.refs.fileChooser.files[0]});
-    this.props.setImageName(this.refs.fileChooser.files[0].name);
+  formGetter() {
+    let data = new FormData(document.getElementById('customForm'));
+    data.append('userName', localStorage.getItem('username'));
+    return data;
   }
 
-  undo() {
-    this.setState({file: null});
-    this.props.setImageName('');
+  customFormRenderer(onSubmit) {
+    let uploadButton;
+    if(this.state.fileName != ''){
+      uploadButton = <IconButton text="Upload" glyphIcon="glyphicon-upload" onClick={onSubmit}/>;
+    }else{
+      uploadButton = '';
+    }
+    return (
+      <form id='customForm' className="file-choser-form">
+        <label className="fileContainer">
+          <span className='glyphicon glyphicon-search' aria-hidden="true"></span>
+          {counterpart.translate('CHOOSE_FILE')}
+          <input type="file" name='file' id="exampleInputFile" ref="fileChooser" onChange={ (e) => this.fileChanged(e.target.files) } />
+        </label>
+        <div>
+          <label className="file-name">{this.state.fileName}</label>
+          {uploadButton}
+        </div>
+     </form>
+    );
   }
 
-  uploadImage() {
-    this.props.uploadImage(this.state.file);
-    this.setState({file: null});
-    this.props.setImageName('');
+  fileChanged(files){
+    if(files && files.length > 0){
+      let newImgHash = this.state.imageHash + 1;
+      this.setState({fileName: files[0].name, imageHash: newImgHash});
+    }
   }
 
   render() {
-    var filePart;
-    var uploadPart;
-    if (this.state.file) {
-      filePart = <IconButton text="verwerfen" glyphIcon="glyphicon-trash" onClick={this.undo.bind(this)}/>;
-      uploadPart = <IconButton text="hochladen" glyphIcon="glyphicon-upload" onClick={this.uploadImage.bind(this)}/>;
-    } else {
-      filePart = <div className="left">
-          <input type="file" className="hiddenInput" ref="fileChooser" accept="image/*" onChange={this.saveFile.bind(this)}/>
-          <IconButton text="Datei auswählen" glyphIcon="glyphicon-search" onClick={this.chooseFile.bind(this)}/>
-      </div>;
-      uploadPart = <div className="left noUpload">
-        <span className="glyphicon glyphicon-upload" aria-hidden="true"></span>
-        <span>
-          HOCHLADEN
-        </span>
-      </div>;
-    }
+    let imageUrl;
+    let image;
 
+    if (this.props.imageFileName) {
+      imageUrl = 'http://localhost:8081/user/image/' + this.props.imageFileName + '/80/80';
+      image = <img src={imageUrl + '?' + this.state.imageHash} alt="profile"/>;
+    }else{
+      image= '';
+    }
     return (
-      <div>
-        {filePart}&nbsp; {uploadPart}
+      <div className="file-choser row">
+        <div className="col-md-2">
+          <label>{counterpart.translate('IMG_LOGO')}:</label>
+          {image}
+        </div>
+        <div className="col-md-10">
+          <FileUploadProgress ref="fileupload" key='ex1' url='http://localhost:8081/user/image/upload'
+            onProgress={(e, request, progress) => {}}
+            onLoad={ (e, request) => { this.forceUpdate();}}
+            onError={ (e, request) => {}}
+            onAbort={ (e, request) => {}}
+            beforeSend={this.beforeSend.bind(this)}
+            formGetter={this.formGetter.bind(this)}
+            formRenderer={this.customFormRenderer.bind(this)} />
+        </div>
       </div>
     );
   }

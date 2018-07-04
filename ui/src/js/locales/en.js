@@ -229,6 +229,8 @@ module.exports = {
   CHOOSE_FILE: 'Choose file',
   DISCARD: 'Discard',
 
-  FAQ: 'Frequently asked questions'
+  FAQ: 'Frequently asked questions',
+
+  IMG_LOGO: 'Image/Logo'
 
 };

@@ -18,7 +18,7 @@ import {
 } from '../common/language/HtmlHelper';
 import IconButton from '../common/components/IconButton';
 
-import EditImageItem from '../profile/edit/EditImageItem';
+
 import EditItem from '../profile/edit/EditItem';
 import Notification from '../common/components/Notification';
 
