@@ -17,6 +17,30 @@ export default class FileChooseAndUploadButton extends Component {
       fileName: '',
       imageUrl: 'http://localhost:8081/user/image/' + this.props.imageFileName + '/80/80'
     }
+    this.styles = {
+      progressWrapper: {
+        height: '15px',
+        marginTop: '10px',
+        width: '100%',
+        float: 'left',
+        overflow: 'hidden',
+        backgroundColor: '#f5f5f5',
+        borderRadius: '4px',
+        WebkitBoxShadow: 'inset 0 1px 2px rgba(0,0,0,.1)',
+        boxShadow: 'inset 0 1px 2px rgba(0,0,0,.1)'
+      },
+      progressBar: {
+        float: 'left',
+        height: '100%',
+        textAlign: 'center',
+        backgroundColor: '#82AB1f',
+        WebkitBoxShadow: 'inset 0 -1px 0 rgba(0,0,0,.15)',
+        boxShadow: 'inset 0 -1px 0 rgba(0,0,0,.15)',
+        WebkitTransition: 'width .6s ease',
+        Otransition: 'width .6s ease',
+        transition: 'width .6s ease'
+      }
+    }
   }
 
   componentDidMount() {
@@ -54,6 +78,35 @@ export default class FileChooseAndUploadButton extends Component {
         </div>
      </form>
     );
+  }
+
+  customProgressRenderer(progress, hasError, cancelHandler) {
+    if (hasError || progress > -1) {
+      let barStyle = Object.assign({}, this.styles.progressBar);
+      barStyle.width = progress + '%';
+
+      let message = (<span>{barStyle.width}</span>);
+      if (hasError) {
+        barStyle.backgroundColor = '#d9534f';
+        message = (<span style={{'color': '#a94442'}}>{counterpart.translate('UPLOAD_FAILED')}</span>);
+      }
+      if (progress === 100) {
+        message = (<span >{counterpart.translate('UPLOAD_FINISHED')}</span>);
+      }
+
+      return (
+        <div>
+          <div style={this.styles.progressWrapper}>
+            <div style={barStyle}></div>
+          </div>
+          <div style={{'clear':'left'}}>
+            {message}
+          </div>
+        </div>
+      );
+    } else {
+      return;
+    }
   }
 
   fileChanged(files) {
@@ -115,7 +168,8 @@ export default class FileChooseAndUploadButton extends Component {
             onAbort={ (e, request) => {}}
             beforeSend={this.beforeSend.bind(this)}
             formGetter={this.formGetter.bind(this)}
-            formRenderer={this.customFormRenderer.bind(this)} />
+            formRenderer={this.customFormRenderer.bind(this)}
+            progressRenderer={this.customProgressRenderer.bind(this)} />
         </div>
       </div>
     );

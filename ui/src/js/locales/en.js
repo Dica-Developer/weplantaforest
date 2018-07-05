@@ -231,6 +231,8 @@ module.exports = {
 
   FAQ: 'Frequently asked questions',
 
-  IMG_LOGO: 'Image/Logo'
+  IMG_LOGO: 'Image/Logo',
+  UPLOAD_FAILED: 'Upload fehlgeschlagen',
+  UPLOAD_FINISHED: 'Upload erfolgreich!'
 
 };
