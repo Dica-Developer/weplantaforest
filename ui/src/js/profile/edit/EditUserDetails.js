@@ -102,7 +102,7 @@ export default class EditUserDetails extends Component {
             <span className="bold">Rang:&nbsp;</span>{this.props.user.rank}
           </div>
         </div>
-        <FileChooseAndUploadButton imageFileName={this.props.user.imageFileName}/>
+        <FileChooseAndUploadButton imageId="edit-logo-img" imageFileName={this.props.user.imageFileName}/>
         <EditNameItem text="Name" content={this.props.user.userName} toEdit="NAME" editUsername={this.editUsername.bind(this)} ref="name"/>
         <EditItem text="Über mich" content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)} ref="ABOUTME"/>
         <EditItem text="Ort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)} ref="LOCATION"/>
