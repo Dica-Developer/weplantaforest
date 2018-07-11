@@ -16,7 +16,8 @@ export default class DateField extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: new Date().toISOString()
+      value: new Date().toISOString(),
+      weekStartsOn: localStorage.getItem('language') == 'DEUTSCH' ? 1 : 0
     };
   }
 
@@ -68,7 +69,7 @@ export default class DateField extends Component {
   render() {
     return (
       <div className="dateField">
-        <DatePicker value={this.state.value} onChange={this.updateValue.bind(this)} onClear={this.resetDate.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
+        <DatePicker value={this.state.value} onChange={this.updateValue.bind(this)} onClear={this.resetDate.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right" weekStartsOn={this.state.weekStartsOn} />
         <Notification ref="notification"/>
       </div>
     );
