@@ -91,8 +91,8 @@ public class UserController {
     @RequestMapping(value = Uris.USER_IMAGE_UPLOAD, method = RequestMethod.POST)
     public ResponseEntity<?> uploadUserImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam("file") MultipartFile file) throws IpatException {
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
-            _userService.uploadUserImage(userName, file);
-            return new ResponseEntity<>(HttpStatus.OK);
+            String imageName = _userService.uploadUserImage(userName, file);
+            return new ResponseEntity<>(imageName, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

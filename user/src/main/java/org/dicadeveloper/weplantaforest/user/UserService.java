@@ -184,7 +184,7 @@ public class UserService {
         _userRepository.save(user);
     }
 
-    public void uploadUserImage(String userName, MultipartFile file) throws IpatException {
+    public String uploadUserImage(String userName, MultipartFile file) throws IpatException {
         IpatPreconditions.checkArgument(!file.isEmpty(), ErrorCodes.EMPTY_FILE);
         User user = getUser(userName);
 
@@ -197,6 +197,7 @@ public class UserService {
             _imageHelper.storeImage(file, imageFolder, imageName, true);
             user.setImageName(imageName);
             _userRepository.save(user);
+            return imageName;
         } catch (IOException e) {
             throw new IpatException(ErrorCodes.SERVER_ERROR);
         }
