@@ -27,7 +27,8 @@ export default class UserDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      restConfig: getConfig()
+      restConfig: getConfig(),
+      imgUrl: ''
     }
   }
 
@@ -68,11 +69,6 @@ export default class UserDetails extends Component {
   }
 
   render() {
-    let imageUrl;
-    if (this.props.user.userName) {
-      imageUrl = 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150';
-    }
-
     var editLink;
     if (this.props.user.editAllowed) {
       editLink = <div><IconButton text="Bearbeiten" glyphIcon="glyphicon-cog" onClick={this.showEditUser.bind(this)}/>
@@ -97,12 +93,12 @@ export default class UserDetails extends Component {
         }
       }
     };
-
+    let imgUrl = 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150?random=' + Math.random();
     return (
       <div>
         <h1>Profil</h1>
         <div className="imageDiv">
-          <img src={imageUrl} alt="profile"/>
+          <img id="logo-img" src={imgUrl} alt="profile"/>
         </div>
         <p className="userName">{htmlDecode(this.props.user.userName)}</p>
         <div className="stats">

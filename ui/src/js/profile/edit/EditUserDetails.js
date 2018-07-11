@@ -57,7 +57,6 @@ export default class EditUserDetails extends Component {
     }).catch(function(response) {
       that.refs.name.undoChanges(that.props.user.userName);
       that.refs.name.showError(response.data.message);
-      console.log(response.data.message);
       if (response instanceof Error) {
         console.error('Error', response.message);
       } else {
@@ -69,25 +68,8 @@ export default class EditUserDetails extends Component {
     });
   }
 
-  uploadImage(file) {
-    var data = new FormData();
-    data.append('userName', this.props.user.userName);
-    data.append('file', file);
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios.post('http://localhost:8081/user/image/upload', data, config).then(function(response) {}).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+  updateImageName(imageName){
+    this.props.updateImageName(imageName);
   }
 
   render() {
@@ -102,7 +84,7 @@ export default class EditUserDetails extends Component {
             <span className="bold">Rang:&nbsp;</span>{this.props.user.rank}
           </div>
         </div>
-        <FileChooseAndUploadButton imageId="edit-logo-img" imageFileName={this.props.user.imageFileName}/>
+        <FileChooseAndUploadButton imageId="edit-logo-img" imageFileName={this.props.user.imageFileName} updateImageName={this.updateImageName.bind(this)}/>
         <EditNameItem text="Name" content={this.props.user.userName} toEdit="NAME" editUsername={this.editUsername.bind(this)} ref="name"/>
         <EditItem text="Über mich" content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)} ref="ABOUTME"/>
         <EditItem text="Ort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)} ref="LOCATION"/>

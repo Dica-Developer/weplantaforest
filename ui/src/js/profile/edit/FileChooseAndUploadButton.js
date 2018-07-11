@@ -44,7 +44,7 @@ export default class FileChooseAndUploadButton extends Component {
   }
 
   componentDidMount() {
-    this.loadImage();
+    this.loadImage(this.props.imageFileName);
   }
 
   beforeSend(req) {
@@ -117,7 +117,7 @@ export default class FileChooseAndUploadButton extends Component {
     }
   }
 
-  loadImage() {
+  loadImage(imageName) {
     const component = this;
 
     const img = new Image();
@@ -129,24 +129,20 @@ export default class FileChooseAndUploadButton extends Component {
 
       var ctx = canvas.getContext("2d");
       ctx.drawImage(this, 0, 0);
-
-      var dataURL = canvas.toDataURL("image/png");
+      var dataURL = canvas.toDataURL();
       component.setState({
         liveImage: dataURL
       });
     };
 
-    img.src = `${this.props.image}?${new Date().getTime()}`;
+    img.src = 'http://localhost:8081/user/image/' + imageName + '/80/80?random=' + Math.random();
     this.setState({
       loadingImage: img
     });
-
-    var myImageElement = document.getElementById(this.props.imageId);
-    myImageElement.src = this.state.imageUrl + '?random=' + Math.random();
+    this.props.updateImageName(imageName);
   }
 
   render() {
-    let imageUrl;
     let image;
 
     if (this.props.imageFileName) {
@@ -163,7 +159,7 @@ export default class FileChooseAndUploadButton extends Component {
         <div className="col-md-10">
           <FileUploadProgress ref="fileupload" key='ex1' url='http://localhost:8081/user/image/upload'
             onProgress={(e, request, progress) => {}}
-            onLoad={ (e, request) => { this.loadImage(); }}
+            onLoad={ (e, request) => { this.loadImage(request.responseText); }}
             onError={ (e, request) => {}}
             onAbort={ (e, request) => {}}
             beforeSend={this.beforeSend.bind(this)}

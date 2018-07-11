@@ -223,6 +223,11 @@ export default class ProfilePage extends Component {
     this.state.user.teamName = ''; this.forceUpdate();
   }
 
+  updateImageName(imageName) {
+    this.state.user.imageFileName = imageName;
+    this.forceUpdate();
+  }
+
   render() {
     var that = this;
     var userPart;
@@ -233,7 +238,7 @@ export default class ProfilePage extends Component {
     if (!this.state.editUser) {
       userPart = <UserDetails user={this.state.user} showEditUser={this.showEditUser.bind(this)}/>;
     } else {
-      userPart = <EditUserDetails user={this.state.user} showProfile={this.showProfile.bind(this)} updateLanguage={this.updateLanguage.bind(this)}/>;
+      userPart = <EditUserDetails user={this.state.user} showProfile={this.showProfile.bind(this)} updateLanguage={this.updateLanguage.bind(this)} updateImageName={this.updateImageName.bind(this)}/>;
     }
 
     if (this.state.user.teamName != '' && !this.state.editTeam) {

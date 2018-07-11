@@ -232,7 +232,8 @@ module.exports = {
   FAQ: 'Frequently asked questions',
 
   IMG_LOGO: 'Image/Logo',
-  UPLOAD_FAILED: 'Upload fehlgeschlagen',
-  UPLOAD_FINISHED: 'Upload erfolgreich!'
+  UPLOAD_FAILED: 'Failed to upload',
+  UPLOAD_FINISHED: 'Upload finished!',
+  SVG_SHOVEL_TITLE: 'testest'
 
 };
