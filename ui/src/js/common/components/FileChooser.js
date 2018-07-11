@@ -28,13 +28,27 @@ export default class FileChooser extends Component {
       file: this.refs.fileChooser.files[0],
       imageName: this.refs.fileChooser.files[0].name
     });
+
+    var file = this.refs.fileChooser.files[0];
+    var reader  = new FileReader();
+    reader.width = 100;
+    reader.height = 100;
+    reader.onloadend = () => {
+     this.setState({
+       imagePreviewUrl: reader.result
+     });
+   }
+
+   reader.readAsDataURL(file)
+
     this.props.updateFile(this.refs.fileChooser.files[0].name, this.refs.fileChooser.files[0]);
   }
 
   undo() {
     this.setState({
       file: null,
-      imageName: ''
+      imageName: '',
+      imagePreviewUrl: ''
     });
     this.props.updateFile('', null);
   }
@@ -46,11 +60,21 @@ export default class FileChooser extends Component {
     } else {
       trashButton = '';
     }
+
+    let image;
+    if(this.state.imagePreviewUrl && this.state.imagePreviewUrl != ''){
+      image = <img src={this.state.imagePreviewUrl} height="100" width="100"/>;
+    }else{
+      image = '';
+    }
     return (
       <div>
         <input type="file" className="hiddenInput" ref="fileChooser" accept="image/*" onChange={this.saveFile.bind(this)}/>
         <IconButton text={counterpart.translate('CHOOSE_FILE')} glyphIcon="glyphicon-search" onClick={this.chooseFile.bind(this)}/>
+        &nbsp;
         {trashButton}
+        <br/>
+        {image}
       </div>
     );
   }
