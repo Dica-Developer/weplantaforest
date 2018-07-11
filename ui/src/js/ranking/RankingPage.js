@@ -30,7 +30,7 @@ export default class RankingPage extends Component {
       orgTypeDesc: counterpart.translate('RANKING_TYPES.ALL'),
       chosenOrgType: counterpart.translate('RANKING_TYPES.PRIVATE'),
       slideIn: false,
-      rankingEntries: 25,
+      rankingEntries: 100,
       onlyLastYear: true
     };
     this.toggleDiv = this.toggleDiv.bind(this);
@@ -113,7 +113,7 @@ export default class RankingPage extends Component {
   }
 
   callMoreRankingEntries() {
-    this.state.rankingEntries = this.state.rankingEntries + 25;
+    this.state.rankingEntries = this.state.rankingEntries + 100;
     this.forceUpdate();
     this.loadRanking(false);
   }
