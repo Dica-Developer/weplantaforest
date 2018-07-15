@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Accounting from 'accounting';
 import {browserHistory} from 'react-router';
 
+import counterpart from 'counterpart';
+
 require('./plantBag.less');
 
 export default class PlantBag extends Component {
@@ -105,10 +107,10 @@ export default class PlantBag extends Component {
           <div className="wrapper">
             <div className="image-wrapper">
               <p className="price">{Accounting.formatNumber(this.state.plantBag.price / 100, 2, '.', ',')}&nbsp;€</p>
-              <img src="/assets/images/barrow.svg" alt="mein Pflanzkorb" width="50" height="25"/>
+              <img src="/assets/images/barrow.svg" alt={counterpart.translate('MY_PLANT_BAG')} width="50" height="25"/>
             </div>
             <div className="plantBag-button-text">
-              <span className="buttonText">PFLANZKORB</span>
+              <span className="buttonText">{counterpart.translate('PLANT_BAG')}</span>
             </div>
           </div>
         </button>
