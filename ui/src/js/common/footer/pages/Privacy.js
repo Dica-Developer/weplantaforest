@@ -7,6 +7,8 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import counterpart from 'counterpart';
+
 require('./privacy.less');
 
 export default class Privacy extends Component {
@@ -56,7 +58,7 @@ export default class Privacy extends Component {
       <div className="container paddingTopBottom15 privacy">
           <div className="row">
             <div className="col-md-12">
-              <h1>Datenschutz</h1>
+              <h1>{counterpart.translate('FOOTER_PAGES.DATA_PROTECTION')}</h1>
             </div>
           </div>
           <div className="row">

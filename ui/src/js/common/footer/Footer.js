@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 
+import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
+
 require('./footer.less');
 
 export default class Footer extends Component {
@@ -18,72 +21,72 @@ export default class Footer extends Component {
               <a role="button" onClick={() => {
                 this.linkTo('/aboutUs');
               }}>
-                ÜBER UNS
+              {counterpart.translate('FOOTER.ABOUT_US')}
               </a>
               <a role="button" onClick={() => {
                 this.linkTo('/faq');
               }}>
-                FAQ
+                {counterpart.translate('FOOTER.FAQ')}
               </a>
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
                 this.linkTo('/partner');
               }}>
-                PARTNER
+                {counterpart.translate('FOOTER.PARTNER')}
               </a>
               <a role="button" onClick={() => {
                 this.linkTo('/awards');
               }}>
-                AUSZEICHNUNGEN
+              {counterpart.translate('FOOTER.AWARDS')}
               </a>
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
                 this.linkTo('/blog');
               }}>
-                BLOG
+              {counterpart.translate('FOOTER.BLOG')}
               </a>
               <a role="button" onClick={() => {
                 this.linkTo('/social');
               }}>
-                SOCIAL
+              {counterpart.translate('FOOTER.SOCIAL')}
               </a>
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
                 this.linkTo('/statistics');
               }}>
-                ZAHLEN & FAKTEN
+              {counterpart.translate('FOOTER.FACTS_FIGURES')}
               </a>
               <a role="button" onClick={() => {
                 this.linkTo('/financials');
               }}>
-                FINANZEN
+              {counterpart.translate('FOOTER.FINANCE')}
               </a>
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
                 this.linkTo('/privacy');
               }}>
-                DATENSCHUTZ
+              {counterpart.translate('FOOTER.DATA_PROTECTION')}
               </a>
               <a role="button" onClick={() => {
                 this.linkTo('/terms');
               }}>
-                AGB
+              {counterpart.translate('FOOTER.TERMS_CONDITIONS')}
               </a>
             </div>
             <div className="col-md-2">
               <a role="button" onClick={() => {
                 this.linkTo('/contact');
               }}>
-                KONTAKT
+              {counterpart.translate('FOOTER.CONTACT')}
               </a>
               <a role="button" onClick={() => {
                 this.linkTo('/imprint');
               }}>
-                IMPRESSUM
+              {counterpart.translate('FOOTER.IMPRINT')}
               </a>
             </div>
           </div>

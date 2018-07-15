@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import counterpart from 'counterpart';
+
 require('./partner.less');
 
 export default class Partner extends Component {
@@ -36,7 +38,7 @@ export default class Partner extends Component {
       <div className="container paddingTopBottom15 partner">
         <div className="row">
           <div className="col-md-12">
-            <h1>Partner</h1>
+            <h1>{counterpart.translate('FOOTER_PAGES.PARTNER')}</h1>
           </div>
         </div>
 

@@ -7,6 +7,8 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import counterpart from 'counterpart';
+
 require('./aboutUs.less');
 
 export default class aboutUs extends Component {
@@ -42,7 +44,7 @@ export default class aboutUs extends Component {
       <div className="container paddingTopBottom15 aboutUs">
           <div className="row">
             <div className="col-md-12">
-              <h1>Über uns</h1>
+              <h1>{counterpart.translate('FOOTER_PAGES.ABOUT_US')}</h1>
             </div>
           </div>
           <div className="row">
