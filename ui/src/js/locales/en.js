@@ -1,6 +1,6 @@
 module.exports = {
   BUTTONBAR: {
-    PLANT_SELF: 'PLANTED YOURSELF',
+    PLANT_SELF: 'PLANT YOURSELF',
     PLANT_ONLINE: 'PLANT ONLINE',
     TREE_SERVICE: 'TREESERVICE'
   },
@@ -22,6 +22,35 @@ module.exports = {
     COOKIE_MESSAGE: 'We use cookies to improve the user-friendliness of the website. By your visit you agree to this.',
     UNDERSTOOD: 'I got it',
     FURTHER_INFORMATION: 'Further Information'
+  },
+
+  FOOTER: {
+    ABOUT_US: 'ABOUT US',
+    FAQ: 'FAQ',
+    PARTNER: 'PARTNER',
+    AWARDS: 'AWARDS',
+    BLOG: 'BLOG',
+    SOCIAL: 'SOCIAL',
+    FACTS_FIGURES: 'FACTS & FIGURES',
+    FINANCE: 'FINANCE',
+    DATA_PROTECTION: 'DATA PROTECTION',
+    TERMS_CONDITIONS: 'TERMS & CONDITIONS',
+    CONTACT: 'CONTACT',
+    IMPRINT: 'IMPRINT'
+  },
+
+  FOOTER_PAGES: {
+    ABOUT_US: 'About us',
+    FAQ: 'Frequently asked questions',
+    PARTNER: 'Partner',
+    AWARDS: 'Awards',
+    BLOG: 'Blog',
+    SOCIAL: 'Social',
+    FACTS_FIGURES: 'Facts & Figures',
+    FINANCE: 'Finance',
+    DATA_PROTECTION: 'Data Protection',
+    TERMS_CONDITIONS: 'Terms & Conditions',
+    IMPRINT: 'Imprint'
   },
 
   JANUARY: 'January',
@@ -228,8 +257,6 @@ module.exports = {
 
   CHOOSE_FILE: 'Choose file',
   DISCARD: 'Discard',
-
-  FAQ: 'Frequently asked questions',
 
   IMG_LOGO: 'Image/Logo',
   UPLOAD_FAILED: 'Failed to upload',

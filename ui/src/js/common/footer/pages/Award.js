@@ -7,6 +7,8 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import counterpart from 'counterpart';
+
 require('./award.less');
 
 export default class Award extends Component {
@@ -42,7 +44,7 @@ export default class Award extends Component {
       <div className="container paddingTopBottom15 award">
         <div className="row">
           <div className="col-md-12">
-            <h1>Auszeichnungen</h1>
+            <h1>{counterpart.translate('FOOTER_PAGES.AWARDS')}</h1>
           </div>
         </div>
         {this.state.awards.map(function(award, i) {

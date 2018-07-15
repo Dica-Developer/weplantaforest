@@ -7,6 +7,8 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import counterpart from 'counterpart';
+
 require('./terms.less');
 
 export default class Terms extends Component {
@@ -56,7 +58,7 @@ export default class Terms extends Component {
       <div className="container paddingTopBottom15 terms">
           <div className="row">
             <div className="col-md-12">
-              <h1>AGB</h1>
+              <h1>{counterpart.translate('FOOTER_PAGES.TERMS_CONDITIONS')}</h1>
             </div>
           </div>
           <div className="row">

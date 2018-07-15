@@ -6,6 +6,8 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 
+import counterpart from 'counterpart';
+
 require('./social.less');
 
 export default class Social extends Component {
@@ -15,7 +17,7 @@ export default class Social extends Component {
       <div className="container paddingTopBottom15 social">
           <div className="row">
             <div className="col-md-12">
-              <h1>Social</h1>
+              <h1>{counterpart.translate('FOOTER_PAGES.SOCIAL')}</h1>
             </div>
           </div>
           <div className="row">

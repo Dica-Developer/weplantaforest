@@ -7,6 +7,8 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import counterpart from 'counterpart';
+
 require('./financial.less');
 
 export default class financial extends Component {
@@ -42,7 +44,7 @@ export default class financial extends Component {
       <div className="container paddingTopBottom15 financial">
           <div className="row">
             <div className="col-md-12">
-              <h1>Finanzen</h1>
+              <h1>{counterpart.translate('FOOTER_PAGES.FINANCE')}</h1>
             </div>
           </div>
           <div className="row">

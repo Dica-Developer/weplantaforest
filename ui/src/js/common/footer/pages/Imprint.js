@@ -7,6 +7,8 @@ import {
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 
+import counterpart from 'counterpart';
+
 require('./imprint.less');
 
 export default class Imprint extends Component {
@@ -41,7 +43,7 @@ export default class Imprint extends Component {
       <div className="container paddingTopBottom15 imprint">
           <div className="row">
             <div className="col-md-12">
-              <h1>Impressum</h1>
+              <h1>{counterpart.translate('FOOTER_PAGES.IMPRINT')}</h1>
             </div>
           </div>
           <div className="row">

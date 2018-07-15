@@ -24,6 +24,35 @@ module.exports = {
     FURTHER_INFORMATION: 'Weitere Informationen'
   },
 
+  FOOTER: {
+    ABOUT_US: 'ÜBER UNS',
+    FAQ: 'FAQ',
+    PARTNER: 'PARTNER',
+    AWARDS: 'AUSZEICHNUNGEN',
+    BLOG: 'BLOG',
+    SOCIAL: 'SOCIAL',
+    FACTS_FIGURES: 'ZAHLEN & FAKTEN',
+    FINANCE: 'FINANZEN',
+    DATA_PROTECTION: 'DATENSCHUTZ',
+    TERMS_CONDITIONS: 'AGB',
+    CONTACT: 'KONTAKT',
+    IMPRINT: 'IMPRESSUM'
+  },
+
+  FOOTER_PAGES: {
+    ABOUT_US: 'Über uns',
+    FAQ: 'Häufig gestellte Fragen',
+    PARTNER: 'Partner',
+    AWARDS: 'Auszeichnungen',
+    BLOG: 'Blog',
+    SOCIAL: 'Social',
+    FACTS_FIGURES: 'Zahlen & Fakten',
+    FINANCE: 'Finanzen',
+    DATA_PROTECTION: 'Datenschutz',
+    TERMS_CONDITIONS: 'AGB',
+    IMPRINT: 'Impressum'
+  },
+
   JANUARY: 'Januar',
   FEBRUARY: 'Februar',
   MARCH: 'März',
@@ -228,8 +257,6 @@ module.exports = {
 
   CHOOSE_FILE: 'Datei auswählen',
   DISCARD: 'Verwerfen',
-
-  FAQ: 'Häufig gestellte Fragen',
 
   IMG_LOGO: 'Bild/Logo',
   UPLOAD_FAILED: 'Failed fehlgeschlagen',

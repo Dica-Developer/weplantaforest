@@ -15,6 +15,8 @@ import {
   getShortText
 } from '../common/language/LanguageHelper';
 
+import counterpart from 'counterpart';
+
 require('./blogOverviewPage.less');
 
 class Article extends Component {
@@ -90,7 +92,7 @@ export default class BlogOverviewPage extends Component {
       <div className="container paddingTopBottom15 blogOverviewPage">
         <div className="row">
           <div className={'col-md-12'}>
-            <h1>Blog</h1>
+            <h1>{counterpart.translate('BLOG')}</h1>
           </div>
         </div>
         <div className="row">
