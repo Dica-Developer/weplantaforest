@@ -8,6 +8,8 @@ import {Link} from 'react-router';
 import SvgButton from '../common/components/SvgButton';
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
+import counterpart from 'counterpart';
+
 export default class ProjectDetails extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +39,7 @@ export default class ProjectDetails extends Component {
     }
 
     if (this.props.project.projectReportData.active) {
-      plantButton = <SvgButton text="HIER PFLANZEN" buttonType="mouse" onClick={this.props.showPlanting.bind(this)} />;
+      plantButton = <SvgButton text={counterpart.translate('PLANT_HERE')} buttonType="mouse" onClick={this.props.showPlanting.bind(this)} />;
     } else {
       plantButton = '';
     }
@@ -47,7 +49,7 @@ export default class ProjectDetails extends Component {
       <div ref="details" className={(this.state.fade
         ? 'fadeOut'
         : 'fadeIn') + ' projectDetails'}>
-        <h1>{'Projekt: '}
+        <h1>{counterpart.translate('PROJECTS') + ': '}
           <i>{this.props.project.projectReportData.projectName}</i>
         </h1>
         <table>
@@ -57,7 +59,7 @@ export default class ProjectDetails extends Component {
                 <div className="floatRight">
                   <span className="greenValue">{formattedPercent}%</span><br/>
                   <span className="tableText">
-                    <i>bepflanzt</i>
+                    <i>{counterpart.translate('PLANTED')}</i>
                   </span>
                 </div>
               </td>
@@ -75,7 +77,7 @@ export default class ProjectDetails extends Component {
               <td >
                 <span className="greenValue">{Accounting.formatNumber(this.props.project.projectReportData.amountOfPlantedTrees, 0, '.', ',')}</span><br/>
                 <span className="tableText">
-                  <i>von {Accounting.formatNumber(this.props.project.projectReportData.amountOfMaximumTreesToPlant, 0, '.', ',')}&nbsp;Bäumen</i>
+                  <i>{counterpart.translate('OF')}&nbsp;{Accounting.formatNumber(this.props.project.projectReportData.amountOfMaximumTreesToPlant, 0, '.', ',')}&nbsp;{counterpart.translate('TREES')}</i>
                 </span>
               </td>
             </tr>
