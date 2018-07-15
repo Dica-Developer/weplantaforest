@@ -270,6 +270,9 @@ module.exports = {
   PLANT_HERE: 'Hier pflanzen',
   PLANTED: 'bepflanzt',
   OF: 'von',
+  BLOG: 'Blog',
+  PLANT_BAG: 'PFLANZKORB',
+  MY_PLANT_BAG: 'Mein Pflanzkorb',
 
   CERTIFICATE: {
     FIND_PLANTINGS: 'Pflanzungen finden',
