@@ -261,6 +261,14 @@ module.exports = {
   IMG_LOGO: 'Image/Logo',
   UPLOAD_FAILED: 'Failed to upload',
   UPLOAD_FINISHED: 'Upload finished!',
-  SVG_SHOVEL_TITLE: 'testest'
+  SVG_SHOVEL_TITLE: 'testest',
+
+  BEST_TEAMS: 'Best teams',
+  BEST_PLANTERS: 'Best planters',
+  NEWEST_PLANTINGS: 'Newest plantings',
+  PROJECTS: 'Projects',
+  PLANT_HERE: 'Plant here',
+  PLANTED: 'planted',
+  OF: 'of'
 
 };
