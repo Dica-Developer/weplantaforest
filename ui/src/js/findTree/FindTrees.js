@@ -8,6 +8,8 @@ import Boostrap from 'bootstrap';
 
 import IconButton from '../common/components/IconButton';
 
+import counterpart from 'counterpart';
+
 export default class FindTrees extends Component {
 
   constructor(props) {
@@ -26,10 +28,10 @@ export default class FindTrees extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <h1>Pflanzungen finden</h1>
+        <h1>{counterpart.translate('CERTIFICATE.FIND_PLANTINGS')}</h1>
         <div className="certificateWrapper">
-            Zertifikat-Nummer: <input type="text" onBlur={this.updateCertId.bind(this)}/>
-          <IconButton text="Finden" glyphIcon="glyphicon-search" onClick={()=>{this.props.findCertificate(this.state.certificateId);}}/>
+          {counterpart.translate('CERTIFICATE.NUMBER') + ': '}<input type="text" onBlur={this.updateCertId.bind(this)}/>
+          <IconButton text={counterpart.translate('CERTIFICATE.FIND')} glyphIcon="glyphicon-search" onClick={()=>{this.props.findCertificate(this.state.certificateId);}}/>
         </div>
       </div>
     );

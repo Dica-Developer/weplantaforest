@@ -269,6 +269,12 @@ module.exports = {
   PROJECTS: 'Projekte',
   PLANT_HERE: 'Hier pflanzen',
   PLANTED: 'bepflanzt',
-  OF: 'von'
+  OF: 'von',
+
+  CERTIFICATE: {
+    FIND_PLANTINGS: 'Pflanzungen finden',
+    NUMBER: 'Zertifikat-Nummer',
+    FIND: 'Finden'
+  }
 
 };
