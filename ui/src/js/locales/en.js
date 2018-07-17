@@ -278,6 +278,9 @@ module.exports = {
     FIND_PLANTINGS: 'Find plantings',
     NUMBER: 'Certificate number',
     FIND: 'Find'
-  }
+  },
+
+  SAVE: 'save',
+  EDIT: 'edit'
 
 };

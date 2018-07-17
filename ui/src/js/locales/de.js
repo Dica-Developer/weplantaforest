@@ -256,7 +256,7 @@ module.exports = {
   OTHER: 'Sonstige',
 
   CHOOSE_FILE: 'Datei auswählen',
-  DISCARD: 'Verwerfen',
+  DISCARD: 'verwerfen',
 
   IMG_LOGO: 'Bild/Logo',
   UPLOAD_FAILED: 'Failed fehlgeschlagen',
@@ -278,6 +278,9 @@ module.exports = {
     FIND_PLANTINGS: 'Pflanzungen finden',
     NUMBER: 'Zertifikat-Nummer',
     FIND: 'Finden'
-  }
+  },
+
+  SAVE: 'speichern',
+  EDIT: 'bearbeiten'
 
 };

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import IconButton from '../../common/components/IconButton';
 
@@ -42,9 +43,9 @@ export default class EditItem extends Component {
   render() {
     var link;
     if (this.state.edit) {
-      link = <div><IconButton text="speichern" glyphIcon="glyphicon-floppy-save" onClick={this.editUser.bind(this)}/><IconButton text="verwerfen" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
+      link = <div><IconButton text={counterpart.translate('SAVE')} glyphIcon="glyphicon-floppy-save" onClick={this.editUser.bind(this)}/><IconButton text={counterpart.translate('DISCARD')} glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
     } else {
-      link = <IconButton text="bearbeiten" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
+      link = <IconButton text={counterpart.translate('EDIT')} glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }
 
     return (
