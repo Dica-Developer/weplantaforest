@@ -5,6 +5,7 @@ import {
   render
 } from 'react-dom';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import Notification from '../../common/components/Notification';
 import IconButton from '../../common/components/IconButton';
@@ -27,9 +28,9 @@ export default class EditPasswordItem extends Component {
 
   saveContent() {
     if (this.state.passwordOne != this.state.passwordTwo) {
-      this.refs.notification.addNotification('Passwörter stimmen nicht überein!', 'Das neu eingegebene Passwort stimmt nicht mit der Bestätigung überein!', 'error');
+      this.refs.notification.addNotification(counterpart.translate('PASSWORDS_DO_NOT_MATCH.title'), counterpart.translate('PASSWORDS_DO_NOT_MATCH.text'), 'error');
     }else if(this.state.passwordOne.length < 6){
-      this.refs.notification.addNotification('Passwort zu kurz!', 'Bitte gibt mind. 6 Zeichen für dein Passwort an!', 'error');
+      this.refs.notification.addNotification(counterpart.translate('PASSWORD_TOO_SHORT.title'), counterpart.translate('PASSWORD_TOO_SHORT.text'), 'error');
     } else {
       this.setState({
         edit: false
@@ -39,7 +40,7 @@ export default class EditPasswordItem extends Component {
   }
 
   saveChanges(){
-    
+
   }
 
   undoChanges() {
@@ -67,22 +68,22 @@ export default class EditPasswordItem extends Component {
     var passwordPart;
     if (this.state.edit) {
       passwordPart = <div className="passwordFields">
-        <input type="password" value={this.state.passwordOne} onChange={this.updatePasswordOne.bind(this)} disabled={!this.state.edit} placeholder="NEUES PASSWORT"/>
-        <input type="password" value={this.state.passwordTwo} onChange={this.updatePasswordTwo.bind(this)}  disabled={!this.state.edit} placeholder="BESTÄTIGUNG"/>
+        <input type="password" value={this.state.passwordOne} onChange={this.updatePasswordOne.bind(this)} disabled={!this.state.edit} placeholder={counterpart.translate('NEW_PASSWORD')}/>
+        <input type="password" value={this.state.passwordTwo} onChange={this.updatePasswordTwo.bind(this)}  disabled={!this.state.edit} placeholder={counterpart.translate('CONFIRMATION')}/>
       </div>;
-      link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.saveContent.bind(this)}/><br/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
+      link = <div><IconButton text={counterpart.translate('SAVE')} glyphIcon="glyphicon-floppy-save" onClick={this.saveContent.bind(this)}/><IconButton text={counterpart.translate('DISCARD')} glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
     } else {
       passwordPart = '••••••';
-      link = <IconButton text="bearbeiten" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
+      link = <IconButton text={counterpart.translate('EDIT')} glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }
 
     return (
-      <div className="editItem">
-        <div className="left">
+      <div className="row editItem">
+        <div className="col-md-9">
           <span className="bold">{this.props.text}:&nbsp;</span>
           {passwordPart}
         </div>
-        <div className="right">
+        <div className="col-md-3">
           {link}
         </div>
         <Notification ref="notification"/>

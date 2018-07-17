@@ -281,6 +281,9 @@ module.exports = {
   },
 
   SAVE: 'speichern',
-  EDIT: 'bearbeiten'
+  EDIT: 'bearbeiten',
+
+  NEW_PASSWORD: 'neues Passwort',
+  CONFIRMATION: 'Bestätigung'
 
 };
