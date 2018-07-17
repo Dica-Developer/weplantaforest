@@ -126,7 +126,7 @@ export default class Routes extends Component {
           <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)}/>
           <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)}/>
-          <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)}/>
+          <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)}/>
           <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>
           <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>
           <Route path="/registration" component={RegistrationPage} reRender={this.reRender.bind(this)}/>

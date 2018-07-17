@@ -317,6 +317,11 @@ module.exports = {
   ABORT: 'abort',
   USER_DELETE_ERROR: 'Please send us a contact message to realize the anonymization of your account.',
   ANONYMIZE_ACCOUNT: 'anonymize account',
-  PROFILE: 'Profile'
+  PROFILE: 'Profile',
+
+  NOT_LOGGED_IN: 'Warning: You are not logged in',
+  NOT_LOGGED_IN_TEXT: 'There are less functions available, when you plant anonymously. Only registrated user can create gifts and certificates and get receipts.',
+  ACCOUNT_Q: 'Do you have an account?',
+  NO_ACCOUNT_Q: 'You don\'t have one?'
 
 };

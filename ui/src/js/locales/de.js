@@ -317,6 +317,11 @@ module.exports = {
   ABORT: 'Abbrechen',
   USER_DELETE_ERROR: 'Bitte wende dich über das Kontaktformular an uns, damit das Anonymisieren deines Accounts durchgeführt werden kann.',
   ANONYMIZE_ACCOUNT: 'Account anonymisieren',
-  PROFILE: 'Profil'
+  PROFILE: 'Profil',
+
+  NOT_LOGGED_IN: 'Wichtig: Du bist nicht eingeloggt',
+  NOT_LOGGED_IN_TEXT: 'Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung. Nur als registrierter Nutzer kannst du Zertifikate und Gutscheine erstellen und erhälst Spendenquittungen.',
+  ACCOUNT_Q: 'Du hast einen Account?',
+  NO_ACCOUNT_Q: 'Du hast noch keinen Account?'
 
 };

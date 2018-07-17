@@ -86,12 +86,12 @@ export default class PlantBag extends Component {
   }
 
   showPlantItems() {
-    for (var project in this.state.plantBag.projects) {
-      console.log('project: ' + project);
-      for (var projectItem in this.state.plantBag.projects[project]['plantItems']) {
-        console.log('article: ' + projectItem + ' | amount: ' + this.state.plantBag.projects[project]['plantItems'][projectItem].amount);
-      }
-    }
+    // for (var project in this.state.plantBag.projects) {
+    //   console.log('project: ' + project);
+    //   for (var projectItem in this.state.plantBag.projects[project]['plantItems']) {
+    //     console.log('article: ' + projectItem + ' | amount: ' + this.state.plantBag.projects[project]['plantItems'][projectItem].amount);
+    //   }
+    // }
   }
 
   showPlantBagPage() {

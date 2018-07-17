@@ -4,6 +4,7 @@ import axios from 'axios';
 import {browserHistory} from 'react-router';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import PlantBagProject from './PlantBagProject';
 import PlantBagItem from './PlantBagItem';
@@ -139,6 +140,14 @@ export default class PlantBagPage extends Component {
     }
   }
 
+  linkTo(url) {
+    browserHistory.push(url);
+  }
+
+  showLogin(){
+    this.props.route.showLoginSlide();
+  }
+
   render() {
     var that = this;
     var overallPriceAndPayment;
@@ -164,8 +173,14 @@ export default class PlantBagPage extends Component {
             <div className={'panel panel-warning ' + (!this.state.isAnonymUser
               ? 'no-display'
               : '')}>
-              <div className="panel-heading">Du bis nicht eingeloggt</div>
-              <div className="panel-body">Du bist nicht als registrierter User eingeloggt. Deine Pflanzung geschieht anonym.</div>
+              <div className="panel-heading">{counterpart.translate('NOT_LOGGED_IN')}</div>
+              <div className="panel-body">
+                {counterpart.translate('NOT_LOGGED_IN_TEXT')}<br/>
+                {counterpart.translate('ACCOUNT_Q')}&nbsp;<a onClick={this.showLogin.bind(this)}>Login</a><br/>
+                {counterpart.translate('NO_ACCOUNT_Q')}&nbsp;<a onClick={() => {
+                  this.linkTo('/registration');
+                }}>{counterpart.translate('REGISTRATE')}</a>
+              </div>
             </div>
             <div className="overview">
               {Object.keys(this.state.plantBag.projects).map(function(project, i) {
