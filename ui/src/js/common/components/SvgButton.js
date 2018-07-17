@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 var svgParams = require('./svgParams.js');
 
@@ -16,7 +17,7 @@ export default class svgButton extends Component {
     let buttonType = this.props.buttonType;
     let svgButton = [];
     svgButton.push('<svg width="' + svgParams[buttonType].width + '" height="' + svgParams[buttonType].height + '" viewBox="' + svgParams[buttonType].viewBox + '">');
-    svgButton.push('<title>' + svgParams[buttonType].title + '</title>');
+    svgButton.push('<title>' + counterpart.translate('SVG_TITLES.' + buttonType)+ '</title>');
     for(let transformFunction of svgParams[buttonType].transform){
       svgButton.push('<g transform="' + transformFunction + '">');
     }

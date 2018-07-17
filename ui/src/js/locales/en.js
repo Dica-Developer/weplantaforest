@@ -263,7 +263,16 @@ module.exports = {
   IMG_LOGO: 'Image/Logo',
   UPLOAD_FAILED: 'Failed to upload',
   UPLOAD_FINISHED: 'Upload finished!',
-  SVG_SHOVEL_TITLE: 'testest',
+
+  SVG_TITLES:  {
+    shovel: 'plant yourself',
+    mouse: 'plant online',
+    secateurs: 'Treeservice',
+    trees: 'My forest',
+    barrow: 'Plantbag',
+    hamburger: 'Menu',
+    ipatlogo: 'Home'
+  },
 
   BEST_TEAMS: 'Best teams',
   BEST_PLANTERS: 'Best planters',
