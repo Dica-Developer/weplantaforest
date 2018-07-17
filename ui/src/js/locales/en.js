@@ -68,8 +68,8 @@ module.exports = {
 
   PLANTED_TREES: 'Planted trees',
   TREES_PLANTED: 'Trees planted',
-  CO2_BOUND: 'CO2 bound / tons',
-  CO2_BOUND_WITHOUT_TONS: 'CO2 bound',
+  CO2_BOUND: 'CO<sub>2</sub> bound (tons)',
+  CO2_BOUND_WITHOUT_TONS: 'CO<sub>2</sub> bound',
 
   USERNAME: 'Username',
   PASSWORD: 'Password',

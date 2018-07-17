@@ -37,9 +37,9 @@ export default class RankingItem extends Component {
             width: this.props.percentCo2 + '%'
           }}>
             <span className="stats">&nbsp;{Accounting.formatNumber(this.props.content.co2Saved, 1, '.', ',')}&nbsp;</span>
-            <span className="text">
-              {counterpart.translate('CO2_BOUND')}
-            </span>
+            <span className="text" dangerouslySetInnerHTML={{
+          __html: counterpart.translate('CO2_BOUND')
+            }}></span>
           </p>
         </div>
       </div>

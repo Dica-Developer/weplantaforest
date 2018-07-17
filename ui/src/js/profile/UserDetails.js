@@ -119,7 +119,9 @@ export default class UserDetails extends Component {
               </tr>
               <tr>
                 <td>
-                  <span className="bold">{counterpart.translate('CO2_BOUND_WITHOUT_TONS')}:&nbsp;</span>{Accounting.formatNumber(this.props.user.co2Data.co2, 3, '.', ',')}&nbsp;t</td>
+                  <span className="bold" dangerouslySetInnerHTML={{
+                    __html: counterpart.translate('CO2_BOUND_WITHOUT_TONS') + ":"
+                  }}></span>&nbsp;{Accounting.formatNumber(this.props.user.co2Data.co2, 3, '.', ',')}&nbsp;t</td>
                 <td>
                   <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>{this.props.user.organizationType}</td>
               </tr>

@@ -39,7 +39,9 @@ export default class StatisticsPage extends Component {
           <TreesPerYear/>
           <div className="row">
             <div className="col-md-12">
-              <h2>{counterpart.translate('CO2_BOUND')}</h2>
+              <h2 dangerouslySetInnerHTML={{
+                __html: counterpart.translate('CO2_BOUND')
+              }}></h2>
             </div>
           </div>
           <Co2PerYear/>

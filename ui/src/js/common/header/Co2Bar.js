@@ -28,7 +28,9 @@ export default class Co2Bar extends Component {
         <div className="tree-chars">{counterpart.translate('PLANTED_TREES')}</div>
         <div className="tree-number">{this.state.treesCount.toLocaleString()}</div>
         <br/>
-        <div className="co2-chars">{counterpart.translate('CO2_BOUND')}</div>
+        <div className="co2-chars" dangerouslySetInnerHTML={{
+          __html: counterpart.translate('CO2_BOUND')
+        }}></div>
         <div className="co2-number">{Accounting.formatNumber(this.state.co2, 0, '.', ',')}</div>
       </div>
     );
