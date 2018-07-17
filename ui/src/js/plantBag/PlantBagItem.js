@@ -88,7 +88,7 @@ export default class PlantBagItem extends Component {
         </div>
         <div className="treeTypeInfo">
           <p>
-            <span className="bold uppercase">{this.props.plantItemName}</span><br/>Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.plantBagitem.price / 100, 2, '.', ',')}&nbsp;€</span>
+            <span className="bold uppercase">{this.props.plantItemName}</span><br/><span className="bold">{Accounting.formatNumber(this.props.plantBagitem.price / 100, 2, '.', ',')}&nbsp;€</span>
           </p>
         </div>
         <div className="customizer">

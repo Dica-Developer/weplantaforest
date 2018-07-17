@@ -322,6 +322,16 @@ module.exports = {
   NOT_LOGGED_IN: 'Wichtig: Du bist nicht eingeloggt',
   NOT_LOGGED_IN_TEXT: 'Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung. Nur als registrierter Nutzer kannst du Zertifikate und Gutscheine erstellen und erhälst Spendenquittungen.',
   ACCOUNT_Q: 'Du hast einen Account?',
-  NO_ACCOUNT_Q: 'Du hast noch keinen Account?'
+  NO_ACCOUNT_Q: 'Du hast noch keinen Account?',
+
+  NO_USER_LOGGED_IN: {
+    TITLE: 'Kein Nutzer angemeldet!',
+    TEXT: 'Anonymen Nutzern ist es leider nicht gestattet, Gutscheine zu erstellen.'
+  },
+
+  AS_GIFT: 'Als Geschenkgutschein',
+  GO_TO_PAYMENT: 'weiter zur Kasse',
+  NO_TREES_IN_PLANTBAG: 'Es befinden sich keine Bäume in deinem Pflanzkorb.',
+  YOUR_PLANTBAG: 'Dein Pflanzkorb'
 
 };

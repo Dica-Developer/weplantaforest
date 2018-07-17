@@ -57,7 +57,7 @@ export default class PlantBagPage extends Component {
       if (!this.state.isAnonymUser) {
         this.createGift(config);
       } else {
-        this.refs.notification.addNotification('Kein Nutzer angemeldet!', 'Anonymen Nutzern ist es leider nicht gestattet, Gutscheine zu erstellen.', 'error');
+        this.refs.notification.addNotification(counterpart.translate('NO_USER_LOGGED_IN.TITLE'), counterpart.translate('NO_USER_LOGGED_IN.TEXT'), 'error');
       }
     } else {
       this.createCart(config);
@@ -154,22 +154,22 @@ export default class PlantBagPage extends Component {
     if (this.state.plantBag.price > 0) {
       overallPriceAndPayment = <div><div className="doubledLine"/>
         <div className="overallPrice">
-          GESAMT:&nbsp;{Accounting.formatNumber(this.state.plantBag.price / 100, 2, '.', ',')}&nbsp;€
+          {counterpart.translate('PRICE_TOTAL')}:&nbsp;{Accounting.formatNumber(this.state.plantBag.price / 100, 2, '.', ',')}&nbsp;€
         </div>
         <div className="align-right">
-          <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text="Als Geschenkgutschein"/><br/>
-          <IconButton glyphIcon="glyphicon-euro" text="WEITER ZUR KASSE" onClick={this.switchTOPaymentPage.bind(this)}/>
+          <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text={counterpart.translate('AS_GIFT')}/><br/>
+          <IconButton glyphIcon="glyphicon-euro" text={counterpart.translate('GO_TO_PAYMENT')} onClick={this.switchTOPaymentPage.bind(this)}/>
         </div>
       </div>;
     } else {
-      overallPriceAndPayment = <div>Es befinden sich keine Bäume in deinem Pflanzkorb.</div>;
+      overallPriceAndPayment = <div>{counterpart.translate('NO_TREES_IN_PLANTBAG')}</div>;
     }
 
     return (
       <div className="container paddingTopBottom15">
         <div className="row plantBagPage">
           <div className="col-md-12">
-            <h1>Dein Pflanzkorb</h1>
+            <h1>{counterpart.translate('YOUR_PLANTBAG')}</h1>
             <div className={'panel panel-warning ' + (!this.state.isAnonymUser
               ? 'no-display'
               : '')}>

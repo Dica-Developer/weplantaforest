@@ -322,6 +322,16 @@ module.exports = {
   NOT_LOGGED_IN: 'Warning: You are not logged in',
   NOT_LOGGED_IN_TEXT: 'There are less functions available, when you plant anonymously. Only registrated user can create gifts and certificates and get receipts.',
   ACCOUNT_Q: 'Do you have an account?',
-  NO_ACCOUNT_Q: 'You don\'t have one?'
+  NO_ACCOUNT_Q: 'You don\'t have one?',
+
+  NO_USER_LOGGED_IN: {
+    TITLE: 'No user logged in!',
+    TEXT: 'Anonym user can\'t create gifts.'
+  },
+
+  AS_GIFT: 'As gift',
+  GO_TO_PAYMENT: 'continue to pay',
+  NO_TREES_IN_PLANTBAG: 'There are no trees in your plantbag.',
+  YOUR_PLANTBAG: 'Your plantbag'
 
 };
