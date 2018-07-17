@@ -6,6 +6,7 @@ import {Link} from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import FileChooseAndUploadButton from './FileChooseAndUploadButton';
 import EditNameItem from './EditNameItem';
@@ -37,7 +38,7 @@ export default class EditUserDetails extends Component {
       that.refs[toEdit].saveChanges();
     }).catch(function(response) {
       that.refs[toEdit].undoChanges();
-      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', response.data, 'error');
+      that.refs.notification.addNotification(counterpart.translate('ERROR'), response.data, 'error');
     });
     if (toEdit == 'LANGUAGE') {
       this.props.updateLanguage(newEntry);
@@ -76,38 +77,38 @@ export default class EditUserDetails extends Component {
     return (
       <div>
         <div className="editUserDetails" onClick={this.clearErrorMessage}>
-          <h1>Profil bearbeiten</h1>
+          <h1>{counterpart.translate('EDIT_PROFILE')}</h1>
           <div className="summary">
             <span className="name">{this.props.user.userName}</span><br/>
-            <span className="bold">Mitglied seit:&nbsp;</span>{moment(this.props.user.regDate).format('DD.MM.YYYY')}<br/>
-            <span className="bold">letzter Besuch:&nbsp;</span>{moment(this.props.user.lastVisit).format('DD.MM.YYYY')}<br/>
-            <span className="bold">Rang:&nbsp;</span>{this.props.user.rank}
+            <span className="bold">{counterpart.translate('MEMBER_SINCE')}:&nbsp;</span>{moment(this.props.user.regDate).format('DD.MM.YYYY')}<br/>
+            <span className="bold">{counterpart.translate('LAST_VISIT')}:&nbsp;</span>{moment(this.props.user.lastVisit).format('DD.MM.YYYY')}<br/>
+            <span className="bold">{counterpart.translate('RANK')}:&nbsp;</span>{this.props.user.rank}
           </div>
         </div>
         <FileChooseAndUploadButton imageId="edit-logo-img" imageFileName={this.props.user.imageFileName} updateImageName={this.updateImageName.bind(this)}/>
-        <EditNameItem text="Name" content={this.props.user.userName} toEdit="NAME" editUsername={this.editUsername.bind(this)} ref="name"/>
-        <EditItem text="Über mich" content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)} ref="ABOUTME"/>
-        <EditItem text="Ort" content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)} ref="LOCATION"/>
-        <EditItem text="Organisation" content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)} ref="ORGANISATION"/>
-        <EditItem text="Webseite" content={this.props.user.homepage} toEdit="HOMEPAGE" editUser={this.editUser.bind(this)} ref="HOMEPAGE"/>
-        <EditDropdownItem text="Sprache" toEdit="LANGUAGE" content={this.props.user.lang} editUser={this.editUser.bind(this)} width="100" ref="LANGUAGE">
-          <option value="DEUTSCH">DEUTSCH</option>
-          <option value="ENGLISH">ENGLISH</option>
+        <EditNameItem text={counterpart.translate('USERNAME')} content={this.props.user.userName} toEdit="NAME" editUsername={this.editUsername.bind(this)} ref="name"/>
+        <EditItem text={counterpart.translate('ABOUT_ME')} content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)} ref="ABOUTME"/>
+        <EditItem text={counterpart.translate('CITY')} content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)} ref="LOCATION"/>
+        <EditItem text={counterpart.translate('COMPANY')} content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)} ref="ORGANISATION"/>
+        <EditItem text={counterpart.translate('WEBSITE')} content={this.props.user.homepage} toEdit="HOMEPAGE" editUser={this.editUser.bind(this)} ref="HOMEPAGE"/>
+        <EditDropdownItem text={counterpart.translate('LANGUAGE')} toEdit="LANGUAGE" content={this.props.user.lang} editUser={this.editUser.bind(this)} width="100" ref="LANGUAGE">
+          <option value="DEUTSCH">{counterpart.translate('GERMAN')}</option>
+          <option value="ENGLISH">{counterpart.translate('ENGLISH')}</option>
         </EditDropdownItem>
-        <EditDropdownItem text="Newsletter abbonnieren" toEdit="NEWSLETTER" content={this.props.user.newsletter} editUser={this.editUser.bind(this)} width="70" ref="NEWSLETTER">
-          <option value="JA">JA</option>
-          <option value="NEIN">NEIN</option>
+        <EditDropdownItem text={counterpart.translate('NEWSLETTER_ABO')} toEdit="NEWSLETTER" content={this.props.user.newsletter} editUser={this.editUser.bind(this)} width="70" ref="NEWSLETTER">
+          <option value="JA">{counterpart.translate('YES')}</option>
+          <option value="NEIN">{counterpart.translate('NO')}</option>
         </EditDropdownItem>
-        <EditItem text="E-Mail" content={this.props.user.mail} toEdit="MAIL" editUser={this.editUser.bind(this)} ref="MAIL"/>
-        <EditDropdownItem text="Typ" toEdit="ORGANIZATION_TYPE" content={this.props.user.organizationType} editUser={this.editUser.bind(this)} width="180" ref="ORGANIZATION_TYPE">
-          <option value="PRIVATE">Privatperson</option>
-          <option value="COMMERCIAL">Firma</option>
-          <option value="NONPROFIT">Non-Profit Organisation</option>
-          <option value="EDUCATIONAL">Schule</option>
+        <EditItem text={counterpart.translate('MAIL')} content={this.props.user.mail} toEdit="MAIL" editUser={this.editUser.bind(this)} ref="MAIL"/>
+        <EditDropdownItem text={counterpart.translate('TYPE')} toEdit="ORGANIZATION_TYPE" content={this.props.user.organizationType} editUser={this.editUser.bind(this)} width="180" ref="ORGANIZATION_TYPE">
+          <option value="PRIVATE">{counterpart.translate('RANKING_TYPES.PRIVATE')}</option>
+          <option value="COMMERCIAL">{counterpart.translate('RANKING_TYPES.COMMERCIAL')}</option>
+          <option value="NONPROFIT">{counterpart.translate('RANKING_TYPES.NONPROFIT')}</option>
+          <option value="EDUCATIONAL">{counterpart.translate('RANKING_TYPES.EDUCATIONAL')}</option>
         </EditDropdownItem>
-        <EditPasswordItem text="Passwort" toEdit="PASSWORD" editUser={this.editUser.bind(this)} ref="PASSWORD"/>
+        <EditPasswordItem text={counterpart.translate('PASSWORD')} toEdit="PASSWORD" editUser={this.editUser.bind(this)} ref="PASSWORD"/>
         <div className="align-center bottomButton">
-          <IconButton text="anschauen" glyphIcon="glyphicon-eye-open" onClick={this.showProfile.bind(this)}/>
+          <IconButton text={counterpart.translate('VIEW')} glyphIcon="glyphicon-eye-open" onClick={this.showProfile.bind(this)}/>
         </div>
         <Notification ref="notification"/>
       </div>

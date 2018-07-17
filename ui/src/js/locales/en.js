@@ -284,6 +284,21 @@ module.exports = {
   EDIT: 'edit',
 
   NEW_PASSWORD: 'new password',
-  CONFIRMATION: 'confirmation'
+  CONFIRMATION: 'confirmation',
+
+  EDIT_PROFILE: 'Edit Profile',
+  MEMBER_SINCE: 'Member since',
+  LAST_VISIT: 'Last visit',
+  RANK: 'Rank',
+  ABOUT_ME: 'About me',
+  WEBSITE: 'Website',
+  LANGUAGE: 'Language',
+  GERMAN: 'german',
+  ENGLISH: 'english',
+  NEWSLETTER_ABO: 'Subscribe to newsletter',
+  YES: 'yes',
+  NO: 'no',
+  TYPE: 'Type',
+  VIEW: 'view'
 
 };

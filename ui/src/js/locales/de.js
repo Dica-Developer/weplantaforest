@@ -284,6 +284,21 @@ module.exports = {
   EDIT: 'bearbeiten',
 
   NEW_PASSWORD: 'neues Passwort',
-  CONFIRMATION: 'Bestätigung'
+  CONFIRMATION: 'Bestätigung',
+
+  EDIT_PROFILE: 'Profil bearbeiten',
+  MEMBER_SINCE: 'Mitglied seit',
+  LAST_VISIT: 'Letzter Besuch',
+  RANK: 'Rang',
+  ABOUT_ME: 'Über mich',
+  WEBSITE: 'Webseite',
+  LANGUAGE: 'Sprache',
+  GERMAN: 'deutsch',
+  ENGLISH: 'englisch',
+  NEWSLETTER_ABO: 'Newsletter abonnieren',
+  YES: 'ja',
+  NO: 'nein',
+  TYPE: 'Typ',
+  VIEW: 'anschauen'
 
 };
