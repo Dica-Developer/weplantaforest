@@ -188,7 +188,7 @@ export default class Sepa extends Component {
             </div>
             <div className="form-group">
               <label htmlFor="country">{counterpart.translate('COUNTRY')}</label>
-              <CountryDropdown id="country" value={this.state.paymentData.country} onChange={(val) => this.selectCountry(val)} classes="form-control" valueType="short"/>
+              <CountryDropdown id="country" value={this.state.paymentData.country} onChange={(val) => this.selectCountry(val)} classes="form-control" valueType="short" disabled={this.state.paymentDone}/>
             </div>
             <div className="form-group">
               <label htmlFor="mail">{counterpart.translate('MAIL')} *</label>
