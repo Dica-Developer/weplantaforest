@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import Notification from '../../common/components/Notification';
 import IconButton from '../../common/components/IconButton';
@@ -48,16 +49,16 @@ export default class EditNameItem extends Component {
   render() {
     var link;
     if (this.state.edit) {
-      link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.saveContent.bind(this)}/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
+      link = <div><IconButton text={counterpart.translate('SAVE')} glyphIcon="glyphicon-floppy-save" onClick={this.saveContent.bind(this)}/><IconButton text={counterpart.translate('DISCARD')} glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
     } else {
-      link = <IconButton text="bearbeiten" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
+      link = <IconButton text={counterpart.translate('EDIT')} glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }
 
     return (
-      <div className="editItem">
-        <div className="left">
+      <div className="row editItem">
+        <div className="col-md-9">
           <span className="bold">{this.props.text}:&nbsp;</span><input type="text" value={this.state.contentTemp} onChange={this.updateContent.bind(this)} ref="content" disabled={!this.state.edit}/></div>
-        <div className="right">
+        <div className="col-md-3">
           {link}
         </div>
         <Notification ref="notification"/>

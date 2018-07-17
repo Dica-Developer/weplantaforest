@@ -256,7 +256,7 @@ module.exports = {
   OTHER: 'Other',
 
   CHOOSE_FILE: 'Choose file',
-  DISCARD: 'Discard',
+  DISCARD: 'discard',
 
   IMG_LOGO: 'Image/Logo',
   UPLOAD_FAILED: 'Failed to upload',
