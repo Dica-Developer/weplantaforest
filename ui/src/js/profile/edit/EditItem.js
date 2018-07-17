@@ -42,16 +42,16 @@ export default class EditItem extends Component {
   render() {
     var link;
     if (this.state.edit) {
-      link = <div><IconButton text="SPEICHERN" glyphIcon="glyphicon-floppy-save" onClick={this.editUser.bind(this)}/><IconButton text="VERWERFEN" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
+      link = <div><IconButton text="speichern" glyphIcon="glyphicon-floppy-save" onClick={this.editUser.bind(this)}/><IconButton text="verwerfen" glyphIcon="glyphicon-trash" onClick={this.undoChanges.bind(this)}/></div>;
     } else {
       link = <IconButton text="bearbeiten" glyphIcon="glyphicon-cog" onClick={this.editContent.bind(this)}/>;
     }
 
     return (
-      <div className="editItem">
-        <div className="left">
+      <div className="row editItem">
+        <div className="col-md-9">
           <span className="bold">{this.props.text}:&nbsp;</span><input type="text" value={this.state.contentTemp} onChange={this.updateContent.bind(this)} ref="content" disabled={!this.state.edit}/></div>
-        <div className="right">
+        <div className="col-md-3">
           {link}
         </div>
       </div>

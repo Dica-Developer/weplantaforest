@@ -56,19 +56,42 @@
 .editItem {
   border-width: 1px;
   border-style: solid none none none;
-  height: 30px;
+  min-height: 30px;
   padding-top: 5px;
   margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 
-  input {
-    border: none;
-    background-color: @base-background-color;
-    width: 230px;
+  .col-md-9{
+    padding-left: 0;
+    display: table;
+    span{
+      display: table-cell;
+      width:1px;
+      white-space: nowrap;
+    }
+    input {
+      border: none;
+      background-color: @base-background-color;
+      display: table-cell;
+      width: 100%;
+    }
+
+    input:focus {
+      border-color: #000;
+    }
+
   }
 
-  input:focus {
-    border-color: #000;
+  .col-md-3{
+    text-align: right;
+    padding-right: 0;
+
+    .iconButton:nth-child(2){
+      margin-top: 8px;
+    }
   }
+
 
   .passwordFields {
     display: inline-block;
