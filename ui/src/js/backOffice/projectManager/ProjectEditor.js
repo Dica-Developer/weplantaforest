@@ -159,7 +159,8 @@ class ProjectImage extends Component {
     };
     var image;
     if (this.state.file != null) {
-      image = <img src={this.state.fileSrc} height="300" width="400"/>;
+      // image = <img src={this.state.fileSrc} height="300" width="400"/>;
+      image: '';
     } else {
       let imageUrl = 'http://localhost:8081/project/image/' + this.state.imageFileName + '/400/300';
       image = <img src={imageUrl}/>;
@@ -517,6 +518,18 @@ export default class ProjectEditor extends Component {
       for (var image in that.state.project.images) {
         that.refs['image_' + image].updateProjectId(projectId);
       }
+      if(that.state.mainImageFileSrc && that.state.mainImageFileSrc != ''){
+          var mainImageFileData = new FormData();
+          mainImageFileData.append('projectId', projectId);
+          mainImageFileData.append('file', that.state.mainImageFile);
+          axios.post('http://localhost:8083/project/mainImage', mainImageFileData, config).then(function(response) {
+            // that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
+          }).catch(function(response) {
+            that.refs.notification.addNotification('Fehler!', response.data+ response.message, 'error');
+          });
+
+      }
+
       that.refs.notification.addNotification('Geschafft!', 'Projekt wurde aktualisiert.', 'success');
       that.forceUpdate();
     }).catch(function(response) {
@@ -606,10 +619,32 @@ export default class ProjectEditor extends Component {
     return projectImages;
   }
 
+  updateMainImage(imageName, file) {
+    this.setState({mainImageFile: file});
+    if (file != null) {
+      var reader = new FileReader();
+      var url = reader.readAsDataURL(file);
+      reader.onloadend = function(e) {
+        this.setState({
+          mainImageFileSrc: [reader.result]
+        });
+      }.bind(this);
+    }
+    this.forceUpdate();
+  }
+
   render() {
     var that = this;
     var articles = this.createProjectArticles();
     var projectImages = this.createProjectImages();
+    let mainImage;
+    let mainImageUrl;
+    if (this.state.mainImageFile != null) {
+      mainImage: '';
+    } else {
+      mainImageUrl = 'http://localhost:8081/project/image/' + this.state.project.imageFileName + '/279/186';
+      mainImage =   <img src={mainImageUrl} />
+    }
 
     return (
       <div className="container paddingTopBottom15 projectEditor">
@@ -644,6 +679,15 @@ export default class ProjectEditor extends Component {
           <div className="col-md-8">
             <RadioButton id="radio-s-1" value="1" checked={this.state.project.shopActive} onChange={this.updateShopActive.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
             <RadioButton id="radio-s-0" value="0" checked={!this.state.project.shopActive} onChange={this.updateShopActive.bind(this)} text="&nbsp; nein"/>
+          </div>
+        </div>
+        <div className="row project-data">
+          <div className="col-md-4">
+            Projekt-Bild:
+          </div>
+          <div className="col-md-8">
+            <FileChooser updateFile={this.updateMainImage.bind(this)}/>
+            {mainImage}
           </div>
         </div>
         <div className="row project-data">

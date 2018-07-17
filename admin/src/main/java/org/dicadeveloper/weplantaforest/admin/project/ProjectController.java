@@ -144,6 +144,28 @@ public class ProjectController {
 
         }
     }
+    
+    @RequestMapping(value = Uris.PROJECT_MAIN_IMAGE, method = RequestMethod.POST)
+    @Transactional
+    public ResponseEntity<?> addMainImage(@RequestParam Long projectId, @RequestParam("file") MultipartFile file) {
+        Project project = _projectRepository.findOne(projectId);
+        
+        if (project == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else{
+            String imageFolder = FileSystemInjector.getImageFolderForProjects();
+            String imageName = project.getName() + "_mainImage" + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."), file.getOriginalFilename().length() );
+            try {
+                imageName = _imageHelper.storeImage(file, imageFolder, imageName, true);
+                project.setImageFileName(imageName);
+                _projectRepository.save(project);
+            } catch (IOException e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return new ResponseEntity<>( HttpStatus.OK);            
+        }
+    }
 
     @RequestMapping(value = Uris.PROJECT_IMAGE_CREATE_EDIT, method = RequestMethod.POST)
     @Transactional

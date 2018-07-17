@@ -38,6 +38,8 @@ public class Uris {
     
     public final static String PROJECT_IMAGE_DELETE = "/project/image/delete";
     
+    public final static String PROJECT_MAIN_IMAGE = "/project/mainImage";
+    
     // carts
     
     public final static String CARTS = "/carts";
