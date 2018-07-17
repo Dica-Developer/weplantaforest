@@ -21,14 +21,14 @@ export default class ArticleDesc extends Component {
     return (
       <div className="articleDesc bold">
         <div>
+        </div>
+        <div>
           <p>
             {counterpart.translate('TREETYPE')}<br/>{counterpart.translate('PRICE_PER_ITEM')}
           </p>
         </div>
         <div>
           {counterpart.translate('NUMBER')}
-        </div>
-        <div>
           &nbsp;/&nbsp;{counterpart.translate('AVAILABLE')}
         </div>
         <div>

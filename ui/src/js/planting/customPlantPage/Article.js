@@ -75,7 +75,6 @@ export default class Article extends Component {
           <input ref="amountInput" type="text" value={this.state.value} onChange={this.updateAmount.bind(this)}/>
           &nbsp;/&nbsp;{this.props.article.amount - this.props.article.alreadyPlanted}
         </div>
-        <div></div>
         <div>
           <p ref="result" className={(this.state.scaleResult
             ? 'scaleResult'
