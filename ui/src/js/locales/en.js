@@ -67,7 +67,9 @@ module.exports = {
   DECEMBER: 'December',
 
   PLANTED_TREES: 'Planted trees',
+  TREES_PLANTED: 'Trees planted',
   CO2_BOUND: 'CO2 bound / tons',
+  CO2_BOUND_WITHOUT_TONS: 'CO2 bound',
 
   USERNAME: 'Username',
   PASSWORD: 'Password',
@@ -299,6 +301,13 @@ module.exports = {
   YES: 'yes',
   NO: 'no',
   TYPE: 'Type',
-  VIEW: 'view'
+  VIEW: 'view',
+  WARNING: 'Warning',
+
+  USER_DELETE_WARNING: 'Your user specific data will be deleted and your profile is not accessable anymore. This action cannot be undone!',
+  ABORT: 'abort',
+  USER_DELETE_ERROR: 'Please send us a contact message to realize the anonymization of your account.',
+  ANONYMIZE_ACCOUNT: 'anonymize account',
+  PROFILE: 'Profile'
 
 };

@@ -12,7 +12,7 @@ import moment from 'moment';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 import NotificationSystem from 'react-notification-system';
-
+import counterpart from 'counterpart';
 
 import IconButton from '../common/components/IconButton';
 import {getConfig} from '../common/RestHelper';
@@ -38,14 +38,14 @@ export default class UserDetails extends Component {
 
   createConfirmation(id) {
     this.refs.notificationSystem.addNotification({
-      title: 'Achtung!',
+      title: counterpart.translate('WARNING') + '!',
       position: 'tc',
       autoDismiss: 0,
-      message: 'Dadurch werden deine personenbezogenen Daten gelöscht und dein Profil ist nicht mehr zugänglich. Diese Aktion kann nicht rückgängig gemacht werden!',
+      message: counterpart.translate('USER_DELETE_WARNING'),
       level: 'warning',
       children: (
         <div className="delete-confirmation align-center">
-        <button>Abbrechen</button>
+        <button>{counterpart.translate('ABORT')}</button>
         <button onClick={() => {
           this.anonymizeUser(id);
         }}>OK</button>
@@ -64,16 +64,16 @@ export default class UserDetails extends Component {
       browserHistory.push('/');
       window.location.reload();
     }).catch(function(response) {
-      that.refs.notification.addNotification('Bei der Aktion ist ein Fehler aufgetreten!', 'Bitte wende dich über das Kontaktformular an uns, damit das Anonymisieren deines Accounts durchgeführt werden kann.', 'error');
+      that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('USER_DELETE_ERROR'), 'error');
     });
   }
 
   render() {
     var editLink;
     if (this.props.user.editAllowed) {
-      editLink = <div><IconButton text="Bearbeiten" glyphIcon="glyphicon-cog" onClick={this.showEditUser.bind(this)}/>
+      editLink = <div><IconButton text={counterpart.translate('EDIT')} glyphIcon="glyphicon-cog" onClick={this.showEditUser.bind(this)}/>
                       <div className="anonymize-button">
-                        <a role="button" title="Account anonymisieren" onClick={this.createConfirmation.bind(this)}>
+                        <a role="button" title={counterpart.translate('ANONYMIZE_ACCOUNT')} onClick={this.createConfirmation.bind(this)}>
                           <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </a>
                       </div>
@@ -96,7 +96,7 @@ export default class UserDetails extends Component {
     let imgUrl = 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150?random=' + Math.random();
     return (
       <div>
-        <h1>Profil</h1>
+        <h1>{counterpart.translate('PROFILE')}</h1>
         <div className="imageDiv">
           <img id="logo-img" src={imgUrl} alt="profile"/>
         </div>
@@ -106,22 +106,22 @@ export default class UserDetails extends Component {
             <tbody>
               <tr>
                 <td>
-                  <span className="bold">Rang:&nbsp;</span>{this.props.user.rank}
+                  <span className="bold">{counterpart.translate('RANK')}:&nbsp;</span>{this.props.user.rank}
                 </td>
                 <td>
-                  <span className="bold">Mitglied seit:&nbsp;</span>{moment(this.props.user.regDate).format('DD.MM.YYYY')}</td>
+                  <span className="bold">{counterpart.translate('MEMBER_SINCE')}:&nbsp;</span>{moment(this.props.user.regDate).format('DD.MM.YYYY')}</td>
               </tr>
               <tr>
                 <td>
-                  <span className="bold">B&auml;ume gepflanzt:&nbsp;</span>{Accounting.formatNumber(this.props.user.co2Data.treesCount, 0, '.', ',')}</td>
+                  <span className="bold">{counterpart.translate('TREES_PLANTED')}:&nbsp;</span>{Accounting.formatNumber(this.props.user.co2Data.treesCount, 0, '.', ',')}</td>
                 <td>
-                  <span className="bold">letzter Besuch:&nbsp;</span>{moment(this.props.user.lastVisit).format('DD.MM.YYYY')}</td>
+                  <span className="bold">{counterpart.translate('LAST_VISIT')}:&nbsp;</span>{moment(this.props.user.lastVisit).format('DD.MM.YYYY')}</td>
               </tr>
               <tr>
                 <td>
-                  <span className="bold">CO<sub>2</sub>&nbsp;gebunden:&nbsp;</span>{Accounting.formatNumber(this.props.user.co2Data.co2, 3, '.', ',')}&nbsp;t</td>
+                  <span className="bold">{counterpart.translate('CO2_BOUND_WITHOUT_TONS')}:&nbsp;</span>{Accounting.formatNumber(this.props.user.co2Data.co2, 3, '.', ',')}&nbsp;t</td>
                 <td>
-                  <span className="bold">Typ:&nbsp;</span>{this.props.user.organizationType}</td>
+                  <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>{this.props.user.organizationType}</td>
               </tr>
             </tbody>
           </table>
