@@ -410,6 +410,11 @@ module.exports = {
   MIXED_POWER: 'mixed power',
   POWER_CONSUMPTION: 'power consumption in kWh',
   ENTER_POWER_CONSUMPTION: 'Please enter the power consumption.',
-  TOTAL_RESULT: 'Total result'
+  TOTAL_RESULT: 'Total result',
+
+  DATE_IN_FUTURE_ERROR: {
+    TITLE: 'Date in future!',
+    TEXT: 'Please do not enter a future date.'
+  }
 
 };

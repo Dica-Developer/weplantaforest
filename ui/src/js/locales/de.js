@@ -410,6 +410,11 @@ module.exports = {
   MIXED_POWER: 'Strommix',
   POWER_CONSUMPTION: 'Stromverbrauch in kWh',
   ENTER_POWER_CONSUMPTION: 'Bitte geben Sie den Stromverbrauch ein.',
-  TOTAL_RESULT: 'Gesamtergebnis'
+  TOTAL_RESULT: 'Gesamtergebnis',
+
+  DATE_IN_FUTURE_ERROR: {
+    TITLE: 'Datum in der Zukunft!',
+    TEXT: 'Bitte kein zukünftiges Datum eintragen.'
+  }
 
 };

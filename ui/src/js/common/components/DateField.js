@@ -6,6 +6,7 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import DatePicker from 'react-16-bootstrap-date-picker';
+import counterpart from 'counterpart';
 
 import Notification from './Notification';
 
@@ -43,7 +44,7 @@ export default class DateField extends Component {
         this.setState({
           value: new Date().toISOString()
         });
-        this.refs.notification.addNotification('Pflanzung in der Zukunft!', 'Bitte keine zukünftigen Pflanzungen eintragen!', 'error');
+        this.refs.notification.addNotification(counterpart.translate('DATE_IN_FUTURE_ERROR.TITLE'), counterpart.translate('DATE_IN_FUTURE_ERROR.TEXT'), 'error');
       }
     } else {
       this.setState({
