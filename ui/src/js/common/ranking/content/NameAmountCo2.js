@@ -26,8 +26,10 @@ export default class NameAmountCo2 extends Component {
         <p >
           <span className="name">{htmlDecode(this.props.content.name)}</span>
           <br/>
-          <span className="stats">B&auml;ume gepflant:&nbsp;{this.props.content.amount}</span><br/>
-          <span className="stats">CO<sub>2</sub>&nbsp;gebunden:&nbsp;</span>
+          <span className="stats">{counterpart.translate('TREES_PLANTED')}:&nbsp;{this.props.content.amount}</span><br/>
+          <span className="stats" dangerouslySetInnerHTML={{
+              __html: counterpart.translate('CO2_BOUND_WITHOUT_TONS')
+            }}></span>:&nbsp;
           <span className="stats">{co2Rounded}&nbsp;t</span>
         </p>
       </div>

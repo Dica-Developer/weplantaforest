@@ -289,7 +289,9 @@ module.exports = {
   CERTIFICATE: {
     FIND_PLANTINGS: 'Find plantings',
     NUMBER: 'Certificate number',
-    FIND: 'Find'
+    FIND: 'Find',
+    NOT_EXISTS: 'Certificate does not exist!',
+    NOT_EXISTS_TEXT: 'There\'s no certificate with this number.'
   },
 
   SAVE: 'save',
@@ -415,6 +417,8 @@ module.exports = {
   DATE_IN_FUTURE_ERROR: {
     TITLE: 'Date in future!',
     TEXT: 'Please do not enter a future date.'
-  }
+  },
+
+  DATE: 'Date'
 
 };

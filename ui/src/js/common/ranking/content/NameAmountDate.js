@@ -26,8 +26,8 @@ export default class NameAmountDate extends Component {
       <div className="rankingSummary">
         <p>
           <span className="name">{htmlDecode(this.props.name)}</span><br/>
-          <span className="stats">B&auml;ume gepflant:&nbsp;{this.props.amount}</span><br/>
-          <span className="stats">Datum:</span>
+          <span className="stats">{counterpart.translate('TREES_PLANTED')}:&nbsp;{this.props.amount}</span><br/>
+          <span className="stats">{counterpart.translate('DATE')}:</span>
           <span className="stats">{moment(this.props.plantedOn).format('DD.MM.YYYY')}</span>
         </p>
       </div>

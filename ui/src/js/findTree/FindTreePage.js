@@ -7,6 +7,7 @@ import {
 import Notification from '../common/components/Notification';
 import axios from 'axios';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 import TreeItem from './TreeItem';
 import FindTrees from './FindTrees';
@@ -44,7 +45,7 @@ export default class FindTreePage extends Component {
         });
       });
     }).catch(function(response) {
-      that.refs.notification.addNotification('Zertifikat nicht vorhanden!', 'Es gibt kein Zertifikat mit dieser Nummer.', 'error');
+      that.refs.notification.addNotification(counterpart.translate('CERTIFICATE.NOT_EXISTS'), counterpart.translate('CERTIFICATE.NOT_EXISTS_TEXT'), 'error');
     });
   }
 
