@@ -30,11 +30,11 @@ export default class TreesFound extends Component {
       <div className="col-md-12">
         <div className="align-center">
           <div className="foundTreesHead">
-            <h1>Zertifikat&nbsp;#{this.props.certificateId}</h1>
-            von:&nbsp;<Link to={'/user/' + this.props.certificate.creator.name}>
+            <h1>{counterpart.translate('CERTIFICATE_WORD')}&nbsp;#{this.props.certificateId}</h1>
+            {counterpart.translate('FROM')}:&nbsp;<Link to={'/user/' + this.props.certificate.creator.name}>
               {this.props.certificate.creator.name}
             </Link><br/>
-            Über die Pflanzung von&nbsp;<span className="bold">{this.state.treeCount}</span>&nbsp;{this.state.treeWord} 
+            {counterpart.translate('ABOUT_PLANTING')}&nbsp;<span className="bold">{this.state.treeCount}</span>&nbsp;{this.state.treeWord}
           </div>
           <div className="text">
             {this.props.certificate.text}

@@ -419,6 +419,9 @@ module.exports = {
     TEXT: 'Bitte kein zukünftiges Datum eintragen.'
   },
 
-  DATE: 'Datum'
+  DATE: 'Datum',
+  CERTIFICATE_WORD: 'Zertifikat',
+  FROM: 'von',
+  ABOUT_PLANTING: 'Über die Pflanzung von'
 
 };

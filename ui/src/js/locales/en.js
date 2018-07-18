@@ -419,6 +419,9 @@ module.exports = {
     TEXT: 'Please do not enter a future date.'
   },
 
-  DATE: 'Date'
+  DATE: 'Date',
+  CERTIFICATE_WORD: 'Certificate',
+  FROM: 'from',
+  ABOUT_PLANTING: 'About the planting of'
 
 };

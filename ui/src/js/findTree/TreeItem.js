@@ -4,6 +4,7 @@ import {render} from 'react-dom';
 import moment from 'moment';
 import {Link} from 'react-router';
 import Accounting from 'accounting';
+import counterpart from 'counterpart';
 
 import Boostrap from 'bootstrap';
 
@@ -19,13 +20,13 @@ export default class RankingItem extends Component {
         <img src={this.props.imageUrl} title={this.props.content.treeType.name} alt={this.props.content.treeType.name}/>
         <div>
           <p>
-            <span className="bold">Anzahl:&nbsp;</span>{Accounting.formatNumber(this.props.content.amount, 0, '.', ',')}<br/>
-            <span className="bold">Projekt:&nbsp;</span>
+            <span className="bold">{counterpart.translate('NUMBER')}:&nbsp;</span>{Accounting.formatNumber(this.props.content.amount, 0, '.', ',')}<br/>
+            <span className="bold">{counterpart.translate('PROJECT')}:&nbsp;</span>
             <Link to={'/projects/' + this.props.content.projectArticle.project.name}>
                {this.props.content.projectArticle.project.name}
              </Link>
              <br/>
-            <span className="bold">Datum:&nbsp;</span>
+            <span className="bold">{counterpart.translate('DATE')}:&nbsp;</span>
             <span >{moment(this.props.content.plantedOn).format('DD.MM.YYYY')}</span>
           </p>
         </div>
