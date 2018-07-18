@@ -145,14 +145,6 @@ export default class Overview extends Component {
             <div id="paypal-button-container">
             </div>
           </div>
-          <div className="paymentOption">
-            <a role="button" onClick={() => {
-              this.setPaymentOption('creditcard');
-            }}>
-              KREDITKARTE<br/>
-              <img src="/assets/images/visa.png" width="256" height="183"/>
-            </a>
-          </div>
           <Notification ref="notification"/>
         </div>
       </div>
