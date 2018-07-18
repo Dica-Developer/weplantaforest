@@ -128,7 +128,7 @@ export default class TeamDetails extends Component {
       }
     };
     axios.post('http://localhost:8081/team/join?teamId=' + this.props.team.teamId, {}, config).then(function(response) {
-      that.refs.notification.addNotification('Team beigetreten', 'Du bist dem Team beigetreten.', 'success');
+      that.refs.notification.addNotification(counterpart.translate('TEAM_JOINED'), counterpart.translate('TEAM_JOINED_TEXT'), 'success');
       that.setState({
         isTeamMember: true
       });
@@ -153,15 +153,14 @@ export default class TeamDetails extends Component {
       }
     };
     axios.post('http://localhost:8081/team/leave', {}, config).then(function(response) {
-      that.refs.notification.addNotification('Team verlassen', 'Du hast dein Team verlassen, deine Mitglieder werden dich vermissen.', 'success');
+      that.refs.notification.addNotification(counterpart.translate('TEAM_LEFT'), counterpart.translate('TEAM_LEFT_TEXT'), 'success');
       that.props.loadTeamMember();
       that.setState({
         isTeamMember: false
       });
       that.forceUpdate();
     }).catch(function(response) {
-      console.error(response);
-      that.refs.notification.addNotification('Team verlassen fehlgeschlagen', 'Beim verlassen des Teams ist ein Fehler aufgetreten, bitte versuche es noch einmal.', 'error');
+      that.refs.notification.addNotification(counterpart.translate('TEAM_LEFT_ERROR'), counterpart.translate('TEAM_LEFT_ERROR_TEXT'), 'error');
     });
   }
 
@@ -204,12 +203,12 @@ export default class TeamDetails extends Component {
   render() {
     let teamImageUrl;
     if (this.props.team.teamName) {
-      teamImageUrl = 'http://localhost:8081/team/image/' + this.props.team.teamId + '/150/150';
+      teamImageUrl = 'http://localhost:8081/team/image/' + this.props.team.teamId + '/150/150?random=' + Math.random();
     }
 
     let buttons = '';
     if (this.state.isTeamAdmin) {
-      buttons = <div><IconButton text={counterpart.translate('TEAM_EDIT')} glyphIcon="glyphicon-cog" onClick={this.editTeam.bind(this)}/> <IconButton text="Team löschen" glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/></div>;
+      buttons = <div><IconButton text={counterpart.translate('TEAM_EDIT')} glyphIcon="glyphicon-cog" onClick={this.editTeam.bind(this)}/> <IconButton text={counterpart.translate('TEAM_DELETE')} glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/></div>;
     } else if (!this.state.isTeamMember) {
       buttons = <div><IconButton text={counterpart.translate('TEAM_JOIN')} glyphIcon="glyphicon-share-alt" onClick={this.joinTeam.bind(this)}/></div>;
     } else if (this.state.isTeamMember) {
@@ -241,22 +240,24 @@ export default class TeamDetails extends Component {
             <tbody>
               <tr>
                 <td>
-                  <span className="bold">Rang:&nbsp;</span>{this.props.team.rank}
+                  <span className="bold">{counterpart.translate('RANK')}:&nbsp;</span>{this.props.team.rank}
                 </td>
                 <td>
-                  <span className="bold">gegründet:&nbsp;</span>{moment(this.props.team.regDate).format('DD.MM.YYYY')}</td>
+                  <span className="bold">{counterpart.translate('FOUNDED')}:&nbsp;</span>{moment(this.props.team.regDate).format('DD.MM.YYYY')}</td>
               </tr>
               <tr>
                 <td>
-                  <span className="bold">B&auml;ume gepflanzt:&nbsp;</span>{Accounting.formatNumber(this.props.team.co2Data.treesCount, 0, '.', ',')}</td>
+                  <span className="bold">{counterpart.translate('TREES_PLANTED')}:&nbsp;</span>{Accounting.formatNumber(this.props.team.co2Data.treesCount, 0, '.', ',')}</td>
                 <td>
-                  <span className="bold">Teamleiter:&nbsp;</span>{htmlDecode(this.props.team.adminName)}</td>
+                  <span className="bold">{counterpart.translate('TEAM_LEAD')}:&nbsp;</span>{htmlDecode(this.props.team.adminName)}</td>
               </tr>
               <tr>
                 <td>
-                  <span className="bold">CO<sub>2</sub>&nbsp;gebunden:&nbsp;</span>{Accounting.formatNumber(this.props.team.co2Data.co2, 3, '.', ',')}&nbsp;t</td>
+                  <span className="bold" dangerouslySetInnerHTML={{
+                    __html: counterpart.translate('CO2_BOUND_WITHOUT_TONS')
+                }}></span>:&nbsp;{Accounting.formatNumber(this.props.team.co2Data.co2, 3, '.', ',')}&nbsp;t</td>
                 <td>
-                  <span className="bold">Mitglieder:&nbsp;</span>{this.props.team.memberCount}</td>
+                  <span className="bold">{counterpart.translate('MEMBERS')}:&nbsp;</span>{this.props.team.memberCount}</td>
               </tr>
             </tbody>
           </table>

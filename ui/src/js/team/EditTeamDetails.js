@@ -21,6 +21,7 @@ import IconButton from '../common/components/IconButton';
 
 
 import EditItem from '../profile/edit/EditItem';
+import FileChooseAndUploadButton from './FileChooseAndUploadButton';
 import Notification from '../common/components/Notification';
 
 import Boostrap from 'bootstrap';
@@ -71,6 +72,10 @@ export default class EditTeamDetails extends Component {
     });
   }
 
+  updateImageName(imageName){
+    // this.props.updateImageName(imageName);
+  }
+
   render() {
     return (
       <div>
@@ -83,6 +88,9 @@ export default class EditTeamDetails extends Component {
           <div className="col-md-12 form-group">
             <label htmlFor="team_name">{counterpart.translate('TEAM_NAME')}:</label>
             <input type="text" className="form-control" id="team_name" placeholder="" defaultValue={this.props.team.teamName} onBlur={(e) => this.editTeam('name', e)}/>
+          </div>
+          <div className="col-md-12">
+            <FileChooseAndUploadButton imageId="edit-team-img" imageFileName={this.props.team.teamId} updateImageName={this.updateImageName.bind(this)} teamId={this.props.team.teamId}/>
           </div>
           <div className="col-md-12 form-group">
             <label htmlFor="team_description">{counterpart.translate('TEAM_DESCRIPTION')}:</label>

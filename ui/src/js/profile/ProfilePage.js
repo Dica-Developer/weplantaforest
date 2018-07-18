@@ -244,7 +244,7 @@ export default class ProfilePage extends Component {
     if (this.state.user.teamName != '' && !this.state.editTeam) {
       teamPart = <TeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} deleteAction={this.switchTeamPartToNoTeam.bind(this)} loadTeamMember={this.teamLeft.bind(this)}/>;
     } else if (this.state.user.teamName != '' && this.state.editTeam) {
-      teamPart = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}  teamNameChangedAction={this.reloadTeam.bind(this)}/>;
+      teamPart = <EditTeamDetails team={this.state.team} editTeam={this.editTeam.bind(this)} loadTeamDetails={this.loadTeamDetails.bind(this)}  teamNameChangedAction={this.reloadTeam.bind(this)} />;
     } else if (this.state.user.teamName === '' && this.state.createTeam) {
       teamPart = <CreateTeam teamCreatedAction={this.teamCreated.bind(this)}/>;
     } else if (this.state.user.teamName === '' && !this.state.createTeam) {

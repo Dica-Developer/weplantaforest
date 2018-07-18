@@ -92,6 +92,7 @@ module.exports = {
   TEAM_EDIT: 'Team bearbeiten',
   TEAM_JOIN: 'Team beitreten',
   TEAM_LEAVE: 'Team verlassen',
+  TEAM_DELETE: 'Team löschen',
   TEAM_DESCRIPTION: 'Team-Beschreibung',
 
   CREATE_TEAM_SUCCESS_TITLE: 'Team erstellt',
@@ -332,6 +333,17 @@ module.exports = {
   AS_GIFT: 'Als Geschenkgutschein',
   GO_TO_PAYMENT: 'weiter zur Kasse',
   NO_TREES_IN_PLANTBAG: 'Es befinden sich keine Bäume in deinem Pflanzkorb.',
-  YOUR_PLANTBAG: 'Dein Pflanzkorb'
+  YOUR_PLANTBAG: 'Dein Pflanzkorb',
+
+  TEAM_JOINED: 'Team beigetreten',
+  TEAM_JOINED_TEXT: 'Du bist dem Team beigetreten.',
+  TEAM_LEFT: 'Team verlassen',
+  TEAM_LEFT_TEXT: 'Du hast dein Team verlassen, deine Mitglieder werden dich vermissen.',
+  TEAM_LEFT_ERROR: 'Team verlassen fehlgeschlagen',
+  TEAM_LEFT_ERROR_TEXT: 'Beim verlassen des Teams ist ein Fehler aufgetreten, bitte versuche es noch einmal.',
+
+  FOUNDED: 'gegründet',
+  TEAM_LEAD: 'Teamleiter',
+  MEMBERS: 'Mitglieder'
 
 };

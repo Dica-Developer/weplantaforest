@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.team;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -61,8 +62,19 @@ public class TeamController {
 			+ "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
 	public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName,
 			@PathVariable int width, @PathVariable int height) {
-		String filePath = FileSystemInjector.getTeamFolder() + "/" + imageName;
+		File directory = new File(FileSystemInjector.getTeamFolder());
+		String[] files = directory.list();
+		String teamImageName = "";
+		for(String fileName : files) {
+		    System.out.println(fileName);
+		    if(fileName.startsWith(imageName + ".")) {
+		        teamImageName = fileName;
+		        break;
+		    }
+		}
+		String filePath = FileSystemInjector.getTeamFolder() + "/" + teamImageName;
 		try {
+		    
 			_imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (IOException e) {

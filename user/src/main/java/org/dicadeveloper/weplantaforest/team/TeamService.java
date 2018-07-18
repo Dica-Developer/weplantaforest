@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.team;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -92,13 +93,20 @@ public class TeamService {
 		IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
 
 		String imageFolder = FileSystemInjector.getTeamFolder();
+		File teamFolder = new File(imageFolder);
+		String[] teamImages = teamFolder.list();
 		String imageName = team.getId() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
 		try {
+		    for(String fileName : teamImages) {
+		        if(fileName.startsWith(team.getId() + ".")) {
+		            File fileToDelete = new File(imageFolder + "/" + fileName);
+		            fileToDelete.delete();
+		        }
+		    }
 			_imageHelper.storeImage(file, imageFolder, imageName, true);
 		} catch (IOException e) {
 			throw new IpatException(ErrorCodes.SERVER_ERROR);
 		}
-
 	}
 
 	public void editTeam(Long teamId, String toEdit, String newEntry) {

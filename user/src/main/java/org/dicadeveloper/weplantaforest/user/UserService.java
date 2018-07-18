@@ -135,6 +135,7 @@ public class UserService {
 
     public UserReportData getUserDetails(String userName, boolean isEditAllowed) {
         UserReportData userReportData = _userRepository.getUserDetails(userName);
+        
         userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName));
         userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data()
                                                                                         .getTreesCount()));

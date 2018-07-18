@@ -92,6 +92,7 @@ module.exports = {
   TEAM_EDIT: 'edit Team',
   TEAM_JOIN: 'join Team',
   TEAM_LEAVE: 'leave Team',
+  TEAM_DELETE: 'delete Team',
   TEAM_DESCRIPTION: 'Team description',
 
   CREATE_TEAM_SUCCESS_TITLE: 'Team created',
@@ -332,6 +333,17 @@ module.exports = {
   AS_GIFT: 'As gift',
   GO_TO_PAYMENT: 'continue to pay',
   NO_TREES_IN_PLANTBAG: 'There are no trees in your plantbag.',
-  YOUR_PLANTBAG: 'Your plantbag'
+  YOUR_PLANTBAG: 'Your plantbag',
+
+  TEAM_JOINED: 'Team joined',
+  TEAM_JOINED_TEXT: 'You joined the team.',
+  TEAM_LEFT: 'Team left',
+  TEAM_LEFT_TEXT: 'You left your team, your mates will miss you.',
+  TEAM_LEFT_ERROR: 'Leaving the team errored',
+  TEAM_LEFT_ERROR_TEXT: 'There was an error leaving your team, please try again.',
+
+  FOUNDED: 'Founded',
+  TEAM_LEAD: 'Teamleader',
+  MEMBERS: 'Members'
 
 };
