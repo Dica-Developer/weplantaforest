@@ -7,6 +7,8 @@ import {
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 import {browserHistory} from 'react-router';
+import counterpart from 'counterpart';
+
 import {
   getTextForSelectedLanguage
 } from '../../language/LanguageHelper';
