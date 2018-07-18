@@ -6,6 +6,7 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
+import counterpart from 'counterpart';
 
 import Notification from '../../common/components/Notification';
 import InputText from '../../common/components/InputText';
@@ -35,20 +36,20 @@ export default class SendRequest extends Component {
         that.refs.notification.handleError( response);
       });
     } else {
-      this.refs.notification.addNotification('Keinen Nutzernamen angegeben!', 'Den Nutzernamen müsstest du schon angeben.', 'error');
+      this.refs.notification.addNotification(counterpart.translate('NO_USERNAME.TITLE'), counterpart.translate('NO_USERNAME.TEXT'), 'error');
     }
   }
 
   render() {
     return (
       <div className="col-md-12">
-        <h1>Passwort vergessen</h1>
+        <h1>{counterpart.translate('PASSWORD_FORGOT')}</h1>
         <div className="form">
-          Bitte gib deinen Nutzernamen an <br/>und wir schicken dir an die angegebene E-Mail Adresse einen Link,<br/>womit du dein Passwort zurücksetzen kannst.
+          {counterpart.translate('PASSWORD_FORGOT_TEXT')}
           <br/>
           <InputText toUpdate="name" updateValue={this.updateValue.bind(this)}/>
           <br/>
-          <IconButton text="PASSWORT RESET MAIL VERSCHICKEN" glyphIcon="glyphicon-envelope" onClick={this.sendPasswortResetMail.bind(this)}/>
+          <IconButton text={counterpart.translate('SEND_PASSWORD_RESET_MAIL')} glyphIcon="glyphicon-envelope" onClick={this.sendPasswortResetMail.bind(this)}/>
         </div>
         <Notification ref="notification"/>
       </div>

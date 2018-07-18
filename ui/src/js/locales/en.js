@@ -422,6 +422,17 @@ module.exports = {
   DATE: 'Date',
   CERTIFICATE_WORD: 'Certificate',
   FROM: 'from',
-  ABOUT_PLANTING: 'About the planting of'
+  ABOUT_PLANTING: 'About the planting of',
+
+  PASSWORD_CAN_BE_RESETTED: 'Password can be resetted now!',
+  PASSWORD_CAN_BE_RESETTED_TEXT: 'We sent you an email conatining a link, which can be used to reset your password.',
+  PASSWORD_FORGOT: 'Forgot password',
+  PASSWORD_FORGOT_TEXT: 'Please enter your username and we send you a password-reset link to the entered E-Mail.',
+  SEND_PASSWORD_RESET_MAIL: 'send password reset mail',
+  NO_USERNAME: {
+    TITLE: 'No username!',
+    TEXT: 'Please enter the username.'
+  }
+
 
 };
