@@ -6,6 +6,7 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
+import counterpart from 'counterpart';
 
 require('./activationPage.less');
 
@@ -23,7 +24,7 @@ export default class ActivationPage extends Component {
     var that = this;
     axios.post('http://localhost:8081/user/activation' + this.props.location.search + '&language=' + localStorage.getItem('language')).then(function(response) {
       that.setState({
-        headLine: 'Herzlich willkommen ' + response.data + '!',
+        headLine: counterpart.translate('WELCOME') + ' ' + response.data + '!',
         text: 'Wir wünschen Dir viel Spaß beim Bäume pflanzen!'
       });
     }).catch(function(response) {

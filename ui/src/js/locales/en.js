@@ -344,6 +344,8 @@ module.exports = {
 
   FOUNDED: 'Founded',
   TEAM_LEAD: 'Teamleader',
-  MEMBERS: 'Members'
+  MEMBERS: 'Members',
+
+  WELCOME: 'Welcome'
 
 };
