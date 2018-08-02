@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
 import moment from 'moment';
 
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
