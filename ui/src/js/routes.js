@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {Router, Route, browserHistory} from 'react-router';
 
 import counterpart from 'counterpart';
-import Translate from 'react-translate-component';
 
 import NavBar from './common/navbar/NavBar';
 import Header from './common/header/Header';
@@ -11,10 +10,8 @@ import Footer from './common/footer/Footer';
 
 import LoadableMainPage from './main/LoadableMainPage';
 import ProposalPlantPage from './planting/proposalPlantPage/ProposalPlantPage';
-import SliderPlantPage from './planting/sliderPlantPage/SliderPlantPage';
 import CustomPlantPage from './planting/customPlantPage/CustomPlantPage';
 import NotFoundPage from './views/NotFoundPage';
-import ExplorePage from './views/ExplorePage';
 import ProjectDetailsPage from './project/ProjectDetailsPage';
 import ProfilePage from './profile/ProfilePage';
 import ToolsPage from './profile/ToolsPage';

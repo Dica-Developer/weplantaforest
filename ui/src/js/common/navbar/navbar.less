@@ -9,6 +9,15 @@
       display: inline-block!important;
     }
   }
+  .react-cookie-banner {
+    height: auto!important;
+    .cookie-message > a {
+      display: block!important;
+    }
+    button {
+      position: absolute!important;
+    }
+  }
 }
 @media (max-width: 730px) {
   .navbar {
@@ -18,7 +27,6 @@
     .navbar-right {
       float: right;
       margin-left: 0;
-      //width: 50%;
     }
     .collapse {
       display: none !important;
@@ -35,11 +43,25 @@
             }
             .plantBag-button-text{
               display: none!important;
-
             }
           }
         }
       }
+    }
+  }
+  #navBar > div.navbar-right.myForrestDiv > div > a > p > span,
+  #navBar > div.navbar-left > div > a > p > span {
+    display: none!important;
+    float: right!important;
+  }
+  .react-cookie-banner {
+    height: auto!important;
+    .cookie-message > a {
+      display: block!important;
+    }
+    button {
+      position: relative!important;
+      left: 10px!important;
     }
   }
 }
