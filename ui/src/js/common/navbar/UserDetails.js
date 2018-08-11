@@ -1,13 +1,4 @@
 import React, {Component} from 'react';
-import {Link, browserHistory} from 'react-router';
-
-import Menu from './Menu';
-import MenuItem from './MenuItem';
-import LanguageMenuItem from './LanguageMenuItem';
-import PlantBag from './PlantBag';
-import LoginMenuItem from './LoginMenuItem';
-import BackOfficeMenuItem from './BackOfficeMenuItem';
-import axios from 'axios';
 
 require('./userDetails.less');
 

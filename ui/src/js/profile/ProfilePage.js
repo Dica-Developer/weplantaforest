@@ -4,9 +4,7 @@ import React, {
 import {
   render
 } from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
 
 import UserDetails from './UserDetails';

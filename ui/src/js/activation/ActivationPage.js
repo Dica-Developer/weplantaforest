@@ -1,10 +1,6 @@
 import React, {
   Component
 } from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
 import counterpart from 'counterpart';
 

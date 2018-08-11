@@ -4,9 +4,8 @@ import {render} from 'react-dom';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 import moment from 'moment';
-import {browserHistory} from 'react-router';
-import {getTextForSelectedLanguage} from '../../language/LanguageHelper';
 import {htmlDecode} from '../../language/HtmlHelper';
+import counterpart from 'counterpart';
 
 export default class AmountProjectDate extends Component {
   constructor(props) {

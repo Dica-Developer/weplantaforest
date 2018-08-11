@@ -1,30 +1,11 @@
 import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link,
-  browserHistory
-} from 'react-router';
-import moment from 'moment';
-import Accounting from 'accounting';
-import Translate from 'react-translate-component';
+import React, { Component } from 'react';
 import counterpart from 'counterpart';
 
-import {
-  htmlDecode
-} from '../common/language/HtmlHelper';
 import IconButton from '../common/components/IconButton';
 
-
-import EditItem from '../profile/edit/EditItem';
 import FileChooseAndUploadButton from './FileChooseAndUploadButton';
 import Notification from '../common/components/Notification';
-
-import Boostrap from 'bootstrap';
 
 export default class EditTeamDetails extends Component {
   constructor(props) {
