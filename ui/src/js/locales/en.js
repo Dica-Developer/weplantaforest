@@ -9,7 +9,7 @@ module.exports = {
     LEAGUE_TABLES: 'League tables',
     FIND_PLANTINGS: 'Find plantings',
     REDEEM_VOUCHER: 'Redeem voucher',
-    CO2_CALCULATOR: 'CO2-Calculator',
+    CO2_CALCULATOR: 'CO<sub>2</sub>-Calculator',
     OFFER_ACREAGE: 'Offer acreage',
     BLOG: 'Blog',
     MY_FOREST: 'MY FOREST',

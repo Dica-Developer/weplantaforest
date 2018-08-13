@@ -9,7 +9,7 @@ module.exports = {
     LEAGUE_TABLES: 'Bestenliste',
     FIND_PLANTINGS: 'Pflanzungen finden',
     REDEEM_VOUCHER: 'Gutschein einlösen',
-    CO2_CALCULATOR: 'CO2-Calculator',
+    CO2_CALCULATOR: 'CO<sub>2</sub>-Rechner',
     OFFER_ACREAGE: 'Fläche anbieten',
     BLOG: 'Blog',
     MY_FOREST: 'MEIN WALD',
