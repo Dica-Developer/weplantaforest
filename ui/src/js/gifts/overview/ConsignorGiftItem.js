@@ -7,6 +7,8 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
+import Accounting from 'accounting';
+
 
 import IconButton from '../../common/components/IconButton';
 
@@ -34,19 +36,16 @@ export default class ConsignorGiftItem extends Component {
       pdfButton = '';
     }
 
-    if(this.props.gift.status == 'REDEEMED'){
-      status = counterpart.translate('REDEEMED');
-    }else{
-      status = counterpart.translate('NOT_REDEEMED');
-    }
-
     return (
       <div className="giftItem">
         <div>
           {this.props.gift.code.code}
         </div>
         <div>
-          {status}
+          {this.props.gift.code.cart.treeCount}
+        </div>
+        <div>
+          {Accounting.formatNumber(this.props.gift.code.cart.totalPrice, 2, '.', ',')}€
         </div>
         <div>
           {recipient}

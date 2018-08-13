@@ -432,7 +432,8 @@ module.exports = {
   NO_USERNAME: {
     TITLE: 'Keinen Nutzernamen angegeben!',
     TEXT: 'Den Nutzernamen müsstest du schon angeben.'
-  }
+  },
 
-
+  TREES: 'Bäume',
+  PRICE: 'Wert'
 };

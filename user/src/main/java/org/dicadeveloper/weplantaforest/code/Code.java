@@ -43,6 +43,7 @@ public class Code {
     
     @OneToOne(optional = true)
     @JoinColumn(name ="_cart__cartId")
+    @JsonView(Views.OverviewGift.class)
     private Cart cart;
     
     @Column(name ="_evaluated",nullable = false)

@@ -432,7 +432,8 @@ module.exports = {
   NO_USERNAME: {
     TITLE: 'No username!',
     TEXT: 'Please enter the username.'
-  }
+  },
 
-
+  TREES: 'Trees',
+  PRICE: 'Price'
 };

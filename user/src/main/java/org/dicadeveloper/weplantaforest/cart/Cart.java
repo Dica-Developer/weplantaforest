@@ -205,17 +205,19 @@ public class Cart {
 	}
 
 	@Transient
-	@JsonView(Views.ShortCart.class)
+	@JsonView({Views.ShortCart.class, Views.OverviewGift.class})
 	public int getTreeCount() {
 		int count = 0;
-		for (Tree tree : getTrees()) {
-			count += tree.getAmount();
+		if(cartItems != null && cartItems.size() > 0) {
+		    for (CartItem item : cartItems) {
+		        count += item.getAmount();		            
+		    }		    
 		}
 		return count;
 	}
 
 	@Transient
-	@JsonView(Views.ShortCart.class)
+    @JsonView({Views.ShortCart.class, Views.OverviewGift.class})
 	public BigDecimal getTotalPrice() {
 		BigDecimal total = new BigDecimal(0.00);
 		for (final CartItem item : cartItems) {

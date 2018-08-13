@@ -63,24 +63,34 @@ export default class GiftOverview extends Component {
           <div className="col-md-12">
             <h1>{counterpart.translate('GIFT_OVERVIEW')}</h1>
             <h2>{counterpart.translate('CREATED_GIFTS')}:</h2>
-            <div className="giftItem">
+            <div className="giftItem giftHeader">
               <div>
-                {counterpart.translate('CODE')}:
+                {counterpart.translate('CODE')}
               </div>
               <div>
-                {counterpart.translate('STATE')}:
+                {counterpart.translate('TREES')}
               </div>
               <div>
-                {counterpart.translate('REDEEMED_BY')}:
+                {counterpart.translate('PRICE')}
               </div>
+              <div>
+                {counterpart.translate('REDEEMED_BY')}
+              </div>
+              <div></div>
             </div>
               {this.state.consignorGifts.map(function(gift, i) {
                 return (<ConsignorGiftItem gift={gift}  key={i}/>);
               })}
             <h2>{counterpart.translate('REDEEMED_GIFTS')}:</h2>
-            <div className="giftItem">
+            <div className="giftItem giftHeader">
               <div>
                 {counterpart.translate('CODE')}:
+              </div>
+              <div>
+                {counterpart.translate('TREES')}:
+              </div>
+              <div>
+                {counterpart.translate('PRICE')}:
               </div>
               <div>
                 {counterpart.translate('CREATED_BY')}:
