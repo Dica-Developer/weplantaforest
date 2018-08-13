@@ -13,6 +13,10 @@ export default class svgButton extends Component {
     super(props);
   }
 
+  onMouseUp(event) {
+    this.props.onClick(event.nativeEvent);
+  }
+
   render() {
     let buttonType = this.props.buttonType;
     let svgButton = [];
@@ -29,7 +33,9 @@ export default class svgButton extends Component {
 
     return (
       <div className="svgButton">
-        <a role="button" onClick={this.props.onClick.bind(this)}>
+        <a role="button" onMouseUp={(event) => {
+          this.onMouseUp(event);
+        }}>
           <div dangerouslySetInnerHTML={{ __html: svgButton }} />
           <p>
             {this.props.text.split('<br/>').map(function(item, i) {

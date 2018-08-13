@@ -111,8 +111,12 @@ export default class NavBar extends Component {
     }
   }
 
-  linkTo(url) {
-    browserHistory.push(url);
+  linkTo(url, mouseEvent) {
+    if(mouseEvent.which == 1) {
+      browserHistory.push(url);
+    }else if(mouseEvent.which == 2){
+      window.open("http://localhost:8080" + url, "_blank");
+    }
   }
 
   render() {
@@ -158,17 +162,17 @@ export default class NavBar extends Component {
           <div className="container">
             <div className="collapse navbar-collapse" id="navbarLinkBar">
               <div className="navbar-left">
-                <SvgButton text="" buttonType="ipatlogo" onClick={() => {
-                  this.linkTo('/');
+                <SvgButton text="" buttonType="ipatlogo" onClick={(event) => {
+                  this.linkTo('/', event);
                 }} />
-                <SvgButton text="" buttonType="shovel" onClick={() => {
-                  this.linkTo('/selfPlant');
+                <SvgButton text="" buttonType="shovel" onClick={(event) => {
+                  this.linkTo('/selfPlant', event);
                 }} />
-                <SvgButton text="" buttonType="mouse" onClick={() => {
-                  this.linkTo('/plant/5');
+                <SvgButton text="" buttonType="mouse" onClick={(event) => {
+                  this.linkTo('/plant/5', event);
                 }} />
-                <SvgButton text="" buttonType="secateurs" onClick={() => {
-                  this.linkTo('/treeService');
+                <SvgButton text="" buttonType="secateurs" onClick={(event) => {
+                  this.linkTo('/treeService', event);
                 }} />
               </div>
             </div>
