@@ -86,7 +86,7 @@ export default class PlantBagPage extends Component {
       browserHistory.push('/payCart/' + response.data);
     }).catch(function(response) {
       that.refs['spinner'].hideSpinner();
-      that.refs.notification.handleError(error);
+      that.refs.notification.handleError(response);
     });
   }
 

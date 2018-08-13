@@ -109,7 +109,7 @@ public class UserService {
         user.addRole(Role.USER);
         user.setActivationKey(randomString);
         user.setLang(Language.DEUTSCH);
-        
+        _userRepository.save(user);
         return user;
     }
     
