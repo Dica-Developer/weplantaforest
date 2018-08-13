@@ -13,7 +13,7 @@ module.exports = {
     OFFER_ACREAGE: 'Offer acreage',
     BLOG: 'Blog',
     MY_FOREST: 'MY FOREST',
-    MY_PROFIL: 'My profil',
+    MY_PROFIL: 'My profile',
     TOOLS: 'Tools',
     VOUCHERS: 'Vouchers',
     CONTRIBUTION_RECEIPTS: 'Contribution receipts',
@@ -435,5 +435,8 @@ module.exports = {
   },
 
   TREES: 'Trees',
-  PRICE: 'Price'
+  PRICE: 'Price',
+
+  ORGANISATION: 'Organization',
+  LOCATION: 'Location'
 };

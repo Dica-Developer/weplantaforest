@@ -88,8 +88,8 @@ export default class EditUserDetails extends Component {
         <FileChooseAndUploadButton imageId="edit-logo-img" imageFileName={this.props.user.imageFileName} updateImageName={this.updateImageName.bind(this)}/>
         <EditNameItem text={counterpart.translate('USERNAME')} content={this.props.user.userName} toEdit="NAME" editUsername={this.editUsername.bind(this)} ref="name"/>
         <EditItem text={counterpart.translate('ABOUT_ME')} content={this.props.user.aboutMe} toEdit="ABOUTME" editUser={this.editUser.bind(this)} ref="ABOUTME"/>
-        <EditItem text={counterpart.translate('CITY')} content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)} ref="LOCATION"/>
-        <EditItem text={counterpart.translate('COMPANY')} content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)} ref="ORGANISATION"/>
+        <EditItem text={counterpart.translate('LOCATION')} content={this.props.user.location} toEdit="LOCATION" editUser={this.editUser.bind(this)} ref="LOCATION"/>
+        <EditItem text={counterpart.translate('ORGANISATION')} content={this.props.user.organisation} toEdit="ORGANISATION" editUser={this.editUser.bind(this)} ref="ORGANISATION"/>
         <EditItem text={counterpart.translate('WEBSITE')} content={this.props.user.homepage} toEdit="HOMEPAGE" editUser={this.editUser.bind(this)} ref="HOMEPAGE"/>
         <EditDropdownItem text={counterpart.translate('LANGUAGE')} toEdit="LANGUAGE" content={this.props.user.lang} editUser={this.editUser.bind(this)} width="100" ref="LANGUAGE">
           <option value="DEUTSCH">{counterpart.translate('GERMAN')}</option>

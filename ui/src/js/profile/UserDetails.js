@@ -125,8 +125,25 @@ export default class UserDetails extends Component {
                 <td>
                   <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>{this.props.user.organizationType}</td>
               </tr>
+              <tr>
+                <td>
+                  <span className="bold">{counterpart.translate('WEBSITE')}:&nbsp;</span>{this.props.user.homepage}</td>
+                <td>
+                  <span className="bold">{counterpart.translate('ORGANISATION')}:&nbsp;</span>{this.props.user.organisation}</td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="bold">{counterpart.translate('LOCATION')}:&nbsp;</span>{this.props.user.location}</td>
+                <td>
+                  <span className="bold"></span></td>
+              </tr>
             </tbody>
           </table>
+        </div>
+        <div className="userDesc">
+          <p>
+            <i>{htmlDecode(this.props.user.aboutMe)}</i>
+          </p>
         </div>
         <div className="align-center bottomButton">
           {editLink}

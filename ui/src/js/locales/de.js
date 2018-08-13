@@ -435,5 +435,8 @@ module.exports = {
   },
 
   TREES: 'Bäume',
-  PRICE: 'Wert'
+  PRICE: 'Wert',
+
+  ORGANISATION: 'Organization',
+  LOCATION: 'Ort'
 };
