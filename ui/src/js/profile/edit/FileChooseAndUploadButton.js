@@ -53,7 +53,7 @@ export default class FileChooseAndUploadButton extends Component {
   }
 
   formGetter() {
-    let data = new FormData(document.getElementById('customForm'));
+    let data = new FormData(document.getElementById('userIamgeForm'));
     data.append('userName', localStorage.getItem('username'));
     return data;
   }
@@ -66,7 +66,7 @@ export default class FileChooseAndUploadButton extends Component {
       uploadButton = '';
     }
     return (
-      <form id='customForm' className="file-choser-form">
+      <form id='userIamgeForm' className="file-choser-form">
         <label className="fileContainer">
           <span className='glyphicon glyphicon-search' aria-hidden="true"></span>
           {counterpart.translate('CHOOSE_FILE')}

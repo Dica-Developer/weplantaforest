@@ -23,7 +23,7 @@ export default class MenuItem extends Component {
       link = <a role="button" onMouseUp={(event) => {
         this.linkTo(this.props.hash, event);
       }}>
-        <div dangerouslySetInnerHTML={{ __html: this.props.children }} />
+      <div dangerouslySetInnerHTML={{ __html: this.props.children }} />
       </a>;
     };
     return (
