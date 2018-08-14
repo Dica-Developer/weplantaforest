@@ -438,5 +438,8 @@ module.exports = {
   PRICE: 'Price',
 
   ORGANISATION: 'Organization',
-  LOCATION: 'Location'
+  LOCATION: 'Location',
+
+  DATEFORMAT: 'MM/DD/YYYY',
+  WEEK_STARTS_ON: 0
 };
