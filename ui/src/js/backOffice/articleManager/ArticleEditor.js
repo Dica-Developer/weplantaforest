@@ -14,6 +14,8 @@ import TextEditor from '../../common/components/TextEditor';
 import Notification from '../../common/components/Notification';
 import {getConfig} from '../../common/RestHelper';
 
+require('./article-manager.less');
+
 class Paragraph extends Component {
   constructor(props) {
     super(props);
