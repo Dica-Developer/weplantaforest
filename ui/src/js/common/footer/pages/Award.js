@@ -6,8 +6,9 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-
 import counterpart from 'counterpart';
+
+import EditLink from '../../../common/components/EditLink';
 
 require('./award.less');
 
@@ -56,6 +57,7 @@ export default class Award extends Component {
                     <img src={imageUrl}/>
                   </div>
                   <div className="col-sm-9">
+                    <EditLink articleId={award.id}/>
                     <p className="title">{award.title}</p>
                     <p dangerouslySetInnerHTML={{
                       __html: award.intro

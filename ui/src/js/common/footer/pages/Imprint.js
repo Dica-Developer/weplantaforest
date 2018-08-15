@@ -6,8 +6,9 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-
 import counterpart from 'counterpart';
+
+import EditLink from '../../../common/components/EditLink';
 
 require('./imprint.less');
 
@@ -50,9 +51,11 @@ export default class Imprint extends Component {
             <div className="col-md-12">
               <div>
                 {this.state.imprint.map(function(imp, i) {
-                  return ( <div key={i} ><p className="title">{imp.title}</p><p dangerouslySetInnerHTML={{
-                    __html: imp.intro}}></p>
-                </div>);
+                  return (<div key={i} >
+                            <EditLink articleId={imp.id}/>
+                            <p className="title">{imp.title}</p><p dangerouslySetInnerHTML={{
+                              __html: imp.intro}}></p>
+                          </div>);
                 })}
               </div>
             </div>

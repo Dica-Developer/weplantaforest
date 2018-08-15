@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-
 import counterpart from 'counterpart';
+
+import EditLink from '../../../common/components/EditLink';
 
 require('./partner.less');
 
@@ -43,7 +44,6 @@ export default class Partner extends Component {
         </div>
 
         {this.state.partners.map(function(partner, i) {
-          console.log(partner);
           let imageUrl = 'http://localhost:8082/article/image/' + partner.id + '/' + partner.imageFileName + '/200/200';
             return (
               <div>
@@ -52,6 +52,7 @@ export default class Partner extends Component {
                     <img src={imageUrl}/>
                   </div>
                   <div className="col-sm-9">
+                    <EditLink articleId={partner.id}/>
                     <p className="title">{partner.title}</p>
                     <p dangerouslySetInnerHTML={{
                       __html: partner.intro

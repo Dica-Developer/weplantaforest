@@ -6,8 +6,9 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-
 import counterpart from 'counterpart';
+
+import EditLink from '../../../common/components/EditLink';
 
 require('./aboutUs.less');
 
@@ -51,7 +52,7 @@ export default class aboutUs extends Component {
             <div className="col-md-12">
               <div>
                 {this.state.aboutUs.map(function(about, i) {
-                return ( <div key={i}><p className="title">{about.title}</p><p dangerouslySetInnerHTML={{
+                return ( <div key={i}><p className="title">{about.title}</p><EditLink articleId={about.id}/><p dangerouslySetInnerHTML={{
                   __html: about.intro
                 }}></p></div>);
                 })}

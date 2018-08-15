@@ -4,6 +4,8 @@ import Boostrap from 'bootstrap';
 import {browserHistory} from 'react-router';
 import axios from 'axios';
 import moment from 'moment';
+
+import EditLink from '../common/components/EditLink';
 import {getTextForSelectedLanguage, getShortText} from '../common/language/LanguageHelper';
 
 require('./blogPage.less');
@@ -96,11 +98,19 @@ export default class BlogPage extends Component {
     }else{
       imageDesc = '';
     }
+
     return (
       <div className="container paddingTopBottom15 blogPage">
         <div className="row">
+          <div className="row">
+            <div className='col-md-10'>
+              <h1>{this.state.article.title}</h1>
+            </div>
+            <div className='col-md-2'>
+              <EditLink articleId={this.props.params.articleId}/>
+            </div>
+          </div>
           <div className={'col-md-12'}>
-            <h1>{this.state.article.title}</h1>
             {moment(this.state.article.createdOn).format('DD.MM.YYYY')}{' von '}
             <a role="button" onClick= { () => { browserHistory.push('/user/' + this.state.article.owner.name); }}>
               {this.state.article.owner.name}</a>

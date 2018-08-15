@@ -8,6 +8,8 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import counterpart from 'counterpart';
 
+import EditLink from '../common/components/EditLink';
+
 require('./faq.less');
 
 export default class FaqView extends Component {
@@ -81,7 +83,7 @@ export default class FaqView extends Component {
               <div className="answers">
                 {this.state.faqs.map(function(question, i) {
                     if(question.index != 0){
-                      return ( <div key={i}><a name={'#question-' + i} className="box-question" >{question.title}</a><p className="box-answer" dangerouslySetInnerHTML={{
+                      return ( <div key={i}><a name={'#question-' + i} className="box-question" >{question.title}</a> <EditLink articleId={question.id}/><p className="box-answer" dangerouslySetInnerHTML={{
                         __html: question.intro
                       }}></p></div>);
                     }else{
