@@ -59,7 +59,7 @@ export default class GiftOverview extends Component {
               this.linkTo('/plantGift/5');
             }}/>
           </div>
-          <RedeemGiftContent />
+          <RedeemGiftContent redeemGift={this.props.route.redeemGift.bind(this)}/>
           <div className="col-md-12">
             <h1>{counterpart.translate('GIFT_OVERVIEW')}</h1>
             <h2>{counterpart.translate('CREATED_GIFTS')}:</h2>

@@ -33,7 +33,7 @@ export default class RedeemGiftContent extends Component {
     this.createGiftCodeString();
     var config = getConfig();
     axios.post('http://localhost:8081/code/redeem?codeString=' + this.state.code, {}, config).then(function(response) {
-      that.refs.notification.addNotification(counterpart.translate('GIFT_REDEEMED'), counterpart.translate('TREES_ACCOUNTED'), 'success');
+      that.props.redeemGift();
     }).catch(function(error) {
       that.refs.notification.handleError(error.response);
     });

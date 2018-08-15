@@ -21,7 +21,7 @@ export default class RedeemGiftPage extends Component {
     return (
       <div className="container paddingTopBottom15">
         <div className="row giftRedeem">
-          <RedeemGiftContent></RedeemGiftContent>
+          <RedeemGiftContent redeemGift={this.props.route.redeemGift.bind(this)}></RedeemGiftContent>
         </div>
       </div>
     );

@@ -7,6 +7,7 @@ import counterpart from 'counterpart';
 import NavBar from './common/navbar/NavBar';
 import Header from './common/header/Header';
 import Footer from './common/footer/Footer';
+import Notification from './common/components/Notification';
 
 import LoadableMainPage from './main/LoadableMainPage';
 import ProposalPlantPage from './planting/proposalPlantPage/ProposalPlantPage';
@@ -98,6 +99,13 @@ export default class Routes extends Component {
     this.refs['navbar'].showRight();
   }
 
+  redeemGift() {
+    if(localStorage.getItem('username') && localStorage.getItem('username') != ''){
+      browserHistory.push('/user/' + localStorage.getItem('username'));
+      this.refs.notification.addNotification(counterpart.translate('GIFT_REDEEMED'), counterpart.translate('TREES_ACCOUNTED'), 'success');
+    }
+  }
+
   render() {
     counterpart.registerTranslations('de', require('counterpart/locales/de'));
     counterpart.registerTranslations('en', require('./locales/en'));
@@ -130,8 +138,8 @@ export default class Routes extends Component {
           <Route path="/userActivation" component={ActivationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/forgotPassword" component={ForgotPasswordPage} reRender={this.reRender.bind(this)}/>
           <Route path="/password_reset" component={ResetPasswordPage} reRender={this.reRender.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)}/>
-          <Route path="/gifts/:userName" component={GiftOverview} reRender={this.reRender.bind(this)}/>
-          <Route path="/gift/redeem" component={RedeemGiftPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/gifts/:userName" component={GiftOverview} reRender={this.reRender.bind(this)} redeemGift={this.redeemGift.bind(this)}/>
+          <Route path="/gift/redeem" component={RedeemGiftPage} reRender={this.reRender.bind(this)} redeemGift={this.redeemGift.bind(this)}/>
           <Route path="/certificate/find" component={FindTreePage} reRender={this.reRender.bind(this)}/>
           <Route path="/statistics" component={StatisticsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/team/:teamName" component={TeamPage} reRender={this.reRender.bind(this)}/>
@@ -170,6 +178,7 @@ export default class Routes extends Component {
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} isGift={false} isAbo={false}/>
         </Router>
         <Footer/>
+        <Notification ref="notification"/>
       </div>
     );
   }
