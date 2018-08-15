@@ -446,5 +446,8 @@ module.exports = {
   PAYMENT_INTRO_TITLE: 'Donate safe',
   PAYMENT_INTRO_TEXT: 'Your data will be transfered encrypted.',
   CHECKOUT: 'Checkout',
-  CHOOSE_PACMENT: 'Choose type of payment'
+  CHOOSE_PACMENT: 'Choose type of payment',
+
+  SEPA_HINT_TITLE: 'Please check your entries',
+  SEPA_HINT_TEXT: 'Wee need your name and your adress to be able to create a receipt for you. You neeed also a valid E-Mail.'
 };

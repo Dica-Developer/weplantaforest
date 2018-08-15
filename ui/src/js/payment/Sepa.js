@@ -132,6 +132,18 @@ export default class Sepa extends Component {
         <div className="row">
           <div className="col-md-2"></div>
           <div className="col-md-8">
+            <div className='panel panel-warning'>
+              <div className="panel-heading">{counterpart.translate('SEPA_HINT_TITLE')}</div>
+              <div className="panel-body">
+                {counterpart.translate('SEPA_HINT_TEXT')}
+              </div>
+            </div>
+          </div>
+          <div className="col-md-2"></div>
+        </div>
+        <div className="row">
+          <div className="col-md-2"></div>
+          <div className="col-md-8">
             <div className="form-group">
               <label htmlFor="company">{counterpart.translate('COMPANY')}</label>
               <InputText id="company" cssclass="form-control" toUpdate="company" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>

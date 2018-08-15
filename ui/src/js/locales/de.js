@@ -446,5 +446,8 @@ module.exports = {
   PAYMENT_INTRO_TITLE: 'Sicher spenden',
   PAYMENT_INTRO_TEXT: 'Deine Daten werden verschlüsselt übertragen.',
   CHECKOUT: 'Kasse',
-  CHOOSE_PAYMENT: 'Zahlungsmethode wählen'
+  CHOOSE_PAYMENT: 'Zahlungsmethode wählen',
+
+  SEPA_HINT_TITLE: 'Bitte überprüfe die Richtigkeit Deiner Angaben',
+  SEPA_HINT_TEXT: 'Damit wir Dir eine Spendenquittung ausstellen können, benötigen wir Deinen Namen und Deine Anschrift. Voraussetzung für den Versand der Spendenquittung ist eine gültige E-Mailadresse.'
 };
