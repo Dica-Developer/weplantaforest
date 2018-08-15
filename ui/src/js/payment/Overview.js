@@ -7,6 +7,7 @@ import {
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 import axios from 'axios';
+import counterpart from 'counterpart';
 
 import Notification from '../common/components/Notification';
 
@@ -64,11 +65,11 @@ export default class Overview extends Component {
         // Make a call to the REST api to create the payment
         return actions.payment.create({
           transactions: [{
-            // amount: { total: Accounting.formatNumber(that.props.price / 100, 2, ',', '.'), currency: 'EUR' }
-            amount: {
-              total: Accounting.formatNumber(0.1, 2, ',', '.'),
-              currency: 'EUR'
-            }
+            amount: { total: Accounting.formatNumber(that.props.price / 100, 2, ',', '.'), currency: 'EUR' }
+            // amount: {
+            //   total: Accounting.formatNumber(0.1, 2, ',', '.'),
+            //   currency: 'EUR'
+            // }
           }]
         });
       },
@@ -99,7 +100,7 @@ export default class Overview extends Component {
           };
 
           axios.post('http://localhost:8081/pay', paymentData, {}).then(function(response) {
-            that.refs.notification.addNotification('Zahlung erfolgreich abgeschlossen!', 'Vielen Dank für deine Spende.', 'success');
+            that.refs.notification.addNotification(counterpart.translate('PAYMENT_SUCCESSFUL'), counterpart.translate('THANKS_FOR_DONATION'), 'success');
             that.props.resetPlantBag();
           }).catch(function(response) {
             if (response instanceof Error) {
@@ -126,12 +127,15 @@ export default class Overview extends Component {
     return (
       <div className="row">
         <div className="col-md-12">
-          <h1>Kasse</h1>
-          <div>
-            Sicher spenden für "I plant a tree". Das Senden der Daten ist mit HTTPS verschlüsselt. Bitte überprüfen sie die Richtigkeit Ihrer Angaben, denn diese finden sich in Ihrer Spendenquittung wieder. Achten sie auch unbedingt auf die richtige Syntax Ihrer Emailadresse - an diese wird die Spendenquittung versendet.
-          </div>
+          <h1>{counterpart.translate('CHECKOUT')}</h1>
+          <div className='panel panel-warning '>
+              <div className="panel-heading">{counterpart.translate('PAYMENT_INTRO_TITLE')}</div>
+              <div className="panel-body">
+                {counterpart.translate('PAYMENT_INTRO_TEXT')}
+              </div>
+            </div>
           <div className="bold choose">
-            Zahlungsmethode wählen:
+            {counterpart.translate('CHOOSE_PAYMENT')}:
           </div>
           <div className="paymentOption">
             <a role="button" onClick={() => {

@@ -441,5 +441,10 @@ module.exports = {
   LOCATION: 'Location',
 
   DATEFORMAT: 'MM/DD/YYYY',
-  WEEK_STARTS_ON: 0
+  WEEK_STARTS_ON: 0,
+
+  PAYMENT_INTRO_TITLE: 'Donate safe',
+  PAYMENT_INTRO_TEXT: 'Your data will be transfered encrypted.',
+  CHECKOUT: 'Checkout',
+  CHOOSE_PACMENT: 'Choose type of payment'
 };

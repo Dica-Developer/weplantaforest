@@ -437,9 +437,14 @@ module.exports = {
   TREES: 'Bäume',
   PRICE: 'Wert',
 
-  ORGANISATION: 'Organization',
+  ORGANISATION: 'Organisation',
   LOCATION: 'Ort',
 
   DATEFORMAT: 'DD.MM.YYYY',
-  WEEK_STARTS_ON: 1
+  WEEK_STARTS_ON: 1,
+
+  PAYMENT_INTRO_TITLE: 'Sicher spenden',
+  PAYMENT_INTRO_TEXT: 'Deine Daten werden verschlüsselt übertragen.',
+  CHECKOUT: 'Kasse',
+  CHOOSE_PAYMENT: 'Zahlungsmethode wählen'
 };
