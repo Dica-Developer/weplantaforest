@@ -15,7 +15,8 @@ export default class FileChooseAndUploadButton extends Component {
     super(props);
     this.state = {
       fileName: '',
-      imageUrl: 'http://localhost:8081/team/image/' + this.props.imageFileName + '/80/80'
+      imageUrl: 'http://localhost:8081/team/image/' + this.props.imageFileName + '/80/80',
+      fileWarning: ''
     }
     this.styles = {
       progressWrapper: {
@@ -74,6 +75,7 @@ export default class FileChooseAndUploadButton extends Component {
         </label>
         <div>
           <label className="file-name">{this.state.fileName}</label>
+          <label className="file-error">{this.state.fileWarning}</label>
           {uploadButton}
         </div>
      </form>
@@ -111,9 +113,16 @@ export default class FileChooseAndUploadButton extends Component {
 
   fileChanged(files) {
     if (files && files.length > 0) {
-      this.setState({
-        fileName: files[0].name
-      });
+      if(files[0].size <= 1048576){
+        this.setState({
+          fileName: files[0].name,
+          fileWarning: ''
+        });
+      }else{
+          this.setState({
+            fileWarning: counterpart.translate('FILE_TOO_BIG')
+          });
+      }
     }
   }
 

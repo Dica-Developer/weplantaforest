@@ -259,6 +259,7 @@ module.exports = {
   OTHER: 'Other',
 
   CHOOSE_FILE: 'Choose file',
+  FILE_TOO_BIG: 'File too large! (Max. 1MB)',
   DISCARD: 'discard',
 
   IMG_LOGO: 'Image/Logo',
