@@ -262,7 +262,7 @@ module.exports = {
   DISCARD: 'verwerfen',
 
   IMG_LOGO: 'Bild/Logo',
-  UPLOAD_FAILED: 'Failed fehlgeschlagen',
+  UPLOAD_FAILED: 'Upload fehlgeschlagen!',
   UPLOAD_FINISHED: 'Upload erfolgreich!',
 
   SVG_TITLES:  {

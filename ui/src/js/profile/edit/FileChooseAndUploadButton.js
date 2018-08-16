@@ -90,7 +90,7 @@ export default class FileChooseAndUploadButton extends Component {
         barStyle.backgroundColor = '#d9534f';
         message = (<span style={{'color': '#a94442'}}>{counterpart.translate('UPLOAD_FAILED')}</span>);
       }
-      if (progress === 100) {
+      if (progress === 100 && !hasError) {
         message = (<span >{counterpart.translate('UPLOAD_FINISHED')}</span>);
       }
 
