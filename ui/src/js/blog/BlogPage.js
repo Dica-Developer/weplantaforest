@@ -91,7 +91,7 @@ export default class BlogPage extends Component {
     let articleImageUrl = '';
     var imageDesc;
     if (this.state.article.imageFileName != '') {
-      articleImageUrl = 'http://localhost:8082/article/image/' + this.props.params.articleId + '/' + this.state.article.imageFileName + '/935/623';
+      articleImageUrl = 'http://localhost:8082/article/image/' + this.props.params.articleId + '/' + this.state.article.imageFileName + '/986/657';
     }
     if(this.state.article.imageDescription != null){
       imageDesc = <p className="img-desc">{this.state.article.imageDescription}</p>;
