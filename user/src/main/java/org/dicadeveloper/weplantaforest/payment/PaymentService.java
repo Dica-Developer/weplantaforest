@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.payment;
 
+import java.util.Locale;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.cart.Cart;
@@ -7,10 +9,12 @@ import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
+import org.dicadeveloper.weplantaforest.common.mail.MailHelper;
 import org.dicadeveloper.weplantaforest.gift.Gift;
 import org.dicadeveloper.weplantaforest.gift.Gift.Status;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
+import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +34,8 @@ public class PaymentService {
     private @NonNull GiftRepository _giftRepository;
 
     private @NonNull MessageByLocaleService _messageByLocaleService;
+    
+    private @NonNull MailHelper _mailHelper;
 
     public void payPlantBag(PaymentData paymentData) throws IpatException {
         switch (paymentData.getPaymentMethod()) {
@@ -61,6 +67,7 @@ public class PaymentService {
                 giftToPay.setStatus(Status.UNREDEEMED);
                 _giftRepository.save(giftToPay);
             }
+            sendPaymentConfirmationMail(cartToPay.getBuyer());
         } else {
             String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
             throw new IpatException(PaymentHelper.BANK_ERRORS.get("BANK_" + errorCode));
@@ -77,6 +84,17 @@ public class PaymentService {
             giftToSubmit.setStatus(Status.UNREDEEMED);
             _giftRepository.save(giftToSubmit);
         }
+    }
+    
+    private void sendPaymentConfirmationMail(User user) {
+        new Thread(new Runnable() {
+            public void run() {
+                String subject = _messageByLocaleService.getMessage("mail.sepapaid.subject", user.getLang().getLocale());
+                String text = _messageByLocaleService.getMessage("mail.sepapaid.text", user.getLang().getLocale());
+                text = text.replace("%userName%", user.getName());
+                _mailHelper.sendAMessage(subject, text, user.getMail());
+            }
+        }).start();
     }
 
 }
