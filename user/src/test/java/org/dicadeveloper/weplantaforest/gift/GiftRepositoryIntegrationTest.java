@@ -59,9 +59,7 @@ public class GiftRepositoryIntegrationTest {
         }
     }
 
-    //Test will be ignored: The DbINjecter has to be extended by creating also carts to the injected codes
     @Test
-    @Ignore
     public void testFindGiftByCode() {
         Gift savedGift = _giftRepository.findGiftByCode(codeString1);
 
@@ -72,6 +70,9 @@ public class GiftRepositoryIntegrationTest {
         assertThat(savedGift.getCode().getCode()).isEqualTo(codeString1);
 
     }
+
+    
+    //Test will be ignored: The DbINjecter has to be extended by creating also carts to the injected codes
 
     @Test
     @Ignore
@@ -87,6 +88,7 @@ public class GiftRepositoryIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void testFindGiftsByRecipient() {
         List<Gift> gifts = _giftRepository.findGiftsByRecipient("Recipient");
 
