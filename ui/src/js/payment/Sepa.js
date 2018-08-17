@@ -112,7 +112,7 @@ export default class Sepa extends Component {
       paymentMethod: 'SEPA',
       iban: '',
       bic: ''
-    }
+    };
     this.setState({
       paymentData: paymentData
     });
@@ -208,7 +208,7 @@ export default class Sepa extends Component {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="forename">{counterpart.translate('FIRSTNAME')} *</label>
-                  <InputText id="forename"  value={this.state.paymentData.forename} cssclass="form-control" toUpdate="forename" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                  <InputText id="forename" value={this.state.paymentData.forename} cssclass="form-control" toUpdate="forename" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
               <div className="col-md-6">
@@ -226,13 +226,13 @@ export default class Sepa extends Component {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="zip">{counterpart.translate('ZIP')} *</label>
-                  <InputText id="zip"  value={this.state.paymentData.zip} cssclass="form-control" toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                  <InputText id="zip" value={this.state.paymentData.zip} cssclass="form-control" toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="city">{counterpart.translate('CITY')} *</label>
-                  <InputText id="city"  value={this.state.paymentData.city} cssclass="form-control" toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                  <InputText id="city" value={this.state.paymentData.city} cssclass="form-control" toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
             </div>
