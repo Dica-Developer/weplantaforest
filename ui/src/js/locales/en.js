@@ -450,5 +450,16 @@ module.exports = {
   CHOOSE_PACMENT: 'Choose type of payment',
 
   SEPA_HINT_TITLE: 'Please check your entries',
-  SEPA_HINT_TEXT: 'Wee need your name and your adress to be able to create a receipt for you. You neeed also a valid E-Mail.'
+  SEPA_HINT_TEXT: 'Wee need your name and your adress to be able to create a receipt for you. You neeed also a valid E-Mail.',
+
+  BANK_UNKNOWN_ERROR: 'IBAN is a required field.',
+  BANK_INVALID_ACCOUNT: 'IBAN is invalid.',
+  BANK_NO_FIRSTNAME: 'Firstname is a required field.',
+  BANK_NO_NAME: 'Lastname is a required field.',
+  BANK_NO_STREET: 'Street is a required field.',
+  BANK_NO_ZIP: 'ZIP is a required field.',
+  BANK_NO_CITY: 'City is a required field.',
+  BANK_NO_MAIL: 'E-Mail is a required field.',
+  BANK_CONNECTION_ERROR: 'There was a Connection-Error to the Bank.',
+  BANK_UNDEFINED_ERROR: 'There was an undefined error when transfering the data to the bank.'
 };

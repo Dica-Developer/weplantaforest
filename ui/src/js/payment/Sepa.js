@@ -130,9 +130,10 @@ export default class Sepa extends Component {
       that.setState({
         paymentDone: true
       });
-    }).catch(function(error) {
+    })
+    .catch(function(error) {
       that.refs['spinner'].hideSpinner();
-      that.refs.notification.handleError(error);
+      that.refs.notification.handleError(error.response);
     });
   }
 

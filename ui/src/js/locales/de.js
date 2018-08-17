@@ -450,5 +450,16 @@ module.exports = {
   CHOOSE_PAYMENT: 'Zahlungsmethode wählen',
 
   SEPA_HINT_TITLE: 'Bitte überprüfe die Richtigkeit Deiner Angaben',
-  SEPA_HINT_TEXT: 'Damit wir Dir eine Spendenquittung ausstellen können, benötigen wir Deinen Namen und Deine Anschrift. Voraussetzung für den Versand der Spendenquittung ist eine gültige E-Mailadresse.'
+  SEPA_HINT_TEXT: 'Damit wir Dir eine Spendenquittung ausstellen können, benötigen wir Deinen Namen und Deine Anschrift. Voraussetzung für den Versand der Spendenquittung ist eine gültige E-Mailadresse.',
+
+  BANK_UNKNOWN_ERROR: 'Die IBAN ist ein Pflichtfeld.',
+  BANK_INVALID_ACCOUNT: 'Die IBAN ist ungültig.',
+  BANK_NO_FIRSTNAME: 'Vorname ist ein Pflichtfeld.',
+  BANK_NO_NAME: 'Nachname ist ein Pflichtfeld.',
+  BANK_NO_STREET: 'Straße ist ein Pflichtfeld.',
+  BANK_NO_ZIP: 'Postleitzahl ist ein Pflichtfeld.',
+  BANK_NO_CITY: 'Ort ist ein Pflichtfeld.',
+  BANK_NO_MAIL: 'E-Mail ist ein Pflichtfeld.',
+  BANK_CONNECTION_ERROR: 'Bei der Verbindung zur Spendenbank ist ein Fehler aufgetreten.',
+  BANK_UNDEFINED_ERROR: 'Es ist ein unerwarteter Fehler bei der Übertragung zur Spendenbank aufgetreten.'
 };
