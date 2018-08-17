@@ -42,4 +42,19 @@ public class CartController {
             return new ResponseEntity<>(cartList, HttpStatus.OK);
         }
     }
+    
+    
+    @RequestMapping(value = Uris.LAST_CART, method = RequestMethod.GET)
+    @JsonView(Views.LastCartDetails.class)
+    public ResponseEntity<Cart> getDetailsOfLastCart(@RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
+        User owner = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (owner != null) {
+            Cart cart = _cartRepository.getDetailsOfLastCartByUser(owner.getId());
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    
 }

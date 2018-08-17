@@ -66,4 +66,8 @@ public interface Views {
     public static interface TeamMember {
         
     }
+    
+    public static interface LastCartDetails {
+        
+    }
 }

@@ -85,39 +85,47 @@ public class Cart {
 	private String callBackVzid;
 
 	@Column(name = "_callBackStrasse", length = 32)
+	@JsonView(Views.LastCartDetails.class)
 	private String callBackStrasse;
 
 	@Column(name = "_callBackTimestamp", length = 32)
 	private String callBackTimestamp;
 
 	@Column(name = "_callBackFirma", length = 256)
+	@JsonView(Views.LastCartDetails.class)
 	private String callBackFirma;
 
 	@Column(name = "_callBackBanktransactionid", length = 32)
 	private String callBackBanktransactionid;
 
 	@Column(name = "_callBackVorname", length = 128)
+	@JsonView(Views.LastCartDetails.class)
 	private String callBackVorname;
 
 	@Column(name = "_callBackPlz", length = 16)
+	@JsonView(Views.LastCartDetails.class)
 	private String callBackPlz;
 
 	@Column(name = "_callBackStatus", length = 32)
 	private String callBackStatus;
 
 	@Column(name = "_callBackNachname", length = 128)
+	@JsonView(Views.LastCartDetails.class)
 	private String callBackNachname;
 
 	@Column(name = "_callBackOrt", length = 128)
+	@JsonView(Views.LastCartDetails.class)
 	private String callBackOrt;
 
 	@Column(name = "_callBackBetrag", length = 16)
 	private String callBackBetrag;
 
 	@Column(name = "_callBackLand", length = 16)
+	@JsonView(Views.LastCartDetails.class)
 	private String callBackLand;
 
 	@Column(name = "_callBackEmail", length = 256)
+	@JsonView(Views.LastCartDetails.class)
 	private String callBackEmail;
 
 	@Column(name = "_callBackTrackingcode", length = 32)
@@ -137,6 +145,14 @@ public class Cart {
 
 	@Column(name = "_callBackFirmanzusatz", length = 256)
 	private String callBackFirmanzusatz;
+	
+	@Column(name = "_callBackSalutation", length = 50)
+	@JsonView(Views.LastCartDetails.class)
+	private String callBackSalutation;
+
+	@Column(name = "_callBackTitle", length = 50)
+	@JsonView(Views.LastCartDetails.class)
+	private String callBackTitle;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "_abo__id", nullable = true)
@@ -271,6 +287,8 @@ public class Cart {
 		setCallBackVorname(paymentData.getForename());
 		setCallBackZahlungsart(paymentData.getPaymentMethod());
 		setCallBackTransactionid(paymentData.getTransactionId());
+		setCallBackSalutation(paymentData.getSalutation());
+		setCallBackTitle(paymentData.getTitle());
 	}
 
 	public void setCallBackValues(PaymentData paymentData) {
@@ -286,5 +304,8 @@ public class Cart {
 		setCallBackTrackingcode(getId().toString());
 		setCallBackVorname(paymentData.getForename());
 		setCallBackZahlungsart(paymentData.getPaymentMethod());
+		setCallBackSalutation(paymentData.getSalutation());
+	    setCallBackTitle(paymentData.getTitle());
+
 	}
 }

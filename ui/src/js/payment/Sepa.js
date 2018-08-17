@@ -58,6 +58,7 @@ export default class Sepa extends Component {
 
   componentDidMount() {
     this.refs.select.options[0].selected = true;
+    this.checkForLastCart();
   }
 
   updateValue(toUpdate, value) {
@@ -77,6 +78,43 @@ export default class Sepa extends Component {
     obj[key] = val;
     this.setState({
       paymentData: obj
+    });
+  }
+
+  checkForLastCart(){
+    var config = getConfig();
+    var that = this;
+    axios.get('http://localhost:8081/carts/last', config).then(function(response) {
+      if(response.data){
+        that.preSetValues(response.data);
+      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
+    });
+  }
+
+  preSetValues(data){
+    let paymentData = {
+      cartId: this.props.cartId,
+      giftId: this.props.giftId,
+      company: data.callBackFirma,
+      salutation: data.callBackSalutation,
+      title: data.callBackTitle,
+      forename: data.callBackVorname,
+      name: data.callBackNachname,
+      street: data.callBackStrasse,
+      country: data.callBackLand,
+      city: data.callBackOrt,
+      zip: data.callBackPlz,
+      mail: data.callBackEmail,
+      receipt: 'sofort',
+      comment: '',
+      paymentMethod: 'SEPA',
+      iban: '',
+      bic: ''
+    }
+    this.setState({
+      paymentData: paymentData
     });
   }
 
@@ -132,7 +170,7 @@ export default class Sepa extends Component {
         <div className="row">
           <div className="col-md-2"></div>
           <div className="col-md-8">
-            <div className='panel panel-warning'>
+            <div className={'panel panel-warning ' + (this.state.paymentDone ? 'no-display' : '')}>
               <div className="panel-heading">{counterpart.translate('SEPA_HINT_TITLE')}</div>
               <div className="panel-body">
                 {counterpart.translate('SEPA_HINT_TEXT')}
@@ -146,13 +184,13 @@ export default class Sepa extends Component {
           <div className="col-md-8">
             <div className="form-group">
               <label htmlFor="company">{counterpart.translate('COMPANY')}</label>
-              <InputText id="company" cssclass="form-control" toUpdate="company" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+              <InputText id="company" value={this.state.paymentData.company} cssclass="form-control" toUpdate="company" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
                 <label htmlFor="salutation">{counterpart.translate('SALUTATION')}</label>
-                <select id="salutation" className="form-control" onChange={this.updateSalutation.bind(this)} ref="select" disabled={this.state.paymentDone}>
+                <select id="salutation" value={this.state.paymentData.salutation} className="form-control" onChange={this.updateSalutation.bind(this)} ref="select" disabled={this.state.paymentDone}>
                   <option value="" disabled>{counterpart.translate('SELECT')}</option>
                   <option value="1">{counterpart.translate('MR')}</option>
                   <option value="2">{counterpart.translate('MRS')}</option>
@@ -162,7 +200,7 @@ export default class Sepa extends Component {
               <div className="col-md-6">
                 <div className="form-group">
                 <label htmlFor="title">{counterpart.translate('TITLE')}</label>
-                <InputText id="title" cssclass="form-control" toUpdate="title" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                <InputText id="title" value={this.state.paymentData.title} cssclass="form-control" toUpdate="title" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
             </div>
@@ -170,31 +208,31 @@ export default class Sepa extends Component {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="forename">{counterpart.translate('FIRSTNAME')} *</label>
-                  <InputText id="forename"  cssclass="form-control" toUpdate="forename" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                  <InputText id="forename"  value={this.state.paymentData.forename} cssclass="form-control" toUpdate="forename" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="name">{counterpart.translate('LASTNAME')} *</label>
-                  <InputText id="name" cssclass="form-control" toUpdate="name" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                  <InputText id="name" value={this.state.paymentData.name} cssclass="form-control" toUpdate="name" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
             </div>
             <div className="form-group">
               <label htmlFor="street">{counterpart.translate('STREET_AND_NR')} *</label>
-              <InputText id="street" cssclass="form-control" toUpdate="street" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+              <InputText id="street" value={this.state.paymentData.street} cssclass="form-control" toUpdate="street" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="zip">{counterpart.translate('ZIP')} *</label>
-                  <InputText id="zip"  cssclass="form-control" toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                  <InputText id="zip"  value={this.state.paymentData.zip} cssclass="form-control" toUpdate="zip" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="city">{counterpart.translate('CITY')} *</label>
-                  <InputText id="city" cssclass="form-control" toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+                  <InputText id="city"  value={this.state.paymentData.city} cssclass="form-control" toUpdate="city" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
                 </div>
               </div>
             </div>
@@ -204,7 +242,7 @@ export default class Sepa extends Component {
             </div>
             <div className="form-group">
               <label htmlFor="mail">{counterpart.translate('MAIL')} *</label>
-              <InputText id="mail" cssclass="form-control" toUpdate="mail" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
+              <InputText id="mail" value={this.state.paymentData.mail} cssclass="form-control" toUpdate="mail" updateValue={this.updateValue.bind(this)} disabled={this.state.paymentDone}/>
             </div>
             <div className="row">
               <div className="col-md-6">
