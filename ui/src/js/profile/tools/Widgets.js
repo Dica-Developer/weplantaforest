@@ -145,7 +145,6 @@ export default class Widgets extends Component {
             </div>
           </div>
         </div>
-        <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view}/>
       </div>
     );
   }

@@ -144,7 +144,6 @@ export default class Banner extends Component {
             </div>
           </div>
         </div>
-        <ButtonBar switchTo={this.props.switchTo.bind(this)} chosen={this.props.view}/>
         <Notification ref="notification"/>
       </div>
     );

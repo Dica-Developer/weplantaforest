@@ -461,5 +461,11 @@ module.exports = {
   BANK_NO_CITY: 'Ort ist ein Pflichtfeld.',
   BANK_NO_MAIL: 'E-Mail ist ein Pflichtfeld.',
   BANK_CONNECTION_ERROR: 'Bei der Verbindung zur Spendenbank ist ein Fehler aufgetreten.',
-  BANK_UNDEFINED_ERROR: 'Es ist ein unerwarteter Fehler bei der Übertragung zur Spendenbank aufgetreten.'
+  BANK_UNDEFINED_ERROR: 'Es ist ein unerwarteter Fehler bei der Übertragung zur Spendenbank aufgetreten.',
+
+  OVERVIEW: 'Übersicht',
+  WIDGETS: 'Widgets',
+  CERTIFICATES: 'Zertifikate',
+  BANNER: 'Banner',
+  TOOLS: 'Tools'
 };

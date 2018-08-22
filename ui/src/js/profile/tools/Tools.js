@@ -9,6 +9,7 @@ import Certificates from './Certificates';
 import Receipts from './Receipts';
 import Banner from './Banner';
 import Widgets from './Widgets';
+import ButtonBar from './ButtonBar';
 
 require('./tools.less');
 
@@ -16,12 +17,14 @@ export default class Tools extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'overview'
+      view: 'overview',
+      iindex: 0
     };
   }
 
-  switchTo(value) {
-    this.setState({view: value});
+  switchTo(value, index) {
+    this.setState({view: value, iindex: index});
+    console.log('setting ' + value + ' and ' + index);
   }
 
   render() {
@@ -31,16 +34,16 @@ export default class Tools extends Component {
         content = <Overview switchTo={this.switchTo.bind(this)}/>;
         break;
       case 'certificates':
-        content = <Certificates view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
+        content = <Certificates view={this.state.view}/>;
         break;
       case 'receipts':
-        content = <Receipts view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
+        content = <Receipts view={this.state.view} />;
         break;
       case 'banner':
-        content = <Banner view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
+        content = <Banner view={this.state.view} />;
         break;
       case 'widgets':
-        content = <Widgets view={this.state.view} switchTo={this.switchTo.bind(this)}/>;
+        content = <Widgets view={this.state.view} />;
         break;
       default:
         break;
@@ -48,6 +51,9 @@ export default class Tools extends Component {
 
     return (
       <div className="row tools">
+        <div className="col-md-12">
+          <ButtonBar switchTo={this.switchTo.bind(this)} clickedIndex={this.state.iindex} />
+        </div>
         {content}
       </div>
     );

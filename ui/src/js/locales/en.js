@@ -461,5 +461,11 @@ module.exports = {
   BANK_NO_CITY: 'City is a required field.',
   BANK_NO_MAIL: 'E-Mail is a required field.',
   BANK_CONNECTION_ERROR: 'There was a Connection-Error to the Bank.',
-  BANK_UNDEFINED_ERROR: 'There was an undefined error when transfering the data to the bank.'
+  BANK_UNDEFINED_ERROR: 'There was an undefined error when transfering the data to the bank.',
+
+  OVERVIEW: 'Overview',
+  WIDGETS: 'Widgets',
+  CERTIFICATES: 'Certificates',
+  BANNER: 'Banner',
+  TOOLS: 'Tools'
 };
