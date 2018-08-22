@@ -23,9 +23,9 @@ export default class ButtonBar extends Component {
     this.props.loadAllUser(true);
   }
 
-  loadOrgTypeRanking(orgType, orgTypeDesc, index) {
+  loadOrgTypeRanking(orgType, index) {
     this.state.clickedIndex = index;
-    this.props.loadOrgTypeRanking(orgType, orgTypeDesc, true);
+    this.props.loadOrgTypeRanking(orgType, true);
   }
 
   loadBestTeams() {
