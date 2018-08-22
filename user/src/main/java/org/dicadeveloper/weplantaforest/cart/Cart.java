@@ -167,7 +167,7 @@ public class Cart {
 	private Code code;
 	
     @Column(name = "_receiptable")
-    private boolean receiptable;
+    private boolean receiptable = true;
 
     @Column(name = "_receiptSent")
     private boolean receiptSent;
