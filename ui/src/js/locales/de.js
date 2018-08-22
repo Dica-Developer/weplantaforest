@@ -145,7 +145,7 @@ module.exports = {
   CREATED_GIFTS: 'Erstelle Gutscheine',
   REDEEMED_GIFTS: 'Eingelöste Gutscheine',
   CREATED_BY: 'Erstellt von',
-  CREATE_GIFT: 'Geschenkgutschein erstellen',
+  CREATE_GIFT: 'Gutschein erstellen',
   GIFT_REDEEMED: 'Der Gutschein wurde eingelöst!',
   TREES_ACCOUNTED: 'Die Bäume wurden dir gutgeschrieben.',
   REDEEM_GIFT: 'Gutschein einlösen',
@@ -333,7 +333,7 @@ module.exports = {
     TEXT: 'Anonymen Nutzern ist es leider nicht gestattet, Gutscheine zu erstellen.'
   },
 
-  AS_GIFT: 'Als Geschenkgutschein',
+  AS_GIFT: 'Als Gutschein',
   GO_TO_PAYMENT: 'weiter zur Kasse',
   NO_TREES_IN_PLANTBAG: 'Es befinden sich keine Bäume in deinem Pflanzkorb.',
   YOUR_PLANTBAG: 'Dein Pflanzkorb',
