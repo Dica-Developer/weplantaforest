@@ -53,13 +53,18 @@ export default class GiftOverview extends Component {
     return (
       <div className="container paddingTopBottom15">
         <div className="row gifts">
-          <div className="col-md-12 createGift">
-            <h1>{counterpart.translate('CREATE_GIFT')}</h1>
-            <IconButton className="iconButton" text={counterpart.translate('CREATE_GIFT')} glyphIcon="glyphicon-gift" onClick={() => {
-              this.linkTo('/plantGift/5');
-            }}/>
+          <div className="col-md-6">
+            <div className="createGift" onClick={() => {this.linkTo('/plantGift/5')}}>
+              <span className={('glyphicon glyphicon-gift')} aria-hidden="true"></span>
+              <p>{counterpart.translate('CREATE_GIFT')}</p>
+            </div>
           </div>
-          <RedeemGiftContent redeemGift={this.props.route.redeemGift.bind(this)}/>
+          <div className="col-md-6">
+            <div className="createGift" onClick={() => {this.linkTo('/gift/redeem')}}>
+              <span className={('glyphicon glyphicon-retweet')} aria-hidden="true"></span>
+              <p>{counterpart.translate('REDEEM_GIFT')}</p>
+            </div>
+          </div>
           <div className="col-md-12">
             <h1>{counterpart.translate('GIFT_OVERVIEW')}</h1>
             <h2>{counterpart.translate('CREATED_GIFTS')}:</h2>
