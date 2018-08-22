@@ -242,7 +242,7 @@ module.exports = {
     ALL: 'All',
     PRIVATE: 'Private',
     COMMERCIAL: 'Companies',
-    NONPROFIT: 'NGO\'S',
+    NONPROFIT: 'NGOs',
     EDUCATIONAL: 'Schools',
     TEAMS: 'Teams',
     LAST_YEAR: 'Last year'
