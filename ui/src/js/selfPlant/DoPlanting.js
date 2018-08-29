@@ -10,7 +10,6 @@ import TextArea from '../common/components/TextArea';
 import DateField from '../common/components/DateField';
 import FileChooser from '../common/components/FileChooser';
 import IconButton from '../common/components/IconButton';
-import Captcha from '../common/components/Captcha';
 
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
@@ -79,8 +78,8 @@ export default class DoPlanting extends Component {
 
   sendSelfPlantedTree() {
     if (localStorage.getItem('jwt') == null || localStorage.getItem('jwt') == '') {
-      this.refs.notification.addNotification('Kein authentifizierter Nutzer!', 'Um eine Pflanzung erstellen zu können, musst du als Nutzer eingeloggt sein.', 'error');
-    } else if (this.refs.captcha.validateCaptcha()) {
+      this.refs.notification.addNotification(counterpart.translate('NO_AUTH_USER_TITLE'), counterpart.translate('NO_AUTH_USER_TEXT'), 'error');
+    } else {
       var that = this;
       var config = {
         headers: {
@@ -88,7 +87,7 @@ export default class DoPlanting extends Component {
         }
       };
       axios.post('http://localhost:8081/plantSelf', this.state.selfPlantData, config).then(function(response) {
-        that.props.setPlantingDone(true);
+        that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
         if (that.state.imageFile != null) {
           config = {};
           var data = new FormData();
@@ -107,7 +106,7 @@ export default class DoPlanting extends Component {
           });
         }
       }).catch(function(response) {
-        that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', 'Bei der Verarbeitung ist ein Fehler aufgetreten! Bitte versuche es noch einmal.', 'error');
+        that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('TRY_AGAIN'), 'error');
         if (response instanceof Error) {
           console.error('Error', response.message);
         } else {
@@ -195,11 +194,6 @@ export default class DoPlanting extends Component {
               <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
               <Marker position={this.state.treePosition} draggable={true} ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
             </Map>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12 align-left">
-            <Captcha ref="captcha"/>
           </div>
         </div>
         <div className="row">

@@ -467,5 +467,12 @@ module.exports = {
   WIDGETS: 'Widgets',
   CERTIFICATES: 'Zertifikate',
   BANNER: 'Banner',
-  TOOLS: 'Tools'
+  TOOLS: 'Tools',
+
+  NO_AUTH_USER_TITLE: 'Kein authentifizierter Nutzer!',
+  NO_AUTH_USER_TEXT: 'Um eine Pflanzung erstellen zu können, musst du als Nutzer eingeloggt sein.',
+  TRY_AGAIN: 'Bitte versuche es noch einmal.',
+
+  PLANTING_CREATED: 'Deine Pflanzung wurde erstellt!'
+
 };

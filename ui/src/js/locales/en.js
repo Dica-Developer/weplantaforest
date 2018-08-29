@@ -467,5 +467,12 @@ module.exports = {
   WIDGETS: 'Widgets',
   CERTIFICATES: 'Certificates',
   BANNER: 'Banner',
-  TOOLS: 'Tools'
+  TOOLS: 'Tools',
+
+  NO_AUTH_USER_TITLE: 'No authenticated user!',
+  NO_AUTH_USER_TEXT: 'You have to be logged in to create a planting.',
+  TRY_AGAIN: 'Please try again.',
+
+  PLANTING_CREATED: 'Your planting was created!'
+
 };
