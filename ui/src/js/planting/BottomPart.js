@@ -29,11 +29,6 @@ export default class BottomPart extends Component {
             <SvgButton text=  {counterpart.translate('PUT_INTO_PLANTBAG')} buttonType="barrow" onClick={this.props.updatePlantBag.bind(this)} />
           </div>
         </div>
-        <div className="line">{counterpart.translate('YOU_HAVE_AREA_TO_PLANT_FOR')}
-        </div>
-        <div className="iconButtonWrapper">
-          <IconButton className="iconButton" glyphIcon="glyphicon-forward" text={counterpart.translate('NAVBAR.OFFER_ACREAGE')} onClick={this.switchToOfferProjectPage.bind(this)}/>
-        </div>
       </div>
     );
   }
