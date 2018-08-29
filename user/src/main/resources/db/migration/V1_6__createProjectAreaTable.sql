@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `AreaPositions`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `AreaPositions` (
   `_projectId` bigint(20) NOT NULL,
-  `_lat` DOUBLE(40,2) DEFAULT NULL,
-  `_lng` DOUBLE(40,2) DEFAULT NULL,
+  `_lat` DOUBLE(17,14) DEFAULT NULL,
+  `_lng` DOUBLE(17,14) DEFAULT NULL,
   FOREIGN KEY(_projectId) REFERENCES Plant(_plantId)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

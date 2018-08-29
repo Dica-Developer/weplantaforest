@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Embeddable
 @Data
-public class AreaPositions {
+public class AreaPositions implements Comparable<AreaPositions>{
 
     @Column(name = "_lat")
     @JsonView(Views.ProjectDetails.class)
@@ -20,5 +20,21 @@ public class AreaPositions {
     @Column(name = "_lng")
     @JsonView(Views.ProjectDetails.class)
     Double lng;
+    
+
+    @Column(name = "_order")
+    @JsonView(Views.ProjectDetails.class)
+    Integer order;
+    
+    @Override
+    public int compareTo(AreaPositions ap) {
+        if(this.order == ap.order) {
+            return 0;            
+        }else if(this.order > ap.order) {
+            return 1;
+        }else {
+            return -1;
+        }
+    }
 
 }

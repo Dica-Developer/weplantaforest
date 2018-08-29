@@ -1,8 +1,8 @@
 package org.dicadeveloper.weplantaforest.projects;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.dicadeveloper.weplantaforest.user.User;
@@ -91,6 +92,7 @@ public class Project {
     
     @ElementCollection
     @CollectionTable(name = "AreaPositions", joinColumns = @JoinColumn(name = "_projectId"))
+    @OrderBy("order ASC")
     @JsonView(Views.ProjectDetails.class)
-    private Set<AreaPositions> positions = new HashSet<>();
+    private SortedSet<AreaPositions> positions = new TreeSet<>();
 }

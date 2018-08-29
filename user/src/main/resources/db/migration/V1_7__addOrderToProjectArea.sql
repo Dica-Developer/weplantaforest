@@ -1,0 +1,1 @@
+ALTER TABLE AreaPositions ADD _order int;

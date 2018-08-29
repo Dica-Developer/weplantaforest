@@ -414,7 +414,7 @@ export default class ProjectEditor extends Component {
       descriptionDe: '',
       descriptionEn: '',
       treeTypes: [],
-      zoom: 5,
+      zoom: 8,
       mapCenter: [0, 0],
       showMap: true
     };
@@ -648,7 +648,7 @@ export default class ProjectEditor extends Component {
   }
 
   addProjectPositionFromMapClick(event) {
-    let addedPoint = {lat: parseFloat(event.latlng.lat), lng: parseFloat(event.latlng.lng)};
+    let addedPoint = {lat: parseFloat(event.latlng.lat), lng: parseFloat(event.latlng.lng), order: this.state.project.positions.length};
     this.state.project.positions.push(addedPoint);
     this.forceUpdate();
   }
