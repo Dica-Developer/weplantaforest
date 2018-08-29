@@ -45,6 +45,9 @@ public class Uris {
     public final static String PROJECT_IMAGE = "/project/image/";
     
     public final static String PROJECT_ARTICLES = "/project/articles";
+        
+    public final static String PROJECTS_PAGED = "/projects/paged";
+
 
     // ranking urls
 

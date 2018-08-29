@@ -70,4 +70,8 @@ public interface Views {
     public static interface LastCartDetails {
         
     }
+    
+    public static interface ProjectDetails {
+        
+    }
 }

@@ -1,8 +1,12 @@
 package org.dicadeveloper.weplantaforest.projects;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,13 +37,15 @@ public class Project {
     @Id
     @GeneratedValue
     @Column(name = "_plantId")
+    @JsonView(Views.ProjectDetails.class)
     private Long id;
 
     @Column(name = "_name", length = 255)
-    @JsonView(Views.PlantedTree.class)
+    @JsonView({Views.PlantedTree.class, Views.ProjectDetails.class})
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")
+    @JsonView(Views.ProjectDetails.class)
     private String description;
 
     @Column(name = "_longitude")
@@ -82,4 +88,9 @@ public class Project {
     
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private List<ProjectImage> images;
+    
+    @ElementCollection
+    @CollectionTable(name = "AreaPositions", joinColumns = @JoinColumn(name = "_projectId"))
+    @JsonView(Views.ProjectDetails.class)
+    private Set<AreaPositions> positions = new HashSet<>();
 }

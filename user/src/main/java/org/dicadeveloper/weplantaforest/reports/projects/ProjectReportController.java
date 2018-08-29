@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
+import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectImage;
@@ -54,6 +55,19 @@ public class ProjectReportController {
         Page<ProjectReportData> projectReports = _projectReportRepository.getAllProjects(new PageRequest(page, size));
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
+    
+    
+    @RequestMapping(value = Uris.PROJECTS_PAGED, method = RequestMethod.GET)
+    @JsonView(Views.ProjectDetails.class)
+    public ResponseEntity<?> getAllProjectsPaged(@Param(value = "page") int page, @Param(value = "size") int size) {
+        try {
+            Iterable<Project> projects = _projectReportRepository.active(new PageRequest(page, size));
+            return new ResponseEntity<>(projects, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
     public ResponseEntity<?> getActiveProjects() {
