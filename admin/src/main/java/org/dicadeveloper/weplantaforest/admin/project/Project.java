@@ -1,8 +1,12 @@
 package org.dicadeveloper.weplantaforest.admin.project;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -83,5 +87,10 @@ public class Project {
     private List<ProjectArticle> articles;
     
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private List<ProjectImage> images;
+    private List<ProjectImage> images;    
+    
+    @ElementCollection
+    @CollectionTable(name = "AreaPositions", joinColumns = @JoinColumn(name = "_projectId"))
+    @JsonView(Views.ProjectData.class)
+    private Set<AreaPositions> positions = new HashSet<>();
 }

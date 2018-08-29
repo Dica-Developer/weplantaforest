@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import {Map, Marker, Popup, TileLayer, Polygon} from 'react-leaflet';
 
 import IconButton from '../../common/components/IconButton';
 import InputText from '../../common/components/InputText';
@@ -408,12 +408,15 @@ export default class ProjectEditor extends Component {
           id: 1
         },
         articles: [],
-        images: []
+        images: [],
+        positions: [[0,0]]
       },
       descriptionDe: '',
       descriptionEn: '',
       treeTypes: [],
-      zoom: 8
+      zoom: 5,
+      mapCenter: [0, 0],
+      showMap: true
     };
   }
 
@@ -432,6 +435,7 @@ export default class ProjectEditor extends Component {
       var descriptionDe = getTextForLanguage(result.description, 'DEUTSCH');
       var descriptionEn = getTextForLanguage(result.description, 'ENGLISH');
       that.setState({project: result, descriptionDe: descriptionDe, descriptionEn: descriptionEn});
+      that.calcCenterOfMap();
       that.refs['editor_de'].refreshEditor();
       that.refs['editor_en'].refreshEditor();
       axios.get('http://localhost:8083/project/articles?projectId=' + encodeURIComponent(that.props.params.projectId), config).then(function(response) {
@@ -457,6 +461,23 @@ export default class ProjectEditor extends Component {
       that.refs.notification.addNotification('Fehler beim Laden der Baumtypen!', response.data + response.message, 'error');
     });
 
+  }
+
+  calcCenterOfMap() {
+    let lat = 0;
+    let lng = 0;
+    if (this.state.project.positions && this.state.project.positions.length > 0) {
+      for (let pos of this.state.project.positions) {
+        lat += pos.lat;
+        lng += pos.lng;
+      }
+      lat = lat / this.state.project.positions.length;
+      lng = lng / this.state.project.positions.length;
+      this.setState({
+        mapCenter: [lat, lng]
+      });
+
+    }
   }
 
   updateValue(toUpdate, value) {
@@ -491,13 +512,6 @@ export default class ProjectEditor extends Component {
       value = false;
     }
     this.state.project.shopActive = value;
-    this.forceUpdate();
-  }
-
-  updateProjectPositionFromMapClick(event) {
-    this.state.zoom = this.refs.map.leafletElement._animateToZoom;
-    this.state.project.latitude = parseFloat(event.latlng.lat);
-    this.state.project.longitude = parseFloat(event.latlng.lng);
     this.forceUpdate();
   }
 
@@ -633,6 +647,17 @@ export default class ProjectEditor extends Component {
     this.forceUpdate();
   }
 
+  addProjectPositionFromMapClick(event) {
+    let addedPoint = {lat: parseFloat(event.latlng.lat), lng: parseFloat(event.latlng.lng)};
+    this.state.project.positions.push(addedPoint);
+    this.forceUpdate();
+  }
+
+  deletePositionPoint(i){
+    this.state.project.positions.splice(i, 1);
+    this.forceUpdate();
+  }
+
   render() {
     var that = this;
     var articles = this.createProjectArticles();
@@ -644,6 +669,16 @@ export default class ProjectEditor extends Component {
     } else {
       mainImageUrl = 'http://localhost:8081/project/image/' + this.state.project.imageFileName + '/279/186';
       mainImage =   <img src={mainImageUrl} />
+    }
+
+    let map;
+    if(this.state.showMap){
+      map = <Map ref="map" center={this.state.mapCenter} zoom={this.state.zoom} onClick={this.addProjectPositionFromMapClick.bind(this)}>
+              <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
+              <Polygon positions={this.state.project.positions} color={'#82AB1f'}></Polygon>
+            </Map>;
+    }else{
+      map = '';
     }
 
     return (
@@ -710,11 +745,32 @@ export default class ProjectEditor extends Component {
           <div className="col-md-4">
             Lage:
           </div>
+          <div className="col-md-8 lat-lng-table">
+            <table>
+              <tbody>
+              <tr>
+                <th>
+                  lat
+                </th>
+                <th>
+                  lng
+                </th>
+                <th>
+                </th>
+                </tr>
+                {this.state.project.positions.map(function(pos, i) {
+                    return (<tr key={i} ><td>{pos.lat}</td><td>{pos.lng}</td><td><IconButton glyphIcon="glyphicon-trash" text="" onClick={() => {that.deletePositionPoint(i);}}/></td></tr>);
+                })}
+              </tbody>
+            </table>
+            <IconButton glyphIcon="glyphicon-eye-open" text="" onClick={() => {this.setState({showMap: !this.state.showMap})}}/>
+          </div>
+        </div>
+        <div className="row project-data">
+          <div className="col-md-4">
+          </div>
           <div className="col-md-8">
-            <Map ref="map" center={[this.state.project.latitude, this.state.project.longitude]} zoom={this.state.zoom} onClick={this.updateProjectPositionFromMapClick.bind(this)}>
-              <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
-              <Marker position={[this.state.project.latitude, this.state.project.longitude]} draggable="true" ref="marker" onDragEnd={this.updateProjectPositionFromMarkerDrag.bind(this)}/>
-            </Map>
+            {map}
           </div>
         </div>
         <div className="row">
