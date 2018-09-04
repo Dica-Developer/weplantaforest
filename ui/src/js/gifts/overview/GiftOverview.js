@@ -33,15 +33,15 @@ export default class GiftOverview extends Component {
     axios.get('http://localhost:8081/gift/search/consignor?userName=' + this.state.userName).then(function(response) {
       var result = response.data;
       that.setState({consignorGifts: result});
-    }).catch(function(response) {
-      that.refs.notification.handleError(error.response);
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
 
     axios.get('http://localhost:8081/gift/search/recipient?userName=' + this.state.userName).then(function(response) {
       var result = response.data;
       that.setState({recipientGifts: result});
-    }).catch(function(response) {
-    that.refs.notification.handleError(error.response);
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
   }
 

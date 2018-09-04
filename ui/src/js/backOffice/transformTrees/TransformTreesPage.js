@@ -101,7 +101,7 @@ export default class TransformTreesPage extends Component {
         sumOfTreesToTransfer: -1
       })
     }).catch(error => {
-      that.refs.notification.handleError(error.response);
+      that.refs.notification.handleError(error);
     });
 
   }

@@ -32,8 +32,8 @@ export default class SendRequest extends Component {
       var that = this;
       axios.post('http://localhost:8081/password_request?userName=' + this.state.name + '&language=' + localStorage.getItem('language')).then(function(response) {
         that.props.setResetted();
-      }).catch(function(response) {
-        that.refs.notification.handleError( response);
+      }).catch(function(error) {
+        that.refs.notification.handleError(error);
       });
     } else {
       this.refs.notification.addNotification(counterpart.translate('NO_USERNAME.TITLE'), counterpart.translate('NO_USERNAME.TEXT'), 'error');

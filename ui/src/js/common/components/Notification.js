@@ -28,18 +28,14 @@ export default class Notification extends Component {
   }
 
   handleError(error) {
-    if (error.data.errorInfos) {
-      this.addMultilineNotification(counterpart.translate('ERROR'), error.data.errorInfos, 'error');
-    } else {
-      //TODO: implement some kind of error report possibility
-      this.refs.notificationSystem.addNotification({title: 'Ein unerwarter Fehler ist aufgetreten!', position: 'tc', autoDismiss: 0, message: '', level: 'error'});
-      if (response instanceof Error) {
+    if (error instanceof Error) {
+      if (!error.response) {
+        this.refs.notificationSystem.addNotification({title: 'Der Server kann nicht erreicht werden.', position: 'tc', autoDismiss: 0, message: error.message, level: 'error'});
         console.error('Error', error.message);
+      } else if (error.response.data && error.response.data.errorInfos) {
+        this.addMultilineNotification(counterpart.translate('ERROR'), error.response.data.errorInfos, 'error');
       } else {
-        console.error(error.data);
-        console.error(error.status);
-        console.error(error.headers);
-        console.error(error.config);
+        this.refs.notificationSystem.addNotification({title: 'Ein unerwarter Fehler ist aufgetreten!', position: 'tc', autoDismiss: 0, message: error.message, level: 'error'});
       }
     }
   }

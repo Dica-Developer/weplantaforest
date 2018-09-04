@@ -64,7 +64,7 @@ export default class DoRegistration extends Component {
         console.log('registration succescull!');
         that.props.setRegistrated();
       }).catch(error => {
-        that.refs.notification.handleError(error.response);
+        that.refs.notification.handleError(error);
       });
     }
   }

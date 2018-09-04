@@ -61,8 +61,8 @@ export default class ArticleOverview extends Component {
       var result = response.data;
       var rows = that.createRows(result);
       that.setState({articles: result, rows: rows});
-    }).catch(function(response) {
-      that.refs.notification.handleError(error.response);
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
 
   }
@@ -133,8 +133,8 @@ export default class ArticleOverview extends Component {
         level: 'success'
       });
 
-    }).catch(function(response) {
-      that.refs.notification.handleError(error.response);
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
 
   }

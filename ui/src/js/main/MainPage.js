@@ -39,29 +39,29 @@ export default class MainPage extends Component {
     axios.get('http://localhost:8081/projects/paged?page=0&size=2').then(function(response) {
       var result = response.data;
       that.setState({projects: result});
-    }).catch(function(response) {
-      that.refs.notification.handleError(error.response);
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
 
     axios.get('http://localhost:8082/articlesPaged?articleType=BLOG&language=DEUTSCH&page=0&size=2').then(function(response) {
       var result = response.data;
       that.setState({teaser: result});
-    }).catch(function(response) {
-      that.refs.notification.handleError(error.response);
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
 
     axios.get('http://localhost:8081/ranking/bestOrgType/PRIVATE?page=0&size=5&lastYear=false').then(function(response) {
       var result = response.data;
       that.setState({bestUserRanking: result});
-    }).catch(function(response) {
-      that.refs.notification.handleError(error.response);
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
 
     axios.get('http://localhost:8081/ranking/bestOrgType/COMMERCIAL?page=0&size=5&lastYear=false').then(function(response) {
       var result = response.data;
       that.setState({bestCompanyRanking: result});
-    }).catch(function(response) {
-      that.refs.notification.handleError(error.response);
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
   }
 

@@ -71,7 +71,7 @@ export default class PlantBagPage extends Component {
     axios.post('http://localhost:8081/gift/create', this.state.plantBag, config).then(function(response) {
       that.refs['spinner'].hideSpinner();
       browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
-    }).catch(function(response) {
+    }).catch(function(error) {
       that.refs['spinner'].hideSpinner();
       that.refs.notification.handleError(error);
     });
@@ -84,9 +84,9 @@ export default class PlantBagPage extends Component {
     axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
       that.refs['spinner'].hideSpinner();
       browserHistory.push('/payCart/' + response.data);
-    }).catch(function(response) {
+    }).catch(function(error) {
       that.refs['spinner'].hideSpinner();
-      that.refs.notification.handleError(response);
+      that.refs.notification.handleError(error);
     });
   }
 

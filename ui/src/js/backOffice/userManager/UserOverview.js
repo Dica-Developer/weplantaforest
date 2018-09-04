@@ -43,16 +43,8 @@ class MailChanger extends Component {
     var config = getConfig();
     axios.post('http://localhost:8083/user/changeMail?userId=' + this.props.id + '&newMail=' + this.state.newMail, {}, config).then(function(response) {
       that.props.closeEditBox(that.props.id, that.state.newMail);
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
   }
 
@@ -89,16 +81,8 @@ class UserNameChanger extends Component {
     var config = getConfig();
     axios.post('http://localhost:8083/user/changeName?userId=' + this.props.id + '&newUsername=' + this.state.newUsername, {}, config).then(function(response) {
       that.props.closeEditBox(that.props.id, that.state.newUsername);
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', response.data, 'error');
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
   }
 

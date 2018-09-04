@@ -133,7 +133,7 @@ export default class Sepa extends Component {
     })
     .catch(function(error) {
       that.refs['spinner'].hideSpinner();
-      that.refs.notification.handleError(error.response);
+      that.refs.notification.handleError(error);
     });
   }
 

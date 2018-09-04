@@ -35,7 +35,7 @@ export default class RedeemGiftContent extends Component {
     axios.post('http://localhost:8081/code/redeem?codeString=' + this.state.code, {}, config).then(function(response) {
       that.props.redeemGift();
     }).catch(function(error) {
-      that.refs.notification.handleError(error.response);
+      that.refs.notification.handleError(error);
     });
   }
 
