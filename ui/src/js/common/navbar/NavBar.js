@@ -99,9 +99,9 @@ export default class NavBar extends Component {
       });
     } else {
       let userDetails;
-      if(localStorage.getItem('userDetails') && localStorage.getItem('userDetails') != ''){
+      if (localStorage.getItem('userDetails') && localStorage.getItem('userDetails') != ''){
         userDetails = JSON.parse(localStorage.getItem('userDetails'));
-      }else{
+      } else {
         userDetails = {co2Data: {}};
       }
       this.setState({
@@ -112,9 +112,10 @@ export default class NavBar extends Component {
   }
 
   linkTo(url, mouseEvent) {
-    if(mouseEvent.which == 1) {
+    event = mouseEvent.hasOwnProperty('nativeEvent') ? mouseEvent.nativeEvent : mouseEvent;
+    if (event.which == 1) {
       browserHistory.push(url);
-    }else if(mouseEvent.which == 2){
+    } else if (event.which == 2) {
       window.open("http://localhost:8080" + url, "_blank");
     }
   }
@@ -129,8 +130,8 @@ export default class NavBar extends Component {
       userDetails = <UserDetails user={this.state.userDetails} updateNavbar={this.updateComponents.bind(this)}/>;
     } else {
       myForrestButton = '';
-      userDetails = <div className="user-details logged-out"> <a className="pull left" onClick={this.showRight.bind(this)}>Login</a>  <a className="pull right" onClick={() => {
-        this.linkTo('/registration');
+      userDetails = <div className="user-details logged-out"> <a className="pull left" onClick={this.showRight.bind(this)}>Login</a>  <a className="pull right" onClick={(event) => {
+        this.linkTo('/registration', event);
       }}>{counterpart.translate('REGISTRATE')}</a></div>;
     }
 
