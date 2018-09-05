@@ -63,7 +63,7 @@ export default class ProjectTeaser extends Component {
       <a role="button" onClick={() => {
         this.linkTo('/projects/' + this.props.content.name);
       }}>
-      <Map center={this.state.mapCenter} zoom={8} scrollWheelZoom={false} dragging={false}>
+      <Map center={this.state.mapCenter} zoom={12} scrollWheelZoom={false} dragging={false}>
         <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
         <Polygon positions={this.props.content.positions} color={'#82AB1f'}></Polygon>
       </Map>
