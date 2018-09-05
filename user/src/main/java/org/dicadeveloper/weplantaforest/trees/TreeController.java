@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.trees;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -79,6 +81,13 @@ public class TreeController {
             LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    
+    @GetMapping(value = Uris.TREES_SELF_PLANTED)
+    @JsonView(Views.SelfPlantedTrees.class)
+    public ResponseEntity<?> findSelfPlantedTrees() {
+        List<Tree> trees = _treeRepository.findSelfPlantedTrees();
+        return new ResponseEntity<>(trees, HttpStatus.OK);
     }
 
 }

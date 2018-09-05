@@ -155,8 +155,8 @@ public class DbInjecter {
 
     public Tree injectTree(String treeType, String owner, int amount, long timeOfPlanting) {
         Tree tree = new Tree();
-        tree.setLatitude(0);
-        tree.setLongitude(0);
+        tree.setLatitude(new Float(0));
+        tree.setLongitude(new Float(0));
         tree.setAmount(amount);
         tree.setTreeType(_treeTypeRepository.findByName(treeType));
         tree.setPlantedOn(new Date(timeOfPlanting).getTime());
@@ -167,8 +167,8 @@ public class DbInjecter {
 
     public Tree injectTreeToProject(String treeType, String owner, int amount, long timeOfPlanting, String pName) {
         Tree tree = new Tree();
-        tree.setLatitude(0);
-        tree.setLongitude(0);
+        tree.setLatitude(new Float(0));
+        tree.setLongitude(new Float(0));
         tree.setAmount(amount);
         tree.setTreeType(_treeTypeRepository.findByName(treeType));
         tree.setPlantedOn(new Date(timeOfPlanting).getTime());

@@ -262,7 +262,7 @@ export default class ProfilePage extends Component {
           if(content.projectArticle != null){
             linkTo = '/projects/' + content.projectArticle.project.name;
           }else{
-            linkTo = '/user/' + that.props.params.userName;
+            linkTo = '/selfPlants/' + content.id;
           }
           return (
             <RankingItem imageUrl={imageUrl} rankNumber={page * 15 + (i + 1)} content={content} key={i} showRankNumber={true} showName={false} linkTo={linkTo}>

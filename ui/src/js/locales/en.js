@@ -473,6 +473,9 @@ module.exports = {
   NO_AUTH_USER_TEXT: 'You have to be logged in to create a planting.',
   TRY_AGAIN: 'Please try again.',
 
-  PLANTING_CREATED: 'Your planting was created!'
+  PLANTING_CREATED: 'Your planting was created!',
+  SELF_PLANTED: 'Community tree',
+
+  TREE_LOCATION: 'Location'
 
 };

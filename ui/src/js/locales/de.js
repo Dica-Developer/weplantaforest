@@ -473,6 +473,9 @@ module.exports = {
   NO_AUTH_USER_TEXT: 'Um eine Pflanzung erstellen zu können, musst du als Nutzer eingeloggt sein.',
   TRY_AGAIN: 'Bitte versuche es noch einmal.',
 
-  PLANTING_CREATED: 'Deine Pflanzung wurde erstellt!'
+  PLANTING_CREATED: 'Deine Pflanzung wurde erstellt!',
+  COMMUNITY_TREE: 'Community Baum',
+
+  TREE_LOCATION: 'Standort'
 
 };

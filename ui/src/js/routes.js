@@ -20,6 +20,7 @@ import ReceiptsPage from './profile/ReceiptsPage';
 import RankingPage from './ranking/RankingPage';
 import ProjectOfferPage from './offer/ProjectOfferPage';
 import SelfPlantPage from './selfPlant/SelfPlantPage';
+import SelfPlantOverviewPage from './selfPlantOverview/SelfPlantOverviewPage';
 import PlantBagPage from './plantBag/PlantBagPage';
 import PaymentPage from './payment/PaymentPage';
 import RegistrationPage from './registration/RegistrationPage';
@@ -131,6 +132,7 @@ export default class Routes extends Component {
           <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)}/>
           <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/selfPlants/:treeId" component={SelfPlantOverviewPage} reRender={this.reRender.bind(this)}/>
           <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)}/>
           <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>
           <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>

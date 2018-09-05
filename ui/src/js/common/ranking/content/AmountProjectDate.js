@@ -16,7 +16,7 @@ export default class AmountProjectDate extends Component {
     var project;
     var name;
     if (this.props.content.projectArticle == null) {
-      project = <span>Eigene Pflanzung</span>;
+      project = <span>{counterpart.translate('SELF_PLANTED')}</span>;
     } else {
       project = this.props.content.projectArticle.project.name;
     }
@@ -29,11 +29,10 @@ export default class AmountProjectDate extends Component {
     return (
       <div className="rankingSummary">
         <p>
-          <span className="bold">{counterpart.translate('NUMBER')}:&nbsp;</span>{Accounting.formatNumber(this.props.content.amount, 0, '.', ',')}&nbsp;{name}<br/>
-          <span className="bold">{counterpart.translate('PROJECT')}:&nbsp;</span>
-          {project}<br/>
-          <span className="bold">{counterpart.translate('DATE')}:&nbsp;</span>
-          <span >{moment(this.props.content.plantedOn).format('DD.MM.YYYY')}</span>
+          <span className="bold">{project}</span>
+          <br/>
+          <span>{counterpart.translate('NUMBER')}:&nbsp;</span>{Accounting.formatNumber(this.props.content.amount, 0, '.', ',')}&nbsp;{name}<br/>
+          <span>{moment(this.props.content.plantedOn).format('DD.MM.YYYY')}</span>
         </p>
       </div>
     );

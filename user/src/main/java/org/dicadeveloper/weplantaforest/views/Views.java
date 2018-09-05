@@ -74,4 +74,8 @@ public interface Views {
     public static interface ProjectDetails {
         
     }
+    
+    public static interface SelfPlantedTrees {
+        
+    }
 }

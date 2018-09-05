@@ -256,8 +256,8 @@ public class DatabasePopulator {
 
             Tree treeDto = new Tree();
             treeDto.setAmount(i % 20 + 1);
-            treeDto.setLatitude(i);
-            treeDto.setLongitude(i);
+            treeDto.setLatitude(new Float(i));
+            treeDto.setLongitude(new Float(i));
             treeDto.setTreeType(articleToPlant.getTreeType());
             treeDto.setPlantedOn(timeOfPlant - i * 100000000L);
             treeDto.setOwner(_userRepository.findByName(DEFAULT_USERS.get(i % 15)));
