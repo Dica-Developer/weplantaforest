@@ -107,6 +107,11 @@ export default class Routes extends Component {
     }
   }
 
+  logout() {
+    this.refs['navbar'].logout();
+    this.showLoginSlide();
+  }
+
   render() {
     counterpart.registerTranslations('de', require('counterpart/locales/de'));
     counterpart.registerTranslations('en', require('./locales/en'));
@@ -116,7 +121,7 @@ export default class Routes extends Component {
       : 'de');
     return (
       <div>
-        <NavBar ref="navbar" reRender={this.reRender.bind(this)} switchLocale={this.switchLocale}/>
+        <NavBar ref="navbar" reRender={this.reRender.bind(this)} switchLocale={this.switchLocale} />
         <Header/>
         <Router history={browserHistory}>
           <Route path="/" component={LoadableMainPage} reRender={this.reRender.bind(this)}/>
@@ -126,7 +131,7 @@ export default class Routes extends Component {
           <Route path="/plantGift2" component={CustomPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header={counterpart.translate('CREATE_GIFT')} isGift={true} isAbo={false}/>
           <Route path="/projects" component={ProjectsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projects/:projectName" component={ProjectDetailsPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)}/>
-          <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)}/>
+          <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)} logout={this.logout.bind(this)} />
           <Route path="/tools/:username" component={ToolsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/receipts/:username" component={ReceiptsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>

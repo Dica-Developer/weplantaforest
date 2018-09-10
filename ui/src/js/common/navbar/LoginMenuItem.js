@@ -63,15 +63,8 @@ export default class LoginMenuItem extends Component {
         that.props.updateLanguage(result);
       }
       that.isAdmin();
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+        that.refs.notification.handleError(error);
     });
 
   }
@@ -92,17 +85,9 @@ export default class LoginMenuItem extends Component {
         password: ''
       });
       that.loadUserDetails();
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
-
   }
 
   loadUserDetails() {
@@ -119,15 +104,8 @@ export default class LoginMenuItem extends Component {
       });
       localStorage.setItem('userDetails', JSON.stringify(result));
       that.props.updateNavbar();
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
   }
 
@@ -164,6 +142,7 @@ export default class LoginMenuItem extends Component {
       password: '',
       loggedIn: false
     });
+    this.linkTo('/');
     this.props.updateNavbar();
   }
 

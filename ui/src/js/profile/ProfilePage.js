@@ -58,15 +58,8 @@ export default class ProfilePage extends Component {
       if (that.state.user.teamName != '') {
         that.loadTeamDetails();
       }
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
 
     axios.get('http://localhost:8081/trees/owner?userName=' + encodeURIComponent(this.props.params.userName) + '&page=0&size=15').then(function(response) {
@@ -74,15 +67,8 @@ export default class ProfilePage extends Component {
       that.setState({
         newestPlantRanking: result
       });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
   }
 
@@ -94,15 +80,8 @@ export default class ProfilePage extends Component {
         that.setState({
           team: result
         });
-      }).catch(function(response) {
-        if (response instanceof Error) {
-          console.error('Error', response.message);
-        } else {
-          console.error(response.data);
-          console.error(response.status);
-          console.error(response.headers);
-          console.error(response.config);
-        }
+      }).catch(function(error) {
+        that.refs.notification.handleError(error);
       });
     }
   }
@@ -130,15 +109,8 @@ export default class ProfilePage extends Component {
       that.setState({
         newestPlantRanking: result
       });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
   }
 
@@ -163,15 +135,8 @@ export default class ProfilePage extends Component {
       that.setState({
         user: result
       });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
     });
   }
 
@@ -226,6 +191,10 @@ export default class ProfilePage extends Component {
     this.forceUpdate();
   }
 
+  logout() {
+    this.props.route.logout();
+  }
+
   render() {
     var that = this;
     var userPart;
@@ -236,7 +205,7 @@ export default class ProfilePage extends Component {
     if (!this.state.editUser) {
       userPart = <UserDetails user={this.state.user} showEditUser={this.showEditUser.bind(this)}/>;
     } else {
-      userPart = <EditUserDetails user={this.state.user} showProfile={this.showProfile.bind(this)} updateLanguage={this.updateLanguage.bind(this)} updateImageName={this.updateImageName.bind(this)}/>;
+      userPart = <EditUserDetails user={this.state.user} showProfile={this.showProfile.bind(this)} updateLanguage={this.updateLanguage.bind(this)} updateImageName={this.updateImageName.bind(this)} logout={this.logout.bind(this)}/>;
     }
 
     if (this.state.user.teamName != '' && !this.state.editTeam) {

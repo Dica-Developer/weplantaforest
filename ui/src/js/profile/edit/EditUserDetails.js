@@ -53,8 +53,7 @@ export default class EditUserDetails extends Component {
       }
     };
     axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=NAME&newEntry=' + newEntry, {}, config).then(function(response) {
-      localStorage.setItem('jwt', '');
-      window.location = '/';
+      that.props.logout();
     }).catch(function(error) {
       that.refs.name.undoChanges(that.props.user.userName);
       that.refs.notification.handleError(error);

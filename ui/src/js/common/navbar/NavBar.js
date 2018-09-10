@@ -120,6 +120,10 @@ export default class NavBar extends Component {
     }
   }
 
+  logout() {
+    this.refs['login-menu-item'].logout();
+  }
+
   render() {
     let myForrestButton;
     let userDetails;
@@ -148,7 +152,7 @@ export default class NavBar extends Component {
           <LanguageMenuItem language={this.state.language} updateLanguage={this.updateLanguage.bind(this)}/>
         </Menu>
         <Menu ref="right" alignment="right">
-          <LoginMenuItem hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
+          <LoginMenuItem ref="login-menu-item" hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
           <MenuItem hash={'/user/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.MY_PROFIL')}</MenuItem>
           <MenuItem hash={'/tools/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.TOOLS')}</MenuItem>
           <MenuItem hash={'/gifts/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.VOUCHERS')}</MenuItem>
