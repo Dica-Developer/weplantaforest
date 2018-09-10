@@ -38,7 +38,7 @@ public class Project {
     @Id
     @GeneratedValue
     @Column(name = "_plantId")
-    @JsonView(Views.ProjectDetails.class)
+    @JsonView({Views.ProjectDetails.class})
     private Long id;
 
     @Column(name = "_name", length = 255)
@@ -46,12 +46,17 @@ public class Project {
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")
-    @JsonView(Views.ProjectDetails.class)
+    @JsonView({Views.ProjectDetails.class})
     private String description;
 
+    /*
+     * no longer in use --> AreaPositions instead
+     */
+    @Deprecated
     @Column(name = "_longitude")
     private Float longitude;
 
+    @Deprecated
     @Column(name = "_latitude")
     private Float latitude;
 
@@ -95,4 +100,5 @@ public class Project {
     @OrderBy("order ASC")
     @JsonView(Views.ProjectDetails.class)
     private SortedSet<AreaPositions> positions = new TreeSet<>();
+
 }

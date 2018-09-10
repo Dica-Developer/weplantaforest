@@ -9,11 +9,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
+import org.dicadeveloper.weplantaforest.projects.AreaPositions;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
 import org.dicadeveloper.weplantaforest.projects.ProjectImage;
 import org.dicadeveloper.weplantaforest.projects.ProjectImageRepository;
+import org.dicadeveloper.weplantaforest.projects.ProjectRepository;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
@@ -41,7 +43,9 @@ public class ProjectReportController {
     protected final Log LOG = LogFactory.getLog(ProjectReportController.class.getName());
 
     private @NonNull ProjectReportRepository _projectReportRepository;
-
+    
+    private @NonNull ProjectRepository _projectRepository;
+    
     private @NonNull ProjectImageRepository _projectImageRepository;
 
     private @NonNull ProjectArticleRepository _projectArticleRepository;
@@ -89,12 +93,14 @@ public class ProjectReportController {
 
     @RequestMapping(value = Uris.PROJECT_SEARCH_NAME + "/extended/" + "{projectName}", method = RequestMethod.GET)
     public ResponseEntity<?> getExtendedProjectDataByName(@PathVariable(value = "projectName") String projectName) {
+        Project project = _projectRepository.findByName(projectName);
         ProjectReportExtendedData projectReportExtendedData = new ProjectReportExtendedData();
         ProjectReportData projectReportData = _projectReportRepository.getProjectDataByProjectName(projectName);
         List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(projectReportData.getProjectId());
 
         projectReportExtendedData.setProjectReportData(projectReportData);
         projectReportExtendedData.setImages(images);
+        projectReportExtendedData.setPositions(project.getPositions());
 
         return new ResponseEntity<>(projectReportExtendedData, HttpStatus.OK);
     }

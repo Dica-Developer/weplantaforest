@@ -2,7 +2,9 @@ package org.dicadeveloper.weplantaforest.reports.projects;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
+import org.dicadeveloper.weplantaforest.projects.AreaPositions;
 import org.dicadeveloper.weplantaforest.projects.ProjectImage;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +22,8 @@ public class ProjectReportExtendedData {
     ProjectReportData projectReportData;
 
     List<ProjectImageData> images;
+    
+    SortedSet<AreaPositions> positions;
 
     protected void setImages(List<ProjectImage> imageEntities) {
         for (ProjectImage projectImage : imageEntities) {

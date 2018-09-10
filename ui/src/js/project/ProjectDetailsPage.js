@@ -1,5 +1,13 @@
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 import axios from 'axios';
+import {
+  Map,
+  TileLayer,
+  Polygon
+} from 'react-leaflet';
+import counterpart from 'counterpart';
 
 import ProjectCarousel from './ProjectCarousel';
 import ProjectDetails from './ProjectDetails';
@@ -8,8 +16,8 @@ import SmallRankingContainer from '../common/ranking/SmallRankingContainer';
 import RankingItem from '../common/ranking/RankingItem';
 import RankingContentNameAmountCo2 from '../common/ranking/content/NameAmountCo2';
 import RankingContentNameAmountDate from '../common/ranking/content/NameAmountDate';
-
-import counterpart from 'counterpart';
+import PolygonMap from '../common/components/PolygonMap';
+import SvgButton from '../common/components/SvgButton';
 
 require('./projectPage.less');
 
@@ -28,7 +36,8 @@ export default class ProjectDetailsPage extends Component {
           amountOfMaximumTreesToPlant: 0,
           amountOfPlantedTrees: 0
         },
-        images: []
+        images: [],
+        positions: []
       },
       articles: [],
       detailsActive: true,
@@ -51,7 +60,9 @@ export default class ProjectDetailsPage extends Component {
     var that = this;
     axios.get('http://localhost:8081/projects/search/name/extended/' + encodeURIComponent(this.props.params.projectName)).then(function(response) {
       var result = response.data;
-      that.setState({project: result});
+      that.setState({
+        project: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -65,7 +76,9 @@ export default class ProjectDetailsPage extends Component {
 
     axios.get('http://localhost:8081/ranking/bestUser/project?projectName=' + this.props.params.projectName + '&page=0&size=5').then(function(response) {
       var result = response.data;
-      that.setState({bestUser: result});
+      that.setState({
+        bestUser: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -79,7 +92,9 @@ export default class ProjectDetailsPage extends Component {
 
     axios.get('http://localhost:8081/ranking/bestTeam/project?projectName=' + this.props.params.projectName + '&page=0&size=5').then(function(response) {
       var result = response.data;
-      that.setState({bestTeam: result});
+      that.setState({
+        bestTeam: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -93,7 +108,9 @@ export default class ProjectDetailsPage extends Component {
 
     axios.get('http://localhost:8081/ranking/lastPlantedTrees/project?projectName=' + this.props.params.projectName + '&page=0&size=5').then(function(response) {
       var result = response.data;
-      that.setState({lastPlantedTrees: result});
+      that.setState({
+        lastPlantedTrees: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -106,7 +123,9 @@ export default class ProjectDetailsPage extends Component {
     });
     axios.get('http://localhost:8081/project/articles?projectName=' + this.props.params.projectName).then(function(response) {
       var result = response.data;
-      that.setState({articles: result});
+      that.setState({
+        articles: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -124,7 +143,9 @@ export default class ProjectDetailsPage extends Component {
     var newPage = page + 1;
     axios.get('http://localhost:8081/ranking/' + rankingType + '/project?projectName=' + this.props.params.projectName + '&page=' + newPage + '&size=5').then(function(response) {
       var result = response.data;
-      that.setState({[rankingType]: result});
+      that.setState({
+        [rankingType]: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -145,7 +166,9 @@ export default class ProjectDetailsPage extends Component {
     var newPage = page - 1;
     axios.get('http://localhost:8081/ranking/' + rankingType + '/project?projectName=' + this.props.params.projectName + '&page=' + newPage + '&size=5').then(function(response) {
       var result = response.data;
-      that.setState({[rankingType]: result});
+      that.setState({
+        [rankingType]: result
+      });
     }).catch(function(response) {
       if (response instanceof Error) {
         console.error('Error', response.message);
@@ -162,7 +185,9 @@ export default class ProjectDetailsPage extends Component {
   }
 
   setDetailsActive(value) {
-    this.setState({detailsActive: value});
+    this.setState({
+      detailsActive: value
+    });
     window.scrollTo(0, 0);
   }
 
@@ -171,27 +196,51 @@ export default class ProjectDetailsPage extends Component {
   }
 
   render() {
-    var bestUserPage = this.state.bestUserPage;
-    var bestTeamPage = this.state.bestTeamPage;
-    var lastPlantedTreesPage = this.state.lastPlantedTreesPage;
-    var mainPart;
+    let bestUserPage = this.state.bestUserPage;
+    let bestTeamPage = this.state.bestTeamPage;
+    let lastPlantedTreesPage = this.state.lastPlantedTreesPage;
+    let mainPart;
+    let plantButton;
+    let map;
 
     if (this.state.detailsActive) {
       mainPart = <div><ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images}/>
-        <ProjectDetails project={this.state.project} showPlanting={() => {
-          this.setDetailsActive(false);
-        }}/></div>;
+        <ProjectDetails project={this.state.project}/></div>;
+        map =   <div className="row project-map">
+            <div className="col-md-12">
+              <PolygonMap positions={this.state.project.positions}/>
+            </div>
+          </div>;
     } else {
       mainPart = <ProjectPlanting projectName={this.props.params.projectName} showDetails={() => {
         this.setDetailsActive(true);
       }} articles={this.state.articles} updatePlantBag={this.updatePlantBag.bind(this)} amount="5"/>;
+      map = '';
     };
+
+    if (this.state.project.projectReportData.active && this.state.detailsActive) {
+      plantButton = <SvgButton text={counterpart.translate('PLANT_HERE')} buttonType="mouse" onClick={() => {
+        this.setDetailsActive(false);
+      }} />;
+    } else {
+      plantButton = '';
+    }
+
+
 
     return (
       <div className="container paddingTopBottom15 projectPage">
         <div className="row">
           <div className="col-md-12">
             {mainPart}
+          </div>
+        </div>
+        {map}
+        <div className="row plant-button">
+          <div className="col-md-12">
+            <div className="align-center">
+              {plantButton}
+            </div>
           </div>
         </div>
         <div className="row projectRankings">

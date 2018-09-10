@@ -3,12 +3,9 @@ import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 import PieChart from 'react-simple-pie-chart';
-import {Link} from 'react-router';
-
-import SvgButton from '../common/components/SvgButton';
-import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
-
 import counterpart from 'counterpart';
+
+import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
 export default class ProjectDetails extends Component {
   constructor(props) {
@@ -23,28 +20,23 @@ export default class ProjectDetails extends Component {
     const elm = this.refs.details;
     elm.addEventListener('animationend', this.fadingDone);
   }
+
   componentWillUnmount() {
     const elm = this.refs.details;
     elm.removeEventListener('animationend', this.fadingDone);
   }
+
   fadingDone() {
     this.setState({fade: false});
   }
 
   render() {
     var percent = 0;
-    var plantButton;
     if (this.props.project.projectReportData.amountOfMaximumTreesToPlant != 0) {
       percent = this.props.project.projectReportData.amountOfPlantedTrees / this.props.project.projectReportData.amountOfMaximumTreesToPlant * 100;
     }
-
-    if (this.props.project.projectReportData.active) {
-      plantButton = <SvgButton text={counterpart.translate('PLANT_HERE')} buttonType="mouse" onClick={this.props.showPlanting.bind(this)} />;
-    } else {
-      plantButton = '';
-    }
-
     var formattedPercent = Accounting.formatNumber(percent, 0, '.', ',');
+
     return (
       <div ref="details" className={(this.state.fade
         ? 'fadeOut'
@@ -87,9 +79,6 @@ export default class ProjectDetails extends Component {
           <p dangerouslySetInnerHTML={{
             __html: getTextForSelectedLanguage(this.props.project.projectReportData.description)
           }}/>
-        </div>
-        <div className="align-center spacing">
-          {plantButton}
         </div>
       </div>
     );

@@ -20,12 +20,59 @@
     }
   }
 
+  .project-map {
+    margin-right: 0;
+    margin-left: 0;
+
+    .col-md-12 {
+      background-color: @base-background-color;
+      padding-bottom: 15px;
+
+      .leaflet-container {
+        margin-left: 4vw;
+        margin-right: 4vw;
+        height: 400px;
+      }
+    }
+  }
+
+  .plant-button {
+    margin-right: 0;
+    margin-left: 0;
+
+
+    .col-md-12 {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      background-color: @base-background-color;
+
+      .svgButton {
+        border-radius: 0;
+        background-color: @primary-color;
+        border: 0;
+
+        a {
+          div {
+            text-align: left;
+
+            svg {
+              border-radius: 0;
+              height: 35px;
+              border: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .projectDetails {
     background-color: @base-background-color;
     padding-top: 15px;
     padding-bottom: 15px;
 
-    h1, h2 {
+    h1,
+    h2 {
       text-align: center;
       font-family: Georgia,Times,Times New Roman,serif;
     }
@@ -70,31 +117,9 @@
     .description {
       margin-left: 4vw;
       margin-right: 4vw;
-      border-bottom: 1px solid;
       margin-bottom: 15px;
     }
 
-    .spacing {
-      margin: 50px 0 40px;
-
-      .svgButton {
-        border-radius: 0;
-        background-color: @primary-color;
-        border: 0;
-
-        a {
-          div {
-            text-align: left;
-
-            svg {
-              border-radius: 0;
-              height: 35px;
-              border: 0;
-            }
-          }
-        }
-      }
-    }
   }
 
   .projectRankings {

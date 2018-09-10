@@ -20,7 +20,7 @@ export default class MainPage extends Component {
     super();
     this.state = {
       projects: {
-        content: [{positions: [[0,0]]}, {positions: [[0,0]]}]
+        content: [{positions: [{lat: 0, lng: 0}]}, {positions: [{lat: 0, lng: 0}]}]
       },
       teaser: {
         content: []
