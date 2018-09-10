@@ -36,9 +36,9 @@ export default class EditUserDetails extends Component {
     };
     axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=' + toEdit + '&newEntry=' + newEntry, {}, config).then(function(response) {
       that.refs[toEdit].saveChanges();
-    }).catch(function(response) {
+    }).catch(function(error) {
       that.refs[toEdit].undoChanges();
-      that.refs.notification.addNotification(counterpart.translate('ERROR'), response.data, 'error');
+      that.refs.notification.handleError(error);
     });
     if (toEdit == 'LANGUAGE') {
       this.props.updateLanguage(newEntry);
@@ -55,17 +55,9 @@ export default class EditUserDetails extends Component {
     axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=NAME&newEntry=' + newEntry, {}, config).then(function(response) {
       localStorage.setItem('jwt', '');
       window.location = '/';
-    }).catch(function(response) {
+    }).catch(function(error) {
       that.refs.name.undoChanges(that.props.user.userName);
-      that.refs.name.showError(response.data.message);
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
+      that.refs.notification.handleError(error);
     });
   }
 
