@@ -79,7 +79,7 @@ module.exports = {
   REGISTRATE: 'Registrieren',
 
   ERROR: 'Ein Fehler ist aufgetreten!',
-  WRONG_USERNAME_PASSWORD: 'Die Kombination aus Name und Passwort stimmt nicht überein! Bitte versuche Sie es noch einmal.',
+  WRONG_USERNAME_PASSWORD: 'Benutzername und Passwort stimmen nicht überein.',
   USER_NOT_FOUND: 'Nutzer nicht gefunden.',
   INVALID_ACTIVATION_KEY: 'Der Aktivierungs-Link ist ungültig.',
   USER_ALREADY_EXISTS: 'Der Nutzername ist bereits vergeben.',
