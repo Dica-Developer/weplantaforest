@@ -20,7 +20,7 @@ export default class Overview extends Component {
 
   render() {
     return (
-      <div>
+      <div className="overview">
         <div className="col-md-12">
           <h1>Tools</h1>
         </div>
