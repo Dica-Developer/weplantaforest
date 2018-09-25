@@ -158,8 +158,7 @@ public class PaymentHelper {
         try {
             params.put("betrag", URLEncoder.encode(formattedPrice, DEFAULT_ENCODING));
 
-            params.put("anrede", URLEncoder.encode(paymentData.getSalutation()
-                                                              .toString(), DEFAULT_ENCODING));
+            params.put("anrede", URLEncoder.encode(paymentData.getSalutation(), DEFAULT_ENCODING));
             params.put("vorname", URLEncoder.encode(paymentData.getForename(), DEFAULT_ENCODING));
             params.put("nachname", URLEncoder.encode(paymentData.getName(), DEFAULT_ENCODING));
             params.put("strasse", URLEncoder.encode(paymentData.getStreet(), DEFAULT_ENCODING));
