@@ -127,56 +127,8 @@ public class PaymentHelper {
         }
     }
 
-    public String postRequestCC(Cart cart, PaymentData paymentData) {
-        String address = _env.getProperty("bfs.url");
-        try {
-            CloseableHttpClient httpClient;
-            // on staging and production the requests has to be routed
-            // through a proxy
-            if (_env.getProperty("proxy.host") != null) {
-                HttpHost proxy = new HttpHost(_env.getProperty("proxy.host"), Integer.parseInt(_env.getProperty("proxy.port")));
-                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-                httpClient = HttpClients.custom()
-                                        .setRoutePlanner(routePlanner)
-                                        .build();
-            } else {
-                httpClient = HttpClients.custom()
-                                        .build();
-            }
-
-            HttpPost httpPost = new HttpPost(address);
-
-            List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-            Map<String, String> params = createParamsCC(cart, paymentData);
-            for (Entry<String, String> entry : params.entrySet()) {
-                urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-            }
-
-            httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
-
-            HttpResponse response = httpClient.execute(httpPost);
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity()
-                                                                                 .getContent()));
-            StringBuffer result = new StringBuffer();
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            }
-            httpClient.close();
-            return result.toString();
-        } catch (final Exception e) {
-            LOG.error("unable to do post request to '" + address + "'", e);
-            return CONNECTION_ERROR;
-        }
-    }
-
     public boolean isSuccessFull(String result) {
         return result != null && result.contains("status=success");
-    }
-
-    public boolean isSuccessFullCC(String result) {
-        return result != null && result.startsWith("<!DOCTYPE html PUBLIC");
     }
 
     public boolean isConnectionError(String result) {
@@ -226,76 +178,20 @@ public class PaymentHelper {
             params.put("ret_error_url", Uris.PAYMENT_ERROR);
             params.put("trackingcode", "Cart-ID: " + cart.getId());
 
-            if (null != paymentData.getCompany() && !paymentData.getCompany()
-                                                                .isEmpty()) {
+            if (null != paymentData.getCompany() && !paymentData.getCompany().isEmpty()) {
                 params.put("firma", URLEncoder.encode(paymentData.getCompany(), DEFAULT_ENCODING));
             }
-            if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon()
-                                                                     .isEmpty()) {
+            if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon().isEmpty()) {
                 params.put("firma_zusatz", URLEncoder.encode(paymentData.getCompanyAddon(), DEFAULT_ENCODING));
             }
-            if (null != paymentData.getComment() && !paymentData.getComment()
-                                                                .isEmpty()) {
+            if (null != paymentData.getComment() && !paymentData.getComment().isEmpty()) {
                 params.put("kommentar", URLEncoder.encode(paymentData.getComment(), DEFAULT_ENCODING));
             }
 
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOG.error("Error on payment via sepa.", e);
         }
 
-        return params;
-    }
-
-    private Map<String, String> createParamsCC(Cart cart, PaymentData paymentData) {
-        Map<String, String> params = new HashMap<>();
-
-        // mandatory parameters
-        params.put("charset", DEFAULT_ENCODING);
-        params.put("oid", _env.getProperty("bfs.oid"));
-
-        String formattedPrice = priceFormat.format(cart.getTotalPrice()
-                                                       .doubleValue())
-                                           .toString();
-        formattedPrice = formattedPrice.replace(",", ".");
-
-        try {
-            params.put("betrag", URLEncoder.encode(formattedPrice, DEFAULT_ENCODING));
-
-            params.put("anrede", URLEncoder.encode(paymentData.getSalutation()
-                                                              .toString(), DEFAULT_ENCODING));
-            params.put("vorname", URLEncoder.encode(paymentData.getForename(), DEFAULT_ENCODING));
-            params.put("nachname", URLEncoder.encode(paymentData.getName(), DEFAULT_ENCODING));
-            params.put("strasse", URLEncoder.encode(paymentData.getStreet(), DEFAULT_ENCODING));
-            params.put("land", URLEncoder.encode(paymentData.getCountry(), DEFAULT_ENCODING));
-            params.put("ort", URLEncoder.encode(paymentData.getCity(), DEFAULT_ENCODING));
-            params.put("plz", URLEncoder.encode(paymentData.getZip(), DEFAULT_ENCODING));
-            params.put("email", URLEncoder.encode(paymentData.getMail(), DEFAULT_ENCODING));
-            params.put("verwendungszweck", "Spende I Plant A Tree");
-            params.put("quittung", URLEncoder.encode(paymentData.getReceipt(), DEFAULT_ENCODING));
-            params.put("zahlungsart", URLEncoder.encode(paymentData.getPaymentMethod(), DEFAULT_ENCODING));
-
-            // optional parameters
-            params.put("ret_success_url", URLEncoder.encode(Uris.PAYMENT_SUCCESS, DEFAULT_ENCODING));
-            params.put("ret_error_url", URLEncoder.encode(Uris.PAYMENT_ERROR, DEFAULT_ENCODING));
-            params.put("trackingcode", URLEncoder.encode("Cart-ID: " + cart.getId(), DEFAULT_ENCODING));
-
-            if (null != paymentData.getCompany() && !paymentData.getCompany()
-                                                                .isEmpty()) {
-                params.put("firma", URLEncoder.encode(paymentData.getCompany(), DEFAULT_ENCODING));
-            }
-            if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon()
-                                                                     .isEmpty()) {
-                params.put("firma_zusatz", URLEncoder.encode(paymentData.getCompanyAddon(), DEFAULT_ENCODING));
-            }
-            if (null != paymentData.getComment() && !paymentData.getComment()
-                                                                .isEmpty()) {
-                params.put("kommentar", URLEncoder.encode(paymentData.getComment(), DEFAULT_ENCODING));
-            }
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         return params;
     }
 
