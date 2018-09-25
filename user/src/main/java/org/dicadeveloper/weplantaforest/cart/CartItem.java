@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.hibernate.annotations.Cascade;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class CartItem {
 
