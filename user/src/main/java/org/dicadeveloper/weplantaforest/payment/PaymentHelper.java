@@ -36,7 +36,8 @@ public class PaymentHelper {
     protected final Log LOG = LogFactory.getLog(PaymentHelper.class.getName());
 
     @Autowired
-    private @NonNull Environment _env;
+    @NonNull
+    private Environment _env;
 
     public static final String DEFAULT_ENCODING = "UTF-8";
 
