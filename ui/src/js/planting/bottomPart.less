@@ -24,10 +24,11 @@
       .svgButton {
         background-color: @primary-color;
 
-        a{
-          div:nth-child(1){
+        a {
+          div:nth-child(1) {
             text-align: left;
-            svg{
+
+            svg {
               margin-top: 5px;
             }
           }
@@ -47,9 +48,66 @@
 
   .iconButtonWrapper {
     text-align: center;
+
     .iconButton {
       margin-bottom: 25px;
     }
   }
 
+}
+
+@media (min-width: 406px) and (max-width: 565px) {
+  .bottomPart {
+    .button-and-price {
+      .price {
+        margin-top: 10px;
+        vertical-align: top;
+
+        span {
+          font-size: 16px;
+        }
+      }
+
+      .plantBagButton {
+        text-align: right;
+        font-size: 12px;
+        margin-right: 10px;
+        height: 40px;
+
+        div {
+          padding: 5px !important;
+        }
+
+        img {
+          margin-top: 6px;
+          width: 36px;
+          height: 20px;
+        }
+
+        p {
+          margin-left: 5px;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 405px) {
+  .bottomPart {
+    .button-and-price {
+      .price {
+        margin-right: 10px;
+
+        span {
+          font-size: 14px;
+        }
+      }
+
+      .plantBagButton {
+        font-size: 10px;
+        margin-right: 5px;
+      }
+    }
+  }
 }
