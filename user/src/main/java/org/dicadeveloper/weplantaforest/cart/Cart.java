@@ -192,20 +192,8 @@ public class Cart {
 	}
 
 	public void addCartItem(final CartItem cartItem) {
-		if (!containsCartItem(cartItem)) {
-			cartItems.add(cartItem);
-			cartItem.setCart(this);
-		}
-	}
-
-	public boolean containsCartItem(final CartItem cartItem) {
-		for (final CartItem item : cartItems) {
-			if (item.getTree().getProjectArticle().getArticleId()
-					.equals(cartItem.getTree().getProjectArticle().getArticleId())) {
-				return true;
-			}
-		}
-		return false;
+                cartItem.setCart(this);
+		cartItems.add(cartItem);
 	}
 
 	public void removeCartItem(final CartItem cartItem) {
