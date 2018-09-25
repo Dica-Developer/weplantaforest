@@ -51,7 +51,7 @@ export default class Award extends Component {
         {this.state.awards.map(function(award, i) {
           let imageUrl = 'http://localhost:8082/article/image/' + award.id + '/' + award.imageFileName + '/200/200';
             return (
-              <div>
+              <div key={i}>
                 <div className="row display-flex">
                   <div className="col-sm-3 image-middle-wrapper">
                     <img src={imageUrl}/>
