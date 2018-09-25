@@ -190,7 +190,7 @@ export default class DoPlanting extends Component {
         <div className="row">
           <div className="form-group col-md-12">
             <label htmlFor="where">{counterpart.translate('WHERE')}:</label>
-            <Map id="where" center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}>
+            <Map id="where" center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}  scrollWheelZoom={false}>
               <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
               <Marker position={this.state.treePosition} draggable={true} ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
             </Map>
