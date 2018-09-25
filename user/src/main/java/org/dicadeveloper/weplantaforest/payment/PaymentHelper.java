@@ -172,7 +172,7 @@ public class PaymentHelper {
     }
 
     public boolean isSuccessFull(String result) {
-        return result != null && result.contains("status=success");
+        return result != null && result.contains("status%3dsuccess");
     }
 
     public boolean isSuccessFullCC(String result) {
@@ -188,7 +188,7 @@ public class PaymentHelper {
     }
 
     public String getErrorCode(String response) {
-        return response.substring(response.indexOf("&amp;code=") + 10, response.indexOf("&amp;code=") + 13);
+        return response.substring(response.indexOf("%26code%3d") + 10, response.indexOf("%26code%3d") + 13);
     }
 
     private Map<String, String> createParams(Cart cart, PaymentData paymentData) {
