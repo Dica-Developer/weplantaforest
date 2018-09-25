@@ -133,24 +133,22 @@ export default class Overview extends Component {
               <div className="panel-body">
                 {counterpart.translate('PAYMENT_INTRO_TEXT')}
               </div>
-            </div>
-          <div className="bold choose">
-            {counterpart.translate('CHOOSE_PAYMENT')}:
           </div>
-          <div className="paymentOption">
-            <a role="button" onClick={() => {
-              this.setPaymentOption('sepa');
-            }}>
-              SEPA<br/>
-              <img src="/assets/images/sepa.png" width="256" height="183"/>
-            </a>
-          </div>
-          <div className="paymentOption">
-            <div id="paypal-button-container">
-            </div>
-          </div>
-          <Notification ref="notification"/>
         </div>
+        <div className="bold choose col-md-12">
+          {counterpart.translate('CHOOSE_PAYMENT')}:
+        </div>
+        <div className="paymentOption col-md-6">
+          <a role="button" onClick={() => {
+            this.setPaymentOption('sepa');
+          }}>
+            <img src="/assets/images/sepa.png" width="256" height="183"/>
+          </a>
+        </div>
+        <div className="paymentOption col-md-6">
+          <div id="paypal-button-container"></div>
+        </div>
+        <Notification ref="notification"/>
       </div>
     );
   }

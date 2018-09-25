@@ -24,6 +24,8 @@ import {
   getConfig
 } from '../common/RestHelper';
 
+require('./paymentPage.less');
+
 export default class Sepa extends Component {
 
   constructor(props) {
