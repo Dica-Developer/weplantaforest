@@ -14,7 +14,7 @@ export default class RankingItem extends Component {
   }
 
   render() {
-    let text = Accounting.formatNumber(this.props.content.amount, 0, '.', ',') + counterpart.translate('PLANTED_TREES');
+    let text = Accounting.formatNumber(this.props.content.amount, 0, '.', ',') + ' ' + counterpart.translate('PLANTED_TREES');
     return (
       <div className="smallRankingItem">
         <div className="smallRankingNumber">{this.props.rankNumber}</div>
@@ -28,7 +28,7 @@ export default class RankingItem extends Component {
             width: this.props.percentTree + '%',
             'white-space': 'nowrap'
           }}>
-            &nbsp;{text}
+            {text}
           </p>
         </div>
       </div>
