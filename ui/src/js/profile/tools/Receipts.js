@@ -67,7 +67,7 @@ export default class Receipts extends Component {
     if(this.state.receipts.length == 0){
       text = 'Für dich wurden bisher leider keine Spendenquittungen erstellt.';
     }else{
-      text = 'Folgende Spendenquittung wurden bereits erstellt und sind verfügbar:';
+      text = 'Folgende Spendenquittungen wurden bereits erstellt und sind verfügbar:';
     }
 
 
