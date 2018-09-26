@@ -500,6 +500,7 @@ module.exports = {
   PLANTING_CREATED: 'Deine Pflanzung wurde erstellt!',
   COMMUNITY_TREE: 'Community Baum',
 
-  TREE_LOCATION: 'Standort'
+  TREE_LOCATION: 'Standort',
+  DONATE_NOW: 'jetzt spenden'
 
 };

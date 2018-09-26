@@ -500,6 +500,7 @@ module.exports = {
   PLANTING_CREATED: 'Your planting was created!',
   SELF_PLANTED: 'Community tree',
 
-  TREE_LOCATION: 'Location'
+  TREE_LOCATION: 'Location',
+  DONATE_NOW: 'donate now'
 
 };

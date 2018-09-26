@@ -264,7 +264,7 @@ export default class Sepa extends Component {
             <div className="form-group amount align-center">
               <label>{counterpart.translate('AMOUNT')}: </label>&nbsp;
               <span className="bold">{Accounting.formatNumber(this.props.price / 100, 2, '.', ',')}&nbsp;€</span><br/>
-              <IconButton glyphIcon="glyphicon-euro" text={counterpart.translate('CONFIRM')} onClick={this.payPlantBag.bind(this)}/>
+              <IconButton glyphIcon="glyphicon-euro" text={counterpart.translate('DONATE_NOW')} onClick={this.payPlantBag.bind(this)}/>
             </div>
           </div>
           <div className="col-md-2"></div>
