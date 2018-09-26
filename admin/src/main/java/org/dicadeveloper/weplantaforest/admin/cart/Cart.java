@@ -66,7 +66,7 @@ public class Cart {
     @JsonView({Views.OverviewCart.class, Views.CodeOverview.class})
     private CartState cartState;
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @JsonView({Views.CartDetails.class})
     private List<CartItem> cartItems = new ArrayList<CartItem>();
