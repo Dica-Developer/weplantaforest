@@ -18,7 +18,7 @@ export default class Header extends Component {
           <div className="col-md-4"><Co2Bar/></div>
           <div className="col-md-4 outline-logo">
             <a role="button" onClick={this.switchToHomePage.bind(this)}>
-              <img src="/assets/images/ipatlogo.svg" alt="selbst pflanzen" width="180" height="180"/>
+              <img src="/assets/images/ipatlogo.svg" alt="selbst pflanzen" width="160" height="160"/>
             </a>
           </div>
           <div className="col-md-4"><ButtonBar/></div>
