@@ -66,7 +66,7 @@ public class Cart {
 	@Column(name = "_cartState")
 	private CartState cartState;
 
-	@OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
 	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
 	private List<CartItem> cartItems = new ArrayList<CartItem>();
 
