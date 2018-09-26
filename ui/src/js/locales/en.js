@@ -501,6 +501,7 @@ module.exports = {
   SELF_PLANTED: 'Community tree',
 
   TREE_LOCATION: 'Location',
-  DONATE_NOW: 'donate now'
+  DONATE_NOW: 'donate now',
+  CART_IS_NULL: 'Your plantbag does not exist anymore.'
 
 };

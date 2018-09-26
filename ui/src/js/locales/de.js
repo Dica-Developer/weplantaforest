@@ -501,6 +501,7 @@ module.exports = {
   COMMUNITY_TREE: 'Community Baum',
 
   TREE_LOCATION: 'Standort',
-  DONATE_NOW: 'jetzt spenden'
+  DONATE_NOW: 'jetzt spenden',
+  CART_IS_NULL: 'Dein Pflanzkorb existiert nicht mehr. Bitte erstelle einen neuen.'
 
 };
