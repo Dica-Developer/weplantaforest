@@ -11,23 +11,28 @@ export default class ButtonBar extends Component {
     super();
   }
 
-  linkTo(url) {
-    browserHistory.push(url);
+  linkTo(url, mouseEvent) {
+    event = mouseEvent.hasOwnProperty('nativeEvent') ? mouseEvent.nativeEvent : mouseEvent;
+    if (event.which == 1) {
+      browserHistory.push(url);
+    } else if (event.which == 2) {
+      window.open("http://localhost:8080" + url, "_blank");
+    }
   }
 
   render() {
     return (
       <div className="buttonBar">
-        <SvgButton text={counterpart.translate('BUTTONBAR.PLANT_SELF')} buttonType="shovel" onClick={() => {
-          this.linkTo('/selfPlant');
+        <SvgButton text={counterpart.translate('BUTTONBAR.PLANT_SELF')} buttonType="shovel" onClick={(event) => {
+          this.linkTo('/selfPlant', event);
         }} />
         <br/>
-        <SvgButton text={counterpart.translate('BUTTONBAR.PLANT_ONLINE')} buttonType="mouse" onClick={() => {
-          this.linkTo('/plant/5');
+        <SvgButton text={counterpart.translate('BUTTONBAR.PLANT_ONLINE')} buttonType="mouse" onClick={(event) => {
+          this.linkTo('/plant/5', event);
         }} />
         <br/>
-        <SvgButton text={counterpart.translate('BUTTONBAR.TREE_SERVICE')} buttonType="secateurs" onClick={() => {
-          this.linkTo('/treeService');
+        <SvgButton text={counterpart.translate('BUTTONBAR.TREE_SERVICE')} buttonType="secateurs" onClick={(event) => {
+          this.linkTo('/treeService', event);
         }} />
       </div>
     );
