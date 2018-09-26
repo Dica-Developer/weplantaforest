@@ -134,7 +134,7 @@ export default class NavBar extends Component {
       userDetails = <UserDetails user={this.state.userDetails} updateNavbar={this.updateComponents.bind(this)}/>;
     } else {
       myForrestButton = '';
-      userDetails = <div className="user-details logged-out"> <a className="pull left" onClick={this.showRight.bind(this)}>Login</a>  <a className="pull right" onClick={(event) => {
+      userDetails = <div className="user-details logged-out"> <a className="pull left" onClick={this.showRight.bind(this)}>Login</a>  <a className="pull right" onMouseUp={(event) => {
         this.linkTo('/registration', event);
       }}>{counterpart.translate('REGISTRATE')}</a></div>;
     }
