@@ -23,6 +23,10 @@ export default class ProjectOffer extends Component {
     };
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   updateValue(toUpdate, value) {
     this.setState({[toUpdate]: value});
   }

@@ -33,6 +33,10 @@ export default class Co2Calculator extends Component {
     };
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   calcFoodResult() {
     let feedingResult = parseFloat(this.refs['feeding'].value);
     let foodAmountResult = parseFloat(this.refs['food-amount'].value);

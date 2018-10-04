@@ -19,6 +19,7 @@ export default class ProjectDetails extends Component {
   componentDidMount() {
     const elm = this.refs.details;
     elm.addEventListener('animationend', this.fadingDone);
+    window.scrollTo(0, 0);
   }
 
   componentWillUnmount() {

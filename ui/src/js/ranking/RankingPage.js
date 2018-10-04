@@ -37,6 +37,7 @@ export default class RankingPage extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.refs['spinner'].showSpinner();
     this.loadAllUser();
   }

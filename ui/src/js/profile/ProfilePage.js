@@ -44,6 +44,7 @@ export default class ProfilePage extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     var that = this;
     var config = {
       headers: {
