@@ -152,9 +152,8 @@ export default class DoPlanting extends Component {
             <DateField id="when" updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true"/>
           </div>
           <div className="form-group col-md-6">
-            <label htmlFor="howmuch">{counterpart.translate('HOW_MANY')}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:</label>
+            <label htmlFor="howmuch">{counterpart.translate('HOW_MANY')}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:&nbsp;{this.state.selfPlantData.amount}</label>
             <input className="tree-slider" type="range" min="1" max="10" value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)}/>
-            <p className="tree-amount">&nbsp;{this.state.selfPlantData.amount}</p>
             <br/>
             <span>{counterpart.translate('HOW_MANY_HINT')}</span>
           </div>
