@@ -112,6 +112,12 @@ export default class Routes extends Component {
     this.showLoginSlide();
   }
 
+  loadUserDetails() {
+    setTimeout(() => { // return the timeoutID
+      this.refs['navbar'].loadUserDetails();
+    }, 500);
+  }
+
   render() {
     counterpart.registerTranslations('de', require('counterpart/locales/de'));
     counterpart.registerTranslations('en', require('./locales/en'));
@@ -136,11 +142,11 @@ export default class Routes extends Component {
           <Route path="/receipts/:username" component={ReceiptsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)}/>
-          <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)} loadUserDetails={this.loadUserDetails.bind(this)}/>
           <Route path="/selfPlants/:treeId" component={SelfPlantOverviewPage} reRender={this.reRender.bind(this)}/>
           <Route path="/plantBag" component={PlantBagPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)}/>
-          <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>
-          <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>
+          <Route path="/payCart/:cartId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)} loadUserDetails={this.loadUserDetails.bind(this)}/>
+          <Route path="/payGift/:cartId/:giftId" component={PaymentPage} reRender={this.reRender.bind(this)} updateComponents={this.updateNavbarComponents.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)} loadUserDetails={this.loadUserDetails.bind(this)}/>
           <Route path="/registration" component={RegistrationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/userActivation" component={ActivationPage} reRender={this.reRender.bind(this)}/>
           <Route path="/forgotPassword" component={ForgotPasswordPage} reRender={this.reRender.bind(this)}/>

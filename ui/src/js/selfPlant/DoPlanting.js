@@ -88,6 +88,7 @@ export default class DoPlanting extends Component {
       };
       axios.post('http://localhost:8081/plantSelf', this.state.selfPlantData, config).then(function(response) {
         that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
+        that.props.loadUserDetails();
         if (that.state.imageFile != null) {
           config = {};
           var data = new FormData();

@@ -16,10 +16,14 @@ export default class SelfPlantPage extends Component {
     window.scrollTo(0, 0);
   }
 
+  loadUserDetails() {
+    this.props.route.loadUserDetails();
+  }
+
   render() {
     return (
       <div className="container paddingTopBottom15 selfPlant">
-        <DoPlanting />
+        <DoPlanting loadUserDetails={this.loadUserDetails.bind(this)}/>
       </div>
     );
   }

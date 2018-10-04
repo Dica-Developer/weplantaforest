@@ -132,6 +132,7 @@ export default class Sepa extends Component {
       that.setState({
         paymentDone: true
       });
+      that.props.loadUserDetails();
     })
     .catch(function(error) {
       that.refs['spinner'].hideSpinner();

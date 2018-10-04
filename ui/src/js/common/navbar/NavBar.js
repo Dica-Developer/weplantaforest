@@ -124,6 +124,10 @@ export default class NavBar extends Component {
     this.refs['login-menu-item'].logout();
   }
 
+  loadUserDetails() {
+    this.refs['login-menu-item'].loadUserDetails();
+  }
+
   render() {
     let myForrestButton;
     let userDetails;

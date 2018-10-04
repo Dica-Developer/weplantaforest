@@ -102,6 +102,7 @@ export default class Overview extends Component {
           axios.post('http://localhost:8081/pay', paymentData, {}).then(function(response) {
             that.refs.notification.addNotification(counterpart.translate('PAYMENT_SUCCESSFUL'), counterpart.translate('THANKS_FOR_DONATION'), 'success');
             that.props.resetPlantBag();
+            that.props.loadUserDetails();
           }).catch(function(response) {
             if (response instanceof Error) {
               console.error('Error', response.message);
