@@ -11,17 +11,21 @@ export default class Header extends Component {
     browserHistory.push('/');
   }
 
+  loadCo2Data() {
+    this.refs['co2-data'].loadCo2Data();
+  }
+
   render() {
     return (
       <div className="container header">
         <div className="row">
-          <div className="col-md-4"><Co2Bar/></div>
+          <div className="col-md-4"><Co2Bar ref="co2-data"/></div>
           <div className="col-md-4 outline-logo">
             <a role="button" onClick={this.switchToHomePage.bind(this)}>
               <img src="/assets/images/ipatlogo.svg" alt="selbst pflanzen" width="160" height="160"/>
             </a>
           </div>
-          <div className="col-md-4"><ButtonBar/></div>
+          <div className="col-md-4"><ButtonBar /></div>
         </div>
       </div>
     );
