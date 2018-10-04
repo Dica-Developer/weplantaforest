@@ -101,7 +101,12 @@ export default class MainPage extends Component {
             <div className="col-md-4">
               <RankingContainer title={counterpart.translate('BEST_PRIVATES')}>
                 {this.state.bestUserRanking.content.map(function(content, i) {
-                  let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                  let imageUrl;
+                  if(content.imageName && content.imageName != 'default'){
+                    imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                  }else{
+                    imageUrl = '/assets/images/default_user.jpg';
+                  }
                   let linkTo = '/user/' + content.name;
                   return (
                     <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>

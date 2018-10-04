@@ -166,7 +166,11 @@ export default class RankingPage extends Component {
                 }
                 var imageUrl;
                 if (orgTypeDesc != 'Teams') {
-                  imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                  if(content.imageName && content.imageName != 'default'){
+                    imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                  }else{
+                    imageUrl = '/assets/images/default_user.jpg';
+                  }
                 } else {
                   imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
                 }
