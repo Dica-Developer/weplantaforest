@@ -56,6 +56,7 @@ export default class ProfilePage extends Component {
       that.setState({
         user: result
       });
+      console.log(result);
       if (that.state.user.teamName != '') {
         that.loadTeamDetails();
       }
@@ -76,7 +77,7 @@ export default class ProfilePage extends Component {
   loadTeamDetails() {
     var that = this;
     if (this.state.user.teamName && this.state.user.teamName != '') {
-      axios.get('http://localhost:8081/team?teamName=' + this.state.user.teamName).then(function(response) {
+      axios.get('http://localhost:8081/team?teamName=' + encodeURIComponent(this.state.user.teamName)).then(function(response) {
         var result = response.data;
         that.setState({
           team: result
