@@ -161,7 +161,6 @@ export default class EventEditor extends Component {
         that.refs.notification.addNotification('Geschafft!', 'Event wurde aktualisiert.', 'success');
         that.forceUpdate();
       }).catch(function(response) {
-        console.log(response);
         that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
       });
     } else {

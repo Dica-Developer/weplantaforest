@@ -58,7 +58,6 @@ export default class Receipts extends Component {
       that.setState({
         receipts: result
       });
-      console.log(result);
     });
   }
 

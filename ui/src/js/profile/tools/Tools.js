@@ -24,7 +24,6 @@ export default class Tools extends Component {
 
   switchTo(value, index) {
     this.setState({view: value, iindex: index});
-    console.log('setting ' + value + ' and ' + index);
   }
 
   render() {

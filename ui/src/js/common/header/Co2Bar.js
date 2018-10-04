@@ -20,7 +20,6 @@ export default class Co2Bar extends Component {
   }
 
   loadCo2Data() {
-    console.log('load co2 data');
     var that = this;
     axios.get('http://localhost:8081/reports/co2').then(function(co2) {
       that.setState(co2.data);

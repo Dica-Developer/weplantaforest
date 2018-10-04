@@ -91,7 +91,6 @@ export default class LoginMenuItem extends Component {
   }
 
   loadUserDetails() {
-    console.log('call user details');
     var that = this;
     var config = {
       headers: {
@@ -100,7 +99,6 @@ export default class LoginMenuItem extends Component {
     };
     axios.get('http://localhost:8081/user?userName=' + localStorage.getItem('username'), config).then(function(response) {
       var result = response.data;
-      console.log(result);
       that.setState({
         userDetails: result
       });

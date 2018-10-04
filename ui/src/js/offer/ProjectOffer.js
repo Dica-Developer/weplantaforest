@@ -65,7 +65,6 @@ export default class ProjectOffer extends Component {
       };
 
       axios.post('http://localhost:8081/project/offer', this.state, config).then(function(response) {
-        console.log('call child');
         that.props.setThankYou(true);
       }).catch(function(response) {
         that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', 'Bitte füll alle notwendigen Felder aus!', 'error');

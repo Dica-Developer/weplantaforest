@@ -53,9 +53,6 @@ export default class TreesPerYear extends Component {
   componentDidMount() {
     this.getAllYearFrom2007();
     this.updateChartForYear();
-    for(var year in this.state.labels){
-      console.log(this.state.labels[year]);
-    }
   }
 
   updateChartForYear() {
