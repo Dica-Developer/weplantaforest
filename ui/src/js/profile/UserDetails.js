@@ -28,7 +28,7 @@ export default class UserDetails extends Component {
     super(props);
     this.state = {
       restConfig: getConfig(),
-      imgUrl: ''
+      imgUrl: 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150?random=' + Math.random()
     }
   }
 
@@ -68,6 +68,10 @@ export default class UserDetails extends Component {
     });
   }
 
+  setDefaultUserUrl() {
+    this.setState({imgUrl: '/assets/images/default_user.jpg'});
+  }
+
   render() {
     var editLink;
     if (this.props.user.editAllowed) {
@@ -98,7 +102,7 @@ export default class UserDetails extends Component {
       <div>
         <h1>{counterpart.translate('PROFILE')}</h1>
         <div className="imageDiv">
-          <img id="logo-img" src={imgUrl} alt="profile"/>
+          <img id="logo-img" src={this.state.imgUrl} alt="profile" onError={this.setDefaultUserUrl.bind(this)} width="150" height="150"/>
         </div>
         <p className="userName">{htmlDecode(this.props.user.userName)}</p>
         <div className="stats">
