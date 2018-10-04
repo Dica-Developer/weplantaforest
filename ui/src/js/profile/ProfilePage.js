@@ -44,6 +44,14 @@ export default class ProfilePage extends Component {
   }
 
   componentDidMount() {
+    this.loadData(this.props.params.userName);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.loadData(newProps.params.userName);
+  }
+
+  loadData(userName) {
     window.scrollTo(0, 0);
     var that = this;
     var config = {
@@ -51,12 +59,11 @@ export default class ProfilePage extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(this.props.params.userName), config).then(function(response) {
+    axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(userName), config).then(function(response) {
       var result = response.data;
       that.setState({
         user: result
       });
-      console.log(result);
       if (that.state.user.teamName != '') {
         that.loadTeamDetails();
       }
@@ -64,7 +71,7 @@ export default class ProfilePage extends Component {
       that.refs.notification.handleError(error);
     });
 
-    axios.get('http://localhost:8081/trees/owner?userName=' + encodeURIComponent(this.props.params.userName) + '&page=0&size=15').then(function(response) {
+    axios.get('http://localhost:8081/trees/owner?userName=' + encodeURIComponent(userName) + '&page=0&size=15').then(function(response) {
       var result = response.data;
       that.setState({
         newestPlantRanking: result
