@@ -16,7 +16,7 @@ export default class AmountProjectDate extends Component {
     var project;
     var name;
     if (this.props.content.projectArticle == null) {
-      project = <span>{counterpart.translate('SELF_PLANTED')}</span>;
+      project = <span>{counterpart.translate('COMMUNITY_TREE')}</span>;
     } else {
       project = this.props.content.projectArticle.project.name;
     }

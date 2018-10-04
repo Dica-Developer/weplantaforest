@@ -498,7 +498,7 @@ module.exports = {
   TRY_AGAIN: 'Please try again.',
 
   PLANTING_CREATED: 'Your planting was created!',
-  SELF_PLANTED: 'Community tree',
+  COMMUNITY_TREE: 'Community tree',
 
   TREE_LOCATION: 'Location',
   DONATE_NOW: 'donate now',
