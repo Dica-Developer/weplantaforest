@@ -32,7 +32,7 @@ export default class svgButton extends Component {
     svgButton.push('</svg>');
 
     return (
-      <div className="svgButton">
+      <div className={"svgButton " + (this.props.className ? this.props.className : '')}>
         <a role="button" onMouseUp={(event) => {
           this.onMouseUp(event);
         }}>

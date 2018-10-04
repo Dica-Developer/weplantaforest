@@ -206,7 +206,7 @@ module.exports = {
   PLANT_ONLINE_TEXT: 'Here you can choose between preselected planting carts of trees. By clicking on "custom" you can compile your own selection.',
   PLANT_ONLINE: 'Plant online',
   YOU_HAVE_AREA_TO_PLANT_FOR: 'You have areas to plant for and are interested, that they will be planted by I Plant a Tree? Here you can',
-  PUT_INTO_PLANTBAG: 'PUT INTO<br/>PLANTBAG',
+  PUT_INTO_PLANTBAG: 'put into<br/>plantbag',
   TOO_MANY_TREES: {
     TITLE: 'Too many trees!',
     TEXT_1: 'There are only ',
@@ -488,6 +488,7 @@ module.exports = {
   BANK_DOUBLED_DONATION: 'Double donation.',
 
   OVERVIEW: 'Overview',
+  TO_OVERVIEW: 'got to overview',
   WIDGETS: 'Widgets',
   CERTIFICATES: 'Certificates',
   BANNER: 'Banner',

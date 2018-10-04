@@ -206,7 +206,7 @@ module.exports = {
   PLANT_ONLINE_TEXT: 'Lass dir von uns einen Vorschlag generieren oder bestimme selber, wo du wieviele Bäume pflanzen möchtest.',
   PLANT_ONLINE: 'Online Pflanzen',
   YOU_HAVE_AREA_TO_PLANT_FOR: 'Dir stehen Flächen zur Verfügung und Du hast Interesse daran, dass I Plant a Tree diese bepflanzt? Hier kannst Du ein',
-  PUT_INTO_PLANTBAG: 'AB IN MEINEN<br/>PFLANZKORB',
+  PUT_INTO_PLANTBAG: 'Ab in meinen<br/>Pflanzkorb',
   TOO_MANY_TREES: {
     TITLE: 'Zu viele Bäume!',
     TEXT_1: 'Von diesem Baum sind leider nur noch ',
@@ -488,6 +488,7 @@ module.exports = {
   BANK_DOUBLED_DONATION: 'Doppelte Spende.',
 
   OVERVIEW: 'Übersicht',
+  TO_OVERVIEW: 'zur Übersicht',
   WIDGETS: 'Widgets',
   CERTIFICATES: 'Zertifikate',
   BANNER: 'Banner',
