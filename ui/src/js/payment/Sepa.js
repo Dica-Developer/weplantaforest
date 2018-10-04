@@ -84,15 +84,17 @@ export default class Sepa extends Component {
   }
 
   checkForLastCart(){
-    var config = getConfig();
-    var that = this;
-    axios.get('http://localhost:8081/carts/last', config).then(function(response) {
-      if(response.data){
-        that.preSetValues(response.data);
-      }
-    }).catch(function(error) {
-      that.refs.notification.handleError(error);
-    });
+    if(localStorage.getItem('username') && localStorage.getItem('username') != '') {
+      var config = getConfig();
+      var that = this;
+      axios.get('http://localhost:8081/carts/last', config).then(function(response) {
+        if(response.data){
+          that.preSetValues(response.data);
+        }
+      }).catch(function(error) {
+        that.refs.notification.handleError(error);
+      });      
+    }
   }
 
   preSetValues(data){

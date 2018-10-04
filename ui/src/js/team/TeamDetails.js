@@ -37,6 +37,7 @@ export default class TeamDetails extends Component {
   }
 
   componentWillReceiveProps(nextProps){
+    this.setState({isLoggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '')})
     if(nextProps.team.teamId && this.state.isLoggedIn){
       this.checkIfTeamAdmin(nextProps.team.teamId);
       this.checkIfTeamMember(nextProps.team.teamId);
@@ -210,7 +211,7 @@ export default class TeamDetails extends Component {
     let buttons = '';
     if (this.state.isTeamAdmin) {
       buttons = <div><IconButton text={counterpart.translate('TEAM_EDIT')} glyphIcon="glyphicon-cog" onClick={this.editTeam.bind(this)}/> <IconButton text={counterpart.translate('TEAM_DELETE')} glyphIcon="glyphicon-remove" onClick={this.createDeleteConfirmation.bind(this)}/></div>;
-    } else if (!this.state.isTeamMember) {
+    } else if (!this.state.isTeamMember && this.state.isLoggedIn) {
       buttons = <div><IconButton text={counterpart.translate('TEAM_JOIN')} glyphIcon="glyphicon-share-alt" onClick={this.joinTeam.bind(this)}/></div>;
     } else if (this.state.isTeamMember) {
       buttons = <div><IconButton text={counterpart.translate('TEAM_LEAVE')} glyphIcon="glyphicon-remove" onClick={this.createLeaveConfirmation.bind(this)}/></div>;
