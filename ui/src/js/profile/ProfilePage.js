@@ -38,7 +38,8 @@ export default class ProfilePage extends Component {
       newestPlantRanking: {
         content: []
       },
-      pageCount: 0
+      pageCount: 0,
+      isMyProfile: (this.props.params.userName == localStorage.getItem('username'))
     };
 
   }
@@ -49,6 +50,7 @@ export default class ProfilePage extends Component {
 
   componentWillReceiveProps(newProps) {
     this.loadData(newProps.params.userName);
+    this.setState({isMyProfile: (newProps.params.userName == localStorage.getItem('username'))});
   }
 
   loadData(userName) {
@@ -224,7 +226,7 @@ export default class ProfilePage extends Component {
     } else if (this.state.user.teamName === '' && this.state.createTeam) {
       teamPart = <CreateTeam teamCreatedAction={this.teamCreated.bind(this)}/>;
     } else if (this.state.user.teamName === '' && !this.state.createTeam) {
-      teamPart = <NoTeamAvailable openCreateTeamPart={this.openCreateTeamPart.bind(this)}/>;
+      teamPart = <NoTeamAvailable openCreateTeamPart={this.openCreateTeamPart.bind(this)} isMyProfile={this.state.isMyProfile}/>;
     }
 
     if (this.state.newestPlantRanking.numberOfElements != 0) {

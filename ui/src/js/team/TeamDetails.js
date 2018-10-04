@@ -27,16 +27,17 @@ export default class TeamDetails extends Component {
     super(props);
     this.state = {
       isTeamAdmin: false,
-      isTeamMember: false
+      isTeamMember: false,
+      isLoggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''),
     };
-    if(this.props.team.teamId){
+    if(this.props.team.teamId && this.state.isLoggedIn){
       this.checkIfTeamAdmin(this.props.team.teamId);
       this.checkIfTeamMember(this.props.team.teamId);
     }
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.team.teamId){
+    if(nextProps.team.teamId && this.state.isLoggedIn){
       this.checkIfTeamAdmin(nextProps.team.teamId);
       this.checkIfTeamMember(nextProps.team.teamId);
     }

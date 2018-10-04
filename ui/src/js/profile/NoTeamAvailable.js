@@ -15,6 +15,9 @@ import IconButton from '../common/components/IconButton';
 export default class NoTeamAvailable extends Component {
   constructor() {
     super();
+    this.state = {
+      isLoggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''),
+    }
   }
 
   goToCreateTeam(){
@@ -22,13 +25,19 @@ export default class NoTeamAvailable extends Component {
   }
 
   render() {
+    let createTeamButton;
+    if(this.state.isLoggedIn && this.props.isMyProfile) {
+      createTeamButton = <div className="row align-center bottomButton">
+        <IconButton text={counterpart.translate('TEAM_CREATE')} glyphIcon="glyphicon glyphicon-plus" onClick={this.goToCreateTeam.bind(this)}/>
+      </div>;
+    }else{
+      createTeamButton = '';
+    }
     return (
       <div>
         <h1>Du bist noch keinem Team beigetreten! Hast du keine Freunde!?</h1>
         <p>(Hier wäre noch eine Beschreibung gut, was da wirklich hin soll)</p>
-        <div className="row align-center bottomButton">
-          <IconButton text={counterpart.translate('TEAM_CREATE')} glyphIcon="glyphicon glyphicon-plus" onClick={this.goToCreateTeam.bind(this)}/>
-        </div>
+        {createTeamButton}
       </div>
     );
   }
