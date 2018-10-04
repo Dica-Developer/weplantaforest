@@ -4,6 +4,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import counterpart from 'counterpart';
+import {browserHistory} from 'react-router';
 
 import Notification from '../common/components/Notification';
 import TextArea from '../common/components/TextArea';
@@ -95,7 +96,9 @@ export default class DoPlanting extends Component {
           data.append('treeId', response.data);
           data.append('file', that.state.imageFile);
 
-          axios.post('http://localhost:8081/plantSelf/upload', data, config).then(function(response) {}).catch(function(response) {
+          axios.post('http://localhost:8081/plantSelf/upload', data, config).then(function(response) {
+            browserHistory.push('/user/' + localStorage.getItem('username'));
+          }).catch(function(response) {
             if (response instanceof Error) {
               console.error('Error', response.message);
             } else {
@@ -105,6 +108,8 @@ export default class DoPlanting extends Component {
               console.error(response.config);
             }
           });
+        }else{
+          browserHistory.push('/user/' + localStorage.getItem('username'));
         }
       }).catch(function(response) {
         that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('TRY_AGAIN'), 'error');
