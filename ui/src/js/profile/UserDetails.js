@@ -26,9 +26,10 @@ import {
 export default class UserDetails extends Component {
   constructor(props) {
     super(props);
+    let imgUrl = this.getImgUrl();
     this.state = {
       restConfig: getConfig(),
-      imgUrl: 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150?random=' + Math.random()
+      imgUrl: imgUrl
     }
   }
 
@@ -68,8 +69,12 @@ export default class UserDetails extends Component {
     });
   }
 
-  setDefaultUserUrl() {
-    this.setState({imgUrl: '/assets/images/default_user.jpg'});
+  getImgUrl() {
+    if(this.props.user.imageFileName && this.props.user.imageFileName != 'default'){
+      return 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150?random=' + Math.random();
+    }else{
+      return '/assets/images/default_user.jpg';
+    }
   }
 
   render() {
@@ -97,12 +102,11 @@ export default class UserDetails extends Component {
         }
       }
     };
-    let imgUrl = 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150?random=' + Math.random();
     return (
       <div>
         <h1>{counterpart.translate('PROFILE')}</h1>
         <div className="imageDiv">
-          <img id="logo-img" src={this.state.imgUrl} alt="profile" onError={this.setDefaultUserUrl.bind(this)} width="150" height="150"/>
+          <img id="logo-img" src={this.state.imgUrl} alt="profile" width="150" height="150"/>
         </div>
         <p className="userName">{htmlDecode(this.props.user.userName)}</p>
         <div className="stats">
