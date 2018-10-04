@@ -1,0 +1,1 @@
+UPDATE Receipt SET _createdOn = _createdOn/1000/1000 WHERE _receiptId < 512;

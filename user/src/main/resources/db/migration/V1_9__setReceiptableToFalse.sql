@@ -1,0 +1,1 @@
+UPDATE Cart SET _receiptable = false;
