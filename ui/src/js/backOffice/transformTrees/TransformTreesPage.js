@@ -94,7 +94,7 @@ export default class TransformTreesPage extends Component {
     var that = this;
     axios.post('http://localhost:8083/transformTrees?fromUserId=' + this.state.fromUser + '&toUserId=' + this.state.toUser, {}, this.state.restConfig).then(function(response) {
       that.refs.notification.addNotification('Geschafft!', 'Die Bäume wurden erfolgreich übertragen!', 'success');
-      this.setState({
+      that.setState({
         fromUser: -1,
         toUser: -1,
         treesToTransfer: [],
