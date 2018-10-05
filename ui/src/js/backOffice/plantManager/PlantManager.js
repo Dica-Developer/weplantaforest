@@ -118,7 +118,7 @@ export default class PlantManager extends Component {
   }
 
   selectUser(user) {
-    this.setState({selectedUserId: user.id});
+    this.setState({selectedUserId: user.value});
   }
 
   render() {
@@ -127,11 +127,13 @@ export default class PlantManager extends Component {
       <div className="container paddingTopBottom15 plantManager">
         <div className="row ">
           <h1>Pflanzen</h1>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <label className="select-label">User</label>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
             <VirtualizedSelect name="user-select" value={this.state.selectedUserId} options={this.state.users} onChange={this.selectUser.bind(this)}/>
+          </div>
+          <div className="col-md-3">
           </div>
           <div className="col-md-12">
             <div>
@@ -144,7 +146,7 @@ export default class PlantManager extends Component {
             <div className="price">
               <span>GESAMT:&nbsp;{Accounting.formatNumber(this.state.overallPrice / 100, 2, '.', ',')}&nbsp;€</span>
             </div>
-            <SvgButton text="PFLANZEN" buttonType="barrow" onClick={this.plantForUser.bind(this)} />
+            <SvgButton text="pflanzen" buttonType="trees" onClick={this.plantForUser.bind(this)} />
           </div>
         </div>
         <Notification ref="notification"/>
