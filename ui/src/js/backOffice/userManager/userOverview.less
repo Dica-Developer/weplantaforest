@@ -12,7 +12,7 @@
     padding-top: 5px;
     input {
       vertical-align: top;
-      width: 250px;
+      width: 245px;
       margin-right: 10px;
     }
   }
@@ -21,7 +21,7 @@
     padding-top: 5px;
 
     input {
-      width: 350px;
+      width: 345px;
       vertical-align: top;
       margin-right: 10px;
     }
@@ -31,7 +31,7 @@
   .glyphicon-remove {
     font-size: 20px;
   }
-  .glyphicon-ok{
+  .glyphicon-ok, .glyphicon-floppy-open{
     color: @accent-color!important;
   }
   .glyphicon-remove{
@@ -56,52 +56,13 @@
   }
 
   .react-grid-Container {
-    background: @base-background-color;
-    border-style: solid;
-    border-width: 1px;
-    max-width: 100%;
-
-    .react-grid-Header {
-      background: #737373;
-      color: @base-background-color;
+    .iconButton{
+      a {
+        background-color: #fff;
+        .glyphicon-pencil {
+          color: #000;
+        }
+      }
     }
-    .react-grid-HeaderCell {
-      font-weight: bold;
-      border-style: none solid none none;
-      border-width: 1px;
-      padding: 5px;
-    }
-
-    .react-grid-Canvas {
-      width: 1110px!important;
-    }
-
-    .react-grid-HeaderCell:nth-child(2),
-    .react-grid-HeaderCell:nth-child(4) {
-      border-style: none;
-    }
-
-    .react-grid-Cell {
-      border-style: none solid none none;
-      border-width: 1px;
-      padding-left: 5px;
-    }
-    .react-grid-Cell:nth-child(2),
-    .react-grid-Cell:nth-child(4) {
-      border-style: none;
-    }
-    .react-grid-Cell:nth-child(3),
-    .react-grid-Cell:nth-child(5),
-    .react-grid-Cell:nth-child(6),
-    .react-grid-Cell:nth-child(7),
-    .react-grid-Cell:nth-child(8),
-    .react-grid-Cell:nth-child(9) {
-      padding-top: 7px;
-      text-align: center;
-    }
-    .react-grid-Row:nth-child(2n+1) {
-      background-color: #e5e5e5;
-    }
-
   }
 }

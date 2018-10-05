@@ -104,14 +104,8 @@ export default class UserOverview extends Component {
     super();
     this.state = {
       users: [],
-      titles: ['ID', 'User name', '', 'EMail', '', 'aktiv', 'gebannt', 'Admin', 'Art.-Man.'],
+      titles: ['User name', '', 'EMail', '', 'aktiv', 'gebannt', 'Admin', 'Art.-Man.'],
       columns: [{
-        key: 'id',
-        name: 'ID',
-        width: 40,
-        filterable: true,
-        sortable: true
-      }, {
         key: 'username',
         name: 'User Name',
         width: 300,
@@ -120,7 +114,7 @@ export default class UserOverview extends Component {
       }, {
         key: 'editName',
         name: '',
-        width: 40
+        width: 50
       }, {
         key: 'mail',
         name: 'EMail',
@@ -130,7 +124,7 @@ export default class UserOverview extends Component {
       }, {
         key: 'editMail',
         name: '',
-        width: 30,
+        width: 50,
         filterable: true,
         sortable: true
       }, {
