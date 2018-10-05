@@ -200,7 +200,8 @@ public class ProjectController {
             if(projectImage.getImageFileName() != null){
                 imageName = projectImage.getImageFileName();
             }else{
-                imageName = "project_" + projectImage.getProject().getId() + "image_1";
+                String imageType = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."), file.getOriginalFilename().length());
+                imageName = "project_" + projectImage.getProject().getId() + "image_1" + imageType;
             }
             if (!file.isEmpty()) {
                 try {
