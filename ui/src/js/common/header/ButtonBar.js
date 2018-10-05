@@ -12,10 +12,10 @@ export default class ButtonBar extends Component {
   }
 
   linkTo(url, mouseEvent) {
-    event = mouseEvent.hasOwnProperty('nativeEvent') ? mouseEvent.nativeEvent : mouseEvent;
-    if (event.which == 1) {
+    let evt = mouseEvent.hasOwnProperty('nativeEvent') ? mouseEvent.nativeEvent : mouseEvent;
+    if (evt.which == 1) {
       browserHistory.push(url);
-    } else if (event.which == 2) {
+    } else if (evt.which == 2) {
       window.open("http://localhost:8080" + url, "_blank");
     }
   }
