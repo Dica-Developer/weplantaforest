@@ -415,7 +415,7 @@ export default class ProjectEditor extends Component {
       descriptionEn: '',
       treeTypes: [],
       zoom: 12,
-      mapCenter: [0, 0],
+      mapCenter: [51.47825246591216, 11.986629374768409],
       showMap: true
     };
   }
