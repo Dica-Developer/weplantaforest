@@ -91,6 +91,11 @@ module.exports = {
   SIGNUP_DONE: 'Du wurdest angemeldet!',
   SIGNUP_DONE_TEXT: 'Um deinen Nutzer zu aktivieren, haben wir dir einen Aktivierungslink an die angegebene E-Mail Adresse geschickt.',
 
+  ACTIVATION_DONE_TEXT: 'Wir wünschen Dir viel Spaß beim Bäume pflanzen!',
+
+  NO_TEAM: 'Du bist noch keinem Team beigetreten',
+  NO_PLANTINGS: 'Du hast noch keine Bäume gepflanzt',
+
   ERROR: 'Ein Fehler ist aufgetreten!',
   WRONG_USERNAME_PASSWORD: 'Benutzername und Passwort stimmen nicht überein.',
   LOCKED_USER: 'Der Nutzer ist nicht aktiviert. Du solltest nach der Registrierung eine Mail mit einem Aktivierungslink in deinem Postfach erhalten haben. Eine weitere Möglichkeit ist, dass der Nutzer vom Administrator gebannt wurde.',

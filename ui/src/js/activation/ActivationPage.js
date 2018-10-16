@@ -21,7 +21,7 @@ export default class ActivationPage extends Component {
     axios.post('http://localhost:8081/user/activation' + this.props.location.search + '&language=' + localStorage.getItem('language')).then(function(response) {
       that.setState({
         headLine: counterpart.translate('WELCOME') + ' ' + response.data + '!',
-        text: 'Wir wünschen Dir viel Spaß beim Bäume pflanzen!'
+        text: counterpart.translate('ACTIVATION_DONE_TEXT')
       });
     }).catch(function(response) {
       that.setState({

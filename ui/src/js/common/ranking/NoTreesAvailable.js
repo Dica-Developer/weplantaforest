@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import counterpart from 'counterpart';
 
 require('./noTreesAvailable.less');
 
@@ -11,8 +12,7 @@ export default class NoTreesAvailable extends Component {
     return (
       <div className={('row noTreesAvailable')}>
         <div className="col-md-12">
-          <h1>Du hast noch keine Bäume gepflanzt!? Na klasse, deine Kinder werden dir dankbar sein...</h1>
-          <p>(Hier wäre noch eine Beschreibung gut, was da wirklich hin soll)</p>
+          <h1>{counterpart.translate('NO_PLANTINGS')}</h1>
         </div>
       </div>
     );

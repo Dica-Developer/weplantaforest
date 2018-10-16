@@ -35,8 +35,7 @@ export default class NoTeamAvailable extends Component {
     }
     return (
       <div>
-        <h1>Du bist noch keinem Team beigetreten! Hast du keine Freunde!?</h1>
-        <p>(Hier wäre noch eine Beschreibung gut, was da wirklich hin soll)</p>
+        <h1>{counterpart.translate('NO_TEAM')}</h1>
         {createTeamButton}
       </div>
     );

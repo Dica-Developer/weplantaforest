@@ -91,6 +91,11 @@ module.exports = {
   SIGNUP_DONE: 'Registration done!',
   SIGNUP_DONE_TEXT: 'You should received a mail containing a link to activate your user.',
 
+  ACTIVATION_DONE_TEXT: 'We wish you a lot of fun planting trees!',
+
+  NO_TEAM: 'You haven\'t joined a team yet',
+  NO_PLANTINGS: 'You haven\'t planted any trees yet',
+
   ERROR: 'An Error occured!',
   WRONG_USERNAME_PASSWORD: 'Wrong username/password combination! Please try again.',
   LOCKED_USER: 'The user is not activated. You should received an email containing an activation link after your registration. Another possibility is, that the user was banned by the administrator.',
