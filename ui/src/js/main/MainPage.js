@@ -8,6 +8,7 @@ import ProjectTeaser from './ProjectTeaser';
 import RankingContainer from '../common/ranking/SmallRankingContainer';
 import RankingItem from '../common/ranking/RankingItem';
 import RankingItemContent from '../common/ranking/content/NameAmountCo2';
+import RankingItemContentForNewest from '../common/ranking/content/NameAmountDate';
 import Notification from '../common/components/Notification';
 
 
@@ -90,11 +91,11 @@ export default class MainPage extends Component {
             <div className="col-md-4">
               <RankingContainer title={counterpart.translate('LAST_PLANTED_TREES')}>
                 {this.state.lastPlantedTrees.content.map(function(content, i) {
-                  let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                  let imageUrl = 'http://localhost:8081/user/image/' + content.treeTypeImageName + '/60/60';
                   let linkTo = '/user/' + content.name;
                   return (
                     <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
-                      <RankingItemContent content={content}/>
+                      <RankingItemContentForNewest name={content.name} amount={content.amount} plantedOn={content.plantedOn}/>
                     </RankingItem>
                   );
                 })}
