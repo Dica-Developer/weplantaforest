@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
+import counterpart from 'counterpart';
 
 export default class RegistrationDone extends Component {
 
@@ -9,8 +10,8 @@ export default class RegistrationDone extends Component {
       <div className="registrationDone">
         <div className="row">
           <div className="col-md-12 align-left">
-            <h1>Du wurdest angemeldet!</h1>
-            <p>Um deinen Nutzer zu aktivieren, haben wir dir einen Aktivierungslink an die angegebene E-Mail Adresse geschickt.</p>
+            <h1>{counterpart.translate('SIGNUP_DONE')}</h1>
+            <p>{counterpart.translate('SIGNUP_DONE_TEXT')}</p>
           </div>
         </div>
       </div>

@@ -73,10 +73,23 @@ module.exports = {
 
   USERNAME: 'Benutzername',
   PASSWORD: 'Passwort',
+  PASSWORD_CONFIRMATION: 'Passwort bestätigen',
   LOGIN: 'Login',
   LOGOUT: 'Logout',
   FORGOT_PASSWORD: 'Passwort vergessen?',
   REGISTRATE: 'Registrieren',
+
+  NEWSLETTER_CB: 'Ich möchte den Newsletter erhalten.',
+  AGB_CB: 'Ich habe die <a href=\'/terms\' target=\'_blank\'>Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere diese.',
+  DSGVO_CB: 'Ich habe die <a href=\'/privacy\' target=\'_blank\'>Datenschutzerklärung</a> gelesen und akzeptiere diese.',
+
+  USERNAME_PLACEHOLDER: 'Bitte gib deinen Benutzernamen ein.',
+  PASSWORD_PLACEHOLDER: 'Bitte gib dein Passwort ein.',
+  PASSWORD_CONFIRMATION_PLACEHOLDER: 'Bitte bestätige dein Passwort.',
+  MAIL_PLACEHOLDER: 'Bitte gib eine gültige E-Mailadresse ein.',
+
+  SIGNUP_DONE: 'Du wurdest angemeldet!',
+  SIGNUP_DONE_TEXT: 'Um deinen Nutzer zu aktivieren, haben wir dir einen Aktivierungslink an die angegebene E-Mail Adresse geschickt.',
 
   ERROR: 'Ein Fehler ist aufgetreten!',
   WRONG_USERNAME_PASSWORD: 'Benutzername und Passwort stimmen nicht überein.',

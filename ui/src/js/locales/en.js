@@ -73,10 +73,23 @@ module.exports = {
 
   USERNAME: 'Username',
   PASSWORD: 'Password',
+  PASSWORD_CONFIRMATION: 'Password confirmation',
   LOGIN: 'Login',
   LOGOUT: 'Logout',
   FORGOT_PASSWORD: 'Forgot password?',
   REGISTRATE: 'Sign Up',
+
+  NEWSLETTER_CB: 'I want to receive the newsletter.',
+  AGB_CB: 'I have read and accept the <a href=\'/terms\' target=\'_blank\'>general terms and conditions</a>.',
+  DSGVO_CB: 'I have read and accept the <a href=\'/privacy\' target=\'_blank\'>privacy policy</a>.',
+
+  USERNAME_PLACEHOLDER: 'Please enter your username.',
+  PASSWORD_PLACEHOLDER: 'Please enter your password.',
+  PASSWORD_CONFIRMATION_PLACEHOLDER: 'Please confirm your password.',
+  MAIL_PLACEHOLDER: 'Please enter a valid E-Mail adress.',
+
+  SIGNUP_DONE: 'Registration done!',
+  SIGNUP_DONE_TEXT: 'You should received a mail containing a link to activate your user.',
 
   ERROR: 'An Error occured!',
   WRONG_USERNAME_PASSWORD: 'Wrong username/password combination! Please try again.',
@@ -158,7 +171,7 @@ module.exports = {
   STATE: 'State',
   REDEEMED_BY: 'Redeemed by',
 
-  PRIVATEPERSON: 'PrivatePerson',
+  PRIVATEPERSON: 'Private',
   COMPANY: 'Company',
   NGO: 'Non-profit organization',
   SCHOOL: 'School',
