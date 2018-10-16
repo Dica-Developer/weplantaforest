@@ -550,4 +550,7 @@ module.exports = {
   PHONE_NO_PLACEHOLDER: 'Bitte gib deine Telefonnummer ein.',
   YOUR_MESSAGE_PLACEHOLDER: 'Bitte gib deine Nachricht ein.',
 
+  NO_ACCESS: 'Keine Erlaubnis',
+  NO_ACCES_TEXT: 'Du kannst folgende Seite aufgrund von fehlenden Berechtigungen nicht aufrufen'
+
 };

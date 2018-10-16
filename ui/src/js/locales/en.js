@@ -550,5 +550,7 @@ module.exports = {
   PHONE_NO_PLACEHOLDER: 'Please enter your phone number.',
   YOUR_MESSAGE_PLACEHOLDER: 'Please enter your message.',
 
+  NO_ACCESS: 'No permission',
+  NO_ACCES_TEXT: 'You don\'t have permission to call the following url'
 
 };

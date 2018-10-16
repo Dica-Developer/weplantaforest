@@ -65,7 +65,7 @@ import SliderImageManager from './backOffice/sliderImageManager/SliderImageManag
 import EventOverview from './backOffice/eventManager/EventOverview';
 import EventEditor from './backOffice/eventManager/EventEditor';
 import TransformTreesPage from './backOffice/transformTrees/TransformTreesPage';
-
+import ForbiddenPage from './views/ForbiddenPage';
 
 export default class Routes extends Component {
 
@@ -189,6 +189,7 @@ export default class Routes extends Component {
           <Route path="/event-manager" component={EventOverview} reRender={this.reRender.bind(this)}/>
           <Route path="/event/:eventId" component={EventEditor} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)}/>
           <Route path="/transform-trees" component={TransformTreesPage} reRender={this.reRender.bind(this)}/>
+          <Route path="/forbidden" component={ForbiddenPage} reRender={this.reRender.bind(this)}/>
           <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} isGift={false} isAbo={false}/>
         </Router>
         <Footer/>
