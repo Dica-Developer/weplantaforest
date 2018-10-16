@@ -513,6 +513,18 @@ module.exports = {
   CERTIFICATES: 'Certificates',
   BANNER: 'Banner',
   TOOLS: 'Tools',
+  MORE_OPTIONS: 'more options',
+
+  WHITE: 'white',
+  GREEN: 'green',
+  VERTICAL: 'vertical',
+  HORIZONTAL: 'horizontal',
+  EMBED_CODE: 'Embed code',
+  CHOOSE_PLANTBAGS: 'Please choose those plantbags, which should included into your certificate',
+  CERTIFICATE_SHOWN_TEXT: 'This text will be shown in your certificate',
+
+  NO_RECEIPTS: 'No contribution receipts have been created for you so far.',
+  FOLLOWING_RECEIPTS: 'The following receipts has been created and are available for you',
 
   NO_AUTH_USER_TITLE: 'No authenticated user!',
   NO_AUTH_USER_TEXT: 'You have to be logged in to create a planting.',
@@ -523,6 +535,20 @@ module.exports = {
 
   TREE_LOCATION: 'Location',
   DONATE_NOW: 'donate now',
-  CART_IS_NULL: 'Your plantbag does not exist anymore.'
+  CART_IS_NULL: 'Your plantbag does not exist anymore.',
+
+  YOUR_CONCERN: 'Your Concern',
+  QUESTION: 'Question',
+  PRESS_MEDIA: 'Press & Media',
+  COORPORATION: 'Coorporation',
+  FIRSTNAME_LASTNAME: 'Firstname Lastname',
+  PHONE_NO: 'Phone number',
+  YOUR_MESSAGE: 'Your Message',
+  SEND: 'send',
+
+  FIRSTNAME_LASTNAME_PLACEHOLDER: 'Please enter your first and lastname.',
+  PHONE_NO_PLACEHOLDER: 'Please enter your phone number.',
+  YOUR_MESSAGE_PLACEHOLDER: 'Please enter your message.',
+
 
 };

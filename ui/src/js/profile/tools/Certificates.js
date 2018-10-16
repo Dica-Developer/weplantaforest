@@ -11,6 +11,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 import Accounting from 'accounting';
+import counterpart from 'counterpart';
 
 import Notification from '../../common/components/Notification';
 import IconButton from '../../common/components/IconButton';
@@ -139,16 +140,16 @@ export default class Certificates extends Component {
     var that = this;
     var content;
     if(this.state.plantBags.length == 0){
-      content = <div className="content">Du hast bisher leider keine Bäume gepflanzt.</div>;
+      content = <div className="content">{counterpart.translate('NO_PLANTINGS')}</div>;
     }else{
       content =
         <div className="content">
-            Bitte wähle die Pflanzkörbe aus, die im Zertifikat erscheinen sollen:<br/>
+            {counterpart.translate('CHOOSE_PLANTBAGS')}:<br/>
               {this.state.plantBags.map(function(plantBag, i) {
                 return (<PlantBag plantBag={plantBag} key={i} index={i} setPlantBagChosenFlag={that.setPlantBagChosenFlag.bind(this)}/>);
               })}
             <br/>
-            Dieser Text wird in deinem Zertifikat angezeigt:<br/>
+            {counterpart.translate('CERTIFICATE_SHOWN_TEXT')}:<br/>
             <textarea ref="certTextarea" rows="4" cols="50" maxLength="250" onChange={this.updateCertificateText.bind(this)} defaultValue="Mein ganz spezieller Beitrag zur Rettung unseres Planeten."/>
             <br/>({this.state.certificateTextLength}/250)
           <div className="align-center">
@@ -159,7 +160,7 @@ export default class Certificates extends Component {
 
     return (
       <div className="col-md-12">
-        <h1>Tools&nbsp;/&nbsp;Zertifikate</h1>
+        <h1>{counterpart.translate('TOOLS')}&nbsp;/&nbsp;{counterpart.translate('CERTIFICATES')}</h1>
         {content}
         <Notification ref="notification"/>
       </div>

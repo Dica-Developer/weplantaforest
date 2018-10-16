@@ -64,7 +64,7 @@ export default class FaqView extends Component {
       <div className="container paddingTopBottom15 faq">
           <div className="row">
             <div className="col-md-12">
-              <h1>{counterpart.translate('FAQ')}</h1>
+              <h1>{counterpart.translate('FOOTER.FAQ')}</h1>
             </div>
           </div>
           <div className="row">

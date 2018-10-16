@@ -11,6 +11,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 import Accounting from 'accounting';
+import counterpart from 'counterpart';
 
 class Receipt extends Component {
   constructor(props) {
@@ -64,16 +65,16 @@ export default class Receipts extends Component {
   render() {
     var text;
     if(this.state.receipts.length == 0){
-      text = 'Für dich wurden bisher leider keine Spendenquittungen erstellt.';
+      text = counterpart.translate('NO_RECEIPTS');
     }else{
-      text = 'Folgende Spendenquittungen wurden bereits erstellt und sind verfügbar:';
+      text =  counterpart.translate('FOLLOWING_RECEIPTS') + ':';
     }
 
 
     return (
       <div className="row receipts">
         <div className="col-md-12">
-          <h1>Spendenquittungen</h1>
+          <h1>{counterpart.translate('NAVBAR.CONTRIBUTION_RECEIPTS')}</h1>
         </div>
         <div className="col-md-12">
           {text}<br/>

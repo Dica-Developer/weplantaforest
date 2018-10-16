@@ -513,6 +513,18 @@ module.exports = {
   CERTIFICATES: 'Zertifikate',
   BANNER: 'Banner',
   TOOLS: 'Tools',
+  MORE_OPTIONS: 'weitere Optionen',
+
+  WHITE: 'weiß',
+  GREEN: 'grün',
+  VERTICAL: 'hoch',
+  HORIZONTAL: 'quer',
+  EMBED_CODE: 'Einbettungs-Code',
+  CHOOSE_PLANTBAGS: 'Bitte wähle die Pflanzkörbe aus, die im Zertifikat erscheinen sollen',
+  CERTIFICATE_SHOWN_TEXT: 'Dieser Text wird in deinem Zertifikat angezeigt',
+
+  NO_RECEIPTS: 'Für dich wurden bisher leider keine Spendenquittungen erstellt.',
+  FOLLOWING_RECEIPTS: 'Folgende Spendenquittungen wurden bereits erstellt und sind verfügbar',
 
   NO_AUTH_USER_TITLE: 'Kein authentifizierter Nutzer!',
   NO_AUTH_USER_TEXT: 'Um eine Pflanzung erstellen zu können, musst du als Nutzer eingeloggt sein.',
@@ -523,6 +535,19 @@ module.exports = {
 
   TREE_LOCATION: 'Standort',
   DONATE_NOW: 'jetzt spenden',
-  CART_IS_NULL: 'Dein Pflanzkorb existiert nicht mehr. Bitte erstelle einen neuen.'
+  CART_IS_NULL: 'Dein Pflanzkorb existiert nicht mehr. Bitte erstelle einen neuen.',
+
+  YOUR_CONCERN: 'Ihr Anliegen',
+  QUESTION: 'Frage',
+  PRESS_MEDIA: 'Presse & Media',
+  COORPORATION: 'Koorperation',
+  FIRSTNAME_LASTNAME: 'Vorname Nachname',
+  PHONE_NO: 'Telefonnummer',
+  YOUR_MESSAGE: 'Ihre Nachricht',
+  SEND: 'Abschicken',
+
+  FIRSTNAME_LASTNAME_PLACEHOLDER: 'Bitte gib deinen Vor- und Nachnamen ein.',
+  PHONE_NO_PLACEHOLDER: 'Bitte gib deine Telefonnummer ein.',
+  YOUR_MESSAGE_PLACEHOLDER: 'Bitte gib deine Nachricht ein.',
 
 };

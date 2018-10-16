@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
+import counterpart from 'counterpart';
 
 import RadioButton from '../../common/components/RadioButton';
 import IconButton from '../../common/components/IconButton';
@@ -134,12 +135,12 @@ export default class Widgets extends Component {
             {widgets}
             <div className="code-and-options">
               <div className="options">
-                <p>weitere Optionen:</p>
-                <LeftRightSwitch leftText="weiß" rightText="grün" leftValue="white" rightValue="green" chosenValue={this.state.type} onClick={this.updateType.bind(this)}/><br/>
-                <LeftRightSwitch leftText="hoch" rightText="quer" leftValue="high" rightValue="cross" chosenValue={this.state.format} onClick={this.updateFormat.bind(this)}/>
+                <p>{counterpart.translate('MORE_OPTIONS')}:</p>
+                <LeftRightSwitch leftText={counterpart.translate('WHITE')} rightText={counterpart.translate('GREEN')} leftValue="white" rightValue="green" chosenValue={this.state.type} onClick={this.updateType.bind(this)}/><br/>
+                <LeftRightSwitch leftText={counterpart.translate('VERTICAL')} rightText={counterpart.translate('HORIZONTAL')} leftValue="high" rightValue="cross" chosenValue={this.state.format} onClick={this.updateFormat.bind(this)}/>
               </div>
               <div className="code">
-                <p>Einbettungs-Code:</p>
+                <p>{counterpart.translate('EMBED_CODE')}:</p>
                 <textarea rows="4" cols="50" maxLength="250" value={this.state.htmlCode}/>
               </div>
             </div>
