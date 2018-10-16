@@ -5,6 +5,7 @@ import axios from 'axios';
 import {browserHistory} from 'react-router';
 import ReactDataGrid from 'react-data-grid';
 import {Toolbar, Data} from 'react-data-grid-addons';
+import moment from 'moment';
 
 import IconButton from '../../common/components/IconButton';
 import NotificationSystem from 'react-notification-system';
@@ -32,6 +33,16 @@ export default class ArticleOverview extends Component {
           key: 'owner',
           name: 'Erstellt von',
           width: 120,
+          filterable: true
+        }, {
+          key: 'language',
+          name: 'Sprache',
+          width: 70,
+          filterable: true
+        }, {
+          key: 'createdOn',
+          name: 'Erstellt am',
+          width: 90,
           filterable: true
         }, {
           key: 'edit',
@@ -83,6 +94,8 @@ export default class ArticleOverview extends Component {
       type: article.articleType,
       title: article.title,
       owner: article.owner.name,
+      language: article.lang.substr(0, 2),
+      createdOn:  moment(article.createdOn).format('DD.MM.YYYY'),
       edit: <IconButton glyphIcon="glyphicon-pencil" text="" onClick={() => {
         this.edit(article.id);
       }}/>,
