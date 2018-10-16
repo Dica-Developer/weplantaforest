@@ -6,6 +6,7 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
+import counterpart from 'counterpart';
 
 require('./treeService.less');
 
@@ -42,7 +43,7 @@ export default class treeService extends Component {
       <div className="container paddingTopBottom15 treeService">
           <div className="row">
             <div className="col-md-12">
-              <h1>Baumservice</h1>
+              <h1>{counterpart.translate('BUTTONBAR.TREE_SERVICE')}</h1>
             </div>
           </div>
           <div className="row">
