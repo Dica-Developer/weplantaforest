@@ -48,9 +48,26 @@ export default class treeService extends Component {
           <div className="row">
             <div className="col-md-12">
               <div>
-                {this.state.treeService.map(function(about, i) {
-                return ( <div key={i}><p className="title">{about.title}</p><p dangerouslySetInnerHTML={{
-                  __html: about.intro
+                {this.state.treeService.map(function(treeServiceArticle, i) {
+                  let articleImageUrl = '';
+                  var imageDesc;
+                  if (treeServiceArticle.imageFileName != '') {
+                    articleImageUrl = 'http://localhost:8082/article/image/' + treeServiceArticle.id + '/' + treeServiceArticle.imageFileName + '/986/657';
+                  }
+                  if(treeServiceArticle.imageDescription != null){
+                    imageDesc = <p className="img-desc">{treeServiceArticle.imageDescription}</p>;
+                  }else{
+                    imageDesc = '';
+                  }
+                return ( <div key={i}><p className="title">{treeServiceArticle.title}</p>
+                <div className="article-img">
+                  <div className="article-img-div">
+                    <img src={articleImageUrl}/>
+                    {imageDesc}
+                  </div>
+                </div>
+                <p dangerouslySetInnerHTML={{
+                  __html: treeServiceArticle.intro
                 }}></p></div>);
                 })}
               </div>
