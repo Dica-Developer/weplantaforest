@@ -12,7 +12,7 @@ axios.interceptors.response.use((response) => {
     return response;
   }, (error) => {
     if(error.response.status == 403) {
-      browserHistory.push('/forbidden?calledUrl=' + error.response.data.path);
+      browserHistory.push('/forbidden?calledUrl=' + error.response.config.url);
     }
     return Promise.reject(error);
   });

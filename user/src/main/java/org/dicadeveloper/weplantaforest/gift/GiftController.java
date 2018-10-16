@@ -60,14 +60,24 @@ public class GiftController {
 
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public List<Gift> findGiftsByConsignor(@RequestParam String userName) {
-        return _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
+    public ResponseEntity<?> findGiftsByConsignor(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {        
+        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
+            List<Gift> gifts = _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
+            return new ResponseEntity<>(gifts, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(value = Uris.GIFTS_BY_RECIPIENT, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public List<Gift> findGiftsByRecipient(@RequestParam String userName) {
-        return _giftRepository.findGiftsByRecipient(userName);
+    public ResponseEntity<?> findGiftsByRecipient(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
+        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
+            List<Gift> gifts = _giftRepository.findGiftsByRecipient(userName);
+            return new ResponseEntity<>(gifts, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }     
     }
 
     /*

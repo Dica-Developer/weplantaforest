@@ -14,6 +14,7 @@ import RecipientGiftItem from './RecipientGiftItem';
 import RedeemGiftContent from '../RedeemGiftContent';
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
+import {getConfig} from '../../common/RestHelper';
 
 require('./gifts.less');
 
@@ -24,20 +25,22 @@ export default class GiftOverview extends Component {
     this.state = {
       userName: this.props.params.userName,
       consignorGifts: [],
-      recipientGifts: []
+      recipientGifts: [],
+      restConfig: getConfig()
     };
   }
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/gift/search/consignor?userName=' + this.state.userName).then(function(response) {
+    let config = getConfig();
+    axios.get('http://localhost:8081/gift/search/consignor?userName=' + this.state.userName, this.state.restConfig).then(function(response) {
       var result = response.data;
       that.setState({consignorGifts: result});
     }).catch(function(error) {
       that.refs.notification.handleError(error);
     });
 
-    axios.get('http://localhost:8081/gift/search/recipient?userName=' + this.state.userName).then(function(response) {
+    axios.get('http://localhost:8081/gift/search/recipient?userName=' + this.state.userName, this.state.restConfig).then(function(response) {
       var result = response.data;
       that.setState({recipientGifts: result});
     }).catch(function(error) {
