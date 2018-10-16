@@ -165,6 +165,7 @@ module.exports = {
 
   BEST_COMPANIES: 'Best companies',
   BEST_PRIVATES: 'Best private persons',
+  LAST_PLANTED_TREES: 'Newest Plantings',
 
   PAYMENT_SUCCESSFUL: 'Payment successfull!',
   THANKS_FOR_DONATION: 'Thanks for your donation.',

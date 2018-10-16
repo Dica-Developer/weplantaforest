@@ -50,8 +50,8 @@ public class RankingController {
     }
 
     @RequestMapping(value = Uris.RANKING_LAST_PLANTED_TREES, method = RequestMethod.GET)
-    public List<TimeRankedTreeData> getLastPlantedTrees() {
-        return _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
+    public Page<TimeRankedTreeData> getLastPlantedTrees(@Param(value = "page") int page, @Param(value = "size") int size) {
+        return _rankingRepository.getLastPlantedTrees(new PageRequest(page, size));
     }
 
     // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)

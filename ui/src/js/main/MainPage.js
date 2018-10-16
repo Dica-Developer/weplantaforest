@@ -30,6 +30,9 @@ export default class MainPage extends Component {
       },
       bestCompanyRanking: {
         content: []
+      },
+      lastPlantedTrees: {
+        content: []
       }
     };
   }
@@ -43,7 +46,7 @@ export default class MainPage extends Component {
       that.refs.notification.handleError(error);
     });
 
-    axios.get('http://localhost:8082/articlesPaged?articleType=BLOG&language='+ localStorage.getItem('language') + '&page=0&size=2').then(function(response) {
+    axios.get('http://localhost:8082/articlesPaged?articleType=BLOG&language='+ localStorage.getItem('language') + '&page=0&size=4').then(function(response) {
       var result = response.data;
       that.setState({teaser: result});
     }).catch(function(error) {
@@ -63,6 +66,13 @@ export default class MainPage extends Component {
     }).catch(function(error) {
       that.refs.notification.handleError(error);
     });
+
+    axios.get('http://localhost:8081/ranking/lastPlantedTrees?page=0&size=5').then(function(response) {
+      var result = response.data;
+      that.setState({lastPlantedTrees: result});
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
+    });
   }
 
   render() {
@@ -72,14 +82,14 @@ export default class MainPage extends Component {
         <div className="teaser">
           <div className="row firstRow">
             <div className="col-md-4">
-              <ProjectTeaser content={this.state.projects.content[0]}/>
-            </div>
-            <div className="col-md-4">
               <ArticleTeaser content={this.state.teaser.content[0]}/>
             </div>
             <div className="col-md-4">
-              <RankingContainer title={counterpart.translate('BEST_COMPANIES')}>
-                {this.state.bestCompanyRanking.content.map(function(content, i) {
+              <ArticleTeaser content={this.state.teaser.content[1]}/>
+            </div>
+            <div className="col-md-4">
+              <RankingContainer title={counterpart.translate('LAST_PLANTED_TREES')}>
+                {this.state.lastPlantedTrees.content.map(function(content, i) {
                   let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
                   let linkTo = '/user/' + content.name;
                   return (
@@ -89,32 +99,53 @@ export default class MainPage extends Component {
                   );
                 })}
               </RankingContainer>
-          </div>
+            </div>
           </div>
           <div className="row secondRow">
+            <div className="col-md-4">
+              <ProjectTeaser content={this.state.projects.content[0]}/>
+            </div>
             <div className="col-md-4">
               <ProjectTeaser content={this.state.projects.content[1]}/>
             </div>
             <div className="col-md-4">
-              <ArticleTeaser content={this.state.teaser.content[1]}/>
+            <RankingContainer title={counterpart.translate('BEST_COMPANIES')}>
+              {this.state.bestCompanyRanking.content.map(function(content, i) {
+                let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                let linkTo = '/user/' + content.name;
+                return (
+                  <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
+                    <RankingItemContent content={content}/>
+                  </RankingItem>
+                );
+              })}
+            </RankingContainer>
+            </div>
+          </div>
+          <div className="row firstRow">
+            <div className="col-md-4">
+              <ArticleTeaser content={this.state.teaser.content[2]}/>
             </div>
             <div className="col-md-4">
-              <RankingContainer title={counterpart.translate('BEST_PRIVATES')}>
-                {this.state.bestUserRanking.content.map(function(content, i) {
-                  let imageUrl;
-                  if(content.imageName && content.imageName != 'default'){
-                    imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
-                  }else{
-                    imageUrl = '/assets/images/default_user.jpg';
-                  }
-                  let linkTo = '/user/' + content.name;
-                  return (
-                    <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
-                      <RankingItemContent content={content}/>
-                    </RankingItem>
-                  );
-                })}
-              </RankingContainer>
+              <ArticleTeaser content={this.state.teaser.content[3]}/>
+            </div>
+            <div className="col-md-4">
+            <RankingContainer title={counterpart.translate('BEST_PRIVATES')}>
+              {this.state.bestUserRanking.content.map(function(content, i) {
+                let imageUrl;
+                if(content.imageName && content.imageName != 'default'){
+                  imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                }else{
+                  imageUrl = '/assets/images/default_user.jpg';
+                }
+                let linkTo = '/user/' + content.name;
+                return (
+                  <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
+                    <RankingItemContent content={content}/>
+                  </RankingItem>
+                );
+              })}
+            </RankingContainer>
             </div>
           </div>
         </div>

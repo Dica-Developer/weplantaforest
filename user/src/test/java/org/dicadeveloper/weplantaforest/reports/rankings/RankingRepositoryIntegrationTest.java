@@ -160,15 +160,15 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Bert", 1, 100000L, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 1, 100000L, "Project");
 
-        List<TimeRankedTreeData> treeList = _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
+        Page<TimeRankedTreeData> treeList = _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
 
         assertThat(treeList).isNotNull();
-        assertThat(treeList.size()).isEqualTo(10);
-        assertThat(treeList.get(0)
+        assertThat(treeList.getContent().size()).isEqualTo(10);
+        assertThat(treeList.getContent().get(0)
                            .getName()).isEqualTo("Adam");
-        assertThat(treeList.get(0)
+        assertThat(treeList.getContent().get(0)
                            .getAmount()).isEqualTo(9);
-        assertThat(treeList.get(0)
+        assertThat(treeList.getContent().get(0)
                            .getPlantedOn()).isEqualTo(900000L);
     }
 

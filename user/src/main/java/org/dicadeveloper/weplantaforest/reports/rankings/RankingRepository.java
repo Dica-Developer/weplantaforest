@@ -68,6 +68,10 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
 	public final static String FIND_LAST_PLANTED_TREES_IN_PROJECT_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(tree.owner.name, tree.amount, tree.plantedOn, tree.treeType.name, tree.treeType.imageFile) "
 			+ "FROM Tree as tree WHERE tree.projectArticle.project.name = :projectName AND NOT tree.owner.name LIKE \'Anonymous%\' ORDER BY tree.plantedOn desc";
 
+	public final static String FIND_LAST_PLANTED_TREES = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(tree.owner.name, tree.amount, tree.plantedOn, tree.treeType.name, tree.treeType.imageFile) "
+            + "FROM Tree as tree WHERE NOT tree.owner.name LIKE \'Anonymous%\' ORDER BY tree.plantedOn desc";
+
+	
 	@Query(value = FIND_BEST_USER_QUERY, countQuery = COUNT_BEST_USER_QUERY)
 	Page<TreeRankedUserData> getBestUser(@Param("time") long timeOfMeasurement, Pageable page);
 
@@ -90,7 +94,7 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
 			@Param("organizationType") OrganizationType organizationType, Pageable page);
 
 	@Query(value = FIND_LAST_PLANTED_TREES_QUERY)
-	List<TimeRankedTreeData> getLastPlantedTrees(Pageable Page);
+	Page<TimeRankedTreeData> getLastPlantedTrees(Pageable Page);
 
 	@Query(value = FIND_BEST_TEAM_QUERY, countQuery = COUNT_BEST_TEAM_QUERY)
 	Page<TreeRankedUserData> getBestTeams(@Param("time") long timeOfMeasurement, Pageable Page);
@@ -116,5 +120,5 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
 
 	@Query(value = FIND_LAST_PLANTED_TREES_IN_PROJECT_QUERY)
 	Page<TimeRankedTreeData> getLastPlantedTreesInProject(@Param("projectName") String projectName, Pageable Page);
-
+	
 }
