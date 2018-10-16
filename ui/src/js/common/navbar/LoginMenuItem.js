@@ -123,12 +123,16 @@ export default class LoginMenuItem extends Component {
       }
     }).then(function(response) {
       that.handleLogin(response.headers['x-auth-token']);
-    }.bind(this)).catch(function(response) {
+    }.bind(this)).catch(function(error) {
       that.setState({
         name: '',
         password: ''
       });
-      that.refs.notification.addNotificationAtDifferentPos(counterpart.translate('ERROR'), counterpart.translate('WRONG_USERNAME_PASSWORD'), 'error', 'tr');
+      if(error.response.data.reason == 'LOCKED'){
+        that.refs.notification.addNotificationAtDifferentPos(counterpart.translate('ERROR'), counterpart.translate('LOCKED_USER'), 'error', 'tr');
+      }else if(error.response.data.reason == 'BAD_CREDENTIALS') {
+        that.refs.notification.addNotificationAtDifferentPos(counterpart.translate('ERROR'), counterpart.translate('WRONG_USERNAME_PASSWORD'), 'error', 'tr');
+      }
     });
   }
 

@@ -80,6 +80,7 @@ module.exports = {
 
   ERROR: 'An Error occured!',
   WRONG_USERNAME_PASSWORD: 'Wrong username/password combination! Please try again.',
+  LOCKED_USER: 'The user is not activated. You should received an email containing an activation link after your registration. Another possibility is, that the user was banned by the administrator.',
   USER_NOT_FOUND: 'User not found.',
   INVALID_ACTIVATION_KEY: 'The activation link is invalid.',
   USER_ALREADY_EXISTS: 'Username already exists.',

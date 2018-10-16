@@ -53,6 +53,9 @@ export default class GiftOverview extends Component {
     return (
       <div className="container paddingTopBottom15">
         <div className="row gifts">
+          <div className="col-md-12">
+            <h1>{counterpart.translate('NAVBAR.VOUCHERS')}</h1>
+          </div>
           <div className="col-md-6">
             <div className="createGift" onClick={() => {this.linkTo('/plantGift/5')}}>
               <span className={('glyphicon glyphicon-gift')} aria-hidden="true"></span>
@@ -66,7 +69,6 @@ export default class GiftOverview extends Component {
             </div>
           </div>
           <div className="col-md-12">
-            <h1>{counterpart.translate('GIFT_OVERVIEW')}</h1>
             <h2>{counterpart.translate('CREATED_GIFTS')}:</h2>
             <div className="giftItem giftHeader">
               <div>

@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.NullRememberMeServices;
 import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +26,7 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
     private final TokenAuthenticationService tokenAuthenticationService;
     private final UserDetailsService userDetailsService;
 
-    private AuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+    private AuthenticationFailureHandler failureHandler = new CustomAuthenticationFailureHandler();
     private RememberMeServices rememberMeServices = new NullRememberMeServices();
 
     public StatelessLoginFilter(String urlMapping, TokenAuthenticationService tokenAuthenticationService, UserDetailsService userDetailsService, AuthenticationManager authManager) {

@@ -30,7 +30,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
-
+    
     public WebSecurityConfigurerAdapterExt() {
         super(true);
     }
@@ -63,7 +63,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
 
     }
-
+    
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
