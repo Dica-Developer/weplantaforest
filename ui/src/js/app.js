@@ -11,10 +11,9 @@ axios.interceptors.response.use((response) => {
     // Do something with response data
     return response;
   }, (error) => {
-    console.log('error: ', error);
-    console.log(error.response);
-    browserHistory.push('/forbidden?calledUrl=' + error.response.data.path);
-    // Do something with response error
+    if(error.response.status == 403) {
+      browserHistory.push('/forbidden?calledUrl=' + error.response.data.path);
+    }
     return Promise.reject(error);
   });
 
