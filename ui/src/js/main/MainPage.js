@@ -43,7 +43,7 @@ export default class MainPage extends Component {
       that.refs.notification.handleError(error);
     });
 
-    axios.get('http://localhost:8082/articlesPaged?articleType=BLOG&language=DEUTSCH&page=0&size=2').then(function(response) {
+    axios.get('http://localhost:8082/articlesPaged?articleType=BLOG&language='+ localStorage.getItem('language') + '&page=0&size=2').then(function(response) {
       var result = response.data;
       that.setState({teaser: result});
     }).catch(function(error) {
