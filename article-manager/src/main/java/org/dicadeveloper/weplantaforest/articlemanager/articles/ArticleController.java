@@ -140,7 +140,7 @@ public class ArticleController {
     @RequestMapping(value = "/backOffice/articles", method = RequestMethod.GET)
     @JsonView(Views.BackofficeArticleOverview.class)
     public ResponseEntity<?> getAllArticles() {
-        Iterable<Article> allArticles = _articleRepository.findAll();
+        Iterable<Article> allArticles = _articleRepository.findAllByOrderByCreatedOnDesc();
         return new ResponseEntity<>(allArticles, HttpStatus.OK);
     }
 

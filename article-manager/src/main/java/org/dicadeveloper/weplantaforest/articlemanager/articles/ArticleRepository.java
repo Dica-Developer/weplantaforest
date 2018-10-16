@@ -17,6 +17,9 @@ public interface ArticleRepository extends CrudRepository<Article, Long> {
     public final static String FIND_ARTICLES_BY_TYPE_PAGING_QUERY = "SELECT article FROM Article article WHERE article.articleType = :articleType AND article.lang = :language AND article.visible = true ORDER BY article.createdOn DESC";
 
     @Query
+    public List<Article> findAllByOrderByCreatedOnDesc();
+    
+    @Query
     public Article findByTitle(@Param("title") String title);
 
     @Query(value = FIND_ARTICLES_BY_TYPE_QUERY)
