@@ -65,7 +65,8 @@ export default class RankingPage extends Component {
       }, 1000);
 
     }).catch(function(response) {
-      this.refs.notification.addNotification('Fehler beim Laden der besten Nutzer!', '', 'error');
+      that.refs['spinner'].hideSpinner();
+      that.refs.notification.addNotification('Fehler beim Laden der besten Nutzer!', '', 'error');
     });
   }
 
@@ -86,7 +87,8 @@ export default class RankingPage extends Component {
         }
       }, 1000);
     }).catch(function(response) {
-      this.refs.notification.addNotification('Fehler beim Laden der besten Teams!', '', 'error');
+      that.refs['spinner'].hideSpinner();
+      that.refs.notification.addNotification('Fehler beim Laden der besten Teams!', '', 'error');
     });
 
   }
@@ -109,7 +111,8 @@ export default class RankingPage extends Component {
         }
       }, 1000);
     }).catch(function(response) {
-      this.refs.notification.addNotification('Fehler beim Laden der Rangliste!', '', 'error');
+      that.refs['spinner'].hideSpinner();
+      that.refs.notification.addNotification('Fehler beim Laden der Rangliste!', '', 'error');
     });
   }
 
