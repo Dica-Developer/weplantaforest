@@ -19,7 +19,7 @@ public class TeamReportData {
     String teamName;
    
     @NonNull
-    Long regData;
+    Long regDate;
     
     @NonNull
     String adminName;
