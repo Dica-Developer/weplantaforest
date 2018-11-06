@@ -1,0 +1,2 @@
+ALTER TABLE CartItem ADD CONSTRAINT FK_CartItemTree FOREIGN KEY (_treeId) REFERENCES Tree(_treeId);
+
