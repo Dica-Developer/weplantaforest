@@ -505,22 +505,20 @@ export default class CartOverview extends Component {
   }
 
   updateFrom(value){
-    this.state.cartRequest.from = Date.parse(value);
-    this.forceUpdate();
-  }
-
-  resetFrom(){
-    this.state.cartRequest.from = null;
+    if (value) {
+      this.state.cartRequest.from = Date.parse(value);
+    } else {
+      this.state.cartRequest.from = 0;
+    }
     this.forceUpdate();
   }
 
   updateTo(value) {
-    this.state.cartRequest.to = Date.parse(value);
-    this.forceUpdate();
-  }
-
-  resetTo(){
-    this.state.cartRequest.to = null;
+    if (value) {
+      this.state.cartRequest.to = Date.parse(value);
+    } else {
+      this.state.cartRequest.to = new Date().getTime();
+    }
     this.forceUpdate();
   }
 
@@ -570,13 +568,13 @@ export default class CartOverview extends Component {
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="from">Von:</label>
-              <DatePicker value={new Date(this.state.cartRequest.from).toISOString()} onChange={this.updateFrom.bind(this)} onClear={this.resetFrom.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
+              <DatePicker value={new Date(this.state.cartRequest.from).toISOString()} onChange={this.updateFrom.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
             </div>
           </div>
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="to">Bis:</label>
-              <DatePicker value={new Date(this.state.cartRequest.to).toISOString()} onChange={this.updateTo.bind(this)} onClear={this.resetTo.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
+              <DatePicker value={new Date(this.state.cartRequest.to).toISOString()} onChange={this.updateTo.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
             </div>
           </div>
           <div className="col-md-3">
