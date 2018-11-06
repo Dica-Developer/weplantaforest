@@ -291,12 +291,9 @@ export default class CartOverview extends Component {
   }
 
   createRow(cart) {
-    var user = cart.buyer == null
-      ? ''
-      : cart.buyer.name;
     var row = {
       id: cart.id,
-      user: user,
+      user: cart.buyer ? cart.buyer.name : '',
       price: Accounting.formatNumber(cart.totalPrice, 2, '.', ','),
       status: cart.cartState,
       timestamp: moment(cart.timeStamp).format('DD.MM.YYYY'),
@@ -307,7 +304,7 @@ export default class CartOverview extends Component {
       details: this.createDetailIcon(cart.id),
       receiptable: this.createReceiptCheckbox(cart.id, cart.receiptable, cart.receipt),
       stateChange: this.createStateChangeDropdown(cart.id),
-      sendReceipt: this.createSendReceiptButton(cart.buyer.id, cart.receipt),
+      sendReceipt: cart.buyer ? this.createSendReceiptButton(cart.buyer.id, cart.receipt) : '',
       timeStampValue: cart.timeStamp
     };
     return row;
