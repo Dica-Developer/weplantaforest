@@ -106,7 +106,7 @@ export default class UserDetails extends Component {
         <div className="imageDiv">
           <img id="logo-img" src={this.state.imgUrl} alt="profile" width="150" height="150"/>
         </div>
-        <p className="userName">{he.decode(this.props.user.userName)}</p>
+        <p className="userName">{this.props.user.userName ? he.decode(this.props.user.userName) : ""}</p>
         <div className="stats">
           <table>
             <tbody>
@@ -148,7 +148,7 @@ export default class UserDetails extends Component {
         </div>
         <div className="userDesc">
           <p>
-            <i>{he.decode(this.props.user.aboutMe)}</i>
+            <i>{this.props.user.aboutMe ? he.decode(this.props.user.aboutMe) : ""}</i>
           </p>
         </div>
         <div className="align-center bottomButton">

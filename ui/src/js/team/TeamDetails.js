@@ -234,7 +234,7 @@ export default class TeamDetails extends Component {
         <div className="imageDiv">
           <img src={teamImageUrl} alt="profile"/>
         </div>
-        <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{he.decode(this.props.team.teamName)}</p>
+        <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{this.props.team.teamName ? he.decode(this.props.team.teamName) : ""}</p>
         <div className="stats">
           <table>
             <tbody>
@@ -249,7 +249,7 @@ export default class TeamDetails extends Component {
                 <td>
                   <span className="bold">{counterpart.translate('TREES_PLANTED')}:&nbsp;</span>{Accounting.formatNumber(this.props.team.co2Data.treesCount, 0, '.', ',')}</td>
                 <td>
-                  <span className="bold">{counterpart.translate('TEAM_LEAD')}:&nbsp;</span>{he.decode(this.props.team.adminName)}</td>
+                  <span className="bold">{counterpart.translate('TEAM_LEAD')}:&nbsp;</span>{this.props.team.adminName ? he.decode(this.props.team.adminName) : ""}</td>
               </tr>
               <tr>
                 <td>
@@ -264,7 +264,7 @@ export default class TeamDetails extends Component {
         </div>
         <div className="teamDesc">
           <p>
-            <i>{he.decode(this.props.team.description)}</i>
+            <i>{this.props.team.description ? he.decode(this.props.team.description) : ""}</i>
           </p>
         </div>
         <div className="align-center teamButtons">
