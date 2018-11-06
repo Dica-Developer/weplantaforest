@@ -4,7 +4,7 @@ import {render} from 'react-dom';
 import {browserHistory} from 'react-router';
 import Accounting from 'accounting';
 
-import {htmlDecode} from '../common/language/HtmlHelper';
+import he from 'he';
 import Boostrap from 'bootstrap';
 
 class Member extends Component {
@@ -25,7 +25,7 @@ class Member extends Component {
             <img src={imageUrl}/>
           </div>
           <div className="name">
-            {htmlDecode(this.props.member.name)}
+            {he.decode(this.props.member.name)}
           </div>
         </a>
       </div>

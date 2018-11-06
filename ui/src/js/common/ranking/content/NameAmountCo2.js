@@ -12,9 +12,7 @@ import counterpart from 'counterpart';
 import {
   getTextForSelectedLanguage
 } from '../../language/LanguageHelper';
-import {
-  htmlDecode
-} from '../../language/HtmlHelper';
+import he from 'he';
 
 export default class NameAmountCo2 extends Component {
   constructor(props) {
@@ -26,7 +24,7 @@ export default class NameAmountCo2 extends Component {
     return (
       <div className="rankingSummary">
         <p >
-          <span className="name">{htmlDecode(this.props.content.name)}</span>
+          <span className="name">{he.decode(this.props.content.name)}</span>
           <br/>
           <span className="stats">{counterpart.translate('TREES_PLANTED')}:&nbsp;{this.props.content.amount}</span><br/>
           <span className="stats" dangerouslySetInnerHTML={{

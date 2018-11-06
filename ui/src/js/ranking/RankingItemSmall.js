@@ -6,7 +6,7 @@ import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
 
-import {htmlDecode} from '../common/language/HtmlHelper';
+import he from 'he';
 
 export default class RankingItem extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class RankingItem extends Component {
         <div className="smallRankingNumber">{this.props.rankNumber}</div>
         <div className="name">
           <Link to={'/user/' + this.props.content.name}>
-            <span className="name">{htmlDecode(this.props.content.name)}</span>
+            <span className="name">{he.decode(this.props.content.name)}</span>
           </Link>
         </div>
         <div className="trees">

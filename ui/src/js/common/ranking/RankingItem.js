@@ -6,7 +6,6 @@ import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 
 import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
-import {htmlDecode} from '../../common/language/HtmlHelper';
 
 require('./rankingItem.less');
 

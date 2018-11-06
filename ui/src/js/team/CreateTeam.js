@@ -13,9 +13,6 @@ import Accounting from 'accounting';
 import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
 
-import {
-  htmlDecode
-} from '../common/language/HtmlHelper';
 import IconButton from '../common/components/IconButton';
 
 

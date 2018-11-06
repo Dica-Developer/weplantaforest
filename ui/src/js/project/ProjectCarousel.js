@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
-import {htmlDecode} from '../common/language/HtmlHelper';
+import he from 'he';
 
 export default class ProjectCarousel extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ export default class ProjectCarousel extends Component {
                 <div className="imageDescription">
                   <span className="date">
                     <i>{moment(slide.date).format('DD.MM.YYYY')}</i>&nbsp;/&nbsp;</span>
-                  <span className="text">{htmlDecode(getTextForSelectedLanguage(slide.description))}</span>
+                  <span className="text">{he.decode(getTextForSelectedLanguage(slide.description))}</span>
                 </div>
               </div>
             );

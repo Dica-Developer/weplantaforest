@@ -4,7 +4,7 @@ import {render} from 'react-dom';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 import moment from 'moment';
-import {htmlDecode} from '../../language/HtmlHelper';
+import he from 'he';
 import counterpart from 'counterpart';
 
 export default class AmountProjectDate extends Component {
@@ -22,7 +22,7 @@ export default class AmountProjectDate extends Component {
     }
 
     if (this.props.showName) {
-      name = '(' + htmlDecode(this.props.content.owner.name) + ')';
+      name = '(' + he.decode(this.props.content.owner.name) + ')';
     } else {
       name = '';
     }

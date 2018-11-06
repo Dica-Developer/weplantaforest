@@ -11,9 +11,7 @@ import {
 } from 'react-router';
 import moment from 'moment';
 import Accounting from 'accounting';
-import {
-  htmlDecode
-} from '../common/language/HtmlHelper';
+import he from 'he';
 import IconButton from '../common/components/IconButton';
 import Notification from '../common/components/Notification';
 import NotificationSystem from 'react-notification-system';
@@ -236,7 +234,7 @@ export default class TeamDetails extends Component {
         <div className="imageDiv">
           <img src={teamImageUrl} alt="profile"/>
         </div>
-        <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{htmlDecode(this.props.team.teamName)}</p>
+        <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{he.decode(this.props.team.teamName)}</p>
         <div className="stats">
           <table>
             <tbody>
@@ -251,7 +249,7 @@ export default class TeamDetails extends Component {
                 <td>
                   <span className="bold">{counterpart.translate('TREES_PLANTED')}:&nbsp;</span>{Accounting.formatNumber(this.props.team.co2Data.treesCount, 0, '.', ',')}</td>
                 <td>
-                  <span className="bold">{counterpart.translate('TEAM_LEAD')}:&nbsp;</span>{htmlDecode(this.props.team.adminName)}</td>
+                  <span className="bold">{counterpart.translate('TEAM_LEAD')}:&nbsp;</span>{he.decode(this.props.team.adminName)}</td>
               </tr>
               <tr>
                 <td>
@@ -266,7 +264,7 @@ export default class TeamDetails extends Component {
         </div>
         <div className="teamDesc">
           <p>
-            <i>{htmlDecode(this.props.team.description)}</i>
+            <i>{he.decode(this.props.team.description)}</i>
           </p>
         </div>
         <div className="align-center teamButtons">
