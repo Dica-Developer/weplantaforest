@@ -53,10 +53,12 @@ public class DatabasePopulatorForArticleManager {
 
     public DatabasePopulatorForArticleManager insertUsers() {
         DEFAULT_USERS.forEach((userName) -> {
-            User user = new User();
-            user.setName(userName);
-            user.setEnabled(true);
-            _userRepository.save(user);
+            if (_userRepository.findByName(userName) == null) {
+                User user = new User();
+                user.setName(userName);
+                user.setEnabled(true);
+                _userRepository.save(user);
+            }
         });
         return this;
     }
