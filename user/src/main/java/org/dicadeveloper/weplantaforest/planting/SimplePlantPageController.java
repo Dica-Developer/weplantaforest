@@ -27,7 +27,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SimplePlantPageController {
 
     private @NonNull SimplePlantBagHelper simplePlantPageDataHelper;
@@ -50,7 +50,7 @@ public class SimplePlantPageController {
 
     @RequestMapping(value = Uris.SIMPLE_PROPOSAL_FOR_TREE_AND_PROJECT, method = RequestMethod.GET)
     @Transactional
-    public SimplePlantBag getCartProposalForAmountOfTrees(@RequestParam String projectName, @RequestParam long amountOfTrees) {
+    public SimplePlantBag getCartProposalForAmountOfTrees(@RequestParam String projectName, @RequestParam long amountOfTrees) throws IpatException {
         return simplePlantPageDataHelper.createPlantProposalForAmountOfTrees(projectName, amountOfTrees);
     }
 

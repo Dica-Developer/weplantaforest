@@ -37,8 +37,10 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         return simplePlantPageData;
     }
 
-    public SimplePlantBag createPlantProposalForAmountOfTrees(String projectName, long targetAmountOfTrees) {
+    public SimplePlantBag createPlantProposalForAmountOfTrees(String projectName, long targetAmountOfTrees) throws IpatException {
         List<ProjectArticle> projectArticles = initialize(projectName, targetAmountOfTrees);
+        IpatPreconditions.checkArgument(projectArticles.size() > 0, ErrorCodes.NO_TREES_TO_PLANT);
+
         ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge(projectArticles);
         addItemWithHighestMarge(projectArticles, articleWithHighestMarge);
         addFurtherItems(projectArticles);
@@ -66,7 +68,7 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         return projectArticles;
     }
 
-    private void addItemWithHighestMarge( List<ProjectArticle> projectArticles, ProjectArticle article) {
+    private void addItemWithHighestMarge(List<ProjectArticle> projectArticles, ProjectArticle article) {
         long amountOfTreesForHighestMarge = (long) Math.round((simplePlantPageData.getTargetAmountOfTrees() * 0.7));
 
         SimplePlantPageItem itemWithHighestMarge = createPlantItemFromArticle(article);
