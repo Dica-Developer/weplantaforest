@@ -137,7 +137,7 @@ export default class ProposalPlantPage extends Component {
             </div>
             <div className={(!this.state.areThereTreesToPlant ? '' : 'no-display')}>
               {this.state.errorMessages.map(function(message, i) {
-                return(<p className='align-center error-message'>{message}</p>);
+                return(<p className='align-center error-message' key={i}>{message}</p>);
               })}
               <div className="align-center col-md-12 offer-acreage">
                 <p>{counterpart.translate('AREA_QUESTION')}</p>

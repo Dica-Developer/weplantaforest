@@ -14,7 +14,6 @@ export default class svgButton extends Component {
   }
 
   onMouseUp(event) {
-    console.log('mouse up');
     this.props.onClick(event.nativeEvent);
   }
 
