@@ -300,7 +300,7 @@ module.exports = {
   BEST_PLANTERS: 'Best planters',
   NEWEST_PLANTINGS: 'Newest plantings',
   PROJECTS: 'Projects',
-  PLANT_HERE: 'Plant here',
+  PLANT_HERE: 'plant here',
   PLANTED: 'planted',
   OF: 'of',
   BLOG: 'Blog',
@@ -551,6 +551,14 @@ module.exports = {
   YOUR_MESSAGE_PLACEHOLDER: 'Please enter your message.',
 
   NO_ACCESS: 'No permission',
-  NO_ACCES_TEXT: 'You don\'t have permission to call the following url'
+  NO_ACCES_TEXT: 'You don\'t have permission to call the following url',
+
+  NO_TREES_TO_PLANT: 'Unfortunately we don\'t have any acreages for afforestation at the moment.',
+
+  HELP_WITH_NO_TREE_DONATION: 'You also can help us with non tree related donations, just send us a contact message:',
+  CONTACT: 'Contact',
+
+  BACK_TO_DESCRIPTION: 'back to description'
+
 
 };

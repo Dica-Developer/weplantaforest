@@ -7,10 +7,18 @@ import {
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 import axios from 'axios';
+import counterpart from 'counterpart';
+import {
+  browserHistory
+} from 'react-router';
 
 import ButtonBar from './ButtonBar';
 import BottomPart from '../../planting/BottomPart';
 import PlantItem from './PlantItem';
+import Notification from '../../common/components/Notification';
+import IconButton from '../../common/components/IconButton';
+
+require('../../planting/bottomPart.less');
 
 export default class PlantProposal extends Component {
   constructor(props) {
@@ -21,7 +29,9 @@ export default class PlantProposal extends Component {
       },
       overallPrice: 0,
       amount: 0,
-      slideIn: false
+      slideIn: false,
+      areThereTreesToPlant: true,
+      errorMessages: []
     };
   }
 
@@ -52,6 +62,16 @@ export default class PlantProposal extends Component {
         trees: result,
         slideIn: false
       });
+    }).catch(function(error) {
+      if(error.response.status == 400){
+        let messages = []
+        for(let errorInfo of error.response.data.errorInfos){
+          messages.push(counterpart.translate(errorInfo.errorCode));
+        }
+        that.setState({areThereTreesToPlant: false, errorMessages: messages});
+      }else{
+        that.refs.notification.handleError(error);
+      }
     });
   }
 
@@ -67,33 +87,57 @@ export default class PlantProposal extends Component {
     while (new Date().getTime() <= e) {}
   }
 
+  switchToOfferProjectPage() {
+    browserHistory.push('/projectOffer');
+  }
+
+  switchToContactPage() {
+    browserHistory.push('/contact');
+  }
+
   render() {
     return (
       <div>
-          <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)}/>
-          <div className="plantItemDesc align-center bold plantItemDesc ">
-            <div>
-              <p>
-                Baumtyp&nbsp;&&nbsp;Preis/Stk.
-              </p>
-            </div>
-            <div>
-              Anzahl
-            </div>
-            <div></div>
-            <div>
-              Preis gesamt
-            </div>
+        <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)}/>
+        <div className={"plantItemDesc align-center bold plantItemDesc "+ (this.state.areThereTreesToPlant ? '' : 'no-display')}>
+          <div>
+            <p>
+              {counterpart.translate('TREETYPE')}<br/>{counterpart.translate('PRICE_PER_ITEM')}
+            </p>
           </div>
-          <div ref="plantItems" className={(this.state.slideIn
-            ? 'sliding-in '
-            : 'sliding-out ') + 'align-center plantItems'}>
-            {this.state.trees.plantItems.map(function(plantItem, i) {
-              return (<PlantItem plantItem={plantItem} key={i}/>);
-            })}
+          <div>
+            {counterpart.translate('NUMBER')}
           </div>
+          <div></div>
+          <div>
+            {counterpart.translate('SUB_TOTAL')}
+          </div>
+        </div>
+        <div ref="plantItems" className={(this.state.slideIn
+          ? 'sliding-in '
+          : 'sliding-out ') + 'align-center plantItems' + (this.state.areThereTreesToPlant ? '' : 'no-display')}>
+          {this.state.trees.plantItems.map(function(plantItem, i) {
+            return (<PlantItem plantItem={plantItem} key={i}/>);
+          })}
+        </div>
+        <div className={(!this.state.areThereTreesToPlant ? '' : 'no-display')}>
+          {this.state.errorMessages.map(function(message, i) {
+            return(<p className='align-center error-message'>{message}</p>);
+          })}
+          <div className="align-center offer-acreage">
+            <p>{counterpart.translate('AREA_QUESTION')}</p>
+            <IconButton glyphIcon="glyphicon-forward" text={counterpart.translate('OFFER_AREA')} onClick={this.switchToOfferProjectPage.bind(this)}/>
+          </div>
+          <div className="align-center offer-acreage">
+            <p>{counterpart.translate('HELP_WITH_NO_TREE_DONATION')}</p>
+            <IconButton glyphIcon="glyphicon-forward" text={counterpart.translate('CONTACT')} onClick={this.switchToContactPage.bind(this)}/>
+          </div>
+        </div>
+        <div className={(this.state.areThereTreesToPlant ? '' : 'no-display')}>
           <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.trees.actualPrice}/>
         </div>
+        <Notification ref="notification"/>
+      </div>
     );
   }
 }

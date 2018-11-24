@@ -81,7 +81,7 @@ export default class Contact extends Component {
       <div className="container paddingTopBottom15 contact">
           <div className="row">
             <div className="col-md-12">
-              <h1>{counterpart.translate('FOOTER.CONTACT')}</h1>
+              <h1>{counterpart.translate('CONTACT')}</h1>
             </div>
           </div>
           <div className="row">

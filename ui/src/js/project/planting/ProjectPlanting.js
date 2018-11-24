@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 import {Link} from 'react-router';
+import counterpart from 'counterpart';
 
 import IconButton from '../../common/components/IconButton';
 import SvgButton from '../../common/components/SvgButton';
@@ -202,7 +203,7 @@ export default class ProjectPlanting extends Component {
           </table>
         </div>
         <div className="bottom align-center">
-          <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)}/>
+          <IconButton text={counterpart.translate('BACK_TO_DESCRIPTION')} glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)}/>
         </div>
       </div>
     );

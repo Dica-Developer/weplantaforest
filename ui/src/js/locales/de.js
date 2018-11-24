@@ -551,6 +551,12 @@ module.exports = {
   YOUR_MESSAGE_PLACEHOLDER: 'Bitte gib deine Nachricht ein.',
 
   NO_ACCESS: 'Keine Erlaubnis',
-  NO_ACCES_TEXT: 'Du kannst folgende Seite aufgrund von fehlenden Berechtigungen nicht aufrufen'
+  NO_ACCES_TEXT: 'Du kannst folgende Seite aufgrund von fehlenden Berechtigungen nicht aufrufen',
+
+  NO_TREES_TO_PLANT: 'Zur Zeit stehen uns leider keine Flächen zur Wiederaufforstung zur Verfügung.',
+  HELP_WITH_NO_TREE_DONATION: 'Du kannst uns auch mit baumunabhängigen Spenden helfen, sende uns dafür eine Kontakanfrage:',
+  CONTACT: 'Kontakt',
+
+  BACK_TO_DESCRIPTION: 'Zurück zur Beschreibung'
 
 };

@@ -4,6 +4,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
+import counterpart from 'counterpart';
 
 require('./buttonBar.less');
 
@@ -16,14 +17,14 @@ export default class ButtonBar extends Component {
   render() {
     return (
       <div className="buttonBar">
-        Lass dir von uns einen Vorschlag generieren oder bestimme selber, wo du wieviele Bäume pflanzen möchtest.<br/>
+        {counterpart.translate('PLANT_ONLINE_TEXT')}<br/>
         <div className={'buttonDiv ' + (this.props.chosen == 1
           ? 'chosen'
           : '')}>
           <a role="button" onClick={() => {
             this.props.setAmount(1);
           }}>
-            1 Baum
+            1 {counterpart.translate('TREE')}
           </a>
         </div>
         <div className={'buttonDiv ' + (this.props.chosen == 5
@@ -32,7 +33,7 @@ export default class ButtonBar extends Component {
           <a role="button" onClick={() => {
             this.props.setAmount(5);
           }}>
-            5 Bäume
+            5 {counterpart.translate('TREES')}
           </a>
         </div>
         <div className={'buttonDiv ' + (this.props.chosen == 10
@@ -41,7 +42,7 @@ export default class ButtonBar extends Component {
           <a role="button" onClick={() => {
             this.props.setAmount(10);
           }}>
-            10 Bäume
+            10 {counterpart.translate('TREES')}
           </a>
         </div>
         <div className={'buttonDiv ' + (this.props.chosen == 50
@@ -50,7 +51,7 @@ export default class ButtonBar extends Component {
           <a role="button" onClick={() => {
             this.props.setAmount(50);
           }}>
-            50 Bäume
+            50 {counterpart.translate('TREES')}
           </a>
         </div>
         <div className={'buttonDiv ' + (this.props.chosen == 100
@@ -59,7 +60,7 @@ export default class ButtonBar extends Component {
           <a role="button" onClick={() => {
             this.props.setAmount(100);
           }}>
-            100 Bäume
+            100 {counterpart.translate('TREES')}
           </a>
         </div>
         <div className={'buttonDiv ' + (this.props.chosen == 'custom'
@@ -68,7 +69,7 @@ export default class ButtonBar extends Component {
           <a role="button" onClick={() => {
             this.props.setAmount('custom');
           }}>
-            individuell
+          {counterpart.translate('CUSTOM')}
           </a>
         </div>
       </div>

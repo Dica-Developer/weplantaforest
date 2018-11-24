@@ -4,6 +4,7 @@ import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 import {Link} from 'react-router';
 import axios from 'axios';
+import counterpart from 'counterpart';
 
 import IconButton from '../../common/components/IconButton';
 
@@ -40,11 +41,11 @@ export default class ProjectPlantingWithoutSlider extends Component {
     return (
       <div className=" projectPlanting">
         <h1>{this.props.projectName}&nbsp;/&nbsp;
-          <i>hier pflanzen</i>
+          <i>{counterpart.translate('PLANT_HERE')}</i>
         </h1>
         {plantContent}
         <div className="bottom align-center">
-          <IconButton text="ZURÜCK ZUR BESCHREIBUNG" glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)}/>
+          <IconButton text={counterpart.translate('BACK_TO_DESCRIPTION')} glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)}/>
         </div>
       </div>
     );
