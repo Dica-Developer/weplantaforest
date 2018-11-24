@@ -30,7 +30,12 @@ export default class Project extends Component {
   componentDidMount() {
     var that = this;
     axios.get('http://localhost:8081/project/articles?projectName=' + this.props.project.projectName).then(function(response) {
-      var articles = response.data;
+      let articles = [];
+      for(let article of response.data){
+        if((article.amount - article.alreadyPlanted) > 0 ){
+          articles.push(article);
+        }
+      }
       that.setState({
         articles: articles
       });
@@ -64,7 +69,7 @@ export default class Project extends Component {
   render() {
     var that = this;
     return (
-      <div className="project">
+      <div className={"project " + ((this.state.articles.length > 0) ? '' : 'no-display')}>
         <h2>{this.props.project.projectName}</h2>
           <ArticleDesc />
         {this.state.articles.map(function(article, i) {
