@@ -23,8 +23,6 @@ public abstract class AbstractPlantBagHelper {
 
     protected @NonNull TreeTypeRepository _treeTypeRepository;
 
-    protected List<ProjectArticle> projectArticles;
-
     protected AbstractPlantBagHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         _projectRepository = projectRepository;
         _projectArticleRepository = projectArticleRepository;
@@ -40,9 +38,9 @@ public abstract class AbstractPlantBagHelper {
         return article.getAmount() - _treeRepository.countAlreadyPlantedTreesByProjectArticle(article);
     }
 
-    protected ProjectArticle findProjectArticleWithHighestMarge() {
+    protected ProjectArticle findProjectArticleWithHighestMarge(List<ProjectArticle> projectArticles) {
         ProjectArticle article = null;
-        double maxMarge = 0.0;
+        double maxMarge = -1;
 
         for (ProjectArticle projectArticle : projectArticles) {
             double articleMarge = projectArticle.getPrice().getMarge().doubleValue();
@@ -58,7 +56,7 @@ public abstract class AbstractPlantBagHelper {
     protected List<ProjectArticle> createListOfAllAvailableProjectArticles() {
         List<ProjectArticle> projectArticles = new ArrayList<>();
         // only the active Projects
-        for (Project project : _projectRepository.active(new PageRequest(0, 5))) {
+        for (Project project : _projectRepository.active(new PageRequest(0, 100))) {
             for (ProjectArticle article : project.getArticles()) {
                 // add only articles, where there are remaining trees to plant
                 if (areThereTreesRemaining(article)) {

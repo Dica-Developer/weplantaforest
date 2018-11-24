@@ -2,6 +2,7 @@ package org.dicadeveloper.weplantaforest.planting;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBagHelper;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBagValidator;
@@ -43,7 +44,7 @@ public class SimplePlantPageController {
 
     @RequestMapping(value = Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", method = RequestMethod.GET)
     @Transactional
-    public SimplePlantBag getCartProposalForAmountOfTrees(@PathVariable long amountOfTrees) {
+    public SimplePlantBag getCartProposalForAmountOfTrees(@PathVariable long amountOfTrees) throws IpatException {
         return simplePlantPageDataHelper.createPlantProposalForAmountOfTrees(amountOfTrees);
     }
 

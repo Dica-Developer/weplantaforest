@@ -44,6 +44,8 @@ public class ErrorCodes {
     
     public final static String NOT_ENOUGH_TREES = "ARTICLE_DOES_NOT_EXISTS";
     
+    public final static String NO_TREES_TO_PLANT = "NO_TREES_TO_PLANT";
+    
     // User 
     
     public final static String NO_ANONYMOUS_CREATED = "NO_ANONYMOUS_CREATED";

@@ -1,6 +1,8 @@
 package org.dicadeveloper.weplantaforest.planting.plantbag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag.ProjectData;
@@ -27,9 +29,9 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
     }
 
     public PlantBag createPlantProposalForTargetPrice(long targetedPrice) {
-        initialize(targetedPrice);
+        List<ProjectArticle> projectArticles = initialize(targetedPrice);
 
-        ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge();
+        ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge(projectArticles);
 
         double targetPriceAsDouble = PriceHelper.fromCentsToEuro(targetedPrice);
         double targetedPriceForHighestMarge = targetPriceAsDouble * 0.7;
@@ -39,24 +41,28 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
         double targetedPriceForOtherTrees = targetPriceAsDouble
                 - PriceHelper.fromCentsToEuro(plantPageData.getActualPrice());
 
-        targetedPriceForOtherTrees = addFurtherPlantItems(targetedPriceForOtherTrees);
+        targetedPriceForOtherTrees = addFurtherPlantItems(projectArticles, targetedPriceForOtherTrees);
 
         increaseAmountOfPlantItemTillPriceReached(articleWithHighestMarge, targetedPriceForOtherTrees);
         return plantPageData;
     }
 
-    private void initialize(long targetedPrice) {
+    private  List<ProjectArticle> initialize(long targetedPrice) {
+        List<ProjectArticle> projectArticles = new ArrayList<>();
         plantPageData = new PlantBag();
         addActiveProjectsToPlantPageData();
         plantPageData.setTargetPrice(targetedPrice);
         projectArticles = createListOfAllAvailableProjectArticles();
         initializePlantItems();
+        return projectArticles;
     }
 
-    private void initializePlantItems() {
+    private List<ProjectArticle> initializePlantItems() {
+        List<ProjectArticle> projectArticles = new ArrayList<>();
         for (ProjectArticle article : projectArticles) {
             initialisePlantItem(article);
         }
+        return projectArticles;
     }
 
     private void addActiveProjectsToPlantPageData() {
@@ -101,7 +107,7 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
         while (treeCouldBeAdded);
     }
 
-    private double addFurtherPlantItems(double targetedPrice) {
+    private double addFurtherPlantItems( List<ProjectArticle> projectArticles, double targetedPrice) {
         boolean treeCouldBeAdded = false;
 
         do {
