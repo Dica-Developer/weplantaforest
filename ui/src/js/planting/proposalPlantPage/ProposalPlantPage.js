@@ -109,7 +109,9 @@ export default class ProposalPlantPage extends Component {
         <div className="row proposalPlantPage">
           <div className="col-md-12">
             <h1>{this.props.route.header}</h1>
-            <ButtonBar chosen={chosen}/>
+            <div className={(this.state.areThereTreesToPlant ? '' : 'no-display')}>
+              <ButtonBar chosen={chosen}/>
+            </div>
             <div className={"align-center bold plantItemDesc " + (this.state.areThereTreesToPlant ? '' : 'no-display')}>
               <div></div>
               <div>

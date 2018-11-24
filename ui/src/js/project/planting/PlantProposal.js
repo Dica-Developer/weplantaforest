@@ -98,7 +98,9 @@ export default class PlantProposal extends Component {
   render() {
     return (
       <div>
-        <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)}/>
+        <div className={(this.state.areThereTreesToPlant ? '' : 'no-display')}>
+          <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)}/>
+        </div>
         <div className={"plantItemDesc align-center bold plantItemDesc "+ (this.state.areThereTreesToPlant ? '' : 'no-display')}>
           <div>
             <p>
