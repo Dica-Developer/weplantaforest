@@ -198,9 +198,7 @@ export default class NavBar extends Component {
           onAccept={() => {}}
           cookie="user-has-accepted-cookies"
           dismissOnScroll={false}
-          styles={{
-            banner: { backgroundColor: '#737373' }
-          }}
+          disableStyle={true}
           />
       </div>
     );

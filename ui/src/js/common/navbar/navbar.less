@@ -9,15 +9,6 @@
       display: inline-block!important;
     }
   }
-  .react-cookie-banner {
-    height: auto!important;
-    .cookie-message > a {
-      display: block!important;
-    }
-    button {
-      position: absolute!important;
-    }
-  }
 }
 @media (max-width: 730px) {
   .navbar {
@@ -54,16 +45,6 @@
     display: none!important;
     float: right!important;
   }
-  .react-cookie-banner {
-    height: auto!important;
-    .cookie-message > a {
-      display: block!important;
-    }
-    button {
-      position: relative!important;
-      left: 10px!important;
-    }
-  }
 }
 @media (max-width: 360px) {
   .navbar {
@@ -94,6 +75,31 @@
     }
   }
 
+}
+.react-cookie-banner {
+  text-align: center;
+  z-index: 10000;
+  font-weight: 500;
+  background-color: #737373;
+  color: white;
+  display: block;
+  .cookie-message > a {
+    text-decoration: underline;
+    color: white;
+    display: block;
+  }
+
+  button {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: black;
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    cursor: pointer;
+    padding: 0px 8px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
 }
 .list-group-item .label {
   margin-right: 5px;

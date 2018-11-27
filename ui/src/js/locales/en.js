@@ -19,8 +19,8 @@ module.exports = {
     CONTRIBUTION_RECEIPTS: 'Contribution receipts',
     BACKOFFICE: 'Backoffice',
     MENU: 'MENU',
-    COOKIE_MESSAGE: 'We use cookies to improve the user-friendliness of the website. By your visit you agree to this.',
-    UNDERSTOOD: 'I got it',
+    COOKIE_MESSAGE: 'We are using cookies and the service Google Analytics. With the usage of our website you agree with this.',
+    UNDERSTOOD: 'Accept',
     FURTHER_INFORMATION: 'Further Information'
   },
 

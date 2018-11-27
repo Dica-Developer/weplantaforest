@@ -19,8 +19,8 @@ module.exports = {
     CONTRIBUTION_RECEIPTS: 'Spendenquittungen',
     BACKOFFICE: 'Backoffice',
     MENU: 'MENÜ',
-    COOKIE_MESSAGE: 'Wir benutzen Cookies um die Nutzerfreundlichkeit der Webseite zu verbessen. Durch Deinen Besuch stimmst Du dem zu.',
-    UNDERSTOOD: 'Verstanden',
+    COOKIE_MESSAGE: 'Wir verwenden Cookies und den Webanalyse-Dienst Google Analytics. Mit der Nutzung unserer Website erklärst Du Dich damit einverstanden.',
+    UNDERSTOOD: 'Akzeptieren',
     FURTHER_INFORMATION: 'Weitere Informationen'
   },
 
