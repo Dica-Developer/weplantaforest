@@ -1,4 +1,5 @@
 import axios from 'axios';
+import counterpart from 'counterpart';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
@@ -60,7 +61,7 @@ export default class LargeRankingContainer extends Component {
       <div className={'largeRankingContainer ' + this.props.styleClass}>
         <div className="row">
           <div className="col-md-12">
-            <h1>Pflanzungen</h1>
+            <h1>{counterpart.translate('PLANTINGS')}</h1>
           </div>
         </div>
         <div ref="ranking" className={(this.state.fade

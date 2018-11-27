@@ -557,6 +557,7 @@ module.exports = {
   HELP_WITH_NO_TREE_DONATION: 'Du kannst uns auch mit baumunabhängigen Spenden helfen, sende uns dafür eine Kontakanfrage:',
   CONTACT: 'Kontakt',
 
-  BACK_TO_DESCRIPTION: 'Zurück zur Beschreibung'
+  BACK_TO_DESCRIPTION: 'Zurück zur Beschreibung',
 
+  PLANTINGS: 'Pflanzungen'
 };

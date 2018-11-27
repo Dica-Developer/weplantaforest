@@ -558,7 +558,7 @@ module.exports = {
   HELP_WITH_NO_TREE_DONATION: 'You also can help us with non tree related donations, just send us a contact message:',
   CONTACT: 'Contact',
 
-  BACK_TO_DESCRIPTION: 'back to description'
+  BACK_TO_DESCRIPTION: 'back to description',
 
-
+  PLANTINGS: 'Plantings'
 };
