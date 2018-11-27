@@ -152,7 +152,7 @@ export default class ProfilePage extends Component {
   }
 
   updateLanguage(value) {
-    this.refs['navbar'].updateLanguage(value);
+    this.props.route.updateLanguage(value);
   }
 
   editTeam(value) {

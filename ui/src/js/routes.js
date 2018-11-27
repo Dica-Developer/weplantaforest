@@ -100,6 +100,10 @@ export default class Routes extends Component {
     this.refs['navbar'].showRight();
   }
 
+  updateLanguage(value) {
+    this.refs['navbar'].updateLanguage(value);
+  }
+
   redeemGift() {
     if(localStorage.getItem('username') && localStorage.getItem('username') != ''){
       browserHistory.push('/user/' + localStorage.getItem('username'));
@@ -138,7 +142,7 @@ export default class Routes extends Component {
           <Route path="/plantGift2" component={CustomPlantPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} header={counterpart.translate('CREATE_GIFT')} isGift={true} isAbo={false}/>
           <Route path="/projects" component={ProjectsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/projects/:projectName" component={ProjectDetailsPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)}/>
-          <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)} logout={this.logout.bind(this)} />
+          <Route path="/user/:userName" component={ProfilePage} reRender={this.reRender.bind(this)} logout={this.logout.bind(this)} updateLanguage={this.updateLanguage.bind(this)}/>
           <Route path="/tools/:username" component={ToolsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/receipts/:username" component={ReceiptsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)}/>

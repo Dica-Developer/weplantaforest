@@ -18,7 +18,7 @@ export default class EditDropdownItem extends Component {
 
   componentDidMount() {
     for (var i = 0; i < this.refs.select.options.length; i++) {
-      if (this.refs.select.options[i].text === this.props.content) {
+      if (this.refs.select.options[i].value === this.props.content) {
         this.state.selectedIndex = i;
         this.state.content = this.refs.select.options[i].value;
         this.state.contentTemp = this.refs.select.options[i].value;
