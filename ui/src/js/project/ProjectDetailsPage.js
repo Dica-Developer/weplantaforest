@@ -18,6 +18,7 @@ import RankingContentNameAmountCo2 from '../common/ranking/content/NameAmountCo2
 import RankingContentNameAmountDate from '../common/ranking/content/NameAmountDate';
 import PolygonMap from '../common/components/PolygonMap';
 import SvgButton from '../common/components/SvgButton';
+import {createProfileImageUrl} from '../common/ImageHelper';
 
 require('./projectPage.less');
 
@@ -260,12 +261,7 @@ export default class ProjectDetailsPage extends Component {
           <div className="col-md-4">
             <SmallRankingContainer title={counterpart.translate('BEST_PLANTERS')} withPaging={true} rankingType="bestUser" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestUser.first} isLastPage={this.state.bestUser.last}>
               {this.state.bestUser.content.map(function(content, i) {
-                let imageUrl;
-                if(content.imageName && content.imageName != 'default'){
-                  imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
-                }else{
-                  imageUrl = '/assets/images/default_user.jpg';
-                }
+                let imageUrl = createProfileImageUrl(content.imageName, 60, 60);
                 let linkTo = '/user/' + content.name;
                 return (
                   <RankingItem content={content} key={i} rankNumber={bestUserPage * 5 + (i + 1)} imageUrl={imageUrl} showRankNumber="true" linkTo={linkTo}>
