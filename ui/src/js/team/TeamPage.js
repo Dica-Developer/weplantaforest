@@ -190,7 +190,12 @@ export default class TeamPage extends Component {
           } else {
             imageUrl = 'http://localhost:8081/treeType/image/' + content.treeType.imageFile + '/60/60';
           }
-          let linkTo = '/projects/' + content.projectArticle.project.name;
+          var linkTo;
+          if(content.projectArticle && content.projectArticle.project){
+            linkTo = '/projects/' + content.projectArticle.project.name;
+          }else{
+            linkTo = '/selfPlants/' + content.id;
+          }
           return (<RankingItem imageUrl={imageUrl} rankNumber={page * 15 + (i + 1)} key={i} showRankNumber="true" showName="true"  linkTo={linkTo}>
           <RankingItemContent content={content}/>
           </RankingItem>

@@ -7,6 +7,8 @@ import Accounting from 'accounting';
 import he from 'he';
 import Boostrap from 'bootstrap';
 
+import {createProfileImageUrl} from '../common/ImageHelper';
+
 class Member extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class Member extends Component {
   }
 
   render() {
-    let imageUrl = 'http://localhost:8081/user/image/' + this.props.member.imageName + '/80/80';
+    let imageUrl = createProfileImageUrl(this.props.member.imageName, 80, 80);
     return (
       <div className="member align-center">
         <a role="button" onClick={this.linkToProfile.bind(this)}>
