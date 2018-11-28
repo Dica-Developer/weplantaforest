@@ -200,6 +200,7 @@ export default class ProfilePage extends Component {
   updateImageName(imageName) {
     this.state.user.imageFileName = imageName;
     this.forceUpdate();
+    this.props.route.loadUserDetails();
   }
 
   logout() {

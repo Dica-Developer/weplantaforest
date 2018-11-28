@@ -12,6 +12,7 @@ import counterpart from 'counterpart';
 
 import Notification from '../components/Notification';
 import IconButton from '../components/IconButton';
+import {createProfileImageUrl} from '../ImageHelper';
 
 export default class LoginMenuItem extends Component {
   constructor(props) {
@@ -163,11 +164,11 @@ export default class LoginMenuItem extends Component {
   render() {
     var content;
     if (localStorage.getItem('username') && localStorage.getItem('username') != '') {
-      let imageUrl = 'http://localhost:8081/user/image/' + this.state.userDetails.imageFileName + '/50/50';
+      let imageUrl = createProfileImageUrl(this.state.userDetails.imageFileName, 50, 50);
 
       content = <div className="login-user-details">
         <div>
-          <img src={imageUrl} alt="profile"/>
+          <img src={imageUrl} alt="profile" width="50" height="50"/>
         </div>
         <div>
           <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
