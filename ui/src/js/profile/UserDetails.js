@@ -79,7 +79,7 @@ export default class UserDetails extends Component {
                   </div>;
     }
 
-    let imgUrl = this.createProfileImageUrl(this.props.user.imageFileName, 150, 150);
+    let imgUrl = createProfileImageUrl(this.props.user.imageFileName, 150, 150);
     var style = {
       Containers: {
         DefaultStyle: {
