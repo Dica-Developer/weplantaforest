@@ -18,7 +18,7 @@ import RankingContentNameAmountCo2 from '../common/ranking/content/NameAmountCo2
 import RankingContentNameAmountDate from '../common/ranking/content/NameAmountDate';
 import PolygonMap from '../common/components/PolygonMap';
 import SvgButton from '../common/components/SvgButton';
-import {createProfileImageUrl} from '../common/ImageHelper';
+import { createProfileImageUrl, createTeamImageUrl } from '../common/ImageHelper';
 
 require('./projectPage.less');
 
@@ -248,7 +248,7 @@ export default class ProjectDetailsPage extends Component {
           <div className="col-md-4">
             <SmallRankingContainer title={counterpart.translate('BEST_TEAMS')} withPaging={true} rankingType="bestTeam" page={bestTeamPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestTeam.first} isLastPage={this.state.bestTeam.last}>
               {this.state.bestTeam.content.map(function(content, i) {
-                let imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
+                let imageUrl = createTeamImageUrl(content.imageName, 60, 60);
                 let linkTo = '/team/' + content.name;
                 return (
                   <RankingItem content={content} key={i} rankNumber={bestTeamPage * 5 + (i + 1)} imageUrl={imageUrl} showRankNumber="true" linkTo={linkTo}>

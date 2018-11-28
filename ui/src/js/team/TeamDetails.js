@@ -17,6 +17,7 @@ import Notification from '../common/components/Notification';
 import NotificationSystem from 'react-notification-system';
 import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
+import {createTeamImageUrl} from '../common/ImageHelper';
 
 import Boostrap from 'bootstrap';
 
@@ -202,8 +203,8 @@ export default class TeamDetails extends Component {
 
   render() {
     let teamImageUrl;
-    if (this.props.team.teamName) {
-      teamImageUrl = 'http://localhost:8081/team/image/' + this.props.team.teamId + '/150/150?random=' + Math.random();
+    if (this.props.team) {
+      teamImageUrl = createTeamImageUrl(this.props.team.teamId, 150, 150);
     }
 
     let buttons = '';
@@ -232,7 +233,7 @@ export default class TeamDetails extends Component {
       <div >
         <h1>Team</h1>
         <div className="imageDiv">
-          <img src={teamImageUrl} alt="profile"/>
+          <img src={teamImageUrl} alt="profile" width="150" height="150"/>
         </div>
         <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{this.props.team.teamName ? he.decode(this.props.team.teamName) : ""}</p>
         <div className="stats">

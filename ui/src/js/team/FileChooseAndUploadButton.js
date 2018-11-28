@@ -9,13 +9,13 @@ import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
 
 import IconButton from '../common/components/IconButton';
+import {createTeamImageUrl} from '../common/ImageHelper';
 
 export default class FileChooseAndUploadButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
       fileName: '',
-      imageUrl: 'http://localhost:8081/team/image/' + this.props.imageFileName + '/80/80',
       fileWarning: ''
     }
     this.styles = {
@@ -144,7 +144,7 @@ export default class FileChooseAndUploadButton extends Component {
       });
     };
 
-    img.src = 'http://localhost:8081/team/image/' + this.props.imageFileName + '/80/80?random=' + Math.random();
+    img.src = createTeamImageUrl(this.props.imageFileName, 80, 80);
     this.setState({
       loadingImage: img
     });
@@ -155,7 +155,7 @@ export default class FileChooseAndUploadButton extends Component {
     let image;
 
     if (this.props.imageFileName) {
-      image = <img id={this.props.imageId} src={this.state.liveImage} alt="profile"/>;
+      image = <img id={this.props.imageId} src={this.state.liveImage} alt="profile" width="80" height="80"/>;
     } else {
       image = '';
     }
