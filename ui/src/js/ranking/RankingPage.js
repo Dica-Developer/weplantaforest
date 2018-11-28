@@ -14,6 +14,8 @@ import RankingItemLarge from './RankingItemLarge';
 import RankingItemSmall from './RankingItemSmall';
 import Notification from '../common/components/Notification';
 import LoadingSpinner from '../common/components/LoadingSpinner';
+import {createProfileImageUrl, createTeamImageUrl} from '../common/ImageHelper';
+
 import $ from 'jquery';
 
 require('./rankingPage.less');
@@ -169,13 +171,9 @@ export default class RankingPage extends Component {
                 }
                 var imageUrl;
                 if (orgTypeDesc != 'Teams') {
-                  if(content.imageName && content.imageName != 'default'){
-                    imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
-                  }else{
-                    imageUrl = '/assets/images/default_user.jpg';
-                  }
+                  imageUrl = createProfileImageUrl(content.imageName, 60, 60);
                 } else {
-                  imageUrl = 'http://localhost:8081/team/image/' + content.imageName + '/60/60';
+                  imageUrl = createTeamImageUrl(content.imageName, 60, 60);
                 }
                 if (i < 10) {
                   return (<RankingItemLarge imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);

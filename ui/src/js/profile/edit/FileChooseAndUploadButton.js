@@ -11,7 +11,6 @@ import counterpart from 'counterpart';
 import IconButton from '../../common/components/IconButton';
 import {createProfileImageUrl} from '../../common/ImageHelper';
 
-
 export default class FileChooseAndUploadButton extends Component {
   constructor(props) {
     super(props);
