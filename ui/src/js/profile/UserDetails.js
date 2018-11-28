@@ -16,6 +16,7 @@ import counterpart from 'counterpart';
 
 import IconButton from '../common/components/IconButton';
 import {getConfig} from '../common/RestHelper';
+import {createProfileImageUrl} from '../common/ImageHelper';
 import Notification from '../common/components/Notification';
 
 
@@ -26,15 +27,7 @@ export default class UserDetails extends Component {
     super(props);
     this.state = {
       restConfig: getConfig(),
-      imgUrl: '/assets/images/default_user.jpg'
-    }
-  }
-
-  constructImageUrl() {
-    if (this.props.user.imageFileName && this.props.user.imageFileName != 'default'){
-      return 'http://localhost:8081/user/image/' + this.props.user.imageFileName + '/150/150?random=' + Math.random();
-    } else {
-      return '/assets/images/default_user.jpg';
+      imgUrl: ''
     }
   }
 
@@ -86,7 +79,7 @@ export default class UserDetails extends Component {
                   </div>;
     }
 
-    let imgUrl = this.constructImageUrl();
+    let imgUrl = this.createProfileImageUrl(this.props.user.imageFileName, 150, 150);
     var style = {
       Containers: {
         DefaultStyle: {
