@@ -10,7 +10,7 @@ import RankingItem from '../common/ranking/RankingItem';
 import RankingItemContent from '../common/ranking/content/NameAmountCo2';
 import RankingItemContentForNewest from '../common/ranking/content/NameAmountDate';
 import Notification from '../common/components/Notification';
-
+import {createProfileImageUrl} from '../common/ImageHelper';
 
 require('./teaser.less');
 
@@ -91,7 +91,7 @@ export default class MainPage extends Component {
             <div className="col-md-4">
               <RankingContainer title={counterpart.translate('LAST_PLANTED_TREES')}>
                 {this.state.lastPlantedTrees.content.map(function(content, i) {
-                  let imageUrl = 'http://localhost:8081/user/image/' + content.treeTypeImageName + '/60/60';
+                  let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeTypeImageName + '/60/60';
                   let linkTo = '/user/' + content.name;
                   return (
                     <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
@@ -112,7 +112,7 @@ export default class MainPage extends Component {
             <div className="col-md-4">
             <RankingContainer title={counterpart.translate('BEST_COMPANIES')}>
               {this.state.bestCompanyRanking.content.map(function(content, i) {
-                let imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
+                let imageUrl = createProfileImageUrl(content.imageName, 60, 60);
                 let linkTo = '/user/' + content.name;
                 return (
                   <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
@@ -133,12 +133,7 @@ export default class MainPage extends Component {
             <div className="col-md-4">
             <RankingContainer title={counterpart.translate('BEST_PRIVATES')}>
               {this.state.bestUserRanking.content.map(function(content, i) {
-                let imageUrl;
-                if(content.imageName && content.imageName != 'default'){
-                  imageUrl = 'http://localhost:8081/user/image/' + content.imageName + '/60/60';
-                }else{
-                  imageUrl = '/assets/images/default_user.jpg';
-                }
+                let imageUrl = createProfileImageUrl(content.imageName, 60, 60);
                 let linkTo = '/user/' + content.name;
                 return (
                   <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
