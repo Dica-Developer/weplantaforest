@@ -16,7 +16,6 @@ export default class FileChooseAndUploadButton extends Component {
     super(props);
     this.state = {
       fileName: '',
-      imageUrl: 'http://localhost:8081/user/image/' + this.props.imageFileName + '/80/80',
       fileWarning: ''
     }
     this.styles = {
