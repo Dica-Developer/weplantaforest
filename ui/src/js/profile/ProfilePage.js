@@ -194,7 +194,10 @@ export default class ProfilePage extends Component {
   }
 
   teamLeft(){
-    this.state.user.teamName = ''; this.forceUpdate();
+    if(this.state.isMyProfile) {
+      this.state.user.teamName = '';
+    }
+    this.forceUpdate();
   }
 
   updateImageName(imageName) {
