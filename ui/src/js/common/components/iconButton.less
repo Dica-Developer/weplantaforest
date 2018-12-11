@@ -2,17 +2,20 @@
 
 .iconButton {
   display: inline-block;
+
   a,
   a:visited {
     color: #000;
     text-align: center;
     text-decoration: none;
     border-radius: 3px;
+
     span:nth-child(1) {
       color: @base-background-color;
       margin-right: 5px;
       top: 3px;
     }
+
     span:nth-child(2) {
       position: relative;
       top: 1px;
@@ -23,7 +26,12 @@
     padding: 6px;
     font-size: 14px;
   }
+
   a:hover {
     background-color: #70523e;
+
+    span {
+      color: @accent-color;
+    }
   }
 }

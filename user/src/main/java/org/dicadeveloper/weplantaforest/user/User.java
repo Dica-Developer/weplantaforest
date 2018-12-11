@@ -120,7 +120,7 @@ public class User implements UserDetails {
     public void removeRole(final Role role) {
         roles.remove(role);
     }
-
+    
     @Transient
     @JsonIgnore
     public boolean isAdmin() {
