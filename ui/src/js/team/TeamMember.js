@@ -24,7 +24,7 @@ class Member extends Component {
       <div className="member align-center">
         <a role="button" onClick={this.linkToProfile.bind(this)}>
           <div className="image">
-            <img src={imageUrl}/>
+            <img src={imageUrl} width="80" height="80"/>
           </div>
           <div className="name">
             {he.decode(this.props.member.name)}
