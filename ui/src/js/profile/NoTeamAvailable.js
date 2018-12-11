@@ -33,9 +33,13 @@ export default class NoTeamAvailable extends Component {
     }else{
       createTeamButton = '';
     }
+    let noTeamMessage = counterpart.translate('NO_TEAM_VISITOR');
+    if (this.props.isMyProfile) {
+      noTeamMessage = counterpart.translate('NO_TEAM_ME');
+    }
     return (
       <div>
-        <h1>{counterpart.translate('NO_TEAM')}</h1>
+        <h1>{noTeamMessage}</h1>
         {createTeamButton}
       </div>
     );

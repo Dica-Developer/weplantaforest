@@ -93,7 +93,8 @@ module.exports = {
 
   ACTIVATION_DONE_TEXT: 'We wish you a lot of fun planting trees!',
 
-  NO_TEAM: 'You haven\'t joined a team yet',
+  NO_TEAM_ME: 'You haven\'t joined a team yet',
+  NO_TEAM_VISITORS: 'The user has not joined a team yet',
   NO_PLANTINGS: 'You haven\'t planted any trees yet',
 
   ERROR: 'An Error occured!',
