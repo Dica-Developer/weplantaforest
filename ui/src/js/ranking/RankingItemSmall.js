@@ -19,7 +19,7 @@ export default class RankingItem extends Component {
       <div className="smallRankingItem">
         <div className="smallRankingNumber">{this.props.rankNumber}</div>
         <div className="name">
-          <Link to={'/user/' + this.props.content.name}>
+          <Link to={this.props.profileUrl}>
             <span className="name">{he.decode(this.props.content.name)}</span>
           </Link>
         </div>

@@ -21,7 +21,7 @@ export default class RankingItem extends Component {
           <img className="ranking-img" src={this.props.imageUrl} alt="logo"/>
         </div>
         <div className="rankingSummary">
-          <Link to={'/user/' + this.props.content.name}>
+          <Link to={this.props.profileUrl}>
             <span className="name">{he.decode(this.props.content.name)}</span>
           </Link>
           <br/>

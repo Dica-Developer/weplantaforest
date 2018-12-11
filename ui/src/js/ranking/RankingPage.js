@@ -169,16 +169,19 @@ export default class RankingPage extends Component {
                   percentTree = 100 * content.amount / maxTree;
                   percentCo2 = 100 * content.co2Saved / maxCo2;
                 }
-                var imageUrl;
+                let imageUrl
+                let profileUrl;
                 if (orgTypeDesc != 'Teams') {
                   imageUrl = createProfileImageUrl(content.imageName, 60, 60);
+                  profileUrl = '/user/' + content.name;
                 } else {
                   imageUrl = createTeamImageUrl(content.imageName, 60, 60);
+                  profileUrl = '/team/' + content.name;
                 }
                 if (i < 10) {
-                  return (<RankingItemLarge imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);
+                  return (<RankingItemLarge profileUrl={profileUrl} imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);
                 } else {
-                  return (<RankingItemSmall content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
+                  return (<RankingItemSmall profileUrl={profileUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
                 }
               })}
             </div>
