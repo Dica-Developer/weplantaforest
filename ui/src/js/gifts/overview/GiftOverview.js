@@ -72,7 +72,7 @@ export default class GiftOverview extends Component {
             </div>
           </div>
           <div className="col-md-12">
-            <h2>{counterpart.translate('CREATED_GIFTS')}:</h2>
+            <h2>{counterpart.translate('CREATED_GIFTS')}</h2>
             <div className="giftItem giftHeader">
               <div>
                 {counterpart.translate('CODE')}
@@ -91,7 +91,7 @@ export default class GiftOverview extends Component {
               {this.state.consignorGifts.map(function(gift, i) {
                 return (<ConsignorGiftItem gift={gift}  key={i}/>);
               })}
-            <h2>{counterpart.translate('REDEEMED_GIFTS')}:</h2>
+            <h2>{counterpart.translate('REDEEMED_GIFTS')}</h2>
             <div className="giftItem giftHeader">
               <div>
                 {counterpart.translate('CODE')}:

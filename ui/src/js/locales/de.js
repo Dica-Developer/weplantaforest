@@ -99,7 +99,8 @@ module.exports = {
 
   ERROR: 'Ein Fehler ist aufgetreten!',
   WRONG_USERNAME_PASSWORD: 'Benutzername und Passwort stimmen nicht überein.',
-  LOCKED_USER: 'Der Nutzer ist nicht aktiviert. Du solltest nach der Registrierung eine Mail mit einem Aktivierungslink in deinem Postfach erhalten haben. Eine weitere Möglichkeit ist, dass der Nutzer vom Administrator gebannt wurde.',
+  LOCKED_USER: 'Der Account ist noch nicht aktiviert. Bitte klicke auf den Aktivierungslink, den du nach der Registrierung erhalten hast. Prüfe gegebenfalls auch deinen Spam-Ordner. Eine weitere Möglichkeit ist, dass der Nutzer vom Administrator gebannt wurde.',
+
   USER_NOT_FOUND: 'Nutzer nicht gefunden.',
   INVALID_ACTIVATION_KEY: 'Der Aktivierungs-Link ist ungültig.',
   USER_ALREADY_EXISTS: 'Der Nutzername ist bereits vergeben.',
@@ -163,7 +164,7 @@ module.exports = {
   OFFER_AREA: 'Fläche anbieten',
   GIFT_OVERVIEW: 'Gutschein-Übersicht',
   CREATED_GIFTS: 'Erstellt',
-  REDEEMED_GIFTS: 'Eingelöst:',
+  REDEEMED_GIFTS: 'Eingelöst',
   CREATED_BY: 'Erstellt von',
   CREATE_GIFT: 'Gutschein erstellen',
   GIFT_REDEEMED: 'Der Gutschein wurde eingelöst!',
