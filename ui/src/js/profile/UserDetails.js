@@ -126,7 +126,7 @@ export default class UserDetails extends Component {
               </tr>
               <tr>
                 <td>
-                  <span className="bold">{counterpart.translate('WEBSITE')}:&nbsp;</span>{this.props.user.homepage}</td>
+                  <span className="bold">{counterpart.translate('WEBSITE')}:&nbsp;</span><a href={(this.props.user.homepage && this.props.user.homepage.startsWith('http') ? '' : 'http://') + this.props.user.homepage} target="blank" rel="nofollow">{this.props.user.homepage}</a></td>
                 <td>
                   <span className="bold">{counterpart.translate('ORGANISATION')}:&nbsp;</span>{this.props.user.organisation}</td>
               </tr>
