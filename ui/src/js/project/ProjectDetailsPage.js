@@ -249,7 +249,7 @@ export default class ProjectDetailsPage extends Component {
             <SmallRankingContainer title={counterpart.translate('BEST_TEAMS')} withPaging={true} rankingType="bestTeam" page={bestTeamPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestTeam.first} isLastPage={this.state.bestTeam.last}>
               {this.state.bestTeam.content.map(function(content, i) {
                 let imageUrl = createTeamImageUrl(content.imageName, 60, 60);
-                let linkTo = '/team/' + content.name;
+                let linkTo = '/team/' + encodeURIComponent(content.name);
                 return (
                   <RankingItem content={content} key={i} rankNumber={bestTeamPage * 5 + (i + 1)} imageUrl={imageUrl} showRankNumber="true" linkTo={linkTo}>
                     <RankingContentNameAmountCo2 content={content}/>

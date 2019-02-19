@@ -36,16 +36,15 @@ export default class TeamDetails extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({isLoggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '')})
+    this.setState({isLoggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '')});
     if(nextProps.team.teamId && this.state.isLoggedIn){
       this.checkIfTeamAdmin(nextProps.team.teamId);
       this.checkIfTeamMember(nextProps.team.teamId);
     }
   }
 
-
   switchToTeamPage() {
-    browserHistory.push('/team/' + this.props.team.teamName);
+    browserHistory.push('/team/' + encodeURIComponent(this.props.team.teamName));
   }
 
   checkIfTeamAdmin(teamId) {
@@ -235,7 +234,7 @@ export default class TeamDetails extends Component {
         <div className="imageDiv">
           <img src={teamImageUrl} alt="profile" width="150" height="150"/>
         </div>
-        <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{this.props.team.teamName ? he.decode(this.props.team.teamName) : ""}</p>
+        <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>{this.props.team.teamName ? he.decode(this.props.team.teamName) : ''}</p>
         <div className="stats">
           <table>
             <tbody>
@@ -250,7 +249,7 @@ export default class TeamDetails extends Component {
                 <td>
                   <span className="bold">{counterpart.translate('TREES_PLANTED')}:&nbsp;</span>{Accounting.formatNumber(this.props.team.co2Data.treesCount, 0, '.', ',')}</td>
                 <td>
-                  <span className="bold">{counterpart.translate('TEAM_LEAD')}:&nbsp;</span>{this.props.team.adminName ? he.decode(this.props.team.adminName) : ""}</td>
+                  <span className="bold">{counterpart.translate('TEAM_LEAD')}:&nbsp;</span>{this.props.team.adminName ? he.decode(this.props.team.adminName) :''}</td>
               </tr>
               <tr>
                 <td>

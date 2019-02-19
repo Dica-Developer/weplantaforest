@@ -28,7 +28,7 @@ export default class UserDetails extends Component {
     this.state = {
       restConfig: getConfig(),
       imgUrl: ''
-    }
+    };
   }
 
   showEditUser() {
@@ -99,7 +99,7 @@ export default class UserDetails extends Component {
         <div className="imageDiv">
           <img id="logo-img" src={imgUrl} alt="profile" width="150" height="150"/>
         </div>
-        <p className="userName">{this.props.user.userName ? he.decode(this.props.user.userName) : ""}</p>
+        <p className="userName">{this.props.user.userName ? he.decode(this.props.user.userName) : ''}</p>
         <div className="stats">
           <table>
             <tbody>
@@ -119,7 +119,7 @@ export default class UserDetails extends Component {
               <tr>
                 <td>
                   <span className="bold" dangerouslySetInnerHTML={{
-                    __html: counterpart.translate('CO2_BOUND_WITHOUT_TONS') + ":"
+                    __html: counterpart.translate('CO2_BOUND_WITHOUT_TONS')+ ':'
                   }}></span>&nbsp;{Accounting.formatNumber(this.props.user.co2Data.co2, 3, '.', ',')}&nbsp;t</td>
                 <td>
                   <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>{this.props.user.organizationType}</td>
@@ -141,7 +141,7 @@ export default class UserDetails extends Component {
         </div>
         <div className="userDesc">
           <p>
-            <i>{this.props.user.aboutMe ? he.decode(this.props.user.aboutMe) : ""}</i>
+            <i>{this.props.user.aboutMe ? he.decode(this.props.user.aboutMe) : ''}</i>
           </p>
         </div>
         <div className="align-center bottomButton">
