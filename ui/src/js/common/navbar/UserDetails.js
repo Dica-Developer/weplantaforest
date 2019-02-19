@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {
+  browserHistory
+} from 'react-router';
 
 require('./userDetails.less');
 
@@ -17,6 +20,7 @@ export default class NavBar extends Component {
     localStorage.setItem('userDetails', '');
     localStorage.setItem('isAdmin', false);
     this.setState({name: '', password: '', loggedIn: false});
+    browserHistory.push('/');
     this.props.updateNavbar();
   }
 
