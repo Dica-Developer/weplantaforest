@@ -48,7 +48,6 @@ public class MailHelper {
     Session session;
 
     public void sendAMessage(String subject, String text) {
-
         setParameter();
         createAndSetProperties();
         createSessionAndAuthenticate();

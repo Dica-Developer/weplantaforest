@@ -45,11 +45,11 @@ export default class SendRequest extends Component {
   resetPassword() {
     if (this.state.passwordOne != this.state.passwordTwo) {
       this.refs.notification.addNotification('Passwörter stimmen nicht überein!', 'Das angegebene Passwort stimmt nicht mit der Bestätigung überein.', 'error');
-    }else if(this.state.passwordOne.length < 6 ){
+    } else if (this.state.passwordOne.length < 6 ){
       this.refs.notification.addNotification('Passwort zu kurz!', 'Das angegebene Passwort ist zu kurz, verwende bitte mind. 6 Zeichen', 'error');
-    }else {
+    } else {
       var that = this;
-      axios.post('http://localhost:8081/password_reset' + this.props.search + '&language=' + localStorage.getItem('language') + '&password=' + this.state.passwordOne).then(function(response) {
+      axios.post('http://localhost:8081/password_reset' + this.props.search + '&language=' + localStorage.getItem('language') + '&password=' + encodeURIComponent(this.state.passwordOne)).then(function(response) {
         that.props.setResetted();
       }).catch(function(response) {
         // that.refs.notification.addNotification('Fehler beim Zurücksetzen des Passworts!', response.data, 'error');
