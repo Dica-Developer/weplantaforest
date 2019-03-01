@@ -140,6 +140,9 @@ export default class Overview extends Component {
           {counterpart.translate('CHOOSE_PAYMENT')}:
         </div>
         <div className="paymentOption col-md-6">
+          <div className='panel panel-warning '>
+              <div className="panel-heading">{counterpart.translate('PLANTING_BETWEEN_1_AND_1000')}</div>
+          </div>
           <a role="button" onClick={() => {
             this.setPaymentOption('sepa');
           }}>
@@ -147,6 +150,9 @@ export default class Overview extends Component {
           </a>
         </div>
         <div className="paymentOption col-md-6">
+          <div className='panel panel-warning '>
+              <div className="panel-heading">{counterpart.translate('PLANTING_FROM_15')}</div>
+          </div>
           <div id="paypal-button-container"></div>
         </div>
         <Notification ref="notification"/>

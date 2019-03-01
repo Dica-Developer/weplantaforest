@@ -561,5 +561,7 @@ module.exports = {
 
   BACK_TO_DESCRIPTION: 'back to description',
 
-  PLANTINGS: 'Plantings'
+  PLANTINGS: 'Plantings',
+  PLANTING_BETWEEN_1_AND_1000: 'Please donate from 1 € to 1000 €',
+  PLANTING_FROM_15: 'Please donate from 15 €'
 };
