@@ -19,6 +19,8 @@ import {createProfileImageUrl} from '../common/ImageHelper';
 import {getConfig} from '../common/RestHelper';
 import Notification from '../common/components/Notification';
 
+import he from 'he';
+
 export default class UserDetails extends Component {
   constructor(props) {
     super(props);
