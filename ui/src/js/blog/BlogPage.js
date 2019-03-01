@@ -29,8 +29,10 @@ class Paragraph extends Component {
     if (this.props.content.imageFileName != null && this.props.content.imageFileName != '') {
       imageUrl = 'http://localhost:8082/article/image/' + this.props.articleId + '/' + this.props.content.imageFileName + '/1140/755';
       imagePart = <div className="article-img">
-        <img src={imageUrl}/>
-      </div>;
+                    <div className="article-img-div">
+                      <img src={imageUrl}/>
+                    </div>;
+                  </div>
     } else {
       imagePart = '';
     }
