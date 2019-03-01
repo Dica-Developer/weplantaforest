@@ -8,7 +8,6 @@ import java.io.File;
 import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
-import org.dicadeveloper.weplantaforest.abo.AboRepository;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
@@ -71,9 +70,6 @@ public class DatabasePopulatorTest {
 
     @Autowired
     private GiftRepository _giftRepository;
-
-    @Autowired
-    private AboRepository _aboRepository;
 
     @Test
     public void testInsertUsers() throws Exception {
@@ -178,14 +174,6 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertGifts();
 
         assertThat(_giftRepository.count()).isEqualTo(10);
-    }
-
-    @Test
-    public void testInsertAbo() {
-        _databasePopulator.insertUsers();
-        _databasePopulator.insertAbo();
-
-        assertThat(_aboRepository.count()).isEqualTo(1);
     }
 
 }

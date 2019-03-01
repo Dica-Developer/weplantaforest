@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.abo.Abo;
-import org.dicadeveloper.weplantaforest.abo.Abo.Period;
-import org.dicadeveloper.weplantaforest.abo.AboRepository;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartItem;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
@@ -84,9 +81,6 @@ public class DbInjecter {
 
     @Autowired
     private CodeGenerator _codeGenerator;
-
-    @Autowired
-    private AboRepository _aboRepository;
 
     @Autowired
     private PasswordEncrypter _passwordEncrypter;
@@ -351,17 +345,6 @@ public class DbInjecter {
         _giftRepository.save(gift);
 
         return gift.getCode();
-    }
-
-    public void injectAbo(String owner, boolean isActive, int amount, Period period, long timeStamp) {
-        Abo abo = new Abo();
-        abo.setActive(isActive);
-        abo.setAmount(amount);
-        abo.setPeriod(period);
-        abo.setTimeStamp(timeStamp);
-        abo.setUser(_userRepository.findByName(owner));
-
-        _aboRepository.save(abo);
     }
 
     public void injectReceipt(String owner, long createdOn, long sentOn, String invoiceNumber) {

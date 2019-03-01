@@ -115,7 +115,6 @@ public class DatabasePopulator {
         _certificateRepository = certificateRepository;
         _giftRepository = giftRepository;
         _codeGenerator = codeGenerator;
-        _aboRepository = aboRepository;
         _passwordEncrypter = passwordEncrypter;
         _receiptRepository = receiptRepository;
         _mainSliderImageRepository = mainSliderImageRepository;
