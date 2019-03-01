@@ -53,8 +53,7 @@ public class ScheduledTasks {
     @Autowired
     private @NonNull Environment _env;
 
-    //@Scheduled(fixedRate = FOUR_HOURS_IN_MILLISECONDS)
-    // disabled because there seems a bug in the cart state change and we don't know if we delete valid carts
+    @Scheduled(fixedRate = FOUR_HOURS_IN_MILLISECONDS)
     private void cleanUpInitialCarts() {
         List<Cart> carts = _cartRepository.findInitialCartsOlderThanFourHours(System.currentTimeMillis());
         for (Cart cart : carts) {
