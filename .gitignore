@@ -27,8 +27,9 @@ application-private.properties
 *.swp
 ui/dist/js/
 /ui/dist/index.html
-application-staging-secret.properties
 .java.tags
 .jsx.tags
 package-lock.json
 *.swo
+*-secret.properties
+

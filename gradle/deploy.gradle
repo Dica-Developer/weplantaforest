@@ -141,7 +141,7 @@ task deployUiProduction {
 
   dependsOn cleanBuildUi
   dependsOn buildUiProduction
-  buildUi.mustRunAfter cleanBuildUi
+  buildUiProduction.mustRunAfter cleanBuildUi
 
   doLast {
     assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
@@ -154,6 +154,7 @@ task deployUiProduction {
 
         logger.info "Creating project dir (for the first deployment (the 0.01% case :-))..."
         execute "mkdir -p ${projectDir}"
+        execute "mkdir -p ${projectDir}/dist"
 
         logger.info "Backing up existing deployment..."
         execute "cp -r ${projectDir}/dist/ ${projectBackup}"
