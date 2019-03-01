@@ -155,10 +155,6 @@ public class Cart {
 	private String callBackTitle;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "_abo__id", nullable = true)
-	private Abo abo;
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "_receipt__receiptId")
 	private Receipt receipt;
 

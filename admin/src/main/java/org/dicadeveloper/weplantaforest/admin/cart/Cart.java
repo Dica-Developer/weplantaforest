@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import org.dicadeveloper.weplantaforest.admin.abo.Abo;
 import org.dicadeveloper.weplantaforest.admin.code.Code;
 import org.dicadeveloper.weplantaforest.admin.event.Event;
 import org.dicadeveloper.weplantaforest.admin.receipt.Receipt;
@@ -143,10 +142,6 @@ public class Cart {
 
     @Column(name = "_callBackFirmanzusatz", length = 256)
     private String callBackFirmanzusatz;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "_abo__id", nullable = true)
-    private Abo abo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_receipt__receiptId")

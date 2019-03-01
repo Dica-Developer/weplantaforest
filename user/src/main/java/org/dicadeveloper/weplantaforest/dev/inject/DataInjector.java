@@ -48,7 +48,6 @@ public class DataInjector {
                                       .copyAndRenameProjectImagesToProjectFolders()
                                       .insertCartAndCertificateToCart()
                                       .insertGifts()
-                                      .insertAbo()
                                       .insertReceipts()
                                       .addUserAndTeamImages()
                                       .addTreeTypeImages()
