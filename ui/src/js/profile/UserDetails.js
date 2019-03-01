@@ -17,7 +17,6 @@ import counterpart from 'counterpart';
 import IconButton from '../common/components/IconButton';
 import {createProfileImageUrl} from '../common/ImageHelper';
 import {getConfig} from '../common/RestHelper';
-import {createProfileImageUrl} from '../common/ImageHelper';
 import Notification from '../common/components/Notification';
 
 export default class UserDetails extends Component {
