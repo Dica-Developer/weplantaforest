@@ -26,7 +26,7 @@ export default class ProjectsPage extends Component {
       completedProjects: {
         content: []
       },
-      completeProjectsPageSize: 10,
+      completeProjectsPageSize: 3,
       activeProjects: []
     };
   }
@@ -37,7 +37,7 @@ export default class ProjectsPage extends Component {
   }
 
   moreCompletedProjects() {
-    this.state.completeProjectsPageSize = this.state.completeProjectsPageSize + 5;
+    this.state.completeProjectsPageSize = this.state.completeProjectsPageSize + 3;
     this.forceUpdate();
     this.getCompletedProjects();
   }
@@ -76,7 +76,7 @@ export default class ProjectsPage extends Component {
   }
 
   render() {
-    var moreCompletedProjectsButton;
+    let moreCompletedProjectsButton;
     if (!this.state.completedProjects.last) {
       moreCompletedProjectsButton = <IconButton text="" glyphIcon="glyphicon-chevron-down" onClick={this.moreCompletedProjects.bind(this)}/>;
     } else {
@@ -93,9 +93,6 @@ export default class ProjectsPage extends Component {
                 {this.state.activeProjects.map(function(project, i) {
                   return (<ActiveProject project={project} key={i} />);
                 })}
-              <div className="align-center border-top">
-                {moreCompletedProjectsButton}
-              </div>
             </div>
           </div>
           <div className="col-md-12">
@@ -104,6 +101,8 @@ export default class ProjectsPage extends Component {
                 {this.state.completedProjects.content.map(function(project, i) {
                   return (<ActiveProject project={project} key={i} />);
                 })}
+            </div>
+            <div className="col-md-12">
               <div className="align-center border-top">
                 {moreCompletedProjectsButton}
               </div>
