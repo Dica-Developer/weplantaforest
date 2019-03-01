@@ -15,20 +15,18 @@ import NotificationSystem from 'react-notification-system';
 import counterpart from 'counterpart';
 
 import IconButton from '../common/components/IconButton';
+import {createProfileImageUrl} from '../common/ImageHelper';
 import {getConfig} from '../common/RestHelper';
 import {createProfileImageUrl} from '../common/ImageHelper';
 import Notification from '../common/components/Notification';
-
-
-import he from 'he';
 
 export default class UserDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       restConfig: getConfig(),
-      imgUrl: ''
-    };
+      imgUrl: '/assets/images/default_user.jpg'
+    }
   }
 
   showEditUser() {
