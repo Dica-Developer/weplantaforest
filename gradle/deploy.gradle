@@ -69,10 +69,33 @@ task buildUi(type: Exec) {
   }
 }
 
+task buildUiProduction(type: Exec) {
+  group 'Deployment'
+
+  dependsOn npmInstall
+
+  inputs.dir project(':').file('ui/node_modules')
+  inputs.dir project(':').file('ui/src')
+
+  outputs.dir project(':').file('ui/dist/js')
+  outputs.file project(':').file('ui/dist/index.html')
+
+  workingDir project(':').file('ui')
+
+  commandLine npmCommand, 'run', 'build'
+
+  doLast {
+    replaceUrls('http://localhost:8080', 'http://iplantatree.org')
+    replaceUrls('http://localhost:8081', 'http://iplantatree.org:8084')
+    replaceUrls('http://localhost:8082', 'http://iplantatree.org:8085')
+    replaceUrls('http://localhost:8083', 'http://iplantatree.org:8086')
+  }
+}
+
 def replaceUrls(toReplace, replaceWith){
   logger.info 'replace urls in every file in ui/dist/js from ' + toReplace + ' to ' + replaceWith
   project(':').file('ui/dist/js').eachFileRecurse {File file ->
-    if(!file.isDirectory()){	 
+    if (!file.isDirectory()){
       def updatedContent = file.getText('UTF-8').replaceAll(toReplace){replaceWith}
       file.write(updatedContent, 'UTF-8')
     }
@@ -117,7 +140,7 @@ task deployUiProduction {
   group 'Deployment'
 
   dependsOn cleanBuildUi
-  dependsOn buildUi
+  dependsOn buildUiProduction
   buildUi.mustRunAfter cleanBuildUi
 
   doLast {
