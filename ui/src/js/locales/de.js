@@ -562,6 +562,6 @@ module.exports = {
   BACK_TO_DESCRIPTION: 'Zurück zur Beschreibung',
 
   PLANTINGS: 'Pflanzungen',
-  PLANTING_BETWEEN_1_AND_1000: 'Spenden von 1 € bis 1000 € möglich',
-  PLANTING_FROM_15: 'Spenden ab 15 € möglich'
+  PLANTING_BETWEEN_1_AND_1000: 'SEPA ist leider nur für Spenden von 1 € bis 1000 € möglich',
+  PLANTING_FROM_15: 'Paypal ist leider erst für Spenden ab 15 € möglich'
 };

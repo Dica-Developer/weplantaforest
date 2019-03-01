@@ -61,15 +61,12 @@ export default class Overview extends Component {
 
       // payment() is called when the button is clicked
       payment: function(data, actions) {
-
-        // Make a call to the REST api to create the payment
         return actions.payment.create({
           transactions: [{
-            amount: { total: Accounting.formatNumber(that.props.price / 100, 2, ',', '.'), currency: 'EUR' }
-            // amount: {
-            //   total: Accounting.formatNumber(0.1, 2, ',', '.'),
-            //   currency: 'EUR'
-            // }
+            amount: {
+              total: Accounting.formatNumber(that.props.price / 100, 2, ',', '.'),
+              currency: 'EUR'
+            }
           }]
         });
       },
@@ -121,10 +118,34 @@ export default class Overview extends Component {
   }
 
   componentDidMount() {
-    this.renderPaypalButton();
+    if (this.props.price >= 1500) {
+      this.renderPaypalButton();
+    }
   }
 
   render() {
+    let sepaPart;
+    let paypalWarning;
+    if (this.props.price <= 100000) {
+      sepaPart = <a role="button" onClick={() => {
+                  this.setPaymentOption('sepa');
+                }}>
+                  <img src="/assets/images/sepa.png" width="256" height="183"/>
+                </a>;
+    } else {
+      sepaPart = <div className='panel panel-warning '>
+                    <div className="panel-heading">{counterpart.translate('PLANTING_BETWEEN_1_AND_1000')}</div>
+                </div>;
+    }
+
+    if (this.props.price >= 1500) {
+      paypalWarning = '';
+    } else {
+      paypalWarning = <div className='panel panel-warning '>
+                    <div className="panel-heading">{counterpart.translate('PLANTING_FROM_15')}</div>
+                </div>;
+    }
+
     return (
       <div className="row">
         <div className="col-md-12">
@@ -140,19 +161,10 @@ export default class Overview extends Component {
           {counterpart.translate('CHOOSE_PAYMENT')}:
         </div>
         <div className="paymentOption col-md-6">
-          <div className='panel panel-warning '>
-              <div className="panel-heading">{counterpart.translate('PLANTING_BETWEEN_1_AND_1000')}</div>
-          </div>
-          <a role="button" onClick={() => {
-            this.setPaymentOption('sepa');
-          }}>
-            <img src="/assets/images/sepa.png" width="256" height="183"/>
-          </a>
+            {sepaPart}
         </div>
         <div className="paymentOption col-md-6">
-          <div className='panel panel-warning '>
-              <div className="panel-heading">{counterpart.translate('PLANTING_FROM_15')}</div>
-          </div>
+          {paypalWarning}
           <div id="paypal-button-container"></div>
         </div>
         <Notification ref="notification"/>
