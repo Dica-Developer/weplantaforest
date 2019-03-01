@@ -8,6 +8,7 @@ def ipatPrivateKeyPassword = ext.properties.get("ipat.sshPrivateKeyPassword")
 def ipatUser = ext.properties.get("ipat.user")
 def ipatHost = ext.properties.get("ipat.host")
 def installationDir = "/home/${ipatUser}/weplantaforest"
+def installationDirProduction = "/home/${ipatUser}/iplantatree"
 
 import org.apache.tools.ant.filters.*;
 
@@ -111,6 +112,39 @@ task deployUi {
   }
 }
 
+task deployUiProduction {
+  description 'Deploys the project to a remote server'
+  group 'Deployment'
+
+  dependsOn cleanBuildUi
+  dependsOn buildUi
+  buildUi.mustRunAfter cleanBuildUi
+
+  doLast {
+    assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+    logger.info "Connect as ${ipatUser} (${ipatPrivateSshKeyFile}) to ${ipatHost}"
+
+    ssh.run {
+      session(remotes.server) {
+        def projectDir = "${installationDirProduction}/ui"
+        def projectBackup = "${installationDirProduction}/ui.backup"
+
+        logger.info "Creating project dir (for the first deployment (the 0.01% case :-))..."
+        execute "mkdir -p ${projectDir}"
+
+        logger.info "Backing up existing deployment..."
+        execute "cp -r ${projectDir}/dist/ ${projectBackup}"
+
+        logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
+        rsync("ui/dist/", "${ipatUser}@${ipatHost}:${projectDir}/dist/")
+
+        logger.lifecycle "chown on directory ${projectDir}/dist"
+        execute "chmod -R ugo+r ${projectDir}/dist/"
+      }
+    }
+  }
+}
+
 configure([project(':article-manager'), project(':user'), project(':admin')]) {
 
   task prepareServiceScripts(description: 'Creates a init.d script from a template for a specific project.') {
@@ -173,6 +207,30 @@ configure([project(':article-manager'), project(':user'), project(':admin')]) {
         session(remotes.server) {
           def projectDir = "${installationDir}/${project.name}"
           def projectBackup = "${installationDir}/${project.name}.backup"
+
+          execute "mkdir -p ${projectDir}"
+
+          logger.info "Removing old backup..."
+          execute "rm -rf ${projectBackup}"
+
+          logger.lifecycle "Backing up existing deployment..."
+          execute "cp -r ${projectDir} ${projectBackup}"
+
+          logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
+          rsync("${project.name}/build/install/${project.name}/bin/", "${ipatUser}@${ipatHost}:${projectDir}/bin/")
+          rsync("${project.name}/build/install/${project.name}/lib/", "${ipatUser}@${ipatHost}:${projectDir}/lib/")
+        }
+      }
+    }
+  }
+
+  task deployProduction (description:'Deploys the project to a remote server', dependsOn:'installDist') {
+    doLast {
+      assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+      ssh.run {
+        session(remotes.server) {
+          def projectDir = "${installationDirProduction}/${project.name}"
+          def projectBackup = "${installationDirProduction}/${project.name}.backup"
 
           execute "mkdir -p ${projectDir}"
 
