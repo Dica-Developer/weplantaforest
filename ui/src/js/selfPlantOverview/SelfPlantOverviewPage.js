@@ -52,7 +52,7 @@ export default class SelfPlantOverviewPage extends Component {
         <div className="row">
           <div className="col-md-12">
           <Map id="all-self-planted-map" center={[this.state.myTree.latitude, this.state.myTree.longitude]} zoom={10}>
-            <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
+            <TileLayer url='https://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'/>
             <Marker position={[this.state.myTree.latitude, this.state.myTree.longitude]} ref="marker" icon={myTreeIcon}/>
             {this.state.trees.map(function(tree, i){
               if(tree.latitude && tree.longitude){

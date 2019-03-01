@@ -674,7 +674,7 @@ export default class ProjectEditor extends Component {
     let map;
     if(this.state.showMap){
       map = <Map ref="map" center={this.state.mapCenter} zoom={this.state.zoom} onClick={this.addProjectPositionFromMapClick.bind(this)}>
-              <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
+              <TileLayer url='https://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'/>
               <Polygon positions={this.state.project.positions} color={'#82AB1f'}></Polygon>
             </Map>;
     }else{
