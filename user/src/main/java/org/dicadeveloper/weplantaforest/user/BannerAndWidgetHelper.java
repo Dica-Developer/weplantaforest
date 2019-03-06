@@ -19,7 +19,11 @@ public class BannerAndWidgetHelper {
 
     public String generateBannerHtmlCode(String host, String type, int width, int height) {
         StringBuffer buffer = new StringBuffer();
-        String hostWithoutPort = host.substring(0, host.indexOf(":", 5) + 1);
+        String hostWithoutPort = host;
+        int indexOf = host.indexOf(":", 5);
+        if (indexOf > 5) {
+            hostWithoutPort = host.substring(0, indexOf + 1);
+        }
         buffer.append("<a href=\"");
         buffer.append(host);
         buffer.append("\">");
@@ -38,7 +42,11 @@ public class BannerAndWidgetHelper {
     
     public String generateWidgetHtmlCode(String host,String userName, String type, int width, int height) {
         StringBuffer buffer = new StringBuffer();
-        String hostWithoutPort = host.substring(0, host.indexOf(":", 5) + 1);
+        String hostWithoutPort = host;
+        int indexOf = host.indexOf(":", 5);
+        if (indexOf > 5) {
+            hostWithoutPort = host.substring(0, indexOf + 1);
+        }
         buffer.append("<a href=\"");
         buffer.append(host);
         buffer.append("\">");
