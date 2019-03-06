@@ -135,11 +135,21 @@ public class UserService {
 
     public UserReportData getUserDetails(String userName, boolean isEditAllowed) {
         UserReportData userReportData = _userRepository.getUserDetails(userName);
+        if (null != userReportData) {
+            try {
+                Long userId = Long.parseLong(userName);
+                userReportData = _userRepository.getUserDetailsById(userId);
+            } catch (Exception e) {
+                // This is a workaround if it works or not we don't care , thats why we don't want to get bothered by any exception
+            }
+        }
+        if (null != userReportData) {
+            userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName));
+            userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data()
+                    .getTreesCount()));
+            userReportData.setEditAllowed(isEditAllowed);
+        }
         
-        userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName));
-        userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data()
-                                                                                        .getTreesCount()));
-        userReportData.setEditAllowed(isEditAllowed);
         return userReportData;
     }
 

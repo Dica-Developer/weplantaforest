@@ -96,10 +96,22 @@ public class TeamController {
 
 	@RequestMapping(value = Uris.TEAM_DETAILS, method = RequestMethod.GET)
 	public ResponseEntity<?> getTeamDetails(@RequestParam String teamName) {
-		TeamReportData teamReportData = _teamRepository.getTeamDetails(teamName);
-		teamReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamName));
-		teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
-		return new ResponseEntity<>(teamReportData, HttpStatus.OK);
+		TeamReportData teamReportData = _teamRepository.getTeamDetails(teamName); 
+		if (null != teamReportData) {
+		    try {
+		        Long teamId = Long.parseLong(teamName);
+		        teamReportData = _teamRepository.getTeamDetailsById(teamId);
+		    } catch (Exception e) {
+		        // This is a workaround if it works or not we don't care, thats why we don't want to get bothered by any exception
+		    }
+		}
+		if (null != teamReportData) {
+		    teamReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamName));
+		    teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
+		    return new ResponseEntity<>(teamReportData, HttpStatus.OK);
+		} else {
+		    return new ResponseEntity<>(teamReportData, HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@RequestMapping(value = Uris.EDIT_TEAM_DETAILS, method = RequestMethod.POST)
