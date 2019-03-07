@@ -23,6 +23,8 @@ public class BannerAndWidgetHelper {
         int indexOf = host.indexOf(":", 5);
         if (indexOf > 5) {
             hostWithoutPort = host.substring(0, indexOf + 1);
+        } else {
+            hostWithoutPort = hostWithoutPort + ":";
         }
         buffer.append("<a href=\"");
         buffer.append(host);
@@ -46,6 +48,8 @@ public class BannerAndWidgetHelper {
         int indexOf = host.indexOf(":", 5);
         if (indexOf > 5) {
             hostWithoutPort = host.substring(0, indexOf + 1);
+        } else {
+            hostWithoutPort = hostWithoutPort + ":";
         }
         buffer.append("<a href=\"");
         buffer.append(host);
