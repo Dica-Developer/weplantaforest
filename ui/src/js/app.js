@@ -8,13 +8,18 @@ import '../less/main.less';
 import '../js/common/header/header.less';
 
 axios.interceptors.response.use((response) => {
-    // Do something with response data
-    return response;
-  }, (error) => {
+  return response;
+}, (error) => {
+  if (error.response) {
     if(error.response.status == 403) {
       browserHistory.push('/forbidden?calledUrl=' + error.response.config.url);
+    } else if (error.response.status == 402) {
+      location.href = error.response.data;
     }
-    return Promise.reject(error);
-  });
+  } else {
+    console.log(error);
+  }
+  return Promise.reject(error);
+});
 
 render(<Routes />, document.getElementById('app'));

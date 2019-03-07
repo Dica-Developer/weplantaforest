@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.user;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,9 @@ import org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData;
 import org.dicadeveloper.weplantaforest.support.CommonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -136,15 +140,7 @@ public class UserService {
     public UserReportData getUserDetails(String userName, boolean isEditAllowed) {
         UserReportData userReportData = _userRepository.getUserDetails(userName);
         if (null != userReportData) {
-            try {
-                Long userId = Long.parseLong(userName);
-                userReportData = _userRepository.getUserDetailsById(userId);
-            } catch (Exception e) {
-                // This is a workaround if it works or not we don't care , thats why we don't want to get bothered by any exception
-            }
-        }
-        if (null != userReportData) {
-            userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName));
+            userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userReportData.getUserName()));
             userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data()
                     .getTreesCount()));
             userReportData.setEditAllowed(isEditAllowed);

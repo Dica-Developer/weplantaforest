@@ -2,6 +2,9 @@ package org.dicadeveloper.weplantaforest.team;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +25,7 @@ import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,7 +70,6 @@ public class TeamController {
 		String[] files = directory.list();
 		String teamImageName = "";
 		for(String fileName : files) {
-		    System.out.println(fileName);
 		    if(fileName.startsWith(imageName + ".")) {
 		        teamImageName = fileName;
 		        break;
@@ -96,17 +99,18 @@ public class TeamController {
 
 	@RequestMapping(value = Uris.TEAM_DETAILS, method = RequestMethod.GET)
 	public ResponseEntity<?> getTeamDetails(@RequestParam String teamName) {
-		TeamReportData teamReportData = _teamRepository.getTeamDetails(teamName); 
-		if (null != teamReportData) {
+		TeamReportData teamReportData = _teamRepository.getTeamDetails(teamName);
+		if (null == teamReportData) {
 		    try {
 		        Long teamId = Long.parseLong(teamName);
-		        teamReportData = _teamRepository.getTeamDetailsById(teamId);
+		        Team team = _teamRepository.findOne(teamId);
+		        return new ResponseEntity<>("https://www.iplantatree.org/team/" + URLEncoder.encode(team.getName(), StandardCharsets.UTF_8.toString()), HttpStatus.PAYMENT_REQUIRED);
 		    } catch (Exception e) {
-		        // This is a workaround if it works or not we don't care, thats why we don't want to get bothered by any exception
+		        LOG.warn("Did not find team with id: " + teamName, e);
 		    }
 		}
 		if (null != teamReportData) {
-		    teamReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamName));
+		    teamReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamReportData.getTeamName()));
 		    teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
 		    return new ResponseEntity<>(teamReportData, HttpStatus.OK);
 		} else {

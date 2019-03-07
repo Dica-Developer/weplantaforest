@@ -27,7 +27,7 @@ export default class UserDetails extends Component {
     this.state = {
       restConfig: getConfig(),
       imgUrl: '/assets/images/default_user.jpg'
-    }
+    };
   }
 
   showEditUser() {

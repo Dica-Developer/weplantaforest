@@ -1,6 +1,9 @@
 package org.dicadeveloper.weplantaforest.user;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +21,7 @@ import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,10 +76,20 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.USER_DETAILS, method = RequestMethod.GET)
-    public UserReportData getUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
+    public ResponseEntity<?> getUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
         boolean isEditAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, userName);
         UserReportData userReportData = _userService.getUserDetails(userName, isEditAllowed);
-        return userReportData;
+        if (null == userReportData) {
+            try {
+                Long userId = Long.parseLong(userName);
+                User user = _userRepository.findOne(userId);
+                return new ResponseEntity<>("https://www.iplantatree.org/user/" + URLEncoder.encode(user.getName(), StandardCharsets.UTF_8.toString()), HttpStatus.PAYMENT_REQUIRED);
+            } catch (Exception e) {
+                LOG.warn("Error on finding user by workaround: " + userName, e);
+            }
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userReportData, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.EDIT_USER_DETAILS, method = RequestMethod.POST)
