@@ -52,9 +52,21 @@ export default class aboutUs extends Component {
             <div className="col-md-12">
               <div>
                 {this.state.aboutUs.map(function(about, i) {
-                return ( <div key={i}><p className="title">{about.title}</p><EditLink articleId={about.id}/><p dangerouslySetInnerHTML={{
-                  __html: about.intro
-                }}></p></div>);
+                  if (about.imageFileName != '') {
+                    let aboutImageUrl = 'http://localhost:8082/article/image/' + about.id + '/' + about.imageFileName + '/986/657';
+                    return ( <div key={i}><p className="title">{about.title}</p><EditLink articleId={about.id}/>
+                              <div className="article-img">
+                                <div className="article-img-div">
+                                  <img src={aboutImageUrl}/>
+                                </div>
+                              </div>
+                              <p dangerouslySetInnerHTML={{__html: about.intro}}></p>
+                            </div>);
+                  }else{
+                    return ( <div key={i}><p className="title">{about.title}</p><EditLink articleId={about.id}/>
+                              <p dangerouslySetInnerHTML={{__html: about.intro}}></p>
+                            </div>);
+                  }
                 })}
               </div>
             </div>
