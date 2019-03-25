@@ -277,15 +277,19 @@ public class UserService {
         _userRepository.save(user);
         return user.getName();
     }
-    
+
     private User getUser(long userId) throws IpatException{
         User user = _userRepository.findOne(userId);
         IpatPreconditions.checkNotNull(user, ErrorCodes.USER_NOT_FOUND);
         return user;
     }
-    
-    private User getUser(String userName) throws IpatException{
-        User user = _userRepository.findByName(userName);
+
+    private User getUser(String userNameOrEmail) throws IpatException{
+        User user = null;
+        user = _userRepository.findByEmail(userNameOrEmail);
+        if (null == user) {
+            user = _userRepository.findByName(userNameOrEmail);
+        }
         IpatPreconditions.checkNotNull(user, ErrorCodes.USER_NOT_FOUND);
         return user;
     }
@@ -304,7 +308,7 @@ public class UserService {
         }
         return rank;
     }
-    
+
     public User anonymizeUser(String userName) throws IpatException {
         User user = _userRepository.findByName(userName);
         user.setName(createAnonymousUserName());
@@ -321,8 +325,8 @@ public class UserService {
         Set<Role> roles = new HashSet<Role>();
         roles.add(Role.USER);
         user.setRoles(roles);
-        _userRepository.save(user);        
-        
+        _userRepository.save(user);
+
         return user;
     }
 }

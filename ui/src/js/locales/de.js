@@ -450,11 +450,11 @@ module.exports = {
   PASSWORD_CAN_BE_RESETTED: 'Passwort kann nun zurückgesetzt werden!',
   PASSWORD_CAN_BE_RESETTED_TEXT: 'Wir haben dir eine Mail geschickt, welche einen Link enthält, mit dem du dein Passwort zurücksetzen kannst.',
   PASSWORD_FORGOT: 'Passwort vergessen',
-  PASSWORD_FORGOT_TEXT: 'Bitte gib deinen Nutzernamen an und wir schicken dir an die angegebene E-Mail Adresse einen Link, womit du dein Passwort zurücksetzen kannst.',
+  PASSWORD_FORGOT_TEXT: 'Bitte gib deinen Nutzernamen oder E-Mail an und wir schicken dir an die angegebene E-Mail Adresse einen Link, womit du dein Passwort zurücksetzen kannst.',
   SEND_PASSWORD_RESET_MAIL: 'Passwort reset mail verschicken',
   NO_USERNAME: {
-    TITLE: 'Keinen Nutzernamen angegeben!',
-    TEXT: 'Den Nutzernamen müsstest du schon angeben.'
+    TITLE: 'Keinen Nutzernamen oder eine E-Mail angegeben!',
+    TEXT: 'Bitte gib deinen Nutzernamen oder deine E-Mail Adresse an.'
   },
 
   TREES: 'Bäume',
