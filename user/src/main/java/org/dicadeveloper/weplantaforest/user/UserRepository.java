@@ -50,6 +50,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = COUNT_ANONYM_USER_QUERY)
     public long countAnonymUser();
 
-    @Query(value = "SELECT * FROM User WHERE mail = :email")
+    @Query(value = "SELECT user FROM User user WHERE user.mail = :email")
     public User findByEmail(@Param("email") String email);
 }
