@@ -14,15 +14,15 @@ const config = {
       cacheGroups: {
         vendorsreact: {
           test: /[\\/]node_modules[\\/]react.*[\\/]/,
-          chunks: "all"
+          chunks: 'all'
         },
         vendorsmoment: {
           test: /[\\/]node_modules[\\/]m.*[\\/]/,
-          chunks: "all"
+          chunks: 'all'
         },
         vendors: {
           test: /[\\/]node_modules[\\/][^rm].*[\\/]/,
-          chunks: "all"
+          chunks: 'all'
         }
       }
     }
@@ -51,9 +51,9 @@ const config = {
       {
         test: /\.less$/,
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" },
-          { loader: "less-loader" }
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'less-loader' }
         ]
       },
       {

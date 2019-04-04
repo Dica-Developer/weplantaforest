@@ -65,9 +65,9 @@ task buildUi(type: Exec) {
   
   doLast {
     replaceUrls('http://localhost:8080', 'http://iplantatree.org:81') 
-    replaceUrls('http://localhost:8081', 'http://iplantatree.org:8084')
-    replaceUrls('http://localhost:8082', 'http://iplantatree.org:8085')
-    replaceUrls('http://localhost:8083', 'http://iplantatree.org:8086')
+    replaceUrls('http://localhost:8081', 'http://iplantatree.org:81/s/u')
+    replaceUrls('http://localhost:8082', 'http://iplantatree.org:81/s/m')
+    replaceUrls('http://localhost:8083', 'http://iplantatree.org:81/s/a')
   }
 }
 
@@ -88,7 +88,9 @@ task buildUiProduction(type: Exec) {
 
   doLast {
     replaceUrls('http://localhost:8080', 'https://iplantatree.org')
-    replaceUrls('http://localhost', 'https://iplantatree.org') 
+    replaceUrls('http://localhost:8081', 'https://iplantatree.org/p/u')
+    replaceUrls('http://localhost:8082', 'https://iplantatree.org/p/m')
+    replaceUrls('http://localhost:8083', 'https://iplantatree.org/p/a')
   }
 }
 

@@ -9,7 +9,7 @@ const config = merge(common, {
     publicPath: '/'
   },
   devtool: 'nosources-source-map',
-})
+});
 
 module.exports = config;
 
