@@ -236,13 +236,13 @@ module.exports = {
   },
 
   OFFER_ACREAGE_TEXTS: {
-    TEXT_1: 'Wir würden gern Flächen kaufen, um sie zu langfristig, gemeinnützig, nachhaltig betriebenen Wäldern umzuwandeln. Wir suchen Flächen, die:',
-    TEXT_2: 'für eine Aufforstung in Frage kommen, für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen)',
-    TEXT_3: 'zwischen 2 und 20 Hektar groß sind, im Idealfall an einer Straße / Fahrradweg liegen und gut von Publikum eingesehen werden können',
-    TEXT_4: 'über einen Kauf oder Schenkung an I Plant A Tree gebunden werden können',
-    TEXT_5: 'idealerweise Mischflächen sind, wo bereits Wald steht, aber noch anliegende Flächen aufgeforstet werden können (Aufforstungsgnehmigung ist oft wahrscheinlicher)',
-    TEXT_6: 'möglichst in den neuen Bundesländern liegen (am besten in Sachsen-Anhalt, Sachsen, Thüringen und rund um Berlin) - aber wir suchen auch in anderen Bundesländern, in Abhängigkeit vom Preis',
-    TEXT_7: 'nach Möglichkeit maximal 4.000 Euro/ha kosten. Seit 2017, schauen wir uns gern auch Flächen rund um Hamburg und in Mecklenburg-Vorpommern an.',
+    TEXT_1: 'Wir wandeln Land in gemeinnützigen Wald um. Dazu suchen wir Flächen, die:',
+    TEXT_2: 'für eine Aufforstung in Frage kommen,',
+    TEXT_3: 'für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen),',
+    TEXT_4: 'für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen),',
+    TEXT_5: 'nach Möglichkeit maximal 6.000 Euro/ha kosten.',
+    TEXT_6: 'Bei uns ist Land in guten, gemeinnützigen Händen. Wir freuen uns auch über bestehenden Wald, um ihn langfristig unter Schutz zu stellen. Denn sollten wir irgendwann mal nicht mehr existieren, werden die Werte von I Plant A Tree satzungsgemäß an eine andere gemeinnützige Umweltorganisation übertragen.',
+    TEXT_7: 'Falls Du, jemand aus Deiner Familie oder Deinem Freundeskreis eine Fläche verkaufen, verschenken oder vererben möchte, melde Dich bitte bei uns.',
     TEXT_8: 'Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.'
   },
   THANKS_FOR_OFFER: 'Vielen Dank für das Angebot!',

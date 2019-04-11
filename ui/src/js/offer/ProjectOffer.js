@@ -92,9 +92,9 @@ export default class ProjectOffer extends Component {
               <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_3')}</li>
               <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_4')}</li>
               <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_5')}</li>
-              <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_6')}</li>
-              <li>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_7')}</li>
             </ul>
+            <p>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_6')}</p>
+            <p>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_7')}</p>
             <h3>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_8')}</h3>
           </div>
           <div className="form-group">

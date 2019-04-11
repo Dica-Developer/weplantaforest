@@ -235,13 +235,13 @@ module.exports = {
   },
 
   OFFER_ACREAGE_TEXTS: {
-    TEXT_1: 'We would like to acquire acreages to grow new forests and run them long-term on a non-profit, sustainable basis. We are looking for acreages providing the following criteria. Acreages should:',
-    TEXT_2: 'be afforestable - we should be able to get an afforestation permission from the local authorities ( no protected dry grass land or orchards)',
-    TEXT_3: '2-20 hectares in size, located on a street / bike path in the ideal case and can easily be seen by the public',
-    TEXT_4: 'be transferable to I Plant A Tree through a purchase or donation',
-    TEXT_5: 'ideally are mixed areas where some forest already in place, but with attached, neighboring surfaces that can be afforested (afforestation permission more likely)',
-    TEXT_6: 'be located ideally in the new federal states of Germany (the best in Saxony-Anhalt, Saxony, Thuringia and around Berlin) - but we also seek acreages outside, depending on price',
-    TEXT_7: 'cost at maximum 4,000 € / ha. Since 2017, we also would like to have acreages around Hamburg and in Mecklenburg-Western Pomerania.',
+    TEXT_1: 'We\'re turning land into community forest. For this purpose we are looking for areas that:',
+    TEXT_2: 'are suitable for afforestation,',
+    TEXT_3: 'for which we can get a reforestation permit (no dry grassland or orchards),',
+    TEXT_4: 'are at least three hectares in size and ideally located on a road or path,',
+    TEXT_5: 'if possible, cost a maximum of 6,000 Euro/ha.',
+    TEXT_6: 'With us, land is in good, non-profit hands. We are also happy about existing forests in order to protect them in the long term. Should we cease to exist at any time, the values of I Plant A Tree will be transferred to another charitable environmental organisation in accordance with our statutes.',
+    TEXT_7: 'If you, someone from your family or your circle of friends would like to sell, give away or inherit an area, please contact us.',
     TEXT_8: 'Please fill in the required fields. We will contact you as soon as possible.'
   },
   THANKS_FOR_OFFER: 'Thanks for the offer!',
