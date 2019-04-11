@@ -12,6 +12,7 @@ import counterpart from 'counterpart';
 import Notification from '../../common/components/Notification';
 import InputText from '../../common/components/InputText';
 import IconButton from '../../common/components/IconButton';
+import he from 'he';
 
 export default class SendRequest extends Component {
 
@@ -29,7 +30,7 @@ export default class SendRequest extends Component {
   componentDidMount(){
     var that = this;
     axios.post('http://localhost:8081/password_reset_verify' + this.props.search + '&language=' + localStorage.getItem('language')).then(function(response) {
-      var headLine = 'Passwortänderung für ' + response.data;
+      var headLine = 'Passwortänderung für ' + he.encode(response.data);
       that.setState({headLine: headLine, linkValid: true});
     }).catch(function(response) {
       that.setState({headLine: counterpart.translate(response.data.errorInfos[0].errorCode), linkValid: false});

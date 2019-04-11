@@ -30,7 +30,7 @@ export default class SendRequest extends Component {
   sendPasswortResetMail() {
     if (this.state.name != '') {
       var that = this;
-      axios.post('http://localhost:8081/password_request?userName=' + this.state.name + '&language=' + localStorage.getItem('language')).then(function(response) {
+      axios.post('http://localhost:8081/password_request?userName=' + encodeURIComponen(this.state.name) + '&language=' + localStorage.getItem('language')).then(function(response) {
         that.props.setResetted();
       }).catch(function(error) {
         that.refs.notification.handleError(error);

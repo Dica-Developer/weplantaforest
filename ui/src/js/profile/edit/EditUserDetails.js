@@ -34,7 +34,7 @@ export default class EditUserDetails extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=' + toEdit + '&newEntry=' + newEntry, {}, config).then(function(response) {
+    axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=' + toEdit + '&newEntry=' + encodeURIComponent(newEntry), {}, config).then(function(response) {
       that.refs[toEdit].saveChanges();
     }).catch(function(error) {
       that.refs[toEdit].undoChanges();
@@ -52,7 +52,7 @@ export default class EditUserDetails extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=NAME&newEntry=' + newEntry, {}, config).then(function(response) {
+    axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(this.props.user.userName) + '&toEdit=NAME&newEntry=' + encodeURIComponent(newEntry), {}, config).then(function(response) {
       that.props.logout();
     }).catch(function(error) {
       that.refs.name.undoChanges(that.props.user.userName);

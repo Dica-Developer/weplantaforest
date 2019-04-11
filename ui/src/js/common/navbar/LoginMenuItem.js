@@ -58,7 +58,7 @@ export default class LoginMenuItem extends Component {
     localStorage.setItem('jwt', token);
     localStorage.setItem('username', this.state.name);
 
-    axios.get('http://localhost:8081/user/language?userName=' + this.state.name).then(function(response) {
+    axios.get('http://localhost:8081/user/language?userName=' + encodeURIComponent(this.state.name)).then(function(response) {
       var result = response.data;
       if (localStorage.getItem('language') != result) {
         that.props.updateLanguage(result);
@@ -98,7 +98,7 @@ export default class LoginMenuItem extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.get('http://localhost:8081/user?userName=' + localStorage.getItem('username'), config).then(function(response) {
+    axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(localStorage.getItem('username')), config).then(function(response) {
       var result = response.data;
       that.setState({
         userDetails: result
