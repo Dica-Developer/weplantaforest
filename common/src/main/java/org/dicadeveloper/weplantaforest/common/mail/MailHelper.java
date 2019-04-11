@@ -70,6 +70,7 @@ public class MailHelper {
             MimeMessage msg = createMessage(subject, text);
             Transport.send(msg);
         } catch (MessagingException e) {
+            LOG.error("Cannot send mail: " + subject + " - " + text);
             handleException(e);
         }
     }
