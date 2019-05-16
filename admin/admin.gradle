@@ -21,7 +21,7 @@ mainClassName = 'org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminAppli
 
 dependencies{
   compile project(':common')
-  compile('org.projectlombok:lombok:1.16.20')
+  compile('org.projectlombok:lombok:1.18.8')
   compile('org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion)
   compile('org.springframework.boot:spring-boot-starter-web:' + springBootVersion)
   compile('org.springframework.boot:spring-boot-starter-security:' + springBootVersion)
