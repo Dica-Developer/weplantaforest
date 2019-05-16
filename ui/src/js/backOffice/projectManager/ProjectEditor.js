@@ -409,7 +409,7 @@ export default class ProjectEditor extends Component {
         },
         articles: [],
         images: [],
-        positions: [[0,0]]
+        positions: []
       },
       descriptionDe: '',
       descriptionEn: '',
