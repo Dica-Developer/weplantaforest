@@ -28,7 +28,7 @@ public class AreaPositions implements Comparable<AreaPositions>{
     @Override
     public int compareTo(AreaPositions ap) {
         if(this.order == ap.order) {
-            return 0;            
+            return 0;
         }else if(this.order > ap.order) {
             return 1;
         }else {

@@ -9,6 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class IpatBackendErrorDTO {
 
-    private final List<IpatErrorInfo> errorInfos;
-    
+    private List<IpatErrorInfo> errorInfos;
+
 }

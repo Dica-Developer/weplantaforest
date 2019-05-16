@@ -14,7 +14,7 @@ public class IpatException extends Exception {
 
     private static final long serialVersionUID = 7868399786472157365L;
 
-    private final List<IpatErrorInfo> errorInfos;
+    private List<IpatErrorInfo> errorInfos;
 
     public IpatException(String errorCode){
         IpatErrorInfo errorInfo = new IpatErrorInfo(errorCode);
