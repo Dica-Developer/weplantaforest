@@ -458,6 +458,19 @@ export default class UserOverview extends Component {
     );
   }
 
+  getCellActions(column, row) {
+    if ('username' === column.key) {
+      return [{
+        icon: 'glyphicon glyphicon-link',
+        callback: () => {
+          browserHistory.push('/user/' + encodeURIComponent(row.username));
+        }
+      }];
+    } else {
+      return null;
+    }
+  }
+
   render() {
     var style = {
       Containers: {
@@ -483,7 +496,8 @@ export default class UserOverview extends Component {
           <div className="col-md-12">
             <ReactDataGrid columns={this.state.columns} titles={this.state.titles} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
               true
-            } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
+            } />}
+            onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)} getCellActions={this.getCellActions.bind(this)}/>
           </div>
         </div>
         <Notification ref="notification"/>
