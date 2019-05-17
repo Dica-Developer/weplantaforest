@@ -266,7 +266,8 @@ module.exports = {
     NONPROFIT: 'NGOs',
     EDUCATIONAL: 'Schools',
     TEAMS: 'Teams',
-    LAST_YEAR: 'Last year'
+    LAST_YEAR: 'Last year',
+    TOTAL: 'Total'
   },
 
   CREATE_PLANTING: 'Create planting',

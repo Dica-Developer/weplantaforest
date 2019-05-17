@@ -267,7 +267,8 @@ module.exports = {
     NONPROFIT: 'NGOs',
     EDUCATIONAL: 'Schulen',
     TEAMS: 'Teams',
-    LAST_YEAR: 'Letztes Jahr'
+    LAST_YEAR: 'Letztes Jahr',
+    TOTAL: 'Insgesamt',
   },
 
   CREATE_PLANTING: 'Eigene Pfanzung erstellen',

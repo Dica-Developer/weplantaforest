@@ -30,7 +30,7 @@ export default class RankingPage extends Component {
 
       },
       orgTypeDesc: counterpart.translate('RANKING_TYPES.ALL'),
-      chosenOrgType: counterpart.translate('RANKING_TYPES.PRIVATE'),
+      chosenOrgType: '',
       slideIn: false,
       rankingEntries: 100,
       onlyLastYear: true
@@ -136,7 +136,7 @@ export default class RankingPage extends Component {
     } else if (this.state.orgTypeDesc == 'Teams') {
       this.loadBestTeams(withToggle);
     } else {
-      this.loadOrgTypeRanking(this.state.chosenOrgType, this.state.orgTypeDesc, withToggle);
+      this.loadOrgTypeRanking(this.state.chosenOrgType, withToggle);
     }
   }
 
@@ -152,7 +152,7 @@ export default class RankingPage extends Component {
         <div className="rankingPage">
           <div className="row">
             <div className="col-md-2 center-switch">
-              <LeftRightSwitch leftText={counterpart.translate('RANKING_TYPES.ALL')} rightText={counterpart.translate('RANKING_TYPES.LAST_YEAR')} leftValue={false} rightValue={true} chosenValue={this.state.onlyLastYear} onClick={this.updateLastYearFlag.bind(this)}/>
+              <LeftRightSwitch leftText={counterpart.translate('RANKING_TYPES.TOTAL')} rightText={counterpart.translate('RANKING_TYPES.LAST_YEAR')} leftValue={false} rightValue={true} chosenValue={this.state.onlyLastYear} onClick={this.updateLastYearFlag.bind(this)}/>
             </div>
               <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
               <hr />
@@ -169,7 +169,7 @@ export default class RankingPage extends Component {
                   percentTree = 100 * content.amount / maxTree;
                   percentCo2 = 100 * content.co2Saved / maxCo2;
                 }
-                let imageUrl
+                let imageUrl;
                 let profileUrl;
                 if (orgTypeDesc != 'Teams') {
                   imageUrl = createProfileImageUrl(content.imageName, 60, 60);
