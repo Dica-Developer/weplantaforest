@@ -157,10 +157,10 @@ export default class NavBar extends Component {
         </Menu>
         <Menu ref="right" alignment="right">
           <LoginMenuItem ref="login-menu-item" hash="login" updateNavbar={this.updateComponents.bind(this)} updateLanguage={this.updateLanguage.bind(this)}></LoginMenuItem>
-          <MenuItem hash={'/user/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.MY_PROFIL')}</MenuItem>
-          <MenuItem hash={'/tools/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.TOOLS')}</MenuItem>
-          <MenuItem hash={'/gifts/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.VOUCHERS')}</MenuItem>
-          <MenuItem hash={'/receipts/' + localStorage.getItem('username')} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.CONTRIBUTION_RECEIPTS')}</MenuItem>
+          <MenuItem hash={'/user/' + encodeURIComponent(localStorage.getItem('username'))} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.MY_PROFIL')}</MenuItem>
+          <MenuItem hash={'/tools/' + encodeURIComponent(localStorage.getItem('username'))} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.TOOLS')}</MenuItem>
+          <MenuItem hash={'/gifts/' + encodeURIComponent(localStorage.getItem('username'))} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.VOUCHERS')}</MenuItem>
+          <MenuItem hash={'/receipts/' + encodeURIComponent(localStorage.getItem('username'))} inactive={!this.state.isLoggedIn}>{counterpart.translate('NAVBAR.CONTRIBUTION_RECEIPTS')}</MenuItem>
           <BackOfficeMenuItem hash="/backOffice">{counterpart.translate('NAVBAR.BACKOFFICE')}</BackOfficeMenuItem>
         </Menu>
         <nav id="navBar" className="navbar navbar-default navbar-fixed-top">
