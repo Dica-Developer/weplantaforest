@@ -262,7 +262,7 @@ export default class ProjectDetailsPage extends Component {
             <SmallRankingContainer title={counterpart.translate('BEST_PLANTERS')} withPaging={true} rankingType="bestUser" page={bestUserPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.bestUser.first} isLastPage={this.state.bestUser.last}>
               {this.state.bestUser.content.map(function(content, i) {
                 let imageUrl = createProfileImageUrl(content.imageName, 60, 60);
-                let linkTo = '/user/' + content.name;
+                let linkTo = '/user/' + encodeURIComponent(content.name);
                 return (
                   <RankingItem content={content} key={i} rankNumber={bestUserPage * 5 + (i + 1)} imageUrl={imageUrl} showRankNumber="true" linkTo={linkTo}>
                     <RankingContentNameAmountCo2 content={content}/>
@@ -275,7 +275,7 @@ export default class ProjectDetailsPage extends Component {
             <SmallRankingContainer title={counterpart.translate('NEWEST_PLANTINGS')}  withPaging={true} rankingType="lastPlantedTrees" page={lastPlantedTreesPage} callPreviousPage={this.callPreviousPage.bind(this)} callNextPage={this.callNextPage.bind(this)} isFirstPage={this.state.lastPlantedTrees.first} isLastPage={this.state.lastPlantedTrees.last}>
               {this.state.lastPlantedTrees.content.map(function(content, i) {
                 let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeTypeImageName + '/60/60';
-                let linkTo = '/user/' + content.name;
+                let linkTo = '/user/' + encodeURIComponent(content.name);
                 return (
                   <RankingItem imageUrl={imageUrl} key={i} linkTo={linkTo}>
                     <RankingContentNameAmountDate name={content.name} amount={content.amount} plantedOn={content.plantedOn}/>

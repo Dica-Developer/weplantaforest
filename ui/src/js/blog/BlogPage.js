@@ -114,7 +114,7 @@ export default class BlogPage extends Component {
           </div>
           <div className={'col-md-12'}>
             {moment(this.state.article.createdOn).format('DD.MM.YYYY')}{' von '}
-            <a role="button" onClick= { () => { browserHistory.push('/user/' + this.state.article.owner.name); }}>
+            <a role="button" onClick= { () => { browserHistory.push('/user/' + encodeURIComponent(this.state.article.owner.name)); }}>
               {this.state.article.owner.name}</a>
             <div className="article-img">
               <div className="article-img-div">

@@ -75,7 +75,7 @@ export default class NavBar extends Component {
           'X-AUTH-TOKEN': localStorage.getItem('jwt')
         }
       };
-      axios.post('http://localhost:8081/user/edit?userName=' + localStorage.getItem('username') + '&toEdit=LANGUAGE&newEntry=' + value, {}, config);
+      axios.post('http://localhost:8081/user/edit?userName=' + encodeURIComponent(localStorage.getItem('username')) + '&toEdit=LANGUAGE&newEntry=' + value, {}, config);
     }
     if (value == 'DEUTSCH') {
       this.props.switchLocale('de');

@@ -106,7 +106,7 @@ export default class Routes extends Component {
 
   redeemGift() {
     if(localStorage.getItem('username') && localStorage.getItem('username') != ''){
-      browserHistory.push('/user/' + localStorage.getItem('username'));
+      browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
       this.refs.notification.addNotification(counterpart.translate('GIFT_REDEEMED'), counterpart.translate('TREES_ACCOUNTED'), 'success');
     }
   }

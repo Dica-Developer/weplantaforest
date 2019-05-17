@@ -54,7 +54,7 @@ export default class UserDetails extends Component {
 
   anonymizeUser(userId) {
     var that = this;
-    axios.post('http://localhost:8081/user/anonymize?userName=' + this.props.user.userName, {}, this.state.restConfig).then(function(response) {
+    axios.post('http://localhost:8081/user/anonymize?userName=' + encodeURIComponent(this.props.user.userName), {}, this.state.restConfig).then(function(response) {
       localStorage.setItem('jwt', '');
       localStorage.setItem('username', '');
       localStorage.setItem('isAdmin', false);

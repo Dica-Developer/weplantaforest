@@ -92,7 +92,7 @@ export default class MainPage extends Component {
               <RankingContainer title={counterpart.translate('LAST_PLANTED_TREES')}>
                 {this.state.lastPlantedTrees.content.map(function(content, i) {
                   let imageUrl = 'http://localhost:8081/treeType/image/' + content.treeTypeImageName + '/60/60';
-                  let linkTo = '/user/' + content.name;
+                  let linkTo = '/user/' + encodeURIComponent(content.name);
                   return (
                     <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
                       <RankingItemContentForNewest name={content.name} amount={content.amount} plantedOn={content.plantedOn}/>
@@ -113,7 +113,7 @@ export default class MainPage extends Component {
             <RankingContainer title={counterpart.translate('BEST_COMPANIES')}>
               {this.state.bestCompanyRanking.content.map(function(content, i) {
                 let imageUrl = createProfileImageUrl(content.imageName, 60, 60);
-                let linkTo = '/user/' + content.name;
+                let linkTo = '/user/' + encodeURIComponent(content.name);
                 return (
                   <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
                     <RankingItemContent content={content}/>
@@ -134,7 +134,7 @@ export default class MainPage extends Component {
             <RankingContainer title={counterpart.translate('BEST_PRIVATES')}>
               {this.state.bestUserRanking.content.map(function(content, i) {
                 let imageUrl = createProfileImageUrl(content.imageName, 60, 60);
-                let linkTo = '/user/' + content.name;
+                let linkTo = '/user/' + encodeURIComponent(content.name);
                 return (
                   <RankingItem key={i} imageUrl={imageUrl} linkTo={linkTo}>
                     <RankingItemContent content={content}/>

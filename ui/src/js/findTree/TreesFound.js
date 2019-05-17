@@ -31,7 +31,7 @@ export default class TreesFound extends Component {
         <div className="align-center">
           <div className="foundTreesHead">
             <h1>{counterpart.translate('CERTIFICATE_WORD')}&nbsp;#{this.props.certificateId}</h1>
-            {counterpart.translate('FROM')}:&nbsp;<Link to={'/user/' + this.props.certificate.creator.name}>
+            {counterpart.translate('FROM')}:&nbsp;<Link to={'/user/' + encodeURIComponent(this.props.certificate.creator.name)}>
               {this.props.certificate.creator.name}
             </Link><br/>
             {counterpart.translate('ABOUT_PLANTING')}&nbsp;<span className="bold">{this.state.treeCount}</span>&nbsp;{this.state.treeWord}

@@ -97,7 +97,7 @@ export default class DoPlanting extends Component {
           data.append('file', that.state.imageFile);
 
           axios.post('http://localhost:8081/plantSelf/upload', data, config).then(function(response) {
-            browserHistory.push('/user/' + localStorage.getItem('username'));
+            browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
           }).catch(function(response) {
             if (response instanceof Error) {
               console.error('Error', response.message);
@@ -109,7 +109,7 @@ export default class DoPlanting extends Component {
             }
           });
         }else{
-          browserHistory.push('/user/' + localStorage.getItem('username'));
+          browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
         }
       }).catch(function(response) {
         that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('TRY_AGAIN'), 'error');

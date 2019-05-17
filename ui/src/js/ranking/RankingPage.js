@@ -173,10 +173,10 @@ export default class RankingPage extends Component {
                 let profileUrl;
                 if (orgTypeDesc != 'Teams') {
                   imageUrl = createProfileImageUrl(content.imageName, 60, 60);
-                  profileUrl = '/user/' + content.name;
+                  profileUrl = '/user/' + encodeURIComponent(content.name);
                 } else {
                   imageUrl = createTeamImageUrl(content.imageName, 60, 60);
-                  profileUrl = '/team/' + content.name;
+                  profileUrl = '/team/' + encodeURIComponent(content.name);
                 }
                 if (i < 10) {
                   return (<RankingItemLarge profileUrl={profileUrl} imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);

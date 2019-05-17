@@ -79,7 +79,7 @@ class UserNameChanger extends Component {
   updateUsername() {
     var that = this;
     var config = getConfig();
-    axios.post('http://localhost:8083/user/changeName?userId=' + this.props.id + '&newUsername=' + this.state.newUsername, {}, config).then(function(response) {
+    axios.post('http://localhost:8083/user/changeName?userId=' + this.props.id + '&newUsername=' + encodeURIComponent(this.state.newUsername), {}, config).then(function(response) {
       that.props.closeEditBox(that.props.id, that.state.newUsername);
     }).catch(function(error) {
       that.refs.notification.handleError(error);

@@ -159,7 +159,7 @@ export default class TeamPage extends Component {
       children: (
         <div className="delete-confirmation align-center">
               <button onClick={() => {
-                browserHistory.push('/user/' + localStorage.getItem('username'));
+                browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
               }}>OK</button>
             </div>
       )
