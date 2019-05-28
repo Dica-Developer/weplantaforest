@@ -26,10 +26,10 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     
     public List<Cart> findCartsByIdIn(@Param("id") Long[] ids);
 
-    @Query(value = FIND_CARTS_BUY_USER_ID, nativeQuery = true)
+    @Query(value = FIND_CARTS_BUY_USER_ID)
     public List<Cart> findCartsByUserId(@Param("userId") long userId);
 
-    @Query(value = FIND_CART_BUY_USER_AND_INITIAL)
+    @Query(value = FIND_CART_BUY_USER_AND_INITIAL, nativeQuery = true)
     public Cart findCartByUserAndOpen(@Param("userId") long userId);
 
     @Query(value = FIND_VERIFIED_CARTS_BUY_USER_ID)
