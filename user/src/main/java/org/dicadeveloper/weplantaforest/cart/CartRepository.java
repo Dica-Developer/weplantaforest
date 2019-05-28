@@ -12,7 +12,7 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
 
     public final static String FIND_CARTS_BUY_USER_ID = "SELECT cart from Cart cart where cart.buyer.id = :userId";
 
-    public final static String FIND_CART_BUY_USER_AND_INITIAL = "SELECT cart from Cart cart where cart.buyer.id = :userId AND cart.cartState = \'INITIAL\' LIMIT 1";
+    public final static String FIND_CART_BUY_USER_AND_INITIAL = "SELECT * from Cart where _buyer__userId  = :userId AND _cartState = \'INITIAL\' LIMIT 1";
 
     public final static String FIND_VERIFIED_CARTS_BUY_USER_ID = "SELECT cart from Cart cart where cart.buyer.id = :userId AND cart.cartState = \'VERIFIED\'";
 
@@ -26,7 +26,7 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     
     public List<Cart> findCartsByIdIn(@Param("id") Long[] ids);
 
-    @Query(value = FIND_CARTS_BUY_USER_ID)
+    @Query(value = FIND_CARTS_BUY_USER_ID, nativeQuery = true)
     public List<Cart> findCartsByUserId(@Param("userId") long userId);
 
     @Query(value = FIND_CART_BUY_USER_AND_INITIAL)
