@@ -2,9 +2,12 @@ package org.dicadeveloper.weplantaforest.planting;
 
 import java.util.List;
 
+import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.cart.CartService;
 import org.dicadeveloper.weplantaforest.cart.CartState;
+import org.dicadeveloper.weplantaforest.code.Code;
+import org.dicadeveloper.weplantaforest.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
@@ -57,6 +60,8 @@ public class PlantPageController {
 
     private @NonNull CartService _cartService;
 
+    private @NonNull CodeRepository _codeRepostiory;
+
     @RequestMapping(value = Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", method = RequestMethod.GET)
     @Transactional
     public PlantBag getCartProposal(@PathVariable long targetedPrice) {
@@ -68,6 +73,16 @@ public class PlantPageController {
     public ResponseEntity<Long> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
         User buyer = _tokenAuthenticationService.getBuyer(userToken);
         if (buyer != null) {
+            final Cart previousUnpaidCart = _cartRepository.findCartByUserAndOpen(buyer.getId());
+            if (null != previousUnpaidCart) {
+                if (null != previousUnpaidCart.getCode()) {
+                    Code code = previousUnpaidCart.getCode();
+                    code.setCart(null);
+                    previousUnpaidCart.setCode(null);
+                    _codeRepostiory.delete(code);
+                }
+                _cartRepository.delete(previousUnpaidCart);
+            }
             long cartId = _cartService.createCartAndSave(plantBag, buyer, CartState.INITIAL);
             return new ResponseEntity<Long>(cartId, HttpStatus.OK);
         } else {

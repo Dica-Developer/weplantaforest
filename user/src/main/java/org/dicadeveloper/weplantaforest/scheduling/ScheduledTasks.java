@@ -28,7 +28,7 @@ public class ScheduledTasks {
 
     private static final Log LOG = LogFactory.getLog(ScheduledTasks.class.getName());
 
-    private final static long FOUR_HOURS_IN_MILLISECONDS = 14400000;
+    private final static long A_HALF_HOUR_IN_MILLISECONDS = 30 * 60 * 1000;
     
     private final static long DAY_IN_MILLISECONDS = 86400000;
 
@@ -53,9 +53,9 @@ public class ScheduledTasks {
     @Autowired
     private @NonNull Environment _env;
 
-    @Scheduled(fixedRate = FOUR_HOURS_IN_MILLISECONDS)
+    @Scheduled(fixedRate = A_HALF_HOUR_IN_MILLISECONDS)
     private void cleanUpInitialCarts() {
-        List<Cart> carts = _cartRepository.findInitialCartsOlderThanFourHours(System.currentTimeMillis());
+        List<Cart> carts = _cartRepository.findInitialCartsOlderThanHalfHour(System.currentTimeMillis());
         for (Cart cart : carts) {
             // quick fix because of fk constraint violations
             // TODO: if there's a code, there has to be also a Gift i think,
