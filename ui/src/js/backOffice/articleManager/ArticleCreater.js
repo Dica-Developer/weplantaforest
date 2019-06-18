@@ -111,7 +111,7 @@ export default class ArticleCreater extends Component {
       imageFile: null,
       article: {
         title: '',
-        articleType: 'HOME',
+        articleType: 'Partner',
         intro: '',
         paragraphs: [{}],
         lang: 'DEUTSCH',
