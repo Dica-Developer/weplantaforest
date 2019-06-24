@@ -77,6 +77,12 @@ export default class Overview extends Component {
         // Make a call to the REST api to execute the payment
         return actions.payment.execute().then(function(response) {
           //TODO: implement if/elso for paypal or creditcard payment and set paymentMethod 'PP' or 'KK'
+          let streetLine1 = response.payer.payer_info.shipping_address.line1 ? response.payer.payer_info.shipping_address.line1 : '';
+          let streetLine2 = response.payer.payer_info.shipping_address.line2 ? response.payer.payer_info.shipping_address.line2 : '';
+          let street = streetLine1 + ' ' + streetLine2;
+          if(street.length > 1024) {
+            street = street.substring(0, 1024);
+          }
           let paymentData = {
             cartId: that.props.cartId,
             giftId: that.props.giftId,
@@ -86,7 +92,7 @@ export default class Overview extends Component {
             title: '',
             forename: response.payer.payer_info.first_name,
             name: response.payer.payer_info.last_name,
-            street: response.payer.payer_info.shipping_address.line1 + response.payer.payer_info.shipping_address.line2,
+            street: street,
             country: response.payer.payer_info.shipping_address.country_code,
             city: response.payer.payer_info.shipping_address.city,
             zip: response.payer.payer_info.shipping_address.postal_code,
