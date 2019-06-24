@@ -143,7 +143,7 @@ export default class Sepa extends Component {
   }
 
   switchToGiftOverview() {
-    browserHistory.push('/gifts/' + localStorage.getItem('username'));
+    browserHistory.push('/gifts/' + encodeURIComponent($localStorage.getItem('username')));
   }
 
   selectCountry(val) {

@@ -33,14 +33,14 @@ export default class GiftOverview extends Component {
   componentDidMount() {
     var that = this;
     let config = getConfig();
-    axios.get('http://localhost:8081/gift/search/consignor?userName=' + this.state.userName, this.state.restConfig).then(function(response) {
+    axios.get('http://localhost:8081/gift/search/consignor?userName=' + encodeURIComponent(this.state.userName), this.state.restConfig).then(function(response) {
       var result = response.data;
       that.setState({consignorGifts: result});
     }).catch(function(error) {
       that.refs.notification.handleError(error);
     });
 
-    axios.get('http://localhost:8081/gift/search/recipient?userName=' + this.state.userName, this.state.restConfig).then(function(response) {
+    axios.get('http://localhost:8081/gift/search/recipient?userName=' + encodeURIComponent(this.state.userName), this.state.restConfig).then(function(response) {
       var result = response.data;
       that.setState({recipientGifts: result});
     }).catch(function(error) {
