@@ -83,7 +83,7 @@ public class Cart {
 	@Column(name = "_callBackVzid", length = 32)
 	private String callBackVzid;
 
-	@Column(name = "_callBackStrasse", length = 32)
+	@Column(name = "_callBackStrasse", length = 1024)
 	@JsonView(Views.LastCartDetails.class)
 	private String callBackStrasse;
 
