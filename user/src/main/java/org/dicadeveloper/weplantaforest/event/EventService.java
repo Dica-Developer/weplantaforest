@@ -5,6 +5,8 @@ import javax.transaction.Transactional;
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.cart.CartState;
+import org.dicadeveloper.weplantaforest.code.Code;
+import org.dicadeveloper.weplantaforest.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
@@ -20,22 +22,34 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired) )
 public class EventService {
 
-    private @NonNull EventRepository _eventRepository;
-    
-    private @NonNull CartRepository _cartRepository;
-    
+    @NonNull
+    private CartRepository _cartRepository;
+
+    @NonNull
+    private CodeRepository _codeRepository;
+
     @Transactional
     public void redeemEventCode(User recipient, String eventCode) throws IpatException{
         Cart cartForEventCode = _cartRepository.findCartByCode(eventCode);
-        IpatPreconditions.checkNotNull(cartForEventCode, ErrorCodes.CART_TO_EVENT_CODE_IS_NULL);
+        if (null == cartForEventCode) {
+            Code code = _codeRepository.findByCode(eventCode);
+            IpatPreconditions.checkNotNull(code, ErrorCodes.INVALID_CODE);
+            IpatPreconditions.checkNotNull(code.getEvent(), ErrorCodes.EVENT_IS_NULL);
+            cartForEventCode = _cartRepository.findOneCartByEventAndGenerated(code.getEvent().getId());
+            IpatPreconditions.checkNotNull(cartForEventCode, ErrorCodes.CART_TO_EVENT_CODE_IS_NULL);
+            cartForEventCode.setCode(code);
+            code.setCart(cartForEventCode);
+        } else {
+            IpatPreconditions.checkNotNull(cartForEventCode, ErrorCodes.CART_TO_EVENT_CODE_IS_NULL);
+        }
 
-        boolean isCartAlreadyVerified = cartForEventCode.getCartState().equals(CartState.VERIFIED);        
+        boolean isCartAlreadyVerified = cartForEventCode.getCartState().equals(CartState.VERIFIED);
         IpatPreconditions.checkArgument(!isCartAlreadyVerified, ErrorCodes.CODE_ALREADY_REDEEMED);
-        
+
         cartForEventCode.setCartState(CartState.VERIFIED);
         for (Tree cartTree : cartForEventCode.getTrees()) {
             cartTree.setOwner(recipient);
         }
-        _cartRepository.save(cartForEventCode);      
+        _cartRepository.save(cartForEventCode);
     }
 }

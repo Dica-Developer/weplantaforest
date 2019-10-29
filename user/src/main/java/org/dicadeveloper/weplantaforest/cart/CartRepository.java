@@ -21,9 +21,11 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     public final static String FIND_INITIAL_CARTS_OLDER_HALF_HOUR = "SELECT cart FROM Cart cart WHERE ((:time - cart.timeStamp) > 1800000) AND cart.cartState = \'INITIAL\'";
 
     public final static String FIND_RECEIPTABLE_CARTS = "select * from Cart where _cartState = 'VERIFIED' AND _receipt__receiptId IS NULL AND _receiptable is TRUE AND ((UNIX_TIMESTAMP() * 1000) - _timeStamp) > (4.838 * POWER(10, 9))";
-    
+
     public final static String FIND_LAST_PAYED_CART_BY_USER = "SELECT * FROM Cart WHERE _cartState IN( 'CALLBACK', 'VERIFIED') AND _callBackZahlungsart = 'SEPA' AND _buyer__userId = :userId ORDER BY _timeStamp DESC LIMIT 1";
-    
+
+    public static final String FIND_ONE_CART_BY_EVENT_AND_GENERATED = "SELECT * FROM Cart cart WHERE cart._cartState = 'GENERATED' AND cart._event__id = :eventId and _code__id IS NULL AND _gift__id IS NULL";
+
     public List<Cart> findCartsByIdIn(@Param("id") Long[] ids);
 
     @Query(value = FIND_CARTS_BUY_USER_ID)
@@ -46,5 +48,8 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
 
     @Query(value = FIND_LAST_PAYED_CART_BY_USER, nativeQuery = true)
     public Cart getDetailsOfLastCartByUser(@Param("userId") long userId);
+
+    @Query(value = FIND_ONE_CART_BY_EVENT_AND_GENERATED, nativeQuery = true)
+    public Cart findOneCartByEventAndGenerated(@Param("eventId") Long eventId);
 
 }
