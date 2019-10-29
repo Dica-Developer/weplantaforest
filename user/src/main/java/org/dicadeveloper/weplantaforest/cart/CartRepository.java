@@ -24,7 +24,7 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
 
     public final static String FIND_LAST_PAYED_CART_BY_USER = "SELECT * FROM Cart WHERE _cartState IN( 'CALLBACK', 'VERIFIED') AND _callBackZahlungsart = 'SEPA' AND _buyer__userId = :userId ORDER BY _timeStamp DESC LIMIT 1";
 
-    public static final String FIND_ONE_CART_BY_EVENT_AND_GENERATED = "SELECT * FROM Cart cart WHERE cart._cartState = 'GENERATED' AND cart._event__id = :eventId and _code__id IS NULL AND _gift__id IS NULL";
+    public static final String FIND_ONE_CART_BY_EVENT_AND_GENERATED = "SELECT * FROM Cart cart WHERE cart._cartState = 'GENERATED' AND cart._event__id = :eventId and _code__id IS NULL LIMIT 1";
 
     public List<Cart> findCartsByIdIn(@Param("id") Long[] ids);
 
