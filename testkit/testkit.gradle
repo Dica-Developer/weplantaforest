@@ -9,6 +9,6 @@ dependencies {
   compile('org.springframework.boot:spring-boot:'+ springBootVersion)
   compile('org.springframework.boot:spring-boot-test:' + springBootVersion)
   compile('org.springframework.restdocs:spring-restdocs-mockmvc:1.2.6.RELEASE')
-  compile 'org.flywaydb:flyway-core:6.0.8'
+  compile 'org.flywaydb:flyway-core:5.2.4'
   compile group: 'junit', name: 'junit', version: '4.13-rc-1'
 }
