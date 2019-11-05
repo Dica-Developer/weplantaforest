@@ -109,7 +109,7 @@ public class ArticleControllerTest {
 
         assertThat(_articleRepository.count()).isEqualTo(1L);
 
-        Article createdArticle = _articleRepository.findOne(1L);
+        Article createdArticle = _articleRepository.findById(1L).orElse(null);
         assertThat(createdArticle.getParagraphs()).isNotNull();
         assertThat(createdArticle.getParagraphs()
                                  .size()).isEqualTo(1);
@@ -141,13 +141,13 @@ public class ArticleControllerTest {
         MockMultipartFile image = new MockMultipartFile("file", "file.jpg","image/jpg", fileInputStream);
         MediaType mediaType = new MediaType("multipart", "form-data");
 
-        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/article/upload/image")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/article/upload/image")
                                               .file(image)                                         
                                               .contentType(mediaType)
                                               .param("articleId", "1"))
                .andExpect(status().isOk());
 
-        assertThat(_articleRepository.findOne(1L)
+        assertThat(_articleRepository.findById(1L).orElse(null)
                                      .getImageFileName()).isEqualTo("article_1_main.jpg");
         TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getArticleFolder()));
 
@@ -164,13 +164,13 @@ public class ArticleControllerTest {
 
         MediaType mediaType = new MediaType("multipart", "form-data");
 
-        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/paragraph/upload/image")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/paragraph/upload/image")
                                               .file(image)
                                               .contentType(mediaType)
                                               .param("articleId", "1")
                                               .param("paragraphId", "1"))
                .andExpect(status().isOk());
-        assertThat(_paragraphRepository.findOne(1L)
+        assertThat(_paragraphRepository.findById(1L).orElse(null)
                                        .getImageFileName()).isEqualTo("article_1_paragraph_1.jpg");
 
         TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getArticleFolder()));

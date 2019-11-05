@@ -92,8 +92,8 @@ public class ArticleController {
     public ResponseEntity<?> deleteeArticle(@RequestParam Long articleId) {
         try {
             List<Paragraph> paragraphs = _paragraphRepository.getParagraphsByArticleId(articleId);
-            _paragraphRepository.delete(paragraphs);
-            _articleRepository.delete(articleId);
+            _paragraphRepository.deleteAll(paragraphs);
+            _articleRepository.deleteById(articleId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             LOG.error("Error occured while deleting article!", e);
@@ -109,7 +109,7 @@ public class ArticleController {
                                                                                  .indexOf("."));
         try {
             imageName = _imageHelper.storeImage(file, folder, imageName, false);
-            Article articleForImage = _articleRepository.findOne(articleId);
+            Article articleForImage = _articleRepository.findById(articleId).orElse(null);
             articleForImage.setImageFileName(imageName);
             _articleRepository.save(articleForImage);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -127,7 +127,7 @@ public class ArticleController {
                                                                                                      .indexOf("."));
         try {
             imageName = _imageHelper.storeImage(file, folder, imageName, true);
-            Paragraph paragraphForImage = _paragraphRepository.findOne(paragraphId);
+            Paragraph paragraphForImage = _paragraphRepository.findById(paragraphId).orElse(null);
             paragraphForImage.setImageFileName(imageName);
             _paragraphRepository.save(paragraphForImage);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -147,7 +147,7 @@ public class ArticleController {
     @RequestMapping(value = "/backOffice/article", method = RequestMethod.GET)
     @JsonView(Views.BackofficeArticleView.class)
     public ResponseEntity<?> getArticleForBackoffice(@RequestParam long articleId) {
-        Article article = _articleRepository.findOne(articleId);
+        Article article = _articleRepository.findById(articleId).orElse(null);
         return new ResponseEntity<>(article, HttpStatus.OK);
     }
 
@@ -161,14 +161,14 @@ public class ArticleController {
     @RequestMapping(value = "/articlesPaged", method = RequestMethod.GET)
     @JsonView({ Views.UserArticleShortView.class })
     public ResponseEntity<?> getArticlesByType(@RequestParam ArticleType articleType, @RequestParam String language, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
-        Page<Article> articles = _articleRepository.getArticlesByType(articleType, Language.valueOf(language), new PageRequest(page, size));
+        Page<Article> articles = _articleRepository.getArticlesByType(articleType, Language.valueOf(language), PageRequest.of(page, size));
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/reports/article/{articleId}", method = RequestMethod.GET)
     @JsonView({ Views.UserArticleView.class })
     public Article getArticle(@PathVariable long articleId) {
-        return _articleRepository.findOne(articleId);
+        return _articleRepository.findById(articleId).orElse(null);
     }
 
     @RequestMapping(value = "/article/image/{articleId}/{imageName:.+}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")

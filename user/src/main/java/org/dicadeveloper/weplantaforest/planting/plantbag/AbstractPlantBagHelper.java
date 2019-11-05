@@ -56,7 +56,7 @@ public abstract class AbstractPlantBagHelper {
     protected List<ProjectArticle> createListOfAllAvailableProjectArticles() {
         List<ProjectArticle> projectArticles = new ArrayList<>();
         // only the active Projects
-        for (Project project : _projectRepository.active(new PageRequest(0, 100))) {
+        for (Project project : _projectRepository.active(PageRequest.of(0, 100))) {
             for (ProjectArticle article : project.getArticles()) {
                 // add only articles, where there are remaining trees to plant
                 if (areThereTreesRemaining(article)) {

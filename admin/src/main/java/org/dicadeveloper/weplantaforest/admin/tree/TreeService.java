@@ -21,8 +21,8 @@ public class TreeService {
     private @NonNull TreeRepository _treeRepository;
     
     public void transformTrees(Long fromUserId, Long toUserId) throws IpatException{
-        User fromUser = _userRepository.findOne(fromUserId);
-        User toUser = _userRepository.findOne(toUserId);
+        User fromUser = _userRepository.findById(fromUserId).orElse(null);
+        User toUser = _userRepository.findById(toUserId).orElse(null);
         IpatPreconditions.checkNotNull(fromUser, ErrorCodes.USER_NOT_FOUND);
         IpatPreconditions.checkNotNull(toUser, ErrorCodes.USER_NOT_FOUND);
         
@@ -31,7 +31,7 @@ public class TreeService {
             for(Tree tree : treesToTransform) {
                 tree.setOwner(toUser);
            }
-            _treeRepository.save(treesToTransform);
+            _treeRepository.saveAll(treesToTransform);
         }                                
     }
 }

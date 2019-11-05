@@ -36,13 +36,13 @@ public class TreeController {
 
     @RequestMapping(value = Uris.PLANT_FOR_USER, method = RequestMethod.POST)
     public ResponseEntity<?> plantForUser(@RequestParam Long userId, @RequestParam Long projectArticleId, @RequestParam int amount) {
-        if (_projectArticleRepository.exists(projectArticleId)) {
-            ProjectArticle article = _projectArticleRepository.findOne(projectArticleId);
+        if (_projectArticleRepository.existsById(projectArticleId)) {
+            ProjectArticle article = _projectArticleRepository.findById(projectArticleId).orElse(null);
             Long articleAmount = article.getAmount();
             Long alreadyPlanted = _treeRepository.countAlreadyPlantedTreesByProjectArticleId(projectArticleId);
             Long treesRemaining = articleAmount - alreadyPlanted;
 
-            User userToPlantFor = _userRepository.findOne(userId);
+            User userToPlantFor = _userRepository.findById(userId).orElse(null);
 
             if (amount <= treesRemaining) {
                 Long plantedOn = System.currentTimeMillis();
@@ -72,6 +72,6 @@ public class TreeController {
     @RequestMapping(value = Uris.TREES_BY_USER, method = RequestMethod.GET)
     @JsonView(Views.TreesByUser.class)
     public List<Tree> treesByUser(@RequestParam Long userId)  {
-       return _treeRepository.findByOwner(_userRepository.findOne(userId));
+       return _treeRepository.findByOwner(_userRepository.findById(userId).orElse(null));
     }
 }

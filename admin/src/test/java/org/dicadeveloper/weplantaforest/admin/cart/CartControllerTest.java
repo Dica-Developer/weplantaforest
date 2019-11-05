@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.admin.cart;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -82,7 +81,7 @@ public class CartControllerTest {
         _dbInjecter.injectProjectArticle(treeType, project, 1.0);
 
         _dbInjecter.injectTreeToProject(treeType, adam, 1, timeOfPlanting, project);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         List<Long> treeIdList = new ArrayList<>();
         treeIdList.add(1L);
@@ -107,21 +106,21 @@ public class CartControllerTest {
         _dbInjecter.injectProjectArticle(treeType, project, 1.0);
 
         _dbInjecter.injectTreeToProject(treeType, adam, 1, timeOfPlanting, project);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         List<Long> treeIdList = new ArrayList<>();
         treeIdList.add(1L);
 
         _dbInjecter.injectCart("Adam", treeIdList);
 
-        Cart cartBeforeChangedState = _cartRepository.findOne(1L);
+        Cart cartBeforeChangedState = _cartRepository.findById(1L).orElse(null);
 
         assertThat(cartBeforeChangedState.getCartState()).isNull();
 
         mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("cartId", "1").param("cartState", "VERIFIED"))
                 .andExpect(status().isOk());
 
-        Cart cartAfterChangedState = _cartRepository.findOne(1L);
+        Cart cartAfterChangedState = _cartRepository.findById(1L).orElse(null);
 
         assertThat(_cartRepository.count()).isEqualTo(1);
         assertThat(cartAfterChangedState.getCartState()).isEqualTo(CartState.VERIFIED);
@@ -146,17 +145,17 @@ public class CartControllerTest {
 
         _dbInjecter.injectCart("Adam", treeIdList);
 
-        Cart cartBeforeChangedState = _cartRepository.findOne(1L);
+        Cart cartBeforeChangedState = _cartRepository.findById(1L).orElse(null);
 
         assertThat(cartBeforeChangedState.getCartState()).isNull();
 
         assertThat(_treeRepository.count()).isEqualTo(1);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("cartId", "1").param("cartState", "DISCARDED"))
                 .andExpect(status().isOk());
 
-        Cart cartAfterChangedState = _cartRepository.findOne(1L);
+        Cart cartAfterChangedState = _cartRepository.findById(1L).orElse(null);
 
         assertThat(_cartRepository.count()).isEqualTo(1);
         assertThat(cartAfterChangedState.getCartState()).isEqualTo(CartState.DISCARDED);
@@ -166,7 +165,7 @@ public class CartControllerTest {
     @Test
     public void testChangeCartStateBadRequestCauseOfNonExistingCartId() throws Exception {
         _dbInjecter.injectUser("Adam");
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         mockMvc.perform(post(Uris.CHANGE_CART_STATE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("cartId", "1").param("cartState", "VERIFIED"))
                 .andExpect(status().isBadRequest());

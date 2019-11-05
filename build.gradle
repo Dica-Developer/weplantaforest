@@ -3,7 +3,7 @@ plugins {
 }
 
 ext {
-  springBootVersion = '1.5.22.RELEASE'
+  springBootVersion = '2.2.0.RELEASE'
 }
 
 repositories {
@@ -43,11 +43,14 @@ subprojects { sub ->
     resolutionStrategy {
       failOnVersionConflict()
       force 'org.slf4j:slf4j-api:1.7.25'
-      force 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
-      force 'org.springframework:spring-web:4.3.22.RELEASE'
-      force 'org.springframework:spring-webmvc:4.3.25.RELEASE'
       force 'org.checkerframework:checker-qual:2.10.0'
       force 'com.google.errorprone:error_prone_annotations:2.3.3'
+      force 'org.springframework:spring-web:5.2.0.RELEASE'
+      force 'org.springframework:spring-test:5.2.0.RELEASE'
+      force 'org.springframework:spring-webmvc:5.2.0.RELEASE'
+      force 'net.bytebuddy:byte-buddy:1.9.11'
+      force 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
+      force 'org.junit.jupiter:junit-jupiter-api:5.5.2'
     }
   }
 }

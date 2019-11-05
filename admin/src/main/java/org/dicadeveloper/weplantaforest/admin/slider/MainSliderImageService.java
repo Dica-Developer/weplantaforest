@@ -38,7 +38,7 @@ public class MainSliderImageService {
 
     @Transactional
     public ResponseEntity<?> uploadImageFile(Long imageId, MultipartFile file) {
-        MainSliderImage image = _mainSliderImageRepository.findOne(imageId);
+        MainSliderImage image = _mainSliderImageRepository.findById(imageId).orElse(null);
         String imageFolder = FileSystemInjector.getMainImageFolder();
         String imageName;
         if (image.getImageFileName() != null) {
@@ -62,11 +62,11 @@ public class MainSliderImageService {
 
     public ResponseEntity<?> deleteImage(Long imageId) {
         try {
-            MainSliderImage mainSliderImage = _mainSliderImageRepository.findOne(imageId);
+            MainSliderImage mainSliderImage = _mainSliderImageRepository.findById(imageId).orElse(null);
             String imageFolder = FileSystemInjector.getMainImageFolder();
             String imageName = mainSliderImage.getImageFileName();
             _imageHelper.deleteImage(imageFolder, imageName);
-            _mainSliderImageRepository.delete(imageId);
+            _mainSliderImageRepository.deleteById(imageId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -89,7 +89,7 @@ public class ProjectControllerTest {
         project.setShopActive(true);
         project.setVisible(true);
         project.setManager(_userRepository.findByName("ProjectManager"));
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         mockMvc.perform(post(Uris.PROJECT_CREATE).header("X-AUTH-TOKEN", userToken)
                                                  .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -111,7 +111,7 @@ public class ProjectControllerTest {
         project.setLongitude(2.0f);
         project.setShopActive(true);
         project.setVisible(true);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         mockMvc.perform(post(Uris.PROJECT_CREATE).header("X-AUTH-TOKEN", userToken)
                                                  .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -130,7 +130,7 @@ public class ProjectControllerTest {
         assertThat(_projectRepository.count()).isEqualTo(1L);
         assertThat(_projectArticleRepository.count()).isEqualTo(1L);
         assertThat(_projectImageRepository.count()).isEqualTo(1L);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         mockMvc.perform(delete(Uris.PROJECT_DELETE).header("X-AUTH-TOKEN", userToken)
                                                    .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -148,9 +148,9 @@ public class ProjectControllerTest {
         Project project = _dbInjecter.injectProject("project", manager, "desc", true, 1.0f, 1.0f);
         TreeType treeType = _dbInjecter.injectTreeType("wood", "wood desc", 0.5);
         _dbInjecter.injectProjectArticle(treeType, project, 10, 1.0, 1.0);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
-        List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
+        List<ProjectArticle> articles = _projectArticleRepository.findByProject(_projectRepository.findById(1L).orElse(null));
 
         assertThat(articles.size()).isEqualTo(1);
 
@@ -160,7 +160,7 @@ public class ProjectControllerTest {
                                                          .param("projectId", "1"))
                .andExpect(status().isOk());
 
-        List<ProjectArticle> articlesAfterRemove = _projectArticleRepository.findByProject(_projectRepository.findOne(1L));
+        List<ProjectArticle> articlesAfterRemove = _projectArticleRepository.findByProject(_projectRepository.findById(1L).orElse(null));
 
         assertThat(articlesAfterRemove.size()).isEqualTo(0);
     }
@@ -169,7 +169,7 @@ public class ProjectControllerTest {
     public void testAddProjectImage() throws Exception {
         User manager = _dbInjecter.injectUser("manager");
         _dbInjecter.injectProject("project 1", manager, "desc", true, 1.0f, 1.0f);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
                                           .size()).isEqualTo(0);
@@ -192,7 +192,7 @@ public class ProjectControllerTest {
 
         MediaType mediaType = new MediaType("multipart", "form-data");
 
-        mockMvc.perform(MockMvcRequestBuilders.fileUpload(Uris.PROJECT_IMAGE_UPLOAD)
+        mockMvc.perform(MockMvcRequestBuilders.multipart(Uris.PROJECT_IMAGE_UPLOAD)
                                               .file(image)
                                               .header("X-AUTH-TOKEN", userToken)
                                               .contentType(mediaType)

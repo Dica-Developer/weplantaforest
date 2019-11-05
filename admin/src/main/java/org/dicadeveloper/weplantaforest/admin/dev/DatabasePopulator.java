@@ -162,7 +162,7 @@ public class DatabasePopulator {
                 projectImage.setDescription("<mlpr>GERMAN<equ>Bildbeschreibung " + j  +"<sep>ENGLISH<equ>image description " + j  +"<sep>ITALIAN<equ>projecto descriptiones<sep>");
                 projectImage.setImageFileName("project" + i + "_" + j + ".jpg");
                 projectImage.setDate(100000000L * j);
-                projectImage.setProject(_projectRepository.findOne((long) i));
+                projectImage.setProject(_projectRepository.findById((long) i).orElse(null));
                 _projectImageRepository.save(projectImage);
             }
         }
@@ -288,7 +288,7 @@ public class DatabasePopulator {
             cart.setCallBackNachname("Nachname");
             cart.setCallBackFirma(DEFAULT_USERS.get(i % 10) + " Industries");
             Tree tree = new Tree();
-            ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
+            ProjectArticle projectArticle = _projectArticleRepository.findById(1L).orElse(null);
             tree.setAmount(i % 10 + 1);
             tree.setProjectArticle(projectArticle);
             tree.setTreeType(projectArticle.getTreeType());

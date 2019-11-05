@@ -166,7 +166,7 @@ public class DbInjecter {
         ProjectImage image = new ProjectImage();
         image.setDate(date);
         image.setDescription(description);
-        image.setProject(_projectRepository.findOne(projectId));
+        image.setProject(_projectRepository.findById(projectId).orElse(null));
         image.setTitle(title);
 
         _projectImageRepository.save(image);
@@ -195,7 +195,7 @@ public class DbInjecter {
         Cart cart = new Cart();
         cart.setBuyer(buyer);
 
-        Tree tree = _treeRepository.findOne(treeId);
+        Tree tree = _treeRepository.findById(treeId).orElse(null);
 
         CartItem cartItem = new CartItem();
         cartItem.setBasePricePerPiece(new BigDecimal(1.0));

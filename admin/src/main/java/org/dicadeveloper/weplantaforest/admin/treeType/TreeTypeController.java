@@ -50,7 +50,7 @@ public class TreeTypeController {
     public ResponseEntity<?> deleteTreeType(@RequestParam Long TreeTypeId) {
 
         try {
-            _treeTypeRepository.delete(TreeTypeId);
+            _treeTypeRepository.deleteById(TreeTypeId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             if (e instanceof DataIntegrityViolationException) {
@@ -65,7 +65,7 @@ public class TreeTypeController {
     @RequestMapping(value = Uris.TREETYPE_IMAGE_UPLOAD, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> uploadUserImage(@RequestParam Long treeTypeId, @RequestParam("file") MultipartFile file) {
-        TreeType treeType = _treeTypeRepository.findOne(treeTypeId);
+        TreeType treeType = _treeTypeRepository.findById(treeTypeId).orElse(null);
         String fileEnding;
         if (file.getOriginalFilename()
                 .length() > 0) {

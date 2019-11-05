@@ -56,7 +56,7 @@ public class ProjectController {
     @JsonView(Views.ProjectData.class)
     public ResponseEntity<?> getProject(@RequestParam long projectId) {
         try {
-            Project project = _projectRepository.findOne(projectId);
+            Project project = _projectRepository.findById(projectId).orElse(null);
             return new ResponseEntity<>(project, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -118,13 +118,13 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_DELETE, method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteProject(@RequestParam Long id) {
         try {
-            if (_projectRepository.exists(id)) {
-                Project project = _projectRepository.findOne(id);
+            if (_projectRepository.existsById(id)) {
+                Project project = _projectRepository.findById(id).orElse(null);
                 List<ProjectArticle> articles = _projectArticleRepository.findByProject(project);
                 List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(id);
-                _projectImageRepository.delete(images);
-                _projectArticleRepository.delete(articles);
-                _projectRepository.delete(id);
+                _projectImageRepository.deleteAll(images);
+                _projectArticleRepository.deleteAll(articles);
+                _projectRepository.deleteById(id);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -139,7 +139,7 @@ public class ProjectController {
         if (_treeRepository.countAlreadyPlantedTreesByProjectArticleId(articleId) > 0) {
             return new ResponseEntity<>("Du kannst diesen Projektartikel nicht löschen, da davon schon Bäume gepflanzt wurden.", HttpStatus.BAD_REQUEST);
         } else {
-            _projectArticleRepository.delete(articleId);
+            _projectArticleRepository.deleteById(articleId);
             return new ResponseEntity<>(HttpStatus.OK);
 
         }
@@ -148,7 +148,7 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_MAIN_IMAGE, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> addMainImage(@RequestParam Long projectId, @RequestParam("file") MultipartFile file) {
-        Project project = _projectRepository.findOne(projectId);
+        Project project = _projectRepository.findById(projectId).orElse(null);
         
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -170,7 +170,7 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_IMAGE_CREATE_EDIT, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> createEditProjectImageData(@RequestBody ProjectImageRequest projectImageRequest) {
-        Project project = _projectRepository.findOne(projectImageRequest.getProjectId());
+        Project project = _projectRepository.findById(projectImageRequest.getProjectId()).orElse(null);
         
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -178,7 +178,7 @@ public class ProjectController {
         else{
             ProjectImage projectImage;
             if(projectImageRequest.getImageId() != null){
-                projectImage = _projectImageRepository.findOne(projectImageRequest.getImageId());
+                projectImage = _projectImageRepository.findById(projectImageRequest.getImageId()).orElse(null);
                 projectImage.setTitle(projectImageRequest.getTitle());
                 projectImage.setDescription(projectImageRequest.getDescription());
             }else{
@@ -194,7 +194,7 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_IMAGE_UPLOAD, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> uploadUserImage(@RequestParam Long imageId, @RequestParam("file") MultipartFile file) {
-            ProjectImage projectImage =  _projectImageRepository.findOne(imageId);
+            ProjectImage projectImage =  _projectImageRepository.findById(imageId).orElse(null);
             String imageFolder = FileSystemInjector.getImageFolderForProjects();
             String imageName ;
             if(projectImage.getImageFileName() != null){
@@ -220,7 +220,7 @@ public class ProjectController {
     
     @RequestMapping(value = Uris.PROJECT_IMAGE_DELETE, method = RequestMethod.POST)
     public ResponseEntity<?> removeProjectImage(@RequestParam Long projectImageId, @RequestParam String imageFileName) {
-        _projectImageRepository.delete(projectImageId);
+        _projectImageRepository.deleteById(projectImageId);
         //TODO: delete image file on filesystem
         return new ResponseEntity<>(HttpStatus.OK);
     }

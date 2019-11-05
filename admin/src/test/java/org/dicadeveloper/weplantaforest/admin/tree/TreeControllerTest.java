@@ -69,7 +69,7 @@ public class TreeControllerTest {
 
         Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
        
         mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("userId", "1")
@@ -78,7 +78,7 @@ public class TreeControllerTest {
                .andExpect(status().isOk());
         assertThat(_treeRepository.count()).isEqualTo(1);
 
-        Tree plantedTreeForUser = _treeRepository.findOne(1L);
+        Tree plantedTreeForUser = _treeRepository.findById(1L).orElse(null);
 
         assertThat(plantedTreeForUser.getOwner()
                                      .getName()).isEqualTo("Adam");
@@ -96,7 +96,7 @@ public class TreeControllerTest {
 
         Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
         
         mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("userId", "1")
@@ -113,7 +113,7 @@ public class TreeControllerTest {
         Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
         _dbInjecter.injectTreeToProject(treeType, adam, 91, System.currentTimeMillis(), project);
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
         
         mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                     .param("userId", "1")

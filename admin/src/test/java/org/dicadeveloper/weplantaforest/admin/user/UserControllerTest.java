@@ -54,7 +54,7 @@ public class UserControllerTest {
         _dbInjecter.injectUser("Adam");
         _dbInjecter.injectUser("Bert");
         _dbInjecter.injectUser("Claus");
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
         mockMvc.perform(get("/users").accept("application/json").header("X-AUTH-TOKEN", userToken))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.[0].name").value("Adam"))

@@ -30,7 +30,7 @@ public class UserController {
 
     @RequestMapping(value = Uris.USERNAME_CHANGE, method = RequestMethod.POST)
     public ResponseEntity<?> updateUsername(@RequestParam long userId, @RequestParam String newUsername) {
-        User user = _userRepository.findOne(userId);
+        User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
             if (_userRepository.userExists(newUsername) == 1) {
                 return new ResponseEntity<>(String.format("Ein Nutzer mit diesem Namen(%s) existiert bereits. ", newUsername), HttpStatus.BAD_REQUEST);
@@ -46,7 +46,7 @@ public class UserController {
     
     @RequestMapping(value = Uris.MAIL_CHANGE, method = RequestMethod.POST)
     public ResponseEntity<?> updateMailaddress(@RequestParam long userId, @RequestParam String newMail) {
-        User user = _userRepository.findOne(userId);
+        User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
             if (_userRepository.userWithMailExists(newMail) == 1) {
                 return new ResponseEntity<>(String.format("Es existiert bereits ein User mit dieser EMail Adresse(%s).", newMail), HttpStatus.BAD_REQUEST);
@@ -62,7 +62,7 @@ public class UserController {
     
     @RequestMapping(value = Uris.ACTIVE_CHANGE, method = RequestMethod.POST)
     public ResponseEntity<?> updateActiveFlag(@RequestParam long userId, @RequestParam boolean activeFlag){
-        User user = _userRepository.findOne(userId);
+        User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
             user.setEnabled(activeFlag);
             _userRepository.save(user);
@@ -74,7 +74,7 @@ public class UserController {
     
     @RequestMapping(value = Uris.BANNED_CHANGE, method = RequestMethod.POST)
     public ResponseEntity<?> updateBannedFlag(@RequestParam long userId, @RequestParam boolean bannedFlag){
-        User user = _userRepository.findOne(userId);
+        User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
             user.setBanned(bannedFlag);
             _userRepository.save(user);
@@ -86,7 +86,7 @@ public class UserController {
     
     @RequestMapping(value = Uris.ROLE_ADMIN_CHANGE, method = RequestMethod.POST)
     public ResponseEntity<?> updateAdminRole(@RequestParam long userId, @RequestParam boolean shouldBeAdmin){
-        User user = _userRepository.findOne(userId);
+        User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
                if(shouldBeAdmin && !user.hasRole(Role.ADMIN)){
                    user.addRole(Role.ADMIN);                   
@@ -102,7 +102,7 @@ public class UserController {
     
     @RequestMapping(value = Uris.ROLE_ARTICLE_MANAGER_CHANGE, method = RequestMethod.POST)
     public ResponseEntity<?> updateArticleManagerRole(@RequestParam long userId, @RequestParam boolean shouldBeArticleManager){
-        User user = _userRepository.findOne(userId);
+        User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
                if(shouldBeArticleManager && !user.hasRole(Role.ARTICLE_MANAGER)){
                    user.addRole(Role.ARTICLE_MANAGER);                   

@@ -3,13 +3,11 @@ package org.dicadeveloper.weplantaforest.admin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-import org.springframework.hateoas.config.EnableEntityLinks;
 
 @SpringBootApplication
-@EnableEntityLinks
 @EntityScan(basePackageClasses = { WeplantaforestAdminApplication.class, Jsr310JpaConverters.class })
 @ComponentScan(basePackages = {"org.dicadeveloper.weplantaforest.*"})
 public class WeplantaforestAdminApplication extends SpringBootServletInitializer {

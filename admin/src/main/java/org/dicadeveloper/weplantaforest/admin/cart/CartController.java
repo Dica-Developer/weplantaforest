@@ -45,7 +45,7 @@ public class CartController {
     @Transactional
     @JsonView(Views.CartDetails.class)
     public Cart getCartDetails(@PathVariable(value = "cartId") Long cartId) {
-        return _cartRepository.findOne(cartId);
+        return _cartRepository.findById(cartId).orElse(null);
     }
     
     @PostMapping(value = "/cart/receiptable")
@@ -56,8 +56,8 @@ public class CartController {
 
     @RequestMapping(value = Uris.CHANGE_CART_STATE, method = RequestMethod.POST)
     public ResponseEntity<?> changeCartState(@RequestParam Long cartId, @RequestParam CartState cartState) {
-        if (_cartRepository.exists(cartId)) {
-            Cart cart = _cartRepository.findOne(cartId);
+        if (_cartRepository.existsById(cartId)) {
+            Cart cart = _cartRepository.findById(cartId).orElse(null);
             cart.setCartState(cartState);
             if (CartState.DISCARDED.equals(cartState)) {
                 List<Tree> treesToDelete = new ArrayList<>();
@@ -66,7 +66,7 @@ public class CartController {
                     treesToDelete.add(tree);
                     cartItem.removeTree();
                 }
-                _treeRepository.delete(treesToDelete);
+                _treeRepository.deleteAll(treesToDelete);
             }
             _cartRepository.save(cart);
             return new ResponseEntity<>(HttpStatus.OK);

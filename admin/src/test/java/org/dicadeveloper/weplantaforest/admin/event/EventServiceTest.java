@@ -74,7 +74,7 @@ public class EventServiceTest {
     @Test
     public void testBUpdateEvent() {
         String updatedEventName = "Event update";
-        Event eventToUpdate = _eventRepository.findOne(1L);
+        Event eventToUpdate = _eventRepository.findById(1L).orElse(null);
         eventToUpdate.setName(updatedEventName);
         try {
             _eventService.update(eventToUpdate);
@@ -82,7 +82,7 @@ public class EventServiceTest {
             fail(String.format("Error when updating event\nerrorCode: %s", e.getErrorInfos().get(0).getErrorCode()));
         }
         assertEquals(1L, _eventRepository.count());
-        Event updatedEvent = _eventRepository.findOne(1L);
+        Event updatedEvent = _eventRepository.findById(1L).orElse(null);
         assertEquals(updatedEventName, updatedEvent.getName());
     }
 
@@ -122,7 +122,7 @@ public class EventServiceTest {
             fail(String.format("Error in deleting event\nerrorCode: %s", e.getErrorInfos().get(0).getErrorCode()));
         }
         
-        assertNull(_eventRepository.findOne(1L));
+        assertNull(_eventRepository.findById(1L));
         assertEquals(0, _cartRepository.count());
         assertEquals(0, _codeRepository.count());
     }

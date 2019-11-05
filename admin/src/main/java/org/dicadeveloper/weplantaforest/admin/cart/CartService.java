@@ -31,7 +31,7 @@ public class CartService {
     }
     
     public Cart setReceiptable(Long cartId, boolean receiptable) {
-        Cart cart = _cartRepository.findOne(cartId);
+        Cart cart = _cartRepository.findById(cartId).orElse(null);
         cart.setReceiptable(receiptable);
         _cartRepository.save(cart);
         return cart;
@@ -41,7 +41,7 @@ public class CartService {
         String query = "SELECT * FROM Cart ";
         if(areThereFilterOptionsSet(cartRequest)) {
             query += "WHERE ";
-            query = addCartStateReqstriction(cartRequest, query);        
+            query = addCartStateReqstriction(cartRequest, query);
             query = addFromRestriction(cartRequest, query);
             query = addToRestriction(cartRequest, query);
             query = query.substring(0, query.length() - 3);

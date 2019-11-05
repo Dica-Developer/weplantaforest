@@ -38,7 +38,7 @@ public class EventService {
     }
 
     public Event getEvent(Long eventId) throws IpatException {        
-        Event event = _eventRepository.findOne(eventId);
+        Event event = _eventRepository.findById(eventId).orElse(null);
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_IS_NULL);
         return event;
     }
@@ -71,7 +71,7 @@ public class EventService {
 
     @Transactional
     public void generateCodes(Long eventId, List<Long> cartIds) throws IpatException {
-        Event event = _eventRepository.findOne(eventId);
+        Event event = _eventRepository.findById(eventId).orElse(null);
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_NOT_FOUND);
         for (int i = 0; i < cartIds.size(); i++) {
             generateCode(event, cartIds.get(i));
@@ -79,7 +79,7 @@ public class EventService {
     }
 
     private void generateCode(Event event, Long cartId) throws IpatException {
-        Cart cart = _cartRepository.findOne(cartId);
+        Cart cart = _cartRepository.findById(cartId).orElse(null);
         IpatPreconditions.checkNotNull(event, ErrorCodes.CART_IS_NULL);
         Code code = _codeService.generateCode();
         code.setEvent(event);
