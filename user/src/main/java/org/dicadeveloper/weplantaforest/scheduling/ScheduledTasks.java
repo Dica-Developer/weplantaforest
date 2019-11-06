@@ -67,7 +67,7 @@ public class ScheduledTasks {
                 _codeRepostiory.delete(code);
             }
         }
-        _cartRepository.delete(carts);
+        _cartRepository.deleteAll(carts);
         LOG.info("deleted initial carts(" + carts.size() + ") and their trees");
     }
     

@@ -316,7 +316,7 @@ public class DatabasePopulator {
                 projectImage.setDescription(" image description " + j);
                 projectImage.setImageFileName("project" + i + "_" + j + ".jpg");
                 projectImage.setDate(100000000L * j);
-                projectImage.setProject(_projectRepository.findOne((long) i));
+                projectImage.setProject(_projectRepository.findById((long) i).orElse(null));
                 _projectImageRepository.save(projectImage);
             }
         }
@@ -431,7 +431,7 @@ public class DatabasePopulator {
         cart.setBuyer(buyer);
         cart.setCartState(CartState.VERIFIED);
         Tree tree = new Tree();
-        ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
+        ProjectArticle projectArticle = _projectArticleRepository.findById(1L).orElse(null);
         tree.setAmount(2);
         tree.setProjectArticle(projectArticle);
         tree.setTreeType(projectArticle.getTreeType());
@@ -450,7 +450,7 @@ public class DatabasePopulator {
         certificate.generateAndSetNumber(0);
 
         List<Cart> carts = new ArrayList<>();
-        carts.add(_cartRepository.findOne(1L));
+        carts.add(_cartRepository.findById(1L).orElse(null));
         certificate.setCarts(carts);
 
         _certificateRepository.save(certificate);
@@ -477,8 +477,8 @@ public class DatabasePopulator {
         // receipt with one cart
         Receipt receipt = new Receipt();
         receipt.setInvoiceNumber("10001/2016");
-        receipt.setOwner(_userRepository.findOne(1L));
-        Cart cart = _cartRepository.findOne(1L);
+        receipt.setOwner(_userRepository.findById(1L).orElse(null));
+        Cart cart = _cartRepository.findById(1L).orElse(null);
         cart.setCallBackFirma("0815 Company");
         cart.setCallBackVorname("Hans");
         cart.setCallBackNachname("Wurst");
@@ -518,7 +518,7 @@ public class DatabasePopulator {
                 cart.setTimeStamp(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(5) * j);
 
                 Tree tree = new Tree();
-                ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
+                ProjectArticle projectArticle = _projectArticleRepository.findById(1L).orElse(null);
                 tree.setAmount(2);
                 tree.setProjectArticle(projectArticle);
                 tree.setTreeType(projectArticle.getTreeType());

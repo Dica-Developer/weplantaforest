@@ -51,7 +51,7 @@ public class SelfPlantDataToTreeConverterTest {
         selfPlantData.setLatitude(2.0f);
 
         long timeNow = System.currentTimeMillis();
-        Tree tree = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantData, _userRepository.findOne(1L));
+        Tree tree = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantData, _userRepository.findById(1L).orElse(null));
 
         assertThat(tree.getOwner().getName()).isEqualTo("Adam");
         assertThat(tree.getAmount()).isEqualTo(10);

@@ -106,7 +106,7 @@ public class PlantPageControllerPostMethodTest {
     @Test
     @Rollback(false)
     public void testDonateTreesSatusOk() throws Exception {
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
                                                 .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
@@ -139,7 +139,7 @@ public class PlantPageControllerPostMethodTest {
 
         assertThat(_treeRepository.count()).isEqualTo(1L);
 
-        ProjectArticle projectArticle = _projectArticleRepository.findOne(1L);
+        ProjectArticle projectArticle = _projectArticleRepository.findById(1L).orElse(null);
         long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
         assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
 
@@ -147,7 +147,7 @@ public class PlantPageControllerPostMethodTest {
                                   .getTrees()
                                   .get(0)
                                   .getId();
-        Tree createdTree = _treeRepository.findOne(createdTreeId);
+        Tree createdTree = _treeRepository.findById(createdTreeId).orElse(null);
         assertThat(createdTree.getAmount()).isEqualTo(3);
         assertThat(createdTree.getOwner()
                               .getName()).isEqualTo("Adam");
@@ -158,7 +158,7 @@ public class PlantPageControllerPostMethodTest {
     @Test
     @Rollback(false)
     public void testDonateTreesWithMultipleEntriesSatusOk() throws Exception {
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(2L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(2L).orElse(null));
 
         PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
                                                 .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
@@ -186,7 +186,7 @@ public class PlantPageControllerPostMethodTest {
         assertThat(_treeRepository.count()).isEqualTo(3L);
 
         for (int i = 1; i <= 3; i++) {
-            ProjectArticle projectArticle = _projectArticleRepository.findOne((long) i);
+            ProjectArticle projectArticle = _projectArticleRepository.findById((long) i).orElse(null);
             long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
             assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
 
@@ -194,7 +194,7 @@ public class PlantPageControllerPostMethodTest {
                                       .getTrees()
                                       .get(i - 1)
                                       .getId();
-            Tree tree = _treeRepository.findOne(createdTreeId);
+            Tree tree = _treeRepository.findById(createdTreeId).orElse(null);
             assertThat(tree.getOwner()
                            .getName()).isEqualTo("Bert");
         }

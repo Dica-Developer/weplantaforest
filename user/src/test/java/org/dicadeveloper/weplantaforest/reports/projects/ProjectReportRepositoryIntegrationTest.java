@@ -72,7 +72,7 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Test
     public void testGetActiveProjectReportWithoutPlantedTrees() {
-        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
+        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()
@@ -109,7 +109,7 @@ public class ProjectReportRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
 
-        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
+        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()
@@ -141,7 +141,7 @@ public class ProjectReportRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 10, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
 
-        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
+        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()
@@ -169,7 +169,7 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Test
     public void testGetActiveProjectReportWithTwoProjectsWithoutPlantedTrees() {
-        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
+        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()
@@ -226,7 +226,7 @@ public class ProjectReportRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 100, timeOfPlanting, "Project B");
         _dbInjecter.injectTreeToProject("doow", "Adam", 200, timeOfPlanting, "Project B");
 
-        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
+        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()
@@ -279,7 +279,7 @@ public class ProjectReportRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
 
-        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(new PageRequest(0, 5));
+        Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
         assertThat(projects.getContent()

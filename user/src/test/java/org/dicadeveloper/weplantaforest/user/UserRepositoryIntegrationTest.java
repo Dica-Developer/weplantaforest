@@ -51,11 +51,11 @@ public class UserRepositoryIntegrationTest {
         _dbInjecter.injectUser("Adam", 100000L, OrganizationType.PRIVATE);
         _dbInjecter.injectUser("Bert");
 
-        User adam = _userRepository.findOne(1L);
+        User adam = _userRepository.findById(1L).orElse(null);
 
         Team team = new Team();
         team.setName("team");
-        team.setAdmin(_userRepository.findOne(2L));
+        team.setAdmin(_userRepository.findById(2L).orElse(null));
         _teamRepository.save(team);
         adam.setTeam(team);
         _userRepository.save(adam);

@@ -38,7 +38,7 @@ public class ReceiptService {
     protected final Log LOG = LogFactory.getLog(ReceiptService.class.getName());
 
     public void sendReceiptMail(Long userId, Long receiptId) {
-        Receipt receipt = _receiptRepository.findOne(receiptId);
+        Receipt receipt = _receiptRepository.findById(receiptId).orElse(null);
         PdfReceiptView pdf = new PdfReceiptView();
         File pdfFile = new File("Spendenquittung_" + receipt.getInvoiceNumber().replaceAll("/", "-") + ".pdf");
         FileOutputStream fos = null;
@@ -47,7 +47,7 @@ public class ReceiptService {
         } catch (FileNotFoundException e1) {
             LOG.error("Error occured while creating PDF file! ", e1);
         }
-        User user = _userRepository.findOne(userId);
+        User user = _userRepository.findById(userId).orElse(null);
         try {
             pdf.writePdfDataToOutputStream(fos, RELATIVE_STATIC_IMAGES_PATH, receipt);
             new Thread(new Runnable() {

@@ -64,8 +64,8 @@ public class EventServiceTest {
         assertEquals(1, _cartRepository.count());
         assertEquals(1, _eventRepository.count());
         assertEquals(1, _codeRepository.count());
-        assertEquals(CartState.GENERATED, _cartRepository.findOne(1L).getCartState());
-        Tree tree = _treeRepository.findOne(1L);
+        assertEquals(CartState.GENERATED, _cartRepository.findById(1L).orElse(null).getCartState());
+        Tree tree = _treeRepository.findById(1L).orElse(null);
         assertEquals(5, tree.getAmount());
         assertEquals("eventUser", tree.getOwner().getName());
 
@@ -77,8 +77,8 @@ public class EventServiceTest {
             fail(String.format("No Exception expected, when redeeming a gift code.\nerrorCode: %s", e.getErrorInfos().get(0).getErrorCode()));
         }
         
-        assertEquals(CartState.VERIFIED, _cartRepository.findOne(1L).getCartState());
-        tree = _treeRepository.findOne(1L);
+        assertEquals(CartState.VERIFIED, _cartRepository.findById(1L).orElse(null).getCartState());
+        tree = _treeRepository.findById(1L).orElse(null);
         assertEquals(5, tree.getAmount());
         assertEquals("redeemer", tree.getOwner().getName());
 

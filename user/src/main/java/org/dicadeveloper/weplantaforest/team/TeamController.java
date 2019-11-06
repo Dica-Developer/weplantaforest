@@ -2,7 +2,6 @@ package org.dicadeveloper.weplantaforest.team;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -25,7 +24,6 @@ import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -103,7 +101,7 @@ public class TeamController {
 		if (null == teamReportData) {
 		    try {
 		        Long teamId = Long.parseLong(teamName);
-		        Team team = _teamRepository.findOne(teamId);
+		        Team team = _teamRepository.findById(teamId).orElse(null);
 		        return new ResponseEntity<>("https://www.iplantatree.org/team/" + URLEncoder.encode(team.getName(), StandardCharsets.UTF_8.toString()), HttpStatus.PAYMENT_REQUIRED);
 		    } catch (Exception e) {
 		        LOG.warn("Did not find team with id: " + teamName, e);
@@ -134,7 +132,7 @@ public class TeamController {
 	@JsonView(Views.TeamMember.class)
 	public ResponseEntity<?> getTeamMember(@RequestParam String teamName, @RequestParam("page") int page,
 			@RequestParam("size") int size) {
-		Page<User> teamMember = _userRepository.getTeamMember(teamName, new PageRequest(page, size));
+		Page<User> teamMember = _userRepository.getTeamMember(teamName, PageRequest.of(page, size));
 		return new ResponseEntity<>(teamMember, HttpStatus.OK);
 	}
 

@@ -87,9 +87,9 @@ public class PlantBagToCartConverter {
 
     private Tree createTree(int amount, long plantedOn, User owner, long projectArticleId) {
         Tree tree = new Tree();
-        Project project = _projectArticleRepository.findOne(projectArticleId)
+        Project project = _projectArticleRepository.findById(projectArticleId).orElse(null)
                                                    .getProject();
-        ProjectArticle projectArticle = _projectArticleRepository.findOne(projectArticleId);
+        ProjectArticle projectArticle = _projectArticleRepository.findById(projectArticleId).orElse(null);
 
         tree.setAmount(amount);
         tree.setTreeType(projectArticle.getTreeType());

@@ -62,7 +62,7 @@ public class SelfPlantController {
                                         .substring(file.getOriginalFilename()
                                                        .indexOf("."));
 
-        Tree tree = _treeRepository.findOne(treeId);
+        Tree tree = _treeRepository.findById(treeId).orElse(null);
         if (!file.isEmpty()) {
             try {
                 _imageHelper.storeImage(file, imageFolder, imageName, false);

@@ -75,15 +75,15 @@ public class CartRepositoryIntegrationTest {
         Tree tree = new Tree();
         tree.setAmount(2);
         tree.setPlantedOn(timeOfPlanting);
-        tree.setProjectArticle(_projectArticleRepository.findOne(1L));
-        tree.setTreeType(_treeTypeRepository.findOne(1L));
+        tree.setProjectArticle(_projectArticleRepository.findById(1L).orElse(null));
+        tree.setTreeType(_treeTypeRepository.findById(1L).orElse(null));
 
         CartItem cartItem = new CartItem();
         cartItem.setTree(tree);
         cart.addCartItem(cartItem);
         _cartRepository.save(cart);
 
-        Cart savedCart = _cartRepository.findOne(1L);
+        Cart savedCart = _cartRepository.findById(1L).orElse(null);
 
         assertThat(savedCart.getCartItems()
                             .size()).isEqualTo(1);
@@ -164,8 +164,8 @@ public class CartRepositoryIntegrationTest {
         tree.setAmount(1);
         tree.setPlantedOn(timeOfPlanting);
         tree.setSubmittedOn(timeOfPlanting);
-        tree.setTreeType(_treeTypeRepository.findOne(1L));
-        tree.setProjectArticle(_projectArticleRepository.findOne(1L));
+        tree.setTreeType(_treeTypeRepository.findById(1L).orElse(null));
+        tree.setProjectArticle(_projectArticleRepository.findById(1L).orElse(null));
 
         CartItem cartItem = new CartItem();
         cartItem.setBasePricePerPiece(new BigDecimal(1.0));

@@ -191,7 +191,7 @@ public class CertificateControllerTest {
     @Test
     @Rollback(false)
     public void testCreateCertificatePdf() throws Exception {
-        String certNumber = _certificateRepository.findOne(1L)
+        String certNumber = _certificateRepository.findById(1L).orElse(null)
                                                   .getNumber();
 
         mockMvc.perform(get(Uris.CERTIFICATE_PDF + certNumber).contentType(TestUtil.APPLICATION_JSON_UTF8)

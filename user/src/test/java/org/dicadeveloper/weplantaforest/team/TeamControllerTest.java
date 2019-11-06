@@ -170,7 +170,7 @@ public class TeamControllerTest {
 		User teamLeader = _userRepository.findByName("TeamLeader");
 		String userToken = _tokenAuthenticationService.getTokenFromUser(teamLeader);
 
-		Team team = _teamRepository.findOne(1L);
+		Team team = _teamRepository.findById(1L).orElse(null);
 		// set member of team
 		User teamMember = _userRepository.findByName("TeamMember");
 		teamMember.setTeam(team);

@@ -53,7 +53,7 @@ public class ReceiptController {
 
     @RequestMapping(value = Uris.RECEIPT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<?> createReceiptPdf(HttpServletResponse response, @RequestParam Long receiptId) {
-        Receipt receipt = _receiptRepository.findOne(receiptId);
+        Receipt receipt = _receiptRepository.findById(receiptId).orElse(null);
         PdfReceiptView pdf = new PdfReceiptView();
 
         try {

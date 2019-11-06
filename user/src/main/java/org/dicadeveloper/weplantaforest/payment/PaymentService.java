@@ -1,7 +1,5 @@
 package org.dicadeveloper.weplantaforest.payment;
 
-import java.util.Locale;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.cart.Cart;
@@ -54,7 +52,7 @@ public class PaymentService {
     }
 
     private void payViaSepa(PaymentData paymentData) throws IpatException {
-        Cart cartToPay = _cartRepository.findOne(paymentData.getCartId());
+        Cart cartToPay = _cartRepository.findById(paymentData.getCartId()).orElse(null);
         IpatPreconditions.checkNotNull(cartToPay, ErrorCodes.CART_IS_NULL);
         String paymentRequestResponse = _paymentHelper.postRequestSepa(cartToPay, paymentData);
         IpatPreconditions.checkArgument(!_paymentHelper.isConnectionError(paymentRequestResponse), ErrorCodes.BANK_CONNECTION_ERROR);
@@ -63,7 +61,7 @@ public class PaymentService {
             cartToPay.setCallBackValuesAndStateToCallBack(paymentData);
             _cartRepository.save(cartToPay);
             if (paymentData.getGiftId() != null) {
-                Gift giftToPay = _giftRepository.findOne(paymentData.getGiftId());
+                Gift giftToPay = _giftRepository.findById(paymentData.getGiftId()).orElse(null);
                 giftToPay.setStatus(Status.UNREDEEMED);
                 _giftRepository.save(giftToPay);
             }
@@ -75,7 +73,7 @@ public class PaymentService {
     }
 
     private void submitPaypalOrCreditCardPayedPlantbag(PaymentData paymentData) throws IpatException {
-        Cart cartToSubmit = _cartRepository.findOne(paymentData.getCartId());
+        Cart cartToSubmit = _cartRepository.findById(paymentData.getCartId()).orElse(null);
         IpatPreconditions.checkNotNull(cartToSubmit, ErrorCodes.CART_IS_NULL);
         cartToSubmit.setCallBackValuesAndStateToCallBack(paymentData);
         _cartRepository.save(cartToSubmit);

@@ -87,7 +87,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "Claus", 50, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Dirk", 10, timeOfPlanting);
 
-        Page<TreeRankedUserData> ruList = _rankingRepository.getBestUser(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, new PageRequest(0, 5));
+        Page<TreeRankedUserData> ruList = _rankingRepository.getBestUser(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, PageRequest.of(0, 5));
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.getTotalElements()).isEqualTo(4);
@@ -107,7 +107,7 @@ public class RankingRepositoryIntegrationTest {
 
     @Test
     public void testGetLastUserRanking() {
-        List<TimeRankedUserData> ruList = _rankingRepository.getLastCreatedUser(new PageRequest(0, 10));
+        List<TimeRankedUserData> ruList = _rankingRepository.getLastCreatedUser(PageRequest.of(0, 10));
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.size()).isEqualTo(10);
@@ -127,7 +127,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
-        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, OrganizationType.PRIVATE, new PageRequest(0, 5));
+        Page<TreeRankedUserData> privateList = _rankingRepository.getBestUserFromOrganizationType(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, OrganizationType.PRIVATE, PageRequest.of(0, 5));
 
         assertThat(privateList).isNotNull();
         assertThat(privateList.getTotalElements()).isEqualTo(2);
@@ -160,7 +160,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Bert", 1, 100000L, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 1, 100000L, "Project");
 
-        Page<TimeRankedTreeData> treeList = _rankingRepository.getLastPlantedTrees(new PageRequest(0, 10));
+        Page<TimeRankedTreeData> treeList = _rankingRepository.getLastPlantedTrees(PageRequest.of(0, 10));
 
         assertThat(treeList).isNotNull();
         assertThat(treeList.getContent().size()).isEqualTo(10);
@@ -182,7 +182,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTree("wood", "Bert", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
 
-        Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, new PageRequest(0, 5));
+        Page<TreeRankedUserData> treeList = _rankingRepository.getBestTeams(timeOfPlanting + TimeConstants.YEAR_IN_MILLISECONDS, PageRequest.of(0, 5));
 
         assertThat(treeList).isNotNull();
         assertThat(treeList.getTotalElements()).isEqualTo(1);
@@ -214,7 +214,7 @@ public class RankingRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlantingTwoWeeksBefore, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 1, timeOfPlantingTwoWeeksBefore, "Project");
 
-        List<TreeRankedUserData> lastWeekList = _rankingRepository.getBestUserFromTimeRange(timeOfOneWeekBefore, timeOfPlanting, new PageRequest(0, 5));
+        List<TreeRankedUserData> lastWeekList = _rankingRepository.getBestUserFromTimeRange(timeOfOneWeekBefore, timeOfPlanting, PageRequest.of(0, 5));
 
         assertThat(lastWeekList).isNotNull();
         assertThat(lastWeekList.size()).isEqualTo(2);
@@ -227,7 +227,7 @@ public class RankingRepositoryIntegrationTest {
         assertThat(lastWeekList.get(1)
                                .getAmount()).isEqualTo(2);
 
-        List<TreeRankedUserData> lastYearList = _rankingRepository.getBestUserFromTimeRange(timeOfOneYearBefore, timeOfPlanting, new PageRequest(0, 5));
+        List<TreeRankedUserData> lastYearList = _rankingRepository.getBestUserFromTimeRange(timeOfOneYearBefore, timeOfPlanting, PageRequest.of(0, 5));
 
         assertThat(lastYearList).isNotNull();
         assertThat(lastYearList.size()).isEqualTo(3);

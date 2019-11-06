@@ -77,7 +77,7 @@ public class ProjectOfferControllerSendMailTests {
     @Test
     public void testSendprojectOfferWithUserId() throws Exception {
         _dbInjecter.injectUser("Adam");
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         ProjectOfferData offer = new ProjectOfferData();
         offer.first = "Hans";

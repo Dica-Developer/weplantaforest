@@ -101,7 +101,7 @@ public class GiftService {
     }
 
     public void createGiftPdf(long giftId, HttpServletResponse response) throws IpatException {
-        Gift gift = _giftRepository.findOne(giftId);
+        Gift gift = _giftRepository.findById(giftId).orElse(null);
         IpatPreconditions.checkNotNull(gift, ErrorCodes.GIFT_IS_NULL);
         Code code = gift.getCode();
         String codeString = code.getCode();

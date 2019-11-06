@@ -68,7 +68,7 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
     private void addActiveProjectsToPlantPageData() {
         HashMap<String, ProjectData> projectMap = new HashMap<>();
         plantPageData.setProjects(projectMap);
-        for (Project project : _projectRepository.active(new PageRequest(0, 5))) {
+        for (Project project : _projectRepository.active(PageRequest.of(0, 5))) {
             ProjectData projectData = new ProjectData();
             String projectName = project.getName();
 

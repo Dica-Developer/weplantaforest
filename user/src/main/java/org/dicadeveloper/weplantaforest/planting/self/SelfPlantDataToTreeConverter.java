@@ -33,7 +33,7 @@ public class SelfPlantDataToTreeConverter {
 
         tree.setImagePath(selfPlantData.getImageName());
    
-        tree.setTreeType(_treeTypeRepository.findOne(selfPlantData.getTreeTypeId()));
+        tree.setTreeType(_treeTypeRepository.findById(selfPlantData.getTreeTypeId()).orElse(null));
         tree.setDescription(selfPlantData.getDescription());
         tree.setLongitude(selfPlantData.getLongitude());
         tree.setLatitude(selfPlantData.getLatitude());

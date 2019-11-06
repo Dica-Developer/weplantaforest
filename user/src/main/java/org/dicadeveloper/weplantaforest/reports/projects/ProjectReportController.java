@@ -9,7 +9,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
-import org.dicadeveloper.weplantaforest.projects.AreaPositions;
 import org.dicadeveloper.weplantaforest.projects.Project;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticleRepository;
@@ -56,7 +55,7 @@ public class ProjectReportController {
 
     @RequestMapping(value = Uris.REPORT_ALL_PROJECTS, method = RequestMethod.GET)
     public ResponseEntity<?> getAllProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
-        Page<ProjectReportData> projectReports = _projectReportRepository.getAllProjects(new PageRequest(page, size));
+        Page<ProjectReportData> projectReports = _projectReportRepository.getAllProjects(PageRequest.of(page, size));
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
     
@@ -65,7 +64,7 @@ public class ProjectReportController {
     @JsonView(Views.ProjectDetails.class)
     public ResponseEntity<?> getAllProjectsPaged(@Param(value = "page") int page, @Param(value = "size") int size) {
         try {
-            Iterable<Project> projects = _projectReportRepository.active(new PageRequest(page, size));
+            Iterable<Project> projects = _projectReportRepository.active(PageRequest.of(page, size));
             return new ResponseEntity<>(projects, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,7 +80,7 @@ public class ProjectReportController {
 
     @RequestMapping(value = Uris.REPORT_INACTIVE_PROJECTS, method = RequestMethod.GET)
     public ResponseEntity<?> getInActiveProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
-        Page<ProjectReportData> projectReports = _projectReportRepository.getInActiveProjects(new PageRequest(page, size));
+        Page<ProjectReportData> projectReports = _projectReportRepository.getInActiveProjects(PageRequest.of(page, size));
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
 

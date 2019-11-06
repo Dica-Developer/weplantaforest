@@ -71,7 +71,7 @@ public class SimplePlantBagToCartConverterTest {
     @Test
     @Rollback(false)
     public void testConvertFromPlantPageDataToCartOneItem() {
-        User buyer = _userRepository.findOne(1L);
+        User buyer = _userRepository.findById(1L).orElse(null);
         SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wood", "Project A")
                                                       .build();
 
@@ -97,7 +97,7 @@ public class SimplePlantBagToCartConverterTest {
     @Test
     @Rollback(false)
     public void testConvertFromPlantPageDataToCartTwoItems() {
-        User buyer = _userRepository.findOne(1L);
+        User buyer = _userRepository.findById(1L).orElse(null);
         SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wood", "Project A")
                                                       .createSimplePlantItemAndAddToSimplePlantBag(1, 100, "doow", "Project A")
                                                       .build();
@@ -137,7 +137,7 @@ public class SimplePlantBagToCartConverterTest {
     @Test
     @Rollback(false)
     public void testConvertFromPlantPageDataToCartThreeItems() {
-        User buyer = _userRepository.findOne(1L);
+        User buyer = _userRepository.findById(1L).orElse(null);
         SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wood", "Project A")
                                                       .createSimplePlantItemAndAddToSimplePlantBag(1, 100, "doow", "Project A")
                                                       .createSimplePlantItemAndAddToSimplePlantBag(2, 100, "wodo", "Project A")
@@ -193,7 +193,7 @@ public class SimplePlantBagToCartConverterTest {
     @Test
     @Rollback(false)
     public void testSavetoDBAfterConversion() {
-        User buyer = _userRepository.findOne(1L);
+        User buyer = _userRepository.findById(1L).orElse(null);
         SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wood", "Project A")
                                                       .build();
 

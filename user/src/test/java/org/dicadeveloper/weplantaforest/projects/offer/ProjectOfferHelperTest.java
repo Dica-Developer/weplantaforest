@@ -226,7 +226,7 @@ public class ProjectOfferHelperTest {
     public void testCreateMailTextWithUser() {
         _dbInjecter.injectUser("Hans", "hans@wurst.de");
 
-        User user = _userRepository.findOne(1L);
+        User user = _userRepository.findById(1L).orElse(null);
 
         ProjectOfferData offer = new ProjectOfferData();
         offer.first = "Hans";

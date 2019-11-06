@@ -83,7 +83,7 @@ public class SelfPlantControllerTest {
     @Rollback(false)
     public void testSelfPlantStatusOk() throws Exception {
         SelfPlantData selfPlantData = new SelfPlantData();
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         // selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(timeOfPlanting);
@@ -101,7 +101,7 @@ public class SelfPlantControllerTest {
         long timeNow = System.currentTimeMillis();
         assertThat(_treeRepository.count()).isEqualTo(1L);
 
-        Tree savedTree = _treeRepository.findOne(1L);
+        Tree savedTree = _treeRepository.findById(1L).orElse(null);
 
         assertThat(savedTree.getAmount()).isEqualTo(10);
         assertThat(savedTree.getLongitude()).isEqualTo(1.0f);

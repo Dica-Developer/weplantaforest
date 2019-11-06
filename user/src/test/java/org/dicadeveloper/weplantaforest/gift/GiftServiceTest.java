@@ -81,12 +81,12 @@ public class GiftServiceTest {
     @Transactional
     public void testBRedeemGiftCode() {
         User recipient = _dbInjecter.injectUser("Recipient");
-        Code code = _codeRepository.findOne(1L);
-        Tree tree = _treeRepository.findOne(1L);
+        Code code = _codeRepository.findById(1L).orElse(null);
+        Tree tree = _treeRepository.findById(1L).orElse(null);
         assertEquals(5, tree.getAmount());
         assertEquals("Adam", tree.getOwner()
                                  .getName());
-        Gift gift = _giftRepository.findOne(1L);
+        Gift gift = _giftRepository.findById(1L).orElse(null);
         gift.setStatus(Status.UNREDEEMED);
         _giftRepository.save(gift);
         try {
@@ -97,9 +97,9 @@ public class GiftServiceTest {
                                                                                                      .getErrorCode()));
         }
 
-        gift = _giftRepository.findOne(1L);
+        gift = _giftRepository.findById(1L).orElse(null);
         assertEquals(Status.REDEEMED, gift.getStatus());
-        tree = _treeRepository.findOne(1L);
+        tree = _treeRepository.findById(1L).orElse(null);
         assertEquals(5, tree.getAmount());
         assertEquals("Recipient", tree.getOwner()
                                       .getName());

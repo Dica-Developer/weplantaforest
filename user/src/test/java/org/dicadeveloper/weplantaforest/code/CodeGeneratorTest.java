@@ -52,7 +52,7 @@ public class CodeGeneratorTest {
         gift.setCode(code);
         _giftRepository.save(gift);
 
-        Gift savedGiftWithCode = _giftRepository.findOne(1L);
+        Gift savedGiftWithCode = _giftRepository.findById(1L).orElse(null);
 
         assertThat(_giftRepository.count()).isEqualTo(1);
         assertThat(savedGiftWithCode.getCode()).isNotNull();
@@ -72,7 +72,7 @@ public class CodeGeneratorTest {
         gift.setCode(code);
         _giftRepository.save(gift);
 
-        Gift savedGiftWithCode = _giftRepository.findOne(1L);
+        Gift savedGiftWithCode = _giftRepository.findById(1L).orElse(null);
 
         assertThat(_giftRepository.count()).isEqualTo(1);
         assertThat(savedGiftWithCode.getCode()).isNotNull();
@@ -96,7 +96,7 @@ public class CodeGeneratorTest {
         event.setCodes(codes);
         _eventRepository.save(event);
 
-        Event savedEventWithCode = _eventRepository.findOne(1L);
+        Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
         assertThat(savedEventWithCode.getCodes()
@@ -124,7 +124,7 @@ public class CodeGeneratorTest {
         event.setCodes(codes);
         _eventRepository.save(event);
 
-        Event savedEventWithCode = _eventRepository.findOne(1L);
+        Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
         assertThat(savedEventWithCode.getCodes()
@@ -161,7 +161,7 @@ public class CodeGeneratorTest {
              .addAll(codes);
         _eventRepository.save(event);
 
-        Event savedEventWithCode = _eventRepository.findOne(1L);
+        Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
         assertThat(savedEventWithCode.getCodes()
@@ -192,7 +192,7 @@ public class CodeGeneratorTest {
         event.setCodes(codes);
         _eventRepository.save(event);
 
-        Event savedEventWithCode = _eventRepository.findOne(1L);
+        Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
         assertThat(savedEventWithCode.getCodes()
@@ -229,7 +229,7 @@ public class CodeGeneratorTest {
              .addAll(codes);
         _eventRepository.save(event);
 
-        Event savedEventWithCode = _eventRepository.findOne(1L);
+        Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
         assertThat(savedEventWithCode.getCodes()

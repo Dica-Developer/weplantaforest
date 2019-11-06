@@ -33,7 +33,7 @@ public class TeamService {
 	private @NonNull ImageHelper _imageHelper;
 
 	public Team createTeam(Team team, Long userId) throws IpatException {
-	    User admin = _userRepository.findOne(userId);
+	    User admin = _userRepository.findById(userId).orElse(null);
 		boolean teamNameDoesNotExists = _teamRepository.findByName(team.getName()) == null;
 		IpatPreconditions.checkArgument(teamNameDoesNotExists, ErrorCodes.TEAM_NAME_ALREADY_EXISTS);
 		team.setAdmin(admin);
@@ -45,21 +45,21 @@ public class TeamService {
 	}
 
 	public void joinTeam(Long userId, Long teamId) throws IpatException {
-		User user = _userRepository.findOne(userId);
-		Team team = _teamRepository.findOne(teamId);
+		User user = _userRepository.findById(userId).orElse(null);
+		Team team = _teamRepository.findById(teamId).orElse(null);
 		IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
 		user.setTeam(team);
 		_userRepository.save(user);
 	}
 
 	public void leaveTeam(Long userId) throws IpatException {
-		User user = _userRepository.findOne(userId);
+		User user = _userRepository.findById(userId).orElse(null);
 		user.setTeam(null);
 		_userRepository.save(user);
 	}
 
 	public boolean isTeamAdmin(Long userId, Long teamId) {
-		Team team = _teamRepository.findOne(teamId);
+		Team team = _teamRepository.findById(teamId).orElse(null);
 		return team.getAdmin().getId().equals(userId);
 	}
 
@@ -74,7 +74,7 @@ public class TeamService {
 	}
 
 	public void deleteTeam(User user, Long teamId) throws IpatException {
-		Team team = _teamRepository.findOne(teamId);
+		Team team = _teamRepository.findById(teamId).orElse(null);
 		IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
 		boolean isAdminOfTeam = user.getId().equals(team.getAdmin().getId());
 		IpatPreconditions.checkArgument(isAdminOfTeam, ErrorCodes.NO_ADMIN_OF_TEAM);
@@ -84,12 +84,12 @@ public class TeamService {
 			member.setTeam(null);
 			_userRepository.save(member);
 		}
-		_teamRepository.delete(teamId);
+		_teamRepository.deleteById(teamId);
 	}
 
 	public void uploadTeamImage(Long teamId, MultipartFile file) throws IpatException {
 		IpatPreconditions.checkArgument(!file.isEmpty(), ErrorCodes.EMPTY_FILE);
-		Team team = _teamRepository.findOne(teamId);
+		Team team = _teamRepository.findById(teamId).orElse(null);
 		IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
 
 		String imageFolder = FileSystemInjector.getTeamFolder();
@@ -110,7 +110,7 @@ public class TeamService {
 	}
 
 	public void editTeam(Long teamId, String toEdit, String newEntry) {
-		Team team = _teamRepository.findOne(teamId);
+		Team team = _teamRepository.findById(teamId).orElse(null);
 		switch (toEdit) {
 		case "description":
 			team.setDescription(newEntry);

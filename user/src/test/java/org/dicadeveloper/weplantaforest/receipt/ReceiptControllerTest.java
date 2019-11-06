@@ -70,7 +70,7 @@ public class ReceiptControllerTest {
         _dbInjecter.injectUser("Adam");
         _dbInjecter.injectReceipt("Adam", createAndSentDate, createAndSentDate, "12345");
 
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         mockMvc.perform(get((Uris.RECEIPTS)).accept("application/json")
                                             .header("X-AUTH-TOKEN", userToken))

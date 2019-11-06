@@ -94,7 +94,7 @@ public class PlantPageController {
     @RequestMapping(value = Uris.PLANT_FOR_USER, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<List<Long>> plantForUser(@RequestBody PlantForUserRequest plantForUserRequest) throws IpatException {
-        User buyer = _userRepsoitory.findOne(plantForUserRequest.getUserId());
+        User buyer = _userRepsoitory.findById(plantForUserRequest.getUserId()).orElse(null);
         IpatPreconditions.checkNotNull(buyer, ErrorCodes.USER_NOT_FOUND);
         _plantPageDataValidator.validatePlantBag(plantForUserRequest.getPlantBag());
         List<Long> cartIds = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()), (int) plantForUserRequest.getAmountOfPlantBags());

@@ -59,7 +59,7 @@ public class DummyPdfController {
 
     @RequestMapping(value = "/certificate/pdf/test", method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<?> createCertificatePdf(HttpServletResponse response) {
-        User user = _userRepository.findOne(1L);
+        User user = _userRepository.findById(1L).orElse(null);
 
         Long[] cartIds = { 1L };
 
@@ -95,7 +95,7 @@ public class DummyPdfController {
 
     @RequestMapping(value = "/certificate/pdf/test2", method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<?> createCertificatePdf2(HttpServletResponse response) {
-        User user = _userRepository.findOne(1L);
+        User user = _userRepository.findById(1L).orElse(null);
 
         Long[] cartIds = { 1L };
 
@@ -131,7 +131,7 @@ public class DummyPdfController {
 
     @RequestMapping(value = "/receipt/pdf/test", method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<?> createReceiptPdf(HttpServletResponse response) {
-        Receipt receipt = _receiptRepository.findOne(1L);
+        Receipt receipt = _receiptRepository.findById(1L).orElse(null);
 
         PdfReceiptView pdf = new PdfReceiptView();
 

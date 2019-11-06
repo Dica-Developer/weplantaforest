@@ -284,7 +284,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit aboutme should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals("aboutme", editedUser.getAboutMe());
     }
@@ -299,7 +299,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit location should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals("location", editedUser.getLocation());
     }
@@ -314,7 +314,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit organisation should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals("organisation", editedUser.getOrganisation());
     }
@@ -329,7 +329,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit homepage should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals("homepage", editedUser.getHomepage());
     }
@@ -366,7 +366,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit mail should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals("edited_user@iplantatree.de", editedUser.getMail());
     }
@@ -381,7 +381,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit newsletter should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals(true, editedUser.isNewsletter());
     }
@@ -396,7 +396,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit organiization type should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals(OrganizationType.COMMERCIAL, editedUser.getOrganizationType());
     }
@@ -411,7 +411,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit language should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals(Language.ENGLISH, editedUser.getLang());
     }
@@ -426,7 +426,7 @@ public class UserServiceTest {
                                 .getErrorCode();
             fail("edit language should not fail here\nerrorCode:" + errorCode);
         }
-        User editedUser = _userRepository.findOne(2L);
+        User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals(_passwordEncrypter.encryptPassword("new_password"), editedUser.getPassword());
     }

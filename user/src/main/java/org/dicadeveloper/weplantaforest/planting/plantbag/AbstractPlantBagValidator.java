@@ -107,7 +107,7 @@ public abstract class AbstractPlantBagValidator {
 
     protected boolean isThereEnoughTreesRemainingForThisArticle(String projectName, String articleName, long wantedToPlant) {
         Long articleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectName, articleName);
-        ProjectArticle article = _projectArticleRepository.findOne(articleId);
+        ProjectArticle article = _projectArticleRepository.findById(articleId).orElse(null);
         Long articleAmount = article.getAmount();
         Long alreadyPlanted = _treeRepository.countAlreadyPlantedTreesByProjectArticle(article);
         Long treesRemaining = articleAmount - alreadyPlanted;

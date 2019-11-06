@@ -67,7 +67,7 @@ public class CartControllerTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 100, 1.0, 0.5);
         dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlanting, "Project A");
 
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         List<Long> treeIds = new ArrayList<>();
         treeIds.add(1L);
@@ -101,7 +101,7 @@ public class CartControllerTest {
         dbInjecter.injectTreeToProject("wood", "Adam", 3, timeOfPlanting, "Project A");
         dbInjecter.injectTreeToProject("doow", "Adam", 4, timeOfPlanting, "Project A");
 
-        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
         List<Long> treeIds = new ArrayList<>();
         treeIds.add(1L);
