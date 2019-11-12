@@ -1,15 +1,7 @@
 plugins {
+  id 'org.springframework.boot' version "${springBootVersion}"
   id 'com.github.ben-manes.versions' version '0.27.0'
 }
-
-repositories {
-  mavenCentral()
-  maven { url "https://repo.spring.io/snapshot" }
-  maven { url "https://repo.spring.io/milestone" }
-}
-
-sourceCompatibility = '1.11'
-targetCompatibility = '1.11'
 
 dependencies {
   annotationProcessor 'org.projectlombok:lombok:1.18.10'

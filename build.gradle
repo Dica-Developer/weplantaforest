@@ -3,7 +3,7 @@ plugins {
 }
 
 ext {
-  springBootVersion = '2.2.0.RELEASE'
+  springBootVersion = '2.2.1.RELEASE'
 }
 
 repositories {
@@ -16,9 +16,6 @@ apply from: "${rootDir}/gradle/envInfo.gradle"
 
 repositories {
   mavenCentral()
-  maven {
-    url "http://repo.spring.io/milestone"
-  }
 }
 
 // start - check early and fail on dependency resolution during configuration
@@ -37,23 +34,6 @@ allprojects { project ->
   }
 }
 // end - check early and fail on dependency resolution during configuration
-
-subprojects { sub ->
-  sub.configurations.all {
-    resolutionStrategy {
-      failOnVersionConflict()
-      force 'org.slf4j:slf4j-api:1.7.25'
-      force 'org.checkerframework:checker-qual:2.10.0'
-      force 'com.google.errorprone:error_prone_annotations:2.3.3'
-      force 'org.springframework:spring-web:5.2.0.RELEASE'
-      force 'org.springframework:spring-test:5.2.0.RELEASE'
-      force 'org.springframework:spring-webmvc:5.2.0.RELEASE'
-      force 'net.bytebuddy:byte-buddy:1.9.11'
-      force 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
-      force 'org.junit.jupiter:junit-jupiter-api:5.5.2'
-    }
-  }
-}
 
 version = '0.1'
 

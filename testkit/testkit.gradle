@@ -1,14 +1,11 @@
 plugins {
+  id 'org.springframework.boot' version "${springBootVersion}"
   id 'com.github.ben-manes.versions' version '0.27.0'
 }
-
-sourceCompatibility = '1.11'
-targetCompatibility = '1.11'
 
 dependencies {
   compile('org.springframework.boot:spring-boot:'+ springBootVersion)
   compile('org.springframework.boot:spring-boot-test:' + springBootVersion)
-  compile('org.springframework.restdocs:spring-restdocs-mockmvc:2.0.4.RELEASE')
   compile 'org.flywaydb:flyway-core:5.2.4'
   compile group: 'junit', name: 'junit', version: '4.12'
 }

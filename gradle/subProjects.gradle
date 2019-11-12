@@ -1,10 +1,9 @@
 subprojects {
   apply plugin: 'java'
-  apply plugin: 'idea'
   apply plugin: 'eclipse'
 
-  sourceCompatibility = 1.8
-  targetCompatibility = 1.8
+  sourceCompatibility = '1.11'
+  targetCompatibility = '1.11'
   compileJava.options.encoding = 'UTF-8'
 
   repositories {
@@ -16,16 +15,14 @@ subprojects {
   configurations.all {
     resolutionStrategy {
       failOnVersionConflict()
-      force 'org.ow2.asm:asm-debug-all:5.0.4'
-      force 'org.ow2.asm:asm:5.0.3'
-      force 'org.springframework:spring-core:4.2.6.RELEASE'
-      force 'org.springframework:spring-beans:4.2.6.RELEASE'
-      force 'org.springframework:spring-context:4.2.6.RELEASE'
-      force 'org.springframework:spring-expression:4.2.6.RELEASE'
-      force 'org.springframework:spring-aop:4.2.6.RELEASE'
-      force 'commons-logging:commons-logging:1.2'
-      cacheDynamicVersionsFor 10*60, 'seconds'
-      cacheChangingModulesFor 0, 'seconds'
+      force 'org.slf4j:slf4j-api:1.7.25'
+      force 'org.checkerframework:checker-qual:2.10.0'
+      force 'com.google.errorprone:error_prone_annotations:2.3.3'
+      force 'net.bytebuddy:byte-buddy:1.9.11'
+      force 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
+      force 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+      force 'commons-codec:commons-codec:1.13'
+      force 'org.assertj:assertj-core:3.14.0'
     }
   }
 

@@ -1,17 +1,8 @@
 plugins {
-  id 'com.github.ben-manes.versions' version '0.27.0'
   id 'org.springframework.boot' version "${springBootVersion}"
+  id 'com.github.ben-manes.versions' version '0.27.0'
   id 'application'
 }
-
-repositories {
-  mavenCentral()
-  maven { url "https://repo.spring.io/snapshot" }
-  maven { url "https://repo.spring.io/milestone" }
-}
-
-sourceCompatibility = '1.11'
-targetCompatibility = '1.11'
 
 jar {
   baseName = 'wpaf-admin'
@@ -21,9 +12,9 @@ jar {
 mainClassName = 'org.dicadeveloper.weplantaforest.admin.WeplantaforestAdminApplication'
 
 dependencies{
-  annotationProcessor 'org.projectlombok:lombok:1.18.8'
+  annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
-  compileOnly 'org.projectlombok:lombok:1.18.8'
+  compileOnly 'org.projectlombok:lombok:1.18.10'
 
   compile project(':common')
   compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
@@ -34,12 +25,12 @@ dependencies{
   compile('org.springframework.boot:spring-boot-starter-validation:' + springBootVersion)
   compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
    //Base64 encoding
-  compile 'commons-codec:commons-codec:1.10'
-  compile('com.h2database:h2:1.4.190')
+  compile 'commons-codec:commons-codec:1.13'
+  compile('com.h2database:h2:1.4.200')
   runtime group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
 
   testCompile group: 'junit', name: 'junit', version: '4.12'
-  testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
+  testCompile group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
   testCompile('com.jayway.jsonpath:json-path:2.4.0')
   testCompile project(':testkit')
 }
