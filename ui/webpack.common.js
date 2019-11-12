@@ -11,20 +11,12 @@ const config = {
   optimization: {
     runtimeChunk: true,
     splitChunks: {
-      cacheGroups: {
-        vendorsreact: {
-          test: /[\\/]node_modules[\\/]react.*[\\/]/,
-          chunks: 'all'
-        },
-        vendorsmoment: {
-          test: /[\\/]node_modules[\\/]m.*[\\/]/,
-          chunks: 'all'
-        },
-        vendors: {
-          test: /[\\/]node_modules[\\/][^rm].*[\\/]/,
-          chunks: 'all'
-        }
-      }
+      chunks: 'async',
+      minSize: 250000,
+      maxSize: 1000000,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      minChunks: 1
     }
   },
   plugins: [
@@ -42,9 +34,17 @@ const config = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          query: {
-            presets: ['react', 'es2015'],
-            plugins: ['syntax-dynamic-import']
+          options: {
+            presets: [
+              '@babel/preset-react',
+              ['env',
+              {
+                targets: {
+                  'chrome': '75'
+                }
+              }]
+            ],
+            plugins: ['syntax-dynamic-import'],
           }
         }
       },
