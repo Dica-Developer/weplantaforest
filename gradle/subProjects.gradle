@@ -46,7 +46,7 @@ subprojects {
 
     def maxForks = Runtime.getRuntime().availableProcessors()
     logger.lifecycle "Maximum used parallel forks for " + project + ": " + maxForks
-    maxParallelForks maxForks	 
+    maxParallelForks maxForks
 
     if (System.env.'CI') {
       jacoco {
