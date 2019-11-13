@@ -26,7 +26,7 @@ export default class RankingItem extends Component {
         <div className="trees">
           <p style={{
             width: this.props.percentTree + '%',
-            'white-space': 'nowrap'
+            whiteSpace: 'nowrap'
           }}>
             {text}
           </p>

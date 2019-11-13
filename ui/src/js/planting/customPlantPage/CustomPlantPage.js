@@ -4,7 +4,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 import {Link, browserHistory} from 'react-router';
-import $ from 'jquery';
+import { slideToggle } from '../../3rd/jquery-alternative';
 
 import ButtonBar from '../ButtonBar';
 import BottomPart from '../BottomPart';
@@ -42,7 +42,7 @@ export default class CustomPlantPage extends Component {
   }
 
   toggleDiv() {
-    $(this.refs['planting']).slideToggle(800);
+    slideToggle(this.refs['planting'], 800);
   }
 
   updatePlantBag() {

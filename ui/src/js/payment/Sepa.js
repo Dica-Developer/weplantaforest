@@ -7,7 +7,6 @@ import {
 import axios from 'axios';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
-import $ from 'jquery';
 import {
   browserHistory
 } from 'react-router';
@@ -127,7 +126,7 @@ export default class Sepa extends Component {
     var that = this;
     var config = getConfig();
     axios.post('http://localhost:8081/pay', this.state.paymentData, config).then(function(response) {
-      $(that.refs['payment-row']).fadeOut(200);
+      that.refs['payment-row'].classList.add('fadeOut');
       that.refs['spinner'].hideSpinner();
       that.refs.notification.addNotification(counterpart.translate('PAYMENT_SUCCESSFUL'), counterpart.translate('THANKS_FOR_DONATION'), 'success');
       that.props.resetPlantBag();
@@ -143,7 +142,7 @@ export default class Sepa extends Component {
   }
 
   switchToGiftOverview() {
-    browserHistory.push('/gifts/' + encodeURIComponent($localStorage.getItem('username')));
+    browserHistory.push('/gifts/' + encodeURIComponent(localStorage.getItem('username')));
   }
 
   selectCountry(val) {
