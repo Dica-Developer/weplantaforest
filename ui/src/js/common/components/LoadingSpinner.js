@@ -15,13 +15,11 @@ export default class LoadingSpinner extends Component {
   }
 
   showSpinner() {
-    this.refs['spinner'].classList.remove('fadeOut');
     this.refs['spinner'].classList.add('fadeIn');
   }
 
   hideSpinner() {
     this.refs['spinner'].classList.remove('fadeIn');
-    this.refs['spinner'].classList.add('fadeOut');
   }
 
   render() {

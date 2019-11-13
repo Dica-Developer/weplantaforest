@@ -33,6 +33,7 @@ task npmInstall(type: Exec) {
   group 'Deployment'
 
   inputs.file project(':').file('ui/package.json')
+  inputs.file project(':').file('ui/yarn.lock')
   outputs.dir project(':').file('ui/node_modules')
 
   workingDir project(':').file('ui')
