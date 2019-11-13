@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import moment from 'moment';
+import moment from 'dayjs';
 import {Link} from 'react-router';
 import Accounting from 'accounting';
 import counterpart from 'counterpart';

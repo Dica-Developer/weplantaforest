@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-import moment from 'moment';
+import moment from 'dayjs';
 
 import {Pie} from 'react-chartjs';
 

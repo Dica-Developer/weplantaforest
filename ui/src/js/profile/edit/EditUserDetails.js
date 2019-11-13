@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import NotificationSystem from 'react-notification-system';
 import {Link} from 'react-router';
-import moment from 'moment';
+import moment from 'dayjs';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';

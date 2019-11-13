@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import moment from 'moment';
+import moment from 'dayjs';
 
 import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 import he from 'he';

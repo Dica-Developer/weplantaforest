@@ -8,7 +8,7 @@ import {
 import {
   Link,  browserHistory
 } from 'react-router';
-import moment from 'moment';
+import moment from 'dayjs';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
 import NotificationSystem from 'react-notification-system';

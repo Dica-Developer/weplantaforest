@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Accounting from 'accounting';
 import Boostrap from 'bootstrap';
-import moment from 'moment';
+import moment from 'dayjs';
 import he from 'he';
 import counterpart from 'counterpart';
 

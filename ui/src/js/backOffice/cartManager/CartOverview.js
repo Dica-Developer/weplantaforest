@@ -4,7 +4,7 @@ import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 import {browserHistory} from 'react-router';
-import moment from 'moment';
+import moment from 'dayjs';
 import ReactDataGrid from 'react-data-grid';
 import {Toolbar, Data} from 'react-data-grid-addons';
 import DatePicker from 'react-16-bootstrap-date-picker';

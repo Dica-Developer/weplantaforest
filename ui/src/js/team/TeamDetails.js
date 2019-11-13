@@ -9,7 +9,7 @@ import {
   Link,
   browserHistory
 } from 'react-router';
-import moment from 'moment';
+import moment from 'dayjs';
 import Accounting from 'accounting';
 import he from 'he';
 import IconButton from '../common/components/IconButton';
