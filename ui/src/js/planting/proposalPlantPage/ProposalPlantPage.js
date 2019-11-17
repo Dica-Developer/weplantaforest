@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import $ from 'jquery';
+import { slideToggle } from '../../3rd/jquery-alternative';
 import counterpart from 'counterpart';
 import {
   browserHistory
@@ -39,7 +39,7 @@ export default class ProposalPlantPage extends Component {
   }
 
   toggleDiv() {
-    $(this.refs['plantItems']).slideToggle(800);
+    slideToggle(this.refs['plantItems'], 800);
   }
 
   updatePlantBag() {

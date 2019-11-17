@@ -9,7 +9,7 @@ import {
 } from 'react-router';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-import moment from 'moment';
+import moment from 'dayjs';
 import Accounting from 'accounting';
 import counterpart from 'counterpart';
 

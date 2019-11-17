@@ -2,7 +2,7 @@ import org.gradle.api.tasks.Exec
 import org.apache.tools.ant.taskdefs.condition.Os
 
 ext {
-  npmCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'npm.cmd' : 'npm'
+  npmCommand = Os.isFamily(Os.FAMILY_WINDOWS) ? 'yarn.cmd' : 'yarn'
 }
 
 logger.lifecycle "Available processors: " + Runtime.getRuntime().availableProcessors()
@@ -12,8 +12,8 @@ try {
   logger.warn("Didn't find node to determine the used versions.")
 }
 try {
-  logger.lifecycle "npm version: " + ((npmCommand +" -version").execute().text.trim())
+  logger.lifecycle "yarn version: " + ((npmCommand +" -version").execute().text.trim())
 } catch (Exception e) {
-  logger.warn("Didn't find npm to determine the used versions.")
+  logger.warn("Didn't find yarn to determine the used versions.")
 }
 logger.lifecycle "java version: " + JavaVersion.current()

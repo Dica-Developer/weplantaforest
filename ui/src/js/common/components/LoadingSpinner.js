@@ -8,8 +8,6 @@ import {
   CopperLoading
 } from 'respinner';
 
-import $ from 'jquery';
-
 export default class LoadingSpinner extends Component {
 
   constructor(props) {
@@ -17,11 +15,11 @@ export default class LoadingSpinner extends Component {
   }
 
   showSpinner() {
-    $(this.refs['spinner']).fadeIn(400);
+    this.refs['spinner'].classList.add('fadeIn');
   }
 
   hideSpinner() {
-      $(this.refs['spinner']).fadeOut(400);
+    this.refs['spinner'].classList.remove('fadeIn');
   }
 
   render() {

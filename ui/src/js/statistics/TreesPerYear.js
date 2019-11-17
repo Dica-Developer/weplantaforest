@@ -6,7 +6,7 @@ import {
 } from 'react-dom';
 import Boostrap from 'bootstrap';
 import axios from 'axios';
-import moment from 'moment';
+import moment from 'dayjs';
 
 import {
   Bar,

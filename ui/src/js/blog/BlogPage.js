@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import Boostrap from 'bootstrap';
 import {browserHistory} from 'react-router';
 import axios from 'axios';
-import moment from 'moment';
+import moment from 'dayjs';
 
 import EditLink from '../common/components/EditLink';
 import {getTextForSelectedLanguage, getShortText} from '../common/language/LanguageHelper';

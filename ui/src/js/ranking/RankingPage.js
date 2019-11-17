@@ -16,7 +16,7 @@ import Notification from '../common/components/Notification';
 import LoadingSpinner from '../common/components/LoadingSpinner';
 import {createProfileImageUrl, createTeamImageUrl} from '../common/ImageHelper';
 
-import $ from 'jquery';
+import { slideToggle } from '../3rd/jquery-alternative';
 
 require('./rankingPage.less');
 
@@ -45,7 +45,7 @@ export default class RankingPage extends Component {
   }
 
   toggleDiv() {
-    $(this.refs['ranking']).slideToggle(800);
+    slideToggle(this.refs['ranking'], 800);
   }
 
   loadAllUser(withToggle) {
