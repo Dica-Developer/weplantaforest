@@ -1,10 +1,6 @@
 import React, {
   Component
 } from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
 import {
   getConfig
@@ -12,11 +8,6 @@ import {
 import Notification from '../../common/components/Notification';
 import VirtualizedSelect from 'react-virtualized-select';
 import IconButton from '../../common/components/IconButton';
-import ReactDataGrid from 'react-data-grid';
-import {
-  Toolbar,
-  Data
-} from 'react-data-grid-addons';
 import createFilterOptions from 'react-select-fast-filter-options';
 
 import CodeOverview from './CodeOverview';

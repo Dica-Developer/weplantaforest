@@ -1,10 +1,6 @@
 import React, {
   Component
 } from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
 import moment from 'dayjs';
 
@@ -12,7 +8,6 @@ import {
   Line
 } from 'react-chartjs';
 
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
 
 export default class Co2PerYear extends Component {

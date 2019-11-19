@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
-import {browserHistory} from 'react-router';
 import moment from 'dayjs';
 import ReactDataGrid from 'react-data-grid';
 import {Toolbar, Data} from 'react-data-grid-addons';
