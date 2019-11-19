@@ -226,6 +226,9 @@ export default class CartOverview extends Component {
       filters: {},
       restConfig: getConfig(),
       cartDetails: {},
+      selectedCartStates: [
+        {value: 'CALLBACK', label: 'Callback'}
+      ],
       cartRequest: {
         cartStates: [
           'CALLBACK'
@@ -500,6 +503,7 @@ export default class CartOverview extends Component {
     for(let elm of objects){
       states.push(elm.value);
     }
+    this.state.selectedCartStates = objects;
     this.state.cartRequest.cartStates = states;
     this.forceUpdate();
   }
@@ -553,9 +557,9 @@ export default class CartOverview extends Component {
               <label htmlFor="status">Stati:</label>
               <Select id="status"
                  name="form-field-name"
-                 value={this.state.cartRequest.cartStates}
+                 value={this.state.selectedCartStates}
                  onChange={this.handleStateSelection.bind(this)}
-                 multi={true}
+                 isMulti={true}
                  options={[
                    { value: 'VERIFIED', label: 'Verified' },
                    { value: 'CALLBACK', label: 'Callback' },
