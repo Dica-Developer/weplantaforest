@@ -5992,12 +5992,11 @@ react-loadable@5.5.0:
   dependencies:
     prop-types "^15.5.0"
 
-react-notification-system@0.2.16:
-  version "0.2.16"
-  resolved "https://registry.yarnpkg.com/react-notification-system/-/react-notification-system-0.2.16.tgz#9b9da20b0d34786b60057c52b42516ea1295374a"
-  integrity sha1-m52iCw00eGtgBXxStCUW6hKVN0o=
+react-notification-system@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-notification-system/-/react-notification-system-0.3.0.tgz#f2a29a354c1c0abb85441a2e95ea43d1c57b3bd4"
+  integrity sha512-4+3Z0I/5/gi9ZOQUOeFaKy2Uw2i3d3S4kWu0x+dUvGRuvezY+WuF21fDg3B2FL0Hx+bJPy/qn6CwMQwc0g0wdA==
   dependencies:
-    create-react-class "^15.5.1"
     object-assign "^4.0.1"
     prop-types "^15.5.6"
 
