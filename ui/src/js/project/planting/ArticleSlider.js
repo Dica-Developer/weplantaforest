@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
+import React, { Component } from 'react';
+import { getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
 
-import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 
 require('./articleSlider.less');
 

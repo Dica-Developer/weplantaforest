@@ -1,13 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import {browserHistory} from 'react-router';
-
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import IconButton from './IconButton';
+
 
 require('./editLink.less');
 

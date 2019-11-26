@@ -1,17 +1,13 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import Accounting from 'accounting';
-import {Link, browserHistory} from 'react-router';
-
-import IconButton from '../../common/components/IconButton';
-
-import ButtonBar from '../ButtonBar';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import BottomPart from '../BottomPart';
-
+import ButtonBar from '../ButtonBar';
 import MainSlider from './MainSlider';
 import ProjectSlider from './ProjectSlider';
+
+
+
 
 require('./plantPage.less');
 

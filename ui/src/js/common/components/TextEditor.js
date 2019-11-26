@@ -1,10 +1,4 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
+import React, { Component } from 'react';
 import TinyMCE from 'react-tinymce';
 
 export default class TextEditor extends Component {

@@ -1,26 +1,9 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
-
+import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid';
-import {
-  Toolbar,
-  Data
-} from 'react-data-grid-addons';
-
-import IconButton from '../../common/components/IconButton';
+import { Data, Toolbar } from 'react-data-grid-addons';
 import Notification from '../../common/components/Notification';
-import {
-  getConfig
-} from '../../common/RestHelper';
+
+
 
 export default class CodeOverview extends Component {
 

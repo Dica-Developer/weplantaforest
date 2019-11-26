@@ -1,17 +1,11 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Notification from '../common/components/Notification';
 import axios from 'axios';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
-import TreeItem from './TreeItem';
+import React, { Component } from 'react';
+import Notification from '../common/components/Notification';
 import FindTrees from './FindTrees';
+import TreeItem from './TreeItem';
 import TreesFound from './TreesFound';
+
 
 require('./findTreePage.less');
 

@@ -1,20 +1,12 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {browserHistory} from 'react-router';
 import axios from 'axios';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import Notification from '../../common/components/Notification';
+import { getConfig } from '../../common/RestHelper';
 import ConsignorGiftItem from './ConsignorGiftItem';
 import RecipientGiftItem from './RecipientGiftItem';
-import RedeemGiftContent from '../RedeemGiftContent';
-import IconButton from '../../common/components/IconButton';
-import Notification from '../../common/components/Notification';
-import {getConfig} from '../../common/RestHelper';
+
 
 require('./gifts.less');
 

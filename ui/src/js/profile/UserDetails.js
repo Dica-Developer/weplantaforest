@@ -1,25 +1,17 @@
-import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link,  browserHistory
-} from 'react-router';
-import moment from 'dayjs';
 import Accounting from 'accounting';
-import Boostrap from 'bootstrap';
-import NotificationSystem from 'react-notification-system';
+import axios from 'axios';
 import counterpart from 'counterpart';
-
-import IconButton from '../common/components/IconButton';
-import {createProfileImageUrl} from '../common/ImageHelper';
-import {getConfig} from '../common/RestHelper';
-import Notification from '../common/components/Notification';
-
+import moment from 'dayjs';
 import he from 'he';
+import React, { Component } from 'react';
+import NotificationSystem from 'react-notification-system';
+import { browserHistory } from 'react-router';
+import IconButton from '../common/components/IconButton';
+import Notification from '../common/components/Notification';
+import { createProfileImageUrl } from '../common/ImageHelper';
+import { getConfig } from '../common/RestHelper';
+
+
 
 export default class UserDetails extends Component {
   constructor(props) {

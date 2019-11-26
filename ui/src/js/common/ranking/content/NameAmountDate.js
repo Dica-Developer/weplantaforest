@@ -1,12 +1,10 @@
-import React, {
-  Component
-} from 'react';
-
-import moment from 'dayjs';
-
-import he from 'he';
-
 import counterpart from 'counterpart';
+import moment from 'dayjs';
+import he from 'he';
+import React, { Component } from 'react';
+
+
+
 
 export default class NameAmountDate extends Component {
   constructor(props) {

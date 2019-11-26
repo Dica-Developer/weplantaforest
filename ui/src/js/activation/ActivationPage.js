@@ -1,8 +1,6 @@
-import React, {
-  Component
-} from 'react';
 import axios from 'axios';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
 
 require('./activationPage.less');
 

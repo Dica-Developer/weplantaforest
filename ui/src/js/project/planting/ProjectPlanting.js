@@ -1,14 +1,11 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
-import {Link} from 'react-router';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
 import IconButton from '../../common/components/IconButton';
 import SvgButton from '../../common/components/SvgButton';
-import ProjectSlider from './ProjectSlider';
 import ArticleSlider from './ArticleSlider';
+import ProjectSlider from './ProjectSlider';
+
 
 require('./projectPlanting.less');
 require('./slider.less');

@@ -1,23 +1,18 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
 import axios from 'axios';
 import counterpart from 'counterpart';
-
-import UserDetails from './UserDetails';
-import EditUserDetails from './edit/EditUserDetails';
-import CreateTeam from '../team/CreateTeam';
-import TeamDetails from '../team/TeamDetails';
-import EditTeamDetails from '../team/EditTeamDetails';
-import NoTeamAvailable from './NoTeamAvailable';
-import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
-import RankingItem from '../common/ranking/RankingItem';
-import RankingItemContent from '../common/ranking/content/AmountProjectDate';
-import NoTreesAvailable from '../common/ranking/NoTreesAvailable';
+import React, { Component } from 'react';
 import Notification from '../common/components/Notification';
+import RankingItemContent from '../common/ranking/content/AmountProjectDate';
+import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
+import NoTreesAvailable from '../common/ranking/NoTreesAvailable';
+import RankingItem from '../common/ranking/RankingItem';
+import CreateTeam from '../team/CreateTeam';
+import EditTeamDetails from '../team/EditTeamDetails';
+import TeamDetails from '../team/TeamDetails';
+import EditUserDetails from './edit/EditUserDetails';
+import NoTeamAvailable from './NoTeamAvailable';
+import UserDetails from './UserDetails';
+
 
 require('./profile.less');
 

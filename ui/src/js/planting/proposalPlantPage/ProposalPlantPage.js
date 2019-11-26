@@ -1,17 +1,15 @@
-import React, {Component} from 'react';
 import axios from 'axios';
-import { slideToggle } from '../../3rd/jquery-alternative';
 import counterpart from 'counterpart';
-import {
-  browserHistory
-} from 'react-router';
-
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import { slideToggle } from '../../3rd/jquery-alternative';
+import IconButton from '../../common/components/IconButton';
+import Notification from '../../common/components/Notification';
+import BottomPart from '../BottomPart';
+import ButtonBar from '../ButtonBar';
 import PlantItem from './PlantItem';
 
-import ButtonBar from '../ButtonBar';
-import BottomPart from '../BottomPart';
-import Notification from '../../common/components/Notification';
-import IconButton from '../../common/components/IconButton';
+
 
 require('./proposalPlantPage.less');
 

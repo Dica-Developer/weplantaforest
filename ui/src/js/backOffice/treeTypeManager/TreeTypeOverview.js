@@ -1,22 +1,12 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-
-import {
-  getTextForSelectedLanguage,
-  getTextForLanguage,
-  createMultiLanguageEntry
-} from '../../common/language/LanguageHelper';
-import IconButton from '../../common/components/IconButton';
-import FileChooser from '../../common/components/FileChooser';
-import Notification from '../../common/components/Notification';
+import React, { Component } from 'react';
 import NotificationSystem from 'react-notification-system';
-import {getConfig} from '../../common/RestHelper';
+import FileChooser from '../../common/components/FileChooser';
+import IconButton from '../../common/components/IconButton';
+import Notification from '../../common/components/Notification';
+import { createMultiLanguageEntry, getTextForLanguage } from '../../common/language/LanguageHelper';
+import { getConfig } from '../../common/RestHelper';
+
 
 require('./treeTypeOverview.less');
 

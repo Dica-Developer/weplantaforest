@@ -1,22 +1,13 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import Accounting from 'accounting';
 import axios from 'axios';
 import counterpart from 'counterpart';
-import {
-  browserHistory
-} from 'react-router';
-
-import ButtonBar from './ButtonBar';
-import BottomPart from '../../planting/BottomPart';
-import PlantItem from './PlantItem';
-import Notification from '../../common/components/Notification';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import IconButton from '../../common/components/IconButton';
+import Notification from '../../common/components/Notification';
+import BottomPart from '../../planting/BottomPart';
+import ButtonBar from './ButtonBar';
+import PlantItem from './PlantItem';
+
 
 require('../../planting/bottomPart.less');
 

@@ -1,15 +1,11 @@
-import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Link} from 'react-router';
-import Boostrap from 'bootstrap';
-
-import Overview from './Overview';
-import Certificates from './Certificates';
-import Receipts from './Receipts';
+import React, { Component } from 'react';
 import Banner from './Banner';
-import Widgets from './Widgets';
 import ButtonBar from './ButtonBar';
+import Certificates from './Certificates';
+import Overview from './Overview';
+import Receipts from './Receipts';
+import Widgets from './Widgets';
+
 
 require('./tools.less');
 

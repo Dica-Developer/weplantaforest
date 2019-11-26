@@ -1,11 +1,11 @@
 import axios from 'axios';
-import React, { Component } from 'react';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
-
-import FileChooseAndUploadButton from './FileChooseAndUploadButton';
 import Notification from '../common/components/Notification';
+import FileChooseAndUploadButton from './FileChooseAndUploadButton';
+
+
 
 export default class EditTeamDetails extends Component {
   constructor(props) {

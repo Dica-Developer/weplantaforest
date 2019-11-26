@@ -1,26 +1,17 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
-
-import TeamDetails from './TeamDetails';
-import EditTeamDetails from './EditTeamDetails';
-import TeamMember from './TeamMember';
-import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
-import RankingItem from '../common/ranking/RankingItem';
-import RankingItemContent from '../common/ranking/content/AmountProjectDate';
-import NoTreesAvailable from '../common/ranking/NoTreesAvailable';
-import Notification from '../common/components/Notification';
+import React, { Component } from 'react';
 import NotificationSystem from 'react-notification-system';
+import { browserHistory } from 'react-router';
+import Notification from '../common/components/Notification';
+import RankingItemContent from '../common/ranking/content/AmountProjectDate';
+import LargeRankingContainer from '../common/ranking/LargeRankingContainer';
+import NoTreesAvailable from '../common/ranking/NoTreesAvailable';
+import RankingItem from '../common/ranking/RankingItem';
+import EditTeamDetails from './EditTeamDetails';
+import TeamDetails from './TeamDetails';
+import TeamMember from './TeamMember';
+
 
 require('./team.less');
 

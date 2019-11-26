@@ -1,17 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link
-} from 'react-router';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import moment from 'dayjs';
-import Accounting from 'accounting';
 import counterpart from 'counterpart';
+import moment from 'dayjs';
+import React, { Component } from 'react';
 
 class Receipt extends Component {
   constructor(props) {

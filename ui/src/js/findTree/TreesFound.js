@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Link} from 'react-router';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 export default class TreesFound extends Component {
 

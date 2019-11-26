@@ -1,10 +1,7 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import {browserHistory} from 'react-router';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import { getFirstParagraph, getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-import IconButton from '../common/components/IconButton';
-import {getTextForSelectedLanguage, getFirstParagraph} from '../common/language/LanguageHelper';
 
 export default class CompletedProject extends Component {
   constructor() {

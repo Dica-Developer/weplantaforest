@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import NotificationSystem from 'react-notification-system';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
+import NotificationSystem from 'react-notification-system';
 import MultiLineErrorObject from './MultiLineErrorObject';
+
 
 export default class Notification extends Component {
 

@@ -1,10 +1,5 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import Accounting from 'accounting';
-import {Link, browserHistory} from 'react-router';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
 
 require('./buttonBar.less');
 

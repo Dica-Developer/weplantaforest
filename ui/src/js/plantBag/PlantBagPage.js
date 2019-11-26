@@ -1,19 +1,17 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import axios from 'axios';
-import {browserHistory} from 'react-router';
 import Accounting from 'accounting';
-import Boostrap from 'bootstrap';
+import axios from 'axios';
 import counterpart from 'counterpart';
-
-import PlantBagProject from './PlantBagProject';
-import PlantBagItem from './PlantBagItem';
-import IconButton from '../common/components/IconButton';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import CheckBox from '../common/components/CheckBox';
-import Notification from '../common/components/Notification';
+import IconButton from '../common/components/IconButton';
 import LoadingSpinner from '../common/components/LoadingSpinner';
+import Notification from '../common/components/Notification';
+import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
+import PlantBagItem from './PlantBagItem';
+import PlantBagProject from './PlantBagProject';
 
-import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+
 
 require('./plantBagPage.less');
 

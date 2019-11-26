@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import Loadable from 'react-loadable';
 
 const LoadableComponent = Loadable({

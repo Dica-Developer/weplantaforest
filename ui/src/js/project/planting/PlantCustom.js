@@ -1,14 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import Accounting from 'accounting';
-import {Link, browserHistory} from 'react-router';
-
-import ButtonBar from './ButtonBar';
+import React, { Component } from 'react';
 import BottomPart from '../../planting/BottomPart';
 import Article from '../../planting/customPlantPage/Article';
 import ArticleDesc from '../../planting/customPlantPage/ArticleDesc';
+import ButtonBar from './ButtonBar';
+
 
 export default class PlantCustom extends Component {
 

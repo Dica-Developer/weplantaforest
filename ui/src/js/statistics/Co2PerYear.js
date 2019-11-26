@@ -1,14 +1,10 @@
-import React, {
-  Component
-} from 'react';
 import axios from 'axios';
-import moment from 'dayjs';
-
-import {
-  Line
-} from 'react-chartjs';
-
 import counterpart from 'counterpart';
+import moment from 'dayjs';
+import React, { Component } from 'react';
+import { Line } from 'react-chartjs';
+
+
 
 export default class Co2PerYear extends Component {
 

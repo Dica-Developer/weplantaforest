@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
 import axios from 'axios';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
-import Notification from '../common/components/Notification';
+import React, { Component } from 'react';
+import Captcha from '../common/components/Captcha';
 import IconButton from '../common/components/IconButton';
 import InputText from '../common/components/InputText';
+import Notification from '../common/components/Notification';
 import TextArea from '../common/components/TextArea';
-import Captcha from '../common/components/Captcha';
-import RadioButton from '../common/components/RadioButton';
+
 
 export default class ProjectOffer extends Component {
 

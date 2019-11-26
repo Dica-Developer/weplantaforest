@@ -1,16 +1,8 @@
-import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
-
-import Boostrap from 'bootstrap';
-
+import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
+
+
 
 export default class NoTeamAvailable extends Component {
   constructor() {

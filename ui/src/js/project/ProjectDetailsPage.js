@@ -1,24 +1,17 @@
-import React, {
-  Component
-} from 'react';
 import axios from 'axios';
-import {
-  Map,
-  TileLayer,
-  Polygon
-} from 'react-leaflet';
 import counterpart from 'counterpart';
-
-import ProjectCarousel from './ProjectCarousel';
-import ProjectDetails from './ProjectDetails';
-import ProjectPlanting from './planting/ProjectPlantingWithoutSlider';
-import SmallRankingContainer from '../common/ranking/SmallRankingContainer';
-import RankingItem from '../common/ranking/RankingItem';
-import RankingContentNameAmountCo2 from '../common/ranking/content/NameAmountCo2';
-import RankingContentNameAmountDate from '../common/ranking/content/NameAmountDate';
+import React, { Component } from 'react';
 import PolygonMap from '../common/components/PolygonMap';
 import SvgButton from '../common/components/SvgButton';
 import { createProfileImageUrl, createTeamImageUrl } from '../common/ImageHelper';
+import RankingContentNameAmountCo2 from '../common/ranking/content/NameAmountCo2';
+import RankingContentNameAmountDate from '../common/ranking/content/NameAmountDate';
+import RankingItem from '../common/ranking/RankingItem';
+import SmallRankingContainer from '../common/ranking/SmallRankingContainer';
+import ProjectPlanting from './planting/ProjectPlantingWithoutSlider';
+import ProjectCarousel from './ProjectCarousel';
+import ProjectDetails from './ProjectDetails';
+
 
 require('./projectPage.less');
 

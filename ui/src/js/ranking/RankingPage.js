@@ -1,22 +1,16 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
 import axios from 'axios';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
-import ButtonBar from './ButtonBar';
+import React, { Component } from 'react';
+import { slideToggle } from '../3rd/jquery-alternative';
 import LeftRightSwitch from '../common/components/LeftRightSwitch';
+import LoadingSpinner from '../common/components/LoadingSpinner';
+import Notification from '../common/components/Notification';
+import { createProfileImageUrl, createTeamImageUrl } from '../common/ImageHelper';
+import ButtonBar from './ButtonBar';
 import RankingItemLarge from './RankingItemLarge';
 import RankingItemSmall from './RankingItemSmall';
-import Notification from '../common/components/Notification';
-import LoadingSpinner from '../common/components/LoadingSpinner';
-import {createProfileImageUrl, createTeamImageUrl} from '../common/ImageHelper';
 
-import { slideToggle } from '../3rd/jquery-alternative';
+
 
 require('./rankingPage.less');
 

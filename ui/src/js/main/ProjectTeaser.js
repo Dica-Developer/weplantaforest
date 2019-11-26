@@ -1,20 +1,8 @@
-import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  browserHistory
-} from 'react-router';
-import Boostrap from 'bootstrap';
-
-import {
-  getTextForSelectedLanguage,
-  getFirstParagraph
-} from '../common/language/LanguageHelper';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import PolygonMap from '../common/components/PolygonMap';
+import { getFirstParagraph, getTextForSelectedLanguage } from '../common/language/LanguageHelper';
+
 
 export default class ProjectTeaser extends Component {
   constructor(props) {

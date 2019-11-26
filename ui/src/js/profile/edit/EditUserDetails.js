@@ -1,20 +1,15 @@
 import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import NotificationSystem from 'react-notification-system';
-import {Link} from 'react-router';
-import moment from 'dayjs';
-import Accounting from 'accounting';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
-import FileChooseAndUploadButton from './FileChooseAndUploadButton';
-import EditNameItem from './EditNameItem';
-import EditItem from './EditItem';
-import EditDropdownItem from './EditDropdownItem';
-import EditPasswordItem from './EditPasswordItem';
-import Notification from '../../common/components/Notification';
+import moment from 'dayjs';
+import React, { Component } from 'react';
 import IconButton from '../../common/components/IconButton';
+import Notification from '../../common/components/Notification';
+import EditDropdownItem from './EditDropdownItem';
+import EditItem from './EditItem';
+import EditNameItem from './EditNameItem';
+import EditPasswordItem from './EditPasswordItem';
+import FileChooseAndUploadButton from './FileChooseAndUploadButton';
+
 
 require('./editUserDetails.less');
 

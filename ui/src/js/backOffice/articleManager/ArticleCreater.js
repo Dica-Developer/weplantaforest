@@ -1,17 +1,14 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {browserHistory} from 'react-router';
-import TinyMCE from 'react-tinymce';
+import React, { Component } from 'react';
 import DatePicker from 'react-16-bootstrap-date-picker';
-
-import InputText from '../../common/components/InputText';
+import TinyMCE from 'react-tinymce';
 import FileChooser from '../../common/components/FileChooser';
-import RadioButton from '../../common/components/RadioButton';
 import IconButton from '../../common/components/IconButton';
+import InputText from '../../common/components/InputText';
 import Notification from '../../common/components/Notification';
-import {getConfig} from '../../common/RestHelper';
+import RadioButton from '../../common/components/RadioButton';
+import { getConfig } from '../../common/RestHelper';
+
 
 class Paragraph extends Component {
   constructor() {

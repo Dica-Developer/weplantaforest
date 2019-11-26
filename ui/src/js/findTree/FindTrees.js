@@ -1,14 +1,8 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-
+import counterpart from 'counterpart';
+import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
 
-import counterpart from 'counterpart';
+
 
 export default class FindTrees extends Component {
 

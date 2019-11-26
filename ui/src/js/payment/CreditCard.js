@@ -1,14 +1,12 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import axios from 'axios';
 import Accounting from 'accounting';
-import Boostrap from 'bootstrap';
-
-import Notification from '../common/components/Notification';
-import LoadingSpinner from '../common/components/LoadingSpinner';
+import axios from 'axios';
+import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
 import InputText from '../common/components/InputText';
-import {getConfig} from '../common/RestHelper';
+import LoadingSpinner from '../common/components/LoadingSpinner';
+import Notification from '../common/components/Notification';
+import { getConfig } from '../common/RestHelper';
+
 
 export default class CreditCard extends Component {
 

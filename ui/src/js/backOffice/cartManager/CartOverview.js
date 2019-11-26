@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
-import axios from 'axios';
 import Accounting from 'accounting';
+import axios from 'axios';
 import moment from 'dayjs';
-import ReactDataGrid from 'react-data-grid';
-import {Toolbar, Data} from 'react-data-grid-addons';
+import React, { Component } from 'react';
 import DatePicker from 'react-16-bootstrap-date-picker';
-
-import IconButton from '../../common/components/IconButton';
+import ReactDataGrid from 'react-data-grid';
+import { Data, Toolbar } from 'react-data-grid-addons';
 import NotificationSystem from 'react-notification-system';
-import Notification from '../../common/components/Notification';
-import LoadingSpinner from '../../common/components/LoadingSpinner';
-import {getConfig} from '../../common/RestHelper';
-import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 import Select from 'react-select';
+import IconButton from '../../common/components/IconButton';
+import LoadingSpinner from '../../common/components/LoadingSpinner';
+import Notification from '../../common/components/Notification';
+import { getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
+import { getConfig } from '../../common/RestHelper';
+
 
 require('./cartOverview.less');
 

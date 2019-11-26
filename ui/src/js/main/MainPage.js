@@ -1,20 +1,19 @@
-import React, {Component} from 'react';
 import axios from 'axios';
 import counterpart from 'counterpart';
-
-import Carousel from './Carousel';
-import ArticleTeaser from './ArticleTeaser';
-import ProjectTeaser from './ProjectTeaser';
-import RankingContainer from '../common/ranking/SmallRankingContainer';
-import RankingItem from '../common/ranking/RankingItem';
+import React, { Component } from 'react';
+import Notification from '../common/components/Notification';
+import { createProfileImageUrl } from '../common/ImageHelper';
 import RankingItemContent from '../common/ranking/content/NameAmountCo2';
 import RankingItemContentForNewest from '../common/ranking/content/NameAmountDate';
-import Notification from '../common/components/Notification';
-import {createProfileImageUrl} from '../common/ImageHelper';
+import RankingItem from '../common/ranking/RankingItem';
+import RankingContainer from '../common/ranking/SmallRankingContainer';
+import ArticleTeaser from './ArticleTeaser';
+import Carousel from './Carousel';
+import ProjectTeaser from './ProjectTeaser';
+
 
 require('./teaser.less');
 
-import Boostrap from 'bootstrap';
 
 export default class MainPage extends Component {
   constructor() {

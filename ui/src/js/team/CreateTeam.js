@@ -1,25 +1,12 @@
 import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link,
-  browserHistory
-} from 'react-router';
-import Accounting from 'accounting';
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
-
-
-import EditItem from '../profile/edit/EditItem';
 import Notification from '../common/components/Notification';
 
-import Boostrap from 'bootstrap';
+
+
+
 
 export default class CreateTeam extends Component {
   constructor(props) {

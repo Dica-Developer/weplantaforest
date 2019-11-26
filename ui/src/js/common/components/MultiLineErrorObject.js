@@ -1,12 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
 
 export default class MultiLineErrorObject extends Component {
 

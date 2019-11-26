@@ -1,12 +1,9 @@
-import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Link} from 'react-router';
 import Accounting from 'accounting';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
 import he from 'he';
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+
 
 export default class RankingItem extends Component {
   constructor(props) {

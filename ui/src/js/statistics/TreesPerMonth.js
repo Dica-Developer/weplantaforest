@@ -1,13 +1,10 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import moment from 'dayjs';
-
-import {Bar} from 'react-chartjs';
-
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
+import moment from 'dayjs';
+import React, { Component } from 'react';
+import { Bar } from 'react-chartjs';
+
+
 
 export default class TreesPerMonth extends Component {
 

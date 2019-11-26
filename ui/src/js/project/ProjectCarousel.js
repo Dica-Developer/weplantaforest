@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
 import moment from 'dayjs';
-
-import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 import he from 'he';
+import React, { Component } from 'react';
+import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
+
 
 export default class ProjectCarousel extends Component {
   constructor(props) {

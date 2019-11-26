@@ -1,15 +1,10 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Link} from 'react-router';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
 import counterpart from 'counterpart';
-
-import Notification from '../../common/components/Notification';
-import IconButton from '../../common/components/IconButton';
-import RadioButton from '../../common/components/RadioButton';
+import React, { Component } from 'react';
 import LeftRightSwitch from '../../common/components/LeftRightSwitch';
-import ButtonBar from './ButtonBar';
+import Notification from '../../common/components/Notification';
+import RadioButton from '../../common/components/RadioButton';
+
 
 export default class Banner extends Component {
   constructor(props) {

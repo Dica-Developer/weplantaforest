@@ -1,20 +1,13 @@
-import React, {
-  Component
-} from 'react';
 import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
-
+import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid';
-import {
-  Toolbar,
-  Data
-} from 'react-data-grid-addons';
-
+import { Data, Toolbar } from 'react-data-grid-addons';
+import { browserHistory } from 'react-router';
 import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
-import {getConfig} from '../../common/RestHelper';
+import { getConfig } from '../../common/RestHelper';
+
+
 
 require('./userOverview.less');
 

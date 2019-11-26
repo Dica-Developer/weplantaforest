@@ -1,21 +1,16 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {browserHistory} from 'react-router';
-import {Map, Marker, Popup, TileLayer, Polygon} from 'react-leaflet';
-
-import IconButton from '../../common/components/IconButton';
-import InputText from '../../common/components/InputText';
-import TextEditor from '../../common/components/TextEditor';
-import TextArea from '../../common/components/TextArea';
-import Notification from '../../common/components/Notification';
+import React, { Component } from 'react';
+import { Map, Polygon, TileLayer } from 'react-leaflet';
 import NotificationSystem from 'react-notification-system';
-import RadioButton from '../../common/components/RadioButton';
 import FileChooser from '../../common/components/FileChooser';
-import {getConfig} from '../../common/RestHelper';
+import IconButton from '../../common/components/IconButton';
+import Notification from '../../common/components/Notification';
+import RadioButton from '../../common/components/RadioButton';
+import TextEditor from '../../common/components/TextEditor';
+import { createMultiLanguageEntry, getTextForLanguage, getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
+import { getConfig } from '../../common/RestHelper';
 
-import {getTextForSelectedLanguage, getTextForLanguage, createMultiLanguageEntry} from '../../common/language/LanguageHelper';
+
 
 require('./projectEditor.less');
 

@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import axios from 'axios';
 import Accounting from 'accounting';
-
-import SvgButton from '../../common/components/SvgButton';
-import Notification from '../../common/components/Notification';
-import Project from '../../planting/customPlantPage/Project';
-import {getConfig} from '../../common/RestHelper';
+import axios from 'axios';
+import React, { Component } from 'react';
 import VirtualizedSelect from 'react-virtualized-select';
+import Notification from '../../common/components/Notification';
+import SvgButton from '../../common/components/SvgButton';
+import { getConfig } from '../../common/RestHelper';
+import Project from '../../planting/customPlantPage/Project';
+
 
 require('./plantManager.less');
 

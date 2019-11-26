@@ -1,11 +1,8 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import NotificationSystem from 'react-notification-system';
-import Boostrap from 'bootstrap';
-
+import React, { Component } from 'react';
+import CreditCard from './CreditCard';
 import Overview from './Overview';
 import Sepa from './Sepa';
-import CreditCard from './CreditCard';
+
 
 require('./paymentPage.less');
 

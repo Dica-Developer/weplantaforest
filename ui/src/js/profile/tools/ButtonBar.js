@@ -1,17 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link
-} from 'react-router';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
-import IconButton from '../../common/components/IconButton';
+import React, { Component } from 'react';
 import CircleButton from '../../common/components/CircleButton';
+
 
 export default class ButtonBar extends Component {
   constructor(props) {

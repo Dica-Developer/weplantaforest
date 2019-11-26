@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Boostrap from 'bootstrap';
 import {browserHistory} from 'react-router';
 
 import Co2Bar from './Co2Bar';

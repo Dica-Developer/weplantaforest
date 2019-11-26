@@ -1,18 +1,16 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import counterpart from 'counterpart';
-import {browserHistory} from 'react-router';
-
-import Notification from '../common/components/Notification';
-import TextArea from '../common/components/TextArea';
+import React, { Component } from 'react';
+import { Map, Marker, TileLayer } from 'react-leaflet';
+import { browserHistory } from 'react-router';
 import DateField from '../common/components/DateField';
 import FileChooser from '../common/components/FileChooser';
 import IconButton from '../common/components/IconButton';
+import Notification from '../common/components/Notification';
+import TextArea from '../common/components/TextArea';
+import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
+
 
 export default class DoPlanting extends Component {
 

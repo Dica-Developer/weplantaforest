@@ -1,15 +1,10 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import Accounting from 'accounting';
-import {Link} from 'react-router';
-import axios from 'axios';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
 import IconButton from '../../common/components/IconButton';
-
-import PlantProposal from './PlantProposal';
 import PlantCustom from './PlantCustom';
+import PlantProposal from './PlantProposal';
+
+
 
 require('./projectPlanting.less');
 

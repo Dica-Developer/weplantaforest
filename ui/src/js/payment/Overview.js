@@ -1,15 +1,9 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
 import axios from 'axios';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
 import Notification from '../common/components/Notification';
+
 
 export default class Overview extends Component {
 

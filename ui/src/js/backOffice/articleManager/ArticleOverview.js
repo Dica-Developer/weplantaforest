@@ -1,16 +1,14 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {browserHistory} from 'react-router';
-import ReactDataGrid from 'react-data-grid';
-import {Toolbar, Data} from 'react-data-grid-addons';
 import moment from 'dayjs';
-
-import IconButton from '../../common/components/IconButton';
+import React, { Component } from 'react';
+import ReactDataGrid from 'react-data-grid';
+import { Data, Toolbar } from 'react-data-grid-addons';
 import NotificationSystem from 'react-notification-system';
-import {getConfig} from '../../common/RestHelper';
+import { browserHistory } from 'react-router';
+import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
+import { getConfig } from '../../common/RestHelper';
+
 
 export default class ArticleOverview extends Component {
 

@@ -1,16 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import axios from 'axios';
-import counterpart from 'counterpart';
-import {
-  Map,
-  TileLayer,
-  Polygon
-} from 'react-leaflet';
+import React, { Component } from 'react';
+import { Map, Polygon, TileLayer } from 'react-leaflet';
 
 export default class Captcha extends Component {
   constructor(props) {

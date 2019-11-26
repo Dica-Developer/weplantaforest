@@ -1,11 +1,4 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import axios from 'axios';
-import Boostrap from 'bootstrap';
+import React, { Component } from 'react';
 
 export default class ErrorCC extends Component {
 

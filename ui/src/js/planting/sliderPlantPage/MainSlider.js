@@ -1,8 +1,5 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
 import Accounting from 'accounting';
+import React, { Component } from 'react';
 
 export default class MainSlider extends Component {
 

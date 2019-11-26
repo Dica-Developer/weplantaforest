@@ -1,14 +1,8 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import DatePicker from 'react-16-bootstrap-date-picker';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
+import DatePicker from 'react-16-bootstrap-date-picker';
 import Notification from './Notification';
+
 
 require('./dateField.less');
 

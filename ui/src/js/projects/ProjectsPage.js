@@ -1,20 +1,11 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import IconButton from '../common/components/IconButton';
-
-import CompletedProject from './CompletedProject';
 import ActiveProject from './ActiveProject';
+
+
 
 require('./projectsPage.less');
 

@@ -1,9 +1,6 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 import Accounting from 'accounting';
+import React, { Component } from 'react';
+import { getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
 
 export default class ArticleSlider extends Component {
 

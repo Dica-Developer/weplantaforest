@@ -1,18 +1,9 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
-
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import IconButton from '../../common/components/IconButton';
-import {getConfig} from '../../common/RestHelper';
-import NotificationSystem from 'react-notification-system';
+import { getConfig } from '../../common/RestHelper';
+
 
 require('./projectOverview.less');
 

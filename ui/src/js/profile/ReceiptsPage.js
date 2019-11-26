@@ -1,10 +1,6 @@
-import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Link} from 'react-router';
-import Boostrap from 'bootstrap';
-
+import React, { Component } from 'react';
 import Receipts from './tools/Receipts';
+
 
 require('./receipts.less');
 

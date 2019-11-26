@@ -1,18 +1,11 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
-
-import Notification from '../../common/components/Notification';
-import InputText from '../../common/components/InputText';
-import IconButton from '../../common/components/IconButton';
 import he from 'he';
+import React, { Component } from 'react';
+import IconButton from '../../common/components/IconButton';
+import InputText from '../../common/components/InputText';
+import Notification from '../../common/components/Notification';
+
 
 export default class SendRequest extends Component {
 

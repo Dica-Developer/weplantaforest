@@ -1,12 +1,8 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import {browserHistory} from 'react-router';
-import Accounting from 'accounting';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import { getFirstParagraph, getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-import IconButton from '../common/components/IconButton';
-import {getTextForSelectedLanguage, getFirstParagraph} from '../common/language/LanguageHelper';
 
 export default class ActiveProject extends Component {
   constructor() {

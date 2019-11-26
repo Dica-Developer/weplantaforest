@@ -1,16 +1,10 @@
 import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
 import Notification from '../common/components/Notification';
-import {getConfig} from '../common/RestHelper';
+import { getConfig } from '../common/RestHelper';
+
 
 require('./redeemGiftContent.less');
 

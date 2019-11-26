@@ -1,15 +1,9 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import FileUploadProgress from 'react-fileupload-progress';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
+import FileUploadProgress from 'react-fileupload-progress';
 import IconButton from '../../common/components/IconButton';
-import {createProfileImageUrl} from '../../common/ImageHelper';
+import { createProfileImageUrl } from '../../common/ImageHelper';
+
 
 export default class FileChooseAndUploadButton extends Component {
   constructor(props) {

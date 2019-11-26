@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
-import axios from 'axios';
 import Accounting from 'accounting';
-
-import Translate from 'react-translate-component';
+import axios from 'axios';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
+
 
 export default class Co2Bar extends Component {
 

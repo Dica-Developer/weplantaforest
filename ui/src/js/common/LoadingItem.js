@@ -1,7 +1,4 @@
-import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
+import React, { Component } from 'react';
 
 require('./loadingItem.less');
 

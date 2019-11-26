@@ -1,8 +1,5 @@
-import axios from 'axios';
 import counterpart from 'counterpart';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
+import React, { Component } from 'react';
 
 require('./largeRankingContainer.less');
 

@@ -1,13 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-
+import React, { Component } from 'react';
 import DoRegistration from './DoRegistration';
 import RegistrationDone from './RegistrationDone';
+
 
 require('./registrationPage.less');
 

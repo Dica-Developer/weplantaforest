@@ -1,25 +1,19 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Link,
-  browserHistory
-} from 'react-router';
-
+import axios from 'axios';
+import counterpart from 'counterpart';
+import React, { Component } from 'react';
 import CookieBanner from 'react-cookie-banner';
-
+import { browserHistory } from 'react-router';
+import SvgButton from '../components/SvgButton';
+import BackOfficeMenuItem from './BackOfficeMenuItem';
+import LanguageMenuItem from './LanguageMenuItem';
+import LoginMenuItem from './LoginMenuItem';
 import Menu from './Menu';
 import MenuItem from './MenuItem';
-import LanguageMenuItem from './LanguageMenuItem';
 import PlantBag from './PlantBag';
-import LoginMenuItem from './LoginMenuItem';
 import UserDetails from './UserDetails';
-import BackOfficeMenuItem from './BackOfficeMenuItem';
-import SvgButton from '../components/SvgButton';
-import axios from 'axios';
 
-import Translate from 'react-translate-component';
-import counterpart from 'counterpart';
+
+
 
 require('./navbar.less');
 require('./menu.less');

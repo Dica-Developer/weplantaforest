@@ -1,22 +1,11 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link
-} from 'react-router';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import moment from 'dayjs';
 import Accounting from 'accounting';
+import axios from 'axios';
 import counterpart from 'counterpart';
-
-import Notification from '../../common/components/Notification';
+import moment from 'dayjs';
+import React, { Component } from 'react';
 import IconButton from '../../common/components/IconButton';
-import TextArea from '../../common/components/TextArea';
-import ButtonBar from './ButtonBar';
+import Notification from '../../common/components/Notification';
+
 
 class PlantBag extends Component {
   constructor(props) {

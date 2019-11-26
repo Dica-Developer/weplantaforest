@@ -1,22 +1,9 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import Accounting from 'accounting';
-import {
-  Link,
-  browserHistory
-} from 'react-router';
-
-import ButtonBar from '../ButtonBar';
-import BottomPart from '../BottomPart';
-
+import React, { Component } from 'react';
 import Article from './Article';
 import ArticleDesc from './ArticleDesc';
+
+
 
 export default class Project extends Component {
 

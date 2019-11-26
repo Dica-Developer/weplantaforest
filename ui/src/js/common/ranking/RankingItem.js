@@ -1,11 +1,6 @@
-import axios from 'axios';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {browserHistory} from 'react-router';
-import Accounting from 'accounting';
-import Boostrap from 'bootstrap';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
-import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 
 require('./rankingItem.less');
 

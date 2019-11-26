@@ -1,11 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
+import React, { Component } from 'react';
 import Projects from '../components/Projects';
-import Boostrap from 'bootstrap';
 
 export default class ExplorePage extends Component {
   render() {

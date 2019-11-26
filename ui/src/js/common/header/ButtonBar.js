@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
-import {Link, browserHistory} from 'react-router';
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import SvgButton from '../components/SvgButton';
+
 
 export default class ButtonBar extends Component {
 

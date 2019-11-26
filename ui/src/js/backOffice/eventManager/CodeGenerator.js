@@ -1,15 +1,11 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
 import Accounting from 'accounting';
-
-import {
-  getConfig
-} from '../../common/RestHelper';
-import SvgButton from '../../common/components/SvgButton';
-import Project from '../../planting/customPlantPage/Project';
+import axios from 'axios';
+import React, { Component } from 'react';
 import Notification from '../../common/components/Notification';
+import SvgButton from '../../common/components/SvgButton';
+import { getConfig } from '../../common/RestHelper';
+import Project from '../../planting/customPlantPage/Project';
+
 
 export default class CodeGenerator extends Component {
 

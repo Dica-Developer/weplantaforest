@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
+import { Map, Marker, TileLayer } from 'react-leaflet';
 import Notification from '../common/components/Notification';
+
 
 require('./selfPlantOverview.less');
 

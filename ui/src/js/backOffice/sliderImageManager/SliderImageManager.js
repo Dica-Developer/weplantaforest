@@ -1,14 +1,11 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {browserHistory} from 'react-router';
-
-import IconButton from '../../common/components/IconButton';
-import Notification from '../../common/components/Notification';
+import React, { Component } from 'react';
 import NotificationSystem from 'react-notification-system';
 import FileChooser from '../../common/components/FileChooser';
-import {getConfig} from '../../common/RestHelper';
+import IconButton from '../../common/components/IconButton';
+import Notification from '../../common/components/Notification';
+import { getConfig } from '../../common/RestHelper';
+
 
 require('./sliderImageManager.less');
 

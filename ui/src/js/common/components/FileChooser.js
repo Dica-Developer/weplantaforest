@@ -1,13 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
 import IconButton from './IconButton';
+
 
 export default class FileChooser extends Component {
 

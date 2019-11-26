@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import {
-  browserHistory
-} from 'react-router';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
 require('./userDetails.less');
 

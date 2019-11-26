@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
+import React, { Component } from 'react';
 
-import {  getTextForSelectedLanguage, getShortText} from '../common/language/LanguageHelper';
 
 export default class Carousel extends Component {
   constructor() {

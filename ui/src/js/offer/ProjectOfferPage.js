@@ -1,10 +1,7 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import axios from 'axios';
-import Boostrap from 'bootstrap';
-
+import React, { Component } from 'react';
 import ProjectOffer from './ProjectOffer';
 import ThanksForOffer from './ThanksForOffer';
+
 
 
 require('./projectOffer.less');

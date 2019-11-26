@@ -1,13 +1,11 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import PieChart from 'react-simple-pie-chart';
 import Accounting from 'accounting';
-import {Link, browserHistory} from 'react-router';
-
+import axios from 'axios';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import PieChart from 'react-simple-pie-chart';
 import IconButton from '../../common/components/IconButton';
 import ArticleSlider from './ArticleSlider';
+
 
 export default class ProjectSlider extends Component {
 

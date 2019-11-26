@@ -1,17 +1,6 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link
-} from 'react-router';
-import Boostrap from 'bootstrap';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
 
-import IconButton from '../../common/components/IconButton';
-import ButtonBar from './ButtonBar';
 
 export default class Overview extends Component {
   constructor(props) {

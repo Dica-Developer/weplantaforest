@@ -1,14 +1,8 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
 import counterpart from 'counterpart';
-
+import React, { Component } from 'react';
 import EditLink from '../common/components/EditLink';
+
 
 require('./faq.less');
 

@@ -1,17 +1,11 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-
-import IconButton from '../../components/IconButton';
+import counterpart from 'counterpart';
+import React, { Component } from 'react';
 import Captcha from '../../../common/components/Captcha';
+import IconButton from '../../components/IconButton';
 import Notification from '../../components/Notification';
 
-import counterpart from 'counterpart';
+
 
 require('./contact.less');
 

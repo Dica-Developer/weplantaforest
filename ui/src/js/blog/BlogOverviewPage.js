@@ -1,21 +1,10 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import {
-  browserHistory
-} from 'react-router';
 import axios from 'axios';
-import moment from 'dayjs';
-import {
-  getTextForSelectedLanguage,
-  getShortText
-} from '../common/language/LanguageHelper';
-
 import counterpart from 'counterpart';
+import moment from 'dayjs';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
+
 
 require('./blogOverviewPage.less');
 

@@ -1,15 +1,11 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import Accounting from 'accounting';
-import {Link, browserHistory} from 'react-router';
+import React, { Component } from 'react';
 import { slideToggle } from '../../3rd/jquery-alternative';
-
-import ButtonBar from '../ButtonBar';
 import BottomPart from '../BottomPart';
-
+import ButtonBar from '../ButtonBar';
 import Project from './Project';
+
+
 
 require('./customPlantPage.less');
 

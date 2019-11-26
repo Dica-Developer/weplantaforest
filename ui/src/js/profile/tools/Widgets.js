@@ -1,15 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Link} from 'react-router';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import Accounting from 'accounting';
 import counterpart from 'counterpart';
-
-import RadioButton from '../../common/components/RadioButton';
-import IconButton from '../../common/components/IconButton';
+import React, { Component } from 'react';
 import LeftRightSwitch from '../../common/components/LeftRightSwitch';
-import ButtonBar from './ButtonBar';
+import RadioButton from '../../common/components/RadioButton';
+
 
 export default class Widgets extends Component {
   constructor(props) {

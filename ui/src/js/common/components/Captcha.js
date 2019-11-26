@@ -1,15 +1,9 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
 import axios from 'axios';
 import counterpart from 'counterpart';
-
-import Notification from './Notification';
+import React, { Component } from 'react';
 import IconButton from './IconButton';
-import InputText from './InputText';
+import Notification from './Notification';
+
 
 require('./captcha.less');
 

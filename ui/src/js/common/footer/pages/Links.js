@@ -1,11 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
+import React, { Component } from 'react';
 
 require('./links.less');
 

@@ -1,17 +1,12 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-
-import {Bar, Line} from 'react-chartjs';
-
-import TreesPerMonth from './TreesPerMonth';
-import TreesPerYear from './TreesPerYear';
-import TreesPerOrgType from './TreesPerOrgType';
-import Co2PerYear from './Co2PerYear';
-
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
+import Co2PerYear from './Co2PerYear';
+import TreesPerMonth from './TreesPerMonth';
+import TreesPerOrgType from './TreesPerOrgType';
+import TreesPerYear from './TreesPerYear';
+
+
+
 
 require('./statisticsPage.less');
 

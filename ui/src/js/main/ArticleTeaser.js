@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import {browserHistory} from 'react-router';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-import {getTextForSelectedLanguage, getShortText} from '../common/language/LanguageHelper';
 
 export default class ArticleTeaser extends Component {
   constructor(props) {

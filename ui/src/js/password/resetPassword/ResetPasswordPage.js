@@ -1,14 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-
-import SendRequest from './SendRequest';
+import React, { Component } from 'react';
 import RequestSent from './RequestSent';
+import SendRequest from './SendRequest';
+
 
 require('./resetPasswordPage.less');
 

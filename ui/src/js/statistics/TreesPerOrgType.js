@@ -1,13 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import moment from 'dayjs';
-
-import {Pie} from 'react-chartjs';
-
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
+import { Pie } from 'react-chartjs';
+
+
 
 export default class TreesPerOrgType extends Component {
 

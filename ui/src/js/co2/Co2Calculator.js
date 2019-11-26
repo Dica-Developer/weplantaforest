@@ -1,15 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
 import Accounting from 'accounting';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
 
-import IconButton from '../common/components/IconButton';
 
 require('./co2Calculator.less');
 

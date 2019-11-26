@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
 
 require('./forbidden.less');
 

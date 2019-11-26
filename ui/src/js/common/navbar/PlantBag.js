@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
 import Accounting from 'accounting';
-import {browserHistory} from 'react-router';
-
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+
 
 require('./plantBag.less');
 

@@ -1,25 +1,15 @@
-import axios from 'axios';
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  Link,
-  browserHistory
-} from 'react-router';
-import moment from 'dayjs';
 import Accounting from 'accounting';
+import axios from 'axios';
+import counterpart from 'counterpart';
+import moment from 'dayjs';
 import he from 'he';
+import React, { Component } from 'react';
+import NotificationSystem from 'react-notification-system';
+import { browserHistory } from 'react-router';
 import IconButton from '../common/components/IconButton';
 import Notification from '../common/components/Notification';
-import NotificationSystem from 'react-notification-system';
-import Translate from 'react-translate-component';
-import counterpart from 'counterpart';
-import {createTeamImageUrl} from '../common/ImageHelper';
+import { createTeamImageUrl } from '../common/ImageHelper';
 
-import Boostrap from 'bootstrap';
 
 export default class TeamDetails extends Component {
   constructor(props) {

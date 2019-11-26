@@ -1,11 +1,4 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import Accounting from 'accounting';
+import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
 
 require('./plantBagProject.less');

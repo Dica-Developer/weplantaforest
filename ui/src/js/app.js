@@ -1,11 +1,11 @@
+import axios from 'axios';
 import React from 'react';
 import { render } from 'react-dom';
-import Routes from './routes';
-import axios from 'axios';
 import { browserHistory } from 'react-router';
-
-import '../less/main.less';
 import '../js/common/header/header.less';
+import '../less/main.less';
+import Routes from './routes';
+
 
 axios.interceptors.response.use((response) => {
   return response;

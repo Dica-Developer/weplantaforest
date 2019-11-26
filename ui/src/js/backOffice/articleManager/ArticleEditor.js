@@ -1,18 +1,13 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {browserHistory} from 'react-router';
-import TinyMCE from 'react-tinymce';
+import React, { Component } from 'react';
 import DatePicker from 'react-16-bootstrap-date-picker';
-
-import InputText from '../../common/components/InputText';
 import FileChooser from '../../common/components/FileChooser';
-import RadioButton from '../../common/components/RadioButton';
 import IconButton from '../../common/components/IconButton';
-import TextEditor from '../../common/components/TextEditor';
 import Notification from '../../common/components/Notification';
-import {getConfig} from '../../common/RestHelper';
+import RadioButton from '../../common/components/RadioButton';
+import TextEditor from '../../common/components/TextEditor';
+import { getConfig } from '../../common/RestHelper';
+
 
 require('./article-manager.less');
 

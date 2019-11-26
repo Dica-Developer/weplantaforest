@@ -1,18 +1,13 @@
-import React, {
-  Component
-} from 'react';
-import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
 import Accounting from 'accounting';
-
-import Translate from 'react-translate-component';
+import axios from 'axios';
 import counterpart from 'counterpart';
-
-import Notification from '../components/Notification';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import IconButton from '../components/IconButton';
-import {createProfileImageUrl} from '../ImageHelper';
+import Notification from '../components/Notification';
+import { createProfileImageUrl } from '../ImageHelper';
+
+
 
 export default class LoginMenuItem extends Component {
   constructor(props) {

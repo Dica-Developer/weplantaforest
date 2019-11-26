@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-import {browserHistory} from 'react-router';
-
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+
 
 require('./footer.less');
 

@@ -1,24 +1,13 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
+import React, { Component } from 'react';
 import createFilterOptions from 'react-select-fast-filter-options';
 import VirtualizedSelect from 'react-virtualized-select';
-
-import {
-  getConfig
-} from '../../common/RestHelper';
-import Notification from '../../common/components/Notification';
 import IconButton from '../../common/components/IconButton';
-
+import Notification from '../../common/components/Notification';
+import { getConfig } from '../../common/RestHelper';
 import './transformTreesPage.less';
+
+
 
 export default class TransformTreesPage extends Component {
 

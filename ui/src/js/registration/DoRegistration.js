@@ -1,16 +1,13 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
 import axios from 'axios';
-import Boostrap from 'bootstrap';
-
-import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
-
-import Notification from '../common/components/Notification';
-import InputText from '../common/components/InputText';
+import React, { Component } from 'react';
+import Captcha from '../common/components/Captcha';
 import CheckBox from '../common/components/CheckBox';
 import IconButton from '../common/components/IconButton';
-import Captcha from '../common/components/Captcha';
+import InputText from '../common/components/InputText';
+import Notification from '../common/components/Notification';
+
+
 
 export default class DoRegistration extends Component {
 

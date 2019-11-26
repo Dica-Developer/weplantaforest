@@ -1,16 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
-
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import './backOfficeOverview.less';
+
 
 class BackofficeLink extends Component {
   constructor(props) {

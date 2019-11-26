@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import Accounting from 'accounting';
-import PieChart from 'react-simple-pie-chart';
 import counterpart from 'counterpart';
+import React, { Component } from 'react';
+import PieChart from 'react-simple-pie-chart';
+import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-import {getTextForSelectedLanguage} from '../common/language/LanguageHelper';
 
 export default class ProjectDetails extends Component {
   constructor(props) {

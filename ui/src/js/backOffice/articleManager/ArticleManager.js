@@ -1,19 +1,8 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import Boostrap from 'bootstrap';
-import axios from 'axios';
-import {
-  browserHistory
-} from 'react-router';
-
-import ArticleCreater from './ArticleCreater';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import IconButton from '../../common/components/IconButton';
 import ArticleOverview from './ArticleOverview';
 
-import IconButton from '../../common/components/IconButton';
 
 require('./article-manager.less');
 

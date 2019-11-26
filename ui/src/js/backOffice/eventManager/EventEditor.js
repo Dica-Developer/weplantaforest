@@ -1,17 +1,13 @@
-import React, {
-  Component
-} from 'react';
 import axios from 'axios';
-import {
-  getConfig
-} from '../../common/RestHelper';
-import Notification from '../../common/components/Notification';
+import React, { Component } from 'react';
+import createFilterOptions from 'react-select-fast-filter-options';
 import VirtualizedSelect from 'react-virtualized-select';
 import IconButton from '../../common/components/IconButton';
-import createFilterOptions from 'react-select-fast-filter-options';
-
-import CodeOverview from './CodeOverview';
+import Notification from '../../common/components/Notification';
+import { getConfig } from '../../common/RestHelper';
 import CodeGenerator from './CodeGenerator';
+import CodeOverview from './CodeOverview';
+
 
 require('./eventEditor.less');
 

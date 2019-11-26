@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
 import Accounting from 'accounting';
-import Boostrap from 'bootstrap';
+import React, { Component } from 'react';
+import { getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
 
-import {getTextForSelectedLanguage} from '../../common/language/LanguageHelper';
 
 export default class PlantItem extends Component {
 

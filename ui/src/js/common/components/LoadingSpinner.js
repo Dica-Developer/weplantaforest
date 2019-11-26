@@ -1,12 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
-import {
-  CopperLoading
-} from 'respinner';
+import React, { Component } from 'react';
+import { CopperLoading } from 'respinner';
 
 export default class LoadingSpinner extends Component {
 

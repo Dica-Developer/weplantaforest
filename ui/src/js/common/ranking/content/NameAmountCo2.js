@@ -1,18 +1,8 @@
-import React, {
-  Component
-} from 'react';
-import {
-  render
-} from 'react-dom';
 import Accounting from 'accounting';
-import Boostrap from 'bootstrap';
-import {browserHistory} from 'react-router';
 import counterpart from 'counterpart';
-
-import {
-  getTextForSelectedLanguage
-} from '../../language/LanguageHelper';
 import he from 'he';
+import React, { Component } from 'react';
+
 
 export default class NameAmountCo2 extends Component {
   constructor(props) {
