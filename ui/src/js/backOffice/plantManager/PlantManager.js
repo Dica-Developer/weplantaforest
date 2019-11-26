@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Boostrap from 'bootstrap';
 import axios from 'axios';
 import Accounting from 'accounting';
 
-import ReactDataGrid from 'react-data-grid';
-import {Toolbar, Data} from 'react-data-grid';
-
 import SvgButton from '../../common/components/SvgButton';
 import Notification from '../../common/components/Notification';
-import BottomPart from '../../planting/BottomPart';
 import Project from '../../planting/customPlantPage/Project';
 import {getConfig} from '../../common/RestHelper';
 import VirtualizedSelect from 'react-virtualized-select';
