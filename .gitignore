@@ -33,3 +33,5 @@ package-lock.json
 *.swo
 *-secret.properties
 
+ui/.vscode/settings.json
+.vscode/settings.json

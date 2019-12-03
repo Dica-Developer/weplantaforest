@@ -84,7 +84,7 @@ public class StatisticsController {
                 if (entry.getLabel()
                          .equals(i.toString())) {
                     for (TreeAmountStatisticData treeData : treeStatistic) {
-                        int year = new Integer(treeData.getLabel());
+                        int year = Integer.valueOf(treeData.getLabel());
                         if (i > year) {
                             long amountOfTrees = treeData.getAmount();
                             int diffOfYears = i - year;

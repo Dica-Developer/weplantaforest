@@ -10,10 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.dicadeveloper.weplantaforest.views.Views;
-
-import com.fasterxml.jackson.annotation.JsonView;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

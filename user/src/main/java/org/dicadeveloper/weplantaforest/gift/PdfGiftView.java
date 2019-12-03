@@ -26,8 +26,6 @@ public class PdfGiftView {
 
     private final String ENTER_CODE_URL = Uris.HOST + Uris.GIFT_REDEEM;
 
-    private final static Font textFontForCircle = new Font(FontFamily.TIMES_ROMAN, 26, Font.ITALIC, BaseColor.WHITE);
-
     PdfHelper pdfHelper = new PdfHelper();
 
     public void buildPdfDocument(OutputStream toWrite, Map<String, String> pdfTexts, String[] codeFragments, String imagePath) throws Exception {

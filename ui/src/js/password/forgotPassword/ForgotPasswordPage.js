@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 import RequestSent from './RequestSent';
 import SendRequest from './SendRequest';
-
 
 require('./forgotPasswordPage.less');
 

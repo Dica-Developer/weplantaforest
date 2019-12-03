@@ -1,6 +1,6 @@
 package org.dicadeveloper.weplantaforest.projects.offer;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ProjectOfferData {
-    
+
     String first;
     @NotEmpty
     String name;
@@ -31,7 +31,7 @@ public class ProjectOfferData {
 
     @JsonProperty
     boolean isSelling;
-    
+
     @JsonProperty
     boolean isLeasing;
 
