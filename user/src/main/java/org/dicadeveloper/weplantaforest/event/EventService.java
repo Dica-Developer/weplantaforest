@@ -10,6 +10,8 @@ import org.dicadeveloper.weplantaforest.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
+import org.dicadeveloper.weplantaforest.team.Team;
+import org.dicadeveloper.weplantaforest.team.TeamService;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,13 @@ public class EventService {
     @NonNull
     private CodeRepository _codeRepository;
 
+    @NonNull
+    private TeamService _teamService;
+
     @Transactional
     public void redeemEventCode(User recipient, String eventCode) throws IpatException{
         Cart cartForEventCode = _cartRepository.findCartByCode(eventCode);
+        Team team = null;
         if (null == cartForEventCode) {
             Code code = _codeRepository.findByCode(eventCode);
             IpatPreconditions.checkNotNull(code, ErrorCodes.INVALID_CODE);
@@ -39,6 +45,7 @@ public class EventService {
             IpatPreconditions.checkNotNull(cartForEventCode, ErrorCodes.CART_TO_EVENT_CODE_IS_NULL);
             cartForEventCode.setCode(code);
             code.setCart(cartForEventCode);
+            team = code.getEvent().getTeam();
         } else {
             IpatPreconditions.checkNotNull(cartForEventCode, ErrorCodes.CART_TO_EVENT_CODE_IS_NULL);
         }
@@ -51,5 +58,9 @@ public class EventService {
             cartTree.setOwner(recipient);
         }
         _cartRepository.save(cartForEventCode);
+
+        if (null != team && null == recipient.getTeam()) {
+            _teamService.joinTeam(recipient.getId(), team.getId());
+        }
     }
 }
