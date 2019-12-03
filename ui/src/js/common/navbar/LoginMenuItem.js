@@ -48,12 +48,13 @@ export default class LoginMenuItem extends Component {
     });
   }
 
-  handleLogin(token) {
+  handleLogin(token, username) {
     var that = this;
     localStorage.setItem('jwt', token);
-    localStorage.setItem('username', this.state.name);
+    localStorage.setItem('username', username);
+    this.state.name = username;
 
-    axios.get('http://localhost:8081/user/language?userName=' + encodeURIComponent(this.state.name)).then(function(response) {
+    axios.get('http://localhost:8081/user/language?userName=' + encodeURIComponent(username)).then(function(response) {
       var result = response.data;
       if (localStorage.getItem('language') != result) {
         that.props.updateLanguage(result);
@@ -118,7 +119,7 @@ export default class LoginMenuItem extends Component {
         password: this.state.password
       }
     }).then(function(response) {
-      that.handleLogin(response.headers['x-auth-token']);
+      that.handleLogin(response.headers['x-auth-token'], response.headers['x-auth-username']);
     }.bind(this)).catch(function(error) {
       that.setState({
         name: '',

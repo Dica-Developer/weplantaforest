@@ -30,4 +30,12 @@ public class UserDetailsService implements org.springframework.security.core.use
         user.setLastVisit(System.currentTimeMillis());
         userRepo.save(user);
     }
+
+    public final String getUsernameByEmail(String email) {
+        final User user = userRepo.findByEmail(email);
+        if (user != null) {
+            return user.getName();
+        }
+        return null;
+    }
 }

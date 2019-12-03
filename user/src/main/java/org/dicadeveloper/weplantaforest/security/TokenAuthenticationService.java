@@ -21,6 +21,8 @@ public class TokenAuthenticationService {
     
     private final static String ANONYMOUS_TOKEN = "anonym-user";
 
+    private static final String USERNAME_HEADER_NAME = "X-AUTH-USERNAME";
+
     private final TokenHandler tokenHandler;
     
     private @NonNull UserService _userHelper;
@@ -33,8 +35,8 @@ public class TokenAuthenticationService {
 
     public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
         final User user = authentication.getDetails();
-        // user.setExpires(System.currentTimeMillis() + TEN_DAYS);
         response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
+        response.addHeader(USERNAME_HEADER_NAME, user.getUsername());
     }
 
     public Authentication getAuthentication(HttpServletRequest request) {

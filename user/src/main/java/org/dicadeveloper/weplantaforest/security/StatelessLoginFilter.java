@@ -39,6 +39,10 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
         final User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+        String username = userDetailsService.getUsernameByEmail(user.getName());
+        if (null != username) {
+            user.setName(username);
+        }
         final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         return getAuthenticationManager().authenticate(loginToken);
     }
