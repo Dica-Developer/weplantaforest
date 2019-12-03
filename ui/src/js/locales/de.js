@@ -346,8 +346,8 @@ module.exports = {
   ANONYMIZE_ACCOUNT: 'Account anonymisieren',
   PROFILE: 'Profil',
 
-  NOT_LOGGED_IN: 'Wichtig: Du bist nicht eingeloggt',
-  NOT_LOGGED_IN_TEXT: 'Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung. Nur als registrierter Nutzer kannst du Zertifikate und Gutscheine erstellen und erhälst Spendenquittungen.',
+  NOT_LOGGED_IN: 'Wichtig: Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung.',
+  NOT_LOGGED_IN_TEXT: 'Nur als registrierter Nutzer hast Du ein individuelles Profil und kannst Zertifikate und Gutscheine erstellen.',
   ACCOUNT_Q: 'Du hast einen Account?',
   NO_ACCOUNT_Q: 'Du hast noch keinen Account?',
 

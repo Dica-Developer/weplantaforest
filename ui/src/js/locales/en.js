@@ -345,8 +345,8 @@ module.exports = {
   ANONYMIZE_ACCOUNT: 'anonymize account',
   PROFILE: 'Profile',
 
-  NOT_LOGGED_IN: 'Warning: You are not logged in',
-  NOT_LOGGED_IN_TEXT: 'There are less functions available, when you plant anonymously. Only registrated user can create gifts and certificates and get receipts.',
+  NOT_LOGGED_IN: 'Attention: You are not logged in! There are fewer functions available when you plant anonymously. ',
+  NOT_LOGGED_IN_TEXT: 'Only as a registered user you have an individual profile and can create certificates and vouchers.',
   ACCOUNT_Q: 'Do you have an account?',
   NO_ACCOUNT_Q: 'You don\'t have one?',
 

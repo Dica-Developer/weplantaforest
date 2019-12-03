@@ -168,10 +168,10 @@ export default class PlantBagPage extends Component {
         <div className="row plantBagPage">
           <div className="col-md-12">
             <h1>{counterpart.translate('YOUR_PLANTBAG')}</h1>
-            <div className={'panel panel-warning ' + (!this.state.isAnonymUser
+            <div className={'panel panel-danger ' + (!this.state.isAnonymUser
               ? 'no-display'
               : '')}>
-              <div className="panel-heading">{counterpart.translate('NOT_LOGGED_IN')}</div>
+              <div className="panel-heading"><strong>{counterpart.translate('NOT_LOGGED_IN')}</strong></div>
               <div className="panel-body">
                 {counterpart.translate('NOT_LOGGED_IN_TEXT')}<br/>
                 {counterpart.translate('ACCOUNT_Q')}&nbsp;<a onClick={this.showLogin.bind(this)}>Login</a><br/>
