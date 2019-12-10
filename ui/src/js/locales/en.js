@@ -231,7 +231,8 @@ module.exports = {
   TOO_MANY_TREES: {
     TITLE: 'Too many trees!',
     TEXT_1: 'There are only ',
-    TEXT_2: ' trees left from this treetype.'
+    TEXT_2: ' trees left from this treetype.',
+    TEXT_3: 'You can donate a maximum of 200 trees at once. For larger quantities please donate several times or contact us. Thank you very much!'
   },
 
   OFFER_ACREAGE_TEXTS: {

@@ -232,7 +232,8 @@ module.exports = {
   TOO_MANY_TREES: {
     TITLE: 'Zu viele Bäume!',
     TEXT_1: 'Von diesem Baum sind leider nur noch ',
-    TEXT_2: ' übrig.'
+    TEXT_2: ' übrig.',
+    TEXT_3: 'Du kannst maximal 200 Bäume auf einmal spenden. Für größere Stückzahlen spende bitte mehrmals oder kontaktiere uns. Vielen Dank!'
   },
 
   OFFER_ACREAGE_TEXTS: {

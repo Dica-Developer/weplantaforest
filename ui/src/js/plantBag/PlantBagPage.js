@@ -37,28 +37,38 @@ export default class PlantBagPage extends Component {
 
   switchTOPaymentPage() {
     var that = this;
-    var config;
-    if (!this.state.isAnonymUser) {
-      config = {
-        headers: {
-          'X-AUTH-TOKEN': localStorage.getItem('jwt')
-        }
-      };
-    } else {
-      config = {
-        headers: {
-          'X-AUTH-TOKEN': 'anonym-user'
-        }
-      };
-    }
-    if (this.state.isGift) {
-      if (!this.state.isAnonymUser) {
-        this.createGift(config);
-      } else {
-        this.refs.notification.addNotification(counterpart.translate('NO_USER_LOGGED_IN.TITLE'), counterpart.translate('NO_USER_LOGGED_IN.TEXT'), 'error');
+    var amount = 0;
+    for (var project in this.state.plantBag.projects) {
+      for (var plantItem in this.state.plantBag.projects[project].plantItems) {
+        amount = amount + this.state.plantBag.projects[project].plantItems[plantItem].amount;
       }
+    }
+    if (amount > 200) {
+      this.refs.notification.addNotification(counterpart.translate('TOO_MANY_TREES.TITLE'), counterpart.translate('TOO_MANY_TREES.TEXT_3'), 'error');
     } else {
-      this.createCart(config);
+      var config;
+      if (!this.state.isAnonymUser) {
+        config = {
+          headers: {
+            'X-AUTH-TOKEN': localStorage.getItem('jwt')
+          }
+        };
+      } else {
+        config = {
+          headers: {
+            'X-AUTH-TOKEN': 'anonym-user'
+          }
+        };
+      }
+      if (this.state.isGift) {
+        if (!this.state.isAnonymUser) {
+          this.createGift(config);
+        } else {
+          this.refs.notification.addNotification(counterpart.translate('NO_USER_LOGGED_IN.TITLE'), counterpart.translate('NO_USER_LOGGED_IN.TEXT'), 'error');
+        }
+      } else {
+        this.createCart(config);
+      }
     }
   }
 
