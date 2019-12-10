@@ -26,12 +26,12 @@ export default class FindTreePage extends Component {
     this.setState({
       certificateId: certificateId
     });
-    axios.get('http://localhost:8081/certificate/search/' + certificateId).then(function(response) {
+    axios.get('http://localhost:8081/certificate/search/' + encodeURIComponent(certificateId)).then(function(response) {
       var result = response.data;
       that.setState({
         trees: result
       });
-      axios.get('http://localhost:8081/certificate/summary/' + certificateId).then(function(response) {
+      axios.get('http://localhost:8081/certificate/summary/' + encodeURIComponent(certificateId)).then(function(response) {
         var result = response.data;
         that.setState({
           certificate: result,

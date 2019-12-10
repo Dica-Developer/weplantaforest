@@ -50,9 +50,6 @@ public class CertificateController {
     
     private @NonNull CertificateService _certificateSerivce;
 
-    private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
-
-    
     /*
      * returns a list of trees belonging to the certificate number
      */
@@ -60,8 +57,8 @@ public class CertificateController {
     @JsonView(Views.PlantedTree.class)
     @Transactional
     public ResponseEntity<List<Tree>> findTreesForCertificateNumber(@PathVariable("certificateNumber") String certificateNumber) {
-        certificateNumber = certificateNumber.replace("#", "");
-        Certificate certificate = _certificateRepository.findByNumber(certificateNumber);
+        final String certificateNumberCleaned = certificateNumber.replace("#", "");
+        Certificate certificate = _certificateRepository.findByNumber(certificateNumberCleaned);
 
         if (null != certificate) {
             List<Tree> trees = new ArrayList<>();
@@ -79,8 +76,8 @@ public class CertificateController {
     @RequestMapping(value = Uris.CERTIFICATE_SUMMARY + "{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.CertificateSummary.class)
     public ResponseEntity<Certificate> findCertificateText(@PathVariable("certificateNumber") String certificateNumber) {
-        certificateNumber = certificateNumber.replace("#", "");
-        Certificate certificate = _certificateRepository.findByNumber(certificateNumber);
+        final String certificateNumberCleaned = certificateNumber.replace("#", "");
+        Certificate certificate = _certificateRepository.findByNumber(certificateNumberCleaned);
 
         if (null != certificate) {
             return new ResponseEntity<>(certificate, HttpStatus.OK);

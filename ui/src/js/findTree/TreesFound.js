@@ -29,7 +29,7 @@ export default class TreesFound extends Component {
       <div className="col-md-12">
         <div className="align-center">
           <div className="foundTreesHead">
-            <h1>{counterpart.translate('CERTIFICATE_WORD')}&nbsp;#{this.props.certificateId}</h1>
+            <h1>{counterpart.translate('CERTIFICATE_WORD')}&nbsp;#{this.props.certificateId.replace(/#/gi, '')}</h1>
             {counterpart.translate('FROM')}:&nbsp;<Link to={'/user/' + encodeURIComponent(this.props.certificate.creator.name)}>
               {this.props.certificate.creator.name}
             </Link><br/>
