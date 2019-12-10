@@ -157,7 +157,7 @@ export default class Routes extends Component {
           <Route path="/forgotPassword" component={ForgotPasswordPage} reRender={this.reRender.bind(this)}/>
           <Route path="/password_reset" component={ResetPasswordPage} reRender={this.reRender.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)}/>
           <Route path="/gifts/:userName" component={GiftOverview} reRender={this.reRender.bind(this)} redeemGift={this.redeemGift.bind(this)}/>
-          <Route path="/gift/redeem" component={RedeemGiftPage} reRender={this.reRender.bind(this)} redeemGift={this.redeemGift.bind(this)}/>
+          <Route path="/gift/redeem" component={RedeemGiftPage} reRender={this.reRender.bind(this)} redeemGift={this.redeemGift.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)}/>
           <Route path="/certificate/find" component={FindTreePage} reRender={this.reRender.bind(this)}/>
           <Route path="/statistics" component={StatisticsPage} reRender={this.reRender.bind(this)}/>
           <Route path="/team/:teamName" component={TeamPage} reRender={this.reRender.bind(this)}/>

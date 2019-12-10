@@ -346,7 +346,8 @@ module.exports = {
   PROFILE: 'Profile',
 
   NOT_LOGGED_IN: 'Attention: You are not logged in! There are fewer functions available when you plant anonymously. ',
-  NOT_LOGGED_IN_TEXT: 'Only as a registered user you have an individual profile and can create certificates and vouchers.',
+  NOT_LOGGED_IN_REDEEM_GIFT: 'Attention: You are not logged in! Only as a registered user you can redeem vouchers.',
+  NOT_LOGGED_IN_TEXT: 'Only as a registered user you have your own profile, can create certificates and use vouchers.',
   ACCOUNT_Q: 'Do you have an account?',
   NO_ACCOUNT_Q: 'You don\'t have one?',
 

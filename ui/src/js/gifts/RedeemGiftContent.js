@@ -1,6 +1,7 @@
 import axios from 'axios';
 import counterpart from 'counterpart';
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import IconButton from '../common/components/IconButton';
 import Notification from '../common/components/Notification';
 import { getConfig } from '../common/RestHelper';
@@ -10,8 +11,8 @@ require('./redeemGiftContent.less');
 
 export default class RedeemGiftContent extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isRedeemed: false,
       code: '',
@@ -80,20 +81,43 @@ export default class RedeemGiftContent extends Component {
     this.forceUpdate();
   }
 
+  linkTo(url) {
+    browserHistory.push(url);
+  }
+
+  showLogin(){
+    this.props.showLoginSlide();
+  }
+
   render() {
+    var loggedIn = localStorage.getItem('username') && localStorage.getItem('username') != '';
     return (
       <div className="col-md-12 redeemGiftContent">
-      <div>
+          <div className={(!loggedIn
+              ? 'no-display'
+              : '')}>
           <h1>{counterpart.translate('REDEEM_GIFT')}</h1>
-            <p>{counterpart.translate('ENTER_GIFT_CODE')}:</p>
-            <div className="inputWrapper">
-              <input type="text" size="4" maxLength="4" ref="part1" onBlur={(event)=>{this.updateInput('part1', event);}} onPaste={this.trimAndSetValuesIfPossible.bind(this)}/>&nbsp;-&nbsp;
-              <input type="text" size="4" maxLength="4" ref="part2" onBlur={(event)=>{this.updateInput('part2', event);}} />&nbsp;-&nbsp;
-              <input type="text" size="4" maxLength="4" ref="part3" onBlur={(event)=>{this.updateInput('part3', event);}}/>&nbsp;-&nbsp;
-              <input type="text" size="4" maxLength="4" ref="part4" onBlur={(event)=>{this.updateInput('part4', event);}}/>
-            </div>
-            <IconButton className="iconButton" text={counterpart.translate('REDEEM_GIFT')} glyphIcon="glyphicon-gift" onClick={this.redeemGift.bind(this)}/>
+          <p>{counterpart.translate('ENTER_GIFT_CODE')}:</p>
+          <div className="inputWrapper">
+            <input type="text" size="4" maxLength="4" ref="part1" onBlur={(event)=>{this.updateInput('part1', event);}} onPaste={this.trimAndSetValuesIfPossible.bind(this)}/>&nbsp;-&nbsp;
+            <input type="text" size="4" maxLength="4" ref="part2" onBlur={(event)=>{this.updateInput('part2', event);}} />&nbsp;-&nbsp;
+            <input type="text" size="4" maxLength="4" ref="part3" onBlur={(event)=>{this.updateInput('part3', event);}}/>&nbsp;-&nbsp;
+            <input type="text" size="4" maxLength="4" ref="part4" onBlur={(event)=>{this.updateInput('part4', event);}}/>
+          </div>
+          <IconButton className="iconButton" text={counterpart.translate('REDEEM_GIFT')} glyphIcon="glyphicon-gift" onClick={this.redeemGift.bind(this)}/>
         </div>
+          <div className={'panel panel-danger ' + (loggedIn
+              ? 'no-display'
+              : '')}>
+            <div className="panel-heading"><strong>{counterpart.translate('NOT_LOGGED_IN_REDEEM_GIFT')}</strong></div>
+            <div className="panel-body">
+              {counterpart.translate('NOT_LOGGED_IN_TEXT')}<br/>
+              {counterpart.translate('ACCOUNT_Q')}&nbsp;<a onClick={this.showLogin.bind(this)}>Login</a><br/>
+              {counterpart.translate('NO_ACCOUNT_Q')}&nbsp;<a onClick={() => {
+                this.linkTo('/registration');
+              }}>{counterpart.translate('REGISTRATE')}</a>
+            </div>
+          </div>
         <Notification ref="notification"/>
       </div>
     );

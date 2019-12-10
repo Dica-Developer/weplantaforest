@@ -347,7 +347,8 @@ module.exports = {
   PROFILE: 'Profil',
 
   NOT_LOGGED_IN: 'Wichtig: Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung.',
-  NOT_LOGGED_IN_TEXT: 'Nur als registrierter Nutzer hast Du ein individuelles Profil und kannst Zertifikate und Gutscheine erstellen.',
+  NOT_LOGGED_IN_REDEEM_GIFT: 'Wichtig: Du bist nicht eingeloggt! Nur als registrierter Nutzer kannst du Gutscheine einlösen.',
+  NOT_LOGGED_IN_TEXT: 'Nur als registrierter Nutzer hast du ein eigenes Profil, kannst Zertifikate erstellen und Gutscheine nutzen.',
   ACCOUNT_Q: 'Du hast einen Account?',
   NO_ACCOUNT_Q: 'Du hast noch keinen Account?',
 
