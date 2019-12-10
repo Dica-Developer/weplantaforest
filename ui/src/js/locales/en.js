@@ -95,7 +95,7 @@ module.exports = {
 
   NO_TEAM_ME: 'You haven\'t joined a team yet',
   NO_TEAM_VISITOR: 'The user has not joined a team yet',
-  NO_PLANTINGS: 'You haven\'t planted any trees yet',
+  NO_PLANTINGS: 'As soon as we have received your donation, you can create a certificate.',
 
   ERROR: 'An Error occured!',
   WRONG_USERNAME_PASSWORD: 'Wrong username/password combination! Please try again.',

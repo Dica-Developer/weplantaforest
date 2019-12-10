@@ -95,7 +95,7 @@ module.exports = {
 
   NO_TEAM_ME: 'Du bist noch keinem Team beigetreten',
   NO_TEAM_VISITOR: 'Der User ist noch keinem Team beigetreten',
-  NO_PLANTINGS: 'Du hast noch keine Bäume gepflanzt',
+  NO_PLANTINGS: 'Sobald deine Spende bei uns eingegangen ist, kannst du ein Zertifikat erstellen.',
 
   ERROR: 'Ein Fehler ist aufgetreten!',
   WRONG_USERNAME_PASSWORD: 'Benutzername und Passwort stimmen nicht überein.',
