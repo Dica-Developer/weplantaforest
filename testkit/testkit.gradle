@@ -5,7 +5,7 @@ plugins {
 dependencies {
   compile 'org.springframework.boot:spring-boot-test:' + springBootVersion
   compile('org.springframework.boot:spring-boot:'+ springBootVersion)
-  compile 'org.flywaydb:flyway-core:6.0.8'
+  compile 'org.flywaydb:flyway-core:5.2.4'
   compile group: 'junit', name: 'junit', version: '4.12'
   compile 'com.fasterxml.jackson.core:jackson-databind:2.9.9.3'
   compile 'org.springframework:spring-web:5.2.1.RELEASE'

@@ -5,6 +5,7 @@ plugins {
 }
 
 jar {
+  enabled = true
   baseName = 'wpaf-admin'
   version = '0.0.1-SNAPSHOT'
 }

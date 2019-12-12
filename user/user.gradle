@@ -5,11 +5,14 @@ plugins {
 }
 
 jar {
-  baseName = 'wpaf-user'
-  version = '0.0.1-SNAPSHOT'
+  enabled = true
+  archiveBaseName = 'wpaf-user'
+  archiveVersion = '0.0.1-SNAPSHOT'
 }
 
-mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
+application {
+  mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
+}
 
 dependencies{
   annotationProcessor 'org.projectlombok:lombok:1.18.10'
@@ -26,7 +29,7 @@ dependencies{
   compile('org.springframework.boot:spring-boot-starter-validation:' + springBootVersion)
   compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
   //DB migrations
-  compile 'org.flywaydb:flyway-core:6.0.8'
+  compile 'org.flywaydb:flyway-core:5.2.4'
   //scale images
   compile 'net.coobird:thumbnailator:0.4.8'
   //PDF generation
