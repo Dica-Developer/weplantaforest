@@ -29,7 +29,7 @@ export default class Notification extends Component {
     if (error instanceof Error) {
       if (!error.response) {
         this.refs.notificationSystem.addNotification({title: 'Der Server kann nicht erreicht werden.', position: 'tc', autoDismiss: 0, message: error.message, level: 'error'});
-        console.error('Error', error.message);
+        console.error('Error', error.message, error);
       } else if (error.response.data && error.response.data.errorInfos) {
         this.addMultilineNotification(counterpart.translate('ERROR'), error.response.data.errorInfos, 'error');
       } else {

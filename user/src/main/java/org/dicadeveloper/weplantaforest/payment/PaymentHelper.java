@@ -80,8 +80,8 @@ public class PaymentHelper {
         BANK_ERRORS.put("BANK_507", "BANK_INVALID_ACCOUNT");
         BANK_ERRORS.put("BANK_508", "BANK_ACCOUNT_NR_TOO_LONG");
         BANK_ERRORS.put("BANK_509", "BANK_ACCOUNT_NR_TOO_SHORT");
-        BANK_ERRORS.put("BANK_984", "BANK_DOUBLED_DONATION");
-        BANK_ERRORS.put("BANK_985", "BANK_CC_DENIED");
+        BANK_ERRORS.put("BANK_985", "BANK_DOUBLED_DONATION");
+        BANK_ERRORS.put("BANK_984", "BANK_CC_DENIED");
     }
 
     public String postRequestSepa(Cart cart, PaymentData paymentData) {
