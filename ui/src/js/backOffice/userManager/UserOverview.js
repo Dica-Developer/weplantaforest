@@ -7,85 +7,7 @@ import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
 import { getConfig } from '../../common/RestHelper';
 
-
-
 require('./userOverview.less');
-
-class MailChanger extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      originalMail: this.props.mail,
-      newMail: this.props.mail
-    };
-  }
-
-  updateNewMail(e) {
-    this.setState({
-      newMail: e.target.value
-    });
-  }
-
-  updateMail() {
-    var that = this;
-    var config = getConfig();
-    axios.post('http://localhost:8083/user/changeMail?userId=' + this.props.id + '&newMail=' + this.state.newMail, {}, config).then(function(response) {
-      that.props.closeEditBox(that.props.id, that.state.newMail);
-    }).catch(function(error) {
-      that.refs.notification.handleError(error);
-    });
-  }
-
-  render() {
-    return (
-      <div className="mail-changer">
-        <input value={this.state.newMail} onChange={this.updateNewMail.bind(this)}/>
-        <IconButton glyphIcon="glyphicon-floppy-open" text="" onClick={this.updateMail.bind(this)}/>
-        <Notification ref="notification"/>
-      </div>
-    );
-  }
-
-}
-
-class UserNameChanger extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      originalUsername: this.props.username,
-      newUsername: this.props.username
-    };
-  }
-
-  updateNewUsername(e) {
-    this.setState({
-      newUsername: e.target.value
-    });
-  }
-
-  updateUsername() {
-    var that = this;
-    var config = getConfig();
-    axios.post('http://localhost:8083/user/changeName?userId=' + this.props.id + '&newUsername=' + encodeURIComponent(this.state.newUsername), {}, config).then(function(response) {
-      that.props.closeEditBox(that.props.id, that.state.newUsername);
-    }).catch(function(error) {
-      that.refs.notification.handleError(error);
-    });
-  }
-
-  render() {
-    return (
-      <div className="user-name-changer">
-        <input value={this.state.newUsername} onChange={this.updateNewUsername.bind(this)}/>
-        <IconButton glyphIcon="glyphicon-floppy-open" text="" onClick={this.updateUsername.bind(this)}/>
-        <Notification ref="notification"/>
-      </div>
-    );
-  }
-
-}
 
 export default class UserOverview extends Component {
 
@@ -99,7 +21,8 @@ export default class UserOverview extends Component {
         name: 'User Name',
         width: 300,
         filterable: true,
-        sortable: true
+        sortable: true, 
+        editable: true
       }, {
         key: 'editName',
         name: '',
@@ -109,13 +32,12 @@ export default class UserOverview extends Component {
         name: 'EMail',
         width: 400,
         filterable: true,
-        sortable: true
+        sortable: true, 
+        editable: true
       }, {
         key: 'editMail',
         name: '',
-        width: 50,
-        filterable: true,
-        sortable: true
+        width: 50
       }, {
         key: 'active',
         name: 'aktiv',
@@ -178,9 +100,9 @@ export default class UserOverview extends Component {
     var row = {
       id: user.id,
       username: user.name,
-      editName: this.createEditButton(user.id, user.name),
+      editName: '',
       mail: user.mail,
-      editMail: this.createEditButtonForMail(user.id, user.mail),
+      editMail: '',
       active: this.createActiveIcon(user.id, user.enabled),
       banned: this.createBannedIcon(user.id, user.banned),
       admin: this.createAdminIcon(user.id, user.admin),
@@ -191,6 +113,7 @@ export default class UserOverview extends Component {
 
   createEditButton(id, username) {
     return <IconButton glyphIcon="glyphicon-pencil" text="" onClick={() => {
+      console.log('show edit box');
       this.showEditBoxForUsername(id,username);
     }}/>;
   }
@@ -247,63 +170,6 @@ export default class UserOverview extends Component {
         this.changeArticleManagerRoleForUser(id,true);
       }}/>;
     }
-  }
-
-  createAbortButton(id, username){
-    return <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
-      this.closeEditBoxForUsername(id,username);
-    }}/>;
-  }
-
-  createAbortButtonForMail(id, mail){
-    return <IconButton glyphIcon="glyphicon-remove" text="" onClick={() => {
-      this.closeEditBoxForMail(id,mail);
-    }}/>;
-  }
-
-  closeEditBoxForUsername(id, username) {
-    for (var row in this.state.rows) {
-      if (this.state.rows[row].id == id) {
-        this.state.rows[row].username = username;
-        this.state.rows[row].editName = this.createEditButton(id, username);
-        break;
-      }
-    }
-    this.forceUpdate();
-  }
-
-  closeEditBoxForMail(id, mail) {
-    for (var row in this.state.rows) {
-      if (this.state.rows[row].id == id) {
-        this.state.rows[row].mail = mail;
-        this.state.rows[row].editMail = this.createEditButtonForMail(id, mail);
-        break;
-      }
-    }
-    this.forceUpdate();
-  }
-
-
-  showEditBoxForUsername(id, username) {
-    for (var row in this.state.rows) {
-      if (this.state.rows[row].id == id) {
-        this.state.rows[row].username = <UserNameChanger id={id} username={username} closeEditBox={this.closeEditBoxForUsername.bind(this)}/>;
-        this.state.rows[row].editName = this.createAbortButton(id, username);
-        break;
-      }
-    }
-    this.forceUpdate();
-  }
-
-  showEditBoxForMail(id, mail) {
-    for (var row in this.state.rows) {
-      if (this.state.rows[row].id == id) {
-        this.state.rows[row].mail = <MailChanger id={id} mail={mail} closeEditBox={this.closeEditBoxForMail.bind(this)}/>;
-        this.state.rows[row].editMail = this.createAbortButtonForMail(id, mail);
-        break;
-      }
-    }
-    this.forceUpdate();
   }
 
   updateActiveIcon(id, active) {
@@ -460,6 +326,72 @@ export default class UserOverview extends Component {
     }
   }
 
+  updateUsername(id, username) {
+    var config = getConfig();
+    var that = this;
+    axios.post('http://localhost:8083/user/changeName?userId=' + id + '&newUsername=' + encodeURIComponent(username), {}, config).then(function(response) {
+      const users = that.state.users;
+      for(let user of users) {
+        if(user.id === id) {
+          user.name = username;
+        }
+      }
+     
+      var rows = that.createRows(users);
+      that.setState({
+        users: users,
+        rows: rows
+      });
+      that.forceUpdate();      
+      that.refs.notification.addNotification('Username geupdatet!', 'Der Nutzername Adresse wurde so eben editiert.', 'success');
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
+    });
+  }
+
+  updateMail(id, mail) {
+    var that = this;
+    var config = getConfig();
+    axios.post('http://localhost:8083/user/changeMail?userId=' + id + '&newMail=' + mail, {}, config).then(function(response) {
+      const users = that.state.users;
+      for(let user of users) {
+        if(user.id === id) {
+          user.mail = mail;
+        }
+      }
+     
+      var rows = that.createRows(users);
+      that.setState({
+        users: users,
+        rows: rows
+      });
+      that.forceUpdate();      
+      that.refs.notification.addNotification('E-Mail geupdatet!', 'Der E-Mail Adresse wurde so eben editiert.', 'success');
+    }).catch(function(error) {
+      that.refs.notification.handleError(error);
+    });
+  }
+
+
+  onGridRowsUpdated({ fromRow, toRow, updated }) {
+    this.setState(state => {
+      const rows = state.rows.slice();
+      for (let i = fromRow; i <= toRow; i++) {
+        if(updated['username']) {
+          if(rows[i].username !== updated.username) {
+            rows[i].editName = <IconButton glyphIcon="glyphicon-floppy-open" text="" onClick={() => { this.updateUsername(rows[i].id, rows[i].username);}}/>;
+          }
+        }else if(updated['mail']) {
+          if(rows[i].mail !== updated.mail) {
+            rows[i].editMail = <IconButton glyphIcon="glyphicon-floppy-open" text="" onClick={() => { this.updateMail(rows[i].id, rows[i].mail);}}/>;
+          }
+        }
+        rows[i] = { ...rows[i], ...updated };
+      }
+      return { rows };
+    });
+  }
+
   render() {
     var style = {
       Containers: {
@@ -483,7 +415,16 @@ export default class UserOverview extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <ReactDataGrid columns={this.state.columns} titles={this.state.titles} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
+            <ReactDataGrid 
+              columns={this.state.columns} 
+              titles={this.state.titles} 
+              rowGetter={this.rowGetter.bind(this)} 
+              rowsCount={this.getSize()} 
+              onGridSort={this.handleGridSort.bind(this)} 
+              minHeight={800} 
+              onGridRowsUpdated={this.onGridRowsUpdated.bind(this)}
+              enableCellSelect={true}
+              toolbar={< Toolbar enableFilter = {
               true
             } />}
             onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)} getCellActions={this.getCellActions.bind(this)}/>
