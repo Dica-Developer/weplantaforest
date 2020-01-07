@@ -173,42 +173,66 @@ export default class UserOverview extends Component {
   }
 
   updateActiveIcon(id, active) {
-    for (var row in this.state.rows) {
-      if (this.state.rows[row].id == id) {
-        this.state.rows[row].active = this.createActiveIcon(id, active);
-        break;
+    const users = this.state.users;
+    for(let user of users) {
+      if(user.id === id) {
+        user.enabled = active;
       }
     }
+     
+    var rows = this.createRows(users);
+    this.setState({
+      users: users,
+      rows: rows
+    });
     this.forceUpdate();
   }
 
   updateBannedIcon(id, banned) {
-    for (var row in this.state.rows) {
-      if (this.state.rows[row].id == id) {
-        this.state.rows[row].banned = this.createBannedIcon(id, banned);
-        break;
+    const users = this.state.users;
+    for(let user of users) {
+      if(user.id === id) {
+        user.banned = banned;
       }
     }
+     
+    var rows = this.createRows(users);
+    this.setState({
+      users: users,
+      rows: rows
+    });
     this.forceUpdate();
   }
 
   updateAdminIcon(id, shouldBeAdmin) {
-    for (var row in this.state.rows) {
-      if (this.state.rows[row].id == id) {
-        this.state.rows[row].admin = this.createAdminIcon(id, shouldBeAdmin);
-        break;
+    const users = this.state.users;
+    for(let user of users) {
+      if(user.id === id) {
+        user.admin = shouldBeAdmin;
       }
     }
+     
+    var rows = this.createRows(users);
+    this.setState({
+      users: users,
+      rows: rows
+    });
     this.forceUpdate();
   }
 
   updateArticleManagerIcon(id, shouldBeArticleManager) {
-    for (var row in this.state.rows) {
-      if (this.state.rows[row].id == id) {
-        this.state.rows[row].articleManager = this.createArticleManagerIcon(id, shouldBeArticleManager);
-        break;
+    const users = this.state.users;
+    for(let user of users) {
+      if(user.id === id) {
+        user.articleManager = shouldBeArticleManager;
       }
     }
+     
+    var rows = this.createRows(users);
+    this.setState({
+      users: users,
+      rows: rows
+    });
     this.forceUpdate();
   }
 
