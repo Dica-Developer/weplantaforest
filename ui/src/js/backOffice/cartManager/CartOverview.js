@@ -495,10 +495,12 @@ export default class CartOverview extends Component {
     );
   }
 
-  handleStateSelection(objects){
+  handleStateSelection(objects) {
     let states = [];
-    for(let elm of objects){
-      states.push(elm.value);
+    if (null != objects) {
+      for(let elm of objects) {
+        states.push(elm.value);
+      }
     }
     this.state.selectedCartStates = objects;
     this.state.cartRequest.cartStates = states;
