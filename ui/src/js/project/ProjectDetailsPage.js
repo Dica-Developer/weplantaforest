@@ -198,7 +198,7 @@ export default class ProjectDetailsPage extends Component {
     let map;
 
     if (this.state.detailsActive) {
-      mainPart = <div><ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images}/>
+      mainPart = <div><ProjectCarousel projectName={this.props.params.projectName} slides={this.state.project.images.reverse()}/>
         <ProjectDetails project={this.state.project}/></div>;
         map =   <div className="row project-map">
             <div className="col-md-12">
