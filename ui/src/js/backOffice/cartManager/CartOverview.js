@@ -304,26 +304,36 @@ export default class CartOverview extends Component {
       details: this.createDetailIcon(cart.id),
       receiptable: this.createReceiptCheckbox(cart.id, cart.receiptable, cart.receipt),
       stateChange: this.createStateChangeDropdown(cart.id),
-      sendReceipt: cart.buyer ? this.createSendReceiptButton(cart.buyer.id, cart.receipt) : '',
+      sendReceipt: cart.buyer ? this.createSendReceiptButton(cart.buyer.id, cart.receipt, cart.id) : '',
       timeStampValue: cart.timeStamp
     };
     return row;
   }
 
-  createSendReceiptButton(userId, receipt) {
-    if(receipt && receipt._receiptId){
-      return <div><IconButton text="" glyphIcon="glyphicon-envelope" onClick={() => this.sendReceipt(userId, receipt._receiptId)}/></div>;
+  createSendReceiptButton(userId, receipt, cartId) {
+    if (receipt && receipt._receiptId){
+      return <div><IconButton text="" glyphIcon="glyphicon-send" onClick={() => this.sendReceipt(userId, receipt._receiptId)}/></div>;
     }else{
-      return <div></div>;
+      return <div><IconButton text="" glyphIcon="glyphicon-cog" onClick={() => this.createAndSendReceipt(userId, cartId)}/></div>;
     }
+  }
+
+  createAndSendReceipt(userId, cartId){
+    var that = this;
+    axios.post('http://localhost:8081/receipt/createAndSend?userId=' + userId + '&cartId=' + cartId, {}, this.state.restConfig).then(function(response) {
+      that.refs.notification.addNotification('Quittung erstellt und versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
+      that.loadCarts();
+    }).catch(function(response) {
+      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim erzeugen und versenden der Quittung ist ein Fehler aufgetreten:' + response.data, 'error');
+    });
   }
 
   sendReceipt(userId, receiptId){
     var that = this;
     axios.post('http://localhost:8081/receipt/send?userId=' + userId + '&receiptId=' + receiptId, {}, this.state.restConfig).then(function(response) {
-      that.refs.notification.addNotification("Mail versandt!", "Die Quittung wurde an den User verschickt!", "success");
+      that.refs.notification.addNotification('Mail versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
     }).catch(function(response) {
-      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Quittungsflags vom Pflanzkorb mit der ID ' + id + 'auf ' + value + ' ist folgender Fehler aufgetreten:' + response.data, 'error');
+      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim versenden der Quittung ist ein Fehler aufgetreten:' + response.data, 'error');
     });
   }
 
@@ -377,7 +387,7 @@ export default class CartOverview extends Component {
   changeStatusOfCart(id, event) {
     let cartState = event.target.value;
     if(cartState != 'DISCARDED'){
-      this.callSatusRequest(id, cartState)
+      this.callSatusRequest(id, cartState);
     }else{
       this.createDiscardConfirmation(id);
     }

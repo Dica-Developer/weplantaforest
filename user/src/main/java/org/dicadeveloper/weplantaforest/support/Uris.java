@@ -149,8 +149,10 @@ public class Uris {
     public final static String RECEIPTS = "/receipts";
 
     public final static String RECEIPT_PDF = "/receipt/pdf";
-    
-    public final static String RECEIPT_SEND = "/receipt/send";    
+
+    public final static String RECEIPT_SEND = "/receipt/send";
+
+    public final static String RECEIPT_CREATE_AND_SEND = "/receipt/createAndSend";
 
     // user
 

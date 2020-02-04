@@ -1,6 +1,7 @@
 package org.dicadeveloper.weplantaforest.cart;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -51,5 +52,8 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
 
     @Query(value = FIND_ONE_CART_BY_EVENT_AND_GENERATED, nativeQuery = true)
     public Cart findOneCartByEventAndGenerated(@Param("eventId") Long eventId);
+
+    @Query(value = "select cart from Cart as cart where cart.id = :cartId AND cart.buyer.id = :userId", nativeQuery = false)
+    public Optional<Cart> findOneCartByUserAndId(@Param("userId") Long userId, @Param("cartId")  Long cartId);
 
 }
