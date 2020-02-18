@@ -27,7 +27,7 @@ public class CodeHelper {
         }
     }
 
-    private static final Pattern CODE_PATTERN = Pattern.compile("[A-Z0-9^IJO0]{4}-[A-Z0-9^IJO0]{4}-[A-Z0-9^IJO0]{4}-[A-Z0-9^IJO0]{4}");
+    private static final Pattern CODE_PATTERN = Pattern.compile("[A-HK-NP-Z1-9]{4}-[A-HK-NP-Z1-9]{4}-[A-HK-NP-Z1-9]{4}-[A-HK-NP-Z1-9]{4}");
 
     private static final Map<Character, Values> _crypt = new HashMap<Character, Values>();
 
@@ -72,27 +72,52 @@ public class CodeHelper {
             int sum = 0;
             for (int i = 0; i < 2; i++) {
                 final char c = code.charAt(i);
-                sum += _crypt.get(c).small;
+                if (_crypt.containsKey(c)) {
+                    sum += _crypt.get(c).small;
+                } else {
+                    return false;
+                }
             }
             for (int i = 2; i < 4; i++) {
                 final char c = code.charAt(i);
-                sum += _crypt.get(c).medium;
+                if (_crypt.containsKey(c)) {
+                    sum += _crypt.get(c).medium;
+                } else {
+                    return false;
+                }
             }
             for (int i = 5; i < 9; i++) {
                 final char c = code.charAt(i);
-                sum += _crypt.get(c).large;
+
+                if (_crypt.containsKey(c)) {
+                    sum += _crypt.get(c).large;
+                } else {
+                    return false;
+                }
             }
             for (int i = 10; i < 14; i++) {
                 final char c = code.charAt(i);
-                sum += _crypt.get(c).large;
+                if (_crypt.containsKey(c)) {
+                    sum += _crypt.get(c).large;
+                } else {
+                    return false;
+                }
             }
             for (int i = 15; i < 17; i++) {
                 final char c = code.charAt(i);
-                sum += _crypt.get(c).small;
+                if (_crypt.containsKey(c)) {
+                    sum += _crypt.get(c).small;
+                } else {
+                    return false;
+                }
             }
             for (int i = 17; i < 19; i++) {
                 final char c = code.charAt(i);
-                sum += _crypt.get(c).medium;
+                if (_crypt.containsKey(c)) {
+                    sum += _crypt.get(c).medium;
+                } else {
+                    return false;
+                }
             }
             if (sum % 23 == 0) {
                 return true;
