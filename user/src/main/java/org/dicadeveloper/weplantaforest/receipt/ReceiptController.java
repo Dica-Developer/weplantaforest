@@ -68,27 +68,17 @@ public class ReceiptController {
     }
 
     @RequestMapping(value = Uris.RECEIPT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
-    public ResponseEntity<?> createReceiptPdf(HttpServletResponse response, @RequestParam Long receiptId, Authentication authentication) {
-        if (authentication.isAuthenticated()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            val user = (User) authentication.getDetails();
-            val receipt = _receiptRepository.findByIdAndOwner(receiptId, user.getId()).orElse(null);
+    public ResponseEntity<?> createReceiptPdf(HttpServletResponse response, @RequestParam Long receiptId) {
+        Receipt receipt = _receiptRepository.findById(receiptId).orElse(null);
+        PdfReceiptView pdf = new PdfReceiptView();
 
-            if (null != receipt) {
-                val pdf = new PdfReceiptView();
-
-                try {
-                    pdf.writePdfDataToOutputStream(response.getOutputStream(), RELATIVE_STATIC_IMAGES_PATH, receipt);
-                } catch (Exception e) {
-                    LOG.error("Error occured while creating PDF for receipt with id " + receiptId + "!\n", e);
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+        try {
+            pdf.writePdfDataToOutputStream(response.getOutputStream(), RELATIVE_STATIC_IMAGES_PATH, receipt);
+        } catch (Exception e) {
+            LOG.error("Error occured while creating PDF for receipt with id " + receiptId + "!\n", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = Uris.RECEIPT_SEND)
