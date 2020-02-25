@@ -84,7 +84,10 @@ public class ReceiptController {
     @PostMapping(value = Uris.RECEIPT_SEND)
     public ResponseEntity<?> sendReceipt(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long userId, @RequestParam Long receiptId) {
         if (_tokenAuthenticationService.isAdmin(userToken)) {
-            _receiptService.sendReceiptMail(userId, receiptId);
+            boolean sendMails = "true".equalsIgnoreCase(_env.getProperty("send.mails"));
+            if (sendMails) {
+                _receiptService.sendReceiptMail(userId, receiptId);
+            }
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -94,7 +97,7 @@ public class ReceiptController {
     @PostMapping(value = Uris.RECEIPT_CREATE_AND_SEND)
     public ResponseEntity<?> sendCreateAndSendReceipt(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long cartId, @RequestParam Long userId) {
         if (_tokenAuthenticationService.isAdmin(userToken)) {
-            boolean sendMails = _env.getProperty("send.mails") == "true" ? true : false;
+            boolean sendMails = "true".equalsIgnoreCase(_env.getProperty("send.mails"));
             Cart cart = _cartRepository.findOneCartByUserAndId(userId, cartId).orElseThrow();
 
             if (null == cart.getReceipt()) {
@@ -107,7 +110,7 @@ public class ReceiptController {
                 carts.add(cart);
                 receipt.setCarts(carts);
                 _receiptRepository.save(receipt);
-                if(sendMails) {
+                if (sendMails) {
                     _receiptService.sendReceiptMail(cart.getBuyer().getId(), receipt.getReceiptId());
                 }
                 return new ResponseEntity<>(HttpStatus.OK);

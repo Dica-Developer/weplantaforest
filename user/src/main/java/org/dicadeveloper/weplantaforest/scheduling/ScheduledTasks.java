@@ -73,7 +73,7 @@ public class ScheduledTasks {
     
     @Scheduled(fixedRate = DAY_IN_MILLISECONDS)
     private void checkCartsForReceipts() {
-        boolean sendMails = _env.getProperty("send.mails") == "true" ? true : false;
+        boolean sendMails = "true".equalsIgnoreCase(_env.getProperty("send.mails"));
         List<Cart> carts = _cartRepository.findReceiptableCarts();
         
         if(carts != null && carts.size() > 0) {
@@ -88,7 +88,7 @@ public class ScheduledTasks {
                 receipt.setInvoiceNumber(receipt.getReceiptId() + "/" + currentYear);
                 receipt.setCarts(userCartMap.get(userName));
                 _receiptRepository.save(receipt);
-                if(sendMails) {
+                if (sendMails) {
                     _receiptService.sendReceiptMail(owner.getId(), receipt.getReceiptId());
                 }
             }
