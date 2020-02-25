@@ -356,7 +356,7 @@ public class PdfReceiptView {
         table.addCell(new Phrase(new Chunk("Es handelt sich nicht um den Verzicht auf Erstattung von Aufwendungen.", textFontLawText)));
         table.addCell(new Phrase(new Chunk("Die Gesellschaft ist wegen Förderung (begünstigter Zweck: Umweltschutz (§52 (2) S. 1 Nr.(n) 8 AO)) durch", textFontLawText)));
         table.addCell(new Phrase(new Chunk("Bescheinigung des Finanzamt Halle (Saale)-Nord, StNr. 110/108/91169, vom 19.11.2008 ab 01.01.2009", textFontLawText)));
-        table.addCell(new Phrase(new Chunk("als gemeinnützig anerkannt. Letzter Freistellungsbescheid datiert auf den 24.10.2016.", textFontLawText)));
+        table.addCell(new Phrase(new Chunk("als gemeinnützig anerkannt. Letzter Freistellungsbescheid datiert auf den 22.01.2020.", textFontLawText)));
         table.addCell(new Phrase(new Chunk("Es wird bestätigt, dass die Zuwendung nur zur Förderung des Umweltschutzes verwendet wird.", textFontLawText)));
 
         PdfPCell emptyCell = new PdfPCell();
