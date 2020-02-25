@@ -32,7 +32,8 @@ export default class CodeOverview extends Component {
         sortable: true
       }],
       rows: [],
-      filters: {}
+      filters: {},
+      copyPasteCodes: ''
     };
   }
 
@@ -44,7 +45,8 @@ export default class CodeOverview extends Component {
     var rows = this.createRows(codes);
     this.setState({
       codes: codes,
-      rows: rows
+      rows: rows,
+      copyPasteCodes: codes.map((code) => {return code.code;}).join('\n')
     });
   }
 
@@ -164,10 +166,13 @@ export default class CodeOverview extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-8">
             <ReactDataGrid columns={this.state.columns} titles={this.state.titles} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
               true
             } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
+          </div>
+          <div className="col-md-4">
+            <textarea value={this.state.copyPasteCodes} disabled="disabled" className="fill-height"></textarea>
           </div>
           <Notification ref="notification"/>
         </div>

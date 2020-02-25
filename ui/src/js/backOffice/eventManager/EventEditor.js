@@ -39,7 +39,6 @@ export default class EventEditor extends Component {
   componentDidMount() {
     if (this.props.params.eventId != 'new') {
       this.loadEvent();
-      this.loadCodesForEvent();
     }
     this.loadUser();
     this.loadTeams();
@@ -49,17 +48,26 @@ export default class EventEditor extends Component {
     var that = this;
     axios.get('http://localhost:8083/event/' + encodeURIComponent(this.props.params.eventId), this.state.restConfig).then(function(response) {
       var result = response.data;
+      if (!result.team) {
+        result.team = {
+          id: null,
+          name: ''
+        };
+      }
       that.setState({
         eventt: result
       });
       that.refs.codegenerator.setEventId(result.id);
       that.refs.codegenerator.setUserId(result.user.id);
+
+      that.loadCodesForEvent();
     });
   }
 
   loadCodesForEvent() {
     var that = this;
-    axios.get('http://localhost:8083/event/codes/' + encodeURIComponent(this.props.params.eventId), this.state.restConfig).then(function(response) {
+    let eventId = this.state.eventt.id;
+    axios.get('http://localhost:8083/event/codes/' + encodeURIComponent(eventId), this.state.restConfig).then(function(response) {
       var result = response.data;
       that.setState({codes: result});
       that.refs.codes.setCodesAndCreateRows(result);
@@ -103,6 +111,10 @@ export default class EventEditor extends Component {
 
   createValueLabelPairsForTeams(teams) {
     var options = [];
+    options.push({
+      value: null,
+      label: '- kein Team ausgewählt -'
+    });
     for (var team in teams) {
       var option = {
         value: teams[team].id,
@@ -138,31 +150,52 @@ export default class EventEditor extends Component {
 
   saveEvent() {
     var that = this;
-    if (this.state.eventt.id != null) {
-      axios.put('http://localhost:8083/event', this.state.eventt, this.state.restConfig).then(function(response) {
-        var result = response.data;
-        that.setState({
-          eventt: result
+    let eventToCreate = {};
+    eventToCreate.id = this.state.eventt.id;
+    eventToCreate.name = this.state.eventt.name;
+    eventToCreate.team = this.state.eventt.team.id ? this.state.eventt.team : null;
+    eventToCreate.user = this.state.eventt.user;
+    if (this.state.eventt.user.id && this.state.eventt.name) {
+      if (this.state.eventt.id != null) {
+        axios.put('http://localhost:8083/event', eventToCreate, this.state.restConfig).then(function(response) {
+          var result = response.data;
+          if (!result.team) {
+            result.team = {
+              id: null,
+              name: ''
+            };
+          }
+          that.setState({
+            eventt: result
+          });
+          that.refs.codegenerator.setUserId(result.user.id);
+          that.refs.notification.addNotification('Geschafft!', 'Event wurde aktualisiert.', 'success');
+          that.forceUpdate();
+        }).catch(function(response) {
+          that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
         });
-        that.refs.codegenerator.setUserId(result.user.id);
-        that.refs.notification.addNotification('Geschafft!', 'Event wurde aktualisiert.', 'success');
-        that.forceUpdate();
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
-      });
+      } else {
+        axios.post('http://localhost:8083/event', eventToCreate, this.state.restConfig).then(function(response) {
+          var result = response.data;
+          if (!result.team) {
+            result.team = {
+              id: null,
+              name: ''
+            };
+          }
+          that.setState({
+            eventt: result
+          });
+          that.refs.codegenerator.setEventId(result.id);
+          that.refs.codegenerator.setUserId(result.user.id);
+          that.refs.notification.addNotification('Geschafft!', 'Event wurde erzeugt.', 'success');
+          that.forceUpdate();
+        }).catch(function(response) {
+          that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
+        });
+      }
     } else {
-      axios.post('http://localhost:8083/event', this.state.eventt, this.state.restConfig).then(function(response) {
-        var result = response.data;
-        that.setState({
-          eventt: result
-        });
-        that.refs.codegenerator.setEventId(result.id);
-        that.refs.codegenerator.setUserId(result.user.id);
-        that.refs.notification.addNotification('Geschafft!', 'Event wurde erzeugt.', 'success');
-        that.forceUpdate();
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
-      });
+      that.refs.notification.addNotification('Fehler!', 'User und/oder Name fehlt!', 'error');
     }
   }
 
@@ -189,7 +222,7 @@ export default class EventEditor extends Component {
         <div className="row">
           <div className="col-md-4"><label className="select-label">Team</label></div>
           <div className="col-md-8">
-            <VirtualizedSelect name="team-select" value={this.state.eventt.team.id} options={this.state.teams} onChange={this.updateTeamForEvent.bind(this)}/>
+            <VirtualizedSelect name="team-select" value={this.state.eventt.team ? this.state.eventt.team.id : null} options={this.state.teams} onChange={this.updateTeamForEvent.bind(this)}/>
           </div>
         </div>
         <div className="row">
@@ -197,8 +230,10 @@ export default class EventEditor extends Component {
             <IconButton glyphIcon="glyphicon-floppy-open" text="EVENT SPEICHERN" onClick={this.saveEvent.bind(this)}/>
           </div>
         </div>
-        <CodeGenerator ref="codegenerator" updatePlantBag={this.updatePlantBag.bind(this)} loadCodesForEvent={this.loadCodesForEvent.bind(this)}/>
-        <CodeOverview ref="codes" codes={this.state.codes}/>
+        <div className={this.state.eventt.id ? '' : 'no-display'}>
+          <CodeGenerator ref="codegenerator" updatePlantBag={this.updatePlantBag.bind(this)} loadCodesForEvent={this.loadCodesForEvent.bind(this)}/>
+          <CodeOverview ref="codes" codes={this.state.codes}/>
+        </div>
         <Notification ref="notification"/>
       </div>
     );
