@@ -173,28 +173,29 @@ export default class ArticleCreater extends Component {
   createArticle() {
     var that = this;
     var restConfig = getConfig();
-    if (this.state.imageFile != null) {
       for (var paragraph = 0; paragraph < this.state.article.paragraphs.length; paragraph++) {
         this.state.article.paragraphs[paragraph] = this.refs['paragraph_' + paragraph].getParagraph();
       }
 
-      axios.post('http://localhost:8082/backOffice/article/create?userName=' + localStorage.getItem('username'), this.state.article, restConfig).then(function(response) {
+      axios.post('http://localhost:8082/backOffice/article/create?userName=' + encodeURIComponent(localStorage.getItem('username')), this.state.article, restConfig).then(function(response) {
         var article = response.data;
         var data = new FormData();
         data.append('articleId', article.id);
         data.append('file', that.state.imageFile);
 
-        axios.post('http://localhost:8082/article/upload/image', data, restConfig).then(function(response) {}).catch(function(response) {
-          that.refs.notification.addNotification('Oh nein!', 'Beim Hochladen des Bildes für den Artikel ist ein Fehler aufgetreten.', 'error');
-          if (response instanceof Error) {
-            console.error('Error', response.message);
-          } else {
-            console.error(response.data);
-            console.error(response.status);
-            console.error(response.headers);
-            console.error(response.config);
-          }
-        });
+        if (that.state.imageFile != null) {
+          axios.post('http://localhost:8082/article/upload/image', data, restConfig).then(function(response) {}).catch(function(response) {
+            that.refs.notification.addNotification('Oh nein!', 'Beim Hochladen des Bildes für den Artikel ist ein Fehler aufgetreten.', 'error');
+            if (response instanceof Error) {
+              console.error('Error', response.message);
+            } else {
+              console.error(response.data);
+              console.error(response.status);
+              console.error(response.headers);
+              console.error(response.config);
+            }
+          });
+        }
         for (var paragraph = 0; paragraph < that.state.paragraphCount; paragraph++) {
           if (that.refs['paragraph_' + paragraph].getImageFile() != null) {
             var paragraphId = article.paragraphs[paragraph].id;
@@ -228,9 +229,6 @@ export default class ArticleCreater extends Component {
           console.error(response.config);
         }
       });
-    } else {
-      that.refs.notification.addNotification('Kein Bild!', 'Füge bitte noch ein Bild zu dem Artikel hinzu, das sieht sonst doof aus ohne.', 'error');
-    }
   }
 
   handleIntroContentChange(e) {
