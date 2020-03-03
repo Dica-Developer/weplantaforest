@@ -30,4 +30,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     
     @Query
     public List<User> findAllByOrderByNameAsc();
+
+    @Query("select id from User where mail = :mail")
+    public Long findByMail(@Param("mail") String mail);
 }

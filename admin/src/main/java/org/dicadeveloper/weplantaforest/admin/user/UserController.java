@@ -6,6 +6,7 @@ import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,8 @@ public class UserController {
     public ResponseEntity<?> updateUsername(@RequestParam long userId, @RequestParam String newUsername) {
         User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
-            if (_userRepository.userExists(newUsername) == 1) {
+            User existingUser = _userRepository.findByName(newUsername);
+            if (null != existingUser && userId != existingUser.getId()) {
                 return new ResponseEntity<>(String.format("Ein Nutzer mit diesem Namen(%s) existiert bereits. ", newUsername), HttpStatus.BAD_REQUEST);
             } else {
                 user.setName(newUsername);
@@ -48,7 +50,8 @@ public class UserController {
     public ResponseEntity<?> updateMailaddress(@RequestParam long userId, @RequestParam String newMail) {
         User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
-            if (_userRepository.userWithMailExists(newMail) == 1) {
+            Long existingUsersId = _userRepository.findByMail(newMail);
+            if (null != existingUsersId && userId != existingUsersId) {
                 return new ResponseEntity<>(String.format("Es existiert bereits ein User mit dieser EMail Adresse(%s).", newMail), HttpStatus.BAD_REQUEST);
             } else {
                 user.setMail(newMail);
@@ -66,7 +69,7 @@ public class UserController {
         if (user != null) {
             user.setEnabled(activeFlag);
             _userRepository.save(user);
-            return new ResponseEntity<>(HttpStatus.OK);            
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
         }
@@ -78,7 +81,7 @@ public class UserController {
         if (user != null) {
             user.setBanned(bannedFlag);
             _userRepository.save(user);
-            return new ResponseEntity<>(HttpStatus.OK);            
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
         }
@@ -89,12 +92,12 @@ public class UserController {
         User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
                if(shouldBeAdmin && !user.hasRole(Role.ADMIN)){
-                   user.addRole(Role.ADMIN);                   
+                   user.addRole(Role.ADMIN);
                }else if(!shouldBeAdmin && user.hasRole(Role.ADMIN)){
                    user.removeRole(Role.ADMIN);
                }
                _userRepository.save(user);
-            return new ResponseEntity<>(HttpStatus.OK);            
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
         }        
@@ -105,17 +108,14 @@ public class UserController {
         User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
                if(shouldBeArticleManager && !user.hasRole(Role.ARTICLE_MANAGER)){
-                   user.addRole(Role.ARTICLE_MANAGER);                   
+                   user.addRole(Role.ARTICLE_MANAGER);
                }else if(!shouldBeArticleManager && user.hasRole(Role.ARTICLE_MANAGER)){
                    user.removeRole(Role.ARTICLE_MANAGER);
                }
                _userRepository.save(user);
-            return new ResponseEntity<>(HttpStatus.OK);            
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
         }
-        
     }
-    
-    
 }
