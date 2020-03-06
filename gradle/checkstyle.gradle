@@ -1,0 +1,11 @@
+tasks.withType(Checkstyle) {
+  reports {
+    xml.enabled false
+    html.enabled true
+  }
+}
+
+task checkstyle() {
+  dependsOn checkstyleMain
+  dependsOn checkstyleTest
+}
