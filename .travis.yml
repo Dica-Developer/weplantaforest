@@ -21,8 +21,8 @@ before_script:
   - sudo service riak stop || true
   - sudo service rsync stop || true
   - sudo service x11-common stop || true
-  - nvm install v10.15.3
-  - nvm use v10.15.3
+  - nvm install v10.19.0
+  - nvm use v10.19.0
 
 stages:
   - compile
