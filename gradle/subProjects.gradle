@@ -2,6 +2,8 @@ subprojects {
   apply plugin: 'java'
   apply plugin: 'eclipse'
 
+  apply from: "${rootDir}/gradle/eclipse.gradle"
+
   sourceCompatibility = '1.11'
   targetCompatibility = '1.11'
   compileJava.options.encoding = 'UTF-8'
@@ -27,13 +29,6 @@ subprojects {
   }
 
   archivesBaseName = path[1..-1].replaceAll(':', '-').toLowerCase()
-
-  eclipse {
-    jdt.file.withProperties { properties ->
-      properties.put('org.eclipse.jdt.core.formatter.lineSplit', '200')
-      properties.put('org.eclipse.jdt.core.formatter.tabulation.char', 'space')
-    }
-  }
 
   test {
     testLogging {

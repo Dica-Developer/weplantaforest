@@ -152,7 +152,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/articles", method = RequestMethod.GET)
-    @JsonView(Views.UserArticleShortView.class)
+    @JsonView(Views.UserArticleView.class)
     public ResponseEntity<?> getArticlesByType(@RequestParam ArticleType articleType, @RequestParam String language) {
         List<Article> articles = _articleRepository.getArticlesByType(articleType, Language.valueOf(language));
         return new ResponseEntity<>(articles, HttpStatus.OK);

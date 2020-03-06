@@ -1,0 +1,23 @@
+eclipse {
+  jdt {
+    file {
+      withProperties { properties ->
+        def propsToBeMerged = new Properties()
+        propsToBeMerged.load(new File('etc/org.eclipse.jdt.core.prefs').newDataInputStream());
+        propsToBeMerged.each {
+          properties.setProperty(it.key, it.value);
+        }
+      }
+    }
+  }
+
+}
+
+task copyJdtPrefs(type: Copy) {
+  from ('../etc') {
+    include 'org.eclipse.jdt.ui.prefs'
+  }
+  into '.settings/'
+}
+
+tasks['eclipse'].dependsOn copyJdtPrefs
