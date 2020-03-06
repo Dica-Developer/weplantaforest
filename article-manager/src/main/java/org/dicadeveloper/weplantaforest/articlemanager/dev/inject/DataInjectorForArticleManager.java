@@ -29,11 +29,7 @@ public class DataInjectorForArticleManager {
 
             @Override
             public void run() {
-                _databasePopulator.insertUsers()
-                                  .insertArticles()
-                                  .insertParagraphsToArticles()
-                                  .addImagesToArticleFolder()
-                                  ;
+                _databasePopulator.insertUsers().insertArticles().insertParagraphsToArticles().addImagesToArticleFolder();
             }
         };
         Thread thread = new Thread(treeInjector);

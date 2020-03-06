@@ -28,19 +28,19 @@ public class Paragraph {
     private Long id;
 
     @Column(name = "_title")
-    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class })
     private String title;
 
     @Column(name = "_text", columnDefinition = "TEXT")
-    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class })
     private String text;
-    
+
     @Column(name = "_imageFileName")
-    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class })
     private String imageFileName;
-    
+
     @Column(name = "_imageCopyrights")
-    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class})
+    @JsonView({ Views.UserArticleView.class, Views.BackofficeArticleView.class })
     private String imageDescription;
 
     @OneToOne(fetch = FetchType.LAZY)

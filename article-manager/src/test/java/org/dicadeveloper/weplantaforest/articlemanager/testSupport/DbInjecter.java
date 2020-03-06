@@ -64,7 +64,7 @@ public class DbInjecter {
         paragraph.setArticle(article);
         paragraph.setTitle(paragraphTitle);
         paragraph.setText(paragraphText);
- 
+
         _paragraphRepository.save(paragraph);
 
         return this;

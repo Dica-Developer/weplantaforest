@@ -18,7 +18,7 @@ public interface ArticleRepository extends CrudRepository<Article, Long> {
 
     @Query
     public List<Article> findAllByOrderByCreatedOnDesc();
-    
+
     @Query
     public Article findByTitle(@Param("title") String title);
 

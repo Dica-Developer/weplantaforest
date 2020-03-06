@@ -50,7 +50,7 @@ public final class TokenHandler {
         }
         return null;
     }
-    
+
     public String createTokenForUser(User user) {
         byte[] userBytes = toJSON(user);
         byte[] hash = createHmac(userBytes);
@@ -61,7 +61,6 @@ public final class TokenHandler {
         return sb.toString();
     }
 
-
     private User fromJSON(final byte[] userBytes) {
         try {
             return new ObjectMapper().readValue(new ByteArrayInputStream(userBytes), User.class);
@@ -69,7 +68,7 @@ public final class TokenHandler {
             throw new IllegalStateException(e);
         }
     }
-    
+
     private byte[] toJSON(User user) {
         try {
             return new ObjectMapper().writeValueAsBytes(user);
@@ -81,7 +80,6 @@ public final class TokenHandler {
     private String toBase64(byte[] content) {
         return DatatypeConverter.printBase64Binary(content);
     }
-
 
     private byte[] fromBase64(String content) {
         return DatatypeConverter.parseBase64Binary(content);

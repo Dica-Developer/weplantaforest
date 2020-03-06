@@ -60,15 +60,15 @@ public class DatabasePopulatorTest {
         _databasePopulator.insertParagraphsToArticles();
         assertThat(_paragraphRepository.count()).isEqualTo(375);
     }
-    
+
     @Test
     public void testcreateProjectFoldersAndInsertMainImages() {
         _databasePopulator.insertUsers();
         _databasePopulator.insertArticles();
         _databasePopulator.addImagesToArticleFolder();
 
-        int articleFolderContentCount = new File(FileSystemInjector.getArticleFolder()).listFiles().length; 
-        assertThat(_articleRepository.count()).isEqualTo(articleFolderContentCount );
+        int articleFolderContentCount = new File(FileSystemInjector.getArticleFolder()).listFiles().length;
+        assertThat(_articleRepository.count()).isEqualTo(articleFolderContentCount);
     }
 
 }

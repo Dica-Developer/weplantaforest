@@ -17,7 +17,7 @@ public class FileSystemInjector {
     public static String UPLOAD_DIR = "/ipat_uploads";
 
     public static String IMAGE_DIR = "/images";
-    
+
     public static String ARTICLE_DIR = "/articles";
 
     private static String topFolder;

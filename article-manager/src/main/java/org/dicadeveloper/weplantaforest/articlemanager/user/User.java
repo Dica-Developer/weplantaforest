@@ -52,13 +52,13 @@ public class User implements UserDetails {
     @Column(unique = true, name = "_name")
     @JsonView({ Views.UserArticleView.class, Views.UserArticleShortView.class, Views.BackofficeArticleOverview.class, Views.BackofficeArticleView.class })
     private String name;
-    
+
     @Column(name = "_password")
     private String password;
 
     @Column(name = "_email", length = 500)
     private String mail;
-    
+
     @Column(name = "_enabled", nullable = false)
     private boolean enabled = false;
 
@@ -67,16 +67,16 @@ public class User implements UserDetails {
 
     @Column(name = "_regDate")
     private Long regDate;
-    
+
     @Column(name = "_lastVisit")
     private Long lastVisit;
 
     @Column(name = "_organisationType")
     private int organizationType;
-    
+
     @Column(name = "_imageName")
     private String imageName;
-    
+
     @Column(name = "_aboutme")
     private String aboutMe;
 
@@ -85,29 +85,29 @@ public class User implements UserDetails {
 
     @Column(name = "_organisation")
     private String organisation;
-    
-    @Column(name ="_homepage")
+
+    @Column(name = "_homepage")
     private String homepage;
-    
-    @Column(name ="_lang")
+
+    @Column(name = "_lang")
     private Language lang;
-    
-    @Column(name ="_newsletter")
+
+    @Column(name = "_newsletter")
     private boolean newsletter;
-    
+
     @Column(name = "_activationKey")
     private String activationKey;
-    
+
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID") )
+    @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID"))
     @Column(name = "ELEMENT")
     private Set<Role> roles = new HashSet<Role>();
 
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
-    
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

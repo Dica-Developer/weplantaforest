@@ -33,7 +33,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ArticleController {
 
     protected final Log LOG = LogFactory.getLog(ArticleController.class.getName());
@@ -71,8 +71,7 @@ public class ArticleController {
     public ResponseEntity<?> editArticle(@RequestParam String userName, @RequestBody Article article) {
         try {
             article.setLastEditedOn(System.currentTimeMillis());
-            article.setOwner(_userRepository.findByName(article.getOwner()
-                                                               .getName()));
+            article.setOwner(_userRepository.findByName(article.getOwner().getName()));
             _articleRepository.save(article);
 
             if (article.getParagraphs() != null) {
@@ -104,9 +103,7 @@ public class ArticleController {
     @RequestMapping(value = "/article/upload/image", method = RequestMethod.POST)
     public ResponseEntity<?> uploadArticleImage(@RequestParam Long articleId, @RequestParam("file") MultipartFile file) {
         String folder = FileSystemInjector.getArticleFolder();
-        String imageName = "article_" + articleId + "_main" + file.getOriginalFilename()
-                                                                  .substring(file.getOriginalFilename()
-                                                                                 .indexOf("."));
+        String imageName = "article_" + articleId + "_main" + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
         try {
             imageName = _imageHelper.storeImage(file, folder, imageName, false);
             Article articleForImage = _articleRepository.findById(articleId).orElse(null);
@@ -122,9 +119,7 @@ public class ArticleController {
     @RequestMapping(value = "/paragraph/upload/image", method = RequestMethod.POST)
     public ResponseEntity<?> uploadParagraphImage(@RequestParam Long articleId, @RequestParam Long paragraphId, @RequestParam("file") MultipartFile file) {
         String folder = FileSystemInjector.getArticleFolder();
-        String imageName = "article_" + articleId + "_paragraph_" + paragraphId + file.getOriginalFilename()
-                                                                                      .substring(file.getOriginalFilename()
-                                                                                                     .indexOf("."));
+        String imageName = "article_" + articleId + "_paragraph_" + paragraphId + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
         try {
             imageName = _imageHelper.storeImage(file, folder, imageName, true);
             Paragraph paragraphForImage = _paragraphRepository.findById(paragraphId).orElse(null);
@@ -200,8 +195,8 @@ public class ArticleController {
     public ResponseEntity<?> getArticleTypes() {
         List<String> articleTypes = new ArrayList<>();
         for (ArticleType articleType : ArticleType.values()) {
-            if(articleType.isUsed()) {
-                articleTypes.add(articleType.getDescription());                
+            if (articleType.isUsed()) {
+                articleTypes.add(articleType.getDescription());
             }
         }
         return new ResponseEntity<>(articleTypes, HttpStatus.OK);
