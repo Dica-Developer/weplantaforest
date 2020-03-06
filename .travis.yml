@@ -38,7 +38,8 @@ jobs:
         - ./gradlew compileTestJava
     - stage: style
       script:
-        - ./gradlew pmd
+        - ./gradlew pmdMain
+        - ./gradlew pmdTest
       script:
         - ./gradlew checkstyle
     - stage: test
