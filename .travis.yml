@@ -8,6 +8,7 @@ notifications:
       - https://webhooks.gitter.im/e/72d92f6ecbc9b66f264c
     on_success: change
     on_failure: always
+
 before_script:
   - sudo service postgresql stop || true
   - sudo service mysql stop || true
@@ -22,9 +23,25 @@ before_script:
   - sudo service x11-common stop || true
   - nvm install v10.15.3
   - nvm use v10.15.3
-script:
-  - ./gradlew compileJava
-  - ./gradlew compileTestJava
-  - ./gradlew pmd
-  - ./gradlew checkstyle
-  - ./gradlew test
+
+stages:
+  - compile
+  - style
+  - test
+
+jobs:
+  include:
+    - stage: compile
+      script:
+        - ./gradlew compileJava
+      script:
+        - ./gradlew compileTestJava
+    - stage: style
+      script:
+        - ./gradlew pmd
+      script:
+        - ./gradlew checkstyle
+    - stage: test
+      - ./gradlew test
+
+after_success: ./gradlew coveralls uploadArchives
