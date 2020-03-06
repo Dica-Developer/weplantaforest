@@ -41,8 +41,8 @@ public class BannerAndWidgetHelper {
         buffer.append("</a>");
         return buffer.toString();
     }
-    
-    public String generateWidgetHtmlCode(String host,String userName, String type, int width, int height) {
+
+    public String generateWidgetHtmlCode(String host, String userName, String type, int width, int height) {
         StringBuffer buffer = new StringBuffer();
         String hostWithoutPort = host;
         int indexOf = host.indexOf(":", 5);
@@ -73,8 +73,7 @@ public class BannerAndWidgetHelper {
         BufferedImage bufferedImg = ImageIO.read(getClass().getResourceAsStream(imagePath));
 
         Double co2Rounded = (double) Math.round(co2DataForUser.getCo2() * 100) / 100;
-        String co2RoundedAsString = co2Rounded.toString()
-                                              .replace(".", ",");
+        String co2RoundedAsString = co2Rounded.toString().replace(".", ",");
         Graphics2D graphics = bufferedImg.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
@@ -88,34 +87,20 @@ public class BannerAndWidgetHelper {
             graphics.drawString("Bäume : ", 8, 82);
             graphics.drawString("CO2 : ", 22, 95);
             graphics.setFont(new Font("Arial", Font.PLAIN, 10));
-            graphics.drawString(co2DataForUser.getTreesCount()
-                                              .toString(),
-                    52, 82);
+            graphics.drawString(co2DataForUser.getTreesCount().toString(), 52, 82);
             graphics.drawString(co2RoundedAsString + " t", 52, 95);
         } else if (width == 100 && height == 200) {
-            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount()
-                                                           .toString(),
-                    co2RoundedAsString, 105, 125, 165, 185);
+            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 105, 125, 165, 185);
         } else if (width == 100 && height == 300) {
-            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount()
-                                                           .toString(),
-                    co2RoundedAsString, 130, 150, 230, 250);
+            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 130, 150, 230, 250);
         } else if (width == 100 && height == 400) {
-            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount()
-                                                           .toString(),
-                    co2RoundedAsString, 160, 180, 290, 310);
+            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 160, 180, 290, 310);
         } else if (width == 200 && height == 100) {
-            drawTextsOnCrossedImage(graphics, 100, type, co2DataForUser.getTreesCount()
-                                                                       .toString(),
-                    co2RoundedAsString, 17, 37, 67, 87, 1);
+            drawTextsOnCrossedImage(graphics, 100, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 17, 37, 67, 87, 1);
         } else if (width == 300 && height == 100) {
-            drawTextsOnCrossedImage(graphics, 100, type, co2DataForUser.getTreesCount()
-                                                                       .toString(),
-                    co2RoundedAsString, 45, 65, 45, 65, 2);
+            drawTextsOnCrossedImage(graphics, 100, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 45, 65, 45, 65, 2);
         } else if (width == 400 && height == 100) {
-            drawTextsOnCrossedImage(graphics, 133, type, co2DataForUser.getTreesCount()
-                                                                       .toString(),
-                    co2RoundedAsString, 45, 65, 45, 65, 2);
+            drawTextsOnCrossedImage(graphics, 133, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 45, 65, 45, 65, 2);
         }
         return bufferedImg;
     }

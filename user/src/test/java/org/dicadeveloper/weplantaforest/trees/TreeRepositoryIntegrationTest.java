@@ -58,8 +58,7 @@ public class TreeRepositoryIntegrationTest {
         _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
         _dbInjecter.injectProjectArticle("big wood", "Project", 3.0);
 
-        ProjectArticle projectArticle = _projectArticleRepository.findByProjectAndTreeType(
-                _projectRepository.findByName("Project"), _treeTypeRepository.findByName("wood"));
+        ProjectArticle projectArticle = _projectArticleRepository.findByProjectAndTreeType(_projectRepository.findByName("Project"), _treeTypeRepository.findByName("wood"));
 
         Long plantedTrees = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
 
@@ -86,29 +85,28 @@ public class TreeRepositoryIntegrationTest {
         _dbInjecter.injectTreeToProject("wood", "Bert", 5, timeOfPlanting, "Project");
         _dbInjecter.injectTreeToProject("big wood", "Bert", 5, timeOfPlanting, "Project");
 
-        ProjectArticle projectArticle = _projectArticleRepository.findByProjectAndTreeType(
-                _projectRepository.findByName("Project"), _treeTypeRepository.findByName("wood"));
+        ProjectArticle projectArticle = _projectArticleRepository.findByProjectAndTreeType(_projectRepository.findByName("Project"), _treeTypeRepository.findByName("wood"));
 
         Long plantedTrees = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
 
         assertThat(plantedTrees).isEqualTo(10);
     }
-    
+
     @Test
-    public void testFindTreesByTreeIds(){
+    public void testFindTreesByTreeIds() {
         long timeOfPlanting = System.currentTimeMillis();
         _dbInjecter.injectTreeType("wood", "this is a wood", 0.5);
         _dbInjecter.injectUser("Adam");
-        
+
         _dbInjecter.injectTree("wood", "Adam", 1, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Adam", 1, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Adam", 1, timeOfPlanting);
-        
+
         List<Long> treeIdList = new ArrayList<>();
         treeIdList.add(1L);
         treeIdList.add(2L);
         treeIdList.add(3L);
-        
+
         List<Tree> trees = _treeRepository.findTreesByIdIn(treeIdList);
         assertThat(trees.size()).isEqualTo(3);
     }

@@ -25,7 +25,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     public final static String COUNT_ANONYM_USER_QUERY = "SELECT count(user) FROM User user WHERE user.name like \'Anonymous%\'";
 
     public final static String GET_ALL_TEAM_MEMBER = "Select user FROM User user WHERE user.team.id = :teamId";
-    
+
     @Query(value = "SELECT * FROM User user WHERE BINARY _name = :name", nativeQuery = true)
     public User findByName(@Param("name") String name);
 
@@ -46,7 +46,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query(value = GET_ALL_TEAM_MEMBER)
     public List<User> getAllTeamMember(@Param("teamId") Long teamId);
-    
+
     @Query(value = COUNT_ANONYM_USER_QUERY)
     public long countAnonymUser();
 

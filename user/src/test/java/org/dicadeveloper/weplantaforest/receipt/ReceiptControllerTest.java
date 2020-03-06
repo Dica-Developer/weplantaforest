@@ -72,12 +72,8 @@ public class ReceiptControllerTest {
 
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
-        mockMvc.perform(get((Uris.RECEIPTS)).accept("application/json")
-                                            .header("X-AUTH-TOKEN", userToken))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].receiptId").value(1))
-               .andExpect(jsonPath("$.[0].invoiceNumber").value("12345"))
-               .andExpect(jsonPath("$.[0].createdOn").exists());
+        mockMvc.perform(get((Uris.RECEIPTS)).accept("application/json").header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk()).andExpect(jsonPath("$.[0].receiptId").value(1))
+                .andExpect(jsonPath("$.[0].invoiceNumber").value("12345")).andExpect(jsonPath("$.[0].createdOn").exists());
     }
 
     @Test
@@ -108,9 +104,7 @@ public class ReceiptControllerTest {
 
         _dbInjecter.injectReceipt("Adam", createAndSentDate, createAndSentDate, "12345", carts);
 
-        mockMvc.perform(get((Uris.RECEIPT_PDF)).accept("application/pdf")
-                                               .param("receiptId", "1"))
-               .andExpect(status().isOk());
+        mockMvc.perform(get((Uris.RECEIPT_PDF)).accept("application/pdf").param("receiptId", "1")).andExpect(status().isOk());
     }
 
 }

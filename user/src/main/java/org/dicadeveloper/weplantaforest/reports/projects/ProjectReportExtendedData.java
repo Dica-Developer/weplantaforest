@@ -22,7 +22,7 @@ public class ProjectReportExtendedData {
     ProjectReportData projectReportData;
 
     List<ProjectImageData> images;
-    
+
     SortedSet<AreaPositions> positions;
 
     protected void setImages(List<ProjectImage> imageEntities) {

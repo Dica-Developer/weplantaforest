@@ -55,15 +55,14 @@ public class PdfReceiptView {
         final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"), Locale.GERMAN);
         cal.setTimeInMillis(receipt.getCreatedOn());
         final String date = cal.get(Calendar.DAY_OF_MONTH) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.YEAR);
-        
+
         _imagePath = imagePath;
 
         doc.open();
 
-        int amountOfCarts = receipt.getCarts()
-                                   .size();
+        int amountOfCarts = receipt.getCarts().size();
         PdfContentByte cb = pdfWriter.getDirectContent();
-        
+
         pdfHelper.addLogo(cb, _imagePath, 262f, 720f);
         createGeometricObjects(cb, amountOfCarts, doc);
         PdfHelper.createAdress(cb, 75f, 710f);
@@ -127,7 +126,7 @@ public class PdfReceiptView {
             priceTable.writeSelectedRows(0, 3 + amountOfCarts, 85f, 390f, cb);
             dateTable.writeSelectedRows(0, 3 + amountOfCarts, 395f, 390f, cb);
             doc.newPage();
-            
+
             PdfHelper.createHeaderBlock(cb, 2, 2);
             lawTable.writeSelectedRows(0, 6, 75f, 812, cb);
             signatureTable.writeSelectedRows(0, 2, 75f, 717, cb);
@@ -144,7 +143,7 @@ public class PdfReceiptView {
             priceTable.writeSelectedRows(0, 21, 85f, 390f, cb);
             dateTable.writeSelectedRows(0, 21, 395f, 390f, cb);
             doc.newPage();
-            
+
             PdfHelper.createHeaderBlock(cb, 2, 2);
 
             // grey block
@@ -251,8 +250,7 @@ public class PdfReceiptView {
         PdfPTable headerTable = new PdfPTable(1);
         float[] rows = { 450f };
         headerTable.setTotalWidth(rows);
-        headerTable.getDefaultCell()
-                   .setBorder(Rectangle.NO_BORDER);
+        headerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         headerTable.addCell(new Phrase(new Chunk("Bestätigung über Geldzuwendungen", textFontForReceiptHeader)));
 
@@ -260,10 +258,8 @@ public class PdfReceiptView {
 
         PdfPTable table = new PdfPTable(1);
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell()
-             .setLeading(8f, 0);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setLeading(8f, 0);
 
         table.addCell(new Phrase(new Chunk("im Sinne des §10b des Einkommensteuergesetzes", textFont)));
         table.addCell(new Phrase(new Chunk("an eine der in §5 Abs. 1 Nr. 9 des Körperschaftsteuergesetzes bezeichneten", textFont)));
@@ -274,8 +270,7 @@ public class PdfReceiptView {
 
     private void createUserFields(PdfContentByte cb, Receipt receipt, Document doc) throws DocumentException {
         // get latest cart and sum of total prices
-        Cart latest = receipt.getCarts()
-                             .get(0);
+        Cart latest = receipt.getCarts().get(0);
 
         // create Strings
         String name = (latest.getCallBackNachname() == null ? "" : latest.getCallBackNachname() + ", ") + (latest.getCallBackVorname() == null ? "" : latest.getCallBackVorname());
@@ -286,8 +281,7 @@ public class PdfReceiptView {
         PdfPTable tableForNameAndAdress = new PdfPTable(1);
         float[] rows = { 450f };
         tableForNameAndAdress.setTotalWidth(rows);
-        tableForNameAndAdress.getDefaultCell()
-                             .setBorder(Rectangle.NO_BORDER);
+        tableForNameAndAdress.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         tableForNameAndAdress.addCell(new Phrase(new Chunk("Name und Anschrift des Zuwendenden:", textFont)));
         tableForNameAndAdress.addCell(new Phrase(new Chunk(" ", textFont)));
@@ -304,21 +298,16 @@ public class PdfReceiptView {
         PdfPTable tableForPrices = new PdfPTable(1);
         float[] rowForTotalPrice = { 250f };
         tableForPrices.setTotalWidth(rowForTotalPrice);
-        tableForPrices.getDefaultCell()
-                      .setBorder(Rectangle.NO_BORDER);
+        tableForPrices.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         tableForPrices.addCell(new Phrase(new Chunk("Betrag der Zuwendung in Ziffern:", textFont)));
         tableForPrices.addCell(new Phrase(new Chunk(" ", textFont)));
         Double totalPrice = 0.0;
         for (final Cart cart : receipt.getCarts()) {
-            tableForPrices.addCell(new Phrase(new Chunk(cart.getTotalPrice()
-                                                            .toString()
-                    + " €", textFontUserData)));
-            totalPrice += cart.getTotalPrice()
-                              .doubleValue();
+            tableForPrices.addCell(new Phrase(new Chunk(cart.getTotalPrice().toString() + " €", textFontUserData)));
+            totalPrice += cart.getTotalPrice().doubleValue();
         }
-        String formattedPrice = priceFormat.format(totalPrice)
-                                           .toString();
+        String formattedPrice = priceFormat.format(totalPrice).toString();
         tableForPrices.addCell(new Phrase(new Chunk("Gesamt: " + formattedPrice + " €", textFontUserData)));
         return tableForPrices;
     }
@@ -327,8 +316,7 @@ public class PdfReceiptView {
         PdfPTable tableForDate = new PdfPTable(1);
         float[] rowForDate = { 110f };
         tableForDate.setTotalWidth(rowForDate);
-        tableForDate.getDefaultCell()
-                    .setBorder(Rectangle.NO_BORDER);
+        tableForDate.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         tableForDate.addCell(new Phrase(new Chunk("Datum der Zuwendung:", textFont)));
         tableForDate.addCell(new Phrase(new Chunk(" ", textFont)));
@@ -348,10 +336,8 @@ public class PdfReceiptView {
         PdfPTable table = new PdfPTable(1);
         float[] rows = { 445f };
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell()
-             .setLeading(8f, 0);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setLeading(8f, 0);
 
         table.addCell(new Phrase(new Chunk("Es handelt sich nicht um den Verzicht auf Erstattung von Aufwendungen.", textFontLawText)));
         table.addCell(new Phrase(new Chunk("Die Gesellschaft ist wegen Förderung (begünstigter Zweck: Umweltschutz (§52 (2) S. 1 Nr.(n) 8 AO)) durch", textFontLawText)));
@@ -371,8 +357,7 @@ public class PdfReceiptView {
         PdfPTable table = new PdfPTable(5);
         float[] rows = { 95f, 10f, 35f, 10f, 110f };
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         final Image signatureImage = Image.getInstance(getClass().getResource(_imagePath + "/Unterschrift150.jpg"));
         final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/stamp.jpg"));
@@ -411,12 +396,9 @@ public class PdfReceiptView {
         PdfPTable table = new PdfPTable(3);
         float[] rows = { 215f, 15f, 215f };
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell()
-             .setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
-        table.getDefaultCell()
-             .setLeading(5f, 0f);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_JUSTIFIED_ALL);
+        table.getDefaultCell().setLeading(5f, 0f);
 
         PdfPCell hintCell = new PdfPCell();
         hintCell.setHorizontalAlignment(Element.ALIGN_LEFT);

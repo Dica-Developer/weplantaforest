@@ -23,8 +23,7 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
     private PlantBag plantPageData;
 
     @Autowired
-    private PlantBagHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository,
-            TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
+    private PlantBagHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
         super(projectRepository, projectArticleRepository, treeTypeRepository, treeRepository);
     }
 
@@ -38,8 +37,7 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
 
         increaseAmountOfPlantItemTillPriceReached(articleWithHighestMarge, targetedPriceForHighestMarge);
 
-        double targetedPriceForOtherTrees = targetPriceAsDouble
-                - PriceHelper.fromCentsToEuro(plantPageData.getActualPrice());
+        double targetedPriceForOtherTrees = targetPriceAsDouble - PriceHelper.fromCentsToEuro(plantPageData.getActualPrice());
 
         targetedPriceForOtherTrees = addFurtherPlantItems(projectArticles, targetedPriceForOtherTrees);
 
@@ -47,7 +45,7 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
         return plantPageData;
     }
 
-    private  List<ProjectArticle> initialize(long targetedPrice) {
+    private List<ProjectArticle> initialize(long targetedPrice) {
         List<ProjectArticle> projectArticles = new ArrayList<>();
         plantPageData = new PlantBag();
         addActiveProjectsToPlantPageData();
@@ -75,8 +73,7 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
             plantPageData.projects.put(projectName, projectData);
 
             HashMap<String, PlantItem> plantItemMap = new HashMap<>();
-            plantPageData.projects.get(projectName)
-                                  .setPlantItems(plantItemMap);
+            plantPageData.projects.get(projectName).setPlantItems(plantItemMap);
         }
     }
 
@@ -85,9 +82,7 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
 
         do {
             treeCouldBeAdded = false;
-            double treePrice = article.getPrice()
-                                      .getAmount()
-                                      .doubleValue();
+            double treePrice = article.getPrice().getAmount().doubleValue();
             // check, if it's possible to add 1 tree without
             // exceeding the targeted price
             if (targetedPrice > 0 && isLowerOrEqualThanTargetedPrice(treePrice, targetedPrice)) {
@@ -107,16 +102,14 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
         while (treeCouldBeAdded);
     }
 
-    private double addFurtherPlantItems( List<ProjectArticle> projectArticles, double targetedPrice) {
+    private double addFurtherPlantItems(List<ProjectArticle> projectArticles, double targetedPrice) {
         boolean treeCouldBeAdded = false;
 
         do {
             treeCouldBeAdded = false;
 
             for (ProjectArticle article : projectArticles) {
-                double treePrice = article.getPrice()
-                                          .getAmount()
-                                          .doubleValue();
+                double treePrice = article.getPrice().getAmount().doubleValue();
                 // check, if it's possible to add 1 tree without
                 // exceeding the targeted price and if there are remaining trees
                 // by
@@ -141,50 +134,33 @@ public class PlantBagHelper extends AbstractPlantBagHelper {
     }
 
     private void initialisePlantItem(ProjectArticle article) {
-        String projectName = article.getProject()
-                                    .getName();
-        String treeTypeName = article.getTreeType()
-                                     .getName();
+        String projectName = article.getProject().getName();
+        String treeTypeName = article.getTreeType().getName();
 
-        long treePrice = PriceHelper.fromBigDecimalToLong(article.getPrice()
-                                                                 .getAmount());
+        long treePrice = PriceHelper.fromBigDecimalToLong(article.getPrice().getAmount());
 
         PlantItem plantItem = new PlantItem();
         plantItem.setAmount(0);
         plantItem.setTreePrice(treePrice);
 
-        plantPageData.getProjects()
-                     .get(projectName)
-                     .getPlantItems()
-                     .put(treeTypeName, plantItem);
+        plantPageData.getProjects().get(projectName).getPlantItems().put(treeTypeName, plantItem);
     }
 
     private boolean increasePlantItemAmountByOneIfEnoughTreesRemaining(ProjectArticle article) {
-        String projectName = article.getProject()
-                                    .getName();
-        String treeTypeName = article.getTreeType()
-                                     .getName();
+        String projectName = article.getProject().getName();
+        String treeTypeName = article.getTreeType().getName();
 
-        int amountNow = plantPageData.getProjects()
-                                     .get(projectName)
-                                     .getPlantItems()
-                                     .get(treeTypeName)
-                                     .getAmount();
+        int amountNow = plantPageData.getProjects().get(projectName).getPlantItems().get(treeTypeName).getAmount();
 
         if ((amountNow + 1) <= countTreesRemainingByThisArticle(article)) {
 
-            long treePrice = PriceHelper.fromBigDecimalToLong(article.getPrice()
-                                                                     .getAmount());
+            long treePrice = PriceHelper.fromBigDecimalToLong(article.getPrice().getAmount());
 
             long actualPriceNow = plantPageData.getActualPrice() + treePrice;
 
             plantPageData.setActualPrice(actualPriceNow);
 
-            plantPageData.getProjects()
-                         .get(projectName)
-                         .getPlantItems()
-                         .get(treeTypeName)
-                         .setAmount(amountNow + 1);
+            plantPageData.getProjects().get(projectName).getPlantItems().get(treeTypeName).setAmount(amountNow + 1);
 
             return true;
         } else {

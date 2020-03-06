@@ -93,12 +93,9 @@ public class PaymentHelper {
             if (_env.getProperty("proxy.host") != null) {
                 HttpHost proxy = new HttpHost(_env.getProperty("proxy.host"), Integer.parseInt(_env.getProperty("proxy.port")));
                 DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-                httpClient = HttpClients.custom()
-                                        .setRoutePlanner(routePlanner)
-                                        .build();
+                httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
             } else {
-                httpClient = HttpClients.custom()
-                                        .build();
+                httpClient = HttpClients.custom().build();
             }
 
             HttpPost httpPost = new HttpPost(address);
@@ -113,8 +110,7 @@ public class PaymentHelper {
 
             HttpResponse response = httpClient.execute(httpPost);
 
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity()
-                                                                                 .getContent()));
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             StringBuffer result = new StringBuffer();
             String line = "";
             while ((line = rd.readLine()) != null) {
@@ -151,9 +147,7 @@ public class PaymentHelper {
         params.put("charset", DEFAULT_ENCODING);
         params.put("oid", _env.getProperty("bfs.oid"));
 
-        String formattedPrice = priceFormat.format(cart.getTotalPrice()
-                                                       .doubleValue())
-                                           .toString();
+        String formattedPrice = priceFormat.format(cart.getTotalPrice().doubleValue()).toString();
         formattedPrice = formattedPrice.replace(",", ".");
         try {
             params.put("betrag", URLEncoder.encode(formattedPrice, DEFAULT_ENCODING));

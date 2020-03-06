@@ -36,7 +36,7 @@ public class ProjectReportRepositoryIntegrationTest {
 
     @Autowired
     private ProjectReportRepository _projectReportRepository;
-    
+
     @Autowired
     private TreeRepository _treeRepository;
 
@@ -64,9 +64,9 @@ public class ProjectReportRepositoryIntegrationTest {
             entitiesInjected = true;
         }
     }
-    
+
     @After
-    public void clearTreeTable(){
+    public void clearTreeTable() {
         _treeRepository.deleteAll();
     }
 
@@ -75,33 +75,15 @@ public class ProjectReportRepositoryIntegrationTest {
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectId()).isEqualTo(2);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectImageFileName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfPlantedTrees()).isEqualTo(0);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .isActive()).isEqualTo(true);
+        assertThat(projects.getContent().get(0).getProjectId()).isEqualTo(2);
+        assertThat(projects.getContent().get(0).getProjectName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(0).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(0).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(0).getAmountOfMaximumTreesToPlant()).isEqualTo(300);
+        assertThat(projects.getContent().get(0).getAmountOfPlantedTrees()).isEqualTo(0);
+        assertThat(projects.getContent().get(0).isActive()).isEqualTo(true);
     }
 
     @Test
@@ -112,27 +94,13 @@ public class ProjectReportRepositoryIntegrationTest {
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectImageFileName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfPlantedTrees()).isEqualTo(20);
+        assertThat(projects.getContent().get(0).getProjectName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(0).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(0).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(0).getAmountOfMaximumTreesToPlant()).isEqualTo(300);
+        assertThat(projects.getContent().get(0).getAmountOfPlantedTrees()).isEqualTo(20);
     }
 
     @Test
@@ -144,27 +112,13 @@ public class ProjectReportRepositoryIntegrationTest {
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectImageFileName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfPlantedTrees()).isEqualTo(50);
+        assertThat(projects.getContent().get(0).getProjectName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(0).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(0).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(0).getAmountOfMaximumTreesToPlant()).isEqualTo(300);
+        assertThat(projects.getContent().get(0).getAmountOfPlantedTrees()).isEqualTo(50);
     }
 
     @Test
@@ -172,48 +126,20 @@ public class ProjectReportRepositoryIntegrationTest {
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectImageFileName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfPlantedTrees()).isEqualTo(0);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getProjectName()).isEqualTo("Project B");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getProjectImageFileName()).isEqualTo("Project B");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(800);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getAmountOfPlantedTrees()).isEqualTo(0);
+        assertThat(projects.getContent().get(0).getProjectName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(0).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(0).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(0).getAmountOfMaximumTreesToPlant()).isEqualTo(300);
+        assertThat(projects.getContent().get(0).getAmountOfPlantedTrees()).isEqualTo(0);
+        assertThat(projects.getContent().get(1).getProjectName()).isEqualTo("Project B");
+        assertThat(projects.getContent().get(1).getProjectImageFileName()).isEqualTo("Project B");
+        assertThat(projects.getContent().get(1).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(1).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(1).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(1).getAmountOfMaximumTreesToPlant()).isEqualTo(800);
+        assertThat(projects.getContent().get(1).getAmountOfPlantedTrees()).isEqualTo(0);
     }
 
     @Test
@@ -229,48 +155,20 @@ public class ProjectReportRepositoryIntegrationTest {
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectImageFileName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfPlantedTrees()).isEqualTo(100);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getProjectName()).isEqualTo("Project B");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getProjectImageFileName()).isEqualTo("Project B");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(800);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getAmountOfPlantedTrees()).isEqualTo(400);
+        assertThat(projects.getContent().get(0).getProjectName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(0).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(0).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(0).getAmountOfMaximumTreesToPlant()).isEqualTo(300);
+        assertThat(projects.getContent().get(0).getAmountOfPlantedTrees()).isEqualTo(100);
+        assertThat(projects.getContent().get(1).getProjectName()).isEqualTo("Project B");
+        assertThat(projects.getContent().get(1).getProjectImageFileName()).isEqualTo("Project B");
+        assertThat(projects.getContent().get(1).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(1).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(1).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(1).getAmountOfMaximumTreesToPlant()).isEqualTo(800);
+        assertThat(projects.getContent().get(1).getAmountOfPlantedTrees()).isEqualTo(400);
     }
 
     @Test
@@ -282,48 +180,20 @@ public class ProjectReportRepositoryIntegrationTest {
         Page<ProjectReportData> projects = _projectReportRepository.getAllProjects(PageRequest.of(0, 5));
 
         assertThat(projects.getTotalElements()).isEqualTo(2);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getProjectImageFileName()).isEqualTo("Project A");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(300);
-        assertThat(projects.getContent()
-                           .get(0)
-                           .getAmountOfPlantedTrees()).isEqualTo(100);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getProjectName()).isEqualTo("Project B");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getProjectImageFileName()).isEqualTo("Project B");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getDescription()).isEqualTo("projectdesc");
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getLatitude()).isEqualTo(1.0f);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getLongitude()).isEqualTo(2.0f);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getAmountOfMaximumTreesToPlant()).isEqualTo(800);
-        assertThat(projects.getContent()
-                           .get(1)
-                           .getAmountOfPlantedTrees()).isEqualTo(0);
+        assertThat(projects.getContent().get(0).getProjectName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getProjectImageFileName()).isEqualTo("Project A");
+        assertThat(projects.getContent().get(0).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(0).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(0).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(0).getAmountOfMaximumTreesToPlant()).isEqualTo(300);
+        assertThat(projects.getContent().get(0).getAmountOfPlantedTrees()).isEqualTo(100);
+        assertThat(projects.getContent().get(1).getProjectName()).isEqualTo("Project B");
+        assertThat(projects.getContent().get(1).getProjectImageFileName()).isEqualTo("Project B");
+        assertThat(projects.getContent().get(1).getDescription()).isEqualTo("projectdesc");
+        assertThat(projects.getContent().get(1).getLatitude()).isEqualTo(1.0f);
+        assertThat(projects.getContent().get(1).getLongitude()).isEqualTo(2.0f);
+        assertThat(projects.getContent().get(1).getAmountOfMaximumTreesToPlant()).isEqualTo(800);
+        assertThat(projects.getContent().get(1).getAmountOfPlantedTrees()).isEqualTo(0);
     }
 
     @Test

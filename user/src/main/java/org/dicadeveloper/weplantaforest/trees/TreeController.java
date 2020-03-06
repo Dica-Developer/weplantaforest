@@ -30,15 +30,15 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TreeController {
-    
+
     protected final Log LOG = LogFactory.getLog(TreeController.class.getName());
 
     private @NonNull TreeRepository _treeRepository;
 
     private @NonNull ImageHelper _imageHelper;
-    
+
     @RequestMapping(value = Uris.TREE + "{id}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Tree list(@PathVariable("id") long id) {
@@ -56,7 +56,7 @@ public class TreeController {
     public Page<Tree> findTreesByOwnerId(@RequestParam("userName") String userName, @RequestParam("page") int page, @RequestParam("size") int size) {
         return _treeRepository.findTreesByUserName(userName, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
     }
-    
+
     @RequestMapping(value = Uris.TREES_BY_TEAM, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Page<Tree> findTreesByTeamName(@RequestParam("teamName") String teamName, @RequestParam("page") int page, @RequestParam("size") int size) {
@@ -68,7 +68,7 @@ public class TreeController {
     public Page<Tree> findTreesByProjectId(@PathVariable("projectId") long projectId, @RequestParam("page") int page, @RequestParam("size") int size) {
         return _treeRepository.findTreesByProjectId(projectId, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
     }
-    
+
     @RequestMapping(value = Uris.TREE_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getTreeFolder() + "/" + imageName;
@@ -80,7 +80,7 @@ public class TreeController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @GetMapping(value = Uris.TREES_SELF_PLANTED)
     @JsonView(Views.SelfPlantedTrees.class)
     public ResponseEntity<?> findSelfPlantedTrees() {

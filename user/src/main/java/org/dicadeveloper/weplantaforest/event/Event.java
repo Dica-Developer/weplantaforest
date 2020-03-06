@@ -46,13 +46,13 @@ public class Event {
     @JoinColumn(name = "_user__userId")
     private User user;
 
-    @Column(name ="_valid")
+    @Column(name = "_valid")
     private Integer valid;
 
     @OneToMany(mappedBy = "event")
     private List<Cart> carts = new ArrayList<Cart>();
 
-    @Column(name ="_userReceiptReceiver")
+    @Column(name = "_userReceiptReceiver")
     private Boolean userReceiptReceiver = false;
 
 }

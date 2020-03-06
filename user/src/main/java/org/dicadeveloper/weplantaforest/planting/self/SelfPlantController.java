@@ -29,7 +29,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SelfPlantController {
 
     protected final Log LOG = LogFactory.getLog(SelfPlantController.class.getName());
@@ -43,24 +43,21 @@ public class SelfPlantController {
     private @NonNull ImageHelper _imageHelper;
 
     @RequestMapping(value = Uris.PLANT_SELF, method = RequestMethod.POST)
-    public ResponseEntity<?> plantTreesByMyself(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @Valid @RequestBody SelfPlantData selfPlantedTree,
-            BindingResult bindingResult) {
+    public ResponseEntity<?> plantTreesByMyself(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @Valid @RequestBody SelfPlantData selfPlantedTree, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             User owner = _tokenAuthenticationService.getUserFromToken(userToken);
             Tree tree = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantedTree, owner);
             _treeRepository.save(tree);
             return new ResponseEntity<Long>(tree.getId(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(value = Uris.UPLOAD_SELF_PLANTED_TREE_IMAGE, method = RequestMethod.POST)
     public ResponseEntity<?> uploadTreeImage(@RequestParam("file") MultipartFile file, @RequestParam long treeId) {
         String imageFolder = FileSystemInjector.getTreeFolder();
-        String imageName = treeId + file.getOriginalFilename()
-                                        .substring(file.getOriginalFilename()
-                                                       .indexOf("."));
+        String imageName = treeId + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
 
         Tree tree = _treeRepository.findById(treeId).orElse(null);
         if (!file.isEmpty()) {

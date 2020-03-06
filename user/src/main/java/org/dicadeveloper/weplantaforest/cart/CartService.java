@@ -16,7 +16,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CartService {
 
     private @NonNull PlantBagToCartConverter plantPageToCartConverter;
@@ -36,15 +36,15 @@ public class CartService {
             cartIds.add(cartId);
         }
         return cartIds;
-    }    
-    
-    public Map<String, List<Cart>> groupCartsByUser(List<Cart> carts){
+    }
+
+    public Map<String, List<Cart>> groupCartsByUser(List<Cart> carts) {
         Map<String, List<Cart>> userCartMap = new HashMap<>();
-        for(Cart cart : carts) {
+        for (Cart cart : carts) {
             String userName = cart.getBuyer().getUsername();
-            if(userCartMap.containsKey(userName)) {
+            if (userCartMap.containsKey(userName)) {
                 userCartMap.get(userName).add(cart);
-            }else {
+            } else {
                 List<Cart> newCartList = new ArrayList<>();
                 newCartList.add(cart);
                 userCartMap.put(userName, newCartList);
@@ -52,6 +52,5 @@ public class CartService {
         }
         return userCartMap;
     }
-    
 
 }

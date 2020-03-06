@@ -11,26 +11,26 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TeamReportData {
-    
+
     @NonNull
     Long teamId;
-  
+
     @NonNull
     String teamName;
-   
+
     @NonNull
     Long regDate;
-    
+
     @NonNull
     String adminName;
-    
+
     @NonNull
     String description;
-    
+
     @NonNull
     Long memberCount;
-    
+
     Co2Data co2Data;
-    
+
     Long rank;
 }

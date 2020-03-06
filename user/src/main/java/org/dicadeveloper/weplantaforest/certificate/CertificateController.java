@@ -33,7 +33,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CertificateController {
 
     protected final static Log LOG = LogFactory.getLog(CertificateController.class.getName());
@@ -47,7 +47,7 @@ public class CertificateController {
     private @NonNull CartRepository _cartRepository;
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
-    
+
     private @NonNull CertificateService _certificateSerivce;
 
     /*
@@ -70,8 +70,10 @@ public class CertificateController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     /*
-     * returns the summary of the belonging certificate number(creator-name and text)
+     * returns the summary of the belonging certificate number(creator-name and
+     * text)
      */
     @RequestMapping(value = Uris.CERTIFICATE_SUMMARY + "{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.CertificateSummary.class)

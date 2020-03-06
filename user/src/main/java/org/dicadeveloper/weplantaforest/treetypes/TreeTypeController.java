@@ -24,13 +24,13 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TreeTypeController {
-    
+
     protected final Log LOG = LogFactory.getLog(TreeTypeController.class.getName());
 
     private @NonNull TreeTypeRepository _treeTypeRepository;
-    
+
     private @NonNull ImageHelper _imageHelper;
 
     @RequestMapping(value = Uris.TREETYPE_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
@@ -44,12 +44,11 @@ public class TreeTypeController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = Uris.TREETYPES, method = RequestMethod.GET)
     @JsonView(Views.ShortTreeType.class)
     public Iterable<TreeType> getTreeTypes() {
         return _treeTypeRepository.findAll();
     }
-
 
 }

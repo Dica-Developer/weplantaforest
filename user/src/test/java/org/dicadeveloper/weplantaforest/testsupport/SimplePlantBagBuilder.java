@@ -18,8 +18,8 @@ public class SimplePlantBagBuilder {
 
         return this;
     }
-    
-    public SimplePlantBag build(){
+
+    public SimplePlantBag build() {
         SimplePlantBag simplePlantBag = this.simplePlantBag;
         this.simplePlantBag = new SimplePlantBag();
         return simplePlantBag;

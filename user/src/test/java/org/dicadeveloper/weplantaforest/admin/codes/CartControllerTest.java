@@ -74,13 +74,8 @@ public class CartControllerTest {
 
         dbInjecter.injectCart("Adam", treeIds, timeOfPlanting);
 
-        this.mockMvc.perform(get(Uris.VERIFIFIED_CART_SHORT_VIEW).accept("application/json")
-                                                      .header("X-AUTH-TOKEN", userToken))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[0].id").value(1))
-                    .andExpect(jsonPath("$.[0].timeStamp").value(timeOfPlanting))
-                    .andExpect(jsonPath("$.[0].treeCount").value(1))
-                    .andExpect(jsonPath("$.[0].totalPrice").value(1));
+        this.mockMvc.perform(get(Uris.VERIFIFIED_CART_SHORT_VIEW).accept("application/json").header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk()).andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$.[0].timeStamp").value(timeOfPlanting)).andExpect(jsonPath("$.[0].treeCount").value(1)).andExpect(jsonPath("$.[0].totalPrice").value(1));
     }
 
     @Test
@@ -115,17 +110,10 @@ public class CartControllerTest {
 
         dbInjecter.injectCart("Adam", treeIds2, timeOfPlanting);
 
-        this.mockMvc.perform(get(Uris.VERIFIFIED_CART_SHORT_VIEW).accept("application/json")
-                                                      .header("X-AUTH-TOKEN", userToken))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.[0].id").value(1))
-                    .andExpect(jsonPath("$.[0].timeStamp").value(timeOfPlanting))
-                    .andExpect(jsonPath("$.[0].treeCount").value(3))
-                    .andExpect(jsonPath("$.[0].totalPrice").value(3))
-                    .andExpect(jsonPath("$.[1].id").value(2))
-                    .andExpect(jsonPath("$.[1].timeStamp").value(timeOfPlanting))
-                    .andExpect(jsonPath("$.[1].treeCount").value(7))
-                    .andExpect(jsonPath("$.[1].totalPrice").value(7));
+        this.mockMvc.perform(get(Uris.VERIFIFIED_CART_SHORT_VIEW).accept("application/json").header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk()).andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$.[0].timeStamp").value(timeOfPlanting)).andExpect(jsonPath("$.[0].treeCount").value(3)).andExpect(jsonPath("$.[0].totalPrice").value(3))
+                .andExpect(jsonPath("$.[1].id").value(2)).andExpect(jsonPath("$.[1].timeStamp").value(timeOfPlanting)).andExpect(jsonPath("$.[1].treeCount").value(7))
+                .andExpect(jsonPath("$.[1].totalPrice").value(7));
 
     }
 }

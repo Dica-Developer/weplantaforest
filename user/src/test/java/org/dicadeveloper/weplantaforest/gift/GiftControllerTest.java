@@ -59,7 +59,7 @@ public class GiftControllerTest {
 
     @Autowired
     private CartRepository _cartRepository;
-    
+
     @Autowired
     private CodeRepository _codeRepository;
 
@@ -97,10 +97,8 @@ public class GiftControllerTest {
             _dbInjecter.injectUser("otherUser");
             _dbInjecter.injectUser("Adam");
 
-            codeString1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW)
-                                     .getCode();
-            codeString2 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED)
-                                     .getCode();
+            codeString1 = _dbInjecter.injectGiftWithCode("Consignore", Status.NEW).getCode();
+            codeString2 = _dbInjecter.injectGiftWithCode("Consignore", Status.UNREDEEMED).getCode();
             codeString3 = _dbInjecter.injectGiftWithCode("Consignore", "Recipient", Status.REDEEMED);
             _dbInjecter.injectGiftWithCode("otherUser", Status.UNREDEEMED);
 
@@ -121,66 +119,60 @@ public class GiftControllerTest {
 
     @After
     public void clear() {
-//        _cartRepository.deleteAll();
-//        _treeRepository.deleteAll();
+        // _cartRepository.deleteAll();
+        // _treeRepository.deleteAll();
     }
 
-    //Test will be ignored: The DbInjecter has to be extended by creating also carts to the injected codes
+    // Test will be ignored: The DbInjecter has to be extended by creating also
+    // carts to the injected codes
 
     @Test
     @Rollback(false)
     @Ignore
     public void testFindGiftsByConsignor() throws Exception {
-        mockMvc.perform(get(Uris.GIFTS_BY_CONSIGNOR).param("userName", "Consignore")
-                                                    .accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
-               .andExpect(jsonPath("$.[0].recipient").isEmpty())
-               .andExpect(jsonPath("$.[0].code.code").value(codeString2))
-               .andExpect(jsonPath("$.[0].status").value("UNREDEEMED"))
-               .andExpect(jsonPath("$.[1].consignor.name").value("Consignore"))
-               .andExpect(jsonPath("$.[1].recipient.name").value("Recipient"))
-               .andExpect(jsonPath("$.[1].code.code").value(codeString3))
-               .andExpect(jsonPath("$.[1].status").value("REDEEMED"));
+        mockMvc.perform(get(Uris.GIFTS_BY_CONSIGNOR).param("userName", "Consignore").accept("application/json")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].consignor.name").value("Consignore")).andExpect(jsonPath("$.[0].recipient").isEmpty()).andExpect(jsonPath("$.[0].code.code").value(codeString2))
+                .andExpect(jsonPath("$.[0].status").value("UNREDEEMED")).andExpect(jsonPath("$.[1].consignor.name").value("Consignore")).andExpect(jsonPath("$.[1].recipient.name").value("Recipient"))
+                .andExpect(jsonPath("$.[1].code.code").value(codeString3)).andExpect(jsonPath("$.[1].status").value("REDEEMED"));
     }
 
     @Test
     @Rollback(false)
     @Ignore
     public void testFindGiftsByRecipient() throws Exception {
-        mockMvc.perform(get((Uris.GIFTS_BY_RECIPIENT)).param("userName", "Recipient")
-                                                      .accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].consignor.name").value("Consignore"))
-               .andExpect(jsonPath("$.[0].recipient.name").value("Recipient"))
-               .andExpect(jsonPath("$.[0].code.code").value(codeString3))
-               .andExpect(jsonPath("$.[0].status").value("REDEEMED"));
+        mockMvc.perform(get((Uris.GIFTS_BY_RECIPIENT)).param("userName", "Recipient").accept("application/json")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].consignor.name").value("Consignore")).andExpect(jsonPath("$.[0].recipient.name").value("Recipient"))
+                .andExpect(jsonPath("$.[0].code.code").value(codeString3)).andExpect(jsonPath("$.[0].status").value("REDEEMED"));
     }
 
-//    @Test
-//    @Rollback(false)
-//    public void testCreateGiftBadRequestCauseOfNoTreesRemaining() throws Exception {
-//        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
-//
-//        PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
-//        plantPageData = PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData, "Project A");
-//        plantPageData = PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood", "Project A", plantPageData);
-//
-//        _dbInjecter.injectTreeToProject("wood", "Adam", 10, System.currentTimeMillis(), "Project A");
-//
-//        mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-//                                              .header("X-AUTH-TOKEN", userToken)
-//                                              .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-//               .andExpect(status().isBadRequest());
-//    }
+    // @Test
+    // @Rollback(false)
+    // public void testCreateGiftBadRequestCauseOfNoTreesRemaining() throws
+    // Exception {
+    // String userToken =
+    // _tokenAuthenticationService.getTokenFromUser(_userRepository.findOne(1L));
+    //
+    // PlantBag plantPageData = PlantPageDataCreater.initializePlantPageData();
+    // plantPageData =
+    // PlantPageDataCreater.initializeProjectDataAndAddToPlantPageData(plantPageData,
+    // "Project A");
+    // plantPageData =
+    // PlantPageDataCreater.createPlantItemAndAddToPlantPageData(3, 300, "wood",
+    // "Project A", plantPageData);
+    //
+    // _dbInjecter.injectTreeToProject("wood", "Adam", 10,
+    // System.currentTimeMillis(), "Project A");
+    //
+    // mockMvc.perform(post(Uris.GIFT_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
+    // .header("X-AUTH-TOKEN", userToken)
+    // .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+    // .andExpect(status().isBadRequest());
+    // }
 
     @Test
     @Rollback(false)
     public void testCreateGiftPdf() throws Exception {
-        mockMvc.perform(get(Uris.GIFT_PDF).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                          .param("giftId", "1")
-                                          .accept("application/pdf"))
-               .andExpect(status().isOk());
+        mockMvc.perform(get(Uris.GIFT_PDF).contentType(TestUtil.APPLICATION_JSON_UTF8).param("giftId", "1").accept("application/pdf")).andExpect(status().isOk());
     }
 
 }

@@ -55,10 +55,10 @@ public class Price {
 
     @Transient
     private Short nrToSconto;
-    
+
     @Transient
     @JsonView(Views.ProjectArticle.class)
-    public Long getPriceAsLong(){
+    public Long getPriceAsLong() {
         return PriceHelper.fromBigDecimalToLong(amount);
     }
 }

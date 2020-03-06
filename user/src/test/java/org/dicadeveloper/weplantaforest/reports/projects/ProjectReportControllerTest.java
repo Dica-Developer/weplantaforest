@@ -102,23 +102,14 @@ public class ProjectReportControllerTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 100, timeOfPlanting, "Project B");
         _dbInjecter.injectTreeToProject("doow", "Adam", 200, timeOfPlanting, "Project B");
 
-        mockMvc.perform(get(Uris.REPORT_ALL_PROJECTS + "?page=0&size=10").accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.content[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.content[0].projectImageFileName").value("Project A"))
-               .andExpect(jsonPath("$.content[0].description").value("projectdesc"))
-               .andExpect(jsonPath("$.content[0].latitude").value(1.0))
-               .andExpect(jsonPath("$.content[0].longitude").value(2.0))
-               .andExpect(jsonPath("$.content[0].amountOfMaximumTreesToPlant").value(300))
-               .andExpect(jsonPath("$.content[0].amountOfPlantedTrees").value(100))
-               .andExpect(jsonPath("$.content[1].projectName").value("Project B"))
-               .andExpect(jsonPath("$.content[1].description").value("projectdesc"))
-               .andExpect(jsonPath("$.content[1].latitude").value(3.0))
-               .andExpect(jsonPath("$.content[1].longitude").value(4.0))
-               .andExpect(jsonPath("$.content[1].amountOfMaximumTreesToPlant").value(800))
-               .andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400))
-               .andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400))
-               .andExpect(jsonPath("$.content[1].active").value(true));
+        mockMvc.perform(get(Uris.REPORT_ALL_PROJECTS + "?page=0&size=10").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.content[0].projectName").value("Project A"))
+                .andExpect(jsonPath("$.content[0].projectImageFileName").value("Project A")).andExpect(jsonPath("$.content[0].description").value("projectdesc"))
+                .andExpect(jsonPath("$.content[0].latitude").value(1.0)).andExpect(jsonPath("$.content[0].longitude").value(2.0))
+                .andExpect(jsonPath("$.content[0].amountOfMaximumTreesToPlant").value(300)).andExpect(jsonPath("$.content[0].amountOfPlantedTrees").value(100))
+                .andExpect(jsonPath("$.content[1].projectName").value("Project B")).andExpect(jsonPath("$.content[1].description").value("projectdesc"))
+                .andExpect(jsonPath("$.content[1].latitude").value(3.0)).andExpect(jsonPath("$.content[1].longitude").value(4.0))
+                .andExpect(jsonPath("$.content[1].amountOfMaximumTreesToPlant").value(800)).andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400))
+                .andExpect(jsonPath("$.content[1].amountOfPlantedTrees").value(400)).andExpect(jsonPath("$.content[1].active").value(true));
     }
 
     @Test
@@ -127,15 +118,9 @@ public class ProjectReportControllerTest {
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
 
-        mockMvc.perform(get(Uris.PROJECT_SEARCH_NAME + "Project A").accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.projectName").value("Project A"))
-               .andExpect(jsonPath("$.projectImageFileName").value("Project A"))
-               .andExpect(jsonPath("$.description").value("projectdesc"))
-               .andExpect(jsonPath("$.latitude").value(1.0))
-               .andExpect(jsonPath("$.longitude").value(2.0))
-               .andExpect(jsonPath("$.amountOfMaximumTreesToPlant").value(300))
-               .andExpect(jsonPath("$.amountOfPlantedTrees").value(100));
+        mockMvc.perform(get(Uris.PROJECT_SEARCH_NAME + "Project A").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.projectName").value("Project A"))
+                .andExpect(jsonPath("$.projectImageFileName").value("Project A")).andExpect(jsonPath("$.description").value("projectdesc")).andExpect(jsonPath("$.latitude").value(1.0))
+                .andExpect(jsonPath("$.longitude").value(2.0)).andExpect(jsonPath("$.amountOfMaximumTreesToPlant").value(300)).andExpect(jsonPath("$.amountOfPlantedTrees").value(100));
 
     }
 
@@ -145,27 +130,17 @@ public class ProjectReportControllerTest {
         _dbInjecter.injectTreeToProject("doow", "Adam", 30, timeOfPlanting, "Project A");
         _dbInjecter.injectTreeToProject("wood", "Adam", 20, timeOfPlanting, "Project A");
 
-        mockMvc.perform(get(Uris.PROJECT_SEARCH_NAME + "/extended/" + "Project A").accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.projectReportData.projectName").value("Project A"))
-               .andExpect(jsonPath("$.projectReportData.projectImageFileName").value("Project A"))
-               .andExpect(jsonPath("$.projectReportData.description").value("projectdesc"))
-               .andExpect(jsonPath("$.projectReportData.latitude").value(1.0))
-               .andExpect(jsonPath("$.projectReportData.longitude").value(2.0))
-               .andExpect(jsonPath("$.projectReportData.amountOfMaximumTreesToPlant").value(300))
-               .andExpect(jsonPath("$.projectReportData.amountOfPlantedTrees").value(100))
-               .andExpect(jsonPath("$.images[0].title").value("image title 1"))
-               .andExpect(jsonPath("$.images[0].description").value("image desc 1"))
-               .andExpect(jsonPath("$.images[0].imageFileName").value("image1.jpg"))
-               .andExpect(jsonPath("$.images[0].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS))
-               .andExpect(jsonPath("$.images[1].title").value("image title 2"))
-               .andExpect(jsonPath("$.images[1].description").value("image desc 2"))
-               .andExpect(jsonPath("$.images[1].imageFileName").value("image2.jpg"))
-               .andExpect(jsonPath("$.images[1].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 2))
-               .andExpect(jsonPath("$.images[2].title").value("image title 3"))
-               .andExpect(jsonPath("$.images[2].description").value("image desc 3"))
-               .andExpect(jsonPath("$.images[2].imageFileName").value("image3.jpg"))
-               .andExpect(jsonPath("$.images[2].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 3));
+        mockMvc.perform(get(Uris.PROJECT_SEARCH_NAME + "/extended/" + "Project A").accept("application/json")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.projectReportData.projectName").value("Project A")).andExpect(jsonPath("$.projectReportData.projectImageFileName").value("Project A"))
+                .andExpect(jsonPath("$.projectReportData.description").value("projectdesc")).andExpect(jsonPath("$.projectReportData.latitude").value(1.0))
+                .andExpect(jsonPath("$.projectReportData.longitude").value(2.0)).andExpect(jsonPath("$.projectReportData.amountOfMaximumTreesToPlant").value(300))
+                .andExpect(jsonPath("$.projectReportData.amountOfPlantedTrees").value(100)).andExpect(jsonPath("$.images[0].title").value("image title 1"))
+                .andExpect(jsonPath("$.images[0].description").value("image desc 1")).andExpect(jsonPath("$.images[0].imageFileName").value("image1.jpg"))
+                .andExpect(jsonPath("$.images[0].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS)).andExpect(jsonPath("$.images[1].title").value("image title 2"))
+                .andExpect(jsonPath("$.images[1].description").value("image desc 2")).andExpect(jsonPath("$.images[1].imageFileName").value("image2.jpg"))
+                .andExpect(jsonPath("$.images[1].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 2)).andExpect(jsonPath("$.images[2].title").value("image title 3"))
+                .andExpect(jsonPath("$.images[2].description").value("image desc 3")).andExpect(jsonPath("$.images[2].imageFileName").value("image3.jpg"))
+                .andExpect(jsonPath("$.images[2].date").value(timeOfPlanting - TimeConstants.YEAR_IN_MILLISECONDS * 3));
     }
 
     @Test
@@ -174,14 +149,12 @@ public class ProjectReportControllerTest {
         String projectImageName = "project1.jpg";
         createProjectFolderAndInsertImage(projectName, projectImageName);
 
-        mockMvc.perform(get(Uris.PROJECT_IMAGE + "{imageName:.+}/{width}/{height}", "project1.jpg", 500, 500).accept("image/jpg"))
-               .andExpect(status().isOk());
+        mockMvc.perform(get(Uris.PROJECT_IMAGE + "{imageName:.+}/{width}/{height}", "project1.jpg", 500, 500).accept("image/jpg")).andExpect(status().isOk());
     }
 
     @Test
     public void testGetImageScaledBadRequest() throws Exception {
-        mockMvc.perform(get(Uris.PROJECT_IMAGE + "{imageName:.+}/{width}/{height}", "wrongName.jpg", 500, 500).accept("image/jpg"))
-               .andExpect(status().isBadRequest());
+        mockMvc.perform(get(Uris.PROJECT_IMAGE + "{imageName:.+}/{width}/{height}", "wrongName.jpg", 500, 500).accept("image/jpg")).andExpect(status().isBadRequest());
     }
 
     private void createProjectFolderAndInsertImage(String projectName, String imageName) {

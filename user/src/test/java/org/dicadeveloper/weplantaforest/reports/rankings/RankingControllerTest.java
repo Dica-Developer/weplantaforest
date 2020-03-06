@@ -90,20 +90,14 @@ public class RankingControllerTest {
     public void testGetBestUser() throws Exception {
         _dbInjecter.injectTree("wood", "Bert", 10, timeOfPlanting);
 
-        mockMvc.perform(get(Uris.RANKING_BEST_USER + "?page=0&size=10&lastYear=false").accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.content[0].name").value("Bert"))
-               .andExpect(jsonPath("$.content[0].amount").value(10))
-               .andExpect(jsonPath("$.content[0].co2Saved").exists());
+        mockMvc.perform(get(Uris.RANKING_BEST_USER + "?page=0&size=10&lastYear=false").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.content[0].name").value("Bert"))
+                .andExpect(jsonPath("$.content[0].amount").value(10)).andExpect(jsonPath("$.content[0].co2Saved").exists());
     }
 
     @Test
     public void testGetLastUser() throws Exception {
-        mockMvc.perform(get(Uris.RANKING_LAST_CREATED_USER).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].name").value("Adam"))
-               .andExpect(jsonPath("$.[0].date").value("01.01.1970"))
-               .andExpect(jsonPath("$.[0].time").value("00:01:30"));
+        mockMvc.perform(get(Uris.RANKING_LAST_CREATED_USER).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].name").value("Adam"))
+                .andExpect(jsonPath("$.[0].date").value("01.01.1970")).andExpect(jsonPath("$.[0].time").value("00:01:30"));
     }
 
     @Test
@@ -114,12 +108,9 @@ public class RankingControllerTest {
         _dbInjecter.injectTree("wood", "no money company", 10, timeOfPlanting);
         _dbInjecter.injectTree("wood", "hogwarts", 10, timeOfPlanting);
 
-        mockMvc.perform(get(Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}?page=0&size=10&lastYear=false", OrganizationType.PRIVATE).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.totalElements").value(2))
-               .andExpect(jsonPath("$.content[0].name").value("Adam"))
-               .andExpect(jsonPath("$.content[0].amount").value(100))
-               .andExpect(jsonPath("$.content[0].co2Saved").exists());
+        mockMvc.perform(get(Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}?page=0&size=10&lastYear=false", OrganizationType.PRIVATE).accept("application/json")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(2)).andExpect(jsonPath("$.content[0].name").value("Adam")).andExpect(jsonPath("$.content[0].amount").value(100))
+                .andExpect(jsonPath("$.content[0].co2Saved").exists());
     }
 
     @Test
@@ -137,11 +128,8 @@ public class RankingControllerTest {
         _dbInjecter.injectTreeToProject("wood", "Bert", 1, 100000L, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 1, 100000L, "Project");
 
-        mockMvc.perform(get(Uris.RANKING_LAST_PLANTED_TREES).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].name").value("Adam"))
-               .andExpect(jsonPath("$.[0].amount").value(9))
-               .andExpect(jsonPath("$.[0].plantedOn").value(900000));
+        mockMvc.perform(get(Uris.RANKING_LAST_PLANTED_TREES).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].name").value("Adam"))
+                .andExpect(jsonPath("$.[0].amount").value(9)).andExpect(jsonPath("$.[0].plantedOn").value(900000));
     }
 
     @Test
@@ -153,12 +141,8 @@ public class RankingControllerTest {
         _dbInjecter.injectTree("wood", "Dirk3", 80, timeOfPlanting);
         _dbInjecter.injectTree("wood", "Claus", 80, timeOfPlanting);
 
-        mockMvc.perform(get(Uris.RANKING_BEST_TEAM + "?page=0&size=10&lastYear=false").accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.totalElements").value(1))
-               .andExpect(jsonPath("$.content[0].name").value("avengers"))
-               .andExpect(jsonPath("$.content[0].amount").value(180))
-               .andExpect(jsonPath("$.content[0].co2Saved").exists());
+        mockMvc.perform(get(Uris.RANKING_BEST_TEAM + "?page=0&size=10&lastYear=false").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect(jsonPath("$.content[0].name").value("avengers")).andExpect(jsonPath("$.content[0].amount").value(180)).andExpect(jsonPath("$.content[0].co2Saved").exists());
     }
 
     @Test
@@ -171,26 +155,14 @@ public class RankingControllerTest {
         _dbInjecter.injectTreeToProject("wood", "Adam", 1, timeOfPlantingTwoWeeksBefore, "Project");
         _dbInjecter.injectTreeToProject("wood", "Claus", 1, timeOfPlantingTwoWeeksBefore, "Project");
 
-        mockMvc.perform(get(Uris.RANKING_BEST_USER_FOR_TIMERANGE + "{range}", "week").accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].name").value("Adam"))
-               .andExpect(jsonPath("$.[0].amount").value(3))
-               .andExpect(jsonPath("$.[1].name").value("Bert"))
-               .andExpect(jsonPath("$.[1].amount").value(2));
+        mockMvc.perform(get(Uris.RANKING_BEST_USER_FOR_TIMERANGE + "{range}", "week").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].name").value("Adam"))
+                .andExpect(jsonPath("$.[0].amount").value(3)).andExpect(jsonPath("$.[1].name").value("Bert")).andExpect(jsonPath("$.[1].amount").value(2));
 
-        mockMvc.perform(get(Uris.RANKING_BEST_USER_FOR_TIMERANGE + "{range}", "year").accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].name").value("Adam"))
-               .andExpect(jsonPath("$.[0].amount").value(4))
-               .andExpect(jsonPath("$.[1].name").value("Bert"))
-               .andExpect(jsonPath("$.[1].amount").value(2));
+        mockMvc.perform(get(Uris.RANKING_BEST_USER_FOR_TIMERANGE + "{range}", "year").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].name").value("Adam"))
+                .andExpect(jsonPath("$.[0].amount").value(4)).andExpect(jsonPath("$.[1].name").value("Bert")).andExpect(jsonPath("$.[1].amount").value(2));
 
-        mockMvc.perform(get(Uris.RANKING_BEST_USER_FOR_TIMERANGE + "{range}", "a").accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].name").value("Adam"))
-               .andExpect(jsonPath("$.[0].amount").value(4))
-               .andExpect(jsonPath("$.[1].name").value("Bert"))
-               .andExpect(jsonPath("$.[1].amount").value(2));
+        mockMvc.perform(get(Uris.RANKING_BEST_USER_FOR_TIMERANGE + "{range}", "a").accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].name").value("Adam"))
+                .andExpect(jsonPath("$.[0].amount").value(4)).andExpect(jsonPath("$.[1].name").value("Bert")).andExpect(jsonPath("$.[1].amount").value(2));
 
     }
 

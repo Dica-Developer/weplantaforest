@@ -44,8 +44,7 @@ public class SimplePlantBagTest {
 
     @Test
     public void testGetPlantItemWithoutAskedProjectInPlantItem() {
-        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(1, 100, "wood", "Project")
-                                                 .build();
+        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(1, 100, "wood", "Project").build();
 
         SimplePlantPageItem plantItemToCheck = new SimplePlantPageItem();
         plantItemToCheck.setTreeType("wood");
@@ -60,8 +59,7 @@ public class SimplePlantBagTest {
 
     @Test
     public void testGetPlantItemWithoutAskedPriceInPlantItem() {
-        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(1, 100, "wood", "Project")
-                                                      .build();
+        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(1, 100, "wood", "Project").build();
 
         SimplePlantPageItem plantItemToCheck = new SimplePlantPageItem();
         plantItemToCheck.setTreeType("wood");

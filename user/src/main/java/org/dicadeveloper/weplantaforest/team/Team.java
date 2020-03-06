@@ -35,23 +35,23 @@ public class Team {
     @Column(name = "_teamId")
     private Long id;
 
-    @Column(name ="_timeStamp")
+    @Column(name = "_timeStamp")
     private Long timeStamp;
 
     @Column(name = "_name", nullable = false, unique = true, length = 256)
     private String name;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
-    // necessary to avoid infinite recursion in authenticated user json object 
+    // necessary to avoid infinite recursion in authenticated user json object
     @JsonIgnore
     private List<User> members = new ArrayList<User>();
 
-    @Column(name="_description", columnDefinition = "TEXT")
+    @Column(name = "_description", columnDefinition = "TEXT")
     private String description;
 
     @OneToOne(optional = false)
     @JoinColumn(name = "_admin__userId")
-    // necessary to avoid infinite recursion in authenticated user json object 
+    // necessary to avoid infinite recursion in authenticated user json object
     @JsonIgnore
     private User admin;
 

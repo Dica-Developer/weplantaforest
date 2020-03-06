@@ -3,7 +3,6 @@ package org.dicadeveloper.weplantaforest.receipt;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,10 +30,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ReceiptController {
 
     private @NonNull ReceiptRepository _receiptRepository;
@@ -59,9 +55,9 @@ public class ReceiptController {
     @JsonView(Views.ReceiptOverview.class)
     public ResponseEntity<?> getReceiptsByOwnerId(@RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
         User user = _tokenAuthenticationService.getUserFromToken(userToken);
-        if(user == null){
+        if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else{
+        } else {
             List<Receipt> receipts = _receiptRepository.findByOwnerId(user.getId());
             return new ResponseEntity<>(receipts, HttpStatus.OK);
         }

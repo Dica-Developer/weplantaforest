@@ -41,14 +41,14 @@ public class PdfGiftView {
 
         PdfHelper.createHeaderBlock(cb, 1, 1);
 
-        createHeaderCircle(cb, pdfTexts);        
+        createHeaderCircle(cb, pdfTexts);
         createBlueBlock(cb, pdfTexts);
         createGreyBlock(cb, pdfTexts, codeFragments);
 
         pdfHelper.addLogo(cb, _imagePath, 262f, 35f);
         doc.close();
     }
-    
+
     private void createHeaderCircle(PdfContentByte cb, Map<String, String> pdfTexts) throws DocumentException {
         cb.saveState();
         cb.setRGBColorFill(0x82, 0xAB, 0x1f);
@@ -56,7 +56,7 @@ public class PdfGiftView {
         cb.fill();
         cb.stroke();
         cb.restoreState();
-        
+
         Font textFont = new Font(FontFamily.TIMES_ROMAN, 22, Font.ITALIC, BaseColor.WHITE);
         PdfPTable tableForHeaderCircleText = new PdfPTable(1);
         float[] rows = { 160f };
@@ -65,7 +65,7 @@ public class PdfGiftView {
         tableForHeaderCircleText.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
         tableForHeaderCircleText.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         tableForHeaderCircleText.getDefaultCell().setFixedHeight(40);
-        
+
         tableForHeaderCircleText.addCell(new Phrase(new Chunk(pdfTexts.get("gift.gift"), textFont)));
         tableForHeaderCircleText.writeSelectedRows(0, 1, 217.5f, 725f, cb);
     }

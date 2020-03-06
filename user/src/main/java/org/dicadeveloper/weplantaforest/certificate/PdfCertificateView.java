@@ -72,14 +72,10 @@ public class PdfCertificateView {
         PdfPTable table = new PdfPTable(1);
         float[] rows = { 595f };
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell()
-             .setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.getDefaultCell()
-             .setVerticalAlignment(Element.ALIGN_MIDDLE);
-        table.getDefaultCell()
-             .setFixedHeight(35);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.getDefaultCell().setFixedHeight(35);
         table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.about"), textFont)));
         table.addCell(new Phrase(new Chunk(pdfTexts.get("treeCount"), textFontTreeCount)));
         table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.trees"), textFont)));
@@ -95,12 +91,9 @@ public class PdfCertificateView {
         PdfPTable textTable = new PdfPTable(1);
         float[] textRows = { 475f };
         textTable.setTotalWidth(textRows);
-        textTable.getDefaultCell()
-                 .setBorder(Rectangle.NO_BORDER);
-        textTable.getDefaultCell()
-                 .setVerticalAlignment(Element.ALIGN_MIDDLE);
-        textTable.getDefaultCell()
-                 .setFixedHeight(40);
+        textTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        textTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+        textTable.getDefaultCell().setFixedHeight(40);
         textTable.addCell(new Phrase(new Chunk(pdfTexts.get("certificateText"), customTextFont)));
         textTable.writeSelectedRows(0, 1, 60, 395, cb);
     }
@@ -113,15 +106,11 @@ public class PdfCertificateView {
         PdfPTable table = new PdfPTable(2);
         float[] rows = { 247.5f, 247.5f };
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.BOTTOM);
-        table.getDefaultCell()
-             .setHorizontalAlignment(Element.ALIGN_LEFT);
-        table.getDefaultCell()
-             .setVerticalAlignment(Element.ALIGN_TOP);
+        table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_TOP);
 
-        table.getDefaultCell()
-             .setFixedHeight(75);
+        table.getDefaultCell().setFixedHeight(75);
 
         Phrase leftPhrase = new Phrase();
         leftPhrase.add(new Chunk(pdfTexts.get("certificate.certify_text"), textFont));
@@ -152,8 +141,7 @@ public class PdfCertificateView {
         PdfPTable signatureAndStamp = new PdfPTable(2);
         float[] rowss = { 80f, 167.5f };
         signatureAndStamp.setTotalWidth(rowss);
-        signatureAndStamp.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
+        signatureAndStamp.getDefaultCell().setBorder(Rectangle.NO_BORDER);
         signatureAndStamp.addCell(signatureImage);
         signatureAndStamp.addCell(stampImage);
 

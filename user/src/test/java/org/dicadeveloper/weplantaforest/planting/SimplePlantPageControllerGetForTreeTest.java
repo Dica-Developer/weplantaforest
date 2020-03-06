@@ -81,15 +81,10 @@ public class SimplePlantPageControllerGetForTreeTest {
     public void testGetCartWithOneArticle() throws Exception {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(10))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(1000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(10))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(1000)).andExpect(jsonPath("$.actualAmountOfTrees").value(10))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
 
     @Test
@@ -97,19 +92,12 @@ public class SimplePlantPageControllerGetForTreeTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 0.8);
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 11).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(8))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(3))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(1100))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(11))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(11));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 11).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(8))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(3))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(1100)).andExpect(jsonPath("$.actualAmountOfTrees").value(11))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(11));
     }
 
     @Test
@@ -118,23 +106,14 @@ public class SimplePlantPageControllerGetForTreeTest {
         dbInjecter.injectProjectArticle("doow", "Project A", 10, 1.0, 0.5);
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(7))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(2))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[2].amount").value(1))
-               .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo"))
-               .andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(1000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(7))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(2))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[2].amount").value(1))
+                .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo")).andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(1000)).andExpect(jsonPath("$.actualAmountOfTrees").value(10))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
 
     @Test
@@ -144,27 +123,16 @@ public class SimplePlantPageControllerGetForTreeTest {
         dbInjecter.injectProjectArticle("wodo", "Project A", 10, 1.0, 0.3);
         dbInjecter.injectProjectArticle("dowo", "Project A", 10, 1.0, 0.3);
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(7))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(1))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[2].amount").value(1))
-               .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo"))
-               .andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[3].amount").value(1))
-               .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo"))
-               .andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(1000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(7))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(1))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[2].amount").value(1))
+                .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo")).andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[3].amount").value(1))
+                .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo")).andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(1000)).andExpect(jsonPath("$.actualAmountOfTrees").value(10))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
 
     }
 
@@ -174,15 +142,10 @@ public class SimplePlantPageControllerGetForTreeTest {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(5))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(500))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(5))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(5))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(500)).andExpect(jsonPath("$.actualAmountOfTrees").value(5))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
 
     @Test
@@ -192,19 +155,12 @@ public class SimplePlantPageControllerGetForTreeTest {
 
         dbInjecter.injectTreeToProject("wood", "Adam", 5, timeOfPlanting, "Project A");
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(5))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(5))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(1000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(5))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(5))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(1000)).andExpect(jsonPath("$.actualAmountOfTrees").value(10))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
 
     @Test
@@ -214,15 +170,10 @@ public class SimplePlantPageControllerGetForTreeTest {
 
         dbInjecter.injectTreeToProject("doow", "Adam", 10, timeOfPlanting, "Project A");
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(10))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(1000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(10))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(1000)).andExpect(jsonPath("$.actualAmountOfTrees").value(10))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
 
     @Test
@@ -230,19 +181,12 @@ public class SimplePlantPageControllerGetForTreeTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 1.0, 0.5);
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(7))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(3))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project B"))
-               .andExpect(jsonPath("$.actualPrice").value(1000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(7))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(3))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project B")).andExpect(jsonPath("$.actualPrice").value(1000)).andExpect(jsonPath("$.actualAmountOfTrees").value(10))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
 
     @Test
@@ -252,27 +196,16 @@ public class SimplePlantPageControllerGetForTreeTest {
         dbInjecter.injectProjectArticle("wood", "Project B", 10, 2.0, 1.0);
         dbInjecter.injectProjectArticle("doow", "Project B", 10, 2.0, 0.5);
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(7))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(300))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(1))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(200))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[2].amount").value(1))
-               .andExpect(jsonPath("$.plantItems[2].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[2].treePrice").value(200))
-               .andExpect(jsonPath("$.plantItems[2].projectName").value("Project B"))
-               .andExpect(jsonPath("$.plantItems[3].amount").value(1))
-               .andExpect(jsonPath("$.plantItems[3].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[3].treePrice").value(200))
-               .andExpect(jsonPath("$.plantItems[3].projectName").value("Project B"))
-               .andExpect(jsonPath("$.actualPrice").value(2700))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(10))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 10).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(7))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(300))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(1))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(200))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[2].amount").value(1))
+                .andExpect(jsonPath("$.plantItems[2].treeType").value("wood")).andExpect(jsonPath("$.plantItems[2].treePrice").value(200))
+                .andExpect(jsonPath("$.plantItems[2].projectName").value("Project B")).andExpect(jsonPath("$.plantItems[3].amount").value(1))
+                .andExpect(jsonPath("$.plantItems[3].treeType").value("doow")).andExpect(jsonPath("$.plantItems[3].treePrice").value(200))
+                .andExpect(jsonPath("$.plantItems[3].projectName").value("Project B")).andExpect(jsonPath("$.actualPrice").value(2700)).andExpect(jsonPath("$.actualAmountOfTrees").value(10))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(10));
     }
 
     @Test
@@ -282,27 +215,16 @@ public class SimplePlantPageControllerGetForTreeTest {
         dbInjecter.injectProjectArticle("wodo", "Project A", 500, 1.0, 0.5);
         dbInjecter.injectProjectArticle("dowo", "Project A", 500, 1.0, 0.5);
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 1000).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(700))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(100))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[2].amount").value(100))
-               .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo"))
-               .andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[3].amount").value(100))
-               .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo"))
-               .andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(100000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 1000).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(700))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(100))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[2].amount").value(100))
+                .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo")).andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[3].amount").value(100))
+                .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo")).andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(100000)).andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
 
     @Test
@@ -314,27 +236,16 @@ public class SimplePlantPageControllerGetForTreeTest {
 
         dbInjecter.injectTreeToProject("dowo", "Adam", 50, System.currentTimeMillis(), "Project A");
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 1000).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(700))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(125))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[2].amount").value(125))
-               .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo"))
-               .andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[3].amount").value(50))
-               .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo"))
-               .andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(100000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 1000).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(700))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(125))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[2].amount").value(125))
+                .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo")).andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[3].amount").value(50))
+                .andExpect(jsonPath("$.plantItems[3].treeType").value("dowo")).andExpect(jsonPath("$.plantItems[3].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[3].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(100000)).andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
 
     @Test
@@ -342,19 +253,12 @@ public class SimplePlantPageControllerGetForTreeTest {
         dbInjecter.injectProjectArticle("wood", "Project A", 1000, 3.0, 2.0);
         dbInjecter.injectProjectArticle("doow", "Project A", 100, 1.0, 0.5);
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 1000).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(900))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(300))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(100))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(280000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 1000).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(900))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(300))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(100))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(280000)).andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
 
     @Test
@@ -366,23 +270,14 @@ public class SimplePlantPageControllerGetForTreeTest {
 
         dbInjecter.injectTreeToProject("dowo", "Adam", 100, System.currentTimeMillis(), "Project A");
 
-        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 1000).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.plantItems[0].amount").value(700))
-               .andExpect(jsonPath("$.plantItems[0].treeType").value("wood"))
-               .andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[1].amount").value(150))
-               .andExpect(jsonPath("$.plantItems[1].treeType").value("doow"))
-               .andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A"))
-               .andExpect(jsonPath("$.plantItems[2].amount").value(150))
-               .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo"))
-               .andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
-               .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A"))
-               .andExpect(jsonPath("$.actualPrice").value(100000))
-               .andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
-               .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
+        mockMvc.perform(get(Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", 1000).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.plantItems[0].amount").value(700))
+                .andExpect(jsonPath("$.plantItems[0].treeType").value("wood")).andExpect(jsonPath("$.plantItems[0].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[0].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[1].amount").value(150))
+                .andExpect(jsonPath("$.plantItems[1].treeType").value("doow")).andExpect(jsonPath("$.plantItems[1].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[1].projectName").value("Project A")).andExpect(jsonPath("$.plantItems[2].amount").value(150))
+                .andExpect(jsonPath("$.plantItems[2].treeType").value("wodo")).andExpect(jsonPath("$.plantItems[2].treePrice").value(100))
+                .andExpect(jsonPath("$.plantItems[2].projectName").value("Project A")).andExpect(jsonPath("$.actualPrice").value(100000)).andExpect(jsonPath("$.actualAmountOfTrees").value(1000))
+                .andExpect(jsonPath("$.targetAmountOfTrees").value(1000));
     }
 
 }

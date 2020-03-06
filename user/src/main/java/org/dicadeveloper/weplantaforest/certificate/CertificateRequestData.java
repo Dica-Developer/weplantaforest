@@ -9,5 +9,5 @@ public class CertificateRequestData {
 
     String text;
     Long[] cartIds;
-    
+
 }

@@ -11,5 +11,5 @@ public class TreeOrgTypeStatisticData {
 
     Long amount;
     OrganizationType orgType;
-    
+
 }

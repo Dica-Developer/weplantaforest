@@ -1,7 +1,6 @@
 package org.dicadeveloper.weplantaforest.receipt;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Locale;
 
@@ -26,7 +25,7 @@ public class ReceiptService {
     private @NonNull ReceiptRepository _receiptRepository;
 
     private @NonNull UserRepository _userRepository;
-    
+
     private @NonNull CartRepository _cartRepository;
 
     private @NonNull MailHelper _mailHelper;
@@ -55,8 +54,8 @@ public class ReceiptService {
                         pdfFile.delete();
                         receipt.setSentOn(System.currentTimeMillis());
                         _receiptRepository.save(receipt);
-                        if(receipt.getCarts() != null && receipt.getCarts().size() > 0) {
-                            for(Cart cart: receipt.getCarts()) {
+                        if (receipt.getCarts() != null && receipt.getCarts().size() > 0) {
+                            for (Cart cart : receipt.getCarts()) {
                                 cart.setReceiptSent(true);
                                 _cartRepository.save(cart);
                             }

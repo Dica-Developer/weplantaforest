@@ -38,15 +38,15 @@ public class Project {
     @Id
     @GeneratedValue
     @Column(name = "_plantId")
-    @JsonView({Views.ProjectDetails.class})
+    @JsonView({ Views.ProjectDetails.class })
     private Long id;
 
     @Column(name = "_name", length = 255)
-    @JsonView({Views.PlantedTree.class, Views.ProjectDetails.class})
+    @JsonView({ Views.PlantedTree.class, Views.ProjectDetails.class })
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")
-    @JsonView({Views.ProjectDetails.class})
+    @JsonView({ Views.ProjectDetails.class })
     private String description;
 
     /*
@@ -91,10 +91,10 @@ public class Project {
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private List<ProjectArticle> articles;
-    
+
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private List<ProjectImage> images;
-    
+
     @ElementCollection
     @CollectionTable(name = "AreaPositions", joinColumns = @JoinColumn(name = "_projectId"))
     @OrderBy("order ASC")

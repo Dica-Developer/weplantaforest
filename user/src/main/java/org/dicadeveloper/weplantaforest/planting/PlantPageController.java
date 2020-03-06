@@ -20,8 +20,8 @@ import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
-import org.dicadeveloper.weplantaforest.user.UserService;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
+import org.dicadeveloper.weplantaforest.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlantPageController {
 
     private @NonNull PlantBagHelper plantPageDataHelper;
@@ -97,7 +97,8 @@ public class PlantPageController {
         User buyer = _userRepsoitory.findById(plantForUserRequest.getUserId()).orElse(null);
         IpatPreconditions.checkNotNull(buyer, ErrorCodes.USER_NOT_FOUND);
         _plantPageDataValidator.validatePlantBag(plantForUserRequest.getPlantBag());
-        List<Long> cartIds = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()), (int) plantForUserRequest.getAmountOfPlantBags());
+        List<Long> cartIds = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()),
+                (int) plantForUserRequest.getAmountOfPlantBags());
         return new ResponseEntity<List<Long>>(cartIds, HttpStatus.OK);
 
     }

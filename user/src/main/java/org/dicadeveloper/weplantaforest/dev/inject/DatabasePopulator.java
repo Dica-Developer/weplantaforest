@@ -101,8 +101,8 @@ public class DatabasePopulator {
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository,
-            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator,
-            PasswordEncrypter passwordEncrypter, ReceiptRepository receiptRepository, MainSliderImageRepository mainSliderImageRepository) {
+            CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator, PasswordEncrypter passwordEncrypter,
+            ReceiptRepository receiptRepository, MainSliderImageRepository mainSliderImageRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -136,46 +136,46 @@ public class DatabasePopulator {
                 project.setShopActive(true);
             }
             switch (i) {
-            case 0:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 1:
-                project.setLatitude(37.235000f);
-                project.setLongitude(-115.811111f);
-                break;
-            case 2:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 3:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 4:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 5:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 6:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 7:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 8:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            default:
-                project.setLatitude(51.482691f);
-                project.setLongitude(11.969947f);
-                break;
+                case 0:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 1:
+                    project.setLatitude(37.235000f);
+                    project.setLongitude(-115.811111f);
+                    break;
+                case 2:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 3:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 4:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 5:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 6:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 7:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 8:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                default:
+                    project.setLatitude(51.482691f);
+                    project.setLongitude(11.969947f);
+                    break;
             }
             _projectRepository.save(project);
         }
@@ -193,13 +193,13 @@ public class DatabasePopulator {
                 treeType.setDescription(description);
                 double co2Savings = 0.02;
                 switch (treeTypeName) {
-                case "Robin":
-                case "Wildapfel":
-                    co2Savings = 0.01;
-                    break;
-                case "Default":
-                    co2Savings = 0.011;
-                    break;
+                    case "Robin":
+                    case "Wildapfel":
+                        co2Savings = 0.01;
+                        break;
+                    case "Default":
+                        co2Savings = 0.011;
+                        break;
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
                 treeType.setImageFile(treeTypeName + ".jpeg");
@@ -539,11 +539,11 @@ public class DatabasePopulator {
     public void createMainSliderImages() {
         for (int i = 1; i <= 4; i++) {
             MainSliderImage image = new MainSliderImage();
-            
+
             String imageFileName = "main_image" + i + ".jpg";
             image.setImageFileName(imageFileName);
             _mainSliderImageRepository.save(image);
-           
+
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageFileName).toPath();
             String imageFileDest = FileSystemInjector.getMainImageFolder() + "/" + imageFileName;
             File newImageFile = new File(imageFileDest);

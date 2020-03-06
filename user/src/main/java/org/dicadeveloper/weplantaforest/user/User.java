@@ -39,7 +39,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "User")
-@EqualsAndHashCode(exclude = {"team"})
+@EqualsAndHashCode(exclude = { "team" })
 public class User implements UserDetails {
 
     /**
@@ -64,7 +64,7 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID") )
+    @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID"))
     @Column(name = "ELEMENT")
     private Set<Role> roles = new HashSet<Role>();
 
@@ -84,7 +84,7 @@ public class User implements UserDetails {
     private OrganizationType organizationType;
 
     @Column(name = "_imageName")
-    @JsonView({Views.TeamMember.class })
+    @JsonView({ Views.TeamMember.class })
     private String imageName;
 
     @Column(name = "_aboutme")
@@ -95,19 +95,19 @@ public class User implements UserDetails {
 
     @Column(name = "_organisation")
     private String organisation;
-    
-    @Column(name ="_homepage")
+
+    @Column(name = "_homepage")
     private String homepage;
-    
-    @Column(name ="_lang")
+
+    @Column(name = "_lang")
     private Language lang;
-    
-    @Column(name ="_newsletter")
+
+    @Column(name = "_newsletter")
     private boolean newsletter;
-    
+
     @Column(name = "_activationKey")
     private String activationKey;
-    
+
     @ManyToOne(optional = true)
     @JoinColumn(name = "_team__teamId")
     @JsonIgnore
@@ -120,7 +120,7 @@ public class User implements UserDetails {
     public void removeRole(final Role role) {
         roles.remove(role);
     }
-    
+
     @Transient
     @JsonIgnore
     public boolean isAdmin() {

@@ -13,25 +13,25 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CodeService {
 
     private @NonNull CodeRepository _codeRepository;
-    
+
     private @NonNull GiftService _giftService;
-    
+
     private @NonNull EventService _eventService;
-    
+
     private @NonNull CodeGenerator _codeGenerator;
-    
-    public void redeemCode(User recipient, String codeString) throws IpatException{
+
+    public void redeemCode(User recipient, String codeString) throws IpatException {
         IpatPreconditions.checkArgument(_codeGenerator.isValid(codeString), ErrorCodes.INVALID_CODE);
         Code code = _codeRepository.findByCode(codeString);
         boolean IsGiftOrEventCode = (code.isGiftCode() || code.isEventCode());
         IpatPreconditions.checkArgument(IsGiftOrEventCode, ErrorCodes.CODE_IS_NEITHER_GIFT_NOR_EVENT);
-        if(code.isGiftCode()){
+        if (code.isGiftCode()) {
             _giftService.redeemGiftCode(recipient, codeString);
-        }else if(code.isEventCode()){
+        } else if (code.isEventCode()) {
             _eventService.redeemEventCode(recipient, codeString);
         }
     }

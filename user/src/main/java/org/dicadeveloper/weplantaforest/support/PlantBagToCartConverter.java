@@ -39,21 +39,13 @@ public class PlantBagToCartConverter {
         cart.setBuyer(buyer);
         cart.setCartState(cartState);
 
-        Set<String> projectNames = plantPageData.getProjects()
-                                                .keySet();
+        Set<String> projectNames = plantPageData.getProjects().keySet();
 
         for (String projectname : projectNames) {
-            Set<String> plantItemnames = plantPageData.getProjects()
-                                                      .get(projectname)
-                                                      .getPlantItems()
-                                                      .keySet();
+            Set<String> plantItemnames = plantPageData.getProjects().get(projectname).getPlantItems().keySet();
 
             for (String plantItemName : plantItemnames) {
-                int amount = plantPageData.getProjects()
-                                          .get(projectname)
-                                          .getPlantItems()
-                                          .get(plantItemName)
-                                          .getAmount();
+                int amount = plantPageData.getProjects().get(projectname).getPlantItems().get(plantItemName).getAmount();
                 if (amount > 0) {
                     Long plantArticleId = _projectArticleRepository.findArticleIdByProjectAndTreeType(projectname, plantItemName);
 
@@ -87,8 +79,7 @@ public class PlantBagToCartConverter {
 
     private Tree createTree(int amount, long plantedOn, User owner, long projectArticleId) {
         Tree tree = new Tree();
-        Project project = _projectArticleRepository.findById(projectArticleId).orElse(null)
-                                                   .getProject();
+        Project project = _projectArticleRepository.findById(projectArticleId).orElse(null).getProject();
         ProjectArticle projectArticle = _projectArticleRepository.findById(projectArticleId).orElse(null);
 
         tree.setAmount(amount);

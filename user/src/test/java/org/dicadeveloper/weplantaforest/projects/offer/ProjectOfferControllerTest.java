@@ -57,9 +57,7 @@ public class ProjectOfferControllerTest {
         offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
-        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .content(TestUtil.convertObjectToJsonBytes(offer)))
-                    .andExpect(status().isBadRequest());
+        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(offer))).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -78,9 +76,7 @@ public class ProjectOfferControllerTest {
         offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
-        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .content(TestUtil.convertObjectToJsonBytes(offer)))
-                    .andExpect(status().isBadRequest());
+        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(offer))).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -99,9 +95,7 @@ public class ProjectOfferControllerTest {
         offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
-        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .content(TestUtil.convertObjectToJsonBytes(offer)))
-                    .andExpect(status().isBadRequest());
+        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(offer))).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -120,9 +114,7 @@ public class ProjectOfferControllerTest {
         // offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
-        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .content(TestUtil.convertObjectToJsonBytes(offer)))
-                    .andExpect(status().isBadRequest());
+        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(offer))).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -141,9 +133,7 @@ public class ProjectOfferControllerTest {
         offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
-        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .content(TestUtil.convertObjectToJsonBytes(offer)))
-                    .andExpect(status().isBadRequest());
+        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(offer))).andExpect(status().isBadRequest());
     }
 
 }

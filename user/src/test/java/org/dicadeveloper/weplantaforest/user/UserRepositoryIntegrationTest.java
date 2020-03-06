@@ -64,7 +64,7 @@ public class UserRepositoryIntegrationTest {
         assertThat(userDetails.userName).isEqualTo("Adam");
         assertThat(userDetails.teamName).isEqualTo("team");
     }
-    
+
     @Test
     public void testGetUserDetailsWithoutTeam() {
         _dbInjecter.injectUser("Adam", 100000L, OrganizationType.PRIVATE);

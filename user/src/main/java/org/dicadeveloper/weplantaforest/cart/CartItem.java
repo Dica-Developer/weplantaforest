@@ -61,11 +61,7 @@ public class CartItem {
 
     private void calcAndSetTotalPrice() {
         if (tree != null) {
-            double totalPrice = tree.getAmount() * (tree.getProjectArticle()
-                                                        .getPrice()
-                                                        .getAmount()
-                                                        .doubleValue()
-                    - scontoPerPiece.doubleValue() - fundingPerPiece.doubleValue());
+            double totalPrice = tree.getAmount() * (tree.getProjectArticle().getPrice().getAmount().doubleValue() - scontoPerPiece.doubleValue() - fundingPerPiece.doubleValue());
             this.totalPrice = new BigDecimal(totalPrice);
         } else {
             this.totalPrice = BigDecimal.ZERO;
@@ -74,22 +70,15 @@ public class CartItem {
 
     public void setTree(Tree tree) {
         this.tree = tree;
-        this.basePricePerPiece = tree.getProjectArticle()
-                                     .getPrice()
-                                     .getAmount();
-        this.fundingPerPiece = tree.getProjectArticle()
-                                   .getPrice()
-                                   .getFunding();
-        this.scontoPerPiece = tree.getProjectArticle()
-                                  .getPrice()
-                                  .getSconto();
-        this.projectArticleId = tree.getProjectArticle()
-                                    .getArticleId();
+        this.basePricePerPiece = tree.getProjectArticle().getPrice().getAmount();
+        this.fundingPerPiece = tree.getProjectArticle().getPrice().getFunding();
+        this.scontoPerPiece = tree.getProjectArticle().getPrice().getSconto();
+        this.projectArticleId = tree.getProjectArticle().getArticleId();
         this.amount = tree.getAmount();
         calcAndSetTotalPrice();
     }
-    
-    public void removeTree(){
+
+    public void removeTree() {
         this.tree = null;
     }
 

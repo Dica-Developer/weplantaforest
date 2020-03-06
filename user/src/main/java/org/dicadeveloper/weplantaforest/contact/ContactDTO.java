@@ -11,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ContactDTO {
 
-	private String reason;
-	private String name;
-	private String mail;
-	private String phone;
-	private String message;
+    private String reason;
+    private String name;
+    private String mail;
+    private String phone;
+    private String message;
 }

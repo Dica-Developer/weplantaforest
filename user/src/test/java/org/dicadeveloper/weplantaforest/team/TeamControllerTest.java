@@ -1,12 +1,11 @@
 package org.dicadeveloper.weplantaforest.team;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
@@ -38,150 +37,145 @@ import org.springframework.web.context.WebApplicationContext;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TeamControllerTest {
 
-	private static MockMvc mockMvc;
+    private static MockMvc mockMvc;
 
-	@Rule
-	@Autowired
-	public CleanDbRule _cleanDbRule;
+    @Rule
+    @Autowired
+    public CleanDbRule _cleanDbRule;
 
-	@Autowired
-	private DbInjecter _dbInjecter;
+    @Autowired
+    private DbInjecter _dbInjecter;
 
-	@Autowired
-	private WebApplicationContext webApplicationContext;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
-	@Autowired
-	private UserRepository _userRepository;
+    @Autowired
+    private UserRepository _userRepository;
 
-	@Autowired
-	private TeamRepository _teamRepository;
+    @Autowired
+    private TeamRepository _teamRepository;
 
-	@Autowired
-	private TokenAuthenticationService _tokenAuthenticationService;
+    @Autowired
+    private TokenAuthenticationService _tokenAuthenticationService;
 
-	static boolean entitiesInjected = false;
+    static boolean entitiesInjected = false;
 
-	@Before
-	public void setUp() {
-		if (!entitiesInjected) {
-			mockMvc = webAppContextSetup(this.webApplicationContext).build();
+    @Before
+    public void setUp() {
+        if (!entitiesInjected) {
+            mockMvc = webAppContextSetup(this.webApplicationContext).build();
 
-			_dbInjecter.injectUser("TeamLeader");
-			_dbInjecter.injectUser("TeamMember");
+            _dbInjecter.injectUser("TeamLeader");
+            _dbInjecter.injectUser("TeamMember");
 
-			entitiesInjected = true;
-		}
-	}
+            entitiesInjected = true;
+        }
+    }
 
-	@Test
-	@Rollback(false)
-	public void testACreateTeam() throws Exception {
-		String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findByName("TeamLeader"));
-		Team team = new Team();
-		team.setTimeStamp(System.currentTimeMillis());
-		team.setName("new team");
+    @Test
+    @Rollback(false)
+    public void testACreateTeam() throws Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findByName("TeamLeader"));
+        Team team = new Team();
+        team.setTimeStamp(System.currentTimeMillis());
+        team.setName("new team");
 
-		mockMvc.perform(post(Uris.TEAM_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(team)).accept("application/json")
-				.header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk());
-	}
+        mockMvc.perform(
+                post(Uris.TEAM_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(team)).accept("application/json").header("X-AUTH-TOKEN", userToken))
+                .andExpect(status().isOk());
+    }
 
-	@Test
-	@Rollback(false)
-	public void testBCreateFailsCauseOfAlreadyExistingTeamName() throws Exception {
-		String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findByName("TeamLeader"));
-		Team team = new Team();
-		team.setTimeStamp(System.currentTimeMillis());
-		team.setName("new team");
+    @Test
+    @Rollback(false)
+    public void testBCreateFailsCauseOfAlreadyExistingTeamName() throws Exception {
+        String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findByName("TeamLeader"));
+        Team team = new Team();
+        team.setTimeStamp(System.currentTimeMillis());
+        team.setName("new team");
 
-		mockMvc.perform(post(Uris.TEAM_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(team)).accept("application/json")
-				.header("X-AUTH-TOKEN", userToken)).andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.errorInfos[0].errorCode").value("TEAM_NAME_ALREADY_EXISTS"));
-	}
+        mockMvc.perform(
+                post(Uris.TEAM_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(team)).accept("application/json").header("X-AUTH-TOKEN", userToken))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.errorInfos[0].errorCode").value("TEAM_NAME_ALREADY_EXISTS"));
+    }
 
-	@Test
-	public void testCCreateFailCauseOfMissingAuthentication() throws Exception {
-		String userToken = "wrong_user_token";
-		Team team = new Team();
-		team.setTimeStamp(System.currentTimeMillis());
-		team.setName("new team");
+    @Test
+    public void testCCreateFailCauseOfMissingAuthentication() throws Exception {
+        String userToken = "wrong_user_token";
+        Team team = new Team();
+        team.setTimeStamp(System.currentTimeMillis());
+        team.setName("new team");
 
-		mockMvc.perform(post(Uris.TEAM_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(team)).accept("application/json")
-				.header("X-AUTH-TOKEN", userToken)).andExpect(status().isForbidden());
+        mockMvc.perform(
+                post(Uris.TEAM_CREATE).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(team)).accept("application/json").header("X-AUTH-TOKEN", userToken))
+                .andExpect(status().isForbidden());
 
-	}
+    }
 
-	@Test
-	@Rollback(false)
-	public void testDJoinTeam() throws Exception {
-		User user = _userRepository.findByName("TeamMember");
-		String userToken = _tokenAuthenticationService.getTokenFromUser(user);
-		assertThat(user.getTeam()).isNull();
+    @Test
+    @Rollback(false)
+    public void testDJoinTeam() throws Exception {
+        User user = _userRepository.findByName("TeamMember");
+        String userToken = _tokenAuthenticationService.getTokenFromUser(user);
+        assertThat(user.getTeam()).isNull();
 
-		mockMvc.perform(post(Uris.TEAM_JOIN).contentType(TestUtil.APPLICATION_JSON_UTF8).param("teamId", "1")
-				.accept("application/json").header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk());
+        mockMvc.perform(post(Uris.TEAM_JOIN).contentType(TestUtil.APPLICATION_JSON_UTF8).param("teamId", "1").accept("application/json").header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk());
 
-		user = _userRepository.findByName("TeamMember");
-		assertThat(user.getTeam()).isNotNull();
-		assertThat(user.getTeam().getName()).isEqualTo("new team");
-	}
+        user = _userRepository.findByName("TeamMember");
+        assertThat(user.getTeam()).isNotNull();
+        assertThat(user.getTeam().getName()).isEqualTo("new team");
+    }
 
-	@Test
-	@Rollback(false)
-	public void testELeaveTeam() throws Exception {
-		User user = _userRepository.findByName("TeamMember");
-		String userToken = _tokenAuthenticationService.getTokenFromUser(user);
-		assertThat(user.getTeam()).isNotNull();
-		assertThat(user.getTeam().getName()).isEqualTo("new team");
+    @Test
+    @Rollback(false)
+    public void testELeaveTeam() throws Exception {
+        User user = _userRepository.findByName("TeamMember");
+        String userToken = _tokenAuthenticationService.getTokenFromUser(user);
+        assertThat(user.getTeam()).isNotNull();
+        assertThat(user.getTeam().getName()).isEqualTo("new team");
 
-		mockMvc.perform(post(Uris.TEAM_LEAVE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json")
-				.header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk());
+        mockMvc.perform(post(Uris.TEAM_LEAVE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json").header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk());
 
-		user = _userRepository.findByName("TeamMember");
-		assertThat(user.getTeam()).isNull();
-	}
+        user = _userRepository.findByName("TeamMember");
+        assertThat(user.getTeam()).isNull();
+    }
 
-	@Test
-	public void testFDeleteTeamErrorCauseNoAdmin() throws Exception {
-		User user = _userRepository.findByName("TeamMember");
-		String userToken = _tokenAuthenticationService.getTokenFromUser(user);
+    @Test
+    public void testFDeleteTeamErrorCauseNoAdmin() throws Exception {
+        User user = _userRepository.findByName("TeamMember");
+        String userToken = _tokenAuthenticationService.getTokenFromUser(user);
 
-		mockMvc.perform(delete(Uris.TEAM_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json")
-				.header("X-AUTH-TOKEN", userToken).param("teamId", "1")).andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.errorInfos[0].errorCode").value("NO_ADMIN_OF_TEAM"));
+        mockMvc.perform(delete(Uris.TEAM_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json").header("X-AUTH-TOKEN", userToken).param("teamId", "1"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.errorInfos[0].errorCode").value("NO_ADMIN_OF_TEAM"));
 
-	}
+    }
 
-	@Test
-	public void testGDeleteTeamErrorCauseTeamNotFound() throws Exception {
-		User user = _userRepository.findByName("TeamLeader");
-		String userToken = _tokenAuthenticationService.getTokenFromUser(user);
+    @Test
+    public void testGDeleteTeamErrorCauseTeamNotFound() throws Exception {
+        User user = _userRepository.findByName("TeamLeader");
+        String userToken = _tokenAuthenticationService.getTokenFromUser(user);
 
-		mockMvc.perform(delete(Uris.TEAM_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json")
-				.header("X-AUTH-TOKEN", userToken).param("teamId", "2")).andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.errorInfos[0].errorCode").value("TEAM_NOT_FOUND"));
+        mockMvc.perform(delete(Uris.TEAM_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json").header("X-AUTH-TOKEN", userToken).param("teamId", "2"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.errorInfos[0].errorCode").value("TEAM_NOT_FOUND"));
 
-	}
+    }
 
-	@Test
-	public void testHDeleteTeamSuccess() throws Exception {
-		User teamLeader = _userRepository.findByName("TeamLeader");
-		String userToken = _tokenAuthenticationService.getTokenFromUser(teamLeader);
+    @Test
+    public void testHDeleteTeamSuccess() throws Exception {
+        User teamLeader = _userRepository.findByName("TeamLeader");
+        String userToken = _tokenAuthenticationService.getTokenFromUser(teamLeader);
 
-		Team team = _teamRepository.findById(1L).orElse(null);
-		// set member of team
-		User teamMember = _userRepository.findByName("TeamMember");
-		teamMember.setTeam(team);
-		_userRepository.save(teamMember);
+        Team team = _teamRepository.findById(1L).orElse(null);
+        // set member of team
+        User teamMember = _userRepository.findByName("TeamMember");
+        teamMember.setTeam(team);
+        _userRepository.save(teamMember);
 
-		mockMvc.perform(delete(Uris.TEAM_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json")
-				.header("X-AUTH-TOKEN", userToken).param("teamId", "1")).andExpect(status().isOk());
-		
-		assertThat(_teamRepository.count()).isEqualTo(0);
-		teamMember = _userRepository.findByName("TeamMember");
-		assertThat(teamMember.getTeam()).isNull();
-	}
+        mockMvc.perform(delete(Uris.TEAM_DELETE).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json").header("X-AUTH-TOKEN", userToken).param("teamId", "1"))
+                .andExpect(status().isOk());
+
+        assertThat(_teamRepository.count()).isEqualTo(0);
+        teamMember = _userRepository.findByName("TeamMember");
+        assertThat(teamMember.getTeam()).isNull();
+    }
 
 }

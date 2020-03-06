@@ -47,11 +47,9 @@ public class SwitchCoverageTester {
         String sameHashForWeek = HashUtil.samehash("week", 1);
         String sameHashForYear = HashUtil.samehash("year", 1);
 
-        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", sameHashForWeek).accept("application/json"))
-                    .andExpect(status().isOk());
+        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", sameHashForWeek).accept("application/json")).andExpect(status().isOk());
 
-        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", sameHashForYear).accept("application/json"))
-                    .andExpect(status().isOk());
+        this.mockMvc.perform(get("/ranking/bestUserFromTimeRange/{range}", sameHashForYear).accept("application/json")).andExpect(status().isOk());
     }
 
 }

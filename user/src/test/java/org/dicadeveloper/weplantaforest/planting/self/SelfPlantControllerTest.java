@@ -93,10 +93,8 @@ public class SelfPlantControllerTest {
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
 
-        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                          .header("X-AUTH-TOKEN", userToken)
-                                          .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
-               .andExpect(status().isOk());
+        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8).header("X-AUTH-TOKEN", userToken).content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
+                .andExpect(status().isOk());
 
         long timeNow = System.currentTimeMillis();
         assertThat(_treeRepository.count()).isEqualTo(1L);
@@ -109,10 +107,8 @@ public class SelfPlantControllerTest {
         assertThat(savedTree.getPlantedOn()).isEqualTo(timeOfPlanting);
         assertThat(savedTree.getSubmittedOn()).isStrictlyBetween(timeNow - 10000, timeNow + 10000);
         assertThat(savedTree.getDescription()).isEqualTo("I planted a tree by myself in my garden.");
-        assertThat(savedTree.getOwner()
-                            .getName()).isEqualTo("Adam");
-        assertThat(savedTree.getTreeType()
-                            .getName()).isEqualTo("wood");
+        assertThat(savedTree.getOwner().getName()).isEqualTo("Adam");
+        assertThat(savedTree.getTreeType().getName()).isEqualTo("wood");
 
     }
 
@@ -129,9 +125,7 @@ public class SelfPlantControllerTest {
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
 
-        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                          .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
-               .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(selfPlantData))).andExpect(status().isBadRequest());
 
         assertThat(_treeRepository.count()).isEqualTo(0);
     }
@@ -149,9 +143,7 @@ public class SelfPlantControllerTest {
         selfPlantData.setLongitude(1.0f);
         selfPlantData.setLatitude(2.0f);
 
-        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                          .content(TestUtil.convertObjectToJsonBytes(selfPlantData)))
-               .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/plantSelf").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(selfPlantData))).andExpect(status().isBadRequest());
         assertThat(_treeRepository.count()).isEqualTo(0);
     }
 }

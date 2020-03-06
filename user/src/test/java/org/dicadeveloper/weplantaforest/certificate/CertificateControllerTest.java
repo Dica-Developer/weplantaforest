@@ -101,14 +101,9 @@ public class CertificateControllerTest {
     @Test
     @Rollback(false)
     public void testGetTreeByCertificateId() throws Exception {
-        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumberForOneTree).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].id").value(1))
-               .andExpect(jsonPath("$.[0].amount").value(1))
-               .andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[0].treeType.name").value("wood"));
+        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumberForOneTree).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$.[0].amount").value(1)).andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
+                .andExpect(jsonPath("$.[0].owner.name").value("Adam")).andExpect(jsonPath("$.[0].treeType.name").value("wood"));
     }
 
     @Test
@@ -116,67 +111,34 @@ public class CertificateControllerTest {
     public void testGetTreeByCertificateIdWithHashInFront() throws Exception {
         certNumberForOneTree = "#" + certNumberForOneTree;
 
-        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumberForOneTree).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].id").value(1))
-               .andExpect(jsonPath("$.[0].amount").value(1))
-               .andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[0].treeType.name").value("wood"));
+        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumberForOneTree).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$.[0].amount").value(1)).andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
+                .andExpect(jsonPath("$.[0].owner.name").value("Adam")).andExpect(jsonPath("$.[0].treeType.name").value("wood"));
     }
 
     @Test
     @Rollback(false)
     public void testGetTreesByCertificateId() throws Exception {
-        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumberForThreeTrees).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].amount").value(1))
-               .andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[0].treeType.name").value("wood"))
-               .andExpect(jsonPath("$.[1].amount").value(2))
-               .andExpect(jsonPath("$.[1].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[1].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[1].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[1].treeType.name").value("doow"))
-               .andExpect(jsonPath("$.[2].amount").value(3))
-               .andExpect(jsonPath("$.[2].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[2].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[2].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[2].treeType.name").value("wodo"));
+        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumberForThreeTrees).accept("application/json")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].amount").value(1)).andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
+                .andExpect(jsonPath("$.[0].owner.name").value("Adam")).andExpect(jsonPath("$.[0].treeType.name").value("wood")).andExpect(jsonPath("$.[1].amount").value(2))
+                .andExpect(jsonPath("$.[1].submittedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[1].plantedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[1].owner.name").value("Adam"))
+                .andExpect(jsonPath("$.[1].treeType.name").value("doow")).andExpect(jsonPath("$.[2].amount").value(3)).andExpect(jsonPath("$.[2].submittedOn").value(timeOfPlanting))
+                .andExpect(jsonPath("$.[2].plantedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[2].owner.name").value("Adam")).andExpect(jsonPath("$.[2].treeType.name").value("wodo"));
     }
 
     @Test
     @Rollback(false)
     public void testGetTreesByCertificateIdWithMultipleCarts() throws Exception {
-        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumberForTwoCarts).accept("application/json"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].id").value(1))
-               .andExpect(jsonPath("$.[0].amount").value(1))
-               .andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[0].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[0].treeType.name").value("wood"))
-               .andExpect(jsonPath("$.[1].id").value(2))
-               .andExpect(jsonPath("$.[1].amount").value(1))
-               .andExpect(jsonPath("$.[1].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[1].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[1].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[1].treeType.name").value("wood"))
-               .andExpect(jsonPath("$.[2].id").value(3))
-               .andExpect(jsonPath("$.[2].amount").value(2))
-               .andExpect(jsonPath("$.[2].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[2].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[2].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[2].treeType.name").value("doow"))
-               .andExpect(jsonPath("$.[3].id").value(4))
-               .andExpect(jsonPath("$.[3].amount").value(3))
-               .andExpect(jsonPath("$.[3].submittedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[3].plantedOn").value(timeOfPlanting))
-               .andExpect(jsonPath("$.[3].owner.name").value("Adam"))
-               .andExpect(jsonPath("$.[3].treeType.name").value("wodo"));
+        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", certNumberForTwoCarts).accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$.[0].amount").value(1)).andExpect(jsonPath("$.[0].submittedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[0].plantedOn").value(timeOfPlanting))
+                .andExpect(jsonPath("$.[0].owner.name").value("Adam")).andExpect(jsonPath("$.[0].treeType.name").value("wood")).andExpect(jsonPath("$.[1].id").value(2))
+                .andExpect(jsonPath("$.[1].amount").value(1)).andExpect(jsonPath("$.[1].submittedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[1].plantedOn").value(timeOfPlanting))
+                .andExpect(jsonPath("$.[1].owner.name").value("Adam")).andExpect(jsonPath("$.[1].treeType.name").value("wood")).andExpect(jsonPath("$.[2].id").value(3))
+                .andExpect(jsonPath("$.[2].amount").value(2)).andExpect(jsonPath("$.[2].submittedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[2].plantedOn").value(timeOfPlanting))
+                .andExpect(jsonPath("$.[2].owner.name").value("Adam")).andExpect(jsonPath("$.[2].treeType.name").value("doow")).andExpect(jsonPath("$.[3].id").value(4))
+                .andExpect(jsonPath("$.[3].amount").value(3)).andExpect(jsonPath("$.[3].submittedOn").value(timeOfPlanting)).andExpect(jsonPath("$.[3].plantedOn").value(timeOfPlanting))
+                .andExpect(jsonPath("$.[3].owner.name").value("Adam")).andExpect(jsonPath("$.[3].treeType.name").value("wodo"));
     }
 
     @Test
@@ -184,19 +146,15 @@ public class CertificateControllerTest {
     public void testGetTreeByCertificateIdBadRequestCauseOfWrongNumber() throws Exception {
         String wrongCertNumber = "wrong cert number";
 
-        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", wrongCertNumber).accept("application/json"))
-               .andExpect(status().isBadRequest());
+        mockMvc.perform(get(Uris.CERTIFICATE_SEARCH + "{certificateNumber}", wrongCertNumber).accept("application/json")).andExpect(status().isBadRequest());
     }
 
     @Test
     @Rollback(false)
     public void testCreateCertificatePdf() throws Exception {
-        String certNumber = _certificateRepository.findById(1L).orElse(null)
-                                                  .getNumber();
+        String certNumber = _certificateRepository.findById(1L).orElse(null).getNumber();
 
-        mockMvc.perform(get(Uris.CERTIFICATE_PDF + certNumber).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                              .accept("application/pdf"))
-               .andExpect(status().isOk());
+        mockMvc.perform(get(Uris.CERTIFICATE_PDF + certNumber).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/pdf")).andExpect(status().isOk());
 
     }
 }

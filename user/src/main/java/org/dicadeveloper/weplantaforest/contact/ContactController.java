@@ -15,16 +15,16 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ContactController {
-	
-	protected final Log LOG = LogFactory.getLog(ContactController.class.getName());
-	
-	private @NonNull ContactService _contactService;
-	
-	@RequestMapping(value = Uris.CONTACT, method = RequestMethod.POST)
+
+    protected final Log LOG = LogFactory.getLog(ContactController.class.getName());
+
+    private @NonNull ContactService _contactService;
+
+    @RequestMapping(value = Uris.CONTACT, method = RequestMethod.POST)
     public ResponseEntity<?> sendContactMail(@RequestBody ContactDTO contactDTO) {
-		_contactService.sendContactMail(contactDTO);
+        _contactService.sendContactMail(contactDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

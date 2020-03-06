@@ -31,7 +31,7 @@ public class PdfCertificateView2 {
     private final static Font textFontForCircle = new Font(FontFamily.TIMES_ROMAN, 26, Font.ITALIC, BaseColor.WHITE);
 
     PdfHelper pdfHelper = new PdfHelper();
-    
+
     public void writePdfDataToOutputStream(OutputStream toWrite, final int treeCount, final String text, final String name, final String number, String imagePath) throws Exception {
         // create pdf
         final Document doc = new Document();
@@ -47,8 +47,8 @@ public class PdfCertificateView2 {
         doc.open();
 
         PdfContentByte cb = pdfWriter.getDirectContent();
-        PdfHelper.createHeaderBlock(cb,1,1);
-//        pdfHelper.createCertificateImage(cb, imagePath, 665f, 116f);
+        PdfHelper.createHeaderBlock(cb, 1, 1);
+        // pdfHelper.createCertificateImage(cb, imagePath, 665f, 116f);
         createTreeCountAndCustomTextBlock(cb, text, treeCount);
         createLawTextDateAndSignatureBlock(cb, number, date);
         pdfHelper.addLogo(cb, _imagePath, 262f, 20f);

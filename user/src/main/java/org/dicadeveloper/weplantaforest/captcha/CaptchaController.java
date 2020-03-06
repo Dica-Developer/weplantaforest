@@ -17,7 +17,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CaptchaController {
 
     protected final Log LOG = LogFactory.getLog(CaptchaController.class.getName());

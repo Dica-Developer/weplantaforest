@@ -78,32 +78,24 @@ public class PlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithOneArticleToTrue() {
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                           .createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A").build();
         try {
             _plantBagValidator.validatePlantBag(plantBag);
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("plantBag should be valid\nerrorCode:" + errorCode);
         }
     }
 
     @Test
     public void testValidatePlantPageDataWithTwoArticlesToTrue() {
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                           .createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
-                                           .createPlantItemAndAddToPlantBag(10, 100, "doow", "Project A")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(5, 100, "wood", "Project A")
+                .createPlantItemAndAddToPlantBag(10, 100, "doow", "Project A").build();
 
         try {
             _plantBagValidator.validatePlantBag(plantBag);
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("plantBag should be valid\nerrorCode:" + errorCode);
         }
     }
@@ -114,9 +106,7 @@ public class PlantBagValidatorTest {
         String treeType = "wood";
         Integer wantedToPlant = 11;
         Integer treesRemaining = 10;
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag(project)
-                                           .createPlantItemAndAddToPlantBag(wantedToPlant, 100, treeType, project)
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag(project).createPlantItemAndAddToPlantBag(wantedToPlant, 100, treeType, project).build();
         try {
             _plantBagValidator.validatePlantBag(plantBag);
         } catch (IpatException e) {
@@ -138,10 +128,8 @@ public class PlantBagValidatorTest {
         String treeType = "wood";
         Integer wantedToPlant = 11;
         Integer treesRemaining = 10;
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag(project)
-                                           .createPlantItemAndAddToPlantBag(5, 100, "doow", project)
-                                           .createPlantItemAndAddToPlantBag(wantedToPlant, 100, treeType, project)
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag(project).createPlantItemAndAddToPlantBag(5, 100, "doow", project)
+                .createPlantItemAndAddToPlantBag(wantedToPlant, 100, treeType, project).build();
 
         try {
             _plantBagValidator.validatePlantBag(plantBag);
@@ -163,13 +151,9 @@ public class PlantBagValidatorTest {
         Integer wantedToPlantB = 12;
         Integer wantedToPlantA = 15;
         Integer treesRemaining = 10;
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                           .initializeProjectDataAndAddToPlantBag("Project B")
-                                           .createPlantItemAndAddToPlantBag(15, 100, "wood", "Project A")
-                                           .createPlantItemAndAddToPlantBag(5, 100, "doow", "Project B")
-                                           .createPlantItemAndAddToPlantBag(6, 100, "wood", "Project B")
-                                           .createPlantItemAndAddToPlantBag(wantedToPlantB, 100, "doow", "Project B")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").initializeProjectDataAndAddToPlantBag("Project B")
+                .createPlantItemAndAddToPlantBag(15, 100, "wood", "Project A").createPlantItemAndAddToPlantBag(5, 100, "doow", "Project B").createPlantItemAndAddToPlantBag(6, 100, "wood", "Project B")
+                .createPlantItemAndAddToPlantBag(wantedToPlantB, 100, "doow", "Project B").build();
 
         try {
             _plantBagValidator.validatePlantBag(plantBag);
@@ -198,16 +182,12 @@ public class PlantBagValidatorTest {
     public void testValidatePlantPageDataWithOneArticleAndAlreadyPlantedTreesToTrue() {
         _dbInjecter.injectTreeToProject("wood", "Adam", 6, timeOfPlanting, "Project A");
 
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                           .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project A")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(4, 100, "wood", "Project A").build();
 
         try {
             _plantBagValidator.validatePlantBag(plantBag);
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("plantBag should be valid\nerrorCode:" + errorCode);
         }
     }
@@ -219,9 +199,7 @@ public class PlantBagValidatorTest {
         Integer wantedToPlant = 4;
         Integer treesRemaining = 3;
 
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                           .createPlantItemAndAddToPlantBag(wantedToPlant, 100, "wood", "Project A")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(wantedToPlant, 100, "wood", "Project A").build();
 
         try {
             _plantBagValidator.validatePlantBag(plantBag);
@@ -241,9 +219,7 @@ public class PlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithNonExistingProject() {
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project NonExisting")
-                                           .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project NonExisting")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project NonExisting").createPlantItemAndAddToPlantBag(4, 100, "wood", "Project NonExisting").build();
 
         try {
             _plantBagValidator.validatePlantBag(plantBag);
@@ -259,9 +235,7 @@ public class PlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithNonActiveProject() {
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project C")
-                                           .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project C")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project C").createPlantItemAndAddToPlantBag(4, 100, "wood", "Project C").build();
 
         try {
             _plantBagValidator.validatePlantBag(plantBag);
@@ -278,9 +252,7 @@ public class PlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithNonExistingArticle() {
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project D")
-                                           .createPlantItemAndAddToPlantBag(4, 100, "wood", "Project D")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project D").createPlantItemAndAddToPlantBag(4, 100, "wood", "Project D").build();
 
         try {
             _plantBagValidator.validatePlantBag(plantBag);

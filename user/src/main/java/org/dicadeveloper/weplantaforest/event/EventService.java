@@ -21,7 +21,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EventService {
 
     @NonNull
@@ -34,7 +34,7 @@ public class EventService {
     private TeamService _teamService;
 
     @Transactional
-    public void redeemEventCode(User recipient, String eventCode) throws IpatException{
+    public void redeemEventCode(User recipient, String eventCode) throws IpatException {
         Cart cartForEventCode = _cartRepository.findCartByCode(eventCode);
         Team team = null;
         if (null == cartForEventCode) {

@@ -33,7 +33,7 @@ public class Tree {
     @Id
     @GeneratedValue
     @Column(name = "_treeId")
-    @JsonView({Views.PlantedTree.class, Views.SelfPlantedTrees.class})
+    @JsonView({ Views.PlantedTree.class, Views.SelfPlantedTrees.class })
     private Long id;
 
     @Column(name = "_amount")
@@ -45,11 +45,11 @@ public class Tree {
     private String imagePath;
 
     @Column(name = "_longitude")
-    @JsonView({Views.PlantedTree.class, Views.SelfPlantedTrees.class})
+    @JsonView({ Views.PlantedTree.class, Views.SelfPlantedTrees.class })
     private Float longitude;
- 
+
     @Column(name = "_latitude")
-    @JsonView({Views.PlantedTree.class, Views.SelfPlantedTrees.class})
+    @JsonView({ Views.PlantedTree.class, Views.SelfPlantedTrees.class })
     private Float latitude;
 
     @Column(name = "_submittedOn")
@@ -60,7 +60,7 @@ public class Tree {
     @JsonView(Views.PlantedTree.class)
     private long plantedOn;
 
-    @Column(name ="_desc", columnDefinition = "TEXT")
+    @Column(name = "_desc", columnDefinition = "TEXT")
     @JsonView(Views.PlantedTree.class)
     private String description;
 

@@ -252,12 +252,12 @@ public class ProjectOfferHelperTest {
             assertEquals("Mail text isn't equal at line " + i + "!", createdList.get(i), compareList.get(i));
         }
     }
-    
-    @Test 
-    public void testCreateSubject(){
+
+    @Test
+    public void testCreateSubject() {
         String compareSubject = "[Projekt Angebot] Hans hans@wurst.de";
         String createdSubject = ProjectOfferHelper.createSubject("Hans", "hans@wurst.de");
-        
+
         assertThat(compareSubject).isEqualTo(createdSubject);
     }
 

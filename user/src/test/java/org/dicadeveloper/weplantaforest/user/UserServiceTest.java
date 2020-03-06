@@ -1,10 +1,10 @@
 package org.dicadeveloper.weplantaforest.user;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.fail;
 
 import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
@@ -32,13 +32,13 @@ public class UserServiceTest {
 
     @Autowired
     UserService _userService;
-    
+
     @Autowired
     private PasswordEncrypter _passwordEncrypter;
 
     @Autowired
     private DbInjecter _dbInjecter;
-    
+
     private static String userName = "User";
 
     @Test
@@ -51,9 +51,7 @@ public class UserServiceTest {
         try {
             _userService.registrateUser(userRegistrationData);
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.USER_ALREADY_EXISTS, e.getErrorInfos()
-                                                          .get(0)
-                                                          .getErrorCode());
+            assertEquals(ErrorCodes.USER_ALREADY_EXISTS, e.getErrorInfos().get(0).getErrorCode());
         }
         assertEquals(1, _userRepository.count());
     }
@@ -68,9 +66,7 @@ public class UserServiceTest {
         try {
             _userService.registrateUser(userRegistrationData);
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.INVALID_MAIL, e.getErrorInfos()
-                                                   .get(0)
-                                                   .getErrorCode());
+            assertEquals(ErrorCodes.INVALID_MAIL, e.getErrorInfos().get(0).getErrorCode());
         }
         assertEquals(1, _userRepository.count());
     }
@@ -85,9 +81,7 @@ public class UserServiceTest {
         try {
             _userService.registrateUser(userRegistrationData);
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.MAIL_ALREADY_EXISTS, e.getErrorInfos()
-                                                          .get(0)
-                                                          .getErrorCode());
+            assertEquals(ErrorCodes.MAIL_ALREADY_EXISTS, e.getErrorInfos().get(0).getErrorCode());
         }
         assertEquals(1, _userRepository.count());
     }
@@ -102,9 +96,7 @@ public class UserServiceTest {
         try {
             _userService.registrateUser(userRegistrationData);
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("user registration should not fail here\nerrorCode:" + errorCode);
         }
         assertEquals(2, _userRepository.count());
@@ -119,9 +111,7 @@ public class UserServiceTest {
         try {
             _userService.activateUser(2L, activationKey);
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.INVALID_ACTIVATION_KEY, e.getErrorInfos()
-                                                             .get(0)
-                                                             .getErrorCode());
+            assertEquals(ErrorCodes.INVALID_ACTIVATION_KEY, e.getErrorInfos().get(0).getErrorCode());
         }
         registratedUser = _userRepository.findByName(userName);
         assertEquals(false, registratedUser.isEnabled());
@@ -132,9 +122,7 @@ public class UserServiceTest {
         try {
             _userService.createPasswordResetMail(userName);
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.USER_NOT_ACTIVATED, e.getErrorInfos()
-                                                         .get(0)
-                                                         .getErrorCode());
+            assertEquals(ErrorCodes.USER_NOT_ACTIVATED, e.getErrorInfos().get(0).getErrorCode());
         }
     }
 
@@ -145,9 +133,7 @@ public class UserServiceTest {
         try {
             _userService.activateUser(2L, activationKey);
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("user registration should not fail here\nerrorCode:" + errorCode);
         }
         registratedUser = _userRepository.findByName(userName);
@@ -161,9 +147,7 @@ public class UserServiceTest {
         try {
             _userService.activateUser(2L, activationKey);
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.USER_ALREADY_ACTIVATED, e.getErrorInfos()
-                                                             .get(0)
-                                                             .getErrorCode());
+            assertEquals(ErrorCodes.USER_ALREADY_ACTIVATED, e.getErrorInfos().get(0).getErrorCode());
         }
         registratedUser = _userRepository.findByName(userName);
         assertEquals(true, registratedUser.isEnabled());
@@ -174,9 +158,7 @@ public class UserServiceTest {
         try {
             _userService.createPasswordResetMail(userName);
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("creating password reset mail should not fail here\nerrorCode:" + errorCode);
         }
     }
@@ -187,9 +169,7 @@ public class UserServiceTest {
         try {
             _userService.verifiyPasswordResetLink(2L, activationKey);
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.INVALID_ACTIVATION_KEY, e.getErrorInfos()
-                                                             .get(0)
-                                                             .getErrorCode());
+            assertEquals(ErrorCodes.INVALID_ACTIVATION_KEY, e.getErrorInfos().get(0).getErrorCode());
         }
     }
 
@@ -200,9 +180,7 @@ public class UserServiceTest {
         try {
             _userService.verifiyPasswordResetLink(2L, activationKey);
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("verify password reset link should not fail here\nerrorCode:" + errorCode);
         }
     }
@@ -213,9 +191,7 @@ public class UserServiceTest {
         try {
             _userService.resetPasswordForUser(2L, activationKey, "newPassword");
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.INVALID_ACTIVATION_KEY, e.getErrorInfos()
-                                                             .get(0)
-                                                             .getErrorCode());
+            assertEquals(ErrorCodes.INVALID_ACTIVATION_KEY, e.getErrorInfos().get(0).getErrorCode());
         }
     }
 
@@ -226,9 +202,7 @@ public class UserServiceTest {
         try {
             _userService.resetPasswordForUser(2L, activationKey, "newPassword");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("reset password should not fail here\nerrorCode:" + errorCode);
         }
 
@@ -242,9 +216,7 @@ public class UserServiceTest {
         try {
             user = _userService.createAnonymous();
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("creating anonymous should not fail here\nerrorCode:" + errorCode);
         }
         assertNotNull(user);
@@ -255,9 +227,7 @@ public class UserServiceTest {
         try {
             _userService.editUser(userName, "NAME", "Adam");
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.USER_ALREADY_EXISTS, e.getErrorInfos()
-                                                          .get(0)
-                                                          .getErrorCode());
+            assertEquals(ErrorCodes.USER_ALREADY_EXISTS, e.getErrorInfos().get(0).getErrorCode());
         }
     }
 
@@ -266,9 +236,7 @@ public class UserServiceTest {
         try {
             _userService.editUser(userName, "NAME", "Edited_User");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit username should not fail here\nerrorCode:" + errorCode);
         }
         userName = "Edited_User";
@@ -279,9 +247,7 @@ public class UserServiceTest {
         try {
             _userService.editUser(userName, "ABOUTME", "aboutme");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit aboutme should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
@@ -294,9 +260,7 @@ public class UserServiceTest {
         try {
             _userService.editUser(userName, "LOCATION", "location");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit location should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
@@ -309,9 +273,7 @@ public class UserServiceTest {
         try {
             _userService.editUser(userName, "ORGANISATION", "organisation");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit organisation should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
@@ -324,9 +286,7 @@ public class UserServiceTest {
         try {
             _userService.editUser(userName, "HOMEPAGE", "homepage");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit homepage should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
@@ -339,9 +299,7 @@ public class UserServiceTest {
         try {
             _userService.editUser(userName, "MAIL", "invalid_mail");
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.INVALID_MAIL, e.getErrorInfos()
-                                                   .get(0)
-                                                   .getErrorCode());
+            assertEquals(ErrorCodes.INVALID_MAIL, e.getErrorInfos().get(0).getErrorCode());
         }
     }
 
@@ -350,96 +308,84 @@ public class UserServiceTest {
         try {
             _userService.editUser(userName, "MAIL", "adam@iplantatree.de");
         } catch (IpatException e) {
-            assertEquals(ErrorCodes.MAIL_ALREADY_EXISTS, e.getErrorInfos()
-                                                          .get(0)
-                                                          .getErrorCode());
+            assertEquals(ErrorCodes.MAIL_ALREADY_EXISTS, e.getErrorInfos().get(0).getErrorCode());
         }
     }
-    
+
     @Test
     public void testOIeditUserEditMailSuccess() {
         try {
             _userService.editUser(userName, "MAIL", "edited_user@iplantatree.de");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit mail should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals("edited_user@iplantatree.de", editedUser.getMail());
     }
-    
+
     @Test
     public void testOJeditUserEditNewsletter() {
         try {
             _userService.editUser(userName, "NEWSLETTER", "JA");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit newsletter should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals(true, editedUser.isNewsletter());
     }
-    
+
     @Test
     public void testOKeditUserEditOrganizationType() {
         try {
             _userService.editUser(userName, "ORGANIZATION_TYPE", OrganizationType.COMMERCIAL.toString());
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit organiization type should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals(OrganizationType.COMMERCIAL, editedUser.getOrganizationType());
     }
-    
+
     @Test
     public void testOLeditUserEditLanguage() {
         try {
             _userService.editUser(userName, "LANGUAGE", Language.ENGLISH.toString());
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit language should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals(Language.ENGLISH, editedUser.getLang());
     }
-    
+
     @Test
     public void testOMeditPassword() {
         try {
             _userService.editUser(userName, "PASSWORD", "new_password");
         } catch (IpatException e) {
-            String errorCode = e.getErrorInfos()
-                                .get(0)
-                                .getErrorCode();
+            String errorCode = e.getErrorInfos().get(0).getErrorCode();
             fail("edit language should not fail here\nerrorCode:" + errorCode);
         }
         User editedUser = _userRepository.findById(2L).orElse(null);
         assertNotNull(editedUser);
         assertEquals(_passwordEncrypter.encryptPassword("new_password"), editedUser.getPassword());
     }
-    
+
     @Test
-    public void testPgetUserDetails(){
+    public void testPgetUserDetails() {
         _dbInjecter.injectTreeType("wood", "desc", 0.5);
         _dbInjecter.injectProject("Project", "Adam", "very n1 project", true, 0, 0);
         _dbInjecter.injectProjectArticle("wood", "Project", 3.0);
-        
+
         _dbInjecter.injectTreeToProject("wood", userName, 1, 900000L, "Project");
         _dbInjecter.injectTreeToProject("wood", "Adam", 2, 900000L, "Project");
-        
+
         UserReportData userData = _userService.getUserDetails(userName, true);
         assertEquals(userName, userData.getUserName());
         assertEquals(2, userData.getRank());
@@ -452,20 +398,20 @@ public class UserServiceTest {
         assertEquals("JA", userData.getNewsletter());
         assertEquals(OrganizationType.COMMERCIAL.getDescription(), userData.getOrganizationType());
         assertEquals(Language.ENGLISH, userData.getLang());
-        
+
     }
-    
+
     @Test
     public void testQAnonymizeUser() {
         _dbInjecter.injectUser("UserToAnonymize", "userToAnonymize@iplantatree.de");
-        
+
         User user = null;
         try {
             user = _userService.anonymizeUser("Adam");
         } catch (IpatException e) {
-            
+
         }
-        
+
         assertThat(user.getName(), containsString("Anonymous"));
         assertEquals(user.getMail(), "");
     }

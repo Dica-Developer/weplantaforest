@@ -1,4 +1,5 @@
 package org.dicadeveloper.weplantaforest.mainSliderImage;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,12 +15,12 @@ import lombok.Setter;
 @Setter
 @Table(name = "MainSliderImage")
 public class MainSliderImage {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_imageId")
     private Long imageId;
-    
+
     @Column(name = "_imageFileName")
     private String imageFileName;
 

@@ -85,28 +85,18 @@ public class CartRepositoryIntegrationTest {
 
         Cart savedCart = _cartRepository.findById(1L).orElse(null);
 
-        assertThat(savedCart.getCartItems()
-                            .size()).isEqualTo(1);
+        assertThat(savedCart.getCartItems().size()).isEqualTo(1);
 
-        assertThat(savedCart.getTrees()
-                            .size()).isEqualTo(1);
-        assertThat(savedCart.getCartItems()
-                            .get(0)
-                            .getCart()
-                            .getId()).isEqualTo(1L);
+        assertThat(savedCart.getTrees().size()).isEqualTo(1);
+        assertThat(savedCart.getCartItems().get(0).getCart().getId()).isEqualTo(1L);
 
-        CartItem cartItemInCart = savedCart.getCartItems()
-                                           .get(0);
+        CartItem cartItemInCart = savedCart.getCartItems().get(0);
         assertThat(cartItemInCart.getAmount()).isEqualTo(2);
-        assertThat(cartItemInCart.getBasePricePerPiece()
-                                 .doubleValue()).isEqualTo(1.0);
-        assertThat(cartItemInCart.getFundingPerPiece()
-                                 .doubleValue()).isEqualTo(0.0);
+        assertThat(cartItemInCart.getBasePricePerPiece().doubleValue()).isEqualTo(1.0);
+        assertThat(cartItemInCart.getFundingPerPiece().doubleValue()).isEqualTo(0.0);
         assertThat(cartItemInCart.getProjectArticleId()).isEqualTo(1);
-        assertThat(cartItemInCart.getScontoPerPiece()
-                                 .doubleValue()).isEqualTo(0.0);
-        assertThat(cartItemInCart.getTotalPrice()
-                                 .doubleValue()).isEqualTo(2.0);
+        assertThat(cartItemInCart.getScontoPerPiece().doubleValue()).isEqualTo(0.0);
+        assertThat(cartItemInCart.getTotalPrice().doubleValue()).isEqualTo(2.0);
     }
 
     @Test
@@ -143,8 +133,7 @@ public class CartRepositoryIntegrationTest {
         Cart savedCart = _cartRepository.findCartByCode(code.getCode());
 
         assertThat(savedCart).isNotNull();
-        assertThat(savedCart.getBuyer()
-                            .getName()).isEqualTo("Adam");
+        assertThat(savedCart.getBuyer().getName()).isEqualTo("Adam");
     }
 
     @Test

@@ -28,10 +28,7 @@ public class SimplePlantBag {
 
         if (null != getPlantItems()) {
             for (SimplePlantPageItem plantPageItem : getPlantItems()) {
-                if (plantPageItem.getTreeType()
-                                 .equals(plantItemToCheck.getTreeType())
-                        && plantPageItem.getProjectName()
-                                        .equals(plantItemToCheck.getProjectName())
+                if (plantPageItem.getTreeType().equals(plantItemToCheck.getTreeType()) && plantPageItem.getProjectName().equals(plantItemToCheck.getProjectName())
                         && plantPageItem.getTreePrice() == plantItemToCheck.getTreePrice()) {
                     contains = true;
                 }
@@ -56,10 +53,7 @@ public class SimplePlantBag {
     protected SimplePlantPageItem getPlantItem(SimplePlantPageItem plantItemToGet) {
         if (null != getPlantItems()) {
             for (SimplePlantPageItem plantPageItem : getPlantItems()) {
-                if (plantPageItem.getTreeType()
-                                 .equals(plantItemToGet.getTreeType())
-                        && plantPageItem.getProjectName()
-                                        .equals(plantItemToGet.getProjectName())
+                if (plantPageItem.getTreeType().equals(plantItemToGet.getTreeType()) && plantPageItem.getProjectName().equals(plantItemToGet.getProjectName())
                         && plantPageItem.getTreePrice() == plantItemToGet.getTreePrice()) {
                     return plantPageItem;
                 }
@@ -96,7 +90,7 @@ public class SimplePlantBag {
         long treePrice;
 
         String projectName;
-        
+
         String imageFile;
 
     }

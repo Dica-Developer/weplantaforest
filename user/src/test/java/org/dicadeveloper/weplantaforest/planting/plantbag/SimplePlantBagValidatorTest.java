@@ -69,8 +69,7 @@ public class SimplePlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithOneArticleToTrue() {
-        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(5, 100, "wood", "Project A")
-                                                 .build();
+        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(5, 100, "wood", "Project A").build();
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantBag);
 
@@ -79,9 +78,8 @@ public class SimplePlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithTwoArticlesToTrue() {
-        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(5, 100, "wood", "Project A")
-                                                 .createSimplePlantItemAndAddToSimplePlantBag(10, 100, "doow", "Project A")
-                                                 .build();
+        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(5, 100, "wood", "Project A").createSimplePlantItemAndAddToSimplePlantBag(10, 100, "doow", "Project A")
+                .build();
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantBag);
 
@@ -90,8 +88,7 @@ public class SimplePlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithOneArticleToFalse() {
-        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(11, 100, "wood", "Project A")
-                                                 .build();
+        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(11, 100, "wood", "Project A").build();
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantBag);
 
@@ -100,9 +97,8 @@ public class SimplePlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithTwoArticlesToFalse() {
-        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(5, 100, "wood", "Project A")
-                                                 .createSimplePlantItemAndAddToSimplePlantBag(11, 100, "wood", "Project A")
-                                                 .build();
+        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(5, 100, "wood", "Project A").createSimplePlantItemAndAddToSimplePlantBag(11, 100, "wood", "Project A")
+                .build();
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantBag);
 
@@ -111,10 +107,8 @@ public class SimplePlantBagValidatorTest {
 
     @Test
     public void testValidatePlantPageDataWithTwoProjectsAndTwoArticlesToFalse() {
-        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(5, 100, "wood", "Project A")
-                                                 .createSimplePlantItemAndAddToSimplePlantBag(6, 100, "wood", "Project A")
-                                                 .createSimplePlantItemAndAddToSimplePlantBag(12, 100, "wood", "Project A")
-                                                 .build();
+        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(5, 100, "wood", "Project A").createSimplePlantItemAndAddToSimplePlantBag(6, 100, "wood", "Project A")
+                .createSimplePlantItemAndAddToSimplePlantBag(12, 100, "wood", "Project A").build();
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantBag);
 
@@ -125,8 +119,7 @@ public class SimplePlantBagValidatorTest {
     public void testValidatePlantPageDataWithOneArticleAndAlreadyPlantedTreesToTrue() {
         _dbInjecter.injectTreeToProject("wood", "Adam", 6, timeOfPlanting, "Project A");
 
-        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(4, 100, "wood", "Project A")
-                                                 .build();
+        SimplePlantBag plantBag = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(4, 100, "wood", "Project A").build();
 
         boolean validation = _simplePlantPageDataValidator.isPlantPageDataValid(plantBag);
 

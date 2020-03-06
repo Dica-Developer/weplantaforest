@@ -18,13 +18,13 @@ import lombok.NonNull;
 public class TokenAuthenticationService {
 
     private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
-    
+
     private final static String ANONYMOUS_TOKEN = "anonym-user";
 
     private static final String USERNAME_HEADER_NAME = "X-AUTH-USERNAME";
 
     private final TokenHandler tokenHandler;
-    
+
     private @NonNull UserService _userHelper;
 
     @Autowired
@@ -57,15 +57,15 @@ public class TokenAuthenticationService {
         }
         return null;
     }
-    
+
     public User getBuyer(String userToken) throws IpatException {
-             User buyer = getUserFromToken(userToken);
-            if (buyer != null) {
-            } else if (userToken.equals(ANONYMOUS_TOKEN)) {
-                buyer = _userHelper.createAnonymous();
-            }
-            return buyer;
-        
+        User buyer = getUserFromToken(userToken);
+        if (buyer != null) {
+        } else if (userToken.equals(ANONYMOUS_TOKEN)) {
+            buyer = _userHelper.createAnonymous();
+        }
+        return buyer;
+
     }
 
     public String getTokenFromUser(User user) {
@@ -79,14 +79,12 @@ public class TokenAuthenticationService {
     public boolean isAuthenticatedUser(String userToken, String userName) {
         if (userToken != "") {
             final User user = tokenHandler.parseUserFromToken(userToken);
-            if (user != null && user.getName()
-                                    .equals(userName)) {
+            if (user != null && user.getName().equals(userName)) {
                 return true;
             }
         }
         return false;
     }
-    
 
     public boolean isAdmin(String userToken) {
         if (userToken != "") {

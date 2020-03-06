@@ -25,8 +25,8 @@ public class UserDetailsService implements org.springframework.security.core.use
         updateLastVisit(user);
         return user;
     }
-    
-    private void updateLastVisit(User user){
+
+    private void updateLastVisit(User user) {
         user.setLastVisit(System.currentTimeMillis());
         userRepo.save(user);
     }

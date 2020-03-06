@@ -107,74 +107,48 @@ public class SimplePlantPageControllerPostMethodTest {
     @Rollback(false)
     public void testDonateTreesSatusOk() throws Exception {
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
-        SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wood", "Project A")
-                                                      .build();
+        SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wood", "Project A").build();
 
-        mockMvc.perform(post(Uris.SIMPLE_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                  .header("X-AUTH-TOKEN", userToken)
-                                                  .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-               .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.SIMPLE_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8).header("X-AUTH-TOKEN", userToken).content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
         List<Cart> carts = _cartRepository.findCartsByUserId(1L);
 
-        assertThat(carts.get(0)
-                        .getTotalPrice()
-                        .doubleValue()).isEqualTo(9.0);
-        assertThat(carts.get(0)
-                        .getCartItems()
-                        .get(0)
-                        .getTree()
-                        .getProjectArticle()
-                        .getArticleId()).isEqualTo(1);
-        assertThat(carts.get(0)
-                        .getBuyer()
-                        .getName()).isEqualTo("Adam");
+        assertThat(carts.get(0).getTotalPrice().doubleValue()).isEqualTo(9.0);
+        assertThat(carts.get(0).getCartItems().get(0).getTree().getProjectArticle().getArticleId()).isEqualTo(1);
+        assertThat(carts.get(0).getBuyer().getName()).isEqualTo("Adam");
         assertThat(_treeRepository.count()).isEqualTo(1L);
 
         ProjectArticle projectArticle = _projectArticleRepository.findById(1L).orElse(null);
         long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
         assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
 
-        long createdTreeId = carts.get(0)
-                                  .getTrees()
-                                  .get(0)
-                                  .getId();
+        long createdTreeId = carts.get(0).getTrees().get(0).getId();
 
         Tree createdTree = _treeRepository.findById(createdTreeId).orElse(null);
         assertThat(createdTree.getAmount()).isEqualTo(3);
-        assertThat(createdTree.getOwner()
-                              .getName()).isEqualTo("Adam");
-        assertThat(createdTree.getProjectArticle()
-                              .getArticleId()).isEqualTo(1L);
+        assertThat(createdTree.getOwner().getName()).isEqualTo("Adam");
+        assertThat(createdTree.getProjectArticle().getArticleId()).isEqualTo(1L);
     }
 
     @Test
     @Rollback(false)
     public void testDonateTreesWithMultipleEntriesSatusOk() throws Exception {
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(2L).orElse(null));
-        SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wood", "Project A")
-                                                      .createSimplePlantItemAndAddToSimplePlantBag(3, 300, "doow", "Project A")
-                                                      .createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wodo", "Project A")
-                                                      .build();
+        SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wood", "Project A").createSimplePlantItemAndAddToSimplePlantBag(3, 300, "doow", "Project A")
+                .createSimplePlantItemAndAddToSimplePlantBag(3, 300, "wodo", "Project A").build();
 
-        mockMvc.perform(post(Uris.SIMPLE_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                  .header("X-AUTH-TOKEN", userToken)
-                                                  .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-               .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.SIMPLE_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8).header("X-AUTH-TOKEN", userToken).content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                .andExpect(status().isOk());
 
         assertThat(_cartRepository.count()).isEqualTo(1L);
 
         List<Cart> carts = _cartRepository.findCartsByUserId(2L);
 
-        assertThat(carts.get(0)
-                        .getTotalPrice()
-                        .doubleValue()).isEqualTo(27.0);
-        assertThat(carts.get(0)
-                        .getPlantArticleIds()).contains(1L, 2L, 3L);
-        assertThat(carts.get(0)
-                        .getBuyer()
-                        .getName()).isEqualTo("Bert");
+        assertThat(carts.get(0).getTotalPrice().doubleValue()).isEqualTo(27.0);
+        assertThat(carts.get(0).getPlantArticleIds()).contains(1L, 2L, 3L);
+        assertThat(carts.get(0).getBuyer().getName()).isEqualTo("Bert");
         assertThat(_treeRepository.count()).isEqualTo(3L);
 
         for (int i = 1; i <= 3; i++) {
@@ -182,27 +156,20 @@ public class SimplePlantPageControllerPostMethodTest {
             long amountOfTreesPlantedByProjectArticle = _treeRepository.countAlreadyPlantedTreesByProjectArticle(projectArticle);
             assertThat(amountOfTreesPlantedByProjectArticle).isEqualTo(3);
 
-            long createdTreeId = carts.get(0)
-                                      .getTrees()
-                                      .get(i - 1)
-                                      .getId();
+            long createdTreeId = carts.get(0).getTrees().get(i - 1).getId();
 
             Tree tree = _treeRepository.findById(createdTreeId).orElse(null);
-            assertThat(tree.getOwner()
-                           .getName()).isEqualTo("Bert");
+            assertThat(tree.getOwner().getName()).isEqualTo("Bert");
         }
     }
 
     @Test
     public void testDonateTreesSatusBadRequest() throws Exception {
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
-        SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(11, 300, "wood", "Project A")
-                                                      .build();
+        SimplePlantBag plantPageData = plantBagBuilder.createSimplePlantItemAndAddToSimplePlantBag(11, 300, "wood", "Project A").build();
 
-        mockMvc.perform(post(Uris.SIMPLE_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                  .header("X-AUTH-TOKEN", userToken)
-                                                  .content(TestUtil.convertObjectToJsonBytes(plantPageData)))
-               .andExpect(status().isBadRequest());
+        mockMvc.perform(post(Uris.SIMPLE_DONATION).contentType(TestUtil.APPLICATION_JSON_UTF8).header("X-AUTH-TOKEN", userToken).content(TestUtil.convertObjectToJsonBytes(plantPageData)))
+                .andExpect(status().isBadRequest());
 
         assertThat(_cartRepository.count()).isEqualTo(0);
 

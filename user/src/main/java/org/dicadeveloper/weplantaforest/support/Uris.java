@@ -15,15 +15,15 @@ public class Uris {
     public final static String SIMPLE_PROPOSAL_FOR_TREE = "/simplePlantProposalForTrees/";
 
     public final static String SIMPLE_PROPOSAL_FOR_TREE_AND_PROJECT = "/simplePlantProposalForTrees/project";
-    
+
     public final static String SIMPLE_DONATION = "/simpleDonateTrees";
 
     public final static String PLANT_SELF = "/plantSelf";
-    
+
     public final static String UPLOAD_SELF_PLANTED_TREE_IMAGE = "/plantSelf/upload";
-    
+
     public final static String PLANT_FOR_USER = "/plantForUser/";
-    
+
     public final static String VALIDATE_PLANTBAG = "/validatePlantBag";
 
     // Co2 report url
@@ -35,19 +35,18 @@ public class Uris {
     // project urls
 
     public final static String REPORT_ALL_PROJECTS = "/reports/allProjects";
-    
+
     public final static String REPORT_ACTIVE_PROJECTS = "/reports/activeProjects";
-    
+
     public final static String REPORT_INACTIVE_PROJECTS = "/reports/inActiveProjects";
 
     public final static String PROJECT_SEARCH_NAME = "/projects/search/name/";
 
     public final static String PROJECT_IMAGE = "/project/image/";
-    
-    public final static String PROJECT_ARTICLES = "/project/articles";
-        
-    public final static String PROJECTS_PAGED = "/projects/paged";
 
+    public final static String PROJECT_ARTICLES = "/project/articles";
+
+    public final static String PROJECTS_PAGED = "/projects/paged";
 
     // ranking urls
 
@@ -80,13 +79,13 @@ public class Uris {
     public final static String TREES = "/trees";
 
     public final static String TREES_BY_USER = "/trees/owner";
-    
+
     public final static String TREES_BY_TEAM = "/trees/team";
 
     public final static String TREES_BY_PROJECT = "/trees/project/";
-    
+
     public final static String TREE_IMAGE = "/tree/image/";
-    
+
     public final static String TREES_SELF_PLANTED = "/trees/selfPlanted";
 
     // certificates
@@ -94,17 +93,17 @@ public class Uris {
     public final static String CERTIFICATE_SEARCH = "/certificate/search/";
 
     public final static String CERTIFICATE_CREATE = "/certificate/create";
-    
+
     public final static String CERTIFICATE_PDF = "/certificate/pdf/";
-    
+
     public final static String CERTIFICATE_SUMMARY = "/certificate/summary/";
 
     // carts
 
     public final static String VERIFIFIED_CART_SHORT_VIEW = "/carts/search/short";
-    
+
     public final static String LAST_CART = "/carts/last";
-        
+
     // gifts
     public final static String GIFTS_BY_CONSIGNOR = "/gift/search/consignor";
 
@@ -131,13 +130,13 @@ public class Uris {
     public final static String LOGIN = "/login";
 
     // payment
-    
+
     public final static String PAY_PLANTBAG = "/pay";
-    
+
     public final static String VALIDATE_CC_DATA = "/validateCC";
-    
+
     public final static String SUBMIT_CC_PAYED_PLANTBAG = "/submitPlantBag";
-    
+
     public final static String SUBMIT_PAYPAL_PAYED_PLANTBAG = "/submitPaypalPlantBag";
 
     public final static String PAYMENT_SUCCESS = "/payment/success";
@@ -157,94 +156,92 @@ public class Uris {
     // user
 
     public final static String USER_IMAGE = "/user/image/";
-    
+
     public final static String USER_IMAGE_UPLOAD = "/user/image/upload";
-    
+
     public final static String USER_DETAILS = "/user";
-    
+
     public final static String EDIT_USER_DETAILS = "/user/edit";
-    
+
     public final static String REGISTRATE_USER = "/user/registrate";
-    
+
     public final static String USER_ACTIVATE = "/user/activation";
-    
+
     public final static String USER_LANGUAGE = "/user/language";
-    
+
     public final static String USER_PASSWORD_RESET_REQUEST = "/password_request";
-    
+
     public final static String USER_PASSWORD_RESET_VERIFIY_LINK = "/password_reset_verify";
-    
+
     public final static String USER_PASSWORD_RESET = "/password_reset";
-    
+
     public final static String IS_USER_ADMIN = "/isAdmin";
 
     public final static String ANONYMIZE = "/user/anonymize";
 
     // team
     public final static String TEAM_IMAGE = "/team/image/";
-    
+
     public final static String TEAM_IMAGE_UPLOAD = "/team/image/upload";
-    
+
     public final static String TEAM_DETAILS = "/team";
-    
+
     public final static String EDIT_TEAM_DETAILS = "/team/edit";
-    
+
     public final static String TEAM_MEMBER = "/team/member";
-    
+
     public final static String TEAM_CREATE = "/team/create";
-    
+
     public final static String TEAM_JOIN = "/team/join";
-    
+
     public final static String TEAM_LEAVE = "/team/leave";
-    
+
     public final static String TEAM_DELETE = "/team/delete";
-    
+
     public final static String TEAM_IS_ADMIN = "/team/isAdmin";
-    
+
     public final static String TEAM_IS_MEMBER = "/team/isMember";
 
     // treeType
-    
+
     public final static String TREETYPES = "/treeTypes";
 
     public final static String TREETYPE_IMAGE = "/treeType/image/";
-    
-    //captcha
-    
+
+    // captcha
+
     public final static String GENERATE_CAPTCHA = "/captcha/generate";
-    
-    
-    //banner
-    
+
+    // banner
+
     public final static String BANNER = "/banner";
-    
+
     public final static String BANNER_CODE = "/banner/code";
 
-    //widgets
-    
+    // widgets
+
     public final static String WIDGET = "/widget";
-    
+
     public final static String WIDGET_CODE = "/widget/code";
-    
-    //statistics
-    
+
+    // statistics
+
     public final static String TREE_STATISTIC_PER_MONTH = "/statistic/treesPerMonth";
 
     public final static String TREE_STATISTIC_PER_YEAR = "/statistic/treesPerYear";
-    
+
     public final static String TREE_STATISTIC_PER_ORGTYPE = "/statistic/treesPerOrgType";
 
     public final static String CO2_STATISTIC = "/statistic/co2";
 
-    //main slider images
-    
+    // main slider images
+
     public final static String MAIN_SLIDER_IMAGES = "/mainSliderImages";
-    
+
     public final static String MAIN_SLIDER_IMAGE = "/mainSliderImage/";
-    
-    //contact
-    
+
+    // contact
+
     public final static String CONTACT = "/contact";
 
-    
 }

@@ -30,7 +30,7 @@ public class SelfPlantDataToTreeConverterTest {
 
     @Autowired
     private SelfPlantDataToTreeConverter _selfPlantDataToTreeConverter;
-    
+
     @Autowired
     private UserRepository _userRepository;
 
@@ -42,7 +42,7 @@ public class SelfPlantDataToTreeConverterTest {
 
         SelfPlantData selfPlantData = new SelfPlantData();
 
-//        selfPlantData.setOwner("Adam");
+        // selfPlantData.setOwner("Adam");
         selfPlantData.setPlantedOn(plantedOn);
         selfPlantData.setAmount(10);
         selfPlantData.setTreeTypeId(1L);

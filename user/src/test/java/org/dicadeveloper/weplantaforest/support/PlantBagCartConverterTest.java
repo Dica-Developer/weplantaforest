@@ -73,27 +73,14 @@ public class PlantBagCartConverterTest {
     @Rollback(false)
     public void testConvertFromPlantPageDataToCartOneItem() {
         User buyer = _userRepository.findByName("Adam");
-        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                                .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
-                                                .build();
+        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A").build();
 
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer, CartState.INITIAL);
 
-        assertThat(cart.getTotalPrice()
-                       .doubleValue()).isEqualTo(9.0);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getTree()
-                       .getProjectArticle()
-                       .getArticleId()).isEqualTo(1L);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getTree()
-                       .getAmount()).isEqualTo(3);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getBasePricePerPiece()
-                       .doubleValue()).isEqualTo(3.0);
+        assertThat(cart.getTotalPrice().doubleValue()).isEqualTo(9.0);
+        assertThat(cart.getCartItems().get(0).getTree().getProjectArticle().getArticleId()).isEqualTo(1L);
+        assertThat(cart.getCartItems().get(0).getTree().getAmount()).isEqualTo(3);
+        assertThat(cart.getCartItems().get(0).getBasePricePerPiece().doubleValue()).isEqualTo(3.0);
     }
 
     @Test
@@ -101,41 +88,18 @@ public class PlantBagCartConverterTest {
     public void testConvertFromPlantPageDataToCartTwoItems() {
         User buyer = _userRepository.findByName("Adam");
 
-        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                                .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
-                                                .createPlantItemAndAddToPlantBag(1, 100, "doow", "Project A")
-                                                .build();
+        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
+                .createPlantItemAndAddToPlantBag(1, 100, "doow", "Project A").build();
 
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer, CartState.INITIAL);
 
-        assertThat(cart.getTotalPrice()
-                       .doubleValue()).isEqualTo(10.0);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getTree()
-                       .getAmount()).isIn(1, 3);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getBasePricePerPiece()
-                       .doubleValue()).isIn(1.0, 3.0);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getTree()
-                       .getProjectArticle()
-                       .getArticleId()).isIn(1L, 2L);
-        assertThat(cart.getCartItems()
-                       .get(1)
-                       .getTree()
-                       .getAmount()).isIn(1, 3);
-        assertThat(cart.getCartItems()
-                       .get(1)
-                       .getBasePricePerPiece()
-                       .doubleValue()).isIn(1.0, 3.0);
-        assertThat(cart.getCartItems()
-                       .get(1)
-                       .getTree()
-                       .getProjectArticle()
-                       .getArticleId()).isIn(1L, 2L);
+        assertThat(cart.getTotalPrice().doubleValue()).isEqualTo(10.0);
+        assertThat(cart.getCartItems().get(0).getTree().getAmount()).isIn(1, 3);
+        assertThat(cart.getCartItems().get(0).getBasePricePerPiece().doubleValue()).isIn(1.0, 3.0);
+        assertThat(cart.getCartItems().get(0).getTree().getProjectArticle().getArticleId()).isIn(1L, 2L);
+        assertThat(cart.getCartItems().get(1).getTree().getAmount()).isIn(1, 3);
+        assertThat(cart.getCartItems().get(1).getBasePricePerPiece().doubleValue()).isIn(1.0, 3.0);
+        assertThat(cart.getCartItems().get(1).getTree().getProjectArticle().getArticleId()).isIn(1L, 2L);
     }
 
     @Test
@@ -143,44 +107,19 @@ public class PlantBagCartConverterTest {
     public void testConvertFromPlantPageDataToCartThreeItemsOneWithZeroAmount() {
         User buyer = _userRepository.findByName("Adam");
 
-        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                                .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
-                                                .createPlantItemAndAddToPlantBag(1, 100, "doow", "Project A")
-                                                .createPlantItemAndAddToPlantBag(0, 100, "wodo", "Project A")
-                                                .build();
+        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
+                .createPlantItemAndAddToPlantBag(1, 100, "doow", "Project A").createPlantItemAndAddToPlantBag(0, 100, "wodo", "Project A").build();
 
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer, CartState.INITIAL);
 
-        assertThat(cart.getTotalPrice()
-                       .doubleValue()).isEqualTo(10.0);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getTree()
-                       .getAmount()).isIn(1, 3);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getBasePricePerPiece()
-                       .doubleValue()).isIn(1.0, 3.0);
-        assertThat(cart.getCartItems()
-                       .get(0)
-                       .getTree()
-                       .getProjectArticle()
-                       .getArticleId()).isIn(1L, 2L);
-        assertThat(cart.getCartItems()
-                       .get(1)
-                       .getTree()
-                       .getAmount()).isIn(1, 3);
-        assertThat(cart.getCartItems()
-                       .get(1)
-                       .getBasePricePerPiece()
-                       .doubleValue()).isIn(1.0, 3.0);
-        assertThat(cart.getCartItems()
-                       .get(1)
-                       .getTree()
-                       .getProjectArticle()
-                       .getArticleId()).isIn(1L, 2L);
-        assertThat(cart.getCartItems()
-                       .size()).isEqualTo(2);
+        assertThat(cart.getTotalPrice().doubleValue()).isEqualTo(10.0);
+        assertThat(cart.getCartItems().get(0).getTree().getAmount()).isIn(1, 3);
+        assertThat(cart.getCartItems().get(0).getBasePricePerPiece().doubleValue()).isIn(1.0, 3.0);
+        assertThat(cart.getCartItems().get(0).getTree().getProjectArticle().getArticleId()).isIn(1L, 2L);
+        assertThat(cart.getCartItems().get(1).getTree().getAmount()).isIn(1, 3);
+        assertThat(cart.getCartItems().get(1).getBasePricePerPiece().doubleValue()).isIn(1.0, 3.0);
+        assertThat(cart.getCartItems().get(1).getTree().getProjectArticle().getArticleId()).isIn(1L, 2L);
+        assertThat(cart.getCartItems().size()).isEqualTo(2);
     }
 
     @Test
@@ -188,9 +127,7 @@ public class PlantBagCartConverterTest {
     public void testSavetoDBAfterConversion() {
         User buyer = _userRepository.findByName("Adam");
 
-        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                                .createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A")
-                                                .build();
+        PlantBag plantPageData = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(3, 300, "wood", "Project A").build();
 
         Cart cart = _plantPageDataCartConverter.convertPlantPageDataToCart(plantPageData, buyer, CartState.INITIAL);
 

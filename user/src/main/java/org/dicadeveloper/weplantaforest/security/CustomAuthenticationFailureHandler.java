@@ -14,29 +14,27 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler{
-    
+public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
     private ObjectMapper objectMapper = new ObjectMapper();
-    
+
     private final static String ACCOUNT_LOCKED = "User account is locked";
 
     private final static String BAD_CREDENTIALS = "Bad credentials";
-    
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        
+
         Map<String, Object> data = new HashMap<>();
-        
-        if(exception.getMessage().equals(ACCOUNT_LOCKED)) {
-            data.put("reason", "LOCKED");            
-        }else if(exception.getMessage().equals(BAD_CREDENTIALS)) {
+
+        if (exception.getMessage().equals(ACCOUNT_LOCKED)) {
+            data.put("reason", "LOCKED");
+        } else if (exception.getMessage().equals(BAD_CREDENTIALS)) {
             data.put("reason", "BAD_CREDENTIALS");
         }
-        
-        
-        response.getOutputStream()
-        .println(objectMapper.writeValueAsString(data));
+
+        response.getOutputStream().println(objectMapper.writeValueAsString(data));
     }
 
 }

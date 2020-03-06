@@ -45,8 +45,7 @@ public class CertificateRepositoryIntegrationTest {
 
         Certificate savedCertificate = _certificateRepository.findByNumber("1-2-3");
 
-        assertThat(savedCertificate.getCreator()
-                                   .getName()).isEqualTo("Adam");
+        assertThat(savedCertificate.getCreator().getName()).isEqualTo("Adam");
         assertThat(savedCertificate.getText()).isEqualTo("Very happy to save the plaent");
         assertThat(savedCertificate.getNumber()).isEqualTo("1-2-3");
     }

@@ -92,17 +92,10 @@ public class RankingRepositoryIntegrationTest {
         assertThat(ruList).isNotNull();
         assertThat(ruList.getTotalElements()).isEqualTo(4);
         assertThat(ruList.getTotalPages()).isEqualTo(1);
-        assertThat(ruList.getContent()
-                         .size()).isEqualTo(4);
-        assertThat(ruList.getContent()
-                         .get(0)
-                         .getName()).isEqualTo("Adam");
-        assertThat(ruList.getContent()
-                         .get(0)
-                         .getAmount()).isEqualTo(100);
-        assertThat(ruList.getContent()
-                         .get(0)
-                         .getCo2Saved()).isEqualTo(50);
+        assertThat(ruList.getContent().size()).isEqualTo(4);
+        assertThat(ruList.getContent().get(0).getName()).isEqualTo("Adam");
+        assertThat(ruList.getContent().get(0).getAmount()).isEqualTo(100);
+        assertThat(ruList.getContent().get(0).getCo2Saved()).isEqualTo(50);
     }
 
     @Test
@@ -111,12 +104,9 @@ public class RankingRepositoryIntegrationTest {
 
         assertThat(ruList).isNotNull();
         assertThat(ruList.size()).isEqualTo(10);
-        assertThat(ruList.get(0)
-                         .getName()).isEqualTo("Adam");
-        assertThat(ruList.get(0)
-                         .getDate()).isEqualTo("01.01.1970");
-        assertThat(ruList.get(0)
-                         .getTime()).isEqualTo("00:01:30");
+        assertThat(ruList.get(0).getName()).isEqualTo("Adam");
+        assertThat(ruList.get(0).getDate()).isEqualTo("01.01.1970");
+        assertThat(ruList.get(0).getTime()).isEqualTo("00:01:30");
     }
 
     @Test
@@ -132,17 +122,10 @@ public class RankingRepositoryIntegrationTest {
         assertThat(privateList).isNotNull();
         assertThat(privateList.getTotalElements()).isEqualTo(2);
         assertThat(privateList.getTotalPages()).isEqualTo(1);
-        assertThat(privateList.getContent()
-                              .size()).isEqualTo(2);
-        assertThat(privateList.getContent()
-                              .get(0)
-                              .getName()).isEqualTo("Adam");
-        assertThat(privateList.getContent()
-                              .get(0)
-                              .getAmount()).isEqualTo(100);
-        assertThat(privateList.getContent()
-                              .get(0)
-                              .getCo2Saved()).isEqualTo(50);
+        assertThat(privateList.getContent().size()).isEqualTo(2);
+        assertThat(privateList.getContent().get(0).getName()).isEqualTo("Adam");
+        assertThat(privateList.getContent().get(0).getAmount()).isEqualTo(100);
+        assertThat(privateList.getContent().get(0).getCo2Saved()).isEqualTo(50);
     }
 
     @Test
@@ -164,12 +147,9 @@ public class RankingRepositoryIntegrationTest {
 
         assertThat(treeList).isNotNull();
         assertThat(treeList.getContent().size()).isEqualTo(10);
-        assertThat(treeList.getContent().get(0)
-                           .getName()).isEqualTo("Adam");
-        assertThat(treeList.getContent().get(0)
-                           .getAmount()).isEqualTo(9);
-        assertThat(treeList.getContent().get(0)
-                           .getPlantedOn()).isEqualTo(900000L);
+        assertThat(treeList.getContent().get(0).getName()).isEqualTo("Adam");
+        assertThat(treeList.getContent().get(0).getAmount()).isEqualTo(9);
+        assertThat(treeList.getContent().get(0).getPlantedOn()).isEqualTo(900000L);
     }
 
     @Test
@@ -187,17 +167,10 @@ public class RankingRepositoryIntegrationTest {
         assertThat(treeList).isNotNull();
         assertThat(treeList.getTotalElements()).isEqualTo(1);
         assertThat(treeList.getTotalPages()).isEqualTo(1);
-        assertThat(treeList.getContent()
-                           .size()).isEqualTo(1);
-        assertThat(treeList.getContent()
-                           .get(0)
-                           .getName()).isEqualTo("avengers");
-        assertThat(treeList.getContent()
-                           .get(0)
-                           .getAmount()).isEqualTo(180);
-        assertThat(treeList.getContent()
-                           .get(0)
-                           .getCo2Saved()).isEqualTo(90);
+        assertThat(treeList.getContent().size()).isEqualTo(1);
+        assertThat(treeList.getContent().get(0).getName()).isEqualTo("avengers");
+        assertThat(treeList.getContent().get(0).getAmount()).isEqualTo(180);
+        assertThat(treeList.getContent().get(0).getCo2Saved()).isEqualTo(90);
 
     }
 
@@ -218,27 +191,19 @@ public class RankingRepositoryIntegrationTest {
 
         assertThat(lastWeekList).isNotNull();
         assertThat(lastWeekList.size()).isEqualTo(2);
-        assertThat(lastWeekList.get(0)
-                               .getName()).isEqualTo("Adam");
-        assertThat(lastWeekList.get(0)
-                               .getAmount()).isEqualTo(3);
-        assertThat(lastWeekList.get(1)
-                               .getName()).isEqualTo("Bert");
-        assertThat(lastWeekList.get(1)
-                               .getAmount()).isEqualTo(2);
+        assertThat(lastWeekList.get(0).getName()).isEqualTo("Adam");
+        assertThat(lastWeekList.get(0).getAmount()).isEqualTo(3);
+        assertThat(lastWeekList.get(1).getName()).isEqualTo("Bert");
+        assertThat(lastWeekList.get(1).getAmount()).isEqualTo(2);
 
         List<TreeRankedUserData> lastYearList = _rankingRepository.getBestUserFromTimeRange(timeOfOneYearBefore, timeOfPlanting, PageRequest.of(0, 5));
 
         assertThat(lastYearList).isNotNull();
         assertThat(lastYearList.size()).isEqualTo(3);
-        assertThat(lastYearList.get(0)
-                               .getName()).isEqualTo("Adam");
-        assertThat(lastYearList.get(0)
-                               .getAmount()).isEqualTo(4);
-        assertThat(lastYearList.get(1)
-                               .getName()).isEqualTo("Bert");
-        assertThat(lastYearList.get(1)
-                               .getAmount()).isEqualTo(2);
+        assertThat(lastYearList.get(0).getName()).isEqualTo("Adam");
+        assertThat(lastYearList.get(0).getAmount()).isEqualTo(4);
+        assertThat(lastYearList.get(1).getName()).isEqualTo("Bert");
+        assertThat(lastYearList.get(1).getAmount()).isEqualTo(2);
 
     }
 

@@ -35,7 +35,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     protected final Log LOG = LogFactory.getLog(UserController.class.getName());
@@ -124,8 +124,7 @@ public class UserController {
 
     @RequestMapping(value = Uris.USER_LANGUAGE, method = RequestMethod.GET)
     public String getLanguageFromUser(@RequestParam String userName) {
-        return _userRepository.getUserLanguage(userName)
-                              .toString();
+        return _userRepository.getUserLanguage(userName).toString();
     }
 
     @RequestMapping(value = Uris.USER_PASSWORD_RESET_REQUEST, method = RequestMethod.POST)

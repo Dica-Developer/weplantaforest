@@ -36,15 +36,15 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProjectReportController {
 
     protected final Log LOG = LogFactory.getLog(ProjectReportController.class.getName());
 
     private @NonNull ProjectReportRepository _projectReportRepository;
-    
+
     private @NonNull ProjectRepository _projectRepository;
-    
+
     private @NonNull ProjectImageRepository _projectImageRepository;
 
     private @NonNull ProjectArticleRepository _projectArticleRepository;
@@ -58,8 +58,7 @@ public class ProjectReportController {
         Page<ProjectReportData> projectReports = _projectReportRepository.getAllProjects(PageRequest.of(page, size));
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
-    
-    
+
     @RequestMapping(value = Uris.PROJECTS_PAGED, method = RequestMethod.GET)
     @JsonView(Views.ProjectDetails.class)
     public ResponseEntity<?> getAllProjectsPaged(@Param(value = "page") int page, @Param(value = "size") int size) {
@@ -70,7 +69,6 @@ public class ProjectReportController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
     public ResponseEntity<?> getActiveProjects() {
@@ -105,8 +103,7 @@ public class ProjectReportController {
     }
 
     @RequestMapping(value = Uris.PROJECT_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
-    public ResponseEntity<?> getProjectImage(HttpServletResponse response, @PathVariable(value = "imageName") String imageName,
-            @PathVariable int width, @PathVariable int height) {
+    public ResponseEntity<?> getProjectImage(HttpServletResponse response, @PathVariable(value = "imageName") String imageName, @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getImageFolderForProjects() + "/" + imageName;
         try {
             _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);

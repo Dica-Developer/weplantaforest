@@ -15,55 +15,55 @@ public class UserReportData {
 
     @NonNull
     String userName;
-    
+
     @NonNull
     String imageFileName;
-    
+
     @NonNull
     String mail;
-    
+
     @NonNull
     Long regDate;
-    
+
     @NonNull
     Long lastVisit;
-    
+
     @NonNull
     OrganizationType organizationType;
-    
+
     @NonNull
     String teamName;
-    
+
     @NonNull
     String aboutMe;
-    
+
     @NonNull
     String location;
-    
+
     @NonNull
     String organisation;
-    
+
     @NonNull
     String homepage;
-    
+
     @NonNull
     Language lang;
-    
+
     @NonNull
     Boolean newsletter;
-    
-    public String getOrganizationType(){
+
+    public String getOrganizationType() {
         return organizationType.getDescription();
     }
-    
-    public String getNewsletter(){
+
+    public String getNewsletter() {
         return newsletter ? "JA" : "NEIN";
     }
-    
+
     long rank;
 
     Co2Data co2Data;
-    
+
     boolean isEditAllowed;
 
 }

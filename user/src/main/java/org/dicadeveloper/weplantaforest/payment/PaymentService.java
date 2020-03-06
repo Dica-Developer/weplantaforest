@@ -32,22 +32,22 @@ public class PaymentService {
     private @NonNull GiftRepository _giftRepository;
 
     private @NonNull MessageByLocaleService _messageByLocaleService;
-    
+
     private @NonNull MailHelper _mailHelper;
 
     public void payPlantBag(PaymentData paymentData) throws IpatException {
         switch (paymentData.getPaymentMethod()) {
-        case "SEPA":
-            payViaSepa(paymentData);
-            break;
-        case "PP":
-            submitPaypalOrCreditCardPayedPlantbag(paymentData);
-            break;
-        case "KK":
-            submitPaypalOrCreditCardPayedPlantbag(paymentData);
-            break;
-        default:
-            break;
+            case "SEPA":
+                payViaSepa(paymentData);
+                break;
+            case "PP":
+                submitPaypalOrCreditCardPayedPlantbag(paymentData);
+                break;
+            case "KK":
+                submitPaypalOrCreditCardPayedPlantbag(paymentData);
+                break;
+            default:
+                break;
         }
     }
 
@@ -83,7 +83,7 @@ public class PaymentService {
             _giftRepository.save(giftToSubmit);
         }
     }
-    
+
     private void sendPaymentConfirmationMail(User user) {
         new Thread(new Runnable() {
             public void run() {

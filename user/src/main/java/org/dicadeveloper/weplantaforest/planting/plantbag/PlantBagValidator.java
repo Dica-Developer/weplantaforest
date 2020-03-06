@@ -23,8 +23,7 @@ public class PlantBagValidator extends AbstractPlantBagValidator {
     }
 
     public void validatePlantBag(PlantBag plantBag) throws IpatException {
-        Set<String> projectNames = plantBag.getProjects()
-                                           .keySet();
+        Set<String> projectNames = plantBag.getProjects().keySet();
         checkProjects(plantBag, projectNames);
         if (errorInfos.size() > 0) {
             List<IpatErrorInfo> returnedErrors = this.errorInfos;
@@ -47,10 +46,7 @@ public class PlantBagValidator extends AbstractPlantBagValidator {
     }
 
     private void checkArticles(PlantBag plantBag, String projectName) {
-        Set<String> articleNames = plantBag.getProjects()
-                                           .get(projectName)
-                                           .getPlantItems()
-                                           .keySet();
+        Set<String> articleNames = plantBag.getProjects().get(projectName).getPlantItems().keySet();
         for (String articleName : articleNames) {
             checkArticle(plantBag, projectName, articleName);
         }
@@ -59,11 +55,7 @@ public class PlantBagValidator extends AbstractPlantBagValidator {
     private void checkArticle(PlantBag plantBag, String projectName, String articleName) {
         ProjectArticle article = articleExistsTemp(projectName, articleName);
         if (article != null) {
-            Long wantedToPlant = (long) plantBag.getProjects()
-                                                .get(projectName)
-                                                .getPlantItems()
-                                                .get(articleName)
-                                                .getAmount();
+            Long wantedToPlant = (long) plantBag.getProjects().get(projectName).getPlantItems().get(articleName).getAmount();
             areThereEnoughTreesRemainingForThisArticleTemp(article, wantedToPlant, projectName, articleName);
         }
     }

@@ -15,7 +15,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CertificateService {
 
     private @NonNull MessageByLocaleService _messageByLocaleService;
@@ -25,18 +25,13 @@ public class CertificateService {
     public void generatePdf(Certificate certificate, HttpServletResponse response, String certificateNumber) throws Exception {
         PdfCertificateView pdf = new PdfCertificateView();
         Integer treeCount = calcTreeCount(certificate);
-        Map<String, String> pdfTexts = generateTextMap(certificate.getCreator()
-                                                                  .getLang()
-                                                                  .getLocale());
+        Map<String, String> pdfTexts = generateTextMap(certificate.getCreator().getLang().getLocale());
         pdfTexts.put("treeCount", treeCount.toString());
         pdfTexts.put("certificateText", certificate.getText());
-        pdfTexts.put("creatorName", certificate.getCreator()
-                                               .getName());
+        pdfTexts.put("creatorName", certificate.getCreator().getName());
         pdfTexts.put("certificateNumber", certificateNumber);
         try {
-            pdf.writePdfDataToOutputStream(response.getOutputStream(), pdfTexts, RELATIVE_STATIC_IMAGES_PATH, certificate.getCreator()
-                                                                                                                         .getLang()
-                                                                                                                         .getShortName());
+            pdf.writePdfDataToOutputStream(response.getOutputStream(), pdfTexts, RELATIVE_STATIC_IMAGES_PATH, certificate.getCreator().getLang().getShortName());
         } catch (Exception e) {
             throw e;
         }

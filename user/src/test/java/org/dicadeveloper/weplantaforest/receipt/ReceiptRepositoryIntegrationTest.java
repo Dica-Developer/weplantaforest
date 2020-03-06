@@ -15,33 +15,30 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest({ "spring.profiles.active=test" })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ReceiptRepositoryIntegrationTest {
 
-    
     @Rule
     @Autowired
     public CleanDbRule _cleanDbRule;
 
     @Autowired
     public DbInjecter _dbInjecter;
-    
+
     @Autowired
     private ReceiptRepository _receiptRepository;
-    
-    
+
     @Test
-    public void testGetReceiptsByOwnerId(){
+    public void testGetReceiptsByOwnerId() {
         long createAndSentDate = System.currentTimeMillis();
 
         _dbInjecter.injectUser("Adam");
         _dbInjecter.injectReceipt("Adam", createAndSentDate, createAndSentDate, "12345");
-        
+
         List<Receipt> receipts = _receiptRepository.findByOwnerId(1L);
-        
+
         assertThat(receipts.size()).isEqualTo(1);
     }
 }

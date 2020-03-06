@@ -28,7 +28,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BannerAndWidgetController {
 
     protected final Log LOG = LogFactory.getLog(BannerAndWidgetController.class.getName());

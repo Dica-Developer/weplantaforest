@@ -124,7 +124,7 @@ public class GiftService {
         }
     }
 
-    private Map<String, String> generateTextMap(Locale locale) {        
+    private Map<String, String> generateTextMap(Locale locale) {
         Map<String, String> textMap = new HashMap<String, String>();
         textMap.put("gift.gift", _messageByLocaleService.getMessage("gift.gift", locale));
         textMap.put("gift.planted_tree", _messageByLocaleService.getMessage("gift.planted_tree", locale));

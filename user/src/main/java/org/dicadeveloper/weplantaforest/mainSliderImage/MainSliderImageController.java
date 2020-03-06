@@ -21,11 +21,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MainSliderImageController {
 
     protected final Log LOG = LogFactory.getLog(MainSliderImageController.class.getName());
-    
+
     @Autowired
     private @NonNull ImageHelper _imageHelper;
 
@@ -36,7 +36,7 @@ public class MainSliderImageController {
     public Iterable<MainSliderImage> getSliderImageEntities() {
         return _mainSliderImageRepository.findAll();
     }
-    
+
     @RequestMapping(value = Uris.MAIN_SLIDER_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getMainImageFolder() + "/" + imageName;

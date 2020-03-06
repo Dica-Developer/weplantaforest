@@ -24,7 +24,7 @@ public class UserRegistrationData {
 
     @NonNull
     private String orgType;
-    
+
     @NonNull
     private String language;
 

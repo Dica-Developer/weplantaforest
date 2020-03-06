@@ -21,7 +21,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 // queries from StatisticsRepository run only on mysql, not on h2, so the
 // belonging controller is also excluded from this profile
 // @Profile({ "!h2", "!test" })
@@ -36,8 +36,7 @@ public class StatisticsController {
         List<TreeAmountStatisticData> orderedList = new ArrayList<>();
         for (Integer i = 1; i <= 12; i++) {
             for (TreeAmountStatisticData entry : treeStatistic) {
-                if (entry.getLabel()
-                         .equals(i.toString())) {
+                if (entry.getLabel().equals(i.toString())) {
                     orderedList.add(entry);
                 }
             }
@@ -55,8 +54,7 @@ public class StatisticsController {
 
         for (Integer i = 2007; i <= 2007 + years; i++) {
             for (TreeAmountStatisticData entry : treeStatistic) {
-                if (entry.getLabel()
-                         .equals(i.toString())) {
+                if (entry.getLabel().equals(i.toString())) {
                     orderedList.add(entry);
                 }
             }
@@ -81,8 +79,7 @@ public class StatisticsController {
         for (Integer i = 2007; i <= 2007 + years; i++) {
             double amountOfCo2TillThisYear = 0;
             for (Co2StatisticData entry : co2Statistic) {
-                if (entry.getLabel()
-                         .equals(i.toString())) {
+                if (entry.getLabel().equals(i.toString())) {
                     for (TreeAmountStatisticData treeData : treeStatistic) {
                         int year = Integer.valueOf(treeData.getLabel());
                         if (i > year) {

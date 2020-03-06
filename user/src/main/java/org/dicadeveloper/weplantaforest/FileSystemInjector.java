@@ -66,7 +66,7 @@ public class FileSystemInjector {
     public static String getTreeFolder() {
         return topFolder + UPLOAD_DIR + IMAGE_DIR + TREE_DIR;
     }
-    
+
     public static String getMainImageFolder() {
         return topFolder + UPLOAD_DIR + IMAGE_DIR + MAIN_IMAGE_DIR;
     }

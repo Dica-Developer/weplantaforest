@@ -29,7 +29,7 @@ public class ScheduledTasks {
     private static final Log LOG = LogFactory.getLog(ScheduledTasks.class.getName());
 
     private final static long A_HALF_HOUR_IN_MILLISECONDS = 30 * 60 * 1000;
-    
+
     private final static long DAY_IN_MILLISECONDS = 86400000;
 
     @Autowired
@@ -40,16 +40,16 @@ public class ScheduledTasks {
 
     @Autowired
     private @NonNull CodeRepository _codeRepostiory;
-    
+
     @Autowired
     private @NonNull CartService _cartService;
-    
+
     @Autowired
     private @NonNull ReceiptRepository _receiptRepository;
-    
+
     @Autowired
     private @NonNull ReceiptService _receiptService;
-    
+
     @Autowired
     private @NonNull Environment _env;
 
@@ -70,19 +70,20 @@ public class ScheduledTasks {
         _cartRepository.deleteAll(carts);
         LOG.info("deleted initial carts(" + carts.size() + ") and their trees");
     }
-    
+
     @Scheduled(fixedRate = DAY_IN_MILLISECONDS)
     private void checkCartsForReceipts() {
         boolean sendMails = "true".equalsIgnoreCase(_env.getProperty("send.mails"));
         List<Cart> carts = _cartRepository.findReceiptableCarts();
-        
-        if(carts != null && carts.size() > 0) {
+
+        if (carts != null && carts.size() > 0) {
             Map<String, List<Cart>> userCartMap = _cartService.groupCartsByUser(carts);
-            for(String userName: userCartMap.keySet()) {
+            for (String userName : userCartMap.keySet()) {
                 User owner = userCartMap.get(userName).get(0).getBuyer();
                 int currentYear = Calendar.getInstance().get(Calendar.YEAR);
                 Receipt receipt = new Receipt();
-                //this save is to get the id, which is needed to create the invoiceNumber
+                // this save is to get the id, which is needed to create the
+                // invoiceNumber
                 _receiptRepository.save(receipt);
                 receipt.setOwner(owner);
                 receipt.setInvoiceNumber(receipt.getReceiptId() + "/" + currentYear);

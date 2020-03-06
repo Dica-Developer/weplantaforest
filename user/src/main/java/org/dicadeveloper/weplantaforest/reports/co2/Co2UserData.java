@@ -9,6 +9,5 @@ public class Co2UserData {
     private Long treesCount;
 
     private Double co2;
-    
-    
+
 }

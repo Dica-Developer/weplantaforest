@@ -17,9 +17,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class WeplantaforestApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(WeplantaforestApplication.class, args);      
+        SpringApplication.run(WeplantaforestApplication.class, args);
     }
-    
+
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile({"h2"})
+@Profile({ "h2" })
 public class H2ConsoleConfig {
     @Bean
-    ServletRegistrationBean h2servletRegistration(){
-          
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+    ServletRegistrationBean h2servletRegistration() {
+
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
         registrationBean.addUrlMappings("/h2/*");
         return registrationBean;
     }

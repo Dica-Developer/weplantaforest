@@ -71,8 +71,8 @@ public class GiftRepositoryIntegrationTest {
 
     }
 
-    
-    //Test will be ignored: The DbINjecter has to be extended by creating also carts to the injected codes
+    // Test will be ignored: The DbINjecter has to be extended by creating also
+    // carts to the injected codes
 
     @Test
     @Ignore

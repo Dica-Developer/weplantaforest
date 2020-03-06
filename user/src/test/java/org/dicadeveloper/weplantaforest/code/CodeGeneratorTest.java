@@ -56,11 +56,9 @@ public class CodeGeneratorTest {
 
         assertThat(_giftRepository.count()).isEqualTo(1);
         assertThat(savedGiftWithCode.getCode()).isNotNull();
-        assertThat(savedGiftWithCode.getCode()
-                                    .getCode()).isNotNull();
+        assertThat(savedGiftWithCode.getCode().getCode()).isNotNull();
 
-        assertThat(_codegenerator.isValid(savedGiftWithCode.getCode()
-                                                           .getCode())).isTrue();
+        assertThat(_codegenerator.isValid(savedGiftWithCode.getCode().getCode())).isTrue();
     }
 
     @Test
@@ -76,11 +74,9 @@ public class CodeGeneratorTest {
 
         assertThat(_giftRepository.count()).isEqualTo(1);
         assertThat(savedGiftWithCode.getCode()).isNotNull();
-        assertThat(savedGiftWithCode.getCode()
-                                    .getCode()).isNotNull();
+        assertThat(savedGiftWithCode.getCode().getCode()).isNotNull();
 
-        assertThat(_codegenerator.isValid(savedGiftWithCode.getCode()
-                                                           .getCode())).isTrue();
+        assertThat(_codegenerator.isValid(savedGiftWithCode.getCode().getCode())).isTrue();
     }
 
     @Test
@@ -99,17 +95,11 @@ public class CodeGeneratorTest {
         Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(savedEventWithCode.getCodes()
-                                     .size()).isEqualTo(1);
-        assertThat(savedEventWithCode.getCodes()
-                                     .get(0)).isNotNull();
-        assertThat(savedEventWithCode.getCodes()
-                                     .get(0)
-                                     .getCode()).isNotNull();
+        assertThat(savedEventWithCode.getCodes().size()).isEqualTo(1);
+        assertThat(savedEventWithCode.getCodes().get(0)).isNotNull();
+        assertThat(savedEventWithCode.getCodes().get(0).getCode()).isNotNull();
 
-        assertThat(_codegenerator.isValid(savedEventWithCode.getCodes()
-                                                            .get(0)
-                                                            .getCode())).isTrue();
+        assertThat(_codegenerator.isValid(savedEventWithCode.getCodes().get(0).getCode())).isTrue();
     }
 
     @Test
@@ -127,19 +117,13 @@ public class CodeGeneratorTest {
         Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(savedEventWithCode.getCodes()
-                                     .size()).isEqualTo(codeCount);
+        assertThat(savedEventWithCode.getCodes().size()).isEqualTo(codeCount);
 
         for (int i = 0; i < codeCount; i++) {
-            assertThat(savedEventWithCode.getCodes()
-                                         .get(i)).isNotNull();
-            assertThat(savedEventWithCode.getCodes()
-                                         .get(i)
-                                         .getCode()).isNotNull();
+            assertThat(savedEventWithCode.getCodes().get(i)).isNotNull();
+            assertThat(savedEventWithCode.getCodes().get(i).getCode()).isNotNull();
 
-            assertThat(_codegenerator.isValid(savedEventWithCode.getCodes()
-                                                                .get(i)
-                                                                .getCode())).isTrue();
+            assertThat(_codegenerator.isValid(savedEventWithCode.getCodes().get(i).getCode())).isTrue();
         }
     }
 
@@ -157,26 +141,19 @@ public class CodeGeneratorTest {
         _eventRepository.save(event);
 
         codes = _codegenerator.generate(event, codeCount2, 2);
-        event.getCodes()
-             .addAll(codes);
+        event.getCodes().addAll(codes);
         _eventRepository.save(event);
 
         Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(savedEventWithCode.getCodes()
-                                     .size()).isEqualTo(codeCount + codeCount2);
+        assertThat(savedEventWithCode.getCodes().size()).isEqualTo(codeCount + codeCount2);
 
         for (int i = 0; i < codeCount + codeCount2; i++) {
-            assertThat(savedEventWithCode.getCodes()
-                                         .get(i)).isNotNull();
-            assertThat(savedEventWithCode.getCodes()
-                                         .get(i)
-                                         .getCode()).isNotNull();
+            assertThat(savedEventWithCode.getCodes().get(i)).isNotNull();
+            assertThat(savedEventWithCode.getCodes().get(i).getCode()).isNotNull();
 
-            assertThat(_codegenerator.isValid(savedEventWithCode.getCodes()
-                                                                .get(i)
-                                                                .getCode())).isTrue();
+            assertThat(_codegenerator.isValid(savedEventWithCode.getCodes().get(i).getCode())).isTrue();
         }
     }
 
@@ -195,22 +172,16 @@ public class CodeGeneratorTest {
         Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(savedEventWithCode.getCodes()
-                                     .size()).isEqualTo(codeCount);
+        assertThat(savedEventWithCode.getCodes().size()).isEqualTo(codeCount);
 
         for (int i = 0; i < codeCount; i++) {
-            assertThat(savedEventWithCode.getCodes()
-                                         .get(i)).isNotNull();
-            assertThat(savedEventWithCode.getCodes()
-                                         .get(i)
-                                         .getCode()).isNotNull();
+            assertThat(savedEventWithCode.getCodes().get(i)).isNotNull();
+            assertThat(savedEventWithCode.getCodes().get(i).getCode()).isNotNull();
 
-            assertThat(_codegenerator.isValid(savedEventWithCode.getCodes()
-                                                                .get(i)
-                                                                .getCode())).isTrue();
+            assertThat(_codegenerator.isValid(savedEventWithCode.getCodes().get(i).getCode())).isTrue();
         }
     }
-    
+
     @Test
     @Transactional
     public void generateCodesForEventHasAlreadyCreatedCodesWithAmount() {
@@ -225,26 +196,19 @@ public class CodeGeneratorTest {
         _eventRepository.save(event);
 
         codes = _codegenerator.generate(event, codeCount2, 2.0f);
-        event.getCodes()
-             .addAll(codes);
+        event.getCodes().addAll(codes);
         _eventRepository.save(event);
 
         Event savedEventWithCode = _eventRepository.findById(1L).orElse(null);
 
         assertThat(_eventRepository.count()).isEqualTo(1);
-        assertThat(savedEventWithCode.getCodes()
-                                     .size()).isEqualTo(codeCount + codeCount2);
+        assertThat(savedEventWithCode.getCodes().size()).isEqualTo(codeCount + codeCount2);
 
         for (int i = 0; i < codeCount + codeCount2; i++) {
-            assertThat(savedEventWithCode.getCodes()
-                                         .get(i)).isNotNull();
-            assertThat(savedEventWithCode.getCodes()
-                                         .get(i)
-                                         .getCode()).isNotNull();
+            assertThat(savedEventWithCode.getCodes().get(i)).isNotNull();
+            assertThat(savedEventWithCode.getCodes().get(i).getCode()).isNotNull();
 
-            assertThat(_codegenerator.isValid(savedEventWithCode.getCodes()
-                                                                .get(i)
-                                                                .getCode())).isTrue();
+            assertThat(_codegenerator.isValid(savedEventWithCode.getCodes().get(i).getCode())).isTrue();
         }
     }
 

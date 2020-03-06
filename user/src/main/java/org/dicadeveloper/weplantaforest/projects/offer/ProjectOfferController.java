@@ -20,13 +20,13 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProjectOfferController {
 
     private @NonNull UserRepository _userRepository;
 
     private @NonNull MailHelper _mailHelper;
-    
+
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
     @RequestMapping(value = "/project/offer", method = RequestMethod.POST)

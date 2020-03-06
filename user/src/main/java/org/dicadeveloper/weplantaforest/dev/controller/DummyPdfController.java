@@ -31,11 +31,11 @@ import lombok.RequiredArgsConstructor;
 
 @Profile("dev")
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DummyPdfController {
 
     private @NonNull GiftRepository _giftRepository;
-    
+
     private @NonNull GiftService _giftService;
 
     private @NonNull UserRepository _userRepository;
@@ -84,11 +84,13 @@ public class DummyPdfController {
         _certificateRepository.save(certificate);
 
         PdfCertificateView pdf = new PdfCertificateView();
-//        try {
-//            pdf.writePdfDataToOutputStream(response.getOutputStream(), treeCount, certificate.getText(), user.getName(), certificateNumber, RELATIVE_STATIC_IMAGES_PATH_CERTIFICATE);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
+        // try {
+        // pdf.writePdfDataToOutputStream(response.getOutputStream(), treeCount,
+        // certificate.getText(), user.getName(), certificateNumber,
+        // RELATIVE_STATIC_IMAGES_PATH_CERTIFICATE);
+        // } catch (Exception e) {
+        // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        // }
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

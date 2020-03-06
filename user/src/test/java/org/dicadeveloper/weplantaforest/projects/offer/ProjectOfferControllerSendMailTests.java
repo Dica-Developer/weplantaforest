@@ -68,10 +68,8 @@ public class ProjectOfferControllerSendMailTests {
         offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
-        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .header("X-AUTH-TOKEN", "")
-                                                   .content(TestUtil.convertObjectToJsonBytes(offer)))
-                    .andExpect(status().isOk());
+        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8).header("X-AUTH-TOKEN", "").content(TestUtil.convertObjectToJsonBytes(offer)))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -93,9 +91,7 @@ public class ProjectOfferControllerSendMailTests {
         offer.size = "1m²";
         offer.comment = "test on" + new Date(System.currentTimeMillis());
 
-        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .header("X-AUTH-TOKEN", userToken)
-                                                   .content(TestUtil.convertObjectToJsonBytes(offer)))
-                    .andExpect(status().isOk());
+        this.mockMvc.perform(post("/project/offer").contentType(TestUtil.APPLICATION_JSON_UTF8).header("X-AUTH-TOKEN", userToken).content(TestUtil.convertObjectToJsonBytes(offer)))
+                .andExpect(status().isOk());
     }
 }

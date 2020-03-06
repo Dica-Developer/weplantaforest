@@ -47,30 +47,18 @@ public class ProjectImageRepositoryIntegrationTest {
         List<ProjectImage> imageList = _projectImageRepository.findProjectImagesToProjectByProjectId(1);
 
         assertThat(imageList.size()).isEqualTo(3);
-        assertThat(imageList.get(0)
-                            .getTitle()).isEqualTo("image1");
-        assertThat(imageList.get(1)
-                            .getTitle()).isEqualTo("image2");
-        assertThat(imageList.get(2)
-                            .getTitle()).isEqualTo("image3");
-        assertThat(imageList.get(0)
-                            .getDescription()).isEqualTo("image description 1");
-        assertThat(imageList.get(1)
-                            .getDescription()).isEqualTo("image description 2");
-        assertThat(imageList.get(2)
-                            .getDescription()).isEqualTo("image description 3");
-        assertThat(imageList.get(0)
-                            .getImageFileName()).isEqualTo("test1.jpg");
-        assertThat(imageList.get(1)
-                            .getImageFileName()).isEqualTo("test2.jpg");
-        assertThat(imageList.get(2)
-                            .getImageFileName()).isEqualTo("test3.jpg");
-        assertThat(imageList.get(0)
-                            .getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 10);
-        assertThat(imageList.get(1)
-                            .getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 20);
-        assertThat(imageList.get(2)
-                            .getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 30);
+        assertThat(imageList.get(0).getTitle()).isEqualTo("image1");
+        assertThat(imageList.get(1).getTitle()).isEqualTo("image2");
+        assertThat(imageList.get(2).getTitle()).isEqualTo("image3");
+        assertThat(imageList.get(0).getDescription()).isEqualTo("image description 1");
+        assertThat(imageList.get(1).getDescription()).isEqualTo("image description 2");
+        assertThat(imageList.get(2).getDescription()).isEqualTo("image description 3");
+        assertThat(imageList.get(0).getImageFileName()).isEqualTo("test1.jpg");
+        assertThat(imageList.get(1).getImageFileName()).isEqualTo("test2.jpg");
+        assertThat(imageList.get(2).getImageFileName()).isEqualTo("test3.jpg");
+        assertThat(imageList.get(0).getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 10);
+        assertThat(imageList.get(1).getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 20);
+        assertThat(imageList.get(2).getDate()).isEqualTo(TimeConstants.YEAR_IN_MILLISECONDS * 30);
     }
 
 }

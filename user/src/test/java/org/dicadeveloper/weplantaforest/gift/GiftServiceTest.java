@@ -64,9 +64,7 @@ public class GiftServiceTest {
         _dbInjecter.injectTreeType("wood", "this is a wood", 0.5);
         _dbInjecter.injectProject("Project A", "Adam", "this is a project", true, 0, 0);
         _dbInjecter.injectProjectArticle("wood", "Project A", 10, 1.0, 0.5);
-        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A")
-                                           .createPlantItemAndAddToPlantBag(5, 5, "wood", "Project A")
-                                           .build();
+        PlantBag plantBag = plantBagBuilder.initializeProjectDataAndAddToPlantBag("Project A").createPlantItemAndAddToPlantBag(5, 5, "wood", "Project A").build();
         try {
             _giftService.generateGift(consignor, plantBag);
         } catch (IpatException e) {
@@ -84,25 +82,21 @@ public class GiftServiceTest {
         Code code = _codeRepository.findById(1L).orElse(null);
         Tree tree = _treeRepository.findById(1L).orElse(null);
         assertEquals(5, tree.getAmount());
-        assertEquals("Adam", tree.getOwner()
-                                 .getName());
+        assertEquals("Adam", tree.getOwner().getName());
         Gift gift = _giftRepository.findById(1L).orElse(null);
         gift.setStatus(Status.UNREDEEMED);
         _giftRepository.save(gift);
         try {
             _giftService.redeemGiftCode(recipient, code.getCode());
         } catch (IpatException e) {
-            fail(String.format("No Exception expected, when redeeming a gift code.\nerrorCode: %s", e.getErrorInfos()
-                                                                                                     .get(0)
-                                                                                                     .getErrorCode()));
+            fail(String.format("No Exception expected, when redeeming a gift code.\nerrorCode: %s", e.getErrorInfos().get(0).getErrorCode()));
         }
 
         gift = _giftRepository.findById(1L).orElse(null);
         assertEquals(Status.REDEEMED, gift.getStatus());
         tree = _treeRepository.findById(1L).orElse(null);
         assertEquals(5, tree.getAmount());
-        assertEquals("Recipient", tree.getOwner()
-                                      .getName());
+        assertEquals("Recipient", tree.getOwner().getName());
     }
 
 }

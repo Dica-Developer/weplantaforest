@@ -59,7 +59,7 @@ public class ProjectArticle {
     @Column(name = "_amount")
     @JsonView(Views.ProjectArticle.class)
     private Long amount;
-    
+
     @Transient
     @JsonView(Views.ProjectArticle.class)
     private Long alreadyPlanted;

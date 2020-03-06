@@ -33,14 +33,10 @@ public class PdfHelper {
         PdfPTable table = new PdfPTable(4);
         float[] rows = { 100f, 100f, 100f, 295f };
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell()
-             .setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.getDefaultCell()
-             .setVerticalAlignment(Element.ALIGN_MIDDLE);
-        table.getDefaultCell()
-             .setFixedHeight(20);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.getDefaultCell().setFixedHeight(20);
         table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_company"), textFont)));
         table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_account"), textFont)));
         table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_homepage"), textFont)));
@@ -62,14 +58,10 @@ public class PdfHelper {
         PdfPTable table = new PdfPTable(4);
         float[] rows = { 100f, 100f, 100f, 295f };
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell()
-             .setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.getDefaultCell()
-             .setVerticalAlignment(Element.ALIGN_MIDDLE);
-        table.getDefaultCell()
-             .setFixedHeight(20);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.getDefaultCell().setFixedHeight(20);
         table.addCell(new Phrase(new Chunk("WALD 1.1 gGmbH", textFont)));
         table.addCell(new Phrase(new Chunk("[ Spendenkonto 222 888 ]", textFont)));
         table.addCell(new Phrase(new Chunk("www.iplantatree.org", textFont)));
@@ -82,7 +74,7 @@ public class PdfHelper {
     }
 
     public void createCertificateImage(PdfContentByte cb, String imagePath, String language, float xPos, float yPos) throws DocumentException, IOException {
-        URL imageUrl = getClass().getResource(imagePath + "/IPAT_Zertifikat_" + language +".jpg");
+        URL imageUrl = getClass().getResource(imagePath + "/IPAT_Zertifikat_" + language + ".jpg");
         final Image logoImage = Image.getInstance(imageUrl);
         logoImage.setAbsolutePosition(xPos, yPos);
         logoImage.scalePercent(70f, 70f);
@@ -103,10 +95,8 @@ public class PdfHelper {
         PdfPTable table = new PdfPTable(1);
         float[] rows = { 200f };
         table.setTotalWidth(rows);
-        table.getDefaultCell()
-             .setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell()
-             .setFixedHeight(14f);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setFixedHeight(14f);
 
         table.addCell(new Phrase(new Chunk("Wald 1.1 gemeinnützige GmbH", textFontForAdress)));
         table.addCell(new Phrase(new Chunk("Gabelsbergerstraße 4", textFontForAdress)));

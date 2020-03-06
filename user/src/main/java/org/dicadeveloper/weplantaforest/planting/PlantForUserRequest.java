@@ -17,7 +17,7 @@ public class PlantForUserRequest {
     private long amountOfPlantBags;
 
     private long userId;
-    
+
     private String cartState;
 
     private @NonNull PlantBag plantBag;

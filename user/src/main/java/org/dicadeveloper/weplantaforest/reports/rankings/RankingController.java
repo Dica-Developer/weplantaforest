@@ -19,7 +19,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RankingController {
 
     private @NonNull RankingRepository _rankingRepository;
@@ -27,11 +27,11 @@ public class RankingController {
     // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_USER, method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestUser(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size, @RequestParam(value = "lastYear") boolean lastYear) {
-    	if(lastYear){
+        if (lastYear) {
             return _rankingRepository.getBestUserForLastYear(System.currentTimeMillis(), PageRequest.of(page, size));
-    	}else{
-            return _rankingRepository.getBestUser(System.currentTimeMillis(), PageRequest.of(page, size));    		
-    	}
+        } else {
+            return _rankingRepository.getBestUser(System.currentTimeMillis(), PageRequest.of(page, size));
+        }
     }
 
     @RequestMapping(value = Uris.RANKING_LAST_CREATED_USER, method = RequestMethod.GET)
@@ -41,12 +41,13 @@ public class RankingController {
 
     // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_ORGANIZATION_TYPE + "{organizationType}", method = RequestMethod.GET)
-    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable OrganizationType organizationType, @Param(value = "page") int page, @Param(value = "size") int size, @RequestParam(value = "lastYear") boolean lastYear) {
-    	if(lastYear){
-        	return _rankingRepository.getBestUserFromOrganizationTypeForLastYear(System.currentTimeMillis(), organizationType, PageRequest.of(page, size));
-    	}else{
-        	return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, PageRequest.of(page, size));    		
-    	}
+    public Page<TreeRankedUserData> getBestUserFromOrganizationType(@PathVariable OrganizationType organizationType, @Param(value = "page") int page, @Param(value = "size") int size,
+            @RequestParam(value = "lastYear") boolean lastYear) {
+        if (lastYear) {
+            return _rankingRepository.getBestUserFromOrganizationTypeForLastYear(System.currentTimeMillis(), organizationType, PageRequest.of(page, size));
+        } else {
+            return _rankingRepository.getBestUserFromOrganizationType(System.currentTimeMillis(), organizationType, PageRequest.of(page, size));
+        }
     }
 
     @RequestMapping(value = Uris.RANKING_LAST_PLANTED_TREES, method = RequestMethod.GET)
@@ -57,11 +58,11 @@ public class RankingController {
     // @Cacheable(value = CacheConfiguration.TEN_MINUTE_CACHE)
     @RequestMapping(value = Uris.RANKING_BEST_TEAM, method = RequestMethod.GET)
     public Page<TreeRankedUserData> getBestTeams(@Param(value = "page") int page, @Param(value = "size") int size, @RequestParam(value = "lastYear") boolean lastYear) {
-    	if(lastYear){
-    		return _rankingRepository.getBestTeamsForLastYear(System.currentTimeMillis(), PageRequest.of(page, size));
-    	}else{
-            return _rankingRepository.getBestTeams(System.currentTimeMillis(), PageRequest.of(page, size));    		
-    	}
+        if (lastYear) {
+            return _rankingRepository.getBestTeamsForLastYear(System.currentTimeMillis(), PageRequest.of(page, size));
+        } else {
+            return _rankingRepository.getBestTeams(System.currentTimeMillis(), PageRequest.of(page, size));
+        }
     }
 
     @RequestMapping(value = Uris.RANKING_BEST_USER_FOR_TIMERANGE + "{timeRange}", method = RequestMethod.GET)
@@ -69,15 +70,15 @@ public class RankingController {
         Long timeRangeEnd = System.currentTimeMillis();
         Long timeRangeStart = 0L;
         switch (timeRange) {
-        case "year":
-            timeRangeStart = timeRangeEnd - TimeConstants.YEAR_IN_MILLISECONDS;
-            break;
-        case "week":
-            timeRangeStart = timeRangeEnd - TimeConstants.WEEK_IN_MILLISECONDS;
-            break;
-        default:
-            timeRangeStart = timeRangeEnd - TimeConstants.YEAR_IN_MILLISECONDS;
-            break;
+            case "year":
+                timeRangeStart = timeRangeEnd - TimeConstants.YEAR_IN_MILLISECONDS;
+                break;
+            case "week":
+                timeRangeStart = timeRangeEnd - TimeConstants.WEEK_IN_MILLISECONDS;
+                break;
+            default:
+                timeRangeStart = timeRangeEnd - TimeConstants.YEAR_IN_MILLISECONDS;
+                break;
         }
         return _rankingRepository.getBestUserFromTimeRange(timeRangeStart, timeRangeEnd, PageRequest.of(0, 10));
     }

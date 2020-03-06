@@ -76,7 +76,7 @@ public class EventServiceTest {
         } catch (IpatException e) {
             fail(String.format("No Exception expected, when redeeming a gift code.\nerrorCode: %s", e.getErrorInfos().get(0).getErrorCode()));
         }
-        
+
         assertEquals(CartState.VERIFIED, _cartRepository.findById(1L).orElse(null).getCartState());
         tree = _treeRepository.findById(1L).orElse(null);
         assertEquals(5, tree.getAmount());

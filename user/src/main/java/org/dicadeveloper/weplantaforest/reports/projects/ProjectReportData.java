@@ -8,7 +8,7 @@ import lombok.Getter;
 public class ProjectReportData {
 
     long projectId;
-    
+
     String projectName;
     String projectImageFileName;
     String description;
@@ -18,7 +18,7 @@ public class ProjectReportData {
 
     long amountOfMaximumTreesToPlant;
     long amountOfPlantedTrees;
-    
+
     boolean active;
 
 }

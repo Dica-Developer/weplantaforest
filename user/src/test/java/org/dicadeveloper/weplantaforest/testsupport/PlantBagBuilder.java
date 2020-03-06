@@ -23,8 +23,8 @@ public class PlantBagBuilder {
 
         return this;
     }
-    
-    public PlantBag build(){
+
+    public PlantBag build() {
         PlantBag plantBag = this.plantBag;
         this.plantBag = new PlantBag();
         return plantBag;

@@ -54,6 +54,6 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     public Cart findOneCartByEventAndGenerated(@Param("eventId") Long eventId);
 
     @Query(value = "select cart from Cart as cart where cart.id = :cartId AND cart.buyer.id = :userId", nativeQuery = false)
-    public Optional<Cart> findOneCartByUserAndId(@Param("userId") Long userId, @Param("cartId")  Long cartId);
+    public Optional<Cart> findOneCartByUserAndId(@Param("userId") Long userId, @Param("cartId") Long cartId);
 
 }

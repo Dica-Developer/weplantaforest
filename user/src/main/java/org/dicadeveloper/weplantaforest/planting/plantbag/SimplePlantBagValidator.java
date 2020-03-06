@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 public class SimplePlantBagValidator extends AbstractPlantBagValidator {
 
     @Autowired
-    private SimplePlantBagValidator(TreeRepository treeRepository,
-            ProjectArticleRepository projectArticleRepository, ProjectRepository projectRepository) {
+    private SimplePlantBagValidator(TreeRepository treeRepository, ProjectArticleRepository projectArticleRepository, ProjectRepository projectRepository) {
         super(treeRepository, projectArticleRepository, projectRepository);
     }
 
@@ -26,8 +25,7 @@ public class SimplePlantBagValidator extends AbstractPlantBagValidator {
             projectNames.add(plantItem.getProjectName());
         }
 
-        return projectsExist(projectNames) && projectsAreActive(projectNames) && articlesExist(plantPageData)
-                && areThereEnoughTreesRemaining(plantPageData);
+        return projectsExist(projectNames) && projectsAreActive(projectNames) && articlesExist(plantPageData) && areThereEnoughTreesRemaining(plantPageData);
     }
 
     private boolean articlesExist(SimplePlantBag plantPageData) {

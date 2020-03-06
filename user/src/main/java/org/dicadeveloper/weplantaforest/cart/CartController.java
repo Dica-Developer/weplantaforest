@@ -20,7 +20,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CartController {
 
     private @NonNull CartRepository _cartRepository;
@@ -42,8 +42,7 @@ public class CartController {
             return new ResponseEntity<>(cartList, HttpStatus.OK);
         }
     }
-    
-    
+
     @RequestMapping(value = Uris.LAST_CART, method = RequestMethod.GET)
     @JsonView(Views.LastCartDetails.class)
     public ResponseEntity<Cart> getDetailsOfLastCart(@RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
@@ -55,6 +54,5 @@ public class CartController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
-    
+
 }

@@ -50,7 +50,7 @@ public class Certificate {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "Certificate_Cart", joinColumns = { @JoinColumn(name = "Certificate__certId", nullable = false, updatable = false) }, inverseJoinColumns = {
-            @JoinColumn(name = "_carts__cartId", nullable = false, updatable = false) })
+        @JoinColumn(name = "_carts__cartId", nullable = false, updatable = false) })
     private List<Cart> carts = new ArrayList<Cart>();
 
     public String generateAndSetNumber(final int certificates) {

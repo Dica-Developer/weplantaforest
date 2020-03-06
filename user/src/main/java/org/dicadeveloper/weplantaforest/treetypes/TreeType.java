@@ -26,18 +26,18 @@ public class TreeType {
     @Id
     @GeneratedValue
     @Column(name = "treeTypeId")
-    @JsonView({Views.ShortTreeType.class})
+    @JsonView({ Views.ShortTreeType.class })
     private Long id;
 
     @Column(name = "_name", unique = true)
-    @JsonView({Views.PlantedTree.class,Views.ProjectArticle.class, Views.ShortTreeType.class})
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.ShortTreeType.class })
     private String name;
 
     @Column(name = "_description")
     private String description;
 
     @Column(name = "_imageFile")
-    @JsonView({Views.PlantedTree.class,Views.ProjectArticle.class})
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class })
     private String imageFile;
 
     @Column(name = "_infoLink")

@@ -35,7 +35,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GiftController {
 
     protected final static Log LOG = LogFactory.getLog(GiftController.class.getName());
@@ -60,7 +60,7 @@ public class GiftController {
 
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public ResponseEntity<?> findGiftsByConsignor(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {        
+    public ResponseEntity<?> findGiftsByConsignor(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
         if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
             List<Gift> gifts = _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
             return new ResponseEntity<>(gifts, HttpStatus.OK);
@@ -77,7 +77,7 @@ public class GiftController {
             return new ResponseEntity<>(gifts, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }     
+        }
     }
 
     /*
@@ -89,7 +89,7 @@ public class GiftController {
     public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
         User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
         if (consignor != null) {
-        	Long[] responseIds  = _giftService.generateGift(consignor, plantBag);            
+            Long[] responseIds = _giftService.generateGift(consignor, plantBag);
             return new ResponseEntity<>(responseIds, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

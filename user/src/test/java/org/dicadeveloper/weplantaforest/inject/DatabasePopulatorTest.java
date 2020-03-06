@@ -143,7 +143,7 @@ public class DatabasePopulatorTest {
 
         assertThat(_projectRepository.count() * 7).isEqualTo(new File(FileSystemInjector.getImageFolderForProjects()).listFiles().length);
     }
-    
+
     @Test
     public void testAddUserImages() {
         _databasePopulator.addUserAndTeamImages();

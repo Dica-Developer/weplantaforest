@@ -30,40 +30,34 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
-    
+
     public WebSecurityConfigurerAdapterExt() {
         super(true);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.exceptionHandling()
-            .and()
-            .anonymous()
-            .and()
-            .servletApi();
-            // .and()
-            // .headers()
-            // .cacheControl();
+        http.exceptionHandling().and().anonymous().and().servletApi();
+        // .and()
+        // .headers()
+        // .cacheControl();
 
         // custom JSON based authentication by POST of
         // {"name":"<name>","password":"<password>"} which sets the
         // token
         // header upon authentication
         http
-            // didn't get this to work
-            .authorizeRequests()
-            .antMatchers(HttpMethod.POST, Uris.PLANT_FOR_USER + "**", Uris.RECEIPT_SEND + "**")
-            .hasRole(Role.ADMIN.getIdentifier())
-            .and()
-            .addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                // didn't get this to work
+                .authorizeRequests().antMatchers(HttpMethod.POST, Uris.PLANT_FOR_USER + "**", Uris.RECEIPT_SEND + "**").hasRole(Role.ADMIN.getIdentifier()).and()
+                .addFilterBefore(new StatelessLoginFilter("/api/login", tokenAuthenticationService, _userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 
-            // custom Token based authentication based on the header previously
-            // given to the client
-            .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
+                // custom Token based authentication based on the header
+                // previously
+                // given to the client
+                .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
 
     }
-    
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -72,8 +66,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(_userDetailsService)
-            .passwordEncoder(_passwordEncrypter);
+        auth.userDetailsService(_userDetailsService).passwordEncoder(_passwordEncrypter);
     }
 
     @Override

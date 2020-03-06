@@ -325,7 +325,7 @@ public class DbInjecter {
         gift.setConsignor(_userRepository.findByName(userName));
         gift.setRecipient(_userRepository.findByName(recipient));
         gift = _giftRepository.save(gift);
-        
+
         Code code = _codeGenerator.generate(gift);
         gift.setCode(code);
         gift.setStatus(giftStatus);

@@ -92,8 +92,7 @@ public abstract class AbstractPlantBagValidator {
     }
 
     protected boolean isProjectActive(String projectName) {
-        return _projectRepository.findByName(projectName)
-                                 .getShopActive();
+        return _projectRepository.findByName(projectName).getShopActive();
     }
 
     protected boolean isProjectActiveTemp(Project project) {
@@ -130,13 +129,13 @@ public abstract class AbstractPlantBagValidator {
         Long articleAmount = article.getAmount();
         Long alreadyPlanted = _treeRepository.countAlreadyPlantedTreesByProjectArticle(article);
         Long treesRemaining = articleAmount - alreadyPlanted;
-        if (wantedToPlant > treesRemaining) {        
+        if (wantedToPlant > treesRemaining) {
             addErrorInfo(ErrorCodes.NOT_ENOUGH_TREES, projectName, articleName, wantedToPlant.toString(), treesRemaining.toString());
         }
 
     }
-    
-    protected void addErrorInfo(String errorCode, String... params){
+
+    protected void addErrorInfo(String errorCode, String... params) {
         IpatErrorInfo errorInfo = new IpatErrorInfo(errorCode, params);
         errorInfos.add(errorInfo);
     }
