@@ -7,10 +7,7 @@ import IconButton from '../common/components/IconButton';
 import InputText from '../common/components/InputText';
 import Notification from '../common/components/Notification';
 
-
-
 export default class DoRegistration extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -28,11 +25,11 @@ export default class DoRegistration extends Component {
   }
 
   updateValue(toUpdate, value) {
-    this.setState({[toUpdate]: value});
+    this.setState({ [toUpdate]: value });
   }
 
   updateOrgType(event) {
-    this.setState({orgType: event.target.value});
+    this.setState({ orgType: event.target.value });
   }
 
   registrateUser() {
@@ -46,7 +43,8 @@ export default class DoRegistration extends Component {
       this.refs.notification.addNotification(counterpart.translate('ACCEPT_AGBS.title'), counterpart.translate('ACCEPT_AGBS.text'), 'error');
     } else if (!this.state.acceptGDPR) {
       this.refs.notification.addNotification(counterpart.translate('ACCEPT_DSGVO.title'), counterpart.translate('ACCEPT_DSGVO.text'), 'error');
-    } else if (!this.refs.captcha.validateCaptcha()) {} else {
+    } else if (!this.refs.captcha.validateCaptcha()) {
+    } else {
       var that = this;
       var data = {
         username: this.state.username,
@@ -57,16 +55,18 @@ export default class DoRegistration extends Component {
         language: this.state.language
       };
 
-      axios.post('http://localhost:8081/user/registrate', data, {}).then(function(response) {
-        that.props.setRegistrated();
-      }).catch(error => {
-        that.refs.notification.handleError(error);
-      });
+      axios
+        .post('http://localhost:8081/user/registrate', data, {})
+        .then(function(response) {
+          that.props.setRegistrated();
+        })
+        .catch(error => {
+          that.refs.notification.handleError(error);
+        });
     }
   }
 
   render() {
-
     return (
       <div className="registrationPage">
         <div className="row">
@@ -77,19 +77,33 @@ export default class DoRegistration extends Component {
         <div className="row">
           <div className="form-group">
             <label htmlFor="username">{counterpart.translate('USERNAME')}:</label>
-            <InputText cssclass="form-control" placeholderText={counterpart.translate('USERNAME_PLACEHOLDER')} id="username" toUpdate="username" updateValue={this.updateValue.bind(this)}/>
+            <InputText cssclass="form-control" placeholderText={counterpart.translate('USERNAME_PLACEHOLDER')} id="username" toUpdate="username" updateValue={this.updateValue.bind(this)} />
           </div>
           <div className="form-group">
             <label htmlFor="passwordOne">{counterpart.translate('PASSWORD')}:</label>
-            <InputText cssclass="form-control" placeholderText={counterpart.translate('PASSWORD_PLACEHOLDER')} id="passwordOne" toUpdate="passwordOne" updateValue={this.updateValue.bind(this)} type="password"/>
+            <InputText
+              cssclass="form-control"
+              placeholderText={counterpart.translate('PASSWORD_PLACEHOLDER')}
+              id="passwordOne"
+              toUpdate="passwordOne"
+              updateValue={this.updateValue.bind(this)}
+              type="password"
+            />
           </div>
           <div className="form-group">
             <label htmlFor="passwordTwo">{counterpart.translate('PASSWORD_CONFIRMATION')}:</label>
-            <InputText cssclass="form-control" placeholderText={counterpart.translate('PASSWORD_PLACEHOLDER')} id="passwordTwo" toUpdate="passwordTwo" updateValue={this.updateValue.bind(this)} type="password"/>
+            <InputText
+              cssclass="form-control"
+              placeholderText={counterpart.translate('PASSWORD_PLACEHOLDER')}
+              id="passwordTwo"
+              toUpdate="passwordTwo"
+              updateValue={this.updateValue.bind(this)}
+              type="password"
+            />
           </div>
           <div className="form-group">
             <label htmlFor="mail">{counterpart.translate('MAIL')}:</label>
-            <InputText cssclass="form-control" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} id="mail" toUpdate="mail" updateValue={this.updateValue.bind(this)}/>
+            <InputText cssclass="form-control" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} id="mail" toUpdate="mail" updateValue={this.updateValue.bind(this)} />
           </div>
           <div className="form-group">
             <label htmlFor="type">Typ:</label>
@@ -101,22 +115,22 @@ export default class DoRegistration extends Component {
             </select>
           </div>
           <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text={counterpart.translate('NEWSLETTER_CB')}/>
+            <CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text={counterpart.translate('NEWSLETTER_CB')} />
           </div>
           <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text={counterpart.translate('AGB_CB')}/>
+            <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text={counterpart.translate('AGB_CB')} />
           </div>
           <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="acceptGDPR" value={this.state.acceptGDPR} updateValue={this.updateValue.bind(this)} text={counterpart.translate('DSGVO_CB')}/>
+            <CheckBox toUpdate="acceptGDPR" value={this.state.acceptGDPR} updateValue={this.updateValue.bind(this)} text={counterpart.translate('DSGVO_CB')} />
           </div>
           <div className="col-md-12 align-left">
-            <Captcha ref="captcha"/>
+            <Captcha ref="captcha" />
           </div>
           <div className="col-md-12 align-left">
-            <IconButton text={counterpart.translate('REGISTRATE')} glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)}/>
+            <IconButton text={counterpart.translate('REGISTRATE')} glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)} />
           </div>
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

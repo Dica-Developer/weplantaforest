@@ -3,7 +3,6 @@ import counterpart from 'counterpart';
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 
-
 require('./plantBag.less');
 
 export default class PlantBag extends Component {
@@ -21,7 +20,7 @@ export default class PlantBag extends Component {
     elm.removeEventListener('animationend', this.scalingDone);
   }
   scalingDone() {
-    this.setState({scale: false});
+    this.setState({ scale: false });
   }
 
   componentDidMount() {
@@ -46,7 +45,7 @@ export default class PlantBag extends Component {
       projects: {}
     };
     localStorage.setItem('plantBag', JSON.stringify(plantBag));
-    this.setState({plantBag: plantBag});
+    this.setState({ plantBag: plantBag });
     this.forceUpdate();
   }
 
@@ -72,13 +71,14 @@ export default class PlantBag extends Component {
     this.forceUpdate();
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     this.showPlantItems();
-    this.setState({scale: true});
+    this.setState({ scale: true });
   }
 
   setPlantItems(projectItems, projectName) {
     for (var projectItem in projectItems) {
       if (projectItem in this.state.plantBag.projects[projectName].plantItems) {
-        this.state.plantBag.projects[projectName].plantItems[projectItem].amount = parseInt(this.state.plantBag.projects[projectName].plantItems[projectItem].amount) + parseInt(projectItems[projectItem].amount);
+        this.state.plantBag.projects[projectName].plantItems[projectItem].amount =
+          parseInt(this.state.plantBag.projects[projectName].plantItems[projectItem].amount) + parseInt(projectItems[projectItem].amount);
       } else {
         this.state.plantBag.projects[projectName].plantItems[projectItem] = projectItems[projectItem];
       }
@@ -100,14 +100,12 @@ export default class PlantBag extends Component {
 
   render() {
     return (
-      <div ref="plantBag" className={(this.state.scale
-        ? 'scale'
-        : ' ') + ' plantBag'}>
+      <div ref="plantBag" className={(this.state.scale ? 'scale' : ' ') + ' plantBag'}>
         <button onClick={this.showPlantBagPage.bind(this)}>
           <div className="wrapper">
             <div className="image-wrapper">
               <p className="price">{Accounting.formatNumber(this.state.plantBag.price / 100, 2, '.', ',')}&nbsp;€</p>
-              <img src="/assets/images/barrow.svg" alt={counterpart.translate('MY_PLANT_BAG')} width="50" height="25"/>
+              <img src="/assets/images/barrow.svg" alt={counterpart.translate('MY_PLANT_BAG')} width="50" height="25" />
             </div>
             <div className="plantBag-button-text">
               <span className="buttonText">{counterpart.translate('PLANT_BAG')}</span>

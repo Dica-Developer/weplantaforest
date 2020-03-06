@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { getFirstParagraph, getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-
 export default class CompletedProject extends Component {
   constructor() {
     super();
@@ -19,17 +18,15 @@ export default class CompletedProject extends Component {
         <div className="projectImage">
           <img src={imageUrl} />
         </div>
-        <div className="projectName">
-          {this.props.project.projectName}
-        </div>
+        <div className="projectName">{this.props.project.projectName}</div>
         <div className="projectDescription">
-          <p dangerouslySetInnerHTML={{
-            __html: getFirstParagraph(getTextForSelectedLanguage(this.props.project.description))
-          }}/>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: getFirstParagraph(getTextForSelectedLanguage(this.props.project.description))
+            }}
+          />
         </div>
-        <div className="full">
-          vollständig&nbsp;bepflanzt&nbsp;mit&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen
-        </div>
+        <div className="full">vollständig&nbsp;bepflanzt&nbsp;mit&nbsp;{this.props.project.amountOfMaximumTreesToPlant}&nbsp;Bäumen</div>
       </div>
     );
   }

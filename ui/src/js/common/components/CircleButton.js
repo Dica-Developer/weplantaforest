@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 require('./circleButton.less');
 
 export default class CircleButton extends Component {
-
   constructor() {
     super();
   }
@@ -12,10 +11,8 @@ export default class CircleButton extends Component {
     return (
       <div className={'circleButton ' + this.props.className}>
         <a role="button" onClick={this.props.onClick.bind(this)}>
-          <span className={('glyphicon ' + this.props.glyphIcon) + ' circle'} aria-hidden="true"></span>
-          <span className="label">
-            {this.props.text}
-          </span>
+          <span className={'glyphicon ' + this.props.glyphIcon + ' circle'} aria-hidden="true"></span>
+          <span className="label">{this.props.text}</span>
         </a>
       </div>
     );

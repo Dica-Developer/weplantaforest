@@ -6,7 +6,6 @@ import Overview from './Overview';
 import Receipts from './Receipts';
 import Widgets from './Widgets';
 
-
 require('./tools.less');
 
 export default class Tools extends Component {
@@ -19,17 +18,17 @@ export default class Tools extends Component {
   }
 
   switchTo(value, index) {
-    this.setState({view: value, iindex: index});
+    this.setState({ view: value, iindex: index });
   }
 
   render() {
     var content;
     switch (this.state.view) {
       case 'overview':
-        content = <Overview switchTo={this.switchTo.bind(this)}/>;
+        content = <Overview switchTo={this.switchTo.bind(this)} />;
         break;
       case 'certificates':
-        content = <Certificates view={this.state.view}/>;
+        content = <Certificates view={this.state.view} />;
         break;
       case 'receipts':
         content = <Receipts view={this.state.view} />;

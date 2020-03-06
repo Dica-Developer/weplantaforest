@@ -5,12 +5,9 @@ import BottomPart from '../BottomPart';
 import ButtonBar from '../ButtonBar';
 import Project from './Project';
 
-
-
 require('./customPlantPage.less');
 
 export default class CustomPlantPage extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -20,7 +17,6 @@ export default class CustomPlantPage extends Component {
     };
     this.updatePrice = this.updatePrice.bind(this);
     this.toggleDiv = this.toggleDiv.bind(this);
-
   }
 
   componentDidMount() {
@@ -30,7 +26,7 @@ export default class CustomPlantPage extends Component {
     axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
       var result = response.data;
       setTimeout(function() {
-        that.setState({projects: result});
+        that.setState({ projects: result });
         that.forceUpdate();
         that.toggleDiv();
       }, 1000);
@@ -77,13 +73,13 @@ export default class CustomPlantPage extends Component {
         <div className="row customPlantPage">
           <div className="col-md-12">
             <h1>{this.props.route.header}</h1>
-            <ButtonBar chosen="custom"/>
+            <ButtonBar chosen="custom" />
             <div ref="planting" className={'plantItems'}>
               {this.state.projects.map(function(project, i) {
-                return (<Project key={i} project={project} ref={'project_' + i} updatePrice={that.updatePrice.bind(this)}/>);
+                return <Project key={i} project={project} ref={'project_' + i} updatePrice={that.updatePrice.bind(this)} />;
               })}
             </div>
-            <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
+            <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice} />
           </div>
         </div>
       </div>

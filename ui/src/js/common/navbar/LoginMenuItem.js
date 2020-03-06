@@ -7,15 +7,13 @@ import IconButton from '../components/IconButton';
 import Notification from '../components/Notification';
 import { createProfileImageUrl } from '../ImageHelper';
 
-
-
 export default class LoginMenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       password: '',
-      loggedIn: (localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != ''),
+      loggedIn: localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '',
       userDetails: {
         imageFileName: 'default',
         co2Data: {}
@@ -54,16 +52,18 @@ export default class LoginMenuItem extends Component {
     localStorage.setItem('username', username);
     this.state.name = username;
 
-    axios.get('http://localhost:8081/user/language?userName=' + encodeURIComponent(username)).then(function(response) {
-      var result = response.data;
-      if (localStorage.getItem('language') != result) {
-        that.props.updateLanguage(result);
-      }
-      that.isAdmin();
-    }).catch(function(error) {
+    axios
+      .get('http://localhost:8081/user/language?userName=' + encodeURIComponent(username))
+      .then(function(response) {
+        var result = response.data;
+        if (localStorage.getItem('language') != result) {
+          that.props.updateLanguage(result);
+        }
+        that.isAdmin();
+      })
+      .catch(function(error) {
         that.refs.notification.handleError(error);
-    });
-
+      });
   }
 
   isAdmin() {
@@ -73,18 +73,21 @@ export default class LoginMenuItem extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.get('http://localhost:8081/isAdmin', config).then(function(response) {
-      var result = response.data;
-      localStorage.setItem('isAdmin', result);
-      that.setState({
-        loggedIn: true,
-        name: '',
-        password: ''
+    axios
+      .get('http://localhost:8081/isAdmin', config)
+      .then(function(response) {
+        var result = response.data;
+        localStorage.setItem('isAdmin', result);
+        that.setState({
+          loggedIn: true,
+          name: '',
+          password: ''
+        });
+        that.loadUserDetails();
+      })
+      .catch(function(error) {
+        that.refs.notification.handleError(error);
       });
-      that.loadUserDetails();
-    }).catch(function(error) {
-      that.refs.notification.handleError(error);
-    });
   }
 
   loadUserDetails() {
@@ -94,16 +97,19 @@ export default class LoginMenuItem extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.get('http://localhost:8081/user?userName=' + encodeURIComponent(localStorage.getItem('username')), config).then(function(response) {
-      var result = response.data;
-      that.setState({
-        userDetails: result
+    axios
+      .get('http://localhost:8081/user?userName=' + encodeURIComponent(localStorage.getItem('username')), config)
+      .then(function(response) {
+        var result = response.data;
+        that.setState({
+          userDetails: result
+        });
+        localStorage.setItem('userDetails', JSON.stringify(result));
+        that.props.updateNavbar();
+      })
+      .catch(function(error) {
+        that.refs.notification.handleError(error);
       });
-      localStorage.setItem('userDetails', JSON.stringify(result));
-      that.props.updateNavbar();
-    }).catch(function(error) {
-      that.refs.notification.handleError(error);
-    });
   }
 
   login() {
@@ -118,19 +124,23 @@ export default class LoginMenuItem extends Component {
         name: this.state.name,
         password: this.state.password
       }
-    }).then(function(response) {
-      that.handleLogin(response.headers['x-auth-token'], response.headers['x-auth-username']);
-    }.bind(this)).catch(function(error) {
-      that.setState({
-        name: '',
-        password: ''
+    })
+      .then(
+        function(response) {
+          that.handleLogin(response.headers['x-auth-token'], response.headers['x-auth-username']);
+        }.bind(this)
+      )
+      .catch(function(error) {
+        that.setState({
+          name: '',
+          password: ''
+        });
+        if (error.response.data.reason == 'LOCKED') {
+          that.refs.notification.addNotificationAtDifferentPos(counterpart.translate('ERROR'), counterpart.translate('LOCKED_USER'), 'error', 'tr');
+        } else if (error.response.data.reason == 'BAD_CREDENTIALS') {
+          that.refs.notification.addNotificationAtDifferentPos(counterpart.translate('ERROR'), counterpart.translate('WRONG_USERNAME_PASSWORD'), 'error', 'tr');
+        }
       });
-      if(error.response.data.reason == 'LOCKED'){
-        that.refs.notification.addNotificationAtDifferentPos(counterpart.translate('ERROR'), counterpart.translate('LOCKED_USER'), 'error', 'tr');
-      }else if(error.response.data.reason == 'BAD_CREDENTIALS') {
-        that.refs.notification.addNotificationAtDifferentPos(counterpart.translate('ERROR'), counterpart.translate('WRONG_USERNAME_PASSWORD'), 'error', 'tr');
-      }
-    });
   }
 
   logout() {
@@ -162,48 +172,64 @@ export default class LoginMenuItem extends Component {
     if (localStorage.getItem('username') && localStorage.getItem('username') != '') {
       let imageUrl = createProfileImageUrl(this.state.userDetails.imageFileName, 50, 50);
 
-      content = <div className="login-user-details">
-        <div>
-          <img src={imageUrl} alt="profile" width="50" height="50"/>
+      content = (
+        <div className="login-user-details">
+          <div>
+            <img src={imageUrl} alt="profile" width="50" height="50" />
+          </div>
+          <div>
+            <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <label>{localStorage.getItem('username')}</label>
+            <br />
+            <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+            <label>{this.state.userDetails.co2Data.treesCount}</label>
+            <br />
+            <span className="glyphicon glyphicon glyphicon-cloud" aria-hidden="true"></span>
+            <label>
+              {Accounting.formatNumber(this.state.userDetails.co2Data.co2, 0, '.', ',')} tCO<sub>2</sub>
+            </label>
+          </div>
+          <div className="logout-div">
+            <a onClick={this.logout.bind(this)}>logout</a>
+          </div>
         </div>
-        <div>
-          <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
-          <label>{localStorage.getItem('username')}</label>
-          <br/>
-          <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
-          <label>{this.state.userDetails.co2Data.treesCount}</label>
-          <br/>
-          <span className="glyphicon glyphicon glyphicon-cloud" aria-hidden="true"></span>
-          <label>{Accounting.formatNumber(this.state.userDetails.co2Data.co2, 0, '.', ',')} tCO<sub>2</sub></label>
-        </div>
-        <div className="logout-div">
-          <a onClick={this.logout.bind(this)}>logout</a>
-        </div>
-      </div>;
+      );
     } else {
-      content = <div className="login">
-        <input type="text" placeholder={counterpart.translate('USERNAME')} value={this.state.name} onChange={this.updateName.bind(this)} onKeyPress={this.handleKeyPress.bind(this)}/>
-        <input type="password" placeholder={counterpart.translate('PASSWORD')} value={this.state.password} onChange={this.updatePassword.bind(this)} onKeyPress={this.handleKeyPress.bind(this)}/>
-        <div className="login-interact">
-          <a role="button" onClick={() => {
-            this.linkTo('/forgotPassword');
-          }}>{counterpart.translate('FORGOT_PASSWORD')}</a>
+      content = (
+        <div className="login">
+          <input type="text" placeholder={counterpart.translate('USERNAME')} value={this.state.name} onChange={this.updateName.bind(this)} onKeyPress={this.handleKeyPress.bind(this)} />
+          <input type="password" placeholder={counterpart.translate('PASSWORD')} value={this.state.password} onChange={this.updatePassword.bind(this)} onKeyPress={this.handleKeyPress.bind(this)} />
+          <div className="login-interact">
+            <a
+              role="button"
+              onClick={() => {
+                this.linkTo('/forgotPassword');
+              }}
+            >
+              {counterpart.translate('FORGOT_PASSWORD')}
+            </a>
+          </div>
+          <div className="buttonDiv">
+            <IconButton text={counterpart.translate('LOGIN')} glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)} />
+          </div>
+          <div className="login-interact">
+            <a
+              role="button"
+              onClick={() => {
+                this.linkTo('/registration');
+              }}
+            >
+              {counterpart.translate('REGISTRATE')}
+            </a>
+          </div>
         </div>
-        <div className="buttonDiv">
-          <IconButton text={counterpart.translate('LOGIN')} glyphIcon="glyphicon-log-in" onClick={this.login.bind(this)}/>
-        </div>
-        <div className="login-interact">
-          <a role="button" onClick={() => {
-            this.linkTo('/registration');
-          }}>{counterpart.translate('REGISTRATE')}</a>
-        </div>
-      </div>;
+      );
     }
 
     return (
       <div className="login-menu-item">
         {content}
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

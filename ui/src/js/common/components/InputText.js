@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 export default class InputText extends Component {
-
   constructor() {
     super();
   }
@@ -13,7 +12,15 @@ export default class InputText extends Component {
   render() {
     return (
       <div>
-        <input id={this.props.id} value={this.props.value} className={this.props.cssclass} placeholder={this.props.placeholderText} type={this.props.type ? this.props.type : 'text'} onChange={this.updateValue.bind(this)} disabled={this.props.disabled} />
+        <input
+          id={this.props.id}
+          value={this.props.value}
+          className={this.props.cssclass}
+          placeholder={this.props.placeholderText}
+          type={this.props.type ? this.props.type : 'text'}
+          onChange={this.updateValue.bind(this)}
+          disabled={this.props.disabled}
+        />
       </div>
     );
   }

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 require('./iconButton.less');
 
 export default class IconButton extends Component {
-
   constructor() {
     super();
   }
@@ -12,10 +11,8 @@ export default class IconButton extends Component {
     return (
       <div className="iconButton">
         <a role="button" onClick={this.props.onClick.bind(this)}>
-          <span className={('glyphicon ' + this.props.glyphIcon)} aria-hidden="true"></span>
-          <span>
-            {this.props.text}
-          </span>
+          <span className={'glyphicon ' + this.props.glyphIcon} aria-hidden="true"></span>
+          <span>{this.props.text}</span>
         </a>
       </div>
     );

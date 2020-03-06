@@ -10,10 +10,7 @@ import Notification from '../common/components/Notification';
 import TextArea from '../common/components/TextArea';
 import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-
-
 export default class DoPlanting extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -32,21 +29,24 @@ export default class DoPlanting extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/treeTypes').then(function(response) {
-      var result = response.data;
-      //move first element('Other') to the last position
-      result.splice(result.length - 1, 0, result.splice(0, 1)[0]);
-      that.setState({treeTypes: result, treeType: that.state.treeTypes[0]});
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+    axios
+      .get('http://localhost:8081/treeTypes')
+      .then(function(response) {
+        var result = response.data;
+        //move first element('Other') to the last position
+        result.splice(result.length - 1, 0, result.splice(0, 1)[0]);
+        that.setState({ treeTypes: result, treeType: that.state.treeTypes[0] });
+      })
+      .catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+      });
   }
 
   updateValue(toUpdate, value) {
@@ -85,41 +85,47 @@ export default class DoPlanting extends Component {
           'X-AUTH-TOKEN': localStorage.getItem('jwt')
         }
       };
-      axios.post('http://localhost:8081/plantSelf', this.state.selfPlantData, config).then(function(response) {
-        that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
-        that.props.loadUserDetails();
-        if (that.state.imageFile != null) {
-          config = {};
-          var data = new FormData();
-          data.append('treeId', response.data);
-          data.append('file', that.state.imageFile);
+      axios
+        .post('http://localhost:8081/plantSelf', this.state.selfPlantData, config)
+        .then(function(response) {
+          that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
+          that.props.loadUserDetails();
+          if (that.state.imageFile != null) {
+            config = {};
+            var data = new FormData();
+            data.append('treeId', response.data);
+            data.append('file', that.state.imageFile);
 
-          axios.post('http://localhost:8081/plantSelf/upload', data, config).then(function(response) {
+            axios
+              .post('http://localhost:8081/plantSelf/upload', data, config)
+              .then(function(response) {
+                browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
+              })
+              .catch(function(response) {
+                if (response instanceof Error) {
+                  console.error('Error', response.message);
+                } else {
+                  console.error(response.data);
+                  console.error(response.status);
+                  console.error(response.headers);
+                  console.error(response.config);
+                }
+              });
+          } else {
             browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
-          }).catch(function(response) {
-            if (response instanceof Error) {
-              console.error('Error', response.message);
-            } else {
-              console.error(response.data);
-              console.error(response.status);
-              console.error(response.headers);
-              console.error(response.config);
-            }
-          });
-        }else{
-          browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
-        }
-      }).catch(function(response) {
-        that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('TRY_AGAIN'), 'error');
-        if (response instanceof Error) {
-          console.error('Error', response.message);
-        } else {
-          console.error(response.data);
-          console.error(response.status);
-          console.error(response.headers);
-          console.error(response.config);
-        }
-      });
+          }
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('TRY_AGAIN'), 'error');
+          if (response instanceof Error) {
+            console.error('Error', response.message);
+          } else {
+            console.error(response.data);
+            console.error(response.status);
+            console.error(response.headers);
+            console.error(response.config);
+          }
+        });
     }
   }
 
@@ -142,7 +148,7 @@ export default class DoPlanting extends Component {
   }
 
   render() {
-    var myIcon = L.divIcon({className: 'glyphicon glyphicon-tree-deciduous'});
+    var myIcon = L.divIcon({ className: 'glyphicon glyphicon-tree-deciduous' });
     return (
       <div>
         <div className="row">
@@ -153,19 +159,21 @@ export default class DoPlanting extends Component {
         <div className="row">
           <div className="form-group col-md-6">
             <label htmlFor="when">{counterpart.translate('WHEN')}:</label>
-            <DateField id="when" updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true"/>
+            <DateField id="when" updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true" />
           </div>
           <div className="form-group col-md-6">
-            <label htmlFor="howmuch">{counterpart.translate('HOW_MANY')}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:&nbsp;{this.state.selfPlantData.amount}</label>
-            <input className="tree-slider" type="range" min="1" max="10" value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)}/>
-            <br/>
+            <label htmlFor="howmuch">
+              {counterpart.translate('HOW_MANY')}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:&nbsp;{this.state.selfPlantData.amount}
+            </label>
+            <input className="tree-slider" type="range" min="1" max="10" value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)} />
+            <br />
             <span>{counterpart.translate('HOW_MANY_HINT')}</span>
           </div>
         </div>
         <div className="row">
           <div className="form-group col-md-6">
             <label htmlFor="photo">{counterpart.translate('FOTO')}:</label>
-            <FileChooser id="photo" updateFile={this.updateImage.bind(this)}/>
+            <FileChooser id="photo" updateFile={this.updateImage.bind(this)} />
           </div>
           <div className="form-group col-md-6">
             <label htmlFor="treeType">{counterpart.translate('TREETYPE')}:</label>
@@ -173,11 +181,15 @@ export default class DoPlanting extends Component {
               {this.state.treeTypes.map(function(treeType, i) {
                 if (treeType.name != 'Default') {
                   return (
-                    <option value={treeType.id} key={i}>{getTextForSelectedLanguage(treeType.name)}</option>
+                    <option value={treeType.id} key={i}>
+                      {getTextForSelectedLanguage(treeType.name)}
+                    </option>
                   );
                 } else {
                   return (
-                    <option value={treeType.id} key={i}>{counterpart.translate('OTHER')}</option>
+                    <option value={treeType.id} key={i}>
+                      {counterpart.translate('OTHER')}
+                    </option>
                   );
                 }
               })}
@@ -187,24 +199,24 @@ export default class DoPlanting extends Component {
         <div className="row">
           <div className="form-group col-md-12">
             <label htmlFor="description">{counterpart.translate('SHORT_DESCRIPTION')}:</label>
-            <TextArea ide="description" toUpdate="description" updateValue={this.updateValue.bind(this)}/>
+            <TextArea ide="description" toUpdate="description" updateValue={this.updateValue.bind(this)} />
           </div>
         </div>
         <div className="row">
           <div className="form-group col-md-12">
             <label htmlFor="where">{counterpart.translate('WHERE')}:</label>
-            <Map id="where" center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)}  scrollWheelZoom={false}>
-              <TileLayer url='https://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'/>
-              <Marker position={this.state.treePosition} draggable={true} ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
+            <Map id="where" center={this.state.treePosition} zoom={5} onClick={this.updateTreePositionFromMapClick.bind(this)} scrollWheelZoom={false}>
+              <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors' />
+              <Marker position={this.state.treePosition} draggable={true} ref="marker" icon={myIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)} />
             </Map>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12 align-left">
-          <IconButton text={counterpart.translate('CREATE_PLANTING')} glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)}/>
+            <IconButton text={counterpart.translate('CREATE_PLANTING')} glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)} />
           </div>
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

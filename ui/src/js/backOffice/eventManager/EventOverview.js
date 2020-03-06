@@ -5,11 +5,9 @@ import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
 import { getConfig } from '../../common/RestHelper';
 
-
 require('./eventOverview.less');
 
 export default class EventOverview extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -24,15 +22,18 @@ export default class EventOverview extends Component {
   loadEvents() {
     var that = this;
     var config = getConfig();
-    axios.get('http://localhost:8083/events', config).then(function(response) {
-      var result = response.data;
-      that.setState({
-        events: result
+    axios
+      .get('http://localhost:8083/events', config)
+      .then(function(response) {
+        var result = response.data;
+        that.setState({
+          events: result
+        });
+      })
+      .catch(function(response) {
+        console.error(response);
+        that.refs.notification.addNotification('Fehler beim Laden der Events!', response.data + response.message, 'error');
       });
-    }).catch(function(response) {
-      console.error(response);
-      that.refs.notification.addNotification('Fehler beim Laden der Events!', response.data + response.message, 'error');
-    });
   }
 
   createEvent() {
@@ -47,26 +48,34 @@ export default class EventOverview extends Component {
     var that = this;
     return (
       <div className="container paddingTopBottom15 eventOverview">
-          <div className="row ">
-            <div className="col-md-12">
-              <h1>Events</h1>
-            </div>
+        <div className="row ">
+          <div className="col-md-12">
+            <h1>Events</h1>
           </div>
-          <div className="row">
-            <div className="col-md-12 project">
-              <IconButton glyphIcon="glyphicon-plus" text="NEUES EVENT ERSTELLEN" onClick={this.createEvent.bind(this)}/>
-            </div>
-          </div>
-          <div className="row">
-            {this.state.events.map(function(ev, i) {
-              return (<div className="col-md-4 event" key={i}>
-                        <p>{ev.name}</p>
-                        <IconButton glyphIcon="glyphicon-pencil" text="" onClick={() => {that.editEvent(ev.id);}}/>
-                      </div>);
-            })}
-          </div>
-          <Notification ref="notification"/>
         </div>
+        <div className="row">
+          <div className="col-md-12 project">
+            <IconButton glyphIcon="glyphicon-plus" text="NEUES EVENT ERSTELLEN" onClick={this.createEvent.bind(this)} />
+          </div>
+        </div>
+        <div className="row">
+          {this.state.events.map(function(ev, i) {
+            return (
+              <div className="col-md-4 event" key={i}>
+                <p>{ev.name}</p>
+                <IconButton
+                  glyphIcon="glyphicon-pencil"
+                  text=""
+                  onClick={() => {
+                    that.editEvent(ev.id);
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+        <Notification ref="notification" />
+      </div>
     );
   }
 }

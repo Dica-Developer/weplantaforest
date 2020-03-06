@@ -6,19 +6,13 @@ import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
 import { getConfig } from '../../common/RestHelper';
 
-
 require('./sliderImageManager.less');
 
 class SliderImage extends Component {
-
   constructor(props) {
     super(props);
-    var imageFileName = this.props.image.imageFileName == ''
-      ? ''
-      : this.props.image.imageFileName.substr(0, this.props.image.imageFileName.indexOf('.'));
-    var fileEnding = this.props.image.imageFileName == ''
-      ? ''
-      : this.props.image.imageFileName.substr(this.props.image.imageFileName.indexOf('.'));
+    var imageFileName = this.props.image.imageFileName == '' ? '' : this.props.image.imageFileName.substr(0, this.props.image.imageFileName.indexOf('.'));
+    var fileEnding = this.props.image.imageFileName == '' ? '' : this.props.image.imageFileName.substr(this.props.image.imageFileName.indexOf('.'));
     this.state = {
       file: null,
       imageFileName: imageFileName,
@@ -35,10 +29,8 @@ class SliderImage extends Component {
 
   updateImage(imageName, file) {
     if (file != null) {
-      var fileEnding = imageName != ''
-        ? imageName.substr(imageName.indexOf('.'))
-        : '';
-      this.setState({file: file, fileEnding: fileEnding});
+      var fileEnding = imageName != '' ? imageName.substr(imageName.indexOf('.')) : '';
+      this.setState({ file: file, fileEnding: fileEnding });
       var reader = new FileReader();
       var url = reader.readAsDataURL(file);
       reader.onloadend = function(e) {
@@ -47,24 +39,16 @@ class SliderImage extends Component {
         });
       }.bind(this);
     } else {
-      var imageFileName = this.props.image.imageFileName == ''
-        ? ''
-        : this.props.image.imageFileName.substr(0, this.props.image.imageFileName.indexOf('.'));
-      var fileEnding = this.props.image.imageFileName == ''
-        ? ''
-        : this.props.image.imageFileName.substr(this.props.image.imageFileName.indexOf('.'));
-      this.setState({imageFileName: imageFileName, file: file, fileEnding: fileEnding});
+      var imageFileName = this.props.image.imageFileName == '' ? '' : this.props.image.imageFileName.substr(0, this.props.image.imageFileName.indexOf('.'));
+      var fileEnding = this.props.image.imageFileName == '' ? '' : this.props.image.imageFileName.substr(this.props.image.imageFileName.indexOf('.'));
+      this.setState({ imageFileName: imageFileName, file: file, fileEnding: fileEnding });
     }
     this.forceUpdate();
   }
 
   updateImageFromParent(image) {
-    var imageFileName = image.imageFileName == ''
-      ? ''
-      : image.imageFileName.substr(0, image.imageFileName.indexOf('.'));
-    var fileEnding = image.imageFileName == ''
-      ? ''
-      : image.imageFileName.substr(image.imageFileName.indexOf('.'));
+    var imageFileName = image.imageFileName == '' ? '' : image.imageFileName.substr(0, image.imageFileName.indexOf('.'));
+    var fileEnding = image.imageFileName == '' ? '' : image.imageFileName.substr(image.imageFileName.indexOf('.'));
     this.state = {
       file: null,
       imageFileName: imageFileName,
@@ -84,9 +68,13 @@ class SliderImage extends Component {
       children: (
         <div>
           <button>Abbrechen</button>
-          <button onClick={() => {
-            this.deleteImage();
-          }}>OK</button>
+          <button
+            onClick={() => {
+              this.deleteImage();
+            }}
+          >
+            OK
+          </button>
         </div>
       )
     });
@@ -96,11 +84,14 @@ class SliderImage extends Component {
     if (this.state.imageId != null) {
       var that = this;
       var config = getConfig();
-      axios.delete('http://localhost:8083/mainSliderImage/delete?imageId=' + this.state.imageId, config).then(function(response) {
-        that.props.removeImage(that.props.arrayIndex);
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler!', response.data, 'error');
-      });
+      axios
+        .delete('http://localhost:8083/mainSliderImage/delete?imageId=' + this.state.imageId, config)
+        .then(function(response) {
+          that.props.removeImage(that.props.arrayIndex);
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification('Fehler!', response.data, 'error');
+        });
     } else {
       this.props.removeImage(this.props.arrayIndex);
     }
@@ -115,36 +106,38 @@ class SliderImage extends Component {
     };
     var config = getConfig();
     if (imageData.imageFileName != '.jpg') {
-      axios.post('http://localhost:8083/mainSliderImage/save', imageData, config).then(function(response) {
-        if (that.state.file != null) {
-          var imageId = response.data;
-          var imageFile = new FormData();
-          imageFile.append('imageId', imageId);
-          imageFile.append('file', that.state.file);
-          axios.post('http://localhost:8083/mainSliderImage/upload', imageFile, config).then(function(response) {
-            that.updateImageData(response.data);
-            that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
-          }).catch(function(response) {
-            that.refs.notification.addNotification('Fehler!', response.data, 'error');
-          });
-        } else {
-          that.refs.notification.addNotification('Geschafft!', 'Daten wurden geupdatet!', 'success');
-        }
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler!', response.data, 'error');
-      });
+      axios
+        .post('http://localhost:8083/mainSliderImage/save', imageData, config)
+        .then(function(response) {
+          if (that.state.file != null) {
+            var imageId = response.data;
+            var imageFile = new FormData();
+            imageFile.append('imageId', imageId);
+            imageFile.append('file', that.state.file);
+            axios
+              .post('http://localhost:8083/mainSliderImage/upload', imageFile, config)
+              .then(function(response) {
+                that.updateImageData(response.data);
+                that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
+              })
+              .catch(function(response) {
+                that.refs.notification.addNotification('Fehler!', response.data, 'error');
+              });
+          } else {
+            that.refs.notification.addNotification('Geschafft!', 'Daten wurden geupdatet!', 'success');
+          }
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification('Fehler!', response.data, 'error');
+        });
     } else {
       that.refs.notification.addNotification('Fehler!', 'Bitte gib einen Dateinamen an!', 'error');
     }
   }
 
   updateImageData(image) {
-    var imageFileName = image.imageFileName == ''
-      ? ''
-      : image.imageFileName.substr(0, image.imageFileName.indexOf('.'));
-    var fileEnding = image.imageFileName == ''
-      ? ''
-      : image.imageFileName.substr(image.imageFileName.indexOf('.'));
+    var imageFileName = image.imageFileName == '' ? '' : image.imageFileName.substr(0, image.imageFileName.indexOf('.'));
+    var fileEnding = image.imageFileName == '' ? '' : image.imageFileName.substr(image.imageFileName.indexOf('.'));
     this.state = {
       imageFileName: imageFileName,
       imageId: image.imageId,
@@ -156,10 +149,10 @@ class SliderImage extends Component {
   render() {
     var image;
     if (this.state.file != null) {
-      image = <img src={this.state.fileSrc} height="320" width="570"/>;
+      image = <img src={this.state.fileSrc} height="320" width="570" />;
     } else if (this.state.imageId != null) {
       let imageUrl = 'http://localhost:8081/mainSliderImage/' + this.state.imageFileName + this.state.fileEnding + '/570/320';
-      image = <img src={imageUrl}/>;
+      image = <img src={imageUrl} />;
     } else {
       image = '';
     }
@@ -181,28 +174,31 @@ class SliderImage extends Component {
         <div className="row">
           <div className="col-md-4">
             Dateiname:
-            <br/>
-            <input type="text" value={this.state.imageFileName} onChange={(event) => {
-              this.updateValue('imageFileName', event.target.value);
-            }}/>&nbsp;{this.state.fileEnding}<br/>
-            <FileChooser updateFile={this.updateImage.bind(this)}/>
-            <IconButton glyphIcon="glyphicon-trash" text="BILD LÖSCHEN" onClick={this.deleteImageConfirmation.bind(this)}/><br/>
-            <IconButton glyphIcon="glyphicon-floppy-save" text="BILD SPEICHERN" onClick={this.saveImage.bind(this)}/>
+            <br />
+            <input
+              type="text"
+              value={this.state.imageFileName}
+              onChange={event => {
+                this.updateValue('imageFileName', event.target.value);
+              }}
+            />
+            &nbsp;{this.state.fileEnding}
+            <br />
+            <FileChooser updateFile={this.updateImage.bind(this)} />
+            <IconButton glyphIcon="glyphicon-trash" text="BILD LÖSCHEN" onClick={this.deleteImageConfirmation.bind(this)} />
+            <br />
+            <IconButton glyphIcon="glyphicon-floppy-save" text="BILD SPEICHERN" onClick={this.saveImage.bind(this)} />
           </div>
-          <div className="col-md-8">
-            {image}
-          </div>
+          <div className="col-md-8">{image}</div>
         </div>
-        <Notification ref="notification"/>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification" />
+        <NotificationSystem ref="notificationSystem" style={style} />
       </div>
     );
   }
-
 }
 
 export default class SliderImageManager extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -212,11 +208,13 @@ export default class SliderImageManager extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/mainSliderImages').then(function(response) {
-      var result = response.data;
-      that.setState({slides: result});
-    }).catch(function(response) {});
-
+    axios
+      .get('http://localhost:8081/mainSliderImages')
+      .then(function(response) {
+        var result = response.data;
+        that.setState({ slides: result });
+      })
+      .catch(function(response) {});
   }
 
   removeImage(index) {
@@ -229,7 +227,7 @@ export default class SliderImageManager extends Component {
   }
 
   createSliderImage(index) {
-    return <SliderImage ref={'image_' + index} image={this.state.slides[index]} arrayIndex={index} key={index} removeImage={this.removeImage.bind(this)}/>;
+    return <SliderImage ref={'image_' + index} image={this.state.slides[index]} arrayIndex={index} key={index} removeImage={this.removeImage.bind(this)} />;
   }
 
   createSliderImages() {
@@ -251,7 +249,6 @@ export default class SliderImageManager extends Component {
     };
     this.state.slides.push(image);
     this.forceUpdate();
-
   }
 
   render() {
@@ -267,10 +264,10 @@ export default class SliderImageManager extends Component {
         {sliderImages}
         <div className="row">
           <div className="col-md-12 align-right">
-            <IconButton glyphIcon="glyphicon-plus" text="BILD HINZUFÜGEN" onClick={this.addImage.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-plus" text="BILD HINZUFÜGEN" onClick={this.addImage.bind(this)} />
           </div>
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

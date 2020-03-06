@@ -2,13 +2,11 @@ import counterpart from 'counterpart';
 import React, { Component } from 'react';
 import CircleButton from '../common/components/CircleButton';
 
-
 export default class ButtonBar extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      'clickedIndex': 0
+      clickedIndex: 0
     };
   }
 
@@ -32,32 +30,50 @@ export default class ButtonBar extends Component {
     return (
       <div className="buttonBar row">
         <div className="col-md-10">
-          <CircleButton text={counterpart.translate('RANKING_TYPES.ALL')} onClick={this.loadAllUser.bind(this)} glyphIcon="glyphicon-forward" className={clickedIndex == 0
-            ? 'circleButtonActive'
-            : ''}/>
-          <CircleButton text={counterpart.translate('RANKING_TYPES.PRIVATE')} onClick={() => {
-            this.loadOrgTypeRanking('PRIVATE', 1);
-          }} glyphIcon="glyphicon-forward" className={clickedIndex == 1
-            ? 'circleButtonActive'
-            : ''}/>
-          <CircleButton text={counterpart.translate('RANKING_TYPES.COMMERCIAL')} onClick={() => {
-            this.loadOrgTypeRanking('COMMERCIAL', 2);
-          }} glyphIcon="glyphicon-forward" className={clickedIndex == 2
-            ? 'circleButtonActive'
-            : ''}/>
-          <CircleButton text={counterpart.translate('RANKING_TYPES.NONPROFIT')} onClick={() => {
-            this.loadOrgTypeRanking('NONPROFIT', 3);
-          }} glyphIcon="glyphicon-forward" className={clickedIndex == 3
-            ? 'circleButtonActive'
-            : ''}/>
-          <CircleButton text={counterpart.translate('RANKING_TYPES.EDUCATIONAL')} onClick={() => {
-            this.loadOrgTypeRanking('EDUCATIONAL', 4);
-          }} glyphIcon="glyphicon-forward" className={clickedIndex == 4
-            ? 'circleButtonActive'
-            : ''}/>
-          <CircleButton text={counterpart.translate('RANKING_TYPES.TEAMS')} onClick={this.loadBestTeams.bind(this)} glyphIcon="glyphicon-forward" className={clickedIndex == 5
-            ? 'circleButtonActive'
-            : ''}/>
+          <CircleButton
+            text={counterpart.translate('RANKING_TYPES.ALL')}
+            onClick={this.loadAllUser.bind(this)}
+            glyphIcon="glyphicon-forward"
+            className={clickedIndex == 0 ? 'circleButtonActive' : ''}
+          />
+          <CircleButton
+            text={counterpart.translate('RANKING_TYPES.PRIVATE')}
+            onClick={() => {
+              this.loadOrgTypeRanking('PRIVATE', 1);
+            }}
+            glyphIcon="glyphicon-forward"
+            className={clickedIndex == 1 ? 'circleButtonActive' : ''}
+          />
+          <CircleButton
+            text={counterpart.translate('RANKING_TYPES.COMMERCIAL')}
+            onClick={() => {
+              this.loadOrgTypeRanking('COMMERCIAL', 2);
+            }}
+            glyphIcon="glyphicon-forward"
+            className={clickedIndex == 2 ? 'circleButtonActive' : ''}
+          />
+          <CircleButton
+            text={counterpart.translate('RANKING_TYPES.NONPROFIT')}
+            onClick={() => {
+              this.loadOrgTypeRanking('NONPROFIT', 3);
+            }}
+            glyphIcon="glyphicon-forward"
+            className={clickedIndex == 3 ? 'circleButtonActive' : ''}
+          />
+          <CircleButton
+            text={counterpart.translate('RANKING_TYPES.EDUCATIONAL')}
+            onClick={() => {
+              this.loadOrgTypeRanking('EDUCATIONAL', 4);
+            }}
+            glyphIcon="glyphicon-forward"
+            className={clickedIndex == 4 ? 'circleButtonActive' : ''}
+          />
+          <CircleButton
+            text={counterpart.translate('RANKING_TYPES.TEAMS')}
+            onClick={this.loadBestTeams.bind(this)}
+            glyphIcon="glyphicon-forward"
+            className={clickedIndex == 5 ? 'circleButtonActive' : ''}
+          />
         </div>
       </div>
     );

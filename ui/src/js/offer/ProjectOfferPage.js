@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import ProjectOffer from './ProjectOffer';
 import ThanksForOffer from './ThanksForOffer';
 
-
-
 require('./projectOffer.less');
 
 export default class ProjectOfferPage extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -15,23 +12,21 @@ export default class ProjectOfferPage extends Component {
     };
   }
 
-  setThankYou(value){
-    this.setState({thankYou: value});
+  setThankYou(value) {
+    this.setState({ thankYou: value });
   }
 
   render() {
     var content;
-    if(this.state.thankYou){
-        content = <ThanksForOffer setThankYou={this.setThankYou.bind(this)}/>;
-    }else{
-      content = <ProjectOffer setThankYou={this.setThankYou.bind(this)}/>;
+    if (this.state.thankYou) {
+      content = <ThanksForOffer setThankYou={this.setThankYou.bind(this)} />;
+    } else {
+      content = <ProjectOffer setThankYou={this.setThankYou.bind(this)} />;
     }
 
     return (
       <div className="container paddingTopBottom15">
-        <div className="row projectOffer">
-          {content}
-        </div>
+        <div className="row projectOffer">{content}</div>
       </div>
     );
   }

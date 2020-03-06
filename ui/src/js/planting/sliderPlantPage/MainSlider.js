@@ -2,7 +2,6 @@ import Accounting from 'accounting';
 import React, { Component } from 'react';
 
 export default class MainSlider extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -12,7 +11,7 @@ export default class MainSlider extends Component {
   }
 
   updateMainSlider(event) {
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
     this.balanceProjectSliders(event.target.value);
   }
 
@@ -25,7 +24,7 @@ export default class MainSlider extends Component {
     this.forceUpdate();
   }
 
-  setOverallPrice(value){
+  setOverallPrice(value) {
     this.state.price = value;
     this.forceUpdate();
   }
@@ -37,14 +36,13 @@ export default class MainSlider extends Component {
           PREIS&nbsp;/&nbsp;STÜCKZAHL&nbsp;<span className="bold">GESAMT</span>
         </div>
         <div className="sliderDiv">
-          <input type="range" min="1" max="100" step="1" value={this.state.value} onChange={this.updateMainSlider.bind(this)}/>
+          <input type="range" min="1" max="100" step="1" value={this.state.value} onChange={this.updateMainSlider.bind(this)} />
         </div>
         <div className="sliderSummary">
-          <div className="priceValue">
-              {Accounting.formatNumber(this.state.price / 100, 2, '.', ',')}&nbsp;€
-          </div>
+          <div className="priceValue">{Accounting.formatNumber(this.state.price / 100, 2, '.', ',')}&nbsp;€</div>
           <div className="treeValue">
-            {this.state.value}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"/>
+            {this.state.value}&nbsp;
+            <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true" />
           </div>
         </div>
       </div>

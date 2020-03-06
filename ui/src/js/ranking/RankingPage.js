@@ -10,18 +10,14 @@ import ButtonBar from './ButtonBar';
 import RankingItemLarge from './RankingItemLarge';
 import RankingItemSmall from './RankingItemSmall';
 
-
-
 require('./rankingPage.less');
 
 export default class RankingPage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       ranking: {
         content: []
-
       },
       orgTypeDesc: counterpart.translate('RANKING_TYPES.ALL'),
       chosenOrgType: '',
@@ -47,23 +43,25 @@ export default class RankingPage extends Component {
     if (withToggle) {
       this.toggleDiv();
     }
-    axios.get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
-      var result = response.data;
-      setTimeout(function() {
+    axios
+      .get('http://localhost:8081/ranking/bestUser?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear)
+      .then(function(response) {
+        var result = response.data;
+        setTimeout(function() {
+          that.refs['spinner'].hideSpinner();
+          that.setState({
+            ranking: result,
+            orgTypeDesc: counterpart.translate('RANKING_TYPES.ALL')
+          });
+          if (withToggle) {
+            that.toggleDiv();
+          }
+        }, 1000);
+      })
+      .catch(function(response) {
         that.refs['spinner'].hideSpinner();
-        that.setState({
-          ranking: result,
-          orgTypeDesc: counterpart.translate('RANKING_TYPES.ALL')
-        });
-        if (withToggle) {
-          that.toggleDiv();
-        }
-      }, 1000);
-
-    }).catch(function(response) {
-      that.refs['spinner'].hideSpinner();
-      that.refs.notification.addNotification('Fehler beim Laden der besten Nutzer!', '', 'error');
-    });
+        that.refs.notification.addNotification('Fehler beim Laden der besten Nutzer!', '', 'error');
+      });
   }
 
   loadBestTeams(withToggle) {
@@ -71,22 +69,24 @@ export default class RankingPage extends Component {
     if (withToggle) {
       this.toggleDiv();
     }
-    axios.get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
-      var result = response.data;
-      setTimeout(function() {
-        that.setState({
-          ranking: result,
-          orgTypeDesc: counterpart.translate('RANKING_TYPES.TEAMS')
-        });
-        if (withToggle) {
-          that.toggleDiv();
-        }
-      }, 1000);
-    }).catch(function(response) {
-      that.refs['spinner'].hideSpinner();
-      that.refs.notification.addNotification('Fehler beim Laden der besten Teams!', '', 'error');
-    });
-
+    axios
+      .get('http://localhost:8081/ranking/bestTeam?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear)
+      .then(function(response) {
+        var result = response.data;
+        setTimeout(function() {
+          that.setState({
+            ranking: result,
+            orgTypeDesc: counterpart.translate('RANKING_TYPES.TEAMS')
+          });
+          if (withToggle) {
+            that.toggleDiv();
+          }
+        }, 1000);
+      })
+      .catch(function(response) {
+        that.refs['spinner'].hideSpinner();
+        that.refs.notification.addNotification('Fehler beim Laden der besten Teams!', '', 'error');
+      });
   }
 
   loadOrgTypeRanking(orgType, withToggle) {
@@ -94,22 +94,25 @@ export default class RankingPage extends Component {
     if (withToggle) {
       this.toggleDiv();
     }
-    axios.get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear).then(function(response) {
-      var result = response.data;
-      setTimeout(function() {
-        that.setState({
-          ranking: result,
-          orgTypeDesc: counterpart.translate('RANKING_TYPES.' + orgType),
-          chosenOrgType: orgType
-        });
-        if (withToggle) {
-          that.toggleDiv();
-        }
-      }, 1000);
-    }).catch(function(response) {
-      that.refs['spinner'].hideSpinner();
-      that.refs.notification.addNotification('Fehler beim Laden der Rangliste!', '', 'error');
-    });
+    axios
+      .get('http://localhost:8081/ranking/bestOrgType/' + orgType + '?page=0&size=' + this.state.rankingEntries + '&lastYear=' + this.state.onlyLastYear)
+      .then(function(response) {
+        var result = response.data;
+        setTimeout(function() {
+          that.setState({
+            ranking: result,
+            orgTypeDesc: counterpart.translate('RANKING_TYPES.' + orgType),
+            chosenOrgType: orgType
+          });
+          if (withToggle) {
+            that.toggleDiv();
+          }
+        }, 1000);
+      })
+      .catch(function(response) {
+        that.refs['spinner'].hideSpinner();
+        that.refs.notification.addNotification('Fehler beim Laden der Rangliste!', '', 'error');
+      });
   }
 
   callMoreRankingEntries() {
@@ -146,10 +149,17 @@ export default class RankingPage extends Component {
         <div className="rankingPage">
           <div className="row">
             <div className="col-md-2 center-switch">
-              <LeftRightSwitch leftText={counterpart.translate('RANKING_TYPES.TOTAL')} rightText={counterpart.translate('RANKING_TYPES.LAST_YEAR')} leftValue={false} rightValue={true} chosenValue={this.state.onlyLastYear} onClick={this.updateLastYearFlag.bind(this)}/>
+              <LeftRightSwitch
+                leftText={counterpart.translate('RANKING_TYPES.TOTAL')}
+                rightText={counterpart.translate('RANKING_TYPES.LAST_YEAR')}
+                leftValue={false}
+                rightValue={true}
+                chosenValue={this.state.onlyLastYear}
+                onClick={this.updateLastYearFlag.bind(this)}
+              />
             </div>
-              <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)}/>
-              <hr />
+            <ButtonBar loadAllUser={this.loadAllUser.bind(this)} loadBestTeams={this.loadBestTeams.bind(this)} loadOrgTypeRanking={this.loadOrgTypeRanking.bind(this)} />
+            <hr />
           </div>
           <div className="row">
             <div ref="ranking" className={'col-md-12 rankingItems'}>
@@ -160,8 +170,8 @@ export default class RankingPage extends Component {
                   maxCo2 = content.co2Saved;
                 }
                 if (i > 0) {
-                  percentTree = 100 * content.amount / maxTree;
-                  percentCo2 = 100 * content.co2Saved / maxCo2;
+                  percentTree = (100 * content.amount) / maxTree;
+                  percentCo2 = (100 * content.co2Saved) / maxCo2;
                 }
                 let imageUrl;
                 let profileUrl;
@@ -173,18 +183,16 @@ export default class RankingPage extends Component {
                   profileUrl = '/team/' + encodeURIComponent(content.name);
                 }
                 if (i < 10) {
-                  return (<RankingItemLarge profileUrl={profileUrl} imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2}/>);
+                  return <RankingItemLarge profileUrl={profileUrl} imageUrl={imageUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} percentCo2={percentCo2} />;
                 } else {
-                  return (<RankingItemSmall profileUrl={profileUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree}/>);
+                  return <RankingItemSmall profileUrl={profileUrl} content={content} rankNumber={page * 25 + (i + 1)} key={i} percentTree={percentTree} />;
                 }
               })}
             </div>
           </div>
           <div className="row">
             <div className={'col-md-12 '}>
-              <a className={(this.state.ranking.last
-                ? 'no-display'
-                : 'pagingLink')} role="button" onClick={this.callMoreRankingEntries.bind(this)}>
+              <a className={this.state.ranking.last ? 'no-display' : 'pagingLink'} role="button" onClick={this.callMoreRankingEntries.bind(this)}>
                 <div>
                   <span className={'glyphicon glyphicon-menu-down'}></span>
                 </div>
@@ -192,8 +200,8 @@ export default class RankingPage extends Component {
             </div>
           </div>
         </div>
-        <LoadingSpinner ref="spinner"/>
-        <Notification ref="notification"/>
+        <LoadingSpinner ref="spinner" />
+        <Notification ref="notification" />
       </div>
     );
   }

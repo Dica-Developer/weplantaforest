@@ -3,11 +3,9 @@ import React, { Component } from 'react';
 import DatePicker from 'react-16-bootstrap-date-picker';
 import Notification from './Notification';
 
-
 require('./dateField.less');
 
 export default class DateField extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -17,9 +15,9 @@ export default class DateField extends Component {
     };
   }
 
-  componentWillReceiveProps(){
-    if(this.props.date){
-      this.setState({value: new Date(this.props.date).toISOString()});
+  componentWillReceiveProps() {
+    if (this.props.date) {
+      this.setState({ value: new Date(this.props.date).toISOString() });
     }
   }
 
@@ -65,8 +63,15 @@ export default class DateField extends Component {
   render() {
     return (
       <div className="dateField">
-        <DatePicker value={this.state.value} onChange={this.updateValue.bind(this)} onClear={this.resetDate.bind(this)} dateFormat={this.state.dateFormat} calendarPlacement="right" weekStartsOn={this.state.weekStartsOn} />
-        <Notification ref="notification"/>
+        <DatePicker
+          value={this.state.value}
+          onChange={this.updateValue.bind(this)}
+          onClear={this.resetDate.bind(this)}
+          dateFormat={this.state.dateFormat}
+          calendarPlacement="right"
+          weekStartsOn={this.state.weekStartsOn}
+        />
+        <Notification ref="notification" />
       </div>
     );
   }

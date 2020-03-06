@@ -7,9 +7,7 @@ import InputText from '../common/components/InputText';
 import Notification from '../common/components/Notification';
 import TextArea from '../common/components/TextArea';
 
-
 export default class ProjectOffer extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -25,30 +23,30 @@ export default class ProjectOffer extends Component {
   }
 
   updateValue(toUpdate, value) {
-    this.setState({[toUpdate]: value});
+    this.setState({ [toUpdate]: value });
   }
 
   updateAfforestation(event) {
     if (event.target.value == '1') {
-      this.setState({isAfforestation: true});
+      this.setState({ isAfforestation: true });
     } else {
-      this.setState({isAfforestation: false});
+      this.setState({ isAfforestation: false });
     }
   }
 
   updateSelling(event) {
     if (event.target.value == '1') {
-      this.setState({isSelling: true});
+      this.setState({ isSelling: true });
     } else {
-      this.setState({isSelling: false});
+      this.setState({ isSelling: false });
     }
   }
 
   updateLeasing(event) {
     if (event.target.value == '1') {
-      this.setState({isLeasing: true});
+      this.setState({ isLeasing: true });
     } else {
-      this.setState({isLeasing: false});
+      this.setState({ isLeasing: false });
     }
   }
 
@@ -61,19 +59,22 @@ export default class ProjectOffer extends Component {
         }
       };
 
-      axios.post('http://localhost:8081/project/offer', this.state, config).then(function(response) {
-        that.props.setThankYou(true);
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', 'Bitte füll alle notwendigen Felder aus!', 'error');
-        if (response instanceof Error) {
-          console.error('Error', response.message);
-        } else {
-          console.error(response.data);
-          console.error(response.status);
-          console.error(response.headers);
-          console.error(response.config);
-        }
-      });
+      axios
+        .post('http://localhost:8081/project/offer', this.state, config)
+        .then(function(response) {
+          that.props.setThankYou(true);
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', 'Bitte füll alle notwendigen Felder aus!', 'error');
+          if (response instanceof Error) {
+            console.error('Error', response.message);
+          } else {
+            console.error(response.data);
+            console.error(response.status);
+            console.error(response.headers);
+            console.error(response.config);
+          }
+        });
     }
   }
 
@@ -95,23 +96,29 @@ export default class ProjectOffer extends Component {
             <h3>{counterpart.translate('OFFER_ACREAGE_TEXTS.TEXT_8')}</h3>
           </div>
           <div className="form-group">
-              <label htmlFor="firstname_familyname">{counterpart.translate('FIRST_AND_LASTNAME')} *:</label>
-              <InputText cssclass="form-control" toUpdate="name" id="firstname_familyname" placeholderText={counterpart.translate('FIRST_AND_LASTNAME_PLACEHOLDER')} updateValue={this.updateValue.bind(this)}/>
-            </div>
-          <div className="form-group">
-              <label htmlFor="e_mail">{counterpart.translate('MAIL')} *:</label>
-              <InputText cssclass="form-control" id="e_mail" toUpdate="name" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} updateValue={this.updateValue.bind(this)}/>
+            <label htmlFor="firstname_familyname">{counterpart.translate('FIRST_AND_LASTNAME')} *:</label>
+            <InputText
+              cssclass="form-control"
+              toUpdate="name"
+              id="firstname_familyname"
+              placeholderText={counterpart.translate('FIRST_AND_LASTNAME_PLACEHOLDER')}
+              updateValue={this.updateValue.bind(this)}
+            />
           </div>
           <div className="form-group">
-              <label htmlFor="message">{counterpart.translate('MESSAGE')} *:</label>
-              <TextArea cssclass="form-control" id="message" toUpdate="comment" placeholderText={counterpart.translate('MESSAGE_PLACEHOLDER')} updateValue={this.updateValue.bind(this)}/>
+            <label htmlFor="e_mail">{counterpart.translate('MAIL')} *:</label>
+            <InputText cssclass="form-control" id="e_mail" toUpdate="name" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} updateValue={this.updateValue.bind(this)} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="message">{counterpart.translate('MESSAGE')} *:</label>
+            <TextArea cssclass="form-control" id="message" toUpdate="comment" placeholderText={counterpart.translate('MESSAGE_PLACEHOLDER')} updateValue={this.updateValue.bind(this)} />
           </div>
           <div className="col-md-12 item-align-start">
-            <Captcha ref="captcha"/>
+            <Captcha ref="captcha" />
           </div>
           <div className="col-md-12 item-align-start">
-            <IconButton text={counterpart.translate('SEND_OFFER')} glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)}/>
-            <Notification ref="notification"/>
+            <IconButton text={counterpart.translate('SEND_OFFER')} glyphIcon="glyphicon-envelope" onClick={this.sendOffer.bind(this)} />
+            <Notification ref="notification" />
           </div>
         </div>
       </div>

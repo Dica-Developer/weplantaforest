@@ -3,14 +3,12 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { createProfileImageUrl } from '../common/ImageHelper';
 
-
-
 class Member extends Component {
   constructor(props) {
     super(props);
   }
 
-  linkToProfile(){
+  linkToProfile() {
     browserHistory.push('/user/' + encodeURIComponent(this.props.member.name));
   }
 
@@ -20,11 +18,9 @@ class Member extends Component {
       <div className="member align-center">
         <a role="button" onClick={this.linkToProfile.bind(this)}>
           <div className="image">
-            <img src={imageUrl} width="80" height="80"/>
+            <img src={imageUrl} width="80" height="80" />
           </div>
-          <div className="name">
-            {he.decode(this.props.member.name)}
-          </div>
+          <div className="name">{he.decode(this.props.member.name)}</div>
         </a>
       </div>
     );
@@ -41,7 +37,7 @@ export default class TeamMember extends Component {
       <div className="teamMember">
         <h1>Mitglieder</h1>
         {this.props.teamMember.content.map(function(member, i) {
-          return (<Member member={member} key={i}/>);
+          return <Member member={member} key={i} />;
         })}
       </div>
     );

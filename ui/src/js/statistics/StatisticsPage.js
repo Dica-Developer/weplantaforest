@@ -5,13 +5,9 @@ import TreesPerMonth from './TreesPerMonth';
 import TreesPerOrgType from './TreesPerOrgType';
 import TreesPerYear from './TreesPerYear';
 
-
-
-
 require('./statisticsPage.less');
 
 export default class StatisticsPage extends Component {
-
   constructor() {
     super();
     this.state = {};
@@ -31,28 +27,29 @@ export default class StatisticsPage extends Component {
               <h2>{counterpart.translate('PLANTED_TREES')}</h2>
             </div>
           </div>
-          <TreesPerYear/>
+          <TreesPerYear />
           <div className="row">
             <div className="col-md-12">
-              <h2 dangerouslySetInnerHTML={{
-                __html: counterpart.translate('CO2_BOUND')
-              }}></h2>
+              <h2
+                dangerouslySetInnerHTML={{
+                  __html: counterpart.translate('CO2_BOUND')
+                }}
+              ></h2>
             </div>
           </div>
-          <Co2PerYear/>
+          <Co2PerYear />
           <div className="row">
             <div className="col-md-12">
               <h2>{counterpart.translate('TREESPLANTED_PERDONORTYPE')}</h2>
             </div>
           </div>
-          <TreesPerOrgType/>
-            <div className="row">
-              <div className="col-md-12">
-                <h2>{counterpart.translate('TREESPLANTED_PERMONTH')}</h2>
-              </div>
+          <TreesPerOrgType />
+          <div className="row">
+            <div className="col-md-12">
+              <h2>{counterpart.translate('TREESPLANTED_PERMONTH')}</h2>
             </div>
-          <TreesPerMonth/>
-
+          </div>
+          <TreesPerMonth />
         </div>
       </div>
     );

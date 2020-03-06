@@ -4,12 +4,9 @@ import React, { Component } from 'react';
 import Notification from '../../common/components/Notification';
 import { getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
 
-
-
 require('./article.less');
 
 export default class Article extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -20,7 +17,7 @@ export default class Article extends Component {
   }
 
   scalingDone() {
-    this.setState({scaleResult: false});
+    this.setState({ scaleResult: false });
   }
 
   componentWillUnmount() {
@@ -42,15 +39,19 @@ export default class Article extends Component {
   }
 
   updateAmount(event) {
-    if (event.target.value <= (this.props.article.amount - this.props.article.alreadyPlanted)) {
+    if (event.target.value <= this.props.article.amount - this.props.article.alreadyPlanted) {
       this.state.amount = event.target.value;
       this.props.updatePrice();
       this.forceUpdate();
     } else {
-      this.refs.notification.addNotification(counterpart.translate('TOO_MANY_TREES.TITLE'), counterpart.translate('TOO_MANY_TREES.TEXT_1') + (this.props.article.amount - this.props.article.alreadyPlanted) + counterpart.translate('TOO_MANY_TREES.TEXT_2'), 'error');
+      this.refs.notification.addNotification(
+        counterpart.translate('TOO_MANY_TREES.TITLE'),
+        counterpart.translate('TOO_MANY_TREES.TEXT_1') + (this.props.article.amount - this.props.article.alreadyPlanted) + counterpart.translate('TOO_MANY_TREES.TEXT_2'),
+        'error'
+      );
       this.refs.amountInput.value = this.state.amount;
     }
-    this.setState({scaleResult: true});
+    this.setState({ scaleResult: true });
   }
 
   render() {
@@ -58,23 +59,25 @@ export default class Article extends Component {
     return (
       <div className="article">
         <div className="image">
-          <img src={imageUrl}/>
+          <img src={imageUrl} />
         </div>
         <div>
           <p>
-            <span className="bold uppercase">{getTextForSelectedLanguage(this.props.article.treeType.name)}</span><br/><span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong / 100, 2, '.', ',')}&nbsp;€</span>
+            <span className="bold uppercase">{getTextForSelectedLanguage(this.props.article.treeType.name)}</span>
+            <br />
+            <span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong / 100, 2, '.', ',')}&nbsp;€</span>
           </p>
         </div>
         <div>
-          <input ref="amountInput" type="text" value={this.state.value} onChange={this.updateAmount.bind(this)}/>
+          <input ref="amountInput" type="text" value={this.state.value} onChange={this.updateAmount.bind(this)} />
           &nbsp;/&nbsp;{this.props.article.amount - this.props.article.alreadyPlanted}
         </div>
         <div>
-          <p ref="result" className={(this.state.scaleResult
-            ? 'scaleResult'
-            : ' ') + ' bold'}>{Accounting.formatNumber(this.state.amount * this.props.article.price.priceAsLong / 100, 2, '.', ',')}&nbsp;€</p>
-        </div >
-        <Notification ref="notification"/>
+          <p ref="result" className={(this.state.scaleResult ? 'scaleResult' : ' ') + ' bold'}>
+            {Accounting.formatNumber((this.state.amount * this.props.article.price.priceAsLong) / 100, 2, '.', ',')}&nbsp;€
+          </p>
+        </div>
+        <Notification ref="notification" />
       </div>
     );
   }

@@ -80,8 +80,8 @@ module.exports = {
   REGISTRATE: 'Registrieren',
 
   NEWSLETTER_CB: 'Ich möchte den Newsletter erhalten.',
-  AGB_CB: 'Ich habe die <a href=\'/terms\' target=\'_blank\'>Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere diese.',
-  DSGVO_CB: 'Ich habe die <a href=\'/privacy\' target=\'_blank\'>Datenschutzerklärung</a> gelesen und akzeptiere diese.',
+  AGB_CB: "Ich habe die <a href='/terms' target='_blank'>Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere diese.",
+  DSGVO_CB: "Ich habe die <a href='/privacy' target='_blank'>Datenschutzerklärung</a> gelesen und akzeptiere diese.",
 
   USERNAME_PLACEHOLDER: 'Bitte gib deinen Benutzernamen ein.',
   PASSWORD_PLACEHOLDER: 'Bitte gib dein Passwort ein.',
@@ -99,7 +99,8 @@ module.exports = {
 
   ERROR: 'Ein Fehler ist aufgetreten!',
   WRONG_USERNAME_PASSWORD: 'Benutzername und Passwort stimmen nicht überein.',
-  LOCKED_USER: 'Der Account ist noch nicht aktiviert. Bitte klicke auf den Aktivierungslink, den du nach der Registrierung erhalten hast. Prüfe gegebenfalls auch deinen Spam-Ordner. Eine weitere Möglichkeit ist, dass der Nutzer vom Administrator gebannt wurde.',
+  LOCKED_USER:
+    'Der Account ist noch nicht aktiviert. Bitte klicke auf den Aktivierungslink, den du nach der Registrierung erhalten hast. Prüfe gegebenfalls auch deinen Spam-Ordner. Eine weitere Möglichkeit ist, dass der Nutzer vom Administrator gebannt wurde.',
 
   USER_NOT_FOUND: 'Nutzer nicht gefunden.',
   INVALID_ACTIVATION_KEY: 'Der Aktivierungs-Link ist ungültig.',
@@ -242,7 +243,8 @@ module.exports = {
     TEXT_3: 'für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen),',
     TEXT_4: 'für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen),',
     TEXT_5: 'nach Möglichkeit maximal 6.000 Euro/ha kosten.',
-    TEXT_6: 'Bei uns ist Land in guten, gemeinnützigen Händen. Wir freuen uns auch über bestehenden Wald, um ihn langfristig unter Schutz zu stellen. Denn sollten wir irgendwann mal nicht mehr existieren, werden die Werte von I Plant A Tree satzungsgemäß an eine andere gemeinnützige Umweltorganisation übertragen.',
+    TEXT_6:
+      'Bei uns ist Land in guten, gemeinnützigen Händen. Wir freuen uns auch über bestehenden Wald, um ihn langfristig unter Schutz zu stellen. Denn sollten wir irgendwann mal nicht mehr existieren, werden die Werte von I Plant A Tree satzungsgemäß an eine andere gemeinnützige Umweltorganisation übertragen.',
     TEXT_7: 'Falls Du, jemand aus Deiner Familie oder Deinem Freundeskreis eine Fläche verkaufen, verschenken oder vererben möchte, melde Dich bitte bei uns.',
     TEXT_8: 'Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.'
   },
@@ -269,7 +271,7 @@ module.exports = {
     EDUCATIONAL: 'Schulen',
     TEAMS: 'Teams',
     LAST_YEAR: 'Letztes Jahr',
-    TOTAL: 'Insgesamt',
+    TOTAL: 'Insgesamt'
   },
 
   CREATE_PLANTING: 'Eigene Pfanzung erstellen',
@@ -290,7 +292,7 @@ module.exports = {
   UPLOAD_FAILED: 'Upload fehlgeschlagen!',
   UPLOAD_FINISHED: 'Upload erfolgreich!',
 
-  SVG_TITLES:  {
+  SVG_TITLES: {
     shovel: 'selbst pflanzen',
     mouse: 'online pflanzen',
     secateurs: 'Baumservice',
@@ -475,7 +477,8 @@ module.exports = {
   CHOOSE_PAYMENT: 'Zahlungsmethode wählen',
 
   SEPA_HINT_TITLE: 'Bitte überprüfe die Richtigkeit Deiner Angaben',
-  SEPA_HINT_TEXT: 'Damit wir Dir eine Spendenquittung ausstellen können, benötigen wir Deinen Namen und Deine Anschrift. Voraussetzung für den Versand der Spendenquittung ist eine gültige E-Mailadresse.',
+  SEPA_HINT_TEXT:
+    'Damit wir Dir eine Spendenquittung ausstellen können, benötigen wir Deinen Namen und Deine Anschrift. Voraussetzung für den Versand der Spendenquittung ist eine gültige E-Mailadresse.',
 
   BANK_UNKNOWN_ERROR: 'Es ist ein unerwarteter Fehler bei der Übertragung zur Spendenbank aufgetreten (Parameter).',
   BANK_INVALID_ACCOUNT: 'Laut Pruefverfahren invalide Kontonummer',

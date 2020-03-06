@@ -8,11 +8,9 @@ import { getConfig } from '../../common/RestHelper';
 import CodeGenerator from './CodeGenerator';
 import CodeOverview from './CodeOverview';
 
-
 require('./eventEditor.less');
 
 export default class EventEditor extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -69,29 +67,35 @@ export default class EventEditor extends Component {
     let eventId = this.state.eventt.id;
     axios.get('http://localhost:8083/event/codes/' + encodeURIComponent(eventId), this.state.restConfig).then(function(response) {
       var result = response.data;
-      that.setState({codes: result});
+      that.setState({ codes: result });
       that.refs.codes.setCodesAndCreateRows(result);
     });
   }
 
   loadUser() {
     var that = this;
-    axios.get('http://localhost:8083/users', this.state.restConfig).then(function(response) {
-      var result = response.data;
-      that.createValueLabelPairsForUser(result);
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der Nutzer!', response.data + response.message, 'error');
-    });
+    axios
+      .get('http://localhost:8083/users', this.state.restConfig)
+      .then(function(response) {
+        var result = response.data;
+        that.createValueLabelPairsForUser(result);
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden der Nutzer!', response.data + response.message, 'error');
+      });
   }
 
   loadTeams() {
     var that = this;
-    axios.get('http://localhost:8083/teams', this.state.restConfig).then(function(response) {
-      var result = response.data;
-      that.createValueLabelPairsForTeams(result);
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der Teams!', response.data + response.message, 'error');
-    });
+    axios
+      .get('http://localhost:8083/teams', this.state.restConfig)
+      .then(function(response) {
+        var result = response.data;
+        that.createValueLabelPairsForTeams(result);
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden der Teams!', response.data + response.message, 'error');
+      });
   }
 
   createValueLabelPairsForUser(users) {
@@ -144,7 +148,7 @@ export default class EventEditor extends Component {
     this.forceUpdate();
   }
 
-  updatePlantBag(price, projectItems, projectName){
+  updatePlantBag(price, projectItems, projectName) {
     this.props.route.updatePlantBag(price, projectItems, projectName, false);
   }
 
@@ -157,42 +161,48 @@ export default class EventEditor extends Component {
     eventToCreate.user = this.state.eventt.user;
     if (this.state.eventt.user.id && this.state.eventt.name) {
       if (this.state.eventt.id != null) {
-        axios.put('http://localhost:8083/event', eventToCreate, this.state.restConfig).then(function(response) {
-          var result = response.data;
-          if (!result.team) {
-            result.team = {
-              id: null,
-              name: ''
-            };
-          }
-          that.setState({
-            eventt: result
+        axios
+          .put('http://localhost:8083/event', eventToCreate, this.state.restConfig)
+          .then(function(response) {
+            var result = response.data;
+            if (!result.team) {
+              result.team = {
+                id: null,
+                name: ''
+              };
+            }
+            that.setState({
+              eventt: result
+            });
+            that.refs.codegenerator.setUserId(result.user.id);
+            that.refs.notification.addNotification('Geschafft!', 'Event wurde aktualisiert.', 'success');
+            that.forceUpdate();
+          })
+          .catch(function(response) {
+            that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
           });
-          that.refs.codegenerator.setUserId(result.user.id);
-          that.refs.notification.addNotification('Geschafft!', 'Event wurde aktualisiert.', 'success');
-          that.forceUpdate();
-        }).catch(function(response) {
-          that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
-        });
       } else {
-        axios.post('http://localhost:8083/event', eventToCreate, this.state.restConfig).then(function(response) {
-          var result = response.data;
-          if (!result.team) {
-            result.team = {
-              id: null,
-              name: ''
-            };
-          }
-          that.setState({
-            eventt: result
+        axios
+          .post('http://localhost:8083/event', eventToCreate, this.state.restConfig)
+          .then(function(response) {
+            var result = response.data;
+            if (!result.team) {
+              result.team = {
+                id: null,
+                name: ''
+              };
+            }
+            that.setState({
+              eventt: result
+            });
+            that.refs.codegenerator.setEventId(result.id);
+            that.refs.codegenerator.setUserId(result.user.id);
+            that.refs.notification.addNotification('Geschafft!', 'Event wurde erzeugt.', 'success');
+            that.forceUpdate();
+          })
+          .catch(function(response) {
+            that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
           });
-          that.refs.codegenerator.setEventId(result.id);
-          that.refs.codegenerator.setUserId(result.user.id);
-          that.refs.notification.addNotification('Geschafft!', 'Event wurde erzeugt.', 'success');
-          that.forceUpdate();
-        }).catch(function(response) {
-          that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
-        });
       }
     } else {
       that.refs.notification.addNotification('Fehler!', 'User und/oder Name fehlt!', 'error');
@@ -208,33 +218,45 @@ export default class EventEditor extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4"><label className="input-label">Name</label></div>
-            <div className="col-md-8"><input type="text" value={this.state.eventt.name} onChange={(event) => {
-              this.updateEventName(event.target.value);
-            }}/></div>
-        </div>
-        <div className="row">
-          <div className="col-md-4"><label className="select-label">User</label></div>
+          <div className="col-md-4">
+            <label className="input-label">Name</label>
+          </div>
           <div className="col-md-8">
-            <VirtualizedSelect name="user-select" value={this.state.eventt.user.id} filterOptions={this.state.usersFilter} options={this.state.users} onChange={this.updateUserForEvent.bind(this)}/>
+            <input
+              type="text"
+              value={this.state.eventt.name}
+              onChange={event => {
+                this.updateEventName(event.target.value);
+              }}
+            />
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4"><label className="select-label">Team</label></div>
+          <div className="col-md-4">
+            <label className="select-label">User</label>
+          </div>
           <div className="col-md-8">
-            <VirtualizedSelect name="team-select" value={this.state.eventt.team ? this.state.eventt.team.id : null} options={this.state.teams} onChange={this.updateTeamForEvent.bind(this)}/>
+            <VirtualizedSelect name="user-select" value={this.state.eventt.user.id} filterOptions={this.state.usersFilter} options={this.state.users} onChange={this.updateUserForEvent.bind(this)} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            <label className="select-label">Team</label>
+          </div>
+          <div className="col-md-8">
+            <VirtualizedSelect name="team-select" value={this.state.eventt.team ? this.state.eventt.team.id : null} options={this.state.teams} onChange={this.updateTeamForEvent.bind(this)} />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12 save">
-            <IconButton glyphIcon="glyphicon-floppy-open" text="EVENT SPEICHERN" onClick={this.saveEvent.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-floppy-open" text="EVENT SPEICHERN" onClick={this.saveEvent.bind(this)} />
           </div>
         </div>
         <div className={this.state.eventt.id ? '' : 'no-display'}>
-          <CodeGenerator ref="codegenerator" updatePlantBag={this.updatePlantBag.bind(this)} loadCodesForEvent={this.loadCodesForEvent.bind(this)}/>
-          <CodeOverview ref="codes" codes={this.state.codes}/>
+          <CodeGenerator ref="codegenerator" updatePlantBag={this.updatePlantBag.bind(this)} loadCodesForEvent={this.loadCodesForEvent.bind(this)} />
+          <CodeOverview ref="codes" codes={this.state.codes} />
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

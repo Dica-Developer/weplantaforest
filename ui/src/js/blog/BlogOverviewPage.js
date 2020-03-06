@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-
 require('./blogOverviewPage.less');
 
 class Article extends Component {
@@ -13,7 +12,7 @@ class Article extends Component {
     super(props);
   }
 
-  switchToBlogEntry(){
+  switchToBlogEntry() {
     browserHistory.push('/blog/' + this.props.content.id);
   }
 
@@ -23,12 +22,18 @@ class Article extends Component {
       <div className="article-entry">
         <a role="button" onClick={this.switchToBlogEntry.bind(this)}>
           <h3>{getTextForSelectedLanguage(this.props.content.title)}</h3>
-          <span>{moment(this.props.content.createdOn).format('DD.MM.YYYY')}{' ' + counterpart.translate('OF') + ' '}{this.props.content.owner.name}</span>
+          <span>
+            {moment(this.props.content.createdOn).format('DD.MM.YYYY')}
+            {' ' + counterpart.translate('OF') + ' '}
+            {this.props.content.owner.name}
+          </span>
           <div className="article-content">
             <img src={imageUrl} />
-            <p dangerouslySetInnerHTML={{
-              __html: getTextForSelectedLanguage(this.props.content.intro)
-            }}/>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: getTextForSelectedLanguage(this.props.content.intro)
+              }}
+            />
           </div>
         </a>
       </div>
@@ -36,7 +41,6 @@ class Article extends Component {
   }
 }
 export default class BlogOverviewPage extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -51,29 +55,32 @@ export default class BlogOverviewPage extends Component {
     this.callArticleEntries();
   }
 
-  callMoreArticleEntries(){
+  callMoreArticleEntries() {
     this.state.entryCount = this.state.entryCount + 3;
     this.forceUpdate();
     this.callArticleEntries();
   }
 
-  callArticleEntries(){
-        var that = this;
-    axios.get('http://localhost:8082/articlesPaged?articleType=BLOG&language=' + localStorage.getItem('language') +'&page=0&size=' + this.state.entryCount).then(function(response) {
-      var result = response.data;
-      that.setState({
-        articles: result
+  callArticleEntries() {
+    var that = this;
+    axios
+      .get('http://localhost:8082/articlesPaged?articleType=BLOG&language=' + localStorage.getItem('language') + '&page=0&size=' + this.state.entryCount)
+      .then(function(response) {
+        var result = response.data;
+        that.setState({
+          articles: result
+        });
+      })
+      .catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
       });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
   }
 
   render() {
@@ -87,13 +94,15 @@ export default class BlogOverviewPage extends Component {
         <div className="row">
           {this.state.articles.content.map(function(article, i) {
             return (
-              <div className="col-md-4" key={i}><Article content={article} /></div>
+              <div className="col-md-4" key={i}>
+                <Article content={article} />
+              </div>
             );
           })}
         </div>
         <div className="row">
           <div className={'col-md-12'}>
-            <a className={(this.state.articles.last ? 'no-display' : 'pagingLink')} role="button" onClick={this.callMoreArticleEntries.bind(this)}>
+            <a className={this.state.articles.last ? 'no-display' : 'pagingLink'} role="button" onClick={this.callMoreArticleEntries.bind(this)}>
               <div>
                 <span className={'glyphicon glyphicon-menu-down'}></span>
               </div>

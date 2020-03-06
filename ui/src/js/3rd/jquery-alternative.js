@@ -1,4 +1,4 @@
-export function slideUp(target, duration=500) {
+export function slideUp(target, duration = 500) {
   target.style.transitionProperty = 'height, margin, padding';
   target.style.transitionDuration = duration + 'ms';
   target.style.boxSizing = 'border-box';
@@ -10,7 +10,7 @@ export function slideUp(target, duration=500) {
   target.style.paddingBottom = 0;
   target.style.marginTop = 0;
   target.style.marginBottom = 0;
-  window.setTimeout( () => {
+  window.setTimeout(() => {
     target.style.display = 'none';
     target.style.removeProperty('height');
     target.style.removeProperty('padding-top');
@@ -22,9 +22,9 @@ export function slideUp(target, duration=500) {
     target.style.removeProperty('transition-property');
     //alert("!");
   }, duration);
-};
+}
 
-export function slideDown(target, duration=500) {
+export function slideDown(target, duration = 500) {
   target.style.removeProperty('display');
   let display = window.getComputedStyle(target).display;
 
@@ -49,13 +49,13 @@ export function slideDown(target, duration=500) {
   target.style.removeProperty('padding-bottom');
   target.style.removeProperty('margin-top');
   target.style.removeProperty('margin-bottom');
-  window.setTimeout( () => {
+  window.setTimeout(() => {
     target.style.removeProperty('height');
     target.style.removeProperty('overflow');
     target.style.removeProperty('transition-duration');
     target.style.removeProperty('transition-property');
   }, duration);
-};
+}
 
 export function slideToggle(target, duration = 500) {
   if (window.getComputedStyle(target).display === 'none') {
@@ -63,5 +63,4 @@ export function slideToggle(target, duration = 500) {
   } else {
     return slideUp(target, duration);
   }
-};
-
+}

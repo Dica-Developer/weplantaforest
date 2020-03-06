@@ -6,9 +6,7 @@ import SvgButton from '../../common/components/SvgButton';
 import { getConfig } from '../../common/RestHelper';
 import Project from '../../planting/customPlantPage/Project';
 
-
 export default class CodeGenerator extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -28,25 +26,28 @@ export default class CodeGenerator extends Component {
 
   loadProjects() {
     var that = this;
-    axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
-      var result = response.data;
-      that.setState({projects: result});
-      that.forceUpdate();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der aktiven Projekte!', response.data + response.message, 'error');
-    });
+    axios
+      .get('http://localhost:8081/reports/activeProjects')
+      .then(function(response) {
+        var result = response.data;
+        that.setState({ projects: result });
+        that.forceUpdate();
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden der aktiven Projekte!', response.data + response.message, 'error');
+      });
   }
 
   setEventId(eventId) {
-    this.setState({eventId: eventId});
+    this.setState({ eventId: eventId });
   }
 
   setUserId(userId) {
-    this.setState({userId: userId});
+    this.setState({ userId: userId });
   }
 
   updateAmount(amount) {
-    this.setState({amount: amount});
+    this.setState({ amount: amount });
   }
 
   generateCodes() {
@@ -54,36 +55,44 @@ export default class CodeGenerator extends Component {
     this.updatePlantBag();
     var plantBag = JSON.parse(localStorage.getItem('plantBag'));
     var plantBagToValidate = this.createPlantBagToValidate(JSON.parse(localStorage.getItem('plantBag')));
-    axios.post('http://localhost:8081/validatePlantBag', plantBagToValidate, {}).then(function(response) {
-      // console.log('plantbag is valid');
-      var request = {
-        amountOfPlantBags: that.state.amount,
-        cartState: 'GENERATED',
-        userId: that.state.userId,
-        plantBag: plantBag
-      };
-      axios.post('http://localhost:8081/plantForUser/', request, that.state.restConfig).then(function(response) {
-        // console.log('carts generated!');
-        // console.log(response.data);
-        var cartIds = response.data;
-        that.loadProjects();
-        axios.post('http://localhost:8083/event/codes/' + that.state.eventId ,cartIds, that.state.restConfig).then(function(response) {
-          // console.log('codes generated!');
-          that.props.loadCodesForEvent();
-          that.refs.notification.addNotification('Codes wurden dem Event hinzugefügt!', '', 'success');
-        }).catch(function(response) {
-          // console.log(response);
-          that.refs.notification.addNotification('Fehler beim Generieren der Codes!', '', 'error');
-        });
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler beim Erzeugen der Pflanzkörbe!', '', 'error');
+    axios
+      .post('http://localhost:8081/validatePlantBag', plantBagToValidate, {})
+      .then(function(response) {
+        // console.log('plantbag is valid');
+        var request = {
+          amountOfPlantBags: that.state.amount,
+          cartState: 'GENERATED',
+          userId: that.state.userId,
+          plantBag: plantBag
+        };
+        axios
+          .post('http://localhost:8081/plantForUser/', request, that.state.restConfig)
+          .then(function(response) {
+            // console.log('carts generated!');
+            // console.log(response.data);
+            var cartIds = response.data;
+            that.loadProjects();
+            axios
+              .post('http://localhost:8083/event/codes/' + that.state.eventId, cartIds, that.state.restConfig)
+              .then(function(response) {
+                // console.log('codes generated!');
+                that.props.loadCodesForEvent();
+                that.refs.notification.addNotification('Codes wurden dem Event hinzugefügt!', '', 'success');
+              })
+              .catch(function(response) {
+                // console.log(response);
+                that.refs.notification.addNotification('Fehler beim Generieren der Codes!', '', 'error');
+              });
+          })
+          .catch(function(response) {
+            that.refs.notification.addNotification('Fehler beim Erzeugen der Pflanzkörbe!', '', 'error');
+          });
+      })
+      .catch(function(response) {
+        // console.log(response);
+        var errorMessage = '';
+        that.refs.notification.addNotification('Fehler beim Validieren der Pflanzkörbe!', errorMessage, 'error');
       });
-    }).catch(function(response) {
-      // console.log(response);
-      var errorMessage = '';
-      that.refs.notification.addNotification('Fehler beim Validieren der Pflanzkörbe!', errorMessage, 'error');
-    });
-
   }
 
   //multiply every plantItem with the amount of codes to generate to assure with one request, that every plantBag would be valid when really creating it
@@ -139,15 +148,21 @@ export default class CodeGenerator extends Component {
           <div className="col-md-4">
             <label className="input-label">Anzahl der zu generierenden Codes</label>
           </div>
-          <div className="col-md-8"><input type="text" value={this.state.amount} onChange={(event) => {
-        this.updateAmount(event.target.value);
-      }}/></div>
+          <div className="col-md-8">
+            <input
+              type="text"
+              value={this.state.amount}
+              onChange={event => {
+                this.updateAmount(event.target.value);
+              }}
+            />
+          </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <div>
               {this.state.projects.map(function(project, i) {
-                return (<Project key={i} project={project} ref={'project_' + i} updatePrice={that.updatePrice.bind(this)}/>);
+                return <Project key={i} project={project} ref={'project_' + i} updatePrice={that.updatePrice.bind(this)} />;
               })}
             </div>
           </div>
@@ -160,7 +175,7 @@ export default class CodeGenerator extends Component {
             <SvgButton text="CODES GENERIEREN" buttonType="barrow" onClick={this.generateCodes.bind(this)} />
           </div>
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

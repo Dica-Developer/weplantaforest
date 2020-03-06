@@ -9,7 +9,7 @@ export function getTextForSelectedLanguage(text) {
     }
   }
   return text;
-};
+}
 
 export function getTextForLanguage(text, language) {
   if (text && text.includes('<mlpr>')) {
@@ -22,9 +22,9 @@ export function getTextForLanguage(text, language) {
     }
   }
   return text;
-};
+}
 
-export function getShortText(text, shortenedTO){
+export function getShortText(text, shortenedTO) {
   if (text && text.length > shortenedTO) {
     text = text.substr(0, shortenedTO);
     text = text.substr(0, Math.min(shortenedTO, text.lastIndexOf(' ')));
@@ -33,14 +33,14 @@ export function getShortText(text, shortenedTO){
   return text;
 }
 
-export function getFirstParagraph(text){
-  if(text && text.includes('<p>')){
+export function getFirstParagraph(text) {
+  if (text && text.includes('<p>')) {
     text = text.substr(3);
-    text = text.substr(0, (text.indexOf('</p>')));
+    text = text.substr(0, text.indexOf('</p>'));
   }
   return text;
 }
 
-export function createMultiLanguageEntry(germanText, englishText){
+export function createMultiLanguageEntry(germanText, englishText) {
   return '<mlpr>GERMAN<equ>' + germanText + '<sep>ENGLISH<equ>' + englishText + '<sep>ITALIAN';
 }

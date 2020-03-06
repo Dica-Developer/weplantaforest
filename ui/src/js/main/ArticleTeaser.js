@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-
 export default class ArticleTeaser extends Component {
   constructor(props) {
     super(props);
@@ -20,17 +19,20 @@ export default class ArticleTeaser extends Component {
 
     return (
       <div>
-        <a role="button" onClick={() => {
-          this.linkTo('/blog/' + this.props.content.id);
-        }}>
+        <a
+          role="button"
+          onClick={() => {
+            this.linkTo('/blog/' + this.props.content.id);
+          }}
+        >
           <img src={imageUrl} alt={this.props.content.title} width="380" height="253" />
-          <h1>
-            {this.props.content.title}
-          </h1>
+          <h1>{this.props.content.title}</h1>
           <div className="description">
-            <p dangerouslySetInnerHTML={{
-              __html: getTextForSelectedLanguage(this.props.content.intro)
-            }}/>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: getTextForSelectedLanguage(this.props.content.intro)
+              }}
+            />
           </div>
         </a>
       </div>

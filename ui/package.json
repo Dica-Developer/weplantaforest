@@ -41,15 +41,13 @@
     "respinner": "3.0.2"
   },
   "devDependencies": {
+    "prettier": "1.19.1",
     "@babel/core": "7.7.7",
-    "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",
     "babel-plugin-syntax-dynamic-import": "6.18.0",
     "babel-preset-env": "1.7.0",
     "@babel/preset-react": "7.7.4",
     "css-loader": "3.2.0",
-    "eslint": "6.8.0",
-    "eslint-plugin-react": "7.17.0",
     "html-webpack-plugin": "3.2.0",
     "less": "3.10.3",
     "less-loader": "5.0.0",
@@ -67,6 +65,7 @@
   "scripts": {
     "build": "webpack --mode=production --config webpack.prod.js",
     "dev": "webpack-dashboard -- ./node_modules/.bin/webpack-dev-server --mode=development --config webpack.dev.js --hot",
-    "lint": "eslint ./src --ext .js"
+    "p:check": "prettier --config .prettierrc --check src/**/*.{js,html,css,less,json,jsx}",
+    "p:format": "prettier --config .prettierrc --write  src/**/*.{js,html,css,less,json,jsx}"
   }
 }

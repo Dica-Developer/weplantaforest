@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
 
 export default class ArticleSlider extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -27,10 +26,8 @@ export default class ArticleSlider extends Component {
   }
 
   updateMaxValue(value) {
-    var maxValue = ((this.props.article.amount - this.props.article.alreadyPlanted) >= value
-      ? value
-      : (this.props.article.amount - this.props.article.alreadyPlanted));
-    this.setState({maxValue: maxValue});
+    var maxValue = this.props.article.amount - this.props.article.alreadyPlanted >= value ? value : this.props.article.amount - this.props.article.alreadyPlanted;
+    this.setState({ maxValue: maxValue });
   }
 
   updateSliderValue(event) {
@@ -53,20 +50,24 @@ export default class ArticleSlider extends Component {
     return (
       <div className="articleSlider">
         <div className="image">
-          <img src={imgUrl}/>
+          <img src={imgUrl} />
         </div>
         <div className="treeTypeInfo">
-          <span className="bold">{getTextForSelectedLanguage(this.props.article.treeType.name)}</span><br/>
-          Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong / 100, 2, '.', ',')}
-            &nbsp;€</span>
+          <span className="bold">{getTextForSelectedLanguage(this.props.article.treeType.name)}</span>
+          <br />
+          Stk.&nbsp;
+          <span className="bold">
+            {Accounting.formatNumber(this.props.article.price.priceAsLong / 100, 2, '.', ',')}
+            &nbsp;€
+          </span>
         </div>
         <div className="sliderDiv">
-          <input type="range" min="0" max={this.state.maxValue} step="1" value={this.state.value} onChange={this.updateSliderValue.bind(this)}/>
+          <input type="range" min="0" max={this.state.maxValue} step="1" value={this.state.value} onChange={this.updateSliderValue.bind(this)} />
         </div>
         <div className="sliderSummary">
-          {Accounting.formatNumber(this.state.price / 100, 2, '.', ',')}&nbsp;€&nbsp;/&nbsp;<span className="green">{this.state.value}&nbsp;</span><span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"/>
+          {Accounting.formatNumber(this.state.price / 100, 2, '.', ',')}&nbsp;€&nbsp;/&nbsp;<span className="green">{this.state.value}&nbsp;</span>
+          <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true" />
         </div>
-
       </div>
     );
   }

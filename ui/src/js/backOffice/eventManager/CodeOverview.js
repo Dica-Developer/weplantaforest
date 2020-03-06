@@ -3,34 +3,35 @@ import ReactDataGrid from 'react-data-grid';
 import { Data, Toolbar } from 'react-data-grid-addons';
 import Notification from '../../common/components/Notification';
 
-
-
 export default class CodeOverview extends Component {
-
   constructor() {
     super();
     this.state = {
       codes: [],
       titles: ['ID', 'Code', 'Cart-Status'],
-      columns: [{
-        key: 'id',
-        name: 'ID',
-        width: 60,
-        filterable: true,
-        sortable: true
-      }, {
-        key: 'code',
-        name: 'Code',
-        width: 300,
-        filterable: true,
-        sortable: true
-      }, {
-        key: 'cartstatus',
-        name: 'Cart-Status',
-        width: 300,
-        filterable: true,
-        sortable: true
-      }],
+      columns: [
+        {
+          key: 'id',
+          name: 'ID',
+          width: 60,
+          filterable: true,
+          sortable: true
+        },
+        {
+          key: 'code',
+          name: 'Code',
+          width: 300,
+          filterable: true,
+          sortable: true
+        },
+        {
+          key: 'cartstatus',
+          name: 'Cart-Status',
+          width: 300,
+          filterable: true,
+          sortable: true
+        }
+      ],
       rows: [],
       filters: {},
       copyPasteCodes: ''
@@ -46,7 +47,11 @@ export default class CodeOverview extends Component {
     this.setState({
       codes: codes,
       rows: rows,
-      copyPasteCodes: codes.map((code) => {return code.code;}).join('\n')
+      copyPasteCodes: codes
+        .map(code => {
+          return code.code;
+        })
+        .join('\n')
     });
   }
 
@@ -66,7 +71,7 @@ export default class CodeOverview extends Component {
       cartState = code.cart.cartState;
     } else {
       cartState = 'NO CART GENERATED!';
-    };
+    }
     var row = {
       id: code.id,
       code: code.code,
@@ -99,27 +104,19 @@ export default class CodeOverview extends Component {
     var sortedRows = this.state.rows;
     const comparer = (a, b) => {
       if (sortDirection === 'ASC') {
-        return (a[sortColumn] > b[sortColumn]) ?
-          1 :
-          -1;
+        return a[sortColumn] > b[sortColumn] ? 1 : -1;
       } else if (sortDirection === 'DESC') {
-        return (a[sortColumn] < b[sortColumn]) ?
-          1 :
-          -1;
+        return a[sortColumn] < b[sortColumn] ? 1 : -1;
       }
     };
 
-    const rows = sortDirection === 'NONE' ?
-      ' ' :
-      sortedRows.sort(comparer);
+    const rows = sortDirection === 'NONE' ? ' ' : sortedRows.sort(comparer);
 
-    this.setState({rows: sortedRows});
+    this.setState({ rows: sortedRows });
   }
 
   getEmptyRowView() {
-    return (
-      <div>Nothing to show</div>
-    );
+    return <div>Nothing to show</div>;
   }
   // ///////////////////////// END OF TABLE-FUNCTIONS ///////////////////////////////
 
@@ -167,14 +164,23 @@ export default class CodeOverview extends Component {
         </div>
         <div className="row">
           <div className="col-md-8">
-            <ReactDataGrid columns={this.state.columns} titles={this.state.titles} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} onGridSort={this.handleGridSort.bind(this)} minHeight={800} toolbar={< Toolbar enableFilter = {
-              true
-            } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
+            <ReactDataGrid
+              columns={this.state.columns}
+              titles={this.state.titles}
+              rowGetter={this.rowGetter.bind(this)}
+              rowsCount={this.getSize()}
+              onGridSort={this.handleGridSort.bind(this)}
+              minHeight={800}
+              toolbar={<Toolbar enableFilter={true} />}
+              onAddFilter={this.handleFilterChange.bind(this)}
+              onClearFilters={this.onClearFilters.bind(this)}
+              emptyRowsView={this.getEmptyRowView.bind(this)}
+            />
           </div>
           <div className="col-md-4">
             <textarea value={this.state.copyPasteCodes} disabled="disabled" className="fill-height"></textarea>
           </div>
-          <Notification ref="notification"/>
+          <Notification ref="notification" />
         </div>
       </div>
     );

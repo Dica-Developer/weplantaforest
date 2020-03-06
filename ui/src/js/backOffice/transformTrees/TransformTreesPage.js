@@ -7,10 +7,7 @@ import Notification from '../../common/components/Notification';
 import { getConfig } from '../../common/RestHelper';
 import './transformTreesPage.less';
 
-
-
 export default class TransformTreesPage extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -21,7 +18,7 @@ export default class TransformTreesPage extends Component {
       toUser: -1,
       treesToTransfer: [],
       sumOfTreesToTransfer: -1
-    }
+    };
   }
 
   componentDidMount() {
@@ -30,12 +27,15 @@ export default class TransformTreesPage extends Component {
 
   loadUser() {
     var that = this;
-    axios.get('http://localhost:8083/users', this.state.restConfig).then(function(response) {
-      var result = response.data;
-      that.createValueLabelPairsForUser(result);
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der Nutzer!', response.data + response.message, 'error');
-    });
+    axios
+      .get('http://localhost:8083/users', this.state.restConfig)
+      .then(function(response) {
+        var result = response.data;
+        that.createValueLabelPairsForUser(result);
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden der Nutzer!', response.data + response.message, 'error');
+      });
   }
 
   createValueLabelPairsForUser(users) {
@@ -63,57 +63,64 @@ export default class TransformTreesPage extends Component {
   updateFromUser(user) {
     this.state.fromUser = user.value;
     var that = this;
-    axios.get('http://localhost:8083/trees?userId=' + user.value, this.state.restConfig).then(function(response) {
-      var result = response.data;
-      let amount = 0;
-      for (let tree of result) {
-        amount += tree.amount;
-      }
-      that.setState({
-        treesToTransfer: result,
-        sumOfTreesToTransfer: amount
+    axios
+      .get('http://localhost:8083/trees?userId=' + user.value, this.state.restConfig)
+      .then(function(response) {
+        var result = response.data;
+        let amount = 0;
+        for (let tree of result) {
+          amount += tree.amount;
+        }
+        that.setState({
+          treesToTransfer: result,
+          sumOfTreesToTransfer: amount
+        });
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden der Bäume!', response.data + response.message, 'error');
       });
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der Bäume!', response.data + response.message, 'error');
-    });
     this.forceUpdate();
   }
 
   transferTrees() {
     var that = this;
-    axios.post('http://localhost:8083/transformTrees?fromUserId=' + this.state.fromUser + '&toUserId=' + this.state.toUser, {}, this.state.restConfig).then(function(response) {
-      that.refs.notification.addNotification('Geschafft!', 'Die Bäume wurden erfolgreich übertragen!', 'success');
-      that.setState({
-        fromUser: -1,
-        toUser: -1,
-        treesToTransfer: [],
-        sumOfTreesToTransfer: -1
+    axios
+      .post('http://localhost:8083/transformTrees?fromUserId=' + this.state.fromUser + '&toUserId=' + this.state.toUser, {}, this.state.restConfig)
+      .then(function(response) {
+        that.refs.notification.addNotification('Geschafft!', 'Die Bäume wurden erfolgreich übertragen!', 'success');
+        that.setState({
+          fromUser: -1,
+          toUser: -1,
+          treesToTransfer: [],
+          sumOfTreesToTransfer: -1
+        });
       })
-    }).catch(error => {
-      that.refs.notification.handleError(error);
-    });
-
+      .catch(error => {
+        that.refs.notification.handleError(error);
+      });
   }
 
   render() {
     let sumOfTreesToTransferDiv = '';
     if (this.state.sumOfTreesToTransfer != -1) {
-      sumOfTreesToTransferDiv = <div className="row sum-of-trees">
-        <div className="col-md-6">
-          <label className="select-label">Anzahl der zu übertragenden Bäume:</label>
+      sumOfTreesToTransferDiv = (
+        <div className="row sum-of-trees">
+          <div className="col-md-6">
+            <label className="select-label">Anzahl der zu übertragenden Bäume:</label>
+          </div>
+          <div className="col-md-6">{this.state.sumOfTreesToTransfer}</div>
         </div>
-        <div className="col-md-6">
-          {this.state.sumOfTreesToTransfer}
-        </div>
-      </div>;
+      );
     }
     let transferButton = '';
     if (this.state.fromUser != -1 && this.state.toUser != -1) {
-      transferButton = <div className="row transfer-button">
+      transferButton = (
+        <div className="row transfer-button">
           <div className="col-md-12">
-            <IconButton glyphIcon="glyphicon-transfer" text="BÄUME TRANSFERIEREN" onClick={this.transferTrees.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-transfer" text="BÄUME TRANSFERIEREN" onClick={this.transferTrees.bind(this)} />
           </div>
-        </div>;
+        </div>
+      );
     }
     return (
       <div className="container paddingTopBottom15 transformTreesPage">
@@ -127,18 +134,18 @@ export default class TransformTreesPage extends Component {
             <label className="select-label">Von User:</label>
           </div>
           <div className="col-md-4">
-            <VirtualizedSelect name="user-from-select" value={this.state.fromUser} filterOptions={this.state.usersFilter} options={this.state.users} onChange={this.updateFromUser.bind(this)}/>
+            <VirtualizedSelect name="user-from-select" value={this.state.fromUser} filterOptions={this.state.usersFilter} options={this.state.users} onChange={this.updateFromUser.bind(this)} />
           </div>
           <div className="col-md-2">
             <label className="select-label">Zu User:</label>
           </div>
           <div className="col-md-4">
-            <VirtualizedSelect name="user-to-select" value={this.state.toUser} filterOptions={this.state.usersFilter} options={this.state.users} onChange={this.updateToUser.bind(this)}/>
+            <VirtualizedSelect name="user-to-select" value={this.state.toUser} filterOptions={this.state.usersFilter} options={this.state.users} onChange={this.updateToUser.bind(this)} />
           </div>
         </div>
         {sumOfTreesToTransferDiv}
         {transferButton}
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

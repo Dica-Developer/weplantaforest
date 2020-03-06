@@ -2,7 +2,6 @@ import counterpart from 'counterpart';
 import React, { Component } from 'react';
 
 export default class RegistrationDone extends Component {
-
   render() {
     return (
       <div className="registrationDone">

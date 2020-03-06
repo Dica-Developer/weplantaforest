@@ -16,4 +16,3 @@ let createTeamImageUrl = function createTeamImageUrl(imageFileName, width, heigh
 };
 
 export { createProfileImageUrl, createTeamImageUrl };
-

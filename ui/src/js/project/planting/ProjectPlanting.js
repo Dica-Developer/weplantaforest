@@ -6,7 +6,6 @@ import SvgButton from '../../common/components/SvgButton';
 import ArticleSlider from './ArticleSlider';
 import ProjectSlider from './ProjectSlider';
 
-
 require('./projectPlanting.less');
 require('./slider.less');
 
@@ -35,7 +34,7 @@ export default class ProjectPlanting extends Component {
     elm.removeEventListener('animationend', this.fadingDone);
   }
   fadingDone() {
-    this.setState({fade: false});
+    this.setState({ fade: false });
   }
 
   updatePlantBag() {
@@ -65,7 +64,7 @@ export default class ProjectPlanting extends Component {
         this.refs['article_' + project].setSliderValue(divisionValue, false);
       }
     }
-    this.setState({treeCount: value});
+    this.setState({ treeCount: value });
     this.calcProjectPrice();
   }
 
@@ -79,7 +78,7 @@ export default class ProjectPlanting extends Component {
       var valueToSet = this.refs['article_' + manualMovedSliderValueWithMaxValue].getSliderValue() - diffToTreeCount;
       this.refs['article_' + manualMovedSliderValueWithMaxValue].setSliderValue(valueToSet, true);
 
-      var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / ((movedCntAndSum[0] - 2)));
+      var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / (movedCntAndSum[0] - 2));
       var moduloValue = (this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) % (movedCntAndSum[0] - 2);
       var moduloCnt = 0;
       for (var project in this.props.articles) {
@@ -99,7 +98,7 @@ export default class ProjectPlanting extends Component {
       this.refs['article_' + manualMovedSliderValueWithMaxValue].setSliderValue(valueToSet, true);
 
       if (movedCntAndSum[0] > 2) {
-        var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / ((movedCntAndSum[0] - 2)));
+        var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / (movedCntAndSum[0] - 2));
         var moduloValue = (this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) % (movedCntAndSum[0] - 2);
         var moduloCnt = 0;
         for (var project in this.props.articles) {
@@ -171,19 +170,22 @@ export default class ProjectPlanting extends Component {
   render() {
     var that = this;
     return (
-      <div ref="planting" className={(this.state.fade
-        ? 'fadeOut'
-        : 'fadeIn') + ' projectPlanting'}>
-        <h1>{this.props.projectName}&nbsp;/&nbsp;
+      <div ref="planting" className={(this.state.fade ? 'fadeOut' : 'fadeIn') + ' projectPlanting'}>
+        <h1>
+          {this.props.projectName}&nbsp;/&nbsp;
           <i>hier pflanzen</i>
         </h1>
-        <ProjectSlider ref="projectSlider" maximumAmountOfTreesToPlant={this.state.maximumAmountOfTreesToPlant} ref="projectSlider" price={this.state.price} balanceArticleSliders={this.balanceArticleSliders.bind(this)}/>
+        <ProjectSlider
+          ref="projectSlider"
+          maximumAmountOfTreesToPlant={this.state.maximumAmountOfTreesToPlant}
+          ref="projectSlider"
+          price={this.state.price}
+          balanceArticleSliders={this.balanceArticleSliders.bind(this)}
+        />
         <div className="articleDesc">
-          <div>
-            Hier kannst Du die Anzahl Deiner Bäume individuell verteilen.
-          </div>
+          <div>Hier kannst Du die Anzahl Deiner Bäume individuell verteilen.</div>
           {this.props.articles.map(function(article, i) {
-            return (<ArticleSlider article={article} key={i} ref={'article_' + i} sliderIndex={i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)}/>);
+            return <ArticleSlider article={article} key={i} ref={'article_' + i} sliderIndex={i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)} />;
           })}
           <table className="bottomTable">
             <tbody>
@@ -200,7 +202,7 @@ export default class ProjectPlanting extends Component {
           </table>
         </div>
         <div className="bottom align-center">
-          <IconButton text={counterpart.translate('BACK_TO_DESCRIPTION')} glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)}/>
+          <IconButton text={counterpart.translate('BACK_TO_DESCRIPTION')} glyphIcon="glyphicon-backward" onClick={this.props.showDetails.bind(this)} />
         </div>
       </div>
     );

@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import DoRegistration from './DoRegistration';
 import RegistrationDone from './RegistrationDone';
 
-
 require('./registrationPage.less');
 
 export default class RegistrationPage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -14,24 +12,26 @@ export default class RegistrationPage extends Component {
     };
   }
 
-  setRegistrated(value){
-    this.setState({registrated: value});
+  setRegistrated(value) {
+    this.setState({ registrated: value });
   }
 
   render() {
     var content;
 
-    if(this.state.registrated){
+    if (this.state.registrated) {
       content = <RegistrationDone />;
-    }else{
-      content = <DoRegistration setRegistrated={()=>{this.setRegistrated(true);}}/>;
+    } else {
+      content = (
+        <DoRegistration
+          setRegistrated={() => {
+            this.setRegistrated(true);
+          }}
+        />
+      );
     }
 
-    return (
-      <div className="container paddingTopBottom15">
-        {content}
-      </div>
-    );
+    return <div className="container paddingTopBottom15">{content}</div>;
   }
 }
 

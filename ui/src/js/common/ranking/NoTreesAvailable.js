@@ -10,7 +10,7 @@ export default class NoTreesAvailable extends Component {
 
   render() {
     return (
-      <div className={('row noTreesAvailable')}>
+      <div className={'row noTreesAvailable'}>
         <div className="col-md-12">
           <h1>{counterpart.translate('NO_PLANTINGS')}</h1>
         </div>

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import DoPlanting from './DoPlanting';
 
-
 require('./selfPlant.less');
 
 export default class SelfPlantPage extends Component {
-
   constructor() {
     super();
   }
@@ -21,7 +19,7 @@ export default class SelfPlantPage extends Component {
   render() {
     return (
       <div className="container paddingTopBottom15 selfPlant">
-        <DoPlanting loadUserDetails={this.loadUserDetails.bind(this)}/>
+        <DoPlanting loadUserDetails={this.loadUserDetails.bind(this)} />
       </div>
     );
   }

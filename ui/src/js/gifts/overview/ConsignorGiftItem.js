@@ -3,8 +3,6 @@ import counterpart from 'counterpart';
 import React, { Component } from 'react';
 import IconButton from '../../common/components/IconButton';
 
-
-
 export default class ConsignorGiftItem extends Component {
   constructor(props) {
     super(props);
@@ -23,29 +21,19 @@ export default class ConsignorGiftItem extends Component {
       recipient = <span>{this.props.gift.recipient.name}</span>;
     }
 
-    if(this.props.gift.status == 'UNREDEEMED'){
-      pdfButton = <IconButton text={counterpart.translate('GENERATE_PDF')} glyphIcon="glyphicon-file" onClick={this.generateGiftPdf.bind(this)}/>;
-    }else{
+    if (this.props.gift.status == 'UNREDEEMED') {
+      pdfButton = <IconButton text={counterpart.translate('GENERATE_PDF')} glyphIcon="glyphicon-file" onClick={this.generateGiftPdf.bind(this)} />;
+    } else {
       pdfButton = '';
     }
 
     return (
       <div className="giftItem">
-        <div>
-          {this.props.gift.code.code}
-        </div>
-        <div>
-          {this.props.gift.code.cart.treeCount}
-        </div>
-        <div>
-          {Accounting.formatNumber(this.props.gift.code.cart.totalPrice, 2, '.', ',')}€
-        </div>
-        <div>
-          {recipient}
-        </div>
-        <div>
-          {pdfButton}
-        </div>
+        <div>{this.props.gift.code.code}</div>
+        <div>{this.props.gift.code.cart.treeCount}</div>
+        <div>{Accounting.formatNumber(this.props.gift.code.cart.totalPrice, 2, '.', ',')}€</div>
+        <div>{recipient}</div>
+        <div>{pdfButton}</div>
       </div>
     );
   }

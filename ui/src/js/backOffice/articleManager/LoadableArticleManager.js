@@ -13,4 +13,3 @@ export default class LoadableArticleManager extends Component {
     return <LoadableComponent />;
   }
 }
-

@@ -11,22 +11,18 @@ import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 import PlantBagItem from './PlantBagItem';
 import PlantBagProject from './PlantBagProject';
 
-
-
 require('./plantBagPage.less');
 
 export default class PlantBagPage extends Component {
-
   constructor(props) {
     super(props);
-    var isGift = (localStorage.getItem('isGift') === 'undefined')
-      ? false
-      : JSON.parse(localStorage.getItem('isGift'));
-    var plantBag = (localStorage.getItem('plantBag') === 'undefined')
-      ? {
-        projects: []
-      }
-      : JSON.parse(localStorage.getItem('plantBag'));
+    var isGift = localStorage.getItem('isGift') === 'undefined' ? false : JSON.parse(localStorage.getItem('isGift'));
+    var plantBag =
+      localStorage.getItem('plantBag') === 'undefined'
+        ? {
+            projects: []
+          }
+        : JSON.parse(localStorage.getItem('plantBag'));
     let isAnonymUser = !(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '');
     this.state = {
       plantBag: plantBag,
@@ -76,26 +72,32 @@ export default class PlantBagPage extends Component {
     this.refs['spinner'].showSpinner();
     var that = this;
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
-    axios.post('http://localhost:8081/gift/create', this.state.plantBag, config).then(function(response) {
-      that.refs['spinner'].hideSpinner();
-      browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
-    }).catch(function(error) {
-      that.refs['spinner'].hideSpinner();
-      that.refs.notification.handleError(error);
-    });
+    axios
+      .post('http://localhost:8081/gift/create', this.state.plantBag, config)
+      .then(function(response) {
+        that.refs['spinner'].hideSpinner();
+        browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
+      })
+      .catch(function(error) {
+        that.refs['spinner'].hideSpinner();
+        that.refs.notification.handleError(error);
+      });
   }
 
   createCart(config) {
     this.refs['spinner'].showSpinner();
     var that = this;
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
-    axios.post('http://localhost:8081/donateTrees', this.state.plantBag, config).then(function(response) {
-      that.refs['spinner'].hideSpinner();
-      browserHistory.push('/payCart/' + response.data);
-    }).catch(function(error) {
-      that.refs['spinner'].hideSpinner();
-      that.refs.notification.handleError(error);
-    });
+    axios
+      .post('http://localhost:8081/donateTrees', this.state.plantBag, config)
+      .then(function(response) {
+        that.refs['spinner'].hideSpinner();
+        browserHistory.push('/payCart/' + response.data);
+      })
+      .catch(function(error) {
+        that.refs['spinner'].hideSpinner();
+        that.refs.notification.handleError(error);
+      });
   }
 
   removePlantBagItem(project, plantItem) {
@@ -142,7 +144,7 @@ export default class PlantBagPage extends Component {
   }
 
   updateValue(toUpdate, value) {
-    this.setState({[toUpdate]: value});
+    this.setState({ [toUpdate]: value });
     if (toUpdate == 'isGift') {
       localStorage.setItem('isGift', value);
     }
@@ -152,7 +154,7 @@ export default class PlantBagPage extends Component {
     browserHistory.push(url);
   }
 
-  showLogin(){
+  showLogin() {
     this.props.route.showLoginSlide();
   }
 
@@ -160,15 +162,19 @@ export default class PlantBagPage extends Component {
     var that = this;
     var overallPriceAndPayment;
     if (this.state.plantBag.price > 0) {
-      overallPriceAndPayment = <div><div className="doubledLine"/>
-        <div className="overallPrice">
-          {counterpart.translate('PRICE_TOTAL')}:&nbsp;{Accounting.formatNumber(this.state.plantBag.price / 100, 2, '.', ',')}&nbsp;€
+      overallPriceAndPayment = (
+        <div>
+          <div className="doubledLine" />
+          <div className="overallPrice">
+            {counterpart.translate('PRICE_TOTAL')}:&nbsp;{Accounting.formatNumber(this.state.plantBag.price / 100, 2, '.', ',')}&nbsp;€
+          </div>
+          <div className="align-right">
+            <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text={counterpart.translate('AS_GIFT')} />
+            <br />
+            <IconButton glyphIcon="glyphicon-euro" text={counterpart.translate('GO_TO_PAYMENT')} onClick={this.switchTOPaymentPage.bind(this)} />
+          </div>
         </div>
-        <div className="align-right">
-          <CheckBox toUpdate="isGift" value={this.state.isGift} updateValue={this.updateValue.bind(this)} text={counterpart.translate('AS_GIFT')}/><br/>
-          <IconButton glyphIcon="glyphicon-euro" text={counterpart.translate('GO_TO_PAYMENT')} onClick={this.switchTOPaymentPage.bind(this)}/>
-        </div>
-      </div>;
+      );
     } else {
       overallPriceAndPayment = <div>{counterpart.translate('NO_TREES_IN_PLANTBAG')}</div>;
     }
@@ -178,35 +184,51 @@ export default class PlantBagPage extends Component {
         <div className="row plantBagPage">
           <div className="col-md-12">
             <h1>{counterpart.translate('YOUR_PLANTBAG')}</h1>
-            <div className={'panel panel-danger ' + (!this.state.isAnonymUser
-              ? 'no-display'
-              : '')}>
-              <div className="panel-heading"><strong>{counterpart.translate('NOT_LOGGED_IN')}</strong></div>
+            <div className={'panel panel-danger ' + (!this.state.isAnonymUser ? 'no-display' : '')}>
+              <div className="panel-heading">
+                <strong>{counterpart.translate('NOT_LOGGED_IN')}</strong>
+              </div>
               <div className="panel-body">
-                {counterpart.translate('NOT_LOGGED_IN_TEXT')}<br/>
-                {counterpart.translate('ACCOUNT_Q')}&nbsp;<a onClick={this.showLogin.bind(this)}>Login</a><br/>
-                {counterpart.translate('NO_ACCOUNT_Q')}&nbsp;<a onClick={() => {
-                  this.linkTo('/registration');
-                }}>{counterpart.translate('REGISTRATE')}</a>
+                {counterpart.translate('NOT_LOGGED_IN_TEXT')}
+                <br />
+                {counterpart.translate('ACCOUNT_Q')}&nbsp;<a onClick={this.showLogin.bind(this)}>Login</a>
+                <br />
+                {counterpart.translate('NO_ACCOUNT_Q')}&nbsp;
+                <a
+                  onClick={() => {
+                    this.linkTo('/registration');
+                  }}
+                >
+                  {counterpart.translate('REGISTRATE')}
+                </a>
               </div>
             </div>
             <div className="overview">
               {Object.keys(this.state.plantBag.projects).map(function(project, i) {
                 var projectPrice = 0;
                 for (var plantItem in that.state.plantBag.projects[project].plantItems) {
-                  projectPrice = projectPrice + (that.state.plantBag.projects[project].plantItems[plantItem].amount * that.state.plantBag.projects[project].plantItems[plantItem].price);
+                  projectPrice = projectPrice + that.state.plantBag.projects[project].plantItems[plantItem].amount * that.state.plantBag.projects[project].plantItems[plantItem].price;
                 }
                 return (
                   <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i} price={projectPrice}>
                     {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
                       var plantItemName = getTextForSelectedLanguage(plantItem);
-                      return (<PlantBagItem plantItemName={plantItemName} plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]} key={i} removePlantBagItem={() => {
-                        that.removePlantBagItem(project, plantItem);
-                      }} increasePlantBagItem={() => {
-                        that.increasePlantBagItem(project, plantItem);
-                      }} decreasePlantBagItem={() => {
-                        that.decreasePlantBagItem(project, plantItem);
-                      }}/>);
+                      return (
+                        <PlantBagItem
+                          plantItemName={plantItemName}
+                          plantBagitem={that.state.plantBag.projects[project].plantItems[plantItem]}
+                          key={i}
+                          removePlantBagItem={() => {
+                            that.removePlantBagItem(project, plantItem);
+                          }}
+                          increasePlantBagItem={() => {
+                            that.increasePlantBagItem(project, plantItem);
+                          }}
+                          decreasePlantBagItem={() => {
+                            that.decreasePlantBagItem(project, plantItem);
+                          }}
+                        />
+                      );
                     })}
                   </PlantBagProject>
                 );
@@ -215,8 +237,8 @@ export default class PlantBagPage extends Component {
             </div>
           </div>
         </div>
-        <LoadingSpinner ref="spinner"/>
-        <Notification ref="notification"/>
+        <LoadingSpinner ref="spinner" />
+        <Notification ref="notification" />
       </div>
     );
   }

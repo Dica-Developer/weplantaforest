@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
-import {browserHistory} from 'react-router';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
 import Co2Bar from './Co2Bar';
 import ButtonBar from './ButtonBar';
 
 export default class Header extends Component {
-
   switchToHomePage() {
     browserHistory.push('/');
   }
@@ -18,13 +17,17 @@ export default class Header extends Component {
     return (
       <div className="container header">
         <div className="row">
-          <div className="col-md-4"><Co2Bar ref="co2-data"/></div>
+          <div className="col-md-4">
+            <Co2Bar ref="co2-data" />
+          </div>
           <div className="col-md-4 outline-logo">
             <a role="button" onClick={this.switchToHomePage.bind(this)}>
-              <img src="/assets/images/ipatlogo.svg" alt="selbst pflanzen" width="160" height="160"/>
+              <img src="/assets/images/ipatlogo.svg" alt="selbst pflanzen" width="160" height="160" />
             </a>
           </div>
-          <div className="col-md-4"><ButtonBar /></div>
+          <div className="col-md-4">
+            <ButtonBar />
+          </div>
         </div>
       </div>
     );

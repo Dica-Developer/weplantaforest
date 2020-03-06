@@ -8,17 +8,18 @@ class Receipt extends Component {
     super(props);
   }
 
-  generateReceiptPdf(){
-    window.open('http://localhost:8081/receipt/pdf?receiptId='+ this.props.receipt.receiptId);
+  generateReceiptPdf() {
+    window.open('http://localhost:8081/receipt/pdf?receiptId=' + this.props.receipt.receiptId);
   }
 
   render() {
     return (
       <div className="receipt">
         <a role="button" onClick={this.generateReceiptPdf.bind(this)}>
-          <img src="/assets/images/receipt.jpg" alt="receipt" width="83" height="117"/><br/>
-          {moment(this.props.receipt.createdOn).format('DD.MM.YYYY')}<br/>
-          #{this.props.receipt.invoiceNumber}
+          <img src="/assets/images/receipt.jpg" alt="receipt" width="83" height="117" />
+          <br />
+          {moment(this.props.receipt.createdOn).format('DD.MM.YYYY')}
+          <br />#{this.props.receipt.invoiceNumber}
         </a>
       </div>
     );
@@ -33,7 +34,7 @@ export default class Receipts extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getReceipts();
   }
 
@@ -54,12 +55,11 @@ export default class Receipts extends Component {
 
   render() {
     var text;
-    if(this.state.receipts.length == 0){
+    if (this.state.receipts.length == 0) {
       text = counterpart.translate('NO_RECEIPTS');
-    }else{
-      text =  counterpart.translate('FOLLOWING_RECEIPTS') + ':';
+    } else {
+      text = counterpart.translate('FOLLOWING_RECEIPTS') + ':';
     }
-
 
     return (
       <div className="row receipts">
@@ -67,9 +67,10 @@ export default class Receipts extends Component {
           <h1>{counterpart.translate('NAVBAR.CONTRIBUTION_RECEIPTS')}</h1>
         </div>
         <div className="col-md-12">
-          {text}<br/>
+          {text}
+          <br />
           {this.state.receipts.map(function(receipt, i) {
-            return (<Receipt key={i} receipt={receipt}/>);
+            return <Receipt key={i} receipt={receipt} />;
           })}
         </div>
       </div>

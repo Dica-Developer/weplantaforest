@@ -27,8 +27,10 @@ export default class AmountProjectDate extends Component {
       <div className="rankingSummary">
         <p>
           <span className="bold">{project}</span>
-          <br/>
-          <span>{counterpart.translate('NUMBER')}:&nbsp;</span>{Accounting.formatNumber(this.props.content.amount, 0, '.', ',')}&nbsp;{name}<br/>
+          <br />
+          <span>{counterpart.translate('NUMBER')}:&nbsp;</span>
+          {Accounting.formatNumber(this.props.content.amount, 0, '.', ',')}&nbsp;{name}
+          <br />
           <span>{moment(this.props.content.plantedOn).format('DD.MM.YYYY')}</span>
         </p>
       </div>

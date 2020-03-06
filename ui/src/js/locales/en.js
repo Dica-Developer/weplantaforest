@@ -80,8 +80,8 @@ module.exports = {
   REGISTRATE: 'Sign Up',
 
   NEWSLETTER_CB: 'I want to receive the newsletter.',
-  AGB_CB: 'I have read and accept the <a href=\'/terms\' target=\'_blank\'>general terms and conditions</a>.',
-  DSGVO_CB: 'I have read and accept the <a href=\'/privacy\' target=\'_blank\'>privacy policy</a>.',
+  AGB_CB: "I have read and accept the <a href='/terms' target='_blank'>general terms and conditions</a>.",
+  DSGVO_CB: "I have read and accept the <a href='/privacy' target='_blank'>privacy policy</a>.",
 
   USERNAME_PLACEHOLDER: 'Please enter your username.',
   PASSWORD_PLACEHOLDER: 'Please enter your password.',
@@ -93,13 +93,14 @@ module.exports = {
 
   ACTIVATION_DONE_TEXT: 'We wish you a lot of fun planting trees!',
 
-  NO_TEAM_ME: 'You haven\'t joined a team yet',
+  NO_TEAM_ME: "You haven't joined a team yet",
   NO_TEAM_VISITOR: 'The user has not joined a team yet',
   NO_PLANTINGS: 'As soon as we have received your donation, you can create a certificate.',
 
   ERROR: 'An Error occured!',
   WRONG_USERNAME_PASSWORD: 'Wrong username/password combination! Please try again.',
-  LOCKED_USER: 'The account is not activated yet. Please click on the activation link you received after registration. Check your spam folder, too. Another possibility is, that the user was banned by the administrator.',
+  LOCKED_USER:
+    'The account is not activated yet. Please click on the activation link you received after registration. Check your spam folder, too. Another possibility is, that the user was banned by the administrator.',
   USER_NOT_FOUND: 'User not found.',
   INVALID_ACTIVATION_KEY: 'The activation link is invalid.',
   USER_ALREADY_EXISTS: 'Username already exists.',
@@ -188,7 +189,7 @@ module.exports = {
 
   PAYMENT_SUCCESSFUL: 'Payment successfull!',
   THANKS_FOR_DONATION: 'Thanks for your donation.',
-  FOLLOWING_DATA_TRANSFERED: 'The following data were transfered to the \'Bank für Sozialwirtschaft\'',
+  FOLLOWING_DATA_TRANSFERED: "The following data were transfered to the 'Bank für Sozialwirtschaft'",
   YOU_FIND_YOUR_GIFT_CODE: 'You find your gift code',
   HERE: 'here',
   SEPA_DEBIT: 'SEPA debit',
@@ -236,12 +237,13 @@ module.exports = {
   },
 
   OFFER_ACREAGE_TEXTS: {
-    TEXT_1: 'We\'re turning land into community forest. For this purpose we are looking for areas that:',
+    TEXT_1: "We're turning land into community forest. For this purpose we are looking for areas that:",
     TEXT_2: 'are suitable for afforestation,',
     TEXT_3: 'for which we can get a reforestation permit (no dry grassland or orchards),',
     TEXT_4: 'are at least three hectares in size and ideally located on a road or path,',
     TEXT_5: 'if possible, cost a maximum of 6,000 Euro/ha.',
-    TEXT_6: 'With us, land is in good, non-profit hands. We are also happy about existing forests in order to protect them in the long term. Should we cease to exist at any time, the values of I Plant A Tree will be transferred to another charitable environmental organisation in accordance with our statutes.',
+    TEXT_6:
+      'With us, land is in good, non-profit hands. We are also happy about existing forests in order to protect them in the long term. Should we cease to exist at any time, the values of I Plant A Tree will be transferred to another charitable environmental organisation in accordance with our statutes.',
     TEXT_7: 'If you, someone from your family or your circle of friends would like to sell, give away or inherit an area, please contact us.',
     TEXT_8: 'Please fill in the required fields. We will contact you as soon as possible.'
   },
@@ -289,7 +291,7 @@ module.exports = {
   UPLOAD_FAILED: 'Failed to upload',
   UPLOAD_FINISHED: 'Upload finished!',
 
-  SVG_TITLES:  {
+  SVG_TITLES: {
     shovel: 'plant yourself',
     mouse: 'plant online',
     secateurs: 'Treeservice',
@@ -315,7 +317,7 @@ module.exports = {
     NUMBER: 'Certificate number',
     FIND: 'Find',
     NOT_EXISTS: 'Certificate does not exist!',
-    NOT_EXISTS_TEXT: 'There\'s no certificate with this number.'
+    NOT_EXISTS_TEXT: "There's no certificate with this number."
   },
 
   SAVE: 'save',
@@ -350,11 +352,11 @@ module.exports = {
   NOT_LOGGED_IN_REDEEM_GIFT: 'Attention: You are not logged in! Only as a registered user you can redeem vouchers.',
   NOT_LOGGED_IN_TEXT: 'Only as a registered user you have your own profile, can create certificates and use vouchers.',
   ACCOUNT_Q: 'Do you have an account?',
-  NO_ACCOUNT_Q: 'You don\'t have one?',
+  NO_ACCOUNT_Q: "You don't have one?",
 
   NO_USER_LOGGED_IN: {
     TITLE: 'No user logged in!',
-    TEXT: 'Anonym user can\'t create gifts.'
+    TEXT: "Anonym user can't create gifts."
   },
 
   AS_GIFT: 'As gift',
@@ -403,7 +405,7 @@ module.exports = {
   NATURAL_GAS: 'natural gas',
   LIQUID_GAS: 'liquid natural gas',
   ELECTRIC: 'electric',
-  CONSUMPTION_Q: 'How high is your vehicle\'s consumption over 100 km?',
+  CONSUMPTION_Q: "How high is your vehicle's consumption over 100 km?",
   ENTER_CONSUMPTION: 'Please enter the consumption.',
   HOW_MANY_KM_Q: 'How many km did you drive?',
   ENTER_KM: 'Please enter the driven distance in kms.',
@@ -555,9 +557,9 @@ module.exports = {
   YOUR_MESSAGE_PLACEHOLDER: 'Please enter your message.',
 
   NO_ACCESS: 'No permission',
-  NO_ACCES_TEXT: 'You don\'t have permission to call the following url',
+  NO_ACCES_TEXT: "You don't have permission to call the following url",
 
-  NO_TREES_TO_PLANT: 'Unfortunately we don\'t have any acreages for afforestation at the moment.',
+  NO_TREES_TO_PLANT: "Unfortunately we don't have any acreages for afforestation at the moment.",
 
   HELP_WITH_NO_TREE_DONATION: 'You also can help us with non tree related donations, just send us a contact message:',
   CONTACT: 'Contact',

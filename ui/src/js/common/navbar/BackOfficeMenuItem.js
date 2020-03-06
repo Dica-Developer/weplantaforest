@@ -13,11 +13,16 @@ export default class BackOfficeMenuItem extends Component {
 
   render() {
     return (
-      <div className={localStorage.getItem('isAdmin') == 'true' ? 'menu-item' : 'no-display'}><a role="button" onClick={() => {
-        this.linkTo(this.props.hash);
-      }}>
-        {this.props.children}
-      </a></div>
+      <div className={localStorage.getItem('isAdmin') == 'true' ? 'menu-item' : 'no-display'}>
+        <a
+          role="button"
+          onClick={() => {
+            this.linkTo(this.props.hash);
+          }}
+        >
+          {this.props.children}
+        </a>
+      </div>
     );
   }
 }

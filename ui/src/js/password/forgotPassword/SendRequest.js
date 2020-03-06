@@ -5,9 +5,7 @@ import IconButton from '../../common/components/IconButton';
 import InputText from '../../common/components/InputText';
 import Notification from '../../common/components/Notification';
 
-
 export default class SendRequest extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -24,11 +22,14 @@ export default class SendRequest extends Component {
   sendPasswortResetMail() {
     if (this.state.name != '') {
       var that = this;
-      axios.post('http://localhost:8081/password_request?userName=' + encodeURIComponent(this.state.name) + '&language=' + localStorage.getItem('language')).then(function(response) {
-        that.props.setResetted();
-      }).catch(function(error) {
-        that.refs.notification.handleError(error);
-      });
+      axios
+        .post('http://localhost:8081/password_request?userName=' + encodeURIComponent(this.state.name) + '&language=' + localStorage.getItem('language'))
+        .then(function(response) {
+          that.props.setResetted();
+        })
+        .catch(function(error) {
+          that.refs.notification.handleError(error);
+        });
     } else {
       this.refs.notification.addNotification(counterpart.translate('NO_USERNAME.TITLE'), counterpart.translate('NO_USERNAME.TEXT'), 'error');
     }
@@ -40,12 +41,12 @@ export default class SendRequest extends Component {
         <h1>{counterpart.translate('PASSWORD_FORGOT')}</h1>
         <div className="form">
           {counterpart.translate('PASSWORD_FORGOT_TEXT')}
-          <br/>
-          <InputText toUpdate="name" updateValue={this.updateValue.bind(this)}/>
-          <br/>
-          <IconButton text={counterpart.translate('SEND_PASSWORD_RESET_MAIL')} glyphIcon="glyphicon-envelope" onClick={this.sendPasswortResetMail.bind(this)}/>
+          <br />
+          <InputText toUpdate="name" updateValue={this.updateValue.bind(this)} />
+          <br />
+          <IconButton text={counterpart.translate('SEND_PASSWORD_RESET_MAIL')} glyphIcon="glyphicon-envelope" onClick={this.sendPasswortResetMail.bind(this)} />
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

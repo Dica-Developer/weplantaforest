@@ -4,14 +4,13 @@ import FileUploadProgress from 'react-fileupload-progress';
 import IconButton from '../common/components/IconButton';
 import { createTeamImageUrl } from '../common/ImageHelper';
 
-
 export default class FileChooseAndUploadButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
       fileName: '',
       fileWarning: ''
-    }
+    };
     this.styles = {
       progressWrapper: {
         height: '15px',
@@ -35,7 +34,7 @@ export default class FileChooseAndUploadButton extends Component {
         Otransition: 'width .6s ease',
         transition: 'width .6s ease'
       }
-    }
+    };
   }
 
   componentDidMount() {
@@ -44,7 +43,7 @@ export default class FileChooseAndUploadButton extends Component {
 
   beforeSend(req) {
     req.setRequestHeader('X-AUTH-TOKEN', localStorage.getItem('jwt'));
-    return req
+    return req;
   }
 
   formGetter() {
@@ -56,23 +55,23 @@ export default class FileChooseAndUploadButton extends Component {
   customFormRenderer(onSubmit) {
     let uploadButton;
     if (this.state.fileName != '') {
-      uploadButton = <IconButton text="Upload" glyphIcon="glyphicon-upload" onClick={onSubmit}/>;
+      uploadButton = <IconButton text="Upload" glyphIcon="glyphicon-upload" onClick={onSubmit} />;
     } else {
       uploadButton = '';
     }
     return (
-      <form id='teamIamgeForm' className="file-choser-form">
+      <form id="teamIamgeForm" className="file-choser-form">
         <label className="fileContainer">
-          <span className='glyphicon glyphicon-search' aria-hidden="true"></span>
+          <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
           {counterpart.translate('CHOOSE_FILE')}
-          <input type="file" name='file' id="exampleInputFile" ref="fileChooser" onChange={ (e) => this.fileChanged(e.target.files) } />
+          <input type="file" name="file" id="exampleInputFile" ref="fileChooser" onChange={e => this.fileChanged(e.target.files)} />
         </label>
         <div>
           <label className="file-name">{this.state.fileName}</label>
           <label className="file-error">{this.state.fileWarning}</label>
           {uploadButton}
         </div>
-     </form>
+      </form>
     );
   }
 
@@ -81,13 +80,13 @@ export default class FileChooseAndUploadButton extends Component {
       let barStyle = Object.assign({}, this.styles.progressBar);
       barStyle.width = progress + '%';
 
-      let message = (<span>{barStyle.width}</span>);
+      let message = <span>{barStyle.width}</span>;
       if (hasError) {
         barStyle.backgroundColor = '#d9534f';
-        message = (<span style={{'color': '#a94442'}}>{counterpart.translate('UPLOAD_FAILED')}</span>);
+        message = <span style={{ color: '#a94442' }}>{counterpart.translate('UPLOAD_FAILED')}</span>;
       }
       if (progress === 100 && !hasError) {
-        message = (<span >{counterpart.translate('UPLOAD_FINISHED')}</span>);
+        message = <span>{counterpart.translate('UPLOAD_FINISHED')}</span>;
       }
 
       return (
@@ -95,9 +94,7 @@ export default class FileChooseAndUploadButton extends Component {
           <div style={this.styles.progressWrapper}>
             <div style={barStyle}></div>
           </div>
-          <div style={{'clear':'left'}}>
-            {message}
-          </div>
+          <div style={{ clear: 'left' }}>{message}</div>
         </div>
       );
     } else {
@@ -107,15 +104,15 @@ export default class FileChooseAndUploadButton extends Component {
 
   fileChanged(files) {
     if (files && files.length > 0) {
-      if(files[0].size <= 1048576){
+      if (files[0].size <= 1048576) {
         this.setState({
           fileName: files[0].name,
           fileWarning: ''
         });
-      }else{
-          this.setState({
-            fileWarning: counterpart.translate('FILE_TOO_BIG')
-          });
+      } else {
+        this.setState({
+          fileWarning: counterpart.translate('FILE_TOO_BIG')
+        });
       }
     }
   }
@@ -124,13 +121,13 @@ export default class FileChooseAndUploadButton extends Component {
     const component = this;
 
     const img = new Image();
-    img.crossOrigin = "Anonymous";
+    img.crossOrigin = 'Anonymous';
     img.onload = function() {
-      var canvas = document.createElement("canvas");
+      var canvas = document.createElement('canvas');
       canvas.width = this.width;
       canvas.height = this.height;
 
-      var ctx = canvas.getContext("2d");
+      var ctx = canvas.getContext('2d');
       ctx.drawImage(this, 0, 0);
       var dataURL = canvas.toDataURL();
       component.setState({
@@ -149,7 +146,7 @@ export default class FileChooseAndUploadButton extends Component {
     let image;
 
     if (this.props.imageFileName) {
-      image = <img id={this.props.imageId} src={this.state.liveImage} alt="profile" width="80" height="80"/>;
+      image = <img id={this.props.imageId} src={this.state.liveImage} alt="profile" width="80" height="80" />;
     } else {
       image = '';
     }
@@ -160,15 +157,21 @@ export default class FileChooseAndUploadButton extends Component {
           {image}
         </div>
         <div className="col-md-10">
-          <FileUploadProgress ref="fileupload" key='ex1' url='http://localhost:8081/team/image/upload'
+          <FileUploadProgress
+            ref="fileupload"
+            key="ex1"
+            url="http://localhost:8081/team/image/upload"
             onProgress={(e, request, progress) => {}}
-            onLoad={ (e, request) => { this.loadImage(); }}
-            onError={ (e, request) => {}}
-            onAbort={ (e, request) => {}}
+            onLoad={(e, request) => {
+              this.loadImage();
+            }}
+            onError={(e, request) => {}}
+            onAbort={(e, request) => {}}
             beforeSend={this.beforeSend.bind(this)}
             formGetter={this.formGetter.bind(this)}
             formRenderer={this.customFormRenderer.bind(this)}
-            progressRenderer={this.customProgressRenderer.bind(this)} />
+            progressRenderer={this.customProgressRenderer.bind(this)}
+          />
         </div>
       </div>
     );

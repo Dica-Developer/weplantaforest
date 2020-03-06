@@ -8,7 +8,8 @@ export default class ExplorePage extends Component {
         <div className="container">
           <Projects />
         </div>
-      </div>);
+      </div>
+    );
   }
 }
 

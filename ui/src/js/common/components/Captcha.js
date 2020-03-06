@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import IconButton from './IconButton';
 import Notification from './Notification';
 
-
 require('./captcha.less');
 
 export default class Captcha extends Component {
@@ -33,21 +32,24 @@ export default class Captcha extends Component {
 
   createCaptchaToken() {
     var that = this;
-    axios.get('http://localhost:8081/captcha/generate').then(function(response) {
-      that.setState({
-        captchaToken: response.data[0],
-        captchaImg: response.data[1]
+    axios
+      .get('http://localhost:8081/captcha/generate')
+      .then(function(response) {
+        that.setState({
+          captchaToken: response.data[0],
+          captchaImg: response.data[1]
+        });
+      })
+      .catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
       });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
   }
 
   validateCaptcha() {
@@ -63,13 +65,13 @@ export default class Captcha extends Component {
   render() {
     return (
       <div className="captcha">
-        <img className="captchaImage" src={'data:image/jpg;base64,' + this.state.captchaImg}/>
+        <img className="captchaImage" src={'data:image/jpg;base64,' + this.state.captchaImg} />
         <p>{counterpart.translate('CAPTCHA_HINT')}:</p>
         <div className="inputWrapper">
-          <input type="text" className="form-control inputField" value={this.state.userInput} onChange={this.updateUserInput.bind(this)}/>
-          <IconButton glyphIcon="glyphicon-refresh" onClick={this.updateCaptchaToken.bind(this)}/>
+          <input type="text" className="form-control inputField" value={this.state.userInput} onChange={this.updateUserInput.bind(this)} />
+          <IconButton glyphIcon="glyphicon-refresh" onClick={this.updateCaptchaToken.bind(this)} />
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

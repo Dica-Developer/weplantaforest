@@ -4,9 +4,7 @@ import Article from '../../planting/customPlantPage/Article';
 import ArticleDesc from '../../planting/customPlantPage/ArticleDesc';
 import ButtonBar from './ButtonBar';
 
-
 export default class PlantCustom extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -44,14 +42,14 @@ export default class PlantCustom extends Component {
     var that = this;
     return (
       <div className="plantCustom">
-        <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)}/>
-        <ArticleDesc/>
+        <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)} />
+        <ArticleDesc />
         <div className={'plantItems align-center'}>
           {this.props.articles.map(function(article, i) {
-            return (<Article key={i} article={article} ref={'article_' + i} updatePrice={that.updatePrice.bind(this)}/>);
+            return <Article key={i} article={article} ref={'article_' + i} updatePrice={that.updatePrice.bind(this)} />;
           })}
         </div>
-        <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
+        <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice} />
       </div>
     );
   }

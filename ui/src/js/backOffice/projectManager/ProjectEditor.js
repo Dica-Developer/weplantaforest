@@ -10,8 +10,6 @@ import TextEditor from '../../common/components/TextEditor';
 import { createMultiLanguageEntry, getTextForLanguage, getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
 import { getConfig } from '../../common/RestHelper';
 
-
-
 require('./projectEditor.less');
 
 class ProjectImage extends Component {
@@ -45,9 +43,13 @@ class ProjectImage extends Component {
       children: (
         <div>
           <button>Abbrechen</button>
-          <button onClick={() => {
-            this.deleteProjectImage();
-          }}>OK</button>
+          <button
+            onClick={() => {
+              this.deleteProjectImage();
+            }}
+          >
+            OK
+          </button>
         </div>
       )
     });
@@ -57,12 +59,15 @@ class ProjectImage extends Component {
     if (this.state.imageId != null) {
       var that = this;
       var config = getConfig();
-      axios.post('http://localhost:8083/project/image/delete?projectImageId=' + this.state.imageId + '&imageFileName=' + this.state.imageFileName, {}, config).then(function(response) {
-        that.props.removeProjectImage(that.props.arrayIndex);
-        that.refs.notification.addNotification('Geschafft!', 'Bild wurde gelöscht.', 'success');
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler!', response.data, 'error');
-      });
+      axios
+        .post('http://localhost:8083/project/image/delete?projectImageId=' + this.state.imageId + '&imageFileName=' + this.state.imageFileName, {}, config)
+        .then(function(response) {
+          that.props.removeProjectImage(that.props.arrayIndex);
+          that.refs.notification.addNotification('Geschafft!', 'Bild wurde gelöscht.', 'success');
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification('Fehler!', response.data, 'error');
+        });
     } else {
       this.props.removeProjectImage(this.props.arrayIndex);
       this.refs.notification.addNotification('Geschafft!', 'Bild wurde gelöscht.', 'success');
@@ -84,8 +89,8 @@ class ProjectImage extends Component {
     this.forceUpdate();
   }
 
-  updateProjectId(projectId){
-    this.setState({projectId: projectId});
+  updateProjectId(projectId) {
+    this.setState({ projectId: projectId });
   }
 
   createEditImage() {
@@ -101,31 +106,37 @@ class ProjectImage extends Component {
     };
 
     var config = getConfig();
-    if(this.state.projectId != null){
-      axios.post('http://localhost:8083/project/image/createEdit', projectImageData, config).then(function(response) {
-        if (that.state.file != null) {
-          var imageId = response.data;
-          var projectImageFile = new FormData();
-          projectImageFile.append('imageId', imageId);
-          projectImageFile.append('file', that.state.file);
-          axios.post('http://localhost:8083/project/image/upload', projectImageFile, config).then(function(response) {
-            that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
-          }).catch(function(response) {
-            that.refs.notification.addNotification('Fehler!', response.data+ response.message, 'error');
-          });
-        } else {
-          that.refs.notification.addNotification('Geschafft!', 'Daten wurden geupdatet!', 'success');
-        }
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
-      });
-    }else{
-        that.refs.notification.addNotification('Projekt ist noch nicht gespeichert!','Bitte speicher erst das Projekt ab, bevor du dazu ein Bild hochladen willst', 'error');
+    if (this.state.projectId != null) {
+      axios
+        .post('http://localhost:8083/project/image/createEdit', projectImageData, config)
+        .then(function(response) {
+          if (that.state.file != null) {
+            var imageId = response.data;
+            var projectImageFile = new FormData();
+            projectImageFile.append('imageId', imageId);
+            projectImageFile.append('file', that.state.file);
+            axios
+              .post('http://localhost:8083/project/image/upload', projectImageFile, config)
+              .then(function(response) {
+                that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
+              })
+              .catch(function(response) {
+                that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
+              });
+          } else {
+            that.refs.notification.addNotification('Geschafft!', 'Daten wurden geupdatet!', 'success');
+          }
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
+        });
+    } else {
+      that.refs.notification.addNotification('Projekt ist noch nicht gespeichert!', 'Bitte speicher erst das Projekt ab, bevor du dazu ein Bild hochladen willst', 'error');
     }
   }
 
   updateImage(imageName, file) {
-    this.setState({file: file});
+    this.setState({ file: file });
     if (file != null) {
       var reader = new FileReader();
       var url = reader.readAsDataURL(file);
@@ -158,63 +169,90 @@ class ProjectImage extends Component {
       image: '';
     } else {
       let imageUrl = 'http://localhost:8081/project/image/' + this.state.imageFileName + '/400/300';
-      image = <img src={imageUrl}/>;
+      image = <img src={imageUrl} />;
     }
     return (
       <div className="projectImage">
         <div className="row">
           <div className="col-md-3">
-            Titel:<br/>(deutsch)
+            Titel:
+            <br />
+            (deutsch)
           </div>
           <div className="col-md-3">
-            <input type="text" value={this.state.titleDe} onChange={(event) => {
-              this.updateValue('titleDe', event.target.value);
-            }}/>
+            <input
+              type="text"
+              value={this.state.titleDe}
+              onChange={event => {
+                this.updateValue('titleDe', event.target.value);
+              }}
+            />
           </div>
           <div className="col-md-3">
-            Titel:<br/>(englisch)
+            Titel:
+            <br />
+            (englisch)
           </div>
           <div className="col-md-3">
-            <input type="text" value={this.state.titleEn} onChange={(event) => {
-              this.updateValue('titleEn', event.target.value);
-            }}/>
+            <input
+              type="text"
+              value={this.state.titleEn}
+              onChange={event => {
+                this.updateValue('titleEn', event.target.value);
+              }}
+            />
           </div>
         </div>
         <div className="row">
           <div className="col-md-3">
-            Text:<br/>(deutsch)
+            Text:
+            <br />
+            (deutsch)
           </div>
           <div className="col-md-3">
-            <textarea rows="4" cols="35" value={this.state.descriptionDe} onChange={(event) => {
-              this.updateValue('descriptionDe', event.target.value);
-            }}/>
+            <textarea
+              rows="4"
+              cols="35"
+              value={this.state.descriptionDe}
+              onChange={event => {
+                this.updateValue('descriptionDe', event.target.value);
+              }}
+            />
           </div>
           <div className="col-md-3">
-            Text:<br/>(englisch)
+            Text:
+            <br />
+            (englisch)
           </div>
           <div className="col-md-3">
-            <textarea rows="4" cols="35" value={this.state.descriptionEn} onChange={(event) => {
-              this.updateValue('descriptionEn', event.target.value);
-            }}/>
+            <textarea
+              rows="4"
+              cols="35"
+              value={this.state.descriptionEn}
+              onChange={event => {
+                this.updateValue('descriptionEn', event.target.value);
+              }}
+            />
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4"><FileChooser updateFile={this.updateImage.bind(this)}/></div>
-          <div className="col-md-8">
-            {image}
+          <div className="col-md-4">
+            <FileChooser updateFile={this.updateImage.bind(this)} />
           </div>
+          <div className="col-md-8">{image}</div>
         </div>
         <div className="row">
           <div className="col-md-12 align-center"></div>
         </div>
         <div className="row">
           <div className="col-md-12 align-right">
-            <IconButton glyphIcon="glyphicon-trash" text="BILD LÖSCHEN" onClick={this.createDeleteProjectImageConfirmation.bind(this)}/><br/>
-            <IconButton glyphIcon="glyphicon-floppy-save" text="BILD SPEICHERN" onClick={this.createEditImage.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-trash" text="BILD LÖSCHEN" onClick={this.createDeleteProjectImageConfirmation.bind(this)} />
+            <br />
+            <IconButton glyphIcon="glyphicon-floppy-save" text="BILD SPEICHERN" onClick={this.createEditImage.bind(this)} />
           </div>
         </div>
-        <Notification ref="notification"/>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification" />
+        <NotificationSystem ref="notificationSystem" style={style} />
       </div>
     );
   }
@@ -268,9 +306,13 @@ class ProjectArticle extends Component {
       children: (
         <div>
           <button>Abbrechen</button>
-          <button onClick={() => {
-            this.deleteProjectArticle();
-          }}>OK</button>
+          <button
+            onClick={() => {
+              this.deleteProjectArticle();
+            }}
+          >
+            OK
+          </button>
         </div>
       )
     });
@@ -280,12 +322,15 @@ class ProjectArticle extends Component {
     if (this.state.article.articleId != null) {
       var that = this;
       var config = getConfig();
-      axios.post('http://localhost:8083/project/article/remove?articleId=' + this.state.article.articleId, {}, config).then(function(response) {
-        that.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
-        that.props.removeProjectArticle(that.props.arrayIndex);
-      }).catch(function(response) {
-        that.refs.notification.addNotification('Fehler!', response.data, 'error');
-      });
+      axios
+        .post('http://localhost:8083/project/article/remove?articleId=' + this.state.article.articleId, {}, config)
+        .then(function(response) {
+          that.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
+          that.props.removeProjectArticle(that.props.arrayIndex);
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification('Fehler!', response.data, 'error');
+        });
     } else {
       this.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
       this.props.removeProjectArticle(this.props.arrayIndex);
@@ -297,7 +342,7 @@ class ProjectArticle extends Component {
   }
 
   updateArticle(article) {
-    this.setState({article: article});
+    this.setState({ article: article });
     this.preSelectTreeType();
   }
 
@@ -317,75 +362,86 @@ class ProjectArticle extends Component {
     };
     return (
       <div className="row projectArticle">
-        <div className="col-md-3">
-          Baumtyp:
-        </div>
+        <div className="col-md-3">Baumtyp:</div>
         <div className="col-md-3">
           <select onChange={this.updateTreeType.bind(this)} ref="select">
             {this.state.treeTypes.map(function(treeType, i) {
               if (treeType.name == 'Default') {
                 return (
-                  <option value={treeType.id} key={i}>keiner der genannten</option>
+                  <option value={treeType.id} key={i}>
+                    keiner der genannten
+                  </option>
                 );
               } else {
                 return (
-                  <option value={treeType.id} key={i}>{getTextForSelectedLanguage(treeType.name)}</option>
+                  <option value={treeType.id} key={i}>
+                    {getTextForSelectedLanguage(treeType.name)}
+                  </option>
                 );
               }
             })}
           </select>
         </div>
+        <div className="col-md-3">Anzahl:</div>
         <div className="col-md-3">
-          Anzahl:
+          <input
+            type="text"
+            value={this.state.article.amount}
+            onChange={event => {
+              this.updateValue('amount', event.target.value);
+            }}
+          />
         </div>
+        <div className="col-md-3">Preis:</div>
         <div className="col-md-3">
-          <input type="text" value={this.state.article.amount} onChange={(event) => {
-            this.updateValue('amount', event.target.value);
-          }}/>
+          <input
+            type="text"
+            value={this.state.article.price.amount}
+            onChange={event => {
+              this.updatePriceValue('amount', event.target.value);
+            }}
+          />
         </div>
+        <div className="col-md-3">Marge:</div>
         <div className="col-md-3">
-          Preis:
+          <input
+            type="text"
+            value={this.state.article.price.marge}
+            onChange={event => {
+              this.updatePriceValue('marge', event.target.value);
+            }}
+          />
         </div>
+        <div className="col-md-3">Funding:</div>
         <div className="col-md-3">
-          <input type="text" value={this.state.article.price.amount} onChange={(event) => {
-            this.updatePriceValue('amount', event.target.value);
-          }}/>
+          <input
+            type="text"
+            value={this.state.article.price.funding}
+            onChange={event => {
+              this.updatePriceValue('funding', event.target.value);
+            }}
+          />
         </div>
+        <div className="col-md-3">Skonto:</div>
         <div className="col-md-3">
-          Marge:
-        </div>
-        <div className="col-md-3">
-          <input type="text" value={this.state.article.price.marge} onChange={(event) => {
-            this.updatePriceValue('marge', event.target.value);
-          }}/>
-        </div>
-        <div className="col-md-3">
-          Funding:
-        </div>
-        <div className="col-md-3">
-          <input type="text" value={this.state.article.price.funding} onChange={(event) => {
-            this.updatePriceValue('funding', event.target.value);
-          }}/>
-        </div>
-        <div className="col-md-3">
-          Skonto:
-        </div>
-        <div className="col-md-3">
-          <input type="text" value={this.state.article.price.sconto} onChange={(event) => {
-            this.updatePriceValue('sconto', event.target.value);
-          }}/>
+          <input
+            type="text"
+            value={this.state.article.price.sconto}
+            onChange={event => {
+              this.updatePriceValue('sconto', event.target.value);
+            }}
+          />
         </div>
         <div className="col-md-12 align-left">
-          <IconButton glyphIcon="glyphicon-trash" text="BAUMTYP LÖSCHEN" onClick={this.createDeleteProjectArticleConfirmation.bind(this)}/>
+          <IconButton glyphIcon="glyphicon-trash" text="BAUMTYP LÖSCHEN" onClick={this.createDeleteProjectArticleConfirmation.bind(this)} />
         </div>
-        <Notification ref="notification"/>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        <Notification ref="notification" />
+        <NotificationSystem ref="notificationSystem" style={style} />
       </div>
     );
   }
 }
 export default class ProjectEditor extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -429,7 +485,7 @@ export default class ProjectEditor extends Component {
       var result = response.data;
       var descriptionDe = getTextForLanguage(result.description, 'DEUTSCH');
       var descriptionEn = getTextForLanguage(result.description, 'ENGLISH');
-      that.setState({project: result, descriptionDe: descriptionDe, descriptionEn: descriptionEn});
+      that.setState({ project: result, descriptionDe: descriptionDe, descriptionEn: descriptionEn });
       that.calcCenterOfMap();
       that.refs['editor_de'].refreshEditor();
       that.refs['editor_en'].refreshEditor();
@@ -449,13 +505,15 @@ export default class ProjectEditor extends Component {
   loadTreeTypes() {
     var that = this;
     var config = getConfig();
-    axios.get('http://localhost:8081/treeTypes', config).then(function(response) {
-      var result = response.data;
-      that.setState({treeTypes: result});
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der Baumtypen!', response.data + response.message, 'error');
-    });
-
+    axios
+      .get('http://localhost:8081/treeTypes', config)
+      .then(function(response) {
+        var result = response.data;
+        that.setState({ treeTypes: result });
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden der Baumtypen!', response.data + response.message, 'error');
+      });
   }
 
   calcCenterOfMap() {
@@ -471,7 +529,6 @@ export default class ProjectEditor extends Component {
       this.setState({
         mapCenter: [lat, lng]
       });
-
     }
   }
 
@@ -481,11 +538,11 @@ export default class ProjectEditor extends Component {
   }
 
   handleDescriptionChangeForDe(e) {
-    this.setState({descriptionDe: e.target.getContent()});
+    this.setState({ descriptionDe: e.target.getContent() });
   }
 
   handleDescriptionChangeForEn(e) {
-    this.setState({descriptionEn: e.target.getContent()});
+    this.setState({ descriptionEn: e.target.getContent() });
   }
 
   updateVisibility(event) {
@@ -521,29 +578,34 @@ export default class ProjectEditor extends Component {
     var description = createMultiLanguageEntry(this.state.descriptionDe, this.state.descriptionEn);
     this.state.project.description = description;
     var config = getConfig();
-    axios.post('http://localhost:8083/project/edit', this.state.project, config).then(function(response) {
-      var projectId = response.data;
-      that.state.project.id = projectId;
-      for (var image in that.state.project.images) {
-        that.refs['image_' + image].updateProjectId(projectId);
-      }
-      if(that.state.mainImageFileSrc && that.state.mainImageFileSrc != ''){
+    axios
+      .post('http://localhost:8083/project/edit', this.state.project, config)
+      .then(function(response) {
+        var projectId = response.data;
+        that.state.project.id = projectId;
+        for (var image in that.state.project.images) {
+          that.refs['image_' + image].updateProjectId(projectId);
+        }
+        if (that.state.mainImageFileSrc && that.state.mainImageFileSrc != '') {
           var mainImageFileData = new FormData();
           mainImageFileData.append('projectId', projectId);
           mainImageFileData.append('file', that.state.mainImageFile);
-          axios.post('http://localhost:8083/project/mainImage', mainImageFileData, config).then(function(response) {
-            // that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
-          }).catch(function(response) {
-            that.refs.notification.addNotification('Fehler!', response.data+ response.message, 'error');
-          });
+          axios
+            .post('http://localhost:8083/project/mainImage', mainImageFileData, config)
+            .then(function(response) {
+              // that.refs.notification.addNotification('Geschafft!', 'Bild wurde hochgeladen!', 'success');
+            })
+            .catch(function(response) {
+              that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
+            });
+        }
 
-      }
-
-      that.refs.notification.addNotification('Geschafft!', 'Projekt wurde aktualisiert.', 'success');
-      that.forceUpdate();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
-    });
+        that.refs.notification.addNotification('Geschafft!', 'Projekt wurde aktualisiert.', 'success');
+        that.forceUpdate();
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler!', 'Bei der Aktualisierung ist ein Fehler aufgetreten. ' + response.data + response.message, 'error');
+      });
   }
 
   addProjectArticle() {
@@ -552,9 +614,9 @@ export default class ProjectEditor extends Component {
       articleId: null,
       price: {
         priceId: null,
-        amount: 0.00,
+        amount: 0.0,
         funding: 0,
-        marge: 0.00,
+        marge: 0.0,
         sconto: 0,
         scontoType: 'NONE'
       },
@@ -597,7 +659,16 @@ export default class ProjectEditor extends Component {
   }
 
   createProjectArticle(index) {
-    return <ProjectArticle ref={'article_' + index} article={this.state.project.articles[index]} key={index} treeTypes={this.state.treeTypes} arrayIndex={index} removeProjectArticle={this.removeProjectArticle.bind(this)}/>;
+    return (
+      <ProjectArticle
+        ref={'article_' + index}
+        article={this.state.project.articles[index]}
+        key={index}
+        treeTypes={this.state.treeTypes}
+        arrayIndex={index}
+        removeProjectArticle={this.removeProjectArticle.bind(this)}
+      />
+    );
   }
 
   createProjectArticles() {
@@ -613,7 +684,16 @@ export default class ProjectEditor extends Component {
   }
 
   createProjectImage(index) {
-    return <ProjectImage ref={'image_' + index} projectImage={this.state.project.images[index]} projectId={this.state.project.id} arrayIndex={index} key={index} removeProjectImage={this.removeProjectImage.bind(this)}/>;
+    return (
+      <ProjectImage
+        ref={'image_' + index}
+        projectImage={this.state.project.images[index]}
+        projectId={this.state.project.id}
+        arrayIndex={index}
+        key={index}
+        removeProjectImage={this.removeProjectImage.bind(this)}
+      />
+    );
   }
 
   createProjectImages() {
@@ -629,7 +709,7 @@ export default class ProjectEditor extends Component {
   }
 
   updateMainImage(imageName, file) {
-    this.setState({mainImageFile: file});
+    this.setState({ mainImageFile: file });
     if (file != null) {
       var reader = new FileReader();
       var url = reader.readAsDataURL(file);
@@ -643,12 +723,12 @@ export default class ProjectEditor extends Component {
   }
 
   addProjectPositionFromMapClick(event) {
-    let addedPoint = {lat: parseFloat(event.latlng.lat), lng: parseFloat(event.latlng.lng), order: this.state.project.positions.length};
+    let addedPoint = { lat: parseFloat(event.latlng.lat), lng: parseFloat(event.latlng.lng), order: this.state.project.positions.length };
     this.state.project.positions.push(addedPoint);
     this.forceUpdate();
   }
 
-  deletePositionPoint(i){
+  deletePositionPoint(i) {
     this.state.project.positions.splice(i, 1);
     this.forceUpdate();
   }
@@ -663,16 +743,18 @@ export default class ProjectEditor extends Component {
       mainImage: '';
     } else {
       mainImageUrl = 'http://localhost:8081/project/image/' + this.state.project.imageFileName + '/279/186';
-      mainImage =   <img src={mainImageUrl} />
+      mainImage = <img src={mainImageUrl} />;
     }
 
     let map;
-    if(this.state.showMap){
-      map = <Map ref="map" center={this.state.mapCenter} zoom={this.state.zoom} onClick={this.addProjectPositionFromMapClick.bind(this)}>
-              <TileLayer url='https://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'/>
-              <Polygon positions={this.state.project.positions} color={'#82AB1f'}></Polygon>
-            </Map>;
-    }else{
+    if (this.state.showMap) {
+      map = (
+        <Map ref="map" center={this.state.mapCenter} zoom={this.state.zoom} onClick={this.addProjectPositionFromMapClick.bind(this)}>
+          <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors' />
+          <Polygon positions={this.state.project.positions} color={'#82AB1f'}></Polygon>
+        </Map>
+      );
+    } else {
       map = '';
     }
 
@@ -684,89 +766,99 @@ export default class ProjectEditor extends Component {
           </div>
         </div>
         <div className="row project-data">
-          <div className="col-md-4">
-            Projektname:
-          </div>
+          <div className="col-md-4">Projektname:</div>
           <div className="col-md-8">
-            <input type="text" value={this.state.project.name} onChange={(event) => {
-              this.updateValue('name', event.target.value);
-            }}/>
+            <input
+              type="text"
+              value={this.state.project.name}
+              onChange={event => {
+                this.updateValue('name', event.target.value);
+              }}
+            />
           </div>
         </div>
         <div className="row project-data">
-          <div className="col-md-4">
-            sichtbar:
-          </div>
+          <div className="col-md-4">sichtbar:</div>
           <div className="col-md-8">
-            <RadioButton id="radio-c-1" value="1" checked={this.state.project.visible} onChange={this.updateVisibility.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
-            <RadioButton id="radio-c-0" value="0" checked={!this.state.project.visible} onChange={this.updateVisibility.bind(this)} text="&nbsp; nein"/>
+            <RadioButton id="radio-c-1" value="1" checked={this.state.project.visible} onChange={this.updateVisibility.bind(this)} text="&nbsp; ja&nbsp;&nbsp;" />
+            <RadioButton id="radio-c-0" value="0" checked={!this.state.project.visible} onChange={this.updateVisibility.bind(this)} text="&nbsp; nein" />
           </div>
         </div>
         <div className="row project-data">
-          <div className="col-md-4">
-            shop active:
-          </div>
+          <div className="col-md-4">shop active:</div>
           <div className="col-md-8">
-            <RadioButton id="radio-s-1" value="1" checked={this.state.project.shopActive} onChange={this.updateShopActive.bind(this)} text="&nbsp; ja&nbsp;&nbsp;"/>
-            <RadioButton id="radio-s-0" value="0" checked={!this.state.project.shopActive} onChange={this.updateShopActive.bind(this)} text="&nbsp; nein"/>
+            <RadioButton id="radio-s-1" value="1" checked={this.state.project.shopActive} onChange={this.updateShopActive.bind(this)} text="&nbsp; ja&nbsp;&nbsp;" />
+            <RadioButton id="radio-s-0" value="0" checked={!this.state.project.shopActive} onChange={this.updateShopActive.bind(this)} text="&nbsp; nein" />
           </div>
         </div>
         <div className="row project-data">
-          <div className="col-md-4">
-            Projekt-Bild:
-          </div>
+          <div className="col-md-4">Projekt-Bild:</div>
           <div className="col-md-8">
-            <FileChooser updateFile={this.updateMainImage.bind(this)}/>
+            <FileChooser updateFile={this.updateMainImage.bind(this)} />
             {mainImage}
           </div>
         </div>
         <div className="row project-data">
           <div className="col-md-4">
-            Beschreibung:<br/>(deutsch)
+            Beschreibung:
+            <br />
+            (deutsch)
           </div>
           <div className="col-md-8">
-            <TextEditor ref="editor_de" content={this.state.descriptionDe} handleContentChange={this.handleDescriptionChangeForDe.bind(this)}/>
+            <TextEditor ref="editor_de" content={this.state.descriptionDe} handleContentChange={this.handleDescriptionChangeForDe.bind(this)} />
           </div>
         </div>
         <div className="row project-data">
           <div className="col-md-4">
-            Beschreibung:<br/>(englisch)
+            Beschreibung:
+            <br />
+            (englisch)
           </div>
           <div className="col-md-8">
-            <TextEditor ref="editor_en" content={this.state.descriptionEn} handleContentChange={this.handleDescriptionChangeForEn.bind(this)}/>
+            <TextEditor ref="editor_en" content={this.state.descriptionEn} handleContentChange={this.handleDescriptionChangeForEn.bind(this)} />
           </div>
         </div>
         <div className="row project-data">
-          <div className="col-md-4">
-            Lage:
-          </div>
+          <div className="col-md-4">Lage:</div>
           <div className="col-md-8 lat-lng-table">
             <table>
               <tbody>
-              <tr>
-                <th>
-                  lat
-                </th>
-                <th>
-                  lng
-                </th>
-                <th>
-                </th>
+                <tr>
+                  <th>lat</th>
+                  <th>lng</th>
+                  <th></th>
                 </tr>
                 {this.state.project.positions.map(function(pos, i) {
-                    return (<tr key={i} ><td>{pos.lat}</td><td>{pos.lng}</td><td><IconButton glyphIcon="glyphicon-trash" text="" onClick={() => {that.deletePositionPoint(i);}}/></td></tr>);
+                  return (
+                    <tr key={i}>
+                      <td>{pos.lat}</td>
+                      <td>{pos.lng}</td>
+                      <td>
+                        <IconButton
+                          glyphIcon="glyphicon-trash"
+                          text=""
+                          onClick={() => {
+                            that.deletePositionPoint(i);
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  );
                 })}
               </tbody>
             </table>
-            <IconButton glyphIcon="glyphicon-eye-open" text="" onClick={() => {this.setState({showMap: !this.state.showMap})}}/>
+            <IconButton
+              glyphIcon="glyphicon-eye-open"
+              text=""
+              onClick={() => {
+                this.setState({ showMap: !this.state.showMap });
+              }}
+            />
           </div>
         </div>
         <div className="row project-data">
-          <div className="col-md-4">
-          </div>
-          <div className="col-md-8">
-            {map}
-          </div>
+          <div className="col-md-4"></div>
+          <div className="col-md-8">{map}</div>
         </div>
         <div className="row">
           <div className="col-md-12">
@@ -776,12 +868,12 @@ export default class ProjectEditor extends Component {
         {articles}
         <div className="row">
           <div className="col-md-12 align-right">
-            <IconButton glyphIcon="glyphicon-plus" text="BAUMTYP HINZUFÜGEN" onClick={this.addProjectArticle.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-plus" text="BAUMTYP HINZUFÜGEN" onClick={this.addProjectArticle.bind(this)} />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12 align-center">
-            <IconButton glyphIcon="glyphicon-floppy-open" text="ÄNDERUNGEN SPEICHERN" onClick={this.updateProject.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-floppy-open" text="ÄNDERUNGEN SPEICHERN" onClick={this.updateProject.bind(this)} />
           </div>
         </div>
         <div className="row project-image-header">
@@ -792,10 +884,10 @@ export default class ProjectEditor extends Component {
         {projectImages}
         <div className="row">
           <div className="col-md-12 align-right">
-            <IconButton glyphIcon="glyphicon-plus" text="BILD HINZUFÜGEN" onClick={this.addProjectImage.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-plus" text="BILD HINZUFÜGEN" onClick={this.addProjectImage.bind(this)} />
           </div>
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

@@ -13,7 +13,6 @@ import Notification from '../../common/components/Notification';
 import { getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
 import { getConfig } from '../../common/RestHelper';
 
-
 require('./cartOverview.less');
 
 class CartDetails extends Component {
@@ -27,40 +26,37 @@ class CartDetails extends Component {
     var cartItems = 'no cartitems available';
     var display = 'none';
     if (this.props.details.cartItems) {
-      cartItems = <CartItems cartItems={this.props.details.cartItems}/>;
+      cartItems = <CartItems cartItems={this.props.details.cartItems} />;
       display = 'block';
     }
     var x = this.props.x - 665;
     var y = this.props.y + 25;
     return (
-      <div style={{
-        display: display,
-        position: 'absolute',
-        left: x,
-        top: y,
-        width: '650px'
-      }} className="cart-details">
+      <div
+        style={{
+          display: display,
+          position: 'absolute',
+          left: x,
+          top: y,
+          width: '650px'
+        }}
+        className="cart-details"
+      >
         <div className="row">
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-3">
                 <strong>Datum:</strong>
               </div>
-              <div className="col-md-9">
-                {moment(this.props.details.timeStamp).format('DD.MM.YYYY')}
-              </div>
+              <div className="col-md-9">{moment(this.props.details.timeStamp).format('DD.MM.YYYY')}</div>
               <div className="col-md-3">
                 <strong>Anzahl Bäume:</strong>
               </div>
-              <div className="col-md-9">
-                {this.props.details.treeCount}
-              </div>
+              <div className="col-md-9">{this.props.details.treeCount}</div>
               <div className="col-md-3">
                 <strong>Preis:</strong>
               </div>
-              <div className="col-md-9">
-                {Accounting.formatNumber(this.props.details.totalPrice, 2, '.', ',')}
-              </div>
+              <div className="col-md-9">{Accounting.formatNumber(this.props.details.totalPrice, 2, '.', ',')}</div>
             </div>
             {cartItems}
           </div>
@@ -93,8 +89,7 @@ class CartItems extends Component {
           <div className="col-md-2 align-center">
             <strong>Preis/Stk</strong>
           </div>
-          <div className="col-md-2">
-          </div>
+          <div className="col-md-2"></div>
         </div>
         {this.props.cartItems.map(function(cartItem, i) {
           var treeTypeName = 'Baum wurde entfernt';
@@ -109,7 +104,10 @@ class CartItems extends Component {
               <div className="col-md-3">{project}</div>
               <div className="col-md-2 align-center">{cartItem.amount}</div>
               <div className="col-md-2 align-center">{Accounting.formatNumber(cartItem.basePricePerPiece, 2, '.', ',')}</div>
-              <div className="col-md-2"><strong>=> </strong>{Accounting.formatNumber(cartItem.totalPrice, 2, '.', ',')}</div>
+              <div className="col-md-2">
+                <strong>=> </strong>
+                {Accounting.formatNumber(cartItem.totalPrice, 2, '.', ',')}
+              </div>
             </div>
           );
         })}
@@ -130,91 +128,104 @@ export default class CartOverview extends Component {
           filterable: true,
           sortable: true,
           visible: false
-        }, {
+        },
+        {
           key: 'user',
           name: 'User',
           width: 120,
           filterable: true,
           sortable: true,
           visible: true
-        }, {
+        },
+        {
           key: 'price',
           name: 'Preis (€)',
           width: 60,
           filterable: true,
           sortable: true,
           visible: true
-        }, {
+        },
+        {
           key: 'status',
           name: 'Status',
           width: 100,
           filterable: true,
           sortable: true,
           visible: true
-        }, {
+        },
+        {
           key: 'timestamp',
           name: 'Erstellt am',
           width: 80,
           filterable: true,
           sortable: true,
           visible: true
-        }, {
+        },
+        {
           key: 'firstName',
           name: 'Vorname',
           width: 100,
           filterable: true,
           sortable: true,
           visible: true
-        }, {
+        },
+        {
           key: 'lastName',
           name: 'Nachname',
           width: 100,
           filterable: true,
           sortable: true,
           visible: true
-        }, {
+        },
+        {
           key: 'company',
           name: 'Unternehmen',
           width: 100,
           filterable: true,
           sortable: true,
           visible: true
-        }, {
+        },
+        {
           key: 'paymentType',
           name: 'Zahlungsart',
           width: 80,
           filterable: true,
           sortable: true,
           visible: true
-        }, {
+        },
+        {
           key: 'details',
           name: 'Details',
           width: 50,
           filterable: false,
           sortable: false,
           visible: true
-        }, {
+        },
+        {
           key: 'receiptable',
           name: 'Quittung',
           width: 60,
           filterable: false,
           sortable: false,
           visible: true
-        }, {
+        },
+        {
           key: 'stateChange',
           name: 'Status wechseln',
           width: 120,
           filterable: false,
           sortable: false,
           visible: true
-        }, {
+        },
+        {
           key: 'sendReceipt',
           name: 'Quittung verschicken',
           width: 140,
           filterable: false,
           sortable: false,
           visible: true
-        }, {
+        },
+        {
           key: 'timeStampValue',
           visible: false
         }
@@ -223,13 +234,9 @@ export default class CartOverview extends Component {
       filters: {},
       restConfig: getConfig(),
       cartDetails: {},
-      selectedCartStates: [
-        {value: 'CALLBACK', label: 'Callback'}
-      ],
+      selectedCartStates: [{ value: 'CALLBACK', label: 'Callback' }],
       cartRequest: {
-        cartStates: [
-          'CALLBACK'
-        ],
+        cartStates: ['CALLBACK'],
         from: 0,
         to: 0
       },
@@ -240,9 +247,9 @@ export default class CartOverview extends Component {
   componentDidMount() {
     let to = new Date();
     let from;
-    if(to.getMonth() < 3){
-        from = new Date(to.getFullYear() - 1, 12 - (3 - to.getMonth()));
-    }else{
+    if (to.getMonth() < 3) {
+      from = new Date(to.getFullYear() - 1, 12 - (3 - to.getMonth()));
+    } else {
       from = new Date(to.getFullYear(), to.getMonth() - 2);
     }
     this.state.cartRequest.from = from.getTime();
@@ -254,31 +261,37 @@ export default class CartOverview extends Component {
   loadCarts() {
     this.refs['spinner'].showSpinner();
     var that = this;
-    axios.post('http://localhost:8083/carts',this.state.cartRequest ,this.state.restConfig).then(function(response) {
-      var result = response.data;
-      var rows = that.createRows(result);
-      that.setState({carts: result, rows: rows});
-      that.refs['spinner'].hideSpinner();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der Pflanzkörbe!', response.data, 'error');
-      that.refs['spinner'].hideSpinner();
-    });
+    axios
+      .post('http://localhost:8083/carts', this.state.cartRequest, this.state.restConfig)
+      .then(function(response) {
+        var result = response.data;
+        var rows = that.createRows(result);
+        that.setState({ carts: result, rows: rows });
+        that.refs['spinner'].hideSpinner();
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden der Pflanzkörbe!', response.data, 'error');
+        that.refs['spinner'].hideSpinner();
+      });
   }
 
   getCartDetails(id, event) {
     var that = this;
     var x = event.pageX;
     var y = event.pageY;
-    axios.get('http://localhost:8083/cart/' + id, this.state.restConfig).then(function(response) {
-      var result = response.data;
-      that.setState({cartDetails: result, x: x, y: y  });
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden des Pflanzkorbes ' + id + '!', response.data, 'error');
-    });
+    axios
+      .get('http://localhost:8083/cart/' + id, this.state.restConfig)
+      .then(function(response) {
+        var result = response.data;
+        that.setState({ cartDetails: result, x: x, y: y });
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden des Pflanzkorbes ' + id + '!', response.data, 'error');
+      });
   }
 
-  hideCartDetails(event){
-    this.setState({cartDetails: {} });
+  hideCartDetails(event) {
+    this.setState({ cartDetails: {} });
   }
 
   createRows(carts) {
@@ -311,84 +324,118 @@ export default class CartOverview extends Component {
   }
 
   createSendReceiptButton(userId, receipt, cartId) {
-    if (receipt && receipt._receiptId){
-      return <div><IconButton text="" glyphIcon="glyphicon-send" onClick={() => this.sendReceipt(userId, receipt._receiptId)}/></div>;
-    }else{
-      return <div><IconButton text="" glyphIcon="glyphicon-cog" onClick={() => this.createAndSendReceipt(userId, cartId)}/></div>;
+    if (receipt && receipt._receiptId) {
+      return (
+        <div>
+          <IconButton text="" glyphIcon="glyphicon-send" onClick={() => this.sendReceipt(userId, receipt._receiptId)} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <IconButton text="" glyphIcon="glyphicon-cog" onClick={() => this.createAndSendReceipt(userId, cartId)} />
+        </div>
+      );
     }
   }
 
-  createAndSendReceipt(userId, cartId){
+  createAndSendReceipt(userId, cartId) {
     var that = this;
-    axios.post('http://localhost:8081/receipt/createAndSend?userId=' + userId + '&cartId=' + cartId, {}, this.state.restConfig).then(function(response) {
-      that.refs.notification.addNotification('Quittung erstellt und versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
-      that.loadCarts();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim erzeugen und versenden der Quittung ist ein Fehler aufgetreten:' + response.data, 'error');
-    });
+    axios
+      .post('http://localhost:8081/receipt/createAndSend?userId=' + userId + '&cartId=' + cartId, {}, this.state.restConfig)
+      .then(function(response) {
+        that.refs.notification.addNotification('Quittung erstellt und versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
+        that.loadCarts();
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim erzeugen und versenden der Quittung ist ein Fehler aufgetreten:' + response.data, 'error');
+      });
   }
 
-  sendReceipt(userId, receiptId){
+  sendReceipt(userId, receiptId) {
     var that = this;
-    axios.post('http://localhost:8081/receipt/send?userId=' + userId + '&receiptId=' + receiptId, {}, this.state.restConfig).then(function(response) {
-      that.refs.notification.addNotification('Mail versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim versenden der Quittung ist ein Fehler aufgetreten:' + response.data, 'error');
-    });
+    axios
+      .post('http://localhost:8081/receipt/send?userId=' + userId + '&receiptId=' + receiptId, {}, this.state.restConfig)
+      .then(function(response) {
+        that.refs.notification.addNotification('Mail versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim versenden der Quittung ist ein Fehler aufgetreten:' + response.data, 'error');
+      });
   }
 
-  createReceiptCheckbox(id, value, receipt){
-    return <div className="align-center"><input type="checkbox" checked={value} onChange={(event) => this.changeReceiptableFlag(id, event, receipt)} disabled={receipt}/></div>;
+  createReceiptCheckbox(id, value, receipt) {
+    return (
+      <div className="align-center">
+        <input type="checkbox" checked={value} onChange={event => this.changeReceiptableFlag(id, event, receipt)} disabled={receipt} />
+      </div>
+    );
   }
 
-  changeReceiptableFlag(id, event, receipt){
+  changeReceiptableFlag(id, event, receipt) {
     let value = event.target.checked;
     var that = this;
-    axios.post('http://localhost:8083/cart/receiptable?cartId=' + id + '&receiptable=' + value, {}, this.state.restConfig).then(function(response) {
-      for (var cart in that.state.carts) {
-        if (that.state.carts[cart].id == id) {
-          that.state.carts[cart].receiptable = value;
-          break;
+    axios
+      .post('http://localhost:8083/cart/receiptable?cartId=' + id + '&receiptable=' + value, {}, this.state.restConfig)
+      .then(function(response) {
+        for (var cart in that.state.carts) {
+          if (that.state.carts[cart].id == id) {
+            that.state.carts[cart].receiptable = value;
+            break;
+          }
         }
-      }
-      for (var row in that.state.rows) {
-        if (that.state.rows[row].id == id) {
-          that.state.rows[row].receiptable = that.createReceiptCheckbox(id, value, receipt);
-          break;
+        for (var row in that.state.rows) {
+          if (that.state.rows[row].id == id) {
+            that.state.rows[row].receiptable = that.createReceiptCheckbox(id, value, receipt);
+            break;
+          }
         }
-      }
-      that.forceUpdate();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Quittungsflags vom Pflanzkorb mit der ID ' + id + 'auf ' + value + ' ist folgender Fehler aufgetreten:' + response.data, 'error');
-    });
+        that.forceUpdate();
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification(
+          'Es ist ein Fehler aufgetreten!',
+          'Beim Umsetzen des Quittungsflags vom Pflanzkorb mit der ID ' + id + 'auf ' + value + ' ist folgender Fehler aufgetreten:' + response.data,
+          'error'
+        );
+      });
   }
 
   createDetailIcon(id) {
-    return <div className="edit-icon">
-      <span className="glyphicon glyphicon-list-alt" aria-hidden="true" onMouseOver={(event) => {
-        this.getCartDetails(id, event);
-      }} onMouseLeave={(event) => {
-        this.hideCartDetails( event);
-      }}></span>
-    </div>;
+    return (
+      <div className="edit-icon">
+        <span
+          className="glyphicon glyphicon-list-alt"
+          aria-hidden="true"
+          onMouseOver={event => {
+            this.getCartDetails(id, event);
+          }}
+          onMouseLeave={event => {
+            this.hideCartDetails(event);
+          }}
+        ></span>
+      </div>
+    );
   }
 
   createStateChangeDropdown(id) {
-    return <div>
-            <select onChange={(event) => this.changeStatusOfCart(id, event)}>
-              <option></option>
-              <option value="CALLBACK">CALLBACK</option>
-              <option value="VERIFIED">VERIFIED</option>
-              <option value="DISCARDED">DISCARDED</option>
-            </select>
-          </div>;
+    return (
+      <div>
+        <select onChange={event => this.changeStatusOfCart(id, event)}>
+          <option></option>
+          <option value="CALLBACK">CALLBACK</option>
+          <option value="VERIFIED">VERIFIED</option>
+          <option value="DISCARDED">DISCARDED</option>
+        </select>
+      </div>
+    );
   }
 
   changeStatusOfCart(id, event) {
     let cartState = event.target.value;
-    if(cartState != 'DISCARDED'){
+    if (cartState != 'DISCARDED') {
       this.callSatusRequest(id, cartState);
-    }else{
+    } else {
       this.createDiscardConfirmation(id);
     }
   }
@@ -396,23 +443,30 @@ export default class CartOverview extends Component {
   callSatusRequest(id, cartState) {
     var that = this;
     var config = getConfig();
-    axios.post('http://localhost:8083/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, config).then(function(response) {
-      for (var cart in that.state.carts) {
-        if (that.state.carts[cart].id == id) {
-          that.state.carts[cart].cartState = cartState;
-          break;
+    axios
+      .post('http://localhost:8083/cart/changeState?cartId=' + id + '&cartState=' + cartState, {}, config)
+      .then(function(response) {
+        for (var cart in that.state.carts) {
+          if (that.state.carts[cart].id == id) {
+            that.state.carts[cart].cartState = cartState;
+            break;
+          }
         }
-      }
-      for (var row in that.state.rows) {
-        if (that.state.rows[row].id == id) {
-          that.state.rows[row].status = cartState;
-          break;
+        for (var row in that.state.rows) {
+          if (that.state.rows[row].id == id) {
+            that.state.rows[row].status = cartState;
+            break;
+          }
         }
-      }
-      that.forceUpdate();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim Umsetzen des Status vom Pflanzkorb mit der ID ' + id + 'auf ' + cartState + ' ist folgender Fehler aufgetreten:' + response.data, 'error');
-    });
+        that.forceUpdate();
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification(
+          'Es ist ein Fehler aufgetreten!',
+          'Beim Umsetzen des Status vom Pflanzkorb mit der ID ' + id + 'auf ' + cartState + ' ist folgender Fehler aufgetreten:' + response.data,
+          'error'
+        );
+      });
   }
 
   createDiscardConfirmation(id) {
@@ -424,17 +478,21 @@ export default class CartOverview extends Component {
       level: 'warning',
       children: (
         <div className="delete-confirmation align-center">
-        <button>Abbrechen</button>
-        <button onClick={() => {
-          this.callSatusRequest(id, 'DISCARDED');
-        }}>OK</button>
-      </div>
+          <button>Abbrechen</button>
+          <button
+            onClick={() => {
+              this.callSatusRequest(id, 'DISCARDED');
+            }}
+          >
+            OK
+          </button>
+        </div>
       )
     });
   }
 
   getRows() {
-    return Data.Selectors.getRows({rows: this.state.rows, filters: this.state.filters});
+    return Data.Selectors.getRows({ rows: this.state.rows, filters: this.state.filters });
   }
 
   rowGetter(i) {
@@ -453,62 +511,48 @@ export default class CartOverview extends Component {
     } else {
       delete newFilters[filter.column.key];
     }
-    this.setState({filters: newFilters});
+    this.setState({ filters: newFilters });
   }
 
   handleGridSort(sortColumn, sortDirection) {
     var sortedRows = this.state.rows;
 
     const comparer = (a, b) => {
-      if(sortColumn == 'timestamp'){
+      if (sortColumn == 'timestamp') {
         if (sortDirection === 'ASC') {
-          return (a.timeStampValue > b.timeStampValue)
-            ? 1
-            : -1;
+          return a.timeStampValue > b.timeStampValue ? 1 : -1;
         } else if (sortDirection === 'DESC') {
-          return (a.timeStampValue < b.timeStampValue)
-            ? 1
-            : -1;
+          return a.timeStampValue < b.timeStampValue ? 1 : -1;
         }
         return 1;
-      }else{
+      } else {
         if (sortDirection === 'ASC') {
-          return (a[sortColumn] > b[sortColumn])
-            ? 1
-            : -1;
+          return a[sortColumn] > b[sortColumn] ? 1 : -1;
         } else if (sortDirection === 'DESC') {
-          return (a[sortColumn] < b[sortColumn])
-            ? 1
-            : -1;
+          return a[sortColumn] < b[sortColumn] ? 1 : -1;
         }
       }
     };
 
-    const rows = sortDirection === 'NONE'
-      ? ' '
-      : sortedRows.sort(comparer);
+    const rows = sortDirection === 'NONE' ? ' ' : sortedRows.sort(comparer);
 
-    this.setState({rows : sortedRows});
+    this.setState({ rows: sortedRows });
   }
 
-  sortByDateString(){
-
-  }
+  sortByDateString() {}
 
   onClearFilters() {
-    this.setState({filters: {}});
+    this.setState({ filters: {} });
   }
 
   getEmptyRowView() {
-    return (
-      <div>Nothing to show</div>
-    );
+    return <div>Nothing to show</div>;
   }
 
   handleStateSelection(objects) {
     let states = [];
     if (null != objects) {
-      for(let elm of objects) {
+      for (let elm of objects) {
         states.push(elm.value);
       }
     }
@@ -517,7 +561,7 @@ export default class CartOverview extends Component {
     this.forceUpdate();
   }
 
-  updateFrom(value){
+  updateFrom(value) {
     if (value) {
       this.state.cartRequest.from = Date.parse(value);
     } else {
@@ -564,37 +608,39 @@ export default class CartOverview extends Component {
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="status">Stati:</label>
-              <Select id="status"
-                 name="form-field-name"
-                 value={this.state.selectedCartStates}
-                 onChange={this.handleStateSelection.bind(this)}
-                 isMulti={true}
-                 options={[
-                   { value: 'VERIFIED', label: 'Verified' },
-                   { value: 'CALLBACK', label: 'Callback' },
-                   { value: 'INITIAL', label: 'Initial' },
-                   { value: 'DISCARDED', label: 'Discarded' },
-                   { value: 'GENERATED', label: 'Generated' },
-                 ]} />
+              <Select
+                id="status"
+                name="form-field-name"
+                value={this.state.selectedCartStates}
+                onChange={this.handleStateSelection.bind(this)}
+                isMulti={true}
+                options={[
+                  { value: 'VERIFIED', label: 'Verified' },
+                  { value: 'CALLBACK', label: 'Callback' },
+                  { value: 'INITIAL', label: 'Initial' },
+                  { value: 'DISCARDED', label: 'Discarded' },
+                  { value: 'GENERATED', label: 'Generated' }
+                ]}
+              />
             </div>
           </div>
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="from">Von:</label>
-              <DatePicker value={new Date(this.state.cartRequest.from).toISOString()} onChange={this.updateFrom.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
+              <DatePicker value={new Date(this.state.cartRequest.from).toISOString()} onChange={this.updateFrom.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right" />
             </div>
           </div>
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="to">Bis:</label>
-              <DatePicker value={new Date(this.state.cartRequest.to).toISOString()} onChange={this.updateTo.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right"/>
+              <DatePicker value={new Date(this.state.cartRequest.to).toISOString()} onChange={this.updateTo.bind(this)} dateFormat="DD.MM.YYYY" calendarPlacement="right" />
             </div>
           </div>
           <div className="col-md-3">
-            <IconButton text="Lade Pflanzkörbe" glyphIcon="glyphicon-refresh" onClick={this.loadCarts.bind(this)}/>
-            <br/>
-            <br/>
-            <label >Ergebnisse:</label>&nbsp;{this.state.carts.length}
+            <IconButton text="Lade Pflanzkörbe" glyphIcon="glyphicon-refresh" onClick={this.loadCarts.bind(this)} />
+            <br />
+            <br />
+            <label>Ergebnisse:</label>&nbsp;{this.state.carts.length}
           </div>
         </div>
         <div className="row ">
@@ -605,19 +651,17 @@ export default class CartOverview extends Component {
               rowsCount={this.getSize()}
               onGridSort={this.handleGridSort.bind(this)}
               minHeight={800}
-              toolbar={< Toolbar enableFilter = {
-                  true
-                } />}
+              toolbar={<Toolbar enableFilter={true} />}
               onAddFilter={this.handleFilterChange.bind(this)}
               onClearFilters={this.onClearFilters.bind(this)}
               emptyRowsView={this.getEmptyRowView.bind(this)}
             />
           </div>
         </div>
-        <CartDetails details={this.state.cartDetails} x={this.state.x} y={this.state.y}/>
-        <LoadingSpinner ref="spinner"/>
-        <NotificationSystem ref="notificationSystem" style={style}/>
-        <Notification ref="notification"/>
+        <CartDetails details={this.state.cartDetails} x={this.state.x} y={this.state.y} />
+        <LoadingSpinner ref="spinner" />
+        <NotificationSystem ref="notificationSystem" style={style} />
+        <Notification ref="notification" />
       </div>
     );
   }

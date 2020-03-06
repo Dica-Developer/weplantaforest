@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { CopperLoading } from 'respinner';
 
 export default class LoadingSpinner extends Component {
-
   constructor(props) {
     super(props);
   }
@@ -19,7 +18,7 @@ export default class LoadingSpinner extends Component {
     return (
       <div ref="spinner" className="spinner-div">
         <div>
-          <CopperLoading fill="#82ab1f" size={100}/>
+          <CopperLoading fill="#82ab1f" size={100} />
         </div>
       </div>
     );

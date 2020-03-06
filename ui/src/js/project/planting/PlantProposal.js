@@ -8,7 +8,6 @@ import BottomPart from '../../planting/BottomPart';
 import ButtonBar from './ButtonBar';
 import PlantItem from './PlantItem';
 
-
 require('../../planting/bottomPart.less');
 
 export default class PlantProposal extends Component {
@@ -26,7 +25,7 @@ export default class PlantProposal extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getPlantProposal(this.props.amount);
   }
 
@@ -45,36 +44,39 @@ export default class PlantProposal extends Component {
 
   getPlantProposal(value) {
     var that = this;
-    this.setState({slideIn: true});
-    axios.get('http://localhost:8081/simplePlantProposalForTrees/project?projectName=' + this.props.projectName + '&amountOfTrees=' + value).then(function(response) {
-      var result = response.data;
-      that.sleep(500);
-      that.setState({
-        trees: result,
-        slideIn: false
-      });
-    }).catch(function(error) {
-      if(error.response.status == 400){
-        let messages = []
-        for(let errorInfo of error.response.data.errorInfos){
-          messages.push(counterpart.translate(errorInfo.errorCode));
+    this.setState({ slideIn: true });
+    axios
+      .get('http://localhost:8081/simplePlantProposalForTrees/project?projectName=' + this.props.projectName + '&amountOfTrees=' + value)
+      .then(function(response) {
+        var result = response.data;
+        that.sleep(500);
+        that.setState({
+          trees: result,
+          slideIn: false
+        });
+      })
+      .catch(function(error) {
+        if (error.response.status == 400) {
+          let messages = [];
+          for (let errorInfo of error.response.data.errorInfos) {
+            messages.push(counterpart.translate(errorInfo.errorCode));
+          }
+          that.setState({ areThereTreesToPlant: false, errorMessages: messages });
+        } else {
+          that.refs.notification.handleError(error);
         }
-        that.setState({areThereTreesToPlant: false, errorMessages: messages});
-      }else{
-        that.refs.notification.handleError(error);
-      }
-    });
+      });
   }
 
   componentDidUpdate() {
     if (this.state.amount != this.props.amount) {
-      this.setState({amount: this.props.amount});
+      this.setState({ amount: this.props.amount });
       this.getPlantProposal(this.props.amount);
     }
   }
 
   sleep(milliseconds) {
-    var e = new Date().getTime() + (milliseconds);
+    var e = new Date().getTime() + milliseconds;
     while (new Date().getTime() <= e) {}
   }
 
@@ -89,47 +91,47 @@ export default class PlantProposal extends Component {
   render() {
     return (
       <div>
-        <div className={(this.state.areThereTreesToPlant ? '' : 'no-display')}>
-          <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)}/>
+        <div className={this.state.areThereTreesToPlant ? '' : 'no-display'}>
+          <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)} />
         </div>
-        <div className={"plantItemDesc align-center bold plantItemDesc "+ (this.state.areThereTreesToPlant ? '' : 'no-display')}>
+        <div className={'plantItemDesc align-center bold plantItemDesc ' + (this.state.areThereTreesToPlant ? '' : 'no-display')}>
           <div>
             <p>
-              {counterpart.translate('TREETYPE')}<br/>{counterpart.translate('PRICE_PER_ITEM')}
+              {counterpart.translate('TREETYPE')}
+              <br />
+              {counterpart.translate('PRICE_PER_ITEM')}
             </p>
           </div>
-          <div>
-            {counterpart.translate('NUMBER')}
-          </div>
+          <div>{counterpart.translate('NUMBER')}</div>
           <div></div>
-          <div>
-            {counterpart.translate('SUB_TOTAL')}
-          </div>
+          <div>{counterpart.translate('SUB_TOTAL')}</div>
         </div>
-        <div ref="plantItems" className={(this.state.slideIn
-          ? 'sliding-in '
-          : 'sliding-out ') + 'align-center plantItems' + (this.state.areThereTreesToPlant ? '' : 'no-display')}>
+        <div ref="plantItems" className={(this.state.slideIn ? 'sliding-in ' : 'sliding-out ') + 'align-center plantItems' + (this.state.areThereTreesToPlant ? '' : 'no-display')}>
           {this.state.trees.plantItems.map(function(plantItem, i) {
-            return (<PlantItem plantItem={plantItem} key={i}/>);
+            return <PlantItem plantItem={plantItem} key={i} />;
           })}
         </div>
-        <div className={(!this.state.areThereTreesToPlant ? '' : 'no-display')}>
+        <div className={!this.state.areThereTreesToPlant ? '' : 'no-display'}>
           {this.state.errorMessages.map(function(message, i) {
-            return(<p className='align-center error-message' key={i} >{message}</p>);
+            return (
+              <p className="align-center error-message" key={i}>
+                {message}
+              </p>
+            );
           })}
           <div className="align-center offer-acreage">
             <p>{counterpart.translate('AREA_QUESTION')}</p>
-            <IconButton glyphIcon="glyphicon-forward" text={counterpart.translate('OFFER_AREA')} onClick={this.switchToOfferProjectPage.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-forward" text={counterpart.translate('OFFER_AREA')} onClick={this.switchToOfferProjectPage.bind(this)} />
           </div>
           <div className="align-center offer-acreage">
             <p>{counterpart.translate('HELP_WITH_NO_TREE_DONATION')}</p>
-            <IconButton glyphIcon="glyphicon-forward" text={counterpart.translate('CONTACT')} onClick={this.switchToContactPage.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-forward" text={counterpart.translate('CONTACT')} onClick={this.switchToContactPage.bind(this)} />
           </div>
         </div>
-        <div className={(this.state.areThereTreesToPlant ? '' : 'no-display')}>
-          <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.trees.actualPrice}/>
+        <div className={this.state.areThereTreesToPlant ? '' : 'no-display'}>
+          <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.trees.actualPrice} />
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

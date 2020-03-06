@@ -6,13 +6,9 @@ import ButtonBar from '../ButtonBar';
 import MainSlider from './MainSlider';
 import ProjectSlider from './ProjectSlider';
 
-
-
-
 require('./plantPage.less');
 
 export default class SliderPlantPage extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -24,11 +20,11 @@ export default class SliderPlantPage extends Component {
   }
 
   componentDidMount() {
-    this.setState({isGift: this.props.route.isGift, isAbo: this.props.route.isAbo});
+    this.setState({ isGift: this.props.route.isGift, isAbo: this.props.route.isAbo });
     var that = this;
     axios.get('http://localhost:8081/reports/activeProjects').then(function(response) {
       var result = response.data;
-      that.setState({projects: result, treeCount: 10});
+      that.setState({ projects: result, treeCount: 10 });
       that.refs['mainSlider'].setMainSliderValue(10);
       that.forceUpdate();
       axios.get('http://localhost:8081/simplePlantProposalForTrees/' + 10).then(function(response) {
@@ -64,7 +60,7 @@ export default class SliderPlantPage extends Component {
           updateProject = true;
         }
       }
-      if(updateProject){
+      if (updateProject) {
         this.refs['navbar'].updatePlantBag(this.refs['project_' + project].getPrice(), projectItems, this.state.projects[project].projectName);
       }
     }
@@ -93,7 +89,7 @@ export default class SliderPlantPage extends Component {
         this.refs['project_' + project].setSliderValue(divisionValue, false);
       }
     }
-    this.setState({treeCount: value});
+    this.setState({ treeCount: value });
     this.calcAndSetOverallPrice();
   }
 
@@ -107,7 +103,7 @@ export default class SliderPlantPage extends Component {
       var valueToSet = this.refs['project_' + manualMovedSliderValueWithMaxValue].getSliderValue() - diffToTreeCount;
       this.refs['project_' + manualMovedSliderValueWithMaxValue].setSliderValue(valueToSet, true);
 
-      var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / ((movedCntAndSum[0] - 2)));
+      var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / (movedCntAndSum[0] - 2));
       var moduloValue = (this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) % (movedCntAndSum[0] - 2);
       var moduloCnt = 0;
       for (var project in this.state.projects) {
@@ -127,7 +123,7 @@ export default class SliderPlantPage extends Component {
       this.refs['project_' + manualMovedSliderValueWithMaxValue].setSliderValue(valueToSet, true);
 
       if (movedCntAndSum[0] > 2) {
-        var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / ((movedCntAndSum[0] - 2)));
+        var divisionValue = Math.trunc((this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) / (movedCntAndSum[0] - 2));
         var moduloValue = (this.state.treeCount - (parseInt(valueToSet) + parseInt(value))) % (movedCntAndSum[0] - 2);
         var moduloCnt = 0;
         for (var project in this.state.projects) {
@@ -198,11 +194,21 @@ export default class SliderPlantPage extends Component {
         <div className="row plantPage">
           <div className="col-md-12">
             <h1>{this.props.route.header}</h1>
-            <ButtonBar chosen="slider"/>
-            <MainSlider ref="mainSlider" balanceProjectSliders={this.balanceProjectSlidersFromMain.bind(this)}/> {this.state.projects.map(function(project, i) {
-              return (<ProjectSlider project={project} articles={project.articles} key={i} ref={'project_' + i} balanceProjectSliders={that.balanceProjectSlidersFromProjectSlider.bind(this)} sliderIndex={i}/>);
+            <ButtonBar chosen="slider" />
+            <MainSlider ref="mainSlider" balanceProjectSliders={this.balanceProjectSlidersFromMain.bind(this)} />{' '}
+            {this.state.projects.map(function(project, i) {
+              return (
+                <ProjectSlider
+                  project={project}
+                  articles={project.articles}
+                  key={i}
+                  ref={'project_' + i}
+                  balanceProjectSliders={that.balanceProjectSlidersFromProjectSlider.bind(this)}
+                  sliderIndex={i}
+                />
+              );
             })}
-            <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice}/>
+            <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice} />
           </div>
         </div>
       </div>

@@ -1,13 +1,10 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import RequestSent from './RequestSent';
 import SendRequest from './SendRequest';
 
 require('./forgotPasswordPage.less');
 
 export default class ForgotPasswordPage extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -23,15 +20,13 @@ export default class ForgotPasswordPage extends Component {
   render() {
     var content;
     if (this.state.isResetted) {
-      content = <RequestSent/>;
+      content = <RequestSent />;
     } else {
-      content = <SendRequest setResetted={this.setResetted.bind(this)}/>;
+      content = <SendRequest setResetted={this.setResetted.bind(this)} />;
     }
     return (
       <div className="container paddingTopBottom15">
-        <div className="row forgotPasswordPage">
-          {content}
-        </div>
+        <div className="row forgotPasswordPage">{content}</div>
       </div>
     );
   }

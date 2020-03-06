@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import Tools from './tools/Tools';
 
-
 export default class ToolsPage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-      },
+      user: {},
       pageCount: 0
     };
   }
@@ -18,12 +15,8 @@ export default class ToolsPage extends Component {
     var toolsPart;
     var page = this.state.pageCount;
 
-    toolsPart = <Tools/>;
+    toolsPart = <Tools />;
 
-    return (
-      <div className="container paddingTopBottom15">
-        {toolsPart}
-      </div>
-    );
+    return <div className="container paddingTopBottom15">{toolsPart}</div>;
   }
 }

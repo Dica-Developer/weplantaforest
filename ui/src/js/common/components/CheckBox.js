@@ -8,7 +8,9 @@ export default class InputText extends Component {
   render() {
     return (
       <div>
-        <label><input type="checkbox" onChange={this.updateValue.bind(this)} checked={this.props.value}/> <span dangerouslySetInnerHTML={{__html: this.props.text}}></span></label>
+        <label>
+          <input type="checkbox" onChange={this.updateValue.bind(this)} checked={this.props.value} /> <span dangerouslySetInnerHTML={{ __html: this.props.text }}></span>
+        </label>
       </div>
     );
   }

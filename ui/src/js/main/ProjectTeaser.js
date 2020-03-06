@@ -3,7 +3,6 @@ import { browserHistory } from 'react-router';
 import PolygonMap from '../common/components/PolygonMap';
 import { getFirstParagraph, getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-
 export default class ProjectTeaser extends Component {
   constructor(props) {
     super(props);
@@ -16,17 +15,20 @@ export default class ProjectTeaser extends Component {
   render() {
     return (
       <div>
-        <a role="button" onClick={() => {
-          this.linkTo('/projects/' + this.props.content.name);
-        }}>
-          <PolygonMap positions={this.props.content.positions}/>
-          <h1>
-            {this.props.content.name}
-          </h1>
+        <a
+          role="button"
+          onClick={() => {
+            this.linkTo('/projects/' + this.props.content.name);
+          }}
+        >
+          <PolygonMap positions={this.props.content.positions} />
+          <h1>{this.props.content.name}</h1>
           <div className="description">
-            <p dangerouslySetInnerHTML={{
-              __html: getFirstParagraph(getTextForSelectedLanguage(this.props.content.description))
-            }}/>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: getFirstParagraph(getTextForSelectedLanguage(this.props.content.description))
+              }}
+            />
           </div>
         </a>
       </div>

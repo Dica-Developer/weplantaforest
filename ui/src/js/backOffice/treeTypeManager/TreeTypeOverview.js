@@ -7,7 +7,6 @@ import Notification from '../../common/components/Notification';
 import { createMultiLanguageEntry, getTextForLanguage } from '../../common/language/LanguageHelper';
 import { getConfig } from '../../common/RestHelper';
 
-
 require('./treeTypeOverview.less');
 
 class TreeType extends Component {
@@ -49,9 +48,13 @@ class TreeType extends Component {
       children: (
         <div>
           <button>Abbrechen</button>
-          <button onClick={() => {
-            this.deleteTreeType();
-          }}>OK</button>
+          <button
+            onClick={() => {
+              this.deleteTreeType();
+            }}
+          >
+            OK
+          </button>
         </div>
       )
     });
@@ -64,142 +67,190 @@ class TreeType extends Component {
     this.state.treeType.name = name;
     this.state.treeType.description = description;
     var config = getConfig();
-    axios.post('http://localhost:8083/treeType/save', this.state.treeType, config).then(function(response) {
+    axios
+      .post('http://localhost:8083/treeType/save', this.state.treeType, config)
+      .then(function(response) {
         if (that.state.imageFile != null) {
           var treeTypeId = response.data;
           var treeTypeImageFile = new FormData();
           treeTypeImageFile.append('treeTypeId', treeTypeId);
           treeTypeImageFile.append('file', that.state.imageFile);
-          axios.post('http://localhost:8083/treeType/imageUpload', treeTypeImageFile, config).then(function(response) {
-            that.refs.notification.addNotification('Geschafft!', 'Baumtyp wurde gespeichert.', 'success');
-          }).catch(function(response) {
+          axios
+            .post('http://localhost:8083/treeType/imageUpload', treeTypeImageFile, config)
+            .then(function(response) {
+              that.refs.notification.addNotification('Geschafft!', 'Baumtyp wurde gespeichert.', 'success');
+            })
+            .catch(function(response) {
               that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
-          });
+            });
         } else {
           that.refs.notification.addNotification('Geschafft!', 'Baumtyp wurde gespeichert.', 'success');
         }
-    }).catch(function(response) {
-    that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
-  });
-}
-
-updateTreeType(treeType) {
-  this.setState({
-    treeType: treeType,
-    nameDe: getTextForLanguage(treeType.name, 'DEUTSCH'),
-    nameEn: getTextForLanguage(treeType.name, 'ENGLISH'),
-    descriptionDe: getTextForLanguage(treeType.description, 'DEUTSCH'),
-    descriptionEn: getTextForLanguage(treeType.description, 'ENGLISH')
-  });
-}
-
-deleteTreeType() {
-  if (this.state.treeType.id != null) {
-    var that = this;
-    var config = getConfig();
-    axios.delete('http://localhost:8083/treeType/delete?TreeTypeId=' + this.state.treeType.id, config).then(function(response) {
-      that.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
-      that.props.removeTreeType(that.props.index);
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
-    });
-  } else {
-    this.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
-    this.props.removeTreeType(that.props.index);
-  }
-}
-
-updateImage(imageName, imageFile) {
-  this.setState({
-    imageFile: imageFile
-  });
-  if (imageFile != null) {
-    var reader = new FileReader();
-    var url = reader.readAsDataURL(imageFile);
-    reader.onloadend = function(e) {
-      this.setState({
-        imageFileSrc: [reader.result]
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
       });
-    }.bind(this);
   }
-  this.forceUpdate();
-}
 
-render() {
-  var style = {
-    Containers: {
-      DefaultStyle: {
-        zIndex: 11000
-      },
-      tc: {
-        top: '50%',
-        bottom: 'auto',
-        margin: '0 auto',
-        left: '50%'
-      }
-    }
-  };
-  var image;
-  if (this.state.imageFile != null) {
-    image = <img src={this.state.imageFileSrc} height="150" width="150"/>;
-  } else {
-    let imageUrl = 'http://localhost:8081/treeType/image/' + this.state.treeType.imageFile + '/150/150';
-    image = <img src={imageUrl}/>;
+  updateTreeType(treeType) {
+    this.setState({
+      treeType: treeType,
+      nameDe: getTextForLanguage(treeType.name, 'DEUTSCH'),
+      nameEn: getTextForLanguage(treeType.name, 'ENGLISH'),
+      descriptionDe: getTextForLanguage(treeType.description, 'DEUTSCH'),
+      descriptionEn: getTextForLanguage(treeType.description, 'ENGLISH')
+    });
   }
-  return (
-    <div className="treeType row">
-          <div className="col-md-2">Name(deutsch)</div>
-          <div className="col-md-4"><input type="text" value={this.state.nameDe} onChange={(event) => {
-            this.updateValue('nameDe', event.target.value);
-          }}/></div>
-          <div className="col-md-2">Name(englisch)</div>
-          <div className="col-md-4"><input type="text" value={this.state.nameEn} onChange={(event) => {
-            this.updateValue('nameEn', event.target.value);
-          }}/></div>
-          <div className="col-md-2">
-            Beschreibung:<br/>(deutsch)
-          </div>
-          <div className="col-md-4">
-            <textarea rows="4" cols="35" value={this.state.descriptionDe} onChange={(event) => {
+
+  deleteTreeType() {
+    if (this.state.treeType.id != null) {
+      var that = this;
+      var config = getConfig();
+      axios
+        .delete('http://localhost:8083/treeType/delete?TreeTypeId=' + this.state.treeType.id, config)
+        .then(function(response) {
+          that.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
+          that.props.removeTreeType(that.props.index);
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification('Fehler!', response.data + response.message, 'error');
+        });
+    } else {
+      this.refs.notification.addNotification('Geschafft!', 'Artikel wurde entfernt.', 'success');
+      this.props.removeTreeType(that.props.index);
+    }
+  }
+
+  updateImage(imageName, imageFile) {
+    this.setState({
+      imageFile: imageFile
+    });
+    if (imageFile != null) {
+      var reader = new FileReader();
+      var url = reader.readAsDataURL(imageFile);
+      reader.onloadend = function(e) {
+        this.setState({
+          imageFileSrc: [reader.result]
+        });
+      }.bind(this);
+    }
+    this.forceUpdate();
+  }
+
+  render() {
+    var style = {
+      Containers: {
+        DefaultStyle: {
+          zIndex: 11000
+        },
+        tc: {
+          top: '50%',
+          bottom: 'auto',
+          margin: '0 auto',
+          left: '50%'
+        }
+      }
+    };
+    var image;
+    if (this.state.imageFile != null) {
+      image = <img src={this.state.imageFileSrc} height="150" width="150" />;
+    } else {
+      let imageUrl = 'http://localhost:8081/treeType/image/' + this.state.treeType.imageFile + '/150/150';
+      image = <img src={imageUrl} />;
+    }
+    return (
+      <div className="treeType row">
+        <div className="col-md-2">Name(deutsch)</div>
+        <div className="col-md-4">
+          <input
+            type="text"
+            value={this.state.nameDe}
+            onChange={event => {
+              this.updateValue('nameDe', event.target.value);
+            }}
+          />
+        </div>
+        <div className="col-md-2">Name(englisch)</div>
+        <div className="col-md-4">
+          <input
+            type="text"
+            value={this.state.nameEn}
+            onChange={event => {
+              this.updateValue('nameEn', event.target.value);
+            }}
+          />
+        </div>
+        <div className="col-md-2">
+          Beschreibung:
+          <br />
+          (deutsch)
+        </div>
+        <div className="col-md-4">
+          <textarea
+            rows="4"
+            cols="35"
+            value={this.state.descriptionDe}
+            onChange={event => {
               this.updateValue('descriptionDe', event.target.value);
-            }}/>
-          </div>
-          <div className="col-md-2">
-            Beschreibung:<br/>(englisch)
-          </div>
-          <div className="col-md-4">
-            <textarea rows="4" cols="35" value={this.state.descriptionEn} onChange={(event) => {
+            }}
+          />
+        </div>
+        <div className="col-md-2">
+          Beschreibung:
+          <br />
+          (englisch)
+        </div>
+        <div className="col-md-4">
+          <textarea
+            rows="4"
+            cols="35"
+            value={this.state.descriptionEn}
+            onChange={event => {
               this.updateValue('descriptionEn', event.target.value);
-            }}/>
+            }}
+          />
+        </div>
+        <div className="col-md-2">Info-Link</div>
+        <div className="col-md-4">
+          <input
+            type="text"
+            value={this.state.treeType.infoLink == null ? '' : this.state.treeType.infoLink}
+            onChange={event => {
+              this.updateInfoLink(event.target.value);
+            }}
+          />
+        </div>
+        <div className="col-md-2">
+          geb. CO<sub>2</sub>/Jahr
+        </div>
+        <div className="col-md-4">
+          <input
+            type="text"
+            value={this.state.treeType.annualCo2SavingInTons}
+            onChange={event => {
+              this.updateCo2(event.target.value);
+            }}
+          />
+        </div>
+        <div className="col-md-2">Bild:</div>
+        <div className="col-md-7">{image}</div>
+        <div className="col-md-3">
+          <div>
+            <FileChooser updateFile={this.updateImage.bind(this)} />
           </div>
-          <div className="col-md-2">Info-Link</div>
-          <div className="col-md-4"><input type="text" value={this.state.treeType.infoLink == null ? '' : this.state.treeType.infoLink} onChange={(event) => {
-            this.updateInfoLink(event.target.value);
-          }}/></div>
-          <div className="col-md-2">geb. CO<sub>2</sub>/Jahr</div>
-          <div className="col-md-4"><input type="text" value={this.state.treeType.annualCo2SavingInTons} onChange={(event) => {
-            this.updateCo2( event.target.value);
-          }}/></div>
-          <div className="col-md-2">Bild:
-          </div>
-          <div className="col-md-7">
-          {image}
-          </div>
-          <div className="col-md-3"><div><FileChooser updateFile={this.updateImage.bind(this)}/></div>
-          </div>
-          <div className="col-md-12 align-right buttons">
-            <IconButton glyphIcon="glyphicon-floppy-open" text="SPEICHERN" onClick={this.save.bind(this)}/>
-            <IconButton glyphIcon="glyphicon-trash" text="BAUMTYP LÖSCHEN" onClick={this.createDeleteTreeTypeConfirmation.bind(this)}/>
-          </div>
-        <Notification ref="notification"/>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        </div>
+        <div className="col-md-12 align-right buttons">
+          <IconButton glyphIcon="glyphicon-floppy-open" text="SPEICHERN" onClick={this.save.bind(this)} />
+          <IconButton glyphIcon="glyphicon-trash" text="BAUMTYP LÖSCHEN" onClick={this.createDeleteTreeTypeConfirmation.bind(this)} />
+        </div>
+        <Notification ref="notification" />
+        <NotificationSystem ref="notificationSystem" style={style} />
       </div>
-  );
-}
+    );
+  }
 }
 
 export default class TreeTypeOverview extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -222,14 +273,17 @@ export default class TreeTypeOverview extends Component {
   loadTreeTypes() {
     var that = this;
     var config = getConfig();
-    axios.get('http://localhost:8083/treeTypes', config).then(function(response) {
-      that.setState({
-        treeTypes: response.data
+    axios
+      .get('http://localhost:8083/treeTypes', config)
+      .then(function(response) {
+        that.setState({
+          treeTypes: response.data
+        });
+        that.forceUpdate();
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification('Fehler beim Laden der Baumtypen!', response.data + response.message, 'error');
       });
-      that.forceUpdate();
-    }).catch(function(response) {
-      that.refs.notification.addNotification('Fehler beim Laden der Baumtypen!', response.data + response.message, 'error');
-    });
   }
 
   addTreeType() {
@@ -248,7 +302,7 @@ export default class TreeTypeOverview extends Component {
   }
 
   createTreeType(index, treeType) {
-    return <TreeType ref={'treeType_' + index} treeType={treeType} index={index} key={index} removeTreeType={this.removeTreeType.bind(this)}/>;
+    return <TreeType ref={'treeType_' + index} treeType={treeType} index={index} key={index} removeTreeType={this.removeTreeType.bind(this)} />;
   }
 
   render() {
@@ -260,16 +314,16 @@ export default class TreeTypeOverview extends Component {
             <h1>Baumarten</h1>
           </div>
         </div>
-          {this.state.treeTypes.map(function(treeType, i) {
-            return (that.createTreeType(i, treeType));
-          })}
-          <div className="row">
-            <div className="col-md-12 align-right">
-              <IconButton glyphIcon="glyphicon-plus" text="BAUMTYP HINZUFÜGEN" onClick={this.addTreeType.bind(this)}/>
-            </div>
+        {this.state.treeTypes.map(function(treeType, i) {
+          return that.createTreeType(i, treeType);
+        })}
+        <div className="row">
+          <div className="col-md-12 align-right">
+            <IconButton glyphIcon="glyphicon-plus" text="BAUMTYP HINZUFÜGEN" onClick={this.addTreeType.bind(this)} />
           </div>
-          <Notification ref="notification"/>
         </div>
+        <Notification ref="notification" />
+      </div>
     );
   }
 }

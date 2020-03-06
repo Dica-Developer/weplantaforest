@@ -6,18 +6,18 @@ export default class Captcha extends Component {
     super(props);
     this.state = {
       mapCenter: [0, 0]
-    }
+    };
   }
 
   componentDidMount() {
     this.calcCenterOfMap();
-    this.setState({positions: this.props.positions});
+    this.setState({ positions: this.props.positions });
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.positions !== this.props.positions) {
       this.calcCenterOfMap();
-      this.setState({positions: this.props.positions})
+      this.setState({ positions: this.props.positions });
     }
   }
 
@@ -40,7 +40,7 @@ export default class Captcha extends Component {
   render() {
     return (
       <Map center={this.state.mapCenter} zoom={14} scrollWheelZoom={false} dragging={false}>
-        <TileLayer url='https://{s}.tile.osm.org/{z}/{x}/{y}.png' attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'/>
+        <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors' />
         <Polygon positions={this.state.positions} color={'#82AB1f'}></Polygon>
       </Map>
     );

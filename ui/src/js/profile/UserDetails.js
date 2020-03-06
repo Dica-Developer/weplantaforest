@@ -11,8 +11,6 @@ import Notification from '../common/components/Notification';
 import { createProfileImageUrl } from '../common/ImageHelper';
 import { getConfig } from '../common/RestHelper';
 
-
-
 export default class UserDetails extends Component {
   constructor(props) {
     super(props);
@@ -35,39 +33,49 @@ export default class UserDetails extends Component {
       level: 'warning',
       children: (
         <div className="delete-confirmation align-center">
-        <button>{counterpart.translate('ABORT')}</button>
-        <button onClick={() => {
-          this.anonymizeUser(id);
-        }}>OK</button>
-      </div>
+          <button>{counterpart.translate('ABORT')}</button>
+          <button
+            onClick={() => {
+              this.anonymizeUser(id);
+            }}
+          >
+            OK
+          </button>
+        </div>
       )
     });
   }
 
   anonymizeUser(userId) {
     var that = this;
-    axios.post('http://localhost:8081/user/anonymize?userName=' + encodeURIComponent(this.props.user.userName), {}, this.state.restConfig).then(function(response) {
-      localStorage.setItem('jwt', '');
-      localStorage.setItem('username', '');
-      localStorage.setItem('isAdmin', false);
-      localStorage.setItem('userDetails', '');
-      browserHistory.push('/');
-      window.location.reload();
-    }).catch(function(response) {
-      that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('USER_DELETE_ERROR'), 'error');
-    });
+    axios
+      .post('http://localhost:8081/user/anonymize?userName=' + encodeURIComponent(this.props.user.userName), {}, this.state.restConfig)
+      .then(function(response) {
+        localStorage.setItem('jwt', '');
+        localStorage.setItem('username', '');
+        localStorage.setItem('isAdmin', false);
+        localStorage.setItem('userDetails', '');
+        browserHistory.push('/');
+        window.location.reload();
+      })
+      .catch(function(response) {
+        that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('USER_DELETE_ERROR'), 'error');
+      });
   }
 
   render() {
     var editLink;
     if (this.props.user.editAllowed) {
-      editLink = <div><IconButton text={counterpart.translate('EDIT')} glyphIcon="glyphicon-cog" onClick={this.showEditUser.bind(this)}/>
-                      <div className="anonymize-button">
-                        <a role="button" title={counterpart.translate('ANONYMIZE_ACCOUNT')} onClick={this.createConfirmation.bind(this)}>
-                          <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </a>
-                      </div>
-                  </div>;
+      editLink = (
+        <div>
+          <IconButton text={counterpart.translate('EDIT')} glyphIcon="glyphicon-cog" onClick={this.showEditUser.bind(this)} />
+          <div className="anonymize-button">
+            <a role="button" title={counterpart.translate('ANONYMIZE_ACCOUNT')} onClick={this.createConfirmation.bind(this)}>
+              <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+          </div>
+        </div>
+      );
     }
 
     let imgUrl = createProfileImageUrl(this.props.user.imageFileName, 150, 150);
@@ -88,7 +96,7 @@ export default class UserDetails extends Component {
       <div>
         <h1>{counterpart.translate('PROFILE')}</h1>
         <div className="imageDiv">
-          <img id="logo-img" src={imgUrl} alt="profile" width="150" height="150"/>
+          <img id="logo-img" src={imgUrl} alt="profile" width="150" height="150" />
         </div>
         <p className="userName">{this.props.user.userName ? he.decode(this.props.user.userName) : ''}</p>
         <div className="stats">
@@ -96,36 +104,59 @@ export default class UserDetails extends Component {
             <tbody>
               <tr>
                 <td>
-                  <span className="bold">{counterpart.translate('RANK')}:&nbsp;</span>{this.props.user.rank}
+                  <span className="bold">{counterpart.translate('RANK')}:&nbsp;</span>
+                  {this.props.user.rank}
                 </td>
                 <td>
-                  <span className="bold">{counterpart.translate('MEMBER_SINCE')}:&nbsp;</span>{moment(this.props.user.regDate).format('DD.MM.YYYY')}</td>
+                  <span className="bold">{counterpart.translate('MEMBER_SINCE')}:&nbsp;</span>
+                  {moment(this.props.user.regDate).format('DD.MM.YYYY')}
+                </td>
               </tr>
               <tr>
                 <td>
-                  <span className="bold">{counterpart.translate('TREES_PLANTED')}:&nbsp;</span>{Accounting.formatNumber(this.props.user.co2Data.treesCount, 0, '.', ',')}</td>
+                  <span className="bold">{counterpart.translate('TREES_PLANTED')}:&nbsp;</span>
+                  {Accounting.formatNumber(this.props.user.co2Data.treesCount, 0, '.', ',')}
+                </td>
                 <td>
-                  <span className="bold">{counterpart.translate('LAST_VISIT')}:&nbsp;</span>{moment(this.props.user.lastVisit).format('DD.MM.YYYY')}</td>
+                  <span className="bold">{counterpart.translate('LAST_VISIT')}:&nbsp;</span>
+                  {moment(this.props.user.lastVisit).format('DD.MM.YYYY')}
+                </td>
               </tr>
               <tr>
                 <td>
-                  <span className="bold" dangerouslySetInnerHTML={{
-                    __html: counterpart.translate('CO2_BOUND_WITHOUT_TONS')+ ':'
-                  }}></span>&nbsp;{Accounting.formatNumber(this.props.user.co2Data.co2, 3, '.', ',')}&nbsp;t</td>
+                  <span
+                    className="bold"
+                    dangerouslySetInnerHTML={{
+                      __html: counterpart.translate('CO2_BOUND_WITHOUT_TONS') + ':'
+                    }}
+                  ></span>
+                  &nbsp;{Accounting.formatNumber(this.props.user.co2Data.co2, 3, '.', ',')}&nbsp;t
+                </td>
                 <td>
-                  <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>{this.props.user.organizationType}</td>
+                  <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>
+                  {this.props.user.organizationType}
+                </td>
               </tr>
               <tr>
                 <td>
-                  <span className="bold">{counterpart.translate('WEBSITE')}:&nbsp;</span><a href={(this.props.user.homepage && this.props.user.homepage.startsWith('http') ? '' : 'http://') + this.props.user.homepage} target="blank" rel="nofollow">{this.props.user.homepage}</a></td>
+                  <span className="bold">{counterpart.translate('WEBSITE')}:&nbsp;</span>
+                  <a href={(this.props.user.homepage && this.props.user.homepage.startsWith('http') ? '' : 'http://') + this.props.user.homepage} target="blank" rel="nofollow">
+                    {this.props.user.homepage}
+                  </a>
+                </td>
                 <td>
-                  <span className="bold">{counterpart.translate('ORGANISATION')}:&nbsp;</span>{this.props.user.organisation}</td>
+                  <span className="bold">{counterpart.translate('ORGANISATION')}:&nbsp;</span>
+                  {this.props.user.organisation}
+                </td>
               </tr>
               <tr>
                 <td>
-                  <span className="bold">{counterpart.translate('LOCATION')}:&nbsp;</span>{this.props.user.location}</td>
+                  <span className="bold">{counterpart.translate('LOCATION')}:&nbsp;</span>
+                  {this.props.user.location}
+                </td>
                 <td>
-                  <span className="bold"></span></td>
+                  <span className="bold"></span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -135,11 +166,9 @@ export default class UserDetails extends Component {
             <i>{this.props.user.aboutMe ? he.decode(this.props.user.aboutMe) : ''}</i>
           </p>
         </div>
-        <div className="align-center bottomButton">
-          {editLink}
-        </div>
-        <NotificationSystem ref="notificationSystem" style={style}/>
-        <Notification ref="notification"/>
+        <div className="align-center bottomButton">{editLink}</div>
+        <NotificationSystem ref="notificationSystem" style={style} />
+        <Notification ref="notification" />
       </div>
     );
   }

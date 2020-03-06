@@ -8,16 +8,14 @@ export default class NavBar extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentDidMount() {}
 
-  }
-
-  logout(){
+  logout() {
     localStorage.setItem('jwt', '');
     localStorage.setItem('username', '');
     localStorage.setItem('userDetails', '');
     localStorage.setItem('isAdmin', false);
-    this.setState({name: '', password: '', loggedIn: false});
+    this.setState({ name: '', password: '', loggedIn: false });
     browserHistory.push('/');
     this.props.updateNavbar();
   }
@@ -25,7 +23,9 @@ export default class NavBar extends Component {
   render() {
     return (
       <div className="user-details">
-        <a className="logout-link" onClick={this.logout.bind(this)} className="pull-right">logout</a>
+        <a className="logout-link" onClick={this.logout.bind(this)} className="pull-right">
+          logout
+        </a>
       </div>
     );
   }

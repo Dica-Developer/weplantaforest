@@ -3,11 +3,9 @@ import CreditCard from './CreditCard';
 import Overview from './Overview';
 import Sepa from './Sepa';
 
-
 require('./paymentPage.less');
 
 export default class PaymentPage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -19,14 +17,14 @@ export default class PaymentPage extends Component {
   }
 
   setPaymentOption(option) {
-    this.setState({paymentOption: option});
+    this.setState({ paymentOption: option });
   }
 
   updateNavbar() {
     this.props.route.updateComponents();
   }
 
-  resetPlantBag(){
+  resetPlantBag() {
     this.props.route.resetPlantBag();
   }
 
@@ -38,11 +36,39 @@ export default class PaymentPage extends Component {
     var content;
     var giftText = '';
     if (this.state.paymentOption == '') {
-      content = <Overview price={this.state.plantBag.price} setPaymentOption={this.setPaymentOption.bind(this)} cartId={this.state.cartId} giftId={this.state.giftId} resetPlantBag={this.resetPlantBag.bind(this)} loadUserDetails={this.loadUserDetails.bind(this)}/>;
+      content = (
+        <Overview
+          price={this.state.plantBag.price}
+          setPaymentOption={this.setPaymentOption.bind(this)}
+          cartId={this.state.cartId}
+          giftId={this.state.giftId}
+          resetPlantBag={this.resetPlantBag.bind(this)}
+          loadUserDetails={this.loadUserDetails.bind(this)}
+        />
+      );
     } else if (this.state.paymentOption == 'sepa') {
-      content = <Sepa price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)} updateNavbar={this.updateNavbar.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)} loadUserDetails={this.loadUserDetails.bind(this)}/>;
+      content = (
+        <Sepa
+          price={this.state.plantBag.price}
+          cartId={this.state.cartId}
+          giftId={this.state.giftId}
+          setPaymentOption={this.setPaymentOption.bind(this)}
+          updateNavbar={this.updateNavbar.bind(this)}
+          resetPlantBag={this.resetPlantBag.bind(this)}
+          loadUserDetails={this.loadUserDetails.bind(this)}
+        />
+      );
     } else if (this.state.paymentOption == 'creditcard') {
-      content = <CreditCard price={this.state.plantBag.price} cartId={this.state.cartId} giftId={this.state.giftId} setPaymentOption={this.setPaymentOption.bind(this)} updateNavbar={this.updateNavbar.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>;
+      content = (
+        <CreditCard
+          price={this.state.plantBag.price}
+          cartId={this.state.cartId}
+          giftId={this.state.giftId}
+          setPaymentOption={this.setPaymentOption.bind(this)}
+          updateNavbar={this.updateNavbar.bind(this)}
+          resetPlantBag={this.resetPlantBag.bind(this)}
+        />
+      );
     }
 
     return (

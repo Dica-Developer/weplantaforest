@@ -4,27 +4,11 @@ import moment from 'dayjs';
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs';
 
-
-
 export default class TreesPerMonth extends Component {
-
   constructor() {
     super();
     this.state = {
-      amountOfTrees: [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
+      amountOfTrees: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       year: new Date().getFullYear(),
       years: [],
       options: {
@@ -45,29 +29,32 @@ export default class TreesPerMonth extends Component {
 
   updateChartForYear() {
     var that = this;
-    axios.get('http://localhost:8081/statistic/treesPerMonth?year=' + this.state.year).then(function(response) {
-      var result = response.data;
-      for (var month in result) {
-        that.state.amountOfTrees[month] = result[month].amount;
-      }
-      if (result.length < 12) {
-        var diffTo12 = 12 - result.length;
-        for (var diffTo12; diffTo12 > 0; diffTo12--) {
-          that.state.amountOfTrees[12 - diffTo12] = 0;
+    axios
+      .get('http://localhost:8081/statistic/treesPerMonth?year=' + this.state.year)
+      .then(function(response) {
+        var result = response.data;
+        for (var month in result) {
+          that.state.amountOfTrees[month] = result[month].amount;
         }
-      }
-      that.forceUpdate();
-      that.refs['barChart'].update();
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+        if (result.length < 12) {
+          var diffTo12 = 12 - result.length;
+          for (var diffTo12; diffTo12 > 0; diffTo12--) {
+            that.state.amountOfTrees[12 - diffTo12] = 0;
+          }
+        }
+        that.forceUpdate();
+        that.refs['barChart'].update();
+      })
+      .catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+      });
   }
 
   getAllYearFrom2007() {
@@ -97,7 +84,7 @@ export default class TreesPerMonth extends Component {
         counterpart.translate('SEPTEMBER'),
         counterpart.translate('OCTOBER'),
         counterpart.translate('NOVEMBER'),
-        counterpart.translate('DECEMBER'),
+        counterpart.translate('DECEMBER')
       ],
       datasets: [
         {
@@ -112,22 +99,27 @@ export default class TreesPerMonth extends Component {
     return (
       <div className="row tree-chart">
         <div className="col-md-3">
-          Jahr:&nbsp;<select ref="year" onChange={this.updateYear.bind(this)}>
+          Jahr:&nbsp;
+          <select ref="year" onChange={this.updateYear.bind(this)}>
             {this.state.years.map(function(year, i) {
               if (i + 1 == that.state.years.length) {
                 return (
-                  <option key={i} value={year} selected>{year}</option>
+                  <option key={i} value={year} selected>
+                    {year}
+                  </option>
                 );
               } else {
                 return (
-                  <option key={i} value={year}>{year}</option>
+                  <option key={i} value={year}>
+                    {year}
+                  </option>
                 );
               }
             })}
           </select>
         </div>
         <div className="col-md-6">
-          <Bar ref="barChart" data={chartData} options={this.state.options}/>
+          <Bar ref="barChart" data={chartData} options={this.state.options} />
         </div>
         <div className="col-md-3" />
       </div>

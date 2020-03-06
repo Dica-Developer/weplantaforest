@@ -6,9 +6,7 @@ import PieChart from 'react-simple-pie-chart';
 import IconButton from '../../common/components/IconButton';
 import ArticleSlider from './ArticleSlider';
 
-
 export default class ProjectSlider extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -24,19 +22,22 @@ export default class ProjectSlider extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8081/project/articles?projectName=' + that.props.project.projectName).then(function(response) {
-      var articles = response.data;
-      that.setState({articles: articles});
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+    axios
+      .get('http://localhost:8081/project/articles?projectName=' + that.props.project.projectName)
+      .then(function(response) {
+        var articles = response.data;
+        that.setState({ articles: articles });
+      })
+      .catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+      });
   }
 
   balanceArticleSlidersFromArticleSlider(sliderIndex, value) {
@@ -49,7 +50,7 @@ export default class ProjectSlider extends Component {
       var valueToSet = this.refs['article_' + manualMovedSliderValueWithMaxValue].getSliderValue() - diffToTreeCount;
       this.refs['article_' + manualMovedSliderValueWithMaxValue].setSliderValue(valueToSet, true);
 
-      var divisionValue = Math.trunc((this.state.value - (parseInt(valueToSet) + parseInt(value))) / ((movedCntAndSum[0] - 2)));
+      var divisionValue = Math.trunc((this.state.value - (parseInt(valueToSet) + parseInt(value))) / (movedCntAndSum[0] - 2));
       var moduloValue = (this.state.value - (parseInt(valueToSet) + parseInt(value))) % (movedCntAndSum[0] - 2);
       var moduloCnt = 0;
       for (var project in this.state.articles) {
@@ -69,7 +70,7 @@ export default class ProjectSlider extends Component {
       this.refs['article_' + manualMovedSliderValueWithMaxValue].setSliderValue(valueToSet, true);
 
       if (movedCntAndSum[0] > 2) {
-        var divisionValue = Math.trunc((this.state.value - (parseInt(valueToSet) + parseInt(value))) / ((movedCntAndSum[0] - 2)));
+        var divisionValue = Math.trunc((this.state.value - (parseInt(valueToSet) + parseInt(value))) / (movedCntAndSum[0] - 2));
         var moduloValue = (this.state.value - (parseInt(valueToSet) + parseInt(value))) % (movedCntAndSum[0] - 2);
         var moduloCnt = 0;
         for (var project in this.state.articles) {
@@ -146,10 +147,11 @@ export default class ProjectSlider extends Component {
   }
 
   updateMaxValue(value) {
-    var maxValue = ((this.props.project.amountOfMaximumTreesToPlant - this.props.project.amountOfPlantedTrees) >= value
-      ? value
-      : (this.props.project.amountOfMaximumTreesToPlant - this.props.project.amountOfPlantedTrees));
-    this.setState({maxValue: maxValue});
+    var maxValue =
+      this.props.project.amountOfMaximumTreesToPlant - this.props.project.amountOfPlantedTrees >= value
+        ? value
+        : this.props.project.amountOfMaximumTreesToPlant - this.props.project.amountOfPlantedTrees;
+    this.setState({ maxValue: maxValue });
   }
 
   getArticleValue(article) {
@@ -195,12 +197,12 @@ export default class ProjectSlider extends Component {
   }
 
   setSliderValue(value, movedManually) {
-    this.setState({value: value, movedManually: movedManually});
+    this.setState({ value: value, movedManually: movedManually });
     this.balanceArticleSliders(value);
   }
 
   setSliderValueWithoutBalancing(value, movedManually) {
-    this.setState({value: value, movedManually: movedManually});
+    this.setState({ value: value, movedManually: movedManually });
   }
 
   switchToProjectPlantingPage() {
@@ -208,67 +210,87 @@ export default class ProjectSlider extends Component {
   }
 
   setShowArticles(value) {
-    this.setState({showArticles: value});
+    this.setState({ showArticles: value });
   }
 
   render() {
     var that = this;
     var percent = 0;
     if (this.props.project.amountOfMaximumTreesToPlant != 0) {
-      percent = this.props.project.amountOfPlantedTrees / this.props.project.amountOfMaximumTreesToPlant * 100;
+      percent = (this.props.project.amountOfPlantedTrees / this.props.project.amountOfMaximumTreesToPlant) * 100;
     }
     var formattedPercent = Accounting.formatNumber(percent, 0, '.', ',');
     var articles;
     var articleButton;
     if (this.state.showArticles) {
-      articles = <div>{this.state.articles.map(function(article, i) {
-          return (<ArticleSlider article={article} key={i} ref={'article_' + i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)} sliderIndex={i}/>);
-        })}</div>;
-      articleButton = <div className="align-center"><IconButton glyphIcon="glyphicon-chevron-up" onClick={() => {
-        this.setShowArticles(false);
-      }}/></div>;
+      articles = (
+        <div>
+          {this.state.articles.map(function(article, i) {
+            return <ArticleSlider article={article} key={i} ref={'article_' + i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)} sliderIndex={i} />;
+          })}
+        </div>
+      );
+      articleButton = (
+        <div className="align-center">
+          <IconButton
+            glyphIcon="glyphicon-chevron-up"
+            onClick={() => {
+              this.setShowArticles(false);
+            }}
+          />
+        </div>
+      );
     } else {
       articles = '';
-      articleButton = <div className="align-center"><IconButton glyphIcon="glyphicon-chevron-down" onClick={() => {
-        this.setShowArticles(true);
-      }}/></div>;
+      articleButton = (
+        <div className="align-center">
+          <IconButton
+            glyphIcon="glyphicon-chevron-down"
+            onClick={() => {
+              this.setShowArticles(true);
+            }}
+          />
+        </div>
+      );
     }
     return (
       <div className="projectSlider">
         <div className="projectSummary">
           <div className="pieChart">
-            <PieChart slices={[
-              {
-                color: '#82ab1f',
-                value: percent
-              }, {
-                color: '#fff',
-                value: 100 - percent
-              }
-            ]}/>
+            <PieChart
+              slices={[
+                {
+                  color: '#82ab1f',
+                  value: percent
+                },
+                {
+                  color: '#fff',
+                  value: 100 - percent
+                }
+              ]}
+            />
           </div>
           <div className="projectInfo">
-            <span className="bold">{this.props.project.projectName}</span><br/>
-            <span className="bold">{formattedPercent}&nbsp;%&nbsp;</span>bepflanzt<br/>
-            <IconButton glyphIcon="glyphicon-forward" text="IM PROJEKT PFLANZEN" onClick={this.switchToProjectPlantingPage.bind(this)}/>
+            <span className="bold">{this.props.project.projectName}</span>
+            <br />
+            <span className="bold">{formattedPercent}&nbsp;%&nbsp;</span>bepflanzt
+            <br />
+            <IconButton glyphIcon="glyphicon-forward" text="IM PROJEKT PFLANZEN" onClick={this.switchToProjectPlantingPage.bind(this)} />
           </div>
         </div>
         <div className="sliderDiv">
-          <input type="range" min="0" max={this.state.maxValue} step="1" value={this.state.value} onChange={this.updateSliderValue.bind(this)}/>
+          <input type="range" min="0" max={this.state.maxValue} step="1" value={this.state.value} onChange={this.updateSliderValue.bind(this)} />
         </div>
         <div className="sliderSummary">
-          <div className="priceValue">
-            {Accounting.formatNumber(this.state.price / 100, 2, '.', ',')}&nbsp;€
-          </div>
+          <div className="priceValue">{Accounting.formatNumber(this.state.price / 100, 2, '.', ',')}&nbsp;€</div>
           <div className="treeValue">
-            {this.state.value}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"/>
+            {this.state.value}&nbsp;
+            <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true" />
           </div>
         </div>
-        <div className={(this.state.showArticles
-          ? ''
-          : 'invisible')}>
+        <div className={this.state.showArticles ? '' : 'invisible'}>
           {this.state.articles.map(function(article, i) {
-            return (<ArticleSlider article={article} key={i} ref={'article_' + i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)} sliderIndex={i}/>);
+            return <ArticleSlider article={article} key={i} ref={'article_' + i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)} sliderIndex={i} />;
           })}
         </div>
         {articleButton}

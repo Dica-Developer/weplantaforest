@@ -3,7 +3,6 @@ import he from 'he';
 import React, { Component } from 'react';
 import { getTextForSelectedLanguage } from '../common/language/LanguageHelper';
 
-
 export default class ProjectCarousel extends Component {
   constructor(props) {
     super(props);
@@ -22,16 +21,14 @@ export default class ProjectCarousel extends Component {
     elm.removeEventListener('animationend', this.fadingDone);
   }
   fadingDone() {
-    this.setState({fade: false});
+    this.setState({ fade: false });
   }
 
   render() {
     var projectName = this.props.projectName;
 
     return (
-      <div ref="carousel" id="carousel-example-generic" className={(this.state.fade
-        ? 'fadeOut'
-        : 'fadeIn') + ' carousel slide'} data-ride="carousel">
+      <div ref="carousel" id="carousel-example-generic" className={(this.state.fade ? 'fadeOut' : 'fadeIn') + ' carousel slide'} data-ride="carousel">
         <div className="carousel-inner" role="listbox">
           {this.props.slides.map(function(slide, index) {
             var activeItem = 'item';
@@ -41,10 +38,11 @@ export default class ProjectCarousel extends Component {
             let imageUrl = 'http://localhost:8081/project/image/' + slide.imageFileName + '/1140/570';
             return (
               <div className={activeItem} key={index}>
-                <img src={imageUrl} width="1140" height="570" alt={slide.imageFileName}/>
+                <img src={imageUrl} width="1140" height="570" alt={slide.imageFileName} />
                 <div className="imageDescription">
                   <span className="date">
-                    <i>{moment(slide.date).format('DD.MM.YYYY')}</i>&nbsp;/&nbsp;</span>
+                    <i>{moment(slide.date).format('DD.MM.YYYY')}</i>&nbsp;/&nbsp;
+                  </span>
                   <span className="text">{he.decode(getTextForSelectedLanguage(slide.description))}</span>
                 </div>
               </div>

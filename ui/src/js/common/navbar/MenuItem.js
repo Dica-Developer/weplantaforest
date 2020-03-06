@@ -8,10 +8,10 @@ export default class MenuItem extends Component {
 
   linkTo(url, event) {
     this.props.hide();
-    if(event.nativeEvent.which == 1) {
+    if (event.nativeEvent.which == 1) {
       browserHistory.push(url);
-    }else if(event.nativeEvent.which == 2){
-      window.open("http://localhost:8080" + url, "_blank");
+    } else if (event.nativeEvent.which == 2) {
+      window.open('http://localhost:8080' + url, '_blank');
     }
   }
 
@@ -20,14 +20,17 @@ export default class MenuItem extends Component {
     if (this.props.inactive) {
       link = <span className="inactive">{this.props.children}</span>;
     } else {
-      link = <a role="button" onMouseUp={(event) => {
-        this.linkTo(this.props.hash, event);
-      }}>
-      <div dangerouslySetInnerHTML={{ __html: this.props.children }} />
-      </a>;
-    };
-    return (
-      <div className="menu-item">{link}</div>
-    );
+      link = (
+        <a
+          role="button"
+          onMouseUp={event => {
+            this.linkTo(this.props.hash, event);
+          }}
+        >
+          <div dangerouslySetInnerHTML={{ __html: this.props.children }} />
+        </a>
+      );
+    }
+    return <div className="menu-item">{link}</div>;
   }
 }

@@ -3,20 +3,16 @@ import { browserHistory } from 'react-router';
 import IconButton from '../../common/components/IconButton';
 import ArticleOverview from './ArticleOverview';
 
-
 require('./article-manager.less');
 
 export default class ArticleManager extends Component {
-
   constructor() {
     super();
   }
 
-  componentDidMount() {
+  componentDidMount() {}
 
-  }
-
-  switchToArticleCreater(){
+  switchToArticleCreater() {
     browserHistory.push('/article-create');
   }
 
@@ -30,7 +26,7 @@ export default class ArticleManager extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <IconButton glyphIcon="glyphicon-plus" text="Artikel erstellen" onClick={this.switchToArticleCreater.bind(this)}/>
+            <IconButton glyphIcon="glyphicon-plus" text="Artikel erstellen" onClick={this.switchToArticleCreater.bind(this)} />
           </div>
         </div>
         <ArticleOverview />

@@ -20,21 +20,21 @@ export default class SmallRankingContainer extends Component {
     elm.removeEventListener('animationend', this.fadingDone);
   }
   fadingDone() {
-    this.setState({fade: false});
+    this.setState({ fade: false });
   }
 
   callNextPage() {
     if (!this.props.isLastPage) {
       this.props.callNextPage(this.props.rankingType, this.props.page);
     }
-    this.setState({fade: true});
+    this.setState({ fade: true });
   }
 
   callPreviousPage() {
     if (!this.props.isFirstPage) {
       this.props.callPreviousPage(this.props.rankingType, this.props.page);
     }
-    this.setState({fade: true});
+    this.setState({ fade: true });
   }
 
   render() {
@@ -44,27 +44,24 @@ export default class SmallRankingContainer extends Component {
       topIcon = 'glyphicon-menu-up';
     } else {
       topIcon = 'glyphicon-minus';
-    };
+    }
     if (!this.props.isLastPage) {
       bottomIcon = 'glyphicon-menu-down';
     } else {
       bottomIcon = 'glyphicon-minus';
-    };
+    }
     return (
       <div className="smallRankingContainer">
-        <h3>{this.props.title}
-        </h3>
-        <a className={(this.props.withPaging ? 'pagingLink' : 'no-display')} role="button" onClick={this.callPreviousPage.bind(this)}>
+        <h3>{this.props.title}</h3>
+        <a className={this.props.withPaging ? 'pagingLink' : 'no-display'} role="button" onClick={this.callPreviousPage.bind(this)}>
           <div>
             <span className={'glyphicon ' + topIcon}></span>
           </div>
         </a>
-        <div ref="ranking" className={(this.state.fade
-          ? 'fadeOut'
-          : 'fadeIn') + (this.props.withPaging ? ' rankingWrapper' : ' ')}>
+        <div ref="ranking" className={(this.state.fade ? 'fadeOut' : 'fadeIn') + (this.props.withPaging ? ' rankingWrapper' : ' ')}>
           {this.props.children}
         </div>
-        <a className={(this.props.withPaging ? 'pagingLink' : 'no-display')} role="button" onClick={this.callNextPage.bind(this)}>
+        <a className={this.props.withPaging ? 'pagingLink' : 'no-display'} role="button" onClick={this.callNextPage.bind(this)}>
           <div>
             <span className={'glyphicon ' + bottomIcon}></span>
           </div>

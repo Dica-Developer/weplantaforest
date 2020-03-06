@@ -2,13 +2,12 @@ import Accounting from 'accounting';
 import React, { Component } from 'react';
 import { getTextForSelectedLanguage } from '../../common/language/LanguageHelper';
 
-
 require('./articleSlider.less');
 
 export default class ArticleSlider extends Component {
   constructor(props) {
     super(props);
-    this.state = ({value: 0, maxValue: 5, overallPrice: 0, movedManually: false});
+    this.state = { value: 0, maxValue: 5, overallPrice: 0, movedManually: false };
   }
 
   wasMovedManually() {
@@ -24,10 +23,8 @@ export default class ArticleSlider extends Component {
   }
 
   updateMaxValue(value) {
-    var maxValue = ((this.props.article.amount - this.props.article.alreadyPlanted) >= value
-      ? value
-      : (this.props.article.amount - this.props.article.alreadyPlanted));
-    this.setState({maxValue: maxValue});
+    var maxValue = this.props.article.amount - this.props.article.alreadyPlanted >= value ? value : this.props.article.amount - this.props.article.alreadyPlanted;
+    this.setState({ maxValue: maxValue });
   }
 
   updateSliderValue(event) {
@@ -50,18 +47,20 @@ export default class ArticleSlider extends Component {
     return (
       <div className="articleSlider">
         <div className="image">
-          <img src={imageUrl} className="treeImg"/>
+          <img src={imageUrl} className="treeImg" />
         </div>
         <div className="treeTypeInfo">
-          <span className="bold">
-            {getTextForSelectedLanguage(this.props.article.treeType.name)}</span><br/>
-          Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong / 100, 2, '.', ',')}&nbsp;€</span><br/>
+          <span className="bold">{getTextForSelectedLanguage(this.props.article.treeType.name)}</span>
+          <br />
+          Stk.&nbsp;<span className="bold">{Accounting.formatNumber(this.props.article.price.priceAsLong / 100, 2, '.', ',')}&nbsp;€</span>
+          <br />
         </div>
         <div className="slider">
-          <input type="range" min="0" max={this.state.maxValue} value={this.state.value} step="1" onChange={this.updateSliderValue.bind(this)}/>
+          <input type="range" min="0" max={this.state.maxValue} value={this.state.value} step="1" onChange={this.updateSliderValue.bind(this)} />
         </div>
         <div className="sliderSummary">
-          <span className="price">{Accounting.formatNumber(this.state.overallPrice / 100, 2, '.', ',')}&nbsp;€</span><br/>
+          <span className="price">{Accounting.formatNumber(this.state.overallPrice / 100, 2, '.', ',')}&nbsp;€</span>
+          <br />
           <span className="treeCount">{Accounting.formatNumber(this.state.value, 0, '.', ',')}</span>
           <span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
         </div>

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import TinyMCE from 'react-tinymce';
 
 export default class TextEditor extends Component {
-
-  constructor(){
+  constructor() {
     super();
     this.state = {
       config: {
@@ -14,14 +13,14 @@ export default class TextEditor extends Component {
     };
   }
 
-  refreshEditor(){
+  refreshEditor() {
     this.refs['editor']._init(this.state.config, this.props.content);
   }
 
   render() {
     return (
       <div>
-      <TinyMCE ref="editor" content={this.props.content} config={this.state.config}  onChange={this.props.handleContentChange.bind(this)}/>
+        <TinyMCE ref="editor" content={this.props.content} config={this.state.config} onChange={this.props.handleContentChange.bind(this)} />
       </div>
     );
   }

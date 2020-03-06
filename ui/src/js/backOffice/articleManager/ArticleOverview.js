@@ -9,9 +9,7 @@ import IconButton from '../../common/components/IconButton';
 import Notification from '../../common/components/Notification';
 import { getConfig } from '../../common/RestHelper';
 
-
 export default class ArticleOverview extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -22,32 +20,38 @@ export default class ArticleOverview extends Component {
           name: 'Titel',
           width: 400,
           filterable: true
-        }, {
+        },
+        {
           key: 'type',
           name: 'Typ',
           width: 200,
           filterable: true
-        }, {
+        },
+        {
           key: 'owner',
           name: 'Erstellt von',
           width: 120,
           filterable: true
-        }, {
+        },
+        {
           key: 'language',
           name: 'Sprache',
           width: 70,
           filterable: true
-        }, {
+        },
+        {
           key: 'createdOn',
           name: 'Erstellt am',
           width: 90,
           filterable: true
-        }, {
+        },
+        {
           key: 'edit',
           name: '',
           width: 40,
           filterable: false
-        }, {
+        },
+        {
           key: 'delete',
           name: '',
           width: 40,
@@ -66,14 +70,16 @@ export default class ArticleOverview extends Component {
   loadArticles() {
     var that = this;
     var restConfig = getConfig();
-    axios.get('http://localhost:8082/backOffice/articles', restConfig).then(function(response) {
-      var result = response.data;
-      var rows = that.createRows(result);
-      that.setState({articles: result, rows: rows});
-    }).catch(function(error) {
-      that.refs.notification.handleError(error);
-    });
-
+    axios
+      .get('http://localhost:8082/backOffice/articles', restConfig)
+      .then(function(response) {
+        var result = response.data;
+        var rows = that.createRows(result);
+        that.setState({ articles: result, rows: rows });
+      })
+      .catch(function(error) {
+        that.refs.notification.handleError(error);
+      });
   }
 
   createRows(articles) {
@@ -93,10 +99,16 @@ export default class ArticleOverview extends Component {
       title: article.title,
       owner: article.owner.name,
       language: article.lang.substr(0, 2),
-      createdOn:  moment(article.createdOn).format('DD.MM.YYYY'),
-      edit: <IconButton glyphIcon="glyphicon-pencil" text="" onClick={() => {
-        this.edit(article.id);
-      }}/>,
+      createdOn: moment(article.createdOn).format('DD.MM.YYYY'),
+      edit: (
+        <IconButton
+          glyphIcon="glyphicon-pencil"
+          text=""
+          onClick={() => {
+            this.edit(article.id);
+          }}
+        />
+      ),
       delete: this.createDeleteButton(article.id),
       isScrolling: false
     };
@@ -104,9 +116,15 @@ export default class ArticleOverview extends Component {
   }
 
   createDeleteButton(id) {
-    return <IconButton glyphIcon="glyphicon-trash" text="" onClick={() => {
-      this.createDeleteConfirmation(id);
-    }}/>;
+    return (
+      <IconButton
+        glyphIcon="glyphicon-trash"
+        text=""
+        onClick={() => {
+          this.createDeleteConfirmation(id);
+        }}
+      />
+    );
   }
 
   edit(id) {
@@ -123,9 +141,13 @@ export default class ArticleOverview extends Component {
       children: (
         <div className="delete-confirmation align-center">
           <button>Abbrechen</button>
-          <button onClick={() => {
-            this.delete(id);
-          }}>OK</button>
+          <button
+            onClick={() => {
+              this.delete(id);
+            }}
+          >
+            OK
+          </button>
         </div>
       )
     });
@@ -134,24 +156,25 @@ export default class ArticleOverview extends Component {
   delete(id) {
     var that = this;
     var restConfig = getConfig();
-    axios.delete('http://localhost:8082/backOffice/article?articleId=' + id, restConfig).then(function(response) {
-      that.loadArticles();
-      that.refs.notificationSystem.addNotification({
-        title: 'geschafft!',
-        position: 'tc',
-        autoDismiss: 0,
-        message: 'artikel mit id ' + id + ' wurde gelöscht!',
-        level: 'success'
+    axios
+      .delete('http://localhost:8082/backOffice/article?articleId=' + id, restConfig)
+      .then(function(response) {
+        that.loadArticles();
+        that.refs.notificationSystem.addNotification({
+          title: 'geschafft!',
+          position: 'tc',
+          autoDismiss: 0,
+          message: 'artikel mit id ' + id + ' wurde gelöscht!',
+          level: 'success'
+        });
+      })
+      .catch(function(error) {
+        that.refs.notification.handleError(error);
       });
-
-    }).catch(function(error) {
-      that.refs.notification.handleError(error);
-    });
-
   }
 
   getRows() {
-    return Data.Selectors.getRows({rows: this.state.rows, filters: this.state.filters});
+    return Data.Selectors.getRows({ rows: this.state.rows, filters: this.state.filters });
   }
 
   rowGetter(i) {
@@ -170,17 +193,15 @@ export default class ArticleOverview extends Component {
     } else {
       delete newFilters[filter.column.key];
     }
-    this.setState({filters: newFilters});
+    this.setState({ filters: newFilters });
   }
 
   onClearFilters() {
-    this.setState({filters: {}});
+    this.setState({ filters: {} });
   }
 
   getEmptyRowView() {
-    return (
-      <div>Nothing to show</div>
-    );
+    return <div>Nothing to show</div>;
   }
 
   render() {
@@ -206,13 +227,20 @@ export default class ArticleOverview extends Component {
         </div>
         <div className="row ">
           <div className="col-md-12">
-            <ReactDataGrid columns={this.state.columns} rowGetter={this.rowGetter.bind(this)} rowsCount={this.getSize()} minHeight={800} toolbar={< Toolbar enableFilter = {
-              true
-            } />} onAddFilter={this.handleFilterChange.bind(this)} onClearFilters={this.onClearFilters.bind(this)} emptyRowsView={this.getEmptyRowView.bind(this)}/>
+            <ReactDataGrid
+              columns={this.state.columns}
+              rowGetter={this.rowGetter.bind(this)}
+              rowsCount={this.getSize()}
+              minHeight={800}
+              toolbar={<Toolbar enableFilter={true} />}
+              onAddFilter={this.handleFilterChange.bind(this)}
+              onClearFilters={this.onClearFilters.bind(this)}
+              emptyRowsView={this.getEmptyRowView.bind(this)}
+            />
           </div>
         </div>
-        <NotificationSystem ref="notificationSystem" style={style}/>
-        <Notification ref="notification"/>
+        <NotificationSystem ref="notificationSystem" style={style} />
+        <Notification ref="notification" />
       </div>
     );
   }

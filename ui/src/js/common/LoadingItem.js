@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 require('./loadingItem.less');
 
-
 export default class LoadingItem extends Component {
   constructor() {
     super();

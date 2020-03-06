@@ -2,11 +2,9 @@ import Accounting from 'accounting';
 import counterpart from 'counterpart';
 import React, { Component } from 'react';
 
-
 require('./co2Calculator.less');
 
 export default class Co2Calculator extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -76,8 +74,8 @@ export default class Co2Calculator extends Component {
     let powerTypeResult = parseFloat(this.refs['power-type'].value);
     let powerConsumptionResult = parseFloat(this.refs['power-consumption'].value);
 
-    let homeResult = houseTypeResult * livingSpaceResult * energyTypeResult / houseMemberCountResult + powerTypeResult * powerConsumptionResult / houseMemberCountResult;
-    if (!isNaN(houseTypeResult) && !isNaN(livingSpaceResult)  && !isNaN(energyTypeResult)  && !isNaN(houseMemberCountResult) && !isNaN(powerTypeResult) && !isNaN(powerConsumptionResult)) {
+    let homeResult = (houseTypeResult * livingSpaceResult * energyTypeResult) / houseMemberCountResult + (powerTypeResult * powerConsumptionResult) / houseMemberCountResult;
+    if (!isNaN(houseTypeResult) && !isNaN(livingSpaceResult) && !isNaN(energyTypeResult) && !isNaN(houseMemberCountResult) && !isNaN(powerTypeResult) && !isNaN(powerConsumptionResult)) {
       this.state.homeMessage = '';
       this.state.homeResult = homeResult;
       this.forceUpdate();
@@ -107,9 +105,11 @@ export default class Co2Calculator extends Component {
       <div className="container paddingTopBottom15 co2Calculator">
         <div className="row">
           <div className="col-md-12 item-align-start">
-            <h1 dangerouslySetInnerHTML={{
-              __html: counterpart.translate('CO2_CALCULATOR')
-            }}></h1>
+            <h1
+              dangerouslySetInnerHTML={{
+                __html: counterpart.translate('CO2_CALCULATOR')
+              }}
+            ></h1>
           </div>
           <div className="col-md-12 item-align-start">
             <h2>1. {counterpart.translate('FOOD')}</h2>
@@ -180,16 +180,16 @@ export default class Co2Calculator extends Component {
             </select>
           </div>
           <div className="col-md-6 item-align-start results">
-            <div className="bold">
-              {counterpart.translate('RESULT')}:
-            </div>
+            <div className="bold">{counterpart.translate('RESULT')}:</div>
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
               {this.state.foodMessage}
-              {this.state.foodResult !== 0 &&
-                <span>{Accounting.formatNumber(this.state.foodResult, 3, '.', ',')}kg CO<sub>2</sub></span>
-              }
+              {this.state.foodResult !== 0 && (
+                <span>
+                  {Accounting.formatNumber(this.state.foodResult, 3, '.', ',')}kg CO<sub>2</sub>
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -229,19 +229,26 @@ export default class Co2Calculator extends Component {
           <div className="col-md-6 item-align-start results">
             <div className="bold">
               {counterpart.translate('RESULT')}:
-              <br/>{counterpart.translate('PRODUCTION_EMISSION')}:
+              <br />
+              {counterpart.translate('PRODUCTION_EMISSION')}:
             </div>
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
-              {this.state.mobilityMessage}<br />
+              {this.state.mobilityMessage}
+              <br />
               {this.state.mobilityProductionMessage}
-                {this.state.mobilityResult !== 0 &&
-                  <span>{Accounting.formatNumber(this.state.mobilityResult, 3, '.', ',')} kg CO<sub>2</sub></span>
-                }<br />
-                {this.state.mobilityProduction !== 0 &&
-                  <span>{Accounting.formatNumber(this.state.mobilityProduction, 3, '.', ',')} kg CO<sub>2</sub></span>
-                }
+              {this.state.mobilityResult !== 0 && (
+                <span>
+                  {Accounting.formatNumber(this.state.mobilityResult, 3, '.', ',')} kg CO<sub>2</sub>
+                </span>
+              )}
+              <br />
+              {this.state.mobilityProduction !== 0 && (
+                <span>
+                  {Accounting.formatNumber(this.state.mobilityProduction, 3, '.', ',')} kg CO<sub>2</sub>
+                </span>
+              )}
             </div>
           </div>
           <div className="col-md-6 item-align-start">
@@ -251,16 +258,16 @@ export default class Co2Calculator extends Component {
             <input className="form-control" ref="flight-range" type="text" placeholder={counterpart.translate('ENTER_FLY_KM')} onBlur={this.calcFlightResult.bind(this)}></input>
           </div>
           <div className="col-md-6 item-align-start results">
-            <div className="bold">
-              {counterpart.translate('RESULT')}:
-            </div>
+            <div className="bold">{counterpart.translate('RESULT')}:</div>
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
               {this.state.flightResult}
-              {this.state.flightMessage !== 0 &&
-                <span>{Accounting.formatNumber(this.state.flightResult, 3, '.', ',')} kg CO<sub>2</sub></span>
-              }
+              {this.state.flightMessage !== 0 && (
+                <span>
+                  {Accounting.formatNumber(this.state.flightResult, 3, '.', ',')} kg CO<sub>2</sub>
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -336,16 +343,16 @@ export default class Co2Calculator extends Component {
             <input className="form-control" ref="power-consumption" placeholder={counterpart.translate('ENTER_POWER_CONSUMPTION')} onBlur={this.calcHomeResult.bind(this)}></input>
           </div>
           <div className="col-md-6 item-align-start results">
-            <div className="bold">
-              {counterpart.translate('RESULT')}:
-            </div>
+            <div className="bold">{counterpart.translate('RESULT')}:</div>
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
               {this.state.homeMessage}
-              {this.state.homeResult !== 0 &&
-                <span>{Accounting.formatNumber(this.state.homeResult, 3, '.', ',')}kg CO<sub>2</sub></span>
-              }
+              {this.state.homeResult !== 0 && (
+                <span>
+                  {Accounting.formatNumber(this.state.homeResult, 3, '.', ',')}kg CO<sub>2</sub>
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -356,9 +363,11 @@ export default class Co2Calculator extends Component {
           <div className="col-md-12 item-align-start results">
             <div className="bold">
               {this.state.overallMessage}
-              {this.state.overallResult !== 0 &&
-                <span>{Accounting.formatNumber(this.state.overallResult, 3, '.', ',')}kg CO<sub>2</sub></span>
-              }
+              {this.state.overallResult !== 0 && (
+                <span>
+                  {Accounting.formatNumber(this.state.overallResult, 3, '.', ',')}kg CO<sub>2</sub>
+                </span>
+              )}
             </div>
           </div>
         </div>

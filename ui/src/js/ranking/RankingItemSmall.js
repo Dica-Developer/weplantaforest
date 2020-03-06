@@ -4,7 +4,6 @@ import he from 'he';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-
 export default class RankingItem extends Component {
   constructor(props) {
     super(props);
@@ -21,10 +20,12 @@ export default class RankingItem extends Component {
           </Link>
         </div>
         <div className="trees">
-          <p style={{
-            width: this.props.percentTree + '%',
-            whiteSpace: 'nowrap'
-          }}>
+          <p
+            style={{
+              width: this.props.percentTree + '%',
+              whiteSpace: 'nowrap'
+            }}
+          >
             {text}
           </p>
         </div>

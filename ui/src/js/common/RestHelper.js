@@ -5,4 +5,4 @@ export function getConfig() {
     }
   };
   return config;
-};
+}

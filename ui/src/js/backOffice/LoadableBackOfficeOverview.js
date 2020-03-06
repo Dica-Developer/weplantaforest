@@ -13,4 +13,3 @@ export default class LoadableBackOfficeOverview extends Component {
     return <LoadableComponent />;
   }
 }
-

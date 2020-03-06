@@ -4,10 +4,7 @@ import moment from 'dayjs';
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs';
 
-
-
 export default class Co2PerYear extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -35,25 +32,28 @@ export default class Co2PerYear extends Component {
 
   updateChartForYear() {
     var that = this;
-    axios.get('http://localhost:8081/statistic/co2').then(function(response) {
-      var result = response.data;
-      for (var year in result) {
-      //  console.log("value for " + year + ": " + result[year].co2);
-        that.state.amountOfCo2[year] = parseFloat(result[year].co2);
+    axios
+      .get('http://localhost:8081/statistic/co2')
+      .then(function(response) {
+        var result = response.data;
+        for (var year in result) {
+          //  console.log("value for " + year + ": " + result[year].co2);
+          that.state.amountOfCo2[year] = parseFloat(result[year].co2);
+          that.forceUpdate();
+        }
         that.forceUpdate();
-      }
-      that.forceUpdate();
-      that.refs['barChart'].update();
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
+        that.refs['barChart'].update();
+      })
+      .catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
+      });
   }
 
   getAllYearFrom2007() {
@@ -74,19 +74,21 @@ export default class Co2PerYear extends Component {
   render() {
     var chartData = {
       labels: this.state.labels,
-      datasets: [{
-        label: counterpart.translate('PLANTED_TREES'),
-        data: this.state.amountOfCo2,
-        fillColor: 'rgb(81, 168, 190)',
-        borderWidth: 1
-      }]
+      datasets: [
+        {
+          label: counterpart.translate('PLANTED_TREES'),
+          data: this.state.amountOfCo2,
+          fillColor: 'rgb(81, 168, 190)',
+          borderWidth: 1
+        }
+      ]
     };
     var that = this;
     return (
       <div className="row tree-chart">
         <div className="col-md-3" />
         <div className="col-md-6">
-          <Line ref="barChart" data={chartData} options={this.state.options}/>
+          <Line ref="barChart" data={chartData} options={this.state.options} />
         </div>
         <div className="col-md-3" />
       </div>

@@ -3,11 +3,9 @@ import counterpart from 'counterpart';
 import React, { Component } from 'react';
 import EditLink from '../../../common/components/EditLink';
 
-
 require('./award.less');
 
 export default class Award extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -17,20 +15,23 @@ export default class Award extends Component {
 
   componentDidMount() {
     var that = this;
-    axios.get('http://localhost:8082/articles?articleType=AWARDS&language=' + localStorage.getItem('language')).then(function(response) {
-      that.setState({
-        awards: response.data
+    axios
+      .get('http://localhost:8082/articles?articleType=AWARDS&language=' + localStorage.getItem('language'))
+      .then(function(response) {
+        that.setState({
+          awards: response.data
+        });
+      })
+      .catch(function(response) {
+        if (response instanceof Error) {
+          console.error('Error', response.message);
+        } else {
+          console.error(response.data);
+          console.error(response.status);
+          console.error(response.headers);
+          console.error(response.config);
+        }
       });
-    }).catch(function(response) {
-      if (response instanceof Error) {
-        console.error('Error', response.message);
-      } else {
-        console.error(response.data);
-        console.error(response.status);
-        console.error(response.headers);
-        console.error(response.config);
-      }
-    });
   }
 
   render() {
@@ -44,27 +45,28 @@ export default class Award extends Component {
         </div>
         {this.state.awards.map(function(award, i) {
           let imageUrl = 'http://localhost:8082/article/image/' + award.id + '/' + award.imageFileName + '/200/200';
-            return (
-              <div key={i}>
-                <div className="row display-flex">
-                  <div className="col-sm-3 image-middle-wrapper">
-                    <img src={imageUrl}/>
-                  </div>
-                  <div className="col-sm-9">
-                    <EditLink articleId={award.id}/>
-                    <p className="title">{award.title}</p>
-                    <p dangerouslySetInnerHTML={{
-                      __html: award.intro
-                    }}></p>
-                  </div>
+          return (
+            <div key={i}>
+              <div className="row display-flex">
+                <div className="col-sm-3 image-middle-wrapper">
+                  <img src={imageUrl} />
                 </div>
-                <div className="row">
-                  <hr/>
+                <div className="col-sm-9">
+                  <EditLink articleId={award.id} />
+                  <p className="title">{award.title}</p>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: award.intro
+                    }}
+                  ></p>
                 </div>
               </div>
-            );
+              <div className="row">
+                <hr />
+              </div>
+            </div>
+          );
         })}
-
       </div>
     );
   }

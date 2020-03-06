@@ -4,10 +4,6 @@ import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
 import Notification from '../common/components/Notification';
 
-
-
-
-
 export default class CreateTeam extends Component {
   constructor(props) {
     super(props);
@@ -23,11 +19,14 @@ export default class CreateTeam extends Component {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
     };
-    axios.post('http://localhost:8081/team/create', this.state.team, config).then(function(response) {
-      that.props.teamCreatedAction(that.state.team.name);
-    }).catch(function(error) {
-      that.refs.notification.handleError(error);
-    });
+    axios
+      .post('http://localhost:8081/team/create', this.state.team, config)
+      .then(function(response) {
+        that.props.teamCreatedAction(that.state.team.name);
+      })
+      .catch(function(error) {
+        that.refs.notification.handleError(error);
+      });
   }
 
   editTeam(toEdit, event) {
@@ -46,17 +45,17 @@ export default class CreateTeam extends Component {
         <div className="row">
           <div className="col-md-12 form-group">
             <label htmlFor="team_name">{counterpart.translate('TEAM_NAME')}:</label>
-            <input type="text" className="form-control" id="team_name" placeholder="" onBlur={(e) => this.editTeam('name', e)}/>
+            <input type="text" className="form-control" id="team_name" placeholder="" onBlur={e => this.editTeam('name', e)} />
           </div>
           <div className="col-md-12 form-group">
             <label htmlFor="team_description">{counterpart.translate('TEAM_DESCRIPTION')}:</label>
-            <textarea className="form-control" rows="10" id="team_description" onBlur={(e) => this.editTeam('description', e)}/>
+            <textarea className="form-control" rows="10" id="team_description" onBlur={e => this.editTeam('description', e)} />
           </div>
         </div>
         <div className="row align-center bottomButton">
-          <IconButton text={counterpart.translate('TEAM_CREATE')} glyphIcon="glyphicon glyphicon-plus" onClick={this.createTeam.bind(this)}/>
+          <IconButton text={counterpart.translate('TEAM_CREATE')} glyphIcon="glyphicon glyphicon-plus" onClick={this.createTeam.bind(this)} />
         </div>
-        <Notification ref="notification"/>
+        <Notification ref="notification" />
       </div>
     );
   }

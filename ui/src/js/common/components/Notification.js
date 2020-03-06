@@ -3,11 +3,9 @@ import React, { Component } from 'react';
 import NotificationSystem from 'react-notification-system';
 import MultiLineErrorObject from './MultiLineErrorObject';
 
-
 export default class Notification extends Component {
-
   addNotification(title, message, type) {
-    this.refs.notificationSystem.addNotification({title: title, position: 'tc', autoDismiss: 0, message: message, level: type});
+    this.refs.notificationSystem.addNotification({ title: title, position: 'tc', autoDismiss: 0, message: message, level: type });
   }
 
   addMultilineNotification(title, multilines, type) {
@@ -17,23 +15,23 @@ export default class Notification extends Component {
       autoDismiss: 0,
       message: '',
       level: type,
-      children: (<MultiLineErrorObject lines={multilines}/>)
+      children: <MultiLineErrorObject lines={multilines} />
     });
   }
 
   addNotificationAtDifferentPos(title, message, type, position) {
-    this.refs.notificationSystem.addNotification({title: title, position: position, autoDismiss: 0, message: message, level: type});
+    this.refs.notificationSystem.addNotification({ title: title, position: position, autoDismiss: 0, message: message, level: type });
   }
 
   handleError(error) {
     if (error instanceof Error) {
       if (!error.response) {
-        this.refs.notificationSystem.addNotification({title: 'Der Server kann nicht erreicht werden.', position: 'tc', autoDismiss: 0, message: error.message, level: 'error'});
+        this.refs.notificationSystem.addNotification({ title: 'Der Server kann nicht erreicht werden.', position: 'tc', autoDismiss: 0, message: error.message, level: 'error' });
         console.error('Error', error.message, error);
       } else if (error.response.data && error.response.data.errorInfos) {
         this.addMultilineNotification(counterpart.translate('ERROR'), error.response.data.errorInfos, 'error');
       } else {
-        this.refs.notificationSystem.addNotification({title: 'Ein unerwarter Fehler ist aufgetreten!', position: 'tc', autoDismiss: 0, message: error.message, level: 'error'});
+        this.refs.notificationSystem.addNotification({ title: 'Ein unerwarter Fehler ist aufgetreten!', position: 'tc', autoDismiss: 0, message: error.message, level: 'error' });
       }
     }
   }
@@ -54,7 +52,7 @@ export default class Notification extends Component {
     };
     return (
       <div>
-        <NotificationSystem ref="notificationSystem" style={style}/>
+        <NotificationSystem ref="notificationSystem" style={style} />
       </div>
     );
   }

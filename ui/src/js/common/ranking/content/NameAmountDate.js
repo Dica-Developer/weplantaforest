@@ -3,9 +3,6 @@ import moment from 'dayjs';
 import he from 'he';
 import React, { Component } from 'react';
 
-
-
-
 export default class NameAmountDate extends Component {
   constructor(props) {
     super(props);
@@ -15,8 +12,12 @@ export default class NameAmountDate extends Component {
     return (
       <div className="rankingSummary">
         <p>
-          <span className="name">{he.decode(this.props.name)}</span><br/>
-          <span className="stats">{counterpart.translate('TREES_PLANTED')}:&nbsp;{this.props.amount}</span><br/>
+          <span className="name">{he.decode(this.props.name)}</span>
+          <br />
+          <span className="stats">
+            {counterpart.translate('TREES_PLANTED')}:&nbsp;{this.props.amount}
+          </span>
+          <br />
           <span className="stats">{counterpart.translate('DATE')}:</span>
           <span className="stats">{moment(this.props.plantedOn).format('DD.MM.YYYY')}</span>
         </p>

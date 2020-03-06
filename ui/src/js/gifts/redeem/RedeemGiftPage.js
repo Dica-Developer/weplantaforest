@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import RedeemGiftContent from '../RedeemGiftContent';
 
-
 require('./giftRedeem.less');
 
 export default class RedeemGiftPage extends Component {
@@ -10,7 +9,6 @@ export default class RedeemGiftPage extends Component {
   }
 
   render() {
-
     return (
       <div className="container paddingTopBottom15">
         <div className="row giftRedeem">
