@@ -25,7 +25,7 @@ public class TestUtil {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return new String(mapper.writeValueAsBytes(object));
     }
-    
+
     public static void deleteFilesInDirectory(File path) {
         if (path.exists()) {
             File[] files = path.listFiles();

@@ -3,8 +3,8 @@ package org.dicadeveloper.weplantaforest.common.testSupport;
 public class HashUtil {
 
     public static String samehash(String string, int level) {
-        if (string.length() < 2){
-            return string;            
+        if (string.length() < 2) {
+            return string;
         }
 
         String stringWithSameHash;
