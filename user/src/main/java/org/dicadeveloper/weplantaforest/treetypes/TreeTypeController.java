@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -22,22 +20,22 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 public class TreeTypeController {
 
-    protected final Log LOG = LogFactory.getLog(TreeTypeController.class.getName());
+    private @NonNull TreeTypeRepository treeTypeRepository;
 
-    private @NonNull TreeTypeRepository _treeTypeRepository;
-
-    private @NonNull ImageHelper _imageHelper;
+    private @NonNull ImageHelper imageHelper;
 
     @RequestMapping(value = Uris.TREETYPE_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getTreeTypeFolder() + "/" + imageName;
         try {
-            _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
+            imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
             LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
@@ -48,7 +46,7 @@ public class TreeTypeController {
     @RequestMapping(value = Uris.TREETYPES, method = RequestMethod.GET)
     @JsonView(Views.ShortTreeType.class)
     public Iterable<TreeType> getTreeTypes() {
-        return _treeTypeRepository.findAll();
+        return treeTypeRepository.findAll();
     }
 
 }

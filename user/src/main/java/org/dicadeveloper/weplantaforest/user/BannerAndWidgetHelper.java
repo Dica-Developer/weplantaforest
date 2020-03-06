@@ -138,17 +138,17 @@ public class BannerAndWidgetHelper {
         drawSectionCenteredString(graphics, co2, sectionWidth, new Font("Arial", Font.BOLD, 16), amountCo2Pos, co2Section);
     }
 
-    private void drawSectionCenteredString(Graphics g, String text, int imageWidth, Font font, int yCoord, int section) {
+    private void drawSectionCenteredString(Graphics g, String text, int imageWidth, Font font, int ycoord, int section) {
         FontMetrics metrics = g.getFontMetrics(font);
         int x = (imageWidth - metrics.stringWidth(text)) / 2;
         g.setFont(font);
-        g.drawString(text, x + (section * imageWidth), yCoord);
+        g.drawString(text, x + (section * imageWidth), ycoord);
     }
 
-    private void drawCenteredString(Graphics g, String text, int imageWidth, Font font, int yCoord) {
+    private void drawCenteredString(Graphics g, String text, int imageWidth, Font font, int ycoord) {
         FontMetrics metrics = g.getFontMetrics(font);
         int x = (imageWidth - metrics.stringWidth(text)) / 2;
         g.setFont(font);
-        g.drawString(text, x, yCoord);
+        g.drawString(text, x, ycoord);
     }
 }

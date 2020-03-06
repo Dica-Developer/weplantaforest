@@ -11,20 +11,21 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    public final static String USER_EXISTS_QUERY = "SELECT COUNT(_name) FROM User WHERE BINARY _name = :name";
+    public static final String USER_EXISTS_QUERY = "SELECT COUNT(_name) FROM User WHERE BINARY _name = :name";
 
-    public final static String USER_WITH_MAIL_EXISTS_QUERY = "SELECT COUNT(user) FROM User user WHERE user.mail = :mail";
+    public static final String USER_WITH_MAIL_EXISTS_QUERY = "SELECT COUNT(user) FROM User user WHERE user.mail = :mail";
 
-    public final static String GET_USER_DETAILS_QUERY = "SELECT new org.dicadeveloper.weplantaforest.user.UserReportData(user.name, COALESCE(user.imageName, 'anonymous.jpg'),COALESCE(user.mail, ''), user.regDate, user.lastVisit, user.organizationType, COALESCE(tm.name, ''), COALESCE(user.aboutMe, ''), COALESCE(user.location, ''), COALESCE(user.organisation, ''), COALESCE(user.homepage, ''), user.lang, user.newsletter)"
-            + " FROM User user LEFT JOIN user.team tm WHERE user.name = :name";
+    public static final String GET_USER_DETAILS_QUERY = "SELECT new org.dicadeveloper.weplantaforest.user.UserReportData(user.name, COALESCE(user.imageName, 'anonymous.jpg'),COALESCE(user.mail, ''), "
+            + " user.regDate, user.lastVisit, user.organizationType, COALESCE(tm.name, ''), COALESCE(user.aboutMe, ''), COALESCE(user.location, ''), COALESCE(user.organisation, ''), "
+            + " COALESCE(user.homepage, ''), user.lang, user.newsletter)" + " FROM User user LEFT JOIN user.team tm WHERE user.name = :name";
 
-    public final static String GET_USER_LANGUAGE = "SELECT user.lang FROM User user WHERE user.name = :name";
+    public static final String GET_USER_LANGUAGE = "SELECT user.lang FROM User user WHERE user.name = :name";
 
-    public final static String GET_TEAM_MEMBER_QUERY = "SELECT user FROM User user WHERE user.team.name = :teamName";
+    public static final String GET_TEAM_MEMBER_QUERY = "SELECT user FROM User user WHERE user.team.name = :teamName";
 
-    public final static String COUNT_ANONYM_USER_QUERY = "SELECT count(user) FROM User user WHERE user.name like \'Anonymous%\'";
+    public static final String COUNT_ANONYM_USER_QUERY = "SELECT count(user) FROM User user WHERE user.name like \'Anonymous%\'";
 
-    public final static String GET_ALL_TEAM_MEMBER = "Select user FROM User user WHERE user.team.id = :teamId";
+    public static final String GET_ALL_TEAM_MEMBER = "Select user FROM User user WHERE user.team.id = :teamId";
 
     @Query(value = "SELECT * FROM User user WHERE BINARY _name = :name", nativeQuery = true)
     public User findByName(@Param("name") String name);

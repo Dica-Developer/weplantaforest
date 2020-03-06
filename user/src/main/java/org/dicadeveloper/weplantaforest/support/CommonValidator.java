@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class CommonValidator {
 
-    public final static String emailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+    public static final String emailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
     public static boolean isValidEmailAddress(String email) {
         Pattern pattern = Pattern.compile(emailRegex);

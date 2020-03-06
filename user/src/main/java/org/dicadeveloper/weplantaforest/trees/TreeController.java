@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -28,52 +26,52 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TreeController {
 
-    protected final Log LOG = LogFactory.getLog(TreeController.class.getName());
+    private @NonNull TreeRepository treeRepository;
 
-    private @NonNull TreeRepository _treeRepository;
-
-    private @NonNull ImageHelper _imageHelper;
+    private @NonNull ImageHelper imageHelper;
 
     @RequestMapping(value = Uris.TREE + "{id}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Tree list(@PathVariable("id") long id) {
-        return _treeRepository.findById(id).orElse(null);
+        return treeRepository.findById(id).orElse(null);
     }
 
     @RequestMapping(value = Uris.TREES, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Page<Tree> list(@RequestParam("page") int page, @RequestParam("size") int size) {
-        return _treeRepository.findAll(PageRequest.of(page, size, Sort.by("plantedOn").descending()));
+        return treeRepository.findAll(PageRequest.of(page, size, Sort.by("plantedOn").descending()));
     }
 
     @RequestMapping(value = Uris.TREES_BY_USER, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Page<Tree> findTreesByOwnerId(@RequestParam("userName") String userName, @RequestParam("page") int page, @RequestParam("size") int size) {
-        return _treeRepository.findTreesByUserName(userName, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
+        return treeRepository.findTreesByUserName(userName, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
     }
 
     @RequestMapping(value = Uris.TREES_BY_TEAM, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Page<Tree> findTreesByTeamName(@RequestParam("teamName") String teamName, @RequestParam("page") int page, @RequestParam("size") int size) {
-        return _treeRepository.findTreesByTeamName(teamName, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
+        return treeRepository.findTreesByTeamName(teamName, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
     }
 
     @RequestMapping(value = Uris.TREES_BY_PROJECT + "{projectId}", method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
     public Page<Tree> findTreesByProjectId(@PathVariable("projectId") long projectId, @RequestParam("page") int page, @RequestParam("size") int size) {
-        return _treeRepository.findTreesByProjectId(projectId, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
+        return treeRepository.findTreesByProjectId(projectId, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
     }
 
     @RequestMapping(value = Uris.TREE_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
         String filePath = FileSystemInjector.getTreeFolder() + "/" + imageName;
         try {
-            _imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
+            imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
             LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
@@ -84,7 +82,7 @@ public class TreeController {
     @GetMapping(value = Uris.TREES_SELF_PLANTED)
     @JsonView(Views.SelfPlantedTrees.class)
     public ResponseEntity<?> findSelfPlantedTrees() {
-        List<Tree> trees = _treeRepository.findSelfPlantedTrees();
+        List<Tree> trees = treeRepository.findSelfPlantedTrees();
         return new ResponseEntity<>(trees, HttpStatus.OK);
     }
 

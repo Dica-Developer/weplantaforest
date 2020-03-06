@@ -8,8 +8,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
@@ -26,20 +24,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 public class BannerAndWidgetController {
 
-    protected final Log LOG = LogFactory.getLog(BannerAndWidgetController.class.getName());
+    private @NonNull ImageHelper imageHelper;
 
-    private @NonNull ImageHelper _imageHelper;
+    private @NonNull Environment env;
 
-    private @NonNull Environment _env;
+    private @NonNull Co2Repository co2Repository;
 
-    private @NonNull Co2Repository _co2Repository;
-
-    private @NonNull BannerAndWidgetHelper _bannerAndWidgetHelper;
+    private @NonNull BannerAndWidgetHelper bannerAndWidgetHelper;
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = Uris.BANNER, method = RequestMethod.GET)
@@ -58,7 +56,7 @@ public class BannerAndWidgetController {
 
     @RequestMapping(value = Uris.BANNER_CODE, method = RequestMethod.GET)
     public ResponseEntity<?> getBannerHtmlCode(@RequestParam String type, @RequestParam int width, @RequestParam int height) {
-        String htmlCode = _bannerAndWidgetHelper.generateBannerHtmlCode(_env.getProperty("ipat.host"), type, width, height);
+        String htmlCode = bannerAndWidgetHelper.generateBannerHtmlCode(env.getProperty("ipat.host"), type, width, height);
         return new ResponseEntity<>(htmlCode, HttpStatus.OK);
     }
 
@@ -67,10 +65,10 @@ public class BannerAndWidgetController {
     public ResponseEntity<?> getWidget(HttpServletResponse response, @RequestParam String userName, @RequestParam String type, @RequestParam int width, @RequestParam int height) {
         String filePath = "/static/images/widgets/";
         String imageName = "widget_" + type + "_" + width + "x" + height + ".jpg";
-        Co2Data co2DataForUser = _co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName);
+        Co2Data co2DataForUser = co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName);
 
         try {
-            BufferedImage bufferedImg = _bannerAndWidgetHelper.createWidget(filePath + imageName, type, width, height, co2DataForUser);
+            BufferedImage bufferedImg = bannerAndWidgetHelper.createWidget(filePath + imageName, type, width, height, co2DataForUser);
             ImageIO.write(bufferedImg, "jpg", response.getOutputStream());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
@@ -81,7 +79,7 @@ public class BannerAndWidgetController {
 
     @RequestMapping(value = Uris.WIDGET_CODE, method = RequestMethod.GET)
     public ResponseEntity<?> getWidgetHtmlCode(@RequestParam String userName, @RequestParam String type, @RequestParam int width, @RequestParam int height) {
-        String htmlCode = _bannerAndWidgetHelper.generateWidgetHtmlCode(_env.getProperty("ipat.host"), userName, type, width, height);
+        String htmlCode = bannerAndWidgetHelper.generateWidgetHtmlCode(env.getProperty("ipat.host"), userName, type, width, height);
         return new ResponseEntity<>(htmlCode, HttpStatus.OK);
     }
 

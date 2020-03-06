@@ -6,8 +6,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface TeamRepository extends CrudRepository<Team, Long> {
 
-    public final static String GET_TEAM_DETAILS_QUERY = "SELECT new org.dicadeveloper.weplantaforest.team.TeamReportData(team.id, team.name, team.timeStamp, team.admin.name, team.description, (SELECT COUNT(*) FROM User user WHERE user.team.name = :name))"
-            + " FROM Team team WHERE team.name = :name";
+    public static final String GET_TEAM_DETAILS_QUERY = "SELECT new org.dicadeveloper.weplantaforest.team.TeamReportData(team.id, team.name, team.timeStamp, team.admin.name, team.description, "
+            + " (SELECT COUNT(*) FROM User user WHERE user.team.name = :name))" + " FROM Team team WHERE team.name = :name";
 
     @Query
     public Team findByName(@Param("name") String name);

@@ -22,17 +22,14 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-// queries from StatisticsRepository run only on mysql, not on h2, so the
-// belonging controller is also excluded from this profile
-// @Profile({ "!h2", "!test" })
 @Profile({ "production", "mysql", "staging" })
 public class StatisticsController {
 
-    private @NonNull StatisticsRepository _statisticsRepository;
+    private @NonNull StatisticsRepository statisticsRepository;
 
     @RequestMapping(value = Uris.TREE_STATISTIC_PER_MONTH, method = RequestMethod.GET)
     public ResponseEntity<?> getTreeStatisticForYear(@RequestParam String year) {
-        List<TreeAmountStatisticData> treeStatistic = _statisticsRepository.getTreesPerMonthForYear(year);
+        List<TreeAmountStatisticData> treeStatistic = statisticsRepository.getTreesPerMonthForYear(year);
         List<TreeAmountStatisticData> orderedList = new ArrayList<>();
         for (Integer i = 1; i <= 12; i++) {
             for (TreeAmountStatisticData entry : treeStatistic) {
@@ -46,7 +43,7 @@ public class StatisticsController {
 
     @RequestMapping(value = Uris.TREE_STATISTIC_PER_YEAR, method = RequestMethod.GET)
     public ResponseEntity<?> getOverallTreeStatistic() {
-        List<TreeAmountStatisticData> treeStatistic = _statisticsRepository.getTreesPerYear();
+        List<TreeAmountStatisticData> treeStatistic = statisticsRepository.getTreesPerYear();
         List<TreeAmountStatisticData> orderedList = new ArrayList<>();
 
         Calendar year2007 = new GregorianCalendar(2007, 1, 1);
@@ -64,14 +61,14 @@ public class StatisticsController {
 
     @RequestMapping(value = Uris.TREE_STATISTIC_PER_ORGTYPE, method = RequestMethod.GET)
     public ResponseEntity<?> getTreesPerOrgType() {
-        List<TreeOrgTypeStatisticData> treeStatistic = _statisticsRepository.getTreesPerOrgType();
+        List<TreeOrgTypeStatisticData> treeStatistic = statisticsRepository.getTreesPerOrgType();
         return new ResponseEntity<>(treeStatistic, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.CO2_STATISTIC, method = RequestMethod.GET)
     public ResponseEntity<?> getCo2Statistic() {
-        List<Co2StatisticData> co2Statistic = _statisticsRepository.getCo2PerYear(System.currentTimeMillis());
-        List<TreeAmountStatisticData> treeStatistic = _statisticsRepository.getTreesPerYear();
+        List<Co2StatisticData> co2Statistic = statisticsRepository.getCo2PerYear(System.currentTimeMillis());
+        List<TreeAmountStatisticData> treeStatistic = statisticsRepository.getTreesPerYear();
         List<Co2StatisticData> orderedList = new ArrayList<>();
         Calendar year2007 = new GregorianCalendar(2007, 1, 1);
         int years = getDiffYears(year2007, new Date(System.currentTimeMillis()));

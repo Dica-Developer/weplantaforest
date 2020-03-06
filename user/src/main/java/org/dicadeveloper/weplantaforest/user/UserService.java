@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
 import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
@@ -29,37 +27,37 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Service
+@Slf4j
 public class UserService {
 
-    protected final Log LOG = LogFactory.getLog(UserService.class.getName());
+    private @NonNull PasswordEncrypter passwordEncrypter;
 
-    private @NonNull PasswordEncrypter _passwordEncrypter;
+    private @NonNull UserRepository userRepository;
 
-    private @NonNull UserRepository _userRepository;
+    private @NonNull Co2Repository co2Repository;
 
-    private @NonNull Co2Repository _co2Repository;
+    private @NonNull RankingRepository rankingRepository;
 
-    private @NonNull RankingRepository _rankingRepository;
+    private @NonNull ImageHelper imageHelper;
 
-    private @NonNull ImageHelper _imageHelper;
+    private @NonNull MailHelper mailHelper;
 
-    private @NonNull MailHelper _mailHelper;
+    private @NonNull MessageByLocaleService messageByLocaleService;
 
-    private @NonNull MessageByLocaleService _messageByLocaleService;
+    private @NonNull Environment env;
 
-    private @NonNull Environment _env;
-
-    private final static String ANONYMOUS = "Anonymous";
+    private static final String ANONYMOUS = "Anonymous";
 
     private User convertUserRegDataToUser(UserRegistrationData userRegistrationData) {
         Long currentTime = System.currentTimeMillis();
         User user = new User();
         user.setName(userRegistrationData.getUsername());
         user.setNewsletter(userRegistrationData.isNewsLetter());
-        user.setPassword(_passwordEncrypter.encryptPassword(userRegistrationData.getPassword()));
+        user.setPassword(passwordEncrypter.encryptPassword(userRegistrationData.getPassword()));
         user.setMail(userRegistrationData.getMail());
         user.setOrganizationType(OrganizationType.valueOf(userRegistrationData.getOrgType()));
         user.setLang(Language.valueOf(userRegistrationData.getLanguage()));
@@ -107,18 +105,18 @@ public class UserService {
         user.addRole(Role.USER);
         user.setActivationKey(randomString);
         user.setLang(Language.DEUTSCH);
-        _userRepository.save(user);
+        userRepository.save(user);
         return user;
     }
 
     private String createAnonymousUserName() throws IpatException {
-        long anonymousCount = _userRepository.countAnonymUser();
+        long anonymousCount = userRepository.countAnonymUser();
         String userName = ANONYMOUS + (anonymousCount + 1);
 
         boolean userSaved = false;
         int tryCount = 1;
         while (!userSaved && tryCount <= 100) {
-            if (_userRepository.userExists(userName) == 0) {
+            if (userRepository.userExists(userName) == 0) {
                 return userName;
             } else {
                 // if such a user already exists, try again with the same name
@@ -132,9 +130,9 @@ public class UserService {
     }
 
     public UserReportData getUserDetails(String userName, boolean isEditAllowed) {
-        UserReportData userReportData = _userRepository.getUserDetails(userName);
+        UserReportData userReportData = userRepository.getUserDetails(userName);
         if (null != userReportData) {
-            userReportData.setCo2Data(_co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userReportData.getUserName()));
+            userReportData.setCo2Data(co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userReportData.getUserName()));
             userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data().getTreesCount()));
             userReportData.setEditAllowed(isEditAllowed);
         }
@@ -146,7 +144,7 @@ public class UserService {
         User user = getUser(userName);
         switch (toEdit) {
             case "NAME":
-                IpatPreconditions.checkArgument((_userRepository.userExists(newEntry) == 0), ErrorCodes.USER_ALREADY_EXISTS);
+                IpatPreconditions.checkArgument((userRepository.userExists(newEntry) == 0), ErrorCodes.USER_ALREADY_EXISTS);
                 user.setName(newEntry);
                 break;
             case "ABOUTME":
@@ -163,7 +161,7 @@ public class UserService {
                 break;
             case "MAIL":
                 IpatPreconditions.checkArgument(CommonValidator.isValidEmailAddress(newEntry), ErrorCodes.INVALID_MAIL);
-                IpatPreconditions.checkArgument((_userRepository.userWithMailExists(newEntry) == 0), ErrorCodes.MAIL_ALREADY_EXISTS);
+                IpatPreconditions.checkArgument((userRepository.userWithMailExists(newEntry) == 0), ErrorCodes.MAIL_ALREADY_EXISTS);
                 user.setMail(newEntry);
                 break;
             case "NEWSLETTER":
@@ -176,12 +174,12 @@ public class UserService {
                 user.setLang(Language.valueOf(newEntry));
                 break;
             case "PASSWORD":
-                user.setPassword(_passwordEncrypter.encryptPassword(newEntry));
+                user.setPassword(passwordEncrypter.encryptPassword(newEntry));
                 break;
             default:
                 break;
         }
-        _userRepository.save(user);
+        userRepository.save(user);
     }
 
     public String uploadUserImage(String userName, MultipartFile file) throws IpatException {
@@ -192,9 +190,9 @@ public class UserService {
         String imageName = user.getName() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
 
         try {
-            _imageHelper.storeImage(file, imageFolder, imageName, true);
+            imageHelper.storeImage(file, imageFolder, imageName, true);
             user.setImageName(imageName);
-            _userRepository.save(user);
+            userRepository.save(user);
             return imageName;
         } catch (IOException e) {
             throw new IpatException(ErrorCodes.SERVER_ERROR);
@@ -205,20 +203,21 @@ public class UserService {
     public void registrateUser(UserRegistrationData userRegistrationData) throws IpatException {
         String userName = userRegistrationData.getUsername();
         String mail = userRegistrationData.getMail();
-        IpatPreconditions.checkArgument((_userRepository.userExists(userName) == 0), ErrorCodes.USER_ALREADY_EXISTS);
+        IpatPreconditions.checkArgument((userRepository.userExists(userName) == 0), ErrorCodes.USER_ALREADY_EXISTS);
         IpatPreconditions.checkArgument(CommonValidator.isValidEmailAddress(mail), ErrorCodes.INVALID_MAIL);
-        IpatPreconditions.checkArgument((_userRepository.userWithMailExists(mail) == 0), ErrorCodes.MAIL_ALREADY_EXISTS);
+        IpatPreconditions.checkArgument((userRepository.userWithMailExists(mail) == 0), ErrorCodes.MAIL_ALREADY_EXISTS);
         User user = convertUserRegDataToUser(userRegistrationData);
-        _userRepository.save(user);
+        userRepository.save(user);
 
-        String mailSubject = _messageByLocaleService.getMessage("mail.registration.subject", user.getLang().getLocale());
+        String mailSubject = messageByLocaleService.getMessage("mail.registration.subject", user.getLang().getLocale());
 
-        String mailTemplateText = _messageByLocaleService.getMessage("mail.registration.text", user.getLang().getLocale());
-        String mailText = createUserRegistrationMailText(user, _env.getProperty("ipat.host"), mailTemplateText);
+        String mailTemplateText = messageByLocaleService.getMessage("mail.registration.text", user.getLang().getLocale());
+        String mailText = createUserRegistrationMailText(user, env.getProperty("ipat.host"), mailTemplateText);
 
         new Thread(new Runnable() {
+            @Override
             public void run() {
-                _mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
+                mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
             }
         }).start();
     }
@@ -228,7 +227,7 @@ public class UserService {
         IpatPreconditions.checkArgument(!user.isEnabled(), ErrorCodes.USER_ALREADY_ACTIVATED);
         IpatPreconditions.checkArgument(key.equals(user.getActivationKey()), ErrorCodes.INVALID_ACTIVATION_KEY);
         user.setEnabled(true);
-        _userRepository.save(user);
+        userRepository.save(user);
     }
 
     public void createPasswordResetMail(String userName) throws IpatException {
@@ -236,16 +235,17 @@ public class UserService {
         IpatPreconditions.checkArgument(user.isEnabled(), ErrorCodes.USER_NOT_ACTIVATED);
 
         user.setActivationKey(UUID.randomUUID().toString());
-        _userRepository.save(user);
+        userRepository.save(user);
 
-        String mailSubject = _messageByLocaleService.getMessage("mail.forgot.password.subject", user.getLang().getLocale());
+        String mailSubject = messageByLocaleService.getMessage("mail.forgot.password.subject", user.getLang().getLocale());
 
-        String mailTemplateText = _messageByLocaleService.getMessage("mail.forgot.password.text", user.getLang().getLocale());
-        String mailText = createForgotPasswordMail(user, _env.getProperty("ipat.host"), mailTemplateText);
+        String mailTemplateText = messageByLocaleService.getMessage("mail.forgot.password.text", user.getLang().getLocale());
+        String mailText = createForgotPasswordMail(user, env.getProperty("ipat.host"), mailTemplateText);
 
         new Thread(new Runnable() {
+            @Override
             public void run() {
-                _mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
+                mailHelper.sendAMessage(mailSubject, mailText, user.getMail());
             }
         }).start();
     }
@@ -259,29 +259,29 @@ public class UserService {
     public String resetPasswordForUser(long userId, String key, String password) throws IpatException {
         User user = getUser(userId);
         IpatPreconditions.checkArgument(key.equals(user.getActivationKey()), ErrorCodes.INVALID_ACTIVATION_KEY);
-        user.setPassword(_passwordEncrypter.encryptPassword(password));
-        _userRepository.save(user);
+        user.setPassword(passwordEncrypter.encryptPassword(password));
+        userRepository.save(user);
         return user.getName();
     }
 
     private User getUser(long userId) throws IpatException {
-        User user = _userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
         IpatPreconditions.checkNotNull(user, ErrorCodes.USER_NOT_FOUND);
         return user;
     }
 
     private User getUser(String userNameOrEmail) throws IpatException {
         User user = null;
-        user = _userRepository.findByEmail(userNameOrEmail);
+        user = userRepository.findByEmail(userNameOrEmail);
         if (null == user) {
-            user = _userRepository.findByName(userNameOrEmail);
+            user = userRepository.findByName(userNameOrEmail);
         }
         IpatPreconditions.checkNotNull(user, ErrorCodes.USER_NOT_FOUND);
         return user;
     }
 
     private long calcUserRank(String userName, long treeCountOfUser) {
-        List<TreeRankedUserData> userList = _rankingRepository.getBestUserList(System.currentTimeMillis());
+        List<TreeRankedUserData> userList = rankingRepository.getBestUserList(System.currentTimeMillis());
         long rank = 1;
         for (TreeRankedUserData user : userList) {
             if (treeCountOfUser < user.getAmount()) {
@@ -295,7 +295,7 @@ public class UserService {
     }
 
     public User anonymizeUser(String userName) throws IpatException {
-        User user = _userRepository.findByName(userName);
+        User user = userRepository.findByName(userName);
         user.setName(createAnonymousUserName());
         user.setAboutMe("");
         user.setEnabled(false);
@@ -310,7 +310,7 @@ public class UserService {
         Set<Role> roles = new HashSet<Role>();
         roles.add(Role.USER);
         user.setRoles(roles);
-        _userRepository.save(user);
+        userRepository.save(user);
 
         return user;
     }

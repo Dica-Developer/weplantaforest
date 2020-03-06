@@ -42,9 +42,6 @@ import lombok.Setter;
 @EqualsAndHashCode(exclude = { "team" })
 public class User implements UserDetails {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -4288563962830437191L;
 
     @Id

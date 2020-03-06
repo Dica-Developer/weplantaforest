@@ -73,23 +73,23 @@ public class PdfHelper {
         table.writeSelectedRows(0, 1, 0, 842, cb);
     }
 
-    public void createCertificateImage(PdfContentByte cb, String imagePath, String language, float xPos, float yPos) throws DocumentException, IOException {
+    public void createCertificateImage(PdfContentByte cb, String imagePath, String language, float xpos, float ypos) throws DocumentException, IOException {
         URL imageUrl = getClass().getResource(imagePath + "/IPAT_Zertifikat_" + language + ".jpg");
         final Image logoImage = Image.getInstance(imageUrl);
-        logoImage.setAbsolutePosition(xPos, yPos);
+        logoImage.setAbsolutePosition(xpos, ypos);
         logoImage.scalePercent(70f, 70f);
         cb.addImage(logoImage);
     }
 
-    public void addLogo(PdfContentByte cb, String imagePath, float xPos, float yPos) throws MalformedURLException, IOException, DocumentException {
+    public void addLogo(PdfContentByte cb, String imagePath, float xpos, float ypos) throws MalformedURLException, IOException, DocumentException {
         URL imageUrl = getClass().getResource(imagePath + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg");
         final Image logoImage = Image.getInstance(imageUrl);
-        logoImage.setAbsolutePosition(xPos, yPos);
+        logoImage.setAbsolutePosition(xpos, ypos);
         logoImage.scalePercent(3f, 3f);
         cb.addImage(logoImage);
     }
 
-    public static void createAdress(PdfContentByte cb, float xCoord, float yCoord) throws DocumentException {
+    public static void createAdress(PdfContentByte cb, float xcoord, float ycoord) throws DocumentException {
         Font textFontForAdress = new Font(FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
 
         PdfPTable table = new PdfPTable(1);
@@ -102,6 +102,6 @@ public class PdfHelper {
         table.addCell(new Phrase(new Chunk("Gabelsbergerstraße 4", textFontForAdress)));
         table.addCell(new Phrase(new Chunk("D-06114 Halle", textFontForAdress)));
 
-        table.writeSelectedRows(0, 3, xCoord, yCoord, cb);
+        table.writeSelectedRows(0, 3, xcoord, ycoord, cb);
     }
 }
