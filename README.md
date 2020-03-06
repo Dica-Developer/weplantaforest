@@ -5,15 +5,13 @@
 [![Open Issues](http://img.shields.io/github/issues/Dica-Developer/weplantaforest.svg?style=flat-square&label=Open%20Issues)](https://github.com/Dica-Developer/weplantaforest/issues)
 [![Build Status](http://img.shields.io/travis/Dica-Developer/weplantaforest/master.svg?style=flat-square&label=Travis%20CI)](https://travis-ci.org/Dica-Developer/weplantaforest)
 [![Coverage Status](http://img.shields.io/coveralls/Dica-Developer/weplantaforest/master.svg?style=flat-square&label=Test%20Coverage)](https://coveralls.io/r/Dica-Developer/weplantaforest?branch=master)
-[![Code Climate](https://img.shields.io/codeclimate/github/Dica-Developer/weplantaforest.svg?style=flat-square)](https://codeclimate.com/github/Dica-Developer/weplantaforest)
-[![BCH compliance](https://bettercodehub.com/edge/badge/Dica-Developer/weplantaforest?branch=master)](https://bettercodehub.com/)
 [![WATCHING YOUR NODE.JS DEPENDENCIES.](https://david-dm.org/Dica-Developer/weplantaforest.svg)](https://david-dm.org/)
 
 
 ### Dev Requirements
 
-* Java 8
-* Eclipse Luna / 4.4 (for 4.3.2 see https://wiki.eclipse.org/JDT/Eclipse_Java_8_Support_For_Kepler)
+* Java 11
+* Eclipse
 * Gradle (./gradlew)
 * NodeJs (https://github.com/creationix/nvm)
 
