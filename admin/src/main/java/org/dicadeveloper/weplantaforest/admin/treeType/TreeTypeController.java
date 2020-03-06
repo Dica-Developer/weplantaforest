@@ -23,7 +23,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TreeTypeController {
 
     private @NonNull TreeTypeRepository _treeTypeRepository;
@@ -67,11 +67,8 @@ public class TreeTypeController {
     public ResponseEntity<?> uploadUserImage(@RequestParam Long treeTypeId, @RequestParam("file") MultipartFile file) {
         TreeType treeType = _treeTypeRepository.findById(treeTypeId).orElse(null);
         String fileEnding;
-        if (file.getOriginalFilename()
-                .length() > 0) {
-            fileEnding = file.getOriginalFilename()
-                             .substring(file.getOriginalFilename()
-                                            .indexOf("."));
+        if (file.getOriginalFilename().length() > 0) {
+            fileEnding = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
         } else {
             fileEnding = ".png";
         }

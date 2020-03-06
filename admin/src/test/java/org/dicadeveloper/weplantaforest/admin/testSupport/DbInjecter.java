@@ -204,7 +204,7 @@ public class DbInjecter {
 
         cart.addCartItem(cartItem);
         cart.setCartState(CartState.GENERATED);
-        cart =  _cartRepository.save(cart);
+        cart = _cartRepository.save(cart);
         return cart.getId();
     }
 

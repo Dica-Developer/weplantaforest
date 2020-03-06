@@ -22,7 +22,7 @@ import lombok.NonNull;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 class CorsFilter implements Filter {
-    
+
     @Autowired
     private @NonNull Environment _env;
 

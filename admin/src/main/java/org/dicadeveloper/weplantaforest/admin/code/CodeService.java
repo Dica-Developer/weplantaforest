@@ -12,7 +12,7 @@ public class CodeService {
     @Autowired
     CodeRepository _codeRepository;
 
-    public Code generateCode() throws IpatException{
+    public Code generateCode() throws IpatException {
         Code code = new Code();
         // save code or try generate a new one
         boolean codeSaved = false;

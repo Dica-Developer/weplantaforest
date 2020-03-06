@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 public class EventController {
 
@@ -43,7 +43,7 @@ public class EventController {
     public Event createEvent(@RequestBody Event event) throws IpatException {
         return eventService.create(event);
     }
-    
+
     @PutMapping(value = REQUEST_URL)
     @JsonView(Views.EventDetails.class)
     public Event updateEvent(@RequestBody Event event) throws IpatException {
@@ -72,7 +72,7 @@ public class EventController {
     public Iterable<Code> getCodesForEvent(@PathVariable Long eventId) {
         return _codeRepository.findByEventId(eventId);
     }
-    
+
     @PostMapping(value = REQUEST_URL + "/codes/{eventId}")
     public ResponseEntity<?> createEvent(@PathVariable Long eventId, @RequestBody List<Long> cartIds) throws IpatException {
         eventService.generateCodes(eventId, cartIds);

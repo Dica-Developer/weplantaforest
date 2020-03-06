@@ -12,6 +12,5 @@ public interface ProjectImageRepository extends CrudRepository<ProjectImage, Lon
 
     @Query(value = FIND_IMAGES_TO_PROJECT_BY_PROJECT_ID)
     List<ProjectImage> findProjectImagesToProjectByProjectId(@Param("projectId") long projectId);
- 
 
 }

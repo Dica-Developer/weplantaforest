@@ -14,5 +14,5 @@ public class CartRequest {
     private List<String> cartStates;
     private Long from;
     private Long to;
-    
+
 }

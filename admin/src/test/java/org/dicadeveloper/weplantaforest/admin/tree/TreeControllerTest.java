@@ -48,18 +48,17 @@ public class TreeControllerTest {
 
     @Autowired
     private TreeRepository _treeRepository;
-    
+
     @Autowired
     private TokenAuthenticationService _tokenAuthenticationService;
 
     @Autowired
     private UserRepository _userRepository;
-    
 
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
-        
+
     }
 
     @Test
@@ -70,25 +69,20 @@ public class TreeControllerTest {
         Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
-       
-        mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                    .param("userId", "1")
-                                                    .param("projectArticleId", "1")
-                                                    .param("amount", "10"))
-               .andExpect(status().isOk());
+
+        mockMvc.perform(
+                post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("userId", "1").param("projectArticleId", "1").param("amount", "10"))
+                .andExpect(status().isOk());
         assertThat(_treeRepository.count()).isEqualTo(1);
 
         Tree plantedTreeForUser = _treeRepository.findById(1L).orElse(null);
 
-        assertThat(plantedTreeForUser.getOwner()
-                                     .getName()).isEqualTo("Adam");
-        assertThat(plantedTreeForUser.getProjectArticle()
-                                     .getTreeType()
-                                     .getName()).isEqualTo("wood");
+        assertThat(plantedTreeForUser.getOwner().getName()).isEqualTo("Adam");
+        assertThat(plantedTreeForUser.getProjectArticle().getTreeType().getName()).isEqualTo("wood");
         assertThat(plantedTreeForUser.getAmount()).isEqualTo(10);
 
     }
-    
+
     @Test
     public void testPlantTreeForUserBadRequestCauseOfWrongProjectArticleId() throws Exception {
         User adam = _dbInjecter.injectUser("Adam");
@@ -97,14 +91,12 @@ public class TreeControllerTest {
         Project project = _dbInjecter.injectProject("project", adam, "project desc", true, 1.0f, 1.0f);
         _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
-        
-        mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                    .param("userId", "1")
-                                                    .param("projectArticleId", "2")
-                                                    .param("amount", "10"))
-               .andExpect(status().isBadRequest());
+
+        mockMvc.perform(
+                post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("userId", "1").param("projectArticleId", "2").param("amount", "10"))
+                .andExpect(status().isBadRequest());
     }
-    
+
     @Test
     public void testPlantTreeForUserBadRequestCauseOfNotEnoughTreesRemaining() throws Exception {
         User adam = _dbInjecter.injectUser("Adam");
@@ -114,11 +106,9 @@ public class TreeControllerTest {
         _dbInjecter.injectProjectArticle(treeType, project, 100, 1.0, 0.5);
         _dbInjecter.injectTreeToProject(treeType, adam, 91, System.currentTimeMillis(), project);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
-        
-        mockMvc.perform(post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                    .param("userId", "1")
-                                                    .param("projectArticleId", "1")
-                                                    .param("amount", "10"))
-               .andExpect(status().isBadRequest());
+
+        mockMvc.perform(
+                post(Uris.PLANT_FOR_USER).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("userId", "1").param("projectArticleId", "1").param("amount", "10"))
+                .andExpect(status().isBadRequest());
     }
 }

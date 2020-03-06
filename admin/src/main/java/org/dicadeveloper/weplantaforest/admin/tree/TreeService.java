@@ -14,24 +14,24 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TreeService {
 
     private @NonNull UserRepository _userRepository;
     private @NonNull TreeRepository _treeRepository;
-    
-    public void transformTrees(Long fromUserId, Long toUserId) throws IpatException{
+
+    public void transformTrees(Long fromUserId, Long toUserId) throws IpatException {
         User fromUser = _userRepository.findById(fromUserId).orElse(null);
         User toUser = _userRepository.findById(toUserId).orElse(null);
         IpatPreconditions.checkNotNull(fromUser, ErrorCodes.USER_NOT_FOUND);
         IpatPreconditions.checkNotNull(toUser, ErrorCodes.USER_NOT_FOUND);
-        
+
         List<Tree> treesToTransform = _treeRepository.findByOwner(fromUser);
-        if(treesToTransform != null && treesToTransform.size() > 0) {
-            for(Tree tree : treesToTransform) {
+        if (treesToTransform != null && treesToTransform.size() > 0) {
+            for (Tree tree : treesToTransform) {
                 tree.setOwner(toUser);
-           }
+            }
             _treeRepository.saveAll(treesToTransform);
-        }                                
+        }
     }
 }

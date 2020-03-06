@@ -8,14 +8,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ProjectImageRequest {
-    
-    public ProjectImageRequest(){
-        
+
+    public ProjectImageRequest() {
+
     }
-    
-    private Long imageId; 
+
+    private Long imageId;
     private String title;
-    private String description;    
+    private String description;
     private Long projectId;
 
 }

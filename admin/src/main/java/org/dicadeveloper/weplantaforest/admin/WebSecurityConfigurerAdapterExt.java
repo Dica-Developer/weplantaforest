@@ -35,45 +35,29 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.exceptionHandling()
-            .and()
-            .anonymous()
-            .and()
-            .servletApi();
-            // .and()
-            // .headers()
-            // .cacheControl();
+        http.exceptionHandling().and().anonymous().and().servletApi();
+        // .and()
+        // .headers()
+        // .cacheControl();
 
         // custom JSON based authentication by POST of
         // {"name":"<name>","password":"<password>"} which sets the
         // token
         // header upon authentication
-        http.authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/**")
-            .hasRole(Role.ADMIN.getIdentifier())
-            .and()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/**")
-            .hasRole(Role.ADMIN.getIdentifier())
-            .and()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.DELETE, "/**")
-            .hasRole(Role.ADMIN.getIdentifier())
-            .and()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.PUT, "/**")
-            .hasRole(Role.ADMIN.getIdentifier())
-            .and()
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/**").hasRole(Role.ADMIN.getIdentifier()).and().authorizeRequests().antMatchers(HttpMethod.POST, "/**")
+                .hasRole(Role.ADMIN.getIdentifier()).and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/**").hasRole(Role.ADMIN.getIdentifier()).and().authorizeRequests()
+                .antMatchers(HttpMethod.PUT, "/**").hasRole(Role.ADMIN.getIdentifier()).and()
 
-            // no need, cause login is handled in user module
-            // .addFilterBefore(new StatelessLoginFilter("/api/login",
-            // tokenAuthenticationService, _userDetailsService,
-            // authenticationManager()),
-            // UsernamePasswordAuthenticationFilter.class)
+                // no need, cause login is handled in user module
+                // .addFilterBefore(new StatelessLoginFilter("/api/login",
+                // tokenAuthenticationService, _userDetailsService,
+                // authenticationManager()),
+                // UsernamePasswordAuthenticationFilter.class)
 
-            // custom Token based authentication based on the header previously
-            // given to the client
-            .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
+                // custom Token based authentication based on the header
+                // previously
+                // given to the client
+                .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
 
     }
 
@@ -85,8 +69,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(_userDetailsService)
-            .passwordEncoder(_passwordEncrypter);
+        auth.userDetailsService(_userDetailsService).passwordEncoder(_passwordEncrypter);
     }
 
     @Override

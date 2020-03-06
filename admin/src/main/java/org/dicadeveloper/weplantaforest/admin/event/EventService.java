@@ -37,7 +37,7 @@ public class EventService {
         return _eventRepository.save(event);
     }
 
-    public Event getEvent(Long eventId) throws IpatException {        
+    public Event getEvent(Long eventId) throws IpatException {
         Event event = _eventRepository.findById(eventId).orElse(null);
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_IS_NULL);
         return event;
@@ -87,7 +87,7 @@ public class EventService {
         cart.setEvent(event);
         cart.setCode(code);
         _cartRepository.save(cart);
-        //TODO: think about to remove one of both references
+        // TODO: think about to remove one of both references
         code.setCart(cart);
         _codeRepository.save(code);
     }

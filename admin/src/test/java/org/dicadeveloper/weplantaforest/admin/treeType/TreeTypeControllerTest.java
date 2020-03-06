@@ -52,23 +52,23 @@ public class TreeTypeControllerTest {
 
     @Autowired
     private TreeTypeRepository _treeTypeRepository;
-    
+
     @Autowired
     private TokenAuthenticationService _tokenAuthenticationService;
 
     @Autowired
     private UserRepository _userRepository;
-    
+
     @Autowired
     private DbInjecter _dbInjecter;
-    
+
     String userToken = null;
 
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
         _dbInjecter.injectUser("Adam");
-        userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));        
+        userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
     }
 
     @After
@@ -85,13 +85,11 @@ public class TreeTypeControllerTest {
         treeType.setAnnualCo2SavingInTons(0.5);
         treeType.setInfoLink("www.abc.de");
 
-        mockMvc.perform(post(Uris.TREETYPE_SAVE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                .content(TestUtil.convertObjectToJsonBytes(treeType)))
-               .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.TREETYPE_SAVE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(treeType)))
+                .andExpect(status().isOk());
 
         assertThat(_treeTypeRepository.count()).isEqualTo(1L);
-        assertThat(_treeTypeRepository.findById(1L).orElse(null)
-                                      .getAnnualCo2SavingInTons()).isEqualTo(0.5);
+        assertThat(_treeTypeRepository.findById(1L).orElse(null).getAnnualCo2SavingInTons()).isEqualTo(0.5);
     }
 
     @Test
@@ -103,15 +101,11 @@ public class TreeTypeControllerTest {
 
         MediaType mediaType = new MediaType("multipart", "form-data");
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart(Uris.TREETYPE_IMAGE_UPLOAD)
-                                              .file(image).header("X-AUTH-TOKEN", userToken)
-                                              .contentType(mediaType)
-                                              .param("treeTypeId", "1"))
-               .andExpect(status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.multipart(Uris.TREETYPE_IMAGE_UPLOAD).file(image).header("X-AUTH-TOKEN", userToken).contentType(mediaType).param("treeTypeId", "1"))
+                .andExpect(status().isOk());
 
         assertThat(_treeTypeRepository.count()).isEqualTo(1L);
-        assertThat(_treeTypeRepository.findById(1L).orElse(null)
-                                      .getAnnualCo2SavingInTons()).isEqualTo(0.5);
+        assertThat(_treeTypeRepository.findById(1L).orElse(null).getAnnualCo2SavingInTons()).isEqualTo(0.5);
 
     }
 

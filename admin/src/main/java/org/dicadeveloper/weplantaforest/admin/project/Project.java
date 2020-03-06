@@ -39,11 +39,11 @@ public class Project {
     @Id
     @GeneratedValue
     @Column(name = "_plantId")
-    @JsonView({Views.ProjectNameAndId.class, Views.ProjectData.class})
+    @JsonView({ Views.ProjectNameAndId.class, Views.ProjectData.class })
     private Long id;
 
     @Column(name = "_name", length = 255)
-    @JsonView({Views.ProjectNameAndId.class, Views.ProjectData.class,Views.CartDetails.class})
+    @JsonView({ Views.ProjectNameAndId.class, Views.ProjectData.class, Views.CartDetails.class })
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")
@@ -83,13 +83,13 @@ public class Project {
     private User manager;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
- //   @Cascade(CascadeType.ALL)
+    // @Cascade(CascadeType.ALL)
     @JsonIgnoreProperties("project")
     private List<ProjectArticle> articles;
-    
+
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private List<ProjectImage> images;    
-    
+    private List<ProjectImage> images;
+
     @ElementCollection
     @CollectionTable(name = "AreaPositions", joinColumns = @JoinColumn(name = "_projectId"))
     @OrderBy("order ASC")

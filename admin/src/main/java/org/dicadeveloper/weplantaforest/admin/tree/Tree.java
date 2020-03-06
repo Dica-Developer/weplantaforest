@@ -64,7 +64,7 @@ public class Tree {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
     @JoinColumn(name = "_treeType_treeTypeId")
-    @JsonView({ Views.CartDetails.class, Views.TreesByUser.class  })
+    @JsonView({ Views.CartDetails.class, Views.TreesByUser.class })
     private TreeType treeType;
 
     @OneToOne(fetch = FetchType.LAZY)

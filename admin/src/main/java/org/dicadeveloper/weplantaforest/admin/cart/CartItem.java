@@ -76,17 +76,10 @@ public class CartItem {
 
     public void setTree(Tree tree) {
         this.tree = tree;
-        this.basePricePerPiece = tree.getProjectArticle()
-                                     .getPrice()
-                                     .getAmount();
-        this.fundingPerPiece = tree.getProjectArticle()
-                                   .getPrice()
-                                   .getFunding();
-        this.scontoPerPiece = tree.getProjectArticle()
-                                  .getPrice()
-                                  .getSconto();
-        this.projectArticleId = tree.getProjectArticle()
-                                    .getArticleId();
+        this.basePricePerPiece = tree.getProjectArticle().getPrice().getAmount();
+        this.fundingPerPiece = tree.getProjectArticle().getPrice().getFunding();
+        this.scontoPerPiece = tree.getProjectArticle().getPrice().getSconto();
+        this.projectArticleId = tree.getProjectArticle().getArticleId();
         this.amount = tree.getAmount();
         calcAndSetTotalPrice();
     }

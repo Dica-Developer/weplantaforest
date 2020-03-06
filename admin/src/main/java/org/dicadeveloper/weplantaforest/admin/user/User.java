@@ -49,7 +49,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "_userId")
-    @JsonView({ Views.OverviewUser.class, Views.ProjectData.class, Views.EventDetails.class, Views.OverviewCart.class})
+    @JsonView({ Views.OverviewUser.class, Views.ProjectData.class, Views.EventDetails.class, Views.OverviewCart.class })
     private Long id;
 
     @Column(unique = true, name = "_name")
@@ -79,10 +79,10 @@ public class User implements UserDetails {
 
     @Column(name = "_organisationType")
     private int organizationType;
-    
+
     @Column(name = "_imageName")
     private String imageName;
-    
+
     @Column(name = "_aboutme")
     private String aboutMe;
 
@@ -91,16 +91,16 @@ public class User implements UserDetails {
 
     @Column(name = "_organisation")
     private String organisation;
-    
-    @Column(name ="_homepage")
+
+    @Column(name = "_homepage")
     private String homepage;
-    
-    @Column(name ="_lang")
+
+    @Column(name = "_lang")
     private Language lang;
-    
-    @Column(name ="_newsletter")
+
+    @Column(name = "_newsletter")
     private boolean newsletter;
-    
+
     @Column(name = "_activationKey")
     private String activationKey;
 
@@ -110,7 +110,7 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID") )
+    @CollectionTable(name = "User__roles", joinColumns = @JoinColumn(name = "USER__USERID"))
     @Column(name = "ELEMENT")
     private Set<Role> roles = new HashSet<Role>();
 

@@ -41,5 +41,5 @@ public class Event {
     @JoinColumn(name = "_user__userId")
     @JsonView(Views.EventDetails.class)
     private User user;
-    
+
 }

@@ -121,7 +121,7 @@ public class EventServiceTest {
         } catch (IpatException e) {
             fail(String.format("Error in deleting event\nerrorCode: %s", e.getErrorInfos().get(0).getErrorCode()));
         }
-        
+
         assertNull(_eventRepository.findById(1L));
         assertEquals(0, _cartRepository.count());
         assertEquals(0, _codeRepository.count());

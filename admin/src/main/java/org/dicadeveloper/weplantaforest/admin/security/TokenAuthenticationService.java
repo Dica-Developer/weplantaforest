@@ -22,7 +22,6 @@ public class TokenAuthenticationService {
     public TokenAuthenticationService(@Value("${token.secret}") String secret) {
         tokenHandler = new TokenHandler(DatatypeConverter.parseBase64Binary(secret));
     }
-    
 
     public Authentication getAuthentication(HttpServletRequest request) {
         final String token = request.getHeader(AUTH_HEADER_NAME);
@@ -34,7 +33,7 @@ public class TokenAuthenticationService {
         }
         return null;
     }
-    
+
     public String getTokenFromUser(User user) {
         if (user != null) {
             final String token = tokenHandler.createTokenForUser(user);

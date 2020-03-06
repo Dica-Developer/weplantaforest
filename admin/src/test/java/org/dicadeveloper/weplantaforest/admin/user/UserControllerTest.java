@@ -30,7 +30,7 @@ public class UserControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
-    
+
     @Autowired
     private TokenAuthenticationService _tokenAuthenticationService;
 
@@ -43,7 +43,7 @@ public class UserControllerTest {
 
     @Autowired
     private DbInjecter _dbInjecter;
-    
+
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(this.webApplicationContext).build();
@@ -55,10 +55,7 @@ public class UserControllerTest {
         _dbInjecter.injectUser("Bert");
         _dbInjecter.injectUser("Claus");
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
-        mockMvc.perform(get("/users").accept("application/json").header("X-AUTH-TOKEN", userToken))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.[0].name").value("Adam"))
-               .andExpect(jsonPath("$.[1].name").value("Bert"))
-               .andExpect(jsonPath("$.[2].name").value("Claus"));
+        mockMvc.perform(get("/users").accept("application/json").header("X-AUTH-TOKEN", userToken)).andExpect(status().isOk()).andExpect(jsonPath("$.[0].name").value("Adam"))
+                .andExpect(jsonPath("$.[1].name").value("Bert")).andExpect(jsonPath("$.[2].name").value("Claus"));
     }
 }

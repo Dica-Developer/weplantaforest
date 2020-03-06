@@ -28,8 +28,8 @@ import lombok.ToString;
 @Table(name = "PlantImage")
 @NoArgsConstructor
 public class ProjectImage {
-    
-    public ProjectImage(String title, String description, Long date){
+
+    public ProjectImage(String title, String description, Long date) {
         this.title = title;
         this.description = description;
         this.date = date;

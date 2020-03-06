@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PasswordEncrypter implements PasswordEncoder{
+public class PasswordEncrypter implements PasswordEncoder {
 
     protected final Log LOG = LogFactory.getLog(PasswordEncrypter.class.getName());
 
@@ -49,7 +49,7 @@ public class PasswordEncrypter implements PasswordEncoder{
     }
 
     @Override
-    public boolean matches(CharSequence rawPassword, String encodedPassword) {    
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {
         return encryptPassword(rawPassword.toString()).equals(encodedPassword);
     }
 

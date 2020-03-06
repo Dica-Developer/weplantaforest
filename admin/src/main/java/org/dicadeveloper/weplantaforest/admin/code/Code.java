@@ -27,38 +27,40 @@ public class Code {
     @Id
     @JsonView(Views.CodeOverview.class)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name ="_id")
+    @Column(name = "_id")
     private Long id;
 
     @JsonView(Views.CodeOverview.class)
-    @Column(name ="_code",unique = true, nullable = false)
+    @Column(name = "_code", unique = true, nullable = false)
     private String code;
 
     @ManyToOne(optional = true)
-    @JoinColumn(name ="_event__id")
+    @JoinColumn(name = "_event__id")
     private Event event;
 
     @OneToOne(optional = true)
-    @JoinColumn(name ="_gift__id")
+    @JoinColumn(name = "_gift__id")
     private Gift gift;
-    
+
     @OneToOne(optional = true)
-    @JoinColumn(name ="_cart__cartId")
+    @JoinColumn(name = "_cart__cartId")
     @JsonView(Views.CodeOverview.class)
     private Cart cart;
-    
-    //TODO: think about to remove these columns, i don't think they are really necessary
-    //only initialized here with default values to avoid constraint violations from the db
-    @Column(name ="_year",nullable = false)
+
+    // TODO: think about to remove these columns, i don't think they are really
+    // necessary
+    // only initialized here with default values to avoid constraint violations
+    // from the db
+    @Column(name = "_year", nullable = false)
     private int year = 0;
 
-    @Column(name ="_month",nullable = false)
+    @Column(name = "_month", nullable = false)
     private int month = 0;
 
-    @Column(name ="_number",nullable = false)
+    @Column(name = "_number", nullable = false)
     private int number = 0;
-    
-    @Column(name ="_evaluated",nullable = false)
+
+    @Column(name = "_evaluated", nullable = false)
     private boolean evaluated = false;
 
 }

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 public class TeamController {
 
@@ -22,9 +22,8 @@ public class TeamController {
 
     public final static String REQUEST_URL = "/team";
 
-
     private @NonNull TeamRepository _teamRepository;
-    
+
     @GetMapping(value = REQUEST_URL + "s")
     @JsonView(Views.TeamOverview.class)
     public List<Team> getAllUser() {

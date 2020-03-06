@@ -26,13 +26,13 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CartController {
 
     private @NonNull CartRepository _cartRepository;
 
     private @NonNull TreeRepository _treeRepository;
-    
+
     private @NonNull CartService _cartService;
 
     @RequestMapping(value = Uris.CARTS, method = RequestMethod.POST)
@@ -47,7 +47,7 @@ public class CartController {
     public Cart getCartDetails(@PathVariable(value = "cartId") Long cartId) {
         return _cartRepository.findById(cartId).orElse(null);
     }
-    
+
     @PostMapping(value = "/cart/receiptable")
     @JsonView(Views.OverviewCart.class)
     public Cart setReceiptable(@RequestParam Long cartId, @RequestParam boolean receiptable) {

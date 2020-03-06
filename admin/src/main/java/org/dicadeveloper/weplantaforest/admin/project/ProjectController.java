@@ -26,7 +26,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProjectController {
 
     private @NonNull ProjectRepository _projectRepository;
@@ -99,7 +99,7 @@ public class ProjectController {
                 }
             }
             project = _projectRepository.save(project);
-            return new ResponseEntity<>(project.getId(),HttpStatus.OK);
+            return new ResponseEntity<>(project.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -144,18 +144,17 @@ public class ProjectController {
 
         }
     }
-    
+
     @RequestMapping(value = Uris.PROJECT_MAIN_IMAGE, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> addMainImage(@RequestParam Long projectId, @RequestParam("file") MultipartFile file) {
         Project project = _projectRepository.findById(projectId).orElse(null);
-        
+
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        else{
+        } else {
             String imageFolder = FileSystemInjector.getImageFolderForProjects();
-            String imageName = project.getName() + "_mainImage" + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."), file.getOriginalFilename().length() );
+            String imageName = project.getName() + "_mainImage" + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."), file.getOriginalFilename().length());
             try {
                 imageName = _imageHelper.storeImage(file, imageFolder, imageName, true);
                 project.setImageFileName(imageName);
@@ -163,7 +162,7 @@ public class ProjectController {
             } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            return new ResponseEntity<>( HttpStatus.OK);            
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
@@ -171,57 +170,55 @@ public class ProjectController {
     @Transactional
     public ResponseEntity<?> createEditProjectImageData(@RequestBody ProjectImageRequest projectImageRequest) {
         Project project = _projectRepository.findById(projectImageRequest.getProjectId()).orElse(null);
-        
+
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        else{
+        } else {
             ProjectImage projectImage;
-            if(projectImageRequest.getImageId() != null){
+            if (projectImageRequest.getImageId() != null) {
                 projectImage = _projectImageRepository.findById(projectImageRequest.getImageId()).orElse(null);
                 projectImage.setTitle(projectImageRequest.getTitle());
                 projectImage.setDescription(projectImageRequest.getDescription());
-            }else{
-                projectImage = new ProjectImage(projectImageRequest.getTitle(), projectImageRequest.getDescription(),System.currentTimeMillis());             
+            } else {
+                projectImage = new ProjectImage(projectImageRequest.getTitle(), projectImageRequest.getDescription(), System.currentTimeMillis());
             }
             projectImage.setProject(project);
             _projectImageRepository.save(projectImage);
-            return new ResponseEntity<>(projectImage.getImageId(), HttpStatus.OK);            
+            return new ResponseEntity<>(projectImage.getImageId(), HttpStatus.OK);
         }
     }
-    
 
     @RequestMapping(value = Uris.PROJECT_IMAGE_UPLOAD, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> uploadUserImage(@RequestParam Long imageId, @RequestParam("file") MultipartFile file) {
-            ProjectImage projectImage =  _projectImageRepository.findById(imageId).orElse(null);
-            String imageFolder = FileSystemInjector.getImageFolderForProjects();
-            String imageName ;
-            if(projectImage.getImageFileName() != null){
-                imageName = projectImage.getImageFileName();
-            }else{
-                String imageType = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."), file.getOriginalFilename().length());
-                imageName = "project_" + projectImage.getProject().getId() + "image_1" + imageType;
+        ProjectImage projectImage = _projectImageRepository.findById(imageId).orElse(null);
+        String imageFolder = FileSystemInjector.getImageFolderForProjects();
+        String imageName;
+        if (projectImage.getImageFileName() != null) {
+            imageName = projectImage.getImageFileName();
+        } else {
+            String imageType = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."), file.getOriginalFilename().length());
+            imageName = "project_" + projectImage.getProject().getId() + "image_1" + imageType;
+        }
+        if (!file.isEmpty()) {
+            try {
+                imageName = _imageHelper.storeImage(file, imageFolder, imageName, false);
+                projectImage.setImageFileName(imageName);
+                _projectImageRepository.save(projectImage);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (IOException e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            if (!file.isEmpty()) {
-                try {
-                    imageName = _imageHelper.storeImage(file, imageFolder, imageName, false);
-                    projectImage.setImageFileName(imageName);
-                    _projectImageRepository.save(projectImage);
-                    return new ResponseEntity<>(HttpStatus.OK);
-                } catch (IOException e) {        
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-  
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
-    
+
     @RequestMapping(value = Uris.PROJECT_IMAGE_DELETE, method = RequestMethod.POST)
     public ResponseEntity<?> removeProjectImage(@RequestParam Long projectImageId, @RequestParam String imageFileName) {
         _projectImageRepository.deleteById(projectImageId);
-        //TODO: delete image file on filesystem
+        // TODO: delete image file on filesystem
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

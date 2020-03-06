@@ -20,7 +20,7 @@ public class MainSliderImage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_imageId")
     private Long imageId;
-    
+
     @Column(name = "_imageFileName")
     private String imageFileName;
 

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = { WeplantaforestAdminApplication.class, Jsr310JpaConverters.class })
-@ComponentScan(basePackages = {"org.dicadeveloper.weplantaforest.*"})
+@ComponentScan(basePackages = { "org.dicadeveloper.weplantaforest.*" })
 public class WeplantaforestAdminApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

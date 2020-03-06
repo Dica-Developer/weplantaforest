@@ -88,10 +88,9 @@ public class CartControllerTest {
 
         _dbInjecter.injectCart("Adam", treeIdList);
         CartRequest cartRequest = new CartRequest();
-        mockMvc.perform(post(Uris.CARTS).header("X-AUTH-TOKEN", userToken)
-                .content(TestUtil.convertObjectToJsonBytes(cartRequest))
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .accept("application/json")).andExpect(status().isOk()).andExpect(jsonPath("$.[0].buyer.name").value("Adam"));
+        mockMvc.perform(
+                post(Uris.CARTS).header("X-AUTH-TOKEN", userToken).content(TestUtil.convertObjectToJsonBytes(cartRequest)).contentType(TestUtil.APPLICATION_JSON_UTF8).accept("application/json"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.[0].buyer.name").value("Adam"));
     }
 
     @Test

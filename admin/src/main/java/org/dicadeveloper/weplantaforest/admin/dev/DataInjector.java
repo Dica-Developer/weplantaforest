@@ -35,15 +35,8 @@ public class DataInjector {
                 // the db (like db.populates=v23)
                 if (!_treeTypeRepository.existsAtAll()) {
                     int treeCount = 15000;
-                    _databasePopulator.insertUsers()
-                                      .insertDefaultTreeTypes()
-                                      .insertProjects()
-                                      .insertProjectArticles()
-                                      .insertCarts()
-                                      .insertProjectImages()
-                                      .addMainImagesToProjectFolder()
-                                      .addProjectImages()
-                                      .createMainSliderImages();
+                    _databasePopulator.insertUsers().insertDefaultTreeTypes().insertProjects().insertProjectArticles().insertCarts().insertProjectImages().addMainImagesToProjectFolder()
+                            .addProjectImages().createMainSliderImages();
                     ;
                     LOG.info("Finished injecting " + treeCount + " trees ");
                 } else {

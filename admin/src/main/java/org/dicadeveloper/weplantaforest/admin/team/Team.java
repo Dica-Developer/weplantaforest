@@ -35,13 +35,13 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_teamId")
-    @JsonView({Views.EventDetails.class, Views.TeamOverview.class})
+    @JsonView({ Views.EventDetails.class, Views.TeamOverview.class })
     private Long id;
 
     private Long _timeStamp;
 
     @Column(name = "_name", nullable = false, unique = true, length = 256)
-    @JsonView({Views.EventDetails.class, Views.TeamOverview.class})
+    @JsonView({ Views.EventDetails.class, Views.TeamOverview.class })
     private String name;
 
     @JsonIgnore

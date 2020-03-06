@@ -53,21 +53,21 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_cartId")
-    @JsonView({Views.OverviewCart.class, Views.CodeOverview.class, Views.CartDetails.class})
+    @JsonView({ Views.OverviewCart.class, Views.CodeOverview.class, Views.CartDetails.class })
     private Long id;
 
     @Column(name = "_timeStamp")
-    @JsonView({Views.OverviewCart.class, Views.CartDetails.class})
+    @JsonView({ Views.OverviewCart.class, Views.CartDetails.class })
     private Long timeStamp;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "_cartState")
-    @JsonView({Views.OverviewCart.class, Views.CodeOverview.class})
+    @JsonView({ Views.OverviewCart.class, Views.CodeOverview.class })
     private CartState cartState;
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
-    @JsonView({Views.CartDetails.class})
+    @JsonView({ Views.CartDetails.class })
     private List<CartItem> cartItems = new ArrayList<CartItem>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -171,10 +171,7 @@ public class Cart {
 
     public CartItem removeCartItem(final Long articleId) {
         for (final CartItem item : cartItems) {
-            if (item.getTree()
-                    .getProjectArticle()
-                    .getArticleId()
-                    .equals(articleId)) {
+            if (item.getTree().getProjectArticle().getArticleId().equals(articleId)) {
                 cartItems.remove(item);
                 return item;
             }
@@ -191,12 +188,7 @@ public class Cart {
 
     public boolean containsCartItem(final CartItem cartItem) {
         for (final CartItem item : cartItems) {
-            if (item.getTree()
-                    .getProjectArticle()
-                    .getArticleId()
-                    .equals(cartItem.getTree()
-                                    .getProjectArticle()
-                                    .getArticleId())) {
+            if (item.getTree().getProjectArticle().getArticleId().equals(cartItem.getTree().getProjectArticle().getArticleId())) {
                 return true;
             }
         }
@@ -216,7 +208,7 @@ public class Cart {
     }
 
     @Transient
-    @JsonView({Views.OverviewCart.class, Views.CartDetails.class})
+    @JsonView({ Views.OverviewCart.class, Views.CartDetails.class })
     public int getTreeCount() {
         int count = 0;
         for (Tree tree : getTrees()) {
@@ -226,12 +218,12 @@ public class Cart {
     }
 
     @Transient
-    @JsonView({Views.OverviewCart.class, Views.CartDetails.class})
+    @JsonView({ Views.OverviewCart.class, Views.CartDetails.class })
     public BigDecimal getTotalPrice() {
         BigDecimal total = new BigDecimal(0.00);
         for (final CartItem item : cartItems) {
-            if(item.getTotalPrice() != null){
-                total = total.add(item.getTotalPrice());                
+            if (item.getTotalPrice() != null) {
+                total = total.add(item.getTotalPrice());
             }
         }
         return total;
@@ -241,8 +233,7 @@ public class Cart {
     public List<Long> getPlantArticleIds() {
         final List<Long> ids = new ArrayList<Long>();
         for (Tree tree : getTrees()) {
-            ids.add(tree.getProjectArticle()
-                        .getArticleId());
+            ids.add(tree.getProjectArticle().getArticleId());
         }
         return ids;
     }

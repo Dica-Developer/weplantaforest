@@ -55,7 +55,8 @@ public class DatabasePopulator {
 
     protected final Log LOG = LogFactory.getLog(DatabasePopulator.class.getName());
 
-    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("<mlpr>GERMAN<equ>Buche<sep>ENGLISH<equ>Beech Tree<sep>ITALIAN<equ>Beech Tree<sep>", "Kiefer", "Birke", "Ahorn", "Eiche", "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
+    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("<mlpr>GERMAN<equ>Buche<sep>ENGLISH<equ>Beech Tree<sep>ITALIAN<equ>Beech Tree<sep>", "Kiefer", "Birke", "Ahorn", "Eiche",
+            "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
 
     private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gab&uuml;r", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert",
             "Claus", "Django", "Emil", "Mr NoTree");
@@ -77,7 +78,8 @@ public class DatabasePopulator {
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
-            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, CartRepository cartRepository, ProjectImageRepository projectImageRepository, MainSliderImageRepository mainSliderImageRepository) {
+            ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, CartRepository cartRepository, ProjectImageRepository projectImageRepository,
+            MainSliderImageRepository mainSliderImageRepository) {
         _projectRepository = projectRepository;
         _userRepository = userRepository;
         _treeTypeRepository = treeTypeRepository;
@@ -97,8 +99,7 @@ public class DatabasePopulator {
             Project project = new Project();
             project.setName(projectName);
             project.setManager(_userRepository.findByName(DEFAULT_USERS.get(i)));
-            project.setDescription(
-                    "<mlpr>GERMAN<equ><p>Projektbeschreibung</p><sep>ENGLISH<equ><p>project description</p><sep>ITALIAN<equ>projecto descriptiones<sep>");
+            project.setDescription("<mlpr>GERMAN<equ><p>Projektbeschreibung</p><sep>ENGLISH<equ><p>project description</p><sep>ITALIAN<equ>projecto descriptiones<sep>");
             project.setImageFileName("project" + (i + 1) + ".jpg");
             if (i < 5) {
                 project.setShopActive(false);
@@ -108,58 +109,58 @@ public class DatabasePopulator {
                 project.setVisible(true);
             }
             switch (i) {
-            case 0:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 1:
-                project.setLatitude(37.235000f);
-                project.setLongitude(-115.811111f);
-                break;
-            case 2:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 3:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 4:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 5:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 6:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 7:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            case 8:
-                project.setLatitude(52.4626536896816f);
-                project.setLongitude(13.607287460327143f);
-                break;
-            default:
-                project.setLatitude(51.482691f);
-                project.setLongitude(11.969947f);
-                break;
+                case 0:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 1:
+                    project.setLatitude(37.235000f);
+                    project.setLongitude(-115.811111f);
+                    break;
+                case 2:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 3:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 4:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 5:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 6:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 7:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                case 8:
+                    project.setLatitude(52.4626536896816f);
+                    project.setLongitude(13.607287460327143f);
+                    break;
+                default:
+                    project.setLatitude(51.482691f);
+                    project.setLongitude(11.969947f);
+                    break;
             }
             _projectRepository.save(project);
         }
         return this;
     }
-    
+
     public DatabasePopulator insertProjectImages() {
         for (int i = 1; i <= 10; i++) {
             for (int j = 1; j <= 5; j++) {
                 ProjectImage projectImage = new ProjectImage();
                 projectImage.setTitle("image " + j);
-                projectImage.setDescription("<mlpr>GERMAN<equ>Bildbeschreibung " + j  +"<sep>ENGLISH<equ>image description " + j  +"<sep>ITALIAN<equ>projecto descriptiones<sep>");
+                projectImage.setDescription("<mlpr>GERMAN<equ>Bildbeschreibung " + j + "<sep>ENGLISH<equ>image description " + j + "<sep>ITALIAN<equ>projecto descriptiones<sep>");
                 projectImage.setImageFileName("project" + i + "_" + j + ".jpg");
                 projectImage.setDate(100000000L * j);
                 projectImage.setProject(_projectRepository.findById((long) i).orElse(null));
@@ -181,13 +182,13 @@ public class DatabasePopulator {
                 treeType.setDescription(description);
                 double co2Savings = 0.02;
                 switch (treeTypeName) {
-                case "Robin":
-                case "Wildapfel":
-                    co2Savings = 0.01;
-                    break;
-                case "Default":
-                    co2Savings = 0.011;
-                    break;
+                    case "Robin":
+                    case "Wildapfel":
+                        co2Savings = 0.01;
+                        break;
+                    case "Default":
+                        co2Savings = 0.011;
+                        break;
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
                 treeType.setImageFile(treeTypeName + ".jpeg");
@@ -209,7 +210,7 @@ public class DatabasePopulator {
             user.setMail(DEFAULT_USERS.get(i) + "@" + DEFAULT_USERS.get(i) + ".de");
             if (i < 5) {
                 user.addRole(Role.ADMIN);
-            }else if(i >=5 && i < 8){
+            } else if (i >= 5 && i < 8) {
                 user.addRole(Role.ARTICLE_MANAGER);
             }
             user.addRole(Role.USER);
@@ -304,7 +305,7 @@ public class DatabasePopulator {
 
         return this;
     }
-    
+
     public DatabasePopulator addMainImagesToProjectFolder() {
         for (int i = 1; i <= _projectRepository.count(); i++) {
             String mainImageFileName = "project" + i + ".jpg";
@@ -334,15 +335,15 @@ public class DatabasePopulator {
 
         return this;
     }
-    
+
     public void createMainSliderImages() {
         for (int i = 1; i <= 4; i++) {
             MainSliderImage image = new MainSliderImage();
-            
+
             String imageFileName = "main_image" + i + ".jpg";
             image.setImageFileName(imageFileName);
             _mainSliderImageRepository.save(image);
-           
+
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageFileName).toPath();
             String imageFileDest = FileSystemInjector.getMainImageFolder() + "/" + imageFileName;
             File newImageFile = new File(imageFileDest);
@@ -354,7 +355,7 @@ public class DatabasePopulator {
             }
         }
     }
-    
+
     private void createProjectImageFileAndCopySrcFileIntoIt(Path srcPath, String destPath) {
         try {
             File newImageFile = new File(destPath);

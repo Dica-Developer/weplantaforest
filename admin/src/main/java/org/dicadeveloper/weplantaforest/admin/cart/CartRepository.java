@@ -24,6 +24,6 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     public Cart findCartByCode(@Param("codeString") String codeString);
 
     public List<Cart> findByEvent(@Param("event") Event event);
-    
+
     public List<Cart> findAllByOrderByIdDesc();
 }

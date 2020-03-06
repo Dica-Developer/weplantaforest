@@ -6,7 +6,6 @@ import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +17,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired) )
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     private @NonNull UserRepository _userRepository;
@@ -45,7 +44,7 @@ public class UserController {
             return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = Uris.MAIL_CHANGE, method = RequestMethod.POST)
     public ResponseEntity<?> updateMailaddress(@RequestParam long userId, @RequestParam String newMail) {
         User user = _userRepository.findById(userId).orElse(null);
@@ -62,60 +61,60 @@ public class UserController {
             return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = Uris.ACTIVE_CHANGE, method = RequestMethod.POST)
-    public ResponseEntity<?> updateActiveFlag(@RequestParam long userId, @RequestParam boolean activeFlag){
+    public ResponseEntity<?> updateActiveFlag(@RequestParam long userId, @RequestParam boolean activeFlag) {
         User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
             user.setEnabled(activeFlag);
             _userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
+        } else {
+            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = Uris.BANNED_CHANGE, method = RequestMethod.POST)
-    public ResponseEntity<?> updateBannedFlag(@RequestParam long userId, @RequestParam boolean bannedFlag){
+    public ResponseEntity<?> updateBannedFlag(@RequestParam long userId, @RequestParam boolean bannedFlag) {
         User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
             user.setBanned(bannedFlag);
             _userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
+        } else {
+            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = Uris.ROLE_ADMIN_CHANGE, method = RequestMethod.POST)
-    public ResponseEntity<?> updateAdminRole(@RequestParam long userId, @RequestParam boolean shouldBeAdmin){
+    public ResponseEntity<?> updateAdminRole(@RequestParam long userId, @RequestParam boolean shouldBeAdmin) {
         User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
-               if(shouldBeAdmin && !user.hasRole(Role.ADMIN)){
-                   user.addRole(Role.ADMIN);
-               }else if(!shouldBeAdmin && user.hasRole(Role.ADMIN)){
-                   user.removeRole(Role.ADMIN);
-               }
-               _userRepository.save(user);
+            if (shouldBeAdmin && !user.hasRole(Role.ADMIN)) {
+                user.addRole(Role.ADMIN);
+            } else if (!shouldBeAdmin && user.hasRole(Role.ADMIN)) {
+                user.removeRole(Role.ADMIN);
+            }
+            _userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
-        }        
+        } else {
+            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);
+        }
     }
-    
+
     @RequestMapping(value = Uris.ROLE_ARTICLE_MANAGER_CHANGE, method = RequestMethod.POST)
-    public ResponseEntity<?> updateArticleManagerRole(@RequestParam long userId, @RequestParam boolean shouldBeArticleManager){
+    public ResponseEntity<?> updateArticleManagerRole(@RequestParam long userId, @RequestParam boolean shouldBeArticleManager) {
         User user = _userRepository.findById(userId).orElse(null);
         if (user != null) {
-               if(shouldBeArticleManager && !user.hasRole(Role.ARTICLE_MANAGER)){
-                   user.addRole(Role.ARTICLE_MANAGER);
-               }else if(!shouldBeArticleManager && user.hasRole(Role.ARTICLE_MANAGER)){
-                   user.removeRole(Role.ARTICLE_MANAGER);
-               }
-               _userRepository.save(user);
+            if (shouldBeArticleManager && !user.hasRole(Role.ARTICLE_MANAGER)) {
+                user.addRole(Role.ARTICLE_MANAGER);
+            } else if (!shouldBeArticleManager && user.hasRole(Role.ARTICLE_MANAGER)) {
+                user.removeRole(Role.ARTICLE_MANAGER);
+            }
+            _userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);  
+        } else {
+            return new ResponseEntity<>(String.format("Kein Nutzer mit dieser ID [%s] vorhanden.", userId), HttpStatus.BAD_REQUEST);
         }
     }
 }

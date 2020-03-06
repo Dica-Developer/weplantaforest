@@ -31,7 +31,7 @@ public class TreeController {
     private @NonNull ProjectArticleRepository _projectArticleRepository;
 
     private @NonNull UserRepository _userRepository;
-    
+
     private @NonNull TreeService _treeService;
 
     @RequestMapping(value = Uris.PLANT_FOR_USER, method = RequestMethod.POST)
@@ -68,10 +68,10 @@ public class TreeController {
         _treeService.transformTrees(fromUserId, toUserId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = Uris.TREES_BY_USER, method = RequestMethod.GET)
     @JsonView(Views.TreesByUser.class)
-    public List<Tree> treesByUser(@RequestParam Long userId)  {
-       return _treeRepository.findByOwner(_userRepository.findById(userId).orElse(null));
+    public List<Tree> treesByUser(@RequestParam Long userId) {
+        return _treeRepository.findByOwner(_userRepository.findById(userId).orElse(null));
     }
 }

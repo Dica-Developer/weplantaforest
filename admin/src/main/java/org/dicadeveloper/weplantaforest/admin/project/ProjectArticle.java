@@ -52,9 +52,8 @@ public class ProjectArticle {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_price__priceId", nullable = false)
     @JsonView(Views.ProjectArticle.class)
-//    @Cascade(CascadeType.ALL)
+    // @Cascade(CascadeType.ALL)
     private Price price;
-
 
     @Column(name = "_amount")
     @JsonView(Views.ProjectArticle.class)

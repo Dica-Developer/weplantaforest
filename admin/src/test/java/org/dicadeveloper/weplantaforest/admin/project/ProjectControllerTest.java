@@ -91,10 +91,8 @@ public class ProjectControllerTest {
         project.setManager(_userRepository.findByName("ProjectManager"));
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
-        mockMvc.perform(post(Uris.PROJECT_CREATE).header("X-AUTH-TOKEN", userToken)
-                                                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                 .content(TestUtil.convertObjectToJsonBytes(project)))
-               .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.PROJECT_CREATE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(project)))
+                .andExpect(status().isOk());
 
         assertThat(_projectRepository.count()).isEqualTo(1L);
     }
@@ -113,10 +111,8 @@ public class ProjectControllerTest {
         project.setVisible(true);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
-        mockMvc.perform(post(Uris.PROJECT_CREATE).header("X-AUTH-TOKEN", userToken)
-                                                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                 .content(TestUtil.convertObjectToJsonBytes(project)))
-               .andExpect(status().is5xxServerError());
+        mockMvc.perform(post(Uris.PROJECT_CREATE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(project)))
+                .andExpect(status().is5xxServerError());
     }
 
     @Test
@@ -132,10 +128,7 @@ public class ProjectControllerTest {
         assertThat(_projectImageRepository.count()).isEqualTo(1L);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
-        mockMvc.perform(delete(Uris.PROJECT_DELETE).header("X-AUTH-TOKEN", userToken)
-                                                   .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                   .param("id", "1"))
-               .andExpect(status().isOk());
+        mockMvc.perform(delete(Uris.PROJECT_DELETE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("id", "1")).andExpect(status().isOk());
         assertThat(_projectRepository.count()).isEqualTo(0);
         assertThat(_projectArticleRepository.count()).isEqualTo(0);
         assertThat(_projectImageRepository.count()).isEqualTo(0);
@@ -154,11 +147,8 @@ public class ProjectControllerTest {
 
         assertThat(articles.size()).isEqualTo(1);
 
-        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).header("X-AUTH-TOKEN", userToken)
-                                                         .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                                         .param("articleId", "1")
-                                                         .param("projectId", "1"))
-               .andExpect(status().isOk());
+        mockMvc.perform(post(Uris.PROJECT_REMOVE_ARTICLE).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).param("articleId", "1").param("projectId", "1"))
+                .andExpect(status().isOk());
 
         List<ProjectArticle> articlesAfterRemove = _projectArticleRepository.findByProject(_projectRepository.findById(1L).orElse(null));
 
@@ -171,36 +161,26 @@ public class ProjectControllerTest {
         _dbInjecter.injectProject("project 1", manager, "desc", true, 1.0f, 1.0f);
         String userToken = _tokenAuthenticationService.getTokenFromUser(_userRepository.findById(1L).orElse(null));
 
-        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
-                                          .size()).isEqualTo(0);
+        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L).size()).isEqualTo(0);
 
         ProjectImageRequest projectImageRequest = new ProjectImageRequest(null, "title", "<mlpr>GERMAN<equ>Beschreibung<sep>ENGLISH<equ>description<sep>ITALIAN<equ>Oak tree<sep>", 1L);
 
         String projectImageRequestAsJson = TestUtil.getJsonStringFromObject(projectImageRequest);
 
-        mockMvc.perform(MockMvcRequestBuilders.post(Uris.PROJECT_IMAGE_CREATE_EDIT)
-                                              .header("X-AUTH-TOKEN", userToken)
-                                              .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                              .content(projectImageRequestAsJson))
-               .andExpect(status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.post(Uris.PROJECT_IMAGE_CREATE_EDIT).header("X-AUTH-TOKEN", userToken).contentType(TestUtil.APPLICATION_JSON_UTF8).content(projectImageRequestAsJson))
+                .andExpect(status().isOk());
 
-        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
-                                          .size()).isEqualTo(1);
+        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L).size()).isEqualTo(1);
 
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/images/" + "test.jpg");
         MockMultipartFile image = new MockMultipartFile("file", fileInputStream);
 
         MediaType mediaType = new MediaType("multipart", "form-data");
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart(Uris.PROJECT_IMAGE_UPLOAD)
-                                              .file(image)
-                                              .header("X-AUTH-TOKEN", userToken)
-                                              .contentType(mediaType)
-                                              .param("imageId", "1"))
-               .andExpect(status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.multipart(Uris.PROJECT_IMAGE_UPLOAD).file(image).header("X-AUTH-TOKEN", userToken).contentType(mediaType).param("imageId", "1"))
+                .andExpect(status().isOk());
 
-        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L)
-                                          .size()).isEqualTo(1);
+        assertThat(_projectImageRepository.findProjectImagesToProjectByProjectId(1L).size()).isEqualTo(1);
 
         TestUtil.deleteFilesInDirectory(new File(FileSystemInjector.getImageFolderForProjects()));
     }
