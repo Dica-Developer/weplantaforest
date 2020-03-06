@@ -33,22 +33,29 @@ stages:
 jobs:
   include:
     - stage: compile
+      name: "main java"
       script: ./gradlew compileJava
     - script: ./gradlew compileTestJava
+      name: "test java"
     - script:
       - cd ui
       - yarn install
       - yarn build
+      name: "main javascript"
     - stage: style
+      name: "pmd"
       script:
         - ./gradlew pmdMain
         - ./gradlew pmdTest
     - script: ./gradlew checkstyle
+      name: "checkstyle"
     - script:
       - cd ui
       - yarn install
       - yarn p:check
+      name: "prettier"
     - stage: test
+      name: "unit"
       script:
         - ./gradlew test
       after_success: ./gradlew coveralls uploadArchives
