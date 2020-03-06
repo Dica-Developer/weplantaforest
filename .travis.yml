@@ -51,5 +51,4 @@ jobs:
     - stage: test
       script:
         - ./gradlew test
-
-after_success: ./gradlew coveralls uploadArchives
+      after_success: ./gradlew coveralls uploadArchives
