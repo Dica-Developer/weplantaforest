@@ -1,5 +1,6 @@
-language:
-  - java
+os:
+  - linux
+language: java
 jdk:
   - oraclejdk11
 notifications:
@@ -32,11 +33,9 @@ stages:
 jobs:
   include:
     - stage: compile
-      script:
-        - ./gradlew compileJava
-      script:
-        - ./gradlew compileTestJava
-      script:
+      script: ./gradlew compileJava
+      - script: ./gradlew compileTestJava
+      - script:
         - cd ui
         - yarn install
         - yarn build
@@ -44,9 +43,8 @@ jobs:
       script:
         - ./gradlew pmdMain
         - ./gradlew pmdTest
-      script:
-        - ./gradlew checkstyle
-      script:
+      - script: ./gradlew checkstyle
+      - script:
         - cd ui
         - yarn install
         - yarn p:check
