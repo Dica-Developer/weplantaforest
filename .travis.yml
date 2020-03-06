@@ -34,20 +34,20 @@ jobs:
   include:
     - stage: compile
       script: ./gradlew compileJava
-      - script: ./gradlew compileTestJava
-      - script:
-        - cd ui
-        - yarn install
-        - yarn build
+    - script: ./gradlew compileTestJava
+    - script:
+      - cd ui
+      - yarn install
+      - yarn build
     - stage: style
       script:
         - ./gradlew pmdMain
         - ./gradlew pmdTest
-      - script: ./gradlew checkstyle
-      - script:
-        - cd ui
-        - yarn install
-        - yarn p:check
+    - script: ./gradlew checkstyle
+    - script:
+      - cd ui
+      - yarn install
+      - yarn p:check
     - stage: test
       script:
         - ./gradlew test
