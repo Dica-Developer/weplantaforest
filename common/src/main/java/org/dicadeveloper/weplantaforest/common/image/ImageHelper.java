@@ -25,11 +25,12 @@ public class ImageHelper {
     private final static int maxSize = 1500;
 
     public void writeImageToOutputStream(OutputStream toWrite, String filePath, int width, int height) throws FileNotFoundException, IOException {
-       //all imageNames before the relaunch are saved without file-ending and are jpegs
-        if(!filePath.contains(".")){
+        // all imageNames before the relaunch are saved without file-ending and
+        // are jpegs
+        if (!filePath.contains(".")) {
             filePath = filePath + ".jpg";
         }
-        
+
         int[] sizes = { width, height };
         if (sizes[0] > maxSize || sizes[1] > maxSize) {
             sizes = scaleSize(sizes);
@@ -71,19 +72,19 @@ public class ImageHelper {
         return imageName;
 
     }
-    
-    public boolean deleteImage(String imageFolder, String fileName){
+
+    public boolean deleteImage(String imageFolder, String fileName) {
         if (folderExists(imageFolder)) {
             File file = new File(imageFolder + "/" + fileName);
-            LOG.info(String.format("Deleting image [%s] in folder [%s]",fileName, imageFolder)); 
-            if(file.delete()){
+            LOG.info(String.format("Deleting image [%s] in folder [%s]", fileName, imageFolder));
+            if (file.delete()) {
                 return true;
-            }else{
+            } else {
                 LOG.error("Image couldn't be deleted");
                 return false;
             }
-        }else{
-            LOG.error(String.format("Image couldn't be deleted, cause the folder (%s) does not exist.", imageFolder)); 
+        } else {
+            LOG.error(String.format("Image couldn't be deleted, cause the folder (%s) does not exist.", imageFolder));
             return false;
         }
     }

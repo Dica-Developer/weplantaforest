@@ -65,7 +65,7 @@ public class CodeHelper {
         _crypt.put('8', Values.create(1, 5, 24));
         _crypt.put('9', Values.create(4, 3, 8));
     }
-    
+
     public static boolean isValid(final String code) {
         final Matcher matcher = CODE_PATTERN.matcher(code);
         if (matcher.matches()) {
@@ -140,7 +140,7 @@ public class CodeHelper {
         key.append(medium(number14));
 
         key.append("-");
-        
+
         // 2nd block
         int number21 = random(32);
         int number22 = random(32);
@@ -159,7 +159,7 @@ public class CodeHelper {
         int number32 = random(32);
         int number33 = random(32);
         int number34 = random(32);
-        
+
         key.append(large(number31));
         key.append(large(number32));
         key.append(large(number33));

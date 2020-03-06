@@ -32,7 +32,7 @@ public class StringHelperTest {
 
         assertThat(fileType).isEqualTo("file");
     }
-    
+
     @Test
     public void testAddNumberToFileName() {
         String fileName = "abc.file";
@@ -41,7 +41,7 @@ public class StringHelperTest {
 
         assertThat(newFileName).isEqualTo("abc2.file");
     }
-    
+
     @Test
     public void testAddNumberToFileNameWithoutPoint() {
         String fileName = "abcfile";
@@ -50,27 +50,27 @@ public class StringHelperTest {
 
         assertThat(newFileName).isEqualTo(StringHelper.UNKNOWN_DATATYPE);
     }
-    
+
     @Test
-    public void testEmailIsValid(){
+    public void testEmailIsValid() {
         String validEmail = "bla@blubb.de";
         assertThat(StringHelper.isValidEmail(validEmail)).isTrue();
     }
-    
+
     @Test
-    public void testEmailIsNotValidMissingAt(){
+    public void testEmailIsNotValidMissingAt() {
         String validEmail = "blablubb.de";
         assertThat(StringHelper.isValidEmail(validEmail)).isFalse();
     }
-    
+
     @Test
-    public void testEmailIsNotValidMissingDot(){
+    public void testEmailIsNotValidMissingDot() {
         String validEmail = "bla@blubbde";
         assertThat(StringHelper.isValidEmail(validEmail)).isFalse();
     }
-    
+
     @Test
-    public void testEmailIsNotValidMissingPrefix(){
+    public void testEmailIsNotValidMissingPrefix() {
         String validEmail = "@blubb.de";
         assertThat(StringHelper.isValidEmail(validEmail)).isFalse();
     }

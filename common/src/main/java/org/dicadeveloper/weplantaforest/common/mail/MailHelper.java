@@ -74,7 +74,7 @@ public class MailHelper {
             handleException(e);
         }
     }
-    
+
     public void sendAMessageWithAttachement(String subject, String text, String receiver, File file) {
 
         setParameter();
@@ -96,7 +96,7 @@ public class MailHelper {
             multipart.addBodyPart(messageBodyPart);
             multipart.addBodyPart(textBodyPart);
             msg.setContent(multipart);
-            
+
             Transport.send(msg);
         } catch (MessagingException e) {
             handleException(e);
@@ -108,8 +108,7 @@ public class MailHelper {
         password = _env.getProperty("mail.password");
         host = _env.getProperty("smtp.host");
         receiver = _env.getProperty("mail.receiver");
-        debug = _env.getProperty("mail.debug")
-                    .equals("true");
+        debug = _env.getProperty("mail.debug").equals("true");
     }
 
     private void createAndSetProperties() {
@@ -137,7 +136,7 @@ public class MailHelper {
         // create a message
         subject = HtmlUtils.htmlUnescape(subject);
         text = HtmlUtils.htmlUnescape(text);
-        
+
         MimeMessage msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(from));
         InternetAddress address = new InternetAddress(receiver);
