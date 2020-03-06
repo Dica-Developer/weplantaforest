@@ -1,7 +1,7 @@
 language:
   - java
 jdk:
-  - oraclejdk8
+  - oraclejdk11
 notifications:
   webhooks:
     urls:
@@ -20,7 +20,11 @@ before_script:
   - sudo service riak stop || true
   - sudo service rsync stop || true
   - sudo service x11-common stop || true
-  - nvm install v5.5.0
-  - nvm use v5.5.0
-script: ./gradlew test
-after_success: ./gradlew coveralls uploadArchives
+  - nvm install v10.15.3
+  - nvm use v10.15.3
+script:
+  - ./gradlew compileJava
+  - ./gradlew compileTestJava
+  - ./gradlew pmd
+  - ./gradlew checkstyle
+  - ./gradlew test
