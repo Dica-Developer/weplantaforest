@@ -85,5 +85,7 @@ public class ErrorCodes {
     public final static String BANK_CONNECTION_ERROR = "BANK_CONNECTION_ERROR";
 
     public final static String BANK_UNDEFINED_ERROR = "BANK_UNDEFINED_ERROR";
+    
+    public final static String TREE_NOT_FOUND = "TREE_NOT_FOUND";
 
 }

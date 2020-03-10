@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
+import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -51,6 +53,28 @@ public class SelfPlantController {
             return new ResponseEntity<Long>(tree.getId(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = Uris.PLANT_SELF, method = RequestMethod.PUT)
+    public ResponseEntity<?> updateSelfPlantedTree(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long id, @Valid @RequestBody SelfPlantData selfPlantedTree,
+            BindingResult bindingResult) throws IpatException {
+        Tree tree = _treeRepository.findById(id).orElse(null);
+        if (null == tree) {
+            throw new IpatException(ErrorCodes.TREE_NOT_FOUND);
+        }
+        Boolean isOwner = _tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getUsername());
+        if (_tokenAuthenticationService.isAdmin(userToken) || isOwner) {
+            if (!bindingResult.hasErrors()) {
+                Tree treeToUpdate = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantedTree, tree.getOwner());
+                treeToUpdate.setId(id);
+                _treeRepository.save(treeToUpdate);
+                return new ResponseEntity<Long>(treeToUpdate.getId(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
