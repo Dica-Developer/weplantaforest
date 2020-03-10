@@ -14,6 +14,7 @@ import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
+import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -39,6 +41,8 @@ public class SelfPlantController {
     private @NonNull SelfPlantDataToTreeConverter _selfPlantDataToTreeConverter;
 
     private @NonNull TreeRepository _treeRepository;
+
+    private @NonNull TreeTypeRepository _treeTypeRepository;
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
@@ -59,17 +63,24 @@ public class SelfPlantController {
     @RequestMapping(value = Uris.PLANT_SELF, method = RequestMethod.PUT)
     public ResponseEntity<?> updateSelfPlantedTree(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long id, @Valid @RequestBody SelfPlantData selfPlantedTree,
             BindingResult bindingResult) throws IpatException {
-        Tree tree = _treeRepository.findById(id).orElse(null);
+        val tree = _treeRepository.findById(id).orElse(null);
         if (null == tree) {
             throw new IpatException(ErrorCodes.TREE_NOT_FOUND);
         }
-        Boolean isOwner = _tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getUsername());
+        val isOwner = _tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getUsername());
         if (_tokenAuthenticationService.isAdmin(userToken) || isOwner) {
             if (!bindingResult.hasErrors()) {
-                Tree treeToUpdate = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantedTree, tree.getOwner());
-                treeToUpdate.setId(id);
-                _treeRepository.save(treeToUpdate);
-                return new ResponseEntity<Long>(treeToUpdate.getId(), HttpStatus.OK);
+                tree.setPlantedOn(selfPlantedTree.getPlantedOn());
+                tree.setSubmittedOn(System.currentTimeMillis());
+                tree.setAmount(selfPlantedTree.getAmount());
+                tree.setImagePath(selfPlantedTree.getImageName());
+                tree.setTreeType(_treeTypeRepository.findById(selfPlantedTree.getTreeTypeId()).orElseThrow());
+                tree.setDescription(selfPlantedTree.getDescription());
+                tree.setLongitude(selfPlantedTree.getLongitude());
+                tree.setLatitude(selfPlantedTree.getLatitude());
+
+                _treeRepository.save(tree);
+                return new ResponseEntity<Long>(tree.getId(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

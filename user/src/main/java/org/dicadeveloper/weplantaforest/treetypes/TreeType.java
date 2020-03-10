@@ -26,7 +26,7 @@ public class TreeType {
     @Id
     @GeneratedValue
     @Column(name = "treeTypeId")
-    @JsonView({ Views.ShortTreeType.class })
+    @JsonView({ Views.ShortTreeType.class, Views.PlantedTree.class })
     private Long id;
 
     @Column(name = "_name", unique = true)
