@@ -237,7 +237,7 @@ module.exports = {
   },
 
   OFFER_ACREAGE_TEXTS: {
-    TEXT_1: "We're turning land into community forest. For this purpose we are looking for areas that:",
+    TEXT_1: 'We are turning land into community forest. For this purpose we are looking for areas that:',
     TEXT_2: 'are suitable for afforestation,',
     TEXT_3: 'for which we can get a reforestation permit (no dry grassland or orchards),',
     TEXT_4: 'are at least three hectares in size and ideally located on a road or path,',
