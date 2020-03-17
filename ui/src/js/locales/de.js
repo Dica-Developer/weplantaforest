@@ -241,7 +241,7 @@ module.exports = {
     TEXT_1: 'Wir wandeln Land in gemeinnützigen Wald um. Dazu suchen wir Flächen, die:',
     TEXT_2: 'für eine Aufforstung in Frage kommen,',
     TEXT_3: 'für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen),',
-    TEXT_4: 'für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen),',
+    TEXT_4: 'mindestens drei Hektar groß sind und im Idealfall an einer Straße oder einem Weg liegen,',
     TEXT_5: 'nach Möglichkeit maximal 6.000 Euro/ha kosten.',
     TEXT_6:
       'Bei uns ist Land in guten, gemeinnützigen Händen. Wir freuen uns auch über bestehenden Wald, um ihn langfristig unter Schutz zu stellen. Denn sollten wir irgendwann mal nicht mehr existieren, werden die Werte von I Plant A Tree satzungsgemäß an eine andere gemeinnützige Umweltorganisation übertragen.',
