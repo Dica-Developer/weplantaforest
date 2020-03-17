@@ -2,8 +2,8 @@ package org.dicadeveloper.weplantaforest.errorhandling;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatBackendErrorDTO;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatBackendErrorDTO;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

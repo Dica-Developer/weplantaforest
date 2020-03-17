@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.common.testSupport;
+package org.dicadeveloper.weplantaforest.common.testsupport;
 
 public class HashUtil {
 

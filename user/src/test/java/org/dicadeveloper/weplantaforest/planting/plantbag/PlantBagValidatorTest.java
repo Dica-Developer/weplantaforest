@@ -5,10 +5,10 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatErrorInfo;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.errorhandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatErrorInfo;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.PlantBagBuilder;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;

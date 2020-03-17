@@ -2,7 +2,7 @@ package org.dicadeveloper.weplantaforest.planting;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBagHelper;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBagValidator;

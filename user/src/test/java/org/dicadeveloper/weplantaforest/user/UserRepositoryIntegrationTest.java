@@ -2,7 +2,7 @@ package org.dicadeveloper.weplantaforest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.team.Team;
 import org.dicadeveloper.weplantaforest.team.TeamRepository;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;

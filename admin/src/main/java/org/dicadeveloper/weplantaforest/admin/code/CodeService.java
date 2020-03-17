@@ -1,8 +1,8 @@
 package org.dicadeveloper.weplantaforest.admin.code;
 
 import org.dicadeveloper.weplantaforest.common.code.CodeHelper;
-import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

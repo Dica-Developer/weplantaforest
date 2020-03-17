@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.event.Event;
 import org.dicadeveloper.weplantaforest.event.EventRepository;
 import org.dicadeveloper.weplantaforest.gift.Gift;

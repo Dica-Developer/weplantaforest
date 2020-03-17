@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.common.testSupport;
+package org.dicadeveloper.weplantaforest.common.testsupport;
 
 import org.flywaydb.core.Flyway;
 import org.junit.rules.ExternalResource;
@@ -12,16 +12,15 @@ import org.springframework.stereotype.Component;
 @Component
 @SpringBootTest
 public class CleanDbRule extends ExternalResource {
-    public final static String X = "";
 
     @Autowired(required = false)
-    private Flyway _flyway;
+    private Flyway flyway;
 
     @Override
     protected void before() throws Throwable {
-        if (_flyway != null) {
-            _flyway.clean();
-            _flyway.migrate();
+        if (flyway != null) {
+            flyway.clean();
+            flyway.migrate();
         } else {
             // flyway is only enabled for mysql, but not for h2! But for
             // h2-memory u can wipe out db via:

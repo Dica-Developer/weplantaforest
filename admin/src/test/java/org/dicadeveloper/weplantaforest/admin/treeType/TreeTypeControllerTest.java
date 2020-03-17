@@ -14,8 +14,8 @@ import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationServic
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.TestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

@@ -2,7 +2,7 @@ package org.dicadeveloper.weplantaforest.planting.plantbag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.testsupport.SimplePlantBagBuilder;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;

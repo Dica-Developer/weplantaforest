@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class StringHelper {
 
-    public final static String UNKNOWN_DATATYPE = "Unknown datatype! No \'.\' found in fileName.";
+    public static final String UNKNOWN_DATATYPE = "Unknown datatype! No \'.\' found in fileName.";
 
     public static final Pattern EMAIL_PATTERN = Pattern
             .compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");

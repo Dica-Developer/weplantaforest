@@ -23,8 +23,8 @@ import org.dicadeveloper.weplantaforest.articlemanager.articles.ParagraphReposit
 import org.dicadeveloper.weplantaforest.articlemanager.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.articlemanager.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.support.Language;
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.TestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

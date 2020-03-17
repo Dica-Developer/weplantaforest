@@ -9,7 +9,7 @@ import org.dicadeveloper.weplantaforest.articlemanager.articles.ArticleRepositor
 import org.dicadeveloper.weplantaforest.articlemanager.articles.ParagraphRepository;
 import org.dicadeveloper.weplantaforest.articlemanager.dev.inject.DatabasePopulatorForArticleManager;
 import org.dicadeveloper.weplantaforest.articlemanager.user.UserRepository;
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

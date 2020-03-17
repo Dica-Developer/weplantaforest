@@ -28,14 +28,15 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.HtmlUtils;
 
-import lombok.NonNull;
+import lombok.val;
 
 @Component
 public class MailHelper {
-    protected final Log LOG = LogFactory.getLog(MailHelper.class.getName());
+
+    protected static final Log LOG = LogFactory.getLog(MailHelper.class.getName());
 
     @Autowired
-    private @NonNull Environment _env;
+    private Environment env;
 
     // connection properties
     String from;
@@ -104,11 +105,11 @@ public class MailHelper {
     }
 
     private void setParameter() {
-        from = _env.getProperty("mail.sender");
-        password = _env.getProperty("mail.password");
-        host = _env.getProperty("smtp.host");
-        receiver = _env.getProperty("mail.receiver");
-        debug = _env.getProperty("mail.debug").equals("true");
+        from = env.getProperty("mail.sender");
+        password = env.getProperty("mail.password");
+        host = env.getProperty("smtp.host");
+        receiver = env.getProperty("mail.receiver");
+        debug = env.getProperty("mail.debug").equals("true");
     }
 
     private void createAndSetProperties() {
@@ -192,10 +193,11 @@ public class MailHelper {
     }
 
     private class SMTPAuthenticator extends Authenticator {
+        @Override
         public PasswordAuthentication getPasswordAuthentication() {
-            String uName = from;
-            String passwd = password;
-            return new PasswordAuthentication(uName, passwd);
+            val userName = from;
+            val passwd = password;
+            return new PasswordAuthentication(userName, passwd);
         }
     }
 

@@ -8,8 +8,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.common.support.TimeConstants;
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.TestUtil;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;

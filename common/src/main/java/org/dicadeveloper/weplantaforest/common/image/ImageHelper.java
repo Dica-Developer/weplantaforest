@@ -20,9 +20,9 @@ import net.coobird.thumbnailator.Thumbnails;
 @Component
 public class ImageHelper {
 
-    protected final Log LOG = LogFactory.getLog(ImageHelper.class.getName());
+    protected static final Log LOG = LogFactory.getLog(ImageHelper.class.getName());
 
-    private final static int maxSize = 1500;
+    private static final int MAX_SIZE = 1500;
 
     public void writeImageToOutputStream(OutputStream toWrite, String filePath, int width, int height) throws FileNotFoundException, IOException {
         // all imageNames before the relaunch are saved without file-ending and
@@ -32,7 +32,7 @@ public class ImageHelper {
         }
 
         int[] sizes = { width, height };
-        if (sizes[0] > maxSize || sizes[1] > maxSize) {
+        if (sizes[0] > MAX_SIZE || sizes[1] > MAX_SIZE) {
             sizes = scaleSize(sizes);
         }
 
@@ -91,13 +91,13 @@ public class ImageHelper {
 
     private int[] scaleSize(int[] sizes) {
         if (sizes[0] >= sizes[1]) {
-            double scaledPercent = maxSize * 1.0 / (sizes[0] * 1.0);
-            sizes[0] = maxSize;
+            double scaledPercent = MAX_SIZE * 1.0 / (sizes[0] * 1.0);
+            sizes[0] = MAX_SIZE;
             double newHeight = scaledPercent * sizes[1] * 1.0;
             sizes[1] = (int) newHeight;
         } else {
-            double scaledPercent = maxSize * 1.0 / (sizes[1] * 1.0);
-            sizes[1] = maxSize;
+            double scaledPercent = MAX_SIZE * 1.0 / (sizes[1] * 1.0);
+            sizes[1] = MAX_SIZE;
             double newWidth = scaledPercent * sizes[0] * 1.0;
             sizes[0] = (int) newWidth;
         }

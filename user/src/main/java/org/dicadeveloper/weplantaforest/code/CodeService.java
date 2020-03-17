@@ -1,8 +1,8 @@
 package org.dicadeveloper.weplantaforest.code;
 
-import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
+import org.dicadeveloper.weplantaforest.common.errorhandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatPreconditions;
 import org.dicadeveloper.weplantaforest.event.EventService;
 import org.dicadeveloper.weplantaforest.gift.GiftService;
 import org.dicadeveloper.weplantaforest.user.User;

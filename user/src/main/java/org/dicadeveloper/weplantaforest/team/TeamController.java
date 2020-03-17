@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.reports.rankings.RankingRepository;

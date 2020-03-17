@@ -2,7 +2,7 @@ package org.dicadeveloper.weplantaforest.encrypter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.encryption.PasswordEncrypter;
 import org.junit.Rule;
 import org.junit.Test;

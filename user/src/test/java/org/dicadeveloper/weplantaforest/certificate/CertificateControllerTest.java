@@ -11,8 +11,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
-import org.dicadeveloper.weplantaforest.common.testSupport.CleanDbRule;
-import org.dicadeveloper.weplantaforest.common.testSupport.TestUtil;
+import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.common.testsupport.TestUtil;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.testsupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.trees.Tree;

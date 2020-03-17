@@ -10,7 +10,7 @@ import org.dicadeveloper.weplantaforest.certificate.Certificate;
 import org.dicadeveloper.weplantaforest.certificate.CertificateRepository;
 import org.dicadeveloper.weplantaforest.certificate.PdfCertificateView;
 import org.dicadeveloper.weplantaforest.certificate.PdfCertificateView2;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
 import org.dicadeveloper.weplantaforest.gift.GiftRepository;
 import org.dicadeveloper.weplantaforest.gift.GiftService;
 import org.dicadeveloper.weplantaforest.receipt.PdfReceiptView;

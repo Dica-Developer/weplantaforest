@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.common.errorHandling;
+package org.dicadeveloper.weplantaforest.common.errorhandling;
 
 public final class IpatPreconditions {
 

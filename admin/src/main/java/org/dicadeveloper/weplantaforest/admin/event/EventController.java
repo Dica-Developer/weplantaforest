@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.admin.code.Code;
 import org.dicadeveloper.weplantaforest.admin.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

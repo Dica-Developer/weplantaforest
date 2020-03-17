@@ -3,9 +3,9 @@ package org.dicadeveloper.weplantaforest.planting.plantbag;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dicadeveloper.weplantaforest.common.errorHandling.ErrorCodes;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatException;
-import org.dicadeveloper.weplantaforest.common.errorHandling.IpatPreconditions;
+import org.dicadeveloper.weplantaforest.common.errorhandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatPreconditions;
 import org.dicadeveloper.weplantaforest.common.support.PriceHelper;
 import org.dicadeveloper.weplantaforest.planting.plantbag.SimplePlantBag.SimplePlantPageItem;
 import org.dicadeveloper.weplantaforest.projects.ProjectArticle;
