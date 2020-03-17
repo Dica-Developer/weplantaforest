@@ -92,6 +92,8 @@ public class DatabasePopulator {
     private ReceiptRepository receiptRepository;
     private MainSliderImageRepository mainSliderImageRepository;
 
+    private PasswordEncrypter passwordEncrypter;
+
     @Autowired
     private Environment env;
 
@@ -100,21 +102,21 @@ public class DatabasePopulator {
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, ProjectImageRepository projectImageRepository, TeamRepository teamRepository,
             CartRepository cartRepository, CertificateRepository certificateRepository, GiftRepository giftRepository, CodeGenerator codeGenerator, PasswordEncrypter passwordEncrypter,
             ReceiptRepository receiptRepository, MainSliderImageRepository mainSliderImageRepository) {
-        projectRepository = projectRepository;
-        userRepository = userRepository;
-        treeTypeRepository = treeTypeRepository;
-        treeRepository = treeRepository;
-        projectArticleRepository = projectArticleRepository;
-        priceRepository = priceRepository;
-        projectImageRepository = projectImageRepository;
-        teamRepository = teamRepository;
-        cartRepository = cartRepository;
-        certificateRepository = certificateRepository;
-        giftRepository = giftRepository;
-        codeGenerator = codeGenerator;
-        passwordEncrypter = passwordEncrypter;
-        receiptRepository = receiptRepository;
-        mainSliderImageRepository = mainSliderImageRepository;
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+        this.treeTypeRepository = treeTypeRepository;
+        this.treeRepository = treeRepository;
+        this.projectArticleRepository = projectArticleRepository;
+        this.priceRepository = priceRepository;
+        this.projectImageRepository = projectImageRepository;
+        this.teamRepository = teamRepository;
+        this.cartRepository = cartRepository;
+        this.certificateRepository = certificateRepository;
+        this.giftRepository = giftRepository;
+        this.codeGenerator = codeGenerator;
+        this.passwordEncrypter = passwordEncrypter;
+        this.receiptRepository = receiptRepository;
+        this.mainSliderImageRepository = mainSliderImageRepository;
     }
 
     public DatabasePopulator insertProjects() {
@@ -123,7 +125,7 @@ public class DatabasePopulator {
             String projectName = "Project " + (i + 1) + " von " + DEFAULT_USERS.get(i);
             Project project = new Project();
             project.setName(projectName);
-            project.setManager(_userRepository.findByName(DEFAULT_USERS.get(i)));
+            project.setManager(userRepository.findByName(DEFAULT_USERS.get(i)));
             project.setDescription(
                     "dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
             project.setImageFileName("project" + (i + 1) + ".jpg");
@@ -215,13 +217,13 @@ public class DatabasePopulator {
         for (int i = 0; i < DEFAULT_USERS.size(); i++) {
             User user = new User();
             user.setName(DEFAULT_USERS.get(i));
-            user.setPassword(_passwordEncrypter.encryptPassword(DEFAULT_USERS.get(i)));
+            user.setPassword(passwordEncrypter.encryptPassword(DEFAULT_USERS.get(i)));
             user.setEnabled(true);
             user.setRegDate(timeNoew - (i + 1) * TimeConstants.YEAR_IN_MILLISECONDS);
             user.setLastVisit(timeNoew - TimeConstants.WEEK_IN_MILLISECONDS);
             user.addRole(Role.USER);
             user.setOrganizationType(OrganizationType.PRIVATE);
-            user.setMail(_env.getProperty("mail.receiver"));
+            user.setMail(env.getProperty("mail.receiver"));
             if (i < 5) {
                 user.setImageName("IPAT_logo_Relaunch2016_RZ_RGB.jpg");
                 user.addRole(Role.ADMIN);
@@ -254,7 +256,7 @@ public class DatabasePopulator {
             treeDto.setLongitude(new Float(i));
             treeDto.setTreeType(articleToPlant.getTreeType());
             treeDto.setPlantedOn(timeOfPlant - i * 100000000L);
-            treeDto.setOwner(_userRepository.findByName(DEFAULT_USERS.get(i % 15)));
+            treeDto.setOwner(userRepository.findByName(DEFAULT_USERS.get(i % 15)));
             treeDto.setProjectArticle(articleToPlant);
             treeRepository.save(treeDto);
         }
@@ -267,7 +269,7 @@ public class DatabasePopulator {
                 Price price = createPrice();
 
                 ProjectArticle plantArticle = new ProjectArticle();
-                plantArticle.setTreeType(_treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(i)));
+                plantArticle.setTreeType(treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(i)));
                 plantArticle.setProject(project);
                 plantArticle.setPrice(price);
                 plantArticle.setAmount(10000L);
@@ -289,7 +291,7 @@ public class DatabasePopulator {
     // }
 
     private Iterable<ProjectArticle> loadProjectArticles() {
-        Verify.verify(_projectArticleRepository.count() > 0, "No ProjectArticles set up!");
+        Verify.verify(projectArticleRepository.count() > 0, "No ProjectArticles set up!");
         return projectArticleRepository.findAll();
     }
 
@@ -334,7 +336,7 @@ public class DatabasePopulator {
             team.setDescription("Can i introduce you: the phenomenal " + "Team " + (i + 1) + "!!!");
 
             List<User> teamMember = new ArrayList<User>();
-            teamMember.add(_userRepository.findByName(DEFAULT_USERS.get(i + 5)));
+            teamMember.add(userRepository.findByName(DEFAULT_USERS.get(i + 5)));
 
             team.setMembers(teamMember);
             teamRepository.save(team);
@@ -444,12 +446,12 @@ public class DatabasePopulator {
         cartRepository.save(cart);
 
         Certificate certificate = new Certificate();
-        certificate.setCreator(_userRepository.findByName(DEFAULT_USERS.get(0)));
+        certificate.setCreator(userRepository.findByName(DEFAULT_USERS.get(0)));
         certificate.setText("Very happy to save the plaent");
         certificate.generateAndSetNumber(0);
 
         List<Cart> carts = new ArrayList<>();
-        carts.add(_cartRepository.findById(1L).orElse(null));
+        carts.add(cartRepository.findById(1L).orElse(null));
         certificate.setCarts(carts);
 
         certificateRepository.save(certificate);
@@ -460,8 +462,8 @@ public class DatabasePopulator {
     public DatabasePopulator insertGifts() {
         for (int i = 0; i < 10; i++) {
             Gift gift = new Gift();
-            gift.setConsignor(_userRepository.findByName(DEFAULT_USERS.get(i)));
-            gift.setRecipient(_userRepository.findByName(DEFAULT_USERS.get(9 - i)));
+            gift.setConsignor(userRepository.findByName(DEFAULT_USERS.get(i)));
+            gift.setRecipient(userRepository.findByName(DEFAULT_USERS.get(9 - i)));
             giftRepository.save(gift);
             Code code = codeGenerator.generate(gift);
             gift.setCode(code);
@@ -476,7 +478,7 @@ public class DatabasePopulator {
         // receipt with one cart
         Receipt receipt = new Receipt();
         receipt.setInvoiceNumber("10001/2016");
-        receipt.setOwner(_userRepository.findById(1L).orElse(null));
+        receipt.setOwner(userRepository.findById(1L).orElse(null));
         Cart cart = cartRepository.findById(1L).orElse(null);
         cart.setCallBackFirma("0815 Company");
         cart.setCallBackVorname("Hans");

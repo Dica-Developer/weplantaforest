@@ -29,35 +29,35 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CartController {
 
-    private @NonNull CartRepository _cartRepository;
+    private @NonNull CartRepository cartRepository;
 
-    private @NonNull TreeRepository _treeRepository;
+    private @NonNull TreeRepository treeRepository;
 
-    private @NonNull CartService _cartService;
+    private @NonNull CartService cartService;
 
     @RequestMapping(value = Uris.CARTS, method = RequestMethod.POST)
     @JsonView(Views.OverviewCart.class)
     public Iterable<Cart> getAllCarts(@RequestBody CartRequest cartRequest) {
-        return _cartService.searchCarts(cartRequest);
+        return cartService.searchCarts(cartRequest);
     }
 
     @RequestMapping(value = "/cart/{cartId}")
     @Transactional
     @JsonView(Views.CartDetails.class)
     public Cart getCartDetails(@PathVariable(value = "cartId") Long cartId) {
-        return _cartRepository.findById(cartId).orElse(null);
+        return cartRepository.findById(cartId).orElse(null);
     }
 
     @PostMapping(value = "/cart/receiptable")
     @JsonView(Views.OverviewCart.class)
     public Cart setReceiptable(@RequestParam Long cartId, @RequestParam boolean receiptable) {
-        return _cartService.setReceiptable(cartId, receiptable);
+        return cartService.setReceiptable(cartId, receiptable);
     }
 
     @RequestMapping(value = Uris.CHANGE_CART_STATE, method = RequestMethod.POST)
     public ResponseEntity<?> changeCartState(@RequestParam Long cartId, @RequestParam CartState cartState) {
-        if (_cartRepository.existsById(cartId)) {
-            Cart cart = _cartRepository.findById(cartId).orElse(null);
+        if (cartRepository.existsById(cartId)) {
+            Cart cart = cartRepository.findById(cartId).orElse(null);
             cart.setCartState(cartState);
             if (CartState.DISCARDED.equals(cartState)) {
                 List<Tree> treesToDelete = new ArrayList<>();
@@ -66,9 +66,9 @@ public class CartController {
                     treesToDelete.add(tree);
                     cartItem.removeTree();
                 }
-                _treeRepository.deleteAll(treesToDelete);
+                treeRepository.deleteAll(treesToDelete);
             }
-            _cartRepository.save(cart);
+            cartRepository.save(cart);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

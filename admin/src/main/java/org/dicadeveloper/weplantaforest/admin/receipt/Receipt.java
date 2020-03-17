@@ -25,38 +25,39 @@ public class Receipt {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Views.OverviewCart.class)
-    private Long _receiptId;
+    @Column(name = "_receiptId")
+    private Long receiptId;
 
-    @Column(unique = true)
-    private String _invoiceNumber;
+    @Column(unique = true, name = "_invoiceNumber")
+    private String invoiceNumber;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "_receipt__receiptId")
-    private List<Cart> _carts = new ArrayList<Cart>();
+    private List<Cart> carts = new ArrayList<Cart>();
 
-    @Column
-    private final Long _createdOn;
+    @Column(name = "_createdOn")
+    private final Long createdOn;
 
-    @Column
-    private Long _sentOn;
+    @Column(name = "_sentOn")
+    private Long sentOn;
 
-    @Column
-    private Long _ownerId;
+    @Column(name = "_ownerId")
+    private Long ownerId;
 
     public Receipt() {
-        _createdOn = System.currentTimeMillis();
+        createdOn = System.currentTimeMillis();
     }
 
     public void setInvoiceNumber(final String invoiceNumber) {
-        _invoiceNumber = invoiceNumber;
+        this.invoiceNumber = invoiceNumber;
     }
 
     public String getInvoiceNumber() {
-        return _invoiceNumber;
+        return invoiceNumber;
     }
 
     public String getMaskedInvoiceNumber() {
-        return _invoiceNumber.replace("/", "_");
+        return invoiceNumber.replace("/", "_");
     }
 
     public static String demaskInvoiceNumber(final String invoiceNumber) {
@@ -64,67 +65,67 @@ public class Receipt {
     }
 
     public void setCarts(final List<Cart> carts) {
-        _carts = carts;
+        this.carts = carts;
     }
 
     public void addCart(final Cart cart) {
-        if (!_carts.contains(cart)) {
-            _carts.add(cart);
+        if (!carts.contains(cart)) {
+            carts.add(cart);
         }
     }
 
     public void removeCart(final Cart cart) {
-        _carts.remove(cart);
+        carts.remove(cart);
     }
 
     public void clearCarts() {
-        _carts.clear();
+        carts.clear();
     }
 
     public List<Cart> getCarts() {
-        return _carts;
+        return carts;
     }
 
     public Long getId() {
-        return _receiptId;
+        return receiptId;
     }
 
     public Long getCreatedOn() {
-        return _createdOn;
+        return createdOn;
     }
 
     public Date getCreatedOnAsDate() {
-        if (_createdOn / 1000000000000000000l >= 1) {
-            return new Date(_createdOn / 1000000l);
+        if (createdOn / 1000000000000000000L >= 1) {
+            return new Date(createdOn / 1000000L);
         }
-        return new Date(_createdOn);
+        return new Date(createdOn);
     }
 
     public void setSentOn(final Long sentOn) {
-        _sentOn = sentOn;
+        this.sentOn = sentOn;
     }
 
     public void setSent() {
-        _sentOn = System.nanoTime();
+        sentOn = System.currentTimeMillis();
     }
 
     public Long getSentOn() {
-        return _sentOn;
+        return sentOn;
     }
 
     public boolean isSent() {
-        return _sentOn == null;
+        return sentOn == null;
     }
 
     public void setOwnerId(final Long ownerId) {
-        _ownerId = ownerId;
+        this.ownerId = ownerId;
     }
 
     public void setOwner(final User owner) {
-        _ownerId = owner.getId();
+        ownerId = owner.getId();
     }
 
     public Long getOwnerId() {
-        return _ownerId;
+        return ownerId;
     }
 }

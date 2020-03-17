@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartRepository extends CrudRepository<Cart, Long> {
 
-    public final static String FIND_CARTS_BUY_USER_ID = "SELECT cart from Cart cart where cart.buyer.id = :userId";
+    public static final String FIND_CARTS_BUY_USER_ID = "SELECT cart from Cart cart where cart.buyer.id = :userId";
 
-    public final static String FIND_CART_BY_CODE = "SELECT cart from Cart cart WHERE cart.code.code = :codeString";
+    public static final String FIND_CART_BY_CODE = "SELECT cart from Cart cart WHERE cart.code.code = :codeString";
 
     public List<Cart> findCartsByIdIn(@Param("id") Long[] ids);
 

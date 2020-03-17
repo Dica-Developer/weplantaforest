@@ -17,14 +17,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import lombok.NonNull;
-
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 class CorsFilter implements Filter {
 
     @Autowired
-    private @NonNull Environment _env;
+    private Environment env;
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

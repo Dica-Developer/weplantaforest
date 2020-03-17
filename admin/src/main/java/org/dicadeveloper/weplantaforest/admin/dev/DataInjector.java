@@ -2,27 +2,26 @@ package org.dicadeveloper.weplantaforest.admin.dev;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.admin.treeType.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
 @Profile("dev")
+@Slf4j
 public class DataInjector {
 
-    protected final Log LOG = LogFactory.getLog(DataInjector.class.getName());
+    protected DatabasePopulator databasePopulator;
 
-    protected DatabasePopulator _databasePopulator;
-
-    private TreeTypeRepository _treeTypeRepository;
+    private TreeTypeRepository treeTypeRepository;
 
     @Autowired
     public DataInjector(TreeTypeRepository treeTypeRepository, DatabasePopulator databasePopulator) {
-        _treeTypeRepository = treeTypeRepository;
-        _databasePopulator = databasePopulator;
+        this.treeTypeRepository = treeTypeRepository;
+        this.databasePopulator = databasePopulator;
     }
 
     @PostConstruct
@@ -33,12 +32,12 @@ public class DataInjector {
             public void run() {
                 // TODO jz: Thinking about giving this an extra state table in
                 // the db (like db.populates=v23)
-                if (!_treeTypeRepository.existsAtAll()) {
+                if (!treeTypeRepository.existsAtAll()) {
                     int treeCount = 15000;
-                    _databasePopulator.insertUsers().insertDefaultTreeTypes().insertProjects().insertProjectArticles().insertCarts().insertProjectImages().addMainImagesToProjectFolder()
+                    databasePopulator.insertUsers().insertDefaultTreeTypes().insertProjects().insertProjectArticles().insertCarts().insertProjectImages().addMainImagesToProjectFolder()
                             .addProjectImages().createMainSliderImages();
                     ;
-                    LOG.info("Finished injecting " + treeCount + " trees ");
+                    LOG.info("Finished injecting {} trees ", treeCount);
                 } else {
                     LOG.info("No entities will be injected.");
                 }

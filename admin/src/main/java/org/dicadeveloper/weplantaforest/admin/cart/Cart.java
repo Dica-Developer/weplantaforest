@@ -179,6 +179,10 @@ public class Cart {
         return null;
     }
 
+    public void removeCartItem(final CartItem cartItem) {
+        cartItems.remove(cartItem);
+    }
+
     public void addCartItem(final CartItem cartItem) {
         if (!containsCartItem(cartItem)) {
             cartItems.add(cartItem);
@@ -193,10 +197,6 @@ public class Cart {
             }
         }
         return false;
-    }
-
-    public void removeCartItem(final CartItem cartItem) {
-        cartItems.remove(cartItem);
     }
 
     public boolean isFilled() {

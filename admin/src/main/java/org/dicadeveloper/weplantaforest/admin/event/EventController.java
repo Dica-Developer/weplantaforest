@@ -2,8 +2,6 @@ package org.dicadeveloper.weplantaforest.admin.event;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.admin.code.Code;
 import org.dicadeveloper.weplantaforest.admin.code.CodeRepository;
 import org.dicadeveloper.weplantaforest.admin.views.Views;
@@ -23,25 +21,31 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
+@Slf4j
 public class EventController {
 
-    protected final Log LOG = LogFactory.getLog(EventController.class.getName());
-
-    public final static String REQUEST_URL = "/event";
+    public static final String REQUEST_URL = "/event";
 
     private @NonNull EventService eventService;
 
     private @NonNull EventRepository eventRepository;
 
-    private @NonNull CodeRepository _codeRepository;
+    private @NonNull CodeRepository codeRepository;
 
     @PostMapping(value = REQUEST_URL)
     @JsonView(Views.EventDetails.class)
     public Event createEvent(@RequestBody Event event) throws IpatException {
         return eventService.create(event);
+    }
+
+    @PostMapping(value = REQUEST_URL + "/codes/{eventId}")
+    public ResponseEntity<?> createEvent(@PathVariable Long eventId, @RequestBody List<Long> cartIds) throws IpatException {
+        eventService.generateCodes(eventId, cartIds);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(value = REQUEST_URL)
@@ -70,12 +74,7 @@ public class EventController {
     @GetMapping(value = REQUEST_URL + "/codes/{eventId}")
     @JsonView(Views.CodeOverview.class)
     public Iterable<Code> getCodesForEvent(@PathVariable Long eventId) {
-        return _codeRepository.findByEventId(eventId);
+        return codeRepository.findByEventId(eventId);
     }
 
-    @PostMapping(value = REQUEST_URL + "/codes/{eventId}")
-    public ResponseEntity<?> createEvent(@PathVariable Long eventId, @RequestBody List<Long> cartIds) throws IpatException {
-        eventService.generateCodes(eventId, cartIds);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

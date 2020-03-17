@@ -21,10 +21,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService _userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    private PasswordEncrypter _passwordEncrypter;
+    private PasswordEncrypter passwordEncrypter;
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
@@ -61,6 +61,11 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncrypter);
+    }
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -68,12 +73,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(_userDetailsService).passwordEncoder(_passwordEncrypter);
-    }
-
-    @Override
     protected UserDetailsService userDetailsService() {
-        return _userDetailsService;
+        return userDetailsService;
     }
 }

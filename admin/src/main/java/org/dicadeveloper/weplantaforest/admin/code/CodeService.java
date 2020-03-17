@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CodeService {
 
     @Autowired
-    CodeRepository _codeRepository;
+    CodeRepository codeRepository;
 
     public Code generateCode() throws IpatException {
         Code code = new Code();
@@ -18,10 +18,10 @@ public class CodeService {
         boolean codeSaved = false;
         while (!codeSaved) {
             final String codeString = CodeHelper.generateCodeString();
-            if (null == _codeRepository.findByCode(codeString)) {
+            if (null == codeRepository.findByCode(codeString)) {
                 code.setCode(codeString);
                 codeSaved = true;
-                return _codeRepository.save(code);
+                return codeRepository.save(code);
             }
         }
         throw new IpatException(ErrorCodes.COULD_NOT_GENERATE_CODE);
@@ -29,7 +29,7 @@ public class CodeService {
 
     public boolean isValid(final String code) {
         if (CodeHelper.isValid(code)) {
-            return _codeRepository.findByCode(code) != null;
+            return codeRepository.findByCode(code) != null;
         } else {
             return false;
         }

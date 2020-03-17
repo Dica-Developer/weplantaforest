@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface CodeRepository extends CrudRepository<Code, Long> {
 
-    public final static String FIND_CODE_BY_EVENT_ID_QUERY = "SELECT code FROM Code code WHERE code.event.id = :eventId";
+    public static final String FIND_CODE_BY_EVENT_ID_QUERY = "SELECT code FROM Code code WHERE code.event.id = :eventId";
 
     @Query
     public Code findByCode(@Param("code") String code);

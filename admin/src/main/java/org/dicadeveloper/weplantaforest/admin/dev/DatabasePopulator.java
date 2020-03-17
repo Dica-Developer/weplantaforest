@@ -12,8 +12,6 @@ import java.util.Random;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.admin.cart.Cart;
 import org.dicadeveloper.weplantaforest.admin.cart.CartItem;
@@ -46,49 +44,49 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Provides the functionality to easily populate the database with test data.
  */
+@Slf4j
 @Service
 public class DatabasePopulator {
 
-    protected final Log LOG = LogFactory.getLog(DatabasePopulator.class.getName());
-
-    private final static List<String> DEFAULT_TREE_TYPES = ImmutableList.of("<mlpr>GERMAN<equ>Buche<sep>ENGLISH<equ>Beech Tree<sep>ITALIAN<equ>Beech Tree<sep>", "Kiefer", "Birke", "Ahorn", "Eiche",
+    private static final List<String> DEFAULT_TREE_TYPES = ImmutableList.of("<mlpr>GERMAN<equ>Buche<sep>ENGLISH<equ>Beech Tree<sep>ITALIAN<equ>Beech Tree<sep>", "Kiefer", "Birke", "Ahorn", "Eiche",
             "Esche", "Linde", "Wildapfel", "Robinie", "Espe", "Default");
 
-    private final static List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gab&uuml;r", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert",
+    private static final List<String> DEFAULT_USERS = ImmutableList.of("admin", "Martin", "Sebastian", "Johannes", "Gab&uuml;r", "Micha", "Christian", "Sven", "Axl", "Philipp", "Adam", "Bert",
             "Claus", "Django", "Emil", "Mr NoTree");
 
-    public final static String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
+    public static final String DUMMY_IMAGE_FOLDER = "src/test/resources/images/";
 
-    private ProjectRepository _projectRepository;
-    private UserRepository _userRepository;
-    private TreeTypeRepository _treeTypeRepository;
-    private TreeRepository _treeRepository;
-    private ProjectArticleRepository _projectArticleRepository;
-    private CartRepository _cartRepository;
-    private PriceRepository _priceRepository;
-    private ProjectImageRepository _projectImageRepository;
-    private MainSliderImageRepository _mainSliderImageRepository;
+    private ProjectRepository projectRepository;
+    private UserRepository userRepository;
+    private TreeTypeRepository treeTypeRepository;
+    private TreeRepository treeRepository;
+    private ProjectArticleRepository projectArticleRepository;
+    private CartRepository cartRepository;
+    private PriceRepository priceRepository;
+    private ProjectImageRepository projectImageRepository;
+    private MainSliderImageRepository mainSliderImageRepository;
 
     @Autowired
-    private @NonNull Environment _env;
+    private @NonNull Environment env;
 
     @Autowired
     public DatabasePopulator(ProjectRepository projectRepository, UserRepository userRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository,
             ProjectArticleRepository projectArticleRepository, PriceRepository priceRepository, CartRepository cartRepository, ProjectImageRepository projectImageRepository,
             MainSliderImageRepository mainSliderImageRepository) {
-        _projectRepository = projectRepository;
-        _userRepository = userRepository;
-        _treeTypeRepository = treeTypeRepository;
-        _treeRepository = treeRepository;
-        _projectArticleRepository = projectArticleRepository;
-        _cartRepository = cartRepository;
-        _priceRepository = priceRepository;
-        _projectImageRepository = projectImageRepository;
-        _mainSliderImageRepository = mainSliderImageRepository;
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+        this.treeTypeRepository = treeTypeRepository;
+        this.treeRepository = treeRepository;
+        this.projectArticleRepository = projectArticleRepository;
+        this.cartRepository = cartRepository;
+        this.priceRepository = priceRepository;
+        this.projectImageRepository = projectImageRepository;
+        this.mainSliderImageRepository = mainSliderImageRepository;
 
     }
 
@@ -98,7 +96,7 @@ public class DatabasePopulator {
             String projectName = "Project " + (i + 1) + " von " + DEFAULT_USERS.get(i);
             Project project = new Project();
             project.setName(projectName);
-            project.setManager(_userRepository.findByName(DEFAULT_USERS.get(i)));
+            project.setManager(userRepository.findByName(DEFAULT_USERS.get(i)));
             project.setDescription("<mlpr>GERMAN<equ><p>Projektbeschreibung</p><sep>ENGLISH<equ><p>project description</p><sep>ITALIAN<equ>projecto descriptiones<sep>");
             project.setImageFileName("project" + (i + 1) + ".jpg");
             if (i < 5) {
@@ -150,7 +148,7 @@ public class DatabasePopulator {
                     project.setLongitude(11.969947f);
                     break;
             }
-            _projectRepository.save(project);
+            projectRepository.save(project);
         }
         return this;
     }
@@ -163,8 +161,8 @@ public class DatabasePopulator {
                 projectImage.setDescription("<mlpr>GERMAN<equ>Bildbeschreibung " + j + "<sep>ENGLISH<equ>image description " + j + "<sep>ITALIAN<equ>projecto descriptiones<sep>");
                 projectImage.setImageFileName("project" + i + "_" + j + ".jpg");
                 projectImage.setDate(100000000L * j);
-                projectImage.setProject(_projectRepository.findById((long) i).orElse(null));
-                _projectImageRepository.save(projectImage);
+                projectImage.setProject(projectRepository.findById((long) i).orElse(null));
+                projectImageRepository.save(projectImage);
             }
         }
 
@@ -173,7 +171,7 @@ public class DatabasePopulator {
 
     public DatabasePopulator insertDefaultTreeTypes() {
         DEFAULT_TREE_TYPES.forEach((treeTypeName) -> {
-            TreeType treeType = _treeTypeRepository.findByName(treeTypeName);
+            TreeType treeType = treeTypeRepository.findByName(treeTypeName);
             if (null == treeType) {
                 final String description = "Die " + treeTypeName
                         + " bilden eine Pflanzengattung in der Unterfamilie der Rosskastaniengewächse (Hippocastanoideae) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae). ";
@@ -189,10 +187,14 @@ public class DatabasePopulator {
                     case "Default":
                         co2Savings = 0.011;
                         break;
+                    default:
+                        co2Savings = 0.011;
+                        break;
+
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
                 treeType.setImageFile(treeTypeName + ".jpeg");
-                _treeTypeRepository.save(treeType);
+                treeTypeRepository.save(treeType);
 
             }
         });
@@ -214,7 +216,7 @@ public class DatabasePopulator {
                 user.addRole(Role.ARTICLE_MANAGER);
             }
             user.addRole(Role.USER);
-            _userRepository.save(user);
+            userRepository.save(user);
         }
         return this;
     }
@@ -235,31 +237,31 @@ public class DatabasePopulator {
             treeDto.setLongitude(i);
             treeDto.setTreeType(articleToPlant.getTreeType());
             treeDto.setPlantedOn(timeOfPlant - i * 100000000L);
-            treeDto.setOwner(_userRepository.findByName(DEFAULT_USERS.get(i % 15)));
+            treeDto.setOwner(userRepository.findByName(DEFAULT_USERS.get(i % 15)));
             treeDto.setProjectArticle(articleToPlant);
-            _treeRepository.save(treeDto);
+            treeRepository.save(treeDto);
         }
         return this;
     }
 
     public DatabasePopulator insertProjectArticles() {
-        for (Project project : _projectRepository.findAll()) {
+        for (Project project : projectRepository.findAll()) {
             for (int i = 0; i < 5; i++) {
                 Price price = createPrice();
 
                 ProjectArticle plantArticle = new ProjectArticle();
-                plantArticle.setTreeType(_treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(i)));
+                plantArticle.setTreeType(treeTypeRepository.findByName(DEFAULT_TREE_TYPES.get(i)));
                 plantArticle.setProject(project);
                 plantArticle.setPrice(price);
                 plantArticle.setAmount(10000L);
-                _projectArticleRepository.save(plantArticle);
+                projectArticleRepository.save(plantArticle);
             }
         }
         return this;
     }
 
     private Iterable<ProjectArticle> loadProjectArticles() {
-        return _projectArticleRepository.findAll();
+        return projectArticleRepository.findAll();
     }
 
     private Price createPrice() {
@@ -272,7 +274,7 @@ public class DatabasePopulator {
         price.setAmount(new BigDecimal(randomPrice));
         price.setScontoType(ScontoType.NONE);
         price.setMarge(new BigDecimal(randomMarge));
-        _priceRepository.save(price);
+        priceRepository.save(price);
         return price;
     }
 
@@ -280,7 +282,7 @@ public class DatabasePopulator {
     public DatabasePopulator insertCarts() {
         for (int i = 0; i < 1000; i++) {
             Cart cart = new Cart();
-            User buyer = _userRepository.findByName(DEFAULT_USERS.get(i % 10));
+            User buyer = userRepository.findByName(DEFAULT_USERS.get(i % 10));
 
             cart.setBuyer(buyer);
             cart.setTimeStamp(1000000000L * i);
@@ -289,7 +291,7 @@ public class DatabasePopulator {
             cart.setCallBackNachname("Nachname");
             cart.setCallBackFirma(DEFAULT_USERS.get(i % 10) + " Industries");
             Tree tree = new Tree();
-            ProjectArticle projectArticle = _projectArticleRepository.findById(1L).orElse(null);
+            ProjectArticle projectArticle = projectArticleRepository.findById(1L).orElse(null);
             tree.setAmount(i % 10 + 1);
             tree.setProjectArticle(projectArticle);
             tree.setTreeType(projectArticle.getTreeType());
@@ -300,14 +302,14 @@ public class DatabasePopulator {
 
             cart.addCartItem(cartItem);
 
-            _cartRepository.save(cart);
+            cartRepository.save(cart);
         }
 
         return this;
     }
 
     public DatabasePopulator addMainImagesToProjectFolder() {
-        for (int i = 1; i <= _projectRepository.count(); i++) {
+        for (int i = 1; i <= projectRepository.count(); i++) {
             String mainImageFileName = "project" + i + ".jpg";
 
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + mainImageFileName).toPath();
@@ -320,7 +322,7 @@ public class DatabasePopulator {
     }
 
     public DatabasePopulator addProjectImages() {
-        for (int i = 0; i < _projectRepository.count(); i++) {
+        for (int i = 0; i < projectRepository.count(); i++) {
             for (int j = 1; j <= 5; j++) {
                 String projectImageName = "project" + i + "_" + j + ".jpg";
 
@@ -342,7 +344,7 @@ public class DatabasePopulator {
 
             String imageFileName = "main_image" + i + ".jpg";
             image.setImageFileName(imageFileName);
-            _mainSliderImageRepository.save(image);
+            mainSliderImageRepository.save(image);
 
             Path imageFileSrc = new File(DUMMY_IMAGE_FOLDER + imageFileName).toPath();
             String imageFileDest = FileSystemInjector.getMainImageFolder() + "/" + imageFileName;

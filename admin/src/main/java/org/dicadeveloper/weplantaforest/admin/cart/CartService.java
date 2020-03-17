@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class CartService {
 
     @Autowired
-    private @NonNull CartRepository _cartRepository;
+    private @NonNull CartRepository cartRepository;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -31,9 +31,9 @@ public class CartService {
     }
 
     public Cart setReceiptable(Long cartId, boolean receiptable) {
-        Cart cart = _cartRepository.findById(cartId).orElse(null);
+        Cart cart = cartRepository.findById(cartId).orElse(null);
         cart.setReceiptable(receiptable);
-        _cartRepository.save(cart);
+        cartRepository.save(cart);
         return cart;
     }
 

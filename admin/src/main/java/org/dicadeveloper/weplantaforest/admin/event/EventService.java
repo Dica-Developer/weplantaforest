@@ -20,25 +20,25 @@ import org.springframework.stereotype.Service;
 public class EventService {
 
     @Autowired
-    private EventRepository _eventRepository;
+    private EventRepository eventRepository;
 
     @Autowired
-    private CodeService _codeService;
+    private CodeService codeService;
 
     @Autowired
-    CodeRepository _codeRepository;
+    CodeRepository codeRepository;
 
     @Autowired
-    CartRepository _cartRepository;
+    CartRepository cartRepository;
 
     public Event create(Event event) throws IpatException {
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_IS_NULL);
         IpatPreconditions.checkArgument(event.getId() == null, ErrorCodes.EVENT_ALREADY_EXISTS);
-        return _eventRepository.save(event);
+        return eventRepository.save(event);
     }
 
     public Event getEvent(Long eventId) throws IpatException {
-        Event event = _eventRepository.findById(eventId).orElse(null);
+        Event event = eventRepository.findById(eventId).orElse(null);
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_IS_NULL);
         return event;
     }
@@ -46,32 +46,32 @@ public class EventService {
     @Transactional
     public void delete(Long eventId) throws IpatException {
         Event event = getEvent(eventId);
-        List<Cart> cartsForEvent = _cartRepository.findByEvent(event);
-        List<Code> codesForEvent = _codeRepository.findByEvent(event);
+        List<Cart> cartsForEvent = cartRepository.findByEvent(event);
+        List<Code> codesForEvent = codeRepository.findByEvent(event);
         for (Cart cart : cartsForEvent) {
             if (cart.getCartState().equals(CartState.VERIFIED)) {
                 throw new IpatException(ErrorCodes.CART_ALREADY_REDEEMED);
             }
         }
         for (Cart cart : cartsForEvent) {
-            _cartRepository.delete(cart);
+            cartRepository.delete(cart);
         }
 
         for (Code code : codesForEvent) {
-            _codeRepository.delete(code);
+            codeRepository.delete(code);
         }
-        _eventRepository.delete(event);
+        eventRepository.delete(event);
     }
 
     public Event update(Event event) throws IpatException {
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_IS_NULL);
         IpatPreconditions.checkNotNull(event.getId(), ErrorCodes.EVENT_ALREADY_EXISTS);
-        return _eventRepository.save(event);
+        return eventRepository.save(event);
     }
 
     @Transactional
     public void generateCodes(Long eventId, List<Long> cartIds) throws IpatException {
-        Event event = _eventRepository.findById(eventId).orElse(null);
+        Event event = eventRepository.findById(eventId).orElse(null);
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_NOT_FOUND);
         for (int i = 0; i < cartIds.size(); i++) {
             generateCode(event, cartIds.get(i));
@@ -79,17 +79,17 @@ public class EventService {
     }
 
     private void generateCode(Event event, Long cartId) throws IpatException {
-        Cart cart = _cartRepository.findById(cartId).orElse(null);
+        Cart cart = cartRepository.findById(cartId).orElse(null);
         IpatPreconditions.checkNotNull(event, ErrorCodes.CART_IS_NULL);
-        Code code = _codeService.generateCode();
+        Code code = codeService.generateCode();
         code.setEvent(event);
-        code = _codeRepository.save(code);
+        code = codeRepository.save(code);
         cart.setEvent(event);
         cart.setCode(code);
-        _cartRepository.save(cart);
+        cartRepository.save(cart);
         // TODO: think about to remove one of both references
         code.setCart(cart);
-        _codeRepository.save(code);
+        codeRepository.save(code);
     }
 
 }

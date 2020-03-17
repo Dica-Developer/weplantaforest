@@ -29,23 +29,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProjectController {
 
-    private @NonNull ProjectRepository _projectRepository;
+    private @NonNull ProjectRepository projectRepository;
 
-    private @NonNull ProjectArticleRepository _projectArticleRepository;
+    private @NonNull ProjectArticleRepository projectArticleRepository;
 
-    private @NonNull ProjectImageRepository _projectImageRepository;
+    private @NonNull ProjectImageRepository projectImageRepository;
 
-    private @NonNull PriceRepository _priceRepository;
+    private @NonNull PriceRepository priceRepository;
 
-    private @NonNull TreeRepository _treeRepository;
+    private @NonNull TreeRepository treeRepository;
 
-    private @NonNull ImageHelper _imageHelper;
+    private @NonNull ImageHelper imageHelper;
 
     @RequestMapping(value = Uris.PROJECTS, method = RequestMethod.GET)
     @JsonView(Views.ProjectNameAndId.class)
     public ResponseEntity<?> getAllProjects() {
         try {
-            Iterable<Project> projects = _projectRepository.findAll();
+            Iterable<Project> projects = projectRepository.findAll();
             return new ResponseEntity<>(projects, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -56,7 +56,7 @@ public class ProjectController {
     @JsonView(Views.ProjectData.class)
     public ResponseEntity<?> getProject(@RequestParam long projectId) {
         try {
-            Project project = _projectRepository.findById(projectId).orElse(null);
+            Project project = projectRepository.findById(projectId).orElse(null);
             return new ResponseEntity<>(project, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,7 +67,7 @@ public class ProjectController {
     @JsonView(Views.ProjectArticle.class)
     public ResponseEntity<?> getArticlesForProject(@RequestParam long projectId) {
         try {
-            List<ProjectArticle> articles = _projectArticleRepository.findByProjectId(projectId);
+            List<ProjectArticle> articles = projectArticleRepository.findByProjectId(projectId);
             return new ResponseEntity<>(articles, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -78,7 +78,7 @@ public class ProjectController {
     @JsonView(Views.ProjectImage.class)
     public ResponseEntity<?> getImagesForProject(@RequestParam long projectId) {
         try {
-            List<ProjectImage> articles = _projectImageRepository.findProjectImagesToProjectByProjectId(projectId);
+            List<ProjectImage> articles = projectImageRepository.findProjectImagesToProjectByProjectId(projectId);
             return new ResponseEntity<>(articles, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -92,13 +92,13 @@ public class ProjectController {
                 for (ProjectArticle article : project.getArticles()) {
                     Price updatedPrice = article.getPrice();
                     if (updatedPrice != null) {
-                        _priceRepository.save(updatedPrice);
+                        priceRepository.save(updatedPrice);
                     }
                     article.setProject(project);
-                    _projectArticleRepository.save(article);
+                    projectArticleRepository.save(article);
                 }
             }
-            project = _projectRepository.save(project);
+            project = projectRepository.save(project);
             return new ResponseEntity<>(project.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -108,7 +108,7 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> createProject(@RequestBody Project project) {
         try {
-            _projectRepository.save(project);
+            projectRepository.save(project);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -118,13 +118,13 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_DELETE, method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteProject(@RequestParam Long id) {
         try {
-            if (_projectRepository.existsById(id)) {
-                Project project = _projectRepository.findById(id).orElse(null);
-                List<ProjectArticle> articles = _projectArticleRepository.findByProject(project);
-                List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(id);
-                _projectImageRepository.deleteAll(images);
-                _projectArticleRepository.deleteAll(articles);
-                _projectRepository.deleteById(id);
+            if (projectRepository.existsById(id)) {
+                Project project = projectRepository.findById(id).orElse(null);
+                List<ProjectArticle> articles = projectArticleRepository.findByProject(project);
+                List<ProjectImage> images = projectImageRepository.findProjectImagesToProjectByProjectId(id);
+                projectImageRepository.deleteAll(images);
+                projectArticleRepository.deleteAll(articles);
+                projectRepository.deleteById(id);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -136,10 +136,10 @@ public class ProjectController {
 
     @RequestMapping(value = Uris.PROJECT_REMOVE_ARTICLE, method = RequestMethod.POST)
     public ResponseEntity<?> removeArticle(@RequestParam Long articleId) {
-        if (_treeRepository.countAlreadyPlantedTreesByProjectArticleId(articleId) > 0) {
+        if (treeRepository.countAlreadyPlantedTreesByProjectArticleId(articleId) > 0) {
             return new ResponseEntity<>("Du kannst diesen Projektartikel nicht löschen, da davon schon Bäume gepflanzt wurden.", HttpStatus.BAD_REQUEST);
         } else {
-            _projectArticleRepository.deleteById(articleId);
+            projectArticleRepository.deleteById(articleId);
             return new ResponseEntity<>(HttpStatus.OK);
 
         }
@@ -148,7 +148,7 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_MAIN_IMAGE, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> addMainImage(@RequestParam Long projectId, @RequestParam("file") MultipartFile file) {
-        Project project = _projectRepository.findById(projectId).orElse(null);
+        Project project = projectRepository.findById(projectId).orElse(null);
 
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -156,9 +156,9 @@ public class ProjectController {
             String imageFolder = FileSystemInjector.getImageFolderForProjects();
             String imageName = project.getName() + "_mainImage" + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."), file.getOriginalFilename().length());
             try {
-                imageName = _imageHelper.storeImage(file, imageFolder, imageName, true);
+                imageName = imageHelper.storeImage(file, imageFolder, imageName, true);
                 project.setImageFileName(imageName);
-                _projectRepository.save(project);
+                projectRepository.save(project);
             } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -169,21 +169,21 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_IMAGE_CREATE_EDIT, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> createEditProjectImageData(@RequestBody ProjectImageRequest projectImageRequest) {
-        Project project = _projectRepository.findById(projectImageRequest.getProjectId()).orElse(null);
+        Project project = projectRepository.findById(projectImageRequest.getProjectId()).orElse(null);
 
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             ProjectImage projectImage;
             if (projectImageRequest.getImageId() != null) {
-                projectImage = _projectImageRepository.findById(projectImageRequest.getImageId()).orElse(null);
+                projectImage = projectImageRepository.findById(projectImageRequest.getImageId()).orElse(null);
                 projectImage.setTitle(projectImageRequest.getTitle());
                 projectImage.setDescription(projectImageRequest.getDescription());
             } else {
                 projectImage = new ProjectImage(projectImageRequest.getTitle(), projectImageRequest.getDescription(), System.currentTimeMillis());
             }
             projectImage.setProject(project);
-            _projectImageRepository.save(projectImage);
+            projectImageRepository.save(projectImage);
             return new ResponseEntity<>(projectImage.getImageId(), HttpStatus.OK);
         }
     }
@@ -191,7 +191,7 @@ public class ProjectController {
     @RequestMapping(value = Uris.PROJECT_IMAGE_UPLOAD, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> uploadUserImage(@RequestParam Long imageId, @RequestParam("file") MultipartFile file) {
-        ProjectImage projectImage = _projectImageRepository.findById(imageId).orElse(null);
+        ProjectImage projectImage = projectImageRepository.findById(imageId).orElse(null);
         String imageFolder = FileSystemInjector.getImageFolderForProjects();
         String imageName;
         if (projectImage.getImageFileName() != null) {
@@ -202,9 +202,9 @@ public class ProjectController {
         }
         if (!file.isEmpty()) {
             try {
-                imageName = _imageHelper.storeImage(file, imageFolder, imageName, false);
+                imageName = imageHelper.storeImage(file, imageFolder, imageName, false);
                 projectImage.setImageFileName(imageName);
-                _projectImageRepository.save(projectImage);
+                projectImageRepository.save(projectImage);
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -217,7 +217,7 @@ public class ProjectController {
 
     @RequestMapping(value = Uris.PROJECT_IMAGE_DELETE, method = RequestMethod.POST)
     public ResponseEntity<?> removeProjectImage(@RequestParam Long projectImageId, @RequestParam String imageFileName) {
-        _projectImageRepository.deleteById(projectImageId);
+        projectImageRepository.deleteById(projectImageId);
         // TODO: delete image file on filesystem
         return new ResponseEntity<>(HttpStatus.OK);
     }
