@@ -15,6 +15,7 @@ export default class ProjectOfferPage extends Component {
 
   render() {
     return (
+      <div className="row">
       <div className="col-md-12">
         <h2 className="thanks">{counterpart.translate('THANKS_FOR_OFFER')}</h2>
         <br />
@@ -22,6 +23,7 @@ export default class ProjectOfferPage extends Component {
           <IconButton text={counterpart.translate('ONE_MORE_OFFER')} glyphIcon="glyphicon-backward" onClick={this.setThankYou.bind(this)} />
         </div>
         <br />
+      </div>
       </div>
     );
   }

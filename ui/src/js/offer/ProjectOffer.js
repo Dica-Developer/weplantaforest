@@ -107,7 +107,7 @@ export default class ProjectOffer extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="e_mail">{counterpart.translate('MAIL')} *:</label>
-            <InputText cssclass="form-control" id="e_mail" toUpdate="name" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} updateValue={this.updateValue.bind(this)} />
+            <InputText cssclass="form-control" id="e_mail" toUpdate="mail" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} updateValue={this.updateValue.bind(this)} />
           </div>
           <div className="form-group">
             <label htmlFor="message">{counterpart.translate('MESSAGE')} *:</label>

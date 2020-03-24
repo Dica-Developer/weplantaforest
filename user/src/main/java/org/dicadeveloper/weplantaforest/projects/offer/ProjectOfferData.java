@@ -12,16 +12,17 @@ import lombok.NoArgsConstructor;
 public class ProjectOfferData {
 
     String first;
+
     @NotEmpty
     String name;
+
     @NotEmpty
     String mail;
 
-    @NotEmpty
     String location;
-    @NotEmpty
+
     String size;
-    @NotEmpty
+
     String owner;
 
     @JsonProperty
