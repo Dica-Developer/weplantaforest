@@ -10,8 +10,7 @@ let createTeamImageUrl = function createTeamImageUrl(imageFileName, width, heigh
   if (imageFileName && imageFileName != 'default') {
     return 'http://localhost:8081/team/image/' + encodeURIComponent(imageFileName) + '/' + width + '/' + height;
   } else {
-    //TODO: add default team image
-    return '/assets/images/default_user.jpg';
+    return '/assets/images/default_team.jpg';
   }
 };
 

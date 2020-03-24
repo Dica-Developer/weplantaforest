@@ -257,7 +257,9 @@ export default class TeamDetails extends Component {
       <div>
         <h1>Team</h1>
         <div className="imageDiv">
-          <img src={teamImageUrl} alt="profile" width="150" height="150" />
+          <object data={teamImageUrl} type="image/jpg" alt="profile" width="150" height="150" >
+            <img src="/assets/images/default_team.jpg" wdth="150" height="150" />
+          </object>
         </div>
         <p className="teamName" onClick={this.switchToTeamPage.bind(this)}>
           {this.props.team.teamName ? he.decode(this.props.team.teamName) : ''}
