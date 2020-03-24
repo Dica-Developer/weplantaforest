@@ -24,7 +24,7 @@ export default class RankingItem extends Component {
           <div className={'rankingNumber' + (this.props.showRankNumber ? ' ' : ' invisible')}>{this.props.rankNumber}</div>
           <div className="defaultTeamImage">
             <object data={this.props.imageUrl}>
-              <img src="/assets/images/default_team.jpg"/>
+              <img src="/assets/images/default_team.jpg" />
             </object>
           </div>
           {this.props.children}

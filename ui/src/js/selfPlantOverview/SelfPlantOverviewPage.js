@@ -62,7 +62,7 @@ export default class SelfPlantOverviewPage extends Component {
       .catch(function(error) {
         that.refs.notification.handleError(error);
       });
-      that.getMyTree();
+    that.getMyTree();
   }
 
   getMyTree() {
@@ -140,7 +140,7 @@ export default class SelfPlantOverviewPage extends Component {
               .post('http://localhost:8081/plantSelf/upload', data, config)
               .then(function(response) {
                 that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
-                that.setState({edit: false});
+                that.setState({ edit: false });
               })
               .catch(function(response) {
                 if (response instanceof Error) {
@@ -151,11 +151,11 @@ export default class SelfPlantOverviewPage extends Component {
                   console.error(response.headers);
                   console.error(response.config);
                 }
-                that.setState({edit: false});
+                that.setState({ edit: false });
               });
           } else {
             that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
-            that.setState({edit: false});
+            that.setState({ edit: false });
           }
         })
         .catch(function(response) {
@@ -168,13 +168,13 @@ export default class SelfPlantOverviewPage extends Component {
             console.error(response.headers);
             console.error(response.config);
           }
-          that.setState({edit: false});
+          that.setState({ edit: false });
         });
     }
   }
 
   startEdit() {
-    this.setState({edit: true});
+    this.setState({ edit: true });
   }
 
   updateTreePositionFromMapClick(event) {
@@ -207,10 +207,11 @@ export default class SelfPlantOverviewPage extends Component {
       <div className="container paddingTopBottom15 selfPlantOverview">
         <div className="row">
           <div className="col-md-12">
-            <h1>{counterpart.translate('TREE_LOCATION')}
-              <div className={this.state.allowEdit ? '': 'no-display '}>
-              <IconButton glyphIcon="glyphicon-pencil" text="" onClick={this.startEdit.bind(this)} />
-            </div>
+            <h1>
+              {counterpart.translate('TREE_LOCATION')}
+              <div className={this.state.allowEdit ? '' : 'no-display '}>
+                <IconButton glyphIcon="glyphicon-pencil" text="" onClick={this.startEdit.bind(this)} />
+              </div>
             </h1>
           </div>
         </div>
@@ -223,7 +224,15 @@ export default class SelfPlantOverviewPage extends Component {
             <label htmlFor="howmuch">
               {counterpart.translate('HOW_MANY')}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:&nbsp;{this.state.selfPlantData.amount}
             </label>
-            <input className="tree-slider" type="range" min="1" max={localStorage.getItem('isAdmin') === 'true' ? 10000 : 10} value={this.state.selfPlantData.amount} step="1" onChange={this.updateAmount.bind(this)} />
+            <input
+              className="tree-slider"
+              type="range"
+              min="1"
+              max={localStorage.getItem('isAdmin') === 'true' ? 10000 : 10}
+              value={this.state.selfPlantData.amount}
+              step="1"
+              onChange={this.updateAmount.bind(this)}
+            />
             <br />
             <span>{counterpart.translate('HOW_MANY_HINT')}</span>
           </div>
@@ -253,17 +262,17 @@ export default class SelfPlantOverviewPage extends Component {
                   }
                 } else {
                   if (treeType.id === that.state.selfPlantData.treeTypeId) {
-                  return (
-                    <option value={treeType.id} key={i} selected="selected">
-                      {counterpart.translate('OTHER')}
-                    </option>
-                  );
+                    return (
+                      <option value={treeType.id} key={i} selected="selected">
+                        {counterpart.translate('OTHER')}
+                      </option>
+                    );
                   } else {
-                  return (
-                    <option value={treeType.id} key={i}>
-                      {counterpart.translate('OTHER')}
-                    </option>
-                  );
+                    return (
+                      <option value={treeType.id} key={i}>
+                        {counterpart.translate('OTHER')}
+                      </option>
+                    );
                   }
                 }
               })}
@@ -274,7 +283,7 @@ export default class SelfPlantOverviewPage extends Component {
           <div className="form-group col-md-12">
             <label htmlFor="description">{counterpart.translate('SHORT_DESCRIPTION')}:</label>
             <div>
-              <textarea  rows="4" cols="50" ref="description" />
+              <textarea rows="4" cols="50" ref="description" />
             </div>
           </div>
         </div>
@@ -287,7 +296,13 @@ export default class SelfPlantOverviewPage extends Component {
           <div className="col-md-12">
             <Map id="all-self-planted-map" center={[this.state.myTree.latitude, this.state.myTree.longitude]} zoom={10} onClick={this.updateTreePositionFromMapClick.bind(this)}>
               <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors' />
-              <Marker position={[this.state.myTree.latitude, this.state.myTree.longitude]} ref="marker" draggable={this.state.edit} icon={myTreeIcon} onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}/>
+              <Marker
+                position={[this.state.myTree.latitude, this.state.myTree.longitude]}
+                ref="marker"
+                draggable={this.state.edit}
+                icon={myTreeIcon}
+                onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}
+              />
               {this.state.trees.map(function(tree, i) {
                 if (tree.latitude && tree.longitude) {
                   if (tree.id != that.props.params.treeId) {

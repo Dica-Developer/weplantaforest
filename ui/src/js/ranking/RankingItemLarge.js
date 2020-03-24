@@ -15,10 +15,10 @@ export default class RankingItem extends Component {
         <div className="rankingNumber">{this.props.rankNumber}</div>
         <div className="ranking-img-div">
           <div className="defaultTeamImage">
-          <object width="60" height="60" data={this.props.imageUrl} alt="logo">
-            <img src="/assets/images/default_team.jpg"/>
-          </object>
-        </div>
+            <object width="60" height="60" data={this.props.imageUrl} alt="logo">
+              <img src="/assets/images/default_team.jpg" />
+            </object>
+          </div>
         </div>
         <div className="rankingSummary">
           <Link to={this.props.profileUrl}>
