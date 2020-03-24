@@ -13,7 +13,7 @@ export default class Widgets extends Component {
       htmlCode: '',
       width: 100,
       height: 100,
-      userName: localStorage.getItem('username')
+      userName: encodeURIComponent(localStorage.getItem('username'))
     };
   }
 

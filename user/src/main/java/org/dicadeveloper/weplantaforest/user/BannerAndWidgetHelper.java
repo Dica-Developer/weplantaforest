@@ -8,11 +8,14 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.imageio.ImageIO;
 
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 import org.springframework.stereotype.Component;
+
+import lombok.SneakyThrows;
 
 @Component
 public class BannerAndWidgetHelper {
@@ -42,6 +45,7 @@ public class BannerAndWidgetHelper {
         return buffer.toString();
     }
 
+    @SneakyThrows
     public String generateWidgetHtmlCode(String host, String userName, String type, int width, int height) {
         StringBuffer buffer = new StringBuffer();
         String hostWithoutPort = host;
@@ -53,11 +57,13 @@ public class BannerAndWidgetHelper {
         }
         buffer.append("<a href=\"");
         buffer.append(host);
+        buffer.append("/user/");
+        buffer.append(URLEncoder.encode(userName, "UTF-8"));
         buffer.append("\">");
         buffer.append("<img src=\"");
         buffer.append(hostWithoutPort);
         buffer.append("8081/widget?userName=");
-        buffer.append(userName);
+        buffer.append(URLEncoder.encode(userName, "UTF-8"));
         buffer.append("&type=");
         buffer.append(type);
         buffer.append("&width=");
