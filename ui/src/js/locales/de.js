@@ -569,5 +569,7 @@ module.exports = {
 
   PLANTINGS: 'Pflanzungen',
   PLANTING_BETWEEN_1_AND_1000: 'SEPA ist leider nur für Spenden von 1 € bis 1000 € möglich',
-  PLANTING_FROM_15: 'Paypal ist leider erst für Spenden ab 15 € möglich'
+  PLANTING_FROM_15: 'Paypal ist leider erst für Spenden ab 15 € möglich',
+
+  CODE_ALREADY_REDEEMED: 'Code wurde bereits eingelöst!'
 };
