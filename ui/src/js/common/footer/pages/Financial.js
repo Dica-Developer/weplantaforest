@@ -51,11 +51,23 @@ export default class financial extends Component {
                   <div key={i}>
                     <EditLink articleId={about.id} />
                     <p className="title">{about.title}</p>
-                    <p
+                    <div
                       dangerouslySetInnerHTML={{
                         __html: about.intro
                       }}
-                    ></p>
+                    ></div>
+                    {about.paragraphs.map(function(paragraph, index) {
+                      return (
+                        <div key={index}>
+                          <p className="title">{paragraph.title}</p>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: paragraph.text
+                            }}
+                          ></div>
+                        </div>
+                      );
+                    })}
                   </div>
                 );
               })}

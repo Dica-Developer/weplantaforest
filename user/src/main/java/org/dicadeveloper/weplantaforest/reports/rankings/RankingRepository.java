@@ -46,14 +46,13 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
             + " and tree.owner.organizationType = :organizationType AND NOT tree.owner.name LIKE \'Anonymous%\' AND tree.plantedOn > (:time - 31536000000L)";
 
     public static final String FIND_LAST_PLANTED_TREES_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(tree.owner.name, tree.amount, tree.plantedOn, "
-            + " tree.treeType.name, tree.treeType.imageFile) " + "FROM Tree as tree WHERE NOT tree.owner.name LIKE \'Anonymous%\' ORDER BY tree.plantedOn desc"
-            + "FROM Tree as tree WHERE tree.owner.team != null GROUP BY tree.owner.team.name ORDER BY sum(tree.amount) desc";
+            + " tree.treeType.name, tree.treeType.imageFile) " + "FROM Tree as tree WHERE NOT tree.owner.name LIKE \'Anonymous%\' ORDER BY tree.plantedOn desc";
 
     public static final String FIND_BEST_TEAM_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData(tree.owner.team.name, sum(tree.amount), sum(tree.amount * tree.treeType.annualCo2SavingInTons * ((:time - tree.plantedOn) / 3.1536E10)), CAST(tree.owner.team.id as string)) "
-            + "FROM Tree as tree WHERE tree.owner.team != null GROUP BY tree.owner.team.name ORDER BY sum(tree.amount) desc";
+            + " FROM Tree as tree WHERE tree.owner.team != null GROUP BY tree.owner.team.name ORDER BY sum(tree.amount) desc";
 
     public static final String FIND_BEST_TEAM_QUERY_FOR_LAST_YEAR = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData(tree.owner.team.name, sum(tree.amount), sum(tree.amount * tree.treeType.annualCo2SavingInTons * ((:time - tree.plantedOn) / 3.1536E10)), CAST(tree.owner.team.id as string)) "
-            + "FROM Tree as tree WHERE tree.owner.team != null  AND tree.plantedOn > (:time - 31536000000L) GROUP BY tree.owner.team.name ORDER BY sum(tree.amount) desc";
+            + " FROM Tree as tree WHERE tree.owner.team != null  AND tree.plantedOn > (:time - 31536000000L) GROUP BY tree.owner.team.name ORDER BY sum(tree.amount) desc";
 
     public static final String COUNT_BEST_TEAM_QUERY = "SELECT count(distinct team.name) from Team as team where :time = :time";
 
