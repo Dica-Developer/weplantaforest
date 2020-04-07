@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -43,6 +44,22 @@ public class PdfReceiptView {
     private final static Font textFontHintBold = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 
     private final static DecimalFormat priceFormat = new DecimalFormat("#0.00");
+
+    private final static HashMap<String, String> numberWordMap = new HashMap<String, String>();
+
+    static {
+        numberWordMap.put("0", "null");
+        numberWordMap.put("1", "eins");
+        numberWordMap.put("2", "zwei");
+        numberWordMap.put("3", "drei");
+        numberWordMap.put("4", "vier");
+        numberWordMap.put("5", "fünf");
+        numberWordMap.put("6", "sechs");
+        numberWordMap.put("7", "sieben");
+        numberWordMap.put("8", "acht");
+        numberWordMap.put("9", "neun");
+        numberWordMap.put(",", "komma");
+    }
 
     private PdfHelper pdfHelper = new PdfHelper();
 
@@ -209,7 +226,7 @@ public class PdfReceiptView {
         // price block
         cb.saveState();
         cb.setRGBColorFill(0xFC, 0xFC, 0xFC);
-        cb.rectangle(75.0f, 350f - (amountOfCarts + 1) * 16f, 295f, 45f + (amountOfCarts + 1) * 16f);
+        cb.rectangle(75.0f, 345f - (amountOfCarts + 1) * 16f, 295f, 50f + (amountOfCarts + 1) * 16f);
         cb.fill();
         cb.stroke();
         cb.restoreState();
@@ -217,7 +234,7 @@ public class PdfReceiptView {
         // date block
         cb.saveState();
         cb.setRGBColorFill(0xFC, 0xFC, 0xFC);
-        cb.rectangle(385.0f, 350f - (amountOfCarts + 1) * 16f, 135f, 45f + (amountOfCarts + 1) * 16f);
+        cb.rectangle(385.0f, 345f - (amountOfCarts + 1) * 16f, 135f, 50f + (amountOfCarts + 1) * 16f);
         cb.fill();
         cb.stroke();
         cb.restoreState();
@@ -300,16 +317,29 @@ public class PdfReceiptView {
         tableForPrices.setTotalWidth(rowForTotalPrice);
         tableForPrices.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
-        tableForPrices.addCell(new Phrase(new Chunk("Betrag der Zuwendung in Ziffern:", textFont)));
+        tableForPrices.addCell(new Phrase(new Chunk("Betrag der Zuwendung:", textFont)));
         tableForPrices.addCell(new Phrase(new Chunk(" ", textFont)));
         Double totalPrice = 0.0;
         for (final Cart cart : receipt.getCarts()) {
             tableForPrices.addCell(new Phrase(new Chunk(cart.getTotalPrice().toString() + " €", textFontUserData)));
             totalPrice += cart.getTotalPrice().doubleValue();
         }
+
         String formattedPrice = priceFormat.format(totalPrice).toString();
-        tableForPrices.addCell(new Phrase(new Chunk("Gesamt: " + formattedPrice + " €", textFontUserData)));
+        String priceInWords = generatePriceInWords(formattedPrice);
+        tableForPrices.addCell(new Phrase(new Chunk("Gesamt: " + formattedPrice + " € (" + priceInWords + " Euro)", textFontUserData)));
         return tableForPrices;
+    }
+
+    private String generatePriceInWords(String price) {
+        String priceInWords = "";
+        for (int i = 0; i < price.length(); i++) {
+            priceInWords += numberWordMap.get(String.valueOf(price.charAt(i)));
+            if (i != price.length() - 1) {
+                priceInWords += "-";
+            }
+        }
+        return priceInWords;
     }
 
     private PdfPTable createDateTable(PdfContentByte cb, Receipt receipt) throws DocumentException {
