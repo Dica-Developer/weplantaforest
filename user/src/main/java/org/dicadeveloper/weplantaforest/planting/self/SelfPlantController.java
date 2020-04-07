@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -109,5 +110,20 @@ public class SelfPlantController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @DeleteMapping(value = Uris.PLANT_SELF)
+    public ResponseEntity<?> deleteTree(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long treeId) throws IpatException {
+        val tree = _treeRepository.findById(treeId).orElse(null);
+        if (null == tree) {
+            throw new IpatException(ErrorCodes.TREE_NOT_FOUND);
+        }
+        val isOwner = _tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getUsername());
+        if (_tokenAuthenticationService.isAdmin(userToken) || isOwner) {
+            _treeRepository.deleteById(treeId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 }

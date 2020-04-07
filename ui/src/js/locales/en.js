@@ -570,5 +570,7 @@ module.exports = {
   PLANTING_BETWEEN_1_AND_1000: 'SEPA is only available for donations between 1 € and 1000 €',
   PLANTING_FROM_15: 'Paypal is only available for  donatations from 15 €',
 
-  CODE_ALREADY_REDEEMED: 'Code has already been redeemed!'
+  CODE_ALREADY_REDEEMED: 'Code has already been redeemed!',
+  DELETE_SELFPLANTING_CONFIRMATION_TEXT: 'Do you really want to delete this planting?',
+  PLANTING_DELETED: 'The planting has been deleted.'
 };

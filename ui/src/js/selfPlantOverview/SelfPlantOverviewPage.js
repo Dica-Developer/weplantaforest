@@ -2,6 +2,8 @@ import axios from 'axios';
 import counterpart from 'counterpart';
 import React, { Component } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
+import { browserHistory } from 'react-router';
+import NotificationSystem from 'react-notification-system';
 import Notification from '../common/components/Notification';
 import DateField from '../common/components/DateField';
 import IconButton from '../common/components/IconButton';
@@ -86,7 +88,8 @@ export default class SelfPlantOverviewPage extends Component {
             treeTypeId: result.treeType.id
           },
           treeId: result.id,
-          allowEdit: that.state.allowEdit || localStorage.getItem('username') === result.owner.name
+          allowEdit: that.state.allowEdit || localStorage.getItem('username') === result.owner.name,
+          treeOwner: result.owner.name
         });
         that.refs.description.value = result.description;
       })
@@ -199,17 +202,72 @@ export default class SelfPlantOverviewPage extends Component {
     }
   }
 
+  openDeleteConfirmation() {
+    this.refs.notificationSystem.addNotification({
+      title: counterpart.translate('WARNING') + '!',
+      position: 'tc',
+      autoDismiss: 0,
+      message: counterpart.translate('DELETE_SELFPLANTING_CONFIRMATION_TEXT'),
+      level: 'warning',
+      children: (
+        <div className="delete-confirmation align-center">
+          <button>{counterpart.translate('ABORT')}</button>
+          <button
+            onClick={() => {
+              this.deleteTree();
+            }}
+          >
+            OK
+          </button>
+        </div>
+      )
+    });
+  }
+
+  deleteTree() {
+     var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt')
+      }
+    };
+    var that = this;
+    axios
+      .delete('http://localhost:8081/plantSelf?treeId=' + this.state.treeId, config)
+      .then(function(response) {
+        browserHistory.push('/user/' + encodeURIComponent(that.state.treeOwner));
+      })
+      .catch(function(error) {
+        that.refs.notification.handleError(error);
+      });
+  }
+
   render() {
     let that = this;
     let myIcon = L.divIcon({ className: 'glyphicon glyphicon-tree-deciduous' });
     let myTreeIcon = L.divIcon({ className: 'glyphicon glyphicon-tree-deciduous my-tree' });
+    var confirmBoxStyle = {
+      Containers: {
+        DefaultStyle: {
+          zIndex: 11000
+        },
+        tc: {
+          top: '50%',
+          bottom: 'auto',
+          margin: '0 auto',
+          left: '50%'
+        }
+      }
+    };
     return (
       <div className="container paddingTopBottom15 selfPlantOverview">
         <div className="row">
           <div className="col-md-12">
             <h1>
               {counterpart.translate('TREE_LOCATION')}
-              <div className={this.state.allowEdit ? '' : 'no-display '}>
+              <div className={this.state.allowEdit? 'delete-btn ' : 'no-display '}>
+                <IconButton glyphIcon="glyphicon-trash" text="" onClick={this.openDeleteConfirmation.bind(this)} />
+              </div>
+              <div className={this.state.allowEdit && !this.state.edit ? '' : 'no-display '}>
                 <IconButton glyphIcon="glyphicon-pencil" text="" onClick={this.startEdit.bind(this)} />
               </div>
             </h1>
@@ -316,6 +374,7 @@ export default class SelfPlantOverviewPage extends Component {
           </div>
         </div>
         <Notification ref="notification" />
+        <NotificationSystem ref="notificationSystem" style={confirmBoxStyle} />
       </div>
     );
   }
