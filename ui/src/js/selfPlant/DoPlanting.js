@@ -19,7 +19,9 @@ export default class DoPlanting extends Component {
         description: '',
         amount: 1,
         imageName: '',
-        treeTypeId: 1
+        treeTypeId: 1,
+        latitude: 51.499807,
+        longitude: 11.956521
       },
       imageFile: null,
       treeTypes: [],
