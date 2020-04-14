@@ -78,7 +78,7 @@ public class UserController {
             try {
                 Long userId = Long.parseLong(userName);
                 User user = userRepository.findById(userId).orElse(null);
-                return new ResponseEntity<>("https://www.iplantatree.org/user/" + UrlEscapers.urlFragmentEscaper().escape(user.getName()), HttpStatus.PAYMENT_REQUIRED);
+                return new ResponseEntity<>("https://www.iplantatree.org/user/" + UrlEscapers.urlPathSegmentEscaper().escape(user.getName()), HttpStatus.PAYMENT_REQUIRED);
             } catch (Exception e) {
                 LOG.warn("Error on finding user by workaround: " + userName, e);
             }

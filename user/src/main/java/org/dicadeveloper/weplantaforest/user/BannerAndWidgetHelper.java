@@ -57,7 +57,7 @@ public class BannerAndWidgetHelper {
         } else {
             hostWithoutPort = hostWithoutPort + ":";
         }
-        val urlEncodedUsername = UrlEscapers.urlFragmentEscaper().escape(userName);
+        val urlEncodedUsername = UrlEscapers.urlPathSegmentEscaper().escape(userName);
         buffer.append("<a href=\"");
         buffer.append(host);
         buffer.append("/user/");

@@ -98,7 +98,7 @@ public class TeamController {
             try {
                 Long teamId = Long.parseLong(teamName);
                 Team team = teamRepository.findById(teamId).orElse(null);
-                return new ResponseEntity<>("https://www.iplantatree.org/team/" + UrlEscapers.urlFragmentEscaper().escape(team.getName()), HttpStatus.PAYMENT_REQUIRED);
+                return new ResponseEntity<>("https://www.iplantatree.org/team/" + UrlEscapers.urlPathSegmentEscaper().escape(team.getName()), HttpStatus.PAYMENT_REQUIRED);
             } catch (Exception e) {
                 LOG.warn("Did not find team with id: " + teamName, e);
             }
