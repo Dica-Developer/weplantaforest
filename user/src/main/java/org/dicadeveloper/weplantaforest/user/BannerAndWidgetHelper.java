@@ -8,14 +8,16 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.imageio.ImageIO;
 
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 import org.springframework.stereotype.Component;
 
+import com.google.common.net.UrlEscapers;
+
 import lombok.SneakyThrows;
+import lombok.val;
 
 @Component
 public class BannerAndWidgetHelper {
@@ -55,15 +57,16 @@ public class BannerAndWidgetHelper {
         } else {
             hostWithoutPort = hostWithoutPort + ":";
         }
+        val urlEncodedUsername = UrlEscapers.urlFragmentEscaper().escape(userName);
         buffer.append("<a href=\"");
         buffer.append(host);
         buffer.append("/user/");
-        buffer.append(URLEncoder.encode(userName, "UTF-8"));
+        buffer.append(urlEncodedUsername);
         buffer.append("\">");
         buffer.append("<img src=\"");
         buffer.append(hostWithoutPort);
         buffer.append("8081/widget?userName=");
-        buffer.append(URLEncoder.encode(userName, "UTF-8"));
+        buffer.append(urlEncodedUsername);
         buffer.append("&type=");
         buffer.append(type);
         buffer.append("&width=");

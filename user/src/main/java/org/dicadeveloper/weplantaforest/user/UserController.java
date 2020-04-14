@@ -1,8 +1,6 @@
 package org.dicadeveloper.weplantaforest.user;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.common.net.UrlEscapers;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +78,7 @@ public class UserController {
             try {
                 Long userId = Long.parseLong(userName);
                 User user = userRepository.findById(userId).orElse(null);
-                return new ResponseEntity<>("https://www.iplantatree.org/user/" + URLEncoder.encode(user.getName(), StandardCharsets.UTF_8.toString()), HttpStatus.PAYMENT_REQUIRED);
+                return new ResponseEntity<>("https://www.iplantatree.org/user/" + UrlEscapers.urlFragmentEscaper().escape(user.getName()), HttpStatus.PAYMENT_REQUIRED);
             } catch (Exception e) {
                 LOG.warn("Error on finding user by workaround: " + userName, e);
             }

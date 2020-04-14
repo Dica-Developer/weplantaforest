@@ -2,15 +2,26 @@ package org.dicadeveloper.weplantaforest.team;
 
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@RequiredArgsConstructor
-@Getter
 @Setter
+@Getter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class TeamReportData {
+
+    public TeamReportData(Long id, String name, Long timeStamp, String adminName, String description, Long memberCount) {
+        this.teamId = id;
+        this.teamName = name;
+        this.regDate = timeStamp;
+        this.adminName = adminName;
+        this.description = description;
+        this.memberCount = memberCount;
+    }
 
     @NonNull
     Long teamId;

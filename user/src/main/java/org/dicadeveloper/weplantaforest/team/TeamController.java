@@ -2,8 +2,6 @@ package org.dicadeveloper.weplantaforest.team;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.google.common.net.UrlEscapers;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -99,7 +98,7 @@ public class TeamController {
             try {
                 Long teamId = Long.parseLong(teamName);
                 Team team = teamRepository.findById(teamId).orElse(null);
-                return new ResponseEntity<>("https://www.iplantatree.org/team/" + URLEncoder.encode(team.getName(), StandardCharsets.UTF_8.toString()), HttpStatus.PAYMENT_REQUIRED);
+                return new ResponseEntity<>("https://www.iplantatree.org/team/" + UrlEscapers.urlFragmentEscaper().escape(team.getName()), HttpStatus.PAYMENT_REQUIRED);
             } catch (Exception e) {
                 LOG.warn("Did not find team with id: " + teamName, e);
             }
