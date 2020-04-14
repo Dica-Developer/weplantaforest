@@ -24,7 +24,6 @@ public class TeamReportData {
     @NonNull
     String adminName;
 
-    @NonNull
     String description;
 
     @NonNull

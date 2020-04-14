@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,6 +40,7 @@ public class Team {
     private Long timeStamp;
 
     @Column(name = "_name", nullable = false, unique = true, length = 256)
+    @Nonnull
     private String name;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)

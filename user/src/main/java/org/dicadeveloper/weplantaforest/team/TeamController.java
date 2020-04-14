@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
@@ -146,7 +147,7 @@ public class TeamController {
     }
 
     @RequestMapping(value = Uris.TEAM_CREATE, method = RequestMethod.POST)
-    public ResponseEntity<?> createTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody Team team) throws IpatException {
+    public ResponseEntity<?> createTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @Valid @RequestBody Team team) throws IpatException {
         User user = tokenAuthenticationService.getUserFromToken(userToken);
         if (user != null) {
             teamService.createTeam(team, user.getId());
