@@ -161,6 +161,7 @@ export default class FileChooseAndUploadButton extends Component {
             ref="fileupload"
             key="ex1"
             url="http://localhost:8081/team/image/upload"
+            method="POST"
             onProgress={(e, request, progress) => {}}
             onLoad={(e, request) => {
               this.loadImage();
