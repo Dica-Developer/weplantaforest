@@ -29,8 +29,8 @@ class Paragraph extends Component {
         <div className="article-img">
           <div className="article-img-div">
             <img src={imageUrl} />
+            <p class="img-desc">{this.props.content.imageDescription}</p>
           </div>
-          ;
         </div>
       );
     } else {
