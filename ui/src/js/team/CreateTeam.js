@@ -1,8 +1,6 @@
 import axios from 'axios';
 import counterpart from 'counterpart';
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import IconButton from '../common/components/IconButton';
 import Notification from '../common/components/Notification';
 

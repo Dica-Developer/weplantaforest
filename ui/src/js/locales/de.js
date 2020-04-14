@@ -575,6 +575,5 @@ module.exports = {
   DELETE_SELFPLANTING_CONFIRMATION_TEXT: 'Möchtest du diese Pflanzung wirklich löschen?',
   PLANTING_DELETED: 'Die Pflanzung wurde gelöscht.',
   CREATE_TEAM_ERROR_TITLE: 'Team konnte nicht erstellt werden',
-  CREATE_TEAM_ERROR_TEXT: 'Bitte gib einen Teamnamen an.',
-
+  CREATE_TEAM_ERROR_TEXT: 'Bitte gib einen Teamnamen an.'
 };

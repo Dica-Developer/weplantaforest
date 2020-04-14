@@ -245,7 +245,11 @@ export default class ProjectDetailsPage extends Component {
       map = '';
     }
 
-    if (this.state.project.projectReportData.active && this.state.detailsActive && this.state.project.projectReportData.amountOfPlantedTrees < this.state.project.projectReportData.amountOfMaximumTreesToPlant) {
+    if (
+      this.state.project.projectReportData.active &&
+      this.state.detailsActive &&
+      this.state.project.projectReportData.amountOfPlantedTrees < this.state.project.projectReportData.amountOfMaximumTreesToPlant
+    ) {
       plantButton = (
         <SvgButton
           text={counterpart.translate('PLANT_HERE')}

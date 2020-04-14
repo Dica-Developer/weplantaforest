@@ -225,7 +225,7 @@ export default class SelfPlantOverviewPage extends Component {
   }
 
   deleteTree() {
-     var config = {
+    var config = {
       headers: {
         'X-AUTH-TOKEN': localStorage.getItem('jwt')
       }
@@ -264,7 +264,7 @@ export default class SelfPlantOverviewPage extends Component {
           <div className="col-md-12">
             <h1>
               {counterpart.translate('TREE_LOCATION')}
-              <div className={this.state.allowEdit? 'delete-btn ' : 'no-display '}>
+              <div className={this.state.allowEdit ? 'delete-btn ' : 'no-display '}>
                 <IconButton glyphIcon="glyphicon-trash" text="" onClick={this.openDeleteConfirmation.bind(this)} />
               </div>
               <div className={this.state.allowEdit && !this.state.edit ? '' : 'no-display '}>
