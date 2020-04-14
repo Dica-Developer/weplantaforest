@@ -573,5 +573,8 @@ module.exports = {
 
   CODE_ALREADY_REDEEMED: 'Code wurde bereits eingelöst!',
   DELETE_SELFPLANTING_CONFIRMATION_TEXT: 'Möchtest du diese Pflanzung wirklich löschen?',
-  PLANTING_DELETED: 'Die Pflanzung wurde gelöscht.'
+  PLANTING_DELETED: 'Die Pflanzung wurde gelöscht.',
+  CREATE_TEAM_ERROR_TITLE: 'Team konnte nicht erstellt werden',
+  CREATE_TEAM_ERROR_TEXT: 'Bitte gib einen Teamnamen an.',
+
 };

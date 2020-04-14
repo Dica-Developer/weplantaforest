@@ -572,5 +572,8 @@ module.exports = {
 
   CODE_ALREADY_REDEEMED: 'Code has already been redeemed!',
   DELETE_SELFPLANTING_CONFIRMATION_TEXT: 'Do you really want to delete this planting?',
-  PLANTING_DELETED: 'The planting has been deleted.'
+  PLANTING_DELETED: 'The planting has been deleted.',
+  CREATE_TEAM_ERROR_TITLE: 'Team could not be created',
+  CREATE_TEAM_ERROR_TEXT: 'Please set a team name.',
+
 };

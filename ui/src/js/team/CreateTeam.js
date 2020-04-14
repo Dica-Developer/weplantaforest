@@ -1,6 +1,8 @@
 import axios from 'axios';
 import counterpart from 'counterpart';
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 import IconButton from '../common/components/IconButton';
 import Notification from '../common/components/Notification';
 
@@ -8,25 +10,32 @@ export default class CreateTeam extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      team: {}
+      team: {
+        name: '',
+        description: ''
+      }
     };
   }
 
   createTeam() {
     var that = this;
-    var config = {
-      headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
-    };
-    axios
-      .post('http://localhost:8081/team/create', this.state.team, config)
-      .then(function(response) {
-        that.props.teamCreatedAction(that.state.team.name);
-      })
-      .catch(function(error) {
-        that.refs.notification.handleError(error);
-      });
+    if (this.state.team.name) {
+      var config = {
+        headers: {
+          'X-AUTH-TOKEN': localStorage.getItem('jwt')
+        }
+      };
+      axios
+        .post('http://localhost:8081/team/create', this.state.team, config)
+        .then(function(response) {
+          that.props.teamCreatedAction(that.state.team.name);
+        })
+        .catch(function(error) {
+          that.refs.notification.handleError(error);
+        });
+    } else {
+      this.refs.notification.addNotification(counterpart.translate('CREATE_TEAM_ERROR_TITLE'), counterpart.translate('CREATE_TEAM_ERROR_TEXT'), 'error');
+    }
   }
 
   editTeam(toEdit, event) {
