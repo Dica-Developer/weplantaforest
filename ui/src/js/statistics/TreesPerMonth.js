@@ -13,9 +13,7 @@ export default class TreesPerMonth extends Component {
       years: [],
       options: {
         scaleShowGridLines: true,
-        scaleOverride: true,
-        scaleSteps: 2,
-        scaleStepWidth: 5000,
+        scaleOverride: false,
         responsive: true,
         tooltipTemplate: '<%= value %>'
       }

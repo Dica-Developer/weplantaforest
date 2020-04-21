@@ -12,9 +12,7 @@ export default class TreesPerOrgType extends Component {
       labels: [counterpart.translate('PRIVATEPERSON'), counterpart.translate('COMPANY'), counterpart.translate('NGO'), counterpart.translate('SCHOOL')],
       options: {
         scaleShowGridLines: true,
-        scaleOverride: true,
-        scaleSteps: 6,
-        scaleStepWidth: 5000,
+        scaleOverride: false,
         tooltipTemplate: '<%= value %>'
       }
     };

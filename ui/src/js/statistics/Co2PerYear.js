@@ -15,9 +15,7 @@ export default class Co2PerYear extends Component {
       options: {
         scaleLineColor: 'rgb(81, 168, 190)',
         scaleShowGridLines: true,
-        scaleOverride: true,
-        scaleSteps: 4,
-        scaleStepWidth: 5000,
+        scaleOverride: false,
         datasetFill: false,
         responsive: true,
         tooltipTemplate: '<%= value %>'

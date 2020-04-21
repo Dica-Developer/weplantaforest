@@ -15,9 +15,7 @@ export default class TreesPerYear extends Component {
       years: [],
       options: {
         scaleShowGridLines: true,
-        scaleOverride: true,
-        scaleSteps: 3,
-        scaleStepWidth: 10000,
+        scaleOverride: false,
         responsive: true,
         barValueSpacing: 3,
         tooltipTemplate: '<%= value %>'
@@ -25,7 +23,7 @@ export default class TreesPerYear extends Component {
       options2: {
         scaleLineColor: 'rgb(130, 171, 31)',
         scaleShowGridLines: true,
-        scaleOverride: true,
+        scaleOverride: false,
         scaleSteps: 4,
         scaleStepWidth: 50000,
         pointDotRadius: 2,
