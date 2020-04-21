@@ -30,7 +30,7 @@ module.exports = {
     PARTNER: 'PARTNER',
     AWARDS: 'AWARDS',
     BLOG: 'BLOG',
-    SOCIAL: 'SOCIAL',
+    SOCIAL: 'NEWSLETTER',
     FACTS_FIGURES: 'FACTS & FIGURES',
     FINANCE: 'FINANCE',
     DATA_PROTECTION: 'DATA PROTECTION',
@@ -45,12 +45,17 @@ module.exports = {
     PARTNER: 'Partner',
     AWARDS: 'Awards',
     BLOG: 'Blog',
-    SOCIAL: 'Social',
+    SOCIAL: 'Newsletter',
     FACTS_FIGURES: 'Facts & Figures',
     FINANCE: 'Finance',
     DATA_PROTECTION: 'Data Protection',
     TERMS_CONDITIONS: 'Terms & Conditions',
     IMPRINT: 'Imprint'
+  },
+
+  NEWSLETTER: {
+    BODY: 'With our newsletter (only in German) you will be the first to know when a new project goes online. In every mail there is of course a link to unsubscribe.',
+    SOCIAL: 'Follow us on:'
   },
 
   JANUARY: 'January',

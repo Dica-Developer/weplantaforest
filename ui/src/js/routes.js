@@ -230,7 +230,7 @@ export default class Routes extends Component {
           <Route path="/imprint" component={Imprint} reRender={this.reRender.bind(this)} />
           <Route path="/contact" component={Contact} reRender={this.reRender.bind(this)} />
           <Route path="/partner" component={Partner} reRender={this.reRender.bind(this)} />
-          <Route path="/social" component={Social} reRender={this.reRender.bind(this)} />
+          <Route path="/newsletter" component={Social} reRender={this.reRender.bind(this)} />
           <Route path="/terms" component={Terms} reRender={this.reRender.bind(this)} />
           <Route path="/backOffice" component={LoadableBackOfficeOverview} reRender={this.reRender.bind(this)} />
           <Route path="/article-manager" component={LoadableArticleManager} reRender={this.reRender.bind(this)} />

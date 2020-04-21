@@ -14,6 +14,11 @@ export default class Social extends Component {
           </div>
         </div>
         <div className="row">
+          <div style={{marginBottom: 10 + 'px'}}>{counterpart.translate('NEWSLETTER.BODY')}</div>
+          <iframe frameborder="0" marginheight="0" marginwidth="0" scrolling="no" width="100%" height="91" allowtransparency="true" src="https://t924dfe8a.emailsys1a.net/126/2029/86f32163be/subscribe/form.html"></iframe>
+        </div>
+        <div className="row">
+          <div style={{marginBottom: 10 + 'px'}}>{counterpart.translate('NEWSLETTER.SOCIAL')}</div>
           <div className="col-md-4">
             <a href="https://de-de.facebook.com/iplantatree/">
               <img src="/assets/images/facebook.png" alt={'facebook'} height="80" />

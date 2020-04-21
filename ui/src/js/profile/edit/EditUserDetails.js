@@ -92,10 +92,6 @@ export default class EditUserDetails extends Component {
           <option value="DEUTSCH">{counterpart.translate('GERMAN')}</option>
           <option value="ENGLISH">{counterpart.translate('ENGLISH')}</option>
         </EditDropdownItem>
-        <EditDropdownItem text={counterpart.translate('NEWSLETTER_ABO')} toEdit="NEWSLETTER" content={this.props.user.newsletter} editUser={this.editUser.bind(this)} width="70" ref="NEWSLETTER">
-          <option value="JA">{counterpart.translate('YES')}</option>
-          <option value="NEIN">{counterpart.translate('NO')}</option>
-        </EditDropdownItem>
         <EditItem text={counterpart.translate('MAIL')} content={this.props.user.mail} toEdit="MAIL" editUser={this.editUser.bind(this)} ref="MAIL" />
         <EditDropdownItem
           text={counterpart.translate('TYPE')}

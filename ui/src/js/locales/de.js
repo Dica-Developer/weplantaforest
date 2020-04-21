@@ -30,7 +30,7 @@ module.exports = {
     PARTNER: 'PARTNER',
     AWARDS: 'AUSZEICHNUNGEN',
     BLOG: 'BLOG',
-    SOCIAL: 'SOCIAL',
+    SOCIAL: 'NEWSLETTER',
     FACTS_FIGURES: 'ZAHLEN & FAKTEN',
     FINANCE: 'FINANZEN',
     DATA_PROTECTION: 'DATENSCHUTZ',
@@ -45,12 +45,17 @@ module.exports = {
     PARTNER: 'Partner',
     AWARDS: 'Auszeichnungen',
     BLOG: 'Blog',
-    SOCIAL: 'Social',
+    SOCIAL: 'Newsletter',
     FACTS_FIGURES: 'Zahlen & Fakten',
     FINANCE: 'Finanzen',
     DATA_PROTECTION: 'Datenschutz',
     TERMS_CONDITIONS: 'AGB',
     IMPRINT: 'Impressum'
+  },
+
+  NEWSLETTER: {
+    BODY: 'Mit unserem Newsletter erfährst du als Erstes, wann ein neues Projekt online geht. In jeder Mail gibt es natürlich einen Link zur Abmeldung.',
+    SOCIAL: 'Folge uns auf:'
   },
 
   JANUARY: 'Januar',

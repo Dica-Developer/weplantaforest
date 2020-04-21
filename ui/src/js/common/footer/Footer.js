@@ -62,7 +62,7 @@ export default class Footer extends Component {
               <a
                 role="button"
                 onClick={() => {
-                  this.linkTo('/social');
+                  this.linkTo('/newsletter');
                 }}
               >
                 {counterpart.translate('FOOTER.SOCIAL')}
