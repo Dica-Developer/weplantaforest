@@ -355,13 +355,13 @@ module.exports = {
 
   NOT_LOGGED_IN: 'Attention: You are not logged in! There are fewer functions available when you plant anonymously. ',
   NOT_LOGGED_IN_REDEEM_GIFT: 'Attention: You are not logged in! Only as a registered user you can redeem vouchers.',
-  NOT_LOGGED_IN_TEXT: 'Only as a registered user you have your own profile, can create certificates and use vouchers.',
+  NOT_LOGGED_IN_TEXT: 'Only as a registered user you will automatically receive a donation receipt, get your own profile and can create certificates and vouchers.',
   ACCOUNT_Q: 'Do you have an account?',
-  NO_ACCOUNT_Q: "You don't have one?",
+  NO_ACCOUNT_Q: 'You do not have one?',
 
   NO_USER_LOGGED_IN: {
     TITLE: 'No user logged in!',
-    TEXT: "Anonym user can't create gifts."
+    TEXT: 'Anonymous users can not create gifts.'
   },
 
   AS_GIFT: 'As gift',
