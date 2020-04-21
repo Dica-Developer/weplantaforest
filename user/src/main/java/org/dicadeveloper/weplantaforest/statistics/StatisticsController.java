@@ -111,4 +111,23 @@ public class StatisticsController {
         return cal;
     }
 
+    @RequestMapping(value = Uris.USER_STATISTIC_PER_YEAR, method = RequestMethod.GET)
+    public ResponseEntity<?> getOverallUserStatistic() {
+        List<TreeAmountStatisticData> treeStatistic = statisticsRepository.getUserPerYear();
+        List<TreeAmountStatisticData> orderedList = new ArrayList<>();
+        orderedList.add(new TreeAmountStatisticData(0L, "2007"));
+
+        Calendar year2007 = new GregorianCalendar(2007, 1, 1);
+        int years = getDiffYears(year2007, new Date(System.currentTimeMillis()));
+
+        for (Integer i = 2007; i <= 2007 + years; i++) {
+            for (TreeAmountStatisticData entry : treeStatistic) {
+                if (null != entry.getLabel() && entry.getLabel().equals(i.toString())) {
+                    orderedList.add(entry);
+                }
+            }
+        }
+        return new ResponseEntity<>(orderedList, HttpStatus.OK);
+    }
+
 }

@@ -4,6 +4,7 @@ import Co2PerYear from './Co2PerYear';
 import TreesPerMonth from './TreesPerMonth';
 import TreesPerOrgType from './TreesPerOrgType';
 import TreesPerYear from './TreesPerYear';
+import UsersPerYear from './UserPerYear';
 
 require('./statisticsPage.less');
 
@@ -40,16 +41,16 @@ export default class StatisticsPage extends Component {
           <Co2PerYear />
           <div className="row">
             <div className="col-md-12">
+              <h2>{counterpart.translate('USERS_PER_YEAR')}</h2>
+            </div>
+          </div>
+          <UsersPerYear />
+          <div className="row">
+            <div className="col-md-12">
               <h2>{counterpart.translate('TREESPLANTED_PERDONORTYPE')}</h2>
             </div>
           </div>
           <TreesPerOrgType />
-          <div className="row">
-            <div className="col-md-12">
-              <h2>{counterpart.translate('TREESPLANTED_PERMONTH')}</h2>
-            </div>
-          </div>
-          <TreesPerMonth />
         </div>
       </div>
     );

@@ -24,6 +24,9 @@ public interface StatisticsRepository extends CrudRepository<Tree, Long> {
     public static final String CO2_PER_YEAR = "select new org.dicadeveloper.weplantaforest.statistics.Co2StatisticData(sum(tree.amount * tree.treeType.annualCo2SavingInTons * ((:time - "
             + " tree.plantedOn) " + " / 3.1536E10)), DATE_FORMAT(FROM_UNIXTIME(_plantedOn/1000), '%Y')) FROM Tree tree GROUP BY DATE_FORMAT(FROM_UNIXTIME(_plantedOn/1000), '%Y')";
 
+    public static final String USER_PER_YEAR_QUERY = "select new org.dicadeveloper.weplantaforest.statistics.TreeAmountStatisticData(count(_userId), DATE_FORMAT(FROM_UNIXTIME(_regDate/1000), "
+            + " '%Y')) FROM User GROUP BY DATE_FORMAT(FROM_UNIXTIME(_regDate/1000), '%Y')";
+
     @Query(value = TREES_PER_YEAR_QUERY)
     List<TreeAmountStatisticData> getTreesPerYear();
 
@@ -35,5 +38,8 @@ public interface StatisticsRepository extends CrudRepository<Tree, Long> {
 
     @Query(value = CO2_PER_YEAR)
     List<Co2StatisticData> getCo2PerYear(@Param("time") long timeOfMeasurement);
+
+    @Query(value = USER_PER_YEAR_QUERY)
+    List<TreeAmountStatisticData> getUserPerYear();
 
 }

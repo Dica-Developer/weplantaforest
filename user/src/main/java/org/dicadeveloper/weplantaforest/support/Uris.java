@@ -240,4 +240,6 @@ public class Uris {
 
     public static final String CONTACT = "/contact";
 
+    public static final String USER_STATISTIC_PER_YEAR = "/statistic/userPerYear";
+
 }
