@@ -39,7 +39,7 @@ public class PaymentHelper {
     @NonNull
     private Environment _env;
 
-    public static final String DEFAULT_ENCODING = "UTF-8";
+    public static final String DEFAULT_ENCODING = "UTF8";
 
     private final static DecimalFormat priceFormat = new DecimalFormat("#0.00");
 
