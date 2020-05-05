@@ -1,5 +1,8 @@
 package org.dicadeveloper.weplantaforest.statistics;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -26,6 +31,8 @@ import lombok.RequiredArgsConstructor;
 public class StatisticsController {
 
     private @NonNull StatisticsRepository statisticsRepository;
+
+    private @NonNull Co2Repository co2Repository;
 
     @RequestMapping(value = Uris.TREE_STATISTIC_PER_MONTH, method = RequestMethod.GET)
     public ResponseEntity<?> getTreeStatisticForYear(@RequestParam String year) {
@@ -49,7 +56,7 @@ public class StatisticsController {
         Calendar year2007 = new GregorianCalendar(2007, 1, 1);
         int years = getDiffYears(year2007, new Date(System.currentTimeMillis()));
 
-        for (Integer i = 2007; i <= 2007 + years; i++) {
+        for (Integer i = 2007; i <= (2007 + years); i++) {
             for (TreeAmountStatisticData entry : treeStatistic) {
                 if (entry.getLabel().equals(i.toString())) {
                     orderedList.add(entry);
@@ -67,33 +74,20 @@ public class StatisticsController {
 
     @RequestMapping(value = Uris.CO2_STATISTIC, method = RequestMethod.GET)
     public ResponseEntity<?> getCo2Statistic() {
-        List<Co2StatisticData> co2Statistic = statisticsRepository.getCo2PerYear(System.currentTimeMillis());
-        List<TreeAmountStatisticData> treeStatistic = statisticsRepository.getTreesPerYear();
-        List<Co2StatisticData> orderedList = new ArrayList<>();
-        Calendar year2007 = new GregorianCalendar(2007, 1, 1);
-        int years = getDiffYears(year2007, new Date(System.currentTimeMillis()));
+        List<Co2StatisticData> result = new ArrayList<>();
 
-        for (Integer i = 2007; i <= 2007 + years; i++) {
-            double amountOfCo2TillThisYear = 0;
-            for (Co2StatisticData entry : co2Statistic) {
-                if (entry.getLabel().equals(i.toString())) {
-                    for (TreeAmountStatisticData treeData : treeStatistic) {
-                        int year = Integer.valueOf(treeData.getLabel());
-                        if (i > year) {
-                            long amountOfTrees = treeData.getAmount();
-                            int diffOfYears = i - year;
-                            amountOfCo2TillThisYear += diffOfYears * amountOfTrees * 0.015;
-                        }
-                    }
-                    double valueThisYear = entry.getCo2();
-                    valueThisYear += amountOfCo2TillThisYear;
-                    entry.setCo2(valueThisYear);
-                    orderedList.add(entry);
-                    amountOfCo2TillThisYear = 0;
-                }
+        for (int year = 2008; year <= LocalDate.now().getYear() + 1; year++) {
+            LocalDateTime startDate = null;
+            if (year == (LocalDate.now().getYear() + 1)) {
+                startDate = LocalDateTime.now();
+            } else {
+                startDate = LocalDateTime.of(year, 1, 1, 0, 0);
             }
+            val co2 = co2Repository.getAllTreesAndCo2Saving(startDate.toInstant(ZoneOffset.UTC).toEpochMilli());
+            Co2StatisticData co2StatisticData = new Co2StatisticData(Math.floor(co2.getCo2()), String.valueOf(startDate.getYear() - 1));
+            result.add(co2StatisticData);
         }
-        return new ResponseEntity<>(orderedList, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     private int getDiffYears(Calendar first, Date last) {
