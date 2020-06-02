@@ -16,10 +16,10 @@ import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.val;
+
 @Service
 public class SimplePlantBagHelper extends AbstractPlantBagHelper {
-
-    private SimplePlantBag simplePlantPageData;
 
     @Autowired
     protected SimplePlantBagHelper(ProjectRepository projectRepository, ProjectArticleRepository projectArticleRepository, TreeTypeRepository treeTypeRepository, TreeRepository treeRepository) {
@@ -27,30 +27,31 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
     }
 
     public SimplePlantBag createPlantProposalForAmountOfTrees(long targetAmountOfTrees) throws IpatException {
-        List<ProjectArticle> projectArticles = initialize(targetAmountOfTrees);
+        val simplePlantPageData = new SimplePlantBag();
+        List<ProjectArticle> projectArticles = initialize(targetAmountOfTrees, simplePlantPageData);
         IpatPreconditions.checkArgument(projectArticles.size() > 0, ErrorCodes.NO_TREES_TO_PLANT);
 
         ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge(projectArticles);
-        addItemWithHighestMarge(projectArticles, articleWithHighestMarge);
-        addFurtherItems(projectArticles);
-        increaseAmountOfItemWithHighestMargeIfNeeded(articleWithHighestMarge);
+        addItemWithHighestMarge(projectArticles, articleWithHighestMarge, simplePlantPageData);
+        addFurtherItems(projectArticles, simplePlantPageData);
+        increaseAmountOfItemWithHighestMargeIfNeeded(articleWithHighestMarge, simplePlantPageData);
         return simplePlantPageData;
     }
 
     public SimplePlantBag createPlantProposalForAmountOfTrees(String projectName, long targetAmountOfTrees) throws IpatException {
-        List<ProjectArticle> projectArticles = initialize(projectName, targetAmountOfTrees);
+        val simplePlantPageData = new SimplePlantBag();
+        List<ProjectArticle> projectArticles = initialize(projectName, targetAmountOfTrees, simplePlantPageData);
         IpatPreconditions.checkArgument(projectArticles.size() > 0, ErrorCodes.NO_TREES_TO_PLANT);
 
         ProjectArticle articleWithHighestMarge = findProjectArticleWithHighestMarge(projectArticles);
-        addItemWithHighestMarge(projectArticles, articleWithHighestMarge);
-        addFurtherItems(projectArticles);
-        increaseAmountOfItemWithHighestMargeIfNeeded(articleWithHighestMarge);
+        addItemWithHighestMarge(projectArticles, articleWithHighestMarge, simplePlantPageData);
+        addFurtherItems(projectArticles, simplePlantPageData);
+        increaseAmountOfItemWithHighestMargeIfNeeded(articleWithHighestMarge, simplePlantPageData);
         return simplePlantPageData;
     }
 
-    private List<ProjectArticle> initialize(long targetAmountOfTrees) {
+    private List<ProjectArticle> initialize(long targetAmountOfTrees, final SimplePlantBag simplePlantPageData) {
         List<ProjectArticle> projectArticles = new ArrayList<>();
-        simplePlantPageData = new SimplePlantBag();
         List<SimplePlantPageItem> simplePlantPageItems = new ArrayList<>();
         simplePlantPageData.setPlantItems(simplePlantPageItems);
         simplePlantPageData.setTargetAmountOfTrees(targetAmountOfTrees);
@@ -58,9 +59,8 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         return projectArticles;
     }
 
-    private List<ProjectArticle> initialize(String projectName, long targetAmountOfTrees) {
+    private List<ProjectArticle> initialize(String projectName, long targetAmountOfTrees, final SimplePlantBag simplePlantPageData) {
         List<ProjectArticle> projectArticles = new ArrayList<>();
-        simplePlantPageData = new SimplePlantBag();
         List<SimplePlantPageItem> simplePlantPageItems = new ArrayList<>();
         simplePlantPageData.setPlantItems(simplePlantPageItems);
         simplePlantPageData.setTargetAmountOfTrees(targetAmountOfTrees);
@@ -68,8 +68,8 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         return projectArticles;
     }
 
-    private void addItemWithHighestMarge(List<ProjectArticle> projectArticles, ProjectArticle article) {
-        long amountOfTreesForHighestMarge = (long) Math.round((simplePlantPageData.getTargetAmountOfTrees() * 0.7));
+    private void addItemWithHighestMarge(List<ProjectArticle> projectArticles, ProjectArticle article, SimplePlantBag simplePlantPageData) {
+        long amountOfTreesForHighestMarge = Math.round((simplePlantPageData.getTargetAmountOfTrees() * 0.7));
 
         SimplePlantPageItem itemWithHighestMarge = createPlantItemFromArticle(article);
 
@@ -83,7 +83,7 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         projectArticles.remove(article);
     }
 
-    private void increaseAmountOfItemWithHighestMargeIfNeeded(ProjectArticle article) {
+    private void increaseAmountOfItemWithHighestMargeIfNeeded(ProjectArticle article, SimplePlantBag simplePlantPageData) {
         if (simplePlantPageData.getDiffToTargetAmount() > 0) {
             long diffTotargetAmount = simplePlantPageData.getDiffToTargetAmount();
 
@@ -99,7 +99,7 @@ public class SimplePlantBagHelper extends AbstractPlantBagHelper {
         }
     }
 
-    private void addFurtherItems(List<ProjectArticle> projectArticles) {
+    private void addFurtherItems(List<ProjectArticle> projectArticles, SimplePlantBag simplePlantPageData) {
         boolean treeCouldBeAdded = false;
         do {
             treeCouldBeAdded = false;
