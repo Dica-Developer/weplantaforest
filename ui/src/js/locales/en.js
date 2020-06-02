@@ -277,6 +277,10 @@ module.exports = {
     LAST_YEAR: 'Last year',
     TOTAL: 'Total'
   },
+  PRIVATE: 'Private',
+  COMMERCIAL: 'Companies',
+  NONPROFIT: 'NGOs',
+  EDUCATIONAL: 'Schools',
 
   CREATE_PLANTING: 'Create planting',
   WHEN: 'When',

@@ -53,7 +53,7 @@ public class UserReportData {
     Boolean newsletter;
 
     public String getOrganizationType() {
-        return organizationType.getDescription();
+        return organizationType.toString();
     }
 
     public String getNewsletter() {

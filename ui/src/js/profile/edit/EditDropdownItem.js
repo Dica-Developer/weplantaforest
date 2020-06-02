@@ -84,7 +84,7 @@ export default class EditDropdownItem extends Component {
           <select disabled={!this.state.edit} onChange={this.updateContent.bind(this)} style={{ width: this.props.width + 'px' }} ref="select" className={this.state.edit ? '' : 'no-display'}>
             {this.props.children}
           </select>
-          <input type="text" value={this.props.content} ref="content" disabled={true} className={this.state.edit ? 'no-display' : ''} />
+          <input type="text" value={counterpart.translate(this.props.content)} ref="content" disabled={true} className={this.state.edit ? 'no-display' : ''} />
         </div>
         <div className="col-md-3">{link}</div>
       </div>

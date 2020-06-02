@@ -134,7 +134,7 @@ export default class UserDetails extends Component {
                 </td>
                 <td>
                   <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>
-                  {this.props.user.organizationType}
+                  {this.props.user.organizationType ? counterpart.translate(this.props.user.organizationType) : ''}
                 </td>
               </tr>
               <tr>
