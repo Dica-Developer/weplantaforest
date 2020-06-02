@@ -2,8 +2,6 @@ package org.dicadeveloper.weplantaforest.payment;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +16,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.message.BasicNameValuePair;
@@ -29,6 +27,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import lombok.NonNull;
+import lombok.val;
 
 @Component
 public class PaymentHelper {
@@ -85,19 +84,18 @@ public class PaymentHelper {
     }
 
     public String postRequestSepa(Cart cart, PaymentData paymentData) {
-        String address = _env.getProperty("bfs.url");
-        try {
-            CloseableHttpClient httpClient;
-            // on staging and production the requests has to be routed
-            // through a proxy
-            if (_env.getProperty("proxy.host") != null) {
-                HttpHost proxy = new HttpHost(_env.getProperty("proxy.host"), Integer.parseInt(_env.getProperty("proxy.port")));
-                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-                httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
-            } else {
-                httpClient = HttpClients.custom().build();
-            }
-
+        HttpClientBuilder httpClientBuilder;
+        // on staging and production the requests has to be routed
+        // through a proxy
+        if (_env.getProperty("proxy.host") != null) {
+            val proxy = new HttpHost(_env.getProperty("proxy.host"), Integer.parseInt(_env.getProperty("proxy.port")));
+            val routePlanner = new DefaultProxyRoutePlanner(proxy);
+            httpClientBuilder = HttpClients.custom().setRoutePlanner(routePlanner);
+        } else {
+            httpClientBuilder = HttpClients.custom();
+        }
+        val address = _env.getProperty("bfs.url");
+        try (val httpClient = httpClientBuilder.build()) {
             HttpPost httpPost = new HttpPost(address);
 
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
@@ -106,7 +104,7 @@ public class PaymentHelper {
                 urlParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
 
-            httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
+            httpPost.setEntity(new UrlEncodedFormEntity(urlParameters, "utf-8"));
 
             HttpResponse response = httpClient.execute(httpPost);
 
@@ -116,7 +114,6 @@ public class PaymentHelper {
             while ((line = rd.readLine()) != null) {
                 result.append(line);
             }
-            httpClient.close();
             return result.toString();
         } catch (final Exception e) {
             LOG.error("unable to do post request to '" + address + "'", e);
@@ -149,41 +146,36 @@ public class PaymentHelper {
 
         String formattedPrice = priceFormat.format(cart.getTotalPrice().doubleValue()).toString();
         formattedPrice = formattedPrice.replace(",", ".");
-        try {
-            params.put("betrag", URLEncoder.encode(formattedPrice, DEFAULT_ENCODING));
+        params.put("betrag", formattedPrice);
 
-            params.put("anrede", URLEncoder.encode(paymentData.getSalutation(), DEFAULT_ENCODING));
-            params.put("vorname", URLEncoder.encode(paymentData.getForename(), DEFAULT_ENCODING));
-            params.put("nachname", URLEncoder.encode(paymentData.getName(), DEFAULT_ENCODING));
-            params.put("strasse", URLEncoder.encode(paymentData.getStreet(), DEFAULT_ENCODING));
-            params.put("land", URLEncoder.encode(paymentData.getCountry(), DEFAULT_ENCODING));
-            params.put("ort", URLEncoder.encode(paymentData.getCity(), DEFAULT_ENCODING));
-            params.put("plz", URLEncoder.encode(paymentData.getZip(), DEFAULT_ENCODING));
-            params.put("email", URLEncoder.encode(paymentData.getMail(), DEFAULT_ENCODING));
+        params.put("anrede", paymentData.getSalutation());
+        params.put("vorname", paymentData.getForename());
+        params.put("nachname", paymentData.getName());
+        params.put("strasse", paymentData.getStreet());
+        params.put("land", paymentData.getCountry());
+        params.put("ort", paymentData.getCity());
+        params.put("plz", paymentData.getZip());
+        params.put("email", paymentData.getMail());
 
-            params.put("verwendungszweck", "Spende I Plant A Tree");
-            params.put("quittung", URLEncoder.encode(paymentData.getReceipt(), DEFAULT_ENCODING));
-            params.put("zahlungsart", URLEncoder.encode(paymentData.getPaymentMethod(), DEFAULT_ENCODING));
-            params.put("sepa_data[iban]", URLEncoder.encode(paymentData.getIban(), DEFAULT_ENCODING));
-            params.put("sepa_data[bic]", URLEncoder.encode(paymentData.getBic(), DEFAULT_ENCODING));
+        params.put("verwendungszweck", "Spende I Plant A Tree");
+        params.put("quittung", paymentData.getReceipt());
+        params.put("zahlungsart", paymentData.getPaymentMethod());
+        params.put("sepa_data[iban]", paymentData.getIban());
+        params.put("sepa_data[bic]", paymentData.getBic());
 
-            // optional parameters
-            params.put("ret_success_url", Uris.PAYMENT_SUCCESS);
-            params.put("ret_error_url", Uris.PAYMENT_ERROR);
-            params.put("trackingcode", "Cart-ID: " + cart.getId());
+        // optional parameters
+        params.put("ret_success_url", Uris.PAYMENT_SUCCESS);
+        params.put("ret_error_url", Uris.PAYMENT_ERROR);
+        params.put("trackingcode", "Cart-ID: " + cart.getId());
 
-            if (null != paymentData.getCompany() && !paymentData.getCompany().isEmpty()) {
-                params.put("firma", URLEncoder.encode(paymentData.getCompany(), DEFAULT_ENCODING));
-            }
-            if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon().isEmpty()) {
-                params.put("firma_zusatz", URLEncoder.encode(paymentData.getCompanyAddon(), DEFAULT_ENCODING));
-            }
-            if (null != paymentData.getComment() && !paymentData.getComment().isEmpty()) {
-                params.put("kommentar", URLEncoder.encode(paymentData.getComment(), DEFAULT_ENCODING));
-            }
-
-        } catch (UnsupportedEncodingException e) {
-            LOG.error("Error on payment via sepa.", e);
+        if (null != paymentData.getCompany() && !paymentData.getCompany().isEmpty()) {
+            params.put("firma", paymentData.getCompany());
+        }
+        if (null != paymentData.getCompanyAddon() && !paymentData.getCompanyAddon().isEmpty()) {
+            params.put("firma_zusatz", paymentData.getCompanyAddon());
+        }
+        if (null != paymentData.getComment() && !paymentData.getComment().isEmpty()) {
+            params.put("kommentar", paymentData.getComment());
         }
 
         return params;
