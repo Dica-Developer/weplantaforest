@@ -143,7 +143,7 @@ module.exports = {
 
   FIELDS_EMPTY: {
     title: 'Eingabefelder sind leer!',
-    text: 'Bitte füllen Sie alle Eingabefelder aus!'
+    text: 'Bitte füll alle Eingabefelder aus!'
   },
   PASSWORDS_DO_NOT_MATCH: {
     title: 'Passwörter stimmen nicht überein!',
@@ -257,10 +257,10 @@ module.exports = {
   ONE_MORE_OFFER: 'Weiters Angebot abgeben',
 
   FIRST_AND_LASTNAME: 'Vorname Nachname',
-  FIRST_AND_LASTNAME_PLACEHOLDER: 'Bitte geben Sie Ihren Vor- und Nachnamen ein.',
-  MAIL_PLACEHOLDER: 'Bitte geben Sie Ihre E-mailadresse ein.',
+  FIRST_AND_LASTNAME_PLACEHOLDER: 'Bitte gib Deinen Vor- und Nachnamen ein.',
+  MAIL_PLACEHOLDER: 'Bitte gib Deine E-Mailadresse ein.',
   MESSAGE: 'Nachricht',
-  MESSAGE_PLACEHOLDER: 'Bitte geben Sie Ihre Nachricht ein.',
+  MESSAGE_PLACEHOLDER: 'Bitte gib Deine Nachricht ein.',
   SEND_OFFER: 'Angebot abschicken',
   CAPTCHA_HINT: 'Bitte hier die 4 Zeichen aus dem Bild eingeben',
   CAPTCHA_ERROR: {
@@ -387,7 +387,7 @@ module.exports = {
 
   WELCOME: 'Herzlich willkommen',
 
-  FILL_IN_FIELDS: 'Bitte füllen Sie alle Felder zur Berechnung aus.',
+  FILL_IN_FIELDS: 'Bitte füll alle Felder zur Berechnung aus.',
   CO2_CALCULATOR: 'CO<sub>2</sub>-Rechner',
   FOOD: 'Ernährung',
   FOOD_Q: 'Wie setzt sich Deine Ernährung zusammen?',
@@ -410,18 +410,18 @@ module.exports = {
   RESULT: 'Ergebnis',
   MOBILITY: 'Mobilität',
   FUEL_Q: 'Welchen Kraftstoff benutzt Dein Auto?',
-  GAS: 'Benzin',
+  PETROL: 'Benzin',
   DIESEL: 'Diesel',
   NATURAL_GAS: 'Erdgas',
   LIQUID_GAS: 'Flüssiggas',
   ELECTRIC: 'Elektro',
   CONSUMPTION_Q: 'Wie hoch ist dessen Verbrauch auf 100km (bitte ohne Einheit angeben)?',
-  ENTER_CONSUMPTION: 'Bitte geben Sie den Verbrauch ein.',
+  ENTER_CONSUMPTION: 'Bitte gib den Verbrauch ein.',
   HOW_MANY_KM_Q: 'Wieviele km bist Du gefahren?',
-  ENTER_KM: 'Bitte geben Sie die gefahrene Strecke in km ein.',
+  ENTER_KM: 'Bitte gib die gefahrene Strecke in km ein.',
   PRODUCTION_EMISSION: 'Produktionsemission',
   HOW_MANY_KM_FLY_Q: 'Wieviele km bist Du geflogen?',
-  ENTER_FLY_KM: 'Bitte geben Sie die gefahrene Strecke in km ein.',
+  ENTER_FLY_KM: 'Bitte gib die geflogene Strecke in km ein.',
   LIVING: 'Wohnen',
   HOUSE_Q: 'In welcher Hausart wohnst Du?',
   SINGLE_HOUSE_UNRENOVATED: 'Einfamilienhaus unsaniert',
@@ -438,17 +438,17 @@ module.exports = {
   GAS: 'Gas',
   HEATING_OIL: 'Heizöl',
   WOOD: 'Holz',
-  COAL: 'Strinkohle',
+  COAL: 'Steinkohle',
   BROWN_COAL: 'Braunkohle',
   LIVING_SPACE: 'Wohnfläche in m²',
-  ENETER_LIVING_SPACE: 'Bitte geben Sie die Wohnfläche ein.',
+  ENETER_LIVING_SPACE: 'Bitte gib die Wohnfläche ein.',
   HOW_MANY_PEOPLE_Q: 'Wieviele Personen leben in dem Haushalt?',
   OR_MORE: 'oder mehr',
   CURRENT_TYPE_Q: 'Welche Stromart benutzt Du?',
   GREEN_POWER: 'Ökostrom',
   MIXED_POWER: 'Strommix',
   POWER_CONSUMPTION: 'Stromverbrauch in kWh',
-  ENTER_POWER_CONSUMPTION: 'Bitte geben Sie den Stromverbrauch ein.',
+  ENTER_POWER_CONSUMPTION: 'Bitte gib den Stromverbrauch ein.',
   TOTAL_RESULT: 'Gesamtergebnis',
 
   DATE_IN_FUTURE_ERROR: {

@@ -409,7 +409,7 @@ module.exports = {
   RESULT: 'Result',
   MOBILITY: 'Mobility',
   FUEL_Q: 'Which fuel do you fill in your car?',
-  GAS: 'gas',
+  PETROL: 'gas',
   DIESEL: 'diesel',
   NATURAL_GAS: 'natural gas',
   LIQUID_GAS: 'liquid natural gas',

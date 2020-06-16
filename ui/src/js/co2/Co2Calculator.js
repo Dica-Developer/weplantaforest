@@ -46,24 +46,20 @@ export default class Co2Calculator extends Component {
   calcMobilityResult() {
     let mobilityResult = 0.01 * parseFloat(this.refs['fuel'].value) * parseFloat(this.refs['consumption'].value) * parseFloat(this.refs['range'].value);
     let mobilityProduction = 0.01 * parseFloat(this.refs['fuel'].value) * parseFloat(this.refs['consumption'].value) * 30000;
-    if (mobilityResult !== 0 && mobilityProduction !== 0) {
-      this.state.mobilityMessage = '';
-      this.state.mobilityProductionMessage = '';
-      this.state.mobilityResult = mobilityResult;
-      this.state.mobilityProduction = mobilityProduction;
-      this.forceUpdate();
-      this.calcOverallResult();
-    }
+    this.state.mobilityMessage = '';
+    this.state.mobilityProductionMessage = '';
+    this.state.mobilityResult = isNaN(mobilityResult) ? 0 : mobilityResult;
+    this.state.mobilityProduction = isNaN(mobilityProduction) ? 0 : mobilityProduction;
+    this.forceUpdate();
+    this.calcOverallResult();
   }
 
   calcFlightResult() {
     let flightResult = 0.38 * parseFloat(this.refs['flight-range'].value);
-    if (flightResult !== 0) {
-      this.state.flightMessage = '';
-      this.state.flightResult = flightResult;
-      this.forceUpdate();
-      this.calcOverallResult();
-    }
+    this.state.flightMessage = '';
+    this.state.flightResult = isNaN(flightResult) ? 0 : flightResult;
+    this.forceUpdate();
+    this.calcOverallResult();
   }
 
   calcHomeResult() {
@@ -203,7 +199,7 @@ export default class Co2Calculator extends Component {
           <div className="col-md-6 item-align-start">
             <select className="form-control" ref="fuel" defaultValue={0} onChange={this.calcFoodResult.bind(this)}>
               <option value={0}>{counterpart.translate('SELECT')}</option>
-              <option value={2.33}>{counterpart.translate('GAS')}</option>
+              <option value={2.33}>{counterpart.translate('PETROL')}</option>
               <option value={2.64}>{counterpart.translate('DIESEL')}</option>
               <option value={2.79}>{counterpart.translate('NATURAL_GAS')}</option>
               <option value={1.64}>{counterpart.translate('LIQUID_GAS')}</option>
@@ -211,7 +207,7 @@ export default class Co2Calculator extends Component {
             </select>
           </div>
           <div className="col-md-6 item-align-start">
-            <p>{counterpart.translate('CONSUMPTION_Q')}*</p>
+            <p>{counterpart.translate('CONSUMPTION_Q')}</p>
           </div>
           <div className="col-md-6 item-align-start">
             <input className="form-control" ref="consumption" type="text" placeholder={counterpart.translate('ENTER_CONSUMPTION')} onBlur={this.calcMobilityResult.bind(this)}></input>
@@ -219,40 +215,15 @@ export default class Co2Calculator extends Component {
         </div>
         <div className="row">
           <div className="col-md-6 item-align-start">
-            <p>{counterpart.translate('HOW_MANY_KM_Q')}*</p>
+            <p>{counterpart.translate('HOW_MANY_KM_Q')}</p>
           </div>
           <div className="col-md-6 item-align-start">
             <input className="form-control" ref="range" type="text" placeholder={counterpart.translate('ENTER_KM')} onBlur={this.calcMobilityResult.bind(this)}></input>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6 item-align-start results">
-            <div className="bold">
-              {counterpart.translate('RESULT')}:
-              <br />
-              {counterpart.translate('PRODUCTION_EMISSION')}:
-            </div>
-          </div>
-          <div className="col-md-6 item-align-start results">
-            <div className="bold">
-              {this.state.mobilityMessage}
-              <br />
-              {this.state.mobilityProductionMessage}
-              {this.state.mobilityResult !== 0 && (
-                <span>
-                  {Accounting.formatNumber(this.state.mobilityResult, 3, '.', ',')} kg CO<sub>2</sub>
-                </span>
-              )}
-              <br />
-              {this.state.mobilityProduction !== 0 && (
-                <span>
-                  {Accounting.formatNumber(this.state.mobilityProduction, 3, '.', ',')} kg CO<sub>2</sub>
-                </span>
-              )}
-            </div>
-          </div>
           <div className="col-md-6 item-align-start">
-            <p>{counterpart.translate('HOW_MANY_KM_FLY_Q')}*</p>
+            <p>{counterpart.translate('HOW_MANY_KM_FLY_Q')}</p>
           </div>
           <div className="col-md-6 item-align-start">
             <input className="form-control" ref="flight-range" type="text" placeholder={counterpart.translate('ENTER_FLY_KM')} onBlur={this.calcFlightResult.bind(this)}></input>
@@ -262,10 +233,9 @@ export default class Co2Calculator extends Component {
           </div>
           <div className="col-md-6 item-align-start results">
             <div className="bold">
-              {this.state.flightResult}
               {this.state.flightMessage !== 0 && (
                 <span>
-                  {Accounting.formatNumber(this.state.flightResult, 3, '.', ',')} kg CO<sub>2</sub>
+                  {Accounting.formatNumber(this.state.mobilityResult + this.state.mobilityProduction + this.state.flightResult, 3, '.', ',')} kg CO<sub>2</sub>
                 </span>
               )}
             </div>
@@ -307,7 +277,7 @@ export default class Co2Calculator extends Component {
             </select>
           </div>
           <div className="col-md-6 item-align-start">
-            <p>{counterpart.translate('LIVING_SPACE')}:*</p>
+            <p>{counterpart.translate('LIVING_SPACE')}:</p>
           </div>
           <div className="col-md-6 item-align-start">
             <input className="form-control" ref="living-space" type="text" placeholder={counterpart.translate('ENETER_LIVING_SPACE')} onBlur={this.calcHomeResult.bind(this)}></input>
@@ -337,7 +307,7 @@ export default class Co2Calculator extends Component {
             </select>
           </div>
           <div className="col-md-6 item-align-start">
-            <p>{counterpart.translate('POWER_CONSUMPTION')}:*</p>
+            <p>{counterpart.translate('POWER_CONSUMPTION')}:</p>
           </div>
           <div className="col-md-6 item-align-start">
             <input className="form-control" ref="power-consumption" placeholder={counterpart.translate('ENTER_POWER_CONSUMPTION')} onBlur={this.calcHomeResult.bind(this)}></input>
