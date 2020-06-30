@@ -192,7 +192,7 @@ export default class TeamPage extends Component {
   callPage(page) {
     var that = this;
     axios
-      .get('http://localhost:8081/trees/team/' + encodeURIComponent(this.props.params.teamName) + '?page=' + page + '&size=15')
+      .get('http://localhost:8081/trees/team?teamName=' + encodeURIComponent(this.props.params.teamName) + '&page=' + page + '&size=15')
       .then(function(response) {
         var result = response.data;
         that.setState({

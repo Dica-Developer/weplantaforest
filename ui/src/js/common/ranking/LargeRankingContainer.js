@@ -61,10 +61,12 @@ export default class LargeRankingContainer extends Component {
           </div>
         </div>
         <div ref="ranking" className={(this.state.fade ? 'fadeOut' : 'fadeIn') + ' row rankingWrapper'}>
-          <div className="col-md-4">
+          <div className="col-md-4 widthforty">
             <a className={'pagingLink left ' + leftIconVisible} role="button" onClick={this.callPreviousPage.bind(this)}>
               <span className="glyphicon glyphicon-chevron-left"></span>
             </a>
+          </div>
+          <div className="col-md-4">
             {this.props.children.map(function(child, i) {
               if (i < 5) {
                 return child;
@@ -79,14 +81,16 @@ export default class LargeRankingContainer extends Component {
             })}
           </div>
           <div className="col-md-4">
-            <a className={'pagingLink right ' + rightIconVisible} role="button" onClick={this.callNextPage.bind(this)}>
-              <span className="glyphicon glyphicon-chevron-right"></span>
-            </a>
             {this.props.children.map(function(child, i) {
               if (i >= 10) {
                 return child;
               }
             })}
+          </div>
+          <div className="col-md-4 widthforty">
+            <a className={'pagingLink right ' + rightIconVisible} role="button" onClick={this.callNextPage.bind(this)}>
+              <span className="glyphicon glyphicon-chevron-right"></span>
+            </a>
           </div>
         </div>
       </div>
