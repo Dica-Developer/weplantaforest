@@ -14,7 +14,7 @@ export default class ProjectsPage extends Component {
       completedProjects: {
         content: []
       },
-      completeProjectsPageSize: 3,
+      completeProjectsPageSize: 9,
       activeProjects: []
     };
   }
@@ -87,15 +87,13 @@ export default class ProjectsPage extends Component {
               })}
             </div>
             <div className="col-md-12">
-
               <div className="align-center border-top">
                 <a className={!this.state.completedProjects.last ? 'pagingLink' : 'no-display'} role="button" onClick={this.moreCompletedProjects.bind(this)}>
                   <div>
                     <span className={'glyphicon glyphicon-menu-down'}></span>
-                      </div>
-                        </a>
-                          </div>
-
+                  </div>
+                </a>
+              </div>
             </div>
             <div className="bottom col-md-12">
               <p>{counterpart.translate('AREA_QUESTION')}</p>
