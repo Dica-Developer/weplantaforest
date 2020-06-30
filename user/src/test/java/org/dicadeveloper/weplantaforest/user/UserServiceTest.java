@@ -396,7 +396,7 @@ public class UserServiceTest {
         assertEquals("homepage", userData.getHomepage());
         assertEquals("edited_user@iplantatree.de", userData.getMail());
         assertEquals("JA", userData.getNewsletter());
-        assertEquals(OrganizationType.COMMERCIAL.getDescription(), userData.getOrganizationType());
+        assertEquals(OrganizationType.COMMERCIAL, userData.getOrganizationType());
         assertEquals(Language.ENGLISH, userData.getLang());
 
     }
