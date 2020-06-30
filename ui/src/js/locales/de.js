@@ -561,7 +561,7 @@ module.exports = {
   COORPORATION: 'Koorperation',
   FIRSTNAME_LASTNAME: 'Vorname Nachname',
   PHONE_NO: 'Telefonnummer',
-  YOUR_MESSAGE: 'Ihre Nachricht',
+  YOUR_MESSAGE: 'Nachricht',
   SEND: 'Abschicken',
 
   FIRSTNAME_LASTNAME_PLACEHOLDER: 'Bitte gib deinen Vor- und Nachnamen ein.',

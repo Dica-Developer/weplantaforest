@@ -100,7 +100,7 @@ export default class Contact extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="form-group">
+          <div className="form-group" className="no-display">
             <label htmlFor="contact_type">{counterpart.translate('YOUR_CONCERN')}:</label>
             <select className="form-control" id="contact_type" defaultValue={0} onChange={e => this.updateValue('reason', e)}>
               <option value={'Frage'}>{counterpart.translate('QUESTION')}</option>
