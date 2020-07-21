@@ -124,7 +124,7 @@ export default class CartOverview extends Component {
         {
           key: 'id',
           name: 'ID',
-          width: 60,
+          width: 10,
           filterable: true,
           sortable: true,
           visible: false
@@ -132,7 +132,7 @@ export default class CartOverview extends Component {
         {
           key: 'user',
           name: 'User',
-          width: 120,
+          width: 170,
           filterable: true,
           sortable: true,
           visible: true
@@ -196,15 +196,15 @@ export default class CartOverview extends Component {
         {
           key: 'details',
           name: 'Details',
-          width: 50,
+          width: 60,
           filterable: false,
           sortable: false,
           visible: true
         },
         {
           key: 'receiptable',
-          name: 'Quittung',
-          width: 60,
+          name: 'SQ',
+          width: 30,
           filterable: false,
           sortable: false,
           visible: true
@@ -212,15 +212,15 @@ export default class CartOverview extends Component {
         {
           key: 'stateChange',
           name: 'Status wechseln',
-          width: 120,
+          width: 110,
           filterable: false,
           sortable: false,
           visible: true
         },
         {
           key: 'sendReceipt',
-          name: 'Quittung verschicken',
-          width: 140,
+          name: 'SQ senden',
+          width: 100,
           filterable: false,
           sortable: false,
           visible: true
@@ -651,6 +651,7 @@ export default class CartOverview extends Component {
               rowsCount={this.getSize()}
               onGridSort={this.handleGridSort.bind(this)}
               minHeight={800}
+              rowHeight={25}
               toolbar={<Toolbar enableFilter={true} />}
               onAddFilter={this.handleFilterChange.bind(this)}
               onClearFilters={this.onClearFilters.bind(this)}
