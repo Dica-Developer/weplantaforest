@@ -544,6 +544,7 @@ export default class UserOverview extends Component {
               rowsCount={this.getSize()}
               onGridSort={this.handleGridSort.bind(this)}
               minHeight={800}
+              rowHeight={25}
               onGridRowsUpdated={this.onGridRowsUpdated.bind(this)}
               enableCellSelect={true}
               toolbar={<Toolbar enableFilter={true} />}

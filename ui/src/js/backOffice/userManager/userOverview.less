@@ -1,6 +1,14 @@
 @import '../../../less/basecolors.less';
 
 .userOverview {
+  .react-grid-Canvas {
+    width: 100% !important;
+  }
+
+  .react-grid-HeaderCell {
+    padding: 2px;
+  }
+
   .row {
     background-color: #e5e5e5;
     margin-left: 0;
@@ -29,7 +37,7 @@
   .glyphicon-ok,
   .glyphicon-pencil,
   .glyphicon-remove {
-    font-size: 20px;
+    font-size: 15px;
   }
   .glyphicon-ok,
   .glyphicon-floppy-open {
@@ -59,6 +67,7 @@
   .react-grid-Container {
     .iconButton {
       a {
+        padding: 0px;
         background-color: #fff;
         .glyphicon-pencil {
           color: #000;
