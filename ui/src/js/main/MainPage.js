@@ -58,7 +58,7 @@ export default class MainPage extends Component {
       });
 
     axios
-      .get('http://localhost:8081/ranking/bestOrgType/PRIVATE?page=0&size=5&lastYear=false')
+      .get('http://localhost:8081/ranking/bestOrgType/PRIVATE?page=0&size=5&lastYear=true')
       .then(function(response) {
         var result = response.data;
         that.setState({ bestUserRanking: result });
@@ -68,7 +68,7 @@ export default class MainPage extends Component {
       });
 
     axios
-      .get('http://localhost:8081/ranking/bestOrgType/COMMERCIAL?page=0&size=5&lastYear=false')
+      .get('http://localhost:8081/ranking/bestOrgType/COMMERCIAL?page=0&size=5&lastYear=true')
       .then(function(response) {
         var result = response.data;
         that.setState({ bestCompanyRanking: result });
