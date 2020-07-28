@@ -402,16 +402,18 @@ export default class CartOverview extends Component {
   }
 
   createDetailIcon(id) {
+    var that = this;
     return (
       <div className="edit-icon">
         <span
           className="glyphicon glyphicon-list-alt"
           aria-hidden="true"
-          onMouseOver={event => {
-            this.getCartDetails(id, event);
-          }}
-          onMouseLeave={event => {
-            this.hideCartDetails(event);
+          onClick={event => {
+            if ($.isEmptyObject(that.state.cartDetails)) {
+              this.getCartDetails(id, event);
+            } else {
+              this.hideCartDetails(event);
+            }
           }}
         ></span>
       </div>
@@ -421,7 +423,7 @@ export default class CartOverview extends Component {
   createStateChangeDropdown(id) {
     return (
       <div>
-        <select onChange={event => this.changeStatusOfCart(id, event)}>
+        <select onClick={event => event.stopPropagation()} onChange={event => this.changeStatusOfCart(id, event)}>
           <option></option>
           <option value="CALLBACK">CALLBACK</option>
           <option value="VERIFIED">VERIFIED</option>
