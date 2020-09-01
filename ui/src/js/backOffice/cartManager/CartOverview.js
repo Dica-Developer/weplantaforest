@@ -374,23 +374,19 @@ export default class CartOverview extends Component {
 
   changeReceiptableFlag(id, event, receipt) {
     let value = event.target.checked;
+    let thatInputField = event.target;
     var that = this;
+
     axios
       .post('http://localhost:8083/cart/receiptable?cartId=' + id + '&receiptable=' + value, {}, this.state.restConfig)
       .then(function(response) {
+        thatInputField.checked = value;
         for (var cart in that.state.carts) {
           if (that.state.carts[cart].id == id) {
             that.state.carts[cart].receiptable = value;
             break;
           }
         }
-        for (var row in that.state.rows) {
-          if (that.state.rows[row].id == id) {
-            that.state.rows[row].receiptable = that.createReceiptCheckbox(id, value, receipt);
-            break;
-          }
-        }
-        that.forceUpdate();
       })
       .catch(function(response) {
         that.refs.notification.addNotification(
