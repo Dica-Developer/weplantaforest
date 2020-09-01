@@ -29,15 +29,13 @@ public class PdfCertificateView {
 
     private String _imagePath;
 
-    private final static Font textFontForCircle = new Font(FontFamily.TIMES_ROMAN, 26, Font.ITALIC, BaseColor.WHITE);
-
     PdfHelper pdfHelper = new PdfHelper();
 
     public void writePdfDataToOutputStream(OutputStream toWrite, Map<String, String> pdfTexts, String imagePath, String languageShortname) throws Exception {
         // create pdf
         final Document doc = new Document();
         final PdfWriter pdfWriter = PdfWriter.getInstance(doc, toWrite);
-        pdfWriter.setEncryption(null, null, PdfWriter.ALLOW_DEGRADED_PRINTING | PdfWriter.ALLOW_PRINTING, PdfWriter.STANDARD_ENCRYPTION_128);
+        pdfWriter.setEncryption(null, null, ~(PdfWriter.ALLOW_MODIFY_CONTENTS), PdfWriter.STANDARD_ENCRYPTION_128);
 
         final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"), Locale.GERMAN);
         cal.setTimeInMillis(System.currentTimeMillis());

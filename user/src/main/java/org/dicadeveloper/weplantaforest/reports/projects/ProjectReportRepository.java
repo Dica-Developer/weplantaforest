@@ -1,14 +1,13 @@
 package org.dicadeveloper.weplantaforest.reports.projects;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 import org.dicadeveloper.weplantaforest.projects.Project;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
-import com.ibm.dtfj.corereaders.PageCache.Page;
 
 public interface ProjectReportRepository extends CrudRepository<Project, Long> {
 

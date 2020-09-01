@@ -32,7 +32,7 @@ public class PdfGiftView {
         // create pdf
         final Document doc = new Document();
         final PdfWriter pdfWriter = PdfWriter.getInstance(doc, toWrite);
-        pdfWriter.setEncryption(null, null, PdfWriter.ALLOW_COPY, PdfWriter.STANDARD_ENCRYPTION_128);
+        pdfWriter.setEncryption(null, null, ~(PdfWriter.ALLOW_MODIFY_CONTENTS), PdfWriter.STANDARD_ENCRYPTION_128);
         _imagePath = imagePath;
 
         doc.open();
