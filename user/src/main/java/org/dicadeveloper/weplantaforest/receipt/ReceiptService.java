@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Locale;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dicadeveloper.weplantaforest.cart.Cart;
@@ -36,6 +38,7 @@ public class ReceiptService {
 
     protected final Log LOG = LogFactory.getLog(ReceiptService.class.getName());
 
+    @Transactional
     public void sendReceiptMail(Long userId, Long receiptId) {
         try {
             Receipt receipt = _receiptRepository.findById(receiptId).orElseThrow();
@@ -44,6 +47,7 @@ public class ReceiptService {
             FileOutputStream fos = new FileOutputStream(pdfFile);
             pdf.writePdfDataToOutputStream(fos, RELATIVE_STATIC_IMAGES_PATH, receipt);
             new Thread(new Runnable() {
+                @Override
                 public void run() {
                     try {
                         User user = _userRepository.findById(userId).orElseThrow();
