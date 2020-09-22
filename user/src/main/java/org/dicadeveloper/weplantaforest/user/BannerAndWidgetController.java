@@ -3,10 +3,14 @@ package org.dicadeveloper.weplantaforest.user;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections4.map.PassiveExpiringMap;
 import org.apache.commons.io.IOUtils;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -38,6 +43,8 @@ public class BannerAndWidgetController {
     private @NonNull Co2Repository co2Repository;
 
     private @NonNull BannerAndWidgetHelper bannerAndWidgetHelper;
+
+    private Map<String, BufferedImage> widgetCache = Collections.synchronizedMap(new PassiveExpiringMap<>(15, TimeUnit.MINUTES));
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = Uris.BANNER, method = RequestMethod.GET)
@@ -63,12 +70,23 @@ public class BannerAndWidgetController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = Uris.WIDGET, method = RequestMethod.GET)
     public ResponseEntity<?> getWidget(HttpServletResponse response, @RequestParam String userName, @RequestParam String type, @RequestParam int width, @RequestParam int height) {
+        BufferedImage bufferedImg = null;
         String filePath = "/static/images/widgets/";
         String imageName = "widget_" + type + "_" + width + "x" + height + ".jpg";
-        Co2Data co2DataForUser = co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName);
-
+        val cacheKey = userName + "_" + imageName;
+        if (widgetCache.containsKey(cacheKey)) {
+            bufferedImg = widgetCache.get(cacheKey);
+        } else {
+            Co2Data co2DataForUser = co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName);
+            try {
+                bufferedImg = bannerAndWidgetHelper.createWidget(filePath + imageName, type, width, height, co2DataForUser);
+                widgetCache.put(cacheKey, bufferedImg);
+            } catch (IOException e) {
+                LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
         try {
-            BufferedImage bufferedImg = bannerAndWidgetHelper.createWidget(filePath + imageName, type, width, height, co2DataForUser);
             ImageIO.write(bufferedImg, "jpg", response.getOutputStream());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {

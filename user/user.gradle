@@ -46,6 +46,8 @@ dependencies{
   compile group: 'com.github.cage', name: 'cage', version: '1.0'
 
   compile 'com.h2database:h2:1.4.200'
+  
+  compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
 
   runtime group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
   runtime 'org.springframework.boot:spring-boot-properties-migrator:' + springBootVersion
