@@ -132,7 +132,7 @@ export default class CartOverview extends Component {
         {
           key: 'user',
           name: 'User',
-          width: 170,
+          width: 185,
           filterable: true,
           sortable: true,
           visible: true
@@ -141,14 +141,6 @@ export default class CartOverview extends Component {
           key: 'price',
           name: 'Preis (€)',
           width: 60,
-          filterable: true,
-          sortable: true,
-          visible: true
-        },
-        {
-          key: 'status',
-          name: 'Status',
-          width: 100,
           filterable: true,
           sortable: true,
           visible: true
@@ -180,7 +172,7 @@ export default class CartOverview extends Component {
         {
           key: 'company',
           name: 'Unternehmen',
-          width: 100,
+          width: 185,
           filterable: true,
           sortable: true,
           visible: true
@@ -265,6 +257,7 @@ export default class CartOverview extends Component {
       .post('http://localhost:8083/carts', this.state.cartRequest, this.state.restConfig)
       .then(function(response) {
         var result = response.data;
+        that.setState({ carts: [], rows: [] });
         var rows = that.createRows(result);
         that.setState({ carts: result, rows: rows });
         that.refs['spinner'].hideSpinner();
@@ -316,7 +309,7 @@ export default class CartOverview extends Component {
       paymentType: cart.callBackZahlungsart,
       details: this.createDetailIcon(cart.id),
       receiptable: this.createReceiptCheckbox(cart.id, cart.receiptable, cart.receipt),
-      stateChange: this.createStateChangeDropdown(cart.id),
+      stateChange: this.createStateChangeDropdown(cart),
       sendReceipt: cart.buyer ? this.createSendReceiptButton(cart.buyer.id, cart.receipt, cart.id) : '',
       timeStampValue: cart.timeStamp
     };
@@ -355,7 +348,7 @@ export default class CartOverview extends Component {
   sendReceipt(userId, receiptId) {
     var that = this;
     axios
-      .post('http://localhost:8081/receipt/send?userId=' + userId + '&receiptId=' + receiptId, {}, this.state.restConfig)
+      .post('http/://localhost:8081/receipt/send?userId=' + userId + '&receiptId=' + receiptId, {}, this.state.restConfig)
       .then(function(response) {
         that.refs.notification.addNotification('Mail versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
       })
@@ -416,14 +409,18 @@ export default class CartOverview extends Component {
     );
   }
 
-  createStateChangeDropdown(id) {
+  createStateChangeDropdown(cart) {
+    var cartState = cart.cartState;
+    var id = cart.id; 
     return (
       <div>
-        <select onClick={event => event.stopPropagation()} onChange={event => this.changeStatusOfCart(id, event)}>
+        <select defaultValue={cartState} onClick={event => event.stopPropagation()} onChange={event => this.changeStatusOfCart(id, event)}>
           <option></option>
           <option value="CALLBACK">CALLBACK</option>
           <option value="VERIFIED">VERIFIED</option>
           <option value="DISCARDED">DISCARDED</option>
+          <option value="GENERATED">GENERATED</option>
+          <option value="INITIAL">INITIAL</option>
         </select>
       </div>
     );
@@ -447,12 +444,6 @@ export default class CartOverview extends Component {
         for (var cart in that.state.carts) {
           if (that.state.carts[cart].id == id) {
             that.state.carts[cart].cartState = cartState;
-            break;
-          }
-        }
-        for (var row in that.state.rows) {
-          if (that.state.rows[row].id == id) {
-            that.state.rows[row].status = cartState;
             break;
           }
         }
