@@ -204,13 +204,6 @@ export default class NavBar extends Component {
                     this.linkTo('/plant/5', event);
                   }}
                 />
-                <SvgButton
-                  text=""
-                  buttonType="secateurs"
-                  onClick={event => {
-                    this.linkTo('/treeService', event);
-                  }}
-                />
               </div>
             </div>
             <div className="navbar-right">
