@@ -309,7 +309,7 @@ export default class CartOverview extends Component {
       paymentType: cart.callBackZahlungsart,
       details: this.createDetailIcon(cart.id),
       receiptable: this.createReceiptCheckbox(cart.id, cart.receiptable, cart.receipt),
-      stateChange: this.createStateChangeDropdown(cart),
+      stateChange: this.createStateChangeDropdown(cart.cartState, cart.id),
       sendReceipt: cart.buyer ? this.createSendReceiptButton(cart.buyer.id, cart.receipt, cart.id) : '',
       timeStampValue: cart.timeStamp
     };
@@ -409,12 +409,10 @@ export default class CartOverview extends Component {
     );
   }
 
-  createStateChangeDropdown(cart) {
-    var cartState = cart.cartState;
-    var id = cart.id; 
+  createStateChangeDropdown(cartState, id) {
     return (
       <div>
-        <select defaultValue={cartState} onClick={event => event.stopPropagation()} onChange={event => this.changeStatusOfCart(id, event)}>
+        <select defaultValue={cartState} value={cartState} onClick={event => event.stopPropagation()} onChange={event => this.changeStatusOfCart(id, event)}>
           <option></option>
           <option value="CALLBACK">CALLBACK</option>
           <option value="VERIFIED">VERIFIED</option>
