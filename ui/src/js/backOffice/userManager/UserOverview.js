@@ -122,31 +122,6 @@ export default class UserOverview extends Component {
     return row;
   }
 
-  createEditButton(id, username) {
-    return (
-      <IconButton
-        glyphIcon="glyphicon-pencil"
-        text=""
-        onClick={() => {
-          console.log('show edit box');
-          this.showEditBoxForUsername(id, username);
-        }}
-      />
-    );
-  }
-
-  createEditButtonForMail(id, mail) {
-    return (
-      <IconButton
-        glyphIcon="glyphicon-pencil"
-        text=""
-        onClick={() => {
-          this.showEditBoxForMail(id, mail);
-        }}
-      />
-    );
-  }
-
   createActiveIcon(id, active) {
     if (active) {
       return (
@@ -359,16 +334,15 @@ export default class UserOverview extends Component {
       });
   }
 
-  getRows() {
+  getRows(rows, filters) {
     return Data.Selectors.getRows({
-      rows: this.state.rows,
-      filters: this.state.filters
+      rows: rows,
+      filters: filters
     });
   }
 
-  rowGetter(i) {
-    var rows = this.getRows();
-    return rows[i];
+  filteredRows() {
+    return this.getRows(this.state.rows, this.state.filters);
   }
 
   getSize() {
@@ -376,7 +350,7 @@ export default class UserOverview extends Component {
   }
 
   handleGridSort(sortColumn, sortDirection) {
-    var sortedRows = this.state.rows;
+    var sortedRows = this.filteredRows();
     const comparer = (a, b) => {
       if (sortDirection === 'ASC') {
         return a[sortColumn] > b[sortColumn] ? 1 : -1;
@@ -479,36 +453,38 @@ export default class UserOverview extends Component {
       });
   }
 
-  onGridRowsUpdated({ fromRow, toRow, updated }) {
+  onGridRowsUpdated({ fromRow, toRow, updated}) {
     this.setState(state => {
       const rows = state.rows.slice();
+      const filtered = this.filteredRows();
       for (let i = fromRow; i <= toRow; i++) {
+        const rows_index = rows.map(function(x) {return x.id; }).indexOf(filtered[i].id);
         if (updated['username']) {
-          if (rows[i].username !== updated.username) {
-            rows[i].editName = (
+          if (rows[rows_index].username !== updated.username) {
+            rows[rows_index].editName = (
               <IconButton
                 glyphIcon="glyphicon-floppy-open"
                 text=""
                 onClick={() => {
-                  this.updateUsername(rows[i].id, rows[i].username);
+                  this.updateUsername(rows[rows_index].id, rows[rows_index].username);
                 }}
               />
             );
           }
         } else if (updated['mail']) {
-          if (rows[i].mail !== updated.mail) {
-            rows[i].editMail = (
+          if (rows[rows_index].mail !== updated.mail) {
+            rows[rows_index].editMail = (
               <IconButton
                 glyphIcon="glyphicon-floppy-open"
                 text=""
                 onClick={() => {
-                  this.updateMail(rows[i].id, rows[i].mail);
+                  this.updateMail(rows[rows_index].id, rows[rows_index].mail);
                 }}
               />
             );
           }
         }
-        rows[i] = { ...rows[i], ...updated };
+        rows[rows_index] = { ...filtered[i], ...updated };
       }
       return { rows };
     });
@@ -540,8 +516,8 @@ export default class UserOverview extends Component {
             <ReactDataGrid
               columns={this.state.columns}
               titles={this.state.titles}
-              rowGetter={this.rowGetter.bind(this)}
-              rowsCount={this.getSize()}
+              rowGetter={i => this.filteredRows()[i]}
+              rowsCount={this.filteredRows().length}
               onGridSort={this.handleGridSort.bind(this)}
               minHeight={800}
               rowHeight={25}
