@@ -52,11 +52,9 @@ export default class CodeGenerator extends Component {
 
   generateCodes() {
     var that = this;
-    this.updatePlantBag();
-    var plantBag = JSON.parse(localStorage.getItem('plantBag'));
-    var plantBagToValidate = this.createPlantBagToValidate(JSON.parse(localStorage.getItem('plantBag')));
+    var plantBag = this.updatePlantBag();
     axios
-      .post('http://localhost:8081/validatePlantBag', plantBagToValidate, {})
+      .post('http://localhost:8081/validatePlantBag', plantBag, {})
       .then(function(response) {
         // console.log('plantbag is valid');
         var request = {
@@ -95,17 +93,6 @@ export default class CodeGenerator extends Component {
       });
   }
 
-  //multiply every plantItem with the amount of codes to generate to assure with one request, that every plantBag would be valid when really creating it
-  createPlantBagToValidate(plantBag) {
-    for (var project in plantBag.projects) {
-      for (var plantItem in plantBag.projects[project].plantItems) {
-        plantBag.projects[project].plantItems[plantItem].amount *= this.state.amount;
-        plantBag.projects[project].plantItems[plantItem].price *= this.state.amount;
-      }
-    }
-    return plantBag;
-  }
-
   updatePrice() {
     var price = 0;
     for (var project in this.state.projects) {
@@ -116,9 +103,13 @@ export default class CodeGenerator extends Component {
   }
 
   updatePlantBag() {
+    var totalPrice = 0;
+    var plantBag = {}; 
+    plantBag.projects = {};
     for (var project in this.state.projects) {
       var projectItems = {};
-      var updateProject = false;
+      plantBag.projects[this.state.projects[project].projectName] = {};
+      plantBag.projects[this.state.projects[project].projectName].plantItems = projectItems;
       for (var article in this.refs['project_' + project].getArticles()) {
         if (this.refs['project_' + project].getArticleValue(article) != null && this.refs['project_' + project].getArticleValue(article) > 0) {
           projectItems[this.refs['project_' + project].getArticles()[article].treeType.name] = {
@@ -126,13 +117,13 @@ export default class CodeGenerator extends Component {
             price: parseInt(this.refs['project_' + project].getArticles()[article].price.priceAsLong),
             imageFile: this.refs['project_' + project].getArticles()[article].treeType.imageFile
           };
-          updateProject = true;
+          //price = price + parseInt(this.refs['project_' + project].getPrice());
+          totalPrice = totalPrice + (parseInt(this.refs['project_' + project].getArticles()[article].price.priceAsLong) * parseInt(this.refs['project_' + project].getArticleValue(article)));
         }
       }
-      if (updateProject) {
-        this.props.updatePlantBag(this.refs['project_' + project].getPrice(), projectItems, this.state.projects[project].projectName);
-      }
     }
+    plantBag.price = totalPrice;
+    return plantBag;
   }
 
   render() {

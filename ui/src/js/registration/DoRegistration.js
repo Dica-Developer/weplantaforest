@@ -15,7 +15,7 @@ export default class DoRegistration extends Component {
       passwordOne: '',
       passwordTwo: '',
       mail: '',
-      language: localStorage.getItem('language'),
+      language: localStorage.getItem('language') ? localStorage.getItem('language') : 'DEUTSCH',
       orgType: 'PRIVATE',
       newsLetter: false,
       acceptAgbs: false,
