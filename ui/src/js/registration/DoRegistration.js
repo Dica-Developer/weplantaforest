@@ -17,7 +17,7 @@ export default class DoRegistration extends Component {
       mail: '',
       language: localStorage.getItem('language'),
       orgType: 'PRIVATE',
-      newsLetter: true,
+      newsLetter: false,
       acceptAgbs: false,
       acceptGDPR: false,
       registrated: false
@@ -113,9 +113,6 @@ export default class DoRegistration extends Component {
               <option value="NONPROFIT">{counterpart.translate('NGO')}</option>
               <option value="EDUCATIONAL">{counterpart.translate('SCHOOL')}</option>
             </select>
-          </div>
-          <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="newsLetter" value={this.state.newsLetter} updateValue={this.updateValue.bind(this)} text={counterpart.translate('NEWSLETTER_CB')} />
           </div>
           <div className="col-md-12 align-left checkBox">
             <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text={counterpart.translate('AGB_CB')} />
