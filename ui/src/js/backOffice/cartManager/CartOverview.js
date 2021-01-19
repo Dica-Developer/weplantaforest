@@ -46,6 +46,10 @@ class CartDetails extends Component {
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-3">
+                <strong>Id:</strong>
+              </div>
+              <div className="col-md-9">{this.props.details.id}</div>
+              <div className="col-md-3">
                 <strong>Datum:</strong>
               </div>
               <div className="col-md-9">{moment(this.props.details.timeStamp).format('DD.MM.YYYY')}</div>
@@ -78,7 +82,7 @@ class CartItems extends Component {
       <div className="cart-items">
         <div className="row">
           <div className="col-md-3">
-            <strong>Baum-Art</strong>
+            <strong>Baumart</strong>
           </div>
           <div className="col-md-3">
             <strong>Projekt</strong>
