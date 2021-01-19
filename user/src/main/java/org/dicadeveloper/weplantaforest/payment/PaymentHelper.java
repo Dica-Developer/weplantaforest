@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -26,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import lombok.NonNull;
 import lombok.val;
 
 @Component
@@ -35,7 +33,6 @@ public class PaymentHelper {
     protected final Log LOG = LogFactory.getLog(PaymentHelper.class.getName());
 
     @Autowired
-    @NonNull
     private Environment _env;
 
     public static final String DEFAULT_ENCODING = "UTF8";
@@ -106,7 +103,7 @@ public class PaymentHelper {
 
             httpPost.setEntity(new UrlEncodedFormEntity(urlParameters, "utf-8"));
 
-            HttpResponse response = httpClient.execute(httpPost);
+            val response = httpClient.execute(httpPost);
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             StringBuffer result = new StringBuffer();
@@ -157,7 +154,7 @@ public class PaymentHelper {
         params.put("plz", paymentData.getZip());
         params.put("email", paymentData.getMail());
 
-        params.put("verwendungszweck", "Spende I Plant A Tree");
+        params.put("verwendungszweck", "Spende I Plant A Tree (" + cart.getId() + ")");
         params.put("quittung", paymentData.getReceipt());
         params.put("zahlungsart", paymentData.getPaymentMethod());
         params.put("sepa_data[iban]", paymentData.getIban());
