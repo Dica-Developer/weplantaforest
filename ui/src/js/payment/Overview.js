@@ -127,6 +127,10 @@ export default class Overview extends Component {
     }
   }
 
+  showLogin() {
+    this.props.route.showLoginSlide();
+  }
+
   render() {
     let sepaPart;
     let paypalWarning;
@@ -159,10 +163,30 @@ export default class Overview extends Component {
       );
     }
 
+    let isAnonymUser = !(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '');
     return (
       <div className="row">
         <div className="col-md-12">
           <h1>{counterpart.translate('CHECKOUT')}</h1>
+	  <div className={'panel panel-danger ' + (!isAnonymUser ? 'no-display' : '')}>
+	    <div className="panel-heading">
+              <strong>{counterpart.translate('NOT_LOGGED_IN')}</strong>
+            </div>
+            <div className="panel-body">
+              {counterpart.translate('NOT_LOGGED_IN_TEXT')}
+              <br />
+              {counterpart.translate('ACCOUNT_Q')}&nbsp;<a onClick={this.showLogin.bind(this)}>Login</a>
+              <br />
+              {counterpart.translate('NO_ACCOUNT_Q')}&nbsp;
+              <a
+	        onClick={() => {
+                  this.linkTo('/registration');
+                }}
+              >
+                {counterpart.translate('REGISTRATE')}
+              </a>
+            </div>
+          </div>
           <div className="panel panel-warning ">
             <div className="panel-heading">{counterpart.translate('PAYMENT_INTRO_TITLE')}</div>
             <div className="panel-body">{counterpart.translate('PAYMENT_INTRO_TEXT')}</div>

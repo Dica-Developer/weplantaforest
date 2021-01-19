@@ -23,11 +23,9 @@ export default class PlantBagPage extends Component {
             projects: []
           }
         : JSON.parse(localStorage.getItem('plantBag'));
-    let isAnonymUser = !(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '');
     this.state = {
       plantBag: plantBag,
-      isGift: isGift,
-      isAnonymUser: isAnonymUser
+      isGift: isGift
     };
   }
 
@@ -43,7 +41,8 @@ export default class PlantBagPage extends Component {
       this.refs.notification.addNotification(counterpart.translate('TOO_MANY_TREES.TITLE'), counterpart.translate('TOO_MANY_TREES.TEXT_3'), 'error');
     } else {
       var config;
-      if (!this.state.isAnonymUser) {
+      let isAnonymUser = !(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '');
+      if (!isAnonymUser) {
         config = {
           headers: {
             'X-AUTH-TOKEN': localStorage.getItem('jwt')
@@ -57,7 +56,7 @@ export default class PlantBagPage extends Component {
         };
       }
       if (this.state.isGift) {
-        if (!this.state.isAnonymUser) {
+        if (!isAnonymUser) {
           this.createGift(config);
         } else {
           this.refs.notification.addNotification(counterpart.translate('NO_USER_LOGGED_IN.TITLE'), counterpart.translate('NO_USER_LOGGED_IN.TEXT'), 'error');
@@ -161,6 +160,7 @@ export default class PlantBagPage extends Component {
   render() {
     var that = this;
     var overallPriceAndPayment;
+    let isAnonymUser = !(localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '');
     if (this.state.plantBag.price > 0) {
       overallPriceAndPayment = (
         <div>
@@ -184,7 +184,7 @@ export default class PlantBagPage extends Component {
         <div className="row plantBagPage">
           <div className="col-md-12">
             <h1>{counterpart.translate('YOUR_PLANTBAG')}</h1>
-            <div className={'panel panel-danger ' + (!this.state.isAnonymUser ? 'no-display' : '')}>
+            <div className={'panel panel-danger ' + (!isAnonymUser ? 'no-display' : '')}>
               <div className="panel-heading">
                 <strong>{counterpart.translate('NOT_LOGGED_IN')}</strong>
               </div>

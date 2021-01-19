@@ -35,23 +35,24 @@ public class PaymentService {
 
     private @NonNull MailHelper _mailHelper;
 
-    public void payPlantBag(PaymentData paymentData) throws IpatException {
+    public void payPlantBag(PaymentData paymentData, User buyer) throws IpatException {
         switch (paymentData.getPaymentMethod()) {
             case "SEPA":
-                payViaSepa(paymentData);
+                payViaSepa(paymentData, buyer);
                 break;
             case "PP":
-                submitPaypalOrCreditCardPayedPlantbag(paymentData);
+                submitPaypalOrCreditCardPayedPlantbag(paymentData, buyer);
                 break;
             case "KK":
-                submitPaypalOrCreditCardPayedPlantbag(paymentData);
+                submitPaypalOrCreditCardPayedPlantbag(paymentData, buyer);
                 break;
             default:
                 break;
         }
     }
 
-    private void payViaSepa(PaymentData paymentData) throws IpatException {
+    // TODO: also set the cart items to the possible new buyer
+    private void payViaSepa(PaymentData paymentData, User buyer) throws IpatException {
         Cart cartToPay = _cartRepository.findById(paymentData.getCartId()).orElse(null);
         IpatPreconditions.checkNotNull(cartToPay, ErrorCodes.CART_IS_NULL);
         String paymentRequestResponse = _paymentHelper.postRequestSepa(cartToPay, paymentData);
@@ -59,6 +60,9 @@ public class PaymentService {
         IpatPreconditions.checkArgument(!_paymentHelper.isUndefinedError(paymentRequestResponse), ErrorCodes.BANK_UNDEFINED_ERROR);
         if (_paymentHelper.isSuccessFull(paymentRequestResponse)) {
             cartToPay.setCallBackValuesAndStateToCallBack(paymentData);
+            if (null != buyer) {
+                cartToPay.setBuyer(buyer);
+            }
             _cartRepository.save(cartToPay);
             if (paymentData.getGiftId() != null) {
                 Gift giftToPay = _giftRepository.findById(paymentData.getGiftId()).orElse(null);
@@ -72,10 +76,13 @@ public class PaymentService {
         }
     }
 
-    private void submitPaypalOrCreditCardPayedPlantbag(PaymentData paymentData) throws IpatException {
+    private void submitPaypalOrCreditCardPayedPlantbag(PaymentData paymentData, User buyer) throws IpatException {
         Cart cartToSubmit = _cartRepository.findById(paymentData.getCartId()).orElse(null);
         IpatPreconditions.checkNotNull(cartToSubmit, ErrorCodes.CART_IS_NULL);
         cartToSubmit.setCallBackValuesAndStateToCallBack(paymentData);
+        if (null != buyer) {
+            cartToSubmit.setBuyer(buyer);
+        }
         _cartRepository.save(cartToSubmit);
         if (cartToSubmit.getCode() != null) {
             Gift giftToSubmit = _giftRepository.findGiftByCode(cartToSubmit.getCode().getCode());
@@ -86,6 +93,7 @@ public class PaymentService {
 
     private void sendPaymentConfirmationMail(User user) {
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 String subject = _messageByLocaleService.getMessage("mail.sepapaid.subject", user.getLang().getLocale());
                 String text = _messageByLocaleService.getMessage("mail.sepapaid.text", user.getLang().getLocale());

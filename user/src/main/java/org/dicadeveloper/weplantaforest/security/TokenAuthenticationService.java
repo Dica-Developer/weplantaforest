@@ -52,8 +52,7 @@ public class TokenAuthenticationService {
 
     public User getUserFromToken(String userToken) {
         if (userToken != null) {
-            final User user = tokenHandler.parseUserFromToken(userToken);
-            return user;
+            return tokenHandler.parseUserFromToken(userToken);
         }
         return null;
     }
