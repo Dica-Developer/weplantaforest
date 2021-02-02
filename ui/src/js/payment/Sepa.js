@@ -123,6 +123,15 @@ export default class Sepa extends Component {
           paymentDone: true
         });
         that.props.loadUserDetails();
+        setTimeout(() => {
+          if (localStorage.getItem('username') && localStorage.getItem('username') != '') {
+            if (that.props.giftId) {
+              browserHistory.push('/gifts/' + encodeURIComponent(localStorage.getItem('username')));
+            } else {
+              browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
+            }
+          }
+        }, 2000);
       })
       .catch(function(error) {
         that.refs['spinner'].hideSpinner();

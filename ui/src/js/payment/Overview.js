@@ -102,6 +102,15 @@ export default class Overview extends Component {
                 that.refs.notification.addNotification(counterpart.translate('PAYMENT_SUCCESSFUL'), counterpart.translate('THANKS_FOR_DONATION'), 'success');
                 that.props.resetPlantBag();
                 that.props.loadUserDetails();
+                setTimeout(() => {
+                  if (localStorage.getItem('username') && localStorage.getItem('username') != '') {
+                    if (that.props.giftId) {
+                      browserHistory.push('/gifts/' + encodeURIComponent(localStorage.getItem('username')));
+                    } else {
+                      browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
+                    }
+                  }
+                }, 2000);
               })
               .catch(function(response) {
                 if (response instanceof Error) {
