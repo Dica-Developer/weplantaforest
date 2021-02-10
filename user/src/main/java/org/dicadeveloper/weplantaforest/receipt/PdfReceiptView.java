@@ -11,6 +11,7 @@ import java.util.TimeZone;
 
 import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.support.PdfHelper;
+import org.dicadeveloper.weplantaforest.user.OrganizationType;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -27,6 +28,8 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import lombok.val;
 
 public class PdfReceiptView {
 
@@ -290,12 +293,22 @@ public class PdfReceiptView {
         Cart latest = receipt.getCarts().get(0);
 
         // create Strings
-        String name = (latest.getCallBackNachname() == null ? "" : latest.getCallBackNachname() + ", ") + (latest.getCallBackVorname() == null ? "" : latest.getCallBackVorname());
-        String company = latest.getCallBackFirma() == null ? "" : latest.getCallBackFirma();
-        String street = latest.getCallBackStrasse() == null ? "" : latest.getCallBackStrasse();
-        String city = (latest.getCallBackPlz() == null ? "" : latest.getCallBackPlz() + " ") + (latest.getCallBackOrt() == null ? "" : latest.getCallBackOrt());
+        val name = (latest.getCallBackNachname() == null ? "" : latest.getCallBackNachname() + ", ") + (latest.getCallBackVorname() == null ? "" : latest.getCallBackVorname());
+        var company = latest.getCallBackFirma();
+        val buyer = receipt.getOwner();
+        if (null != buyer && OrganizationType.COMMERCIAL.equals(buyer.getOrganizationType())) {
+            if (null == company || company.isBlank()) {
+                company = buyer.getOrganisation();
+                if (null == company || company.isBlank()) {
+                    company = buyer.getUsername();
+                }
+            }
+        }
+        company = company == null ? "" : company;
+        val street = latest.getCallBackStrasse() == null ? "" : latest.getCallBackStrasse();
+        val city = (latest.getCallBackPlz() == null ? "" : latest.getCallBackPlz() + " ") + (latest.getCallBackOrt() == null ? "" : latest.getCallBackOrt());
 
-        PdfPTable tableForNameAndAdress = new PdfPTable(1);
+        val tableForNameAndAdress = new PdfPTable(1);
         float[] rows = { 450f };
         tableForNameAndAdress.setTotalWidth(rows);
         tableForNameAndAdress.getDefaultCell().setBorder(Rectangle.NO_BORDER);
@@ -308,11 +321,10 @@ public class PdfReceiptView {
         tableForNameAndAdress.addCell(new Phrase(new Chunk(city, textFontUserData)));
 
         tableForNameAndAdress.writeSelectedRows(0, 6, 85f, 525f, cb);
-
     }
 
     private PdfPTable createPriceTable(PdfContentByte cb, Receipt receipt) throws DocumentException {
-        PdfPTable tableForPrices = new PdfPTable(1);
+        val tableForPrices = new PdfPTable(1);
         float[] rowForTotalPrice = { 250f };
         tableForPrices.setTotalWidth(rowForTotalPrice);
         tableForPrices.getDefaultCell().setBorder(Rectangle.NO_BORDER);

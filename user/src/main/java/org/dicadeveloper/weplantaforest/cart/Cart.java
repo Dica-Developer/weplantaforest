@@ -249,10 +249,7 @@ public class Cart {
         if (callBackTimestamp == null) {
             return null;
         }
-        return new Date(Long.parseLong(callBackTimestamp) * 1000); // its php,
-                                                                   // sec since
-                                                                   // 1970, not
-                                                                   // msec
+        return new Date(Long.parseLong(callBackTimestamp) * 1000);
     }
 
     public void setCallBackValuesAndStateToCallBack(PaymentData paymentData) {
@@ -272,23 +269,5 @@ public class Cart {
         setCallBackTransactionid(paymentData.getTransactionId());
         setCallBackSalutation(paymentData.getSalutation());
         setCallBackTitle(paymentData.getTitle());
-    }
-
-    public void setCallBackValues(PaymentData paymentData) {
-        setCallBackBetrag(String.valueOf(getTotalPrice().doubleValue()));
-        setCallBackEmail(paymentData.getMail());
-        setCallBackFirma(paymentData.getCompany());
-        setCallBackFirmanzusatz(paymentData.getCompanyAddon());
-        setCallBackLand(paymentData.getCountry());
-        setCallBackNachname(paymentData.getName());
-        setCallBackOrt(paymentData.getCity());
-        setCallBackPlz(paymentData.getZip());
-        setCallBackStrasse(paymentData.getStreet());
-        setCallBackTrackingcode(getId().toString());
-        setCallBackVorname(paymentData.getForename());
-        setCallBackZahlungsart(paymentData.getPaymentMethod());
-        setCallBackSalutation(paymentData.getSalutation());
-        setCallBackTitle(paymentData.getTitle());
-
     }
 }
