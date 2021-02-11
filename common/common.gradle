@@ -1,5 +1,5 @@
 plugins {
-  id 'com.github.ben-manes.versions' version '0.27.0'
+  id 'com.github.ben-manes.versions' version '0.36.0'
 }
 
 dependencies {
@@ -7,12 +7,12 @@ dependencies {
 
   compileOnly 'org.projectlombok:lombok:1.18.10'
 
-  compile 'net.coobird:thumbnailator:0.4.8'
+  implementation 'net.coobird:thumbnailator:0.4.8'
   
   //mail API
-  compile 'com.sun.mail:javax.mail:1.6.2'
-  compile 'org.springframework.boot:spring-boot-starter-web:' + springBootVersion
+  implementation 'com.sun.mail:javax.mail:1.6.2'
+  implementation 'org.springframework.boot:spring-boot-starter-web:' + springBootVersion
 
-  testCompile group: 'junit', name: 'junit', version: '4.12'
-  testCompile group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
+  testImplementation group: 'junit', name: 'junit', version: '4.12'
+  testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
 }

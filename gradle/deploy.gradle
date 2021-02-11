@@ -3,31 +3,12 @@
 
 def userHome = System.getProperty('user.home')
 
-def ipatPrivateSshKeyFile = file(ext.properties.get("ipat.sshPrivateKeyFile", userHome + '/.ssh/id_rsa'))
-def ipatPrivateKeyPassword = ext.properties.get("ipat.sshPrivateKeyPassword")
 def ipatUser = ext.properties.get("ipat.user")
 def ipatHost = ext.properties.get("ipat.host")
 def installationDir = "/home/${ipatUser}/weplantaforest"
 def installationDirProduction = "/home/${ipatUser}/iplantatree"
 
 import org.apache.tools.ant.filters.*;
-
-ssh.settings {
-  retryCount = 0
-  logging = 'slf4j'
-  dryRun = false
-  jschLog = true
-  timeoutSec = 30
-}
-
-remotes {
-  server {
-    host = ipatHost
-    user = ipatUser
-    identity = ipatPrivateSshKeyFile
-    passphrase = ipatPrivateKeyPassword
-  }
-}
 
 task npmInstall(type: Exec) {
   group 'Deployment'
@@ -114,27 +95,23 @@ task deployUi {
   buildUi.mustRunAfter cleanBuildUi
 
   doLast {
-    assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
-    logger.info "Connect as ${ipatUser} (${ipatPrivateSshKeyFile}) to ${ipatHost}"
+    assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+    logger.info "Connect as ${ipatUser} to ${ipatHost}"
 
-    ssh.run {
-      session(remotes.server) {
-        def projectDir = "${installationDir}/ui"
-        def projectBackup = "${installationDir}/ui.backup"
+    def projectDir = "${installationDir}/ui"
+    def projectBackup = "${installationDir}/ui.backup"
 
-        logger.info "Creating project dir (for the first deployment (the 0.01% case :-))..."
-        execute "mkdir -p ${projectDir}"
+    logger.info "Creating project dir (for the first deployment (the 0.01% case :-))..."
+    ssh("${ipatUser}@${ipatHost}", "mkdir -p ${projectDir}")
 
-        logger.info "Backing up existing deployment..."
-        execute "cp -r ${projectDir}/dist/ ${projectBackup}"
+    logger.info "Backing up existing deployment..."
+    ssh("${ipatUser}@${ipatHost}", "cp -r ${projectDir}/dist/ ${projectBackup}")
 
-        logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
-        rsync("ui/dist/", "${ipatUser}@${ipatHost}:${projectDir}/dist/")
+    logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
+    rsync("ui/dist/", "${ipatUser}@${ipatHost}:${projectDir}/dist/")
 
-        logger.lifecycle "chown on directory ${projectDir}/dist"
-        execute "chmod -R ugo+r ${projectDir}/dist/"
-      }
-    }
+    logger.lifecycle "chown on directory ${projectDir}/dist"
+    ssh("${ipatUser}@${ipatHost}", "chmod -R ugo+r ${projectDir}/dist/")
   }
 }
 
@@ -147,28 +124,24 @@ task deployUiProduction {
   buildUiProduction.mustRunAfter cleanBuildUi
 
   doLast {
-    assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
-    logger.info "Connect as ${ipatUser} (${ipatPrivateSshKeyFile}) to ${ipatHost}"
+    assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+    logger.info "Connect as ${ipatUser} to ${ipatHost}"
 
-    ssh.run {
-      session(remotes.server) {
-        def projectDir = "${installationDirProduction}/ui"
-        def projectBackup = "${installationDirProduction}/ui.backup"
+    def projectDir = "${installationDirProduction}/ui"
+    def projectBackup = "${installationDirProduction}/ui.backup"
 
-        logger.info "Creating project dir (for the first deployment (the 0.01% case :-))..."
-        execute "mkdir -p ${projectDir}"
-        execute "mkdir -p ${projectDir}/dist"
+    logger.info "Creating project dir (for the first deployment (the 0.01% case :-))..."
+    ssh("${ipatUser}@${ipatHost}", "mkdir -p ${projectDir}")
+    ssh("${ipatUser}@${ipatHost}", "mkdir -p ${projectDir}/dist")
 
-        logger.info "Backing up existing deployment..."
-        execute "cp -r ${projectDir}/dist/ ${projectBackup}"
+    logger.info "Backing up existing deployment..."
+    ssh("${ipatUser}@${ipatHost}", "cp -r ${projectDir}/dist/ ${projectBackup}")
 
-        logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
-        rsync("ui/dist/", "${ipatUser}@${ipatHost}:${projectDir}/dist/")
+    logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
+    rsync("ui/dist/", "${ipatUser}@${ipatHost}:${projectDir}/dist/")
 
-        logger.lifecycle "chown on directory ${projectDir}/dist"
-        execute "chmod -R ugo+r ${projectDir}/dist/"
-      }
-    }
+    logger.lifecycle "chown on directory ${projectDir}/dist"
+    ssh("${ipatUser}@${ipatHost}", "chmod -R ugo+r ${projectDir}/dist/")
   }
 }
 
@@ -200,7 +173,7 @@ configure([project(':article-manager'), project(':user'), project(':admin')]) {
 
   task syncServiceScript(description:'Syncs the init.d script for operating the installed weplantaforest modules on a remote server', dependsOn: 'prepareServiceScripts') {
     doLast {
-      assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
+      assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
       ssh.run {
         session(remotes.server) {
           def initdScript = file("build/init.d/${project.name}")
@@ -229,49 +202,42 @@ configure([project(':article-manager'), project(':user'), project(':admin')]) {
 
   task deploy (description:'Deploys the project to a remote server', dependsOn:'installDist') {
     doLast {
-      assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
-      ssh.run {
-        session(remotes.server) {
-          def projectDir = "${installationDir}/${project.name}"
-          def projectBackup = "${installationDir}/${project.name}.backup"
+      assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
 
-          execute "mkdir -p ${projectDir}"
+      def projectDir = "${installationDir}/${project.name}"
+      def projectBackup = "${installationDir}/${project.name}.backup"
 
-          logger.info "Removing old backup..."
-          execute "rm -rf ${projectBackup}"
+      ssh("${ipatUser}@${ipatHost}", "mkdir -p ${projectDir}")
 
-          logger.lifecycle "Backing up existing deployment..."
-          execute "cp -r ${projectDir} ${projectBackup}"
+      logger.info "Removing old backup..."
+      ssh("${ipatUser}@${ipatHost}", "rm -rf ${projectBackup}")
 
-          logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
-          rsync("${project.name}/build/install/${project.name}/bin/", "${ipatUser}@${ipatHost}:${projectDir}/bin/")
-          rsync("${project.name}/build/install/${project.name}/lib/", "${ipatUser}@${ipatHost}:${projectDir}/lib/")
-        }
-      }
+      logger.lifecycle "Backing up existing deployment..."
+      ssh("${ipatUser}@${ipatHost}", "cp -r ${projectDir} ${projectBackup}")
+
+      logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
+      rsync("${project.name}/build/install/${project.name}/bin/", "${ipatUser}@${ipatHost}:${projectDir}/bin/")
+      rsync("${project.name}/build/install/${project.name}/lib/", "${ipatUser}@${ipatHost}:${projectDir}/lib/")
     }
   }
 
   task deployProduction (description:'Deploys the project to a remote server', dependsOn:'installDist') {
     doLast {
-      assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
-      ssh.run {
-        session(remotes.server) {
-          def projectDir = "${installationDirProduction}/${project.name}"
-          def projectBackup = "${installationDirProduction}/${project.name}.backup"
+      assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user' and 'ipat.host' in your ${userHome}/.gradle/gradle.properties!"
 
-          execute "mkdir -p ${projectDir}"
+      def projectDir = "${installationDirProduction}/${project.name}"
+      def projectBackup = "${installationDirProduction}/${project.name}.backup"
+      ssh("${ipatUser}@${ipatHost}", "mkdir -p ${projectDir}")
 
-          logger.info "Removing old backup..."
-          execute "rm -rf ${projectBackup}"
+      logger.info "Removing old backup..."
+      ssh("${ipatUser}@${ipatHost}", "rm -rf ${projectBackup}")
 
-          logger.lifecycle "Backing up existing deployment..."
-          execute "cp -r ${projectDir} ${projectBackup}"
+      logger.lifecycle "Backing up existing deployment..."
+      ssh("${ipatUser}@${ipatHost}", "cp -r ${projectDir} ${projectBackup}")
 
-          logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
-          rsync("${project.name}/build/install/${project.name}/bin/", "${ipatUser}@${ipatHost}:${projectDir}/bin/")
-          rsync("${project.name}/build/install/${project.name}/lib/", "${ipatUser}@${ipatHost}:${projectDir}/lib/")
-        }
-      }
+      logger.lifecycle "put project from $buildDir/install/${project.name} to ${projectDir}"
+      rsync("${project.name}/build/install/${project.name}/bin/", "${ipatUser}@${ipatHost}:${projectDir}/bin/")
+      rsync("${project.name}/build/install/${project.name}/lib/", "${ipatUser}@${ipatHost}:${projectDir}/lib/")
     }
   }
 }
@@ -284,3 +250,9 @@ def rsync(String from, String to) {
   }
 }
 
+def ssh(from, command) {
+  exec {
+    executable "ssh"
+    args from, command
+  }
+}

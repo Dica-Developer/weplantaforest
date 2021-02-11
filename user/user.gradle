@@ -1,6 +1,6 @@
 plugins {
   id 'org.springframework.boot' version "${springBootVersion}"
-  id 'com.github.ben-manes.versions' version '0.27.0'
+  id 'com.github.ben-manes.versions' version '0.36.0'
   id 'application'
 }
 
@@ -11,53 +11,52 @@ jar {
 }
 
 application {
-  mainClassName = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
+  mainClass = 'org.dicadeveloper.weplantaforest.WeplantaforestApplication'
 }
 
 dependencies{
-  annotationProcessor 'org.projectlombok:lombok:1.18.10'
+  annotationProcessor 'org.projectlombok:lombok:1.18.16'
+  compileOnly 'org.projectlombok:lombok:1.18.16'
 
-  compileOnly 'org.projectlombok:lombok:1.18.10'
-
-  runtime group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.8.0'
-  compile 'org.springframework.boot:spring-boot-starter-cache:' + springBootVersion
-  compile 'javax.xml.bind:jaxb-api:2.3.1'
-  compile project(':common')
-  compile('org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion)
-  compile('org.springframework.boot:spring-boot-starter-web:' + springBootVersion)
-  compile('org.springframework.boot:spring-boot-starter-security:' + springBootVersion)
-  compile('org.springframework.boot:spring-boot-starter-validation:' + springBootVersion)
-  compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+  runtimeOnly group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.8.0'
+  implementation 'org.springframework.boot:spring-boot-starter-cache:' + springBootVersion
+  implementation 'javax.xml.bind:jaxb-api:2.3.1'
+  implementation project(':common')
+  implementation('org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion)
+  implementation('org.springframework.boot:spring-boot-starter-web:' + springBootVersion)
+  implementation('org.springframework.boot:spring-boot-starter-security:' + springBootVersion)
+  implementation('org.springframework.boot:spring-boot-starter-validation:' + springBootVersion)
+  implementation group: 'com.google.guava', name: 'guava', version: '28.1-jre'
   //DB migrations
-  compile 'org.flywaydb:flyway-core:5.2.4'
+  implementation 'org.flywaydb:flyway-core:5.2.4'
   //scale images
-  compile 'net.coobird:thumbnailator:0.4.8'
+  implementation 'net.coobird:thumbnailator:0.4.8'
   //PDF generation
-  compile 'com.itextpdf:itextpdf:5.5.13.1'
-  compile 'org.bouncycastle:bcprov-jdk15on:1.64'
-  compile 'org.bouncycastle:bcpkix-jdk15on:1.64'
+  implementation 'com.itextpdf:itextpdf:5.5.13.1'
+  implementation 'org.bouncycastle:bcprov-jdk15on:1.64'
+  implementation 'org.bouncycastle:bcpkix-jdk15on:1.64'
   //Base64 encoding
-  compile 'commons-codec:commons-codec:1.13'
+  implementation 'commons-codec:commons-codec:1.13'
   //http client
-  compile 'org.apache.httpcomponents:httpclient:4.5.10'
+  implementation 'org.apache.httpcomponents:httpclient:4.5.10'
   //apache commons
-  compile group: 'commons-io', name: 'commons-io', version: '2.6'
+  implementation group: 'commons-io', name: 'commons-io', version: '2.6'
   //captcha generator
-  compile group: 'com.github.cage', name: 'cage', version: '1.0'
+  implementation group: 'com.github.cage', name: 'cage', version: '1.0'
 
-  compile 'com.h2database:h2:1.4.200'
+  implementation 'com.h2database:h2:1.4.200'
   
-  compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+  implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
 
-  runtime group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
-  runtime 'org.springframework.boot:spring-boot-properties-migrator:' + springBootVersion
+  runtimeOnly group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+  runtimeOnly 'org.springframework.boot:spring-boot-properties-migrator:' + springBootVersion
 
-  testCompile group: 'junit', name: 'junit', version: '4.12'
-  testCompile group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
-  testCompile('com.jayway.jsonpath:json-path:2.4.0')
-  testCompile('org.springframework.boot:spring-boot-test:' + springBootVersion)
-  testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
-  testCompile project(':testkit')
+  testImplementation group: 'junit', name: 'junit', version: '4.12'
+  testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
+  testImplementation('com.jayway.jsonpath:json-path:2.4.0')
+  testImplementation('org.springframework.boot:spring-boot-test:' + springBootVersion)
+  testImplementation('org.springframework.boot:spring-boot-starter-test:' + springBootVersion) 
+  testImplementation project(':testkit')
 }
 
 test{

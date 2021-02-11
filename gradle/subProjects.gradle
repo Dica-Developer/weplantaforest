@@ -7,9 +7,19 @@ subprojects {
   apply from: "${rootDir}/gradle/eclipse.gradle"
   apply from: "${rootDir}/gradle/checkstyle.gradle"
 
+
   sourceCompatibility = '1.11'
   targetCompatibility = '1.11'
-  compileJava.options.encoding = 'UTF-8'
+
+  tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.release = 11
+    options.incremental = true
+    options.fork = true
+    options.verbose = false
+    options.debug = true
+//  options.compilerArgs = ['-verbose', '-XprintProcessorInfo', '-Xlint']
+  }
 
   repositories {
     mavenCentral()
@@ -73,7 +83,7 @@ subprojects {
 
   task testJar(type: Jar, group: 'Build') {
     description = 'Assembles a jar archive containing the test classes.'
-    baseName = "${archivesBaseName}-test"
+    archiveBaseName = "${archivesBaseName}-test"
     from sourceSets.test.output
   }
 
