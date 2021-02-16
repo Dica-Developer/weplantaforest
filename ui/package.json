@@ -37,7 +37,8 @@
     "react-translate-component": "0.15.1",
     "react-virtualized": "9.22.3",
     "react-virtualized-select": "3.1.3",
-    "respinner": "3.0.2"
+    "respinner": "3.0.2",
+    "react-select": "3.1.1"
   },
   "devDependencies": {
     "prettier": "2.2.1",
@@ -73,6 +74,7 @@
     "kind-of": "6.0.3",
     "debug": "4.3.1",
     "handlebars": "4.7.7",
-    "@babel/runtime": "7.12.13"
+    "@babel/runtime": "7.12.13",
+    "axios": "0.21.1"
   }
 }
