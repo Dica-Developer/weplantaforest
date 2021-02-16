@@ -321,10 +321,10 @@ export default class CartOverview extends Component {
   }
 
   createSendReceiptButton(userId, receipt, cartId) {
-    if (receipt && receipt._receiptId) {
+    if (receipt && receipt.receiptId) {
       return (
         <div>
-          <IconButton text="" glyphIcon="glyphicon-send" onClick={() => this.sendReceipt(userId, receipt._receiptId)} />
+          <IconButton text="" glyphIcon="glyphicon-send" onClick={() => this.sendReceipt(userId, receipt.receiptId)} />
         </div>
       );
     } else {
@@ -344,20 +344,20 @@ export default class CartOverview extends Component {
         that.refs.notification.addNotification('Quittung erstellt und versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
         that.loadCarts();
       })
-      .catch(function(response) {
-        that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim erzeugen und versenden der Quittung ist ein Fehler aufgetreten:' + response.data, 'error');
+      .catch(function(error) {
+        that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim erzeugen und versenden der Quittung ist ein Fehler aufgetreten: "' + error.response.data + '"', 'error');
       });
   }
 
   sendReceipt(userId, receiptId) {
     var that = this;
     axios
-      .post('http/://localhost:8081/receipt/send?userId=' + userId + '&receiptId=' + receiptId, {}, this.state.restConfig)
+      .post('http://localhost:8081/receipt/send?userId=' + userId + '&receiptId=' + receiptId, {}, this.state.restConfig)
       .then(function(response) {
         that.refs.notification.addNotification('Mail versandt!', 'Die Quittung wurde an den User verschickt!', 'success');
       })
-      .catch(function(response) {
-        that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim versenden der Quittung ist ein Fehler aufgetreten:' + response.data, 'error');
+      .catch(function(error) {
+        that.refs.notification.addNotification('Es ist ein Fehler aufgetreten!', 'Beim versenden der Quittung ist ein Fehler aufgetreten: "' + error.response.data + '"', 'error');
       });
   }
 
