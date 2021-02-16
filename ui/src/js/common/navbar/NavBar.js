@@ -75,7 +75,6 @@ export default class NavBar extends Component {
 
   updateComponents() {
     this.isLoggedIn();
-    this.props.reRender();
   }
 
   isLoggedIn() {

@@ -66,10 +66,6 @@ import NotFoundPage from './views/NotFoundPage';
 export default class Routes extends Component {
   componentDidMount() {}
 
-  reRender() {
-    this.forceUpdate();
-  }
-
   updatePlantBag(price, projectItems, projectName, isGift) {
     this.refs['navbar'].updatePlantBag(price, projectItems, projectName, isGift);
   }
@@ -126,15 +122,15 @@ export default class Routes extends Component {
     counterpart.setLocale(localStorage.getItem('language') == 'ENGLISH' ? 'en' : 'de');
     return (
       <div>
-        <NavBar ref="navbar" reRender={this.reRender.bind(this)} switchLocale={this.switchLocale} />
+        <NavBar ref="navbar" switchLocale={this.switchLocale} />
         <Header ref="header" />
         <Router history={browserHistory}>
-          <Route path="/" component={LoadableMainPage} reRender={this.reRender.bind(this)} />
+          <Route path="/" component={LoadableMainPage} />
           <Route
             path="/plant/:amount"
             component={ProposalPlantPage}
             updatePlantBag={this.updatePlantBag.bind(this)}
-            reRender={this.reRender.bind(this)}
+          
             header={counterpart.translate('PLANT_ONLINE')}
             isGift={false}
             isAbo={false}
@@ -143,7 +139,7 @@ export default class Routes extends Component {
             path="/plant3"
             component={CustomPlantPage}
             updatePlantBag={this.updatePlantBag.bind(this)}
-            reRender={this.reRender.bind(this)}
+          
             header={counterpart.translate('PLANT_ONLINE')}
             isGift={false}
             isAbo={false}
@@ -152,7 +148,7 @@ export default class Routes extends Component {
             path="/plantGift/:amount"
             component={ProposalPlantPage}
             updatePlantBag={this.updatePlantBag.bind(this)}
-            reRender={this.reRender.bind(this)}
+          
             header={counterpart.translate('CREATE_GIFT')}
             isGift={true}
             isAbo={false}
@@ -161,38 +157,38 @@ export default class Routes extends Component {
             path="/plantGift2"
             component={CustomPlantPage}
             updatePlantBag={this.updatePlantBag.bind(this)}
-            reRender={this.reRender.bind(this)}
+          
             header={counterpart.translate('CREATE_GIFT')}
             isGift={true}
             isAbo={false}
           />
-          <Route path="/projects" component={ProjectsPage} reRender={this.reRender.bind(this)} />
-          <Route path="/projects/:projectName" component={ProjectDetailsPage} updatePlantBag={this.updatePlantBag.bind(this)} reRender={this.reRender.bind(this)} />
+          <Route path="/projects" component={ProjectsPage} />
+          <Route path="/projects/:projectName" component={ProjectDetailsPage} updatePlantBag={this.updatePlantBag.bind(this)} />
           <Route
             path="/user/:userName"
             component={ProfilePage}
-            reRender={this.reRender.bind(this)}
+          
             logout={this.logout.bind(this)}
             updateLanguage={this.updateLanguage.bind(this)}
             loadUserDetails={this.loadUserDetails.bind(this)}
           />
-          <Route path="/tools/:username" component={ToolsPage} reRender={this.reRender.bind(this)} />
-          <Route path="/receipts/:username" component={ReceiptsPage} reRender={this.reRender.bind(this)} />
-          <Route path="/ranking" component={RankingPage} reRender={this.reRender.bind(this)} />
-          <Route path="/projectOffer" component={ProjectOfferPage} reRender={this.reRender.bind(this)} />
-          <Route path="/selfPlant" component={SelfPlantPage} reRender={this.reRender.bind(this)} loadUserDetails={this.loadUserDetails.bind(this)} />
-          <Route path="/selfPlants/:treeId" component={SelfPlantOverviewPage} reRender={this.reRender.bind(this)} />
+          <Route path="/tools/:username" component={ToolsPage} />
+          <Route path="/receipts/:username" component={ReceiptsPage} />
+          <Route path="/ranking" component={RankingPage} />
+          <Route path="/projectOffer" component={ProjectOfferPage} />
+          <Route path="/selfPlant" component={SelfPlantPage} loadUserDetails={this.loadUserDetails.bind(this)} />
+          <Route path="/selfPlants/:treeId" component={SelfPlantOverviewPage} />
           <Route
             path="/plantBag"
             component={PlantBagPage}
-            reRender={this.reRender.bind(this)}
+          
             updatePlantBag={this.updatePlantBagFromLocaleStorage.bind(this)}
             showLoginSlide={this.showLoginSlide.bind(this)}
           />
           <Route
             path="/payCart/:cartId"
             component={PaymentPage}
-            reRender={this.reRender.bind(this)}
+          
             updateComponents={this.updateNavbarComponents.bind(this)}
             resetPlantBag={this.resetPlantBag.bind(this)}
             loadUserDetails={this.loadUserDetails.bind(this)}
@@ -200,53 +196,53 @@ export default class Routes extends Component {
           <Route
             path="/payGift/:cartId/:giftId"
             component={PaymentPage}
-            reRender={this.reRender.bind(this)}
+          
             updateComponents={this.updateNavbarComponents.bind(this)}
             resetPlantBag={this.resetPlantBag.bind(this)}
             loadUserDetails={this.loadUserDetails.bind(this)}
           />
-          <Route path="/registration" component={RegistrationPage} reRender={this.reRender.bind(this)} />
-          <Route path="/userActivation" component={ActivationPage} reRender={this.reRender.bind(this)} />
-          <Route path="/forgotPassword" component={ForgotPasswordPage} reRender={this.reRender.bind(this)} />
-          <Route path="/password_reset" component={ResetPasswordPage} reRender={this.reRender.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)} />
-          <Route path="/gifts/:userName" component={GiftOverview} reRender={this.reRender.bind(this)} redeemGift={this.redeemGift.bind(this)} />
-          <Route path="/gift/redeem" component={RedeemGiftPage} reRender={this.reRender.bind(this)} redeemGift={this.redeemGift.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)} />
-          <Route path="/certificate/find" component={FindTreePage} reRender={this.reRender.bind(this)} />
-          <Route path="/statistics" component={StatisticsPage} reRender={this.reRender.bind(this)} />
-          <Route path="/team/:teamName" component={TeamPage} reRender={this.reRender.bind(this)} />
-          <Route path="/blog/:articleId" component={BlogPage} reRender={this.reRender.bind(this)} />
-          <Route path="/blog" component={BlogOverviewPage} reRender={this.reRender.bind(this)} />
-          <Route path="/payCC/succes/:cartId" component={SuccessCC} reRender={this.reRender.bind(this)} />
-          <Route path="/payCC/error/:cartId" component={ErrorCC} reRender={this.reRender.bind(this)} />
-          <Route path="/co2Calculator" component={LoadableCo2Calculator} reRender={this.reRender.bind(this)} />
-          <Route path="/faq" component={FAQ} reRender={this.reRender.bind(this)} />
-          <Route path="/AboutUs" component={AboutUs} reRender={this.reRender.bind(this)} />
-          <Route path="/awards" component={Award} reRender={this.reRender.bind(this)} />
-          <Route path="/links" component={Links} reRender={this.reRender.bind(this)} />
-          <Route path="/disclaimer" component={Disclaimer} reRender={this.reRender.bind(this)} />
-          <Route path="/financials" component={Financial} reRender={this.reRender.bind(this)} />
-          <Route path="/privacy" component={Privacy} reRender={this.reRender.bind(this)} />
-          <Route path="/imprint" component={Imprint} reRender={this.reRender.bind(this)} />
-          <Route path="/contact" component={Contact} reRender={this.reRender.bind(this)} />
-          <Route path="/partner" component={Partner} reRender={this.reRender.bind(this)} />
-          <Route path="/newsletter" component={Social} reRender={this.reRender.bind(this)} />
-          <Route path="/terms" component={Terms} reRender={this.reRender.bind(this)} />
-          <Route path="/backOffice" component={LoadableBackOfficeOverview} reRender={this.reRender.bind(this)} />
-          <Route path="/article-manager" component={LoadableArticleManager} reRender={this.reRender.bind(this)} />
-          <Route path="/article-create" component={ArticleCreater} reRender={this.reRender.bind(this)} />
-          <Route path="/article-edit/:articleId" component={ArticleEditor} reRender={this.reRender.bind(this)} />
-          <Route path="/cart-manager" component={CartOverview} reRender={this.reRender.bind(this)} />
-          <Route path="/user-manager" component={UserOverview} reRender={this.reRender.bind(this)} />
-          <Route path="/project-manager" component={ProjectOverview} reRender={this.reRender.bind(this)} />
-          <Route path="/project-edit/:projectId" component={ProjectEditor} reRender={this.reRender.bind(this)} />
-          <Route path="/treeType-manager" component={TreeTypeOverview} reRender={this.reRender.bind(this)} />
-          <Route path="/plant-manager" component={PlantManager} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} />
-          <Route path="/slider-image-manager" component={SliderImageManager} reRender={this.reRender.bind(this)} />
-          <Route path="/event-manager" component={EventOverview} reRender={this.reRender.bind(this)} />
-          <Route path="/event/:eventId" component={EventEditor} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} />
-          <Route path="/transform-trees" component={TransformTreesPage} reRender={this.reRender.bind(this)} />
-          <Route path="/forbidden" component={ForbiddenPage} reRender={this.reRender.bind(this)} />
-          <Route path="*" component={NotFoundPage} reRender={this.reRender.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} isGift={false} isAbo={false} />
+          <Route path="/registration" component={RegistrationPage} />
+          <Route path="/userActivation" component={ActivationPage} />
+          <Route path="/forgotPassword" component={ForgotPasswordPage} />
+          <Route path="/password_reset" component={ResetPasswordPage} showLoginSlide={this.showLoginSlide.bind(this)} />
+          <Route path="/gifts/:userName" component={GiftOverview} redeemGift={this.redeemGift.bind(this)} />
+          <Route path="/gift/redeem" component={RedeemGiftPage} redeemGift={this.redeemGift.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)} />
+          <Route path="/certificate/find" component={FindTreePage} />
+          <Route path="/statistics" component={StatisticsPage} />
+          <Route path="/team/:teamName" component={TeamPage} />
+          <Route path="/blog/:articleId" component={BlogPage} />
+          <Route path="/blog" component={BlogOverviewPage} />
+          <Route path="/payCC/succes/:cartId" component={SuccessCC} />
+          <Route path="/payCC/error/:cartId" component={ErrorCC} />
+          <Route path="/co2Calculator" component={LoadableCo2Calculator} />
+          <Route path="/faq" component={FAQ} />
+          <Route path="/AboutUs" component={AboutUs} />
+          <Route path="/awards" component={Award} />
+          <Route path="/links" component={Links} />
+          <Route path="/disclaimer" component={Disclaimer} />
+          <Route path="/financials" component={Financial} />
+          <Route path="/privacy" component={Privacy} />
+          <Route path="/imprint" component={Imprint} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/partner" component={Partner} />
+          <Route path="/newsletter" component={Social} />
+          <Route path="/terms" component={Terms} />
+          <Route path="/backOffice" component={LoadableBackOfficeOverview} />
+          <Route path="/article-manager" component={LoadableArticleManager} />
+          <Route path="/article-create" component={ArticleCreater} />
+          <Route path="/article-edit/:articleId" component={ArticleEditor} />
+          <Route path="/cart-manager" component={CartOverview} />
+          <Route path="/user-manager" component={UserOverview} />
+          <Route path="/project-manager" component={ProjectOverview} />
+          <Route path="/project-edit/:projectId" component={ProjectEditor} />
+          <Route path="/treeType-manager" component={TreeTypeOverview} />
+          <Route path="/plant-manager" component={PlantManager} updatePlantBag={this.updatePlantBag.bind(this)} />
+          <Route path="/slider-image-manager" component={SliderImageManager} />
+          <Route path="/event-manager" component={EventOverview} />
+          <Route path="/event/:eventId" component={EventEditor} updatePlantBag={this.updatePlantBag.bind(this)} />
+          <Route path="/transform-trees" component={TransformTreesPage} />
+          <Route path="/forbidden" component={ForbiddenPage} />
+          <Route path="*" component={NotFoundPage} updatePlantBag={this.updatePlantBag.bind(this)} isGift={false} isAbo={false} />
         </Router>
         <Footer />
         <Notification ref="notification" />
