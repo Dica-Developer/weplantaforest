@@ -449,7 +449,9 @@ export default class CartOverview extends Component {
             break;
           }
         }
-        that.forceUpdate();
+        var carts = that.state.carts;
+        var rows = that.createRows(carts);
+        that.setState({ carts: carts, rows: rows });
       })
       .catch(function(response) {
         that.refs.notification.addNotification(

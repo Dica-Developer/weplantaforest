@@ -46,7 +46,6 @@ public class CartService {
             query = addToRestriction(cartRequest, query);
             query = query.substring(0, query.length() - 3);
         }
-        System.out.println("query: " + query);
         return query;
     }
 
