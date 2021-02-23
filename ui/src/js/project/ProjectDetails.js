@@ -57,12 +57,11 @@ export default class ProjectDetails extends Component {
                 <PieChart
                   slices={[
                     {
-                      color: '#82ab1f',
-                      value: percent
-                    },
-                    {
                       color: '#fff',
                       value: 100 - percent
+                    }, {
+                      color: '#82ab1f',
+                      value: percent
                     }
                   ]}
                 />
