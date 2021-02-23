@@ -50,12 +50,11 @@ public class BannerAndWidgetHelper {
     @SneakyThrows
     public String generateWidgetHtmlCode(String host, String userName, String type, int width, int height) {
         StringBuffer buffer = new StringBuffer();
-        String hostWithoutPort = host;
-        int indexOf = host.indexOf(":", 5);
-        if (indexOf > 5) {
-            hostWithoutPort = host.substring(0, indexOf + 1);
+        String hostWithPath = host;
+        if (host.contains(":8080")) {
+            hostWithPath = host.replaceAll(":8080", ":8081");
         } else {
-            hostWithoutPort = hostWithoutPort + ":";
+            hostWithPath = host + "/p/u";
         }
         val urlEncodedUsername = UrlEscapers.urlPathSegmentEscaper().escape(userName);
         buffer.append("<a href=\"");
@@ -64,8 +63,8 @@ public class BannerAndWidgetHelper {
         buffer.append(urlEncodedUsername);
         buffer.append("\">");
         buffer.append("<img src=\"");
-        buffer.append(hostWithoutPort);
-        buffer.append("8081/widget?userName=");
+        buffer.append(hostWithPath);
+        buffer.append("/widget?userName=");
         buffer.append(urlEncodedUsername);
         buffer.append("&type=");
         buffer.append(type);
