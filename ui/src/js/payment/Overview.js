@@ -131,7 +131,7 @@ export default class Overview extends Component {
   }
 
   componentDidMount() {
-    if (this.props.price >= 1500) {
+    if (this.props.price >= 1500 && 1 === 0) {
       this.renderPaypalButton();
     }
   }
