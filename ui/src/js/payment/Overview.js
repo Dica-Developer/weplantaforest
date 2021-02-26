@@ -3,6 +3,7 @@ import axios from 'axios';
 import counterpart from 'counterpart';
 import React, { Component } from 'react';
 import Notification from '../common/components/Notification';
+import { getConfig } from '../common/RestHelper';
 
 export default class Overview extends Component {
   constructor(props) {
@@ -96,8 +97,9 @@ export default class Overview extends Component {
               transactionId: response.transactions[0].related_resources[0].sale.id
             };
 
+            var config = getConfig();
             axios
-              .post('http://localhost:8081/pay', paymentData, {})
+              .post('http://localhost:8081/pay', paymentData, config)
               .then(function(response) {
                 that.refs.notification.addNotification(counterpart.translate('PAYMENT_SUCCESSFUL'), counterpart.translate('THANKS_FOR_DONATION'), 'success');
                 that.props.resetPlantBag();
@@ -131,7 +133,7 @@ export default class Overview extends Component {
   }
 
   componentDidMount() {
-    if (this.props.price >= 1500 && 1 === 0) {
+    if (this.props.price >= 1500) {
       this.renderPaypalButton();
     }
   }
