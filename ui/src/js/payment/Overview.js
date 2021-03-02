@@ -60,6 +60,7 @@ export default class Overview extends Component {
               {
                 amount: {
                   //  invoice_number: cart id here!!!!
+                  invoice_number: that.props.cartId,
                   total: Accounting.formatNumber(that.props.price / 100, 2, ',', '.'),
                   currency: 'EUR'
                 }
