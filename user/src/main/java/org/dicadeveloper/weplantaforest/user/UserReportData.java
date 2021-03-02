@@ -16,7 +16,6 @@ public class UserReportData {
     @NonNull
     String userName;
 
-    @NonNull
     String imageFileName;
 
     @NonNull
