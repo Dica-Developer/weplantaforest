@@ -295,6 +295,7 @@ module.exports = {
 
   CHOOSE_FILE: 'Datei auswählen',
   FILE_TOO_BIG: 'Datei zu groß! (Max. 1MB)',
+  WRONG_IMAGE_TYPE: 'Nur Bilder (png or jpeg) können hochgeladen werden',
   DISCARD: 'verwerfen',
 
   IMG_LOGO: 'Bild/Logo',

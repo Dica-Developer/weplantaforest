@@ -65,7 +65,7 @@ export default class FileChooseAndUploadButton extends Component {
         <label className="fileContainer">
           <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
           {counterpart.translate('CHOOSE_FILE')}
-          <input type="file" name="file" id="exampleInputFile" ref="fileChooser" onChange={(e) => this.fileChanged(e.target.files)} />
+          <input type="file" name="file" id="exampleInputFile" ref="fileChooser" onChange={(e) => this.fileChanged(e.target.files)} accept="image/png, image/jpeg" />
         </label>
         <div>
           <label className="file-name">{this.state.fileName}</label>
@@ -100,15 +100,22 @@ export default class FileChooseAndUploadButton extends Component {
   }
 
   fileChanged(files) {
+    let acceptedTypes = ['image/png', 'image/jpeg'];
     if (files && files.length > 0) {
-      if (files[0].size <= 1048576) {
+      if (files[0].size > 1048576) {
+        this.setState({
+          fileWarning: counterpart.translate('FILE_TOO_BIG'),
+        });
+      } 
+      else if (!acceptedTypes.includes[files[0].type]) {
+        this.setState({
+          fileWarning: counterpart.translate('WRONG_IMAGE_TYPE'),
+        });
+      }
+       else {
         this.setState({
           fileName: files[0].name,
           fileWarning: '',
-        });
-      } else {
-        this.setState({
-          fileWarning: counterpart.translate('FILE_TOO_BIG'),
         });
       }
     }
