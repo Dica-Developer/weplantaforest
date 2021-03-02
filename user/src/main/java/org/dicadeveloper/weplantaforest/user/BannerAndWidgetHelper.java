@@ -23,20 +23,19 @@ import lombok.val;
 public class BannerAndWidgetHelper {
 
     public String generateBannerHtmlCode(String host, String type, int width, int height) {
-        StringBuffer buffer = new StringBuffer();
-        String hostWithoutPort = host;
-        int indexOf = host.indexOf(":", 5);
-        if (indexOf > 5) {
-            hostWithoutPort = host.substring(0, indexOf + 1);
+        val buffer = new StringBuffer();
+        var hostWithPath = host;
+        if (host.contains(":8080")) {
+            hostWithPath = host.replaceAll(":8080", ":8081");
         } else {
-            hostWithoutPort = hostWithoutPort + ":";
+            hostWithPath = host + "/p/u";
         }
         buffer.append("<a href=\"");
         buffer.append(host);
         buffer.append("\">");
         buffer.append("<img src=\"");
-        buffer.append(hostWithoutPort);
-        buffer.append("8081/banner?type=");
+        buffer.append(hostWithPath);
+        buffer.append("/banner?type=");
         buffer.append(type);
         buffer.append("&width=");
         buffer.append(width);
@@ -125,7 +124,7 @@ public class BannerAndWidgetHelper {
         if ("white".equals(type)) {
             graphics.setColor(Color.WHITE);
         }
-        drawCenteredString(graphics, "C02 gebunden in t", 100, new Font("Georgia", Font.PLAIN, 9), textCo2Pos);
+        drawCenteredString(graphics, "CO2 gebunden in t", 100, new Font("Georgia", Font.PLAIN, 9), textCo2Pos);
         drawCenteredString(graphics, co2, 100, new Font("Arial", Font.BOLD, 16), amountCo2Pos);
     }
 
@@ -142,7 +141,7 @@ public class BannerAndWidgetHelper {
         if ("white".equals(type)) {
             graphics.setColor(Color.WHITE);
         }
-        drawSectionCenteredString(graphics, "C02 gebunden in t", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textCo2Pos, co2Section);
+        drawSectionCenteredString(graphics, "CO2 gebunden in t", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textCo2Pos, co2Section);
         drawSectionCenteredString(graphics, co2, sectionWidth, new Font("Arial", Font.BOLD, 16), amountCo2Pos, co2Section);
     }
 
