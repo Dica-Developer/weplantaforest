@@ -117,7 +117,7 @@ export default class Overview extends Component {
                 }, 2000);
               })
               .catch(function (error) {
-                let errorString = 'Bitte wende dich via mail(support@iplantatree.org) an den Support';
+                let errorString = 'Bitte wende dich via E-Mail (support@iplantatree.org) an den Support';
                 if (error && error.response && error.response.data) {
                   errorString += ' und füge die Fehlermeldung bei: ' + error.response.data;
                 } else {
