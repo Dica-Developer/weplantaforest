@@ -18,7 +18,12 @@ subprojects {
     options.fork = true
     options.verbose = false
     options.debug = true
-//  options.compilerArgs = ['-verbose', '-XprintProcessorInfo', '-Xlint']
+  }
+
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(15)
+    }
   }
 
   repositories {
