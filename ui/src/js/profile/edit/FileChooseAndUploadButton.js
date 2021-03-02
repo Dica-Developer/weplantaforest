@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import FileUploadProgress from 'react-fileupload-progress';
 import IconButton from '../../common/components/IconButton';
 import { createProfileImageUrl } from '../../common/ImageHelper';
+import Notification from '../../common/components/Notification';
 
 export default class FileChooseAndUploadButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
       fileName: '',
-      fileWarning: ''
+      fileWarning: '',
     };
     this.styles = {
       progressWrapper: {
@@ -21,7 +22,7 @@ export default class FileChooseAndUploadButton extends Component {
         backgroundColor: '#f5f5f5',
         borderRadius: '4px',
         WebkitBoxShadow: 'inset 0 1px 2px rgba(0,0,0,.1)',
-        boxShadow: 'inset 0 1px 2px rgba(0,0,0,.1)'
+        boxShadow: 'inset 0 1px 2px rgba(0,0,0,.1)',
       },
       progressBar: {
         float: 'left',
@@ -32,8 +33,8 @@ export default class FileChooseAndUploadButton extends Component {
         boxShadow: 'inset 0 -1px 0 rgba(0,0,0,.15)',
         WebkitTransition: 'width .6s ease',
         Otransition: 'width .6s ease',
-        transition: 'width .6s ease'
-      }
+        transition: 'width .6s ease',
+      },
     };
   }
 
@@ -64,7 +65,7 @@ export default class FileChooseAndUploadButton extends Component {
         <label className="fileContainer">
           <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
           {counterpart.translate('CHOOSE_FILE')}
-          <input type="file" name="file" id="exampleInputFile" ref="fileChooser" onChange={e => this.fileChanged(e.target.files)} />
+          <input type="file" name="file" id="exampleInputFile" ref="fileChooser" onChange={(e) => this.fileChanged(e.target.files)} />
         </label>
         <div>
           <label className="file-name">{this.state.fileName}</label>
@@ -81,10 +82,6 @@ export default class FileChooseAndUploadButton extends Component {
       barStyle.width = progress + '%';
 
       let message = <span>{barStyle.width}</span>;
-      if (hasError) {
-        barStyle.backgroundColor = '#d9534f';
-        message = <span style={{ color: '#a94442' }}>{counterpart.translate('UPLOAD_FAILED')}</span>;
-      }
       if (progress === 100 && !hasError) {
         message = <span>{counterpart.translate('UPLOAD_FINISHED')}</span>;
       }
@@ -107,11 +104,11 @@ export default class FileChooseAndUploadButton extends Component {
       if (files[0].size <= 1048576) {
         this.setState({
           fileName: files[0].name,
-          fileWarning: ''
+          fileWarning: '',
         });
       } else {
         this.setState({
-          fileWarning: counterpart.translate('FILE_TOO_BIG')
+          fileWarning: counterpart.translate('FILE_TOO_BIG'),
         });
       }
     }
@@ -122,7 +119,7 @@ export default class FileChooseAndUploadButton extends Component {
 
     const img = new Image();
     img.crossOrigin = 'Anonymous';
-    img.onload = function() {
+    img.onload = function () {
       var canvas = document.createElement('canvas');
       canvas.width = this.width;
       canvas.height = this.height;
@@ -131,13 +128,13 @@ export default class FileChooseAndUploadButton extends Component {
       ctx.drawImage(this, 0, 0);
       var dataURL = canvas.toDataURL();
       component.setState({
-        liveImage: dataURL
+        liveImage: dataURL,
       });
     };
 
     img.src = createProfileImageUrl(imageName, 80, 80);
     this.setState({
-      loadingImage: img
+      loadingImage: img,
     });
     this.props.updateImageName(imageName);
   }
@@ -166,7 +163,10 @@ export default class FileChooseAndUploadButton extends Component {
             onLoad={(e, request) => {
               this.loadImage(request.responseText);
             }}
-            onError={(e, request) => {}}
+            onError={(e, request) => {
+              let error = JSON.parse(e.target.response);
+              this.refs.notification.addNotification(counterpart.translate('UPLOAD_FAILED'), counterpart.translate(error.errorInfos[0].errorCode), 'error');
+            }}
             onAbort={(e, request) => {}}
             beforeSend={this.beforeSend.bind(this)}
             formGetter={this.formGetter.bind(this)}
@@ -174,6 +174,7 @@ export default class FileChooseAndUploadButton extends Component {
             progressRenderer={this.customProgressRenderer.bind(this)}
           />
         </div>
+        <Notification ref="notification" />
       </div>
     );
   }
