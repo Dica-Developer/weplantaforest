@@ -52,7 +52,7 @@ public class TeamController {
 
     private @NonNull Co2Repository co2Repository;
 
-    private @NonNull RankingRepository rankingRepository;"image/png"
+    private @NonNull RankingRepository rankingRepository;
 
     private @NonNull TeamService teamService;
 

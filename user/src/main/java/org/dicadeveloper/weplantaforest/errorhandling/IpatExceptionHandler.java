@@ -15,8 +15,6 @@ public class IpatExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = IpatException.class)
     public ResponseEntity<IpatBackendErrorDTO> handleIpatException(HttpServletResponse response, IpatException ex) {
-        IpatBackendErrorDTO error = new IpatBackendErrorDTO(ex.getErrorInfos());
-        ResponseEntity<IpatBackendErrorDTO> result = new ResponseEntity<IpatBackendErrorDTO>(error, HttpStatus.BAD_REQUEST);
-        return result;
+        return new ResponseEntity<IpatBackendErrorDTO>(new IpatBackendErrorDTO(ex.getErrorInfos()), HttpStatus.BAD_REQUEST);
     }
 }
