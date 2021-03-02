@@ -84,6 +84,7 @@ public class TeamService {
     }
 
     public void uploadTeamImage(Long teamId, MultipartFile file) throws IpatException {
+        IpatPreconditions.checkArgument("image/png".equalsIgnoreCase(file.getContentType()) || "image/jpeg".equalsIgnoreCase(file.getContentType()), ErrorCodes.WRONG_IMAGE_TYPE);
         IpatPreconditions.checkArgument(!file.isEmpty(), ErrorCodes.EMPTY_FILE);
         Team team = teamRepository.findById(teamId).orElse(null);
         IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);

@@ -183,6 +183,7 @@ public class UserService {
     }
 
     public String uploadUserImage(String userName, MultipartFile file) throws IpatException {
+        IpatPreconditions.checkArgument("image/png".equalsIgnoreCase(file.getContentType()) || "image/jpeg".equalsIgnoreCase(file.getContentType()), ErrorCodes.WRONG_IMAGE_TYPE);
         IpatPreconditions.checkArgument(!file.isEmpty(), ErrorCodes.EMPTY_FILE);
         User user = getUser(userName);
 

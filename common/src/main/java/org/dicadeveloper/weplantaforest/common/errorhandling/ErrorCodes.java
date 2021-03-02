@@ -88,4 +88,6 @@ public class ErrorCodes {
 
     public static final String TREE_NOT_FOUND = "TREE_NOT_FOUND";
 
+    public static final String WRONG_IMAGE_TYPE = "WRONG_IMAGE_TYPE";
+
 }
