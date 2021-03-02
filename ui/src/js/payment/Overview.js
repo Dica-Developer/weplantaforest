@@ -31,7 +31,7 @@ export default class Overview extends Component {
           shape: 'rect', // pill | rect
           color: 'silver', // gold | blue | silver | black
           tagline: false,
-          fundingicons: true // optional
+          fundingicons: true, // optional
         },
         // Options:
         // - paypal.FUNDING.CARD
@@ -40,21 +40,21 @@ export default class Overview extends Component {
 
         funding: {
           allowed: [paypal.FUNDING.CARD],
-          disallowed: [paypal.FUNDING.ELV]
+          disallowed: [paypal.FUNDING.ELV],
         },
 
         // PayPal Client IDs - replace with your own
         // Create a PayPal app: https://developer.paypal.com/developer/applications/create
         client: {
           // sandbox: 'AQIg9TONrZNfKMgZ3F7OroWWqx3yQMGXjQubo2uvgiZTq9TsA7ReOhMGAzNJC4BVeoPwLd6XgezKGGfU',
-          production: 'AY7q3cX-S1w60RV7sbCPo27zHabr-COtyAWUGJibBL9hkos4eg25PyskST_uYLXsPxYkBo2guws927Ky'
+          production: 'AY7q3cX-S1w60RV7sbCPo27zHabr-COtyAWUGJibBL9hkos4eg25PyskST_uYLXsPxYkBo2guws927Ky',
         },
 
         // Show the buyer a 'Pay Now' button in the checkout flow
         commit: true,
 
         // payment() is called when the button is clicked
-        payment: function(data, actions) {
+        payment: function (data, actions) {
           return actions.payment.create({
             transactions: [
               {
@@ -62,17 +62,17 @@ export default class Overview extends Component {
                   //  invoice_number: cart id here!!!!
                   invoice_number: that.props.cartId,
                   total: Accounting.formatNumber(that.props.price / 100, 2, ',', '.'),
-                  currency: 'EUR'
-                }
-              }
-            ]
+                  currency: 'EUR',
+                },
+              },
+            ],
           });
         },
 
         // onAuthorize() is called when the buyer approves the payment
-        onAuthorize: function(data, actions) {
+        onAuthorize: function (data, actions) {
           // Make a call to the REST api to execute the payment
-          return actions.payment.execute().then(function(response) {
+          return actions.payment.execute().then(function (response) {
             //TODO: implement if/elso for paypal or creditcard payment and set paymentMethod 'PP' or 'KK'
             let streetLine1 = response.payer.payer_info.shipping_address.line1 ? response.payer.payer_info.shipping_address.line1 : '';
             let streetLine2 = response.payer.payer_info.shipping_address.line2 ? response.payer.payer_info.shipping_address.line2 : '';
@@ -96,13 +96,13 @@ export default class Overview extends Component {
               mail: response.payer.payer_info.email,
               comment: '',
               paymentMethod: 'PP',
-              transactionId: response.transactions[0].related_resources[0].sale.id
+              transactionId: response.transactions[0].related_resources[0].sale.id,
             };
 
             var config = getConfig();
             axios
               .post('http://localhost:8081/pay', paymentData, config)
-              .then(function(response) {
+              .then(function (response) {
                 that.refs.notification.addNotification(counterpart.translate('PAYMENT_SUCCESSFUL'), counterpart.translate('THANKS_FOR_DONATION'), 'success');
                 that.props.resetPlantBag();
                 that.props.loadUserDetails();
@@ -116,19 +116,17 @@ export default class Overview extends Component {
                   }
                 }, 2000);
               })
-              .catch(function(response) {
-                if (response instanceof Error) {
-                  console.error('Error', response.message);
+              .catch(function (error) {
+                let errorString = 'Bitte wende dich via mail(support@iplantatree.org) an den Support';
+                if (error && error.response && error.response.data) {
+                  errorString += ' und füge die Fehlermeldung bei: ' + error.response.data;
                 } else {
-                  console.error(response.data);
-                  console.error(response.status);
-                  console.error(response.headers);
-                  console.error(response.config);
+                  errorString += '.';
                 }
-                console.error('Payment failed');
+                that.refs.notification.addNotification('Bei der Bezahlung ist ein Fehler aufgetreten!', errorString, 'error');
               });
           });
-        }
+        },
       },
       '#paypal-button-container'
     );
@@ -181,8 +179,8 @@ export default class Overview extends Component {
       <div className="row">
         <div className="col-md-12">
           <h1>{counterpart.translate('CHECKOUT')}</h1>
-	  <div className={'panel panel-danger ' + (!isAnonymUser ? 'no-display' : '')}>
-	    <div className="panel-heading">
+          <div className={'panel panel-danger ' + (!isAnonymUser ? 'no-display' : '')}>
+            <div className="panel-heading">
               <strong>{counterpart.translate('NOT_LOGGED_IN')}</strong>
             </div>
             <div className="panel-body">
@@ -192,7 +190,7 @@ export default class Overview extends Component {
               <br />
               {counterpart.translate('NO_ACCOUNT_Q')}&nbsp;
               <a
-	        onClick={() => {
+                onClick={() => {
                   this.linkTo('/registration');
                 }}
               >
