@@ -1,10 +1,8 @@
 // TODO add start/stop/backup-mysql to deploy ?
 // use the correct app profile  
 
-def userHome = System.getProperty('user.home')
-
-def ipatUser = ext.properties.get("ipat.user")
-def ipatHost = ext.properties.get("ipat.host")
+def ipatUser = 'ipat'
+def ipatHost = 'iplantatree.org'
 def installationDir = "/home/${ipatUser}/weplantaforest"
 def installationDirProduction = "/home/${ipatUser}/iplantatree"
 
@@ -95,7 +93,6 @@ task deployUi {
   buildUi.mustRunAfter cleanBuildUi
 
   doLast {
-    assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
     logger.info "Connect as ${ipatUser} to ${ipatHost}"
 
     def projectDir = "${installationDir}/ui"
@@ -124,7 +121,6 @@ task deployUiProduction {
   buildUiProduction.mustRunAfter cleanBuildUi
 
   doLast {
-    assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
     logger.info "Connect as ${ipatUser} to ${ipatHost}"
 
     def projectDir = "${installationDirProduction}/ui"
@@ -149,7 +145,6 @@ configure([project(':article-manager'), project(':user'), project(':admin')]) {
 
   task prepareServiceScripts(description: 'Creates a init.d script from a template for a specific project.') {
     doLast {
-      assert ipatUser!=null && ipatHost!=null && ipatPrivateSshKeyFile.exists(), "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
       def initdTemplate = rootProject.file('gradle/deploy/initd.template.sh')
       assert initdTemplate.exists(), "The file ${initdTemplate} does not exist!"
 
@@ -173,7 +168,6 @@ configure([project(':article-manager'), project(':user'), project(':admin')]) {
 
   task syncServiceScript(description:'Syncs the init.d script for operating the installed weplantaforest modules on a remote server', dependsOn: 'prepareServiceScripts') {
     doLast {
-      assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
       ssh.run {
         session(remotes.server) {
           def initdScript = file("build/init.d/${project.name}")
@@ -202,8 +196,6 @@ configure([project(':article-manager'), project(':user'), project(':admin')]) {
 
   task deploy (description:'Deploys the project to a remote server', dependsOn:'installDist') {
     doLast {
-      assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user', 'ipat.host' & 'ipat.sshPrivateKeyFile' in your ${userHome}/.gradle/gradle.properties!"
-
       def projectDir = "${installationDir}/${project.name}"
       def projectBackup = "${installationDir}/${project.name}.backup"
 
@@ -223,8 +215,6 @@ configure([project(':article-manager'), project(':user'), project(':admin')]) {
 
   task deployProduction (description:'Deploys the project to a remote server', dependsOn:'installDist') {
     doLast {
-      assert ipatUser!=null && ipatHost!=null, "Please configure 'ipat.user' and 'ipat.host' in your ${userHome}/.gradle/gradle.properties!"
-
       def projectDir = "${installationDirProduction}/${project.name}"
       def projectBackup = "${installationDirProduction}/${project.name}.backup"
       ssh("${ipatUser}@${ipatHost}", "mkdir -p ${projectDir}")
