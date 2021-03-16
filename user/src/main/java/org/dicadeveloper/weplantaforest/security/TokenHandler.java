@@ -71,6 +71,7 @@ public final class TokenHandler {
 
     private byte[] toJSON(User user) {
         try {
+            //TODO: add expiresAt field 
             return new ObjectMapper().writeValueAsBytes(user);
         } catch (JsonProcessingException e) {
             throw new IllegalStateException(e);
