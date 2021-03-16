@@ -4,6 +4,7 @@ import counterpart from 'counterpart';
 import React, { Component } from 'react';
 import Notification from '../common/components/Notification';
 import { getConfig } from '../common/RestHelper';
+import { browserHistory } from 'react-router';
 
 export default class Overview extends Component {
   constructor(props) {
