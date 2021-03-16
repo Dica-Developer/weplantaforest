@@ -82,10 +82,10 @@ public class PdfHelper {
     }
 
     public void addLogo(PdfContentByte cb, String imagePath, float xpos, float ypos) throws MalformedURLException, IOException, DocumentException {
-        URL imageUrl = getClass().getResource(imagePath + "/IPAT_logo_Relaunch2016_RZ_RGB.jpg");
+        URL imageUrl = getClass().getResource(imagePath + "/IPAT_logo_Relaunch2016_RZ_RGB.png");
         final Image logoImage = Image.getInstance(imageUrl);
         logoImage.setAbsolutePosition(xpos, ypos);
-        logoImage.scalePercent(3f, 3f);
+        logoImage.scalePercent(8f, 8f);
         cb.addImage(logoImage);
     }
 
