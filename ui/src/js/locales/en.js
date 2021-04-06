@@ -587,5 +587,8 @@ module.exports = {
   CREATE_TEAM_ERROR_TITLE: 'Team could not be created',
   CREATE_TEAM_ERROR_TEXT: 'Please set a team name.',
 
-  USERS_PER_YEAR: 'User numbers'
+  USERS_PER_YEAR: 'User numbers',
+
+  SHOW_PASSWORD: 'Show password',
+  HIDE_PASSWORD: 'Hide password'
 };

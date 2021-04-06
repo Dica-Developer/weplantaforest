@@ -11,6 +11,7 @@ export default class LoginMenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showPassword: false,
       name: '',
       password: '',
       loggedIn: localStorage.getItem('jwt') != null && localStorage.getItem('jwt') != '',
@@ -167,6 +168,16 @@ export default class LoginMenuItem extends Component {
     }
   }
 
+  togglePasswordVisibility(elem) {
+    if ("password" === document.getElementById("password-field").type) {
+      this.setState({showPassword: true});
+      document.getElementById("password-field").type="text"
+    } else {
+      this.setState({showPassword: false});
+      document.getElementById("password-field").type="password"
+    }
+  }
+
   render() {
     var content;
     if (localStorage.getItem('username') && localStorage.getItem('username') != '') {
@@ -198,7 +209,12 @@ export default class LoginMenuItem extends Component {
       content = (
         <div className="login">
           <input type="text" placeholder={counterpart.translate('USERNAME')} value={this.state.name} onChange={this.updateName.bind(this)} onKeyPress={this.handleKeyPress.bind(this)} />
-          <input type="password" placeholder={counterpart.translate('PASSWORD')} value={this.state.password} onChange={this.updatePassword.bind(this)} onKeyPress={this.handleKeyPress.bind(this)} />
+          <input className="passwordInput" id="password-field" type="password" placeholder={counterpart.translate('PASSWORD')} value={this.state.password} onChange={this.updatePassword.bind(this)} onKeyPress={this.handleKeyPress.bind(this)} />
+          {this.state.showPassword ? (
+            <span title={counterpart.translate('HIDE_PASSWORD')} className="togglePasswordVisibility glyphicon glyphicon-eye-close" onClick={this.togglePasswordVisibility.bind(this)}></span>
+          ): (
+            <span title={counterpart.translate('SHOW_PASSWORD')} className="togglePasswordVisibility glyphicon glyphicon-eye-open" onClick={this.togglePasswordVisibility.bind(this)}></span>
+          )}
           <div className="login-interact">
             <a
               role="button"

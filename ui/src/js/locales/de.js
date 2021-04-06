@@ -588,5 +588,8 @@ module.exports = {
   CREATE_TEAM_ERROR_TITLE: 'Team konnte nicht erstellt werden',
   CREATE_TEAM_ERROR_TEXT: 'Bitte gib einen Teamnamen an.',
 
-  USERS_PER_YEAR: 'Nutzerzahlen'
+  USERS_PER_YEAR: 'Nutzerzahlen',
+
+  SHOW_PASSWORD: 'Passwort anzeigen',
+  HIDE_PASSWORD: 'Passwort verbergen'
 };
