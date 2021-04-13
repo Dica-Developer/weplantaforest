@@ -107,7 +107,7 @@ export default class FileChooseAndUploadButton extends Component {
           fileWarning: counterpart.translate('FILE_TOO_BIG'),
         });
       } 
-      else if (!acceptedTypes.includes[files[0].type]) {
+      else if (!acceptedTypes.includes(files[0].type)) {
         this.setState({
           fileWarning: counterpart.translate('WRONG_IMAGE_TYPE'),
         });
