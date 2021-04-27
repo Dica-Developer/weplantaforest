@@ -21,11 +21,11 @@ export default class DoPlanting extends Component {
         imageName: '',
         treeTypeId: 1,
         latitude: 51.499807,
-        longitude: 11.956521
+        longitude: 11.956521,
       },
       imageFile: null,
       treeTypes: [],
-      treePosition: [51.499807, 11.956521]
+      treePosition: [51.499807, 11.956521],
     };
   }
 
@@ -33,13 +33,13 @@ export default class DoPlanting extends Component {
     var that = this;
     axios
       .get('http://localhost:8081/treeTypes')
-      .then(function(response) {
+      .then(function (response) {
         var result = response.data;
         //move first element('Other') to the last position
         result.splice(result.length - 1, 0, result.splice(0, 1)[0]);
         that.setState({ treeTypes: result, treeType: that.state.treeTypes[0] });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         if (response instanceof Error) {
           console.error('Error', response.message);
         } else {
@@ -84,26 +84,25 @@ export default class DoPlanting extends Component {
       var that = this;
       var config = {
         headers: {
-          'X-AUTH-TOKEN': localStorage.getItem('jwt')
-        }
+          'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+        },
       };
       axios
         .post('http://localhost:8081/plantSelf', this.state.selfPlantData, config)
-        .then(function(response) {
+        .then(function (response) {
           that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
           that.props.loadUserDetails();
           if (that.state.imageFile != null) {
-            config = {};
             var data = new FormData();
             data.append('treeId', response.data);
             data.append('file', that.state.imageFile);
 
             axios
               .post('http://localhost:8081/plantSelf/upload', data, config)
-              .then(function(response) {
+              .then(function (response) {
                 browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
               })
-              .catch(function(response) {
+              .catch(function (response) {
                 if (response instanceof Error) {
                   console.error('Error', response.message);
                 } else {
@@ -117,7 +116,7 @@ export default class DoPlanting extends Component {
             browserHistory.push('/user/' + encodeURIComponent(localStorage.getItem('username')));
           }
         })
-        .catch(function(response) {
+        .catch(function (response) {
           that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('TRY_AGAIN'), 'error');
           if (response instanceof Error) {
             console.error('Error', response.message);
@@ -180,7 +179,7 @@ export default class DoPlanting extends Component {
           <div className="form-group col-md-6">
             <label htmlFor="treeType">{counterpart.translate('TREETYPE')}:</label>
             <select id="treeType" className="form-control" onChange={this.updateTreeType.bind(this)} ref="select">
-              {this.state.treeTypes.map(function(treeType, i) {
+              {this.state.treeTypes.map(function (treeType, i) {
                 if (treeType.name != 'Default') {
                   return (
                     <option value={treeType.id} key={i}>

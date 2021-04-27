@@ -15,4 +15,6 @@ public interface ReceiptRepository extends CrudRepository<Receipt, Long> {
     @Query(value = "select receipt from Receipt as receipt where receipt.id = :receiptId AND receipt.owner.id = :userId", nativeQuery = false)
     public Optional<Receipt> findByIdAndOwner(Long receiptId, Long userId);
 
+    public boolean existsByReceiptIdAndOwnerId(Long receiptId, Long ownerId);
+
 }

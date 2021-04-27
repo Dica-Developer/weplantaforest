@@ -56,7 +56,7 @@ public class ReceiptController {
     public ResponseEntity<?> getReceiptsByOwnerId(@RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
         User user = _tokenAuthenticationService.getUserFromToken(userToken);
         if (user == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
             List<Receipt> receipts = _receiptRepository.findByOwnerId(user.getId());
             return new ResponseEntity<>(receipts, HttpStatus.OK);
@@ -64,17 +64,22 @@ public class ReceiptController {
     }
 
     @RequestMapping(value = Uris.RECEIPT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
-    public ResponseEntity<?> createReceiptPdf(HttpServletResponse response, @RequestParam Long receiptId) {
-        Receipt receipt = _receiptRepository.findById(receiptId).orElse(null);
-        PdfReceiptView pdf = new PdfReceiptView();
+    public ResponseEntity<?> createReceiptPdf(HttpServletResponse response, @RequestParam Long receiptId, @RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
+        User user = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (user == null || !_receiptRepository.existsByReceiptIdAndOwnerId(receiptId, user.getId())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else {
+            Receipt receipt = _receiptRepository.findById(receiptId).orElse(null);
+            PdfReceiptView pdf = new PdfReceiptView();
 
-        try {
-            pdf.writePdfDataToOutputStream(response.getOutputStream(), RELATIVE_STATIC_IMAGES_PATH, receipt);
-        } catch (Exception e) {
-            LOG.error("Error occured while creating PDF for receipt with id " + receiptId + "!\n", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            try {
+                pdf.writePdfDataToOutputStream(response.getOutputStream(), RELATIVE_STATIC_IMAGES_PATH, receipt);
+            } catch (Exception e) {
+                LOG.error("Error occured while creating PDF for receipt with id " + receiptId + "!\n", e);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = Uris.RECEIPT_SEND)

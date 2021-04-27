@@ -9,7 +9,18 @@ class Receipt extends Component {
   }
 
   generateReceiptPdf() {
-    window.open('http://localhost:8081/receipt/pdf?receiptId=' + this.props.receipt.receiptId);
+    var that = this;
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+      },
+      responseType: 'arraybuffer',
+    };
+    axios.get('http://localhost:8081/receipt/pdf?receiptId=' + this.props.receipt.receiptId, config).then(function (response) {
+      var result = response.data;
+      var pdfData = URL.createObjectURL(new Blob([result], { type: 'application/pdf' }));
+      window.open(pdfData);
+    });
   }
 
   render() {
@@ -30,7 +41,7 @@ export default class Receipts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      receipts: []
+      receipts: [],
     };
   }
 
@@ -42,13 +53,13 @@ export default class Receipts extends Component {
     var that = this;
     var config = {
       headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
+        'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+      },
     };
-    axios.get('http://localhost:8081/receipts', config).then(function(response) {
+    axios.get('http://localhost:8081/receipts', config).then(function (response) {
       var result = response.data;
       that.setState({
-        receipts: result
+        receipts: result,
       });
     });
   }
@@ -69,7 +80,7 @@ export default class Receipts extends Component {
         <div className="col-md-12">
           {text}
           <br />
-          {this.state.receipts.map(function(receipt, i) {
+          {this.state.receipts.map(function (receipt, i) {
             return <Receipt key={i} receipt={receipt} />;
           })}
         </div>

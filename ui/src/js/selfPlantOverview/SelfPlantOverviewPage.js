@@ -24,7 +24,7 @@ export default class SelfPlantOverviewPage extends Component {
         description: '',
         amount: 1,
         imageName: '',
-        treeTypeId: 1
+        treeTypeId: 1,
       },
       imageFile: null,
       treeTypes: [],
@@ -32,7 +32,7 @@ export default class SelfPlantOverviewPage extends Component {
       trees: [],
       myTree: { latitude: 0, longitude: 0 },
       treeId: null,
-      allowEdit: localStorage.getItem('isAdmin') === 'true'
+      allowEdit: localStorage.getItem('isAdmin') === 'true',
     };
   }
 
@@ -40,12 +40,12 @@ export default class SelfPlantOverviewPage extends Component {
     var that = this;
     axios
       .get('http://localhost:8081/treeTypes')
-      .then(function(response) {
+      .then(function (response) {
         var result = response.data;
         result.splice(result.length - 1, 0, result.splice(0, 1)[0]);
         that.setState({ treeTypes: result });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         if (response instanceof Error) {
           console.error('Error', response.message);
         } else {
@@ -57,11 +57,11 @@ export default class SelfPlantOverviewPage extends Component {
       });
     axios
       .get('http://localhost:8081/trees/selfPlanted')
-      .then(function(response) {
+      .then(function (response) {
         var result = response.data;
         that.setState({ trees: result });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         that.refs.notification.handleError(error);
       });
     that.getMyTree();
@@ -71,12 +71,12 @@ export default class SelfPlantOverviewPage extends Component {
     var that = this;
     axios
       .get('http://localhost:8081/tree/' + this.props.params.treeId)
-      .then(function(response) {
+      .then(function (response) {
         var result = response.data;
         that.setState({
           myTree: {
             latitude: result.latitude,
-            longitude: result.longitude
+            longitude: result.longitude,
           },
           selfPlantData: {
             latitude: result.latitude,
@@ -85,15 +85,15 @@ export default class SelfPlantOverviewPage extends Component {
             description: result.description,
             amount: result.amount,
             imageName: result.imagePath,
-            treeTypeId: result.treeType.id
+            treeTypeId: result.treeType.id,
           },
           treeId: result.id,
           allowEdit: that.state.allowEdit || localStorage.getItem('username') === result.owner.name,
-          treeOwner: result.owner.name
+          treeOwner: result.owner.name,
         });
         that.refs.description.value = result.description;
       })
-      .catch(function(error) {
+      .catch(function (error) {
         that.refs.notification.handleError(error);
       });
   }
@@ -126,26 +126,25 @@ export default class SelfPlantOverviewPage extends Component {
       var that = this;
       var config = {
         headers: {
-          'X-AUTH-TOKEN': localStorage.getItem('jwt')
-        }
+          'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+        },
       };
       this.state.selfPlantData.description = this.refs.description.value;
       axios
         .put('http://localhost:8081/plantSelf?id=' + this.state.treeId, this.state.selfPlantData, config)
-        .then(function(response) {
+        .then(function (response) {
           if (that.state.imageFile != null) {
-            config = {};
             var data = new FormData();
             data.append('treeId', response.data);
             data.append('file', that.state.imageFile);
 
             axios
               .post('http://localhost:8081/plantSelf/upload', data, config)
-              .then(function(response) {
+              .then(function (response) {
                 that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
                 that.setState({ edit: false });
               })
-              .catch(function(response) {
+              .catch(function (response) {
                 if (response instanceof Error) {
                   console.error('Error', response.message);
                 } else {
@@ -161,7 +160,7 @@ export default class SelfPlantOverviewPage extends Component {
             that.setState({ edit: false });
           }
         })
-        .catch(function(response) {
+        .catch(function (response) {
           that.refs.notification.addNotification(counterpart.translate('ERROR'), counterpart.translate('TRY_AGAIN'), 'error');
           if (response instanceof Error) {
             console.error('Error', response.message);
@@ -220,23 +219,23 @@ export default class SelfPlantOverviewPage extends Component {
             OK
           </button>
         </div>
-      )
+      ),
     });
   }
 
   deleteTree() {
     var config = {
       headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
+        'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+      },
     };
     var that = this;
     axios
       .delete('http://localhost:8081/plantSelf?treeId=' + this.state.treeId, config)
-      .then(function(response) {
+      .then(function (response) {
         browserHistory.push('/user/' + encodeURIComponent(that.state.treeOwner));
       })
-      .catch(function(error) {
+      .catch(function (error) {
         that.refs.notification.handleError(error);
       });
   }
@@ -248,15 +247,15 @@ export default class SelfPlantOverviewPage extends Component {
     var confirmBoxStyle = {
       Containers: {
         DefaultStyle: {
-          zIndex: 11000
+          zIndex: 11000,
         },
         tc: {
           top: '50%',
           bottom: 'auto',
           margin: '0 auto',
-          left: '50%'
-        }
-      }
+          left: '50%',
+        },
+      },
     };
     return (
       <div className="container paddingTopBottom15 selfPlantOverview">
@@ -303,7 +302,7 @@ export default class SelfPlantOverviewPage extends Component {
           <div className="form-group col-md-6">
             <label htmlFor="treeType">{counterpart.translate('TREETYPE')}:</label>
             <select id="treeType" className="form-control" onChange={this.updateTreeType.bind(this)} ref="select">
-              {this.state.treeTypes.map(function(treeType, i) {
+              {this.state.treeTypes.map(function (treeType, i) {
                 if (treeType.name != 'Default') {
                   if (treeType.id === that.state.selfPlantData.treeTypeId) {
                     return (
@@ -361,7 +360,7 @@ export default class SelfPlantOverviewPage extends Component {
                 icon={myTreeIcon}
                 onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}
               />
-              {this.state.trees.map(function(tree, i) {
+              {this.state.trees.map(function (tree, i) {
                 if (tree.latitude && tree.longitude) {
                   if (tree.id != that.props.params.treeId) {
                     return <Marker key={i} position={[tree.latitude, tree.longitude]} ref={'marker-' + i} icon={myIcon} />;

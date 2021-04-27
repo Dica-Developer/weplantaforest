@@ -91,25 +91,27 @@ public class SelfPlantController {
     }
 
     @RequestMapping(value = Uris.UPLOAD_SELF_PLANTED_TREE_IMAGE, method = RequestMethod.POST)
-    public ResponseEntity<?> uploadTreeImage(@RequestParam("file") MultipartFile file, @RequestParam long treeId) {
-        String imageFolder = FileSystemInjector.getTreeFolder();
-        String imageName = treeId + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
-
+    public ResponseEntity<?> uploadTreeImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam("file") MultipartFile file, @RequestParam long treeId) {
         Tree tree = _treeRepository.findById(treeId).orElse(null);
-        if (!file.isEmpty()) {
-            try {
-                _imageHelper.storeImage(file, imageFolder, imageName, false);
-                tree.setImagePath(imageName);
-                _treeRepository.save(tree);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } catch (IOException e) {
-                LOG.error("Error occured while trying to save image " + imageName + " in folder: " + imageFolder, e);
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (null != tree && !file.isEmpty()) {
+            if (_tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getUsername())) {
+                String imageFolder = FileSystemInjector.getTreeFolder();
+                val imageName = treeId + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+                try {
+                    _imageHelper.storeImage(file, imageFolder, imageName, false);
+                    tree.setImagePath(imageName);
+                    _treeRepository.save(tree);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } catch (IOException e) {
+                    LOG.error("Error occured while trying to save image " + imageName + " in folder: " + imageFolder, e);
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            } else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @DeleteMapping(value = Uris.PLANT_SELF)
