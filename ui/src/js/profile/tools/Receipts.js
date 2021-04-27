@@ -9,7 +9,6 @@ class Receipt extends Component {
   }
 
   generateReceiptPdf() {
-    var that = this;
     var config = {
       headers: {
         'X-AUTH-TOKEN': localStorage.getItem('jwt'),

@@ -17,7 +17,7 @@ class PlantBag extends Component {
         <div>
           <input
             type="checkbox"
-            onChange={event => {
+            onChange={(event) => {
               this.props.setPlantBagChosenFlag(this.props.index, event.target.checked);
             }}
           />
@@ -46,7 +46,7 @@ export default class Certificates extends Component {
       plantBags: [],
       plantBagsChosen: [],
       certificateText: 'Mein ganz spezieller Beitrag zur Rettung unseres Planeten.',
-      certificateTextLength: 58
+      certificateTextLength: 58,
     };
     this.setPlantBagChosenFlag = this.setPlantBagChosenFlag.bind(this);
   }
@@ -59,14 +59,14 @@ export default class Certificates extends Component {
     var that = this;
     var config = {
       headers: {
-        'X-AUTH-TOKEN': localStorage.getItem('jwt')
-      }
+        'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+      },
     };
-    axios.get('http://localhost:8081/carts/search/short/', config).then(function(response) {
+    axios.get('http://localhost:8081/carts/search/short/', config).then(function (response) {
       var result = response.data;
       that.initChoserArray(result.length);
       that.setState({
-        plantBags: result
+        plantBags: result,
       });
     });
   }
@@ -77,7 +77,7 @@ export default class Certificates extends Component {
       plantBagsChosen.push(false);
     }
     this.setState({
-      plantBagsChosen: plantBagsChosen
+      plantBagsChosen: plantBagsChosen,
     });
   }
 
@@ -89,28 +89,38 @@ export default class Certificates extends Component {
   updateCertificateText(event) {
     this.setState({
       certificateText: event.target.value,
-      certificateTextLength: event.target.value.length
+      certificateTextLength: event.target.value.length,
     });
   }
 
   generateCertificate() {
-    if (this.state.plantBagsChosen.every(elem => elem == false)) {
+    if (this.state.plantBagsChosen.every((elem) => elem == false)) {
       this.refs.notification.addNotification('Keine Pflanzkörbe ausgewählt!', 'Du musst mindestens einen Pflanzkorb ausgewählt haben.', 'error');
     } else {
       var requestItem = this.createCertificateRequestItem();
       var config = {
         headers: {
-          'X-AUTH-TOKEN': localStorage.getItem('jwt')
-        }
+          'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+        },
       };
 
       axios
         .post('http://localhost:8081/certificate/create', requestItem, config)
-        .then(function(response) {
+        .then(function (response) {
           var result = response.data;
-          window.open('http://localhost:8081/certificate/pdf/' + result);
+          var configPdf = {
+            headers: {
+              'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+            },
+            responseType: 'arraybuffer',
+          };
+          axios.get('http://localhost:8081/certificate/pdf/' + result, configPdf).then(function (response) {
+            var result = response.data;
+            var pdfData = URL.createObjectURL(new Blob([result], { type: 'application/pdf' }));
+            window.open(pdfData);
+          });
         })
-        .catch(function(response) {
+        .catch(function (response) {
           if (response instanceof Error) {
             console.error('Error', response.message);
           } else {
@@ -126,7 +136,7 @@ export default class Certificates extends Component {
   createCertificateRequestItem() {
     var certificateRequestItem = {
       text: this.state.certificateText,
-      cartIds: []
+      cartIds: [],
     };
     for (var i = 0; i < this.state.plantBags.length; i++) {
       if (this.state.plantBagsChosen[i]) {
@@ -145,7 +155,7 @@ export default class Certificates extends Component {
       content = (
         <div className="content">
           {counterpart.translate('CHOOSE_PLANTBAGS')}:<br />
-          {this.state.plantBags.map(function(plantBag, i) {
+          {this.state.plantBags.map(function (plantBag, i) {
             return <PlantBag plantBag={plantBag} key={i} index={i} setPlantBagChosenFlag={that.setPlantBagChosenFlag.bind(this)} />;
           })}
           <br />

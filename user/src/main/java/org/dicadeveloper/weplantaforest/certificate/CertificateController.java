@@ -14,7 +14,6 @@ import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
-import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -57,9 +57,8 @@ public class CertificateController {
     @JsonView(Views.PlantedTree.class)
     @Transactional
     public ResponseEntity<List<Tree>> findTreesForCertificateNumber(@PathVariable("certificateNumber") String certificateNumber) {
-        final String certificateNumberCleaned = certificateNumber.replace("#", "");
+        val certificateNumberCleaned = certificateNumber.replace("#", "");
         Certificate certificate = _certificateRepository.findByNumber(certificateNumberCleaned);
-
         if (null != certificate) {
             List<Tree> trees = new ArrayList<>();
             for (Cart cart : certificate.getCarts()) {
@@ -67,7 +66,7 @@ public class CertificateController {
             }
             return new ResponseEntity<>(trees, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -78,13 +77,12 @@ public class CertificateController {
     @RequestMapping(value = Uris.CERTIFICATE_SUMMARY + "{certificateNumber:.+}", method = RequestMethod.GET)
     @JsonView(Views.CertificateSummary.class)
     public ResponseEntity<Certificate> findCertificateText(@PathVariable("certificateNumber") String certificateNumber) {
-        final String certificateNumberCleaned = certificateNumber.replace("#", "");
+        val certificateNumberCleaned = certificateNumber.replace("#", "");
         Certificate certificate = _certificateRepository.findByNumber(certificateNumberCleaned);
-
         if (null != certificate) {
             return new ResponseEntity<>(certificate, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -94,8 +92,7 @@ public class CertificateController {
     @RequestMapping(value = Uris.CERTIFICATE_CREATE, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> createCertificate(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody CertificateRequestData requestData) {
-        User user = _tokenAuthenticationService.getUserFromToken(userToken);
-
+        val user = _tokenAuthenticationService.getUserFromToken(userToken);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
@@ -123,20 +120,24 @@ public class CertificateController {
      */
     @RequestMapping(value = Uris.CERTIFICATE_PDF + "{certificateNumber:.+}", method = RequestMethod.GET, headers = "Accept=application/pdf")
     @Transactional
-    public ResponseEntity<?> getCertificatePdf(HttpServletResponse response, @PathVariable String certificateNumber) {
+    public ResponseEntity<?> getCertificatePdf(HttpServletResponse response, @RequestHeader(value = "X-AUTH-TOKEN") String userToken, @PathVariable String certificateNumber) {
         certificateNumber = certificateNumber.replace("#", "");
         Certificate certificate = _certificateRepository.findByNumber(certificateNumber);
-
         if (certificate == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            try {
-                _certificateSerivce.generatePdf(certificate, response, certificateNumber);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            val isAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, certificate.getCreator().getUsername());
+            if (isAllowed) {
+                try {
+                    _certificateSerivce.generatePdf(certificate, response, certificateNumber);
+                } catch (Exception e) {
+                    LOG.error("Error on certificate pdf generation.", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
-            return new ResponseEntity<>(HttpStatus.OK);
         }
 
     }
