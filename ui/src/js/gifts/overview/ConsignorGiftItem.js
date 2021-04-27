@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Accounting from 'accounting';
 import counterpart from 'counterpart';
 import React, { Component } from 'react';
@@ -8,7 +9,17 @@ export default class ConsignorGiftItem extends Component {
     super(props);
   }
   generateGiftPdf() {
-    window.open('http://localhost:8081/gift/pdf?giftId=' + this.props.gift.id);
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+      },
+      responseType: 'arraybuffer',
+    };
+    axios.get('http://localhost:8081/gift/pdf?giftId=' + this.props.gift.id, config).then(function (response) {
+      var result = response.data;
+      var pdfData = URL.createObjectURL(new Blob([result], { type: 'application/pdf' }));
+      window.open(pdfData);
+    });
   }
 
   render() {

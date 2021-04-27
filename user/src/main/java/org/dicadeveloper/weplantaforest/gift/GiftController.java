@@ -33,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -97,9 +98,15 @@ public class GiftController {
     }
 
     @RequestMapping(value = Uris.GIFT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
-    public ResponseEntity<?> createGiftPdf(HttpServletResponse response, @RequestParam long giftId) throws IpatException {
-        _giftService.createGiftPdf(giftId, response);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> createGiftPdf(HttpServletResponse response, @RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long giftId) throws IpatException {
+        val gift = _giftRepository.findById(giftId).orElse(null);
+        val isAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, gift.getConsignor().getUsername());
+        if (isAllowed) {
+            _giftService.createGiftPdf(giftId, response);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
 }
