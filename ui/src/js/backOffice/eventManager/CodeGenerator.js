@@ -15,7 +15,7 @@ export default class CodeGenerator extends Component {
       amount: 0,
       projects: [],
       overallPrice: 0,
-      restConfig: getConfig()
+      restConfig: getConfig(),
     };
     this.updatePrice = this.updatePrice.bind(this);
   }
@@ -28,12 +28,12 @@ export default class CodeGenerator extends Component {
     var that = this;
     axios
       .get('http://localhost:8081/reports/activeProjects')
-      .then(function(response) {
+      .then(function (response) {
         var result = response.data;
         that.setState({ projects: result });
         that.forceUpdate();
       })
-      .catch(function(response) {
+      .catch(function (response) {
         that.refs.notification.addNotification('Fehler beim Laden der aktiven Projekte!', response.data + response.message, 'error');
       });
   }
@@ -54,39 +54,39 @@ export default class CodeGenerator extends Component {
     var that = this;
     var plantBag = this.updatePlantBag();
     axios
-      .post('http://localhost:8081/validatePlantBag', plantBag, {})
-      .then(function(response) {
+      .post('http://localhost:8081/validatePlantBag', plantBag, that.state.restConfig)
+      .then(function (response) {
         // console.log('plantbag is valid');
         var request = {
           amountOfPlantBags: that.state.amount,
           cartState: 'GENERATED',
           userId: that.state.userId,
-          plantBag: plantBag
+          plantBag: plantBag,
         };
         axios
           .post('http://localhost:8081/plantForUser/', request, that.state.restConfig)
-          .then(function(response) {
+          .then(function (response) {
             // console.log('carts generated!');
             // console.log(response.data);
             var cartIds = response.data;
             that.loadProjects();
             axios
               .post('http://localhost:8083/event/codes/' + that.state.eventId, cartIds, that.state.restConfig)
-              .then(function(response) {
+              .then(function (response) {
                 // console.log('codes generated!');
                 that.props.loadCodesForEvent();
                 that.refs.notification.addNotification('Codes wurden dem Event hinzugefügt!', '', 'success');
               })
-              .catch(function(response) {
+              .catch(function (response) {
                 // console.log(response);
                 that.refs.notification.addNotification('Fehler beim Generieren der Codes!', '', 'error');
               });
           })
-          .catch(function(response) {
+          .catch(function (response) {
             that.refs.notification.addNotification('Fehler beim Erzeugen der Pflanzkörbe!', '', 'error');
           });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         // console.log(response);
         var errorMessage = '';
         that.refs.notification.addNotification('Fehler beim Validieren der Pflanzkörbe!', errorMessage, 'error');
@@ -104,7 +104,7 @@ export default class CodeGenerator extends Component {
 
   updatePlantBag() {
     var totalPrice = 0;
-    var plantBag = {}; 
+    var plantBag = {};
     plantBag.projects = {};
     for (var project in this.state.projects) {
       var projectItems = {};
@@ -115,10 +115,10 @@ export default class CodeGenerator extends Component {
           projectItems[this.refs['project_' + project].getArticles()[article].treeType.name] = {
             amount: parseInt(this.refs['project_' + project].getArticleValue(article)),
             price: parseInt(this.refs['project_' + project].getArticles()[article].price.priceAsLong),
-            imageFile: this.refs['project_' + project].getArticles()[article].treeType.imageFile
+            imageFile: this.refs['project_' + project].getArticles()[article].treeType.imageFile,
           };
           //price = price + parseInt(this.refs['project_' + project].getPrice());
-          totalPrice = totalPrice + (parseInt(this.refs['project_' + project].getArticles()[article].price.priceAsLong) * parseInt(this.refs['project_' + project].getArticleValue(article)));
+          totalPrice = totalPrice + parseInt(this.refs['project_' + project].getArticles()[article].price.priceAsLong) * parseInt(this.refs['project_' + project].getArticleValue(article));
         }
       }
     }
@@ -143,7 +143,7 @@ export default class CodeGenerator extends Component {
             <input
               type="text"
               value={this.state.amount}
-              onChange={event => {
+              onChange={(event) => {
                 this.updateAmount(event.target.value);
               }}
             />
@@ -152,7 +152,7 @@ export default class CodeGenerator extends Component {
         <div className="row">
           <div className="col-md-12">
             <div>
-              {this.state.projects.map(function(project, i) {
+              {this.state.projects.map(function (project, i) {
                 return <Project key={i} project={project} ref={'project_' + i} updatePrice={that.updatePrice.bind(this)} />;
               })}
             </div>

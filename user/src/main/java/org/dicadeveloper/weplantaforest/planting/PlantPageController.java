@@ -56,11 +56,11 @@ public class PlantPageController {
 
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
-    private @NonNull UserRepository _userRepsoitory;
+    private @NonNull UserRepository _userRepository;
 
     private @NonNull CartService _cartService;
 
-    private @NonNull CodeRepository _codeRepostiory;
+    private @NonNull CodeRepository _codeRepository;
 
     @RequestMapping(value = Uris.COMPLEX_PROPOSAL_FOR_PRICE + "{targetedPrice}", method = RequestMethod.GET)
     @Transactional
@@ -79,7 +79,7 @@ public class PlantPageController {
                     Code code = previousUnpaidCart.getCode();
                     code.setCart(null);
                     previousUnpaidCart.setCode(null);
-                    _codeRepostiory.delete(code);
+                    _codeRepository.delete(code);
                 }
                 _cartRepository.delete(previousUnpaidCart);
             }
@@ -93,20 +93,28 @@ public class PlantPageController {
 
     @RequestMapping(value = Uris.PLANT_FOR_USER, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<List<Long>> plantForUser(@RequestBody PlantForUserRequest plantForUserRequest) throws IpatException {
-        User buyer = _userRepsoitory.findById(plantForUserRequest.getUserId()).orElse(null);
-        IpatPreconditions.checkNotNull(buyer, ErrorCodes.USER_NOT_FOUND);
-        _plantPageDataValidator.validatePlantBag(plantForUserRequest.getPlantBag());
-        List<Long> cartIds = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()),
-                (int) plantForUserRequest.getAmountOfPlantBags());
-        return new ResponseEntity<List<Long>>(cartIds, HttpStatus.OK);
+    public ResponseEntity<List<Long>> plantForUser(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantForUserRequest plantForUserRequest) throws IpatException {
+        if (_tokenAuthenticationService.isAdmin(userToken)) {
+            User buyer = _userRepository.findById(plantForUserRequest.getUserId()).orElse(null);
+            IpatPreconditions.checkNotNull(buyer, ErrorCodes.USER_NOT_FOUND);
+            _plantPageDataValidator.validatePlantBag(plantForUserRequest.getPlantBag());
+            List<Long> cartIds = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()),
+                    (int) plantForUserRequest.getAmountOfPlantBags());
+            return new ResponseEntity<List<Long>>(cartIds, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
     }
 
     @RequestMapping(value = Uris.VALIDATE_PLANTBAG, method = RequestMethod.POST)
-    public ResponseEntity<?> validatePlantBag(@RequestBody PlantBag plantBag) throws IpatException {
-        _plantPageDataValidator.validatePlantBag(plantBag);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> validatePlantBag(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
+        if (_tokenAuthenticationService.isAdmin(userToken)) {
+            _plantPageDataValidator.validatePlantBag(plantBag);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
 }

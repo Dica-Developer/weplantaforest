@@ -83,7 +83,7 @@ public class TeamController {
     @RequestMapping(value = Uris.TEAM_IMAGE_UPLOAD, method = RequestMethod.POST)
     public ResponseEntity<?> uploadTeamImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId, @RequestParam("file") MultipartFile file) throws IpatException {
         User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (teamService.isTeamAdmin(user.getId(), teamId)) {
+        if (null != user && teamService.isTeamAdmin(user.getId(), teamId)) {
             teamService.uploadTeamImage(teamId, file);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -116,7 +116,7 @@ public class TeamController {
     public ResponseEntity<?> editTeamDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId, @RequestParam String toEdit, @RequestParam String newEntry)
             throws IpatException {
         User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (teamService.isTeamAdmin(user.getId(), teamId)) {
+        if (null != user && teamService.isTeamAdmin(user.getId(), teamId)) {
             teamService.editTeam(teamId, toEdit, newEntry);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -181,7 +181,7 @@ public class TeamController {
     @RequestMapping(value = Uris.TEAM_DELETE, method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId) throws IpatException {
         User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (user != null) {
+        if (null != user && teamService.isTeamAdmin(user.getId(), teamId)) {
             teamService.deleteTeam(user, teamId);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
