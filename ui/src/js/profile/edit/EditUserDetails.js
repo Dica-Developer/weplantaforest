@@ -75,8 +75,8 @@ export default class EditUserDetails extends Component {
             <span className="bold">{counterpart.translate('MEMBER_SINCE')}:&nbsp;</span>
             {moment(this.props.user.regDate).format('DD.MM.YYYY')}
             <br />
-            <span className="bold">{counterpart.translate('LAST_VISIT')}:&nbsp;</span>
-            {moment(this.props.user.lastVisit).format('DD.MM.YYYY')}
+            <span className="bold">&nbsp;</span>
+            &nbsp;
             <br />
             <span className="bold">{counterpart.translate('RANK')}:&nbsp;</span>
             {this.props.user.rank}

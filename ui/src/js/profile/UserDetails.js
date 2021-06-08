@@ -118,8 +118,8 @@ export default class UserDetails extends Component {
                   {Accounting.formatNumber(this.props.user.co2Data.treesCount, 0, '.', ',')}
                 </td>
                 <td>
-                  <span className="bold">{counterpart.translate('LAST_VISIT')}:&nbsp;</span>
-                  {moment(this.props.user.lastVisit).format('DD.MM.YYYY')}
+                  <span className="bold">&nbsp;</span>
+                  &nbsp;
                 </td>
               </tr>
               <tr>
