@@ -145,15 +145,8 @@ export default class UserDetails extends Component {
                   </a>
                 </td>
                 <td>
-                  <span className="bold"></span>
-                </td>
-              </tr>
-              <tr>
-                <td>
                   <span className="bold">{counterpart.translate('LOCATION')}:&nbsp;</span>
                   {this.props.user.location}
-                </td>
-                <td>
                   <span className="bold"></span>
                 </td>
               </tr>
