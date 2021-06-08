@@ -29,6 +29,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
@@ -109,6 +110,10 @@ public class User implements UserDetails {
     @JoinColumn(name = "_team__teamId")
     @JsonIgnore
     private Team team;
+
+    @Transient
+    @JsonProperty("authenticationExpiresAt")
+    private Long authenticationExpiresAt;
 
     public void addRole(final Role role) {
         roles.add(role);

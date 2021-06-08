@@ -7,11 +7,13 @@ import '../less/main.less';
 import Routes from './routes';
 
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
-  error => {
+  (error) => {
     if (error.response) {
+      // TODO in case of 401 or invalid token set token to null and isAmdin false
+      // TODO in any other case store the new token
       if (error.response.status == 403) {
         browserHistory.push('/forbidden?calledUrl=' + error.response.config.url);
       } else if (error.response.status == 402) {

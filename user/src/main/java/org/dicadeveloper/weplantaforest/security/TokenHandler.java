@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 
 import javax.crypto.Mac;
@@ -15,6 +17,11 @@ import org.dicadeveloper.weplantaforest.user.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.SneakyThrows;
+import lombok.val;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public final class TokenHandler {
 
     private static final String HMAC_ALGO = "HmacSHA256";
@@ -41,8 +48,14 @@ public final class TokenHandler {
 
                 boolean validHash = Arrays.equals(createHmac(userBytes), hash);
                 if (validHash) {
-                    final User user = fromJSON(userBytes);
-                    return user;
+                    try {
+                        final User user = fromJSON(userBytes);
+                        if (user.getAuthenticationExpiresAt() == null || LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() < user.getAuthenticationExpiresAt()) {
+                            return user;
+                        }
+                    } catch (Exception e) {
+                        LOG.warn("authentication token has wrong format. log the user out!!!");
+                    }
                 }
             } catch (IllegalArgumentException e) {
                 // log tempering attempt here
@@ -69,10 +82,12 @@ public final class TokenHandler {
         }
     }
 
+    @SneakyThrows
     private byte[] toJSON(User user) {
         try {
-            //TODO: add expiresAt field 
-            return new ObjectMapper().writeValueAsBytes(user);
+            val mapper = new ObjectMapper();
+            user.setAuthenticationExpiresAt(LocalDateTime.now().plusWeeks(1).toInstant(ZoneOffset.UTC).toEpochMilli());
+            return mapper.writeValueAsBytes(user);
         } catch (JsonProcessingException e) {
             throw new IllegalStateException(e);
         }

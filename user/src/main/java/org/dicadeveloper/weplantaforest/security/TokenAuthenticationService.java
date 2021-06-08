@@ -33,8 +33,8 @@ public class TokenAuthenticationService {
         this._userHelper = userHelper;
     }
 
-    public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
-        final User user = authentication.getDetails();
+    public void addAuthentication(HttpServletResponse response, Authentication authentication) {
+        final User user = (User) authentication.getDetails();
         response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
         response.addHeader(USERNAME_HEADER_NAME, user.getUsername());
     }
