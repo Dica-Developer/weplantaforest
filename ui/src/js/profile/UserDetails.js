@@ -118,8 +118,8 @@ export default class UserDetails extends Component {
                   {Accounting.formatNumber(this.props.user.co2Data.treesCount, 0, '.', ',')}
                 </td>
                 <td>
-                  <span className="bold">&nbsp;</span>
-                  &nbsp;
+                  <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>
+                  {this.props.user.organizationType ? counterpart.translate(this.props.user.organizationType) : ''}
                 </td>
               </tr>
               <tr>
@@ -133,8 +133,8 @@ export default class UserDetails extends Component {
                   &nbsp;{Accounting.formatNumber(this.props.user.co2Data.co2, 3, '.', ',')}&nbsp;t
                 </td>
                 <td>
-                  <span className="bold">{counterpart.translate('TYPE')}:&nbsp;</span>
-                  {this.props.user.organizationType ? counterpart.translate(this.props.user.organizationType) : ''}
+                  <span className="bold">{counterpart.translate('ORGANISATION')}:&nbsp;</span>
+                  {this.props.user.organisation}
                 </td>
               </tr>
               <tr>
@@ -145,8 +145,7 @@ export default class UserDetails extends Component {
                   </a>
                 </td>
                 <td>
-                  <span className="bold">{counterpart.translate('ORGANISATION')}:&nbsp;</span>
-                  {this.props.user.organisation}
+                  <span className="bold"></span>
                 </td>
               </tr>
               <tr>
