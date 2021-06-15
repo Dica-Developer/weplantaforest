@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 import org.springframework.stereotype.Component;
 
@@ -76,11 +77,14 @@ public class BannerAndWidgetHelper {
         return buffer.toString();
     }
 
-    public BufferedImage createWidget(String imagePath, String type, int width, int height, Co2Data co2DataForUser) throws IOException {
-        BufferedImage bufferedImg = ImageIO.read(getClass().getResourceAsStream(imagePath));
+    public BufferedImage createWidget(String imagePath, String type, int width, int height, Co2Data co2DataForUser, Language language) throws IOException {
+        val bufferedImg = ImageIO.read(getClass().getResourceAsStream(imagePath));
 
-        Double co2Rounded = (double) Math.round(co2DataForUser.getCo2() * 100) / 100;
-        String co2RoundedAsString = co2Rounded.toString().replace(".", ",");
+        Double co2Rounded = Math.round(co2DataForUser.getCo2() * 100) / 100.0;
+        var co2RoundedAsString = co2Rounded.toString();
+        if (Language.DEUTSCH.equals(language)) {
+            co2RoundedAsString = co2Rounded.toString().replace(".", ",");
+        }
         Graphics2D graphics = bufferedImg.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
@@ -91,57 +95,78 @@ public class BannerAndWidgetHelper {
                 graphics.setColor(new Color(130, 171, 31));
             }
             graphics.setFont(new Font("Georgia", Font.PLAIN, 10));
-            graphics.drawString("Bäume : ", 8, 82);
-            graphics.drawString("CO2 : ", 22, 95);
+            if (Language.DEUTSCH.equals(language)) {
+                graphics.drawString("Bäume : ", 8, 82);
+                graphics.drawString("CO2 : ", 22, 95);
+            } else {
+                graphics.drawString("Trees : ", 18, 82);
+                graphics.drawString("CO2 : ", 22, 95);
+            }
             graphics.setFont(new Font("Arial", Font.PLAIN, 10));
             graphics.drawString(co2DataForUser.getTreesCount().toString(), 52, 82);
             graphics.drawString(co2RoundedAsString + " t", 52, 95);
         } else if (width == 100 && height == 200) {
-            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 105, 125, 165, 185);
+            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 105, 125, 165, 185, language);
         } else if (width == 100 && height == 300) {
-            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 130, 150, 230, 250);
+            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 130, 150, 230, 250, language);
         } else if (width == 100 && height == 400) {
-            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 160, 180, 290, 310);
+            drawTextsOnImage(graphics, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 160, 180, 290, 310, language);
         } else if (width == 200 && height == 100) {
-            drawTextsOnCrossedImage(graphics, 100, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 17, 37, 67, 87, 1);
+            drawTextsOnCrossedImage(graphics, 100, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 17, 37, 67, 87, 1, language);
         } else if (width == 300 && height == 100) {
-            drawTextsOnCrossedImage(graphics, 100, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 45, 65, 45, 65, 2);
+            drawTextsOnCrossedImage(graphics, 100, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 45, 65, 45, 65, 2, language);
         } else if (width == 400 && height == 100) {
-            drawTextsOnCrossedImage(graphics, 133, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 45, 65, 45, 65, 2);
+            drawTextsOnCrossedImage(graphics, 133, type, co2DataForUser.getTreesCount().toString(), co2RoundedAsString, 45, 65, 45, 65, 2, language);
         }
         return bufferedImg;
     }
 
-    private void drawTextsOnImage(Graphics2D graphics, String type, String treeCount, String co2, int textTreePos, int amountTreePos, int textCo2Pos, int amountCo2Pos) {
+    private void drawTextsOnImage(Graphics2D graphics, String type, String treeCount, String co2, int textTreePos, int amountTreePos, int textCo2Pos, int amountCo2Pos, Language language) {
         if ("green".equals(type)) {
             graphics.setColor(Color.WHITE);
         } else {
             graphics.setColor(new Color(130, 171, 31));
         }
-        drawCenteredString(graphics, "gepflanzte Bäume", 100, new Font("Georgia", Font.PLAIN, 9), textTreePos);
+        if (Language.DEUTSCH.equals(language)) {
+            drawCenteredString(graphics, "gepflanzte Bäume", 100, new Font("Georgia", Font.PLAIN, 9), textTreePos);
+        } else {
+            drawCenteredString(graphics, "planted trees", 100, new Font("Georgia", Font.PLAIN, 9), textTreePos);
+        }
         drawCenteredString(graphics, treeCount, 100, new Font("Arial", Font.BOLD, 16), amountTreePos);
 
         if ("white".equals(type)) {
             graphics.setColor(Color.WHITE);
         }
-        drawCenteredString(graphics, "CO2 gebunden in t", 100, new Font("Georgia", Font.PLAIN, 9), textCo2Pos);
+        if (Language.DEUTSCH.equals(language)) {
+            drawCenteredString(graphics, "CO2 gebunden in t", 100, new Font("Georgia", Font.PLAIN, 9), textCo2Pos);
+        } else {
+            drawCenteredString(graphics, "CO2 bound in t", 100, new Font("Georgia", Font.PLAIN, 9), textCo2Pos);
+        }
         drawCenteredString(graphics, co2, 100, new Font("Arial", Font.BOLD, 16), amountCo2Pos);
     }
 
     private void drawTextsOnCrossedImage(Graphics2D graphics, int sectionWidth, String type, String treeCount, String co2, int textTreePos, int amountTreePos, int textCo2Pos, int amountCo2Pos,
-            int co2Section) {
+            int co2Section, Language language) {
         if ("green".equals(type)) {
             graphics.setColor(Color.WHITE);
         } else {
             graphics.setColor(new Color(130, 171, 31));
         }
-        drawSectionCenteredString(graphics, "gepflanzte Bäume", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textTreePos, 1);
+        if (Language.DEUTSCH.equals(language)) {
+            drawSectionCenteredString(graphics, "gepflanzte Bäume", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textTreePos, 1);
+        } else {
+            drawSectionCenteredString(graphics, "planted trees", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textTreePos, 1);
+        }
         drawSectionCenteredString(graphics, treeCount, sectionWidth, new Font("Arial", Font.BOLD, 16), amountTreePos, 1);
 
         if ("white".equals(type)) {
             graphics.setColor(Color.WHITE);
         }
-        drawSectionCenteredString(graphics, "CO2 gebunden in t", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textCo2Pos, co2Section);
+        if (Language.DEUTSCH.equals(language)) {
+            drawSectionCenteredString(graphics, "CO2 gebunden in t", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textCo2Pos, co2Section);
+        } else {
+            drawSectionCenteredString(graphics, "CO2 bound in t", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textCo2Pos, co2Section);
+        }
         drawSectionCenteredString(graphics, co2, sectionWidth, new Font("Arial", Font.BOLD, 16), amountCo2Pos, co2Section);
     }
 
@@ -158,4 +183,5 @@ public class BannerAndWidgetHelper {
         g.setFont(font);
         g.drawString(text, x, ycoord);
     }
+
 }

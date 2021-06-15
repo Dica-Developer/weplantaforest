@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections4.map.PassiveExpiringMap;
 import org.apache.commons.io.IOUtils;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
+import org.dicadeveloper.weplantaforest.common.support.Language;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 import org.dicadeveloper.weplantaforest.reports.co2.Co2Repository;
 import org.dicadeveloper.weplantaforest.support.Uris;
@@ -69,17 +70,18 @@ public class BannerAndWidgetController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = Uris.WIDGET, method = RequestMethod.GET)
-    public ResponseEntity<?> getWidget(HttpServletResponse response, @RequestParam String userName, @RequestParam String type, @RequestParam int width, @RequestParam int height) {
+    public ResponseEntity<?> getWidget(HttpServletResponse response, @RequestParam String userName, @RequestParam String type, @RequestParam int width, @RequestParam int height,
+            @RequestParam(required = false, defaultValue = "DEUTSCH") Language language) {
         BufferedImage bufferedImg = null;
-        String filePath = "/static/images/widgets/";
-        String imageName = "widget_" + type + "_" + width + "x" + height + ".jpg";
-        val cacheKey = userName + "_" + imageName;
+        val filePath = "/static/images/widgets/";
+        val imageName = "widget_" + type + "_" + width + "x" + height + ".jpg";
+        val cacheKey = userName + "_" + language.name() + "_" + imageName;
         if (widgetCache.containsKey(cacheKey)) {
             bufferedImg = widgetCache.get(cacheKey);
         } else {
             Co2Data co2DataForUser = co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName);
             try {
-                bufferedImg = bannerAndWidgetHelper.createWidget(filePath + imageName, type, width, height, co2DataForUser);
+                bufferedImg = bannerAndWidgetHelper.createWidget(filePath + imageName, type, width, height, co2DataForUser, language);
                 widgetCache.put(cacheKey, bufferedImg);
             } catch (IOException e) {
                 LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
