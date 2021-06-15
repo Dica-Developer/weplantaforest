@@ -48,7 +48,7 @@ public class BannerAndWidgetHelper {
     }
 
     @SneakyThrows
-    public String generateWidgetHtmlCode(String host, String userName, String type, int width, int height) {
+    public String generateWidgetHtmlCode(String host, String userName, String type, int width, int height, Language language) {
         StringBuffer buffer = new StringBuffer();
         String hostWithPath = host;
         if (host.contains(":8080")) {
@@ -72,6 +72,8 @@ public class BannerAndWidgetHelper {
         buffer.append(width);
         buffer.append("&height=");
         buffer.append(height);
+        buffer.append("&language=");
+        buffer.append(language.name());
         buffer.append("\" />");
         buffer.append("</a>");
         return buffer.toString();

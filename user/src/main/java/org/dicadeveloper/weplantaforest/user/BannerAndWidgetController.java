@@ -98,8 +98,9 @@ public class BannerAndWidgetController {
     }
 
     @RequestMapping(value = Uris.WIDGET_CODE, method = RequestMethod.GET)
-    public ResponseEntity<?> getWidgetHtmlCode(@RequestParam String userName, @RequestParam String type, @RequestParam int width, @RequestParam int height) {
-        String htmlCode = bannerAndWidgetHelper.generateWidgetHtmlCode(env.getProperty("ipat.host"), userName, type, width, height);
+    public ResponseEntity<?> getWidgetHtmlCode(@RequestParam String userName, @RequestParam String type, @RequestParam int width, @RequestParam int height,
+            @RequestParam(required = false, defaultValue = "DEUTSCH") Language language) {
+        String htmlCode = bannerAndWidgetHelper.generateWidgetHtmlCode(env.getProperty("ipat.host"), userName, type, width, height, language);
         return new ResponseEntity<>(htmlCode, HttpStatus.OK);
     }
 

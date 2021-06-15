@@ -13,7 +13,7 @@ export default class Widgets extends Component {
       htmlCode: '',
       width: 100,
       height: 100,
-      userName: encodeURIComponent(localStorage.getItem('username'))
+      userName: encodeURIComponent(localStorage.getItem('username')),
     };
   }
 
@@ -51,12 +51,12 @@ export default class Widgets extends Component {
   generateHtmlCode() {
     var that = this;
     axios
-      .get('http://localhost:8081/widget/code?userName=' + this.state.userName + '&type=' + this.state.type + '&width=' + this.state.width + '&height=' + this.state.height)
-      .then(function(response) {
+      .get('http://localhost:8081/widget/code?userName=' + this.state.userName + '&type=' + this.state.type + '&width=' + this.state.width + '&height=' + this.state.height +'&language=' + localStorage.getItem('language'))
+      .then(function (response) {
         var result = response.data;
         that.setState({ htmlCode: result });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         if (response instanceof Error) {
           console.error('Error', response.message);
         } else {
@@ -76,10 +76,10 @@ export default class Widgets extends Component {
     var widgets;
 
     if (this.state.format == 'high') {
-      widget1 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=100';
-      widget2 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=200';
-      widget3 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=300';
-      widget4 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=400';
+      widget1 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=100&language=' + localStorage.getItem('language');
+      widget2 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=200&language=' + localStorage.getItem('language');
+      widget3 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=300&language=' + localStorage.getItem('language');
+      widget4 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=400&language=' + localStorage.getItem('language');
       widgets = (
         <div className="widgets-images-high">
           <div className="image">
@@ -105,10 +105,10 @@ export default class Widgets extends Component {
         </div>
       );
     } else {
-      widget1 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=100';
-      widget2 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=200&height=100';
-      widget3 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=300&height=100';
-      widget4 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=400&height=100';
+      widget1 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=100&height=100&language=' + localStorage.getItem('language');
+      widget2 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=200&height=100&language=' + localStorage.getItem('language');
+      widget3 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=300&height=100&language=' + localStorage.getItem('language');
+      widget4 = 'http://localhost:8081/widget?userName=' + this.state.userName + '&type=' + this.state.type + '&width=400&height=100&language=' + localStorage.getItem('language');
       widgets = (
         <div className="widgets-images-cross">
           <div className="image">
