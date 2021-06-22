@@ -5,9 +5,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

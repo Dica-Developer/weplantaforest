@@ -9,7 +9,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -18,11 +17,8 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 
     private final TokenAuthenticationService tokenAuthenticationService;
 
-    private final UserDetailsService userDetailsService;
-
-    public StatelessAuthenticationFilter(TokenAuthenticationService taService, UserDetailsService userDetailsService) {
+    public StatelessAuthenticationFilter(TokenAuthenticationService taService) {
         this.tokenAuthenticationService = taService;
-        this.userDetailsService = userDetailsService;
     }
 
     @Override

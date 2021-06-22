@@ -17,15 +17,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.articlemanager.views.Views;
 import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.common.user.IUser;
 import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
@@ -37,7 +40,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Table(name = "User")
-public class User implements UserDetails {
+public class User implements UserDetails, IUser {
 
     /**
      * 
@@ -104,6 +107,11 @@ public class User implements UserDetails {
     @Column(name = "ELEMENT")
     private Set<Role> roles = new HashSet<Role>();
 
+    @Transient
+    @JsonProperty("authenticationExpiresAt")
+    private Long authenticationExpiresAt;
+
+    @Override
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }

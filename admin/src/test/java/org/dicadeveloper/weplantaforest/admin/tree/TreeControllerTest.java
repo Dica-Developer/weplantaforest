@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.dicadeveloper.weplantaforest.admin.project.Project;
-import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.admin.treeType.TreeType;
@@ -14,6 +13,7 @@ import org.dicadeveloper.weplantaforest.admin.user.User;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testsupport.TestUtil;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

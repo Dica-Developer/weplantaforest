@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.common.user.IUser;
 import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.team.Team;
 import org.dicadeveloper.weplantaforest.views.Views;
@@ -41,7 +42,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "User")
 @EqualsAndHashCode(exclude = { "team" })
-public class User implements UserDetails {
+public class User implements UserDetails, IUser {
 
     private static final long serialVersionUID = -4288563962830437191L;
 
@@ -123,6 +124,7 @@ public class User implements UserDetails {
         roles.remove(role);
     }
 
+    @Override
     @Transient
     @JsonIgnore
     public boolean isAdmin() {

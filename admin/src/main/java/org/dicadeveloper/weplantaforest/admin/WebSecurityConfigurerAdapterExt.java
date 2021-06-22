@@ -1,10 +1,10 @@
 package org.dicadeveloper.weplantaforest.admin;
 
 import org.dicadeveloper.weplantaforest.admin.security.PasswordEncrypter;
-import org.dicadeveloper.weplantaforest.admin.security.StatelessAuthenticationFilter;
-import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.security.UserDetailsService;
 import org.dicadeveloper.weplantaforest.common.user.Role;
+import org.dicadeveloper.weplantaforest.security.StatelessAuthenticationFilter;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

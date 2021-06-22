@@ -6,19 +6,31 @@ import '../js/common/header/header.less';
 import '../less/main.less';
 import Routes from './routes';
 
+function storeToken(response) {
+  if (response.headers['x-auth-token']) {
+    let token = response.headers['x-auth-token'];
+    localStorage.setItem('jwt', token);
+  }
+}
+
 axios.interceptors.response.use(
   (response) => {
+    storeToken(response);
     return response;
   },
   (error) => {
     if (error.response) {
-      // TODO in case of 401 or invalid token set token to null and isAmdin false
-      // TODO in any other case store the new token
       if (error.response.status == 403) {
         browserHistory.push('/forbidden?calledUrl=' + error.response.config.url);
       } else if (error.response.status == 402) {
         location.href = error.response.data;
+      } else if (error.response.status == 401) {
+        localStorage.setItem('jwt', '');
+        localStorage.setItem('username', '');
+        localStorage.setItem('userDetails', '');
+        localStorage.setItem('isAdmin', false);
       }
+      storeToken(error.response);
     } else {
       console.log(error);
     }

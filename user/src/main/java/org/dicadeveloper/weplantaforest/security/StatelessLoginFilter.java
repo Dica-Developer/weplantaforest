@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dicadeveloper.weplantaforest.common.user.IUser;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,7 +53,7 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 
         // Lookup the complete User object from the database and create an
         // Authentication for it
-        final User authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
+        final IUser authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
         final UserAuthentication userAuthentication = new UserAuthentication(authenticatedUser);
 
         // Add the custom token as HTTP header to the response

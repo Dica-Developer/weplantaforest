@@ -7,11 +7,14 @@ dependencies {
 
   compileOnly 'org.projectlombok:lombok:1.18.10'
 
+  implementation 'javax.xml.bind:jaxb-api:2.3.1'
   implementation 'net.coobird:thumbnailator:0.4.8'
   
   //mail API
   implementation 'com.sun.mail:javax.mail:1.6.2'
   implementation 'org.springframework.boot:spring-boot-starter-web:' + springBootVersion
+
+  implementation('org.springframework.boot:spring-boot-starter-security:' + springBootVersion)
 
   testImplementation group: 'junit', name: 'junit', version: '4.12'
   testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
