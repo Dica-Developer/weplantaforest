@@ -1,7 +1,7 @@
 package org.dicadeveloper.weplantaforest.projects.offer;
 
 import org.dicadeveloper.weplantaforest.common.support.StringHelper;
-import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.common.user.IUser;
 
 public class ProjectOfferHelper {
 
@@ -9,11 +9,11 @@ public class ProjectOfferHelper {
         return "[Projekt Angebot] " + name + " " + mail;
     }
 
-    protected static String createMailText(ProjectOfferData projectOffer, User user) {
+    protected static String createMailText(final ProjectOfferData projectOffer, final IUser user) {
         final StringBuilder text = new StringBuilder();
 
         if (user != null) {
-            text.append("User: " + user + "\n");
+            text.append("User: " + user.getName() + "\n");
         }
 
         text.append("Name: " + projectOffer.getName() + "\n");

@@ -15,7 +15,7 @@ import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.Tree;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
 import org.dicadeveloper.weplantaforest.treetypes.TreeTypeRepository;
-import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,10 +49,15 @@ public class SelfPlantController {
 
     private @NonNull ImageHelper _imageHelper;
 
+    @Autowired
+    private UserRepository _userRepository;
+
     @RequestMapping(value = Uris.PLANT_SELF, method = RequestMethod.POST)
     public ResponseEntity<?> plantTreesByMyself(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @Valid @RequestBody SelfPlantData selfPlantedTree, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            User owner = _tokenAuthenticationService.getUserFromToken(userToken);
+            val authUser = _tokenAuthenticationService.getUserFromToken(userToken);
+            val owner = _userRepository.findByName(authUser.getName());
+
             Tree tree = _selfPlantDataToTreeConverter.convertSelfPlantDataToTree(selfPlantedTree, owner);
             _treeRepository.save(tree);
             return new ResponseEntity<Long>(tree.getId(), HttpStatus.OK);

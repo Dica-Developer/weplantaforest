@@ -37,6 +37,7 @@ import com.google.common.net.UrlEscapers;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -57,6 +58,9 @@ public class TeamController {
     private @NonNull TeamService teamService;
 
     private @NonNull TokenAuthenticationService tokenAuthenticationService;
+
+    @Autowired
+    private UserRepository _userRepository;
 
     @RequestMapping(value = Uris.TEAM_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
@@ -82,13 +86,15 @@ public class TeamController {
 
     @RequestMapping(value = Uris.TEAM_IMAGE_UPLOAD, method = RequestMethod.POST)
     public ResponseEntity<?> uploadTeamImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId, @RequestParam("file") MultipartFile file) throws IpatException {
-        User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (null != user && teamService.isTeamAdmin(user.getId(), teamId)) {
-            teamService.uploadTeamImage(teamId, file);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        val authUser = tokenAuthenticationService.getUserFromToken(userToken);
+        if (null != authUser) {
+            val user = _userRepository.findByName(authUser.getName());
+            if (teamService.isTeamAdmin(user.getId(), teamId)) {
+                teamService.uploadTeamImage(teamId, file);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(value = Uris.TEAM_DETAILS, method = RequestMethod.GET)
@@ -115,13 +121,15 @@ public class TeamController {
     @RequestMapping(value = Uris.EDIT_TEAM_DETAILS, method = RequestMethod.POST)
     public ResponseEntity<?> editTeamDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId, @RequestParam String toEdit, @RequestParam String newEntry)
             throws IpatException {
-        User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (null != user && teamService.isTeamAdmin(user.getId(), teamId)) {
-            teamService.editTeam(teamId, toEdit, newEntry);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        val authUser = tokenAuthenticationService.getUserFromToken(userToken);
+        if (null != authUser) {
+            val user = _userRepository.findByName(authUser.getName());
+            if (teamService.isTeamAdmin(user.getId(), teamId)) {
+                teamService.editTeam(teamId, toEdit, newEntry);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(value = Uris.TEAM_MEMBER, method = RequestMethod.GET)
@@ -147,8 +155,9 @@ public class TeamController {
 
     @RequestMapping(value = Uris.TEAM_CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> createTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @Valid @RequestBody Team team) throws IpatException {
-        User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (user != null) {
+        val authUser = tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser != null) {
+            val user = _userRepository.findByName(authUser.getName());
             teamService.createTeam(team, user.getId());
             return new ResponseEntity<>(team.getName(), HttpStatus.OK);
         } else {
@@ -158,8 +167,9 @@ public class TeamController {
 
     @RequestMapping(value = Uris.TEAM_JOIN, method = RequestMethod.POST)
     public ResponseEntity<?> joinTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId) throws IpatException {
-        User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (user != null) {
+        val authUser = tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser != null) {
+            val user = _userRepository.findByName(authUser.getName());
             teamService.joinTeam(user.getId(), teamId);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -169,8 +179,9 @@ public class TeamController {
 
     @RequestMapping(value = Uris.TEAM_LEAVE, method = RequestMethod.POST)
     public ResponseEntity<?> leaveTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken) throws IpatException {
-        User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (user != null) {
+        val authUser = tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser != null) {
+            val user = _userRepository.findByName(authUser.getName());
             teamService.leaveTeam(user.getId());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -180,19 +191,22 @@ public class TeamController {
 
     @RequestMapping(value = Uris.TEAM_DELETE, method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteTeam(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId) throws IpatException {
-        User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (null != user && teamService.isTeamAdmin(user.getId(), teamId)) {
-            teamService.deleteTeam(user, teamId);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        val authUser = tokenAuthenticationService.getUserFromToken(userToken);
+        if (null != authUser) {
+            val user = _userRepository.findByName(authUser.getName());
+            if (teamService.isTeamAdmin(user.getId(), teamId)) {
+                teamService.deleteTeam(user, teamId);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(value = Uris.TEAM_IS_ADMIN, method = RequestMethod.GET)
     public ResponseEntity<?> isAdmin(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId) throws IpatException {
-        User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (user != null) {
+        val authUser = tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser != null) {
+            val user = _userRepository.findByName(authUser.getName());
             boolean isAdmin = teamService.isTeamAdmin(user.getId(), teamId);
             return new ResponseEntity<>(isAdmin, HttpStatus.OK);
         } else {
@@ -202,8 +216,9 @@ public class TeamController {
 
     @RequestMapping(value = Uris.TEAM_IS_MEMBER, method = RequestMethod.GET)
     public ResponseEntity<?> isMember(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId) throws IpatException {
-        User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (user != null) {
+        val authUser = tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser != null) {
+            val user = _userRepository.findByName(authUser.getName());
             boolean isMember = teamService.isTeamMember(user.getId(), teamId);
             return new ResponseEntity<>(isMember, HttpStatus.OK);
         } else {

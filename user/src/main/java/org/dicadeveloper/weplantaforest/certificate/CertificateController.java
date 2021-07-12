@@ -92,10 +92,11 @@ public class CertificateController {
     @RequestMapping(value = Uris.CERTIFICATE_CREATE, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> createCertificate(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody CertificateRequestData requestData) {
-        val user = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (user == null) {
+        val authUser = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
+            val user = _userRepository.findByName(authUser.getName());
             Certificate certificate = new Certificate();
             certificate.setCreator(user);
             certificate.setText(requestData.getText());

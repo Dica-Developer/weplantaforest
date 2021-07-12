@@ -12,7 +12,6 @@ import org.dicadeveloper.weplantaforest.cart.Cart;
 import org.dicadeveloper.weplantaforest.cart.CartRepository;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
-import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -54,10 +54,11 @@ public class ReceiptController {
     @RequestMapping(value = Uris.RECEIPTS, method = RequestMethod.GET)
     @JsonView(Views.ReceiptOverview.class)
     public ResponseEntity<?> getReceiptsByOwnerId(@RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
-        User user = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (user == null) {
+        val authUser = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
+            val user = _userRepository.findByName(authUser.getName());
             List<Receipt> receipts = _receiptRepository.findByOwnerId(user.getId());
             return new ResponseEntity<>(receipts, HttpStatus.OK);
         }
@@ -65,10 +66,15 @@ public class ReceiptController {
 
     @RequestMapping(value = Uris.RECEIPT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<?> createReceiptPdf(HttpServletResponse response, @RequestParam Long receiptId, @RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
-        User user = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (user == null || !_receiptRepository.existsByReceiptIdAndOwnerId(receiptId, user.getId())) {
+        val authUser = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
+            val user = _userRepository.findByName(authUser.getName());
+            if (!_receiptRepository.existsByReceiptIdAndOwnerId(receiptId, user.getId())) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+
             Receipt receipt = _receiptRepository.findById(receiptId).orElse(null);
             PdfReceiptView pdf = new PdfReceiptView();
 

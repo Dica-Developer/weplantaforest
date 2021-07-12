@@ -1,4 +1,4 @@
-package org.dicadeveloper.weplantaforest.admin.security;
+package org.dicadeveloper.weplantaforest.security;
 
 import java.io.IOException;
 
@@ -7,7 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -21,7 +23,13 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        SecurityContextHolder.getContext().setAuthentication(tokenAuthenticationService.getAuthentication((HttpServletRequest) req));
-        chain.doFilter(req, res); // always continue
+        final Authentication authentication = tokenAuthenticationService.getAuthentication((HttpServletRequest) req);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        if (null != authentication) {
+            tokenAuthenticationService.addAuthentication((HttpServletResponse) res, authentication);
+        }
+
+        chain.doFilter(req, res);
     }
 }

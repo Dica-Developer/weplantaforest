@@ -2,23 +2,23 @@ package org.dicadeveloper.weplantaforest.security;
 
 import java.util.Collection;
 
-import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.common.user.IUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 public class UserAuthentication implements Authentication {
 
     private static final long serialVersionUID = -2242106351785882988L;
-    private final User user;
+    private final IUser user;
     private boolean authenticated = true;
 
-    public UserAuthentication(User user) {
+    public UserAuthentication(IUser user) {
         this.user = user;
     }
 
     @Override
     public String getName() {
-        return user.getUsername();
+        return user.getName();
     }
 
     @Override
@@ -32,19 +32,13 @@ public class UserAuthentication implements Authentication {
     }
 
     @Override
-    public User getDetails() {
-        User customUser = new User();
-        customUser.setId(user.getId());
-        customUser.setName(user.getName());
-        customUser.setMail(user.getMail());
-        customUser.setRoles(user.getRoles());
-        customUser.setLang(user.getLang());
-        return customUser;
+    public IUser getDetails() {
+        return user;
     }
 
     @Override
     public Object getPrincipal() {
-        return user.getUsername();
+        return user.getName();
     }
 
     @Override

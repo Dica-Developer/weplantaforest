@@ -4,17 +4,24 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.common.user.IUser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.SneakyThrows;
+import lombok.val;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public final class TokenHandler {
 
     private static final String HMAC_ALGO = "HmacSHA256";
@@ -32,7 +39,7 @@ public final class TokenHandler {
         }
     }
 
-    public User parseUserFromToken(String token) {
+    public IUser parseUserFromToken(String token) {
         final String[] parts = token.split(SEPARATOR_SPLITTER);
         if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 0) {
             try {
@@ -41,8 +48,14 @@ public final class TokenHandler {
 
                 boolean validHash = Arrays.equals(createHmac(userBytes), hash);
                 if (validHash) {
-                    final User user = fromJSON(userBytes);
-                    return user;
+                    try {
+                        final IUser user = fromJSON(userBytes);
+                        if (user.getAuthenticationExpiresAt() == null || LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() < user.getAuthenticationExpiresAt()) {
+                            return user;
+                        }
+                    } catch (Exception e) {
+                        LOG.warn("authentication token has wrong format. log the user out!!!");
+                    }
                 }
             } catch (IllegalArgumentException e) {
                 // log tempering attempt here
@@ -51,7 +64,7 @@ public final class TokenHandler {
         return null;
     }
 
-    public String createTokenForUser(User user) {
+    public String createTokenForUser(IUser user) {
         byte[] userBytes = toJSON(user);
         byte[] hash = createHmac(userBytes);
         final StringBuilder sb = new StringBuilder(170);
@@ -61,18 +74,20 @@ public final class TokenHandler {
         return sb.toString();
     }
 
-    private User fromJSON(final byte[] userBytes) {
+    private IUser fromJSON(final byte[] userBytes) {
         try {
-            return new ObjectMapper().readValue(new ByteArrayInputStream(userBytes), User.class);
+            return new ObjectMapper().readValue(new ByteArrayInputStream(userBytes), IUser.class);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private byte[] toJSON(User user) {
+    @SneakyThrows
+    private byte[] toJSON(IUser user) {
         try {
-            //TODO: add expiresAt field 
-            return new ObjectMapper().writeValueAsBytes(user);
+            val mapper = new ObjectMapper();
+            user.setAuthenticationExpiresAt(LocalDateTime.now().plusMonths(1).toInstant(ZoneOffset.UTC).toEpochMilli());
+            return mapper.writeValueAsBytes(user);
         } catch (JsonProcessingException e) {
             throw new IllegalStateException(e);
         }
@@ -90,18 +105,4 @@ public final class TokenHandler {
     private synchronized byte[] createHmac(byte[] content) {
         return hmac.doFinal(content);
     }
-    /*
-     * public static void main(String[] args) { Date start = new Date(); byte[]
-     * secret = new byte[70]; new
-     * java.security.SecureRandom().nextBytes(secret);
-     * 
-     * TokenHandler tokenHandler = new TokenHandler(secret); for (int i = 0; i <
-     * 1000; i++) { final User user = new
-     * User(java.util.UUID.randomUUID().toString().substring(0, 8), new Date(
-     * new Date().getTime() + 10000)); user.grantRole(UserRole.ADMIN); final
-     * String token = tokenHandler.createTokenForUser(user); final User
-     * parsedUser = tokenHandler.parseUserFromToken(token); if (parsedUser ==
-     * null || parsedUser.getUsername() == null) { System.out.println("error");
-     * } } System.out.println(System.currentTimeMillis() - start.getTime()); }
-     */
 }

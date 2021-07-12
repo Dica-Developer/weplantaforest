@@ -10,12 +10,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.dicadeveloper.weplantaforest.admin.FileSystemInjector;
-import org.dicadeveloper.weplantaforest.admin.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.admin.support.Uris;
 import org.dicadeveloper.weplantaforest.admin.testSupport.DbInjecter;
 import org.dicadeveloper.weplantaforest.admin.user.UserRepository;
 import org.dicadeveloper.weplantaforest.common.testsupport.CleanDbRule;
 import org.dicadeveloper.weplantaforest.common.testsupport.TestUtil;
+import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.dicadeveloper.weplantaforest.common.support.Language;
+import org.dicadeveloper.weplantaforest.common.user.IUser;
 import org.dicadeveloper.weplantaforest.common.user.Role;
 import org.dicadeveloper.weplantaforest.team.Team;
 import org.dicadeveloper.weplantaforest.views.Views;
@@ -29,6 +30,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
@@ -40,7 +42,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "User")
 @EqualsAndHashCode(exclude = { "team" })
-public class User implements UserDetails {
+public class User implements UserDetails, IUser {
 
     private static final long serialVersionUID = -4288563962830437191L;
 
@@ -110,6 +112,10 @@ public class User implements UserDetails {
     @JsonIgnore
     private Team team;
 
+    @Transient
+    @JsonProperty("authenticationExpiresAt")
+    private Long authenticationExpiresAt;
+
     public void addRole(final Role role) {
         roles.add(role);
     }
@@ -118,15 +124,11 @@ public class User implements UserDetails {
         roles.remove(role);
     }
 
+    @Override
     @Transient
     @JsonIgnore
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
-    }
-
-    @Override
-    public String toString() {
-        return "'" + name + "'(" + mail + ")[" + id + "]";
     }
 
     @Override

@@ -22,7 +22,7 @@ public class SelfPlantDataToTreeConverter {
         _treeTypeRepository = treeTypeRepository;
     }
 
-    protected Tree convertSelfPlantDataToTree(SelfPlantData selfPlantData, User owner) {
+    protected Tree convertSelfPlantDataToTree(@NonNull SelfPlantData selfPlantData, @NonNull User owner) {
         Tree tree = new Tree();
         long submittedOn = System.currentTimeMillis();
 

@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.dicadeveloper.weplantaforest.common.mail.MailHelper;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
-import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -35,10 +35,11 @@ public class ProjectOfferController {
             final String subject = ProjectOfferHelper.createSubject(projectOffer.getName(), projectOffer.getMail());
             String text;
 
-            User user = _tokenAuthenticationService.getUserFromToken(userToken);
+            val user = _tokenAuthenticationService.getUserFromToken(userToken);
             text = ProjectOfferHelper.createMailText(projectOffer, user);
 
             new Thread(new Runnable() {
+                @Override
                 public void run() {
                     _mailHelper.sendAMessage(subject, text);
                 }
