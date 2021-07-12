@@ -3,6 +3,7 @@ package org.dicadeveloper.weplantaforest.payment;
 import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.Uris;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,13 @@ public class PaymentController {
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
+    @Autowired
+    private UserRepository _userRepository;
+
     @RequestMapping(value = Uris.PAY_PLANTBAG, method = RequestMethod.POST)
     public ResponseEntity<?> payPlantBag(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PaymentData paymentData) throws IpatException {
-        val buyer = _tokenAuthenticationService.getUserFromToken(userToken);
+        val authUser = _tokenAuthenticationService.getUserFromToken(userToken);
+        val buyer = _userRepository.findByName(authUser.getName());
         _paymentService.payPlantBag(paymentData, buyer);
         return new ResponseEntity<>(HttpStatus.OK);
     }

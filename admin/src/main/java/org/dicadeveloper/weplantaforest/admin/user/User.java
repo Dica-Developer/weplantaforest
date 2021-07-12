@@ -155,11 +155,6 @@ public class User implements UserDetails, IUser {
     }
 
     @Override
-    public String toString() {
-        return "'" + name + "'(" + mail + ")[" + id + "]";
-    }
-
-    @Override
     public String getUsername() {
         return name;
     }

@@ -31,9 +31,6 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     public WebSecurityConfigurerAdapterExt() {
         super(true);
     }
@@ -57,7 +54,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
                 // custom Token based authentication based on the header
                 // previously
                 // given to the client
-                .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService, userDetailsService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
 
     }
 

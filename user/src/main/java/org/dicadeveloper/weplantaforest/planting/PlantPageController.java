@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -71,8 +72,9 @@ public class PlantPageController {
     @RequestMapping(value = Uris.COMPLEX_DONATION, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<Long> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
-        User buyer = _tokenAuthenticationService.getBuyer(userToken);
-        if (buyer != null) {
+        val authUser = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser != null) {
+            val buyer = _userRepository.findByName(authUser.getName());
             final Cart previousUnpaidCart = _cartRepository.findCartByUserAndOpen(buyer.getId());
             if (null != previousUnpaidCart) {
                 if (null != previousUnpaidCart.getCode()) {

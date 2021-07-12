@@ -10,7 +10,7 @@ import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.trees.TreeRepository;
-import org.dicadeveloper.weplantaforest.user.User;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -42,6 +43,9 @@ public class SimplePlantPageController {
 
     private @NonNull TokenAuthenticationService _tokenAuthenticationService;
 
+    @Autowired
+    private UserRepository _userRepository;
+
     @RequestMapping(value = Uris.SIMPLE_PROPOSAL_FOR_TREE + "{amountOfTrees}", method = RequestMethod.GET)
     @Transactional
     public SimplePlantBag getCartProposalForAmountOfTrees(@PathVariable long amountOfTrees) throws IpatException {
@@ -56,9 +60,10 @@ public class SimplePlantPageController {
 
     @RequestMapping(value = Uris.SIMPLE_DONATION, method = RequestMethod.POST)
     public ResponseEntity<?> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody SimplePlantBag plantPageData) {
-        User buyer = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (buyer != null) {
+        val authUser = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser != null) {
             if (_simplePlantPageDataValidator.isPlantPageDataValid(plantPageData)) {
+                val buyer = _userRepository.findByName(authUser.getName());
                 Cart cart = plantPageToCartConverter.convertSimplePlantPageDataToCart(plantPageData, buyer);
                 _cartRepository.save(cart);
                 return new ResponseEntity<>(HttpStatus.OK);

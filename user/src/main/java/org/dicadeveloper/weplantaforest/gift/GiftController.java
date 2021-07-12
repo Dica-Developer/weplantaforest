@@ -16,7 +16,6 @@ import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
 import org.dicadeveloper.weplantaforest.security.TokenAuthenticationService;
 import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
 import org.dicadeveloper.weplantaforest.support.Uris;
-import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,13 +87,13 @@ public class GiftController {
     @RequestMapping(value = Uris.GIFT_CREATE, method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> generateGift(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
-        User consignor = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (consignor != null) {
+        val authUser = _tokenAuthenticationService.getUserFromToken(userToken);
+        if (authUser != null) {
+            val consignor = _userRepository.findByName(authUser.getName());
             Long[] responseIds = _giftService.generateGift(consignor, plantBag);
             return new ResponseEntity<>(responseIds, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(value = Uris.GIFT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")

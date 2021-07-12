@@ -132,11 +132,6 @@ public class User implements UserDetails, IUser {
     }
 
     @Override
-    public String toString() {
-        return "'" + name + "'(" + mail + ")[" + id + "]";
-    }
-
-    @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();

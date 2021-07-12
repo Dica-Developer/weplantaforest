@@ -50,7 +50,7 @@ public class GiftService {
     private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
 
     @Transactional
-    public Long[] generateGift(User consignor, PlantBag plantBag) throws IpatException {
+    public Long[] generateGift(@NonNull User consignor, @NonNull PlantBag plantBag) throws IpatException {
         Long[] ids = new Long[2];
         _plantBagValidator.validatePlantBag(plantBag);
         Cart cart = plantBagToCartConverter.convertPlantPageDataToCart(plantBag, consignor, CartState.INITIAL);
