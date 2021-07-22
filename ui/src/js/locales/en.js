@@ -138,8 +138,6 @@ module.exports = {
 
   ARE_YOU_SURE: 'Are you sure you want to do this?',
 
-  ERROR_OCCURED: 'An error occured!',
-
   FIELDS_EMPTY: {
     title: 'Input fields are empty!',
     text: 'Please fill all input fields!'
@@ -590,5 +588,8 @@ module.exports = {
   USERS_PER_YEAR: 'User numbers',
 
   SHOW_PASSWORD: 'Show password',
-  HIDE_PASSWORD: 'Hide password'
+  HIDE_PASSWORD: 'Hide password',
+
+  NOT_ENOUGH_TREES: 'There are not enough trees.',
+  TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Invalid plant bag'
 };

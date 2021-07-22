@@ -20,12 +20,12 @@ export default class PlantBagPage extends Component {
     var plantBag =
       localStorage.getItem('plantBag') === 'undefined'
         ? {
-            projects: []
+            projects: [],
           }
         : JSON.parse(localStorage.getItem('plantBag'));
     this.state = {
       plantBag: plantBag,
-      isGift: isGift
+      isGift: isGift,
     };
   }
 
@@ -45,14 +45,14 @@ export default class PlantBagPage extends Component {
       if (!isAnonymUser) {
         config = {
           headers: {
-            'X-AUTH-TOKEN': localStorage.getItem('jwt')
-          }
+            'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+          },
         };
       } else {
         config = {
           headers: {
-            'X-AUTH-TOKEN': 'anonym-user'
-          }
+            'X-AUTH-TOKEN': 'anonym-user',
+          },
         };
       }
       if (this.state.isGift) {
@@ -73,13 +73,14 @@ export default class PlantBagPage extends Component {
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     axios
       .post('http://localhost:8081/gift/create', this.state.plantBag, config)
-      .then(function(response) {
+      .then(function (response) {
         that.refs['spinner'].hideSpinner();
         browserHistory.push('/payGift/' + response.data[0] + '/' + response.data[1]);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         that.refs['spinner'].hideSpinner();
-        that.refs.notification.handleError(error);
+        let title = counterpart.translate('TITLE_ERROR_PLANT_BAG_NOT_VALID');
+        that.refs.notification.handleErrorWithTitle(title, error);
       });
   }
 
@@ -89,13 +90,14 @@ export default class PlantBagPage extends Component {
     localStorage.setItem('plantBag', JSON.stringify(this.state.plantBag));
     axios
       .post('http://localhost:8081/donateTrees', this.state.plantBag, config)
-      .then(function(response) {
+      .then(function (response) {
         that.refs['spinner'].hideSpinner();
         browserHistory.push('/payCart/' + response.data);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         that.refs['spinner'].hideSpinner();
-        that.refs.notification.handleError(error);
+        let title = counterpart.translate('TITLE_ERROR_PLANT_BAG_NOT_VALID');
+        that.refs.notification.handleErrorWithTitle(title, error);
       });
   }
 
@@ -204,14 +206,14 @@ export default class PlantBagPage extends Component {
               </div>
             </div>
             <div className="overview">
-              {Object.keys(this.state.plantBag.projects).map(function(project, i) {
+              {Object.keys(this.state.plantBag.projects).map(function (project, i) {
                 var projectPrice = 0;
                 for (var plantItem in that.state.plantBag.projects[project].plantItems) {
                   projectPrice = projectPrice + that.state.plantBag.projects[project].plantItems[plantItem].amount * that.state.plantBag.projects[project].plantItems[plantItem].price;
                 }
                 return (
                   <PlantBagProject projectName={project} plantItems={that.state.plantBag.projects[project].plantItems} key={i} price={projectPrice}>
-                    {Object.keys(that.state.plantBag.projects[project].plantItems).map(function(plantItem, i) {
+                    {Object.keys(that.state.plantBag.projects[project].plantItems).map(function (plantItem, i) {
                       var plantItemName = getTextForSelectedLanguage(plantItem);
                       return (
                         <PlantBagItem

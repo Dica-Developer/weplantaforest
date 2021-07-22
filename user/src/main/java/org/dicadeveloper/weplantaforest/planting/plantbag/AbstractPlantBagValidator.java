@@ -1,6 +1,5 @@
 package org.dicadeveloper.weplantaforest.planting.plantbag;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -28,8 +27,6 @@ public abstract class AbstractPlantBagValidator {
     @Autowired
     protected @NonNull ProjectRepository _projectRepository;
 
-    protected List<IpatErrorInfo> errorInfos = new ArrayList<>();
-
     @Autowired
     protected AbstractPlantBagValidator(TreeRepository treeRepository, ProjectArticleRepository projectArticlerepository, ProjectRepository projectRepository) {
         _treeRepository = treeRepository;
@@ -46,9 +43,9 @@ public abstract class AbstractPlantBagValidator {
         return true;
     }
 
-    protected void projectsExistTemp(Set<String> projectNames) {
+    protected void projectsExistTemp(Set<String> projectNames, final List<IpatErrorInfo> errorInfos) {
         for (String projectName : projectNames) {
-            projectExistsTemp(projectName);
+            projectExistsTemp(projectName, errorInfos);
         }
     }
 
@@ -68,10 +65,10 @@ public abstract class AbstractPlantBagValidator {
         return false;
     }
 
-    protected ProjectArticle articleExistsTemp(String projectName, String articleName) {
+    protected ProjectArticle articleExistsTemp(String projectName, String articleName, final List<IpatErrorInfo> errorInfos) {
         ProjectArticle article = _projectArticleRepository.findArticleByProjectAndTreeType(projectName, articleName);
         if (null == article) {
-            addErrorInfo(ErrorCodes.ARTICLE_DOES_NOT_EXISTS, projectName, articleName);
+            addErrorInfo(errorInfos, ErrorCodes.ARTICLE_DOES_NOT_EXISTS, projectName, articleName);
         }
         return article;
     }
@@ -83,10 +80,10 @@ public abstract class AbstractPlantBagValidator {
         return false;
     }
 
-    protected Project projectExistsTemp(String projectName) {
+    protected Project projectExistsTemp(String projectName, final List<IpatErrorInfo> errorInfos) {
         Project project = _projectRepository.findByName(projectName);
         if (null == project) {
-            addErrorInfo(ErrorCodes.PROJECT_DOES_NOT_EXISTS, projectName);
+            addErrorInfo(errorInfos, ErrorCodes.PROJECT_DOES_NOT_EXISTS, projectName);
         }
         return project;
     }
@@ -95,10 +92,10 @@ public abstract class AbstractPlantBagValidator {
         return _projectRepository.findByName(projectName).getShopActive();
     }
 
-    protected boolean isProjectActiveTemp(Project project) {
+    protected boolean isProjectActiveTemp(Project project, final List<IpatErrorInfo> errorInfos) {
         boolean isActive = true;
         if (!project.getShopActive()) {
-            addErrorInfo(ErrorCodes.PROJECT_NOT_ACTIVE, project.getName());
+            addErrorInfo(errorInfos, ErrorCodes.PROJECT_NOT_ACTIVE, project.getName());
             isActive = false;
         }
         return isActive;
@@ -125,17 +122,17 @@ public abstract class AbstractPlantBagValidator {
         }
     }
 
-    protected void areThereEnoughTreesRemainingForThisArticleTemp(ProjectArticle article, Long wantedToPlant, String projectName, String articleName) {
+    protected void areThereEnoughTreesRemainingForThisArticleTemp(ProjectArticle article, Long wantedToPlant, String projectName, String articleName, final List<IpatErrorInfo> errorInfos) {
         Long articleAmount = article.getAmount();
         Long alreadyPlanted = _treeRepository.countAlreadyPlantedTreesByProjectArticle(article);
         Long treesRemaining = articleAmount - alreadyPlanted;
         if (wantedToPlant > treesRemaining) {
-            addErrorInfo(ErrorCodes.NOT_ENOUGH_TREES, projectName, articleName, wantedToPlant.toString(), treesRemaining.toString());
+            addErrorInfo(errorInfos, ErrorCodes.NOT_ENOUGH_TREES, projectName, articleName, wantedToPlant.toString(), treesRemaining.toString());
         }
 
     }
 
-    protected void addErrorInfo(String errorCode, String... params) {
+    protected void addErrorInfo(final List<IpatErrorInfo> errorInfos, final String errorCode, final String... params) {
         IpatErrorInfo errorInfo = new IpatErrorInfo(errorCode, params);
         errorInfos.add(errorInfo);
     }

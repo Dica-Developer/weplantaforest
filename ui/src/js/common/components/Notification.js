@@ -15,7 +15,7 @@ export default class Notification extends Component {
       autoDismiss: 0,
       message: '',
       level: type,
-      children: <MultiLineErrorObject lines={multilines} />
+      children: <MultiLineErrorObject lines={multilines} />,
     });
   }
 
@@ -23,32 +23,37 @@ export default class Notification extends Component {
     this.refs.notificationSystem.addNotification({ title: title, position: position, autoDismiss: 0, message: message, level: type });
   }
 
-  handleError(error) {
+  handleErrorWithTitle(title, error) {
     if (error instanceof Error) {
       if (!error.response) {
         this.refs.notificationSystem.addNotification({ title: 'Der Server kann nicht erreicht werden.', position: 'tc', autoDismiss: 0, message: error.message, level: 'error' });
         console.error('Error', error.message, error);
       } else if (error.response.data && error.response.data.errorInfos) {
-        this.addMultilineNotification(counterpart.translate('ERROR'), error.response.data.errorInfos, 'error');
+        this.addMultilineNotification(title, error.response.data.errorInfos, 'error');
       } else {
         this.refs.notificationSystem.addNotification({ title: 'Ein unerwarter Fehler ist aufgetreten!', position: 'tc', autoDismiss: 0, message: error.message, level: 'error' });
       }
     }
   }
 
+  handleError(error) {
+    let title = counterpart.translate('ERROR');
+    this.handleErrorWithTitle(title, error);
+  }
+
   render() {
     var style = {
       Containers: {
         DefaultStyle: {
-          zIndex: 11000
+          zIndex: 11000,
         },
         tc: {
           top: '50%',
           bottom: 'auto',
           margin: '0 auto',
-          left: '50%'
-        }
-      }
+          left: '50%',
+        },
+      },
     };
     return (
       <div>

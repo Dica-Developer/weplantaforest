@@ -139,8 +139,6 @@ module.exports = {
 
   ARE_YOU_SURE: 'Bist du sicher, dass du das machen möchtest?',
 
-  ERROR_OCCURED: 'Es ist ein Fehler aufgetreten!',
-
   FIELDS_EMPTY: {
     title: 'Eingabefelder sind leer!',
     text: 'Bitte füll alle Eingabefelder aus!'
@@ -591,5 +589,9 @@ module.exports = {
   USERS_PER_YEAR: 'Nutzerzahlen',
 
   SHOW_PASSWORD: 'Passwort anzeigen',
-  HIDE_PASSWORD: 'Passwort verbergen'
+  HIDE_PASSWORD: 'Passwort verbergen',
+
+
+  NOT_ENOUGH_TREES: 'Es gibt nicht genug Bäume.',
+  TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Ungültiger Pflanzkorb'
 };

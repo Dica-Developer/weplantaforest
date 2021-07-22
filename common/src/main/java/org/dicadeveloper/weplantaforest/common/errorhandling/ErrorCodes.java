@@ -42,7 +42,7 @@ public class ErrorCodes {
 
     public static final String ARTICLE_DOES_NOT_EXISTS = "ARTICLE_DOES_NOT_EXISTS";
 
-    public static final String NOT_ENOUGH_TREES = "ARTICLE_DOES_NOT_EXISTS";
+    public static final String NOT_ENOUGH_TREES = "NOT_ENOUGH_TREES";
 
     public static final String NO_TREES_TO_PLANT = "NO_TREES_TO_PLANT";
 
