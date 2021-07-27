@@ -1,4 +1,23 @@
 package org.dicadeveloper.weplantaforest.planting;
+import java.util.List;
+import lombok.NonNull;
+import org.dicadeveloper.weplantaforest.cart.CartService;
+import org.dicadeveloper.weplantaforest.common.errorhandling.ErrorCodes;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
+import org.dicadeveloper.weplantaforest.common.errorhandling.IpatPreconditions;
+import org.dicadeveloper.weplantaforest.messages.MessageByLocaleService;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBag;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagHelper;
+import org.dicadeveloper.weplantaforest.planting.plantbag.PlantBagValidator;
+import org.dicadeveloper.weplantaforest.support.PlantBagToCartConverter;
+import org.dicadeveloper.weplantaforest.user.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -32,6 +51,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +59,7 @@ import lombok.val;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 public class PlantPageController {
 
     private @NonNull PlantBagHelper plantPageDataHelper;
@@ -74,7 +95,6 @@ public class PlantPageController {
     public ResponseEntity<Long> processPlant(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestBody PlantBag plantBag) throws IpatException {
         val buyer = _tokenAuthenticationService.getBuyer(userToken);
         if (buyer != null) {
-            _plantPageDataValidator.validatePlantBag(plantBag);
             final Cart previousUnpaidCart = _cartRepository.findCartByUserAndOpen(buyer.getId());
             if (null != previousUnpaidCart) {
                 if (null != previousUnpaidCart.getCode()) {
@@ -85,6 +105,7 @@ public class PlantPageController {
                 }
                 _cartRepository.delete(previousUnpaidCart);
             }
+            _plantPageDataValidator.validatePlantBag(plantBag);
             long cartId = _cartService.createCartAndSave(plantBag, buyer, CartState.INITIAL);
             return new ResponseEntity<Long>(cartId, HttpStatus.OK);
         } else {
