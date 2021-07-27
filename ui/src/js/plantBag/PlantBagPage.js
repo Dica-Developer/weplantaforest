@@ -111,23 +111,9 @@ export default class PlantBagPage extends Component {
     this.calcPriceAndUpdatePlantBag();
   }
 
-  increasePlantBagItem(project, plantItem) {
-    this.state.plantBag.projects[project].plantItems[plantItem].amount++;
+  setPlantBagItemAmount(project, plantItem, amount) {
+    this.state.plantBag.projects[project].plantItems[plantItem].amount = amount;
     this.forceUpdate();
-    this.calcPriceAndUpdatePlantBag();
-  }
-
-  decreasePlantBagItem(project, plantItem) {
-    this.state.plantBag.projects[project].plantItems[plantItem].amount--;
-    this.forceUpdate();
-    if (this.state.plantBag.projects[project].plantItems[plantItem].amount == 0) {
-      delete this.state.plantBag.projects[project].plantItems[plantItem];
-      if (Object.keys(this.state.plantBag.projects[project].plantItems).length === 0) {
-        delete this.state.plantBag.projects[project];
-        this.forceUpdate();
-      }
-      this.forceUpdate();
-    }
     this.calcPriceAndUpdatePlantBag();
   }
 
@@ -223,12 +209,7 @@ export default class PlantBagPage extends Component {
                           removePlantBagItem={() => {
                             that.removePlantBagItem(project, plantItem);
                           }}
-                          increasePlantBagItem={() => {
-                            that.increasePlantBagItem(project, plantItem);
-                          }}
-                          decreasePlantBagItem={() => {
-                            that.decreasePlantBagItem(project, plantItem);
-                          }}
+                          setPlantBagItemAmount= {(amount) => {that.setPlantBagItemAmount(project, plantItem, amount)}}
                         />
                       );
                     })}

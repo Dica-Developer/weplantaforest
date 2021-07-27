@@ -8,19 +8,12 @@ export default class PlantBagItem extends Component {
   constructor() {
     super();
     this.state = {
-      decreaseInterval: null,
-      increaseInterval: null,
-      descreaseDown: false,
-      increaseDown: false,
-      intervalDuration: 0,
-      scaleResult: false
     };
-    this.scalingDone = this.scalingDone.bind(this);
   }
 
   componentWillUnmount() {
     const elm = this.refs.result;
-    elm.removeEventListener('animationend', this.scalingDone);
+    // elm.removeEventListener('animationend', this.scalingDone);
   }
   scalingDone() {
     this.setState({ scaleResult: false });
@@ -31,48 +24,8 @@ export default class PlantBagItem extends Component {
     elm.addEventListener('animationend', this.scalingDone);
   }
 
-  startDecreasing() {
-    this.props.decreasePlantBagItem();
-    var that = this;
-    this.state.descreaseDown = true;
-    setTimeout(function() {
-      that.state.decreaseInterval = setInterval(function() {
-        if (that.state.descreaseDown && that.props.plantBagitem.amount != 1) {
-          that.props.decreasePlantBagItem();
-          that.setState({ scaleResult: true });
-          that.forceUpdate();
-        } else {
-          clearInterval(that.state.decreaseInterval);
-        }
-      }, 100);
-    }, 750);
-    this.setState({ scaleResult: true });
-  }
-
-  stopDecreasing() {
-    this.setState({ descreaseDown: false });
-  }
-
-  startIncreasing() {
-    this.props.increasePlantBagItem();
-    var that = this;
-    this.state.increaseDown = true;
-    setTimeout(function() {
-      that.state.increaseInterval = setInterval(function() {
-        if (that.state.increaseDown) {
-          that.props.increasePlantBagItem();
-          that.setState({ scaleResult: true });
-          that.forceUpdate();
-        } else {
-          clearInterval(that.state.increaseInterval);
-        }
-      }, 100);
-    }, 750);
-    this.setState({ scaleResult: true });
-  }
-
-  stopIncreasing() {
-    this.setState({ increaseDown: false });
+  updateAmount(event) {
+    this.props.setPlantBagItemAmount(event.target.value);
   }
 
   render() {
@@ -90,16 +43,9 @@ export default class PlantBagItem extends Component {
           </p>
         </div>
         <div className="customizer">
-          <a role="button" onMouseDown={this.startDecreasing.bind(this)} onMouseUp={this.stopDecreasing.bind(this)}>
-            <span className={'glyphicon glyphicon-minus'} aria-hidden="true"></span>
-          </a>
-          <span className="bold">{this.props.plantBagitem.amount}</span>
-          <a role="button" onMouseDown={this.startIncreasing.bind(this)} onMouseUp={this.stopIncreasing.bind(this)}>
-            <span className={'glyphicon glyphicon-plus'} aria-hidden="true"></span>
-          </a>
+          <input ref="amountInput" type="number" value={this.props.plantBagitem.amount} onChange={this.updateAmount.bind(this)} />
         </div>
-        <div className="result-arrow"></div>
-        <div ref="result" className={(this.state.scaleResult ? 'scaleResult' : ' ') + ' result'}>
+        <div ref="result" className={'result'}>
           <p className="bold">{Accounting.formatNumber((this.props.plantBagitem.amount * this.props.plantBagitem.price) / 100, 2, '.', ',')}&nbsp;€</p>
           <IconButton glyphIcon="glyphicon-trash" onClick={this.props.removePlantBagItem.bind(this)} />
         </div>
