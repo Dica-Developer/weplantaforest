@@ -91,7 +91,6 @@ module.exports = {
   USERNAME_PLACEHOLDER: 'Bitte gib deinen Benutzernamen ein.',
   PASSWORD_PLACEHOLDER: 'Bitte gib dein Passwort ein.',
   PASSWORD_CONFIRMATION_PLACEHOLDER: 'Bitte bestätige dein Passwort.',
-  MAIL_PLACEHOLDER: 'Bitte gib eine gültige E-Mailadresse ein.',
 
   SIGNUP_DONE: 'Du wurdest angemeldet!',
   SIGNUP_DONE_TEXT: 'Um deinen Nutzer zu aktivieren, haben wir dir einen Aktivierungslink an die angegebene E-Mail Adresse geschickt.',
@@ -161,7 +160,6 @@ module.exports = {
   },
   ALREADY_PLANTED: 'Bereits gepflanzt',
   GOAL: 'Ziel',
-  PROJECTS: 'Projekte',
   RUNNING_PROJECTS: 'laufende Projekte',
   FINISHED_PROJECTS: 'abgeschlossene Projekte',
   AREA_QUESTION: 'Dir stehen Flächen zur Verfügung?',
@@ -183,7 +181,6 @@ module.exports = {
   REDEEMED_BY: 'Eingelöst von',
 
   PRIVATEPERSON: 'PrivatPerson',
-  COMPANY: 'Unternehmen',
   NGO: 'Non-Profit Organisation',
   SCHOOL: 'Schule',
 
@@ -197,7 +194,6 @@ module.exports = {
   YOU_FIND_YOUR_GIFT_CODE: 'Deinen Gutschein-Code findest du',
   HERE: 'hier',
   SEPA_DEBIT: 'SEPA Lastschrift',
-  COMPANY: 'Unternehmen',
   SALUTATION: 'Anrede',
   SELECT: 'Bitte auswählen',
   MR: 'Herr',
@@ -227,7 +223,6 @@ module.exports = {
   SUB_TOTAL: 'Zwischensumme',
   PRICE_TOTAL: 'Gesamtpreis',
   TREE: 'Baum',
-  TREES: 'Bäume',
   CUSTOM: 'individuell',
   PLANT_ONLINE_TEXT: 'Lass dir von uns einen Vorschlag generieren oder bestimme selber, wo du wieviele Bäume pflanzen möchtest.',
   PLANT_ONLINE: 'Online Pflanzen',
@@ -508,7 +503,6 @@ module.exports = {
   BANK_NO_SALUTATION: 'Anrede ungültig.',
   BANK_NO_CC_OWNER: 'cc owner',
   BANK_NO_CC_NR: 'cc nr',
-  BANK_NO_CC_DATE: 'cc date 203',
   BANK_NO_CC_DATE: 'cc date 204',
   BANK_NO_SECURITY_NUMBER: 'no security number',
   BANK_NO_CC_TYPE: 'cc type',
@@ -547,7 +541,6 @@ module.exports = {
   NO_AUTH_USER_TEXT: 'Um eine Pflanzung erstellen zu können, musst du als Nutzer eingeloggt sein.',
   TRY_AGAIN: 'Bitte versuche es noch einmal.',
 
-  PLANTING_CREATED: 'Deine Pflanzung wurde erstellt!',
   COMMUNITY_TREE: 'Community Baum',
 
   TREE_LOCATION: 'Standort',

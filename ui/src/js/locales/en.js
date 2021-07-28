@@ -91,7 +91,6 @@ module.exports = {
   USERNAME_PLACEHOLDER: 'Please enter your username.',
   PASSWORD_PLACEHOLDER: 'Please enter your password.',
   PASSWORD_CONFIRMATION_PLACEHOLDER: 'Please confirm your password.',
-  MAIL_PLACEHOLDER: 'Please enter a valid E-Mail adress.',
 
   SIGNUP_DONE: 'Registration done!',
   SIGNUP_DONE_TEXT: 'You should received a mail containing a link to activate your user.',
@@ -155,12 +154,11 @@ module.exports = {
     text: 'Die Nutzungsbedingungen müssen akzeptiert werden!'
   },
   ACCEPT_DSGVO: {
-    text: 'Datenschutzerklärung nicht akzeptiert!',
+    title: 'Datenschutzerklärung nicht akzeptiert!',
     text: 'Die Datenschutzerklärung muss akzeptiert werden!'
   },
   ALREADY_PLANTED: 'Already Planted',
   GOAL: 'Goal',
-  PROJECTS: 'Projects',
   RUNNING_PROJECTS: 'running projects',
   FINISHED_PROJECTS: 'finished projects',
   AREA_QUESTION: 'Do you have areas to plant for?',
@@ -196,7 +194,6 @@ module.exports = {
   YOU_FIND_YOUR_GIFT_CODE: 'You find your gift code',
   HERE: 'here',
   SEPA_DEBIT: 'SEPA debit',
-  COMPANY: 'Company',
   SALUTATION: 'Salutation',
   SELECT: 'please select',
   MR: 'Mr',
@@ -226,7 +223,6 @@ module.exports = {
   SUB_TOTAL: 'Subtotal',
   PRICE_TOTAL: 'Total Price',
   TREE: 'Tree',
-  TREES: 'Trees',
   CUSTOM: 'Custom',
   PLANT_ONLINE_TEXT: 'Here you can choose between preselected planting carts of trees. By clicking on "custom" you can compile your own selection.',
   PLANT_ONLINE: 'Plant online',
@@ -507,7 +503,6 @@ module.exports = {
   BANK_NO_CC_OWNER: 'cc owner',
   BANK_NO_CC_NR: 'cc nr',
   BANK_NO_CC_DATE: 'cc date 203',
-  BANK_NO_CC_DATE: 'cc date 204',
   BANK_NO_SECURITY_NUMBER: 'no security number',
   BANK_NO_CC_TYPE: 'cc type',
   BANK_INVALID_IBAN: 'IBAN invalid.',
@@ -545,7 +540,6 @@ module.exports = {
   NO_AUTH_USER_TEXT: 'You have to be logged in to create a planting.',
   TRY_AGAIN: 'Please try again.',
 
-  PLANTING_CREATED: 'Your planting was created!',
   COMMUNITY_TREE: 'Community tree',
 
   TREE_LOCATION: 'Location',
