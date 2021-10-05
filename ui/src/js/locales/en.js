@@ -532,6 +532,7 @@ module.exports = {
   EMBED_CODE: 'Embed code',
   CHOOSE_PLANTBAGS: 'Please choose those plantbags, which should included into your certificate',
   CERTIFICATE_SHOWN_TEXT: 'This text will be shown in your certificate',
+  CERTIFICATE_DEFAULT_TEXT: 'So that our children have a bright future.',
 
   NO_RECEIPTS: 'No contribution receipts have been created for you so far.',
   FOLLOWING_RECEIPTS: 'The following receipts has been created and are available for you',

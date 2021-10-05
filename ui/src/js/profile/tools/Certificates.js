@@ -45,7 +45,7 @@ export default class Certificates extends Component {
     this.state = {
       plantBags: [],
       plantBagsChosen: [],
-      certificateText: 'Mein ganz spezieller Beitrag zur Rettung unseres Planeten.',
+      certificateText: counterpart.translate('CERTIFICATE_DEFAULT_TEXT'),
       certificateTextLength: 58,
     };
     this.setPlantBagChosenFlag = this.setPlantBagChosenFlag.bind(this);
@@ -160,7 +160,7 @@ export default class Certificates extends Component {
           })}
           <br />
           {counterpart.translate('CERTIFICATE_SHOWN_TEXT')}:<br />
-          <textarea ref="certTextarea" rows="4" cols="50" maxLength="250" onChange={this.updateCertificateText.bind(this)} defaultValue="Mein ganz spezieller Beitrag zur Rettung unseres Planeten." />
+          <textarea ref="certTextarea" rows="4" cols="50" maxLength="250" onChange={this.updateCertificateText.bind(this)} defaultValue={this.state.certificateText} />
           <br />({this.state.certificateTextLength}/250)
           <div className="align-center">
             <IconButton text="Zertifikat erstellen" glyphIcon="glyphicon-file" onClick={this.generateCertificate.bind(this)} />

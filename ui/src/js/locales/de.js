@@ -533,6 +533,7 @@ module.exports = {
   EMBED_CODE: 'Einbettungs-Code',
   CHOOSE_PLANTBAGS: 'Bitte wähle die Pflanzkörbe aus, die im Zertifikat erscheinen sollen',
   CERTIFICATE_SHOWN_TEXT: 'Dieser Text wird in deinem Zertifikat angezeigt',
+  CERTIFICATE_DEFAULT_TEXT: 'Damit unsere Kinder eine schöne Zukunft haben.',
 
   NO_RECEIPTS: 'Für dich wurden bisher leider keine Spendenquittungen erstellt.',
   FOLLOWING_RECEIPTS: 'Folgende Spendenquittungen wurden bereits erstellt und sind verfügbar',
