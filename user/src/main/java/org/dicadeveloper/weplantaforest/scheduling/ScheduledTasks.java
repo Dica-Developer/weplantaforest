@@ -39,7 +39,7 @@ public class ScheduledTasks {
     private @NonNull TreeRepository _treeRepository;
 
     @Autowired
-    private @NonNull CodeRepository _codeRepostiory;
+    private @NonNull CodeRepository _codeRepository;
 
     @Autowired
     private @NonNull CartService _cartService;
@@ -57,14 +57,15 @@ public class ScheduledTasks {
     private void cleanUpInitialCarts() {
         List<Cart> carts = _cartRepository.findInitialCartsOlderThanHalfHour(System.currentTimeMillis());
         for (Cart cart : carts) {
-            // quick fix because of fk constraint violations
-            // TODO: if there's a code, there has to be also a Gift i think,
-            // think this should also be checked
             if (cart.getCode() != null) {
                 Code code = cart.getCode();
                 code.setCart(null);
+                _codeRepository.save(code);
+
                 cart.setCode(null);
-                _codeRepostiory.delete(code);
+                _cartRepository.save(cart);
+
+                _codeRepository.delete(code);
             }
         }
         _cartRepository.deleteAll(carts);
