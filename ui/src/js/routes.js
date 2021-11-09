@@ -205,7 +205,7 @@ export default class Routes extends Component {
           <Route path="/userActivation" component={ActivationPage} />
           <Route path="/forgotPassword" component={ForgotPasswordPage} />
           <Route path="/password_reset" component={ResetPasswordPage} showLoginSlide={this.showLoginSlide.bind(this)} />
-          <Route path="/gifts/:userName" component={GiftOverview} redeemGift={this.redeemGift.bind(this)} />
+          <Route path="/gifts/:userName" component={GiftOverview} redeemGift={this.redeemGift.bind(this)} updatePlantBag={this.updatePlantBag.bind(this)} />
           <Route path="/gift/redeem" component={RedeemGiftPage} redeemGift={this.redeemGift.bind(this)} showLoginSlide={this.showLoginSlide.bind(this)} />
           <Route path="/certificate/find" component={FindTreePage} />
           <Route path="/statistics" component={StatisticsPage} />

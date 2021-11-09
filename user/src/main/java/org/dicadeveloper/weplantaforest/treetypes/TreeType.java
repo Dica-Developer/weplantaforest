@@ -26,7 +26,7 @@ public class TreeType {
     @Id
     @GeneratedValue
     @Column(name = "treeTypeId")
-    @JsonView({ Views.ShortTreeType.class, Views.PlantedTree.class })
+    @JsonView({ Views.ShortTreeType.class, Views.PlantedTree.class, Views.OverviewGift.class })
     private Long id;
 
     @Column(name = "_name", unique = true)
@@ -37,7 +37,7 @@ public class TreeType {
     private String description;
 
     @Column(name = "_imageFile")
-    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class })
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class })
     private String imageFile;
 
     @Column(name = "_infoLink")

@@ -49,6 +49,7 @@ export default class GiftOverview extends Component {
   }
 
   render() {
+    var that = this;
     return (
       <div className="container paddingTopBottom15">
         <div className="row gifts">
@@ -87,7 +88,7 @@ export default class GiftOverview extends Component {
               <div></div>
             </div>
             {this.state.consignorGifts.map(function(gift, i) {
-              return <ConsignorGiftItem gift={gift} key={i} />;
+              return <ConsignorGiftItem gift={gift} key={i} route={that.props.route}/>;
             })}
             <h2>{counterpart.translate('REDEEMED_GIFTS')}</h2>
             <div className="giftItem giftHeader">

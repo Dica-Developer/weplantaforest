@@ -40,7 +40,7 @@ public class ProjectArticle {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_plant__plantId", nullable = false)
-    @JsonView(Views.PlantedTree.class)
+    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class })
     private Project project;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -50,7 +50,7 @@ public class ProjectArticle {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_price__priceId", nullable = false)
-    @JsonView(Views.ProjectArticle.class)
+    @JsonView({ Views.ProjectArticle.class, Views.OverviewGift.class })
     private Price price;
 
     @Column(name = "_description", length = 20000)

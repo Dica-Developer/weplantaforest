@@ -13,7 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.dicadeveloper.weplantaforest.trees.Tree;
+import org.dicadeveloper.weplantaforest.views.Views;
 import org.hibernate.annotations.Cascade;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,11 +38,13 @@ public class CartItem {
     @OneToOne(fetch = FetchType.LAZY)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @JoinColumn(name = "_treeId")
+    @JsonView({ Views.OverviewGift.class })
     private Tree tree;
 
     @Column(name = "_plantArticleId")
     private Long projectArticleId;
 
+    @JsonView({ Views.OverviewGift.class })
     @Column(name = "_amount")
     private int amount;
 
