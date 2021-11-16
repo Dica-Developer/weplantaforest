@@ -586,5 +586,7 @@ module.exports = {
   HIDE_PASSWORD: 'Hide password',
 
   NOT_ENOUGH_TREES: 'There are not enough trees.',
-  TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Invalid plant bag'
+  TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Invalid plant bag',
+
+  GENERATE_SAME_GIFT_AGAIN: 'Generate the same gift again'
 };

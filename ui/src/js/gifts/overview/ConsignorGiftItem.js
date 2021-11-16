@@ -29,11 +29,11 @@ export default class ConsignorGiftItem extends Component {
     var that = this;
     var value = this.props.gift.code.cart.treeCount;
     that.props.gift.code.cart.cartItems.forEach(plantItem => {
-      var price = plantItem.amount * plantItem.tree.projectArticle.price.amount;
+      var price = plantItem.amount * plantItem.tree.projectArticle.price.amount * 100;
       var projectItems = {};
-      projectItems[plantItem.treeType.id] = {
+      projectItems[plantItem.tree.treeType.name] = {
         amount: parseInt(plantItem.amount),
-        price: parseInt(plantItem.tree.projectArticle.price.amount),
+        price: parseInt(plantItem.tree.projectArticle.price.amount * 100),
         imageFile: plantItem.tree.treeType.imageFile
       };
       that.props.route.updatePlantBag(price, projectItems, plantItem.tree.projectArticle.project.name, true);
@@ -58,7 +58,7 @@ export default class ConsignorGiftItem extends Component {
     } else {
       pdfButton = '';
     }
-    var generateSameGiftAgainButton = <IconButton text={counterpart.translate('GENERATE_SAME_GIFT_AGAIN')} glyphIcon="glyphicon-file" onClick={this.generateSameGiftAgain.bind(this)} />;
+    var generateSameGiftAgainButton = <IconButton text={counterpart.translate('GENERATE_SAME_GIFT_AGAIN')} glyphIcon="glyphicon-refresh" onClick={this.generateSameGiftAgain.bind(this)} />;
 
     return (
       <div className="giftItem">

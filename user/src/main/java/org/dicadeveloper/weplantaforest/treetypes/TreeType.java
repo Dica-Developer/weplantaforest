@@ -30,7 +30,7 @@ public class TreeType {
     private Long id;
 
     @Column(name = "_name", unique = true)
-    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.ShortTreeType.class })
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.ShortTreeType.class, Views.OverviewGift.class })
     private String name;
 
     @Column(name = "_description")
