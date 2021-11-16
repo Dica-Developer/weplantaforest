@@ -67,6 +67,7 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
+    @JsonView({ Views.OverviewGift.class })
     private List<CartItem> cartItems = new ArrayList<CartItem>();
 
     @ManyToOne(fetch = FetchType.EAGER)

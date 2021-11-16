@@ -42,7 +42,7 @@ public class Project {
     private Long id;
 
     @Column(name = "_name", length = 255)
-    @JsonView({ Views.PlantedTree.class, Views.ProjectDetails.class })
+    @JsonView({ Views.PlantedTree.class, Views.ProjectDetails.class, Views.OverviewGift.class })
     private String name;
 
     @Column(name = "_description", length = 65535, columnDefinition = "TEXT")

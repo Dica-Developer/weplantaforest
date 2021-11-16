@@ -585,7 +585,8 @@ module.exports = {
   SHOW_PASSWORD: 'Passwort anzeigen',
   HIDE_PASSWORD: 'Passwort verbergen',
 
-
   NOT_ENOUGH_TREES: 'Es gibt nicht genug Bäume.',
-  TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Ungültiger Pflanzkorb'
+  TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Ungültiger Pflanzkorb',
+
+  GENERATE_SAME_GIFT_AGAIN: 'Gutschein nochmal erstellen'
 };

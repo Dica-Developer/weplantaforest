@@ -3,11 +3,14 @@ import Accounting from 'accounting';
 import counterpart from 'counterpart';
 import React, { Component } from 'react';
 import IconButton from '../../common/components/IconButton';
+import { browserHistory } from 'react-router';
+import Notification from '../../common/components/Notification';
 
 export default class ConsignorGiftItem extends Component {
   constructor(props) {
     super(props);
   }
+
   generateGiftPdf() {
     var config = {
       headers: {
@@ -20,6 +23,24 @@ export default class ConsignorGiftItem extends Component {
       var pdfData = URL.createObjectURL(new Blob([result], { type: 'application/pdf' }));
       window.open(pdfData);
     });
+  }
+
+  generateSameGiftAgain() {
+    var that = this;
+    var value = this.props.gift.code.cart.treeCount;
+    that.props.gift.code.cart.cartItems.forEach(plantItem => {
+      var price = plantItem.amount * plantItem.tree.projectArticle.price.amount * 100;
+      var projectItems = {};
+      projectItems[plantItem.tree.treeType.name] = {
+        amount: parseInt(plantItem.amount),
+        price: parseInt(plantItem.tree.projectArticle.price.amount * 100),
+        imageFile: plantItem.tree.treeType.imageFile
+      };
+      that.props.route.updatePlantBag(price, projectItems, plantItem.tree.projectArticle.project.name, true);
+    });
+    setTimeout(function() {
+      browserHistory.push('/plantBag');
+    }, 1000);
   }
 
   render() {
@@ -37,6 +58,7 @@ export default class ConsignorGiftItem extends Component {
     } else {
       pdfButton = '';
     }
+    var generateSameGiftAgainButton = <IconButton text={counterpart.translate('GENERATE_SAME_GIFT_AGAIN')} glyphIcon="glyphicon-refresh" onClick={this.generateSameGiftAgain.bind(this)} />;
 
     return (
       <div className="giftItem">
@@ -44,7 +66,9 @@ export default class ConsignorGiftItem extends Component {
         <div>{this.props.gift.code.cart.treeCount}</div>
         <div>{Accounting.formatNumber(this.props.gift.code.cart.totalPrice, 2, '.', ',')}€</div>
         <div>{recipient}</div>
+        <div>{generateSameGiftAgainButton}</div>
         <div>{pdfButton}</div>
+        <Notification ref="notification" />
       </div>
     );
   }

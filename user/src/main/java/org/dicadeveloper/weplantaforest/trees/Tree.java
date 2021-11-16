@@ -71,11 +71,11 @@ public class Tree {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = TreeType.class)
     @JoinColumn(name = "_treeType_treeTypeId")
-    @JsonView(Views.PlantedTree.class)
+    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class })
     private TreeType treeType;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_plantArticle__articleId")
-    @JsonView(Views.PlantedTree.class)
+    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class })
     private ProjectArticle projectArticle;
 }

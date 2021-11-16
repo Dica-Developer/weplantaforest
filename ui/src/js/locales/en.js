@@ -163,16 +163,16 @@ module.exports = {
   FINISHED_PROJECTS: 'finished projects',
   AREA_QUESTION: 'Do you have areas to plant for?',
   OFFER_AREA: 'Offer area',
-  GIFT_OVERVIEW: 'Gift overview',
-  CREATED_GIFTS: 'Created gifts',
-  REDEEMED_GIFTS: 'Redeemed gifts',
+  GIFT_OVERVIEW: 'Voucher overview',
+  CREATED_GIFTS: 'Created vouchers',
+  REDEEMED_GIFTS: 'Redeemed vouchers',
   CREATED_BY: 'Created by',
-  CREATE_GIFT: 'Create gift voucher',
-  GIFT_REDEEMED: 'The gift was redeemed!',
+  CREATE_GIFT: 'Create voucher',
+  GIFT_REDEEMED: 'The voucher was redeemed!',
   TREES_ACCOUNTED: 'The trees were credited for you.',
-  REDEEM_GIFT: 'Redeem gift',
-  ENTER_GIFT_CODE: 'Enter the gift code here',
-  GENERATE_PDF: 'generate PDF',
+  REDEEM_GIFT: 'Redeem voucher',
+  ENTER_GIFT_CODE: 'Enter the voucher code here',
+  GENERATE_PDF: 'Generate PDF',
   REDEEMED: 'redeemed',
   NOT_REDEEMED: 'not redeemed',
   CODE: 'Code',
@@ -586,5 +586,7 @@ module.exports = {
   HIDE_PASSWORD: 'Hide password',
 
   NOT_ENOUGH_TREES: 'There are not enough trees.',
-  TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Invalid plant bag'
+  TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Invalid plant bag',
+
+  GENERATE_SAME_GIFT_AGAIN: 'Create same voucher again'
 };
