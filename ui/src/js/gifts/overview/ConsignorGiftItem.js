@@ -66,8 +66,8 @@ export default class ConsignorGiftItem extends Component {
         <div>{this.props.gift.code.cart.treeCount}</div>
         <div>{Accounting.formatNumber(this.props.gift.code.cart.totalPrice, 2, '.', ',')}€</div>
         <div>{recipient}</div>
-        <div>{pdfButton}</div>
         <div>{generateSameGiftAgainButton}</div>
+        <div>{pdfButton}</div>
         <Notification ref="notification" />
       </div>
     );
