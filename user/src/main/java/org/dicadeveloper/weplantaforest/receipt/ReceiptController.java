@@ -66,7 +66,7 @@ public class ReceiptController {
     @RequestMapping(value = Uris.RECEIPT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<?> createReceiptPdf(HttpServletResponse response, @RequestParam Long receiptId, @RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
         User user = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (user == null || !_receiptRepository.existsByReceiptIdAndOwnerId(receiptId, user.getId())) {
+        if (user == null || (!_receiptRepository.existsByReceiptIdAndOwnerId(receiptId, user.getId()) && !user.isAdmin())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
             Receipt receipt = _receiptRepository.findById(receiptId).orElse(null);
@@ -105,6 +105,8 @@ public class ReceiptController {
                 int currentYear = Calendar.getInstance().get(Calendar.YEAR);
                 Receipt receipt = new Receipt();
                 _receiptRepository.save(receipt);
+                cart.setReceipt(receipt);
+                _cartRepository.save(cart);
                 receipt.setOwner(cart.getBuyer());
                 receipt.setInvoiceNumber(receipt.getReceiptId() + "/" + currentYear);
                 final ArrayList<Cart> carts = new ArrayList<>();
