@@ -588,5 +588,7 @@ module.exports = {
   NOT_ENOUGH_TREES: 'Es gibt nicht genug Bäume.',
   TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Ungültiger Pflanzkorb',
 
-  GENERATE_SAME_GIFT_AGAIN: 'Gutschein nochmal erstellen'
+  GENERATE_SAME_GIFT_AGAIN: 'Gutschein nochmal erstellen',
+
+  PROJECT_NOT_ACTIVE: 'Die Bäume sind nicht mehr verfügbar.'
 };

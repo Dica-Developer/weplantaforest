@@ -588,5 +588,7 @@ module.exports = {
   NOT_ENOUGH_TREES: 'There are not enough trees.',
   TITLE_ERROR_PLANT_BAG_NOT_VALID: 'Invalid plant bag',
 
-  GENERATE_SAME_GIFT_AGAIN: 'Create same voucher again'
+  GENERATE_SAME_GIFT_AGAIN: 'Create same voucher again',
+
+  PROJECT_NOT_ACTIVE: 'The trees are no longer available.'
 };
