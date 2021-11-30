@@ -1,12 +1,26 @@
 import React, { Component } from 'react';
+import counterpart from 'counterpart';
 
 export default class InputText extends Component {
   constructor() {
     super();
+    this.state = {
+      showPassword: false,
+    };
   }
 
   updateValue(event) {
     this.props.updateValue(this.props.toUpdate, event.target.value);
+  }
+
+  togglePasswordVisibility(elem) {
+    if ('password' === document.getElementById(this.props.id).type) {
+      this.setState({ showPassword: true });
+      document.getElementById(this.props.id).type = 'text';
+    } else {
+      this.setState({ showPassword: false });
+      document.getElementById(this.props.id).type = 'password';
+    }
   }
 
   render() {
@@ -21,6 +35,13 @@ export default class InputText extends Component {
           onChange={this.updateValue.bind(this)}
           disabled={this.props.disabled}
         />
+        {this.props.showhide ? (
+          this.state.showPassword ? (
+            <span title={counterpart.translate('HIDE_PASSWORD')} className="password-icon glyphicon glyphicon-eye-close" onClick={this.togglePasswordVisibility.bind(this)}></span>
+          ) : (
+            <span title={counterpart.translate('SHOW_PASSWORD')} className="password-icon glyphicon glyphicon-eye-open" onClick={this.togglePasswordVisibility.bind(this)}></span>
+          )
+        ) : null}
       </div>
     );
   }

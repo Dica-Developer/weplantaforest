@@ -20,7 +20,7 @@ export default class DoRegistration extends Component {
       newsLetter: false,
       acceptAgbs: false,
       acceptGDPR: false,
-      registrated: false
+      registrated: false,
     };
   }
 
@@ -52,15 +52,15 @@ export default class DoRegistration extends Component {
         mail: this.state.mail,
         orgType: this.state.orgType,
         newsLetter: this.state.newsLetter,
-        language: this.state.language
+        language: this.state.language,
       };
 
       axios
         .post('http://localhost:8081/user/registrate', data, {})
-        .then(function(response) {
+        .then(function (response) {
           that.props.setRegistrated();
         })
-        .catch(error => {
+        .catch((error) => {
           that.refs.notification.handleError(error);
         });
     }
@@ -70,62 +70,70 @@ export default class DoRegistration extends Component {
     return (
       <div className="registrationPage">
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-3"></div>
+          <div className="col-md-6">
             <h1>{counterpart.translate('REGISTRATE')}</h1>
           </div>
+          <div className="col-md-3"></div>
         </div>
         <div className="row">
-          <div className="form-group">
-            <label htmlFor="username">{counterpart.translate('USERNAME')}:</label>
-            <InputText cssclass="form-control" placeholderText={counterpart.translate('USERNAME_PLACEHOLDER')} id="username" toUpdate="username" updateValue={this.updateValue.bind(this)} />
+          <div className="col-md-3"></div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="username">{counterpart.translate('USERNAME')}:</label>
+              <InputText cssclass="form-control" placeholderText={counterpart.translate('USERNAME_PLACEHOLDER')} id="username" toUpdate="username" updateValue={this.updateValue.bind(this)} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password-one">{counterpart.translate('PASSWORD')}:</label>
+              <InputText
+                cssclass="form-control"
+                placeholderText={counterpart.translate('PASSWORD_PLACEHOLDER')}
+                id="password-one"
+                toUpdate="passwordOne"
+                updateValue={this.updateValue.bind(this)}
+                type="password"
+                showhide="true"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="passwordTwo">{counterpart.translate('PASSWORD_CONFIRMATION')}:</label>
+              <InputText
+                cssclass="form-control"
+                placeholderText={counterpart.translate('PASSWORD_PLACEHOLDER')}
+                id="passwordTwo"
+                toUpdate="passwordTwo"
+                updateValue={this.updateValue.bind(this)}
+                type="password"
+                showhide="true"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="mail">{counterpart.translate('MAIL')}:</label>
+              <InputText cssclass="form-control" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} id="mail" toUpdate="mail" updateValue={this.updateValue.bind(this)} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="type">Typ:</label>
+              <select id="type" className="form-control" onChange={this.updateOrgType.bind(this)}>
+                <option value="PRIVATE">{counterpart.translate('PRIVATEPERSON')}</option>
+                <option value="COMMERCIAL">{counterpart.translate('COMPANY')}</option>
+                <option value="NONPROFIT">{counterpart.translate('NGO')}</option>
+                <option value="EDUCATIONAL">{counterpart.translate('SCHOOL')}</option>
+              </select>
+            </div>
+            <div className="col-md-12 align-left checkBox">
+              <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text={counterpart.translate('AGB_CB')} />
+            </div>
+            <div className="col-md-12 align-left checkBox">
+              <CheckBox toUpdate="acceptGDPR" value={this.state.acceptGDPR} updateValue={this.updateValue.bind(this)} text={counterpart.translate('DSGVO_CB')} />
+            </div>
+            <div className="col-md-12 align-left">
+              <Captcha ref="captcha" />
+            </div>
+            <div className="col-md-12 align-left">
+              <IconButton text={counterpart.translate('REGISTRATE')} glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)} />
+            </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="passwordOne">{counterpart.translate('PASSWORD')}:</label>
-            <InputText
-              cssclass="form-control"
-              placeholderText={counterpart.translate('PASSWORD_PLACEHOLDER')}
-              id="passwordOne"
-              toUpdate="passwordOne"
-              updateValue={this.updateValue.bind(this)}
-              type="password"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="passwordTwo">{counterpart.translate('PASSWORD_CONFIRMATION')}:</label>
-            <InputText
-              cssclass="form-control"
-              placeholderText={counterpart.translate('PASSWORD_PLACEHOLDER')}
-              id="passwordTwo"
-              toUpdate="passwordTwo"
-              updateValue={this.updateValue.bind(this)}
-              type="password"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="mail">{counterpart.translate('MAIL')}:</label>
-            <InputText cssclass="form-control" placeholderText={counterpart.translate('MAIL_PLACEHOLDER')} id="mail" toUpdate="mail" updateValue={this.updateValue.bind(this)} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="type">Typ:</label>
-            <select id="type" className="form-control" onChange={this.updateOrgType.bind(this)}>
-              <option value="PRIVATE">{counterpart.translate('PRIVATEPERSON')}</option>
-              <option value="COMMERCIAL">{counterpart.translate('COMPANY')}</option>
-              <option value="NONPROFIT">{counterpart.translate('NGO')}</option>
-              <option value="EDUCATIONAL">{counterpart.translate('SCHOOL')}</option>
-            </select>
-          </div>
-          <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="acceptAgbs" value={this.state.acceptAgbs} updateValue={this.updateValue.bind(this)} text={counterpart.translate('AGB_CB')} />
-          </div>
-          <div className="col-md-12 align-left checkBox">
-            <CheckBox toUpdate="acceptGDPR" value={this.state.acceptGDPR} updateValue={this.updateValue.bind(this)} text={counterpart.translate('DSGVO_CB')} />
-          </div>
-          <div className="col-md-12 align-left">
-            <Captcha ref="captcha" />
-          </div>
-          <div className="col-md-12 align-left">
-            <IconButton text={counterpart.translate('REGISTRATE')} glyphIcon="glyphicon-share" onClick={this.registrateUser.bind(this)} />
-          </div>
+          <div className="col-md-3"></div>
         </div>
         <Notification ref="notification" />
       </div>
