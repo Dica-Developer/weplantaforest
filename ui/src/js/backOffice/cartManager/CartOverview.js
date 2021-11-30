@@ -472,7 +472,7 @@ export default class CartOverview extends Component {
       children: (
         <div className="delete-confirmation align-center">
           <button>Abbrechen</button>
-          <button
+          <button id="discard-confirmation-btn"
             onClick={() => {
               this.callSatusRequest(id, 'DISCARDED');
             }}
@@ -482,6 +482,10 @@ export default class CartOverview extends Component {
         </div>
       )
     });
+    setTimeout(() => {
+      this.forceUpdate();
+      document.getElementById("discard-confirmation-btn").focus();
+    }, 5);
   }
 
   getRows() {
