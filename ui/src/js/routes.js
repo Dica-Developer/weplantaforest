@@ -236,7 +236,7 @@ export default class Routes extends Component {
           <Route path="/project-manager" component={ProjectOverview} />
           <Route path="/project-edit/:projectId" component={ProjectEditor} />
           <Route path="/treeType-manager" component={TreeTypeOverview} />
-          <Route path="/plant-manager" component={PlantManager} updatePlantBag={this.updatePlantBag.bind(this)} />
+          <Route path="/plant-manager" component={PlantManager} updatePlantBag={this.updatePlantBag.bind(this)} resetPlantBag={this.resetPlantBag.bind(this)}/>
           <Route path="/slider-image-manager" component={SliderImageManager} />
           <Route path="/event-manager" component={EventOverview} />
           <Route path="/event/:eventId" component={EventEditor} updatePlantBag={this.updatePlantBag.bind(this)} />

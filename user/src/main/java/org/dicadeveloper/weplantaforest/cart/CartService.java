@@ -23,19 +23,18 @@ public class CartService {
 
     private @NonNull CartRepository _cartRepository;
 
-    public Long createCartAndSave(PlantBag plantBag, User buyer, CartState cartState) throws IpatException {
+    public Cart createCartAndSave(PlantBag plantBag, User buyer, CartState cartState) throws IpatException {
         Cart cart = plantPageToCartConverter.convertPlantPageDataToCart(plantBag, buyer, cartState);
         cart = _cartRepository.save(cart);
-        return cart.getId();
+        return cart;
     }
 
-    public List<Long> createCarts(PlantBag plantBag, User buyer, CartState cartState, int amountOfPlantBags) throws IpatException {
-        List<Long> cartIds = new ArrayList<>();
-        for (int i = 0; i < amountOfPlantBags; i++) {
-            long cartId = createCartAndSave(plantBag, buyer, cartState);
-            cartIds.add(cartId);
+    public List<Cart> createCarts(PlantBag plantBag, User buyer, CartState cartState, int amountOfPlantBags) throws IpatException {
+        List<Cart> carts = new ArrayList<>();
+        for (int i = 0; i < amountOfPlantBags; i++) {            
+            carts.add(createCartAndSave(plantBag, buyer, cartState));
         }
-        return cartIds;
+        return carts;
     }
 
     public Map<String, List<Cart>> groupCartsByUser(List<Cart> carts) {

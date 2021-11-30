@@ -106,8 +106,8 @@ public class PlantPageController {
                 _cartRepository.delete(previousUnpaidCart);
             }
             _plantPageDataValidator.validatePlantBag(plantBag);
-            long cartId = _cartService.createCartAndSave(plantBag, buyer, CartState.INITIAL);
-            return new ResponseEntity<Long>(cartId, HttpStatus.OK);
+            Cart cart = _cartService.createCartAndSave(plantBag, buyer, CartState.INITIAL);
+            return new ResponseEntity<Long>(cart.getId(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -121,9 +121,13 @@ public class PlantPageController {
             User buyer = _userRepository.findById(plantForUserRequest.getUserId()).orElse(null);
             IpatPreconditions.checkNotNull(buyer, ErrorCodes.USER_NOT_FOUND);
             _plantPageDataValidator.validatePlantBag(plantForUserRequest.getPlantBag());
-            List<Long> cartIds = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()),
+            List<Cart> carts = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()),
                     (int) plantForUserRequest.getAmountOfPlantBags());
-            return new ResponseEntity<List<Long>>(cartIds, HttpStatus.OK);
+            for(Cart c: carts) {
+              c.setReceiptable(false);
+              _cartRepository.save(c);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

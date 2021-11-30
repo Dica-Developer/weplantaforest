@@ -98,24 +98,28 @@ export default class PlantManager extends Component {
 
   plantForUser() {
     var that = this;
-    this.updatePlantBag();
-    var plantBag = JSON.parse(localStorage.getItem('plantBag'));
-    var request = {
-      amountOfPlantBags: 1,
-      cartState: 'VERIFIED',
-      userId: this.state.selectedUserId,
-      plantBag: plantBag
-    };
-
     var config = getConfig();
-    axios
-      .post('http://localhost:8081/plantForUser/', request, config)
-      .then(function(response) {
-        that.refs.notification.addNotification('Bäume wurden für den Nutzer gepflant!', '', 'success');
-      })
-      .catch(function(response) {
-        that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', '', 'error');
-      });
+    if(this.state.selectedUserId){
+      this.updatePlantBag();
+      var plantBag = JSON.parse(localStorage.getItem('plantBag'));
+      var request = {
+        amountOfPlantBags: 1,
+        cartState: 'CALLBACK',
+        userId: this.state.selectedUserId,
+        plantBag: plantBag
+      };
+      axios
+        .post('http://localhost:8081/plantForUser/', request, config)
+        .then(function(response) {
+          that.refs.notification.addNotification('Bäume wurden für den Nutzer gepflant!', '', 'success');
+          that.props.route.resetPlantBag();
+        })
+        .catch(function(response) {
+          that.refs.notification.addNotification('Ein Fehler ist aufgetreten!', '', 'error');
+        });
+    } else {
+      that.refs.notification.addNotification('Du hast keinen User ausgewählt.', '', 'error');
+    }
   }
 
   selectUser(user) {
