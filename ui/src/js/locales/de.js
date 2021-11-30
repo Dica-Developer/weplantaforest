@@ -105,7 +105,6 @@ module.exports = {
   WRONG_USERNAME_PASSWORD: 'Benutzername und Passwort stimmen nicht überein.',
   LOCKED_USER:
     'Der Account ist noch nicht aktiviert. Bitte klicke auf den Aktivierungslink, den du nach der Registrierung erhalten hast. Prüfe gegebenfalls auch deinen Spam-Ordner. Eine weitere Möglichkeit ist, dass der Nutzer vom Administrator gebannt wurde.',
-
   USER_NOT_FOUND: 'Nutzer nicht gefunden.',
   INVALID_ACTIVATION_KEY: 'Der Aktivierungs-Link ist ungültig.',
   USER_ALREADY_EXISTS: 'Der Nutzername ist bereits vergeben.',
@@ -181,6 +180,7 @@ module.exports = {
   REDEEMED_BY: 'Eingelöst von',
 
   PRIVATEPERSON: 'PrivatPerson',
+  COMPANY: 'Unternehmen',  
   NGO: 'Non-Profit Organisation',
   SCHOOL: 'Schule',
 
