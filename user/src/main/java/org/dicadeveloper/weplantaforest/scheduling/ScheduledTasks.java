@@ -22,6 +22,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import lombok.NonNull;
+import lombok.val;
 
 @Service
 public class ScheduledTasks {
@@ -80,12 +81,17 @@ public class ScheduledTasks {
         if (carts != null && carts.size() > 0) {
             Map<String, List<Cart>> userCartMap = _cartService.groupCartsByUser(carts);
             for (String userName : userCartMap.keySet()) {
-                User owner = userCartMap.get(userName).get(0).getBuyer();
+                val cartsByUser = userCartMap.get(userName);
+                User owner = cartsByUser.get(0).getBuyer();
                 int currentYear = Calendar.getInstance().get(Calendar.YEAR);
                 Receipt receipt = new Receipt();
                 // this save is to get the id, which is needed to create the
                 // invoiceNumber
                 _receiptRepository.save(receipt);
+                for (val cart : cartsByUser) {
+                    cart.setReceipt(receipt);
+                    _cartRepository.save(cart);
+                }
                 receipt.setOwner(owner);
                 receipt.setInvoiceNumber(receipt.getReceiptId() + "/" + currentYear);
                 receipt.setCarts(userCartMap.get(userName));
