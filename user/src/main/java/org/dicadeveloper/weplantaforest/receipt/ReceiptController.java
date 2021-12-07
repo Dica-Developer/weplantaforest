@@ -66,9 +66,7 @@ public class ReceiptController {
     @RequestMapping(value = Uris.RECEIPT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<?> createReceiptPdf(HttpServletResponse response, @RequestParam Long receiptId, @RequestHeader(value = "X-AUTH-TOKEN") String userToken) {
         User user = _tokenAuthenticationService.getUserFromToken(userToken);
-        if (user == null || (!_receiptRepository.existsByReceiptIdAndOwnerId(receiptId, user.getId()) && !user.isAdmin())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        } else {
+        if (user != null && (_receiptRepository.existsByReceiptIdAndOwnerId(receiptId, user.getId()) || user.isAdmin())) {
             Receipt receipt = _receiptRepository.findById(receiptId).orElse(null);
             PdfReceiptView pdf = new PdfReceiptView();
 
@@ -79,6 +77,8 @@ public class ReceiptController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
