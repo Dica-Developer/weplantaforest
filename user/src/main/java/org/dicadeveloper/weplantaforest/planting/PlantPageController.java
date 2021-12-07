@@ -1,4 +1,5 @@
 package org.dicadeveloper.weplantaforest.planting;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.NonNull;
 import org.dicadeveloper.weplantaforest.cart.CartService;
@@ -121,13 +122,15 @@ public class PlantPageController {
             User buyer = _userRepository.findById(plantForUserRequest.getUserId()).orElse(null);
             IpatPreconditions.checkNotNull(buyer, ErrorCodes.USER_NOT_FOUND);
             _plantPageDataValidator.validatePlantBag(plantForUserRequest.getPlantBag());
+            List<Long> cartIds = new ArrayList<>();
             List<Cart> carts = _cartService.createCarts(plantForUserRequest.getPlantBag(), buyer, CartState.valueOf(plantForUserRequest.getCartState()),
                     (int) plantForUserRequest.getAmountOfPlantBags());
             for(Cart c: carts) {
+              cartIds.add(c.getId());
               c.setReceiptable(false);
               _cartRepository.save(c);
             }
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<List<Long>>(cartIds, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
