@@ -82,6 +82,7 @@ public class UserService {
 
     private String createForgotPasswordMail(User user, String ipatHost, String mailText) {
         String resetLink = "/password_reset" + "?id=" + user.getId() + "&key=" + user.getActivationKey();
+        System.out.println("resetlink: " + resetLink);
         mailText = mailText.replace("%resetLink%", resetLink);
         mailText = mailText.replace("%userName%", user.getName());
         mailText = mailText.replace("%ipatHost%", ipatHost);

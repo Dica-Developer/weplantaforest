@@ -11,7 +11,7 @@ export default class IconButton extends Component {
     return (
       <div className="iconButton">
         <a role="button" onClick={this.props.onClick.bind(this)}>
-          <span className={'glyphicon ' + this.props.glyphIcon} aria-hidden="true"></span>
+          <span className={'glyphicon ' + this.props.glyphIcon} aria-hidden="true" title={this.props.title}></span>
           <span>{this.props.text}</span>
         </a>
       </div>

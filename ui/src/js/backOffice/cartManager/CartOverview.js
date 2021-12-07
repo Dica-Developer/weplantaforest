@@ -215,7 +215,7 @@ export default class CartOverview extends Component {
         },
         {
           key: 'sendReceipt',
-          name: 'SQ senden',
+          name: 'Aktion',
           width: 100,
           filterable: false,
           sortable: false,
@@ -322,15 +322,17 @@ export default class CartOverview extends Component {
 
   createSendReceiptButton(userId, receipt, cartId) {
     if (receipt && receipt.receiptId) {
-      return (
-        <div>
-          <IconButton text="" glyphIcon="glyphicon-send" onClick={() => this.sendReceipt(userId, receipt.receiptId)} />
+      return (        
+        <div className="sq-buttons">
+          <IconButton text="" glyphIcon="glyphicon-send" onClick={() => this.sendReceipt(userId, receipt.receiptId)} title="SQ senden"/>
+          <div className="spacer"></div>
+          <IconButton text="" glyphIcon="glyphicon-download" onClick={() => this.generateReceiptPdf(receipt.receiptId)} title="SQ download"/>
         </div>
       );
     } else {
       return (
         <div>
-          <IconButton text="" glyphIcon="glyphicon-cog" onClick={() => this.createAndSendReceipt(userId, cartId)} />
+          <IconButton text="" glyphIcon="glyphicon-cog" onClick={() => this.createAndSendReceipt(userId, cartId)} title="SQ generieren"/>
         </div>
       );
     }
@@ -574,6 +576,20 @@ export default class CartOverview extends Component {
       this.state.cartRequest.to = new Date().getTime();
     }
     this.forceUpdate();
+  }
+
+  generateReceiptPdf(receiptId) {
+    var config = {
+      headers: {
+        'X-AUTH-TOKEN': localStorage.getItem('jwt'),
+      },
+      responseType: 'arraybuffer',
+    };
+    axios.get('http://localhost:8081/receipt/pdf?receiptId=' + receiptId, config).then(function (response) {
+      var result = response.data;
+      var pdfData = URL.createObjectURL(new Blob([result], { type: 'application/pdf' }));
+      window.open(pdfData);
+    });
   }
 
   render() {
