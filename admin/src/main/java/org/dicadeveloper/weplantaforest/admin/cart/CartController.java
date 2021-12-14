@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,13 @@ public class CartController {
     @JsonView(Views.OverviewCart.class)
     public Iterable<Cart> getAllCarts(@RequestBody CartRequest cartRequest) {
         return cartService.searchCarts(cartRequest);
+    }
+
+    @RequestMapping(value = "/cart/{cartId}/address", method = RequestMethod.PUT)
+    public ResponseEntity<Void> saveStreet(@PathVariable long cartId, @RequestBody ObjectNode address) {
+        // TODO: validate
+        cartService.saveAddress(cartId, address);
+        return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/cart/{cartId}")
@@ -75,5 +83,4 @@ public class CartController {
         }
 
     }
-
 }

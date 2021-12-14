@@ -182,6 +182,44 @@ export default class CartOverview extends Component {
           visible: true
         },
         {
+          key: 'street',
+          name: 'Straße',
+          width: 185,
+          filterable: true,
+          sortable: true,
+          visible: true,
+          editable: true
+        },
+        {
+          key: 'editStreet',
+          name: '',
+          width: 50,
+          visible: true
+        },
+        {
+          key: 'city',
+          name: 'Ort',
+          width: 185,
+          filterable: true,
+          sortable: true,
+          visible: true,
+          editable: true
+        },
+        {
+          key: 'editCity',
+          name: '',
+          width: 50,
+          visible: true
+        },
+        {
+          key: 'postalcode',
+          name: 'PLZ',
+          width: 185,
+          filterable: true,
+          sortable: true,
+          visible: true
+        },
+        {
           key: 'paymentType',
           name: 'Zahlungsart',
           width: 80,
@@ -310,6 +348,11 @@ export default class CartOverview extends Component {
       firstName: cart.callBackVorname,
       lastName: cart.callBackNachname,
       company: cart.callBackFirma,
+      street: cart.callBackStrasse,
+      editStreet: '',
+      city: cart.callBackOrt,
+      editCity: '',
+      postalcode: cart.callBackPlz,
       paymentType: cart.callBackZahlungsart,
       details: this.createDetailIcon(cart.id),
       receiptable: this.createReceiptCheckbox(cart.id, cart.receiptable, cart.receipt),
@@ -322,7 +365,7 @@ export default class CartOverview extends Component {
 
   createSendReceiptButton(userId, receipt, cartId) {
     if (receipt && receipt.receiptId) {
-      return (        
+      return (
         <div className="sq-buttons">
           <IconButton text="" glyphIcon="glyphicon-send" onClick={() => this.sendReceipt(userId, receipt.receiptId)} title="SQ senden"/>
           <div className="spacer"></div>
@@ -592,6 +635,64 @@ export default class CartOverview extends Component {
     });
   }
 
+  filteredRows() {
+    return this.getRows(this.state.rows, this.state.filters);
+  }
+
+  updateAddress(row, address) {
+    var that = this;
+    var config = getConfig();
+    // TODO: encode cartId
+    axios
+      .put('http://localhost:8083/cart/' + row.id + '/address', address, config)
+      .then(function(response) {
+        that.refs.notification.addNotification('Adresse aktualisiert!', 'Die Adresse wurde so eben editiert.', 'success');
+        row.editStreet = '';
+        row.editCity = '';
+        that.forceUpdate();
+      })
+      .catch(function(error) {
+        that.refs.notification.handleError(error);
+      });
+  }
+
+  onGridRowsUpdated({ fromRow, toRow, updated}) {
+    this.setState(state => {
+      const rows = state.rows.slice();
+      const filtered = this.filteredRows();
+      for (let i = fromRow; i <= toRow; i++) {
+        const rows_index = rows.map(function(x) {return x.id; }).indexOf(filtered[i].id);
+        if (updated['street']) {
+          if (rows[rows_index].street !== updated.street) {
+            rows[rows_index].editStreet = (
+              <IconButton
+                glyphIcon="glyphicon-floppy-open"
+                text=""
+                onClick={() => {
+                  this.updateAddress(rows[rows_index], {"street": rows[rows_index].street});
+                }}
+              />
+            );
+          }
+        } else if (updated['city']) {
+          if (rows[rows_index].city !== updated.city) {
+            rows[rows_index].editCity = (
+              <IconButton
+                glyphIcon="glyphicon-floppy-open"
+                text=""
+                onClick={() => {
+                  this.updateAddress(rows[rows_index], {"city": rows[rows_index].city});
+                }}
+              />
+            );
+          }
+        }
+        rows[rows_index] = { ...filtered[i], ...updated };
+      }
+      return { rows };
+    });
+  }
+
   render() {
     var style = {
       Containers: {
@@ -665,6 +766,8 @@ export default class CartOverview extends Component {
               onGridSort={this.handleGridSort.bind(this)}
               minHeight={800}
               rowHeight={25}
+              onGridRowsUpdated={this.onGridRowsUpdated.bind(this)}
+              enableCellSelect={true}
               toolbar={<Toolbar enableFilter={true} />}
               onAddFilter={this.handleFilterChange.bind(this)}
               onClearFilters={this.onClearFilters.bind(this)}

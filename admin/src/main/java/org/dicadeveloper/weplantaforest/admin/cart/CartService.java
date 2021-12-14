@@ -2,13 +2,17 @@ package org.dicadeveloper.weplantaforest.admin.cart;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -75,5 +79,16 @@ public class CartService {
 
     private boolean areThereFilterOptionsSet(CartRequest cartRequest) {
         return (cartRequest.getCartStates() != null && cartRequest.getCartStates().size() > 0) || (cartRequest.getFrom() != null) || (cartRequest.getTo() != null);
+    }
+
+    @Transactional
+    public void saveAddress(long cartId, ObjectNode address) {
+        // TODO set null on null and do nothing if the field is not in the
+        // address object
+        cartRepository.findById(cartId).ifPresent(cart -> {
+            Optional.ofNullable(address.get("street")).ifPresent((street) -> cart.setCallBackStrasse(street.asText()));
+            Optional.ofNullable(address.get("city")).ifPresent((city) -> cart.setCallBackOrt(city.asText()));
+            cartRepository.save(cart);
+        });
     }
 }
