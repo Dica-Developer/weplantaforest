@@ -1,5 +1,13 @@
 @import '../../../less/basecolors.less';
 
+
+
+@media (min-width: 1900px) {
+  .cartOverview {
+    width: 1900px;
+  }
+}
+
 .cartOverview {
   select {
     width: 96px;
@@ -51,6 +59,33 @@
     .spacer{
       width: 5px;
       display:inline-block;
+    }
+  }
+
+  .glyphicon-ok,
+  .glyphicon-pencil,
+  .glyphicon-remove {
+    font-size: 15px;
+  }
+  .glyphicon-ok,
+  .glyphicon-floppy-open {
+    color: @accent-color!important;
+  }
+  .glyphicon-remove {
+    color: red !important;
+  }
+  .glyphicon-floppy-open {
+    font-size: 22px;
+  }
+  .react-grid-Container {
+    .iconButton {
+      a {
+        padding: 0px;
+        background-color: #fff;
+        .glyphicon-pencil {
+          color: #000;
+        }
+      }
     }
   }
 }

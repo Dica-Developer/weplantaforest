@@ -139,7 +139,8 @@ export default class CartOverview extends Component {
           width: 185,
           filterable: true,
           sortable: true,
-          visible: true
+          visible: true,
+          frozen: true
         },
         {
           key: 'price',
@@ -163,6 +164,13 @@ export default class CartOverview extends Component {
           width: 100,
           filterable: true,
           sortable: true,
+          visible: true,
+          editable: true
+        },
+        {
+          key: 'editFirstName',
+          name: '',
+          width: 50,
           visible: true
         },
         {
@@ -171,6 +179,13 @@ export default class CartOverview extends Component {
           width: 100,
           filterable: true,
           sortable: true,
+          visible: true,
+          editable: true
+        },
+        {
+          key: 'editLastName',
+          name: '',
+          width: 50,
           visible: true
         },
         {
@@ -179,6 +194,13 @@ export default class CartOverview extends Component {
           width: 185,
           filterable: true,
           sortable: true,
+          visible: true,
+          editable: true
+        },
+        {
+          key: 'editCompany',
+          name: '',
+          width: 50,
           visible: true
         },
         {
@@ -217,6 +239,13 @@ export default class CartOverview extends Component {
           width: 185,
           filterable: true,
           sortable: true,
+          visible: true,
+          editable: true
+        },
+        {
+          key: 'editPostalcode',
+          name: '',
+          width: 50,
           visible: true
         },
         {
@@ -249,7 +278,7 @@ export default class CartOverview extends Component {
           width: 110,
           filterable: false,
           sortable: false,
-          visible: true
+          visible: true,
         },
         {
           key: 'sendReceipt',
@@ -257,7 +286,7 @@ export default class CartOverview extends Component {
           width: 100,
           filterable: false,
           sortable: false,
-          visible: true
+          visible: true,
         },
         {
           key: 'timeStampValue',
@@ -346,13 +375,17 @@ export default class CartOverview extends Component {
       status: cart.cartState,
       timestamp: moment(cart.timeStamp).format('DD.MM.YYYY'),
       firstName: cart.callBackVorname,
+      editFirstName: '',
       lastName: cart.callBackNachname,
+      editLastName: '',
       company: cart.callBackFirma,
+      editCompany: '',
       street: cart.callBackStrasse,
       editStreet: '',
       city: cart.callBackOrt,
       editCity: '',
       postalcode: cart.callBackPlz,
+      editPostalcode: '',
       paymentType: cart.callBackZahlungsart,
       details: this.createDetailIcon(cart.id),
       receiptable: this.createReceiptCheckbox(cart.id, cart.receiptable, cart.receipt),
@@ -639,7 +672,7 @@ export default class CartOverview extends Component {
     return this.getRows(this.state.rows, this.state.filters);
   }
 
-  updateAddress(row, address) {
+  updateAddress(row, address, editFieldName, rowIndex) {
     var that = this;
     var config = getConfig();
     // TODO: encode cartId
@@ -647,8 +680,13 @@ export default class CartOverview extends Component {
       .put('http://localhost:8083/cart/' + row.id + '/address', address, config)
       .then(function(response) {
         that.refs.notification.addNotification('Adresse aktualisiert!', 'Die Adresse wurde so eben editiert.', 'success');
-        row.editStreet = '';
-        row.editCity = '';
+        var rowss = [];
+        that.state.rows.forEach(e => rowss.push(e));
+        rowss[rowIndex][editFieldName] = '';
+        that.setState({
+          rows: rowss
+        });
+
         that.forceUpdate();
       })
       .catch(function(error) {
@@ -669,7 +707,7 @@ export default class CartOverview extends Component {
                 glyphIcon="glyphicon-floppy-open"
                 text=""
                 onClick={() => {
-                  this.updateAddress(rows[rows_index], {"street": rows[rows_index].street});
+                  this.updateAddress(rows[rows_index], {"street": rows[rows_index].street}, "editStreet");
                 }}
               />
             );
@@ -681,7 +719,55 @@ export default class CartOverview extends Component {
                 glyphIcon="glyphicon-floppy-open"
                 text=""
                 onClick={() => {
-                  this.updateAddress(rows[rows_index], {"city": rows[rows_index].city});
+                  this.updateAddress(rows[rows_index], {"city": rows[rows_index].city}, "editCity", rows_index);
+                }}
+              />
+            );
+          }
+        } else if (updated['company']) {
+          if (rows[rows_index].company !== updated.company) {
+            rows[rows_index].editCompany = (
+              <IconButton
+                glyphIcon="glyphicon-floppy-open"
+                text=""
+                onClick={() => {
+                  this.updateAddress(rows[rows_index], {"company": rows[rows_index].company}, "editCompany", rows_index);
+                }}
+              />
+            );
+          }
+        } else if (updated['postalcode']) {
+          if (rows[rows_index].postalcode !== updated.postalcode) {
+            rows[rows_index].editPostalcode = (
+              <IconButton
+                glyphIcon="glyphicon-floppy-open"
+                text=""
+                onClick={() => {
+                  this.updateAddress(rows[rows_index], {"postalcode": rows[rows_index].postalcode}, "editPostalcode", rows_index);
+                }}
+              />
+            );
+          }
+        } else if (updated['lastName']) {
+          if (rows[rows_index].lastName !== updated.lastName) {
+            rows[rows_index].editLastName = (
+              <IconButton
+                glyphIcon="glyphicon-floppy-open"
+                text=""
+                onClick={() => {
+                  this.updateAddress(rows[rows_index], {"lastName": rows[rows_index].lastName}, "editLastName", rows_index);
+                }}
+              />
+            );
+          }
+        } else if (updated['firstName']) {
+          if (rows[rows_index].firstName !== updated.firstName) {
+            rows[rows_index].editFirstName = (
+              <IconButton
+                glyphIcon="glyphicon-floppy-open"
+                text=""
+                onClick={() => {
+                  this.updateAddress(rows[rows_index], {"firstName": rows[rows_index].firstName}, "editFirstName", rows_index);
                 }}
               />
             );

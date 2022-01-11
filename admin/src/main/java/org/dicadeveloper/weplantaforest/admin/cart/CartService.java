@@ -83,11 +83,25 @@ public class CartService {
 
     @Transactional
     public void saveAddress(long cartId, ObjectNode address) {
-        // TODO set null on null and do nothing if the field is not in the
-        // address object
         cartRepository.findById(cartId).ifPresent(cart -> {
-            Optional.ofNullable(address.get("street")).ifPresent((street) -> cart.setCallBackStrasse(street.asText()));
-            Optional.ofNullable(address.get("city")).ifPresent((city) -> cart.setCallBackOrt(city.asText()));
+            if (address.has("company")) {
+                Optional.ofNullable(address.get("company")).ifPresent((field) -> cart.setCallBackFirma(field.asText()));
+            }
+            if (address.has("lastName")) {
+                Optional.ofNullable(address.get("lastName")).ifPresent((field) -> cart.setCallBackNachname(field.asText()));
+            }
+            if (address.has("firstName")) {
+                Optional.ofNullable(address.get("firstName")).ifPresent((field) -> cart.setCallBackVorname(field.asText()));
+            }
+            if (address.has("street")) {
+                Optional.ofNullable(address.get("street")).ifPresent((field) -> cart.setCallBackStrasse(field.asText()));
+            }
+            if (address.has("city")) {
+                Optional.ofNullable(address.get("city")).ifPresent((field) -> cart.setCallBackOrt(field.asText()));
+            }
+            if (address.has("postalcode")) {
+                Optional.ofNullable(address.get("postalcode")).ifPresent((field) -> cart.setCallBackPlz(field.asText()));
+            }
             cartRepository.save(cart);
         });
     }
