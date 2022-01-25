@@ -706,7 +706,7 @@ export default class CartOverview extends Component {
                 glyphIcon="glyphicon-floppy-open"
                 text=""
                 onClick={() => {
-                  this.updateAddress(rows[rows_index], {"street": rows[rows_index].street}, "editStreet");
+                  this.updateAddress(rows[rows_index], {"street": rows[rows_index].street}, "editStreet", rows_index);
                 }}
               />
             );
