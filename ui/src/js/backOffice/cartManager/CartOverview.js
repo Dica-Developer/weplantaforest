@@ -140,7 +140,7 @@ export default class CartOverview extends Component {
           filterable: true,
           sortable: true,
           visible: true,
-          frozen: true
+          frozen: false
         },
         {
           key: 'price',
@@ -675,7 +675,6 @@ export default class CartOverview extends Component {
   updateAddress(row, address, editFieldName, rowIndex) {
     var that = this;
     var config = getConfig();
-    // TODO: encode cartId
     axios
       .put('http://localhost:8083/cart/' + row.id + '/address', address, config)
       .then(function(response) {
