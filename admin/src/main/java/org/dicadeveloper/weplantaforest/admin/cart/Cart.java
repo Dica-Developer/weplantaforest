@@ -86,6 +86,7 @@ public class Cart {
     private String callBackVzid;
 
     @Column(name = "_callBackStrasse", length = 1024)
+    @JsonView(Views.OverviewCart.class)
     private String callBackStrasse;
 
     @Column(name = "_callBackTimestamp", length = 32)
@@ -103,6 +104,7 @@ public class Cart {
     private String callBackVorname;
 
     @Column(name = "_callBackPlz", length = 16)
+    @JsonView(Views.OverviewCart.class)
     private String callBackPlz;
 
     @Column(name = "_callBackStatus", length = 32)
@@ -113,6 +115,7 @@ public class Cart {
     private String callBackNachname;
 
     @Column(name = "_callBackOrt", length = 128)
+    @JsonView(Views.OverviewCart.class)
     private String callBackOrt;
 
     @Column(name = "_callBackBetrag", length = 16)
