@@ -25,6 +25,7 @@ export default class SelfPlantOverviewPage extends Component {
         amount: 1,
         imageName: '',
         treeTypeId: 1,
+        treeTypeName: '',
       },
       imageFile: null,
       treeTypes: [],
@@ -86,6 +87,7 @@ export default class SelfPlantOverviewPage extends Component {
             amount: result.amount,
             imageName: result.imagePath,
             treeTypeId: result.treeType.id,
+            treeTypeName: result.treeType.name,
           },
           treeId: result.id,
           allowEdit: that.state.allowEdit || localStorage.getItem('username') === result.owner.name,
@@ -347,6 +349,27 @@ export default class SelfPlantOverviewPage extends Component {
         <div className={'row ' + (this.state.edit ? '' : 'no-display')}>
           <div className="col-md-12 align-left">
             <IconButton text="Planzung aktualisieren" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)} />
+          </div>
+        </div>
+        <div className={'row ' + (this.state.edit ? 'no-display' : '')}>
+          <div className="col-md-12">
+            <img width="100%" height="100%" src={"http://localhost:8081/tree/image/" + encodeURIComponent(this.state.selfPlantData.imageName) + "/935/935"} />
+          </div>
+        </div>
+        <div className={'row ' + (this.state.edit ? 'no-display' : '')}>
+          <div className="col-md-12">
+            {this.state.selfPlantData.description}
+          </div>
+        </div>
+        <div className={'row ' + (this.state.edit ? 'no-display' : '')}>
+          <div className="col-md-4">
+            Datum: {(new Date(this.state.selfPlantData.plantedOn)).toLocaleDateString()}
+          </div>
+          <div className="col-md-4">
+            Anzahl: {this.state.selfPlantData.amount}
+          </div>
+          <div className="col-md-4">
+            Baumart: {getTextForSelectedLanguage(this.state.selfPlantData.treeTypeName)}
           </div>
         </div>
         <div className="row">
