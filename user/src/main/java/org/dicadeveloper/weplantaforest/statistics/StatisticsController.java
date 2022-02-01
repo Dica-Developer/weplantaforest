@@ -53,7 +53,7 @@ public class StatisticsController {
         List<TreeAmountStatisticData> treeStatistic = statisticsRepository.getTreesPerYear();
         List<TreeAmountStatisticData> orderedList = new ArrayList<>();
 
-        Calendar year2007 = new GregorianCalendar(2007, 1, 1);
+        Calendar year2007 = new GregorianCalendar(2007, 0, 1);
         int years = getDiffYears(year2007, new Date(System.currentTimeMillis()));
 
         for (Integer i = 2007; i <= (2007 + years); i++) {
@@ -92,11 +92,7 @@ public class StatisticsController {
 
     private int getDiffYears(Calendar first, Date last) {
         Calendar b = getCalendar(last);
-        int diff = b.get(Calendar.YEAR) - first.get(Calendar.YEAR);
-        if (first.get(Calendar.MONTH) > b.get(Calendar.MONTH) || (first.get(Calendar.MONTH) == b.get(Calendar.MONTH) && first.get(Calendar.DATE) > b.get(Calendar.DATE))) {
-            diff--;
-        }
-        return diff;
+        return b.get(Calendar.YEAR) - first.get(Calendar.YEAR);
     }
 
     private Calendar getCalendar(Date date) {
@@ -111,7 +107,7 @@ public class StatisticsController {
         List<TreeAmountStatisticData> orderedList = new ArrayList<>();
         orderedList.add(new TreeAmountStatisticData(0L, "2007"));
 
-        Calendar year2007 = new GregorianCalendar(2007, 1, 1);
+        Calendar year2007 = new GregorianCalendar(2007, 0, 1);
         int years = getDiffYears(year2007, new Date(System.currentTimeMillis()));
 
         for (Integer i = 2007; i <= 2007 + years; i++) {
