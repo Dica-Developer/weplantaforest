@@ -215,7 +215,7 @@ module.exports = {
   TREESPLANTED_PERDONORTYPE: 'Gepflanzte Bäume pro Spendertyp',
   TREESPLANTED_PERMONTH: 'Gepflanzte Bäume pro Monat',
 
-  TREETYPE: 'Baumtyp',
+  TREETYPE: 'Baumart',
   PRICE_PER_ITEM: 'Preis / Stk.',
   NUMBER: 'Anzahl',
   AVAILABLE: 'verfügbar',

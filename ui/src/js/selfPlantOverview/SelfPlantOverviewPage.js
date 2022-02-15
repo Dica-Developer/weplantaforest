@@ -1,7 +1,7 @@
 import axios from 'axios';
 import counterpart from 'counterpart';
 import React, { Component } from 'react';
-import { Map, Marker, TileLayer } from 'react-leaflet';
+import { Map, Marker, TileLayer, useMap } from 'react-leaflet';
 import { browserHistory } from 'react-router';
 import NotificationSystem from 'react-notification-system';
 import Notification from '../common/components/Notification';
@@ -17,6 +17,7 @@ export default class SelfPlantOverviewPage extends Component {
     super();
     this.state = {
       edit: false,
+      showEditMap: true,
       selfPlantData: {
         latitude: 0,
         longitude: 0,
@@ -39,6 +40,12 @@ export default class SelfPlantOverviewPage extends Component {
 
   componentDidMount() {
     var that = this;
+    // this is a little hack to assure both leaflet maps(for edit and non-edit)  are rendered correctly
+    // on initial rendering both maps have to be displayed so that leaflet can render the correct tiles
+    // surprisingly 1ms is enough...
+    setTimeout(() => {
+      that.setState({showEditMap: false});
+    }, 1);
     axios
       .get('http://localhost:8081/treeTypes')
       .then(function (response) {
@@ -144,7 +151,8 @@ export default class SelfPlantOverviewPage extends Component {
               .post('http://localhost:8081/plantSelf/upload', data, config)
               .then(function (response) {
                 that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
-                that.setState({ edit: false });
+                that.setState({ edit: false, showEditMap: false });
+                that.forceUpdate();
               })
               .catch(function (response) {
                 if (response instanceof Error) {
@@ -155,11 +163,11 @@ export default class SelfPlantOverviewPage extends Component {
                   console.error(response.headers);
                   console.error(response.config);
                 }
-                that.setState({ edit: false });
+                that.setState({ edit: false, showEditMap: false });
               });
           } else {
             that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
-            that.setState({ edit: false });
+            that.setState({ edit: false, showEditMap: false });
           }
         })
         .catch(function (response) {
@@ -178,8 +186,8 @@ export default class SelfPlantOverviewPage extends Component {
   }
 
   startEdit() {
-    this.setState({ edit: true });
-  }
+    this.setState({ edit: true, showEditMap: true });
+ }
 
   updateTreePositionFromMapClick(event) {
     if (this.state.edit) {
@@ -264,7 +272,7 @@ export default class SelfPlantOverviewPage extends Component {
         <div className="row">
           <div className="col-md-12">
             <h1>
-              {counterpart.translate('TREE_LOCATION')}
+              {counterpart.translate('COMMUNITY_TREE')}
               <div className={this.state.allowEdit ? 'delete-btn ' : 'no-display '}>
                 <IconButton glyphIcon="glyphicon-trash" text="" onClick={this.openDeleteConfirmation.bind(this)} />
               </div>
@@ -275,13 +283,13 @@ export default class SelfPlantOverviewPage extends Component {
           </div>
         </div>
         <div className={'row ' + (this.state.edit ? '' : 'no-display')}>
-          <div className="form-group col-md-6">
-            <label htmlFor="when">{counterpart.translate('WHEN')}:</label>
+          <div className="form-group col-md-4">
+            <label htmlFor="when">{counterpart.translate('DATE')}:</label>
             <DateField id="when" date={this.state.selfPlantData.plantedOn} updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true" />
           </div>
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-8">
             <label htmlFor="howmuch">
-              {counterpart.translate('HOW_MANY')}&nbsp;<span className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>:&nbsp;{this.state.selfPlantData.amount}
+              {counterpart.translate('NUMBER')}:&nbsp;{this.state.selfPlantData.amount}
             </label>
             <input
               className="tree-slider"
@@ -297,11 +305,11 @@ export default class SelfPlantOverviewPage extends Component {
           </div>
         </div>
         <div className={'row ' + (this.state.edit ? '' : 'no-display')}>
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-4">
             <label htmlFor="photo">{counterpart.translate('FOTO')}:</label>
             <FileChooser id="photo" updateFile={this.updateImage.bind(this)} />
           </div>
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-8">
             <label htmlFor="treeType">{counterpart.translate('TREETYPE')}:</label>
             <select id="treeType" className="form-control" onChange={this.updateTreeType.bind(this)} ref="select">
               {this.state.treeTypes.map(function (treeType, i) {
@@ -338,43 +346,57 @@ export default class SelfPlantOverviewPage extends Component {
             </select>
           </div>
         </div>
-        <div className={'row ' + (this.state.edit ? '' : 'no-display')}>
-          <div className="form-group col-md-12">
+        <div className={'row ' + (this.state.showEditMap ? '' : 'no-display')}>
+          <div className="form-group col-md-4">
             <label htmlFor="description">{counterpart.translate('SHORT_DESCRIPTION')}:</label>
             <div>
               <textarea rows="4" cols="50" ref="description" />
             </div>
           </div>
+          <div className="col-md-8">
+          <label htmlFor="all-self-planted-edit-map">{counterpart.translate('TREE_LOCATION')}:</label>
+          <Map id="all-self-planted-edit-map" center={[this.state.myTree.latitude, this.state.myTree.longitude]} zoom={10} onClick={this.updateTreePositionFromMapClick.bind(this)} >
+              <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors' />
+              <Marker
+                position={[this.state.myTree.latitude, this.state.myTree.longitude]}
+                ref="marker"
+                draggable={this.state.edit}
+                icon={myTreeIcon}
+                onDragEnd={this.updateTreePositionFromMarkerDrag.bind(this)}
+              />
+              {this.state.trees.map(function (tree, i) {
+                if (tree.latitude && tree.longitude) {
+                  if (tree.id != that.props.params.treeId) {
+                    return <Marker key={i} position={[tree.latitude, tree.longitude]} ref={'marker-' + i} icon={myIcon} />;
+                  }
+                } else {
+                  return '';
+                }
+              })}
+            </Map>
+          </div>
+
         </div>
         <div className={'row ' + (this.state.edit ? '' : 'no-display')}>
           <div className="col-md-12 align-left">
             <IconButton text="Planzung aktualisieren" glyphIcon="glyphicon-tree-deciduous" onClick={this.sendSelfPlantedTree.bind(this)} />
           </div>
         </div>
-        <div className={'row ' + (this.state.edit ? 'no-display' : '')}>
-          <div className="col-md-12">
-            <img width="100%" height="100%" src={"http://localhost:8081/tree/image/" + encodeURIComponent(this.state.selfPlantData.imageName) + "/935/935"} />
-          </div>
-        </div>
-        <div className={'row ' + (this.state.edit ? 'no-display' : '')}>
-          <div className="col-md-12">
-            {this.state.selfPlantData.description}
-          </div>
-        </div>
+
         <div className={'row ' + (this.state.edit ? 'no-display' : '')}>
           <div className="col-md-4">
-            Datum: {(new Date(this.state.selfPlantData.plantedOn)).toLocaleDateString()}
+            <div className={'row ' + (this.state.edit ? 'no-display' : 'no-padding')}>
+              <div className="col-md-12 center">
+                <img height="150px" src={'http://localhost:8081/tree/image/' + encodeURIComponent(this.state.selfPlantData.imageName) + '/935/935'} />
+              </div>
+                <div className="col-md-12 tree-description"><i>{this.state.selfPlantData.description}</i></div>
+                <div className="col-md-12"><b>{counterpart.translate('DATE')}: </b> {new Date(this.state.selfPlantData.plantedOn).toLocaleDateString()}</div>
+                <div className="col-md-12"><b>{counterpart.translate('NUMBER')}: </b>{this.state.selfPlantData.amount}</div>
+                <div className="col-md-12"><b>{counterpart.translate('TREETYPE')}: </b>{getTextForSelectedLanguage(this.state.selfPlantData.treeTypeName)}</div>
+            </div>
           </div>
-          <div className="col-md-4">
-            Anzahl: {this.state.selfPlantData.amount}
-          </div>
-          <div className="col-md-4">
-            Baumart: {getTextForSelectedLanguage(this.state.selfPlantData.treeTypeName)}
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <Map id="all-self-planted-map" center={[this.state.myTree.latitude, this.state.myTree.longitude]} zoom={10} onClick={this.updateTreePositionFromMapClick.bind(this)}>
+          <div className="col-md-8">
+            <Map id="all-self-planted-map" center={[this.state.myTree.latitude, this.state.myTree.longitude]} zoom={10} onClick={this.updateTreePositionFromMapClick.bind(this)} >
               <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors' />
               <Marker
                 position={[this.state.myTree.latitude, this.state.myTree.longitude]}
@@ -395,6 +417,9 @@ export default class SelfPlantOverviewPage extends Component {
             </Map>
           </div>
         </div>
+
+        
+        
         <Notification ref="notification" />
         <NotificationSystem ref="notificationSystem" style={confirmBoxStyle} />
       </div>
