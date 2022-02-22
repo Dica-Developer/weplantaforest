@@ -153,6 +153,7 @@ export default class SelfPlantOverviewPage extends Component {
                 that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
                 that.setState({ edit: false, showEditMap: false });
                 that.forceUpdate();
+                location.reload();
               })
               .catch(function (response) {
                 if (response instanceof Error) {
@@ -168,6 +169,7 @@ export default class SelfPlantOverviewPage extends Component {
           } else {
             that.refs.notification.addNotification(counterpart.translate('PLANTING_CREATED'), '', 'success');
             that.setState({ edit: false, showEditMap: false });
+            location.reload();
           }
         })
         .catch(function (response) {
