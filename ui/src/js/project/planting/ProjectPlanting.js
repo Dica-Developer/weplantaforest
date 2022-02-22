@@ -184,7 +184,7 @@ export default class ProjectPlanting extends Component {
         />
         <div className="articleDesc">
           <div>Hier kannst Du die Anzahl Deiner Bäume individuell verteilen.</div>
-          {this.props.articles.map(function(article, i) {
+          {this.props.articles.filter(article -> (article.amount - article.alreadyPlanted) > 0).map(function(article, i) {
             return <ArticleSlider article={article} key={i} ref={'article_' + i} sliderIndex={i} balanceArticleSliders={that.balanceArticleSlidersFromArticleSlider.bind(this)} />;
           })}
           <table className="bottomTable">
