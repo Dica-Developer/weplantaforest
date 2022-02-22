@@ -45,8 +45,8 @@ public interface RankingRepository extends PagingAndSortingRepository<User, Long
     public static final String COUNT_BEST_ORGANIZATION_USER_QUERY_FOR_LAST_YEAR = COUNT_BEST_USER_QUERY
             + " and tree.owner.organizationType = :organizationType AND NOT tree.owner.name LIKE \'Anonymous%\' AND tree.plantedOn > (:time - 31536000000L)";
 
-    public static final String FIND_LAST_PLANTED_TREES_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(tree.owner.name, tree.amount, tree.plantedOn, "
-            + " tree.treeType.name, tree.treeType.imageFile) " + "FROM Tree as tree WHERE NOT tree.owner.name LIKE \'Anonymous%\' ORDER BY tree.plantedOn desc";
+    public static final String FIND_LAST_PLANTED_TREES_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TimeRankedTreeData(cartItems.tree.owner.name, cartItems.tree.amount, cartItems.tree.plantedOn, cartItems.tree.treeType.name, cartItems.tree.treeType.imageFile) "
+            + "FROM Cart as cart JOIN cart.cartItems cartItems WHERE cart.cartState IN ('VERIFIED', 'GENERATED', 'CALLBACK') AND NOT cartItems.tree.owner.name LIKE \'Anonymous%\' ORDER BY cartItems.tree.plantedOn DESC";
 
     public static final String FIND_BEST_TEAM_QUERY = "SELECT new org.dicadeveloper.weplantaforest.reports.rankings.TreeRankedUserData(tree.owner.team.name, sum(tree.amount), sum(tree.amount * tree.treeType.annualCo2SavingInTons * ((:time - tree.plantedOn) / 3.1536E10)), CAST(tree.owner.team.id as string)) "
             + " FROM Tree as tree WHERE tree.owner.team != null GROUP BY tree.owner.team.name ORDER BY sum(tree.amount) desc";
