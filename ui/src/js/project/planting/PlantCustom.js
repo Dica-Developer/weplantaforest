@@ -45,10 +45,10 @@ export default class PlantCustom extends Component {
         <ButtonBar chosen={this.props.amount} setAmount={this.props.setAmount.bind(this)} />
         <ArticleDesc />
         <div className={'plantItems align-center'}>
-          {this.props.articles.map(function(article, i) {
+          {this.props.articles.filter(article => (article.amount - article.alreadyPlanted) > 0).map(function(article, i) {
             return <Article key={i} article={article} ref={'article_' + i} updatePrice={that.updatePrice.bind(this)} />;
           })}
-        </div>
+          </div>
         <BottomPart updatePlantBag={this.updatePlantBag.bind(this)} overallPrice={this.state.overallPrice} />
       </div>
     );

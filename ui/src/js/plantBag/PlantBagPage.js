@@ -112,7 +112,11 @@ export default class PlantBagPage extends Component {
   }
 
   setPlantBagItemAmount(project, plantItem, amount) {
-    this.state.plantBag.projects[project].plantItems[plantItem].amount = amount;
+    if (typeof value === 'number') {
+      this.state.plantBag.projects[project].plantItems[plantItem].amount = amount;
+    } else {
+      this.state.plantBag.projects[project].plantItems[plantItem].amount = parseInt(amount);
+    }
     this.forceUpdate();
     this.calcPriceAndUpdatePlantBag();
   }
