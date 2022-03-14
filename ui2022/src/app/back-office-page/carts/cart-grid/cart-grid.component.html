@@ -4,6 +4,7 @@
       class="ag-theme-alpine"
       [rowData]="rowData"
       [columnDefs]="colDefs"
+      (cellValueChanged)="onCellValueChanged($event)"
   >
   </ag-grid-angular>
 </div>

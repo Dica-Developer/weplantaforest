@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ColDef } from 'ag-grid-community';
+import { CellValueChangedEvent, ColDef } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { selectCarts } from '../../../store/carts.store';
+import { selectCarts, updateAddress } from '../../../store/carts.store';
 import { GridHelper } from '../../../util/grid.helper';
 
 @Component({
@@ -32,18 +32,29 @@ export class CartGridComponent implements OnInit {
       sortable: true,
     },
     {
-      field: 'givenName',
+      field: 'firstName',
       headerName: 'Vorname',
       filter: 'agTextColumnFilter',
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: params => {
+        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+        return true;
+      }
+    
     },
     {
-      field: 'name',
+      field: 'lastName',
       headerName: 'Nachname',
       filter: 'agTextColumnFilter',
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: params => {
+        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+        return true;
+      }
     },
     {
       field: 'company',
@@ -51,6 +62,11 @@ export class CartGridComponent implements OnInit {
       filter: 'agTextColumnFilter',
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: params => {
+        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+        return true;
+      }
     },
     {
       field: 'street',
@@ -58,6 +74,11 @@ export class CartGridComponent implements OnInit {
       filter: 'agTextColumnFilter',
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: params => {
+        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+        return true;
+      }
     },
     {
       field: 'city',
@@ -65,13 +86,23 @@ export class CartGridComponent implements OnInit {
       filter: 'agTextColumnFilter',
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: params => {
+        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+        return true;
+      }
     },
     {
-      field: 'zip',
+      field: 'postalcode',
       headerName: 'PLZ',
       filter: 'agTextColumnFilter',
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: params => {
+        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+        return true;
+      }
     },
     {
       field: 'paymentType',
@@ -91,4 +122,7 @@ export class CartGridComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onCellValueChanged(event: CellValueChangedEvent) {
+  }
 }

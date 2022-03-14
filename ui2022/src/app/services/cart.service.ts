@@ -12,4 +12,10 @@ export class CartService {
   loadCarts(request: CartsLoadRequest) {
     return this.http.post(environment.backendAdminUrl + '/carts', request);
   }
+
+  saveAddress(cartId: number, field: string, value: string) {
+    const request = {};
+    request[field] = value;
+    return this.http.put(environment.backendAdminUrl + '/cart/' + cartId + '/address', request);
+  }
 }

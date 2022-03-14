@@ -47,16 +47,17 @@ export interface Cart {
 }
 
 export interface GridCart {
-  username: string,
-  price: number,
-  createdAt: number
-  givenName: string,
-  name: string,
-  company: string,
-  street: string,
-  city: string,
-  zip: string,
-  paymentType: string
+  id: number;
+  username: string;
+  price: number;
+  createdAt: number;
+  firstName: string;
+  lastName: string;
+  company: string;
+  street: string;
+  city: string;
+  postalcode: string;
+  paymentType: string;
 }
 
 export const loadCarts = createAction(
@@ -68,6 +69,15 @@ export const loadCartsSuccess = createAction(
   props<{ carts: Cart[] }>()
 );
 
+export const updateAddress = createAction(
+  '[Carts] update address',
+  props<{ cartId: number; field: string; value: string }>()
+);
+export const updateAddressSuccess = createAction(
+  '[Carts] update address success',
+  props<{ cartId: number; field: string; value: string }>()
+);
+
 export interface CartsState {
   carts: GridCart[];
   cartsLoading: boolean;
@@ -75,16 +85,31 @@ export interface CartsState {
 
 export const initialState: CartsState = {
   carts: [],
-  cartsLoading: false
+  cartsLoading: false,
 };
 
 const cartsReducer = createReducer(
   initialState,
-  on(loadCarts, (state) => ({...state, cartsLoading: true})),
+  on(loadCarts, (state) => ({ ...state, cartsLoading: true })),
   on(loadCartsSuccess, (state, { carts }) => ({
     ...state,
     carts: convertToGridCarts(carts),
-    cartsLoading: false
+    cartsLoading: false,
+  })),
+  on(updateAddressSuccess, (state, { cartId, field, value }) => ({
+    ...state,
+    carts: state.carts
+      .map((cart) => ({ ...cart }))
+      .map((cart) => {
+        if (cart.id === cartId) {
+          return {
+            ...cart,
+            [field]: value,
+          };
+        } else {
+          return cart;
+        }
+      }),
   }))
 );
 
@@ -102,30 +127,29 @@ export const selectCartsLoadingProgress = createSelector(
   (state: CartsState) => state.cartsLoading
 );
 
-
 function convertToGridCarts(carts: Cart[]): GridCart[] {
   const gridCarts: GridCart[] = [];
-  for(let cart of carts) {
-    gridCarts.push(convertToGridCart(cart))
+  for (let cart of carts) {
+    gridCarts.push(convertToGridCart(cart));
   }
   return gridCarts;
 }
 
 function convertToGridCart(cart: Cart): GridCart {
   return {
+    id: cart.id,
     username: cart.buyer.name,
     price: cart.totalPrice,
     createdAt: cart.timeStamp,
-    givenName: cart.callBackVorname,
-    name: cart.callBackNachname,
+    firstName: cart.callBackVorname,
+    lastName: cart.callBackNachname,
     company: cart.callBackFirma,
     street: cart.callBackStrasse,
     city: cart.callBackOrt,
-    zip: cart.callBackPlz,
-    paymentType: cart.callBackZahlungsart
-  }
+    postalcode: cart.callBackPlz,
+    paymentType: cart.callBackZahlungsart,
+  };
 }
-
 
 @Injectable()
 export class CartsEffects {
@@ -138,6 +162,17 @@ export class CartsEffects {
         this.cartsService
           .loadCarts(action.request)
           .pipe(switchMap((carts: Cart[]) => [loadCartsSuccess({ carts })]))
+      )
+    )
+  );
+
+  UpdateAddress$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateAddress),
+      switchMap((action) =>
+        this.cartsService
+          .saveAddress(action.cartId, action.field, action.value)
+          .pipe(switchMap(() => [updateAddressSuccess(action)]))
       )
     )
   );
