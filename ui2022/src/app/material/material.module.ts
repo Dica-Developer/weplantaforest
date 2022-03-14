@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -24,6 +25,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatDatepickerModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatInputModule,
@@ -35,6 +37,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatDatepickerModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatCheckboxModule,
   ],
 })
 export class MaterialModule {}

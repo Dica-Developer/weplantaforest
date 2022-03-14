@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CellValueChangedEvent, ColDef } from 'ag-grid-community';
+import { CellValueChangedEvent, ColDef, GridOptions } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { selectCarts, updateAddress } from '../../../store/carts.store';
 import { GridHelper } from '../../../util/grid.helper';
+import { GridCheckboxComponent } from '../../../util/grid-components/grid-checkbox/grid-checkbox.component';
 
 @Component({
   selector: 'app-cart-grid',
@@ -38,11 +39,16 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: params => {
-        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+      valueSetter: (params) => {
+        this.store.dispatch(
+          updateAddress({
+            cartId: params.data.id,
+            field: params.colDef.field,
+            value: params.newValue,
+          })
+        );
         return true;
-      }
-    
+      },
     },
     {
       field: 'lastName',
@@ -51,10 +57,16 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: params => {
-        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+      valueSetter: (params) => {
+        this.store.dispatch(
+          updateAddress({
+            cartId: params.data.id,
+            field: params.colDef.field,
+            value: params.newValue,
+          })
+        );
         return true;
-      }
+      },
     },
     {
       field: 'company',
@@ -63,10 +75,16 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: params => {
-        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+      valueSetter: (params) => {
+        this.store.dispatch(
+          updateAddress({
+            cartId: params.data.id,
+            field: params.colDef.field,
+            value: params.newValue,
+          })
+        );
         return true;
-      }
+      },
     },
     {
       field: 'street',
@@ -75,10 +93,16 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: params => {
-        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+      valueSetter: (params) => {
+        this.store.dispatch(
+          updateAddress({
+            cartId: params.data.id,
+            field: params.colDef.field,
+            value: params.newValue,
+          })
+        );
         return true;
-      }
+      },
     },
     {
       field: 'city',
@@ -87,10 +111,16 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: params => {
-        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+      valueSetter: (params) => {
+        this.store.dispatch(
+          updateAddress({
+            cartId: params.data.id,
+            field: params.colDef.field,
+            value: params.newValue,
+          })
+        );
         return true;
-      }
+      },
     },
     {
       field: 'postalcode',
@@ -99,10 +129,16 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: params => {
-        this.store.dispatch(updateAddress({cartId: params.data.id, field: params.colDef.field, value: params.newValue}))
+      valueSetter: (params) => {
+        this.store.dispatch(
+          updateAddress({
+            cartId: params.data.id,
+            field: params.colDef.field,
+            value: params.newValue,
+          })
+        );
         return true;
-      }
+      },
     },
     {
       field: 'paymentType',
@@ -111,7 +147,27 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
     },
+    {
+      field: 'receiptable',
+      headerName: 'SQ',
+      cellRendererSelector: (params) => {
+        return {
+          component: 'checkboxRenderer',
+          params: {
+            value: params.data.receiptable,
+            disabled: params.data.receiptId !== null
+          }
+        }
+      }
+    },
   ];
+
+  gridOptions: GridOptions = {
+    rowData: [],
+    components: {
+      checkboxRenderer: GridCheckboxComponent
+    }
+  };
 
   rowData = [];
 
@@ -123,6 +179,5 @@ export class CartGridComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onCellValueChanged(event: CellValueChangedEvent) {
-  }
+  onCellValueChanged(event: CellValueChangedEvent) {}
 }

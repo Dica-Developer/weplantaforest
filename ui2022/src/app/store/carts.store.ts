@@ -58,6 +58,8 @@ export interface GridCart {
   city: string;
   postalcode: string;
   paymentType: string;
+  receiptable: boolean;
+  receiptId: number;
 }
 
 export const loadCarts = createAction(
@@ -148,6 +150,8 @@ function convertToGridCart(cart: Cart): GridCart {
     city: cart.callBackOrt,
     postalcode: cart.callBackPlz,
     paymentType: cart.callBackZahlungsart,
+    receiptable: cart.receiptable,
+    receiptId: cart.receipt?.receiptId
   };
 }
 
