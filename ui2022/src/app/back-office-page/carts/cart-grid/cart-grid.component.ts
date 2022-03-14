@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CellValueChangedEvent, ColDef, GridOptions } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { selectCarts, updateAddress } from '../../../store/carts.store';
+import {
+  selectCarts,
+  updateAddress,
+  updateReceiptableFlag,
+} from '../../../store/carts.store';
 import { GridHelper } from '../../../util/grid.helper';
 import { GridCheckboxComponent } from '../../../util/grid-components/grid-checkbox/grid-checkbox.component';
 
@@ -155,24 +159,31 @@ export class CartGridComponent implements OnInit {
           component: 'checkboxRenderer',
           params: {
             value: params.data.receiptable,
-            disabled: params.data.receiptId !== null
-          }
-        }
-      }
+            disabled:
+              params.data.receiptId !== null &&
+              params.data.receiptId !== undefined,
+            cartId: params.data.id,
+            valueChange: (cartId, value) =>
+              this.store.dispatch(updateReceiptableFlag({ cartId, value })),
+          },
+        };
+      },
     },
   ];
 
   gridOptions: GridOptions = {
     rowData: [],
     components: {
-      checkboxRenderer: GridCheckboxComponent
-    }
+      checkboxRenderer: GridCheckboxComponent,
+    },
   };
 
   rowData = [];
 
   constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
     store.select(selectCarts).subscribe((carts) => {
+      console.log(carts);
+
       this.rowData = carts;
     });
   }

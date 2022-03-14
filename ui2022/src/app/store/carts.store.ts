@@ -80,6 +80,16 @@ export const updateAddressSuccess = createAction(
   props<{ cartId: number; field: string; value: string }>()
 );
 
+export const updateReceiptableFlag = createAction(
+  '[Carts] update receiptable flag',
+  props<{ cartId: number; value: boolean }>()
+);
+
+export const updateReceiptableFlagSuccess = createAction(
+  '[Carts] update receiptable flag success',
+  props<{ cartId: number; value: boolean }>()
+);
+
 export interface CartsState {
   carts: GridCart[];
   cartsLoading: boolean;
@@ -107,6 +117,21 @@ const cartsReducer = createReducer(
           return {
             ...cart,
             [field]: value,
+          };
+        } else {
+          return cart;
+        }
+      }),
+  })),
+  on(updateReceiptableFlagSuccess, (state, { cartId, value }) => ({
+    ...state,
+    carts: state.carts
+      .map((cart) => ({ ...cart }))
+      .map((cart) => {
+        if (cart.id === cartId) {
+          return {
+            ...cart,
+            receiptable: value,
           };
         } else {
           return cart;
@@ -151,7 +176,7 @@ function convertToGridCart(cart: Cart): GridCart {
     postalcode: cart.callBackPlz,
     paymentType: cart.callBackZahlungsart,
     receiptable: cart.receiptable,
-    receiptId: cart.receipt?.receiptId
+    receiptId: cart.receipt?.receiptId,
   };
 }
 
@@ -180,4 +205,15 @@ export class CartsEffects {
       )
     )
   );
+
+  UpdateReceiptableFlag$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(updateReceiptableFlag),
+    switchMap((action) =>
+      this.cartsService
+        .changeReceiptableFlag(action.cartId, action.value)
+        .pipe(switchMap(() => [updateReceiptableFlagSuccess(action)]))
+    )
+  )
+);
 }

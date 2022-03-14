@@ -18,4 +18,8 @@ export class CartService {
     request[field] = value;
     return this.http.put(environment.backendAdminUrl + '/cart/' + cartId + '/address', request);
   }
+
+  changeReceiptableFlag(cartId: number, value: boolean) {
+    return this.http.post(environment.backendAdminUrl + '/cart/receiptable?cartId=' + cartId + '&receiptable=' + value, {});
+  }
 }
