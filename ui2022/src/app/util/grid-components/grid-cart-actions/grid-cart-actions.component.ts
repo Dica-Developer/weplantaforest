@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ICellEditorAngularComp } from 'ag-grid-angular';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { createAndSendReceipt } from 'src/app/store/carts.store';
+import { createAndSendReceipt, loadCartDetails } from 'src/app/store/carts.store';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -21,7 +21,6 @@ export class GridCartActionsComponent implements ICellEditorAngularComp {
   ) {}
 
   agInit(params: any): void {
-    console.log(params);
     this.cartId = params.value;
     this.receiptId = params.data.receiptId;
     this.userId = params.data.userId;
@@ -39,5 +38,9 @@ export class GridCartActionsComponent implements ICellEditorAngularComp {
 
   downloadReceipt() {
     this.cartService.generateReceiptPdf(this.receiptId);
+  }
+
+  loadCartDetails() {
+    this.store.dispatch(loadCartDetails({cartId: this.cartId}));
   }
 }

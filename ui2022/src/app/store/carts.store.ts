@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import {
   createAction,
   props,
@@ -64,6 +63,32 @@ export interface GridCart {
   status: string;
 }
 
+export interface CartDetails {
+  id: number;
+  timeStamp: number;
+  totalPrice: number;
+  treeCount: number;
+  cartItems: CartItem[];
+}
+
+export interface CartItem {
+  id: number;
+  amount: number;
+  basePricePerPiece: number;
+  totalPrice: number;
+  tree: {
+    amount: number;
+    projectArticle: {
+      project: {
+        name: string;
+      };
+    };
+    treeType: {
+      name: string;
+    };
+  };
+}
+
 export const loadCarts = createAction(
   '[Carts] load',
   props<{ request: CartsLoadRequest }>()
@@ -117,14 +142,30 @@ export const downloadReceiptPdf = createAction(
   props<{ receiptId: number }>()
 );
 
+export const loadCartDetails = createAction(
+  '[Carts] load cart details',
+  props<{ cartId: number }>()
+);
+
+export const loadCartDetailsSuccess = createAction(
+  '[Carts] load cart details success',
+  props<{ cartDetails: CartDetails }>()
+);
+
+export const resetCartDetails = createAction(
+  '[Carts] reset cart details'
+);
+
 export interface CartsState {
   carts: GridCart[];
   cartsLoading: boolean;
+  cartDetails: CartDetails
 }
 
 export const initialState: CartsState = {
   carts: [],
   cartsLoading: false,
+  cartDetails: null
 };
 
 const cartsReducer = createReducer(
@@ -194,6 +235,14 @@ const cartsReducer = createReducer(
           return cart;
         }
       }),
+  })),
+  on(loadCartDetailsSuccess, (state, { cartDetails }) => ({
+    ...state,
+    cartDetails: cartDetails
+  })),
+  on(resetCartDetails, (state) => ({
+    ...state,
+    cartDetails: null
   }))
 );
 
@@ -209,6 +258,11 @@ export const selectCarts = createSelector(
 export const selectCartsLoadingProgress = createSelector(
   cartsFeature,
   (state: CartsState) => state.cartsLoading
+);
+
+export const selectCartDetails = createSelector(
+  cartsFeature,
+  (state: CartsState) => state.cartDetails
 );
 
 function convertToGridCarts(carts: Cart[]): GridCart[] {
@@ -302,19 +356,16 @@ export class CartsEffects {
     )
   );
 
-//   DownloadReceiptPdf$ = createEffect(() =>
-//   this.actions$.pipe(
-//     ofType(downloadReceiptPdf),
-//     switchMap((action) =>
-//       this.cartsService
-//         .generateReceiptPdf(action.receiptId)
-//         // .pipe(
-//         //   // switchMap(() => [
-//         //   //   // createAndSendReceiptSuccess({ receiptId, cartId: action.cartId }),
-//         //   // ])
-//         // )
-//     )
-//   ),
-//   {dispatch: false}
-// );
+  LoadCartDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCartDetails),
+      switchMap((action) =>
+        this.cartsService
+          .getCartDetails(action.cartId)
+          .pipe(switchMap((cartDetails: CartDetails) => [
+            loadCartDetailsSuccess({cartDetails})
+          ]))
+      )
+    )
+  );
 }

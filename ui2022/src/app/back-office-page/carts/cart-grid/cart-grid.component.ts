@@ -10,7 +10,7 @@ import {
 import { GridHelper } from '../../../util/grid.helper';
 import { GridCheckboxComponent } from '../../../util/grid-components/grid-checkbox/grid-checkbox.component';
 import { GridSelectComponent } from '../../../util/grid-components/grid-select/grid-select.component';
-import { updateStatus } from '../../../store/carts.store';
+import { updateStatus, CartDetails, selectCartDetails } from '../../../store/carts.store';
 import { GridCartActionsComponent } from '../../../util/grid-components/grid-cart-actions/grid-cart-actions.component';
 
 @Component({
@@ -187,9 +187,14 @@ export class CartGridComponent implements OnInit {
 
   rowData = [];
 
+  cartDetails: CartDetails;
+
   constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
     store.select(selectCarts).subscribe((carts) => {
       this.rowData = carts;
+    });
+    store.select(selectCartDetails).subscribe((details) => {
+      this.cartDetails = details;
     });
   }
 

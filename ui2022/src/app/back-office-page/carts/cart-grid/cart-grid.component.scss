@@ -1,7 +1,12 @@
 .grid-wrapper{
   height: 79vh;
+  display: inline-block;
 }
 
 button{
   margin-right: 15px!important;
+}
+
+.cart-detail-wrapper{
+  display: inline;
 }

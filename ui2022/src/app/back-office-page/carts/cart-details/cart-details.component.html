@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-content>
+    <div class="close-wrapper">
+      <span class="close-button" (click)="closeDetails()">X</span>
+    </div>
+    <div>
+      <div class="col-30">
+        <b>Id:</b>
+      </div>
+      <div class="col-70">{{ cartDetails.id }}</div>
+    </div>
+    <div>
+      <div class="col-30">
+        <b>Datum:</b>
+      </div>
+      <div class="col-70">{{ cartDetails.timeStamp | date:'dd.MM.yyyy'}}</div>
+    </div>
+    <div>
+      <div class="col-30">
+        <b>Anzahl Bäume:</b>
+      </div>
+      <div class="col-70">{{ cartDetails.treeCount}}</div>
+    </div>
+    <div>
+      <div class="col-30">
+        <b>Preis:</b>
+      </div>
+      <div class="col-70">{{ cartDetails.totalPrice | currency: 'EUR' }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>

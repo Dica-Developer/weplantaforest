@@ -38,4 +38,8 @@ export class CartService {
       window.open(pdfData);
     });
   }
+
+  getCartDetails(cartId: number) {
+    return this.http.get(environment.backendAdminUrl + '/cart/' + cartId);
+  }
 }
