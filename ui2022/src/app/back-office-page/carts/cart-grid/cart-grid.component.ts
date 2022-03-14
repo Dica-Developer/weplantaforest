@@ -18,7 +18,8 @@ import { updateStatus } from '../../../store/carts.store';
   styleUrls: ['./cart-grid.component.scss'],
 })
 export class CartGridComponent implements OnInit {
-  colDefs: ColDef[] = [
+
+  allColumns: ColDef[] = [
     {
       field: 'username',
       headerName: 'User',
@@ -138,6 +139,30 @@ export class CartGridComponent implements OnInit {
     },
   ];
 
+  subsetOfColumns: ColDef[] = [
+    {
+      field: 'username',
+      headerName: 'User',
+      filter: 'agTextColumnFilter',
+      sortable: true,
+      comparator: this.gridHelper.caseInsensitiveComparator,
+    },
+    {
+      field: 'price',
+      headerName: 'Preis (€)',
+      valueFormatter: this.gridHelper.priceFormatter,
+      sortable: true,
+    },
+    {
+      field: 'createdAt',
+      headerName: 'Erstellt am',
+      valueFormatter: this.gridHelper.dateFormatter,
+      sortable: true,
+    },
+  ];
+
+  colDefs: ColDef[] = this.allColumns;
+
   gridOptions: GridOptions = {
     rowData: [],
     components: {
@@ -167,5 +192,13 @@ export class CartGridComponent implements OnInit {
       })
     );
     return true;
+  }
+
+  filterColumns() {
+    this.colDefs = this.subsetOfColumns;
+  }
+
+  resetColumns() {
+    this.colDefs = this.allColumns;
   }
 }
