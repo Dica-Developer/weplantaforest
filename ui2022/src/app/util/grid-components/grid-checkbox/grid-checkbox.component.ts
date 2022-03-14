@@ -15,11 +15,9 @@ export class GridCheckboxComponent implements ICellEditorAngularComp {
   cartId: number;
   valueChange: any;
 
-  constructor(private store: Store<AppState>) {}
+  constructor() {}
 
   agInit(params: any): void {
-    console.log('init');
-    
     this.value = params.value;
     this.disabled = params.disabled;
     this.cartId = params.cartId;

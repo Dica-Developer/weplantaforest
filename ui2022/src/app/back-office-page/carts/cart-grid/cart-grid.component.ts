@@ -182,8 +182,6 @@ export class CartGridComponent implements OnInit {
 
   constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
     store.select(selectCarts).subscribe((carts) => {
-      console.log(carts);
-
       this.rowData = carts;
     });
   }
