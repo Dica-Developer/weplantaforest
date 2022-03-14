@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill">
+  <mat-label>Cartstate</mat-label>
+  <mat-select [value]="value" (selectionChange)="valueChanged($event)">
+    <mat-option *ngFor="let entry of valueList" [value]="entry.value" >{{
+      entry.label
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>

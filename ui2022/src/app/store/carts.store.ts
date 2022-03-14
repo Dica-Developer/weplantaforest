@@ -60,6 +60,7 @@ export interface GridCart {
   paymentType: string;
   receiptable: boolean;
   receiptId: number;
+  status: string;
 }
 
 export const loadCarts = createAction(
@@ -88,6 +89,16 @@ export const updateReceiptableFlag = createAction(
 export const updateReceiptableFlagSuccess = createAction(
   '[Carts] update receiptable flag success',
   props<{ cartId: number; value: boolean }>()
+);
+
+export const updateStatus = createAction(
+  '[Carts] update status',
+  props<{ cartId: number; value: string }>()
+);
+
+export const updateStatusSuccess = createAction(
+  '[Carts] update status success',
+  props<{ cartId: number; value: string }>()
 );
 
 export interface CartsState {
@@ -137,6 +148,21 @@ const cartsReducer = createReducer(
           return cart;
         }
       }),
+  })),
+  on(updateStatusSuccess, (state, { cartId, value }) => ({
+    ...state,
+    carts: state.carts
+      .map((cart) => ({ ...cart }))
+      .map((cart) => {
+        if (cart.id === cartId) {
+          return {
+            ...cart,
+            status: value,
+          };
+        } else {
+          return cart;
+        }
+      }),
   }))
 );
 
@@ -177,6 +203,7 @@ function convertToGridCart(cart: Cart): GridCart {
     paymentType: cart.callBackZahlungsart,
     receiptable: cart.receiptable,
     receiptId: cart.receipt?.receiptId,
+    status: cart.cartState,
   };
 }
 
@@ -207,13 +234,24 @@ export class CartsEffects {
   );
 
   UpdateReceiptableFlag$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(updateReceiptableFlag),
-    switchMap((action) =>
-      this.cartsService
-        .changeReceiptableFlag(action.cartId, action.value)
-        .pipe(switchMap(() => [updateReceiptableFlagSuccess(action)]))
+    this.actions$.pipe(
+      ofType(updateReceiptableFlag),
+      switchMap((action) =>
+        this.cartsService
+          .changeReceiptableFlag(action.cartId, action.value)
+          .pipe(switchMap(() => [updateReceiptableFlagSuccess(action)]))
+      )
     )
-  )
-);
+  );
+
+  UpdateCartState$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateStatus),
+      switchMap((action) =>
+        this.cartsService
+          .updateStatus(action.cartId, action.value)
+          .pipe(switchMap(() => [updateStatusSuccess(action)]))
+      )
+    )
+  );
 }

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GridCheckboxComponent } from './grid-components/grid-checkbox/grid-checkbox.component';
+import { GridSelectComponent } from './grid-components/grid-select/grid-select.component';
 
 
 
 @NgModule({
-  declarations: [GridCheckboxComponent],
+  declarations: [GridCheckboxComponent, GridSelectComponent],
   imports: [
     CommonModule,
     MaterialModule

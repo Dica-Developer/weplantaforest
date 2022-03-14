@@ -9,6 +9,8 @@ import {
 } from '../../../store/carts.store';
 import { GridHelper } from '../../../util/grid.helper';
 import { GridCheckboxComponent } from '../../../util/grid-components/grid-checkbox/grid-checkbox.component';
+import { GridSelectComponent } from '../../../util/grid-components/grid-select/grid-select.component';
+import { updateStatus } from '../../../store/carts.store';
 
 @Component({
   selector: 'app-cart-grid',
@@ -43,7 +45,7 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: (params) => this.updateAddress(params)
+      valueSetter: (params) => this.updateAddress(params),
     },
     {
       field: 'lastName',
@@ -52,7 +54,7 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: (params) => this.updateAddress(params)
+      valueSetter: (params) => this.updateAddress(params),
     },
     {
       field: 'company',
@@ -61,7 +63,7 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: (params) => this.updateAddress(params)
+      valueSetter: (params) => this.updateAddress(params),
     },
     {
       field: 'street',
@@ -70,7 +72,7 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: (params) => this.updateAddress(params)
+      valueSetter: (params) => this.updateAddress(params),
     },
     {
       field: 'city',
@@ -79,7 +81,7 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: (params) => this.updateAddress(params)
+      valueSetter: (params) => this.updateAddress(params),
     },
     {
       field: 'postalcode',
@@ -88,7 +90,7 @@ export class CartGridComponent implements OnInit {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
-      valueSetter: (params) => this.updateAddress(params)
+      valueSetter: (params) => this.updateAddress(params),
     },
     {
       field: 'paymentType',
@@ -115,12 +117,32 @@ export class CartGridComponent implements OnInit {
         };
       },
     },
+    {
+      field: 'status',
+      headerName: 'Status',
+      filter: 'agTextColumnFilter',
+      sortable: true,
+      editable: (params) => {
+        if (params.data.status === 'DISCARDED') {
+          return false;
+        } else {
+          return true;
+        }
+      },
+      cellEditor: 'selectRenderer',
+      cellEditorParams: {
+        valueList: this.gridHelper.getCartStates(),
+        valueChange: (cartId, value) =>
+          this.store.dispatch(updateStatus({ cartId, value })),
+      },
+    },
   ];
 
   gridOptions: GridOptions = {
     rowData: [],
     components: {
       checkboxRenderer: GridCheckboxComponent,
+      selectRenderer: GridSelectComponent,
     },
   };
 

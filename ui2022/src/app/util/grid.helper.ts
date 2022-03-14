@@ -36,4 +36,15 @@ export class GridHelper {
       return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
     }
   }
+
+
+  getCartStates() {
+    return  [
+      { value: 'CALLBACK', label: 'Callback' },
+      { value: 'INITIAL', label: 'Initial' },
+      { value: 'VERIFIED', label: 'Verified' },
+      { value: 'GENERATED', label: 'Generated' },
+      { value: 'DISCARDED', label: 'Discarded' },
+    ];
+  }
 }

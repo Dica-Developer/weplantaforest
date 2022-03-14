@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { GridHelper } from '../../../util/grid.helper';
 
 @Component({
   selector: 'app-cart-filter',
@@ -13,13 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class CartFilterComponent implements OnInit {
 
-  cartStatesList = [
-    { value: 'CALLBACK', label: 'Callback' },
-    { value: 'INITIAL', label: 'Initial' },
-    { value: 'VERIFIED', label: 'Verified' },
-    { value: 'GENERATED', label: 'Generated' },
-    { value: 'DISCARED', label: 'Discarded' },
-  ];
+  cartStatesList = this.gridHelper.getCartStates();
 
   cartStatesDefault = ['CALLBACK'];
 
@@ -35,7 +30,7 @@ export class CartFilterComponent implements OnInit {
   cartsLoading$: Observable<boolean>;
 
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder) {
+  constructor(private store: Store<AppState>, private fb: FormBuilder, private gridHelper: GridHelper) {
     this.requestForm = fb.group({
       cartStates: [this.cartStatesDefault],
     });

@@ -22,4 +22,8 @@ export class CartService {
   changeReceiptableFlag(cartId: number, value: boolean) {
     return this.http.post(environment.backendAdminUrl + '/cart/receiptable?cartId=' + cartId + '&receiptable=' + value, {});
   }
+
+  updateStatus(cartId: number, value: string) {
+    return this.http.post(environment.backendAdminUrl + '/cart/changeState?cartId=' + cartId + '&cartState=' + value, {});
+  }
 }
