@@ -11,6 +11,7 @@ import { GridHelper } from '../../../util/grid.helper';
 import { GridCheckboxComponent } from '../../../util/grid-components/grid-checkbox/grid-checkbox.component';
 import { GridSelectComponent } from '../../../util/grid-components/grid-select/grid-select.component';
 import { updateStatus } from '../../../store/carts.store';
+import { GridCartActionsComponent } from '../../../util/grid-components/grid-cart-actions/grid-cart-actions.component';
 
 @Component({
   selector: 'app-cart-grid',
@@ -137,6 +138,18 @@ export class CartGridComponent implements OnInit {
           this.store.dispatch(updateStatus({ cartId, value })),
       },
     },
+    {
+      field: 'id',
+      headerName: 'Actions',
+      cellRendererSelector: (params) => {
+        return {
+          component: 'cartActionRenderer',
+          params: {
+            value: params.data.id,
+          },
+        };
+      },
+    }
   ];
 
   subsetOfColumns: ColDef[] = [
@@ -168,6 +181,7 @@ export class CartGridComponent implements OnInit {
     components: {
       checkboxRenderer: GridCheckboxComponent,
       selectRenderer: GridSelectComponent,
+      cartActionRenderer: GridCartActionsComponent
     },
   };
 

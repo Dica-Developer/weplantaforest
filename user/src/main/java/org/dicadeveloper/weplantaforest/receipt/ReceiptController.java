@@ -112,11 +112,11 @@ public class ReceiptController {
                 final ArrayList<Cart> carts = new ArrayList<>();
                 carts.add(cart);
                 receipt.setCarts(carts);
-                _receiptRepository.save(receipt);
+                receipt = _receiptRepository.save(receipt);
                 if (sendMails) {
                     _receiptService.sendReceiptMail(cart.getBuyer().getId(), receipt.getReceiptId());
                 }
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(receipt.getReceiptId(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Receipt already exists.", HttpStatus.BAD_REQUEST);
             }

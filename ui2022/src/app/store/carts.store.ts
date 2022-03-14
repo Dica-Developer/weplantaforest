@@ -49,6 +49,7 @@ export interface Cart {
 export interface GridCart {
   id: number;
   username: string;
+  userId: number;
   price: number;
   createdAt: number;
   firstName: string;
@@ -99,6 +100,21 @@ export const updateStatus = createAction(
 export const updateStatusSuccess = createAction(
   '[Carts] update status success',
   props<{ cartId: number; value: string }>()
+);
+
+export const createAndSendReceipt = createAction(
+  '[Carts] create and send receipt',
+  props<{ cartId: number; userId: number }>()
+);
+
+export const createAndSendReceiptSuccess = createAction(
+  '[Carts] create and send receipt success',
+  props<{ receiptId: number; cartId: number }>()
+);
+
+export const downloadReceiptPdf = createAction(
+  '[Carts] download receipt PDF',
+  props<{ receiptId: number }>()
 );
 
 export interface CartsState {
@@ -163,6 +179,21 @@ const cartsReducer = createReducer(
           return cart;
         }
       }),
+  })),
+  on(createAndSendReceiptSuccess, (state, { receiptId, cartId }) => ({
+    ...state,
+    carts: state.carts
+      .map((cart) => ({ ...cart }))
+      .map((cart) => {
+        if (cart.id === cartId) {
+          return {
+            ...cart,
+            receiptId,
+          };
+        } else {
+          return cart;
+        }
+      }),
   }))
 );
 
@@ -192,6 +223,7 @@ function convertToGridCart(cart: Cart): GridCart {
   return {
     id: cart.id,
     username: cart.buyer.name,
+    userId: cart.buyer.id,
     price: cart.totalPrice,
     createdAt: cart.timeStamp,
     firstName: cart.callBackVorname,
@@ -254,4 +286,35 @@ export class CartsEffects {
       )
     )
   );
+
+  CreateAndSendReceipt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createAndSendReceipt),
+      switchMap((action) =>
+        this.cartsService
+          .createAndSendReceipt(action.userId, action.cartId)
+          .pipe(
+            switchMap((receiptId: number) => [
+              createAndSendReceiptSuccess({ receiptId, cartId: action.cartId }),
+            ])
+          )
+      )
+    )
+  );
+
+//   DownloadReceiptPdf$ = createEffect(() =>
+//   this.actions$.pipe(
+//     ofType(downloadReceiptPdf),
+//     switchMap((action) =>
+//       this.cartsService
+//         .generateReceiptPdf(action.receiptId)
+//         // .pipe(
+//         //   // switchMap(() => [
+//         //   //   // createAndSendReceiptSuccess({ receiptId, cartId: action.cartId }),
+//         //   // ])
+//         // )
+//     )
+//   ),
+//   {dispatch: false}
+// );
 }
