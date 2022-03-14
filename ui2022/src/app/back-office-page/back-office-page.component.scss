@@ -1,0 +1,33 @@
+.menu-spacer {
+  width: 60px;
+}
+
+mat-toolbar-row{
+  div{
+    text-align: center;
+    width: 100%;
+    display: block;
+  }
+}
+
+.profile-img{
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.profile-name {
+  margin: 0;
+}
+
+a{
+  text-decoration: none;
+  color: #fff;
+  margin-right: 30px;
+  cursor: pointer;
+}
+
+.logout {
+  font-size: 12px;
+  cursor: pointer;
+  margin-right: 15px;
+}

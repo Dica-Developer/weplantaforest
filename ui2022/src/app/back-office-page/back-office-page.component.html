@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <img src="/assets/ipatlogo.svg" width="50" height="50"/> 
+    <div class="menu-spacer"></div>
+    <div>
+      <a mat-list-item (click)="selectOverviewPage('CARTS')"> Carts </a>
+      <a mat-list-item (click)="selectOverviewPage('USER')"> User </a>
+      <a mat-list-item (click)="selectOverviewPage('PROJECTS')"> Projects </a>  
+    </div>    
+    <div class="menu-spacer"></div>
+    <span class="logout" (click)="logout()">Logout</span>
+    <img class="profile-img" src={{profileImgUrl}} width="50" height="50"/>
+    <p class="profile-name">{{username$ | async}}</p>   
+</mat-toolbar-row>
+</mat-toolbar>
+<app-carts-overview *ngIf="selectedOverview == 'CARTS'"> </app-carts-overview>
+<app-projects-overview *ngIf="selectedOverview == 'PROJECTS'"></app-projects-overview>
+<app-user-overview *ngIf="selectedOverview == 'USER'"></app-user-overview>
