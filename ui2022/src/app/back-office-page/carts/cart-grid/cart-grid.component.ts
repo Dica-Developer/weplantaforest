@@ -112,7 +112,7 @@ export class CartGridComponent implements OnInit {
             disabled:
               params.data.receiptId !== null &&
               params.data.receiptId !== undefined,
-            cartId: params.data.id,
+            id: params.data.id,
             valueChange: (cartId, value) =>
               this.store.dispatch(updateReceiptableFlag({ cartId, value })),
           },

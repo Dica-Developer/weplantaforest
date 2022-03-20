@@ -9,6 +9,8 @@ import { UserOverviewComponent } from './user/user-overview/user-overview.compon
 import { CartFilterComponent } from './carts/cart-filter/cart-filter.component';
 import { CartGridComponent } from './carts/cart-grid/cart-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { CartDetailsComponent } from './carts/cart-details/cart-details.component';
+import { UserGridComponent } from './user/user-grid/user-grid.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { AgGridModule } from 'ag-grid-angular';
     UserOverviewComponent,
     CartFilterComponent,
     CartGridComponent,
+    CartDetailsComponent,
+    UserGridComponent,
   ],
   imports: [
     CommonModule,

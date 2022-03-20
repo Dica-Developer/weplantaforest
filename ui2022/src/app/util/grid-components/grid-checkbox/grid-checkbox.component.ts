@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ICellEditorAngularComp } from 'ag-grid-angular';
-import { AppState } from 'src/app/store/app.state';
-import { Store } from '@ngrx/store';
-import { updateReceiptableFlag } from '../../../store/carts.store';
 
 @Component({
   selector: 'app-grid-checkbox',
@@ -12,7 +9,7 @@ import { updateReceiptableFlag } from '../../../store/carts.store';
 export class GridCheckboxComponent implements ICellEditorAngularComp {
   value: boolean;
   disabled: boolean;
-  cartId: number;
+  id: number;
   valueChange: any;
 
   constructor() {}
@@ -20,7 +17,7 @@ export class GridCheckboxComponent implements ICellEditorAngularComp {
   agInit(params: any): void {
     this.value = params.value;
     this.disabled = params.disabled;
-    this.cartId = params.cartId;
+    this.id = params.id;
     this.valueChange = params.valueChange;
   }
 
@@ -29,6 +26,6 @@ export class GridCheckboxComponent implements ICellEditorAngularComp {
   }
 
   valueChanged(event: any) {
-    this.valueChange(this.cartId, event.checked);
+    this.valueChange(this.id, event.checked);
   }
 }

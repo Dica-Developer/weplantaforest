@@ -15,8 +15,9 @@ import { BackofficePageModule } from './back-office-page/back-office-page.module
 import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { TokenInterceptor } from './services/http-interceptors/token.interceptor';
 import { cartsReducerFn, CartsEffects } from './store/carts.store';
-import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AgGridModule } from 'ag-grid-angular';
+import { userReducerFn, UserEffects } from './store/user.store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,14 +30,24 @@ import { AgGridModule } from 'ag-grid-angular';
     LoginPageModule,
     BackofficePageModule,
     UtilModule,
-    StoreModule.forRoot({ auth: authReducerFn, profile: profileReducerFn, carts: cartsReducerFn }),
-    EffectsModule.forRoot([AuthEffects, ProfileEffects, CartsEffects]),
+    StoreModule.forRoot({
+      auth: authReducerFn,
+      profile: profileReducerFn,
+      carts: cartsReducerFn,
+      user: userReducerFn,
+    }),
+    EffectsModule.forRoot([
+      AuthEffects,
+      ProfileEffects,
+      CartsEffects,
+      UserEffects,
+    ]),
     MatNativeDateModule,
-    AgGridModule.forRoot()
+    AgGridModule.forRoot(),
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
   ],
   bootstrap: [AppComponent],
 })
