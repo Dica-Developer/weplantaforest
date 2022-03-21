@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from './store/app.state';
 import { selectLoggedIn, selectJwtToken } from './store/auth.store';
-import { selectCarts } from './store/carts.store';
-import { ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-root',

@@ -1,7 +1,18 @@
-<div >
+
+<div *ngIf="details" class="row">
+  <div class="col">
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Daten">
+        <app-project-edit-data></app-project-edit-data>
+      </mat-tab>
+      <mat-tab label="Bäume">Content 2</mat-tab>
+      <mat-tab label="Bilder">Content 3</mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
 
 
-<div class="no-details-wrapper">
+<div *ngIf="!details" class="no-details-wrapper">
   <mat-spinner *ngIf="detailsLoading$ | async"></mat-spinner>
   <p *ngIf="!details && !(detailsLoading$ | async)">No details selected</p>
 </div>

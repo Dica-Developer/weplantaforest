@@ -13,6 +13,7 @@ import { CartDetailsComponent } from './carts/cart-details/cart-details.componen
 import { UserGridComponent } from './user/user-grid/user-grid.component';
 import { ProjectGridComponent } from './projects/project-grid/project-grid.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
+import { ProjectEditDataComponent } from './projects/project-edit/project-edit-data/project-edit-data.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +27,13 @@ import { ProjectEditComponent } from './projects/project-edit/project-edit.compo
     UserGridComponent,
     ProjectGridComponent,
     ProjectEditComponent,
+    ProjectEditDataComponent,
   ],
   imports: [
     CommonModule,
     UtilModule,
     RouterModule,
-    AgGridModule.forRoot()
+    AgGridModule.forRoot(),
   ],
 })
 export class BackofficePageModule {}

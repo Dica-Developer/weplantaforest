@@ -1,0 +1,42 @@
+<div class="form-wrapper">
+  <div>
+    <form [formGroup]="projectForm">
+      <div class="row">
+        <div class="col-11"></div>
+        <div class="col-1">
+          <button mat-raised-button color="primary" (click)="saveData()">
+            save
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Name"
+              name="name"
+              formControlName="name"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-checkbox formControlName="visible">visible</mat-checkbox>
+        </div>
+        <div class="col">
+          <mat-checkbox formControlName="shopActive">shopActive</mat-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-10">
+          <app-text-editor [html]="''"></app-text-editor>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-10">
+          <app-text-editor [html]="''"></app-text-editor>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
