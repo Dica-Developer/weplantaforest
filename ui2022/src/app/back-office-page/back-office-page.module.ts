@@ -11,6 +11,8 @@ import { CartGridComponent } from './carts/cart-grid/cart-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CartDetailsComponent } from './carts/cart-details/cart-details.component';
 import { UserGridComponent } from './user/user-grid/user-grid.component';
+import { ProjectGridComponent } from './projects/project-grid/project-grid.component';
+import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { UserGridComponent } from './user/user-grid/user-grid.component';
     CartGridComponent,
     CartDetailsComponent,
     UserGridComponent,
+    ProjectGridComponent,
+    ProjectEditComponent,
   ],
   imports: [
     CommonModule,

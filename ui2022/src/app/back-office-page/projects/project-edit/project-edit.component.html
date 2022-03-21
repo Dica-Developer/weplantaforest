@@ -1,0 +1,7 @@
+<div >
+
+
+<div class="no-details-wrapper">
+  <mat-spinner *ngIf="detailsLoading$ | async"></mat-spinner>
+  <p *ngIf="!details && !(detailsLoading$ | async)">No details selected</p>
+</div>

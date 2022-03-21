@@ -5,11 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { GridCheckboxComponent } from './grid-components/grid-checkbox/grid-checkbox.component';
 import { GridSelectComponent } from './grid-components/grid-select/grid-select.component';
 import { GridCartActionsComponent } from './grid-components/grid-cart-actions/grid-cart-actions.component';
+import { GridProjectActionsComponent } from './grid-components/grid-project-actions/grid-project-actions.component';
 
 
 
 @NgModule({
-  declarations: [GridCheckboxComponent, GridSelectComponent, GridCartActionsComponent],
+  declarations: [GridCheckboxComponent, GridSelectComponent, GridCartActionsComponent, GridProjectActionsComponent],
   imports: [
     CommonModule,
     MaterialModule

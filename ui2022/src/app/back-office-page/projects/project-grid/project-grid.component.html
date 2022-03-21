@@ -1,0 +1,15 @@
+<mat-progress-bar
+  mode="buffer"
+  *ngIf="projectsLoading$ | async"
+></mat-progress-bar>
+<div class="grid-wrapper">
+  <ag-grid-angular
+    style="width: 100%; height: 100%"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="colDefs"
+    (cellValueChanged)="onCellValueChanged($event)"
+    [gridOptions]="gridOptions"
+  >
+  </ag-grid-angular>
+</div>

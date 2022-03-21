@@ -152,20 +152,18 @@ export const loadCartDetailsSuccess = createAction(
   props<{ cartDetails: CartDetails }>()
 );
 
-export const resetCartDetails = createAction(
-  '[Carts] reset cart details'
-);
+export const resetCartDetails = createAction('[Carts] reset cart details');
 
 export interface CartsState {
   carts: GridCart[];
   cartsLoading: boolean;
-  cartDetails: CartDetails
+  cartDetails: CartDetails;
 }
 
 export const initialState: CartsState = {
   carts: [],
   cartsLoading: false,
-  cartDetails: null
+  cartDetails: null,
 };
 
 const cartsReducer = createReducer(
@@ -238,11 +236,11 @@ const cartsReducer = createReducer(
   })),
   on(loadCartDetailsSuccess, (state, { cartDetails }) => ({
     ...state,
-    cartDetails: cartDetails
+    cartDetails: cartDetails,
   })),
   on(resetCartDetails, (state) => ({
     ...state,
-    cartDetails: null
+    cartDetails: null,
   }))
 );
 
@@ -362,9 +360,11 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .getCartDetails(action.cartId)
-          .pipe(switchMap((cartDetails: CartDetails) => [
-            loadCartDetailsSuccess({cartDetails})
-          ]))
+          .pipe(
+            switchMap((cartDetails: CartDetails) => [
+              loadCartDetailsSuccess({ cartDetails }),
+            ])
+          )
       )
     )
   );
