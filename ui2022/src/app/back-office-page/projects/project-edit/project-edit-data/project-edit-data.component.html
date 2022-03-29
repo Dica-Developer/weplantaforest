@@ -2,14 +2,6 @@
   <div>
     <form [formGroup]="projectForm">
       <div class="row">
-        <div class="col-11"></div>
-        <div class="col-1">
-          <button mat-raised-button color="primary" (click)="saveData()">
-            save
-          </button>
-        </div>
-      </div>
-      <div class="row">
         <div class="col">
           <mat-form-field>
             <input
@@ -27,14 +19,26 @@
           <mat-checkbox formControlName="shopActive">shopActive</mat-checkbox>
         </div>
       </div>
+      <mat-divider></mat-divider>
       <div class="row">
-        <div class="col-2"></div>
-        <div class="col-10">
-          <app-text-editor [html]="''"></app-text-editor>
+        <div class="col-2">
+          Description(De)
         </div>
-        <div class="col-2"></div>
         <div class="col-10">
-          <app-text-editor [html]="''"></app-text-editor>
+          <app-text-editor
+            [control]="this.projectForm.get('descriptionDe')"
+          ></app-text-editor>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col-2">
+          Description(En)
+        </div>
+        <div class="col-10">
+          <app-text-editor
+            [control]="this.projectForm.get('descriptionEn')"
+          ></app-text-editor>
         </div>
       </div>
     </form>

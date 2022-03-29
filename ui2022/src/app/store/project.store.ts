@@ -10,6 +10,42 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectService } from '../services/project.service';
 import { Injectable } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
+
+export interface TreeType {
+  id: number;
+  name: string;
+}
+
+export interface ProjectPrice {
+  amount: number;
+  funding: number;
+  marge: number;
+  priceId: number;
+  sconto: number;
+  scontoType: string;
+}
+
+export interface ProjectArticle {
+  amount: number;
+  articleId: number;
+  price: ProjectPrice;
+  treeType: TreeType;
+}
+
+export interface ProjectPositionPoint {
+  lat: number;
+  lng: number;
+  order: number;
+}
+
+export interface ProjectImage {
+  date: number;
+  description: string;
+  imageFileName: string;
+  imageId: number;
+  title: string;
+}
+
 export interface GridProject {
   id: number;
   name: string;
@@ -25,6 +61,22 @@ export interface ProjectDetails {
   manager: ProjectManager;
   shopActive: boolean;
   visible: boolean;
+  positions: ProjectPositionPoint[];
+}
+
+export interface ProjectEditRequest {
+  id: number;
+  imageFileName: string;
+  latitude: number;
+  longitude: number;
+  manager: ProjectManager;
+  name: string;
+  positions: ProjectPositionPoint[];
+  shopActive: boolean;
+  visible: boolean;
+  description: string;
+  images: ProjectImage[];
+  articles: ProjectArticle[];
 }
 
 export interface ProjectManager {

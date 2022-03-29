@@ -14,6 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [],
@@ -32,6 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatIconModule,
     MatTooltipModule,
     MatTabsModule,
+    MatDividerModule,
   ],
   exports: [
     MatInputModule,
@@ -47,6 +49,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatIconModule,
     MatTooltipModule,
     MatTabsModule,
+    MatDividerModule,
   ],
 })
 export class MaterialModule {}

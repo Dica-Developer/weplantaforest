@@ -21,7 +21,7 @@ import { userReducerFn, UserEffects } from './store/user.store';
 import { projectsReducerFn, ProjectsEffects } from './store/project.store';
 import { NgxEditorModule } from 'ngx-editor';
 import { FormsModule } from '@angular/forms';
-import { TextEditorComponent } from './util/common-components/text-editor/text-editor.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [AppComponent],
@@ -86,6 +86,7 @@ import { TextEditorComponent } from './util/common-components/text-editor/text-e
         remove: 'Remove',
       },
     }),
+    LeafletModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

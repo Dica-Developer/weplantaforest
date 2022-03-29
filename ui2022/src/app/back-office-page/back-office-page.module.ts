@@ -14,6 +14,8 @@ import { UserGridComponent } from './user/user-grid/user-grid.component';
 import { ProjectGridComponent } from './projects/project-grid/project-grid.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 import { ProjectEditDataComponent } from './projects/project-edit/project-edit-data/project-edit-data.component';
+import { ProjectEditLocationComponent } from './projects/project-edit/project-edit-location/project-edit-location.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -28,12 +30,14 @@ import { ProjectEditDataComponent } from './projects/project-edit/project-edit-d
     ProjectGridComponent,
     ProjectEditComponent,
     ProjectEditDataComponent,
+    ProjectEditLocationComponent,
   ],
   imports: [
     CommonModule,
     UtilModule,
     RouterModule,
     AgGridModule.forRoot(),
+    LeafletModule
   ],
 })
 export class BackofficePageModule {}
