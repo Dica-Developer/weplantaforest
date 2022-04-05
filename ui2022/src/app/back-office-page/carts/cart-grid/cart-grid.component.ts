@@ -174,7 +174,7 @@ export class CartGridComponent implements OnInit {
     },
   ];
 
-  colDefs: ColDef[] = this.allColumns;
+  colDefs: ColDef[] = this.subsetOfColumns;
 
   gridOptions: GridOptions = {
     rowData: [],

@@ -16,6 +16,7 @@ import { ProjectEditComponent } from './projects/project-edit/project-edit.compo
 import { ProjectEditDataComponent } from './projects/project-edit/project-edit-data/project-edit-data.component';
 import { ProjectEditLocationComponent } from './projects/project-edit/project-edit-location/project-edit-location.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     UtilModule,
     RouterModule,
     AgGridModule.forRoot(),
-    LeafletModule
+    LeafletModule,
+    LeafletDrawModule
   ],
 })
 export class BackofficePageModule {}

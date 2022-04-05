@@ -22,6 +22,7 @@ import { projectsReducerFn, ProjectsEffects } from './store/project.store';
 import { NgxEditorModule } from 'ngx-editor';
 import { FormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletDrawModule } from "@asymmetrik/ngx-leaflet-draw";
 
 @NgModule({
   declarations: [AppComponent],
@@ -86,7 +87,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
         remove: 'Remove',
       },
     }),
-    LeafletModule
+    LeafletModule,
+    LeafletDrawModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

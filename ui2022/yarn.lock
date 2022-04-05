@@ -261,6 +261,11 @@
   dependencies:
     tslib "^2.0.0"
 
+"@asymmetrik/ngx-leaflet-draw@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet-draw/-/ngx-leaflet-draw-7.0.0.tgz#095dffae27fbb335bf8293c26db5c23e54cb54f6"
+  integrity sha512-BgTqx9RFumMFL9wKcg/p52Q+hVFHkeiYZ5fBek7hxBPvUekEoISs2CZtCf20evyI9XtXwZgSfZQkIZJx7ztJZA==
+
 "@asymmetrik/ngx-leaflet@^8.1.0":
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet/-/ngx-leaflet-8.1.0.tgz#e67b965ed49220b4ae55c3218125fc972c6d96a2"
@@ -5444,6 +5449,11 @@ klona@^2.0.4:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.5.tgz#d166574d90076395d9963aa7a928fabb8d76afbc"
   integrity sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==
+
+leaflet-draw@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/leaflet-draw/-/leaflet-draw-1.0.4.tgz#45be92f378ed253e7202fdeda1fcc71885198d46"
+  integrity sha512-rsQ6saQO5ST5Aj6XRFylr5zvarWgzWnrg46zQ1MEOEIHsppdC/8hnN8qMoFvACsPvTioAuysya/TVtog15tyAQ==
 
 leaflet@^1.7.1:
   version "1.7.1"
