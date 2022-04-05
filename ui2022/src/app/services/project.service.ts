@@ -15,4 +15,8 @@ export class ProjectService {
   loadDetails(id: number) {
     return this.http.get(environment.backendAdminUrl + '/project?projectId=' + id);
   }
+
+  loadArticles(id: number) {
+    return this.http.get(environment.backendAdminUrl + '/project/articles?projectId=' + id);
+  }
 }

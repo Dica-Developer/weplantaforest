@@ -8,8 +8,9 @@ import {
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
+import { ProjectArticle } from '../../../store/project.store';
 
 @Component({
   selector: 'app-project-edit',
@@ -32,10 +33,15 @@ export class ProjectEditComponent implements OnInit {
     latitude: new FormControl(''),
     longitude: new FormControl(''),
     manager: new FormControl(''),
-    positions: new FormControl([])
+    positions: new FormControl([]),
+    articles: this.fb.array([]),
   });
 
-  constructor(private store: Store<AppState>, private textHelper: TextHelper) {
+  constructor(
+    private store: Store<AppState>,
+    private textHelper: TextHelper,
+    private fb: FormBuilder
+  ) {
     store.select(selectProjectDetails).subscribe((details) => {
       this.details = details;
       if (details) {
@@ -58,6 +64,12 @@ export class ProjectEditComponent implements OnInit {
     this.projectForm.get('longitude').setValue(details.longitude);
     this.projectForm.get('manager').setValue(details.manager);
     this.projectForm.get('positions').setValue(details.positions);
+
+    let articleArray = [];
+    for (let article of details.articles) {
+      articleArray.push(this.fb.control(article));
+    }
+    this.projectForm.controls['articles'] = this.fb.array(articleArray);
 
     this.projectForm
       .get('descriptionDe')
@@ -88,4 +100,5 @@ export class ProjectEditComponent implements OnInit {
     };
     console.log(request);
   }
+
 }

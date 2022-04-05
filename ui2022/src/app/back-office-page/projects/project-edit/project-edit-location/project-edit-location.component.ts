@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as L from 'leaflet';
-import * as LD from 'leaflet-draw';
-import { tileLayer, polygon, latLng, Map } from 'leaflet';
+import { tileLayer, latLng, Map } from 'leaflet';
 import { ProjectPositionPoint } from '../../../../store/project.store';
 
 @Component({

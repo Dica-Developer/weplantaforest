@@ -62,6 +62,7 @@ export interface ProjectDetails {
   shopActive: boolean;
   visible: boolean;
   positions: ProjectPositionPoint[];
+  articles: ProjectArticle[];
 }
 
 export interface ProjectEditRequest {
@@ -99,6 +100,16 @@ export const loadProjectDetailsSuccess = createAction(
   props<{ projectDetails: ProjectDetails }>()
 );
 
+export const loadProjectArticles = createAction(
+  '[Project] load articles',
+  props<{ id: number }>()
+);
+export const loadProjectArticlesSuccess = createAction(
+  '[Project] load articles success',
+  props<{ articles: ProjectArticle[] }>()
+);
+
+
 export interface ProjectState {
   projects: GridProject[];
   projectsLoading: boolean;
@@ -131,8 +142,18 @@ const projectsReducer = createReducer(
   })),
   on(loadProjectDetailsSuccess, (state, { projectDetails }) => ({
     ...state,
-    projectDetails,
+    projectDetails: {
+      ...projectDetails,
+      articles: []
+    },
     projectDetailsLoading: false,
+  })),
+  on(loadProjectArticlesSuccess, (state, { articles }) => ({
+    ...state,
+    projectDetails: {
+      ...state.projectDetails,
+      articles
+    }
   }))
 );
 
@@ -193,9 +214,26 @@ export class ProjectsEffects {
           .pipe(
             switchMap((projectDetails: ProjectDetails) => [
               loadProjectDetailsSuccess({ projectDetails }),
+              loadProjectArticles({ id: action.id }),
             ])
           )
       )
     )
   );
+
+  LoadProjectArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProjectArticles),
+      switchMap((action) =>
+        this.projectService
+          .loadArticles(action.id)
+          .pipe(
+            switchMap((articles: ProjectArticle[]) => [
+              loadProjectArticlesSuccess({ articles }),
+            ])
+          )
+      )
+    )
+  );
+
 }
