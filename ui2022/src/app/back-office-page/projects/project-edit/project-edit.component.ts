@@ -67,7 +67,7 @@ export class ProjectEditComponent implements OnInit {
 
     let articleArray = [];
     for (let article of details.articles) {
-      articleArray.push(this.fb.control(article));
+      articleArray.push(this.createArticleFormGroup(article));
     }
     this.projectForm.controls['articles'] = this.fb.array(articleArray);
 
@@ -99,6 +99,25 @@ export class ProjectEditComponent implements OnInit {
       manager: this.projectForm.get('manager').value,
     };
     console.log(request);
+  }
+
+  createArticleFormGroup(article: ProjectArticle) {
+    return this.fb.group({
+      amount: article.amount,
+      articleId: article.articleId,
+      price: this.fb.group({
+        amount: article.price.amount,
+        funding: article.price.funding,
+        marge: article.price.marge,
+        priceId: article.price.priceId,
+        sconto: article.price.sconto,
+        scontoType: article.price.scontoType
+      }),
+      treeType: this.fb.group({
+        id: article.treeType.id,
+        name: article.treeType.name
+      })
+    })
   }
 
 }
