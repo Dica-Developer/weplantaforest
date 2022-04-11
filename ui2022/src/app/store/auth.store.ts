@@ -11,6 +11,7 @@ import {
 import { AppState } from './app.state';
 import { AuthService } from '../services/auth.service';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { loadTreeTypes } from './treeType.store';
 import {
   setUsername,
   loadProfileDetails,
@@ -102,6 +103,7 @@ export class AuthEffects {
             loadProfileDetails({
               username: response.headers.get('X-AUTH-USERNAME'),
             }),
+            loadTreeTypes()
           ]),
           catchError(() => [loginFailed({ error: 'login failed' })])
         )

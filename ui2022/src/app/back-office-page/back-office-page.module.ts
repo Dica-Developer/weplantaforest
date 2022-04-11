@@ -17,7 +17,7 @@ import { ProjectEditDataComponent } from './projects/project-edit/project-edit-d
 import { ProjectEditLocationComponent } from './projects/project-edit/project-edit-location/project-edit-location.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
-import { ProjectEditTreeComponent } from './projects/project-edit/project-edit-tree/project-edit-tree.component';
+import { ProjectEditTreeComponent, DeleteArticleConfirmationDialog } from './projects/project-edit/project-edit-tree/project-edit-tree.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,7 @@ import { ProjectEditTreeComponent } from './projects/project-edit/project-edit-t
     ProjectEditDataComponent,
     ProjectEditLocationComponent,
     ProjectEditTreeComponent,
+    DeleteArticleConfirmationDialog
   ],
   imports: [
     CommonModule,

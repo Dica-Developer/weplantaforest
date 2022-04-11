@@ -23,6 +23,8 @@ import { NgxEditorModule } from 'ngx-editor';
 import { FormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from "@asymmetrik/ngx-leaflet-draw";
+import { TreeTypeEffects, treeTypeReducerFn } from './store/treeType.store';
+import { errorsReducerFn } from './store/error.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +43,8 @@ import { LeafletDrawModule } from "@asymmetrik/ngx-leaflet-draw";
       carts: cartsReducerFn,
       user: userReducerFn,
       projects: projectsReducerFn,
+      treeTypes: treeTypeReducerFn,
+      errors: errorsReducerFn
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -48,6 +52,7 @@ import { LeafletDrawModule } from "@asymmetrik/ngx-leaflet-draw";
       CartsEffects,
       UserEffects,
       ProjectsEffects,
+      TreeTypeEffects
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),

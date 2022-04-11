@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from './store/app.state';
 import { selectLoggedIn, selectJwtToken } from './store/auth.store';
+import { selectErrors, removeError } from './store/error.state';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,11 @@ export class AppComponent {
   loggedIn$: Observable<boolean>;
   token$: Observable<string>;
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.loggedIn$ = store.select(selectLoggedIn);
     this.token$ = store.select(selectJwtToken);
     this.loggedIn$.subscribe((res) => {
@@ -22,6 +28,16 @@ export class AppComponent {
         this.router.navigate(['/backOffice2022']);
       } else {
         this.router.navigate(['/login']);
+      }
+    });
+    this.store.select(selectErrors).subscribe((errors) => {
+      for (let error of errors) {
+        this.snackBar
+          .open(error.message, 'X')
+          .afterDismissed()
+          .subscribe((res) => {
+            this.store.dispatch(removeError({ key: error.key }));
+          });
       }
     });
   }

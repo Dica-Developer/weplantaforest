@@ -10,7 +10,7 @@ import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
-import { ProjectArticle } from '../../../store/project.store';
+import { ProjectArticle, addArticle } from '../../../store/project.store';
 
 @Component({
   selector: 'app-project-edit',
@@ -77,6 +77,7 @@ export class ProjectEditComponent implements OnInit {
     this.projectForm
       .get('descriptionEn')
       .setValue(this.textHelper.getTextForLanguage(details.description, 'en'));
+    console.log(this.projectForm.controls['articles']);
   }
 
   saveData() {
@@ -84,6 +85,7 @@ export class ProjectEditComponent implements OnInit {
       this.projectForm.get('descriptionDe').value,
       this.projectForm.get('descriptionEn').value
     );
+
     const request: ProjectEditRequest = {
       id: this.projectForm.get('id').value,
       name: this.projectForm.get('name').value,
@@ -92,7 +94,7 @@ export class ProjectEditComponent implements OnInit {
       description: fullDescription,
       positions: this.projectForm.get('positions').value,
       images: [],
-      articles: [],
+      articles: this.projectForm.get('articles').value,
       imageFileName: this.projectForm.get('imageFileName').value,
       latitude: this.projectForm.get('latitude').value,
       longitude: this.projectForm.get('longitude').value,
@@ -111,13 +113,32 @@ export class ProjectEditComponent implements OnInit {
         marge: article.price.marge,
         priceId: article.price.priceId,
         sconto: article.price.sconto,
-        scontoType: article.price.scontoType
+        scontoType: article.price.scontoType,
       }),
       treeType: this.fb.group({
         id: article.treeType.id,
-        name: article.treeType.name
-      })
-    })
+        name: article.treeType.name,
+      }),
+    });
   }
 
+  addArticle() {
+    const article = {
+      amount: 0,
+      articleId: null,
+      price: {
+        amount: 0,
+        funding: 0,
+        marge: 0,
+        priceId: null,
+        sconto: 0,
+        scontoType: null,
+      },
+      treeType: {
+        id: null,
+        name: '',
+      },
+    };
+    this.store.dispatch(addArticle({ article }));
+  }
 }

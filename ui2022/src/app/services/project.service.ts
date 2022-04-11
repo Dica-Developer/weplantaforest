@@ -19,4 +19,8 @@ export class ProjectService {
   loadArticles(id: number) {
     return this.http.get(environment.backendAdminUrl + '/project/articles?projectId=' + id);
   }
+
+  removeArticle(id: number) {
+    return this.http.post(environment.backendAdminUrl + '/project/article/remove?articleId=' + id, {});
+  }
 }

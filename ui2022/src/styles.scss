@@ -270,3 +270,15 @@ mat-divider {
   margin-top: 15px!important;
   margin-bottom: 15px!important;
 }
+
+.mat-raised-button.mat-warn{
+  color: #fff!important;
+}
+
+snack-bar-container{
+  background-color: #ff5a00!important;
+
+  .mat-simple-snackbar-action{
+    color: #fff!important;
+  }
+}

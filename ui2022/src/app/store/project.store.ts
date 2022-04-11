@@ -9,7 +9,8 @@ import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectService } from '../services/project.service';
 import { Injectable } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
+import { addError } from './error.state';
 
 export interface TreeType {
   id: number;
@@ -109,6 +110,25 @@ export const loadProjectArticlesSuccess = createAction(
   props<{ articles: ProjectArticle[] }>()
 );
 
+export const addArticle = createAction(
+  '[Project] add article',
+  props<{ article: ProjectArticle }>()
+);
+
+
+export const deleteArticle = createAction(
+  '[Project] delete article',
+  props<{ id: number }>()
+);
+export const deleteArticleSuccess = createAction(
+  '[Project] delete article success',
+  props<{ id: number }>()
+);
+export const deleteArticleWithoutId = createAction(
+  '[Project] delete article without id',
+  props<{ article: ProjectArticle }>()
+);
+
 
 export interface ProjectState {
   projects: GridProject[];
@@ -144,7 +164,7 @@ const projectsReducer = createReducer(
     ...state,
     projectDetails: {
       ...projectDetails,
-      articles: []
+      articles: [],
     },
     projectDetailsLoading: false,
   })),
@@ -152,8 +172,32 @@ const projectsReducer = createReducer(
     ...state,
     projectDetails: {
       ...state.projectDetails,
-      articles
-    }
+      articles,
+    },
+  })),
+  on(addArticle, (state, { article }) => ({
+    ...state,
+    projectDetails: {
+      ...state.projectDetails,
+      articles: [
+        ...state.projectDetails.articles,
+        article
+      ]
+    },
+  })),
+  on(deleteArticle, (state, { id }) => ({
+    ...state,
+    projectDetails: {
+      ...state.projectDetails,
+      articles: state.projectDetails.articles.filter(el => el.id != id)
+    },
+  })),
+  on(deleteArticleWithoutId, (state, { article }) => ({
+    ...state,
+    projectDetails: {
+      ...state.projectDetails,
+      articles: state.projectDetails.articles.filter(el => el.articleId != null)
+    },
   }))
 );
 
@@ -236,4 +280,19 @@ export class ProjectsEffects {
     )
   );
 
+  DeleteProjectArticle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteArticle),
+      switchMap((action) =>
+        this.projectService.removeArticle(action.id).pipe(
+          switchMap(() => [deleteArticleSuccess({ id: action.id })]),
+          catchError((error) => [
+            addError({
+              error: { key: 'ARTICLE_DELETE_FAILED', message: error.error },
+            }),
+          ])
+        )
+      )
+    )
+  );
 }

@@ -8,7 +8,16 @@
         <app-project-edit-data [projectForm]="projectForm"></app-project-edit-data>
       </mat-tab>
       <mat-tab label="Trees">
-        <app-project-edit-tree *ngFor="let tree of projectForm.get('articles').value"></app-project-edit-tree>
+        <div class="spacer"></div>
+        <div *ngFor="let tree of projectForm.get('articles').controls">
+          <app-project-edit-tree [control]="tree"></app-project-edit-tree>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="center">
+          <button mat-raised-button color="primary" (click)="addArticle()">
+            add article
+          </button>
+        </div>
       </mat-tab>
       <mat-tab label="Images">Content 3</mat-tab>
     </mat-tab-group>

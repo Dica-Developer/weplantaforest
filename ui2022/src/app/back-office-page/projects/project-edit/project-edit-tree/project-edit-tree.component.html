@@ -1,1 +1,46 @@
-<p>project-edit-tree works!</p>
+<form [formGroup]="controlObj">
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <mat-label>Treetype</mat-label>
+        <mat-select
+          [value]="controlObj.get('treeType').get('id').value"
+          (selectionChange)="treeTypeChanged($event)"
+        >
+          <mat-option
+            *ngFor="let treeType of treeTypes"
+            [value]="treeType.id"
+            >{{ treeType.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col" formGroupName="price">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Preis"
+          name="amount"
+          formControlName="amount"
+          type="number"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Anzahl"
+          name="amount"
+          formControlName="amount"
+          type="number"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <button mat-raised-button color="warn" (click)="openDeleteConfirmation()">
+        delete
+      </button>
+    </div>
+  </div>
+</form>
