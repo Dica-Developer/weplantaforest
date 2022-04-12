@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-5">
+    <mat-form-field appearance="fill">
+      <mat-label>Description(De)</mat-label>
+      <textarea
+        matInput
+        placeholder=""
+        [formControl]="descriptionDe"
+        rows="5"
+      ></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Description(En)</mat-label>
+      <textarea
+        matInput
+        placeholder=""
+        [formControl]="descriptionEn"
+        rows="5"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-6">
+    <img src="{{ imageSrc }}" width="400" height="300" />
+  </div>
+  <div class="col-1">
+    <button mat-raised-button color="primary" (click)="updateImage()">
+      save
+    </button>
+    <input
+      #csvInput
+      hidden="true"
+      type="file"
+      onclick="this.value=null"
+      (change)="imageChanged($event)"
+      accept=".png, .jpg, .jpeg"
+    />
+    <button mat-raised-button color="primary" (click)="csvInput.click()">
+      image
+    </button>
+    <button mat-raised-button color="warn" (click)="openDeleteConfirmation()">
+      delete
+    </button>
+  </div>
+</div>

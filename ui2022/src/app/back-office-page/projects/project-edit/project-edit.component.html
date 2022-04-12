@@ -19,7 +19,14 @@
           </button>
         </div>
       </mat-tab>
-      <mat-tab label="Images">Content 3</mat-tab>
+      <mat-tab label="Images">
+        <div class="spacer"></div>
+        <div *ngFor="let image of projectForm.get('images').controls">
+          <app-project-edit-image [control]="image" [projectId]="projectForm.get('id').value"></app-project-edit-image>
+          <mat-divider></mat-divider>
+        </div>
+
+      </mat-tab>
     </mat-tab-group>
   </div>
   <div class="col-1">

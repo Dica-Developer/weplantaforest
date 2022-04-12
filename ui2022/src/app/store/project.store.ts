@@ -47,6 +47,13 @@ export interface ProjectImage {
   title: string;
 }
 
+export interface ProjectImageCreateEditRequest {
+  imageId: number;
+  title: string;
+  description: string;
+  projectId: number;
+}
+
 export interface GridProject {
   id: number;
   name: string;
@@ -64,6 +71,7 @@ export interface ProjectDetails {
   visible: boolean;
   positions: ProjectPositionPoint[];
   articles: ProjectArticle[];
+  images: ProjectImage[];
 }
 
 export interface ProjectEditRequest {
@@ -115,7 +123,6 @@ export const addArticle = createAction(
   props<{ article: ProjectArticle }>()
 );
 
-
 export const deleteArticle = createAction(
   '[Project] delete article',
   props<{ id: number }>()
@@ -129,6 +136,33 @@ export const deleteArticleWithoutId = createAction(
   props<{ article: ProjectArticle }>()
 );
 
+export const loadProjectImages = createAction(
+  '[Project] load images',
+  props<{ id: number }>()
+);
+export const loadProjectImagesSuccess = createAction(
+  '[Project] load images success',
+  props<{ images: ProjectImage[] }>()
+);
+
+export const deleteProjectImage = createAction(
+  '[Project] delete image',
+  props<{ id: number; imageFileName: string }>()
+);
+export const deleteProjectImageSuccess = createAction(
+  '[Project] delete image success',
+  props<{ id: number }>()
+);
+
+export const createEditProjectImageData = createAction(
+  '[Project] create/edit projectImage data',
+  props<{ projectImageData: ProjectImageCreateEditRequest; file: any }>()
+);
+
+export const uploadProjectImage = createAction(
+  '[Project] upload image',
+  props<{ imageId: number; file: any }>()
+);
 
 export interface ProjectState {
   projects: GridProject[];
@@ -165,6 +199,7 @@ const projectsReducer = createReducer(
     projectDetails: {
       ...projectDetails,
       articles: [],
+      images: [],
     },
     projectDetailsLoading: false,
   })),
@@ -179,24 +214,37 @@ const projectsReducer = createReducer(
     ...state,
     projectDetails: {
       ...state.projectDetails,
-      articles: [
-        ...state.projectDetails.articles,
-        article
-      ]
+      articles: [...state.projectDetails.articles, article],
     },
   })),
-  on(deleteArticle, (state, { id }) => ({
+  on(deleteArticleSuccess, (state, { id }) => ({
     ...state,
     projectDetails: {
       ...state.projectDetails,
-      articles: state.projectDetails.articles.filter(el => el.id != id)
+      articles: state.projectDetails.articles.filter((el) => el.id != id),
     },
   })),
   on(deleteArticleWithoutId, (state, { article }) => ({
     ...state,
     projectDetails: {
       ...state.projectDetails,
-      articles: state.projectDetails.articles.filter(el => el.articleId != null)
+      articles: state.projectDetails.articles.filter(
+        (el) => el.articleId != null
+      ),
+    },
+  })),
+  on(loadProjectImagesSuccess, (state, { images }) => ({
+    ...state,
+    projectDetails: {
+      ...state.projectDetails,
+      images,
+    },
+  })),
+  on(deleteProjectImageSuccess, (state, { id }) => ({
+    ...state,
+    projectDetails: {
+      ...state.projectDetails,
+      images: state.projectDetails.images.filter((el) => el.imageId != id),
     },
   }))
 );
@@ -259,6 +307,7 @@ export class ProjectsEffects {
             switchMap((projectDetails: ProjectDetails) => [
               loadProjectDetailsSuccess({ projectDetails }),
               loadProjectArticles({ id: action.id }),
+              loadProjectImages({ id: action.id }),
             ])
           )
       )
@@ -290,6 +339,68 @@ export class ProjectsEffects {
             addError({
               error: { key: 'ARTICLE_DELETE_FAILED', message: error.error },
             }),
+          ])
+        )
+      )
+    )
+  );
+
+  LoadProjectImages$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProjectImages),
+      switchMap((action) =>
+        this.projectService
+          .loadImages(action.id)
+          .pipe(
+            switchMap((images: ProjectImage[]) => [
+              loadProjectImagesSuccess({ images }),
+            ])
+          )
+      )
+    )
+  );
+  DeleteProjectImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteProjectImage),
+      switchMap((action) =>
+        this.projectService.deleteImage(action.id, action.imageFileName).pipe(
+          switchMap(() => [deleteProjectImageSuccess({ id: action.id })]),
+          catchError((error) => [
+            // addError({
+            //   error: { key: 'ARTICLE_DELETE_FAILED', message: error.error },
+            // }),
+          ])
+        )
+      )
+    )
+  );
+
+  CreateEditProjectImageData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createEditProjectImageData),
+      switchMap((action) =>
+        this.projectService.createEditImage(action.projectImageData).pipe(
+          switchMap((images: ProjectImage[]) => [
+            action.file
+              ? uploadProjectImage({
+                  imageId: action.projectImageData.imageId,
+                  file: action.file,
+                })
+              : null,
+            // loadProjectImagesSuccess({ images }),
+          ])
+        )
+      )
+    )
+  );
+
+  UploadProjectImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(uploadProjectImage),
+      switchMap((action) =>
+        this.projectService.uploadImage(action.imageId, action.file).pipe(
+          switchMap((images: ProjectImage[]) => [
+            // loadProjectImagesSuccess({ images }),
           ])
         )
       )

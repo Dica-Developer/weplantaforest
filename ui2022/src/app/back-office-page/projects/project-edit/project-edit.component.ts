@@ -10,7 +10,7 @@ import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
-import { ProjectArticle, addArticle } from '../../../store/project.store';
+import { ProjectArticle, addArticle, ProjectImage } from '../../../store/project.store';
 
 @Component({
   selector: 'app-project-edit',
@@ -35,6 +35,7 @@ export class ProjectEditComponent implements OnInit {
     manager: new FormControl(''),
     positions: new FormControl([]),
     articles: this.fb.array([]),
+    images: this.fb.array([]),
   });
 
   constructor(
@@ -70,6 +71,13 @@ export class ProjectEditComponent implements OnInit {
       articleArray.push(this.createArticleFormGroup(article));
     }
     this.projectForm.controls['articles'] = this.fb.array(articleArray);
+
+    let imageArray = [];
+    for (let image of details.images) {
+      imageArray.push(this.createImageFormGroup(image));
+    }
+    this.projectForm.controls['images'] = this.fb.array(imageArray);
+
 
     this.projectForm
       .get('descriptionDe')
@@ -119,6 +127,16 @@ export class ProjectEditComponent implements OnInit {
         id: article.treeType.id,
         name: article.treeType.name,
       }),
+    });
+  }
+
+  createImageFormGroup(image: ProjectImage) {
+    return this.fb.group({
+      date: image.date,
+      description: image.description,
+      imageFileName: image.imageFileName,
+      imageId: image.imageId,
+      title: image.title
     });
   }
 
