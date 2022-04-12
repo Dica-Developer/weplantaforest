@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { ProjectImageCreateEditRequest } from '../store/project.store';
+import { ProjectImageCreateEditRequest, ProjectEditRequest } from '../store/project.store';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +42,9 @@ export class ProjectService {
     formData.append('imageId', imageId);
     formData.append('file', file);
     return this.http.post(environment.backendAdminUrl + '/project/image/upload', formData);
+  }
+
+  updateProject(request: ProjectEditRequest) {
+    return this.http.post(environment.backendAdminUrl + '/project/edit', request);
   }
 }

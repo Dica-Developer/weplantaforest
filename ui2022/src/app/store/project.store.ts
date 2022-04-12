@@ -164,6 +164,11 @@ export const uploadProjectImage = createAction(
   props<{ imageId: number; file: any }>()
 );
 
+export const updateProject = createAction(
+  '[Project] update',
+  props<{ request: ProjectEditRequest }>()
+);
+
 export interface ProjectState {
   projects: GridProject[];
   projectsLoading: boolean;
@@ -401,6 +406,24 @@ export class ProjectsEffects {
         this.projectService.uploadImage(action.imageId, action.file).pipe(
           switchMap((images: ProjectImage[]) => [
             // loadProjectImagesSuccess({ images }),
+          ])
+        )
+      )
+    )
+  );
+
+  UpdateProject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateProject),
+      switchMap((action) =>
+        this.projectService.updateProject(action.request).pipe(
+          switchMap(() => [
+            // loadProjectImagesSuccess({ images }),
+          ]),
+          catchError((error) => [
+            addError({
+              error: { key: 'PROJECT_UPDATE_FAILED', message: 'Das Speichern ist leider fehlgeschlagen!' },
+            }),
           ])
         )
       )

@@ -10,7 +10,12 @@ import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
-import { ProjectArticle, addArticle, ProjectImage } from '../../../store/project.store';
+import {
+  ProjectArticle,
+  addArticle,
+  ProjectImage,
+  updateProject,
+} from '../../../store/project.store';
 
 @Component({
   selector: 'app-project-edit',
@@ -78,14 +83,12 @@ export class ProjectEditComponent implements OnInit {
     }
     this.projectForm.controls['images'] = this.fb.array(imageArray);
 
-
     this.projectForm
       .get('descriptionDe')
       .setValue(this.textHelper.getTextForLanguage(details.description, 'de'));
     this.projectForm
       .get('descriptionEn')
       .setValue(this.textHelper.getTextForLanguage(details.description, 'en'));
-    console.log(this.projectForm.controls['articles']);
   }
 
   saveData() {
@@ -109,6 +112,8 @@ export class ProjectEditComponent implements OnInit {
       manager: this.projectForm.get('manager').value,
     };
     console.log(request);
+    
+    this.store.dispatch(updateProject({ request }));
   }
 
   createArticleFormGroup(article: ProjectArticle) {
@@ -136,7 +141,7 @@ export class ProjectEditComponent implements OnInit {
       description: image.description,
       imageFileName: image.imageFileName,
       imageId: image.imageId,
-      title: image.title
+      title: image.title,
     });
   }
 
@@ -150,7 +155,7 @@ export class ProjectEditComponent implements OnInit {
         marge: 0,
         priceId: null,
         sconto: 0,
-        scontoType: null,
+        scontoType: 'NONE',
       },
       treeType: {
         id: null,
