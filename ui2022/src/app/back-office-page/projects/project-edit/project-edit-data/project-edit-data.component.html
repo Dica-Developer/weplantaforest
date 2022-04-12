@@ -21,6 +21,26 @@
       </div>
       <mat-divider></mat-divider>
       <div class="row">
+        <div class="col-4">
+          <img src="{{ imageSrc }}" width="400" height="300" />
+        </div>
+        <div class="col-2">
+          <input
+          #csvInput
+          hidden="true"
+          type="file"
+          onclick="this.value=null"
+          (change)="imageChanged($event)"
+          accept=".png, .jpg, .jpeg"
+        />
+        <button mat-raised-button color="primary" (click)="csvInput.click()">
+          image
+        </button>    
+        </div>
+        <div class="col-6"></div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row">
         <div class="col-2">
           Description(De)
         </div>

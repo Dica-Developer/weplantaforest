@@ -10,6 +10,7 @@ import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
+import { environment } from '../../../../environments/environment';
 import {
   ProjectArticle,
   addArticle,
@@ -27,6 +28,7 @@ export class ProjectEditComponent implements OnInit {
 
   detailsLoading$: Observable<Boolean>;
 
+
   projectForm = new FormGroup({
     id: new FormControl(null),
     name: new FormControl(''),
@@ -41,6 +43,7 @@ export class ProjectEditComponent implements OnInit {
     positions: new FormControl([]),
     articles: this.fb.array([]),
     images: this.fb.array([]),
+    mainImageFile: new FormControl(null)
   });
 
   constructor(
@@ -66,6 +69,7 @@ export class ProjectEditComponent implements OnInit {
     this.projectForm.get('visible').setValue(details.visible);
     this.projectForm.get('id').setValue(details.id);
     this.projectForm.get('imageFileName').setValue(details.imageFileName);
+    this.projectForm.get('mainImageFile').setValue(null);
     this.projectForm.get('latitude').setValue(details.latitude);
     this.projectForm.get('longitude').setValue(details.longitude);
     this.projectForm.get('manager').setValue(details.manager);
@@ -111,9 +115,8 @@ export class ProjectEditComponent implements OnInit {
       longitude: this.projectForm.get('longitude').value,
       manager: this.projectForm.get('manager').value,
     };
-    console.log(request);
-    
-    this.store.dispatch(updateProject({ request }));
+    this.store.dispatch(updateProject({ request, mainImageFile: this.projectForm.get('mainImageFile').value}));
+    console.log(this.projectForm.get('mainImageFile').value != null);
   }
 
   createArticleFormGroup(article: ProjectArticle) {

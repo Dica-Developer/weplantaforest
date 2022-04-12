@@ -166,7 +166,12 @@ export const uploadProjectImage = createAction(
 
 export const updateProject = createAction(
   '[Project] update',
-  props<{ request: ProjectEditRequest }>()
+  props<{ request: ProjectEditRequest; mainImageFile: any }>()
+);
+
+export const updateProjectMainImage = createAction(
+  '[Project] update mainImage',
+  props<{ projectId: number; file: any }>()
 );
 
 export interface ProjectState {
@@ -419,12 +424,39 @@ export class ProjectsEffects {
         this.projectService.updateProject(action.request).pipe(
           switchMap(() => [
             // loadProjectImagesSuccess({ images }),
+            action.mainImageFile
+              ? updateProjectMainImage({
+                  projectId: action.request.id,
+                  file: action.mainImageFile,
+                })
+              : null,
           ]),
           catchError((error) => [
             addError({
-              error: { key: 'PROJECT_UPDATE_FAILED', message: 'Das Speichern ist leider fehlgeschlagen!' },
+              error: {
+                key: 'PROJECT_UPDATE_FAILED',
+                message: 'Das Speichern ist leider fehlgeschlagen!',
+              },
             }),
           ])
+        )
+      )
+    )
+  );
+
+  UpdateProjectMainImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateProjectMainImage),
+      switchMap((action) =>
+        this.projectService.updateMainImage(action.projectId, action.file).pipe(
+          switchMap(() => [
+            // loadProjectImagesSuccess({ images }),
+          ])
+          // catchError((error) => [
+          //   addError({
+          //     error: { key: 'PROJECT_UPDATE_FAILED', message: 'Das Speichern ist leider fehlgeschlagen!' },
+          //   }),
+          // ])
         )
       )
     )

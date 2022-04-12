@@ -47,4 +47,11 @@ export class ProjectService {
   updateProject(request: ProjectEditRequest) {
     return this.http.post(environment.backendAdminUrl + '/project/edit', request);
   }
+
+  updateMainImage(projectId: number, file: any) {
+    let formData: any = new FormData();
+    formData.append('projectId', projectId);
+    formData.append('file', file);
+    return this.http.post(environment.backendAdminUrl + '/project/mainImage', formData);
+  }
 }
