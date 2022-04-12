@@ -3,29 +3,50 @@
     <div class="close-wrapper">
       <span class="close-button" (click)="closeDetails()">X</span>
     </div>
-    <div>
-      <div class="col-30">
+    <div class="row">
+      <div class="col-4">
         <b>Id:</b>
       </div>
-      <div class="col-70">{{ cartDetails.id }}</div>
-    </div>
-    <div>
-      <div class="col-30">
+      <div class="col-8">{{ cartDetails.id }}</div>
+      <div class="col-4">
         <b>Datum:</b>
       </div>
-      <div class="col-70">{{ cartDetails.timeStamp | date:'dd.MM.yyyy'}}</div>
-    </div>
-    <div>
-      <div class="col-30">
+      <div class="col-8">{{ cartDetails.timeStamp | date: "dd.MM.yyyy" }}</div>
+      <div class="col-4">
         <b>Anzahl Bäume:</b>
       </div>
-      <div class="col-70">{{ cartDetails.treeCount}}</div>
-    </div>
-    <div>
-      <div class="col-30">
+      <div class="col-8">{{ cartDetails.treeCount }}</div>
+      <div class="col-4">
         <b>Preis:</b>
       </div>
-      <div class="col-70">{{ cartDetails.totalPrice | currency: 'EUR' }}</div>
+      <div class="col-8">{{ cartDetails.totalPrice | currency: "EUR" }}</div>
+    </div>
+    <div class="row">
+      <mat-divider></mat-divider>
+    </div>
+    <div class="row">
+      <div class="col"><b>Baumart</b></div>
+      <div class="col"><b>Projekt</b></div>
+      <div class="col"><b>Anzahl</b></div>
+      <div class="col"><b>Preis/Stk</b></div>
+      <div class="col"><b>Gesamt</b></div>
+    </div>
+    <div class="row" *ngFor="let item of cartDetails.cartItems">
+      <div class="col">
+        {{ createName(item.tree.treeType.name) }}
+      </div>
+      <div class="col">
+        {{ item.tree.projectArticle.project.name }}
+      </div>
+      <div class="col">
+        {{ item.tree.amount }}
+      </div>
+      <div class="col">
+        {{ item.basePricePerPiece | currency: "EUR" }}
+      </div>
+      <div class="col">
+        {{ item.totalPrice | currency: "EUR" }}
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

@@ -6,24 +6,25 @@
     All columns
   </button>
 </div>
-
-<div class="grid-wrapper" [ngStyle]="{ width: cartDetails ? '70vw' : '100vw' }">
-  <ag-grid-angular
-    style="width: 100%; height: 100%"
-    class="ag-theme-alpine"
-    [rowData]="rowData"
-    [columnDefs]="colDefs"
-    (cellValueChanged)="onCellValueChanged($event)"
-    [gridOptions]="gridOptions"
+<div class="row">
+  <div class="grid-wrapper" [ngStyle]="{ width: cartDetails ? '65vw' : '100vw' }">
+    <ag-grid-angular
+      style="width: 100%; height: 100%"
+      class="ag-theme-alpine"
+      [rowData]="rowData"
+      [columnDefs]="colDefs"
+      (cellValueChanged)="onCellValueChanged($event)"
+      [gridOptions]="gridOptions"
+    >
+    </ag-grid-angular>
+  </div>
+  <div
+    class="cart-detail-wrapper"
+    [ngStyle]="{
+      width: cartDetails ? '32vw' : '0vw',
+      display: cartDetails ? 'inline-block' : 'none'
+    }"
   >
-  </ag-grid-angular>
-</div>
-<div
-  class="cart-detail-wrapper"
-  [ngStyle]="{
-    width: cartDetails ? '29vw' : '0vw',
-    display: cartDetails ? 'inline-block' : 'none'
-  }"
->
-  <app-cart-details *ngIf="cartDetails"></app-cart-details>
+    <app-cart-details *ngIf="cartDetails"></app-cart-details>
+  </div>
 </div>
