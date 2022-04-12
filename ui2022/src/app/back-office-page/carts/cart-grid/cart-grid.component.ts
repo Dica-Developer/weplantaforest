@@ -16,6 +16,7 @@ import {
   selectCartDetails,
 } from '../../../store/carts.store';
 import { GridCartActionsComponent } from '../../../util/grid-components/grid-cart-actions/grid-cart-actions.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cart-grid',
@@ -242,8 +243,18 @@ export class CartGridComponent implements OnInit {
       cellEditor: 'selectRenderer',
       cellEditorParams: {
         valueList: this.gridHelper.getCartStates(),
-        valueChange: (cartId, value) =>
-          this.store.dispatch(updateStatus({ cartId, value })),
+        valueChange: (cartId, value) => {
+          if (value === 'DISCARDED') {
+            const dialogRef = this.dialog.open(DiscardCartConfirmationDialog);
+            dialogRef.afterClosed().subscribe((result) => {
+              if (result) {
+                this.store.dispatch(updateStatus({ cartId, value }));
+              }
+            });
+          } else {
+            this.store.dispatch(updateStatus({ cartId, value }));
+          }
+        },
       },
     },
     {
@@ -275,7 +286,11 @@ export class CartGridComponent implements OnInit {
 
   cartDetails: CartDetails;
 
-  constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
+  constructor(
+    private store: Store<AppState>,
+    private gridHelper: GridHelper,
+    public dialog: MatDialog
+  ) {
     store.select(selectCarts).subscribe((carts) => {
       this.rowData = carts;
     });
@@ -307,3 +322,9 @@ export class CartGridComponent implements OnInit {
     this.colDefs = this.allColumns;
   }
 }
+
+@Component({
+  selector: 'discard-cart-confirmation-dialog',
+  templateUrl: 'discard-cart-confirmation-dialog.html',
+})
+export class DiscardCartConfirmationDialog {}

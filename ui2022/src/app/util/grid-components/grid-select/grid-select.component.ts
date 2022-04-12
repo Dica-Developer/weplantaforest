@@ -27,7 +27,6 @@ export class GridSelectComponent implements ICellEditorAngularComp {
   }
 
   valueChanged(event: any) {
-    console.log('value changed: ', event.value);
     this.valueChange(this.cartId, event.value);
   }
 }
