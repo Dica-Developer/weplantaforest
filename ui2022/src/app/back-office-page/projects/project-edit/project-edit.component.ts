@@ -8,9 +8,8 @@ import {
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
-import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
-import { environment } from '../../../../environments/environment';
 import {
   ProjectArticle,
   addArticle,
@@ -116,7 +115,6 @@ export class ProjectEditComponent implements OnInit {
       manager: this.projectForm.get('manager').value,
     };
     this.store.dispatch(updateProject({ request, mainImageFile: this.projectForm.get('mainImageFile').value}));
-    console.log(this.projectForm.get('mainImageFile').value != null);
   }
 
   createArticleFormGroup(article: ProjectArticle) {

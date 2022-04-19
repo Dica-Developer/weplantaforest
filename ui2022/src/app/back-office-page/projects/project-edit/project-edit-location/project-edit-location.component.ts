@@ -96,6 +96,7 @@ export class ProjectEditLocationComponent implements OnInit {
     map.addControl(drawControl);
 
     map.on(L.Draw.Event.CREATED, (e) => {
+      
       this.map.removeLayer(this.polygon);
       this.polygon = e.layer;
       this.map.addLayer(this.polygon);

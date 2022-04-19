@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CellValueChangedEvent, ColDef, GridOptions } from 'ag-grid-community';
+import {
+  CellClickedEvent,
+  CellValueChangedEvent,
+  ColDef,
+  GridApi,
+  GridOptions,
+} from 'ag-grid-community';
 import { AppState } from 'src/app/store/app.state';
 import { GridHelper } from '../../../util/grid.helper';
 import { Store } from '@ngrx/store';
@@ -8,7 +14,7 @@ import {
   selectProjectsLoading,
 } from '../../../store/project.store';
 import { Observable } from 'rxjs';
-import { loadProjects } from '../../../store/project.store';
+import { loadProjects, loadProjectDetails } from '../../../store/project.store';
 import { GridProjectActionsComponent } from '../../../util/grid-components/grid-project-actions/grid-project-actions.component';
 
 @Component({
@@ -17,6 +23,10 @@ import { GridProjectActionsComponent } from '../../../util/grid-components/grid-
   styleUrls: ['./project-grid.component.scss'],
 })
 export class ProjectGridComponent implements OnInit {
+
+  gridApi: GridApi;
+  selectedRowIndex: number;
+
   colDefs: ColDef[] = [
     {
       field: 'name',
@@ -31,9 +41,9 @@ export class ProjectGridComponent implements OnInit {
         return {
           component: 'projectActionRenderer',
           value: params.data.id,
-        }
-      }
-    }
+        };
+      },
+    },
   ];
 
   rowData = [];
@@ -43,8 +53,24 @@ export class ProjectGridComponent implements OnInit {
   gridOptions: GridOptions = {
     rowData: [],
     components: {
-      projectActionRenderer: GridProjectActionsComponent
+      projectActionRenderer: GridProjectActionsComponent,
     },
+    onCellClicked: (event: CellClickedEvent) => {
+      if(event.column.getColId() === 'name'){
+        this.store.dispatch(loadProjectDetails({ id: event.data.id }));
+        this.selectedRowIndex = event.rowIndex;
+        this.gridApi.redrawRows();
+      }
+    },
+    getRowStyle: (params) => {
+      if (params.node.rowIndex === this.selectedRowIndex) {
+        return { background: '#82ab1f', color: '#fff' };
+      }
+    },
+    onGridReady: (params) => {
+      this.gridApi = params.api;
+      // this.gridColumnApi = params.columnApi;
+    }
   };
 
   constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
@@ -58,4 +84,12 @@ export class ProjectGridComponent implements OnInit {
   ngOnInit(): void {}
 
   onCellValueChanged(event: CellValueChangedEvent) {}
+
+
+  rowStyleFn(params)  {
+      if (params.node.rowIndex === this.selectedRowIndex) {
+        return { background: 'red' };
+      }
+  }
+
 }

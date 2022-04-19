@@ -369,6 +369,7 @@ export class ProjectsEffects {
       )
     )
   );
+
   DeleteProjectImage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteProjectImage),
@@ -422,15 +423,18 @@ export class ProjectsEffects {
       ofType(updateProject),
       switchMap((action) =>
         this.projectService.updateProject(action.request).pipe(
-          switchMap(() => [
-            // loadProjectImagesSuccess({ images }),
-            action.mainImageFile
-              ? updateProjectMainImage({
+          switchMap(() => {
+            if (action.mainImageFile) {
+              return [
+                updateProjectMainImage({
                   projectId: action.request.id,
                   file: action.mainImageFile,
-                })
-              : null,
-          ]),
+                }),
+              ];
+            } else {
+              return [];
+            }
+          }),
           catchError((error) => [
             addError({
               error: {
