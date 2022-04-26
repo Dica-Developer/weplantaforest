@@ -40,9 +40,13 @@ export class ProjectEditLocationComponent implements OnInit {
   onMapReady(map: Map): void {
     this.map = map;
     setTimeout(() => {
-      this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
-      map.addLayer(this.polygon);
-      this.map.fitBounds(this.polygon.getBounds());
+      if (this.coords.length > 0) {
+        this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
+        map.addLayer(this.polygon);
+        this.map.fitBounds(this.polygon.getBounds());
+      }else {
+        map.setView(new L.LatLng(51.482814, 11.969977), 13);
+      }
       map.invalidateSize();
       this.addDrawOptions(map);
     });
@@ -96,8 +100,9 @@ export class ProjectEditLocationComponent implements OnInit {
     map.addControl(drawControl);
 
     map.on(L.Draw.Event.CREATED, (e) => {
-      
-      this.map.removeLayer(this.polygon);
+      if(this.polygon) {
+        this.map.removeLayer(this.polygon);
+      }
       this.polygon = e.layer;
       this.map.addLayer(this.polygon);
       this.createNewProjectPositionPoints(e.layer.editing.latlngs[0][0]);
