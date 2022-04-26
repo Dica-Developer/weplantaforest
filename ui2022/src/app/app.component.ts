@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AppState } from './store/app.state';
 import { selectLoggedIn, selectJwtToken } from './store/auth.store';
 import { selectErrors, removeError } from './store/error.state';
+import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
 
 @Component({
   selector: 'app-root',
@@ -40,5 +41,16 @@ export class AppComponent {
           });
       }
     });
+    this.store.select(selectSuccessMessages).subscribe((messages) => {
+      for (let message of messages) {
+        this.snackBar
+          .open(message.message, 'X', {panelClass: ['success-snackbar']})
+          .afterDismissed()
+          .subscribe((res) => {
+            this.store.dispatch(removeSuccessMessage({ key: message.key }));
+          });
+      }
+    });
+
   }
 }

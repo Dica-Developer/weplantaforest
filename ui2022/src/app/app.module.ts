@@ -25,6 +25,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from "@asymmetrik/ngx-leaflet-draw";
 import { TreeTypeEffects, treeTypeReducerFn } from './store/treeType.store';
 import { errorsReducerFn } from './store/error.state';
+import { successMessageReducerFn } from './store/success-message.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +45,8 @@ import { errorsReducerFn } from './store/error.state';
       user: userReducerFn,
       projects: projectsReducerFn,
       treeTypes: treeTypeReducerFn,
-      errors: errorsReducerFn
+      errors: errorsReducerFn,
+      successMessages: successMessageReducerFn
     }),
     EffectsModule.forRoot([
       AuthEffects,

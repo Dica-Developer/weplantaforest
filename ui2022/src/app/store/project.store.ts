@@ -11,6 +11,7 @@ import { ProjectService } from '../services/project.service';
 import { Injectable } from '@angular/core';
 import { switchMap, catchError } from 'rxjs/operators';
 import { addError } from './error.state';
+import { addSuccessMessage } from './success-message.state';
 
 export interface TreeType {
   id: number;
@@ -104,9 +105,7 @@ export const loadProjectDetails = createAction(
   '[Project] load details',
   props<{ id: number }>()
 );
-export const resetProjectDetails = createAction(
-  '[Project] reset details'
-);
+export const resetProjectDetails = createAction('[Project] reset details');
 export const loadProjectDetailsSuccess = createAction(
   '[Project] load details success',
   props<{ projectDetails: ProjectDetails }>()
@@ -276,7 +275,7 @@ const projectsReducer = createReducer(
       ...state.projectDetails,
       images: [image, ...state.projectDetails.images],
     },
-  })),
+  }))
 );
 
 export function projectsReducerFn(state, action) {
@@ -452,7 +451,14 @@ export class ProjectsEffects {
                 }),
               ];
             } else {
-              return [];
+              return [
+                addSuccessMessage({
+                  message: {
+                    key: 'PROJECT_SAVE_SUCCESS',
+                    message: 'Projekt wurde gespeichert!',
+                  },
+                }),
+              ];
             }
           }),
           catchError((error) => [
@@ -474,6 +480,12 @@ export class ProjectsEffects {
       switchMap((action) =>
         this.projectService.updateMainImage(action.projectId, action.file).pipe(
           switchMap(() => [
+            addSuccessMessage({
+              message: {
+                key: 'PROJECT_SAVE_SUCCESS',
+                message: 'Projekt wurde gespeichert!',
+              },
+            }),
             // loadProjectImagesSuccess({ images }),
           ])
           // catchError((error) => [
