@@ -159,6 +159,11 @@ export const createEditProjectImageData = createAction(
   props<{ projectImageData: ProjectImageCreateEditRequest; file: any }>()
 );
 
+export const addProjectImage = createAction(
+  '[Project] add project image',
+  props<{ image: ProjectImage }>()
+);
+
 export const uploadProjectImage = createAction(
   '[Project] upload image',
   props<{ imageId: number; file: any }>()
@@ -256,7 +261,14 @@ const projectsReducer = createReducer(
       ...state.projectDetails,
       images: state.projectDetails.images.filter((el) => el.imageId != id),
     },
-  }))
+  })),
+  on(addProjectImage, (state, { image }) => ({
+    ...state,
+    projectDetails: {
+      ...state.projectDetails,
+      images: [image, ...state.projectDetails.images],
+    },
+  })),
 );
 
 export function projectsReducerFn(state, action) {
@@ -391,10 +403,10 @@ export class ProjectsEffects {
       ofType(createEditProjectImageData),
       switchMap((action) =>
         this.projectService.createEditImage(action.projectImageData).pipe(
-          switchMap((images: ProjectImage[]) => [
+          switchMap((imageId: number) => [
             action.file
               ? uploadProjectImage({
-                  imageId: action.projectImageData.imageId,
+                  imageId,
                   file: action.file,
                 })
               : null,

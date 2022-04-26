@@ -21,7 +21,10 @@
       </mat-tab>
       <mat-tab label="Images">
         <div class="spacer"></div>
-        <div *ngFor="let image of projectForm.get('images').controls">
+        <button mat-raised-button color="primary" (click)="addImage()">
+          add image
+        </button>
+      <div *ngFor="let image of projectForm.get('images').controls">
           <app-project-edit-image [control]="image" [projectId]="projectForm.get('id').value"></app-project-edit-image>
           <mat-divider></mat-divider>
         </div>

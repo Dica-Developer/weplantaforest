@@ -10,6 +10,7 @@ import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
+import { ProjectImageCreateEditRequest, addProjectImage } from '../../../store/project.store';
 import {
   ProjectArticle,
   addArticle,
@@ -164,5 +165,16 @@ export class ProjectEditComponent implements OnInit {
       },
     };
     this.store.dispatch(addArticle({ article }));
+  }
+
+  addImage() {
+    const image: ProjectImage = {
+      date: new Date().getTime(),
+      imageId: null,
+      title: '',
+      description: '',
+      imageFileName: ''
+    };
+    this.store.dispatch(addProjectImage({ image }));
   }
 }
