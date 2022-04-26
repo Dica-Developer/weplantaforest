@@ -7,7 +7,7 @@ import { CartsOverviewComponent } from './carts/carts-overview/carts-overview.co
 import { ProjectsOverviewComponent } from './projects/projects-overview/projects-overview.component';
 import { UserOverviewComponent } from './user/user-overview/user-overview.component';
 import { CartFilterComponent } from './carts/cart-filter/cart-filter.component';
-import { CartGridComponent } from './carts/cart-grid/cart-grid.component';
+import { CartGridComponent, DiscardCartConfirmationDialog } from './carts/cart-grid/cart-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CartDetailsComponent } from './carts/cart-details/cart-details.component';
 import { UserGridComponent } from './user/user-grid/user-grid.component';
@@ -37,7 +37,8 @@ import { ProjectEditImageComponent, DeleteProjectImageConfirmationDialog } from 
     ProjectEditTreeComponent,
     DeleteArticleConfirmationDialog,
     ProjectEditImageComponent,
-    DeleteProjectImageConfirmationDialog
+    DeleteProjectImageConfirmationDialog,
+    DiscardCartConfirmationDialog
   ],
   imports: [
     CommonModule,

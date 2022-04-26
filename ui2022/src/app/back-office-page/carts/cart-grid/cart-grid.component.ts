@@ -108,6 +108,7 @@ export class CartGridComponent implements OnInit {
     {
       field: 'receiptable',
       headerName: 'SQ',
+      width: 30,
       cellRendererSelector: (params) => {
         return {
           component: 'checkboxRenderer',
@@ -213,6 +214,7 @@ export class CartGridComponent implements OnInit {
     {
       field: 'receiptable',
       headerName: 'SQ',
+      width: 56,
       cellRendererSelector: (params) => {
         return {
           component: 'checkboxRenderer',
