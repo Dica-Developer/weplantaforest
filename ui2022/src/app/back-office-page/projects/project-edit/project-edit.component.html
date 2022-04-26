@@ -2,10 +2,14 @@
   <div class="col-11">
     <mat-tab-group mat-align-tabs="center">
       <mat-tab label="Geo-Coordinates">
-        <app-project-edit-location [positions]="projectForm.get('positions')"></app-project-edit-location>
+        <app-project-edit-location
+          [positions]="projectForm.get('positions')"
+        ></app-project-edit-location>
       </mat-tab>
       <mat-tab label="Data">
-        <app-project-edit-data [projectForm]="projectForm"></app-project-edit-data>
+        <app-project-edit-data
+          [projectForm]="projectForm"
+        ></app-project-edit-data>
       </mat-tab>
       <mat-tab label="Trees">
         <div class="spacer"></div>
@@ -24,21 +28,20 @@
         <button mat-raised-button color="primary" (click)="addImage()">
           add image
         </button>
-      <div *ngFor="let image of projectForm.get('images').controls">
-          <app-project-edit-image [control]="image" [projectId]="projectForm.get('id').value"></app-project-edit-image>
+        <div *ngFor="let image of projectForm.get('images').controls">
+          <app-project-edit-image
+            [control]="image"
+            [projectId]="projectForm.get('id').value"
+          ></app-project-edit-image>
           <mat-divider></mat-divider>
         </div>
-
       </mat-tab>
     </mat-tab-group>
   </div>
   <div class="col-1">
-    <button mat-raised-button color="primary" (click)="saveData()">
-      save
-    </button>
+    <button mat-raised-button color="primary" (click)="saveData()">save</button>
   </div>
 </div>
-
 
 <div *ngIf="!details" class="no-details-wrapper">
   <mat-spinner *ngIf="detailsLoading$ | async"></mat-spinner>
