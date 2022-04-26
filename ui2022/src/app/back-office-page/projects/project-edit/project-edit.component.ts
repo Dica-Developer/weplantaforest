@@ -10,7 +10,7 @@ import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
-import { ProjectImageCreateEditRequest, addProjectImage } from '../../../store/project.store';
+import { addProjectImage } from '../../../store/project.store';
 import {
   ProjectArticle,
   addArticle,

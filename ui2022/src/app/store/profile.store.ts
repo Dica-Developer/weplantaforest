@@ -35,6 +35,7 @@ export interface Co2Data {
 }
 
 export interface ProfileDetails {
+  id: number;
   aboutMe: string;
   co2Data: Co2Data;
   editAllowed: boolean;
@@ -89,6 +90,11 @@ export const selectUsername = createSelector(
 export const selectProfileImagename = createSelector(
   profileFeature,
   (state: ProfileState) => state.details?.imageFileName
+);
+
+export const selectProfileDetails = createSelector(
+  profileFeature,
+  (state: ProfileState) => state.details
 );
 
 @Injectable()

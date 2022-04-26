@@ -104,6 +104,9 @@ export const loadProjectDetails = createAction(
   '[Project] load details',
   props<{ id: number }>()
 );
+export const resetProjectDetails = createAction(
+  '[Project] reset details'
+);
 export const loadProjectDetailsSuccess = createAction(
   '[Project] load details success',
   props<{ projectDetails: ProjectDetails }>()
@@ -205,6 +208,11 @@ const projectsReducer = createReducer(
     projectsLoading: false,
   })),
   on(loadProjectDetails, (state) => ({
+    ...state,
+    projectDetails: null,
+    projectDetailsLoading: true,
+  })),
+  on(resetProjectDetails, (state) => ({
     ...state,
     projectDetails: null,
     projectDetailsLoading: true,
