@@ -181,6 +181,15 @@ export const updateProjectMainImage = createAction(
   props<{ projectId: number; file: any }>()
 );
 
+export const deleteProject = createAction(
+  '[Project] delete project',
+  props<{ id: number }>()
+);
+export const deleteProjectSuccess = createAction(
+  '[Project] delete project success',
+  props<{ id: number }>()
+);
+
 export interface ProjectState {
   projects: GridProject[];
   projectsLoading: boolean;
@@ -275,6 +284,11 @@ const projectsReducer = createReducer(
       ...state.projectDetails,
       images: [image, ...state.projectDetails.images],
     },
+  })),
+  on(deleteProjectSuccess, (state, { id }) => ({
+    ...state,
+    projects: state.projects.filter((project) => project.id != id),
+    projectDetails: null,
   }))
 );
 
@@ -339,6 +353,17 @@ export class ProjectsEffects {
               loadProjectImages({ id: action.id }),
             ])
           )
+      )
+    )
+  );
+
+  DeleteProject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteProject),
+      switchMap((action) =>
+        this.projectService
+          .deleteroject(action.id)
+          .pipe(switchMap(() => [deleteProjectSuccess({ id: action.id })]))
       )
     )
   );

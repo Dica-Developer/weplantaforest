@@ -19,6 +19,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { ProjectEditTreeComponent, DeleteArticleConfirmationDialog } from './projects/project-edit/project-edit-tree/project-edit-tree.component';
 import { ProjectEditImageComponent, DeleteProjectImageConfirmationDialog } from './projects/project-edit/project-edit-image/project-edit-image.component';
+import { DeleteProjectConfirmationDialog } from '../util/grid-components/grid-project-actions/grid-project-actions.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ProjectEditImageComponent, DeleteProjectImageConfirmationDialog } from 
     DeleteArticleConfirmationDialog,
     ProjectEditImageComponent,
     DeleteProjectImageConfirmationDialog,
-    DiscardCartConfirmationDialog
+    DiscardCartConfirmationDialog,
+    // DeleteProjectConfirmationDialog
   ],
   imports: [
     CommonModule,
