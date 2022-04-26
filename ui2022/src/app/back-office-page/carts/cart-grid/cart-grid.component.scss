@@ -1,6 +1,7 @@
 .grid-wrapper{
   height: 75vh;
   display: inline-block;
+  width: 100%;
 }
 
 button{
@@ -9,4 +10,7 @@ button{
 
 .cart-detail-wrapper{
   display: inline;
+}
+.row {
+  margin: 0;
 }
