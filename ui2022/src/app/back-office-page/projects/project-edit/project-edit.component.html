@@ -28,6 +28,7 @@
         <button mat-raised-button color="primary" (click)="addImage()">
           add image
         </button>
+        <div class="spacer"></div>
         <div *ngFor="let image of projectForm.get('images').controls">
           <app-project-edit-image
             [control]="image"

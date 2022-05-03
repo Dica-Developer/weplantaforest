@@ -407,7 +407,7 @@ export class ProjectsEffects {
           .loadImages(action.id)
           .pipe(
             switchMap((images: ProjectImage[]) => [
-              loadProjectImagesSuccess({ images }),
+              loadProjectImagesSuccess({ images: images.reverse() }),
             ])
           )
       )

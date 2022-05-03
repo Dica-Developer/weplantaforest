@@ -6,6 +6,7 @@ import { ProjectState } from './project.store';
 import { TreeTypeState } from './treeType.store';
 import { ErrorState } from './error.state';
 import { SuccessMessageState } from './success-message.state';
+import { ContentState } from './content.store';
 
 
 export interface AppState{
@@ -16,5 +17,6 @@ export interface AppState{
   readonly projects: ProjectState,
   readonly treeTypes: TreeTypeState,
   readonly errors: ErrorState,
-  readonly successMessages: SuccessMessageState
+  readonly successMessages: SuccessMessageState,
+  readonly content: ContentState
 }

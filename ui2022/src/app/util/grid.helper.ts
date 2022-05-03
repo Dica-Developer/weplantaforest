@@ -7,9 +7,9 @@ import * as moment from 'moment';
 export class GridHelper {
   constructor() {}
 
-  dateFormatter(colData) {
-    if (colData.data && colData.data.createdAt) {
-      return moment(colData.data.createdAt).format('DD.MM.YYYY');
+  dateFormatter(params) {
+    if (params.data && params.data[params.colDef.field]) {
+      return moment(params.data[params.colDef.field]).format('DD.MM.YYYY');
     } else {
       return '';
     }

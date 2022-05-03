@@ -20,6 +20,8 @@ import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { ProjectEditTreeComponent, DeleteArticleConfirmationDialog } from './projects/project-edit/project-edit-tree/project-edit-tree.component';
 import { ProjectEditImageComponent, DeleteProjectImageConfirmationDialog } from './projects/project-edit/project-edit-image/project-edit-image.component';
 import { DeleteProjectConfirmationDialog } from '../util/grid-components/grid-project-actions/grid-project-actions.component';
+import { ContentOverviewComponent } from './content/content-overview/content-overview.component';
+import { ContentGridComponent } from './content/content-grid/content-grid.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { DeleteProjectConfirmationDialog } from '../util/grid-components/grid-pr
     ProjectEditImageComponent,
     DeleteProjectImageConfirmationDialog,
     DiscardCartConfirmationDialog,
+    ContentOverviewComponent,
+    ContentGridComponent,
     // DeleteProjectConfirmationDialog
   ],
   imports: [
