@@ -10,6 +10,7 @@ import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ContentService } from '../services/content.service';
 import { switchMap } from 'rxjs/operators';
+import { addSuccessMessage } from './success-message.state';
 
 export interface ContentGridEntry {
   id: number;
@@ -32,6 +33,7 @@ export interface ContentArticleDetails {
   showFull: boolean;
   title: string;
   visible: boolean;
+  owner: ArticleOwner;
 }
 
 export interface ContentParagraph {
@@ -40,6 +42,10 @@ export interface ContentParagraph {
   imageFileName: string;
   text: string;
   title: string;
+}
+
+export interface ArticleOwner {
+  name: string;
 }
 
 export const loadContentArticles = createAction('[Content] load all articles');
@@ -72,6 +78,26 @@ export const loadArticleTypes = createAction('[Content] load article types');
 export const loadArticleTypesSuccess = createAction(
   '[Content] load article types success',
   props<{ articleTypes: string[] }>()
+);
+
+export const saveContentArticle = createAction(
+  '[Content] save article',
+  props<{
+    request: ContentArticleDetails;
+    userName: string;
+    paragraphImages: any[];
+    articleImage: any;
+  }>()
+);
+
+export const uploadArticleImage = createAction(
+  '[Content] upload article image',
+  props<{ articleId: number; file: any }>()
+);
+
+export const uploadParagraphImage = createAction(
+  '[Content] upload paragraph image',
+  props<{ articleId: number; paragraphId: number; file: any }>()
 );
 
 export interface ContentState {
@@ -213,6 +239,99 @@ export class ContentEffects {
               loadArticleDetailsSuccess({ details }),
             ])
           )
+      )
+    )
+  );
+
+  SaveContentArticle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(saveContentArticle),
+      switchMap((action) =>
+        this.contentService.editArticle(action.request, action.userName).pipe(
+          switchMap((details: ContentArticleDetails) => {
+            const actionArray = [];
+            actionArray.push(
+              addSuccessMessage({
+                message: {
+                  key: 'CONTENT_SAVE_SUCCESS',
+                  message: 'Artikel wurde gespeichert!',
+                },
+              })
+            );
+            if (action.articleImage && action.paragraphImages.length > 0) {
+              actionArray.push(
+                uploadArticleImage({
+                  articleId: action.request.id,
+                  file: action.articleImage,
+                })
+              );
+              for (let pi of action.paragraphImages) {
+                actionArray.push(
+                  uploadParagraphImage({
+                    articleId: action.request.id,
+                    paragraphId: pi.paragraphId,
+                    file: pi.imageFile,
+                  })
+                );
+              }
+
+              return actionArray;
+            } else if (
+              action.articleImage &&
+              action.paragraphImages.length == 0
+            ) {
+              return [
+                uploadArticleImage({
+                  articleId: action.request.id,
+                  file: action.articleImage,
+                }),
+              ];
+            } else if (
+              !action.articleImage &&
+              action.paragraphImages.length > 0
+            ) {
+              for (let pi of action.paragraphImages) {
+                actionArray.push(
+                  uploadParagraphImage({
+                    articleId: action.request.id,
+                    paragraphId: pi.paragraphId,
+                    file: pi.imageFile,
+                  })
+                );
+              }
+
+              return actionArray;
+            } else {
+              return actionArray;
+            }
+          })
+        )
+      )
+    )
+  );
+
+  UploadArticleImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(uploadArticleImage),
+      switchMap((action) =>
+        this.contentService
+          .uploadArticleImage(action.file, action.articleId)
+          .pipe(switchMap(() => []))
+      )
+    )
+  );
+
+  UploadParagraphImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(uploadParagraphImage),
+      switchMap((action) =>
+        this.contentService
+          .uploadParagraphImage(
+            action.file,
+            action.articleId,
+            action.paragraphId
+          )
+          .pipe(switchMap(() => []))
       )
     )
   );

@@ -12,6 +12,8 @@ import {
 } from '../../../store/content.store';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
+import { selectUsername } from '../../../store/profile.store';
+import { saveContentArticle } from '../../../store/content.store';
 
 @Component({
   selector: 'app-content-details',
@@ -34,6 +36,8 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
     createdOn: new FormControl(moment()),
     mainImageFile: new FormControl(null),
     paragraphs: this.fb.array([]),
+    imageDescription: new FormControl(''),
+    owner: new FormControl(''),
   });
 
   detailsSelector = this.store
@@ -45,10 +49,15 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
       }
     });
 
+  username;
+
   constructor(private store: Store<AppState>, private fb: FormBuilder) {
     this.detailsLoading$ = this.store.select(
       selectContentArticleDetailsLoading
     );
+    store.select(selectUsername).subscribe((res) => {
+      this.username = res;
+    });
   }
 
   ngOnInit(): void {}
@@ -61,11 +70,13 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
     this.articleForm.get('id').setValue(details.id);
     this.articleForm.get('articleType').setValue(details.articleType);
     this.articleForm.get('imageFileName').setValue(details.imageFileName);
+    this.articleForm.get('imageDescription').setValue(details.imageDescription);
     this.articleForm.get('showFull').setValue(details.showFull);
     this.articleForm.get('title').setValue(details.title);
     this.articleForm.get('visible').setValue(details.visible);
     this.articleForm.get('lang').setValue(details.lang);
     this.articleForm.get('intro').setValue(details.intro);
+    this.articleForm.get('owner').setValue(details.owner);
     this.articleForm.get('createdOn').setValue(new Date(details.createdOn));
     let paragrapArray = [];
     for (let paragraph of details.paragraphs) {
@@ -81,7 +92,51 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
       imageFileName: paragraph.imageFileName,
       text: paragraph.text,
       title: paragraph.title,
-      imageFile: null
+      imageFile: null,
     });
+  }
+
+  saveArticle() {
+    const paragraphs = [];
+    const paragraphImages = [];
+    for (let paragraph of this.articleForm.get('paragraphs')['controls']) {
+      paragraphs.push({
+        id: paragraph.get('id').value,
+        imageDescription: paragraph.get('imageDescription').value,
+        imageFileName: paragraph.get('imageFileName').value,
+        text: paragraph.get('text').value,
+        title: paragraph.get('title').value,
+      });
+      if (paragraph.get('imageFile').value) {
+        paragraphImages.push({
+          imageFile: paragraph.get('imageFile').value,
+          articleId: this.articleForm.get('id').value,
+          paragraphId: paragraph.get('id').value,
+        });
+      }
+    }
+
+    let request: ContentArticleDetails = {
+      id: this.articleForm.get('id').value,
+      articleType: this.articleForm.get('articleType').value,
+      createdOn: moment(this.articleForm.get('createdOn').value).valueOf(),
+      imageDescription: this.articleForm.get('imageDescription').value,
+      imageFileName: this.articleForm.get('imageFileName').value,
+      intro: this.articleForm.get('intro').value,
+      lang: this.articleForm.get('lang').value,
+      showFull: this.articleForm.get('showFull').value,
+      title: this.articleForm.get('title').value,
+      visible: this.articleForm.get('visible').value,
+      owner: this.articleForm.get('owner').value,
+      paragraphs,
+    };
+    this.store.dispatch(
+      saveContentArticle({
+        request,
+        userName: this.username,
+        paragraphImages,
+        articleImage: this.articleForm.get('mainImageFile').value,
+      })
+    );
   }
 }

@@ -1,5 +1,8 @@
 <div class="row">
   <div class="col-12">
+    <button mat-raised-button color="primary" (click)="saveArticle()" class="save-btn">save</button>
+  </div>
+  <div class="col-12">
     <mat-tab-group mat-align-tabs="center">
       <mat-tab label="Daten">
         <app-content-edit [articleForm]="articleForm"></app-content-edit>
