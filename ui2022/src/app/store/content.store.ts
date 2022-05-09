@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   createAction,
   props,
@@ -20,6 +20,28 @@ export interface ContentGridEntry {
   createdOn: number;
 }
 
+export interface ContentArticleDetails {
+  id: number;
+  articleType: string;
+  createdOn: number;
+  imageDescription: string;
+  imageFileName: string;
+  intro: string;
+  lang: string;
+  paragraphs: ContentParagraph[];
+  showFull: boolean;
+  title: string;
+  visible: boolean;
+}
+
+export interface ContentParagraph {
+  id: number;
+  imageDescription: string;
+  imageFileName: string;
+  text: string;
+  title: string;
+}
+
 export const loadContentArticles = createAction('[Content] load all articles');
 
 export const loadContentArticlesSuccess = createAction(
@@ -27,24 +49,76 @@ export const loadContentArticlesSuccess = createAction(
   props<{ articles: ContentGridEntry[] }>()
 );
 
+export const loadArticleDetails = createAction(
+  '[Content] load article details',
+  props<{ id: number }>()
+);
+
+export const loadArticleDetailsSuccess = createAction(
+  '[Content] load article details success',
+  props<{ details: ContentArticleDetails }>()
+);
+
+export const deleteContentArticle = createAction(
+  '[Content] delete article',
+  props<{ id: number }>()
+);
+export const deleteContentArticleSuccess = createAction(
+  '[Content] delete article success',
+  props<{ id: number }>()
+);
+
+export const loadArticleTypes = createAction('[Content] load article types');
+export const loadArticleTypesSuccess = createAction(
+  '[Content] load article types success',
+  props<{ articleTypes: string[] }>()
+);
+
 export interface ContentState {
   articles: ContentGridEntry[];
   articlesLoading: boolean;
+  articleTypes: string[];
+  details: ContentArticleDetails;
+  detailsLoading: boolean;
 }
 
 export const intialState: ContentState = {
   articles: [],
   articlesLoading: false,
+  articleTypes: [],
+  details: null,
+  detailsLoading: false,
 };
 
 const contentReducer = createReducer(
   intialState,
   on(loadContentArticles, (state) => ({
+    ...state,
     articlesLoading: true,
   })),
   on(loadContentArticlesSuccess, (state, { articles }) => ({
+    ...state,
     articles,
     articlesLoading: false,
+  })),
+  on(deleteContentArticleSuccess, (state, { id }) => ({
+    ...state,
+    articles: state.articles.filter((article) => article.id != id),
+    articlesLoading: false,
+  })),
+  on(loadArticleTypesSuccess, (state, { articleTypes }) => ({
+    ...state,
+    articleTypes,
+  })),
+  on(loadArticleDetails, (state) => ({
+    ...state,
+    details: null,
+    detailsLoading: true,
+  })),
+  on(loadArticleDetailsSuccess, (state, { details }) => ({
+    ...state,
+    details,
+    detailsLoading: false,
   }))
 );
 
@@ -63,23 +137,83 @@ export const selectContentArticlesLoading = createSelector(
   (state: ContentState) => state.articlesLoading
 );
 
+export const selectContentArticleTypes = createSelector(
+  contentFeature,
+  (state: ContentState) => state.articleTypes
+);
+
+export const selectContentArticleDetails = createSelector(
+  contentFeature,
+  (state: ContentState) => state.details
+);
+
+export const selectContentArticleDetailsLoading = createSelector(
+  contentFeature,
+  (state: ContentState) => state.detailsLoading
+);
 
 @Injectable()
 export class ContentEffects {
-  constructor(private actions$: Actions, private contentService: ContentService) {}
+  constructor(
+    private actions$: Actions,
+    private contentService: ContentService
+  ) {}
 
-  LoadContentArticles$ =  createEffect(() =>
-  this.actions$.pipe(
-    ofType(loadContentArticles),
-    switchMap((action) =>
-      this.contentService
-        .loadAll()
-        .pipe(
-          switchMap((articles: ContentGridEntry[]) => [
-            loadContentArticlesSuccess({ articles }),
-          ])
-        )
+  LoadContentArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadContentArticles),
+      switchMap((action) =>
+        this.contentService
+          .loadAll()
+          .pipe(
+            switchMap((articles: ContentGridEntry[]) => [
+              loadContentArticlesSuccess({ articles }),
+            ])
+          )
+      )
     )
-  )
-);
+  );
+
+  DeleteContentArticle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteContentArticle),
+      switchMap((action) =>
+        this.contentService
+          .delete(action.id)
+          .pipe(
+            switchMap(() => [deleteContentArticleSuccess({ id: action.id })])
+          )
+      )
+    )
+  );
+
+  LoadArticleTypes$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadArticleTypes),
+      switchMap((action) =>
+        this.contentService
+          .getArticleTypes()
+          .pipe(
+            switchMap((articleTypes: string[]) => [
+              loadArticleTypesSuccess({ articleTypes }),
+            ])
+          )
+      )
+    )
+  );
+
+  LoadArticleDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadArticleDetails),
+      switchMap((action) =>
+        this.contentService
+          .getDetails(action.id)
+          .pipe(
+            switchMap((details: ContentArticleDetails) => [
+              loadArticleDetailsSuccess({ details }),
+            ])
+          )
+      )
+    )
+  );
 }

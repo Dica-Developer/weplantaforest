@@ -14,7 +14,7 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   @Input()
   set control(controlObj: FormControl) {
     this.editorControl = controlObj;
-    this.text = this.editorControl.value;
+    this.text = this.editorControl.value;    
   }
 
   editor: Editor;

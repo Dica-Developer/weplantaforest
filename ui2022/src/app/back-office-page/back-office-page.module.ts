@@ -22,6 +22,10 @@ import { ProjectEditImageComponent, DeleteProjectImageConfirmationDialog } from 
 import { DeleteProjectConfirmationDialog } from '../util/grid-components/grid-project-actions/grid-project-actions.component';
 import { ContentOverviewComponent } from './content/content-overview/content-overview.component';
 import { ContentGridComponent } from './content/content-grid/content-grid.component';
+import { ContentDetailsComponent } from './content/content-details/content-details.component';
+import { ContentEditComponent } from './content/content-edit/content-edit.component';
+import { ContentPreviewComponent } from './content/content-preview/content-preview.component';
+import { ContentParagraphComponent } from './content/content-paragraph/content-paragraph.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,10 @@ import { ContentGridComponent } from './content/content-grid/content-grid.compon
     DiscardCartConfirmationDialog,
     ContentOverviewComponent,
     ContentGridComponent,
+    ContentDetailsComponent,
+    ContentEditComponent,
+    ContentPreviewComponent,
+    ContentParagraphComponent,
     // DeleteProjectConfirmationDialog
   ],
   imports: [

@@ -8,6 +8,7 @@ import { GridCartActionsComponent } from './grid-components/grid-cart-actions/gr
 import { GridProjectActionsComponent, DeleteProjectConfirmationDialog } from './grid-components/grid-project-actions/grid-project-actions.component';
 import { TextEditorComponent } from './common-components/text-editor/text-editor.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { GridContentActionsComponent, DeleteContentArticleConfirmationDialog } from './grid-components/grid-content-actions/grid-content-actions.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { NgxEditorModule } from 'ngx-editor';
     GridCartActionsComponent,
     GridProjectActionsComponent,
     TextEditorComponent,
-    DeleteProjectConfirmationDialog
+    DeleteProjectConfirmationDialog,
+    GridContentActionsComponent,
+    DeleteContentArticleConfirmationDialog
   ],
   imports: [CommonModule, MaterialModule, NgxEditorModule.forChild({}), FormsModule],
   exports: [MaterialModule, ReactiveFormsModule, TextEditorComponent],

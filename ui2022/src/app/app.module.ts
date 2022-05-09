@@ -15,7 +15,7 @@ import { BackofficePageModule } from './back-office-page/back-office-page.module
 import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { TokenInterceptor } from './services/http-interceptors/token.interceptor';
 import { cartsReducerFn, CartsEffects } from './store/carts.store';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { userReducerFn, UserEffects } from './store/user.store';
 import { projectsReducerFn, ProjectsEffects } from './store/project.store';
@@ -27,6 +27,18 @@ import { TreeTypeEffects, treeTypeReducerFn } from './store/treeType.store';
 import { errorsReducerFn } from './store/error.state';
 import { successMessageReducerFn } from './store/success-message.state';
 import { contentReducerFn, ContentEffects } from './store/content.store';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -103,6 +115,7 @@ import { contentReducerFn, ContentEffects } from './store/content.store';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
   bootstrap: [AppComponent],
 })

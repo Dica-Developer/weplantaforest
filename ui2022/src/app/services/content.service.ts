@@ -13,4 +13,26 @@ export class ContentService {
       environment.backendArticleManagerUrl + '/backOffice/articles'
     );
   }
+
+  delete(id: number) {
+    return this.http.delete(
+      environment.backendArticleManagerUrl +
+        '/backOffice/article?articleId=' +
+        id
+    );
+  }
+
+  getDetails(id: number) {
+    return this.http.get(
+      environment.backendArticleManagerUrl +
+        '/backOffice/article?articleId=' +
+        id
+    );
+  }
+
+  getArticleTypes() {
+    return this.http.get(
+      environment.backendArticleManagerUrl + '/articleTypes'
+    );
+  }
 }

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   backendUrl: 'http://localhost:8081',
-  backendAdminUrl: 'http://localhost:8083'
+  backendAdminUrl: 'http://localhost:8083',
+  backendArticleManagerUrl: 'http://localhost:8082',
 };
 
 /*

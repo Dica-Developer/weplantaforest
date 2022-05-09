@@ -1,0 +1,48 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{ paragraph.get("title").value }}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="paragraph">
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="title-field">
+            <input
+              matInput
+              placeholder="Titel"
+              name="title"
+              formControlName="title"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">Inhalt:</div>
+        <div class="col-10">
+          <app-text-editor
+            [control]="this.paragraph.get('text')"
+          ></app-text-editor>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="row">
+        <div class="col-6">
+          <img src="{{ imageSrc }}" width="400" height="300" />
+        </div>
+        <div class="col-2">
+          <input
+            #csvInput
+            hidden="true"
+            type="file"
+            onclick="this.value=null"
+            (change)="imageChanged($event)"
+            accept=".png, .jpg, .jpeg"
+          />
+          <button mat-raised-button color="primary" (click)="csvInput.click()">
+            image
+          </button>
+        </div>
+      </div>  
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

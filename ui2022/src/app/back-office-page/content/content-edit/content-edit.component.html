@@ -1,0 +1,97 @@
+<div class="form-wrapper">
+  <form [formGroup]="articleForm">
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Artikel-Typ</mat-label>
+          <mat-select formControlName="articleType">
+            <mat-option
+              *ngFor="let articleType of articleTypes"
+              [value]="articleType"
+              >{{ articleType }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Sprache</mat-label>
+          <mat-select formControlName="lang">
+            <mat-option *ngFor="let language of languages" [value]="language">{{
+              language
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-checkbox formControlName="visible">visible</mat-checkbox>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <mat-form-field class="title-field">
+          <input
+            matInput
+            placeholder="Titel"
+            name="title"
+            formControlName="title"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Datum</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepicker"
+            formControlName="createdOn"
+          />
+          <mat-hint></mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="datepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDatepickerApply>
+                OK
+              </button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">Intro:</div>
+      <div class="col-10">
+        <app-text-editor
+          [control]="this.articleForm.get('intro')"
+        ></app-text-editor>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="row">
+      <div class="col-6">
+        <img src="{{ imageSrc }}" width="400" height="300" />
+      </div>
+      <div class="col-2">
+        <input
+          #csvInput
+          hidden="true"
+          type="file"
+          onclick="this.value=null"
+          (change)="imageChanged($event)"
+          accept=".png, .jpg, .jpeg"
+        />
+        <button mat-raised-button color="primary" (click)="csvInput.click()">
+          image
+        </button>
+      </div>
+    </div>
+    <app-content-paragraph
+      *ngFor="let paragraph of articleForm.get('paragraphs')['controls']"
+      [paragraph]="paragraph"
+    ></app-content-paragraph>
+  </form>
+</div>

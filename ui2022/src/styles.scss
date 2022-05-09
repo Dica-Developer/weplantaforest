@@ -1,4 +1,4 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~bootstrap/dist/css/bootstrap.min.css";
 @import "ag-grid-community/dist/styles/ag-grid.css";
 @import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 @import "~leaflet/dist/leaflet.css";
@@ -267,26 +267,34 @@ body {
 }
 
 mat-divider {
-  margin-top: 15px!important;
-  margin-bottom: 15px!important;
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
 }
 
-.mat-raised-button.mat-warn{
-  color: #fff!important;
+.mat-raised-button.mat-warn {
+  color: #fff !important;
 }
 
-snack-bar-container{
-  background-color: #ff5a00!important;
+snack-bar-container {
+  background-color: #ff5a00 !important;
 
-  .mat-simple-snackbar-action{
-    color: #fff!important;
+  .mat-simple-snackbar-action {
+    color: #fff !important;
   }
 }
 
-.success-snackbar{
-  background-color: #82ab1f!important;
+.success-snackbar {
+  background-color: #82ab1f !important;
 }
 
 .no-display {
   display: none;
+}
+
+.form-wrapper {
+  padding: 15px;
+}
+
+.spacer {
+  height: 15px;
 }
