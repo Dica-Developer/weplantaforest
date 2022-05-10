@@ -27,12 +27,16 @@ export class ContentEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.handleImageUrl();
     this.articleForm.get('imageFileName').valueChanges.subscribe((res) => {
       this.handleImageUrl();
     });
   }
 
   handleImageUrl() {
+    console.log('handling image url...');
+    console.log(this.articleForm.get('imageFileName').value);
+    
     if (this.articleForm.get('imageFileName').value) {
       this.imageSrc =
         environment.backendArticleManagerUrl +

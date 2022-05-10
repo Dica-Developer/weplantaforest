@@ -15,7 +15,9 @@ export class ContentParagraphComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.handleImageUrl();
+  }
 
   handleImageUrl() {
     if (this.paragraph.get('imageFileName').value) {
