@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppState } from '../../../store/app.state';
 import { Store } from '@ngrx/store';
+import { selectProfileDetails } from '../../../store/profile.store';
+import { Subscription } from 'rxjs';
 import {
   ProjectManager,
   resetProjectDetails,
 } from '../../../store/project.store';
-import {
-  profileFeature,
-  selectProfileDetails,
-} from '../../../store/profile.store';
 import {
   loadProjectDetailsSuccess,
   ProjectDetails,
@@ -19,18 +17,27 @@ import {
   templateUrl: './projects-overview.component.html',
   styleUrls: ['./projects-overview.component.scss'],
 })
-export class ProjectsOverviewComponent implements OnInit {
+export class ProjectsOverviewComponent implements OnInit, OnDestroy {
   manager: ProjectManager;
+
+  selectProfileDetailsSub: Subscription;
+
   constructor(private store: Store<AppState>) {
-    store.select(selectProfileDetails).subscribe((res) => {
-      this.manager = {
-        id: res.id,
-        name: res.userName,
-      };
-    });
+    this.selectProfileDetailsSub = store
+      .select(selectProfileDetails)
+      .subscribe((res) => {
+        this.manager = {
+          id: res.id,
+          name: res.userName,
+        };
+      });
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.selectProfileDetailsSub.unsubscribe();
+  }
 
   createProject() {
     const projectDetails: ProjectDetails = {

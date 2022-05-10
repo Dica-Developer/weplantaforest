@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   GridApi,
   ColDef,
@@ -18,13 +18,14 @@ import {
   loadContentArticles,
   selectContentArticlesLoading,
 } from '../../../store/content.store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-content-grid',
   templateUrl: './content-grid.component.html',
   styleUrls: ['./content-grid.component.scss'],
 })
-export class ContentGridComponent implements OnInit {
+export class ContentGridComponent implements OnInit, OnDestroy {
   gridApi: GridApi;
   selectedRowIndex: number;
 
@@ -93,14 +94,22 @@ export class ContentGridComponent implements OnInit {
     },
   };
 
+  contentArticlesSub: Subscription;
+
   constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
-    store.select(selectContentArticles).subscribe((articles) => {
-      this.rowData = articles;
-    });
+    this.contentArticlesSub = store
+      .select(selectContentArticles)
+      .subscribe((articles) => {
+        this.rowData = articles;
+      });
     this.store.dispatch(loadContentArticles());
     this.articlesLoading$ = this.store.select(selectContentArticlesLoading);
     this.store.dispatch(loadArticleTypes());
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.contentArticlesSub.unsubscribe();
+  }
 }

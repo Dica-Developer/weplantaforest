@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
@@ -10,13 +10,14 @@ import {
 import { selectTreeTypes } from '../../../../store/treeType.store';
 import { TextHelper } from '../../../../util/text.helper';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-edit-tree',
   templateUrl: './project-edit-tree.component.html',
   styleUrls: ['./project-edit-tree.component.scss'],
 })
-export class ProjectEditTreeComponent implements OnInit {
+export class ProjectEditTreeComponent implements OnInit, OnDestroy {
   controlObj: FormGroup;
   treeTypes: TreeType[] = [];
 
@@ -24,12 +25,14 @@ export class ProjectEditTreeComponent implements OnInit {
     this.controlObj = control;
   }
 
+  selectTreetypesSub: Subscription;
+
   constructor(
     private store: Store<AppState>,
     private textHelper: TextHelper,
     public dialog: MatDialog
   ) {
-    store.select(selectTreeTypes).subscribe((res) => {
+    this.selectTreetypesSub = store.select(selectTreeTypes).subscribe((res) => {
       for (let tt of res) {
         this.treeTypes.push({
           id: tt.id,
@@ -40,6 +43,10 @@ export class ProjectEditTreeComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.selectTreetypesSub.unsubscribe();
+  }
 
   treeTypeChanged($event) {
     this.controlObj.get('treeType').get('id').setValue($event.value);

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { GridHelper } from '../../../util/grid.helper';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   selectUsersLoadingProgress,
   loadUsers,
@@ -26,7 +26,7 @@ import {
   templateUrl: './user-grid.component.html',
   styleUrls: ['./user-grid.component.scss'],
 })
-export class UserGridComponent implements OnInit {
+export class UserGridComponent implements OnInit, OnDestroy {
   usersLoading$: Observable<boolean>;
 
   rowData = [];
@@ -135,15 +135,21 @@ export class UserGridComponent implements OnInit {
     },
   };
 
+  selectUsersSub: Subscription;
+
   constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
     this.usersLoading$ = this.store.select(selectUsersLoadingProgress);
     this.store.dispatch(loadUsers());
-    this.store.select(selectUsers).subscribe((users) => {
+    this.selectUsersSub = this.store.select(selectUsers).subscribe((users) => {
       this.rowData = users;
     });
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.selectUsersSub.unsubscribe();
+  }
 
   onCellValueChanged(event: CellValueChangedEvent) {}
 }

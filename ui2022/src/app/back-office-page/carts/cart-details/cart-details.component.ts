@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { TextHelper } from '../../../util/text.helper';
@@ -13,16 +13,20 @@ import {
   templateUrl: './cart-details.component.html',
   styleUrls: ['./cart-details.component.scss'],
 })
-export class CartDetailsComponent implements OnInit {
+export class CartDetailsComponent implements OnInit, OnDestroy {
   cartDetails: CartDetails;
 
-  constructor(private store: Store<AppState>, private textHelper: TextHelper) {
-    this.store.select(selectCartDetails).subscribe((details) => {
-      this.cartDetails = details;
-    });
-  }
+  cartDetailsSub = this.store.select(selectCartDetails).subscribe((details) => {
+    this.cartDetails = details;
+  });
+
+  constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.cartDetailsSub.unsubscribe();
+  }
 
   closeDetails() {
     this.store.dispatch(resetCartDetails());

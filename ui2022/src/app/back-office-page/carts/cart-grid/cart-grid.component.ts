@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CellValueChangedEvent, ColDef, GridOptions } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
@@ -23,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './cart-grid.component.html',
   styleUrls: ['./cart-grid.component.scss'],
 })
-export class CartGridComponent implements OnInit {
+export class CartGridComponent implements OnInit, OnDestroy {
   allColumns: ColDef[] = [
     {
       field: 'username',
@@ -288,20 +288,28 @@ export class CartGridComponent implements OnInit {
 
   cartDetails: CartDetails;
 
+  selectCartsSub = this.store.select(selectCarts).subscribe((carts) => {
+    this.rowData = carts;
+  });
+
+  selectCartDetailsSub = this.store
+    .select(selectCartDetails)
+    .subscribe((details) => {
+      this.cartDetails = details;
+    });
+
   constructor(
     private store: Store<AppState>,
     private gridHelper: GridHelper,
     public dialog: MatDialog
-  ) {
-    store.select(selectCarts).subscribe((carts) => {
-      this.rowData = carts;
-    });
-    store.select(selectCartDetails).subscribe((details) => {
-      this.cartDetails = details;
-    });
-  }
+  ) {}
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.selectCartsSub.unsubscribe();
+    this.selectCartDetailsSub.unsubscribe();
+  }
 
   onCellValueChanged(event: CellValueChangedEvent) {}
 

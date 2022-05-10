@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   CellClickedEvent,
   CellValueChangedEvent,
@@ -13,7 +13,7 @@ import {
   selectProjects,
   selectProjectsLoading,
 } from '../../../store/project.store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { loadProjects, loadProjectDetails } from '../../../store/project.store';
 import { GridProjectActionsComponent } from '../../../util/grid-components/grid-project-actions/grid-project-actions.component';
 
@@ -22,8 +22,7 @@ import { GridProjectActionsComponent } from '../../../util/grid-components/grid-
   templateUrl: './project-grid.component.html',
   styleUrls: ['./project-grid.component.scss'],
 })
-export class ProjectGridComponent implements OnInit {
-
+export class ProjectGridComponent implements OnInit, OnDestroy {
   gridApi: GridApi;
   selectedRowIndex: number;
 
@@ -56,7 +55,7 @@ export class ProjectGridComponent implements OnInit {
       projectActionRenderer: GridProjectActionsComponent,
     },
     onCellClicked: (event: CellClickedEvent) => {
-      if(event.column.getColId() === 'name'){
+      if (event.column.getColId() === 'name') {
         this.store.dispatch(loadProjectDetails({ id: event.data.id }));
         this.selectedRowIndex = event.rowIndex;
         this.gridApi.redrawRows();
@@ -70,26 +69,32 @@ export class ProjectGridComponent implements OnInit {
     onGridReady: (params) => {
       this.gridApi = params.api;
       // this.gridColumnApi = params.columnApi;
-    }
+    },
   };
 
+  selectProjectsSub: Subscription;
+
   constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
-    store.select(selectProjects).subscribe((projects) => {
-      this.rowData = projects;
-    });
+    this.selectProjectsSub = store
+      .select(selectProjects)
+      .subscribe((projects) => {
+        this.rowData = projects;
+      });
     this.store.dispatch(loadProjects());
     this.projectsLoading$ = this.store.select(selectProjectsLoading);
   }
 
   ngOnInit(): void {}
 
-  onCellValueChanged(event: CellValueChangedEvent) {}
-
-
-  rowStyleFn(params)  {
-      if (params.node.rowIndex === this.selectedRowIndex) {
-        return { background: 'red' };
-      }
+  ngOnDestroy(): void {
+    this.selectProjectsSub.unsubscribe();
   }
 
+  onCellValueChanged(event: CellValueChangedEvent) {}
+
+  rowStyleFn(params) {
+    if (params.node.rowIndex === this.selectedRowIndex) {
+      return { background: 'red' };
+    }
+  }
 }

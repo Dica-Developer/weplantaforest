@@ -51,19 +51,21 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
 
   username;
 
+  usernameSub = this.store.select(selectUsername).subscribe((res) => {
+    this.username = res;
+  });
+
   constructor(private store: Store<AppState>, private fb: FormBuilder) {
     this.detailsLoading$ = this.store.select(
       selectContentArticleDetailsLoading
     );
-    store.select(selectUsername).subscribe((res) => {
-      this.username = res;
-    });
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.detailsSelector.unsubscribe();
+    this.usernameSub.unsubscribe();
   }
 
   initForm(details: ContentArticleDetails) {

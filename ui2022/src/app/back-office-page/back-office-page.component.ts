@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.state';
 import { Observable } from 'rxjs';
@@ -13,24 +13,30 @@ declare type BackofficePage = 'CARTS' | 'USER' | 'PROJECTS' | 'CONTENT';
   templateUrl: './back-office-page.component.html',
   styleUrls: ['./back-office-page.component.scss'],
 })
-export class BackOfficePageComponent implements OnInit {
+export class BackOfficePageComponent implements OnInit, OnDestroy {
 
   username$: Observable<string>;
   profileImgUrl: string;
   selectedOverview: BackofficePage = 'CARTS';
+
+  profileImagenameSub = this.store.select(selectProfileImagename).subscribe(imageName => {
+    if(imageName && imageName != 'default' && imageName != '') {
+      this.profileImgUrl = environment.backendUrl + '/user/image/' + imageName + '/' + 50 + '/' + 50;
+    }else {
+      this.profileImgUrl = '/assets/default_user.jpg'
+    }
+  });
   
   constructor(private store: Store<AppState>) {
     this.username$ = store.select(selectUsername);
-    store.select(selectProfileImagename).subscribe(imageName => {
-      if(imageName && imageName != 'default' && imageName != '') {
-        this.profileImgUrl = environment.backendUrl + '/user/image/' + imageName + '/' + 50 + '/' + 50;
-      }else {
-        this.profileImgUrl = '/assets/default_user.jpg'
-      }
-    });
+    
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.profileImagenameSub.unsubscribe();
+  }
 
   logout() {
     this.store.dispatch(logout())

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './content-edit.component.html',
   styleUrls: ['./content-edit.component.scss'],
 })
-export class ContentEditComponent implements OnInit {
+export class ContentEditComponent implements OnInit, OnDestroy {
   @Input()
   articleForm: FormGroup;
 
@@ -20,23 +20,35 @@ export class ContentEditComponent implements OnInit {
   mainImageFile: any;
   imageSrc: any;
 
-  constructor(private store: Store<AppState>) {
-    store.select(selectContentArticleTypes).subscribe((res) => {
-      this.articleTypes = res;
-    });
-  }
+  articleTypesSub;
+
+  imageNameSub;
+
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.handleImageUrl();
-    this.articleForm.get('imageFileName').valueChanges.subscribe((res) => {
-      this.handleImageUrl();
-    });
+    this.imageNameSub = this.articleForm
+      .get('imageFileName')
+      .valueChanges.subscribe((res) => {
+        this.handleImageUrl();
+      });
+    this.imageNameSub = this.store
+      .select(selectContentArticleTypes)
+      .subscribe((res) => {
+        this.articleTypes = res;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.articleTypesSub.unsubscribe();
+    this.imageNameSub.unsubscribe();
   }
 
   handleImageUrl() {
     console.log('handling image url...');
     console.log(this.articleForm.get('imageFileName').value);
-    
+
     if (this.articleForm.get('imageFileName').value) {
       this.imageSrc =
         environment.backendArticleManagerUrl +

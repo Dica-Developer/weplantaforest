@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TextHelper } from '../../../../util/text.helper';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
 import { environment } from '../../../../../environments/environment';
+import { Subscription } from 'rxjs';
 import {
   deleteProjectImage,
   ProjectImageCreateEditRequest,
@@ -16,7 +17,7 @@ import {
   templateUrl: './project-edit-image.component.html',
   styleUrls: ['./project-edit-image.component.scss'],
 })
-export class ProjectEditImageComponent implements OnInit {
+export class ProjectEditImageComponent implements OnInit, OnDestroy {
   controlObj: FormGroup;
   descriptionDe: FormControl;
   descriptionEn: FormControl;
@@ -27,6 +28,9 @@ export class ProjectEditImageComponent implements OnInit {
 
   @Input()
   projectId: number;
+
+  descDeSub: Subscription;
+  descEnSub: Subscription;
 
   @Input() set control(control: FormGroup) {
     this.controlObj = control;
@@ -42,7 +46,7 @@ export class ProjectEditImageComponent implements OnInit {
         'en'
       )
     );
-    this.descriptionDe.valueChanges.subscribe((res) => {
+    this.descDeSub = this.descriptionDe.valueChanges.subscribe((res) => {
       this.controlObj
         .get('description')
         .setValue(
@@ -52,7 +56,7 @@ export class ProjectEditImageComponent implements OnInit {
           )
         );
     });
-    this.descriptionEn.valueChanges.subscribe((res) => {
+    this.descEnSub = this.descriptionEn.valueChanges.subscribe((res) => {
       this.controlObj
         .get('description')
         .setValue(
@@ -76,6 +80,11 @@ export class ProjectEditImageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.descDeSub.unsubscribe();
+    this.descEnSub.unsubscribe();
+  }
 
   deleteImage() {
     const id = this.controlObj.get('imageId').value;

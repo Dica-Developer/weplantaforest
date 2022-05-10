@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   ProjectDetails,
   selectProjectDetails,
@@ -7,7 +7,7 @@ import {
 } from '../../../store/project.store';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
 import { addProjectImage } from '../../../store/project.store';
@@ -23,11 +23,10 @@ import {
   templateUrl: './project-edit.component.html',
   styleUrls: ['./project-edit.component.scss'],
 })
-export class ProjectEditComponent implements OnInit {
+export class ProjectEditComponent implements OnInit, OnDestroy {
   details: ProjectDetails;
 
   detailsLoading$: Observable<Boolean>;
-
 
   projectForm = new FormGroup({
     id: new FormControl(null),
@@ -43,25 +42,33 @@ export class ProjectEditComponent implements OnInit {
     positions: new FormControl([]),
     articles: this.fb.array([]),
     images: this.fb.array([]),
-    mainImageFile: new FormControl(null)
+    mainImageFile: new FormControl(null),
   });
+
+  projectDetailsSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
     private textHelper: TextHelper,
     private fb: FormBuilder
   ) {
-    store.select(selectProjectDetails).subscribe((details) => {
-      this.details = details;
-      if (details) {
-        this.initForm(this.details);
-      }
-    });
+    this.projectDetailsSub = store
+      .select(selectProjectDetails)
+      .subscribe((details) => {
+        this.details = details;
+        if (details) {
+          this.initForm(this.details);
+        }
+      });
 
     this.detailsLoading$ = store.select(selectProjectDetailsLoading);
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.projectDetailsSub.unsubscribe();
+  }
 
   initForm(details: ProjectDetails) {
     this.projectForm.get('name').setValue(details.name);
@@ -115,7 +122,12 @@ export class ProjectEditComponent implements OnInit {
       longitude: this.projectForm.get('longitude').value,
       manager: this.projectForm.get('manager').value,
     };
-    this.store.dispatch(updateProject({ request, mainImageFile: this.projectForm.get('mainImageFile').value}));
+    this.store.dispatch(
+      updateProject({
+        request,
+        mainImageFile: this.projectForm.get('mainImageFile').value,
+      })
+    );
   }
 
   createArticleFormGroup(article: ProjectArticle) {
@@ -173,7 +185,7 @@ export class ProjectEditComponent implements OnInit {
       imageId: null,
       title: '',
       description: '',
-      imageFileName: ''
+      imageFileName: '',
     };
     this.store.dispatch(addProjectImage({ image }));
   }

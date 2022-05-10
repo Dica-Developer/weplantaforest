@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Editor, toHTML } from 'ngx-editor';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-text-editor',
@@ -14,17 +15,19 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   @Input()
   set control(controlObj: FormControl) {
     this.editorControl = controlObj;
-    this.text = this.editorControl.value;    
+    this.text = this.editorControl.value;
   }
 
   editor: Editor;
+
+  valueChangeSub: Subscription;
 
   constructor() {}
 
   ngOnInit(): void {
     this.editor = new Editor();
-    this.editor.valueChanges.subscribe(res => {
-      if(res && res.type === 'doc') {
+    this.valueChangeSub = this.editor.valueChanges.subscribe((res) => {
+      if (res && res.type === 'doc') {
         this.editorControl.setValue(toHTML(res));
       }
     });
@@ -32,5 +35,6 @@ export class TextEditorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.editor.destroy();
+    this.valueChangeSub.unsubscribe();
   }
 }
