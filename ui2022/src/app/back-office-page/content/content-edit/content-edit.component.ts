@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { selectContentArticleTypes } from '../../../store/content.store';
@@ -24,7 +24,7 @@ export class ContentEditComponent implements OnInit, OnDestroy {
 
   imageNameSub;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.handleImageUrl();
@@ -33,7 +33,7 @@ export class ContentEditComponent implements OnInit, OnDestroy {
       .valueChanges.subscribe((res) => {
         this.handleImageUrl();
       });
-    this.imageNameSub = this.store
+    this.articleTypesSub = this.store
       .select(selectContentArticleTypes)
       .subscribe((res) => {
         this.articleTypes = res;
@@ -46,9 +46,6 @@ export class ContentEditComponent implements OnInit, OnDestroy {
   }
 
   handleImageUrl() {
-    console.log('handling image url...');
-    console.log(this.articleForm.get('imageFileName').value);
-
     if (this.articleForm.get('imageFileName').value) {
       this.imageSrc =
         environment.backendArticleManagerUrl +
@@ -67,5 +64,22 @@ export class ContentEditComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(this.mainImageFile);
       this.articleForm.get('mainImageFile').setValue(this.mainImageFile);
     }
+  }
+
+  addParagraph() {
+    const newParagraph = this.fb.group({
+      id: null,
+      imageDescription: '',
+      imageFileName: '',
+      text: '',
+      title: '',
+      imageFile: null,
+    });
+    const newArray = [];
+    for (const par of this.articleForm.get('paragraphs')['controls']) {
+      newArray.push(par);
+    }
+    newArray.push(newParagraph);
+    this.articleForm.controls['paragraphs'] = this.fb.array(newArray);
   }
 }

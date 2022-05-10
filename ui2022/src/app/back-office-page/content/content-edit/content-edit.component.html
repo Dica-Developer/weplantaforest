@@ -89,6 +89,9 @@
         </button>
       </div>
     </div>
+    <div class="col-12">
+      <button mat-raised-button color="primary" (click)="addParagraph()" class="save-btn">Paragraph hinzufügen</button>
+    </div>  
     <app-content-paragraph
       *ngFor="let paragraph of articleForm.get('paragraphs')['controls']"
       [paragraph]="paragraph"
