@@ -54,15 +54,18 @@ public class ReceiptService {
                         String mailSubject = _messageByLocaleService.getMessage("mail.receipt.subject", Locale.GERMAN);
                         String mailTemplateText = _messageByLocaleService.getMessage("mail.receipt.text", Locale.GERMAN);
                         mailTemplateText = mailTemplateText.replace("%userName%", user.getName());
-                        _mailHelper.sendAMessageWithAttachement(mailSubject, mailTemplateText, user.getMail(), pdfFile);
-                        pdfFile.delete();
-                        receipt.setSentOn(System.currentTimeMillis());
-                        _receiptRepository.save(receipt);
-                        if (receipt.getCarts() != null && receipt.getCarts().size() > 0) {
-                            for (Cart cart : receipt.getCarts()) {
-                                cart.setReceiptSent(true);
-                                _cartRepository.save(cart);
-                            }
+                        //Anonymous user dont have mail adresses set
+                        if(user.getMail() != null) {
+                          _mailHelper.sendAMessageWithAttachement(mailSubject, mailTemplateText, user.getMail(), pdfFile);
+                          pdfFile.delete();
+                          receipt.setSentOn(System.currentTimeMillis());
+                          _receiptRepository.save(receipt);
+                          if (receipt.getCarts() != null && receipt.getCarts().size() > 0) {
+                              for (Cart cart : receipt.getCarts()) {
+                                  cart.setReceiptSent(true);
+                                  _cartRepository.save(cart);
+                              }
+                          }
                         }
                     } catch (Exception e) {
                         LOG.error("Error on sending mail!", e);
