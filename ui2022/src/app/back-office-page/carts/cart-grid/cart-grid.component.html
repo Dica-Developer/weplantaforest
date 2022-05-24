@@ -1,10 +1,12 @@
-<div>
-  <button mat-raised-button color="primary" (click)="filterColumns()">
-    Filter columns
-  </button>
-  <button mat-raised-button color="primary" (click)="resetColumns()">
-    All columns
-  </button>
+<div class="row">
+  <div class="col">
+    <button mat-raised-button color="primary" (click)="filterColumns()">
+      Filter columns
+    </button>
+    <button mat-raised-button color="primary" (click)="resetColumns()">
+      All columns
+    </button>
+  </div>
 </div>
 <div class="row">
   <div [ngClass]="cartDetails ? 'col-8' : 'col-12'">
@@ -20,7 +22,7 @@
       </ag-grid-angular>
     </div>
   </div>
-  <div [ngClass]="cartDetails ? 'col-4': 'no-display'">
+  <div [ngClass]="cartDetails ? 'col-4' : 'no-display'">
     <div class="cart-detail-wrapper">
       <app-cart-details *ngIf="cartDetails"></app-cart-details>
     </div>
