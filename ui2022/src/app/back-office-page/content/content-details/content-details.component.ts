@@ -101,6 +101,7 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
   saveArticle() {
     const paragraphs = [];
     const paragraphImages = [];
+    let paragraphCnt = 0;
     for (let paragraph of this.articleForm.get('paragraphs')['controls']) {
       paragraphs.push({
         id: paragraph.get('id').value,
@@ -113,9 +114,10 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
         paragraphImages.push({
           imageFile: paragraph.get('imageFile').value,
           articleId: this.articleForm.get('id').value,
-          paragraphId: paragraph.get('id').value,
+          paragraphId: paragraph.get('id').value ? paragraph.get('id').value : 'no ' + paragraphCnt,
         });
       }
+      paragraphCnt++;
     }
 
     let request: ContentArticleDetails = {

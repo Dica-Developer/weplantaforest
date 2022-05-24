@@ -55,6 +55,11 @@ export const loadContentArticlesSuccess = createAction(
   props<{ articles: ContentGridEntry[] }>()
 );
 
+export const addContentGridArticle = createAction(
+  '[Content] add content grid article',
+  props<{ article: ContentGridEntry }>()
+);
+
 export const loadArticleDetails = createAction(
   '[Content] load article details',
   props<{ id: number }>()
@@ -125,6 +130,11 @@ const contentReducer = createReducer(
   on(loadContentArticlesSuccess, (state, { articles }) => ({
     ...state,
     articles,
+    articlesLoading: false,
+  })),
+  on(addContentGridArticle, (state, { article }) => ({
+    ...state,
+    articles: [article, ...state.articles],
     articlesLoading: false,
   })),
   on(deleteContentArticleSuccess, (state, { id }) => ({
@@ -258,18 +268,35 @@ export class ContentEffects {
                 },
               })
             );
+            if (action.request.id == null) {
+              //if request id was null, which means a new article was generated, so it has to be added to the gridArray
+              const article: ContentGridEntry = {
+                id: details.id,
+                articleType: details.articleType,
+                lang: details.lang,
+                createdOn: details.createdOn,
+                title: details.title,
+              };
+              actionArray.push(addContentGridArticle({ article }));
+              // add response of create article request to details to assure ids are now there
+              actionArray.push(loadArticleDetailsSuccess({ details }));
+            }
+
             if (action.articleImage && action.paragraphImages.length > 0) {
               actionArray.push(
                 uploadArticleImage({
-                  articleId: action.request.id,
+                  articleId: details.id,
                   file: action.articleImage,
                 })
               );
               for (let pi of action.paragraphImages) {
+                //on create there are no paragraphIds, so they has to be found here
+                let paragraphId = this.getParagraphId(pi, details);
+
                 actionArray.push(
                   uploadParagraphImage({
-                    articleId: action.request.id,
-                    paragraphId: pi.paragraphId,
+                    articleId: details.id,
+                    paragraphId: paragraphId,
                     file: pi.imageFile,
                   })
                 );
@@ -282,7 +309,7 @@ export class ContentEffects {
             ) {
               return [
                 uploadArticleImage({
-                  articleId: action.request.id,
+                  articleId: details.id,
                   file: action.articleImage,
                 }),
               ];
@@ -291,10 +318,13 @@ export class ContentEffects {
               action.paragraphImages.length > 0
             ) {
               for (let pi of action.paragraphImages) {
+                //on create there are no paragraphIds, so they has to be found here
+                let paragraphId = this.getParagraphId(pi, details);
+
                 actionArray.push(
                   uploadParagraphImage({
-                    articleId: action.request.id,
-                    paragraphId: pi.paragraphId,
+                    articleId: details.id,
+                    paragraphId: paragraphId,
                     file: pi.imageFile,
                   })
                 );
@@ -335,4 +365,20 @@ export class ContentEffects {
       )
     )
   );
+
+  getParagraphId(paragraphImage: any, details: ContentArticleDetails): number {
+    let paragraphId;
+    // if there was no paragraphId(when a new paragraph was added for example)
+    // instead of the id it is 'no [arrayIndex]'
+    if (
+      isNaN(Number(paragraphImage.paragraphId)) &&
+      paragraphImage.paragraphId.startsWith('no ')
+    ) {
+      const arrayIndex = paragraphImage.paragraphId.substring(3);
+      paragraphId = details.paragraphs[arrayIndex].id;
+    } else {
+      paragraphId = paragraphImage.paragraphId;
+    }
+    return paragraphId;
+  }
 }
