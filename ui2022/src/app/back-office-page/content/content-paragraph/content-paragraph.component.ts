@@ -27,6 +27,8 @@ export class ContentParagraphComponent implements OnInit {
         this.paragraph.get('id').value +
         '/' +
         this.paragraph.get('imageFileName').value;
+    }else {
+      this.imageSrc = null;
     }
   }
 

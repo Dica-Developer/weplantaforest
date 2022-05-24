@@ -53,6 +53,8 @@ export class ContentEditComponent implements OnInit, OnDestroy {
         this.articleForm.get('id').value +
         '/' +
         this.articleForm.get('imageFileName').value;
+    } else {
+      this.imageSrc = null;
     }
   }
 

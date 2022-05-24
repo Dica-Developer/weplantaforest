@@ -73,7 +73,8 @@
     <div class="spacer"></div>
     <div class="row">
       <div class="col-6">
-        <img src="{{ imageSrc }}" width="400" height="300" />
+        <img src="{{ imageSrc }}" width="400" height="300" *ngIf="imageSrc" />
+        <app-no-img-box *ngIf="!imageSrc"></app-no-img-box>
       </div>
       <div class="col-2">
         <input
