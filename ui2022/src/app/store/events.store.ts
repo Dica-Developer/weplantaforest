@@ -10,6 +10,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EventService } from '../services/event.service';
 import { switchMap } from 'rxjs/operators';
 import { AppState } from './app.state';
+import { addSuccessMessage } from './success-message.state';
 
 export interface EventGridEntry {
   id: number;
@@ -84,6 +85,16 @@ export const updateEvent = createAction(
   props<{ request: EventRequest }>()
 );
 
+export const createEvent = createAction(
+  '[Content] create event',
+  props<{ request: EventRequest }>()
+);
+
+export const createEventSuccess = createAction(
+  '[Content] create event success',
+  props<{ details: EventDetails }>()
+);
+
 export interface EventsState {
   events: EventGridEntry[];
   eventsLoading: boolean;
@@ -117,6 +128,11 @@ const eventsReducer = createReducer(
       ...state.details,
       codes,
     },
+  })),
+  on(createEventSuccess, (state, { details }) => ({
+    ...state,
+    details,
+    events: [{ id: details.id, name: details.name }, ...state.events],
   }))
 );
 
@@ -195,14 +211,38 @@ export class EventsEffects {
     this.actions$.pipe(
       ofType(updateEvent),
       switchMap((action) =>
-        this.eventService
-          .save(action.request)
-          .pipe(
-            switchMap((details: EventDetails) => [
-              loadEventDetailsSuccess({ details }),
-              loadEventCodes({ id: details.id }),
-            ])
-          )
+        this.eventService.save(action.request).pipe(
+          switchMap((details: EventDetails) => [
+            loadEventDetailsSuccess({ details }),
+            loadEventCodes({ id: details.id }),
+            addSuccessMessage({
+              message: {
+                key: 'EVENT_SAVE_SUCCESS',
+                message: 'Event wurde aktualisiert!',
+              },
+            }),
+          ])
+        )
+      )
+    )
+  );
+
+  CreateEvent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createEvent),
+      switchMap((action) =>
+        this.eventService.create(action.request).pipe(
+          switchMap((details: EventDetails) => [
+            createEventSuccess({ details }),
+            loadEventCodes({ id: details.id }),
+            addSuccessMessage({
+              message: {
+                key: 'EVENT_CREATE_SUCCESS',
+                message: 'Event wurde erstellt!',
+              },
+            }),
+          ])
+        )
       )
     )
   );

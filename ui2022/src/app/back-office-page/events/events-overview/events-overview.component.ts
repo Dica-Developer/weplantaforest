@@ -7,6 +7,7 @@ import {
   selectEventDetails,
 } from '../../../store/events.store';
 import { Subscription } from 'rxjs';
+import { loadEventDetailsSuccess } from '../../../store/events.store';
 
 @Component({
   selector: 'app-events-overview',
@@ -34,5 +35,14 @@ export class EventsOverviewComponent implements OnInit, OnDestroy {
     this.eventDetailsSub.unsubscribe();
   }
 
-  createEvent() {}
+  createEvent() {
+    const details: EventDetails = {
+      id: null,
+      name: '',
+      team: null,
+      user: null,
+      codes: [],
+    };
+    this.store.dispatch(loadEventDetailsSuccess({ details }));
+  }
 }

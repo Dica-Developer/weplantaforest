@@ -21,7 +21,11 @@ export class EventService {
     return this.http.get(environment.backendAdminUrl + '/event/codes/' + id);
   }
 
-  save(request: EventRequest) {
+  create(request: EventRequest) {
     return this.http.post(environment.backendAdminUrl + '/event', request);
+  }
+
+  save(request: EventRequest) {
+    return this.http.put(environment.backendAdminUrl + '/event', request);
   }
 }

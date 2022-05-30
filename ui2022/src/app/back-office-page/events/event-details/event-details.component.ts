@@ -3,9 +3,14 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { Subscription } from 'rxjs';
-import { EventDetails, selectEventDetails } from '../../../store/events.store';
+import {
+  EventDetails,
+  selectEventDetails,
+  EventRequest,
+} from '../../../store/events.store';
 import { User, selectUsers, loadUsers } from '../../../store/user.store';
 import { Team, selectTeams, loadTeams } from '../../../store/team.store';
+import { updateEvent, createEvent } from '../../../store/events.store';
 
 @Component({
   selector: 'app-event-details',
@@ -17,7 +22,9 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
     id: new FormControl(null),
     name: new FormControl(''),
     teamId: new FormControl(null),
+    teamName: new FormControl(null),
     userId: new FormControl(null),
+    userName: new FormControl(null),
   });
 
   eventDetailsSub: Subscription;
@@ -26,13 +33,13 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   allUsers: User[];
   allUsersSub: Subscription;
   filteredOptions: User[];
-  filterControl = new FormControl();
+  filterControl = new FormControl('');
   filterControlVCSub: Subscription;
 
   allTeams: Team[];
   allTeamsSub: Subscription;
   teamFilteredOptions: Team[];
-  teamFilterControl = new FormControl();
+  teamFilterControl = new FormControl('');
   teamFilterControlVCSub: Subscription;
 
   constructor(private store: Store<AppState>, private fb: FormBuilder) {
@@ -53,8 +60,6 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.allTeamsSub = this.store.select(selectTeams).subscribe((res) => {
-      console.log('teams: ', res);
-
       this.allTeams = res;
       if (this.allTeams.length == 0) {
         this.store.dispatch(loadTeams());
@@ -69,6 +74,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
         if (res?.id) {
           this.filterControl.setValue(res.name);
           this.eventForm.get('userId').setValue(res.id);
+          this.eventForm.get('userName').setValue(res.name);
         } else {
           // if value is string --> filter options
           this.filteredOptions = this._filter(res);
@@ -81,6 +87,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
         if (res?.id) {
           this.teamFilterControl.setValue(res.name);
           this.eventForm.get('teamId').setValue(res.id);
+          this.eventForm.get('teamName').setValue(res.name);
         } else {
           this.teamFilteredOptions = this._filterTeams(res);
         }
@@ -101,11 +108,43 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
     this.eventForm.get('name').setValue(details.name);
     this.eventForm.get('teamId').setValue(details.team?.id);
     this.eventForm.get('userId').setValue(details.user?.id);
-    this.filterControl.setValue(details.user?.name);
-    this.teamFilterControl.setValue(details.team?.name);
+    if (details.user) {
+      this.filterControl.setValue(details.user?.name);
+    }else {
+      this.filterControl.setValue('');
+    }
+    if (details.team) {
+      this.teamFilterControl.setValue(details.team?.name);
+    } else {
+      this.teamFilterControl.setValue('');
+    }
   }
 
-  saveEvent() {}
+  saveEvent() {
+    const eventTeam = this.eventForm.get('teamId').value
+      ? {
+          id: this.eventForm.get('teamId').value,
+          name: this.eventForm.get('teamName').value,
+        }
+      : null;
+    const eventUser = this.eventForm.get('userId').value
+      ? {
+          id: this.eventForm.get('userId').value,
+          name: this.eventForm.get('userName').value,
+        }
+      : null;
+    const request: EventRequest = {
+      id: this.eventForm.get('id').value,
+      name: this.eventForm.get('name').value,
+      user: eventUser,
+      team: eventTeam,
+    };
+    if (request.id) {
+      this.store.dispatch(updateEvent({ request }));
+    } else {
+      this.store.dispatch(createEvent({ request }));
+    }
+  }
 
   private _filter(value: string): User[] {
     const filterValue = value.toLowerCase();
@@ -119,5 +158,17 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
     return this.allTeams.filter((team) =>
       team.name.toLowerCase().includes(filterValue)
     );
+  }
+
+  removeUser() {
+    this.filterControl.setValue('');
+    this.eventForm.get('userId').setValue(null);
+    this.eventForm.get('userName').setValue(null);
+  }
+
+  removeTeam() {
+    this.teamFilterControl.setValue('');
+    this.eventForm.get('teamId').setValue(null);
+    this.eventForm.get('teamName').setValue(null);
   }
 }
