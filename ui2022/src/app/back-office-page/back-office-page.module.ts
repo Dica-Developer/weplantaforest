@@ -26,6 +26,9 @@ import { ContentDetailsComponent } from './content/content-details/content-detai
 import { ContentEditComponent } from './content/content-edit/content-edit.component';
 import { ContentPreviewComponent } from './content/content-preview/content-preview.component';
 import { ContentParagraphComponent } from './content/content-paragraph/content-paragraph.component';
+import { EventsOverviewComponent } from './events/events-overview/events-overview.component';
+import { EventGridComponent } from './events/event-grid/event-grid.component';
+import { EventDetailsComponent } from './events/event-details/event-details.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,9 @@ import { ContentParagraphComponent } from './content/content-paragraph/content-p
     ContentEditComponent,
     ContentPreviewComponent,
     ContentParagraphComponent,
+    EventsOverviewComponent,
+    EventGridComponent,
+    EventDetailsComponent,
     // DeleteProjectConfirmationDialog
   ],
   imports: [

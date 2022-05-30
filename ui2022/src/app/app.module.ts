@@ -15,18 +15,25 @@ import { BackofficePageModule } from './back-office-page/back-office-page.module
 import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { TokenInterceptor } from './services/http-interceptors/token.interceptor';
 import { cartsReducerFn, CartsEffects } from './store/carts.store';
-import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MatNativeDateModule,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { userReducerFn, UserEffects } from './store/user.store';
 import { projectsReducerFn, ProjectsEffects } from './store/project.store';
 import { NgxEditorModule } from 'ngx-editor';
 import { FormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { LeafletDrawModule } from "@asymmetrik/ngx-leaflet-draw";
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { TreeTypeEffects, treeTypeReducerFn } from './store/treeType.store';
 import { errorsReducerFn } from './store/error.state';
 import { successMessageReducerFn } from './store/success-message.state';
 import { contentReducerFn, ContentEffects } from './store/content.store';
+import { APP_BASE_HREF } from '@angular/common';
+import { eventsReducerFn, EventsEffects } from './store/events.store';
+import { teamReducerFn, TeamEffects } from './store/team.store';
 
 export const MY_FORMATS = {
   parse: {
@@ -60,7 +67,9 @@ export const MY_FORMATS = {
       treeTypes: treeTypeReducerFn,
       errors: errorsReducerFn,
       successMessages: successMessageReducerFn,
-      content: contentReducerFn
+      content: contentReducerFn,
+      event: eventsReducerFn,
+      teams: teamReducerFn,
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -69,7 +78,9 @@ export const MY_FORMATS = {
       UserEffects,
       ProjectsEffects,
       TreeTypeEffects,
-      ContentEffects
+      ContentEffects,
+      EventsEffects,
+      TeamEffects,
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),
@@ -110,12 +121,13 @@ export const MY_FORMATS = {
       },
     }),
     LeafletModule,
-    LeafletDrawModule
+    LeafletDrawModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    // {provide: APP_BASE_HREF, useValue:'backOffice2022'}
   ],
   bootstrap: [AppComponent],
 })

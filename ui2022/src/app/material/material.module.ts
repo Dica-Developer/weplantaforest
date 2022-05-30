@@ -18,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -40,6 +41,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDialogModule,
     MatSnackBarModule,
     MatExpansionModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatInputModule,
@@ -59,6 +61,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDialogModule,
     MatSnackBarModule,
     MatExpansionModule,
+    MatAutocompleteModule,
   ],
 })
 export class MaterialModule {}

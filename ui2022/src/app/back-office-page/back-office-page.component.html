@@ -7,6 +7,7 @@
       <a mat-list-item (click)="selectOverviewPage('USER')" [ngClass]="selectedOverview === 'USER' ? 'border-bottom' : ''"> User </a>
       <a mat-list-item (click)="selectOverviewPage('PROJECTS')" [ngClass]="selectedOverview === 'PROJECTS' ? 'border-bottom' : ''"> Projects </a>  
       <a mat-list-item (click)="selectOverviewPage('CONTENT')" [ngClass]="selectedOverview === 'CONTENT' ? 'border-bottom' : ''"> Content </a>  
+      <a mat-list-item (click)="selectOverviewPage('EVENTS')" [ngClass]="selectedOverview === 'EVENTS' ? 'border-bottom' : ''"> Events </a>  
     </div>    
     <div class="menu-spacer"></div>
     <span class="logout" (click)="logout()">Logout</span>
@@ -19,3 +20,4 @@
 <app-projects-overview *ngIf="selectedOverview == 'PROJECTS'"></app-projects-overview>
 <app-user-overview *ngIf="selectedOverview == 'USER'"></app-user-overview>
 <app-content-overview *ngIf="selectedOverview == 'CONTENT'"></app-content-overview>
+<app-events-overview *ngIf="selectedOverview == 'EVENTS'"></app-events-overview>

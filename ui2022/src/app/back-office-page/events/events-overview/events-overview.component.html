@@ -1,0 +1,11 @@
+<div class="row">
+  <div [ngClass]="eventDetails ? 'col-3' : 'col-12'">
+    <button mat-raised-button color="primary" (click)="createEvent()" class="create-event-btn">
+      create event
+    </button>
+    <app-event-grid></app-event-grid>
+  </div>
+  <div [ngClass]="eventDetails ? 'col-9' : 'no-display'" *ngIf="eventDetails">
+    <app-event-details></app-event-details>
+  </div>
+</div>

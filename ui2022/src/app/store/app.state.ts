@@ -7,6 +7,8 @@ import { TreeTypeState } from './treeType.store';
 import { ErrorState } from './error.state';
 import { SuccessMessageState } from './success-message.state';
 import { ContentState } from './content.store';
+import { EventsState } from './events.store';
+import { TeamState } from './team.store';
 
 
 export interface AppState{
@@ -18,5 +20,7 @@ export interface AppState{
   readonly treeTypes: TreeTypeState,
   readonly errors: ErrorState,
   readonly successMessages: SuccessMessageState,
-  readonly content: ContentState
+  readonly content: ContentState,
+  readonly event: EventsState,
+  readonly teams: TeamState
 }

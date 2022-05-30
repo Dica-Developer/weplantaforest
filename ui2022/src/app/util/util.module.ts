@@ -16,6 +16,7 @@ import {
   DeleteContentArticleConfirmationDialog,
 } from './grid-components/grid-content-actions/grid-content-actions.component';
 import { NoImgBoxComponent } from './common-components/no-img-box/no-img-box.component';
+import { GridEventActionsComponent } from './grid-components/grid-event-actions/grid-event-actions.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { NoImgBoxComponent } from './common-components/no-img-box/no-img-box.com
     GridContentActionsComponent,
     DeleteContentArticleConfirmationDialog,
     NoImgBoxComponent,
+    GridEventActionsComponent,
   ],
   imports: [
     CommonModule,
