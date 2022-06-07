@@ -9,7 +9,7 @@ import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectService } from '../services/project.service';
 import { Injectable } from '@angular/core';
-import { switchMap, catchError } from 'rxjs/operators';
+import { switchMap, catchError, mergeMap } from 'rxjs/operators';
 import { addError } from './error.state';
 import { addSuccessMessage } from './success-message.state';
 
@@ -93,6 +93,36 @@ export interface ProjectEditRequest {
 export interface ProjectManager {
   id: number;
   name: string;
+}
+
+export interface ActiveProject {
+  active: boolean;
+  amountOfMaximumTreesToPlant: number;
+  amountOfPlantedTrees: number;
+  description: string;
+  latitude: number;
+  longitude: number;
+  projectId: number;
+  projectImageFileName: string;
+  projectName: string;
+  articles: ActiveProjectArticle[];
+}
+
+export interface ActiveProjectArticle {
+  articleId: number;
+  alreadyPlanted: number;
+  amount: number;
+  price: {
+    priceAsLong: number;
+  };
+  treeType: {
+    name: string;
+    imageFile: string;
+  };
+  project: {
+    id: number;
+    name: string;
+  };
 }
 
 export const loadProjects = createAction('[Project] load projects');
@@ -190,11 +220,31 @@ export const deleteProjectSuccess = createAction(
   props<{ id: number }>()
 );
 
+export const loadActiveProjects = createAction(
+  '[Project] load active projects'
+);
+
+export const loadActiveProjectsSuccess = createAction(
+  '[Project] load active projects success',
+  props<{ activeProjects: ActiveProject[] }>()
+);
+
+export const loadActiveProjectArticles = createAction(
+  '[Project] load active project articles',
+  props<{ id: number; projectName: string }>()
+);
+
+export const loadActiveProjectArticlesSuccess = createAction(
+  '[Project] load active projects articles success',
+  props<{ id: number; articles: ActiveProjectArticle[] }>()
+);
+
 export interface ProjectState {
   projects: GridProject[];
   projectsLoading: boolean;
   projectDetails: ProjectDetails;
   projectDetailsLoading: boolean;
+  activeProjects: ActiveProject[];
 }
 
 export const initialState: ProjectState = {
@@ -202,6 +252,7 @@ export const initialState: ProjectState = {
   projectsLoading: false,
   projectDetails: null,
   projectDetailsLoading: false,
+  activeProjects: [],
 };
 
 const projectsReducer = createReducer(
@@ -289,6 +340,25 @@ const projectsReducer = createReducer(
     ...state,
     projects: state.projects.filter((project) => project.id != id),
     projectDetails: null,
+  })),
+  on(loadActiveProjectsSuccess, (state, { activeProjects }) => ({
+    ...state,
+    activeProjects,
+  })),
+  on(loadActiveProjectArticlesSuccess, (state, { id, articles }) => ({
+    ...state,
+    activeProjects: state.activeProjects
+      .map((project) => ({ ...project }))
+      .map((project) => {
+        if (project.projectId == id) {
+          return {
+            ...project,
+            articles,
+          };
+        } else {
+          return project;
+        }
+      }),
   }))
 );
 
@@ -316,6 +386,11 @@ export const selectProjectDetails = createSelector(
 export const selectProjectDetailsLoading = createSelector(
   projectsFeature,
   (state: ProjectState) => state.projectDetailsLoading
+);
+
+export const selectActiveProjects = createSelector(
+  projectsFeature,
+  (state: ProjectState) => state.activeProjects
 );
 
 @Injectable()
@@ -519,6 +594,44 @@ export class ProjectsEffects {
           //   }),
           // ])
         )
+      )
+    )
+  );
+
+  LoadActiveProjects$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadActiveProjects),
+      switchMap((action) =>
+        this.projectService.getActiveProjects().pipe(
+          switchMap((activeProjects: ActiveProject[]) => {
+            const actions = [];
+            actions.push(loadActiveProjectsSuccess({ activeProjects }));
+            for (const project of activeProjects) {
+              actions.push(
+                loadActiveProjectArticles({
+                  id: project.projectId,
+                  projectName: project.projectName,
+                })
+              );
+            }
+            return actions;
+          })
+        )
+      )
+    )
+  );
+
+  LoadActiveProjectArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadActiveProjectArticles),
+      mergeMap((action) =>
+        this.projectService
+          .getActiveProjectArticlesForProject(action.projectName)
+          .pipe(
+            mergeMap((articles: ActiveProjectArticle[]) => [
+              loadActiveProjectArticlesSuccess({ id: action.id, articles }),
+            ])
+          )
       )
     )
   );

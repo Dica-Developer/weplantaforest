@@ -8,6 +8,10 @@ import {
 } from '../../../store/events.store';
 import { Subscription } from 'rxjs';
 import { loadEventDetailsSuccess } from '../../../store/events.store';
+import {
+  selectActiveProjects,
+  loadActiveProjects,
+} from '../../../store/project.store';
 
 @Component({
   selector: 'app-events-overview',
@@ -20,6 +24,7 @@ export class EventsOverviewComponent implements OnInit, OnDestroy {
   eventDetailsSub: Subscription;
 
   constructor(private store: Store<AppState>) {
+    this.store.dispatch(loadActiveProjects());
     this.eventDetailsSub = this.store
       .select(selectEventDetails)
       .subscribe((res) => {

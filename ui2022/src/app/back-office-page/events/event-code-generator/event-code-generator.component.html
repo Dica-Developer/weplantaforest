@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-6">
+    <div *ngFor="let project of activeProjects">
+      <h3>
+        <b>{{ project.projectName }}</b>
+      </h3>
+      <ng-container *ngFor="let article of project.articles">
+        <app-plantbag-tree-input
+          [article]="article"
+          *ngIf="article.amount - article.alreadyPlanted > 0"
+        ></app-plantbag-tree-input>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-6">
+    <mat-form-field appearance="fill" class="title-field">
+      <mat-label>Anzahl an Codes</mat-label>
+      <input
+        matInput
+        placeholder="Anzahl Codes"
+        name="amount"
+        [formControl]="amountControl"
+      />
+    </mat-form-field>
+    <app-plantbag></app-plantbag>    
+    <div class="generate-code-btn-wrapper">
+      <button mat-raised-button color="primary" class="generate-codes-btn" (click)="generateCodes()">Codes generieren</button>
+    </div>
+  </div>
+</div>

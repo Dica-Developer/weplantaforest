@@ -36,11 +36,12 @@ public class ProjectArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_articleId")
+    @JsonView({ Views.ProjectArticle.class })
     private Long articleId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_plant__plantId", nullable = false)
-    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class })
+    @JsonView({ Views.PlantedTree.class, Views.OverviewGift.class, Views.ProjectArticle.class })
     private Project project;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -9,6 +9,7 @@ import { SuccessMessageState } from './success-message.state';
 import { ContentState } from './content.store';
 import { EventsState } from './events.store';
 import { TeamState } from './team.store';
+import { PlantbagState } from './plantbag.store';
 
 
 export interface AppState{
@@ -22,5 +23,6 @@ export interface AppState{
   readonly successMessages: SuccessMessageState,
   readonly content: ContentState,
   readonly event: EventsState,
-  readonly teams: TeamState
+  readonly teams: TeamState,
+  readonly plantbag: PlantbagState
 }

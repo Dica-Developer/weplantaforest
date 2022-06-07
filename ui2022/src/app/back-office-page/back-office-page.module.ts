@@ -29,6 +29,8 @@ import { ContentParagraphComponent } from './content/content-paragraph/content-p
 import { EventsOverviewComponent } from './events/events-overview/events-overview.component';
 import { EventGridComponent } from './events/event-grid/event-grid.component';
 import { EventDetailsComponent } from './events/event-details/event-details.component';
+import { EventCodesGridComponent } from './events/event-codes-grid/event-codes-grid.component';
+import { EventCodeGeneratorComponent } from './events/event-code-generator/event-code-generator.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { EventDetailsComponent } from './events/event-details/event-details.comp
     EventsOverviewComponent,
     EventGridComponent,
     EventDetailsComponent,
+    EventCodesGridComponent,
+    EventCodeGeneratorComponent,
     // DeleteProjectConfirmationDialog
   ],
   imports: [

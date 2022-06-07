@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,10 +34,12 @@ import { contentReducerFn, ContentEffects } from './store/content.store';
 import { APP_BASE_HREF } from '@angular/common';
 import { eventsReducerFn, EventsEffects } from './store/events.store';
 import { teamReducerFn, TeamEffects } from './store/team.store';
+import { plantbagReducerFn, PlantbagEffects } from './store/plantbag.store';
 
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'LL',
+    // dateInput: 'LL',
+    dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
   },
   display: {
     dateInput: 'DD.MM.YYYY',
@@ -70,6 +72,7 @@ export const MY_FORMATS = {
       content: contentReducerFn,
       event: eventsReducerFn,
       teams: teamReducerFn,
+      plantbag: plantbagReducerFn
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -81,6 +84,7 @@ export const MY_FORMATS = {
       ContentEffects,
       EventsEffects,
       TeamEffects,
+      PlantbagEffects
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),
@@ -128,6 +132,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     // {provide: APP_BASE_HREF, useValue:'backOffice2022'}
+    {provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'}
   ],
   bootstrap: [AppComponent],
 })

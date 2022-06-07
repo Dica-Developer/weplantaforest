@@ -26,37 +26,62 @@
         </div>
         <div class="col-4">
           <mat-form-field appearance="fill" class="title-field">
-            <input type="text"
-            placeholder="User"
-            matInput
-            [formControl]="filterControl"
-            [matAutocomplete]="auto"
-            class="filter-input">
-            <mat-icon aria-hidden="false" (click)="removeUser()" *ngIf="eventForm.get('userId').value">delete</mat-icon>
+            <input
+              type="text"
+              placeholder="User"
+              matInput
+              [formControl]="filterControl"
+              [matAutocomplete]="auto"
+              class="filter-input"
+            />
+            <mat-icon
+              aria-hidden="false"
+              (click)="removeUser()"
+              *ngIf="eventForm.get('userId').value"
+              >delete</mat-icon
+            >
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let user of filteredOptions" [value]="user">
-                {{user.name}}
+                {{ user.name }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
         <div class="col-4">
           <mat-form-field appearance="fill" class="title-field">
-            <input type="text"
-            placeholder="Team"
-            matInput
-            [formControl]="teamFilterControl"
-            [matAutocomplete]="autoTeam"
-            class="filter-input">
-            <mat-icon aria-hidden="false" (click)="removeTeam()" *ngIf="eventForm.get('teamId').value">delete</mat-icon>
+            <input
+              type="text"
+              placeholder="Team"
+              matInput
+              [formControl]="teamFilterControl"
+              [matAutocomplete]="autoTeam"
+              class="filter-input"
+            />
+            <mat-icon
+              aria-hidden="false"
+              (click)="removeTeam()"
+              *ngIf="eventForm.get('teamId').value"
+              >delete</mat-icon
+            >
             <mat-autocomplete #autoTeam="matAutocomplete">
-              <mat-option *ngFor="let team of teamFilteredOptions" [value]="team">
-                {{team.name}}
+              <mat-option
+                *ngFor="let team of teamFilteredOptions"
+                [value]="team"
+              >
+                {{ team.name }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
       </div>
     </form>
+    <mat-tab-group mat-align-tabs="center" *ngIf="eventForm.get('id').value">
+      <mat-tab label="Code-Übersicht">
+        <app-event-codes-grid></app-event-codes-grid>
+      </mat-tab>
+      <mat-tab label="Codes generieren">
+        <app-event-code-generator [userId]="eventForm.get('userId').value" [eventId]="eventForm.get('id').value"></app-event-code-generator>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

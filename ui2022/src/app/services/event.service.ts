@@ -28,4 +28,11 @@ export class EventService {
   save(request: EventRequest) {
     return this.http.put(environment.backendAdminUrl + '/event', request);
   }
+
+  addCartsToEvent(cartIds: number[], eventId: number) {
+    return this.http.post(
+      environment.backendAdminUrl + '/event/codes/' + eventId,
+      cartIds
+    );
+  }
 }

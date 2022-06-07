@@ -91,4 +91,14 @@ export class ProjectService {
       formData
     );
   }
+
+  getActiveProjects() {
+    return this.http.get(environment.backendUrl + '/reports/activeProjects');
+  }
+
+  getActiveProjectArticlesForProject(projectName: string) {
+    return this.http.get(
+      environment.backendUrl + '/project/articles?projectName=' + projectName
+    );
+  }
 }
