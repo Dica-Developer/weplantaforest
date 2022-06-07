@@ -242,8 +242,8 @@ export class CartGridComponent implements OnInit, OnDestroy {
           return true;
         }
       },
-      cellEditor: 'selectRenderer',
-      cellEditorParams: {
+      cellRenderer: 'selectRenderer',
+      cellRendererParams: {        
         valueList: this.gridHelper.getCartStates(),
         valueChange: (cartId, value) => {
           if (value === 'DISCARDED') {
@@ -258,6 +258,22 @@ export class CartGridComponent implements OnInit, OnDestroy {
           }
         },
       },
+      // cellEditor: 'selectRenderer',
+      // cellEditorParams: {
+      //   valueList: this.gridHelper.getCartStates(),
+      //   valueChange: (cartId, value) => {
+      //     if (value === 'DISCARDED') {
+      //       const dialogRef = this.dialog.open(DiscardCartConfirmationDialog);
+      //       dialogRef.afterClosed().subscribe((result) => {
+      //         if (result) {
+      //           this.store.dispatch(updateStatus({ cartId, value }));
+      //         }
+      //       });
+      //     } else {
+      //       this.store.dispatch(updateStatus({ cartId, value }));
+      //     }
+      //   },
+      // },
     },
     {
       field: 'id',

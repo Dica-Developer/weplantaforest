@@ -1,6 +1,6 @@
 <mat-form-field appearance="fill">
-  <mat-label>Cartstate</mat-label>
-  <mat-select [value]="value" (selectionChange)="valueChanged($event)">
+  <!-- <mat-label>Status</mat-label> -->
+  <mat-select [value]="value" (selectionChange)="valueChanged($event)" [disabled]="value == 'DISCARDED'">
     <mat-option *ngFor="let entry of valueList" [value]="entry.value" >{{
       entry.label
     }}</mat-option>
