@@ -8,6 +8,7 @@
       <a mat-list-item (click)="selectOverviewPage('PROJECTS')" [ngClass]="selectedOverview === 'PROJECTS' ? 'border-bottom' : ''"> Projects </a>  
       <a mat-list-item (click)="selectOverviewPage('CONTENT')" [ngClass]="selectedOverview === 'CONTENT' ? 'border-bottom' : ''"> Content </a>  
       <a mat-list-item (click)="selectOverviewPage('EVENTS')" [ngClass]="selectedOverview === 'EVENTS' ? 'border-bottom' : ''"> Events </a>  
+      <a mat-list-item (click)="selectOverviewPage('TREETYPES')" [ngClass]="selectedOverview === 'TREETYPES' ? 'border-bottom' : ''"> Baumarten </a>  
     </div>    
     <div class="menu-spacer"></div>
     <span class="logout" (click)="logout()">Logout</span>
@@ -21,3 +22,4 @@
 <app-user-overview *ngIf="selectedOverview == 'USER'"></app-user-overview>
 <app-content-overview *ngIf="selectedOverview == 'CONTENT'"></app-content-overview>
 <app-events-overview *ngIf="selectedOverview == 'EVENTS'"></app-events-overview>
+<app-treetypes-overview *ngIf="selectedOverview == 'TREETYPES'"></app-treetypes-overview>

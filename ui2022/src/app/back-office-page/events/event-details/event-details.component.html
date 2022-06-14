@@ -76,11 +76,11 @@
       </div>
     </form>
     <mat-tab-group mat-align-tabs="center" *ngIf="eventForm.get('id').value">
-      <mat-tab label="Code-Übersicht">
-        <app-event-codes-grid></app-event-codes-grid>
-      </mat-tab>
       <mat-tab label="Codes generieren">
         <app-event-code-generator [userId]="eventForm.get('userId').value" [eventId]="eventForm.get('id').value"></app-event-code-generator>
+      </mat-tab>
+      <mat-tab label="Code-Übersicht">
+        <app-event-codes-grid></app-event-codes-grid>
       </mat-tab>
     </mat-tab-group>
   </div>

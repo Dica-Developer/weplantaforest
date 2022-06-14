@@ -19,7 +19,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { ProjectEditTreeComponent, DeleteArticleConfirmationDialog } from './projects/project-edit/project-edit-tree/project-edit-tree.component';
 import { ProjectEditImageComponent, DeleteProjectImageConfirmationDialog } from './projects/project-edit/project-edit-image/project-edit-image.component';
-import { DeleteProjectConfirmationDialog } from '../util/grid-components/grid-project-actions/grid-project-actions.component';
 import { ContentOverviewComponent } from './content/content-overview/content-overview.component';
 import { ContentGridComponent } from './content/content-grid/content-grid.component';
 import { ContentDetailsComponent } from './content/content-details/content-details.component';
@@ -31,6 +30,8 @@ import { EventGridComponent } from './events/event-grid/event-grid.component';
 import { EventDetailsComponent } from './events/event-details/event-details.component';
 import { EventCodesGridComponent } from './events/event-codes-grid/event-codes-grid.component';
 import { EventCodeGeneratorComponent } from './events/event-code-generator/event-code-generator.component';
+import { TreetypesOverviewComponent } from './treeTypes/treetypes-overview/treetypes-overview.component';
+import { TreetypeEditComponent } from './treeTypes/treetype-edit/treetype-edit.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,8 @@ import { EventCodeGeneratorComponent } from './events/event-code-generator/event
     EventDetailsComponent,
     EventCodesGridComponent,
     EventCodeGeneratorComponent,
+    TreetypesOverviewComponent,
+    TreetypeEditComponent,
     // DeleteProjectConfirmationDialog
   ],
   imports: [

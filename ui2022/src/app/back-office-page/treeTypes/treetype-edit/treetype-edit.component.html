@@ -1,0 +1,56 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-2">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Name(De)"
+              name="name"
+              required
+              formControlName="nameDe"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-2">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Name(En)"
+              name="name"
+              required
+              formControlName="nameEn"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-2">
+          <img src="{{ imageSrc }}" width="150" height="150" *ngIf="imageSrc" />
+          <p *ngIf="!imageSrc">Kein Bild ausgewählt</p>
+        </div>
+        <div class="col-1">
+          <input
+            #csvInput
+            hidden="true"
+            type="file"
+            onclick="this.value=null"
+            (change)="imageChanged($event)"
+            accept=".png, .jpg, .jpeg"
+          />
+          <button mat-raised-button color="primary" (click)="csvInput.click()">
+            image
+          </button>
+        </div>
+        <div class="col-1">
+          <button mat-raised-button color="primary" (click)="updateTreetype()">
+            save
+          </button>
+          <button mat-raised-button color="warn" (click)="delete()">
+            delete
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+<mat-divider></mat-divider>
