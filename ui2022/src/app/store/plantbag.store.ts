@@ -44,6 +44,8 @@ export const plantForUser = createAction(
   props<{ request: any }>()
 );
 
+export const resetPlantbag = createAction('[Plantbag] reset plantbag');
+
 export interface PlantbagState {
   plantbagItems: PlantbagItem[];
 }
@@ -89,6 +91,10 @@ const plantbagReducer = createReducer(
     plantbagItems: state.plantbagItems.filter(
       (item) => item.article.articleId !== articleId
     ),
+  })),
+  on(resetPlantbag, (state) => ({
+    ...state,
+    plantbagItems: [],
   }))
 );
 
@@ -199,6 +205,7 @@ export class PlantbagEffects {
                 message: 'Pflanzkorb wurde generiert!',
               },
             }),
+            resetPlantbag()
           ])
         )
       )
