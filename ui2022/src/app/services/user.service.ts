@@ -77,4 +77,21 @@ export class UserService {
       {}
     );
   }
+
+  getTreesForUser(userId: number) {
+    return this.http.get(
+      environment.backendAdminUrl + '/trees?userId=' + userId
+    );
+  }
+
+  transferTrees(fromUserId: number, toUserId: number) {
+    return this.http.post(
+      environment.backendAdminUrl +
+        '/transformTrees?fromUserId=' +
+        fromUserId +
+        '&toUserId=' +
+        toUserId,
+      {}
+    );
+  }
 }

@@ -10,6 +10,8 @@ import { UserService } from '../services/user.service';
 import { switchMap } from 'rxjs/operators';
 import { AppState } from './app.state';
 import { Injectable } from '@angular/core';
+import { TreeType } from './project.store';
+import { addSuccessMessage } from './success-message.state';
 
 export interface User {
   admin: boolean;
@@ -19,6 +21,17 @@ export interface User {
   id: number;
   mail: string;
   name: string;
+}
+
+export interface TreesForUser {
+  userId: number;
+  trees: Tree[];
+}
+
+export interface Tree {
+  amount: number;
+  id: number;
+  treeType: TreeType;
 }
 
 export const loadUsers = createAction('[User] load all user');
@@ -85,14 +98,31 @@ export const updateUserArticleManagerRoleSuccess = createAction(
   props<{ userId: number; value: boolean }>()
 );
 
+export const loadTreesForUser = createAction(
+  '[User] load trees for user',
+  props<{ userId: number }>()
+);
+
+export const loadTreesForUserSuccess = createAction(
+  '[User] update article-manager role success',
+  props<{ userId: number; trees: Tree[] }>()
+);
+
+export const transferTrees = createAction(
+  '[User] transfer trees',
+  props<{ fromUserId: number; toUserId: number }>()
+);
+
 export interface UserState {
   users: User[];
   usersLoading: boolean;
+  treesForUser: TreesForUser;
 }
 
 export const initialState: UserState = {
   users: [],
   usersLoading: false,
+  treesForUser: null,
 };
 
 const userReducer = createReducer(
@@ -192,6 +222,14 @@ const userReducer = createReducer(
           return user;
         }
       }),
+  })),
+  on(loadTreesForUser, (state, { userId }) => ({
+    ...state,
+    treesForUser: null,
+  })),
+  on(loadTreesForUserSuccess, (state, { userId, trees }) => ({
+    ...state,
+    treesForUser: { userId, trees },
   }))
 );
 
@@ -210,6 +248,28 @@ export const selectUsersLoadingProgress = createSelector(
   usersFeature,
   (state: UserState) => state.usersLoading
 );
+
+export const selectTreesForUser = createSelector(
+  usersFeature,
+  (state: UserState) => state.treesForUser
+);
+
+export const selectAmountTreesForUser = createSelector(
+  usersFeature,
+  (state: UserState) => calcAmountOfTrees(state)
+);
+
+export function calcAmountOfTrees(state: UserState) {
+  if (state && state.treesForUser) {
+    let cnt = 0;
+    for (const tree of state.treesForUser.trees) {
+      cnt += tree.amount;
+    }
+    return cnt;
+  } else {
+    return 0;
+  }
+}
 
 @Injectable()
 export class UserEffects {
@@ -288,6 +348,39 @@ export class UserEffects {
         this.userService
           .updateArticleManagerRole(action.userId, action.value)
           .pipe(switchMap(() => [updateUserArticleManagerRoleSuccess(action)]))
+      )
+    )
+  );
+
+  LoadTreesForUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadTreesForUser),
+      switchMap((action) =>
+        this.userService
+          .getTreesForUser(action.userId)
+          .pipe(
+            switchMap((trees: Tree[]) => [
+              loadTreesForUserSuccess({ userId: action.userId, trees }),
+            ])
+          )
+      )
+    )
+  );
+
+  TranferTrees$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(transferTrees),
+      switchMap((action) =>
+        this.userService.transferTrees(action.fromUserId, action.toUserId).pipe(
+          switchMap(() => [
+            addSuccessMessage({
+              message: {
+                key: 'TRANSFER_TREES_SUCCESS',
+                message: 'Bäume wurden transferiert!',
+              },
+            }),
+          ])
+        )
       )
     )
   );
