@@ -1,0 +1,50 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-3">
+      <mat-form-field appearance="fill" class="title-field">
+        <input
+          type="text"
+          placeholder="User"
+          matInput
+          [formControl]="filterControl"
+          [matAutocomplete]="auto"
+          class="filter-input"
+        />
+        <mat-icon
+          aria-hidden="false"
+          (click)="removeUser()"
+          *ngIf="form.get('userId').value"
+          >delete</mat-icon
+        >
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let user of filteredOptions" [value]="user">
+            {{ user.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div *ngFor="let project of activeProjects$ | async">
+        <h3>
+          <b>{{ project.projectName }}</b>
+        </h3>
+        <ng-container *ngFor="let article of project.articles">
+          <app-plantbag-tree-input
+            [article]="article"
+            *ngIf="article.amount - article.alreadyPlanted > 0"
+          ></app-plantbag-tree-input>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-6">
+      <app-plantbag></app-plantbag>
+      <div class="button-wrapper">
+        <button mat-raised-button color="primary" (click)="plant()">
+          Pflanzkorb erstellen
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

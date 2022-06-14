@@ -97,7 +97,7 @@ export const createEventSuccess = createAction(
 
 export const addCartsToEvent = createAction(
   '[Content] add carts to event',
-  props<{ cartIds: number[], eventId: number }>()
+  props<{ cartIds: number[]; eventId: number }>()
 );
 
 export interface EventsState {
@@ -259,21 +259,21 @@ export class EventsEffects {
   );
 
   AddCartsToEvent$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(addCartsToEvent),
-    switchMap((action) =>
-      this.eventService.addCartsToEvent(action.cartIds, action.eventId).pipe(
-        switchMap((response: any) => [
-          loadEventCodes({ id: action.eventId }),
-          addSuccessMessage({
-            message: {
-              key: 'CARTS_ADDED_TO_EVENT',
-              message: 'Pflanzkörbe wurden dem Event hinzugefügt!',
-            },
-          }),
-        ])
+    this.actions$.pipe(
+      ofType(addCartsToEvent),
+      switchMap((action) =>
+        this.eventService.addCartsToEvent(action.cartIds, action.eventId).pipe(
+          switchMap((response: any) => [
+            loadEventCodes({ id: action.eventId }),
+            addSuccessMessage({
+              message: {
+                key: 'CARTS_ADDED_TO_EVENT',
+                message: 'Pflanzkörbe wurden dem Event hinzugefügt!',
+              },
+            }),
+          ])
+        )
       )
     )
-  )
-);
+  );
 }

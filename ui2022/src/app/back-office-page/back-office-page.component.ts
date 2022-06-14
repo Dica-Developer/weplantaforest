@@ -6,7 +6,7 @@ import { selectUsername, selectProfileImagename } from '../store/profile.store';
 import { environment } from '../../environments/environment';
 import { logout } from "../store/auth.store";
 
-declare type BackofficePage = 'CARTS' | 'USER' | 'PROJECTS' | 'CONTENT' | 'EVENTS' | 'TREETYPES';
+declare type BackofficePage = 'CARTS' | 'USER' | 'PROJECTS' | 'CONTENT' | 'EVENTS' | 'TREETYPES' | 'PLANT_FOR_USER';
 
 @Component({
   selector: 'app-back-office-page',

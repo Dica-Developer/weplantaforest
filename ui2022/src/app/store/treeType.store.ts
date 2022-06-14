@@ -95,7 +95,6 @@ export const treeTypeReducer = createReducer(
 );
 
 export function treeTypeReducerFn(state, action) {
-  console.log(state, action);  
   return treeTypeReducer(state, action);
 }
 

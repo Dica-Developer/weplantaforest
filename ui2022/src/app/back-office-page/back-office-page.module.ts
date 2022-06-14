@@ -32,6 +32,7 @@ import { EventCodesGridComponent } from './events/event-codes-grid/event-codes-g
 import { EventCodeGeneratorComponent } from './events/event-code-generator/event-code-generator.component';
 import { TreetypesOverviewComponent } from './treeTypes/treetypes-overview/treetypes-overview.component';
 import { TreetypeEditComponent } from './treeTypes/treetype-edit/treetype-edit.component';
+import { PlantForUserComponent } from './plant-for-user/plant-for-user/plant-for-user.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { TreetypeEditComponent } from './treeTypes/treetype-edit/treetype-edit.c
     EventCodeGeneratorComponent,
     TreetypesOverviewComponent,
     TreetypeEditComponent,
+    PlantForUserComponent,
     // DeleteProjectConfirmationDialog
   ],
   imports: [

@@ -39,6 +39,11 @@ export const generateCodes = createAction(
   props<{ request: any; eventId: number }>()
 );
 
+export const plantForUser = createAction(
+  '[Plantbag] plant for user',
+  props<{ request: any }>()
+);
+
 export interface PlantbagState {
   plantbagItems: PlantbagItem[];
 }
@@ -174,6 +179,24 @@ export class PlantbagEffects {
               message: {
                 key: 'CARTS_GENERATED',
                 message: 'Pflanzkörbe wurden generiert!',
+              },
+            }),
+          ])
+        )
+      )
+    )
+  );
+
+  PlantForUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(plantForUser),
+      switchMap((action) =>
+        this.plantbagService.plantForUser(action.request).pipe(
+          switchMap((cartIds: number[]) => [
+            addSuccessMessage({
+              message: {
+                key: 'CARTS_GENERATED',
+                message: 'Pflanzkorb wurde generiert!',
               },
             }),
           ])
