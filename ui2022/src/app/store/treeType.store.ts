@@ -57,6 +57,11 @@ export const deleteTreeTypeSuccess = createAction(
   props<{ treeTypeId: number }>()
 );
 
+export const addTreeType = createAction(
+  '[Treetypes] add treetype',
+  props<{ treeType: TreeTypeAdmin }>()
+);
+
 export interface TreeTypeState {
   treeTypes: TreeType[];
   treeTypesForAdmin: TreeTypeAdmin[];
@@ -82,10 +87,15 @@ export const treeTypeReducer = createReducer(
     treeTypesForAdmin: state.treeTypesForAdmin.filter(
       (tt) => tt.id != treeTypeId
     ),
+  })),
+  on(addTreeType, (state, { treeType }) => ({
+    ...state,
+    treeTypesForAdmin: [treeType, ...state.treeTypesForAdmin]
   }))
 );
 
 export function treeTypeReducerFn(state, action) {
+  console.log(state, action);  
   return treeTypeReducer(state, action);
 }
 
@@ -148,7 +158,7 @@ export class TreeTypeEffects {
               return [
                 uploadTreetypeImage({
                   imageFile: action.imageFile,
-                  treeTypeId: action.request.id,
+                  treeTypeId: id,
                 }),
               ];
             } else {
@@ -192,13 +202,14 @@ export class TreeTypeEffects {
       ofType(deleteTreeType),
       switchMap((action) =>
         this.treeTypeService.delete(action.treeTypeId).pipe(
-          switchMap((id: number) => [
+          switchMap((treeTypeId: number) => [
             addSuccessMessage({
               message: {
                 key: 'TREETYPE_DELETE_SUCCESS',
                 message: 'Baumart wurde gelöscht!',
               },
             }),
+            deleteTreeTypeSuccess({treeTypeId: action.treeTypeId})
           ]),
           catchError((error) => [
             addError({

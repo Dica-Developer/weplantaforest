@@ -1,3 +1,7 @@
+<button mat-raised-button color="primary" (click)="createTreeType()">
+  create
+</button>
+
 <app-treetype-edit
   *ngFor="let treeType of treeTypes$ | async"
   [treeType]="treeType"
