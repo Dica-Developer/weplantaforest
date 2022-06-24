@@ -1,17 +1,17 @@
 <div *ngIf="details" class="row">
   <div class="col-11">
     <mat-tab-group mat-align-tabs="center">
-      <mat-tab label="Geo-Coordinates">
+      <mat-tab label="Karte">
         <app-project-edit-location
           [positions]="projectForm.get('positions')"
         ></app-project-edit-location>
       </mat-tab>
-      <mat-tab label="Data">
+      <mat-tab label="Daten">
         <app-project-edit-data
           [projectForm]="projectForm"
         ></app-project-edit-data>
       </mat-tab>
-      <mat-tab label="Trees">
+      <mat-tab label="Bäume">
         <div class="spacer"></div>
         <div *ngFor="let tree of projectForm.get('articles').controls">
           <app-project-edit-tree [control]="tree"></app-project-edit-tree>
@@ -23,7 +23,7 @@
           </button>
         </div>
       </mat-tab>
-      <mat-tab label="Images">
+      <mat-tab label="Bilder">
         <div class="spacer"></div>
         <button mat-raised-button color="primary" (click)="addImage()">
           add image
@@ -40,7 +40,7 @@
     </mat-tab-group>
   </div>
   <div class="col-1">
-    <button mat-raised-button color="primary" (click)="saveData()">save</button>
+    <button mat-raised-button color="primary" (click)="saveData()">Speichern</button>
   </div>
 </div>
 
