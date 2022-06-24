@@ -277,7 +277,7 @@ mat-divider {
 
 snack-bar-container {
   background-color: #ff5a00 !important;
-
+  color: #fff!important;
   .mat-simple-snackbar-action {
     color: #fff !important;
   }
@@ -285,6 +285,7 @@ snack-bar-container {
 
 .success-snackbar {
   background-color: #82ab1f !important;
+  color: #fff!important;
 }
 
 .no-display {
@@ -303,3 +304,9 @@ snack-bar-container {
   margin-top: 15px !important;
   margin-bottom: 15px !important;
 }
+
+// .autocomplete-field {
+//   .mat-form-field-wrapper{
+//     padding-bottom: 25px!important;
+//   }
+// }
