@@ -1,6 +1,7 @@
 <form [formGroup]="form">
   <div class="row">
-    <div class="col-3">
+    <div class="col-4"></div>
+    <div class="col-4">
       <mat-form-field appearance="fill" class="title-field">
         <input
           type="text"
@@ -23,19 +24,25 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
+    <div class="col-4"></div>
   </div>
   <div class="row">
     <div class="col-6">
       <div *ngFor="let project of activeProjects$ | async">
-        <h3>
-          <b>{{ project.projectName }}</b>
-        </h3>
-        <ng-container *ngFor="let article of project.articles">
-          <app-plantbag-tree-input
-            [article]="article"
-            *ngIf="article.amount - article.alreadyPlanted > 0"
-          ></app-plantbag-tree-input>
-        </ng-container>
+        <mat-card>
+          <mat-card-content>
+            <h3>
+              <b>{{ project.projectName }}</b>
+            </h3>
+            <ng-container *ngFor="let article of project.articles">
+              <app-plantbag-tree-input
+                [article]="article"
+                *ngIf="article.amount - article.alreadyPlanted > 0"
+              ></app-plantbag-tree-input>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+        <mat-divider></mat-divider>
       </div>
     </div>
     <div class="col-6">
