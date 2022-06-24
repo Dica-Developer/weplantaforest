@@ -25,6 +25,9 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   @Input()
   withDelete: boolean = false;
 
+  @Input()
+  showProject: boolean = false;
+
   control: FormControl;
   controlVcSub: Subscription;
   sum: number = 0;
