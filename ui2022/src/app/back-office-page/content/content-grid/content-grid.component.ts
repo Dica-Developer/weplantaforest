@@ -58,7 +58,7 @@ export class ContentGridComponent implements OnInit, OnDestroy {
 
     {
       field: 'id',
-      headerName: 'Actions',
+      headerName: 'Löschen',
       cellRendererSelector: (params) => {
         return {
           component: 'contentActionRenderer',
