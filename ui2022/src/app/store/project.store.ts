@@ -131,6 +131,11 @@ export const loadProjectsSuccess = createAction(
   props<{ projects: GridProject[] }>()
 );
 
+export const addGridProject = createAction(
+  '[Project] add grid project',
+  props<{ project: GridProject }>()
+);
+
 export const loadProjectDetails = createAction(
   '[Project] load details',
   props<{ id: number }>()
@@ -266,6 +271,18 @@ const projectsReducer = createReducer(
     projects,
     projectsLoading: false,
   })),
+  on(addGridProject, (state, { project }) => {
+    if (state.projects.filter((el) => el.id == project.id).length == 0) {
+      return {
+        ...state,
+        projects: [project, ...state.projects],
+      };
+    } else {
+      return {
+        ...state,
+      };
+    }
+  }),
   on(loadProjectDetails, (state) => ({
     ...state,
     projectDetails: null,
@@ -303,7 +320,9 @@ const projectsReducer = createReducer(
     ...state,
     projectDetails: {
       ...state.projectDetails,
-      articles: state.projectDetails.articles.filter((el) => el.articleId != id),
+      articles: state.projectDetails.articles.filter(
+        (el) => el.articleId != id
+      ),
     },
   })),
   on(deleteArticleWithoutId, (state, { article }) => ({
@@ -546,8 +565,13 @@ export class ProjectsEffects {
       switchMap((action) =>
         this.projectService.updateProject(action.request).pipe(
           switchMap(() => {
+            const project: GridProject = {
+              id: action.request.id,
+              name: action.request.name,
+            };
             if (action.mainImageFile) {
               return [
+                addGridProject({ project }),
                 updateProjectMainImage({
                   projectId: action.request.id,
                   file: action.mainImageFile,
@@ -555,6 +579,7 @@ export class ProjectsEffects {
               ];
             } else {
               return [
+                addGridProject({ project }),
                 addSuccessMessage({
                   message: {
                     key: 'PROJECT_SAVE_SUCCESS',
