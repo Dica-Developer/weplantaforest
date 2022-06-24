@@ -382,9 +382,6 @@ const projectsReducer = createReducer(
 );
 
 export function projectsReducerFn(state, action) {
-  console.log(action);
-  // console.log(state.projectDetails?.articles);
-
   return projectsReducer(state, action);
 }
 
