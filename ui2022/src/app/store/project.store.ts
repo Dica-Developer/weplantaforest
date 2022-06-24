@@ -303,7 +303,7 @@ const projectsReducer = createReducer(
     ...state,
     projectDetails: {
       ...state.projectDetails,
-      articles: state.projectDetails.articles.filter((el) => el.id != id),
+      articles: state.projectDetails.articles.filter((el) => el.articleId != id),
     },
   })),
   on(deleteArticleWithoutId, (state, { article }) => ({
@@ -363,6 +363,9 @@ const projectsReducer = createReducer(
 );
 
 export function projectsReducerFn(state, action) {
+  console.log(action);
+  // console.log(state.projectDetails?.articles);
+
   return projectsReducer(state, action);
 }
 
