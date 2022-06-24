@@ -19,14 +19,14 @@
         </div>
         <div class="center">
           <button mat-raised-button color="primary" (click)="addArticle()">
-            add article
+            Bäume hinzufügen
           </button>
         </div>
       </mat-tab>
       <mat-tab label="Bilder">
         <div class="spacer"></div>
         <button mat-raised-button color="primary" (click)="addImage()">
-          add image
+          Bild hinzuügen
         </button>
         <div class="spacer"></div>
         <div *ngFor="let image of projectForm.get('images').controls">

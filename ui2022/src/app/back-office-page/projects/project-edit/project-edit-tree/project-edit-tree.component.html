@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <mat-label>Treetype</mat-label>
+        <mat-label>Baumart</mat-label>
         <mat-select
           [value]="controlObj.get('treeType').get('id').value"
           (selectionChange)="treeTypeChanged($event)"
@@ -38,8 +38,8 @@
       </mat-form-field>
     </div>
     <div class="col">
-      <button mat-raised-button color="warn" (click)="openDeleteConfirmation()">
-        delete
+      <button mat-icon-button color="warn" (click)="openDeleteConfirmation()">
+        <mat-icon aria-hidden="false">delete</mat-icon>
       </button>
     </div>
   </div>
