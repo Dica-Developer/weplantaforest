@@ -39,7 +39,7 @@ export class EventGridComponent implements OnInit, OnDestroy {
     },
     {
       field: 'id',
-      headerName: 'Actions',
+      headerName: 'Löschen',
       cellRendererSelector: (params) => {
         return {
           component: 'gridActionRenderer',
