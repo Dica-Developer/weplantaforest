@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col-5">
+  <div class="col-4">
     <mat-form-field appearance="fill">
-      <mat-label>Description(De)</mat-label>
+      <mat-label>Beschreibung(De)</mat-label>
       <textarea
         matInput
         placeholder=""
@@ -10,7 +10,7 @@
       ></textarea>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Description(En)</mat-label>
+      <mat-label>Beschreibung(En)</mat-label>
       <textarea
         matInput
         placeholder=""
@@ -22,9 +22,9 @@
   <div class="col-6">
     <img src="{{ imageSrc }}" width="400" height="300" />
   </div>
-  <div class="col-1">
+  <div class="col-2">
     <button mat-raised-button color="primary" (click)="updateImage()">
-      save
+      Speichern
     </button>
     <input
       #csvInput
@@ -35,10 +35,10 @@
       accept=".png, .jpg, .jpeg"
     />
     <button mat-raised-button color="primary" (click)="csvInput.click()">
-      image
+      Bild
     </button>
-    <button mat-raised-button color="warn" (click)="openDeleteConfirmation()">
-      delete
+    <button mat-icon-button color="warn" (click)="openDeleteConfirmation()">
+      <mat-icon aria-hidden="false">delete</mat-icon>
     </button>
   </div>
 </div>
