@@ -35,7 +35,7 @@ export class ProjectGridComponent implements OnInit, OnDestroy {
     },
     {
       field: 'id',
-      headerName: 'Actions',
+      headerName: 'Löschen',
       cellRendererSelector: (params) => {
         return {
           component: 'projectActionRenderer',
