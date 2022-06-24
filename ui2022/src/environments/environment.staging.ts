@@ -1,7 +1,6 @@
 export const environment = {
   production: true,
-  backendUrl: 'https://iplantatree.org/s/u',
-  backendAdminUrl: 'https://iplantatree.org/s/a',
-  backendArticleManagerUrl: 'https://iplantatree.org/s/m',
-
+  backendUrl: 'http://iplantatree.org:81/s/u',
+  backendAdminUrl: 'http://iplantatree.org:81/s/a',
+  backendArticleManagerUrl: 'http://iplantatree.org:81/s/m',
 };
