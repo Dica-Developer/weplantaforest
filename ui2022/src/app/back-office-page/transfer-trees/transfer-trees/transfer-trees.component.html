@@ -1,9 +1,11 @@
+<div class="spacer"></div>
 <div class="row">
+  <div class="col-2"></div>
   <div class="col-4">
     <mat-form-field appearance="fill" class="title-field">
       <input
         type="text"
-        placeholder="User der Bäume abgibt"
+        placeholder="Von User der Bäume abgibt"
         matInput
         [formControl]="filterControlFromUser"
         [matAutocomplete]="auto"
@@ -26,7 +28,7 @@
     <mat-form-field appearance="fill" class="title-field">
       <input
         type="text"
-        placeholder="User der Bäume aufnimmt"
+        placeholder="Zu User der Bäume aufnimmt"
         matInput
         [formControl]="filterControlToUser"
         [matAutocomplete]="autoTo"
@@ -45,23 +47,24 @@
       </mat-autocomplete>
     </mat-form-field>
   </div>
-  <div class="col-4">
-    <div class="btn-wrapper">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="transferTrees()"
-        [disabled]="!fromUser.value || !toUser.value"
-      >
-        Bäume übertragen
-      </button>
-    </div>
-  </div>
 </div>
 <div class="row">
-  <div class="col">
-    <b>{{
-      "Anzahl an zu übertragenden Bäumen: " + (amountOfTrees$ | async)
-    }}</b>
+  <div class="col-2"></div>
+  <div class="col-4 transfer-text">
+    <p>
+      <b>{{
+        "Anzahl der zu übertragenden Bäume: " + (amountOfTrees$ | async)
+      }}</b>
+    </p>
+  </div>
+  <div class="col-2">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="transferTrees()"
+      [disabled]="!fromUser.value || !toUser.value"
+    >
+      Bäume übertragen
+    </button>
   </div>
 </div>

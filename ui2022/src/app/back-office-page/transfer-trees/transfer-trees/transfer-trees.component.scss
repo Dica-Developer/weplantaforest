@@ -11,7 +11,13 @@ mat-icon {
   cursor: pointer;
 }
 
-
-.btn-wrapper {
-  padding: 15px;
+.transfer-text{
+  text-align: right;
+  p{
+    margin-top: 10px;
+  }
+}
+.spacer {
+  width: 100%;
+  height: 25px;
 }
