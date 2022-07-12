@@ -561,16 +561,16 @@ export class ProjectsEffects {
       ofType(updateProject),
       switchMap((action) =>
         this.projectService.updateProject(action.request).pipe(
-          switchMap(() => {
+          switchMap((projectId: number) => {
             const project: GridProject = {
-              id: action.request.id,
+              id: projectId,
               name: action.request.name,
             };
             if (action.mainImageFile) {
               return [
                 addGridProject({ project }),
                 updateProjectMainImage({
-                  projectId: action.request.id,
+                  projectId,
                   file: action.mainImageFile,
                 }),
               ];
