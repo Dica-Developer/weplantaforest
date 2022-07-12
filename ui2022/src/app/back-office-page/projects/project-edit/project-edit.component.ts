@@ -8,7 +8,7 @@ import {
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { Observable, Subscription } from 'rxjs';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
 import { addProjectImage } from '../../../store/project.store';
 import {
@@ -71,35 +71,75 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
   }
 
   initForm(details: ProjectDetails) {
-    this.projectForm.get('name').setValue(details.name);
-    this.projectForm.get('shopActive').setValue(details.shopActive);
-    this.projectForm.get('visible').setValue(details.visible);
-    this.projectForm.get('id').setValue(details.id);
-    this.projectForm.get('imageFileName').setValue(details.imageFileName);
-    this.projectForm.get('mainImageFile').setValue(null);
-    this.projectForm.get('latitude').setValue(details.latitude);
-    this.projectForm.get('longitude').setValue(details.longitude);
+    //for new id set data, for the same one, leave as is to not overwrite edited but not saved data
     this.projectForm.get('manager').setValue(details.manager);
-    this.projectForm.get('positions').setValue(details.positions);
+    if (this.projectForm.get('id').value !== details.id) {
+      this.projectForm.get('name').setValue(details.name);
+      this.projectForm.get('shopActive').setValue(details.shopActive);
+      this.projectForm.get('visible').setValue(details.visible);
+      this.projectForm.get('id').setValue(details.id);
+      this.projectForm.get('imageFileName').setValue(details.imageFileName);
+      this.projectForm.get('mainImageFile').setValue(null);
+      this.projectForm.get('latitude').setValue(details.latitude);
+      this.projectForm.get('longitude').setValue(details.longitude);
+      this.projectForm.get('positions').setValue(details.positions);
 
-    let articleArray = [];
-    for (let article of details.articles) {
-      articleArray.push(this.createArticleFormGroup(article));
+      this.projectForm
+        .get('descriptionDe')
+        .setValue(
+          this.textHelper.getTextForLanguage(details.description, 'de')
+        );
+      this.projectForm
+        .get('descriptionEn')
+        .setValue(
+          this.textHelper.getTextForLanguage(details.description, 'en')
+        );
+
+      let articleArray = [];
+      for (let article of details.articles) {
+        articleArray.push(this.createArticleFormGroup(article));
+      }
+      this.projectForm.controls['articles'] = this.fb.array(articleArray);
+
+      let imageArray = [];
+      for (let image of details.images) {
+        imageArray.push(this.createImageFormGroup(image));
+      }
+      this.projectForm.controls['images'] = this.fb.array(imageArray);
+    } else {
+      console.log('no new id, check if articles or images changed');
+
+      //if article were added, create new one, with the last one added, leave the other ones as it is
+      const articleControlArray = this.projectForm.controls[
+        'articles'
+      ] as FormArray;
+      if (articleControlArray.controls.length < details.articles.length) {
+        const diff =
+          details.articles.length - articleControlArray.controls.length;
+        for (let i = diff; i > 0; i--) {
+          articleControlArray.controls.push(
+            this.createArticleFormGroup(
+              details.articles[details.articles.length - i]
+            )
+          );
+        }
+      }
+      this.projectForm.controls['articles'] = articleControlArray;
+
+      //same for imageArray
+      const imageControlArray = this.projectForm.controls[
+        'images'
+      ] as FormArray;
+      if (imageControlArray.controls.length < details.images.length) {
+        const diff = details.images.length - imageControlArray.controls.length;
+        for (let i = diff; i > 0; i--) {
+          imageControlArray.controls.push(
+            this.createImageFormGroup(details.images[details.images.length - i])
+          );
+        }
+      }
+      this.projectForm.controls['images'] = imageControlArray;
     }
-    this.projectForm.controls['articles'] = this.fb.array(articleArray);
-
-    let imageArray = [];
-    for (let image of details.images) {
-      imageArray.push(this.createImageFormGroup(image));
-    }
-    this.projectForm.controls['images'] = this.fb.array(imageArray);
-
-    this.projectForm
-      .get('descriptionDe')
-      .setValue(this.textHelper.getTextForLanguage(details.description, 'de'));
-    this.projectForm
-      .get('descriptionEn')
-      .setValue(this.textHelper.getTextForLanguage(details.description, 'en'));
   }
 
   saveData() {
@@ -107,7 +147,13 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       this.projectForm.get('descriptionDe').value,
       this.projectForm.get('descriptionEn').value
     );
-
+    const articles = [];
+    const articleControlArray = this.projectForm.controls[
+      'articles'
+    ] as FormArray;
+    for(let article of articleControlArray.controls) {
+      articles.push(article.value);
+    }
     const request: ProjectEditRequest = {
       id: this.projectForm.get('id').value,
       name: this.projectForm.get('name').value,
@@ -116,12 +162,16 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       description: fullDescription,
       positions: this.projectForm.get('positions').value,
       images: [],
-      articles: this.projectForm.get('articles').value,
+      articles,
       imageFileName: this.projectForm.get('imageFileName').value,
       latitude: this.projectForm.get('latitude').value,
       longitude: this.projectForm.get('longitude').value,
       manager: this.projectForm.get('manager').value,
     };
+    console.log(this.projectForm);
+    
+    console.log(request);
+    
     this.store.dispatch(
       updateProject({
         request,

@@ -17,7 +17,7 @@ export class ProjectEditDataComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.imageSrc = environment.backendUrl + '/project/image/' + this.projectForm.get('imageFileName').value + '/400/300';
   }
 
