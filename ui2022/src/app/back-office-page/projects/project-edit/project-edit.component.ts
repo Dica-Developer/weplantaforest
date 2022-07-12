@@ -107,8 +107,6 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       }
       this.projectForm.controls['images'] = this.fb.array(imageArray);
     } else {
-      console.log('no new id, check if articles or images changed');
-
       //if article were added, create new one, with the last one added, leave the other ones as it is
       const articleControlArray = this.projectForm.controls[
         'articles'
@@ -168,10 +166,6 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       longitude: this.projectForm.get('longitude').value,
       manager: this.projectForm.get('manager').value,
     };
-    console.log(this.projectForm);
-    
-    console.log(request);
-    
     this.store.dispatch(
       updateProject({
         request,
