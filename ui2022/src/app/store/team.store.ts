@@ -10,6 +10,7 @@ import { AppState } from './app.state';
 import { TeamService } from '../services/team.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
+import * as he from 'he';
 
 export interface Team {
   id: number;
@@ -32,10 +33,20 @@ export const initialState: TeamState = {
 
 const teamReducer = createReducer(
   initialState,
-  on(loadTeamsSuccess, (state, { teams }) => ({
-    ...state,
-    teams,
-  }))
+  on(loadTeamsSuccess, (state, { teams }) => {
+    const teamsDecoded = [];
+    for (let team of teams) {
+      const teamDecoded = {
+        id: team.id,
+        name: he.decode(team.name),
+      };
+      teamsDecoded.push(teamDecoded);
+    }
+    return {
+      ...state,
+      teams: teamsDecoded,
+    };
+  })
 );
 
 export function teamReducerFn(state, action) {
