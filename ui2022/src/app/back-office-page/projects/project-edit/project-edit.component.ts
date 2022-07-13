@@ -149,8 +149,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  createArticleFormGroups(details: ProjectDetails) {
-    
+  createArticleFormGroups(details: ProjectDetails) {    
     const articleControlArray = this.projectForm.controls[
       'articles'
     ] as FormArray;

@@ -29,6 +29,7 @@
           Bild hinzuügen
         </button>
         <div class="spacer"></div>
+        <p class="alert alert-warning" *ngIf="!projectForm.get('id').value">Bitte Bilder erst nach dem Erstellen eines Projektes hinzufügen.</p>
         <div *ngFor="let image of projectForm.get('images').controls">
           <app-project-edit-image
             [control]="image"

@@ -170,7 +170,7 @@ export const deleteArticleSuccess = createAction(
 );
 export const deleteArticleWithoutId = createAction(
   '[Project] delete article without id',
-  props<{ article: ProjectArticle }>()
+  props<{ article: ProjectArticle, index: number }>()
 );
 
 export const loadProjectImages = createAction(
@@ -325,15 +325,17 @@ const projectsReducer = createReducer(
       ),
     },
   })),
-  on(deleteArticleWithoutId, (state, { article }) => ({
-    ...state,
-    projectDetails: {
-      ...state.projectDetails,
-      articles: state.projectDetails.articles.filter(
-        (el) => el.articleId != null
-      ),
-    },
-  })),
+  on(deleteArticleWithoutId, (state, { article, index }) =>{
+    const articles = [...state.projectDetails.articles];
+    articles.splice(index, 1);
+    return {
+      ...state,
+      projectDetails: {
+        ...state.projectDetails,
+        articles
+      }
+    };
+  }),
   on(loadProjectImagesSuccess, (state, { images }) => ({
     ...state,
     projectDetails: {
