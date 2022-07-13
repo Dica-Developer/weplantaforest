@@ -8,9 +8,10 @@ import {
 } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EventService } from '../services/event.service';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 import { AppState } from './app.state';
 import { addSuccessMessage } from './success-message.state';
+import { addError } from './error.state';
 
 export interface EventGridEntry {
   id: number;
@@ -252,7 +253,27 @@ export class EventsEffects {
                 message: 'Event wurde erstellt!',
               },
             }),
-          ])
+          ]),
+          catchError((err) => {
+            console.log(err);
+            let errorMessage = 'Das Speichern ist leider fehlgeschlagen';
+            if (
+              err &&
+              err.error &&
+              err.error.errorInfos &&
+              err.error.errorInfos.length >= 1
+            ) {
+              errorMessage = err.error.errorInfos[0].errorCode;
+            }
+            return [
+              addError({
+                error: {
+                  key: 'EVENT_CREATE_FAILED',
+                  message: errorMessage,
+                },
+              }),
+            ];
+          })
         )
       )
     )

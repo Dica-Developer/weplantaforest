@@ -34,6 +34,8 @@ public class EventService {
     public Event create(Event event) throws IpatException {
         IpatPreconditions.checkNotNull(event, ErrorCodes.EVENT_IS_NULL);
         IpatPreconditions.checkArgument(event.getId() == null, ErrorCodes.EVENT_ALREADY_EXISTS);
+        Event checkEvent = eventRepository.findByName(event.getName());
+        IpatPreconditions.checkArgument(checkEvent == null, "Ein Event mit diesem Namen existiert bereits.");
         return eventRepository.save(event);
     }
 
