@@ -19,6 +19,7 @@ import { NoImgBoxComponent } from './common-components/no-img-box/no-img-box.com
 import { GridEventActionsComponent } from './grid-components/grid-event-actions/grid-event-actions.component';
 import { PlantbagTreeInputComponent } from './plantbag-components/plantbag-tree-input/plantbag-tree-input.component';
 import { PlantbagComponent } from './common-components/plantbag/plantbag.component';
+import { UserGridProfileLinkComponent } from './grid-components/user-grid-profile-link/user-grid-profile-link.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PlantbagComponent } from './common-components/plantbag/plantbag.compone
     GridEventActionsComponent,
     PlantbagTreeInputComponent,
     PlantbagComponent,
+    UserGridProfileLinkComponent,
   ],
   imports: [
     CommonModule,

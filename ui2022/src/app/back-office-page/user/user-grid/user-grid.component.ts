@@ -8,8 +8,15 @@ import {
   loadUsers,
   selectUsers,
 } from '../../../store/user.store';
-import { CellValueChangedEvent, ColDef, GridOptions } from 'ag-grid-community';
+import {
+  CellClickedEvent,
+  CellValueChangedEvent,
+  ColDef,
+  GridOptions,
+} from 'ag-grid-community';
 import { GridCheckboxComponent } from '../../../util/grid-components/grid-checkbox/grid-checkbox.component';
+import { environment } from '../../../../environments/environment';
+import { UserGridProfileLinkComponent } from '../../../util/grid-components/user-grid-profile-link/user-grid-profile-link.component';
 import {
   updateUserBannedFlag,
   updateUserArticleManagerRole,
@@ -44,6 +51,18 @@ export class UserGridComponent implements OnInit, OnDestroy {
           updateUserName({ userId: params.data.id, userName: params.newValue })
         );
         return true;
+      },
+    },
+    {
+      field: 'name',
+      headerName: 'Profil',
+      sortable: false,
+      width: 80,
+      cellRenderer: 'profileRenderer',
+      onCellClicked: (event: CellClickedEvent) => {
+        window
+          .open(environment.oldFrontendUrl + '/user/' + event.value, '_blank')
+          .focus();
       },
     },
     {
@@ -132,6 +151,7 @@ export class UserGridComponent implements OnInit, OnDestroy {
     rowData: [],
     components: {
       checkboxRenderer: GridCheckboxComponent,
+      profileRenderer: UserGridProfileLinkComponent,
     },
   };
 
