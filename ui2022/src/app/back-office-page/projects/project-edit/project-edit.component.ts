@@ -108,35 +108,10 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       this.projectForm.controls['images'] = this.fb.array(imageArray);
     } else {
       //if article were added, create new one, with the last one added, leave the other ones as it is
-      const articleControlArray = this.projectForm.controls[
-        'articles'
-      ] as FormArray;
-      if (articleControlArray.controls.length < details.articles.length) {
-        const diff =
-          details.articles.length - articleControlArray.controls.length;
-        for (let i = diff; i > 0; i--) {
-          articleControlArray.controls.push(
-            this.createArticleFormGroup(
-              details.articles[details.articles.length - i]
-            )
-          );
-        }
-      }
-      this.projectForm.controls['articles'] = articleControlArray;
+      this.createArticleFormGroups(details);
 
       //same for imageArray
-      const imageControlArray = this.projectForm.controls[
-        'images'
-      ] as FormArray;
-      if (imageControlArray.controls.length < details.images.length) {
-        const diff = details.images.length - imageControlArray.controls.length;
-        for (let i = diff; i > 0; i--) {
-          imageControlArray.controls.push(
-            this.createImageFormGroup(details.images[details.images.length - i])
-          );
-        }
-      }
-      this.projectForm.controls['images'] = imageControlArray;
+      this.createImageFormGroups(details);
     }
   }
 
@@ -149,7 +124,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     const articleControlArray = this.projectForm.controls[
       'articles'
     ] as FormArray;
-    for(let article of articleControlArray.controls) {
+    for (let article of articleControlArray.controls) {
       articles.push(article.value);
     }
     const request: ProjectEditRequest = {
@@ -172,6 +147,48 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
         mainImageFile: this.projectForm.get('mainImageFile').value,
       })
     );
+  }
+
+  createArticleFormGroups(details: ProjectDetails) {
+    
+    const articleControlArray = this.projectForm.controls[
+      'articles'
+    ] as FormArray;
+    //article added
+    if (articleControlArray.controls.length < details.articles.length) {
+      const diff =
+        details.articles.length - articleControlArray.controls.length;
+      for (let i = diff; i > 0; i--) {
+        articleControlArray.controls.push(
+          this.createArticleFormGroup(
+            details.articles[details.articles.length - i]
+          )
+        );
+      }
+    }
+    //article removed is handled via eventEmitter
+    this.projectForm.controls['articles'] = articleControlArray;
+  }
+
+  removeArticleForm(index: number) {
+    const articleControlArray = this.projectForm.controls[
+      'articles'
+    ] as FormArray;
+    articleControlArray.controls.splice(index, 1);
+    this.projectForm.controls['articles'] = articleControlArray;    
+  }
+
+  createImageFormGroups(details: ProjectDetails) {
+    const imageControlArray = this.projectForm.controls['images'] as FormArray;
+    if (imageControlArray.controls.length < details.images.length) {
+      const diff = details.images.length - imageControlArray.controls.length;
+      for (let i = diff; i > 0; i--) {
+        imageControlArray.controls.push(
+          this.createImageFormGroup(details.images[details.images.length - i])
+        );
+      }
+    }
+    this.projectForm.controls['images'] = imageControlArray;
   }
 
   createArticleFormGroup(article: ProjectArticle) {

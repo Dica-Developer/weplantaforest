@@ -13,8 +13,8 @@
       </mat-tab>
       <mat-tab label="Bäume">
         <div class="spacer"></div>
-        <div *ngFor="let tree of projectForm.get('articles').controls">
-          <app-project-edit-tree [control]="tree"></app-project-edit-tree>
+        <div *ngFor="let tree of projectForm.get('articles').controls; let i = index" >
+          <app-project-edit-tree [control]="tree" [index]="i" (articleRemoved)="removeArticleForm($event)"></app-project-edit-tree>
           <mat-divider></mat-divider>
         </div>
         <div class="center">

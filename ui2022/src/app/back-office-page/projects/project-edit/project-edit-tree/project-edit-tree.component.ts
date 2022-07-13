@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { TextHelper } from '../../../../util/text.helper';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-project-edit-tree',
   templateUrl: './project-edit-tree.component.html',
@@ -24,6 +25,12 @@ export class ProjectEditTreeComponent implements OnInit, OnDestroy {
   @Input() set control(control: FormGroup) {
     this.controlObj = control;
   }
+
+  @Input()
+  index: number;
+
+  @Output()
+  articleRemoved = new EventEmitter<number>();
 
   selectTreetypesSub: Subscription;
 
@@ -53,16 +60,19 @@ export class ProjectEditTreeComponent implements OnInit, OnDestroy {
   }
 
   openDeleteConfirmation() {
-    const dialogRef = this.dialog.open(DeleteArticleConfirmationDialog);
+    console.log('removing article with index' + this.index);
+    
+    const dialogRef = this.dialog.open(DeleteArticleConfirmationDialog);    
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        this.articleRemoved.emit(this.index);
         if (this.controlObj.get('articleId').value) {
           this.store.dispatch(
             deleteArticle({ id: this.controlObj.get('articleId').value })
           );
         } else {
           this.store.dispatch(
-            deleteArticleWithoutId({ article: this.controlObj.value })
+            deleteArticleWithoutId({ article: this.controlObj.value, index: this.index })
           );
         }
       }
