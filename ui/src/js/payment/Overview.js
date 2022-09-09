@@ -203,7 +203,12 @@ export default class Overview extends Component {
           </div>
         </div>
         <div className="bold choose col-md-12">{counterpart.translate('CHOOSE_PAYMENT')}:</div>
-        <div className="paymentOption col-md-6">{sepaPart}</div>
+        {/* <div className="paymentOption col-md-6">{sepaPart}</div>  */}
+        <div className="paymentOption col-md-6">
+        <div className="panel panel-warning ">
+          <div className="panel-heading">Aufgrund einer technischen Störung sind SEPA-Lastschriften derzeit leider nicht möglich. Wir arbeiten an einer Lösung und würden uns freuen, wenn du bis dahin PayPal verwendest.<br></br> Vielen Dank!</div>
+        </div>
+        </div>
         <div className="paymentOption col-md-6">
           {paypalWarning}
           <div id="paypal-button-container"></div>
