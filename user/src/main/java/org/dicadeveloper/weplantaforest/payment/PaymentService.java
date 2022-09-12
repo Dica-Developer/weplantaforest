@@ -51,7 +51,7 @@ public class PaymentService {
         }
     }
 
-    private void payViaSepa(PaymentData paymentData, User buyer) throws IpatException {
+    private void payViaSepa(PaymentData paymentData, User buyer) throws IpatException { 
         Cart cartToPay = _cartRepository.findById(paymentData.getCartId()).orElse(null);
         IpatPreconditions.checkNotNull(cartToPay, ErrorCodes.CART_IS_NULL);
         String paymentRequestResponse = _paymentHelper.postRequestSepa(cartToPay, paymentData);
@@ -71,6 +71,8 @@ public class PaymentService {
             }
             sendPaymentConfirmationMail(cartToPay.getBuyer());
         } else {
+            LOG.error("Error occured due to connection with Spendenbank:");
+            LOG.error(paymentRequestResponse);
             String errorCode = _paymentHelper.getErrorCode(paymentRequestResponse);
             throw new IpatException(PaymentHelper.BANK_ERRORS.get("BANK_" + errorCode));
         }
