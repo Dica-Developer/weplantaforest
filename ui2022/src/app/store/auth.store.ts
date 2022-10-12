@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { loadTreeTypes } from './treeType.store';
 import { Router } from '@angular/router';
+import { addError } from './error.state';
 import {
   setUsername,
   loadProfileDetails,
@@ -175,7 +176,10 @@ export class AuthEffects {
       switchMap((action: any) =>
         this.authService
           .resetPasswordRequest(action.email, action.language)
-          .pipe(switchMap((response) => [resetPasswordRequestSuccess()]))
+          .pipe(switchMap((response) => [resetPasswordRequestSuccess()]),
+          catchError((error) => [ addError({
+            error: { key: 'USER_NOT_FOUND', message: 'Nutzer nicht gefunden' },
+          }),]))
       )
     )
   );

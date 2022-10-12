@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AppState } from '../store/app.state';
 import { selectPasswordResetSent, resetPassword, verifyPasswordResetLink, selectVerifyPasswordResetLink } from '../store/auth.store';
+import { PasswordValidation } from '../util/validators/compare-password.validator';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -16,7 +17,7 @@ export class ResetPasswordPageComponent implements OnInit {
   resetPasswordForm = new FormGroup({
     password: new FormControl(''),
     passwordConfirmation: new FormControl(''),
-  });
+  }, PasswordValidation.MatchPassword);
   id: string = '';
   key: string = '';
 
