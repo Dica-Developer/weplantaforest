@@ -134,13 +134,13 @@ public class UserController {
     @RequestMapping(value = Uris.USER_PASSWORD_RESET_VERIFIY_LINK, method = RequestMethod.POST)
     public ResponseEntity<?> verifyPasswordResetLink(@RequestParam long id, @RequestParam String key, @RequestParam String language) throws IpatException {
         String userName = userService.verifiyPasswordResetLink(id, key);
-        return new ResponseEntity<>(userName, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.USER_PASSWORD_RESET, method = RequestMethod.POST)
     public ResponseEntity<?> resetPasswordForUser(@RequestParam long id, @RequestParam String key, @RequestParam String language, @RequestParam String password) throws IpatException {
         String userName = userService.resetPasswordForUser(id, key, password);
-        return new ResponseEntity<>(userName, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.IS_USER_ADMIN, method = RequestMethod.GET)

@@ -35,6 +35,8 @@ import { APP_BASE_HREF } from '@angular/common';
 import { eventsReducerFn, EventsEffects } from './store/events.store';
 import { teamReducerFn, TeamEffects } from './store/team.store';
 import { plantbagReducerFn, PlantbagEffects } from './store/plantbag.store';
+import { ForgotPasswordPageComponent } from './forgot-password-page/forgot-password-page.component';
+import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -50,7 +52,7 @@ export const MY_FORMATS = {
 };
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ForgotPasswordPageComponent, ResetPasswordPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
