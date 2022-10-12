@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from './store/app.state';
@@ -17,20 +17,20 @@ export class AppComponent {
   loggedIn$: Observable<boolean>;
   token$: Observable<string>;
 
-  constructor(
-    private store: Store<AppState>,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {
+  constructor(private store: Store<AppState>, private router: Router, private snackBar: MatSnackBar) {
     this.loggedIn$ = store.select(selectLoggedIn);
     this.token$ = store.select(selectJwtToken);
-    this.loggedIn$.subscribe((res) => {
-      if (res) {
-        this.router.navigate(['/backOffice2022']);
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
+    console.log(this.router.url);
+    // this.loggedIn$.subscribe((res) => {
+
+    //   if (!this.router.url.includes('password_reset')) {
+    //     if (res) {
+    //       this.router.navigate(['/backOffice2022/carts']);
+    //     } else {
+    //       this.router.navigate(['/login']);
+    //     }
+    //   }
+    // });
     this.store.select(selectErrors).subscribe((errors) => {
       for (let error of errors) {
         this.snackBar
@@ -44,13 +44,12 @@ export class AppComponent {
     this.store.select(selectSuccessMessages).subscribe((messages) => {
       for (let message of messages) {
         this.snackBar
-          .open(message.message, 'X', {panelClass: ['success-snackbar']})
+          .open(message.message, 'X', { panelClass: ['success-snackbar'] })
           .afterDismissed()
           .subscribe((res) => {
             this.store.dispatch(removeSuccessMessage({ key: message.key }));
           });
       }
     });
-
   }
 }

@@ -14,13 +14,11 @@ export class LoginPageComponent implements OnInit {
   loginError$: Observable<string>;
 
   loginForm = new FormGroup({
-    name: new FormControl(''),
-    password: new FormControl(''),
+    name: new FormControl('koko'),
+    password: new FormControl('welcome1'),
   });
 
-  constructor(
-    private store: Store<AppState>
-  ) {
+  constructor(private store: Store<AppState>) {
     this.loginError$ = store.select(selectLoginError);
   }
 

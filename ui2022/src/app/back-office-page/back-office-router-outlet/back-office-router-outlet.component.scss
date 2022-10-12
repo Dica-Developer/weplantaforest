@@ -2,20 +2,19 @@
   width: 60px;
 }
 
-mat-toolbar-row{
-  div{
+mat-toolbar-row {
+  div {
     text-align: center;
     width: 100%;
     display: block;
   }
 }
 
-.border-bottom{
+.border-bottom {
   border-bottom: solid;
 }
 
-
-.profile-img{
+.profile-img {
   border-radius: 50%;
   margin-right: 15px;
 }
@@ -24,7 +23,7 @@ mat-toolbar-row{
   margin: 0;
 }
 
-a{
+a {
   text-decoration: none;
   color: #fff;
   margin-right: 30px;

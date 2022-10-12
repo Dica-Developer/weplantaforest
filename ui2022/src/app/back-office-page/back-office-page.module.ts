@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BackOfficePageComponent } from './back-office-page.component';
 import { UtilModule } from '../util/util.module';
 import { RouterModule } from '@angular/router';
 import { CartsOverviewComponent } from './carts/carts-overview/carts-overview.component';
@@ -34,10 +33,10 @@ import { TreetypesOverviewComponent } from './treeTypes/treetypes-overview/treet
 import { TreetypeEditComponent } from './treeTypes/treetype-edit/treetype-edit.component';
 import { PlantForUserComponent } from './plant-for-user/plant-for-user/plant-for-user.component';
 import { TransferTreesComponent } from './transfer-trees/transfer-trees/transfer-trees.component';
+import { BackOfficeRouterOutletComponent } from './back-office-router-outlet/back-office-router-outlet.component';
 
 @NgModule({
   declarations: [
-    BackOfficePageComponent,
     CartsOverviewComponent,
     ProjectsOverviewComponent,
     UserOverviewComponent,
@@ -69,15 +68,9 @@ import { TransferTreesComponent } from './transfer-trees/transfer-trees/transfer
     TreetypeEditComponent,
     PlantForUserComponent,
     TransferTreesComponent,
+    BackOfficeRouterOutletComponent,
     // DeleteProjectConfirmationDialog
   ],
-  imports: [
-    CommonModule,
-    UtilModule,
-    RouterModule,
-    AgGridModule.forRoot(),
-    LeafletModule,
-    LeafletDrawModule
-  ],
+  imports: [CommonModule, UtilModule, RouterModule, AgGridModule.forRoot(), LeafletModule, LeafletDrawModule],
 })
 export class BackofficePageModule {}
