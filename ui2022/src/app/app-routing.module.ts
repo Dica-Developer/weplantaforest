@@ -13,6 +13,7 @@ import { ForgotPasswordPageComponent } from './forgot-password-page/forgot-passw
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
+import { AuthGuard } from "./util/auth.guard";
 import { UtilModule } from './util/util.module';
 
 export const backofficeRoutes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
     path: 'backOffice2022',
     component: BackOfficeRouterOutletComponent,
     children: backofficeRoutes,
+    canActivate: [AuthGuard] 
   },
 ];
 

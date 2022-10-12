@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { AppState } from './store/app.state';
-import { selectLoggedIn, selectJwtToken } from './store/auth.store';
 import { selectErrors, removeError } from './store/error.state';
-import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
+import {
+  selectSuccessMessages,
+  removeSuccessMessage,
+} from './store/success-message.state';
 
 @Component({
   selector: 'app-root',
@@ -14,23 +15,25 @@ import { selectSuccessMessages, removeSuccessMessage } from './store/success-mes
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  loggedIn$: Observable<boolean>;
-  token$: Observable<string>;
+  @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
+    localStorage.setItem('previousUrl', this.router.url);
+  }
 
-  constructor(private store: Store<AppState>, private router: Router, private snackBar: MatSnackBar) {
-    this.loggedIn$ = store.select(selectLoggedIn);
-    this.token$ = store.select(selectJwtToken);
-    console.log(this.router.url);
-    // this.loggedIn$.subscribe((res) => {
-
-    //   if (!this.router.url.includes('password_reset')) {
-    //     if (res) {
-    //       this.router.navigate(['/backOffice2022/carts']);
-    //     } else {
-    //       this.router.navigate(['/login']);
-    //     }
-    //   }
-    // });
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    if (localStorage.getItem('jwt')) {
+      const previousUrl = localStorage.getItem('previousUrl');
+      if (previousUrl && previousUrl !== '/login') {
+        this.router.navigate([previousUrl]);
+      } else {
+        this.router.navigate(['/']);
+      }
+    } else {
+      this.router.navigate(['/login']);
+    }
     this.store.select(selectErrors).subscribe((errors) => {
       for (let error of errors) {
         this.snackBar

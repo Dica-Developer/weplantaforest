@@ -37,6 +37,7 @@ import { teamReducerFn, TeamEffects } from './store/team.store';
 import { plantbagReducerFn, PlantbagEffects } from './store/plantbag.store';
 import { ForgotPasswordPageComponent } from './forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
+import { AuthGuard } from './util/auth.guard';
 
 export const MY_FORMATS = {
   parse: {
@@ -134,7 +135,8 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     // {provide: APP_BASE_HREF, useValue:'backOffice2022'}
-    {provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'}
+    {provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'},
+    AuthGuard
   ],
   bootstrap: [AppComponent],
 })

@@ -14,8 +14,8 @@ export class LoginPageComponent implements OnInit {
   loginError$: Observable<string>;
 
   loginForm = new FormGroup({
-    name: new FormControl('koko'),
-    password: new FormControl('welcome1'),
+    name: new FormControl(''),
+    password: new FormControl(''),
   });
 
   constructor(private store: Store<AppState>) {
