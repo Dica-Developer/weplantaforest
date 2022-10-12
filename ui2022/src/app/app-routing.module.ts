@@ -13,7 +13,7 @@ import { ForgotPasswordPageComponent } from './forgot-password-page/forgot-passw
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
-import { AuthGuard } from "./util/auth.guard";
+import { AuthGuard } from './util/auth.guard';
 import { UtilModule } from './util/util.module';
 
 export const backofficeRoutes: Routes = [
@@ -29,7 +29,7 @@ export const backofficeRoutes: Routes = [
 ];
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  { path: '', component: HomePageComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginPageComponent },
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },
   { path: 'password_reset', component: ResetPasswordPageComponent },
@@ -37,7 +37,7 @@ const routes: Routes = [
     path: 'backOffice2022',
     component: BackOfficeRouterOutletComponent,
     children: backofficeRoutes,
-    canActivate: [AuthGuard] 
+    canActivate: [AuthGuard],
   },
 ];
 

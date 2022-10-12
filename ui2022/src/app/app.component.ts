@@ -24,16 +24,14 @@ export class AppComponent {
     private router: Router,
     private snackBar: MatSnackBar
   ) {
+    const previousUrl = localStorage.getItem('previousUrl');
     if (localStorage.getItem('jwt')) {
-      const previousUrl = localStorage.getItem('previousUrl');
       if (previousUrl && previousUrl !== '/login') {
         this.router.navigate([previousUrl]);
       } else {
         this.router.navigate(['/']);
       }
-    } else {
-      this.router.navigate(['/login']);
-    }
+    } 
     this.store.select(selectErrors).subscribe((errors) => {
       for (let error of errors) {
         this.snackBar
