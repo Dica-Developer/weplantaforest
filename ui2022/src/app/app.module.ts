@@ -31,13 +31,16 @@ import { TreeTypeEffects, treeTypeReducerFn } from './store/treeType.store';
 import { errorsReducerFn } from './store/error.state';
 import { successMessageReducerFn } from './store/success-message.state';
 import { contentReducerFn, ContentEffects } from './store/content.store';
-import { APP_BASE_HREF } from '@angular/common';
 import { eventsReducerFn, EventsEffects } from './store/events.store';
 import { teamReducerFn, TeamEffects } from './store/team.store';
 import { plantbagReducerFn, PlantbagEffects } from './store/plantbag.store';
 import { ForgotPasswordPageComponent } from './forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
 import { AuthGuard } from './util/auth.guard';
+import {
+  NgcCookieConsentConfig,
+  NgcCookieConsentModule,
+} from 'ngx-cookieconsent';
 
 export const MY_FORMATS = {
   parse: {
@@ -52,8 +55,42 @@ export const MY_FORMATS = {
   },
 };
 
+const cookieConfig: NgcCookieConsentConfig = {
+  cookie: {
+    domain: 'tinesoft.github.io',
+  },
+  position: 'bottom',
+  theme: 'block',
+  palette: {
+    popup: {
+      background: '#4f3a2c',
+      text: '#ffffff',
+      link: '#ffffff',
+    },
+    button: {
+      background: '#82ab1f',
+      text: '#ffffff',
+      border: 'transparent',
+    },
+  },
+  type: 'opt-out',
+  content: {
+    message:
+      'This website uses cookies to ensure you get the best experience on our website.',
+    dismiss: 'Got it!',
+    deny: 'Refuse cookies',
+    link: 'Learn more',
+    href: 'https://cookiesandyou.com',
+    policy: 'Cookie Policy',
+  },
+};
+
 @NgModule({
-  declarations: [AppComponent, ForgotPasswordPageComponent, ResetPasswordPageComponent],
+  declarations: [
+    AppComponent,
+    ForgotPasswordPageComponent,
+    ResetPasswordPageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -75,7 +112,7 @@ export const MY_FORMATS = {
       content: contentReducerFn,
       event: eventsReducerFn,
       teams: teamReducerFn,
-      plantbag: plantbagReducerFn
+      plantbag: plantbagReducerFn,
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -87,7 +124,7 @@ export const MY_FORMATS = {
       ContentEffects,
       EventsEffects,
       TeamEffects,
-      PlantbagEffects
+      PlantbagEffects,
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),
@@ -129,14 +166,15 @@ export const MY_FORMATS = {
     }),
     LeafletModule,
     LeafletDrawModule,
+    NgcCookieConsentModule.forRoot(cookieConfig),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     // {provide: APP_BASE_HREF, useValue:'backOffice2022'}
-    {provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'},
-    AuthGuard
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' },
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })

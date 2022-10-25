@@ -6,7 +6,10 @@ import { CartsOverviewComponent } from './carts/carts-overview/carts-overview.co
 import { ProjectsOverviewComponent } from './projects/projects-overview/projects-overview.component';
 import { UserOverviewComponent } from './user/user-overview/user-overview.component';
 import { CartFilterComponent } from './carts/cart-filter/cart-filter.component';
-import { CartGridComponent, DiscardCartConfirmationDialog } from './carts/cart-grid/cart-grid.component';
+import {
+  CartGridComponent,
+  DiscardCartConfirmationDialog,
+} from './carts/cart-grid/cart-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CartDetailsComponent } from './carts/cart-details/cart-details.component';
 import { UserGridComponent } from './user/user-grid/user-grid.component';
@@ -16,8 +19,14 @@ import { ProjectEditDataComponent } from './projects/project-edit/project-edit-d
 import { ProjectEditLocationComponent } from './projects/project-edit/project-edit-location/project-edit-location.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
-import { ProjectEditTreeComponent, DeleteArticleConfirmationDialog } from './projects/project-edit/project-edit-tree/project-edit-tree.component';
-import { ProjectEditImageComponent, DeleteProjectImageConfirmationDialog } from './projects/project-edit/project-edit-image/project-edit-image.component';
+import {
+  ProjectEditTreeComponent,
+  DeleteArticleConfirmationDialog,
+} from './projects/project-edit/project-edit-tree/project-edit-tree.component';
+import {
+  ProjectEditImageComponent,
+  DeleteProjectImageConfirmationDialog,
+} from './projects/project-edit/project-edit-image/project-edit-image.component';
 import { ContentOverviewComponent } from './content/content-overview/content-overview.component';
 import { ContentGridComponent } from './content/content-grid/content-grid.component';
 import { ContentDetailsComponent } from './content/content-details/content-details.component';
@@ -34,6 +43,7 @@ import { TreetypeEditComponent } from './treeTypes/treetype-edit/treetype-edit.c
 import { PlantForUserComponent } from './plant-for-user/plant-for-user/plant-for-user.component';
 import { TransferTreesComponent } from './transfer-trees/transfer-trees/transfer-trees.component';
 import { BackOfficeRouterOutletComponent } from './back-office-router-outlet/back-office-router-outlet.component';
+import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 
 @NgModule({
   declarations: [
@@ -71,6 +81,14 @@ import { BackOfficeRouterOutletComponent } from './back-office-router-outlet/bac
     BackOfficeRouterOutletComponent,
     // DeleteProjectConfirmationDialog
   ],
-  imports: [CommonModule, UtilModule, RouterModule, AgGridModule.forRoot(), LeafletModule, LeafletDrawModule],
+  imports: [
+    CommonModule,
+    UtilModule,
+    RouterModule,
+    AgGridModule.forRoot(),
+    LeafletModule,
+    LeafletDrawModule,
+    NgcCookieConsentModule,
+  ],
 })
 export class BackofficePageModule {}

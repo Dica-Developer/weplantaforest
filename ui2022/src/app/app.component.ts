@@ -8,6 +8,8 @@ import {
   selectSuccessMessages,
   removeSuccessMessage,
 } from './store/success-message.state';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
+
 
 @Component({
   selector: 'app-root',
@@ -22,7 +24,8 @@ export class AppComponent {
   constructor(
     private store: Store<AppState>,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private ngCookieConsent: NgcCookieConsentService
   ) {
     const previousUrl = localStorage.getItem('previousUrl');
     if (localStorage.getItem('jwt')) {
