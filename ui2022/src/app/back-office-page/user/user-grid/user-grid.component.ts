@@ -67,7 +67,7 @@ export class UserGridComponent implements OnInit, OnDestroy {
     },
     {
       field: 'mail',
-      headerName: 'EMail',
+      headerName: 'E-Mail',
       filter: 'agTextColumnFilter',
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
@@ -127,24 +127,24 @@ export class UserGridComponent implements OnInit, OnDestroy {
         };
       },
     },
-    {
-      field: 'articleManager',
-      headerName: 'Art.-Man.',
-      cellRendererSelector: (params) => {
-        return {
-          component: 'checkboxRenderer',
-          params: {
-            value: params.data.articleManager,
-            disabled: false,
-            id: params.data.id,
-            valueChange: (userId, value) =>
-              this.store.dispatch(
-                updateUserArticleManagerRole({ userId, value })
-              ),
-          },
-        };
-      },
-    },
+    // {
+    //   field: 'articleManager',
+    //   headerName: 'Art.-Man.',
+    //   cellRendererSelector: (params) => {
+    //     return {
+    //       component: 'checkboxRenderer',
+    //       params: {
+    //         value: params.data.articleManager,
+    //         disabled: false,
+    //         id: params.data.id,
+    //         valueChange: (userId, value) =>
+    //           this.store.dispatch(
+    //             updateUserArticleManagerRole({ userId, value })
+    //           ),
+    //       },
+    //     };
+    //   },
+    // },
   ];
 
   gridOptions: GridOptions = {
