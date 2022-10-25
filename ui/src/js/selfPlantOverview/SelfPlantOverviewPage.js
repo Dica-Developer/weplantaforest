@@ -269,6 +269,7 @@ export default class SelfPlantOverviewPage extends Component {
         },
       },
     };
+    let inputRange = localStorage.getItem('isAdmin') ? 'number' : 'range';
     return (
       <div className="container paddingTopBottom15 selfPlantOverview">
         <div className="row">
@@ -290,12 +291,12 @@ export default class SelfPlantOverviewPage extends Component {
             <DateField id="when" date={this.state.selfPlantData.plantedOn} updateDateValue={this.updatePlantedOn.bind(this)} noFuture="true" />
           </div>
           <div className="form-group col-md-8">
-            <label htmlFor="howmuch">
+            <label htmlFor="howmuch" className="tree-slider-label">
               {counterpart.translate('NUMBER')}:&nbsp;{this.state.selfPlantData.amount}
             </label>
             <input
               className="tree-slider"
-              type="range"
+              type={inputRange}
               min="1"
               max={localStorage.getItem('isAdmin') === 'true' ? 10000 : 10}
               value={this.state.selfPlantData.amount}
