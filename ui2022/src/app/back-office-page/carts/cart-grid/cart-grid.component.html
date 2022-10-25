@@ -18,6 +18,7 @@
         [columnDefs]="colDefs"
         (cellValueChanged)="onCellValueChanged($event)"
         [gridOptions]="gridOptions"
+        (gridReady)="onGridReady($event)"
       >
       </ag-grid-angular>
     </div>

@@ -1,5 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CellValueChangedEvent, ColDef, GridOptions } from 'ag-grid-community';
+import {
+  CellValueChangedEvent,
+  ColDef,
+  GridOptions,
+  GridApi,
+  ColumnApi,
+} from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import {
@@ -24,139 +30,6 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./cart-grid.component.scss'],
 })
 export class CartGridComponent implements OnInit, OnDestroy {
-  allColumns: ColDef[] = [
-    {
-      field: 'username',
-      headerName: 'User',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      comparator: this.gridHelper.caseInsensitiveComparator,
-    },
-    {
-      field: 'price',
-      headerName: 'Preis (€)',
-      valueFormatter: this.gridHelper.priceFormatter,
-      sortable: true,
-    },
-    {
-      field: 'createdAt',
-      headerName: 'Erstellt am',
-      valueFormatter: this.gridHelper.dateFormatter,
-      sortable: true,
-    },
-    {
-      field: 'firstName',
-      headerName: 'Vorname',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      comparator: this.gridHelper.caseInsensitiveComparator,
-      editable: true,
-      valueSetter: (params) => this.updateAddress(params),
-    },
-    {
-      field: 'lastName',
-      headerName: 'Nachname',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      comparator: this.gridHelper.caseInsensitiveComparator,
-      editable: true,
-      valueSetter: (params) => this.updateAddress(params),
-    },
-    {
-      field: 'company',
-      headerName: 'Unternehmen',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      comparator: this.gridHelper.caseInsensitiveComparator,
-      editable: true,
-      valueSetter: (params) => this.updateAddress(params),
-    },
-    {
-      field: 'street',
-      headerName: 'Straße',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      comparator: this.gridHelper.caseInsensitiveComparator,
-      editable: true,
-      valueSetter: (params) => this.updateAddress(params),
-    },
-    {
-      field: 'city',
-      headerName: 'Ort',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      comparator: this.gridHelper.caseInsensitiveComparator,
-      editable: true,
-      valueSetter: (params) => this.updateAddress(params),
-    },
-    {
-      field: 'postalcode',
-      headerName: 'PLZ',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      comparator: this.gridHelper.caseInsensitiveComparator,
-      editable: true,
-      valueSetter: (params) => this.updateAddress(params),
-    },
-    {
-      field: 'paymentType',
-      headerName: 'Zahlungsart',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      comparator: this.gridHelper.caseInsensitiveComparator,
-    },
-    {
-      field: 'receiptable',
-      headerName: 'SQ',
-      width: 30,
-      cellRendererSelector: (params) => {
-        return {
-          component: 'checkboxRenderer',
-          params: {
-            value: params.data.receiptable,
-            disabled:
-              params.data.receiptId !== null &&
-              params.data.receiptId !== undefined,
-            id: params.data.id,
-            valueChange: (cartId, value) =>
-              this.store.dispatch(updateReceiptableFlag({ cartId, value })),
-          },
-        };
-      },
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-      filter: 'agTextColumnFilter',
-      sortable: true,
-      editable: (params) => {
-        if (params.data.status === 'DISCARDED') {
-          return false;
-        } else {
-          return true;
-        }
-      },
-      cellEditor: 'selectRenderer',
-      cellEditorParams: {
-        valueList: this.gridHelper.getCartStates(),
-        valueChange: (cartId, value) =>
-          this.store.dispatch(updateStatus({ cartId, value })),
-      },
-    },
-    {
-      field: 'id',
-      headerName: 'Actions',
-      cellRendererSelector: (params) => {
-        return {
-          component: 'cartActionRenderer',
-          params: {
-            value: params.data.id,
-          },
-        };
-      },
-    },
-  ];
-
   subsetOfColumns: ColDef[] = [
     {
       field: 'username',
@@ -214,7 +87,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
     {
       field: 'receiptable',
       headerName: 'SQ',
-      width: 56,
+      width: 30,
       cellRendererSelector: (params) => {
         return {
           component: 'checkboxRenderer',
@@ -235,6 +108,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
       headerName: 'Status',
       filter: 'agTextColumnFilter',
       sortable: true,
+      suppressSizeToFit: true,
       editable: (params) => {
         if (params.data.status === 'DISCARDED') {
           return false;
@@ -243,7 +117,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
         }
       },
       cellRenderer: 'selectRenderer',
-      cellRendererParams: {        
+      cellRendererParams: {
         valueList: this.gridHelper.getCartStates(),
         valueChange: (cartId, value) => {
           if (value === 'DISCARDED') {
@@ -278,6 +152,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
     {
       field: 'id',
       headerName: 'Actions',
+      suppressSizeToFit: true,
       cellRendererSelector: (params) => {
         return {
           component: 'cartActionRenderer',
@@ -286,6 +161,38 @@ export class CartGridComponent implements OnInit, OnDestroy {
           },
         };
       },
+      minWidth: 80,
+    },
+  ];
+
+  allColumns: ColDef[] = [
+    ...this.subsetOfColumns,
+    {
+      field: 'street',
+      headerName: 'Straße',
+      filter: 'agTextColumnFilter',
+      sortable: true,
+      comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: (params) => this.updateAddress(params),
+    },
+    {
+      field: 'city',
+      headerName: 'Ort',
+      filter: 'agTextColumnFilter',
+      sortable: true,
+      comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: (params) => this.updateAddress(params),
+    },
+    {
+      field: 'postalcode',
+      headerName: 'PLZ',
+      filter: 'agTextColumnFilter',
+      sortable: true,
+      comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: (params) => this.updateAddress(params),
     },
   ];
 
@@ -313,6 +220,9 @@ export class CartGridComponent implements OnInit, OnDestroy {
     .subscribe((details) => {
       this.cartDetails = details;
     });
+
+  gridApi: GridApi;
+  columnApi: ColumnApi;
 
   constructor(
     private store: Store<AppState>,
@@ -342,10 +252,22 @@ export class CartGridComponent implements OnInit, OnDestroy {
 
   filterColumns() {
     this.colDefs = this.subsetOfColumns;
+    this.columnApi.autoSizeAllColumns();
   }
 
   resetColumns() {
     this.colDefs = this.allColumns;
+    this.columnApi.autoSizeAllColumns();
+  }
+
+  onGridReady(params) {
+    console.log(params);
+
+    console.log('grid ready');
+    this.gridApi = params.api;
+    this.columnApi = params.columnApi;
+    // this.gridApi.sizeColumnsToFit()
+    this.columnApi.autoSizeAllColumns();
   }
 }
 
