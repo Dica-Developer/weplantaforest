@@ -34,7 +34,7 @@
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
     "material-icons": "^1.12.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "ngx-cookie-service": "12.0.3",
     "ngx-cookieconsent": "2.2.3",
     "ngx-editor": "9.0.2",
