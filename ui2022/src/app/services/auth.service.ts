@@ -39,7 +39,8 @@ export class AuthService {
         key +
         '&language=' +
         language,
-      {}
+      {},
+      { responseType: 'text' }
     );
   }
 
@@ -52,8 +53,8 @@ export class AuthService {
         key +
         '&language=' +
         language,
-      {}
+      {},
+      { responseType: 'text' }
     );
   }
-
 }
