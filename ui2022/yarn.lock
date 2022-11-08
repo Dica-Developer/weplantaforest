@@ -6037,10 +6037,10 @@ next-tick@^1.1.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
   integrity sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==
 
-ngx-cookie-service@^14.0.1:
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-14.0.1.tgz#0c0f8a7ba91dbb68d3f8ad0f8808bbde4f6e55aa"
-  integrity sha512-PHjpA/bpp1ZgvQ2AWdXA6oxPQgE9k0WljQ7tvUH/u0Acl6p6akzF8kWlQiWxkgR3hBs7xB3paIsTk6GKdtakMg==
+ngx-cookie-service@12.0.3:
+  version "12.0.3"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-12.0.3.tgz#eb2fc73b40dcc5ef8282eb78e82986afc299537f"
+  integrity sha512-F5xJBTrrreI2DERGOrO6U+L7s031HxTER+3Z4gDCwxdTl4AXmtWddMxxQVw7KflOLZ4InYEs6FjQsXmKU4HsJg==
   dependencies:
     tslib "^2.0.0"
 

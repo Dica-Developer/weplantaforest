@@ -267,9 +267,6 @@ export class CartGridComponent implements OnInit, OnDestroy {
   }
 
   onGridReady(params) {
-    console.log(params);
-
-    console.log('grid ready');
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
     // this.gridApi.sizeColumnsToFit()

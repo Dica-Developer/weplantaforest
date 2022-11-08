@@ -42,6 +42,8 @@ import {
   NgcCookieConsentModule,
 } from 'ngx-cookieconsent';
 import { ErrorInterceptor } from "./services/http-interceptors/http.interceptor";
+import { AppCookieService } from "./util/cookie.service";
+import { CookieService } from "ngx-cookie-service";
 
 export const MY_FORMATS = {
   parse: {
@@ -177,6 +179,8 @@ const cookieConfig: NgcCookieConsentConfig = {
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' },
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    AppCookieService,
+    CookieService
   ],
   bootstrap: [AppComponent],
 })
