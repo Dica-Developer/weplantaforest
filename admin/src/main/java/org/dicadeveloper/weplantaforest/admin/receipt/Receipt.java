@@ -39,6 +39,7 @@ public class Receipt {
     private final Long createdOn;
 
     @Column(name = "_sentOn")
+    @JsonView(Views.OverviewCart.class)
     private Long sentOn;
 
     @Column(name = "_ownerId")

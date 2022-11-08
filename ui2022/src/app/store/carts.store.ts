@@ -24,6 +24,7 @@ export interface CartBuyer {
 
 export interface Receipt {
   receiptId: number;
+  sentOn: Date;
 }
 
 export interface Cart {
@@ -61,6 +62,7 @@ export interface GridCart {
   receiptable: boolean;
   receiptId: number;
   status: string;
+  receiptSentOn: Date;
 }
 
 export interface CartDetails {
@@ -288,6 +290,7 @@ function convertToGridCart(cart: Cart): GridCart {
     receiptable: cart.receiptable,
     receiptId: cart.receipt?.receiptId,
     status: cart.cartState,
+    receiptSentOn: cart.receipt?.sentOn
   };
 }
 
