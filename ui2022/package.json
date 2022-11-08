@@ -33,6 +33,7 @@
     "he": "^1.2.0",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
+    "material-icons": "^1.12.1",
     "moment": "^2.29.1",
     "ngx-cookie-service": "^14.0.1",
     "ngx-cookieconsent": "2.2.3",
