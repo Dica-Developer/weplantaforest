@@ -97,4 +97,9 @@ export class ProjectGridComponent implements OnInit, OnDestroy {
       return { background: 'red' };
     }
   }
+
+  resetSelectedRowIndex() {
+    this.selectedRowIndex = null;
+    this.gridApi.redrawRows();
+  }
 }

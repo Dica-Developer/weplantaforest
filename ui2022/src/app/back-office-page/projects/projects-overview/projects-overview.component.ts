@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppState } from '../../../store/app.state';
 import { Store } from '@ngrx/store';
 import { selectProfileDetails } from '../../../store/profile.store';
 import { Subscription } from 'rxjs';
+import { ProjectGridComponent } from '../project-grid/project-grid.component';
 import {
   ProjectManager,
   resetProjectDetails,
@@ -22,14 +23,19 @@ export class ProjectsOverviewComponent implements OnInit, OnDestroy {
 
   selectProfileDetailsSub: Subscription;
 
+  @ViewChild('projectgrid')
+  grid: ProjectGridComponent;
+
   constructor(private store: Store<AppState>) {
     this.selectProfileDetailsSub = store
       .select(selectProfileDetails)
       .subscribe((res) => {
-        this.manager = {
-          id: res.id,
-          name: res.userName,
-        };
+        if (res) {
+          this.manager = {
+            id: res.id,
+            name: res.userName,
+          };
+        }
       });
   }
 
@@ -55,6 +61,7 @@ export class ProjectsOverviewComponent implements OnInit, OnDestroy {
       images: [],
     };
     this.store.dispatch(resetProjectDetails());
+    this.grid.resetSelectedRowIndex();
     setTimeout(() => {
       this.store.dispatch(loadProjectDetailsSuccess({ projectDetails }));
     }, 300);
