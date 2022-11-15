@@ -104,12 +104,6 @@ export class CartGridComponent implements OnInit, OnDestroy {
       },
     },
     {
-      field: 'receiptSentOn',
-      headerName: 'SQ gesendet am',
-      valueFormatter: this.gridHelper.dateFormatter,
-      // sortable: true,
-    },
-    {
       field: 'status',
       headerName: 'Status',
       filter: 'agTextColumnFilter',
@@ -173,6 +167,12 @@ export class CartGridComponent implements OnInit, OnDestroy {
 
   allColumns: ColDef[] = [
     ...this.subsetOfColumns,
+    {
+      field: 'receiptSentOn',
+      headerName: 'SQ gesendet am',
+      valueFormatter: this.gridHelper.dateFormatter,
+      // sortable: true,
+    },
     {
       field: 'street',
       headerName: 'Straße',
