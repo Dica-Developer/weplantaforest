@@ -87,7 +87,10 @@ export class CartGridComponent implements OnInit, OnDestroy {
     {
       field: 'receiptable',
       headerName: 'SQ',
-      width: 30,
+      width: 60,
+      minWidth: 60,
+      suppressSizeToFit: true,
+      suppressAutoSize: true,
       cellRendererSelector: (params) => {
         return {
           component: 'checkboxRenderer',
@@ -109,6 +112,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
       filter: 'agTextColumnFilter',
       sortable: true,
       suppressSizeToFit: true,
+      suppressAutoSize: true,
       editable: (params) => {
         if (params.data.status === 'DISCARDED') {
           return false;
@@ -153,6 +157,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
       field: 'id',
       headerName: 'Actions',
       suppressSizeToFit: true,
+      suppressAutoSize: true,
       cellRendererSelector: (params) => {
         return {
           component: 'cartActionRenderer',
@@ -171,6 +176,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
       field: 'receiptSentOn',
       headerName: 'SQ gesendet am',
       valueFormatter: this.gridHelper.dateFormatter,
+
       // sortable: true,
     },
     {
@@ -259,17 +265,18 @@ export class CartGridComponent implements OnInit, OnDestroy {
   filterColumns() {
     this.colDefs = this.subsetOfColumns;
     this.columnApi.autoSizeAllColumns();
+    // this.gridApi.sizeColumnsToFit()
   }
 
   resetColumns() {
     this.colDefs = this.allColumns;
     this.columnApi.autoSizeAllColumns();
+    // this.gridApi.sizeColumnsToFit()
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit()
     this.columnApi.autoSizeAllColumns();
   }
 }
