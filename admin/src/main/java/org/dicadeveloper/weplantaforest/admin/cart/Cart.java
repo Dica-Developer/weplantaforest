@@ -122,6 +122,7 @@ public class Cart {
     private String callBackBetrag;
 
     @Column(name = "_callBackLand", length = 16)
+    @JsonView(Views.OverviewCart.class)
     private String callBackLand;
 
     @Column(name = "_callBackEmail", length = 256)

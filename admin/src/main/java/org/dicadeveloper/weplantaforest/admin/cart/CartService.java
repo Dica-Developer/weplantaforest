@@ -102,7 +102,10 @@ public class CartService {
             if (address.has("postalcode")) {
                 Optional.ofNullable(address.get("postalcode")).ifPresent((field) -> cart.setCallBackPlz(field.asText()));
             }
-            cartRepository.save(cart);
+            if (address.has("country")) {
+              Optional.ofNullable(address.get("country")).ifPresent((field) -> cart.setCallBackLand(field.asText()));
+          }
+          cartRepository.save(cart);
         });
     }
 }
