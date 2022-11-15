@@ -206,6 +206,16 @@ export class CartGridComponent implements OnInit, OnDestroy {
       editable: true,
       valueSetter: (params) => this.updateAddress(params),
     },
+    {
+      field: 'country',
+      headerName: 'Land',
+      filter: 'agTextColumnFilter',
+      sortable: true,
+      comparator: this.gridHelper.caseInsensitiveComparator,
+      editable: true,
+      valueSetter: (params) => this.updateAddress(params),
+    },
+
   ];
 
   colDefs: ColDef[] = this.subsetOfColumns;

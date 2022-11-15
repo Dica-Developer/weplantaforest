@@ -36,6 +36,7 @@ export interface Cart {
   callBackStrasse: string;
   callBackVorname: string;
   callBackZahlungsart: string;
+  callBackLand: string;
   cartState: string;
   id: number;
   receipt: Receipt;
@@ -63,6 +64,7 @@ export interface GridCart {
   receiptId: number;
   status: string;
   receiptSentOn: Date;
+  country: string;
 }
 
 export interface CartDetails {
@@ -290,7 +292,8 @@ function convertToGridCart(cart: Cart): GridCart {
     receiptable: cart.receiptable,
     receiptId: cart.receipt?.receiptId,
     status: cart.cartState,
-    receiptSentOn: cart.receipt?.sentOn
+    receiptSentOn: cart.receipt?.sentOn,
+    country: cart.callBackLand
   };
 }
 
