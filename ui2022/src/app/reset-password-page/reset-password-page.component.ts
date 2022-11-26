@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,9 +14,9 @@ import { PasswordValidation } from '../util/validators/compare-password.validato
   styleUrls: ['./reset-password-page.component.scss'],
 })
 export class ResetPasswordPageComponent implements OnInit {
-  resetPasswordForm = new FormGroup({
-    password: new FormControl(''),
-    passwordConfirmation: new FormControl(''),
+  resetPasswordForm = new UntypedFormGroup({
+    password: new UntypedFormControl(''),
+    passwordConfirmation: new UntypedFormControl(''),
   }, PasswordValidation.MatchPassword);
   id: string = '';
   key: string = '';

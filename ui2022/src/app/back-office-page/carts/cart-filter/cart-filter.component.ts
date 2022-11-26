@@ -3,7 +3,7 @@ import { loadCarts, CartsLoadRequest, selectCartsLoadingProgress } from '../../.
 import * as moment from 'moment';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { GridHelper } from '../../../util/grid.helper';
 
@@ -18,19 +18,19 @@ export class CartFilterComponent implements OnInit {
 
   cartStatesDefault = ['CALLBACK'];
 
-  range = new FormGroup({
-    start: new FormControl(moment().subtract(3, 'months').toDate()),
-    end: new FormControl(new Date()),
+  range = new UntypedFormGroup({
+    start: new UntypedFormControl(moment().subtract(3, 'months').toDate()),
+    end: new UntypedFormControl(new Date()),
   });
 
-  requestForm: FormGroup = new FormGroup({
-    cartStates: new FormControl(),
+  requestForm: UntypedFormGroup = new UntypedFormGroup({
+    cartStates: new UntypedFormControl(),
   });
 
   cartsLoading$: Observable<boolean>;
 
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder, private gridHelper: GridHelper) {
+  constructor(private store: Store<AppState>, private fb: UntypedFormBuilder, private gridHelper: GridHelper) {
     this.requestForm = fb.group({
       cartStates: [this.cartStatesDefault],
     });

@@ -8,7 +8,7 @@ import {
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { Observable, Subscription } from 'rxjs';
-import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, UntypedFormArray } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
 import { addProjectImage } from '../../../store/project.store';
 import {
@@ -28,21 +28,21 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
 
   detailsLoading$: Observable<Boolean>;
 
-  projectForm = new FormGroup({
-    id: new FormControl(null),
-    name: new FormControl(''),
-    shopActive: new FormControl(false),
-    visible: new FormControl(false),
-    descriptionDe: new FormControl(''),
-    descriptionEn: new FormControl(''),
-    imageFileName: new FormControl(''),
-    latitude: new FormControl(''),
-    longitude: new FormControl(''),
-    manager: new FormControl(''),
-    positions: new FormControl([]),
+  projectForm = new UntypedFormGroup({
+    id: new UntypedFormControl(null),
+    name: new UntypedFormControl(''),
+    shopActive: new UntypedFormControl(false),
+    visible: new UntypedFormControl(false),
+    descriptionDe: new UntypedFormControl(''),
+    descriptionEn: new UntypedFormControl(''),
+    imageFileName: new UntypedFormControl(''),
+    latitude: new UntypedFormControl(''),
+    longitude: new UntypedFormControl(''),
+    manager: new UntypedFormControl(''),
+    positions: new UntypedFormControl([]),
     articles: this.fb.array([]),
     images: this.fb.array([]),
-    mainImageFile: new FormControl(null),
+    mainImageFile: new UntypedFormControl(null),
   });
 
   projectDetailsSub: Subscription;
@@ -50,7 +50,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private textHelper: TextHelper,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
     this.projectDetailsSub = store
       .select(selectProjectDetails)
@@ -123,7 +123,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     const articles = [];
     const articleControlArray = this.projectForm.controls[
       'articles'
-    ] as FormArray;
+    ] as UntypedFormArray;
     for (let article of articleControlArray.controls) {
       articles.push(article.value);
     }
@@ -152,7 +152,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
   createArticleFormGroups(details: ProjectDetails) {    
     const articleControlArray = this.projectForm.controls[
       'articles'
-    ] as FormArray;
+    ] as UntypedFormArray;
     //article added
     if (articleControlArray.controls.length < details.articles.length) {
       const diff =
@@ -172,13 +172,13 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
   removeArticleForm(index: number) {
     const articleControlArray = this.projectForm.controls[
       'articles'
-    ] as FormArray;
+    ] as UntypedFormArray;
     articleControlArray.controls.splice(index, 1);
     this.projectForm.controls['articles'] = articleControlArray;    
   }
 
   createImageFormGroups(details: ProjectDetails) {
-    const imageControlArray = this.projectForm.controls['images'] as FormArray;
+    const imageControlArray = this.projectForm.controls['images'] as UntypedFormArray;
     if (imageControlArray.controls.length < details.images.length) {
       const diff = details.images.length - imageControlArray.controls.length;
       for (let i = diff; i > 0; i--) {

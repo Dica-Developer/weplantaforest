@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.state';
 import { Observable } from 'rxjs';
 import { selectLoginError, login } from '../store/auth.store';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
@@ -13,9 +13,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class LoginPageComponent implements OnInit {
   loginError$: Observable<string>;
 
-  loginForm = new FormGroup({
-    name: new FormControl(''),
-    password: new FormControl(''),
+  loginForm = new UntypedFormGroup({
+    name: new UntypedFormControl(''),
+    password: new UntypedFormControl(''),
   });
 
   constructor(private store: Store<AppState>) {

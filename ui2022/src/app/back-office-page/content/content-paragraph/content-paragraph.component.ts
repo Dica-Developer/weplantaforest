@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -8,7 +8,7 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./content-paragraph.component.scss'],
 })
 export class ContentParagraphComponent implements OnInit {
-  @Input() paragraph: FormGroup;
+  @Input() paragraph: UntypedFormGroup;
 
   imageFile: any;
   imageSrc: any;

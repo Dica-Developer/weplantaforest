@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Editor, toHTML } from 'ngx-editor';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -9,11 +9,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./text-editor.component.scss'],
 })
 export class TextEditorComponent implements OnInit, OnDestroy {
-  editorControl: FormControl;
+  editorControl: UntypedFormControl;
   text: string;
 
   @Input()
-  set control(controlObj: FormControl) {
+  set control(controlObj: UntypedFormControl) {
     this.editorControl = controlObj;
     this.text = this.editorControl.value;
   }

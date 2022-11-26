@@ -6,7 +6,7 @@ import {
 } from '../../../store/project.store';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
 import { createPlantbagForBackend, generateCodes } from '../../../store/plantbag.store';
 import {
@@ -24,7 +24,7 @@ export class EventCodeGeneratorComponent implements OnInit, OnDestroy {
   activeProjectsSub: Subscription;
   activeProjects: ActiveProject[] = [];
 
-  amountControl: FormControl = new FormControl(0);
+  amountControl: UntypedFormControl = new UntypedFormControl(0);
 
   plantbag: PlantbagState;
   plantbagSub: Subscription;

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import {
@@ -19,9 +19,9 @@ import { selectActiveProjects, loadActiveProjects } from '../../../store/project
   styleUrls: ['./plant-for-user.component.scss'],
 })
 export class PlantForUserComponent implements OnInit, OnDestroy {
-  form: FormGroup = this.fb.group({
-    userId: new FormControl(null),
-    userName: new FormControl(null),
+  form: UntypedFormGroup = this.fb.group({
+    userId: new UntypedFormControl(null),
+    userName: new UntypedFormControl(null),
   });
 
   plantbag: PlantbagState;
@@ -30,12 +30,12 @@ export class PlantForUserComponent implements OnInit, OnDestroy {
   allUsers: User[];
   allUsersSub: Subscription;
   filteredOptions: User[];
-  filterControl = new FormControl('');
+  filterControl = new UntypedFormControl('');
   filterControlVCSub: Subscription;
 
   activeProjects$: Observable<any>;
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder) {}
+  constructor(private store: Store<AppState>, private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadActiveProjects());

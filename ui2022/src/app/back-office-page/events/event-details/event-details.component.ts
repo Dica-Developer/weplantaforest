@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { Subscription } from 'rxjs';
@@ -18,13 +18,13 @@ import { updateEvent, createEvent } from '../../../store/events.store';
   styleUrls: ['./event-details.component.scss'],
 })
 export class EventDetailsComponent implements OnInit, OnDestroy {
-  eventForm: FormGroup = new FormGroup({
-    id: new FormControl(null),
-    name: new FormControl(''),
-    teamId: new FormControl(null),
-    teamName: new FormControl(null),
-    userId: new FormControl(null),
-    userName: new FormControl(null),
+  eventForm: UntypedFormGroup = new UntypedFormGroup({
+    id: new UntypedFormControl(null),
+    name: new UntypedFormControl(''),
+    teamId: new UntypedFormControl(null),
+    teamName: new UntypedFormControl(null),
+    userId: new UntypedFormControl(null),
+    userName: new UntypedFormControl(null),
   });
 
   eventDetailsSub: Subscription;
@@ -33,16 +33,16 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   allUsers: User[];
   allUsersSub: Subscription;
   filteredOptions: User[];
-  filterControl = new FormControl('');
+  filterControl = new UntypedFormControl('');
   filterControlVCSub: Subscription;
 
   allTeams: Team[];
   allTeamsSub: Subscription;
   teamFilteredOptions: Team[];
-  teamFilterControl = new FormControl('');
+  teamFilterControl = new UntypedFormControl('');
   teamFilterControlVCSub: Subscription;
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder) {
+  constructor(private store: Store<AppState>, private fb: UntypedFormBuilder) {
     this.eventDetailsSub = this.store
       .select(selectEventDetails)
       .subscribe((res) => {
