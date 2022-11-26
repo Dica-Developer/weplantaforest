@@ -40,11 +40,11 @@
     "ngx-editor": "9.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.8"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1100.0-next.1",
-    "@angular/cli": "~11.0.0-next.1",
+    "@angular-devkit/build-angular": "~12.2.18",
+    "@angular/cli": "~12.2.18",
     "@angular/compiler-cli": "~12.2.17",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
@@ -52,7 +52,7 @@
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~5.2.0",
+    "karma": "~6.4.1",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
