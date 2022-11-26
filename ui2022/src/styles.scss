@@ -1,10 +1,10 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "ag-grid-community/dist/styles/ag-grid.css";
 @import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 @import "~leaflet/dist/leaflet.css";
 
-@import "~@angular/material/prebuilt-themes/purple-green.css";
+@import "@angular/material/prebuilt-themes/purple-green.css";
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
