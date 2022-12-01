@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { loadCarts, CartsLoadRequest, selectCartsLoadingProgress } from '../../../store/carts.store';
-import * as moment from 'moment';
+import {
+  loadCarts,
+  CartsLoadRequest,
+  selectCartsLoadingProgress,
+} from '../../../store/carts.store';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { GridHelper } from '../../../util/grid.helper';
+import { DateHelper } from 'src/app/util/date.helper';
 
 @Component({
   selector: 'app-cart-filter',
@@ -13,13 +21,14 @@ import { GridHelper } from '../../../util/grid.helper';
   styleUrls: ['./cart-filter.component.scss'],
 })
 export class CartFilterComponent implements OnInit {
-
   cartStatesList = this.gridHelper.getCartStates();
 
   cartStatesDefault = ['CALLBACK'];
 
   range = new UntypedFormGroup({
-    start: new UntypedFormControl(moment().subtract(3, 'months').toDate()),
+    start: new UntypedFormControl(
+      this.dateHelper.subtractMonths(new Date(), 3)
+    ),
     end: new UntypedFormControl(new Date()),
   });
 
@@ -29,8 +38,12 @@ export class CartFilterComponent implements OnInit {
 
   cartsLoading$: Observable<boolean>;
 
-
-  constructor(private store: Store<AppState>, private fb: UntypedFormBuilder, private gridHelper: GridHelper) {
+  constructor(
+    private store: Store<AppState>,
+    private fb: UntypedFormBuilder,
+    private gridHelper: GridHelper,
+    private dateHelper: DateHelper
+  ) {
     this.requestForm = fb.group({
       cartStates: [this.cartStatesDefault],
     });
