@@ -10,8 +10,11 @@ import {
   selectContentArticleDetailsLoading,
   ContentParagraph,
 } from '../../../store/content.store';
-import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
-import * as moment from 'moment';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  UntypedFormBuilder,
+} from '@angular/forms';
 import { selectUsername } from '../../../store/profile.store';
 import { saveContentArticle } from '../../../store/content.store';
 
@@ -33,7 +36,7 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
     showFull: new UntypedFormControl(false),
     title: new UntypedFormControl(''),
     visible: new UntypedFormControl(false),
-    createdOn: new UntypedFormControl(moment()),
+    createdOn: new UntypedFormControl(new Date()),
     mainImageFile: new UntypedFormControl(null),
     paragraphs: this.fb.array([]),
     imageDescription: new UntypedFormControl(''),
@@ -114,7 +117,9 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
         paragraphImages.push({
           imageFile: paragraph.get('imageFile').value,
           articleId: this.articleForm.get('id').value,
-          paragraphId: paragraph.get('id').value ? paragraph.get('id').value : 'no ' + paragraphCnt,
+          paragraphId: paragraph.get('id').value
+            ? paragraph.get('id').value
+            : 'no ' + paragraphCnt,
         });
       }
       paragraphCnt++;
@@ -123,7 +128,7 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
     let request: ContentArticleDetails = {
       id: this.articleForm.get('id').value,
       articleType: this.articleForm.get('articleType').value,
-      createdOn: moment(this.articleForm.get('createdOn').value).valueOf(),
+      createdOn: new Date(this.articleForm.get('createdOn').value).valueOf(),
       imageDescription: this.articleForm.get('imageDescription').value,
       imageFileName: this.articleForm.get('imageFileName').value,
       intro: this.articleForm.get('intro').value,

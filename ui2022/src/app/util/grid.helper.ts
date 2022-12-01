@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +8,8 @@ export class GridHelper {
 
   dateFormatter(params) {
     if (params.data && params.data[params.colDef.field]) {
-      return moment(params.data[params.colDef.field]).format('DD.MM.YYYY');
+      // TO DO ---> format date to correct value
+      return new Date(params.data[params.colDef.field]);
     } else {
       return '';
     }
@@ -37,9 +37,8 @@ export class GridHelper {
     }
   }
 
-
   getCartStates() {
-    return  [
+    return [
       { value: 'CALLBACK', label: 'Callback' },
       { value: 'INITIAL', label: 'Initial' },
       { value: 'VERIFIED', label: 'Verified' },
