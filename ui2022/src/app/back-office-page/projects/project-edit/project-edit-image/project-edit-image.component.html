@@ -23,7 +23,7 @@
     <img src="{{ imageSrc }}" width="400" height="300" />
   </div>
   <div class="col-2">
-    <button mat-raised-button color="primary" (click)="updateImage()">
+    <button mat-raised-button color="primary" (click)="updateImage()"  [disabled]="!saveAvailable">
       Speichern
     </button>
     <input

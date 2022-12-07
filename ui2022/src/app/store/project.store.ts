@@ -170,7 +170,7 @@ export const deleteArticleSuccess = createAction(
 );
 export const deleteArticleWithoutId = createAction(
   '[Project] delete article without id',
-  props<{ article: ProjectArticle, index: number }>()
+  props<{ article: ProjectArticle; index: number }>()
 );
 
 export const loadProjectImages = createAction(
@@ -313,7 +313,7 @@ const projectsReducer = createReducer(
     ...state,
     projectDetails: {
       ...state.projectDetails,
-      articles: [...state.projectDetails.articles, article],
+      articles: [article, ...state.projectDetails.articles],
     },
   })),
   on(deleteArticleSuccess, (state, { id }) => ({
@@ -325,15 +325,15 @@ const projectsReducer = createReducer(
       ),
     },
   })),
-  on(deleteArticleWithoutId, (state, { article, index }) =>{
+  on(deleteArticleWithoutId, (state, { article, index }) => {
     const articles = [...state.projectDetails.articles];
     articles.splice(index, 1);
     return {
       ...state,
       projectDetails: {
         ...state.projectDetails,
-        articles
-      }
+        articles,
+      },
     };
   }),
   on(loadProjectImagesSuccess, (state, { images }) => ({
@@ -350,13 +350,18 @@ const projectsReducer = createReducer(
       images: state.projectDetails.images.filter((el) => el.imageId != id),
     },
   })),
-  on(addProjectImage, (state, { image }) => ({
-    ...state,
-    projectDetails: {
-      ...state.projectDetails,
-      images: [image, ...state.projectDetails.images],
-    },
-  })),
+  on(
+    addProjectImage,
+    (state, { image }) => {
+      return {
+        ...state,
+        projectDetails: {
+          ...state.projectDetails,
+          images: [image, ...state.projectDetails.images],
+        },
+      };
+    }
+  ),
   on(deleteProjectSuccess, (state, { id }) => ({
     ...state,
     projects: state.projects.filter((project) => project.id != id),
@@ -551,6 +556,12 @@ export class ProjectsEffects {
       switchMap((action) =>
         this.projectService.uploadImage(action.imageId, action.file).pipe(
           switchMap((images: ProjectImage[]) => [
+            addSuccessMessage({
+              message: {
+                key: 'SAVE_IMAGE_SUCCESS',
+                message: 'Bild wurde gespeichert',
+              },
+            }),
             // loadProjectImagesSuccess({ images }),
           ])
         )

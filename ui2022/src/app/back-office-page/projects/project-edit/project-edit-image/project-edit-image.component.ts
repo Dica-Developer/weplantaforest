@@ -26,6 +26,8 @@ export class ProjectEditImageComponent implements OnInit, OnDestroy {
 
   imageFile: any;
 
+  saveAvailable: boolean;
+
   @Input()
   projectId: number;
 
@@ -117,6 +119,7 @@ export class ProjectEditImageComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       createEditProjectImageData({ projectImageData, file: this.imageFile })
     );
+    this.saveAvailable = false;
   }
 
   imageChanged(fileInputEvent: any) {
@@ -124,6 +127,7 @@ export class ProjectEditImageComponent implements OnInit, OnDestroy {
       this.imageFile = fileInputEvent.target.files[0];
       const reader = new FileReader();
       reader.onload = (e) => (this.imageSrc = reader.result);
+      this.saveAvailable = true;
       reader.readAsDataURL(this.imageFile);
     }
   }

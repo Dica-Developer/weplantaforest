@@ -107,7 +107,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       }
       this.projectForm.controls['images'] = this.fb.array(imageArray);
     } else {
-      //if article were added, create new one, with the last one added, leave the other ones as it is
+      //if article were added, create new one, push it to 1st entry
       this.createArticleFormGroups(details);
 
       //same for imageArray
@@ -149,7 +149,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  createArticleFormGroups(details: ProjectDetails) {    
+  createArticleFormGroups(details: ProjectDetails) {
     const articleControlArray = this.projectForm.controls[
       'articles'
     ] as FormArray;
@@ -157,10 +157,12 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     if (articleControlArray.controls.length < details.articles.length) {
       const diff =
         details.articles.length - articleControlArray.controls.length;
-      for (let i = diff; i > 0; i--) {
-        articleControlArray.controls.push(
+      for (let i = 0; i < diff; i++) {
+        articleControlArray.controls.splice(
+          0,
+          0,
           this.createArticleFormGroup(
-            details.articles[details.articles.length - i]
+            details.articles[i]
           )
         );
       }
@@ -174,16 +176,18 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       'articles'
     ] as FormArray;
     articleControlArray.controls.splice(index, 1);
-    this.projectForm.controls['articles'] = articleControlArray;    
+    this.projectForm.controls['articles'] = articleControlArray;
   }
 
   createImageFormGroups(details: ProjectDetails) {
     const imageControlArray = this.projectForm.controls['images'] as FormArray;
     if (imageControlArray.controls.length < details.images.length) {
       const diff = details.images.length - imageControlArray.controls.length;
-      for (let i = diff; i > 0; i--) {
-        imageControlArray.controls.push(
-          this.createImageFormGroup(details.images[details.images.length - i])
+      for (let i = 0; i < diff; i++) {
+        imageControlArray.controls.splice(
+          0,
+          0,
+          this.createImageFormGroup(details.images[i])
         );
       }
     }
