@@ -82,16 +82,13 @@ const cookieConfig: NgcCookieConsentConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, ForgotPasswordPageComponent, ResetPasswordPageComponent],
+  declarations: [AppComponent],
   imports: [
     PagesModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HomePageModule,
-    LoginPageModule,
-    BackofficePageModule,
     UtilModule,
     StoreModule.forRoot({
       auth: authReducerFn,
