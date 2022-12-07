@@ -8,8 +8,15 @@ export class GridHelper {
 
   dateFormatter(params) {
     if (params.data && params.data[params.colDef.field]) {
-      // TO DO ---> format date to correct value
-      return new Date(params.data[params.colDef.field]);
+      let date = new Date(params.data[params.colDef.field]);
+      let jsonDate = date.toJSON().slice(0, 10);
+      let formattedDate =
+        jsonDate.slice(8, 10) +
+        '.' +
+        jsonDate.slice(5, 7) +
+        '.' +
+        jsonDate.slice(0, 4);
+      return formattedDate;
     } else {
       return '';
     }
