@@ -8,7 +8,7 @@ export class DateHelper {
 
   subtractMonths(date, months) {
     var result = new Date(date);
-    result.setDate(result.getMonth() - months);
+    result.setMonth(result.getMonth() - months);
     return result;
   }
 }
