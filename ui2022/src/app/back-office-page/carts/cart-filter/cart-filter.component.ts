@@ -27,7 +27,7 @@ export class CartFilterComponent implements OnInit {
 
   range = new UntypedFormGroup({
     start: new UntypedFormControl(
-      this.dateHelper.subtractMonths(new Date(), 3)
+      this.dateHelper.subtractMonths(new Date(), 48)
     ),
     end: new UntypedFormControl(new Date()),
   });
