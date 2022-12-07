@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { GridCheckboxComponent } from './grid-components/grid-checkbox/grid-checkbox.component';
 import { GridSelectComponent } from './grid-components/grid-select/grid-select.component';
@@ -42,7 +42,7 @@ import { UserGridProfileLinkComponent } from './grid-components/user-grid-profil
     MaterialModule,
     NgxEditorModule.forChild({}),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     MaterialModule,
@@ -50,7 +50,7 @@ import { UserGridProfileLinkComponent } from './grid-components/user-grid-profil
     TextEditorComponent,
     NoImgBoxComponent,
     PlantbagTreeInputComponent,
-    PlantbagComponent
+    PlantbagComponent,
   ],
 })
 export class UtilModule {}
