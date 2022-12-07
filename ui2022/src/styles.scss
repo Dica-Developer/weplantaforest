@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "ag-grid-community/dist/styles/ag-grid.css";
 @import "ag-grid-community/dist/styles/ag-theme-alpine.css";
@@ -24,13 +24,12 @@
 * Fork at: https://materialtheme.arcsine.dev/?c=YHBhbGV0dGU$YHByaW1hcnk$YF48IzgyYWIxZiIsIj9lcjwjZGFlNmJjIiwiO2VyPCM2NTkxMTJ$LCIlPmBePCM0ZjNhMmMiLCI~ZXI8I2NhYzRjMCIsIjtlcjwjMzYyNTFifiwid2Fybj5gXjwjZmZjNjAwIiwiP2VyPCNmZmVlYjMiLCI7ZXI8I2ZmYjEwMH4sIj9UZXh0PCMwMDAwMDAiLCI~PTwjZmFmYWZhIiwiO1RleHQ8I2ZmZmZmZiIsIjs9PCMyYzJjMmN$LCJmb250cz5bYEA8KC00fixgQDwoLTN$LGBAPCgtMn4sYEA8KC0xfixgQDxoZWFkbGluZX4sYEA8dGl0bGV$LGBAPHN1YiktMn4sYEA8c3ViKS0xfixgQDxib2R5LTJ$LGBAPGJvZHktMX4sYEA8YnV0dG9ufixgQDxjYXB0aW9ufixgQDxpbnB1dCIsInNpemU$bnVsbH1dLCJpY29uczxGaWxsZWQiLCI~bmVzcz50cnVlLCJ2ZXJzaW9uPjExfQ==
 */
 
-
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 
 // Fonts
-@import './assets/fonts/roboto/roboto.css';
-@import 'material-icons/iconfont/material-icons.css';
+@import "./assets/fonts/roboto/roboto.css";
+@import "material-icons/iconfont/material-icons.css";
 
 $fontConfig: (
   display-4: mat.define-typography-level(112px, 112px, 300, "Roboto", -0.0134em),
@@ -74,7 +73,7 @@ mat.$light-theme-foreground-palette: (
   text: rgba(black, 0.87),
   slider-min: rgba(black, 0.87),
   slider-off: rgba($dark-text, 0.26),
-  slider-off-active: rgba(black, 0.38),
+  slider-off-active: rgba(black, 0.38)
 );
 
 // Dark Theme text
@@ -101,7 +100,7 @@ mat.$dark-theme-foreground-palette: (
   text: $light-text,
   slider-min: $light-text,
   slider-off: rgba($light-text, 0.3),
-  slider-off-active: rgba($light-text, 0.3),
+  slider-off-active: rgba($light-text, 0.3)
 );
 
 // Background config
@@ -131,7 +130,7 @@ mat.$light-theme-background-palette: (
   selected-disabled-button: $light-bg-darker-30,
   disabled-button-toggle: $light-bg-darker-10,
   unselected-chip: $light-bg-darker-10,
-  disabled-list-option: $light-bg-darker-10,
+  disabled-list-option: $light-bg-darker-10
 );
 
 // Dark bg
@@ -159,7 +158,7 @@ mat.$dark-theme-background-palette: (
   selected-disabled-button: $dark-bg-lighter-30,
   disabled-button-toggle: $dark-bg-lighter-10,
   unselected-chip: $dark-bg-lighter-20,
-  disabled-list-option: $dark-bg-lighter-10,
+  disabled-list-option: $dark-bg-lighter-10
 );
 
 // Compute font config
@@ -276,7 +275,7 @@ mat-divider {
 
 snack-bar-container {
   background-color: #ff5a00 !important;
-  color: #fff!important;
+  color: #fff !important;
   .mat-simple-snackbar-action {
     color: #fff !important;
   }
@@ -284,7 +283,7 @@ snack-bar-container {
 
 .success-snackbar {
   background-color: #82ab1f !important;
-  color: #fff!important;
+  color: #fff !important;
 }
 
 .no-display {
@@ -302,6 +301,10 @@ snack-bar-container {
 .top-row-btn {
   margin-top: 15px !important;
   margin-bottom: 15px !important;
+}
+
+.mat-form-field-flex {
+  padding: 0 0.5rem !important;
 }
 
 // .autocomplete-field {
