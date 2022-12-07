@@ -4,22 +4,18 @@ import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomePageModule } from './home-page/home-page.module';
+import { HomePageModule } from './pages/home-page/home-page.module';
 import { StoreModule } from '@ngrx/store';
 import { AuthEffects, authReducerFn } from './store/auth.store';
-import { LoginPageModule } from './login-page/login-page.module';
+import { LoginPageModule } from './pages/login-page/login-page.module';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UtilModule } from './util/util.module';
-import { BackofficePageModule } from './back-office-page/back-office-page.module';
+import { BackofficePageModule } from './pages/back-office-page/back-office-page.module';
 import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { TokenInterceptor } from './services/http-interceptors/token.interceptor';
 import { cartsReducerFn, CartsEffects } from './store/carts.store';
-import {
-  MatNativeDateModule,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { userReducerFn, UserEffects } from './store/user.store';
 import { projectsReducerFn, ProjectsEffects } from './store/project.store';
@@ -34,16 +30,14 @@ import { contentReducerFn, ContentEffects } from './store/content.store';
 import { eventsReducerFn, EventsEffects } from './store/events.store';
 import { teamReducerFn, TeamEffects } from './store/team.store';
 import { plantbagReducerFn, PlantbagEffects } from './store/plantbag.store';
-import { ForgotPasswordPageComponent } from './forgot-password-page/forgot-password-page.component';
-import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
+import { ForgotPasswordPageComponent } from './pages/forgot-password-page/forgot-password-page.component';
+import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { AuthGuard } from './util/auth.guard';
-import {
-  NgcCookieConsentConfig,
-  NgcCookieConsentModule,
-} from 'ngx-cookieconsent';
-import { ErrorInterceptor } from "./services/http-interceptors/http.interceptor";
-import { AppCookieService } from "./util/cookie.service";
-import { CookieService } from "ngx-cookie-service";
+import { NgcCookieConsentConfig, NgcCookieConsentModule } from 'ngx-cookieconsent';
+import { ErrorInterceptor } from './services/http-interceptors/http.interceptor';
+import { AppCookieService } from './util/cookie.service';
+import { CookieService } from 'ngx-cookie-service';
+import { PagesModule } from './pages/pages.module';
 
 export const MY_FORMATS = {
   parse: {
@@ -78,8 +72,7 @@ const cookieConfig: NgcCookieConsentConfig = {
   },
   type: 'opt-out',
   content: {
-    message:
-      'This website uses cookies to ensure you get the best experience on our website.',
+    message: 'This website uses cookies to ensure you get the best experience on our website.',
     dismiss: 'Got it!',
     deny: 'Refuse cookies',
     link: 'Learn more',
@@ -89,12 +82,9 @@ const cookieConfig: NgcCookieConsentConfig = {
 };
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ForgotPasswordPageComponent,
-    ResetPasswordPageComponent,
-  ],
+  declarations: [AppComponent, ForgotPasswordPageComponent, ResetPasswordPageComponent],
   imports: [
+    PagesModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -180,7 +170,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AppCookieService,
-    CookieService
+    CookieService,
   ],
   bootstrap: [AppComponent],
 })
