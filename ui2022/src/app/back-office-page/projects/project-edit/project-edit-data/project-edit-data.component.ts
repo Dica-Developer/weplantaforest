@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
@@ -9,7 +9,7 @@ import { environment } from '../../../../../environments/environment';
 })
 export class ProjectEditDataComponent implements OnInit {
   @Input()
-  projectForm: FormGroup;
+  projectForm: UntypedFormGroup;
 
   mainImageFile: any;
   imageSrc: any;

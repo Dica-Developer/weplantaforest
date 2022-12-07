@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, UntypedFormGroup } from '@angular/forms';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
 import {
@@ -19,10 +19,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./project-edit-tree.component.scss'],
 })
 export class ProjectEditTreeComponent implements OnInit, OnDestroy {
-  controlObj: FormGroup;
+  controlObj: UntypedFormGroup;
   treeTypes: TreeType[] = [];
 
-  @Input() set control(control: FormGroup) {
+  @Input() set control(control: UntypedFormGroup) {
     this.controlObj = control;
   }
 

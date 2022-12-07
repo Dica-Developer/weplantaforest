@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TreeTypeAdmin, updateTreetype, deleteTreeType } from '../../../store/treeType.store';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { TextHelper } from '../../../util/text.helper';
 import { environment } from '../../../../environments/environment';
 import { Store } from '@ngrx/store';
@@ -15,22 +15,22 @@ export class TreetypeEditComponent implements OnInit {
   @Input()
   treeType: TreeTypeAdmin;
 
-  form: FormGroup = new FormGroup({
-    id: new FormControl(null),
-    annualCo2SavingInTons: new FormControl(0.01),
-    descriptionDe: new FormControl(''),
-    descriptionEn: new FormControl(''),
-    imageFile: new FormControl(null),
-    infoLink: new FormControl(''),
-    nameDe: new FormControl(''),
-    nameEn: new FormControl(''),
+  form: UntypedFormGroup = new UntypedFormGroup({
+    id: new UntypedFormControl(null),
+    annualCo2SavingInTons: new UntypedFormControl(0.01),
+    descriptionDe: new UntypedFormControl(''),
+    descriptionEn: new UntypedFormControl(''),
+    imageFile: new UntypedFormControl(null),
+    infoLink: new UntypedFormControl(''),
+    nameDe: new UntypedFormControl(''),
+    nameEn: new UntypedFormControl(''),
   });
 
   imageFile: any;
   imageSrc: any;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private textHelper: TextHelper,
     private store: Store<AppState>
   ) {}

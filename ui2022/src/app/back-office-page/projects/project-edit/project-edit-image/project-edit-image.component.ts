@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TextHelper } from '../../../../util/text.helper';
 import { Store } from '@ngrx/store';
@@ -18,9 +18,9 @@ import {
   styleUrls: ['./project-edit-image.component.scss'],
 })
 export class ProjectEditImageComponent implements OnInit, OnDestroy {
-  controlObj: FormGroup;
-  descriptionDe: FormControl;
-  descriptionEn: FormControl;
+  controlObj: UntypedFormGroup;
+  descriptionDe: UntypedFormControl;
+  descriptionEn: UntypedFormControl;
 
   imageSrc: any;
 
@@ -34,15 +34,15 @@ export class ProjectEditImageComponent implements OnInit, OnDestroy {
   descDeSub: Subscription;
   descEnSub: Subscription;
 
-  @Input() set control(control: FormGroup) {
+  @Input() set control(control: UntypedFormGroup) {
     this.controlObj = control;
-    this.descriptionDe = new FormControl(
+    this.descriptionDe = new UntypedFormControl(
       this.textHelper.getTextForLanguage(
         this.controlObj.get('description').value,
         'de'
       )
     );
-    this.descriptionEn = new FormControl(
+    this.descriptionEn = new UntypedFormControl(
       this.textHelper.getTextForLanguage(
         this.controlObj.get('description').value,
         'en'

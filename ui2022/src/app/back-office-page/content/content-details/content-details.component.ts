@@ -10,7 +10,7 @@ import {
   selectContentArticleDetailsLoading,
   ContentParagraph,
 } from '../../../store/content.store';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
 import * as moment from 'moment';
 import { selectUsername } from '../../../store/profile.store';
 import { saveContentArticle } from '../../../store/content.store';
@@ -24,20 +24,20 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
   details: ContentArticleDetails;
   detailsLoading$: Observable<Boolean>;
 
-  articleForm = new FormGroup({
-    id: new FormControl(null),
-    articleType: new FormControl('Blog'),
-    imageFileName: new FormControl(null),
-    intro: new FormControl(''),
-    lang: new FormControl('DEUTSCH'),
-    showFull: new FormControl(false),
-    title: new FormControl(''),
-    visible: new FormControl(false),
-    createdOn: new FormControl(moment()),
-    mainImageFile: new FormControl(null),
+  articleForm = new UntypedFormGroup({
+    id: new UntypedFormControl(null),
+    articleType: new UntypedFormControl('Blog'),
+    imageFileName: new UntypedFormControl(null),
+    intro: new UntypedFormControl(''),
+    lang: new UntypedFormControl('DEUTSCH'),
+    showFull: new UntypedFormControl(false),
+    title: new UntypedFormControl(''),
+    visible: new UntypedFormControl(false),
+    createdOn: new UntypedFormControl(moment()),
+    mainImageFile: new UntypedFormControl(null),
     paragraphs: this.fb.array([]),
-    imageDescription: new FormControl(''),
-    owner: new FormControl(''),
+    imageDescription: new UntypedFormControl(''),
+    owner: new UntypedFormControl(''),
   });
 
   detailsSelector = this.store
@@ -55,7 +55,7 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
     this.username = res;
   });
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder) {
+  constructor(private store: Store<AppState>, private fb: UntypedFormBuilder) {
     this.detailsLoading$ = this.store.select(
       selectContentArticleDetailsLoading
     );

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { ActiveProjectArticle } from '../../../store/project.store';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
@@ -28,7 +28,7 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   @Input()
   showProject: boolean = false;
 
-  control: FormControl;
+  control: UntypedFormControl;
   controlVcSub: Subscription;
   sum: number = 0;
 
@@ -39,7 +39,7 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   }
 
   initControl() {
-    this.control = new FormControl(this.amount, [
+    this.control = new UntypedFormControl(this.amount, [
       Validators.max(this.article.amount - this.article.alreadyPlanted),
       Validators.min(0),
     ]);

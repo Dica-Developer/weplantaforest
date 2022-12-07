@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../store/app.state';
@@ -11,8 +11,8 @@ import { resetPasswordRequest, selectPasswordResetRequestSent } from '../store/a
   styleUrls: ['./forgot-password-page.component.scss'],
 })
 export class ForgotPasswordPageComponent implements OnInit {
-  forgotPasswordForm = new FormGroup({
-    email: new FormControl(''),
+  forgotPasswordForm = new UntypedFormGroup({
+    email: new UntypedFormControl(''),
   });
 
   passwordResetRequestSent$: Observable<boolean> = this.store.select(selectPasswordResetRequestSent);

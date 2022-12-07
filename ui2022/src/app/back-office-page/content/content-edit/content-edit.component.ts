@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { selectContentArticleTypes } from '../../../store/content.store';
@@ -12,7 +12,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class ContentEditComponent implements OnInit, OnDestroy {
   @Input()
-  articleForm: FormGroup;
+  articleForm: UntypedFormGroup;
 
   articleTypes: string[];
   languages: string[] = ['DEUTSCH', 'ENGLISH'];
@@ -24,7 +24,7 @@ export class ContentEditComponent implements OnInit, OnDestroy {
 
   imageNameSub;
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder) {}
+  constructor(private store: Store<AppState>, private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.handleImageUrl();

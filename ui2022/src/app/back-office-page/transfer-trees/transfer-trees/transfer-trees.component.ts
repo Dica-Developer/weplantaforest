@@ -8,7 +8,7 @@ import {
   transferTrees,
 } from '../../../store/user.store';
 import { Subscription, Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 
@@ -22,15 +22,15 @@ export class TransferTreesComponent implements OnInit {
   allUsersSub: Subscription;
 
   filteredOptionsFromUser: User[];
-  filterControlFromUser = new FormControl('');
+  filterControlFromUser = new UntypedFormControl('');
   filterControlVCFromUserSub: Subscription;
 
   filteredOptionsToUser: User[];
-  filterControlToUser = new FormControl('');
+  filterControlToUser = new UntypedFormControl('');
   filterControlVCToUserSub: Subscription;
 
-  fromUser = new FormControl(null);
-  toUser = new FormControl(null);
+  fromUser = new UntypedFormControl(null);
+  toUser = new UntypedFormControl(null);
 
   amountOfTrees$: Observable<number>;
 

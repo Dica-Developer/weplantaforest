@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import * as L from 'leaflet';
 import { tileLayer, latLng, Map } from 'leaflet';
 import { ProjectPositionPoint } from '../../../../store/project.store';
@@ -10,14 +10,14 @@ import { ProjectPositionPoint } from '../../../../store/project.store';
   styleUrls: ['./project-edit-location.component.scss'],
 })
 export class ProjectEditLocationComponent implements OnInit {
-  control: FormControl;
+  control: UntypedFormControl;
 
   map: Map;
   coords;
   polygon;
 
   @Input()
-  set positions(control: FormControl) {
+  set positions(control: UntypedFormControl) {
     this.control = control;
     this.coords = this.createPolygonPoints();
   }
