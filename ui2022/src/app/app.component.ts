@@ -10,7 +10,6 @@ import {
 } from './store/success-message.state';
 import { AppCookieService } from './util/cookie.service';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,11 +34,13 @@ export class AppComponent {
       } else {
         this.router.navigate(['/']);
       }
-    } 
+    }
     this.store.select(selectErrors).subscribe((errors) => {
       for (let error of errors) {
         this.snackBar
-          .open(error.message, 'X')
+          .open(error.message, 'X', {
+            duration: 4000,
+          })
           .afterDismissed()
           .subscribe((res) => {
             this.store.dispatch(removeError({ key: error.key }));
@@ -49,7 +50,10 @@ export class AppComponent {
     this.store.select(selectSuccessMessages).subscribe((messages) => {
       for (let message of messages) {
         this.snackBar
-          .open(message.message, 'X', { panelClass: ['success-snackbar'] })
+          .open(message.message, 'X', {
+            duration: 4000,
+            panelClass: ['success-snackbar'],
+          })
           .afterDismissed()
           .subscribe((res) => {
             this.store.dispatch(removeSuccessMessage({ key: message.key }));
