@@ -25,3 +25,18 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+## deploy to server via scp:
+staging:
+build: `yarn build --configuration=staging --base-href /backOffice2022/ --deploy-url /backOffice2022/`
+
+deployment: `scp -r /home/ipat/weplantaforest/ui2022/dist/ui2022/* ipat@iplantatree.org:/home/ipat/weplantaforest/ui/dist/backOffice2022`
+
+production:
+!! extend urls in /assets/fonts/roboto/roboto.css
+--> /assets/fonts/roboto/KFOlCnqEu92Fr1MmEU9fChc4EsA.woff2 -> /backOffice2022/assets/fonts/roboto/KFOlCnqEu92Fr1MmEU9fChc4EsA.woff2
+
+build: `yarn build --configuration=production --base-href /backOffice2022/ --deploy-url /backOffice2022/`
+
+deployment: `scp -r /home/ipat/weplantaforest/ui2022/dist/ui2022/* ipat@iplantatree.org:/home/ipat/iplantatree/ui/dist/backOffice2022`

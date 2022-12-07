@@ -20,9 +20,11 @@ export class BackOfficeRouterOutletComponent implements OnInit {
       this.profileImgUrl =
         environment.backendUrl + '/user/image/' + imageName + '/' + 50 + '/' + 50;
     } else {
-      this.profileImgUrl = '/assets/default_user.jpg';
+      this.profileImgUrl = environment.baseUrl +  '/assets/default_user.jpg';
     }
   });
+
+  logoUrl = environment.baseUrl + '/assets/ipat_logo.png';
 
   constructor(private store: Store<AppState>) {
     this.username$ = store.select(selectUsername);

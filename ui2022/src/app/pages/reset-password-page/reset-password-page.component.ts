@@ -11,6 +11,7 @@ import {
   verifyPasswordResetLink,
   selectVerifyPasswordResetLink,
 } from '../../store/auth.store';
+import { environment } from '../../../environments/environment';
 import { PasswordValidation } from '../../util/validators/compare-password.validator';
 
 @Component({
@@ -28,6 +29,8 @@ export class ResetPasswordPageComponent implements OnInit {
   );
   id: string = '';
   key: string = '';
+
+  logoUrl = environment.baseUrl + 'assets/ipat_logo.png';
 
   passwordResetSent$: Observable<boolean> = this.store.select(selectPasswordResetSent);
   verifyPasswordResetLink$: Observable<boolean> = this.store.select(selectVerifyPasswordResetLink);
