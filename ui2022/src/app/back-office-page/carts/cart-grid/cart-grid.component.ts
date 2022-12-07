@@ -1,26 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {
-  CellValueChangedEvent,
-  ColDef,
-  GridOptions,
-  GridApi,
-  ColumnApi,
-} from 'ag-grid-community';
+import { CellValueChangedEvent, ColDef, GridOptions, GridApi, ColumnApi } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import {
-  selectCarts,
-  updateAddress,
-  updateReceiptableFlag,
-} from '../../../store/carts.store';
+import { selectCarts, updateAddress, updateReceiptableFlag } from '../../../store/carts.store';
 import { GridHelper } from '../../../util/grid.helper';
 import { GridCheckboxComponent } from '../../../util/grid-components/grid-checkbox/grid-checkbox.component';
 import { GridSelectComponent } from '../../../util/grid-components/grid-select/grid-select.component';
-import {
-  updateStatus,
-  CartDetails,
-  selectCartDetails,
-} from '../../../store/carts.store';
+import { updateStatus, CartDetails, selectCartDetails } from '../../../store/carts.store';
 import { GridCartActionsComponent } from '../../../util/grid-components/grid-cart-actions/grid-cart-actions.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -88,20 +74,21 @@ export class CartGridComponent implements OnInit, OnDestroy {
       field: 'receiptable',
       headerName: 'SQ',
       width: 60,
-      minWidth: 60,
       suppressSizeToFit: true,
-      suppressAutoSize: true,
       cellRendererSelector: (params) => {
         return {
           component: 'checkboxRenderer',
           params: {
             value: params.data.receiptable,
-            disabled:
-              params.data.receiptId !== null &&
-              params.data.receiptId !== undefined,
+            disabled: params.data.receiptId !== null && params.data.receiptId !== undefined,
             id: params.data.id,
             valueChange: (cartId, value) =>
-              this.store.dispatch(updateReceiptableFlag({ cartId, value })),
+              this.store.dispatch(
+                updateReceiptableFlag({
+                  cartId,
+                  value,
+                }),
+              ),
           },
         };
       },
@@ -111,8 +98,6 @@ export class CartGridComponent implements OnInit, OnDestroy {
       headerName: 'Status',
       filter: 'agTextColumnFilter',
       sortable: true,
-      suppressSizeToFit: true,
-      suppressAutoSize: true,
       editable: (params) => {
         if (params.data.status === 'DISCARDED') {
           return false;
@@ -128,36 +113,28 @@ export class CartGridComponent implements OnInit, OnDestroy {
             const dialogRef = this.dialog.open(DiscardCartConfirmationDialog);
             dialogRef.afterClosed().subscribe((result) => {
               if (result) {
-                this.store.dispatch(updateStatus({ cartId, value }));
+                this.store.dispatch(
+                  updateStatus({
+                    cartId,
+                    value,
+                  }),
+                );
               }
             });
           } else {
-            this.store.dispatch(updateStatus({ cartId, value }));
+            this.store.dispatch(
+              updateStatus({
+                cartId,
+                value,
+              }),
+            );
           }
         },
       },
-      // cellEditor: 'selectRenderer',
-      // cellEditorParams: {
-      //   valueList: this.gridHelper.getCartStates(),
-      //   valueChange: (cartId, value) => {
-      //     if (value === 'DISCARDED') {
-      //       const dialogRef = this.dialog.open(DiscardCartConfirmationDialog);
-      //       dialogRef.afterClosed().subscribe((result) => {
-      //         if (result) {
-      //           this.store.dispatch(updateStatus({ cartId, value }));
-      //         }
-      //       });
-      //     } else {
-      //       this.store.dispatch(updateStatus({ cartId, value }));
-      //     }
-      //   },
-      // },
     },
     {
       field: 'id',
       headerName: 'Actions',
-      suppressSizeToFit: true,
-      suppressAutoSize: true,
       cellRendererSelector: (params) => {
         return {
           component: 'cartActionRenderer',
@@ -166,7 +143,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
           },
         };
       },
-      minWidth: 80,
+      width: 120,
     },
   ];
 
@@ -176,8 +153,6 @@ export class CartGridComponent implements OnInit, OnDestroy {
       field: 'receiptSentOn',
       headerName: 'SQ gesendet am',
       valueFormatter: this.gridHelper.dateFormatter,
-
-      // sortable: true,
     },
     {
       field: 'street',
@@ -215,7 +190,6 @@ export class CartGridComponent implements OnInit, OnDestroy {
       editable: true,
       valueSetter: (params) => this.updateAddress(params),
     },
-
   ];
 
   colDefs: ColDef[] = this.subsetOfColumns;
@@ -237,11 +211,9 @@ export class CartGridComponent implements OnInit, OnDestroy {
     this.rowData = carts;
   });
 
-  selectCartDetailsSub = this.store
-    .select(selectCartDetails)
-    .subscribe((details) => {
-      this.cartDetails = details;
-    });
+  selectCartDetailsSub = this.store.select(selectCartDetails).subscribe((details) => {
+    this.cartDetails = details;
+  });
 
   gridApi: GridApi;
   columnApi: ColumnApi;
@@ -249,7 +221,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private gridHelper: GridHelper,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {}
@@ -267,27 +239,26 @@ export class CartGridComponent implements OnInit, OnDestroy {
         cartId: params.data.id,
         field: params.colDef.field,
         value: params.newValue,
-      })
+      }),
     );
     return true;
   }
 
   filterColumns() {
     this.colDefs = this.subsetOfColumns;
-    this.columnApi.autoSizeAllColumns();
-    // this.gridApi.sizeColumnsToFit()
+    // this.columnApi.autoSizeAllColumns();
   }
 
   resetColumns() {
     this.colDefs = this.allColumns;
-    this.columnApi.autoSizeAllColumns();
-    // this.gridApi.sizeColumnsToFit()
+    // this.columnApi.autoSizeAllColumns();
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-    this.columnApi.autoSizeAllColumns();
+    // this.columnApi.autoSizeAllColumns();
+    this.columnApi.sizeColumnsToFit(1800);
   }
 }
 
