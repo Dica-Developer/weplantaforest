@@ -2,8 +2,6 @@ import {FormGroup } from '@angular/forms';
 
 export class PasswordValidation {
   static MatchPassword(formGroup: FormGroup) {
-    console.log(formGroup);
-    
     let password = formGroup.controls['password'].value; // to get value in input tag
     let confirmPassword = formGroup.controls['passwordConfirmation'].value;  // to get value in input tag
     if (password != confirmPassword) {

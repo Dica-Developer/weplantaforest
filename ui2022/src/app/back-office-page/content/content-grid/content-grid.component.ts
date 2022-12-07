@@ -100,9 +100,6 @@ export class ContentGridComponent implements OnInit, OnDestroy {
     this.contentArticlesSub = store
       .select(selectContentArticles)
       .subscribe((articles) => {
-        console.log('articles changed...');
-        console.log(articles);
-        
         this.rowData = articles;
 
       });

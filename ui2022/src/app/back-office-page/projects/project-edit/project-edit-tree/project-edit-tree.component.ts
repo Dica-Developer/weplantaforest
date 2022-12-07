@@ -60,8 +60,6 @@ export class ProjectEditTreeComponent implements OnInit, OnDestroy {
   }
 
   openDeleteConfirmation() {
-    console.log('removing article with index' + this.index);
-    
     const dialogRef = this.dialog.open(DeleteArticleConfirmationDialog);    
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
