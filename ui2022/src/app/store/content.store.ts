@@ -307,12 +307,13 @@ export class ContentEffects {
               action.articleImage &&
               action.paragraphImages.length == 0
             ) {
-              return [
+              actionArray.push(
                 uploadArticleImage({
                   articleId: details.id,
                   file: action.articleImage,
-                }),
-              ];
+                })
+              );
+              return actionArray;
             } else if (
               !action.articleImage &&
               action.paragraphImages.length > 0

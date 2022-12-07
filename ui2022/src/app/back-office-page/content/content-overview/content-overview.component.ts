@@ -20,7 +20,7 @@ export class ContentOverviewComponent implements OnInit, OnDestroy {
   contentDetailsSub: Subscription;
 
   loggedInUsername: string;
-  loggedInUserNameSub: Subscription;
+  // loggedInUserNameSub: Subscription;
 
   constructor(private store: Store<AppState>) {
     this.contentDetailsSub = store
@@ -28,16 +28,19 @@ export class ContentOverviewComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.contentDetails = res;
       });
-    this.loggedInUserNameSub = store.select(selectUsername).subscribe((res) => {
-      this.loggedInUsername = res;
-    });
+    this.loggedInUsername = localStorage.getItem('username');
+    // this.loggedInUserNameSub = store.select(selectUsername).subscribe((res) => {
+    //   console.log('got username: ', res);
+      
+    //   this.loggedInUsername = res;
+    // });
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.contentDetailsSub.unsubscribe();
-    this.loggedInUserNameSub.unsubscribe();
+    // this.loggedInUserNameSub.unsubscribe();
   }
 
   createArticle() {
