@@ -4,10 +4,11 @@
 
   img {
     height: 100%;
-    width: 100%;
+    min-width: 100%;
   }
 }
-button {
+
+.tour-button {
   font-family: 'Bull-mono';
   font-size: 24px;
   line-height: 24px;
@@ -15,12 +16,29 @@ button {
   border: 2px solid var(--background);
   color: var(--background);
   background: #00000000;
+}
+
+.center {
+  width: 100%;
   position: absolute;
-  bottom: 10%;
   left: 10%;
+  bottom: 10%;
 }
 
 button:hover {
   border: 2px solid var(--lightGreen);
   color: var(--lightGreen);
+}
+
+@media only screen and (max-width: 768px) {
+  .tour-button {
+    font-size: 15px;
+    line-height: 15px;
+    border-radius: 30px;
+  }
+
+  .center {
+    left: initial;
+    text-align: center;
+  }
 }
