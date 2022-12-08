@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { AppState } from '../../store/app.state';
 import { Observable } from 'rxjs';
-import { selectUsername, selectProfileImagename } from '../../../store/profile.store';
-import { environment } from '../../../../environments/environment';
-import { logout } from '../../../store/auth.store';
+import { selectUsername, selectProfileImagename } from '../../store/profile.store';
+import { environment } from '../../../environments/environment';
+import { logout } from '../../store/auth.store';
 
 @Component({
   selector: 'app-back-office-router-outlet',

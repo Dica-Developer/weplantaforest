@@ -35,11 +35,12 @@ import { CookieService } from 'ngx-cookie-service';
 import { PagesModule } from './pages/pages.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TreeEffects, treeReducerFn } from "./store/tree.store";
+import { TreeEffects, treeReducerFn } from './store/tree.store';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-
+import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
+import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -87,11 +88,10 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserRouterOutletComponent, BackOfficeRouterOutletComponent],
   imports: [
     PagesModule,
     BrowserModule,
@@ -112,7 +112,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       event: eventsReducerFn,
       teams: teamReducerFn,
       plantbag: plantbagReducerFn,
-      trees: treeReducerFn
+      trees: treeReducerFn,
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -125,7 +125,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       EventsEffects,
       TeamEffects,
       PlantbagEffects,
-      TreeEffects
+      TreeEffects,
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BackOfficeRouterOutletComponent } from './pages/back-office-page/back-office-router-outlet/back-office-router-outlet.component';
+import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
 import { CartsOverviewComponent } from './pages/back-office-page/carts/carts-overview/carts-overview.component';
 import { ContentOverviewComponent } from './pages/back-office-page/content/content-overview/content-overview.component';
 import { EventsOverviewComponent } from './pages/back-office-page/events/events-overview/events-overview.component';
@@ -15,6 +15,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { AuthGuard } from './util/auth.guard';
 import { UtilModule } from './util/util.module';
+import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -28,8 +29,10 @@ export const backofficeRoutes: Routes = [
   { path: 'transferTrees', component: TransferTreesComponent },
 ];
 
+export const userRoutes: Routes = [{ path: '', component: HomePageComponent }];
+
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  { path: '', component: UserRouterOutletComponent, children: userRoutes },
   { path: 'login', component: LoginPageComponent },
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },
   { path: 'password_reset', component: ResetPasswordPageComponent },

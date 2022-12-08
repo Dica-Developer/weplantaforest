@@ -4,5 +4,5 @@ export const environment = {
   backendAdminUrl: 'http://iplantatree.org:81/s/a',
   backendArticleManagerUrl: 'http://iplantatree.org:81/s/m',
   oldFrontendUrl: 'http://iplantatree.org:81',
-  baseUrl: "/backOffice2022"
+  baseUrl: "/ui2022"
 };

@@ -42,7 +42,6 @@ import { TreetypesOverviewComponent } from './treeTypes/treetypes-overview/treet
 import { TreetypeEditComponent } from './treeTypes/treetype-edit/treetype-edit.component';
 import { PlantForUserComponent } from './plant-for-user/plant-for-user/plant-for-user.component';
 import { TransferTreesComponent } from './transfer-trees/transfer-trees/transfer-trees.component';
-import { BackOfficeRouterOutletComponent } from './back-office-router-outlet/back-office-router-outlet.component';
 import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 
 @NgModule({
@@ -78,7 +77,6 @@ import { NgcCookieConsentModule } from 'ngx-cookieconsent';
     TreetypeEditComponent,
     PlantForUserComponent,
     TransferTreesComponent,
-    BackOfficeRouterOutletComponent,
     // DeleteProjectConfirmationDialog
   ],
   imports: [

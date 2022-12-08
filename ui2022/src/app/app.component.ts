@@ -4,10 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app.state';
 import { selectErrors, removeError } from './store/error.state';
-import {
-  selectSuccessMessages,
-  removeSuccessMessage,
-} from './store/success-message.state';
+import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
 import { AppCookieService } from './util/cookie.service';
 
 @Component({
@@ -24,17 +21,21 @@ export class AppComponent {
     private store: Store<AppState>,
     private router: Router,
     private snackBar: MatSnackBar,
-    private cookieService: AppCookieService
+    private cookieService: AppCookieService,
   ) {
     this.cookieService.init();
-    const previousUrl = localStorage.getItem('previousUrl');
-    if (localStorage.getItem('jwt')) {
-      if (previousUrl && previousUrl !== '/login') {
-        this.router.navigate([previousUrl]);
-      } else {
-        this.router.navigate(['/']);
-      }
-    }
+
+    //comment in for dev-purpose: to avoid manually routing back to page, where you work after each codechange
+    // const previousUrl = localStorage.getItem('previousUrl');
+    // if (localStorage.getItem('jwt')) {
+    //   console.log(previousUrl);
+
+    //   if (previousUrl && previousUrl !== '/login') {
+    //     this.router.navigate([previousUrl]);
+    //   } else {
+    //     this.router.navigate(['/']);
+    //   }
+    // }
     this.store.select(selectErrors).subscribe((errors) => {
       for (let error of errors) {
         this.snackBar
