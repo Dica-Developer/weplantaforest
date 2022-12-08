@@ -20,6 +20,7 @@ import { GridEventActionsComponent } from './grid-components/grid-event-actions/
 import { PlantbagTreeInputComponent } from './common-components/plantbag-tree-input/plantbag-tree-input.component';
 import { PlantbagComponent } from './common-components/plantbag/plantbag.component';
 import { UserGridProfileLinkComponent } from './grid-components/user-grid-profile-link/user-grid-profile-link.component';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { UserGridProfileLinkComponent } from './grid-components/user-grid-profil
     NgxEditorModule.forChild({}),
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule
   ],
   exports: [
     MaterialModule,
@@ -51,6 +53,7 @@ import { UserGridProfileLinkComponent } from './grid-components/user-grid-profil
     NoImgBoxComponent,
     PlantbagTreeInputComponent,
     PlantbagComponent,
+    TranslateModule
   ],
 })
 export class UtilModule {}

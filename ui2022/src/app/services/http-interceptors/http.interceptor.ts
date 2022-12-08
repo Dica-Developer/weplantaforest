@@ -13,10 +13,16 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
+        console.log('error:');
+        
+        console.log(error);
+        
         switch (error.status) {
           case 500:
             this.handleError500();
             break;
+          case 401:
+            break;  
           case 0:
             this.handleError0(error);
             break;

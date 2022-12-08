@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { AuthEffects, authReducerFn } from './store/auth.store';
 import { EffectsModule } from '@ngrx/effects';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { UtilModule } from './util/util.module';
 import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { TokenInterceptor } from './services/http-interceptors/token.interceptor';
@@ -33,6 +33,8 @@ import { ErrorInterceptor } from './services/http-interceptors/http.interceptor'
 import { AppCookieService } from './util/cookie.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PagesModule } from './pages/pages.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const MY_FORMATS = {
   parse: {
@@ -75,6 +77,10 @@ const cookieConfig: NgcCookieConsentConfig = {
     policy: 'Cookie Policy',
   },
 };
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -152,6 +158,14 @@ const cookieConfig: NgcCookieConsentConfig = {
     LeafletModule,
     LeafletDrawModule,
     NgcCookieConsentModule.forRoot(cookieConfig),
+    TranslateModule.forRoot({
+      defaultLanguage: 'de',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
