@@ -33,25 +33,19 @@ body {
 
 h2 {
   font-family: 'Bull-regular' !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
   font-size: 50px !important;
   line-height: 64px !important;
-  color: var(--black);
+  color: var(--dark-brown);
 }
 
 h4 {
   font-family: 'Bull-regular' !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
   font-size: 24px !important;
   line-height: 30px !important;
 }
 
 p {
   font-family: 'Bull-regular' !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
   font-size: 18px !important;
   line-height: 21px !important;
   letter-spacing: 0.02em !important;
@@ -64,7 +58,7 @@ a {
 }
 
 a:hover {
-  color: #969900;
+  color: var(--green);
 }
 
 mat-divider {

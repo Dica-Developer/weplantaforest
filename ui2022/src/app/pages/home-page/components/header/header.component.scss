@@ -1,5 +1,4 @@
 .header {
-  // padding: 0 7rem;
 }
 
 .stats {
@@ -26,12 +25,11 @@ p {
   font-family: 'Bull-regular' !important;
   font-size: 60px !important;
   line-height: 70px !important;
-  color: #3c3335 !important;
+  color: var(--dark-brown) !important;
   margin-bottom: 3rem !important;
 }
 
 a {
-  font-family: 'Bull-mono' !important;
   font-size: 15px;
   line-height: 15px;
   margin-left: 4px;
