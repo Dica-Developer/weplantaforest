@@ -1,4 +1,5 @@
 .header {
+  margin-top: 80px;
   height: calc(100vh - 80px);
   padding: 0 6rem;
 }
@@ -12,13 +13,13 @@
 
 .header-title {
   font-size: 13rem;
-  font-family: "NBArchitect";
+  font-family: 'NBArchitect';
   line-height: 13rem;
   color: #65594e;
 }
 
 h2 {
-  font-family: "Bull-regular";
+  font-family: 'Bull-regular';
   font-size: 75px;
   line-height: 80px;
   color: #3c3335;
@@ -27,7 +28,7 @@ h2 {
 
 p {
   margin-left: 4px;
-  font-family: "Bull-mono";
+  font-family: 'Bull-mono';
   font-size: 20px;
   line-height: 30px;
   letter-spacing: 0.02em;
