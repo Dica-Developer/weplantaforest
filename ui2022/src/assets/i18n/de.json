@@ -1,3 +1,9 @@
 {
-  "hello": "HALLLOOOOOOOOOOOOOOOO"
+  "hello": "HALLLOOOOOOOOOOOOOOOO",
+
+  "headerText": "Regional und glaubwürdig.",
+  "headerSubtext1": "Wir pflanzen Bäume. Weil wir wollen.",
+  "headerSubtext2": "Und weil wir müssen.",
+  "learnMore": "Mehr über uns erfahren"
+
 }
