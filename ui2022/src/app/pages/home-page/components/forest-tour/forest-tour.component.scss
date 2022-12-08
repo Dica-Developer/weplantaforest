@@ -1,0 +1,26 @@
+.image-wrapper {
+  width: 100%;
+  position: relative;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+button {
+  font-family: 'Bull-mono';
+  font-size: 24px;
+  line-height: 24px;
+  border-radius: 48px;
+  border: 2px solid var(--background);
+  color: var(--background);
+  background: #00000000;
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+}
+
+button:hover {
+  border: 2px solid var(--lightGreen);
+  color: var(--lightGreen);
+}
