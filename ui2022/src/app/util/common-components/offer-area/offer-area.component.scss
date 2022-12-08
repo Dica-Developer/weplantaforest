@@ -3,7 +3,8 @@
 }
 
 .column {
-  border-top: 1px solid black;
+  border-top: 1px solid var(--black);
+  padding: 2rem;
 }
 
 .flex {
@@ -16,7 +17,7 @@
 }
 
 .is-three-fifths {
-  border-right: 1px solid black;
+  border-right: 1px solid var(--black);
 }
 
 p {
@@ -24,7 +25,6 @@ p {
   line-height: 25px;
   letter-spacing: 0.02em;
   margin: 0;
-  padding: 1rem 7rem;
 }
 
 .largeText {

@@ -1,5 +1,5 @@
 .header {
-  padding: 0 7rem;
+  // padding: 0 7rem;
 }
 
 .stats {
@@ -10,27 +10,28 @@
 }
 
 h1 {
-  font-size: 8rem;
+  font-size: 10rem;
   font-family: 'NBArchitect';
-  line-height: 8rem;
-  color: #65594e;
+  line-height: 10rem;
+  color: var(--brown);
 }
 
 p {
   margin-left: 4px;
-  font-family: 'Bull-mono';
+  font-family: 'Bull-mono' !important;
   margin-bottom: 3rem;
 }
 
 .text-left {
   font-family: 'Bull-regular' !important;
-  font-size: 70px !important;
-  line-height: 80px !important;
+  font-size: 60px !important;
+  line-height: 70px !important;
   color: #3c3335 !important;
   margin-bottom: 3rem !important;
 }
 
 a {
+  font-family: 'Bull-mono' !important;
   font-size: 15px;
   line-height: 15px;
   margin-left: 4px;
