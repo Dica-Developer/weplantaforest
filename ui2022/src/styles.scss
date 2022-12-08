@@ -39,6 +39,7 @@
   --black: #212121;
   --green: #969900;
   --dark-brown: #3c3335;
+  --brown: #65594e;
 }
 
 $fontConfig: (
@@ -272,6 +273,15 @@ h2 {
   font-weight: 400 !important;
   font-size: 50px !important;
   line-height: 64px !important;
+  color: var(--black);
+}
+
+h4 {
+  font-family: 'Bull-regular' !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 24px !important;
+  line-height: 30px !important;
 }
 
 p {

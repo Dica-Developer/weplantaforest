@@ -28,6 +28,9 @@ import { BarrelIconComponent } from './common-components/icons/barrel-icon/barre
 import { TreeIconComponent } from './icons/tree-icon/tree-icon.component';
 import { PlantTreeComponent } from './common-components/plant-tree/plant-tree.component';
 import { TreeTileComponent } from './common-components/tree-tile/tree-tile.component';
+import { PlantingProcessComponent } from './common-components/planting-process/planting-process.component';
+import { ShovelIconComponent } from './common-components/icons/shovel-icon/shovel-icon.component';
+import { CertificateIconComponent } from './common-components/icons/certificate-icon/certificate-icon.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import { TreeTileComponent } from './common-components/tree-tile/tree-tile.compo
     TreeIconComponent,
     PlantTreeComponent,
     TreeTileComponent,
+    PlantingProcessComponent,
+    ShovelIconComponent,
+    CertificateIconComponent,
   ],
   imports: [
     CommonModule,
@@ -75,6 +81,9 @@ import { TreeTileComponent } from './common-components/tree-tile/tree-tile.compo
     TreeIconComponent,
     PlantTreeComponent,
     TreeTileComponent,
+    PlantingProcessComponent,
+    ShovelIconComponent,
+    CertificateIconComponent,
   ],
 })
 export class UtilModule {}

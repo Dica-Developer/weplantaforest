@@ -1,0 +1,33 @@
+.columns {
+  padding-left: 6rem;
+
+  .column {
+    text-align: center;
+
+    .svg-div {
+      height: 40px;
+    }
+
+    :host ::ng-deep svg {
+      cursor: auto;
+      path {
+        fill: var(--brown) !important;
+      }
+    }
+    .desc {
+      font-family: 'Bull-5 Trial';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 21px;
+    }
+
+    .line {
+      height: 0;
+      width: 100%;
+      border-top-style: solid;
+      border-width: 1px;
+      margin-top: 114px;
+    }
+  }
+}
