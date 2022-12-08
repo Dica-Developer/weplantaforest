@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: 'app-tree-tile',
@@ -9,6 +10,8 @@ export class TreeTileComponent implements OnInit {
 
   @Input()
   name: string;
+
+  treeUrl = environment.baseUrl + '/assets/laerche.svg';
 
   constructor() { }
 
