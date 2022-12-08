@@ -10,6 +10,7 @@ import { ContentState } from './content.store';
 import { EventsState } from './events.store';
 import { TeamState } from './team.store';
 import { PlantbagState } from './plantbag.store';
+import { TreeState } from "./tree.store";
 
 
 export interface AppState{
@@ -24,5 +25,6 @@ export interface AppState{
   readonly content: ContentState,
   readonly event: EventsState,
   readonly teams: TeamState,
-  readonly plantbag: PlantbagState
+  readonly plantbag: PlantbagState,
+  readonly trees: TreeState
 }

@@ -1,4 +1,7 @@
 mat-toolbar {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+
   font-family: '';
   background: var(--background);
   padding: 0px;
@@ -44,6 +47,7 @@ mat-toolbar {
     padding-top: 20px;
     text-align: center;
     mat-icon {
+      cursor: pointer;
       width: 40px;
       height: 40px;
       font-size: 35px;

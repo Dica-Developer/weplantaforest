@@ -329,6 +329,7 @@ snack-bar-container {
 }
 
 .svg-icon:hover {
+  cursor: pointer;
   path {
     fill: var(--green);
   }
