@@ -1,7 +1,6 @@
 .header {
+  margin-top: 80px;
   padding: 0 7rem;
-  background: var(--background);
-  border-top: 1px solid black;
 }
 
 .stats {
@@ -39,6 +38,10 @@ a {
   font-size: 15px;
   line-height: 15px;
   margin-left: 4px;
+}
+
+.columns:last-child {
+  margin-bottom: 10rem !important;
 }
 
 @media only screen and (max-width: 768px) {
