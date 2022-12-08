@@ -19,7 +19,7 @@ export class LoginPageComponent implements OnInit {
     password: new UntypedFormControl(''),
   });
 
-  logoUrl = environment.baseUrl + 'assets/ipat_logo.png';
+  logoUrl = environment.baseUrl + '/assets/ipat_logo.png';
 
   constructor(private store: Store<AppState>) {
     this.loginError$ = store.select(selectLoginError);
