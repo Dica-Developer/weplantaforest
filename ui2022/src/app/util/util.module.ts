@@ -28,6 +28,7 @@ import { BarrelIconComponent } from './common-components/icons/barrel-icon/barre
 import { TreeIconComponent } from './icons/tree-icon/tree-icon.component';
 import { PlantTreeComponent } from './common-components/plant-tree/plant-tree.component';
 import { TreeTileComponent } from './common-components/tree-tile/tree-tile.component';
+import { OfferAreaComponent } from './common-components/offer-area/offer-area.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { TreeTileComponent } from './common-components/tree-tile/tree-tile.compo
     TreeIconComponent,
     PlantTreeComponent,
     TreeTileComponent,
+    OfferAreaComponent,
   ],
   imports: [
     CommonModule,
@@ -75,6 +77,7 @@ import { TreeTileComponent } from './common-components/tree-tile/tree-tile.compo
     TreeIconComponent,
     PlantTreeComponent,
     TreeTileComponent,
+    OfferAreaComponent,
   ],
 })
 export class UtilModule {}
