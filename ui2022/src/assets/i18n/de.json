@@ -1,3 +1,8 @@
 {
-  "hello": "HALLLOOOOOOOOOOOOOOOO"
+  "hello": "HALLLOOOOOOOOOOOOOOOO",
+  "plantTree": "Baum pflanzen",
+  "projects": "Projekte",
+  "aboutUs": "Über uns",
+  "explore": "Erforschen",
+  "login": "Login"
 }

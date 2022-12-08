@@ -1,0 +1,34 @@
+<mat-toolbar>
+  <div class="columns">
+    <div class="column is-2 bordered">
+      <!-- logo svg -->
+      <app-logo-icon class="logo"></app-logo-icon>
+    </div>
+    <div class="column is-6 bordered">
+      <div class="columns links">
+        <div class="column">
+          <p>{{ "plantTree" | translate }}</p>
+        </div>
+        <div class="column">
+          <p>{{ "projects" | translate }}</p>
+        </div>
+        <div class="column">
+          <p>{{ "aboutUs" | translate }}</p>
+        </div>
+        <div class="column">
+          <p>{{ "explore" | translate }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="column is-1 bordered icon-col">
+      <mat-icon>search</mat-icon>
+    </div>
+    <div class="column is-1 bordered barrel-col">
+      <!-- barrel svg -->
+    <app-barrel-icon ></app-barrel-icon>
+    </div>
+    <div class="column is-2 bordered login-col">
+      <app-button label="{{ 'login' | translate }}" (clicked)="loginClicked()"></app-button>
+    </div>
+  </div>
+</mat-toolbar>

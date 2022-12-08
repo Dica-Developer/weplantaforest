@@ -20,7 +20,11 @@ import { GridEventActionsComponent } from './grid-components/grid-event-actions/
 import { PlantbagTreeInputComponent } from './common-components/plantbag-tree-input/plantbag-tree-input.component';
 import { PlantbagComponent } from './common-components/plantbag/plantbag.component';
 import { UserGridProfileLinkComponent } from './grid-components/user-grid-profile-link/user-grid-profile-link.component';
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
+import { ToolbarComponent } from './common-components/toolbar/toolbar.component';
+import { ButtonComponent } from './common-components/button/button.component';
+import { LogoIconComponent } from './common-components/icons/logo-icon/logo-icon.component';
+import { BarrelIconComponent } from './common-components/icons/barrel-icon/barrel-icon.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,10 @@ import { TranslateModule } from "@ngx-translate/core";
     PlantbagTreeInputComponent,
     PlantbagComponent,
     UserGridProfileLinkComponent,
+    ToolbarComponent,
+    ButtonComponent,
+    LogoIconComponent,
+    BarrelIconComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +52,7 @@ import { TranslateModule } from "@ngx-translate/core";
     NgxEditorModule.forChild({}),
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     MaterialModule,
@@ -53,7 +61,11 @@ import { TranslateModule } from "@ngx-translate/core";
     NoImgBoxComponent,
     PlantbagTreeInputComponent,
     PlantbagComponent,
-    TranslateModule
+    TranslateModule,
+    ToolbarComponent,
+    ButtonComponent,
+    LogoIconComponent,
+    BarrelIconComponent,
   ],
 })
 export class UtilModule {}

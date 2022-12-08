@@ -1,0 +1,76 @@
+mat-toolbar {
+  font-family: "";
+  background: var(--background);
+  padding: 0px;
+
+  position: absolute;
+  height: 80px;
+  // left: 0px;
+  top: 0px;
+  .columns {
+    width: 100%;
+    margin: 0;
+  }
+  .column {
+    padding: 0;
+  }
+
+
+  .logo {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    margin-top: 12px;
+    margin-left: 50px;
+  }
+
+  .links {
+    padding-left: 30px;
+  }
+
+  p {
+    padding-top: 30px;
+    font-family: "Bull";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 15px;
+    text-align: center;
+    cursor: pointer;
+  }
+  p:hover {
+    color: var(--green);
+  }
+  .icon-col {
+    padding-top: 20px;
+    text-align: center;
+    mat-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 35px;
+    }
+    mat-icon:hover {
+      color: var(--green);
+    }
+  }
+  .barrel-col {
+    padding-top: 25px;
+    text-align: center;
+    .barrel {
+      width: 40px;
+      height: 20px;
+    }
+  }
+
+  .bordered {
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-color: var(--black);
+    height: 80px;
+  }
+
+  .login-col {
+    text-align: center;
+    padding-top: 15px;
+  }
+}
