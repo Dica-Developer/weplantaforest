@@ -29,22 +29,24 @@
 
 // Fonts
 @import "./assets/fonts/roboto/roboto.css";
+@import "./assets/fonts/bull5/bull5.css";
+@import "./assets/fonts/nbArchitect/nbArchitect.css";
 @import "material-icons/iconfont/material-icons.css";
 
 $fontConfig: (
-  display-4: mat.define-typography-level(112px, 112px, 300, "Roboto", -0.0134em),
-  display-3: mat.define-typography-level(56px, 56px, 400, "Roboto", -0.0089em),
-  display-2: mat.define-typography-level(45px, 48px, 400, "Roboto", 0em),
-  display-1: mat.define-typography-level(34px, 40px, 400, "Roboto", 0.0074em),
-  headline: mat.define-typography-level(24px, 32px, 400, "Roboto", 0em),
-  title: mat.define-typography-level(20px, 32px, 500, "Roboto", 0.0075em),
-  subheading-2: mat.define-typography-level(16px, 28px, 400, "Roboto", 0.0094em),
-  subheading-1: mat.define-typography-level(15px, 24px, 500, "Roboto", 0.0067em),
-  body-2: mat.define-typography-level(14px, 24px, 500, "Roboto", 0.0179em),
-  body-1: mat.define-typography-level(14px, 20px, 400, "Roboto", 0.0179em),
-  button: mat.define-typography-level(14px, 14px, 500, "Roboto", 0.0893em),
-  caption: mat.define-typography-level(12px, 20px, 400, "Roboto", 0.0333em),
-  input: mat.define-typography-level(inherit, 1.125, 400, "Roboto", 1.5px),
+  display-4: mat.define-typography-level(112px, 112px, 300, "NBArchitect", -0.0134em),
+  display-3: mat.define-typography-level(56px, 56px, 400, "NBArchitect", -0.0089em),
+  display-2: mat.define-typography-level(45px, 48px, 400, "NBArchitect", 0em),
+  display-1: mat.define-typography-level(34px, 40px, 400, "NBArchitect", 0.0074em),
+  headline: mat.define-typography-level(24px, 32px, 400, "NBArchitect", 0em),
+  title: mat.define-typography-level(20px, 32px, 500, "NBArchitect", 0.0075em),
+  subheading-2: mat.define-typography-level(16px, 28px, 400, "NBArchitect", 0.0094em),
+  subheading-1: mat.define-typography-level(15px, 24px, 500, "NBArchitect", 0.0067em),
+  body-2: mat.define-typography-level(14px, 24px, 500, "NBArchitect", 0.0179em),
+  body-1: mat.define-typography-level(14px, 20px, 400, "NBArchitect", 0.0179em),
+  button: mat.define-typography-level(14px, 14px, 500, "NBArchitect", 0.0893em),
+  caption: mat.define-typography-level(12px, 20px, 400, "NBArchitect", 0.0333em),
+  input: mat.define-typography-level(inherit, 1.125, 400, "NBArchitect", 1.5px),
 );
 
 // Foreground Elements
@@ -252,7 +254,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "NBArchitect", Bull, "Helvetica Neue", sans-serif;
 }
 
 .col-30 {
