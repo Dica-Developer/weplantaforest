@@ -1,6 +1,4 @@
 .header {
-  margin-top: 80px;
-  height: calc(100vh - 80px);
   padding: 0 6rem;
 }
 
@@ -12,18 +10,10 @@
 }
 
 .header-title {
-  font-size: 13rem;
+  font-size: 10rem;
   font-family: 'NBArchitect';
-  line-height: 13rem;
+  line-height: 10rem;
   color: #65594e;
-}
-
-h2 {
-  font-family: 'Bull-regular';
-  font-size: 75px;
-  line-height: 80px;
-  color: #3c3335;
-  margin-bottom: 3rem;
 }
 
 p {
@@ -35,9 +25,17 @@ p {
   margin-bottom: 3rem;
 }
 
+.text-left {
+  font-family: 'Bull-regular' !important;
+  font-size: 70px !important;
+  line-height: 80px !important;
+  color: #3c3335 !important;
+  margin-bottom: 3rem !important;
+}
+
 a {
-  font-size: 20px;
-  line-height: 25px;
+  font-size: 15px;
+  line-height: 15px;
   margin-left: 4px;
 }
 

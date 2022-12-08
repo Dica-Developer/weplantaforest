@@ -26,6 +26,8 @@ import { ButtonComponent } from './common-components/button/button.component';
 import { LogoIconComponent } from './common-components/icons/logo-icon/logo-icon.component';
 import { BarrelIconComponent } from './common-components/icons/barrel-icon/barrel-icon.component';
 import { TreeIconComponent } from './icons/tree-icon/tree-icon.component';
+import { PlantTreeComponent } from './common-components/plant-tree/plant-tree.component';
+import { TreeTileComponent } from './common-components/tree-tile/tree-tile.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { TreeIconComponent } from './icons/tree-icon/tree-icon.component';
     LogoIconComponent,
     BarrelIconComponent,
     TreeIconComponent,
+    PlantTreeComponent,
+    TreeTileComponent,
   ],
   imports: [
     CommonModule,
@@ -69,6 +73,8 @@ import { TreeIconComponent } from './icons/tree-icon/tree-icon.component';
     LogoIconComponent,
     BarrelIconComponent,
     TreeIconComponent,
+    PlantTreeComponent,
+    TreeTileComponent,
   ],
 })
 export class UtilModule {}
