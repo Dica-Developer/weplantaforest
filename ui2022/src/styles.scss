@@ -1,12 +1,12 @@
-@use "@angular/material" as mat;
-@import "ag-grid-community/dist/styles/ag-grid.css";
-@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-@import "~leaflet/dist/leaflet.css";
+@use '@angular/material' as mat;
+@import 'ag-grid-community/dist/styles/ag-grid.css';
+@import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+@import '~leaflet/dist/leaflet.css';
 
-@import "@angular/material/prebuilt-themes/purple-green.css";
+@import '@angular/material/prebuilt-themes/purple-green.css';
 // @import "bulma/sass/utilities/_all.sass";
 // @import "bulma/sass/grid/columns.sass";
-@import "bulma/bulma.sass";
+@import 'bulma/bulma.sass';
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
@@ -30,9 +30,9 @@
 // have to load a single css file for Angular Material in your app.
 
 // Fonts
-@import "./assets/fonts/bull5/bull5.css";
-@import "./assets/fonts/nbArchitect/nbArchitect.css";
-@import "material-icons/iconfont/material-icons.css";
+@import './assets/fonts/bull5/bull5.css';
+@import './assets/fonts/nbArchitect/nbArchitect.css';
+@import 'material-icons/iconfont/material-icons.css';
 
 :root {
   --background: #dcdcd6;
@@ -42,19 +42,19 @@
 }
 
 $fontConfig: (
-  display-4: mat.define-typography-level(112px, 112px, 300, "Helvetica", -0.0134em),
-  display-3: mat.define-typography-level(56px, 56px, 400, "Helvetica", -0.0089em),
-  display-2: mat.define-typography-level(45px, 48px, 400, "Helvetica", 0em),
-  display-1: mat.define-typography-level(34px, 40px, 400, "Helvetica", 0.0074em),
-  headline: mat.define-typography-level(24px, 32px, 400, "Helvetica", 0em),
-  title: mat.define-typography-level(20px, 32px, 500, "Helvetica", 0.0075em),
-  subheading-2: mat.define-typography-level(16px, 28px, 400, "Helvetica", 0.0094em),
-  subheading-1: mat.define-typography-level(15px, 24px, 500, "Helvetica", 0.0067em),
-  body-2: mat.define-typography-level(14px, 24px, 500, "Helvetica", 0.0179em),
-  body-1: mat.define-typography-level(14px, 20px, 400, "Helvetica", 0.0179em),
-  button: mat.define-typography-level(14px, 14px, 500, "Helvetica", 0.0893em),
-  caption: mat.define-typography-level(12px, 20px, 400, "Helvetica", 0.0333em),
-  input: mat.define-typography-level(inherit, 1.125, 400, "Helvetica", 1.5px),
+  display-4: mat.define-typography-level(112px, 112px, 300, 'Helvetica', -0.0134em),
+  display-3: mat.define-typography-level(56px, 56px, 400, 'Helvetica', -0.0089em),
+  display-2: mat.define-typography-level(45px, 48px, 400, 'Helvetica', 0em),
+  display-1: mat.define-typography-level(34px, 40px, 400, 'Helvetica', 0.0074em),
+  headline: mat.define-typography-level(24px, 32px, 400, 'Helvetica', 0em),
+  title: mat.define-typography-level(20px, 32px, 500, 'Helvetica', 0.0075em),
+  subheading-2: mat.define-typography-level(16px, 28px, 400, 'Helvetica', 0.0094em),
+  subheading-1: mat.define-typography-level(15px, 24px, 500, 'Helvetica', 0.0067em),
+  body-2: mat.define-typography-level(14px, 24px, 500, 'Helvetica', 0.0179em),
+  body-1: mat.define-typography-level(14px, 20px, 400, 'Helvetica', 0.0179em),
+  button: mat.define-typography-level(14px, 14px, 500, 'Helvetica', 0.0893em),
+  caption: mat.define-typography-level(12px, 20px, 400, 'Helvetica', 0.0333em),
+  input: mat.define-typography-level(inherit, 1.125, 400, 'Helvetica', 1.5px),
 );
 
 // Foreground Elements
@@ -263,13 +263,13 @@ body {
 }
 body {
   margin: 0;
-  font-family: "NBArchitect", Bull, "Helvetica Neue", sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 a {
   color: black;
   text-decoration: underline;
-  font-family: "Bull-mono";
+  font-family: 'Bull-mono';
 }
 
 a:hover {
