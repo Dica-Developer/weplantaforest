@@ -266,6 +266,16 @@ body {
   font-family: "NBArchitect", Bull, "Helvetica Neue", sans-serif;
 }
 
+a {
+  color: black;
+  text-decoration: underline;
+  font-family: "Bull-mono";
+}
+
+a:hover {
+  color: #969900;
+}
+
 .col-30 {
   width: 30%;
   display: inline-block;

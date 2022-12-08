@@ -1,8 +1,12 @@
 {
-  "hello": "HALLLOOOOOOOOOOOOOOOO",
   "plantTree": "Baum pflanzen",
   "projects": "Projekte",
   "aboutUs": "Über uns",
   "explore": "Erforschen",
-  "login": "Login"
+  "login": "Login",
+  "headerText": "Regional und glaubwürdig.",
+  "headerSubtext1": "Wir pflanzen Bäume. Weil wir wollen.",
+  "headerSubtext2": "Und weil wir müssen.",
+  "learnMore": "Mehr über uns erfahren"
+
 }
