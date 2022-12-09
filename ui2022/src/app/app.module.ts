@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { UtilModule } from './util/util.module';
 import { profileReducerFn, ProfileEffects } from './store/profile.store';
+import { projectsReportReducerFn, ProjectReportsEffects } from './store/project-report.store';
 import { TokenInterceptor } from './services/http-interceptors/token.interceptor';
 import { cartsReducerFn, CartsEffects } from './store/carts.store';
 import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -113,6 +114,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       teams: teamReducerFn,
       plantbag: plantbagReducerFn,
       trees: treeReducerFn,
+      projectReports: projectsReportReducerFn,
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -126,6 +128,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       TeamEffects,
       PlantbagEffects,
       TreeEffects,
+      ProjectReportsEffects,
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),
