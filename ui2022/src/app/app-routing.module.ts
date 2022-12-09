@@ -17,6 +17,7 @@ import { AuthGuard } from './util/auth.guard';
 import { UtilModule } from './util/util.module';
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 import { RankingPageComponent } from './pages/ranking-page/ranking-page.component';
+import { ImprintPageComponent } from './pages/imprint-page/imprint-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -33,6 +34,7 @@ export const backofficeRoutes: Routes = [
 export const userRoutes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'ranking', component: RankingPageComponent },
+  { path: 'imprint', component: ImprintPageComponent },
 ];
 
 const routes: Routes = [
