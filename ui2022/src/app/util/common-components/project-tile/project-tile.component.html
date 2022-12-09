@@ -2,11 +2,18 @@
   <div class="image-wrapper">
     <img src="{{ imgUrl }}" alt="{{ projectReport.projectName }}" />
   </div>
-  <h4>{{ projectReport.projectName }}</h4>
-  <p>{{ projectReport.description }}</p>
-
-  <div class="status-bar">
-    <div class="bar"></div>
-    <span></span>
+  <div class="tile-body">
+    <h4>{{ projectReport.projectName }}</h4>
+    <p>{{ projectReport.description }}</p>
+    <div class="status-bar">
+      <div class="bar">
+        <div class="inner-bar" [style.width.%]="progress"></div>
+      </div>
+      <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+        <span>{{ 'alreadyPlanted' | translate }} {{ projectReport.amountOfPlantedTrees }} </span>
+        <span>{{ 'target' | translate }} {{ projectReport.amountOfMaximumTreesToPlant }}</span>
+      </div>
+      <span></span>
+    </div>
   </div>
 </div>

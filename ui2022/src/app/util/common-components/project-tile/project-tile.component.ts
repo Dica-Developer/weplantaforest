@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class ProjectTileComponent implements OnInit {
   @Input() projectReport;
   imgUrl: string;
+  progress: number;
 
   constructor() {}
 
@@ -18,5 +19,8 @@ export class ProjectTileComponent implements OnInit {
     //   '/project/image/' +
     //   this.projectReport.projectImageFileName
     this.imgUrl = environment.baseUrl + '/assets/forest.png';
+    this.progress =
+      (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
+      100;
   }
 }

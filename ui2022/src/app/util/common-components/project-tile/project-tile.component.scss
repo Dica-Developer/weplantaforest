@@ -1,7 +1,41 @@
 .project-tile {
-  max-width: 400px;
+  max-width: 500px;
   height: 600px;
-  background: black;
   overflow: hidden;
   white-space: pre-wrap;
+  border: 1px solid var(--black);
+}
+
+.bar {
+  margin: 2rem auto 1rem auto;
+  background: var(--background);
+  border: 1px solid var(--black);
+  height: 18px;
+  width: 100%;
+  border-radius: 9px;
+}
+
+.inner-bar {
+  background: var(--green);
+  height: 16px;
+  border-radius: 8px;
+}
+
+.tile-body {
+  font-family: 'Bull-mono';
+  padding: 2rem;
+  text-align: left;
+
+  h4 {
+    text-decoration: underline;
+  }
+
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4; /* number of lines to show */
+    -webkit-box-orient: vertical;
+  }
 }
