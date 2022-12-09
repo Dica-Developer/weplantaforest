@@ -10,39 +10,29 @@ export class ContentService {
   constructor(private http: HttpClient) {}
 
   loadAll() {
-    return this.http.get(
-      environment.backendArticleManagerUrl + '/backOffice/articles'
-    );
+    return this.http.get(environment.backendArticleManagerUrl + '/backOffice/articles');
   }
 
   delete(id: number) {
     return this.http.delete(
-      environment.backendArticleManagerUrl +
-        '/backOffice/article?articleId=' +
-        id
+      environment.backendArticleManagerUrl + '/backOffice/article?articleId=' + id,
     );
   }
 
   getDetails(id: number) {
     return this.http.get(
-      environment.backendArticleManagerUrl +
-        '/backOffice/article?articleId=' +
-        id
+      environment.backendArticleManagerUrl + '/backOffice/article?articleId=' + id,
     );
   }
 
   getArticleTypes() {
-    return this.http.get(
-      environment.backendArticleManagerUrl + '/articleTypes'
-    );
+    return this.http.get(environment.backendArticleManagerUrl + '/articleTypes');
   }
 
   editArticle(request: ContentArticleDetails, userName: string) {
     return this.http.post(
-      environment.backendArticleManagerUrl +
-        '/backOffice/article/edit?userName=' +
-        userName,
-      request
+      environment.backendArticleManagerUrl + '/backOffice/article/edit?userName=' + userName,
+      request,
     );
   }
 
@@ -50,10 +40,7 @@ export class ContentService {
     let formData: any = new FormData();
     formData.append('articleId', articleId);
     formData.append('file', file);
-    return this.http.post(
-      environment.backendArticleManagerUrl + '/article/upload/image',
-      formData
-    );
+    return this.http.post(environment.backendArticleManagerUrl + '/article/upload/image', formData);
   }
 
   uploadParagraphImage(file: any, articleId: number, paragraphId: number) {
@@ -63,7 +50,25 @@ export class ContentService {
     formData.append('file', file);
     return this.http.post(
       environment.backendArticleManagerUrl + '/paragraph/upload/image',
-      formData
+      formData,
+    );
+  }
+
+  // getImprint(language: string) {
+  //   // language string ==> all caps  --> ENGLISH / DEUTSCH
+  //   return this.http.get(
+  //     environment.backendArticleManagerUrl + '/articles?articleType=IMPRESS&language=' + language,
+  //   );
+  // }
+
+  getInfrastructureArticle(contentType: string, language: string) {
+    // language string ==> all caps  --> ENGLISH / DEUTSCH
+    return this.http.get(
+      environment.backendArticleManagerUrl +
+        '/articles?articleType=' +
+        contentType +
+        '&language=' +
+        language,
     );
   }
 }

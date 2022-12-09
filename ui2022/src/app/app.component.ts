@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { AppState } from './store/app.state';
 import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
@@ -22,9 +23,11 @@ export class AppComponent {
     private router: Router,
     private snackBar: MatSnackBar,
     private cookieService: AppCookieService,
+    private translateService: TranslateService,
   ) {
     this.cookieService.init();
-
+    this.translateService.setDefaultLang('de');
+    this.translateService.use('de');
     //comment in for dev-purpose: to avoid manually routing back to page, where you work after each codechange
     // const previousUrl = localStorage.getItem('previousUrl');
     // if (localStorage.getItem('jwt')) {
