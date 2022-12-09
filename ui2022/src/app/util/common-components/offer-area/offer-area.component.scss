@@ -9,25 +9,13 @@
 
 .flex {
   display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // p {
-  //   text-align: center;
-  // }
 }
 
 .is-three-fifths {
   border-right: 1px solid var(--black);
 }
 
-p {
-  font-size: 20px !important;
-  line-height: 25px;
-  letter-spacing: 0.02em;
-  margin: 0;
-}
-
 .largeText {
-  font-size: 30px !important;
+  font-size: 25px !important;
   line-height: 31px !important;
 }

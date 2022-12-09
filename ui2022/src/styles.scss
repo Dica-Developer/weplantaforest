@@ -59,6 +59,14 @@ p {
   letter-spacing: 0.02em !important;
 }
 
+p.desktop {
+  font-family: 'Bull-regular'!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  font-size: 15px!important;
+  line-height: 21px!important;
+}
+
 a {
   color: var(--black);
   text-decoration: underline;
