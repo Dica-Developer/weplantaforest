@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# exit when any command fails
+set -e
+
 # replace font urls with base href prefix '/ui2022'
 find='assets';
 replace='ui2022/assets';
@@ -12,6 +15,11 @@ rm -rf dist
 yarn install
 # build app
 yarn build --configuration=staging --base-href /ui2022/ --deploy-url /ui2022/
+# create ui backup
+ssh ipat@iplantatree.org "rm -r weplantaforest/ui2022.backup/*"
+ssh ipat@iplantatree.org "cp -a  weplantaforest/ui/dist/ui2022/. weplantaforest/ui2022.backup/ "
+# clean remote folder first
+ssh ipat@iplantatree.org "rm -r weplantaforest/ui/dist/ui2022/*"
 # deploy to server
 scp -r /home/ipat/weplantaforest/ui2022/dist/ui2022/* ipat@iplantatree.org:/home/ipat/weplantaforest/ui/dist/ui2022
 
