@@ -5,12 +5,20 @@ import { switchMap } from 'rxjs';
 import { RankingService } from '../services/ranking.service';
 import { AppState, PagedData } from './app.state';
 
-export const loadAllRankings = createAction(
+export declare type RankingType =
+  | 'bestUser'
+  | 'bestTeam'
+  | 'bestOrgType/PRIVATE'
+  | 'bestOrgType/COMMERCIAL'
+  | 'bestOrgType/NONPROFIT'
+  | 'bestOrgType/EDUCATIONAL';
+
+export const loadRankings = createAction(
   '[Ranking] load all',
-  props<{ pageSize: number; lastYear: boolean }>(),
+  props<{ rankingType: RankingType; pageSize: number; lastYear: boolean }>(),
 );
 
-export const loadAllRankingsSuccess = createAction(
+export const loadRankingsSuccess = createAction(
   '[Ranking] load all success',
   props<{ result: PagedData<TreeRankedUserData> }>(),
 );
@@ -23,12 +31,13 @@ export interface TreeRankedUserData {
 }
 
 export interface RankingState {
-  allRankings: PagedData<TreeRankedUserData>;
-  allRankingsLoading: boolean;
+  rankings: PagedData<TreeRankedUserData>;
+  rankingsLoading: boolean;
+  rankingsMaxAmount: number;
 }
 
 export const initialState: RankingState = {
-  allRankings: {
+  rankings: {
     content: [],
     totalPages: 0,
     totalElements: 0,
@@ -36,19 +45,21 @@ export const initialState: RankingState = {
     last: true,
     first: true,
   },
-  allRankingsLoading: false,
+  rankingsLoading: false,
+  rankingsMaxAmount: 0,
 };
 
 const rankingReducer = createReducer(
   initialState,
-  on(loadAllRankings, (state) => ({
+  on(loadRankings, (state) => ({
     ...state,
-    allRankingsLoading: true,
+    rankingsLoading: true,
   })),
-  on(loadAllRankingsSuccess, (state, action) => ({
+  on(loadRankingsSuccess, (state, action) => ({
     ...state,
-    allRankings: action.result,
-    allRankingsLoading: false,
+    rankings: action.result,
+    rankingsMaxAmount: getMaxAmount(action.result.content),
+    rankingsLoading: false,
   })),
 );
 
@@ -56,11 +67,26 @@ export function rankingReducerFn(state, action) {
   return rankingReducer(state, action);
 }
 
+function getMaxAmount(data: TreeRankedUserData[]): number {
+  let maxValue = 0;
+  for (const item of data) {
+    if (item.amount > maxValue) {
+      maxValue = item.amount;
+    }
+  }
+  return maxValue;
+}
+
 export const rankingFeature = (state: AppState) => state.ranking;
 
-export const selectAllRankings = createSelector(
+export const selectRankings = createSelector(
   rankingFeature,
-  (state: RankingState) => state.allRankings,
+  (state: RankingState) => state.rankings,
+);
+
+export const selectRankingMaxAmount = createSelector(
+  rankingFeature,
+  (state: RankingState) => state.rankingsMaxAmount,
 );
 
 @Injectable()
@@ -69,14 +95,12 @@ export class RankingEffects {
 
   loadAll$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadAllRankings),
+      ofType(loadRankings),
       switchMap((action) =>
         this.rankingService
-          .loadAll(action.pageSize, action.lastYear)
+          .loadAll(action.rankingType, action.pageSize, action.lastYear)
           .pipe(
-            switchMap((result: PagedData<TreeRankedUserData>) => [
-              loadAllRankingsSuccess({ result }),
-            ]),
+            switchMap((result: PagedData<TreeRankedUserData>) => [loadRankingsSuccess({ result })]),
           ),
       ),
     ),

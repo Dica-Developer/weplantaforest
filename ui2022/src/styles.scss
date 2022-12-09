@@ -15,6 +15,7 @@
   --lightGreen: #dcff61;
   --dark-brown: #3c3335;
   --brown: #65594e;
+  --dark-green: #959349;
 }
 
 html,
@@ -32,10 +33,10 @@ body {
 }
 
 h1 {
-  font-size: 12rem!important;
-  font-family: 'NBArchitect'!important;
-  line-height: 12rem!important;
-  color: var(--brown)!important;
+  font-size: 12rem !important;
+  font-family: 'NBArchitect' !important;
+  line-height: 12rem !important;
+  color: var(--brown) !important;
 }
 
 h2 {
@@ -119,8 +120,21 @@ snack-bar-container {
 }
 
 .padding-left {
-  padding-left: 4rem!important;
+  padding-left: 4rem !important;
 }
 .padding-right {
-  padding-right: 4rem!important;
+  padding-right: 4rem !important;
+}
+
+.breadcrumb {
+  font-family: 'Bull-regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  cursor: pointer;
+}
+
+.breadcrumb-active {
+  text-decoration: underline;
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { GridCheckboxComponent } from './grid-components/grid-checkbox/grid-checkbox.component';
@@ -35,6 +35,7 @@ import { OfferAreaComponent } from './common-components/offer-area/offer-area.co
 import { ProjectTileComponent } from './common-components/project-tile/project-tile.component';
 import { CircleIconComponent } from './common-components/icons/circle-icon/circle-icon.component';
 import { FooterComponent } from './common-components/footer/footer.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { FooterComponent } from './common-components/footer/footer.component';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    RouterModule,
   ],
   exports: [
     MaterialModule,

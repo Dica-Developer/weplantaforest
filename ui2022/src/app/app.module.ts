@@ -36,11 +36,12 @@ import { PagesModule } from './pages/pages.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TreeEffects, treeReducerFn } from './store/tree.store';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
+import { RankingEffects, rankingReducerFn } from './store/ranking.store';
 
 export const MY_FORMATS = {
   parse: {
@@ -93,6 +94,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 @NgModule({
   declarations: [AppComponent, UserRouterOutletComponent, BackOfficeRouterOutletComponent],
   imports: [
+    CommonModule,
     PagesModule,
     BrowserModule,
     AppRoutingModule,
@@ -113,6 +115,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       teams: teamReducerFn,
       plantbag: plantbagReducerFn,
       trees: treeReducerFn,
+      ranking: rankingReducerFn,
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -126,6 +129,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       TeamEffects,
       PlantbagEffects,
       TreeEffects,
+      RankingEffects,
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),

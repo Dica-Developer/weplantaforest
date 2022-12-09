@@ -1,0 +1,47 @@
+.item-wrapper {
+  margin-bottom: 20px;
+}
+
+.name-col {
+  width: 100%;
+}
+
+.name {
+  vertical-align: top;
+  font-family: 'Bull-regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.img-wrapper {
+  border: solid 1px;
+  border-radius: 50%;
+  width: 59px;
+  height: 59px;
+  display: inline-block;
+  margin-right: 25px;
+  img {
+    border-radius: 50%;
+    width: 59px;
+    height: 59px;
+  }
+}
+
+.bar-wrapper {
+  text-align: right;
+  height: 22px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 25px;
+  .amount {
+    margin-right: 10px;
+    float: right;
+  }
+  .bar-fill {
+    height: 20px;
+    background: var(--dark-green);
+    border-radius: 25px;
+  }
+}

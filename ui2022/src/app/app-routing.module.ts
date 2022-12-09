@@ -16,6 +16,7 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
 import { AuthGuard } from './util/auth.guard';
 import { UtilModule } from './util/util.module';
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
+import { RankingPageComponent } from './pages/ranking-page/ranking-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -29,7 +30,10 @@ export const backofficeRoutes: Routes = [
   { path: 'transferTrees', component: TransferTreesComponent },
 ];
 
-export const userRoutes: Routes = [{ path: '', component: HomePageComponent }];
+export const userRoutes: Routes = [
+  { path: '', component: HomePageComponent },
+  { path: 'ranking', component: RankingPageComponent },
+];
 
 const routes: Routes = [
   { path: '', component: UserRouterOutletComponent, children: userRoutes },
