@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-logo-icon',
   templateUrl: './logo-icon.component.html',
-  styleUrls: ['./logo-icon.component.scss']
+  styleUrls: ['./logo-icon.component.scss'],
 })
 export class LogoIconComponent implements OnInit {
+  @Input()
+  width: number = 56;
 
-  constructor() { }
+  @Input()
+  height: number = 56;
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
 }
