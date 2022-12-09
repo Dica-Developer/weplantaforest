@@ -1,1 +1,12 @@
-<p>project-tile works!</p>
+<div class="project-tile">
+  <div class="image-wrapper">
+    <img src="{{ imgUrl }}" alt="{{ projectReport.projectName }}" />
+  </div>
+  <h4>{{ projectReport.projectName }}</h4>
+  <p>{{ projectReport.description }}</p>
+
+  <div class="status-bar">
+    <div class="bar"></div>
+    <span></span>
+  </div>
+</div>

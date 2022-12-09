@@ -1,15 +1,18 @@
 <div class="columns">
-  <div class="column is-half">
+  <div class="column padding-left is-half">
     <div class="map">yoo her eis ognna be a map</div>
   </div>
   <div class="column scroll">
-    <div>
-      <p>
-        <app-circle-icon [width]="20" [height]="20"></app-circle-icon
-        >{{ 'projectsSectionInfo' | translate }}
-      </p>
-    </div>
+    <p class="center">
+      <app-circle-icon [width]="17" [height]="17"></app-circle-icon
+      >{{ 'projectsSectionInfo' | translate }}
+    </p>
     <div class="scrollmenu">
+      <app-project-tile
+        *ngFor="let project of (projectReports$ | async).content"
+        [projectReport]="project"
+      ></app-project-tile>
+      <!-- <app-project-tile></app-project-tile>
       <app-project-tile></app-project-tile>
       <app-project-tile></app-project-tile>
       <app-project-tile></app-project-tile>
@@ -19,9 +22,10 @@
       <app-project-tile></app-project-tile>
       <app-project-tile></app-project-tile>
       <app-project-tile></app-project-tile>
-      <app-project-tile></app-project-tile>
-      <app-project-tile></app-project-tile>
-      <app-project-tile></app-project-tile>
+      <app-project-tile></app-project-tile> -->
+    </div>
+    <div class="center">
+      <app-button label="{{ 'allProjects' | translate }}"></app-button>
     </div>
   </div>
 </div>

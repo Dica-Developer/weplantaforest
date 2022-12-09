@@ -6,10 +6,26 @@ div.scrollmenu {
 div.scrollmenu app-project-tile {
   display: inline-block;
   text-align: center;
-  padding: 1rem;
+  padding: 0.5rem;
   text-decoration: none;
 }
 
 .scroll {
   overflow: hidden;
+}
+
+app-circle-icon {
+  margin-right: 1rem;
+}
+
+.center {
+  margin: 4rem auto;
+}
+
+.column {
+  border-top: 1px solid var(--black);
+}
+
+.column:first-child {
+  border-right: 1px solid var(--black);
 }
