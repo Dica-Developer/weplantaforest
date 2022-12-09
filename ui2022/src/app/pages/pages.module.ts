@@ -9,9 +9,15 @@ import { ImprintPageComponent } from './imprint-page/imprint-page.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { UtilModule } from '../util/util.module';
 import { RankingPageModule } from './ranking-page/ranking-page.module';
+import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 
 @NgModule({
-  declarations: [ForgotPasswordPageComponent, ResetPasswordPageComponent, ImprintPageComponent],
+  declarations: [
+    ForgotPasswordPageComponent,
+    ResetPasswordPageComponent,
+    ImprintPageComponent,
+    PrivacyPageComponent,
+  ],
   imports: [
     CommonModule,
     HomePageModule,
@@ -20,6 +26,11 @@ import { RankingPageModule } from './ranking-page/ranking-page.module';
     UtilModule,
     RankingPageModule,
   ],
-  exports: [ForgotPasswordPageComponent, ResetPasswordPageComponent, ImprintPageComponent],
+  exports: [
+    ForgotPasswordPageComponent,
+    ResetPasswordPageComponent,
+    ImprintPageComponent,
+    PrivacyPageComponent,
+  ],
 })
 export class PagesModule {}

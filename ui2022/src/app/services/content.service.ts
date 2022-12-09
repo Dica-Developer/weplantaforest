@@ -54,10 +54,21 @@ export class ContentService {
     );
   }
 
-  getImprint(language: string) {
+  // getImprint(language: string) {
+  //   // language string ==> all caps  --> ENGLISH / DEUTSCH
+  //   return this.http.get(
+  //     environment.backendArticleManagerUrl + '/articles?articleType=IMPRESS&language=' + language,
+  //   );
+  // }
+
+  getInfrastructureArticle(contentType: string, language: string) {
     // language string ==> all caps  --> ENGLISH / DEUTSCH
     return this.http.get(
-      environment.backendArticleManagerUrl + '/articles?articleType=IMPRESS&language=' + language,
+      environment.backendArticleManagerUrl +
+        '/articles?articleType=' +
+        contentType +
+        '&language=' +
+        language,
     );
   }
 }

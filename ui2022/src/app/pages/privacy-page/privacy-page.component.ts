@@ -3,13 +3,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { ContentService } from 'src/app/services/content.service';
 
 @Component({
-  selector: 'app-imprint-page',
-  templateUrl: './imprint-page.component.html',
-  styleUrls: ['./imprint-page.component.scss'],
+  selector: 'app-privacy-page',
+  templateUrl: './privacy-page.component.html',
+  styleUrls: ['./privacy-page.component.scss'],
 })
-export class ImprintPageComponent implements OnInit {
+export class PrivacyPageComponent implements OnInit {
   lang: string;
-  imprints;
+  privacyPolicy;
   constructor(private contentService: ContentService, private translateService: TranslateService) {}
 
   ngOnInit(): void {
@@ -18,8 +18,8 @@ export class ImprintPageComponent implements OnInit {
     } else if (this.translateService.currentLang === 'en') {
       this.lang = 'ENGLISH';
     }
-    this.contentService.getInfrastructureArticle('IMPRESS', this.lang).subscribe((res) => {
-      this.imprints = res;
+    this.contentService.getInfrastructureArticle('PRIVACY', this.lang).subscribe((res) => {
+      this.privacyPolicy = res;
       console.log(res);
     });
   }

@@ -1,0 +1,19 @@
+<div class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
+  <div class="privacy">
+    <h2>{{ 'dsgvo' | translate }}</h2>
+    <div *ngFor="let dsgvo of privacyPolicy?.slice().reverse()">
+      <h4>{{ dsgvo.title }}</h4>
+      <p>
+        {{ dsgvo.intro }}
+      </p>
+      <div *ngFor="let paragraph of dsgvo.paragraphs">
+        <p>
+          {{ dsgvo.title }}
+        </p>
+        <p>
+          {{ dsgvo.text }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
