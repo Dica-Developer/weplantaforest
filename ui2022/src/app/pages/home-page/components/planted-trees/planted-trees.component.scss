@@ -1,3 +1,17 @@
+.label-div {
+  text-align: right;
+  font-family: 'Bull-regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  max-height: 25px;
+
+  div {
+    display: inline;
+    vertical-align: super;
+  }
+}
 .tree-count-div {
   text-align: center;
   .number-big {

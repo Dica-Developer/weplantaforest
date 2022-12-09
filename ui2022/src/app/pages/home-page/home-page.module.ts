@@ -5,9 +5,16 @@ import { UtilModule } from '../../util/util.module';
 import { HeaderComponent } from './components/header/header.component';
 import { ForestTourComponent } from './components/forest-tour/forest-tour.component';
 import { PlantedTreesComponent } from './components/planted-trees/planted-trees.component';
+import { ProjectsSectionComponent } from './components/projects-section/projects-section.component';
 
 @NgModule({
-  declarations: [HomePageComponent, HeaderComponent, ForestTourComponent, PlantedTreesComponent],
+  declarations: [
+    HomePageComponent,
+    HeaderComponent,
+    ForestTourComponent,
+    PlantedTreesComponent,
+    ProjectsSectionComponent,
+  ],
   imports: [CommonModule, UtilModule],
   exports: [HomePageComponent],
 })
