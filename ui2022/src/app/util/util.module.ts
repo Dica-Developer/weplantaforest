@@ -25,13 +25,15 @@ import { ToolbarComponent } from './common-components/toolbar/toolbar.component'
 import { ButtonComponent } from './common-components/button/button.component';
 import { LogoIconComponent } from './common-components/icons/logo-icon/logo-icon.component';
 import { BarrelIconComponent } from './common-components/icons/barrel-icon/barrel-icon.component';
-import { TreeIconComponent } from './icons/tree-icon/tree-icon.component';
+import { TreeIconComponent } from './common-components/icons/tree-icon/tree-icon.component';
 import { PlantTreeComponent } from './common-components/plant-tree/plant-tree.component';
 import { TreeTileComponent } from './common-components/tree-tile/tree-tile.component';
 import { PlantingProcessComponent } from './common-components/planting-process/planting-process.component';
 import { ShovelIconComponent } from './common-components/icons/shovel-icon/shovel-icon.component';
 import { CertificateIconComponent } from './common-components/icons/certificate-icon/certificate-icon.component';
 import { OfferAreaComponent } from './common-components/offer-area/offer-area.component';
+import { ProjectTileComponent } from './common-components/project-tile/project-tile.component';
+import { CircleIconComponent } from './common-components/icons/circle-icon/circle-icon.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { OfferAreaComponent } from './common-components/offer-area/offer-area.co
     ShovelIconComponent,
     CertificateIconComponent,
     OfferAreaComponent,
+    ProjectTileComponent,
+    CircleIconComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +91,8 @@ import { OfferAreaComponent } from './common-components/offer-area/offer-area.co
     ShovelIconComponent,
     CertificateIconComponent,
     OfferAreaComponent,
+    ProjectTileComponent,
+    CircleIconComponent,
   ],
 })
 export class UtilModule {}
