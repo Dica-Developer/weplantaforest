@@ -53,8 +53,15 @@ h4 {
 }
 
 p {
-  font-family: 'Bull-regular' !important;
-  font-size: 18px !important;
+  font-family: 'Bull-mono' !important;
+  font-size: 15px !important;
+  line-height: 21px !important;
+  letter-spacing: 0.02em !important;
+}
+
+span {
+  font-family: 'Bull-mono' !important;
+  font-size: 15px !important;
   line-height: 21px !important;
   letter-spacing: 0.02em !important;
 }
@@ -145,4 +152,18 @@ snack-bar-container {
 
 .breadcrumb-active {
   text-decoration: underline;
+}
+
+.center {
+  text-align: center;
+}
+
+.image-wrapper {
+  width: 100%;
+  position: relative;
+
+  img {
+    height: 100%;
+    min-width: 100%;
+  }
 }
