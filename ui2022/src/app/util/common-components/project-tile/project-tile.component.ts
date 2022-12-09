@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
+import { TextHelper } from '../../text.helper';
 
 @Component({
   selector: 'app-project-tile',
@@ -10,8 +12,9 @@ export class ProjectTileComponent implements OnInit {
   @Input() projectReport;
   imgUrl: string;
   progress: number;
+  description: string;
 
-  constructor() {}
+  constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     // this.imgUrl =
@@ -22,5 +25,9 @@ export class ProjectTileComponent implements OnInit {
     this.progress =
       (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
       100;
+    this.description = this.textHelper.getTextForLanguage(
+      this.projectReport.description,
+      this.translateService.currentLang,
+    );
   }
 }
