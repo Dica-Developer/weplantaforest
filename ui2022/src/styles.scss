@@ -32,10 +32,10 @@ body {
 }
 
 h1 {
-  font-size: 12rem!important;
-  font-family: 'NBArchitect'!important;
-  line-height: 12rem!important;
-  color: var(--brown)!important;
+  font-size: 12rem !important;
+  font-family: 'NBArchitect' !important;
+  line-height: 12rem !important;
+  color: var(--brown) !important;
 }
 
 h2 {
@@ -52,7 +52,7 @@ h4 {
 }
 
 p {
-  font-family: 'Bull-regular' !important;
+  font-family: 'Bull-mono' !important;
   font-size: 18px !important;
   line-height: 21px !important;
   letter-spacing: 0.02em !important;
@@ -119,8 +119,22 @@ snack-bar-container {
 }
 
 .padding-left {
-  padding-left: 4rem!important;
+  padding-left: 4rem !important;
 }
 .padding-right {
-  padding-right: 4rem!important;
+  padding-right: 4rem !important;
+}
+
+.center {
+  text-align: center;
+}
+
+.image-wrapper {
+  width: 100%;
+  position: relative;
+
+  img {
+    height: 100%;
+    min-width: 100%;
+  }
 }
