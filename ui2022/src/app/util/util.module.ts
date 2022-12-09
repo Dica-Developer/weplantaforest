@@ -34,6 +34,7 @@ import { CertificateIconComponent } from './common-components/icons/certificate-
 import { OfferAreaComponent } from './common-components/offer-area/offer-area.component';
 import { ProjectTileComponent } from './common-components/project-tile/project-tile.component';
 import { CircleIconComponent } from './common-components/icons/circle-icon/circle-icon.component';
+import { FooterComponent } from './common-components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { CircleIconComponent } from './common-components/icons/circle-icon/circl
     OfferAreaComponent,
     ProjectTileComponent,
     CircleIconComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
@@ -93,6 +95,7 @@ import { CircleIconComponent } from './common-components/icons/circle-icon/circl
     OfferAreaComponent,
     ProjectTileComponent,
     CircleIconComponent,
+    FooterComponent,
   ],
 })
 export class UtilModule {}
