@@ -17,9 +17,9 @@
   margin-bottom: 2rem;
   text-align: center;
   .number-big {
-    font-size: 25rem;
+    font-size: 25rem !important;
     font-family: 'NBArchitect' !important;
-    line-height: 25rem;
+    line-height: 25rem !important;
     color: var(--brown);
   }
 }
