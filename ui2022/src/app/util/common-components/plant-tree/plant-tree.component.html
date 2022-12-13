@@ -1,3 +1,18 @@
-<h2>{{ 'plantTree' | translate }}</h2>
-<p>{{ 'selectAndPlantNow' | translate }}</p>
-<app-button label="{{ 'plantNow' | translate }}" (clicked)="plantClicked()"></app-button>
+<div class="columns">
+  <div
+    class="column is-two-fifths bordered padding-left is-flex is-flex-direction-column is-justify-content-center"
+  >
+    <h2>{{ 'plantTree' | translate }}</h2>
+    <p>{{ 'selectAndPlantNow' | translate }}</p>
+    <app-button label="{{ 'plantNow' | translate }}" (clicked)="plantClicked()"></app-button>
+  </div>
+  <div class="column bordered">
+    <app-tree-tile name="Lärche"></app-tree-tile>
+  </div>
+  <div class="column bordered">
+    <app-tree-tile name="Eiche"></app-tree-tile>
+  </div>
+  <div class="column bordered">
+    <app-tree-tile name="Buche"></app-tree-tile>
+  </div>
+</div>

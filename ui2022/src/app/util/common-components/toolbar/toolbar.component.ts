@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -10,12 +11,12 @@ export class ToolbarComponent implements OnInit {
   logoUrl = environment.baseUrl + '/assets/ipatlogo_black.svg';
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   loginClicked() {
     console.log('login clicked');
-    
+    // this.router.navigate(['/login']);
   }
 }
