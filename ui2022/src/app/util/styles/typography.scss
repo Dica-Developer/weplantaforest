@@ -1,0 +1,110 @@
+h1 {
+  font-size: 12rem !important;
+  font-family: 'NBArchitect' !important;
+  line-height: 12rem !important;
+  color: var(--brown) !important;
+}
+
+h2 {
+  font-family: 'Bull-regular' !important;
+  font-size: 50px !important;
+  line-height: 64px !important;
+  color: var(--dark-brown);
+}
+
+h4 {
+  font-family: 'Bull-regular' !important;
+  font-size: 24px !important;
+  line-height: 30px !important;
+}
+
+p {
+  font-family: 'Bull-mono' !important;
+  font-size: 15px !important;
+  line-height: 21px !important;
+  letter-spacing: 0.02em !important;
+}
+
+span {
+  font-family: 'Bull-mono' !important;
+  font-size: 15px !important;
+  line-height: 21px !important;
+  letter-spacing: 0.02em !important;
+}
+
+p.desktop {
+  font-family: 'Bull-regular' !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
+  line-height: 21px !important;
+}
+
+a {
+  color: var(--black);
+  text-decoration: underline;
+  font-family: 'Bull-mono';
+}
+
+a:hover {
+  color: var(--green);
+}
+
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 4.5rem !important;
+    line-height: 5rem !important;
+  }
+
+  // h2 {
+  //   font-family: 'Bull-regular' !important;
+  //   font-size: 50px !important;
+  //   line-height: 64px !important;
+  //   color: var(--dark-brown);
+  // }
+
+  // h4 {
+  //   font-family: 'Bull-regular' !important;
+  //   font-size: 24px !important;
+  //   line-height: 30px !important;
+  // }
+
+  // p {
+  //   font-family: 'Bull-mono' !important;
+  //   font-size: 15px !important;
+  //   line-height: 21px !important;
+  //   letter-spacing: 0.02em !important;
+  // }
+
+  // span {
+  //   font-family: 'Bull-mono' !important;
+  //   font-size: 15px !important;
+  //   line-height: 21px !important;
+  //   letter-spacing: 0.02em !important;
+  // }
+
+  // p.desktop {
+  //   font-family: 'Bull-regular' !important;
+  //   font-style: normal !important;
+  //   font-weight: 400 !important;
+  //   font-size: 15px !important;
+  //   line-height: 21px !important;
+  // }
+
+  // a {
+  //   color: var(--black);
+  //   text-decoration: underline;
+  //   font-family: 'Bull-mono';
+  // }
+
+  // a:hover {
+  //   color: var(--green);
+  // }
+
+  .padding-left {
+    padding-left: 1rem !important;
+  }
+  .padding-right {
+    padding-right: 1rem !important;
+  }
+}
