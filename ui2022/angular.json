@@ -26,6 +26,7 @@
             "styles": [
               "src/styles.scss",
               "src/app/util/styles/typography.scss",
+              "src/app/util/styles/spacings.scss",
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/leaflet-draw/dist/leaflet.draw.css"
             ],

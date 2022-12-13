@@ -1,0 +1,15 @@
+.padding-left {
+  padding-left: 4rem !important;
+}
+.padding-right {
+  padding-right: 4rem !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .padding-left {
+    padding-left: 1rem !important;
+  }
+  .padding-right {
+    padding-right: 1rem !important;
+  }
+}
