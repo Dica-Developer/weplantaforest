@@ -5,12 +5,6 @@
   line-height: 24px;
 }
 
-// p {
-//   margin-left: 4px;
-//   font-family: 'Bull-mono' !important;
-//   margin-bottom: 3rem;
-// }
-
 .header-title-wrapper {
   margin-top: -30px;
 }
@@ -34,7 +28,22 @@ a {
 }
 
 @media only screen and (max-width: 768px) {
-  .header {
-    padding: 0 1rem;
+  .mobile-space-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .stats {
+    margin: 0;
+  }
+
+  .text-left {
+    font-size: 35px !important;
+    line-height: 40px !important;
+  }
+
+  .columns:last-child {
+    margin-bottom: 0 !important;
   }
 }

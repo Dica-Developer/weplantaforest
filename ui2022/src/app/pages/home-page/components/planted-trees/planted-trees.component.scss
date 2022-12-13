@@ -1,23 +1,38 @@
 .label-div {
+  margin: 2rem auto 4rem auto;
   text-align: right;
   font-family: 'Bull-regular';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 19px;
-  max-height: 25px;
 
   div {
     display: inline;
     vertical-align: super;
   }
 }
+
 .tree-count-div {
+  margin-bottom: 2rem;
   text-align: center;
   .number-big {
-    font-size: 22rem!important;
-    font-family: 'NBArchitect'!important;
-    line-height: 22rem!important;
-    color: var(--brown)!important;
+    font-size: 25rem;
+    font-family: 'NBArchitect' !important;
+    line-height: 25rem;
+    color: var(--brown);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .label-div {
+    margin: 1rem auto;
+  }
+
+  .tree-count-div {
+    .number-big {
+      font-size: 5rem !important;
+      line-height: 6rem !important;
+    }
   }
 }
