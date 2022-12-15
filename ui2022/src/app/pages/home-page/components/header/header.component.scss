@@ -28,6 +28,10 @@ a {
 }
 
 @media only screen and (max-width: 768px) {
+  .header {
+    min-height: 100vh;
+  }
+
   .mobile-space-between {
     display: flex;
     flex-direction: column;

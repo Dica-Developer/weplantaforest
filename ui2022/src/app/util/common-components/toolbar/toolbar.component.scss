@@ -2,66 +2,33 @@ mat-toolbar {
   border-bottom-style: solid;
   border-bottom-width: 1px;
   z-index: 10;
-
-  font-family: '';
   background: var(--background);
-  padding: 0px;
-
   position: fixed;
   height: 80px;
-  // left: 0px;
-  top: 0px;
+  font-family: 'Bull-regular' !important;
+
   .columns {
     width: 100%;
-    margin: 0;
-  }
-  .column {
-    padding: 0;
   }
 
-  .logo {
-    position: absolute;
-    width: 56px;
-    height: 56px;
-    margin-top: 12px;
-  }
-
-  .links {
-    padding-left: 30px;
-  }
-
-  p {
-    padding-top: 30px;
+  a {
+    text-decoration: none;
     font-family: 'Bull-regular';
-    font-style: normal;
-    font-weight: 400;
     font-size: 18px !important;
-    text-align: center;
-    cursor: pointer;
   }
-  p:hover {
+  a:hover {
     color: var(--green);
   }
-  .icon-col {
-    padding-top: 20px;
-    text-align: center;
-    mat-icon {
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      font-size: 35px;
-    }
-    mat-icon:hover {
-      color: var(--green);
-    }
+
+  mat-icon {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    font-size: 35px;
   }
-  .barrel-col {
-    padding-top: 25px;
-    text-align: center;
-    .barrel {
-      width: 40px;
-      height: 20px;
-    }
+
+  mat-icon:hover {
+    color: var(--green);
   }
 
   .bordered {
@@ -69,10 +36,5 @@ mat-toolbar {
     border-right-width: 1px;
     border-color: var(--black);
     height: 80px;
-  }
-
-  .login-col {
-    text-align: center;
-    padding-top: 15px;
   }
 }

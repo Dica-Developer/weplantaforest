@@ -1,33 +1,25 @@
 <mat-toolbar>
   <div class="columns">
-    <div class="column is-2 bordered padding-left">
+    <div class="column bordered">
       <!-- logo svg -->
-      <app-logo-icon class="logo" routerLink="/"></app-logo-icon>
+      <app-logo-icon class="center-vertically-horizontally h-100" routerLink="/"></app-logo-icon>
     </div>
-    <div class="column is-6 bordered">
-      <div class="columns links">
-        <div class="column">
-          <p>{{ 'plantTree' | translate }}</p>
-        </div>
-        <div class="column">
-          <p>{{ 'projects' | translate }}</p>
-        </div>
-        <div class="column">
-          <p>{{ 'aboutUs' | translate }}</p>
-        </div>
-        <div class="column">
-          <p>{{ 'explore' | translate }}</p>
-        </div>
-      </div>
+    <div
+      class="column is-6 bordered is-flex is-justify-content-space-around is-align-items-center h-100"
+    >
+      <a class="is-flex align-items-center" routerLink="/plant">{{ 'plantTree' | translate }}</a>
+      <a class="is-flex align-items-center" routerLink="/projects">{{ 'projects' | translate }}</a>
+      <a class="is-flex align-items-center" routerLink="/about">{{ 'aboutUs' | translate }}</a>
+      <a class="is-flex align-items-center" routerLink="/explore">{{ 'explore' | translate }}</a>
     </div>
-    <div class="column is-1 bordered icon-col">
-      <mat-icon>search</mat-icon>
+    <div class="column center-vertically-horizontally is-1 bordered">
+      <mat-icon class="h-100">search</mat-icon>
     </div>
-    <div class="column is-1 bordered barrel-col">
+    <div class="column is-1 bordered">
       <!-- barrel svg -->
-      <app-barrel-icon></app-barrel-icon>
+      <app-barrel-icon class="h-100 center-vertically-horizontally"></app-barrel-icon>
     </div>
-    <div class="column is-2 login-col">
+    <div class="column center-vertically-horizontally is-2">
       <app-button label="{{ 'login' | translate }}" (clicked)="loginClicked()"></app-button>
     </div>
   </div>
