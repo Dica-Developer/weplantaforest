@@ -1,22 +1,18 @@
 <mat-toolbar>
-  <div class="columns">
+  <div class="columns h-100">
     <div class="column bordered">
-      <!-- logo svg -->
-      <app-logo-icon class="center-vertically-horizontally h-100" routerLink="/"></app-logo-icon>
+      <app-logo-icon class="center-vertically-horizontally" routerLink="/"></app-logo-icon>
     </div>
-    <div
-      class="column is-6 bordered is-flex is-justify-content-space-around is-align-items-center h-100"
-    >
-      <a class="is-flex align-items-center" routerLink="/plant">{{ 'plantTree' | translate }}</a>
-      <a class="is-flex align-items-center" routerLink="/projects">{{ 'projects' | translate }}</a>
-      <a class="is-flex align-items-center" routerLink="/about">{{ 'aboutUs' | translate }}</a>
-      <a class="is-flex align-items-center" routerLink="/explore">{{ 'explore' | translate }}</a>
+    <div class="column is-6 bordered is-flex is-justify-content-space-around is-align-items-center">
+      <a routerLink="/plant">{{ 'plantTree' | translate }}</a>
+      <a routerLink="/projects">{{ 'projects' | translate }}</a>
+      <a routerLink="/about">{{ 'aboutUs' | translate }}</a>
+      <a routerLink="/explore">{{ 'explore' | translate }}</a>
     </div>
     <div class="column center-vertically-horizontally is-1 bordered">
-      <mat-icon class="h-100">search</mat-icon>
+      <mat-icon>search</mat-icon>
     </div>
     <div class="column is-1 bordered">
-      <!-- barrel svg -->
       <app-barrel-icon class="h-100 center-vertically-horizontally"></app-barrel-icon>
     </div>
     <div class="column center-vertically-horizontally is-2">
