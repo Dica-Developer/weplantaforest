@@ -29,4 +29,4 @@
   </div>
 </mat-toolbar>
 
-<app-mobile-menu *ngIf="menuOpened"></app-mobile-menu>
+<app-mobile-menu (menuClosed)="toggleMenu()" *ngIf="menuOpened"></app-mobile-menu>

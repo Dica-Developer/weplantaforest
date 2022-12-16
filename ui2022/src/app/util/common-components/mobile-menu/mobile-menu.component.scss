@@ -1,7 +1,8 @@
 .mobile-menu {
   padding-top: 80px;
-  position: relative;
+  position: fixed;
   z-index: 9;
+  background: var(--background);
 }
 
 a {
@@ -20,4 +21,10 @@ mat-icon {
 
 mat-icon:hover {
   color: var(--green);
+}
+
+.columns {
+  a {
+    font-size: 15px;
+  }
 }

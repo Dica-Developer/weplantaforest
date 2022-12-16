@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-mobile-menu',
@@ -6,9 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mobile-menu.component.scss'],
 })
 export class MobileMenuComponent implements OnInit {
+  @Output() menuClosed = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {}
 
   loginClicked() {}
+
+  closeMenu() {
+    this.menuClosed.emit();
+  }
 }
