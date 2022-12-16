@@ -1,6 +1,5 @@
 mat-toolbar {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
+  border-bottom: 1px solid var(--black);
   z-index: 10;
   background: var(--background);
   position: fixed;
@@ -11,13 +10,14 @@ mat-toolbar {
     width: 100%;
   }
 
+  .w-80px {
+    width: 80px;
+  }
+
   a {
     text-decoration: none;
     font-family: 'Bull-regular';
-    font-size: 18px !important;
-  }
-  a:hover {
-    color: var(--green);
+    font-size: 18px;
   }
 
   mat-icon {
@@ -32,9 +32,16 @@ mat-toolbar {
   }
 
   .bordered {
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-color: var(--black);
-    height: 80px;
+    border-left: 1px solid var(--black);
+    border-right: 1px solid var(--black);
+  }
+}
+
+.hide-mobile {
+  display: flex;
+}
+@media only screen and (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
   }
 }
