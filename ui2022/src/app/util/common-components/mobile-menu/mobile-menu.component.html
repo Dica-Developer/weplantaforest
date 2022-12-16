@@ -1,0 +1,76 @@
+<div class="mobile-menu w-100 h-100 is-flex-direction-column is-flex">
+  <div class="is-flex h-80px border-bottom">
+    <div class="h-100 is-flex-grow-3 border-rght"></div>
+    <div class="h-100 w-80px is-flex-grow-0 center-vertically-horizontally">
+      <mat-icon>search</mat-icon>
+    </div>
+  </div>
+  <div class="is-flex h-80px border-bottom">
+    <div class="h-100 is-flex-grow-3 border-rght"></div>
+    <div class="h-100 w-160px center-vertically-horizontally">
+      <app-button label="{{ 'login' | translate }}" (clicked)="loginClicked()"></app-button>
+    </div>
+  </div>
+  <div
+    class="padding-1 is-flex h-80px border-bottom is-align-items-center is-justify-content-space-between"
+  >
+    <a routerLink="/plant">{{ 'plantTree' | translate }}</a>
+    <mat-icon>arrow_forward</mat-icon>
+  </div>
+  <div
+    class="padding-1 is-flex h-80px border-bottom is-align-items-center is-justify-content-space-between"
+  >
+    <a routerLink="/projects">{{ 'projects' | translate }}</a>
+    <mat-icon>arrow_forward</mat-icon>
+  </div>
+  <div
+    class="padding-1 is-flex h-80px border-bottom is-align-items-center is-justify-content-space-between"
+  >
+    <a routerLink="/about">{{ 'aboutUs' | translate }}</a>
+    <mat-icon>arrow_forward</mat-icon>
+  </div>
+  <div
+    class="padding-1 is-flex h-80px border-bottom is-align-items-center is-justify-content-space-between"
+  >
+    <a routerLink="/explore">{{ 'explore' | translate }}</a>
+    <mat-icon>arrow_forward</mat-icon>
+  </div>
+  <div class="is-flex-grow-1 is-flex is-flex-direction-column">
+    <div class="is-flex is-flex-grow-1 border-bottom">
+      <div
+        class="padding-1 is-flex is-flex-grow-1 is-flex-direction-column is-justify-content-space-around"
+      >
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+      </div>
+      <div
+        class="border-left padding-1 is-flex is-flex-grow-1 is-flex-direction-column is-justify-content-space-around"
+      >
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+      </div>
+    </div>
+    <div class="is-flex is-flex-grow-1">
+      <div
+        class="padding-1 is-flex is-flex-grow-1 is-flex-direction-column is-justify-content-space-around"
+      >
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+      </div>
+      <div
+        class="border-left padding-1 is-flex is-flex-grow-1 is-flex-direction-column is-justify-content-space-around"
+      >
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+        <a routerLink="">news</a>
+      </div>
+    </div>
+  </div>
+</div>

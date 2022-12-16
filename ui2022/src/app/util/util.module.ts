@@ -36,6 +36,7 @@ import { ProjectTileComponent } from './common-components/project-tile/project-t
 import { CircleIconComponent } from './common-components/icons/circle-icon/circle-icon.component';
 import { FooterComponent } from './common-components/footer/footer.component';
 import { RouterModule } from '@angular/router';
+import { MobileMenuComponent } from './common-components/mobile-menu/mobile-menu.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { RouterModule } from '@angular/router';
     ProjectTileComponent,
     CircleIconComponent,
     FooterComponent,
+    MobileMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -98,6 +100,7 @@ import { RouterModule } from '@angular/router';
     ProjectTileComponent,
     CircleIconComponent,
     FooterComponent,
+    MobileMenuComponent,
   ],
 })
 export class UtilModule {}

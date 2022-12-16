@@ -5,30 +5,13 @@ mat-toolbar {
   position: fixed;
   height: 80px;
   font-family: 'Bull-regular' !important;
-
-  .columns {
-    width: 100%;
-  }
-
-  .w-80px {
-    width: 80px;
-  }
+  width: 100%;
+  max-width: 100%;
 
   a {
     text-decoration: none;
     font-family: 'Bull-regular';
     font-size: 18px;
-  }
-
-  mat-icon {
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    font-size: 35px;
-  }
-
-  mat-icon:hover {
-    color: var(--green);
   }
 
   .bordered {
@@ -37,11 +20,30 @@ mat-toolbar {
   }
 }
 
+mat-icon {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  font-size: 35px;
+}
+
+mat-icon:hover {
+  color: var(--green);
+}
+
 .hide-mobile {
   display: flex;
 }
+
+.hide-desktop {
+  display: none;
+}
+
 @media only screen and (max-width: 768px) {
   .hide-mobile {
-    display: none !important;
+    display: none;
+  }
+  .hide-desktop {
+    display: flex;
   }
 }

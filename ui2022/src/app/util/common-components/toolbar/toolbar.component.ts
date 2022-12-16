@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 export class ToolbarComponent implements OnInit {
   logoUrl = environment.baseUrl + '/assets/ipatlogo_black.svg';
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
+  menuOpened = false;
 
   constructor(private router: Router) {}
 
@@ -18,5 +19,9 @@ export class ToolbarComponent implements OnInit {
   loginClicked() {
     console.log('login clicked');
     // this.router.navigate(['/login']);
+  }
+
+  toggleMenu() {
+    this.menuOpened = !this.menuOpened;
   }
 }
