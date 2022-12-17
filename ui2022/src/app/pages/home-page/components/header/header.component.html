@@ -1,11 +1,7 @@
-<div class="header">
-  <div class="columns">
-    <div class="column is-12 stats padding-left">
-      <app-tree-icon></app-tree-icon>{{ treeCount$ | async }}
-    </div>
-  </div>
-  <div class="columns mobile-space-between">
-    <div class="column is-4 padding-left">
+<div class="header is-flex is-flex-direction-column padding-left padding-right">
+  <div class="stats"><app-tree-icon></app-tree-icon>{{ treeCount$ | async }}</div>
+  <div class="is-flex direction-wrapper">
+    <div class="is-flex is-flex-direction-column">
       <p class="text-left">
         {{ 'headerText' | translate }}
       </p>
@@ -17,11 +13,9 @@
         {{ 'learnMore' | translate }}
       </a>
     </div>
-    <div class="column header-title-wrapper">
-      <h1 class="header-title">
-        I PLANT <br />
-        A TREE
-      </h1>
-    </div>
+    <h1>
+      I PLANT <br />
+      A TREE
+    </h1>
   </div>
 </div>

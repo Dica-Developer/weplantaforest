@@ -1,4 +1,4 @@
-<div class="columns">
+<!-- <div class="columns">
   <div class="column">
     <h2>{{ 'process' | translate }}</h2>
   </div>
@@ -45,5 +45,52 @@
     <p class="desc">
       {{ 'certificateText' | translate }}
     </p>
+  </div>
+</div> -->
+
+<div
+  class="wrapper padding-left padding-right is-flex is-flex-direction-column is-justify-content-center is-align-items-center"
+>
+  <h2>{{ 'process' | translate }}</h2>
+  <div class="is-flex flex-container is-align-items-center center">
+    <div class="is-flex is-flex-direction-column is-align-items-center">
+      <div class="svg-div">
+        <app-tree-icon></app-tree-icon>
+      </div>
+      <h4>{{ 'selectTree' | translate }}</h4>
+      <p class="desc">
+        {{ 'selectTreeText' | translate }}
+      </p>
+    </div>
+    <div class="line"></div>
+    <div class="is-flex is-flex-direction-column is-align-items-center">
+      <div class="svg-div">
+        <app-barrel-icon></app-barrel-icon>
+      </div>
+      <h4>{{ 'plantbag' | translate }}</h4>
+      <p class="desc">
+        {{ 'plantbagText' | translate }}
+      </p>
+    </div>
+    <div class="line"></div>
+    <div class="is-flex is-flex-direction-column is-align-items-center">
+      <div class="svg-div">
+        <app-shovel-icon></app-shovel-icon>
+      </div>
+      <h4>{{ 'plantTree' | translate }}</h4>
+      <p class="desc">
+        {{ 'plantTreeText' | translate }}
+      </p>
+    </div>
+    <!-- <div class="line"></div> -->
+    <div class="is-flex is-flex-direction-column is-align-items-center">
+      <div class="svg-div">
+        <app-certificate-icon></app-certificate-icon>
+      </div>
+      <h4>{{ 'certificate' | translate }}</h4>
+      <p class="desc">
+        {{ 'certificateText' | translate }}
+      </p>
+    </div>
   </div>
 </div>
