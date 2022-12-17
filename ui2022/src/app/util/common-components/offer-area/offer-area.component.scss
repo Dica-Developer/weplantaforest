@@ -16,10 +16,37 @@ p {
 }
 
 .largeText {
+  display: block;
+  font-size: 25px !important;
+  line-height: 31px !important;
+}
+
+.largeTextMobile {
+  display: none;
   font-size: 25px !important;
   line-height: 31px !important;
 }
 
 app-circle-icon {
   margin-right: 1rem;
+}
+
+.desktop {
+  font-family: 'Bull-regular' !important;
+  font-size: 15px !important;
+  line-height: 21px !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .column {
+    padding: 1rem;
+  }
+
+  .largeText {
+    display: none;
+  }
+
+  .largeTextMobile {
+    display: block;
+  }
 }

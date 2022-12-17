@@ -1,8 +1,10 @@
 h1 {
-  font-size: 12rem !important;
+  font-size: 15rem !important;
   font-family: 'NBArchitect' !important;
-  line-height: 12rem !important;
+  line-height: 15rem !important;
   color: var(--brown) !important;
+  position: relative;
+  top: -30px;
 }
 
 h2 {
@@ -32,14 +34,6 @@ span {
   letter-spacing: 0.02em !important;
 }
 
-p.desktop {
-  font-family: 'Bull-regular' !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  font-size: 15px !important;
-  line-height: 21px !important;
-}
-
 a {
   color: var(--black);
   text-decoration: underline;
@@ -49,19 +43,24 @@ a {
 a:hover {
   color: var(--green);
 }
-
+@media only screen and (max-width: 1600px) {
+  h1 {
+    font-size: 8rem !important;
+    line-height: 8.5rem !important;
+    top: 0;
+  }
+}
 @media only screen and (max-width: 768px) {
   h1 {
     font-size: 4.5rem !important;
     line-height: 5rem !important;
+    text-align: justify;
   }
 
-  // h2 {
-  //   font-family: 'Bull-regular' !important;
-  //   font-size: 50px !important;
-  //   line-height: 64px !important;
-  //   color: var(--dark-brown);
-  // }
+  h2 {
+    font-size: 35px !important;
+    line-height: 40px !important;
+  }
 
   // h4 {
   //   font-family: 'Bull-regular' !important;
