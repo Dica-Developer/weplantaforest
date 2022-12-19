@@ -10,6 +10,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UtilModule } from '../util/util.module';
 import { RankingPageModule } from './ranking-page/ranking-page.module';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
+import { ProjectPageComponent } from './project-page/project-page.component';
+import { ProjectHeaderComponent } from './project-page/components/project-header/project-header.component';
+import { ProjectDescriptionComponent } from './project-page/components/project-description/project-description.component';
+import { ProjectFeedComponent } from './project-page/components/project-feed/project-feed.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,10 @@ import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
     ResetPasswordPageComponent,
     ImprintPageComponent,
     PrivacyPageComponent,
+    ProjectPageComponent,
+    ProjectHeaderComponent,
+    ProjectDescriptionComponent,
+    ProjectFeedComponent,
   ],
   imports: [
     CommonModule,
