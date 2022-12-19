@@ -6,14 +6,9 @@ import { LoginPageModule } from './login-page/login-page.module';
 import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
 import { HomePageModule } from './home-page/home-page.module';
 import { ImprintPageComponent } from './imprint-page/imprint-page.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { UtilModule } from '../util/util.module';
 import { RankingPageModule } from './ranking-page/ranking-page.module';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
-import { ProjectPageComponent } from './project-page/project-page.component';
-import { ProjectHeaderComponent } from './project-page/components/project-header/project-header.component';
-import { ProjectDescriptionComponent } from './project-page/components/project-description/project-description.component';
-import { ProjectFeedComponent } from './project-page/components/project-feed/project-feed.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +16,6 @@ import { ProjectFeedComponent } from './project-page/components/project-feed/pro
     ResetPasswordPageComponent,
     ImprintPageComponent,
     PrivacyPageComponent,
-    ProjectPageComponent,
-    ProjectHeaderComponent,
-    ProjectDescriptionComponent,
-    ProjectFeedComponent,
   ],
   imports: [
     CommonModule,
