@@ -9,6 +9,7 @@ import { ImprintPageComponent } from './imprint-page/imprint-page.component';
 import { UtilModule } from '../util/util.module';
 import { RankingPageModule } from './ranking-page/ranking-page.module';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
+import { ProjectPageModule } from './project-page/project-page.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
     BackofficePageModule,
     LoginPageModule,
     UtilModule,
+    ProjectPageModule,
     RankingPageModule,
   ],
   exports: [

@@ -1,1 +1,35 @@
-<p>project-header works!</p>
+<div class="columns project-header">
+  <div
+    class="border-right column is-two-fifths is-flex is-flex-direction-column padding-left is-justify-content-space-between"
+  >
+    <p>links / projekte / wallendoprf</p>
+    <!-- <p>{{ 'links / projekte / wallendoprf' }}</p> -->
+    <h2>Wallendorf</h2>
+    <h4>Sachsen Anhalt</h4>
+    <!-- <h2>{{ projectReport.name }}</h2>
+    <h4>{{ projectReport.description }}</h4> -->
+  </div>
+  <div
+    class="column padding-left padding-right is-three-fifths is-flex is-flex-direction-column is-justify-content-space-around"
+  >
+    <div class="is-flex">
+      <div class="bar">
+        <div class="inner-bar" [style.width.%]="75"></div>
+      </div>
+    </div>
+    <div class="project-stats is-flex is-justify-content-space-between">
+      <p>
+        <!-- <span>{{ projectReport.amountOfPlantedTrees }}</span> {{ 'of' | translate }} {{projectReport.amountOfMaximumTreesToPlant}} -->
+        <span>1.501</span> von 10.300
+      </p>
+      <p>
+        <!-- <span>{{ projectReport.amountOfPlantedTrees }}</span> {{ 'of' | translate }} {{projectReport.amountOfMaximumTreesToPlant}} -->
+        <span>12%</span> bepflanzt
+      </p>
+      <p>
+        <!-- <span>{{ projectReport.amountOfPlantedTrees }}</span> {{ 'of' | translate }} {{projectReport.amountOfMaximumTreesToPlant}} -->
+        <span>2020</span> Startjahr
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+span {
+  font-size: 1.5rem !important;
+  font-family: 'Bull-mono' !important;
+}
+
+.bar {
+  margin: 2rem auto 1rem auto;
+  background: var(--background);
+  border: 1px solid var(--black);
+  height: 20px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.inner-bar {
+  background: var(--green);
+  height: 18px;
+  border-radius: 9px;
+}
+
+.space-right {
+  margin-right: 5rem;
+}
+
+.project-header {
+  border-bottom: 1px solid var(--black);
+}
+
+@media only screen and (max-width: 768px) {
+  .bar {
+    margin: 1rem auto 1rem auto;
+  }
+
+  span {
+    font-size: 1rem !important;
+  }
+
+  .space-right {
+    margin-right: 0rem;
+  }
+
+  .project-stats {
+    flex-direction: column;
+  }
+
+  .border-right {
+    border-right: none;
+    border-bottom: 1px solid var(--black);
+  }
+}

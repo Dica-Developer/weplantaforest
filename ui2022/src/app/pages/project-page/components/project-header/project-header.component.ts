@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-project-header',
   templateUrl: './project-header.component.html',
-  styleUrls: ['./project-header.component.scss']
+  styleUrls: ['./project-header.component.scss'],
 })
 export class ProjectHeaderComponent implements OnInit {
+  @Input() projectReport;
+  progress: number;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+    // this.progress =
+    //   (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
+    //   100;
   }
-
 }

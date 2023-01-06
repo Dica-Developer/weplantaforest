@@ -5,6 +5,7 @@ import { ProjectDescriptionComponent } from './components/project-description/pr
 import { ProjectPageComponent } from './project-page.component';
 import { ProjectFeedComponent } from './components/project-feed/project-feed.component';
 import { ProjectHeaderComponent } from './components/project-header/project-header.component';
+import { ProjectCarouselComponent } from './components/project-carousel/project-carousel.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { ProjectHeaderComponent } from './components/project-header/project-head
     ProjectDescriptionComponent,
     ProjectFeedComponent,
     ProjectHeaderComponent,
+    ProjectCarouselComponent,
   ],
   imports: [CommonModule, UtilModule],
   exports: [ProjectPageComponent],
