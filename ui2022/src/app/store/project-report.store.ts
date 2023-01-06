@@ -1,7 +1,6 @@
 import { createAction, props, createReducer, on, createSelector } from '@ngrx/store';
 import { AppState, PagedData } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ProjectService } from '../services/project.service';
 import { Injectable } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ProjectReportService } from '../services/project-report.service';
