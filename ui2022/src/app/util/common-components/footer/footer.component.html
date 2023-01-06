@@ -1,57 +1,25 @@
 <div class="columns">
-  <div class="column logo-col bordered">
+  <div class="column logo-col center-vertically-horizontally bordered">
     <app-logo-icon [width]="96" [height]="96" routerLink="/"></app-logo-icon>
   </div>
-  <div class="column bordered link-col">
-    <a routerLink="/">
-      {{ 'contact' | translate }}
-    </a>
-    <div class="footer-spacer"></div>
-    <a routerLink="/">
-      {{ 'newsletter' | translate }}
-    </a>
-    <div class="footer-spacer"></div>
-    <a routerLink="/">
-      {{ 'aboutUs' | translate }}
-    </a>
-    <div class="footer-spacer"></div>
-    <a routerLink="/">
-      {{ 'blog' | translate }}
-    </a>
+  <div class="column is-one-fifth is-flex is-flex-direction-column bordered">
+    <a routerLink="/"> {{ 'contact' | translate }} </a>
+    <a routerLink="/"> {{ 'newsletter' | translate }} </a>
+    <a routerLink="/"> {{ 'aboutUs' | translate }} </a>
+    <a routerLink="/"> {{ 'blog' | translate }} </a>
   </div>
-  <div class="column bordered link-col">
-    <a routerLink="/">
-      {{ 'numbers' | translate }}
-    </a>
-    <div class="footer-spacer"></div>
-    <a routerLink="/">
-      {{ 'facts' | translate }}
-    </a>
-    <div class="footer-spacer"></div>
-    <a routerLink="/">
-      {{ 'finances' | translate }}
-    </a>
-    <div class="footer-spacer"></div>
-    <a routerLink="/">
-      {{ 'partner' | translate }}
-    </a>
+  <div class="column is-one-fifth is-flex is-flex-direction-column bordered">
+    <a routerLink="/"> {{ 'numbers' | translate }} </a>
+    <a routerLink="/"> {{ 'facts' | translate }} </a>
+    <a routerLink="/"> {{ 'finances' | translate }} </a>
+    <a routerLink="/"> {{ 'partner' | translate }} </a>
   </div>
-  <div class="column bordered link-col">
-    <a routerLink="/">
-      {{ 'press' | translate }}
-    </a>
-    <div class="footer-spacer"></div>
-    <a routerLink="/ranking">
-      {{ 'ranking' | translate }}
-    </a>
+  <div class="column is-one-fifth is-flex is-flex-direction-column bordered">
+    <a routerLink="/"> {{ 'press' | translate }} </a>
+    <a routerLink="/ranking"> {{ 'ranking' | translate }} </a>
   </div>
-  <div class="column bordered link-col">
-    <a routerLink="/imprint">
-      {{ 'imprint' | translate }}
-    </a>
-    <div class="footer-spacer"></div>
-    <a routerLink="/privacy">
-      {{ 'dsgvo' | translate }}
-    </a>
+  <div class="column is-one-fifth is-flex is-flex-direction-column bordered">
+    <a routerLink="/imprint"> {{ 'imprint' | translate }} </a>
+    <a routerLink="/privacy"> {{ 'dsgvo' | translate }} </a>
   </div>
 </div>

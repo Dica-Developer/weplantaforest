@@ -1,19 +1,11 @@
-.logo-col {
-  text-align: center;
-  padding-top: 80px;
-}
-
-.link-col {
-  padding-left: 30px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-.footer-spacer {
-  height: 36px;
+a {
+  font-size: 1.25rem;
+  margin: 0 0 2rem 0;
 }
 
 .bordered {
   border-right-style: solid;
   border-top-style: solid;
   border-width: 1px;
+  padding: 2rem !important;
 }
