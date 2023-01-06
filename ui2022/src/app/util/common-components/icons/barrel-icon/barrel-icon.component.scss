@@ -1,0 +1,18 @@
+.svg-icon {
+  path {
+    fill: #65594e;
+  }
+}
+
+.inToolbar {
+  cursor: pointer;
+  path {
+    fill: var(--black);
+  }
+}
+.inToolbar:hover {
+  cursor: pointer;
+  path {
+    fill: var(--green);
+  }
+}

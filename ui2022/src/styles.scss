@@ -75,13 +75,6 @@ snack-bar-container {
   padding: 0 0.5rem !important;
 }
 
-.svg-icon:hover {
-  cursor: pointer;
-  path {
-    fill: var(--green);
-  }
-}
-
 .breadcrumb {
   font-family: 'Bull-regular';
   font-style: normal;
