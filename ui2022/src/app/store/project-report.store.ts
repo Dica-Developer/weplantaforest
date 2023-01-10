@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { ProjectReportService } from '../services/project-report.service';
 
 export interface ProjectReport {
-  id: number;
+  projectId: number;
   name: string;
   description: string;
   imageFileName: string;
