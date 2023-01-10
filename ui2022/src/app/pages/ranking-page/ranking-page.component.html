@@ -1,10 +1,19 @@
 <div class="columns">
   <div class="column is-one-third padding-left bordered">
-    <span class="breadcrumb" routerLink="/">{{ 'startPage' | translate }}</span>
-    {{ ' / ' }}
-    <span class="breadcrumb breadcrumb-active">
-      {{ 'plantedTrees' | translate | titlecase }}
-    </span>
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li class="breadcrumb-active">
+          <a>
+            {{ 'plantedTrees' | translate | titlecase }}
+          </a>
+        </li>
+      </ul>
+    </nav>
 
     <h2>{{ 'plantedTrees' | translate | titlecase }}</h2>
     <p class="description">{{ 'rankingPageText' | translate }}</p>
