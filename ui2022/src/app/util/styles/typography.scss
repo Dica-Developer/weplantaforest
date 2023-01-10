@@ -40,6 +40,17 @@ a {
   font-family: 'Bull-mono';
 }
 
+.breadcrumb {
+  a {
+    color: var(--black);
+    text-decoration: none;
+    font-family: 'Bull-mono';
+  }
+  a:hover {
+    color: var(--green);
+  }
+}
+
 a:hover {
   color: var(--green);
 }

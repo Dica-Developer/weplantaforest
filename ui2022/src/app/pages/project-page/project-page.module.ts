@@ -6,6 +6,7 @@ import { ProjectPageComponent } from './project-page.component';
 import { ProjectFeedComponent } from './components/project-feed/project-feed.component';
 import { ProjectHeaderComponent } from './components/project-header/project-header.component';
 import { ProjectCarouselComponent } from './components/project-carousel/project-carousel.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { ProjectCarouselComponent } from './components/project-carousel/project-
     ProjectHeaderComponent,
     ProjectCarouselComponent,
   ],
-  imports: [CommonModule, UtilModule],
+  imports: [CommonModule, UtilModule, RouterModule],
   exports: [ProjectPageComponent],
 })
 export class ProjectPageModule {}

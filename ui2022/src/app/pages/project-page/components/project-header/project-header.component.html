@@ -5,13 +5,19 @@
     <nav class="breadcrumb">
       <ul>
         <li>
-          {{ 'startPage' | translate }}
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
         </li>
         <li>
-          {{ 'projects' | translate }}
+          <a routerLink="/">
+            {{ 'projects' | translate }}
+          </a>
         </li>
         <li class="breadcrumb-active">
-          {{ projectReport.projectReportData.projectName | titlecase }}
+          <a>
+            {{ projectReport.projectReportData.projectName | titlecase }}
+          </a>
         </li>
       </ul>
     </nav>
