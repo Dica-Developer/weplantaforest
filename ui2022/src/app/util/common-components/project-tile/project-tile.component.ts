@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { TextHelper } from '../../text.helper';
@@ -14,7 +15,11 @@ export class ProjectTileComponent implements OnInit {
   progress: number;
   description: string;
 
-  constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
+  constructor(
+    private textHelper: TextHelper,
+    private translateService: TranslateService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.imgUrl =
@@ -30,5 +35,9 @@ export class ProjectTileComponent implements OnInit {
       this.projectReport.description,
       this.translateService.currentLang,
     );
+  }
+
+  routeToProject() {
+    this.router.navigate(['/project/' + encodeURIComponent(this.projectReport.projectName)]);
   }
 }

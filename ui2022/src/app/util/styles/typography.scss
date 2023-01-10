@@ -43,6 +43,12 @@ a {
 a:hover {
   color: var(--green);
 }
+
+ul {
+  li {
+    font-size: 20px;
+  }
+}
 @media only screen and (max-width: 1600px) {
   h1 {
     font-size: 8rem !important;
