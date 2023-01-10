@@ -2,10 +2,20 @@
   <div
     class="border-right column is-two-fifths is-flex is-flex-direction-column padding-left is-justify-content-space-between"
   >
-    <p>
-      {{ 'startPage' | translate }} / {{ 'projects' | translate }} / {{ projectReport.projectName }}
-    </p>
-    <h2>{{ projectReport.projectName }}</h2>
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          {{ 'startPage' | translate }}
+        </li>
+        <li>
+          {{ 'projects' | translate }}
+        </li>
+        <li class="breadcrumb-active">
+          {{ projectReport.projectReportData.projectName | titlecase }}
+        </li>
+      </ul>
+    </nav>
+    <h2>{{ projectReport.projectReportData.projectName }}</h2>
     <!-- <h4>{{ projectReport.description }}</h4> -->
   </div>
   <div
@@ -18,8 +28,9 @@
     </div>
     <div class="project-stats is-flex is-justify-content-space-between">
       <p>
-        <span>{{ projectReport.amountOfPlantedTrees }}</span> {{ 'of' | translate }}
-        {{ projectReport.amountOfMaximumTreesToPlant }}
+        <span>{{ projectReport.projectReportData.amountOfPlantedTrees }}</span>
+        {{ 'of' | translate }}
+        {{ projectReport.projectReportData.amountOfMaximumTreesToPlant }}
       </p>
       <p>
         <span>{{ percentage }}%</span> {{ 'planted' | translate }}

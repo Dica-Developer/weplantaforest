@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ProjectReportDetails } from 'src/app/store/project-report.store';
 import { TextHelper } from 'src/app/util/text.helper';
 import { environment } from 'src/environments/environment';
 
@@ -9,7 +10,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./project-description.component.scss'],
 })
 export class ProjectDescriptionComponent implements OnInit {
-  @Input() projectReport;
+  @Input() projectReport: ProjectReportDetails;
   imgUrl: string;
   description: string;
 
@@ -23,7 +24,7 @@ export class ProjectDescriptionComponent implements OnInit {
     //   '/300/300';
     this.imgUrl = environment.baseUrl + '/assets/lucy.jpg';
     this.description = this.textHelper.getTextForLanguage(
-      this.projectReport.description,
+      this.projectReport.projectReportData.description,
       this.translateService.currentLang,
     );
   }

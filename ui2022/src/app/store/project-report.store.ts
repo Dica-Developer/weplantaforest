@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { ProjectReportService } from '../services/project-report.service';
 
 export interface ProjectReport {
-  projectId: number;
+  id: number;
   name: string;
   description: string;
   imageFileName: string;
@@ -16,15 +16,43 @@ export interface ProjectReport {
   visible: boolean;
 }
 
+export interface ProjectReportDetails {
+  projectReportData: ProjectReportData;
+  images: any[];
+  positions: any[];
+}
+
+export interface ProjectReportData {
+  projectId: number;
+  projectName: string;
+  description: string;
+  projectImageFileName: string;
+  latitude: number;
+  longitude: number;
+  amountOfPlantedTrees: number;
+  amountOfMaximumTreesToPlant: number;
+  active: boolean;
+}
+
 export const loadProjectReports = createAction('[ProjectReport] load project reports');
 export const loadProjectReportsSuccess = createAction(
   '[ProjectReport] load project reports success',
   props<{ projectReports: PagedData<ProjectReport> }>(),
 );
+export const loadProjectReport = createAction(
+  '[ProjectReport] load project report',
+  props<{ projectName: string }>(),
+);
+export const loadProjectReportSuccess = createAction(
+  '[ProjectReport] load project report success',
+  props<{ projectReportDetails: ProjectReportDetails }>(),
+);
 
 export interface ProjectReportState {
   projectReports: PagedData<ProjectReport>;
+  projectReport: any;
   projectsLoading: boolean;
+  projectLoading: boolean;
 }
 
 export const initialState: ProjectReportState = {
@@ -37,6 +65,8 @@ export const initialState: ProjectReportState = {
     first: true,
   },
   projectsLoading: false,
+  projectReport: null,
+  projectLoading: false,
 };
 
 const projectReportReducer = createReducer(
@@ -45,10 +75,20 @@ const projectReportReducer = createReducer(
     ...state,
     projectsLoading: true,
   })),
+  on(loadProjectReport, (state) => ({
+    ...state,
+    projectReport: null,
+    projectLoading: true,
+  })),
   on(loadProjectReportsSuccess, (state, { projectReports }) => ({
     ...state,
     projectReports,
     projectsLoading: false,
+  })),
+  on(loadProjectReportSuccess, (state, { projectReportDetails }) => ({
+    ...state,
+    projectReport: projectReportDetails,
+    projectLoading: false,
   })),
 );
 
@@ -61,6 +101,10 @@ export const projectsReportsFeature = (state: AppState) => state.projectReports;
 export const selectProjectReports = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => state.projectReports,
+);
+export const selectProjectReport = createSelector(
+  projectsReportsFeature,
+  (state: ProjectReportState) => state.projectReport,
 );
 
 @Injectable()
@@ -76,6 +120,21 @@ export class ProjectReportsEffects {
           .pipe(
             switchMap((projectReports: PagedData<ProjectReport>) => [
               loadProjectReportsSuccess({ projectReports }),
+            ]),
+          ),
+      ),
+    ),
+  );
+
+  LoadProject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProjectReport),
+      switchMap((action) =>
+        this.projectReportService
+          .loadProjectReport(action.projectName)
+          .pipe(
+            switchMap((projectReportDetails: ProjectReportDetails) => [
+              loadProjectReportSuccess({ projectReportDetails }),
             ]),
           ),
       ),

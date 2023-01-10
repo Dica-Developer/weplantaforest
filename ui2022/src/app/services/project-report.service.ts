@@ -13,4 +13,10 @@ export class ProjectReportService {
       environment.backendUrl + '/reports/allProjects' + '?page=' + page + '&size=' + size,
     );
   }
+
+  loadProjectReport(projectName: string) {
+    return this.http.get(
+      environment.backendUrl + '/projects/search/name/extended/' + encodeURIComponent(projectName),
+    );
+  }
 }
