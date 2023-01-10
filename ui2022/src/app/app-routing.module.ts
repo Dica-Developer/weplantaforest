@@ -36,9 +36,9 @@ export const backofficeRoutes: Routes = [
 export const userRoutes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'ranking', component: RankingPageComponent },
+  { path: 'project/:id', component: ProjectPageComponent },
   { path: 'imprint', component: ImprintPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },
-  { path: 'project', component: ProjectPageComponent },
 ];
 
 const routes: Routes = [

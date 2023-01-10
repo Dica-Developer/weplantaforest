@@ -1,5 +1,7 @@
-<app-project-header></app-project-header>
-<app-project-description></app-project-description>
-<app-project-carousel></app-project-carousel>
-<app-offer-area></app-offer-area>
-<!-- <app-project-map></app-project-map> -->
+<div *ngIf="projectReport">
+  <app-project-header [projectReport]="projectReport"></app-project-header>
+  <app-project-description [projectReport]="projectReport"></app-project-description>
+  <app-project-carousel></app-project-carousel>
+  <app-offer-area></app-offer-area>
+  <!-- <app-project-map></app-project-map> -->
+</div>
