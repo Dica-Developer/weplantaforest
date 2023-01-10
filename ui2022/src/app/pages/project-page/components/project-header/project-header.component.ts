@@ -7,13 +7,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProjectHeaderComponent implements OnInit {
   @Input() projectReport;
-  progress: number;
+  percentage: number;
 
   constructor() {}
 
   ngOnInit(): void {
-    // this.progress =
-    //   (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
-    //   100;
+    this.percentage = +(
+      (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
+      100
+    ).toFixed(1);
   }
 }

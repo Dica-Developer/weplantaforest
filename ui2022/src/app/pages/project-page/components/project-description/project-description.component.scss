@@ -6,25 +6,7 @@ app-button {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
-.description-text {
-  padding: 2rem;
-  p {
-    font-size: 1.75rem !important;
-    line-height: 2rem !important;
-  }
-}
 
-@media only screen and (max-width: 768px) {
-  .description-text {
-    padding: 2rem;
-    p {
-      font-size: 1.75rem !important;
-      line-height: 2rem !important;
-    }
-  }
+.description {
+  padding: 1rem 2rem 1rem 0;
 }
-
-// p {
-//   font-size: 2rem !important;
-//   line-height: 2rem !important;
-// }

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { TextHelper } from 'src/app/util/text.helper';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,8 +11,9 @@ import { environment } from 'src/environments/environment';
 export class ProjectDescriptionComponent implements OnInit {
   @Input() projectReport;
   imgUrl: string;
+  description: string;
 
-  constructor() {}
+  constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     // this.imgUrl =
@@ -18,6 +21,10 @@ export class ProjectDescriptionComponent implements OnInit {
     //   '/project/image/' +
     //   encodeURI(this.projectReport.projectImageFileName) +
     //   '/300/300';
-    this.imgUrl = environment.baseUrl + '/assets/forest.png';
+    this.imgUrl = environment.baseUrl + '/assets/lucy.jpg';
+    this.description = this.textHelper.getTextForLanguage(
+      this.projectReport.description,
+      this.translateService.currentLang,
+    );
   }
 }
