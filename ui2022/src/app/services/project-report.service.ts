@@ -9,8 +9,6 @@ export class ProjectReportService {
   constructor(private http: HttpClient) {}
 
   loadAllProjectReports(page: number, size: number) {
-    console.log('inside service');
-
     return this.http.get(
       environment.backendUrl + '/reports/allProjects' + '?page=' + page + '&size=' + size,
     );
