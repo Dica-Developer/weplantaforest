@@ -17,10 +17,28 @@
   margin-bottom: 2rem;
   text-align: center;
   .number-big {
-    font-size: 25rem !important;
+    font-size: 20rem !important;
     font-family: 'NBArchitect' !important;
-    line-height: 25rem !important;
+    line-height: 20rem !important;
     color: var(--brown);
+  }
+}
+
+@media only screen and (max-width: 1600px) {
+  .tree-count-div {
+    .number-big {
+      font-size: 10rem !important;
+      line-height: 11rem !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .tree-count-div {
+    .number-big {
+      font-size: 7rem !important;
+      line-height: 7.5rem !important;
+    }
   }
 }
 
@@ -28,11 +46,10 @@
   .label-div {
     margin: 1rem auto;
   }
-
   .tree-count-div {
     .number-big {
-      font-size: 5rem !important;
-      line-height: 6rem !important;
+      font-size: 4rem !important;
+      line-height: 4.5rem !important;
     }
   }
 }

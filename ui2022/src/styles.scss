@@ -26,6 +26,14 @@ body {
   padding: 0;
   background: var(--background);
   font-family: 'Helvetica Neue', sans-serif;
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  html,
+  body {
+    font-size: 16px;
+  }
 }
 
 .columns {

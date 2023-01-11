@@ -17,8 +17,8 @@ p {
 
 .largeText {
   display: block;
-  font-size: 25px !important;
-  line-height: 31px !important;
+  font-size: 1.25rem !important;
+  line-height: 1.25rem !important;
 }
 
 .largeTextMobile {
@@ -32,9 +32,9 @@ app-circle-icon {
 }
 
 .desktop {
-  font-family: 'Bull-regular' !important;
-  font-size: 15px !important;
-  line-height: 21px !important;
+  // font-family: 'Bull-regular' !important;
+  // font-size: 15px !important;
+  // line-height: 21px !important;
 }
 
 @media only screen and (max-width: 768px) {
