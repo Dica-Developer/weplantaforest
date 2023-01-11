@@ -1,21 +1,15 @@
-<div class="item-wrapper">
-  <table>
-    <tr>
-      <td>
-        <div class="img-wrapper">
-          <img src="{{ imageUrl }}" alt="{{ item.name }}" />
-          <!-- <img src="assets/ipat_logo.jpg" /> -->
-        </div>
-      </td>
-      <td class="name-col">
-        <span class="name">{{ item.name }}</span>
-        <div class="bar-wrapper">
-          <div class="amount">
-            {{ item.amount }}
-          </div>
-          <div class="bar-fill" [style.width.%]="percentOfMax"></div>
-        </div>
-      </td>
-    </tr>
-  </table>
+<div class="ranking-item is-flex is-flex-direction-row">
+  <div class="img-wrapper">
+    <img src="{{ imageUrl }}" alt="{{ item.name }}" />
+    <!-- <img src="assets/ipat_logo.jpg" /> -->
+  </div>
+  <div class="is-flex-direction-column is-flex-grow-1">
+    <span class="name">{{ item.name }}</span>
+    <div class="bar-wrapper">
+      <div class="amount">
+        {{ item.amount }}
+      </div>
+      <div class="bar-fill" [style.width.%]="percentOfMax"></div>
+    </div>
+  </div>
 </div>

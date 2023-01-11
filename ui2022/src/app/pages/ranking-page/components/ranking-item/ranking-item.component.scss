@@ -1,9 +1,5 @@
-.item-wrapper {
-  margin-bottom: 20px;
-}
-
-.name-col {
-  width: 100%;
+.ranking-item {
+  margin-bottom: 1rem;
 }
 
 .name {
@@ -13,14 +9,13 @@
 .img-wrapper {
   border: solid 1px;
   border-radius: 50%;
-  width: 59px;
-  height: 59px;
-  display: inline-block;
+  width: 3rem !important;
+  height: 3rem !important;
   margin-right: 1rem;
   img {
     border-radius: 50%;
-    width: 59px;
-    height: 59px;
+    width: 3rem !important;
+    height: 3rem !important;
   }
 }
 
