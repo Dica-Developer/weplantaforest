@@ -7,8 +7,8 @@
             {{ 'startPage' | translate }}
           </a>
         </li>
-        <li class="breadcrumb-active">
-          <a>
+        <li>
+          <a class="breadcrumb-active">
             {{ 'plantedTrees' | translate | titlecase }}
           </a>
         </li>
@@ -16,60 +16,62 @@
     </nav>
 
     <h2>{{ 'plantedTrees' | translate | titlecase }}</h2>
-    <p class="description">{{ 'rankingPageText' | translate }}</p>
-    <div class="category">
-      <div
-        [ngClass]="type === 'bestUser' ? 'circle circle-active' : 'circle'"
-        (click)="loadRankings('bestUser')"
-      >
-        <div></div>
+    <p>{{ 'rankingPageText' | translate }}</p>
+    <div class="radio-buttons">
+      <div class="category">
+        <div
+          [ngClass]="type === 'bestUser' ? 'circle circle-active' : 'circle'"
+          (click)="loadRankings('bestUser')"
+        >
+          <div></div>
+        </div>
+        <span>{{ 'all' | translate | titlecase }}</span>
       </div>
-      <span>{{ 'all' | translate | titlecase }}</span>
-    </div>
-    <div class="category">
-      <div
-        [ngClass]="type === 'bestOrgType/PRIVATE' ? 'circle circle-active' : 'circle'"
-        (click)="loadRankings('bestOrgType/PRIVATE')"
-      >
-        <div></div>
+      <div class="category">
+        <div
+          [ngClass]="type === 'bestOrgType/PRIVATE' ? 'circle circle-active' : 'circle'"
+          (click)="loadRankings('bestOrgType/PRIVATE')"
+        >
+          <div></div>
+        </div>
+        <span>{{ 'private' | translate | titlecase }}</span>
       </div>
-      <span>{{ 'private' | translate | titlecase }}</span>
-    </div>
-    <div class="category">
-      <div
-        [ngClass]="type === 'bestOrgType/COMMERCIAL' ? 'circle circle-active' : 'circle'"
-        (click)="loadRankings('bestOrgType/COMMERCIAL')"
-      >
-        <div></div>
+      <div class="category">
+        <div
+          [ngClass]="type === 'bestOrgType/COMMERCIAL' ? 'circle circle-active' : 'circle'"
+          (click)="loadRankings('bestOrgType/COMMERCIAL')"
+        >
+          <div></div>
+        </div>
+        <span>{{ 'companies' | translate | titlecase }}</span>
       </div>
-      <span>{{ 'companies' | translate | titlecase }}</span>
-    </div>
-    <div class="category">
-      <div
-        [ngClass]="type === 'bestOrgType/NONPROFIT' ? 'circle circle-active' : 'circle'"
-        (click)="loadRankings('bestOrgType/NONPROFIT')"
-      >
-        <div></div>
+      <div class="category">
+        <div
+          [ngClass]="type === 'bestOrgType/NONPROFIT' ? 'circle circle-active' : 'circle'"
+          (click)="loadRankings('bestOrgType/NONPROFIT')"
+        >
+          <div></div>
+        </div>
+        <span>{{ 'ngos' | translate | titlecase }}</span>
       </div>
-      <span>{{ 'ngos' | translate | titlecase }}</span>
-    </div>
-    <div class="category">
-      <div
-        [ngClass]="type === 'bestOrgType/EDUCATIONAL' ? 'circle circle-active' : 'circle'"
-        (click)="loadRankings('bestOrgType/EDUCATIONAL')"
-      >
-        <div></div>
+      <div class="category">
+        <div
+          [ngClass]="type === 'bestOrgType/EDUCATIONAL' ? 'circle circle-active' : 'circle'"
+          (click)="loadRankings('bestOrgType/EDUCATIONAL')"
+        >
+          <div></div>
+        </div>
+        <span>{{ 'schools' | translate | titlecase }}</span>
       </div>
-      <span>{{ 'schools' | translate | titlecase }}</span>
-    </div>
-    <div class="category">
-      <div
-        [ngClass]="type === 'bestTeam' ? 'circle circle-active' : 'circle'"
-        (click)="loadRankings('bestTeam')"
-      >
-        <div></div>
+      <div class="category">
+        <div
+          [ngClass]="type === 'bestTeam' ? 'circle circle-active' : 'circle'"
+          (click)="loadRankings('bestTeam')"
+        >
+          <div></div>
+        </div>
+        <span>{{ 'teams' | translate | titlecase }}</span>
       </div>
-      <span>{{ 'teams' | translate | titlecase }}</span>
     </div>
   </div>
   <div class="column is-two-thirds rankings">

@@ -1,32 +1,23 @@
 h2 {
-  margin-top: 25px;
+  margin: 1rem 0;
 }
 .bordered {
   border-right: solid 1px;
 }
 
-.description {
-  font-family: 'Bull-regular' !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  font-size: 15px !important;
-  line-height: 21px !important;
-}
-
 .category {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   span {
-    font-family: 'Bull-regular';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 15px;
+    font-size: 1.25rem;
   }
 }
 
+.radio-buttons {
+  margin-top: 2rem;
+}
+
 .rankings {
-  padding-top: 60px;
+  padding: 4rem 2rem;
 }
 
 nav {
@@ -57,5 +48,11 @@ nav {
 .circle:hover {
   div {
     background: var(--green);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .rankings {
+    padding: 1rem;
   }
 }

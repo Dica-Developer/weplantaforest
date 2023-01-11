@@ -7,12 +7,7 @@
 }
 
 .name {
-  vertical-align: top;
-  font-family: 'Bull-regular';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 25px;
+  font-size: 1rem;
 }
 
 .img-wrapper {
@@ -21,7 +16,7 @@
   width: 59px;
   height: 59px;
   display: inline-block;
-  margin-right: 25px;
+  margin-right: 1rem;
   img {
     border-radius: 50%;
     width: 59px;

@@ -83,17 +83,8 @@ snack-bar-container {
   padding: 0 0.5rem !important;
 }
 
-.breadcrumb {
-  font-family: 'Bull-regular';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  cursor: pointer;
-}
-
 .breadcrumb-active {
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 
 .center {
