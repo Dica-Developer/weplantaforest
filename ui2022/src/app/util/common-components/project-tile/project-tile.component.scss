@@ -1,6 +1,6 @@
 .project-tile {
-  max-width: 500px;
-  height: 600px;
+  max-width: 600px;
+  height: 700px;
   overflow: hidden;
   white-space: pre-wrap;
   border: 1px solid var(--black);
@@ -37,5 +37,19 @@
     line-clamp: 4;
     -webkit-line-clamp: 4; /* number of lines to show */
     -webkit-box-orient: vertical;
+  }
+}
+
+.stats {
+  flex-direction: row;
+}
+
+@media only screen and (max-width: 768px) {
+  .project-tile {
+    height: 500px;
+  }
+
+  .stats {
+    flex-direction: column;
   }
 }

@@ -5,15 +5,12 @@
   <div class="tile-body">
     <h4>{{ projectReport.projectName }}</h4>
     <div class="description" innerHtml="{{ description }}"></div>
-    <div class="status-bar">
-      <div class="bar">
-        <div class="inner-bar" [style.width.%]="progress"></div>
-      </div>
-      <div class="is-flex is-flex-direction-row is-justify-content-space-between">
-        <span>{{ 'alreadyPlanted' | translate }} {{ projectReport.amountOfPlantedTrees }} </span>
-        <span>{{ 'target' | translate }} {{ projectReport.amountOfMaximumTreesToPlant }}</span>
-      </div>
-      <span></span>
+    <div class="bar">
+      <div class="inner-bar" [style.width.%]="progress"></div>
+    </div>
+    <div class="is-flex stats is-justify-content-space-between">
+      <p>{{ 'alreadyPlanted' | translate }} {{ projectReport.amountOfPlantedTrees }}</p>
+      <p>{{ 'target' | translate }} {{ projectReport.amountOfMaximumTreesToPlant }}</p>
     </div>
   </div>
 </div>
