@@ -7,6 +7,7 @@ import { ProjectFeedComponent } from './components/project-feed/project-feed.com
 import { ProjectHeaderComponent } from './components/project-header/project-header.component';
 import { ProjectCarouselComponent } from './components/project-carousel/project-carousel.component';
 import { RouterModule } from '@angular/router';
+import { CarouselItemComponent } from './components/carousel-item/carousel-item.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     ProjectFeedComponent,
     ProjectHeaderComponent,
     ProjectCarouselComponent,
+    CarouselItemComponent,
   ],
   imports: [CommonModule, UtilModule, RouterModule],
   exports: [ProjectPageComponent],
