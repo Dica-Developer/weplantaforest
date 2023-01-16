@@ -19,4 +19,8 @@ export class ProjectReportService {
       environment.backendUrl + '/projects/search/name/extended/' + encodeURIComponent(projectName),
     );
   }
+
+  loadActiveProjectReports() {
+    return this.http.get(environment.backendUrl + '/reports/activeProjects');
+  }
 }

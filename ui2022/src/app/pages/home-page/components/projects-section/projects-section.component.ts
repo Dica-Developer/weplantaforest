@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
-import { loadProjectReports, selectProjectReports } from 'src/app/store/project-report.store';
+import {
+  loadActiveProjectReports,
+  selectActiveProjectReports,
+} from 'src/app/store/project-report.store';
 
 @Component({
   selector: 'app-projects-section',
@@ -11,10 +14,10 @@ import { loadProjectReports, selectProjectReports } from 'src/app/store/project-
 })
 export class ProjectsSectionComponent implements OnInit {
   selectProjectReportsSub: Subscription;
-  projectReports$ = this.store.select(selectProjectReports);
+  projectReports$ = this.store.select(selectActiveProjectReports);
 
   constructor(private store: Store<AppState>) {
-    this.store.dispatch(loadProjectReports());
+    this.store.dispatch(loadActiveProjectReports());
   }
 
   ngOnInit(): void {}

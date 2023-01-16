@@ -47,12 +47,18 @@ export const loadProjectReportSuccess = createAction(
   '[ProjectReport] load project report success',
   props<{ projectReportDetails: ProjectReportDetails }>(),
 );
+export const loadActiveProjectReports = createAction('[ProjectReport] load active project reports');
+export const loadActiveProjectReportsSuccess = createAction(
+  '[ProjectReport] load project report success',
+  props<{ activeProjectReports: any[] }>(),
+);
 
 export interface ProjectReportState {
   projectReports: PagedData<ProjectReport>;
   projectReport: any;
   projectsLoading: boolean;
   projectLoading: boolean;
+  activeProjects: any[];
 }
 
 export const initialState: ProjectReportState = {
@@ -64,6 +70,7 @@ export const initialState: ProjectReportState = {
     last: true,
     first: true,
   },
+  activeProjects: [],
   projectsLoading: false,
   projectReport: null,
   projectLoading: false,
@@ -90,6 +97,11 @@ const projectReportReducer = createReducer(
     projectReport: projectReportDetails,
     projectLoading: false,
   })),
+  on(loadActiveProjectReportsSuccess, (state, { activeProjectReports }) => ({
+    ...state,
+    activeProjects: activeProjectReports,
+    projectLoading: false,
+  })),
 );
 
 export function projectsReportReducerFn(state, action) {
@@ -105,6 +117,10 @@ export const selectProjectReports = createSelector(
 export const selectProjectReport = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => state.projectReport,
+);
+export const selectActiveProjectReports = createSelector(
+  projectsReportsFeature,
+  (state: ProjectReportState) => state.activeProjects,
 );
 
 @Injectable()
@@ -135,6 +151,21 @@ export class ProjectReportsEffects {
           .pipe(
             switchMap((projectReportDetails: ProjectReportDetails) => [
               loadProjectReportSuccess({ projectReportDetails }),
+            ]),
+          ),
+      ),
+    ),
+  );
+
+  LoadActiveProjects$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadActiveProjectReports),
+      switchMap((action) =>
+        this.projectReportService
+          .loadActiveProjectReports()
+          .pipe(
+            switchMap((activeProjects: any[]) => [
+              loadActiveProjectReportsSuccess({ activeProjectReports: activeProjects }),
             ]),
           ),
       ),

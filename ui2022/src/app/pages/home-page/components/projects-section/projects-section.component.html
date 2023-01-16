@@ -8,10 +8,7 @@
       >{{ 'projectsSectionInfo' | translate }}
     </p>
     <div class="scrollmenu">
-      <app-project-tile
-        *ngFor="let project of (projectReports$ | async).content"
-        [projectReport]="project"
-      >
+      <app-project-tile *ngFor="let project of projectReports$ | async" [projectReport]="project">
         ></app-project-tile
       >
     </div>
