@@ -23,6 +23,26 @@ export const loadRankingsSuccess = createAction(
   props<{ result: PagedData<TreeRankedUserData> }>(),
 );
 
+export const loadPartners = createAction(
+  '[Ranking] load partners',
+  props<{ projectName: string }>(),
+);
+
+export const loadPartnersSuccess = createAction(
+  '[Ranking] load partners success',
+  props<{ partners: PagedData<CarouselItem> }>(),
+);
+
+export const loadLatestPlantings = createAction(
+  '[Ranking] load latest plantings',
+  props<{ projectName: string }>(),
+);
+
+export const loadLatestPlantingsSuccess = createAction(
+  '[Ranking] load latest plantings success',
+  props<{ plantings: PagedData<CarouselItem> }>(),
+);
+
 export interface TreeRankedUserData {
   name: string;
   imageName: string;
@@ -30,14 +50,38 @@ export interface TreeRankedUserData {
   amount: number;
 }
 
+export interface CarouselItem {
+  name: string;
+  imageName: string;
+  amount: number;
+}
+
 export interface RankingState {
   rankings: PagedData<TreeRankedUserData>;
+  plantings: PagedData<CarouselItem>;
+  partners: PagedData<CarouselItem>;
   rankingsLoading: boolean;
   rankingsMaxAmount: number;
 }
 
 export const initialState: RankingState = {
   rankings: {
+    content: [],
+    totalPages: 0,
+    totalElements: 0,
+    numberOfElements: 0,
+    last: true,
+    first: true,
+  },
+  plantings: {
+    content: [],
+    totalPages: 0,
+    totalElements: 0,
+    numberOfElements: 0,
+    last: true,
+    first: true,
+  },
+  partners: {
     content: [],
     totalPages: 0,
     totalElements: 0,
@@ -59,6 +103,24 @@ const rankingReducer = createReducer(
     ...state,
     rankings: action.result,
     rankingsMaxAmount: getMaxAmount(action.result.content),
+    rankingsLoading: false,
+  })),
+  on(loadPartners, (state) => ({
+    ...state,
+    rankingsLoading: true,
+  })),
+  on(loadPartnersSuccess, (state, action) => ({
+    ...state,
+    partners: action.partners,
+    rankingsLoading: false,
+  })),
+  on(loadLatestPlantings, (state) => ({
+    ...state,
+    rankingsLoading: true,
+  })),
+  on(loadLatestPlantingsSuccess, (state, action) => ({
+    ...state,
+    plantings: action.plantings,
     rankingsLoading: false,
   })),
 );
@@ -84,6 +146,16 @@ export const selectRankings = createSelector(
   (state: RankingState) => state.rankings,
 );
 
+export const selectPartners = createSelector(
+  rankingFeature,
+  (state: RankingState) => state.partners,
+);
+
+export const selectPlantings = createSelector(
+  rankingFeature,
+  (state: RankingState) => state.plantings,
+);
+
 export const selectRankingMaxAmount = createSelector(
   rankingFeature,
   (state: RankingState) => state.rankingsMaxAmount,
@@ -101,6 +173,36 @@ export class RankingEffects {
           .loadAll(action.rankingType, action.pageSize, action.lastYear)
           .pipe(
             switchMap((result: PagedData<TreeRankedUserData>) => [loadRankingsSuccess({ result })]),
+          ),
+      ),
+    ),
+  );
+
+  loadPartners$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadPartners),
+      switchMap((action) =>
+        this.rankingService
+          .loadPartnersForProject(action.projectName)
+          .pipe(
+            switchMap((partners: PagedData<CarouselItem>) => [
+              loadPartnersSuccess({ partners: partners }),
+            ]),
+          ),
+      ),
+    ),
+  );
+
+  loadLatestPlantings$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadLatestPlantings),
+      switchMap((action) =>
+        this.rankingService
+          .loadLatestTreesForProject(action.projectName)
+          .pipe(
+            switchMap((plantings: PagedData<CarouselItem>) => [
+              loadLatestPlantingsSuccess({ plantings: plantings }),
+            ]),
           ),
       ),
     ),

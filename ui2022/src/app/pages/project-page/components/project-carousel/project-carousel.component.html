@@ -1,10 +1,16 @@
-<div class="is-flex is-flex-direction-column">
+<div class="is-flex is-flex-direction-column" *ngIf="projectReport">
   <h4 class="center">{{ 'newestPlantings' | translate }}</h4>
   <div class="carousel-row is-flex is-flex-direction-row">
-    dsafsadfasdasdffassfasdasdasdfqwfwqdsa dsafsadfasdasdffassfasdasdasdfqwfwqdsa
+    <app-carousel-item
+      *ngFor="let item of (plantings$ | async).content"
+      [rankingItem]="item"
+    ></app-carousel-item>
   </div>
   <h4 class="center">{{ 'partner' | translate }}</h4>
   <div class="carousel-row is-flex is-flex-direction-row">
-    dsafsadfasdasdffassfasdasdasdfqwfwqdsa dsafsadfasdasdffassfasdasdasdfqwfwqdsa
+    <app-carousel-item
+      *ngFor="let item of (partners$ | async).content"
+      [rankingItem]="item"
+    ></app-carousel-item>
   </div>
 </div>

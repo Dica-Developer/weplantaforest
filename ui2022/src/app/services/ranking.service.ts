@@ -17,4 +17,22 @@ export class RankingService {
         lastYear,
     );
   }
+
+  loadLatestTreesForProject(projectName: string) {
+    return this.http.get(
+      environment.backendUrl +
+        '/ranking/lastPlantedTrees/project?projectName=' +
+        encodeURIComponent(projectName) +
+        '&page=0&size=5',
+    );
+  }
+
+  loadPartnersForProject(projectName: string) {
+    return this.http.get(
+      environment.backendUrl +
+        '/ranking/bestTeam/project?projectName=' +
+        encodeURIComponent(projectName) +
+        '&page=0&size=5',
+    );
+  }
 }
