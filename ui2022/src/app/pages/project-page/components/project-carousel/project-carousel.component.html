@@ -3,26 +3,41 @@
   <div
     class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
   >
-    <mat-icon *ngIf="currentPlantingPage > 0" (click)="fetchNextPage('plantings', -1)"
+    <mat-icon
+      class="desktopIcon"
+      *ngIf="currentPlantingPage > 0"
+      (click)="fetchNextPage('plantings', -1)"
       >arrow_left</mat-icon
     >
+    <mat-icon class="mobileIcon" (click)="fetchNextPage('plantings', 1)">arrow_drop_up</mat-icon>
     <app-carousel-item
       *ngFor="let item of (plantings$ | async).content"
       [rankingItem]="item"
     ></app-carousel-item>
-    <mat-icon (click)="fetchNextPage('plantings', 1)">arrow_right</mat-icon>
+    <mat-icon class="desktopIcon" (click)="fetchNextPage('plantings', 1)">arrow_right</mat-icon>
+    <mat-icon class="mobileIcon" (click)="fetchNextPage('plantings', 1)">arrow_drop_down</mat-icon>
   </div>
   <h4 class="center">{{ 'partner' | translate }}</h4>
   <div
     class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
   >
-    <mat-icon *ngIf="currentPartnerPage > 0" (click)="fetchNextPage('partners', -1)"
+    <mat-icon
+      class="desktopIcon"
+      *ngIf="currentPartnerPage > 0"
+      (click)="fetchNextPage('partners', -1)"
       >arrow_left</mat-icon
+    >
+    <mat-icon
+      class="mobileIcon"
+      *ngIf="currentPartnerPage > 0"
+      (click)="fetchNextPage('partners', -1)"
+      >arrow_drop_up</mat-icon
     >
     <app-carousel-item
       *ngFor="let item of (partners$ | async).content"
       [rankingItem]="item"
     ></app-carousel-item>
-    <mat-icon (click)="fetchNextPage('partners', 1)">arrow_right</mat-icon>
+    <mat-icon class="desktopIcon" (click)="fetchNextPage('partners', 1)">arrow_right</mat-icon>
+    <mat-icon class="mobileIcon" (click)="fetchNextPage('partners', 1)">arrow_drop_down</mat-icon>
   </div>
 </div>

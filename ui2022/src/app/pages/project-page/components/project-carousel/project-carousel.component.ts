@@ -42,7 +42,6 @@ export class ProjectCarouselComponent implements OnInit {
   fetchNextPage(type: string, page: number) {
     if (type === 'plantings') {
       this.currentPlantingPage = this.currentPlantingPage + page;
-      console.log(this.currentPlantingPage);
       this.store.dispatch(
         loadLatestPlantings({
           projectName: this.projectReport?.projectReportData.projectName,
@@ -51,7 +50,6 @@ export class ProjectCarouselComponent implements OnInit {
       );
     } else if (type === 'partners') {
       this.currentPartnerPage = this.currentPartnerPage + page;
-      console.log(this.currentPartnerPage);
       this.store.dispatch(
         loadPartners({
           projectName: this.projectReport?.projectReportData.projectName,

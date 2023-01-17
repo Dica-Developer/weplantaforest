@@ -2,6 +2,10 @@
   border-bottom: 1px solid var(--black);
 }
 
+.carousel-row {
+  overflow: hidden;
+}
+
 h4 {
   margin: 2rem auto 1rem auto;
 }
@@ -11,12 +15,36 @@ h4 {
 // }
 
 mat-icon {
+  position: relative;
   height: 4rem;
   width: 4rem;
   font-size: 4rem;
 }
 
+.desktopIcon {
+  display: block;
+}
+
+.mobileIcon {
+  display: none;
+  margin: 0 auto;
+}
+
 mat-icon:hover {
   cursor: pointer;
   color: var(--green);
+}
+
+@media only screen and (max-width: 900px) {
+  .is-flex-direction-row {
+    flex-direction: column !important;
+  }
+
+  .desktopIcon {
+    display: none;
+  }
+
+  .mobileIcon {
+    display: block;
+  }
 }
