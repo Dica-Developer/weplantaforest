@@ -162,7 +162,7 @@ export function contentReducerFn(state, action) {
   return contentReducer(state, action);
 }
 
-export const contentFeature = (state: AppState) => state.content;
+export const contentFeature = (state: AppState) => state.contentState;
 
 export const selectContentArticles = createSelector(
   contentFeature,

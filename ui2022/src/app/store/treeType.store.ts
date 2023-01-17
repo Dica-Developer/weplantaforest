@@ -98,7 +98,7 @@ export function treeTypeReducerFn(state, action) {
   return treeTypeReducer(state, action);
 }
 
-export const treeTypeFeature = (state: AppState) => state.treeTypes;
+export const treeTypeFeature = (state: AppState) => state.treeTypesState;
 
 export const selectTreeTypes = createSelector(
   treeTypeFeature,

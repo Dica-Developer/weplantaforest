@@ -80,7 +80,7 @@ export function profileReducerFn(state, action) {
   return profileReducer(state, action);
 }
 
-export const profileFeature = (state: AppState) => state.profile;
+export const profileFeature = (state: AppState) => state.profileState;
 
 export const selectUsername = createSelector(
   profileFeature,

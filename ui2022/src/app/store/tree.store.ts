@@ -40,7 +40,7 @@ export function treeReducerFn(state, action) {
   return treeReducer(state, action);
 }
 
-export const treeFeature = (state: AppState) => state.trees;
+export const treeFeature = (state: AppState) => state.treesState;
 
 export const selectAllTreeCount = createSelector(treeFeature, (state: TreeState) => {
   return formatNumber(state.allTrees.treesCount, 'de-DE');

@@ -25,19 +25,19 @@ export interface PagedData<T> {
 import { ProjectReportState } from './project-report.store';
 
 export interface AppState {
-  readonly auth: AuthState;
-  readonly profile: ProfileState;
-  readonly carts: CartsState;
-  readonly user: UserState;
-  readonly projects: ProjectState;
-  readonly treeTypes: TreeTypeState;
-  readonly errors: ErrorState;
-  readonly successMessages: SuccessMessageState;
-  readonly content: ContentState;
-  readonly event: EventsState;
-  readonly teams: TeamState;
-  readonly plantbag: PlantbagState;
-  readonly trees: TreeState;
-  readonly ranking: RankingState;
-  readonly projectReports: ProjectReportState;
+  readonly authState: AuthState;
+  readonly profileState: ProfileState;
+  readonly cartsState: CartsState;
+  readonly userState: UserState;
+  readonly projectsState: ProjectState;
+  readonly treeTypesState: TreeTypeState;
+  readonly errorsState: ErrorState;
+  readonly successMessagesState: SuccessMessageState;
+  readonly contentState: ContentState;
+  readonly eventState: EventsState;
+  readonly teamsState: TeamState;
+  readonly plantbagState: PlantbagState;
+  readonly treesState: TreeState;
+  readonly rankingState: RankingState;
+  readonly projectReportsState: ProjectReportState;
 }

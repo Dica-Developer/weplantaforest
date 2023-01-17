@@ -102,7 +102,7 @@ export function plantbagReducerFn(state, action) {
   return plantbagReducer(state, action);
 }
 
-export const plantbagFeature = (state: AppState) => state.plantbag;
+export const plantbagFeature = (state: AppState) => state.plantbagState;
 
 export const selectPlantbag = createSelector(
   plantbagFeature,

@@ -248,7 +248,7 @@ export function cartsReducerFn(state, action) {
   return cartsReducer(state, action);
 }
 
-export const cartsFeature = (state: AppState) => state.carts;
+export const cartsFeature = (state: AppState) => state.cartsState;
 export const selectCarts = createSelector(cartsFeature, (state: CartsState) => state.carts);
 export const selectCartsLoadingProgress = createSelector(
   cartsFeature,

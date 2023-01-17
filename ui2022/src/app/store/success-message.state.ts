@@ -46,7 +46,7 @@ export function successMessageReducerFn(state, action) {
   return successMessageReducer(state, action);
 }
 
-export const successMessageFeature = (state: AppState) => state.successMessages;
+export const successMessageFeature = (state: AppState) => state.successMessagesState;
 
 export const selectSuccessMessages = createSelector(
   successMessageFeature,

@@ -139,7 +139,7 @@ function getMaxAmount(data: TreeRankedUserData[]): number {
   return maxValue;
 }
 
-export const rankingFeature = (state: AppState) => state.ranking;
+export const rankingFeature = (state: AppState) => state.rankingState;
 
 export const selectRankings = createSelector(
   rankingFeature,
