@@ -10,6 +10,7 @@ import { UtilModule } from '../util/util.module';
 import { RankingPageModule } from './ranking-page/ranking-page.module';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { ProjectPageModule } from './project-page/project-page.module';
+import { ProjectReportsOverviewModule } from './project-reports-overview-page/project-reports-overview.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ProjectPageModule } from './project-page/project-page.module';
     UtilModule,
     ProjectPageModule,
     RankingPageModule,
+    ProjectReportsOverviewModule,
   ],
   exports: [
     ForgotPasswordPageComponent,
