@@ -1,18 +1,23 @@
-.grid-wrapper{
+.grid-wrapper {
   height: 75vh;
   display: inline-block;
   width: 100%;
 }
 
-button{
-  margin-right: 15px!important;
+.column {
+  padding: 0;
+}
+
+button {
+  margin-right: 15px !important;
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
-.cart-detail-wrapper{
+.cart-detail-wrapper {
   display: inline;
 }
-.row {
-  margin: 0;
+.button-bar {
+  background-color: #fff;
+  padding-left: 1rem;
 }

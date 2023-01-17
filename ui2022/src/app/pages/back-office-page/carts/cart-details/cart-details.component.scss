@@ -1,6 +1,6 @@
 .close-wrapper {
   text-align: right;
-  .close-button{
+  .close-button {
     font-size: 20px;
     font-weight: bold;
     margin-right: 15px;
@@ -8,7 +8,26 @@
   }
 }
 
-b{
+b {
   margin-right: 5px;
 }
 
+.columns {
+  .column {
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+  .tree-type {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .price {
+    text-align: right;
+    padding-right: 0;    
+  }
+}
+
+.spacer {
+  height: 1rem;
+}
