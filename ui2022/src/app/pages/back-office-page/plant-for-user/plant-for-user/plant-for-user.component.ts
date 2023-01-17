@@ -12,6 +12,7 @@ import { Subscription, Observable } from 'rxjs';
 import { User } from 'src/app/store/user.store';
 import { loadUsers, selectUsers } from '../../../../store/user.store';
 import { selectActiveProjects, loadActiveProjects } from '../../../../store/project.store';
+import { addError } from 'src/app/store/error.state';
 
 @Component({
   selector: 'app-plant-for-user',
@@ -69,14 +70,31 @@ export class PlantForUserComponent implements OnInit, OnDestroy {
   }
 
   plant() {
-    const plantBag = createPlantbagForBackend(this.plantbag);
-    const request = {
-      plantBag,
-      amountOfPlantBags: 1,
-      cartState: 'CALLBACK',
-      userId: this.form.get('userId').value,
-    };
-    this.store.dispatch(plantForUser({ request }));
+    let treeSum = 0;
+    this.plantbag.plantbagItems.forEach((pbi) => (treeSum += pbi.amount));
+    if (!this.form.get('userId').value) {
+      this.store.dispatch(
+        addError({ error: { key: 'USER_NOT_SET', message: 'Der User muss ausgewählt sein' } }),
+      );
+    } else if (treeSum == 0) {
+      this.store.dispatch(
+        addError({
+          error: {
+            key: 'NO_TREES_SET',
+            message: 'Ein Baum muss mindestens in den Pflanzkorb gepackt werden',
+          },
+        }),
+      );
+    } else {
+      const plantBag = createPlantbagForBackend(this.plantbag);
+      const request = {
+        plantBag,
+        amountOfPlantBags: 1,
+        cartState: 'CALLBACK',
+        userId: this.form.get('userId').value,
+      };
+      this.store.dispatch(plantForUser({ request }));
+    }
   }
 
   private _filter(value: string): User[] {

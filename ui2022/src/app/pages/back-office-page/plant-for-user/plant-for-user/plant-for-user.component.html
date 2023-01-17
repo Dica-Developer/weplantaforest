@@ -1,7 +1,7 @@
 <form [formGroup]="form">
-  <div class="row">
-    <div class="col-4"></div>
-    <div class="col-4">
+  <div class="columns">
+    <div class="column is-one-third"></div>
+    <div class="column is-one-third">
       <mat-form-field appearance="fill" class="title-field">
         <input
           type="text"
@@ -24,10 +24,10 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div class="col-4"></div>
+    <div class="column is-one-third"></div>
   </div>
-  <div class="row">
-    <div class="col-6">
+  <div class="columns">
+    <div class="column is-half">
       <div *ngFor="let project of activeProjects$ | async">
         <mat-card>
           <mat-card-content>
@@ -45,7 +45,7 @@
         <mat-divider></mat-divider>
       </div>
     </div>
-    <div class="col-6">
+    <div class="column is-half">
       <app-plantbag></app-plantbag>
       <div class="button-wrapper">
         <button mat-raised-button color="primary" (click)="plant()">
