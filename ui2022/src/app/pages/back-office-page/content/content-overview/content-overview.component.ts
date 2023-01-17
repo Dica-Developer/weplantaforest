@@ -6,7 +6,6 @@ import {
   ContentArticleDetails,
 } from '../../../../store/content.store';
 import { Subscription } from 'rxjs';
-import { selectUsername } from '../../../../store/profile.store';
 import { loadArticleDetailsSuccess } from '../../../../store/content.store';
 
 @Component({
@@ -20,25 +19,18 @@ export class ContentOverviewComponent implements OnInit, OnDestroy {
   contentDetailsSub: Subscription;
 
   loggedInUsername: string;
-  // loggedInUserNameSub: Subscription;
 
   constructor(private store: Store<AppState>) {
     this.contentDetailsSub = store.select(selectContentArticleDetails).subscribe((res) => {
       this.contentDetails = res;
     });
     this.loggedInUsername = localStorage.getItem('username');
-    // this.loggedInUserNameSub = store.select(selectUsername).subscribe((res) => {
-    //   console.log('got username: ', res);
-
-    //   this.loggedInUsername = res;
-    // });
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.contentDetailsSub.unsubscribe();
-    // this.loggedInUserNameSub.unsubscribe();
   }
 
   createArticle() {

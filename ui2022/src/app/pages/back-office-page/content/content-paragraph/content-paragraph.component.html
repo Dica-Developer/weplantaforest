@@ -4,8 +4,8 @@
       <mat-panel-title> {{ paragraph.get("title").value }}</mat-panel-title>
     </mat-expansion-panel-header>
     <form [formGroup]="paragraph">
-      <div class="row">
-        <div class="col">
+      <div class="columns">
+        <div class="column">
           <mat-form-field class="title-field">
             <input
               matInput
@@ -16,21 +16,21 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
-        <div class="col-2">Inhalt:</div>
-        <div class="col-10">
+      <div class="columns">
+        <div class="column is-2">Inhalt:</div>
+        <div class="column is-10">
           <app-text-editor
             [control]="this.paragraph.get('text')"
           ></app-text-editor>
         </div>
       </div>
       <div class="spacer"></div>
-      <div class="row">
-        <div class="col-6">
+      <div class="columns">
+        <div class="column is-6">
           <img src="{{ imageSrc }}" width="400" height="300" *ngIf="imageSrc"/>
           <app-no-img-box *ngIf="!imageSrc"></app-no-img-box>
         </div>
-        <div class="col-2">
+        <div class="column is-2">
           <input
             #csvInput
             hidden="true"
