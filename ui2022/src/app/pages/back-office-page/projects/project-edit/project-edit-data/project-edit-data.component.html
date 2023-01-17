@@ -1,8 +1,8 @@
 <div class="form-wrapper">
   <div>
     <form [formGroup]="projectForm">
-      <div class="row">
-        <div class="col">
+      <div class="columns">
+        <div class="column">
           <mat-form-field>
             <input
               matInput
@@ -12,19 +12,19 @@
             />
           </mat-form-field>
         </div>
-        <div class="col">
+        <div class="column">
           <mat-checkbox formControlName="visible">sichtbar</mat-checkbox>
         </div>
-        <div class="col">
+        <div class="column">
           <mat-checkbox formControlName="shopActive">aktiv</mat-checkbox>
         </div>
       </div>
       <mat-divider></mat-divider>
-      <div class="row">
-        <div class="col-4">
+      <div class="columns">
+        <div class="column is-4">
           <img src="{{ imageSrc }}" width="400" height="300" />
         </div>
-        <div class="col-2">
+        <div class="column is-2">
           <input
           #csvInput
           hidden="true"
@@ -37,25 +37,25 @@
           Bild
         </button>    
         </div>
-        <div class="col-6"></div>
+        <div class="column is-6"></div>
       </div>
       <mat-divider></mat-divider>
-      <div class="row">
-        <div class="col-2">
+      <div class="columns">
+        <div class="column is-2">
           Description(De)
         </div>
-        <div class="col-10">
+        <div class="column is-10">
           <app-text-editor
             [control]="this.projectForm.get('descriptionDe')"
           ></app-text-editor>
         </div>
       </div>
       <mat-divider></mat-divider>
-      <div class="row">
-        <div class="col-2">
+      <div class="columns">
+        <div class="column is-2">
           Description(En)
         </div>
-        <div class="col-10">
+        <div class="column is-10">
           <app-text-editor
             [control]="this.projectForm.get('descriptionEn')"
           ></app-text-editor>

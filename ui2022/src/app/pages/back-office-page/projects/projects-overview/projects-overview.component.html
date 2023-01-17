@@ -1,11 +1,11 @@
-<div class="row">
-  <div class="col-3">
+<div class="columns">
+  <div class="column is-one-quarter">
     <button mat-raised-button color="primary" (click)="createProject()" class="top-row-btn">
       Projekt erstellen
     </button>
     <app-project-grid #projectgrid></app-project-grid>
   </div>
-  <div class="col-9">
+  <div class="column is-three-quarters">
     <app-project-edit></app-project-edit>
   </div>
 </div>

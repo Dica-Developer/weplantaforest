@@ -1,11 +1,11 @@
 
-  <div class="row">
-    <div class="col">
+  <div class="columns">
+    <div class="column">
       <b>{{getGerman(article.treeType.name)}}{{showProject ? "(" + article.project.name + ")" : ""}}</b>
       <br>
       {{article.price.priceAsLong/100 | currency}}
     </div>
-    <div class="col">
+    <div class="column">
       <mat-form-field appearance="fill" class="title-field">
         <mat-label>{{'max.' +  (article.amount - article.alreadyPlanted)}}</mat-label>
         <input
@@ -17,10 +17,10 @@
         <mat-error *ngIf="control.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
-    <div class="col">
+    <div class="column">
       <b>{{sum | currency}}</b>
     </div>
-    <div class="col" *ngIf="withDelete">
+    <div class="column" *ngIf="withDelete">
       <button mat-icon-button (click)="removeItemFormPlantbag()" matTooltip="Artikel aus Pflanzkorb entfernen">
         <mat-icon aria-hidden="false">delete</mat-icon>
       </button>

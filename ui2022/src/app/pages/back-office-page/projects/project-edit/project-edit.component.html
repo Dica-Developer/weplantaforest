@@ -1,5 +1,5 @@
-<div *ngIf="details" class="row">
-  <div class="col-11">
+<div *ngIf="details" class="columns">
+  <div class="column is-11">
     <mat-tab-group mat-align-tabs="center">
       <mat-tab label="Karte">
         <app-project-edit-location
@@ -40,7 +40,7 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <div class="col-1">
+  <div class="column is-1">
     <button mat-raised-button color="primary" (click)="saveData()">Speichern</button>
   </div>
 </div>
