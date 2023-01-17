@@ -14,7 +14,7 @@ rm -rf dist
 # install dependencies
 yarn install
 # build app
-yarn build --configuration=staging --base-href /ui2022/ --deploy-url /ui2022/
+yarn build --configuration=prod --base-href /ui2022/ --deploy-url /ui2022/
 
 # undo find/replace changes
 find='ui2022/assets';
@@ -23,10 +23,10 @@ find src/assets/fonts/bull5/bull5.css -type f -exec sed -i "s#$find#$replace#g" 
 find src/assets/fonts/nbArchitect/nbArchitect.css -type f -exec sed -i "s#$find#$replace#g" {} +
 
 # create ui backup
-ssh ipat@iplantatree.org "rm -r weplantaforest/ui2022.backup/*"
-ssh ipat@iplantatree.org "cp -a  weplantaforest/ui/dist/ui2022/. weplantaforest/ui2022.backup/ "
+ssh ipat@iplantatree.org "rm -r iplantatree/ui2022.backup/*"
+ssh ipat@iplantatree.org "cp -a  iplantatree/ui/dist/ui2022/. iplantatree/ui2022.backup/ "
 # clean remote folder first
-ssh ipat@iplantatree.org "rm -r weplantaforest/ui/dist/ui2022/*"
+ssh ipat@iplantatree.org "rm -r iplantatree/ui/dist/ui2022/*"
 # deploy new version to server
-scp -r /home/ipat/weplantaforest/ui2022/dist/ui2022/* ipat@iplantatree.org:/home/ipat/weplantaforest/ui/dist/ui2022
+scp -r /home/ipat/weplantaforest/ui2022/dist/ui2022/* ipat@iplantatree.org:/home/ipat/iplantatree/ui/dist/ui2022
 
