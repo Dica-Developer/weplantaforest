@@ -53,7 +53,7 @@ export function teamReducerFn(state, action) {
   return teamReducer(state, action);
 }
 
-export const teamsFeature = (state: AppState) => state.teams;
+export const teamsFeature = (state: AppState) => state.teamsState;
 
 export const selectTeams = createSelector(
   teamsFeature,

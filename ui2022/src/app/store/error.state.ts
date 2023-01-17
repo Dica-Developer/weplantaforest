@@ -45,7 +45,7 @@ export function errorsReducerFn(state, action) {
   return errorReducer(state, action);
 }
 
-export const errorsFeature = (state: AppState) => state.errors;
+export const errorsFeature = (state: AppState) => state.errorsState;
 
 export const selectErrors = createSelector(
   errorsFeature,

@@ -146,7 +146,7 @@ export function eventsReducerFn(state, action) {
   return eventsReducer(state, action);
 }
 
-export const eventsFeature = (state: AppState) => state.event;
+export const eventsFeature = (state: AppState) => state.eventState;
 
 export const selectEvents = createSelector(
   eventsFeature,

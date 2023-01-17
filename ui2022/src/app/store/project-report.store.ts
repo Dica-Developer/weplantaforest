@@ -123,7 +123,7 @@ export function projectsReportReducerFn(state, action) {
   return projectReportReducer(state, action);
 }
 
-export const projectsReportsFeature = (state: AppState) => state.projectReports;
+export const projectsReportsFeature = (state: AppState) => state.projectReportsState;
 
 export const selectProjectReports = createSelector(
   projectsReportsFeature,

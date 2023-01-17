@@ -78,7 +78,7 @@ export function authReducerFn(state, action) {
   return authReducer(state, action);
 }
 
-export const authFeature = (state: AppState) => state.auth;
+export const authFeature = (state: AppState) => state.authState;
 
 export const selectLoginError = createSelector(authFeature, (state: AuthState) => state.loginError);
 

@@ -237,7 +237,7 @@ export function userReducerFn(state, action) {
   return userReducer(state, action);
 }
 
-export const usersFeature = (state: AppState) => state.user;
+export const usersFeature = (state: AppState) => state.userState;
 
 export const selectUsers = createSelector(
   usersFeature,
