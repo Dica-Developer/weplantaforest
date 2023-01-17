@@ -36,7 +36,8 @@ export default class DoPlanting extends Component {
       .then(function (response) {
         var result = response.data;
         //move first element('Other') to the last position
-        result.splice(result.length - 1, 0, result.splice(0, 1)[0]);
+        // result.splice(result.length - 1, 0, result.splice(0, 1)[0]);
+        result = result.filter(treetype => !treetype.name.includes('Default'));
         that.setState({ treeTypes: result, treeType: that.state.treeTypes[0] });
       })
       .catch(function (response) {
