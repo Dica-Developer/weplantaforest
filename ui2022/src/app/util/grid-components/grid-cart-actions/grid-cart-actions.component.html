@@ -1,6 +1,10 @@
-<button *ngIf="!receiptId" mat-icon-button color="primary" (click)="createAndSendReceipt()" matTooltip="create&send receipt">
+<button *ngIf="!receiptId" mat-icon-button color="primary" (click)="createReceipt()" matTooltip="create receipt">
+  <mat-icon aria-hidden="false">picture_as_pdf</mat-icon>
+</button>
+<button *ngIf="receiptId" mat-icon-button color="primary" (click)="sendReceipt()" matTooltip="send receipt">
   <mat-icon aria-hidden="false">send</mat-icon>
 </button>
+
 <button *ngIf="receiptId" mat-icon-button color="primary" (click)="downloadReceipt()" matTooltip="download receipt">
   <mat-icon aria-hidden="false">file_download</mat-icon>
 </button>

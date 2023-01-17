@@ -95,6 +95,33 @@ public class ReceiptController {
         }
     }
 
+    @PostMapping(value = Uris.RECEIPT_CREATE)
+    public ResponseEntity<?> create(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long userId, @RequestParam Long cartId) {
+      if (_tokenAuthenticationService.isAdmin(userToken)) {
+        Cart cart = _cartRepository.findOneCartByUserAndId(userId, cartId).orElseThrow();
+        if (null == cart.getReceipt()) {
+            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+            Receipt receipt = new Receipt();
+            _receiptRepository.save(receipt);
+            cart.setReceipt(receipt);
+            _cartRepository.save(cart);
+            receipt.setOwner(cart.getBuyer());
+            receipt.setInvoiceNumber(receipt.getReceiptId() + "/" + currentYear);
+            final ArrayList<Cart> carts = new ArrayList<>();
+            carts.add(cart);
+            receipt.setCarts(carts);
+            receipt = _receiptRepository.save(receipt);
+            return new ResponseEntity<>(receipt.getReceiptId(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Receipt already exists.", HttpStatus.BAD_REQUEST);
+        }
+    } else {
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    }
+
+
     @PostMapping(value = Uris.RECEIPT_CREATE_AND_SEND)
     public ResponseEntity<?> sendCreateAndSendReceipt(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long cartId, @RequestParam Long userId) {
         if (_tokenAuthenticationService.isAdmin(userToken)) {

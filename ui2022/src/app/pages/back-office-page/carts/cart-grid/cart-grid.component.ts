@@ -143,7 +143,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
           },
         };
       },
-      width: 120,
+      width: 180,
     },
   ];
 

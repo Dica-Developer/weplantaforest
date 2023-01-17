@@ -1,15 +1,10 @@
-import {
-  createAction,
-  props,
-  createReducer,
-  on,
-  createSelector,
-} from '@ngrx/store';
+import { createAction, props, createReducer, on, createSelector } from '@ngrx/store';
 import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { CartService } from '../services/cart.service';
 import { Injectable } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
+import { addSuccessMessage } from './success-message.state';
 
 export interface CartsLoadRequest {
   cartStates: string[];
@@ -93,67 +88,68 @@ export interface CartItem {
   };
 }
 
-export const loadCarts = createAction(
-  '[Carts] load',
-  props<{ request: CartsLoadRequest }>()
-);
-export const loadCartsSuccess = createAction(
-  '[Carts] load success',
-  props<{ carts: Cart[] }>()
-);
+export const loadCarts = createAction('[Carts] load', props<{ request: CartsLoadRequest }>());
+export const loadCartsSuccess = createAction('[Carts] load success', props<{ carts: Cart[] }>());
 
 export const updateAddress = createAction(
   '[Carts] update address',
-  props<{ cartId: number; field: string; value: string }>()
+  props<{ cartId: number; field: string; value: string }>(),
 );
 export const updateAddressSuccess = createAction(
   '[Carts] update address success',
-  props<{ cartId: number; field: string; value: string }>()
+  props<{ cartId: number; field: string; value: string }>(),
 );
 
 export const updateReceiptableFlag = createAction(
   '[Carts] update receiptable flag',
-  props<{ cartId: number; value: boolean }>()
+  props<{ cartId: number; value: boolean }>(),
 );
 
 export const updateReceiptableFlagSuccess = createAction(
   '[Carts] update receiptable flag success',
-  props<{ cartId: number; value: boolean }>()
+  props<{ cartId: number; value: boolean }>(),
 );
 
 export const updateStatus = createAction(
   '[Carts] update status',
-  props<{ cartId: number; value: string }>()
+  props<{ cartId: number; value: string }>(),
 );
 
 export const updateStatusSuccess = createAction(
   '[Carts] update status success',
-  props<{ cartId: number; value: string }>()
+  props<{ cartId: number; value: string }>(),
 );
 
-export const createAndSendReceipt = createAction(
-  '[Carts] create and send receipt',
-  props<{ cartId: number; userId: number }>()
+export const createReceipt = createAction(
+  '[Carts] create receipt',
+  props<{ cartId: number; userId: number }>(),
 );
 
-export const createAndSendReceiptSuccess = createAction(
-  '[Carts] create and send receipt success',
-  props<{ receiptId: number; cartId: number }>()
+export const createReceiptSuccess = createAction(
+  '[Carts] create receipt success',
+  props<{ cartId: number; receiptId: number }>(),
 );
+
+export const sendReceipt = createAction(
+  '[Carts] send receipt',
+  props<{ receiptId: number; userId: number }>(),
+);
+
+export const sendReceiptSuccess = createAction('[Carts] send receipt success');
 
 export const downloadReceiptPdf = createAction(
   '[Carts] download receipt PDF',
-  props<{ receiptId: number }>()
+  props<{ receiptId: number }>(),
 );
 
 export const loadCartDetails = createAction(
   '[Carts] load cart details',
-  props<{ cartId: number }>()
+  props<{ cartId: number }>(),
 );
 
 export const loadCartDetailsSuccess = createAction(
   '[Carts] load cart details success',
-  props<{ cartDetails: CartDetails }>()
+  props<{ cartDetails: CartDetails }>(),
 );
 
 export const resetCartDetails = createAction('[Carts] reset cart details');
@@ -223,7 +219,7 @@ const cartsReducer = createReducer(
         }
       }),
   })),
-  on(createAndSendReceiptSuccess, (state, { receiptId, cartId }) => ({
+  on(createReceiptSuccess, (state, { receiptId, cartId }) => ({
     ...state,
     carts: state.carts
       .map((cart) => ({ ...cart }))
@@ -245,7 +241,7 @@ const cartsReducer = createReducer(
   on(resetCartDetails, (state) => ({
     ...state,
     cartDetails: null,
-  }))
+  })),
 );
 
 export function cartsReducerFn(state, action) {
@@ -253,18 +249,15 @@ export function cartsReducerFn(state, action) {
 }
 
 export const cartsFeature = (state: AppState) => state.carts;
-export const selectCarts = createSelector(
-  cartsFeature,
-  (state: CartsState) => state.carts
-);
+export const selectCarts = createSelector(cartsFeature, (state: CartsState) => state.carts);
 export const selectCartsLoadingProgress = createSelector(
   cartsFeature,
-  (state: CartsState) => state.cartsLoading
+  (state: CartsState) => state.cartsLoading,
 );
 
 export const selectCartDetails = createSelector(
   cartsFeature,
-  (state: CartsState) => state.cartDetails
+  (state: CartsState) => state.cartDetails,
 );
 
 function convertToGridCarts(carts: Cart[]): GridCart[] {
@@ -293,7 +286,7 @@ function convertToGridCart(cart: Cart): GridCart {
     receiptId: cart.receipt?.receiptId,
     status: cart.cartState,
     receiptSentOn: cart.receipt?.sentOn,
-    country: cart.callBackLand
+    country: cart.callBackLand,
   };
 }
 
@@ -307,9 +300,9 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .loadCarts(action.request)
-          .pipe(switchMap((carts: Cart[]) => [loadCartsSuccess({ carts })]))
-      )
-    )
+          .pipe(switchMap((carts: Cart[]) => [loadCartsSuccess({ carts })])),
+      ),
+    ),
   );
 
   UpdateAddress$ = createEffect(() =>
@@ -318,9 +311,9 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .saveAddress(action.cartId, action.field, action.value)
-          .pipe(switchMap(() => [updateAddressSuccess(action)]))
-      )
-    )
+          .pipe(switchMap(() => [updateAddressSuccess(action)])),
+      ),
+    ),
   );
 
   UpdateReceiptableFlag$ = createEffect(() =>
@@ -329,9 +322,9 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .changeReceiptableFlag(action.cartId, action.value)
-          .pipe(switchMap(() => [updateReceiptableFlagSuccess(action)]))
-      )
-    )
+          .pipe(switchMap(() => [updateReceiptableFlagSuccess(action)])),
+      ),
+    ),
   );
 
   UpdateCartState$ = createEffect(() =>
@@ -340,24 +333,59 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .updateStatus(action.cartId, action.value)
-          .pipe(switchMap(() => [updateStatusSuccess(action)]))
-      )
-    )
+          .pipe(switchMap(() => [updateStatusSuccess(action)])),
+      ),
+    ),
   );
 
-  CreateAndSendReceipt$ = createEffect(() =>
+  CreateReceipt$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(createAndSendReceipt),
+      ofType(createReceipt),
       switchMap((action) =>
         this.cartsService
-          .createAndSendReceipt(action.userId, action.cartId)
+          .createReceipt(action.userId, action.cartId)
           .pipe(
             switchMap((receiptId: number) => [
-              createAndSendReceiptSuccess({ receiptId, cartId: action.cartId }),
-            ])
-          )
-      )
-    )
+              createReceiptSuccess({ receiptId, cartId: action.cartId }),
+            ]),
+          ),
+      ),
+    ),
+  );
+
+  SendReceipt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(sendReceipt),
+      switchMap((action) =>
+        this.cartsService
+          .sendReceipt(action.userId, action.receiptId)
+          .pipe(
+            switchMap((receiptId: number) => [
+              addSuccessMessage({
+                message: { key: 'RECEIPTMAIL_SENT', message: 'SpendenQuittung wurde verschickt' },
+              }),
+            ]),
+          ),
+      ),
+    ),
+  );
+
+  DownloadReceipt$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(downloadReceiptPdf),
+        switchMap((action) =>
+          this.cartsService.downloadReceipt(action.receiptId).pipe(
+            switchMap((res) => {
+              let pdfData = URL.createObjectURL(new Blob([res], { type: 'application/pdf' }));
+              window.open(pdfData);
+
+              return [];
+            }),
+          ),
+        ),
+      ),
+    { dispatch: false },
   );
 
   LoadCartDetails$ = createEffect(() =>
@@ -366,12 +394,8 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .getCartDetails(action.cartId)
-          .pipe(
-            switchMap((cartDetails: CartDetails) => [
-              loadCartDetailsSuccess({ cartDetails }),
-            ])
-          )
-      )
-    )
+          .pipe(switchMap((cartDetails: CartDetails) => [loadCartDetailsSuccess({ cartDetails })])),
+      ),
+    ),
   );
 }

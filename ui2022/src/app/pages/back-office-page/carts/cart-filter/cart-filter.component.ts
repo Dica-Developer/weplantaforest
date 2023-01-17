@@ -22,7 +22,7 @@ export class CartFilterComponent implements OnInit {
   cartStatesDefault = ['CALLBACK'];
 
   range = new UntypedFormGroup({
-    start: new UntypedFormControl(this.dateHelper.subtractMonths(new Date(), 48)),
+    start: new UntypedFormControl(this.dateHelper.subtractMonths(new Date(), 3)),
     end: new UntypedFormControl(new Date()),
   });
 

@@ -4,7 +4,7 @@ import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { GridCheckboxComponent } from './grid-components/grid-checkbox/grid-checkbox.component';
 import { GridSelectComponent } from './grid-components/grid-select/grid-select.component';
-import { GridCartActionsComponent } from './grid-components/grid-cart-actions/grid-cart-actions.component';
+import { GridCartActionsComponent, SendReceiptConfirmationDialog } from './grid-components/grid-cart-actions/grid-cart-actions.component';
 import {
   GridProjectActionsComponent,
   DeleteProjectConfirmationDialog,
@@ -68,6 +68,7 @@ import { MobileMenuComponent } from './common-components/mobile-menu/mobile-menu
     CircleIconComponent,
     FooterComponent,
     MobileMenuComponent,
+    SendReceiptConfirmationDialog
   ],
   imports: [
     CommonModule,

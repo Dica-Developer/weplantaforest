@@ -20,22 +20,36 @@ export class CartService {
   }
 
   changeReceiptableFlag(cartId: number, value: boolean) {
-    return this.http.post(environment.backendAdminUrl + '/cart/receiptable?cartId=' + cartId + '&receiptable=' + value, {});
+    return this.http.post(
+      environment.backendAdminUrl + '/cart/receiptable?cartId=' + cartId + '&receiptable=' + value,
+      {},
+    );
   }
 
   updateStatus(cartId: number, value: string) {
-    return this.http.post(environment.backendAdminUrl + '/cart/changeState?cartId=' + cartId + '&cartState=' + value, {});
+    return this.http.post(
+      environment.backendAdminUrl + '/cart/changeState?cartId=' + cartId + '&cartState=' + value,
+      {},
+    );
   }
 
-  createAndSendReceipt(userId, cartId) {
-    return this.http.post(environment.backendUrl + '/receipt/createAndSend?userId=' + userId + '&cartId=' + cartId, {});
+  createReceipt(userId, cartId) {
+    return this.http.post(
+      environment.backendUrl + '/receipt/create?userId=' + userId + '&cartId=' + cartId,
+      {},
+    );
   }
 
-  generateReceiptPdf(receiptId: number) {
-    return this.http.get(environment.backendUrl + '/receipt/pdf?receiptId=' + receiptId, {responseType: 'arraybuffer'})
-    .subscribe(res => {
-      let pdfData = URL.createObjectURL(new Blob([res], {type: 'application/pdf'}));
-      window.open(pdfData);
+  sendReceipt(userId, receiptId) {
+    return this.http.post(
+      environment.backendUrl + '/receipt/send?userId=' + userId + '&receiptId=' + receiptId,
+      {},
+    );
+  }
+
+  downloadReceipt(receiptId: number) {
+    return this.http.get(environment.backendUrl + '/receipt/pdf?receiptId=' + receiptId, {
+      responseType: 'arraybuffer',
     });
   }
 
