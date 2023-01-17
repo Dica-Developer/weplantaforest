@@ -4,7 +4,7 @@ import { AppState } from 'src/app/store/app.state';
 import { loadEvents, EventDetails, selectEventDetails } from '../../../../store/events.store';
 import { Subscription } from 'rxjs';
 import { loadEventDetailsSuccess } from '../../../../store/events.store';
-import { selectActiveProjects, loadActiveProjects } from '../../../../store/project.store';
+import { loadActiveProjects } from '../../../../store/project.store';
 
 @Component({
   selector: 'app-events-overview',

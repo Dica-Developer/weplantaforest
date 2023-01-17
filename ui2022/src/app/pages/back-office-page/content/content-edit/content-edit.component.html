@@ -1,7 +1,7 @@
 <div class="form-wrapper">
   <form [formGroup]="articleForm">
-    <div class="row">
-      <div class="col">
+    <div class="columns">
+      <div class="column">
         <mat-form-field appearance="fill">
           <mat-label>Artikel-Typ</mat-label>
           <mat-select formControlName="articleType">
@@ -13,7 +13,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="column">
         <mat-form-field appearance="fill">
           <mat-label>Sprache</mat-label>
           <mat-select formControlName="lang">
@@ -23,12 +23,12 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="column">
         <mat-checkbox formControlName="visible">sichtbar</mat-checkbox>
       </div>
     </div>
-    <div class="row">
-      <div class="col-8">
+    <div class="columns">
+      <div class="column is-8">
         <mat-form-field class="title-field">
           <input
             matInput
@@ -38,7 +38,7 @@
           />
         </mat-form-field>
       </div>
-      <div class="col-4">
+      <div class="column is-4">
         <mat-form-field>
           <mat-label>Datum</mat-label>
           <input
@@ -62,21 +62,21 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="row">
-      <div class="col-2">Intro:</div>
-      <div class="col-10">
+    <div class="columns">
+      <div class="column is-2">Intro:</div>
+      <div class="column is-10">
         <app-text-editor
           [control]="this.articleForm.get('intro')"
         ></app-text-editor>
       </div>
     </div>
     <div class="spacer"></div>
-    <div class="row">
-      <div class="col-6">
+    <div class="columns">
+      <div class="column is-6">
         <img src="{{ imageSrc }}" width="400" height="300" *ngIf="imageSrc" />
         <app-no-img-box *ngIf="!imageSrc"></app-no-img-box>
       </div>
-      <div class="col-2">
+      <div class="column is-2">
         <input
           #csvInput
           hidden="true"
@@ -90,7 +90,7 @@
         </button>
       </div>
     </div>
-    <div class="col-12">
+    <div class="column is-12">
       <button mat-raised-button color="primary" (click)="addParagraph()" class="save-btn">Absatz hinzufügen</button>
     </div>  
     <app-content-paragraph

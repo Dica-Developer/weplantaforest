@@ -1,7 +1,7 @@
 <div class="spacer"></div>
-<div class="row">
-  <div class="col-2"></div>
-  <div class="col-4">
+<div class="columns">
+  <div class="column is-2"></div>
+  <div class="column is-4">
     <mat-form-field appearance="fill" class="title-field">
       <input
         type="text"
@@ -24,7 +24,7 @@
       </mat-autocomplete>
     </mat-form-field>
   </div>
-  <div class="col-4">
+  <div class="column is-4">
     <mat-form-field appearance="fill" class="title-field">
       <input
         type="text"
@@ -48,16 +48,16 @@
     </mat-form-field>
   </div>
 </div>
-<div class="row">
-  <div class="col-2"></div>
-  <div class="col-4 transfer-text">
+<div class="columns">
+  <div class="column is-2"></div>
+  <div class="column is-4 transfer-text">
     <p>
       <b>{{
         "Anzahl der zu übertragenden Bäume: " + (amountOfTrees$ | async)
       }}</b>
     </p>
   </div>
-  <div class="col-2">
+  <div class="column is-2">
     <button
       mat-raised-button
       color="primary"

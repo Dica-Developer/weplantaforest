@@ -1,8 +1,8 @@
 <mat-card>
   <mat-card-content>
     <form [formGroup]="form">
-      <div class="row">
-        <div class="col-2">
+      <div class="columns">
+        <div class="column is-2">
           <mat-form-field>
             <input
               matInput
@@ -13,7 +13,7 @@
             />
           </mat-form-field>
         </div>
-        <div class="col-2">
+        <div class="column is-2">
           <mat-form-field>
             <input
               matInput
@@ -24,11 +24,11 @@
             />
           </mat-form-field>
         </div>
-        <div class="col-2">
+        <div class="column is-2">
           <img src="{{ imageSrc }}" width="150" height="150" *ngIf="imageSrc" />
           <p *ngIf="!imageSrc">Kein Bild ausgewählt</p>
         </div>
-        <div class="col-2">
+        <div class="column is-2">
           <input
             #csvInput
             hidden="true"
