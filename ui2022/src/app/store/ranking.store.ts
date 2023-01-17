@@ -25,7 +25,7 @@ export const loadRankingsSuccess = createAction(
 
 export const loadPartners = createAction(
   '[Ranking] load partners',
-  props<{ projectName: string }>(),
+  props<{ projectName: string; page: number }>(),
 );
 
 export const loadPartnersSuccess = createAction(
@@ -35,7 +35,7 @@ export const loadPartnersSuccess = createAction(
 
 export const loadLatestPlantings = createAction(
   '[Ranking] load latest plantings',
-  props<{ projectName: string }>(),
+  props<{ projectName: string; page: number }>(),
 );
 
 export const loadLatestPlantingsSuccess = createAction(
@@ -183,7 +183,7 @@ export class RankingEffects {
       ofType(loadPartners),
       switchMap((action) =>
         this.rankingService
-          .loadPartnersForProject(action.projectName)
+          .loadPartnersForProject(action.projectName, action.page)
           .pipe(
             switchMap((partners: PagedData<CarouselItem>) => [
               loadPartnersSuccess({ partners: partners }),
@@ -198,7 +198,7 @@ export class RankingEffects {
       ofType(loadLatestPlantings),
       switchMap((action) =>
         this.rankingService
-          .loadLatestTreesForProject(action.projectName)
+          .loadLatestTreesForProject(action.projectName, action.page)
           .pipe(
             switchMap((plantings: PagedData<CarouselItem>) => [
               loadLatestPlantingsSuccess({ plantings: plantings }),

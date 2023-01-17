@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { RankingService } from 'src/app/services/ranking.service';
 import { AppState } from 'src/app/store/app.state';
 import { ProjectReportDetails } from 'src/app/store/project-report.store';
 import {
@@ -19,17 +18,46 @@ export class ProjectCarouselComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
   plantings$ = this.store.select(selectPlantings);
   partners$ = this.store.select(selectPartners);
+  currentPlantingPage: number;
+  currentPartnerPage: number;
 
-  constructor(private store: Store<AppState>, private rankingsService: RankingService) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.store.dispatch(
-      loadLatestPlantings({ projectName: this.projectReport?.projectReportData.projectName }),
+      loadLatestPlantings({
+        projectName: this.projectReport?.projectReportData.projectName,
+        page: 0,
+      }),
     );
+    this.currentPlantingPage = 0;
     this.store.dispatch(
-      loadPartners({ projectName: this.projectReport?.projectReportData.projectName }),
+      loadPartners({ projectName: this.projectReport?.projectReportData.projectName, page: 0 }),
     );
+    this.currentPartnerPage = 0;
+  }
+
+  fetchNextPage(type: string, page: number) {
+    if (type === 'plantings') {
+      this.currentPlantingPage = this.currentPlantingPage + page;
+      console.log(this.currentPlantingPage);
+      this.store.dispatch(
+        loadLatestPlantings({
+          projectName: this.projectReport?.projectReportData.projectName,
+          page: this.currentPlantingPage,
+        }),
+      );
+    } else if (type === 'partners') {
+      this.currentPartnerPage = this.currentPartnerPage + page;
+      console.log(this.currentPartnerPage);
+      this.store.dispatch(
+        loadPartners({
+          projectName: this.projectReport?.projectReportData.projectName,
+          page: this.currentPlantingPage,
+        }),
+      );
+    }
   }
 }

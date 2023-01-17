@@ -18,21 +18,25 @@ export class RankingService {
     );
   }
 
-  loadLatestTreesForProject(projectName: string) {
-    return this.http.get(
-      environment.backendUrl +
-        '/ranking/lastPlantedTrees/project?projectName=' +
-        encodeURIComponent(projectName) +
-        '&page=0&size=5',
-    );
-  }
-
-  loadPartnersForProject(projectName: string) {
+  loadPartnersForProject(projectName: string, page: number) {
     return this.http.get(
       environment.backendUrl +
         '/ranking/bestTeam/project?projectName=' +
         encodeURIComponent(projectName) +
-        '&page=0&size=5',
+        '&page=' +
+        page +
+        '&size=4',
+    );
+  }
+
+  loadLatestTreesForProject(projectName: string, page: number) {
+    return this.http.get(
+      environment.backendUrl +
+        '/ranking/lastPlantedTrees/project?projectName=' +
+        encodeURIComponent(projectName) +
+        '&page=' +
+        page +
+        '&size=4',
     );
   }
 }

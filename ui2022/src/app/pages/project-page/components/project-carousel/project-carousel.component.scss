@@ -1,11 +1,22 @@
-.carousel-row {
-  padding-bottom: 2rem;
-}
-
 .carousel-row:first-of-type {
   border-bottom: 1px solid var(--black);
 }
 
 h4 {
-  margin: 2rem auto;
+  margin: 2rem auto 1rem auto;
+}
+
+// app-carousel-item {
+//   width: 20%;
+// }
+
+mat-icon {
+  height: 4rem;
+  width: 4rem;
+  font-size: 4rem;
+}
+
+mat-icon:hover {
+  cursor: pointer;
+  color: var(--green);
 }
