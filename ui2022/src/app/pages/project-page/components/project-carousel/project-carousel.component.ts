@@ -53,7 +53,7 @@ export class ProjectCarouselComponent implements OnInit {
       this.store.dispatch(
         loadPartners({
           projectName: this.projectReport?.projectReportData.projectName,
-          page: this.currentPlantingPage,
+          page: this.currentPartnerPage,
         }),
       );
     }

@@ -7,18 +7,20 @@
 }
 
 h4 {
-  margin: 2rem auto 1rem auto;
+  margin: 2rem auto 0 auto;
 }
 
-// app-carousel-item {
-//   width: 20%;
-// }
-
 mat-icon {
+  z-index: 3;
   position: relative;
   height: 4rem;
   width: 4rem;
   font-size: 4rem;
+  color: var(--brown);
+}
+
+.placeholder {
+  color: #00000000;
 }
 
 .desktopIcon {
@@ -30,7 +32,7 @@ mat-icon {
   margin: 0 auto;
 }
 
-mat-icon:hover {
+mat-icon:not(.placeholder):hover {
   cursor: pointer;
   color: var(--green);
 }
