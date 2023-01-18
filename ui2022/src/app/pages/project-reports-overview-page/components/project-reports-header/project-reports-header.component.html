@@ -1,0 +1,26 @@
+<div class="columns project-header">
+  <div
+    class="border-right column is-two-fifths is-flex is-flex-direction-column padding-left is-justify-content-space-between"
+  >
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li>
+          <a class="breadcrumb-active" routerLink="/projects">
+            {{ 'projects' | translate }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h2>{{ 'projects' | translate }}</h2>
+    <p>{{ 'projectsDescription' | translate }}</p>
+    <a routerLink="/">{{ 'linkToMap' | translate }}</a>
+  </div>
+  <div
+    class="column padding-left padding-right is-three-fifths is-flex is-flex-direction-column is-justify-content-space-around"
+  ></div>
+</div>

@@ -1,1 +1,3 @@
-<p>project-reports-overview-page works!</p>
+<div *ngIf="projectReports$ | async">
+  <app-project-reports-header></app-project-reports-header>
+</div>

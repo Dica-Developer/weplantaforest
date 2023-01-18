@@ -1,0 +1,34 @@
+span {
+  font-size: 1.5rem !important;
+}
+
+.project-header {
+  border-bottom: 1px solid var(--black);
+}
+
+nav {
+  margin-top: 1rem;
+}
+
+h2 {
+  margin-top: 2rem;
+}
+
+h4 {
+  margin: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  span {
+    font-size: 1rem !important;
+  }
+
+  .project-stats {
+    flex-direction: column;
+  }
+
+  .border-right {
+    border-right: none;
+    border-bottom: 1px solid var(--black);
+  }
+}
