@@ -3,41 +3,84 @@
   <div
     class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
   >
+    <mat-icon class="desktopIcon placeholder" *ngIf="(plantings$ | async).first"
+      >arrow_left</mat-icon
+    >
     <mat-icon
       class="desktopIcon"
-      *ngIf="currentPlantingPage > 0"
+      *ngIf="!(plantings$ | async).first"
       (click)="fetchNextPage('plantings', -1)"
       >arrow_left</mat-icon
     >
-    <mat-icon class="mobileIcon" (click)="fetchNextPage('plantings', 1)">arrow_drop_up</mat-icon>
-    <app-carousel-item
-      *ngFor="let item of (plantings$ | async).content"
-      [rankingItem]="item"
-    ></app-carousel-item>
-    <mat-icon class="desktopIcon" (click)="fetchNextPage('plantings', 1)">arrow_right</mat-icon>
-    <mat-icon class="mobileIcon" (click)="fetchNextPage('plantings', 1)">arrow_drop_down</mat-icon>
+    <mat-icon
+      class="mobileIcon"
+      *ngIf="!(plantings$ | async).first"
+      (click)="fetchNextPage('plantings', 1)"
+      >arrow_drop_up</mat-icon
+    >
+    <div class="columns w-100">
+      <app-carousel-item
+        class="column is-3"
+        *ngFor="let item of (plantings$ | async).content"
+        [rankingItem]="item"
+      ></app-carousel-item>
+    </div>
+    <mat-icon class="desktopIcon placeholder" *ngIf="(plantings$ | async).last"
+      >arrow_right</mat-icon
+    >
+    <mat-icon
+      class="desktopIcon"
+      *ngIf="!(plantings$ | async).last"
+      (click)="fetchNextPage('plantings', 1)"
+      >arrow_right</mat-icon
+    >
+    <mat-icon
+      class="mobileIcon"
+      *ngIf="!(plantings$ | async).last"
+      (click)="fetchNextPage('plantings', 1)"
+      >arrow_drop_down</mat-icon
+    >
   </div>
-  <h4 class="center">{{ 'partner' | translate }}</h4>
+
+  <h4 class="center">{{ 'donors' | translate }}</h4>
   <div
     class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
   >
+    <mat-icon class="desktopIcon placeholder" *ngIf="(partners$ | async).first"
+      >arrow_left</mat-icon
+    >
     <mat-icon
       class="desktopIcon"
-      *ngIf="currentPartnerPage > 0"
+      *ngIf="!(partners$ | async).first"
       (click)="fetchNextPage('partners', -1)"
       >arrow_left</mat-icon
     >
     <mat-icon
       class="mobileIcon"
-      *ngIf="currentPartnerPage > 0"
+      *ngIf="!(partners$ | async).first"
       (click)="fetchNextPage('partners', -1)"
       >arrow_drop_up</mat-icon
     >
-    <app-carousel-item
-      *ngFor="let item of (partners$ | async).content"
-      [rankingItem]="item"
-    ></app-carousel-item>
-    <mat-icon class="desktopIcon" (click)="fetchNextPage('partners', 1)">arrow_right</mat-icon>
-    <mat-icon class="mobileIcon" (click)="fetchNextPage('partners', 1)">arrow_drop_down</mat-icon>
+    <div class="columns w-100">
+      <app-carousel-item
+        class="column is-3"
+        *ngFor="let item of (partners$ | async).content"
+        [rankingItem]="item"
+      ></app-carousel-item>
+    </div>
+
+    <mat-icon class="desktopIcon placeholder" *ngIf="(partners$ | async).last">arrow_left</mat-icon>
+    <mat-icon
+      class="desktopIcon"
+      *ngIf="!(partners$ | async).last"
+      (click)="fetchNextPage('partners', 1)"
+      >arrow_right</mat-icon
+    >
+    <mat-icon
+      class="mobileIcon"
+      *ngIf="!(partners$ | async).last"
+      (click)="fetchNextPage('partners', 1)"
+      >arrow_drop_down</mat-icon
+    >
   </div>
 </div>

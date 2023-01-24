@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ForestTourComponent } from './components/forest-tour/forest-tour.component';
 import { PlantedTreesComponent } from './components/planted-trees/planted-trees.component';
 import { ProjectsSectionComponent } from './components/projects-section/projects-section.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { ProjectsSectionComponent } from './components/projects-section/projects
     PlantedTreesComponent,
     ProjectsSectionComponent,
   ],
-  imports: [CommonModule, UtilModule],
+  imports: [CommonModule, UtilModule, RouterModule],
   exports: [HomePageComponent],
 })
 export class HomePageModule {}

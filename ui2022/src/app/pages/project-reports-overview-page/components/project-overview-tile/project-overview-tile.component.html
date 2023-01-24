@@ -1,0 +1,13 @@
+<div class="project-tile is-flex is-flex-direction-column">
+  <div class="tile-body h-100 is-flex is-flex-direction-column is-justify-content-space-between">
+    <h4>{{ projectReport.projectName }}</h4>
+    <div class="description" innerHtml="{{ description }}"></div>
+    <div class="is-flex stats is-flex-direction-column is-justify-content-space-around">
+      <div class="bar">
+        <div class="inner-bar" [style.width.%]="progress"></div>
+      </div>
+      <span>{{ 'alreadyPlanted' | translate }} {{ projectReport.amountOfPlantedTrees }}</span>
+      <span>{{ 'target' | translate }} {{ projectReport.amountOfMaximumTreesToPlant }}</span>
+    </div>
+  </div>
+</div>

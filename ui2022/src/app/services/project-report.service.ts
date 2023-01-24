@@ -10,7 +10,7 @@ export class ProjectReportService {
 
   loadAllProjectReports(page: number, size: number) {
     return this.http.get(
-      environment.backendUrl + '/reports/allProjects' + '?page=' + page + '&size=' + size,
+      environment.backendUrl + '/reports/allProjects?page=' + page + '&size=' + size,
     );
   }
 
@@ -22,5 +22,11 @@ export class ProjectReportService {
 
   loadActiveProjectReports() {
     return this.http.get(environment.backendUrl + '/reports/activeProjects');
+  }
+
+  loadInActiveProjectReports(page: number, size: number) {
+    return this.http.get(
+      environment.backendUrl + '/reports/inActiveProjects?page=' + page + '&size=' + size,
+    );
   }
 }

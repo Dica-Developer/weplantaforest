@@ -1,0 +1,38 @@
+<div *ngIf="(activeProjectReports$ | async) && (inactiveProjectReports$ | async)">
+  <app-project-reports-header
+    [type]="type"
+    (typeSelected)="setType($event)"
+  ></app-project-reports-header>
+  <div class="columns is-flex w-100 is-multiline" *ngIf="type === 'active' || type === 'all'">
+    <h4 class="padding-1 padding-left is-hidden-tablet border-bottom w-100">
+      {{ 'activeProjects' | translate }}
+    </h4>
+    <div class="column is-two-fifths border-right is-hidden-mobile">
+      <h4 class="padding-1 padding-left">{{ 'activeProjects' | translate }}</h4>
+    </div>
+    <div class="column is-one-fifth" *ngFor="let project of activeProjectReports$ | async">
+      <app-project-overview-tile
+        [projectReport]="project"
+        class="projectReport"
+      ></app-project-overview-tile>
+    </div>
+    <div class="border-bottom w-100"></div>
+  </div>
+  <div class="columns is-flex w-100 is-multiline" *ngIf="type === 'inactive' || type === 'all'">
+    <h4 class="padding-1 padding-left is-hidden-tablet border-bottom w-100">
+      {{ 'inactiveProjects' | translate }}
+    </h4>
+    <div class="column is-two-fifths border-right border-bottom is-hidden-mobile">
+      <h4 class="padding-1 padding-left">{{ 'inactiveProjects' | translate }}</h4>
+    </div>
+    <div
+      class="column is-one-fifth"
+      *ngFor="let project of (inactiveProjectReports$ | async).content"
+    >
+      <app-project-overview-tile
+        [projectReport]="project"
+        class="projectReport"
+      ></app-project-overview-tile>
+    </div>
+  </div>
+</div>

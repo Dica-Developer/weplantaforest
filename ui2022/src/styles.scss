@@ -105,6 +105,44 @@ snack-bar-container {
   padding: 0 !important;
 }
 
+///////// radio button
+.radio-buttons {
+  margin-top: 2rem;
+}
+
+.category {
+  margin-bottom: 1rem;
+  span {
+    font-size: 1.25rem;
+  }
+}
+
+.circle {
+  padding: 2px;
+  border-style: solid;
+  border-width: 1px;
+  width: 21px;
+  border-radius: 50%;
+  height: 21px;
+  margin-right: 10px;
+  div {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+  }
+}
+.circle-active {
+  div {
+    background: var(--black);
+  }
+}
+.circle:hover {
+  div {
+    background: var(--green);
+  }
+}
+
 .ag-icon {
   font-family: 'agGridAlpine' !important;
 }

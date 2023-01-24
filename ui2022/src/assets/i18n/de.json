@@ -52,6 +52,11 @@
   "planted": "bepflanzt",
   "startYear": "Startjahr",
   "of": "von",
-  "newestPlantings": "Neueste Pflanzungen"
+  "newestPlantings": "Neueste Pflanzungen",
+  "linkToMap": "Link zur Karte",
+  "donors": "Spender",
+  "projectsDescription": "Unsere Projekte sind in ganz Deutschland verteilt. Am meisten pflanzen wir momentan in Sachsen-Anhalt.",
+  "activeProjects": "Aktive Projekte",
+  "inactiveProjects": "Abgeschlossene Projekte"
 
 }

@@ -14,6 +14,7 @@ export interface ProjectReport {
   longitude: number;
   shopActive: boolean;
   visible: boolean;
+  active: boolean;
 }
 
 export interface ProjectReportDetails {
@@ -49,8 +50,15 @@ export const loadProjectReportSuccess = createAction(
 );
 export const loadActiveProjectReports = createAction('[ProjectReport] load active project reports');
 export const loadActiveProjectReportsSuccess = createAction(
-  '[ProjectReport] load project report success',
+  '[ProjectReport] load active project reports success',
   props<{ activeProjectReports: any[] }>(),
+);
+export const loadInActiveProjectReports = createAction(
+  '[ProjectReport] load inactive project reports',
+);
+export const loadInActiveProjectReportsSuccess = createAction(
+  '[ProjectReport] load inactive project reports success',
+  props<{ inactiveProjectReports: any[] }>(),
 );
 
 export interface ProjectReportState {
@@ -59,6 +67,7 @@ export interface ProjectReportState {
   projectsLoading: boolean;
   projectLoading: boolean;
   activeProjects: any[];
+  inactiveProjects: any[];
 }
 
 export const initialState: ProjectReportState = {
@@ -71,6 +80,7 @@ export const initialState: ProjectReportState = {
     first: true,
   },
   activeProjects: [],
+  inactiveProjects: [],
   projectsLoading: false,
   projectReport: null,
   projectLoading: false,
@@ -102,6 +112,11 @@ const projectReportReducer = createReducer(
     activeProjects: activeProjectReports,
     projectLoading: false,
   })),
+  on(loadInActiveProjectReportsSuccess, (state, { inactiveProjectReports }) => ({
+    ...state,
+    inactiveProjects: inactiveProjectReports,
+    projectLoading: false,
+  })),
 );
 
 export function projectsReportReducerFn(state, action) {
@@ -121,6 +136,10 @@ export const selectProjectReport = createSelector(
 export const selectActiveProjectReports = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => state.activeProjects,
+);
+export const selectInActiveProjectReports = createSelector(
+  projectsReportsFeature,
+  (state: ProjectReportState) => state.inactiveProjects,
 );
 
 @Injectable()
@@ -166,6 +185,21 @@ export class ProjectReportsEffects {
           .pipe(
             switchMap((activeProjects: any[]) => [
               loadActiveProjectReportsSuccess({ activeProjectReports: activeProjects }),
+            ]),
+          ),
+      ),
+    ),
+  );
+
+  LoadInactiveProjects$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadInActiveProjectReports),
+      switchMap((action) =>
+        this.projectReportService
+          .loadInActiveProjectReports(0, 10)
+          .pipe(
+            switchMap((inactiveProjects: any[]) => [
+              loadInActiveProjectReportsSuccess({ inactiveProjectReports: inactiveProjects }),
             ]),
           ),
       ),

@@ -20,6 +20,7 @@ import { RankingPageComponent } from './pages/ranking-page/ranking-page.componen
 import { ImprintPageComponent } from './pages/imprint-page/imprint-page.component';
 import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
 import { ProjectPageComponent } from './pages/project-page/project-page.component';
+import { ProjectReportsOverviewPageComponent } from './pages/project-reports-overview-page/project-reports-overview-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -36,6 +37,7 @@ export const backofficeRoutes: Routes = [
 export const userRoutes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'ranking', component: RankingPageComponent },
+  { path: 'projectReports', component: ProjectReportsOverviewPageComponent },
   { path: 'project/:projectName', component: ProjectPageComponent },
   { path: 'imprint', component: ImprintPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },
