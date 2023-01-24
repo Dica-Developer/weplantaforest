@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { filter, map, Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { loadProjectReports, selectProjectReports } from 'src/app/store/project-report.store';
 
@@ -9,10 +10,21 @@ import { loadProjectReports, selectProjectReports } from 'src/app/store/project-
   styleUrls: ['./project-reports-overview-page.component.scss'],
 })
 export class ProjectReportsOverviewPageComponent implements OnInit {
+  type: string = 'all';
+  selectProjectReportsSub: Subscription;
   projectReports$ = this.store.select(selectProjectReports);
+
   constructor(private store: Store<AppState>) {
     this.store.dispatch(loadProjectReports());
   }
 
   ngOnInit(): void {}
+
+  setType(event: any) {
+    this.type = event;
+  }
+
+  // ngOnDestroy() {
+  //   this.selectProjectReportsSub.unsubscribe();
+  // }
 }

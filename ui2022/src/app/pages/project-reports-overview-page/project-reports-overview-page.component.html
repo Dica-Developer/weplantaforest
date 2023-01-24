@@ -1,3 +1,14 @@
 <div *ngIf="projectReports$ | async">
-  <app-project-reports-header></app-project-reports-header>
+  <app-project-reports-header
+    [type]="type"
+    (typeSelected)="setType($event)"
+  ></app-project-reports-header>
+  <div class="columns is-flex w-100">
+    <div class="column is-one-fifth" *ngFor="let project of (projectReports$ | async).content">
+      <app-project-overview-tile
+        [projectReport]="project"
+        class="projectReport"
+      ></app-project-overview-tile>
+    </div>
+  </div>
 </div>
