@@ -14,6 +14,10 @@ div.scrollmenu app-project-tile {
   overflow: hidden;
 }
 
+.projectTile {
+  height: 700px;
+}
+
 app-circle-icon {
   margin-right: 1rem;
 }
@@ -28,4 +32,10 @@ app-circle-icon {
 
 .column:first-child {
   border-right: 1px solid var(--black);
+}
+
+@media only screen and (max-width: 900px) {
+  .projectTile {
+    height: initial;
+  }
 }
