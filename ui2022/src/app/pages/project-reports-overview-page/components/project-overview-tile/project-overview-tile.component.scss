@@ -46,6 +46,14 @@ span {
   margin-bottom: 0.25rem;
 }
 
+img {
+  height: auto;
+  display: none;
+}
+.inner:hover img {
+  display: block;
+}
+
 @media only screen and (max-width: 768px) {
   .project-tile {
     height: initial;
