@@ -2,7 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { filter, map, Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
-import { loadProjectReports, selectProjectReports } from 'src/app/store/project-report.store';
+import {
+  loadActiveProjectReports,
+  loadInActiveProjectReports,
+  loadProjectReports,
+  selectActiveProjectReports,
+  selectInActiveProjectReports,
+  selectProjectReports,
+} from 'src/app/store/project-report.store';
 
 @Component({
   selector: 'app-project-reports-overview-page',
@@ -12,10 +19,12 @@ import { loadProjectReports, selectProjectReports } from 'src/app/store/project-
 export class ProjectReportsOverviewPageComponent implements OnInit {
   type: string = 'all';
   selectProjectReportsSub: Subscription;
-  projectReports$ = this.store.select(selectProjectReports);
+  activeProjectReports$ = this.store.select(selectActiveProjectReports);
+  inactiveProjectReports$ = this.store.select(selectInActiveProjectReports);
 
   constructor(private store: Store<AppState>) {
-    this.store.dispatch(loadProjectReports());
+    this.store.dispatch(loadInActiveProjectReports());
+    this.store.dispatch(loadActiveProjectReports());
   }
 
   ngOnInit(): void {}

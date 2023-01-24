@@ -36,7 +36,7 @@ export class ProjectOverviewTileComponent implements OnInit {
     );
   }
 
-  routeToProject() {
-    this.router.navigate(['/project/' + encodeURIComponent(this.projectReport.projectName)]);
-  }
+  // routeToProject() {
+  //   this.router.navigate(['/project/' + encodeURIComponent(this.projectReport.projectName)]);
+  // }
 }
