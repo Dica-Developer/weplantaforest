@@ -14,6 +14,7 @@ export interface ProjectReport {
   longitude: number;
   shopActive: boolean;
   visible: boolean;
+  active: boolean;
 }
 
 export interface ProjectReportDetails {

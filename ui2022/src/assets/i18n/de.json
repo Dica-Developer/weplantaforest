@@ -55,6 +55,8 @@
   "newestPlantings": "Neueste Pflanzungen",
   "linkToMap": "Link zur Karte",
   "donors": "Spender",
-  "projectsDescription": "Unsere Projekte sind in ganz Deutschland verteilt. Am meisten pflanzen wir momentan in Sachsen-Anhalt."
+  "projectsDescription": "Unsere Projekte sind in ganz Deutschland verteilt. Am meisten pflanzen wir momentan in Sachsen-Anhalt.",
+  "activeProjects": "Aktive Projekte",
+  "inactiveProjects": "Abgeschlossene Projekte"
 
 }
