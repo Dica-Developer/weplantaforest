@@ -25,7 +25,7 @@ body {
   margin: 0;
   padding: 0;
   background: var(--background);
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Bull-mono', sans-serif;
   font-size: 20px;
 }
 
@@ -140,5 +140,8 @@ snack-bar-container {
 .circle:hover {
   div {
     background: var(--green);
+  }
+  .ag-icon {
+    font-family: 'agGridAlpine' !important;
   }
 }
