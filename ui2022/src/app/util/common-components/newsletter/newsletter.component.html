@@ -1,0 +1,21 @@
+<div class="newsletter w-100 is-flex columns border-top">
+  <div class="is-flex column is-one-third is-flex-direction-column">
+    <h2>{{ 'newsLetter' | translate }}</h2>
+    <p>{{ 'newsLetterText' | translate }}</p>
+  </div>
+  <div
+    class="is-flex is-flex-direction-column is-align-items-left is-justify-content-center column is-one-third padding-1"
+  >
+    <div class="inputOutline">
+      <input [placeholder]="'name' | translate" type="text" />
+    </div>
+    <div class="inputOutline">
+      <input [placeholder]="'email' | translate" type="text" />
+    </div>
+    <app-button
+      label="{{ 'sendNow' | translate }}"
+      (clicked)="subscribeToNewsletter()"
+    ></app-button>
+  </div>
+  <div class="column is-one-third"></div>
+</div>

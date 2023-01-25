@@ -1,0 +1,27 @@
+.newsletter {
+  flex-direction: row;
+  padding: 3rem;
+}
+
+.inputOutline {
+  border: 1px var(--black) solid;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+input {
+  font-family: 'Bull-mono';
+  background: #00000000;
+  color: var(--black);
+  border: none;
+  outline: 0;
+  font-size: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .newsletter {
+    flex-direction: column;
+    padding: 1rem;
+  }
+}

@@ -40,6 +40,7 @@ import { CircleIconComponent } from './common-components/icons/circle-icon/circl
 import { FooterComponent } from './common-components/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { MobileMenuComponent } from './common-components/mobile-menu/mobile-menu.component';
+import { NewsletterComponent } from './common-components/newsletter/newsletter.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { MobileMenuComponent } from './common-components/mobile-menu/mobile-menu
     FooterComponent,
     MobileMenuComponent,
     SendReceiptConfirmationDialog,
+    NewsletterComponent,
   ],
   imports: [
     CommonModule,
@@ -105,6 +107,7 @@ import { MobileMenuComponent } from './common-components/mobile-menu/mobile-menu
     CircleIconComponent,
     FooterComponent,
     MobileMenuComponent,
+    NewsletterComponent,
   ],
 })
 export class UtilModule {}

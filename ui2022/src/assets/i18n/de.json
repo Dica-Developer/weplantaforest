@@ -58,6 +58,11 @@
   "projectsDescription": "Unsere Projekte sind in ganz Deutschland verteilt. Am meisten pflanzen wir momentan in Sachsen-Anhalt.",
   "activeProjects": "Aktive Projekte",
   "inactiveProjects": "Abgeschlossene Projekte",
-  "enterSearch": "Gib deinen Suchbegriff hier ein..."
+  "enterSearch": "Gib deinen Suchbegriff hier ein...",
+  "sendNow": "Jetzt senden",
+  "newsLetter": "Newsletter",
+  "email": "E-Mail",
+  "name": "Name",
+  "newsLetterText": "Bleibe immer auf dem neuesten Stand. Wir updaten dich, wie es mit unseren Projekten voran geht, wieviele Bäume wir gepflanzt haben und wann wir die nächste Erkundungstour machen."
 
 }
