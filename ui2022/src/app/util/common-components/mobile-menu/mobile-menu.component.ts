@@ -7,6 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class MobileMenuComponent implements OnInit {
   @Output() menuClosed = new EventEmitter();
+  @Output() clickedSearchEmitter = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {}
@@ -15,5 +16,9 @@ export class MobileMenuComponent implements OnInit {
 
   closeMenu() {
     this.menuClosed.emit();
+  }
+
+  searchClicked() {
+    this.clickedSearchEmitter.emit();
   }
 }

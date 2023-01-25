@@ -11,7 +11,10 @@
     <a routerLink="/about">{{ 'aboutUs' | translate }}</a>
     <a routerLink="/explore">{{ 'explore' | translate }}</a>
   </div>
-  <div class="h-100 w-80px is-flex-grow-0 center-vertically-horizontally hide-mobile">
+  <div
+    class="h-100 w-80px is-flex-grow-0 center-vertically-horizontally hide-mobile"
+    (click)="toggleSearch()"
+  >
     <mat-icon>search</mat-icon>
   </div>
   <div class="h-100 w-80px is-flex-grow-0 bordered">
@@ -31,5 +34,17 @@
     <app-button label="{{ 'login' | translate }}" (clicked)="loginClicked()"></app-button>
   </div>
 </mat-toolbar>
-
-<app-mobile-menu (menuClosed)="toggleMenu()" *ngIf="menuOpened"></app-mobile-menu>
+<div
+  class="overlay is-align-items-center is-justify-content-center center"
+  [ngClass]="overlayIsOpen ? 'overlayOpen' : ''"
+>
+  <div class="icon" (click)="toggleSearch()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <p style="color: black">yoasdasdasdasooo</p>
+</div>
+<app-mobile-menu
+  (menuClosed)="toggleMenu()"
+  (clickedSearchEmitter)="toggleSearch(); toggleMenu()"
+  *ngIf="menuOpened"
+></app-mobile-menu>

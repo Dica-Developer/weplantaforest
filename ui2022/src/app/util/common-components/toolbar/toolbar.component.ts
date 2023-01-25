@@ -11,6 +11,7 @@ export class ToolbarComponent implements OnInit {
   logoUrl = environment.baseUrl + '/assets/ipatlogo_black.svg';
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
   menuOpened = false;
+  overlayIsOpen = false;
 
   constructor(private router: Router) {}
 
@@ -23,5 +24,9 @@ export class ToolbarComponent implements OnInit {
 
   toggleMenu() {
     this.menuOpened = !this.menuOpened;
+  }
+
+  toggleSearch() {
+    this.overlayIsOpen = !this.overlayIsOpen;
   }
 }

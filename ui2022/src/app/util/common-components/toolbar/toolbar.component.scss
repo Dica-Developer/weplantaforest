@@ -39,6 +39,39 @@ mat-icon:hover {
   display: none;
 }
 
+.overlay {
+  display: none;
+  background: var(--dark-brown);
+  opacity: 0;
+  z-index: 9;
+  height: 100vh;
+  width: 100%;
+  transition: 0.5s;
+
+  .icon {
+    width: 4rem;
+    height: 4rem;
+    mat-icon {
+      color: var(--background);
+      height: 4rem;
+      width: 4rem;
+      font-size: 4rem;
+    }
+    mat-icon:hover {
+      color: var(--green);
+    }
+    position: absolute;
+    top: 6rem;
+    right: 4%;
+  }
+}
+
+.overlayOpen {
+  display: flex;
+  z-index: 9;
+  opacity: 1;
+}
+
 @media only screen and (max-width: 768px) {
   .hide-mobile {
     display: none;
