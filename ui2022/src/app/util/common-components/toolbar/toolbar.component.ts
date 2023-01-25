@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -12,6 +13,7 @@ export class ToolbarComponent implements OnInit {
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
   menuOpened = false;
   overlayIsOpen = false;
+  control: FormControl;
 
   constructor(private router: Router) {}
 

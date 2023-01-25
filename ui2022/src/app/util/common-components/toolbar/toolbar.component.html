@@ -34,6 +34,7 @@
     <app-button label="{{ 'login' | translate }}" (clicked)="loginClicked()"></app-button>
   </div>
 </mat-toolbar>
+
 <div
   class="overlay is-align-items-center is-justify-content-center center"
   [ngClass]="overlayIsOpen ? 'overlayOpen' : ''"
@@ -41,7 +42,14 @@
   <div class="icon" (click)="toggleSearch()">
     <mat-icon>close</mat-icon>
   </div>
-  <p style="color: black">yoasdasdasdasooo</p>
+  <div class="inputOutline">
+    <input
+      [placeholder]="'enterSearch' | translate"
+      name="search"
+      type="text"
+      [formControl]="control"
+    />
+  </div>
 </div>
 <app-mobile-menu
   (menuClosed)="toggleMenu()"
