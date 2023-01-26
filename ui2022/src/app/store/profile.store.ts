@@ -1,32 +1,23 @@
 import { Injectable } from '@angular/core';
-import {
-  createAction,
-  createReducer,
-  createSelector,
-  on,
-  props,
-} from '@ngrx/store';
+import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
 import { switchMap } from 'rxjs/operators';
 
-export const setUsername = createAction(
-  '[Profile] set username',
-  props<{ username: string }>()
-);
+export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
   '[Profile] load Details',
-  props<{ username: string }>()
+  props<{ username: string }>(),
 );
 export const loadProfileDetailsSuccess = createAction(
   '[Profile] load Details success',
-  props<{ details: any }>()
+  props<{ details: any }>(),
 );
 export const loadAdminFlag = createAction('[Profile] load Admin flag');
 export const loadAdminFlagSuccess = createAction(
   '[Profile] load Admin flag success',
-  props<{ isAdmin: boolean }>()
+  props<{ isAdmin: boolean }>(),
 );
 
 export interface Co2Data {
@@ -73,7 +64,7 @@ const profileReducer = createReducer(
     ...state,
     details,
   })),
-  on(loadAdminFlagSuccess, (state, { isAdmin }) => ({ ...state, isAdmin }))
+  on(loadAdminFlagSuccess, (state, { isAdmin }) => ({ ...state, isAdmin })),
 );
 
 export function profileReducerFn(state, action) {
@@ -84,25 +75,22 @@ export const profileFeature = (state: AppState) => state.profileState;
 
 export const selectUsername = createSelector(
   profileFeature,
-  (state: ProfileState) => state.username
+  (state: ProfileState) => state.username,
 );
 
 export const selectProfileImagename = createSelector(
   profileFeature,
-  (state: ProfileState) => state.details?.imageFileName
+  (state: ProfileState) => state.details?.imageFileName,
 );
 
 export const selectProfileDetails = createSelector(
   profileFeature,
-  (state: ProfileState) => state.details
+  (state: ProfileState) => state.details,
 );
 
 @Injectable()
 export class ProfileEffects {
-  constructor(
-    private actions$: Actions,
-    private profileService: ProfileService
-  ) {}
+  constructor(private actions$: Actions, private profileService: ProfileService) {}
 
   LoadUserDetails$ = createEffect(() =>
     this.actions$.pipe(
@@ -110,26 +98,19 @@ export class ProfileEffects {
       switchMap((action) =>
         this.profileService
           .loadUserDetails(action.username)
-          .pipe(
-            switchMap((details) => [loadProfileDetailsSuccess({ details })])
-          )
-      )
-    )
+          .pipe(switchMap((details) => [loadProfileDetailsSuccess({ details })])),
+      ),
+    ),
   );
 
-  IsAdmin$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(loadAdminFlag),
-        switchMap((action) =>
-          this.profileService
-            .isAdmin()
-            .pipe(
-              switchMap((isAdmin: boolean) => [
-                loadAdminFlagSuccess({ isAdmin }),
-              ])
-            )
-        )
+  IsAdmin$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadAdminFlag),
+      switchMap((action) =>
+        this.profileService
+          .isAdmin()
+          .pipe(switchMap((isAdmin: boolean) => [loadAdminFlagSuccess({ isAdmin })])),
       ),
+    ),
   );
 }

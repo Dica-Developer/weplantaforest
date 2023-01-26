@@ -11,10 +11,7 @@
         [matAutocomplete]="auto"
         class="filter-input"
       />
-      <mat-icon
-        aria-hidden="false"
-        (click)="removeFromUser()"
-        *ngIf="fromUser.value"
+      <mat-icon aria-hidden="false" (click)="removeFromUser()" *ngIf="fromUser.value"
         >delete</mat-icon
       >
       <mat-autocomplete #auto="matAutocomplete">
@@ -34,12 +31,7 @@
         [matAutocomplete]="autoTo"
         class="filter-input"
       />
-      <mat-icon
-        aria-hidden="false"
-        (click)="removeToUser()"
-        *ngIf="toUser.value"
-        >delete</mat-icon
-      >
+      <mat-icon aria-hidden="false" (click)="removeToUser()" *ngIf="toUser.value">delete</mat-icon>
       <mat-autocomplete #autoTo="matAutocomplete">
         <mat-option *ngFor="let user of filteredOptionsToUser" [value]="user">
           {{ user.name }}
@@ -52,9 +44,7 @@
   <div class="column is-2"></div>
   <div class="column is-4 transfer-text">
     <p>
-      <b>{{
-        "Anzahl der zu übertragenden Bäume: " + (amountOfTrees$ | async)
-      }}</b>
+      <b>{{ 'Anzahl der zu übertragenden Bäume: ' + (amountOfTrees$ | async) }}</b>
     </p>
   </div>
   <div class="column is-2">

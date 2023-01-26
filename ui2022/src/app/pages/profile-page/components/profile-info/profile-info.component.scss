@@ -1,0 +1,19 @@
+h4 {
+  margin: 0;
+}
+
+.imageWrapper {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  img {
+    border-radius: 50%;
+    height: 10rem !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .padding-2 {
+    padding: 1rem;
+  }
+}
