@@ -20,8 +20,8 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {}
 
   loginClicked() {
-    console.log('login clicked');
-    // this.router.navigate(['/login']);
+    // console.log('login clicked');
+    this.router.navigate(['/login']);
   }
 
   toggleMenu() {
