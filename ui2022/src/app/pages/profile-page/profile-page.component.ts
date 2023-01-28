@@ -13,6 +13,7 @@ import { loadProfileDetails, selectProfileDetails } from 'src/app/store/profile.
 export class ProfilePageComponent implements OnInit {
   selectProjectReportsSub: Subscription;
   profileDetails$ = this.store.select(selectProfileDetails);
+  teamDetails$ = this.store.select(selectProfileDetails);
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -20,5 +21,9 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.profileDetails$.subscribe((res) => {
+      console.log(res);
+    });
+  }
 }

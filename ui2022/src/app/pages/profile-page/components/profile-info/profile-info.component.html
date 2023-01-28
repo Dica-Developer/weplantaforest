@@ -4,8 +4,8 @@
       <h2>
         {{ 'profile' | translate }}
       </h2>
-      <h4>Christian</h4>
-      <h4>Lingnau</h4>
+      <h4>{{ profileDetails.userName }}</h4>
+      <h4>{{ profileDetails.mail }}</h4>
     </div>
     <div class="column is-half">
       <div class="imageWrapper">
@@ -18,8 +18,8 @@
       <h2>
         {{ 'team' | translate }}
       </h2>
-      <h4>teamName</h4>
-      <h4>company</h4>
+      <h4>{{ profileDetails.teamName }}</h4>
+      <h4>{{ profileDetails.organisation }}</h4>
     </div>
     <div class="column is-half">
       <div class="imageWrapper">
@@ -32,49 +32,39 @@
 <div class="columns border-bottom">
   <div class="columns column is-half border-right padding-2">
     <div class="column is-half">
-      <!-- <p>{{ 'rank' | translate }}: {{ (profileDetails | async).rank }}</p>
-      <p>{{ 'treesPlanted' | translate }}: {{ (profileDetails | async).treesPlanted }}</p>
-      <p>{{ 'CO2Trapped' | translate }}:{{ (profileDetails | async).co2Data }}</p>
-      <p>{{ 'website' | translate }}: {{ (profileDetails | async).website }}</p> -->
-      <p>{{ 'rank' | translate }}: 43</p>
-      <p>{{ 'treesPlanted' | translate }}: 345</p>
-      <p>{{ 'CO2Trapped' | translate }}: 2,768 t</p>
-      <p>{{ 'website' | translate }}: skillcap.org</p>
+      <p>{{ 'rank' | translate }}: {{ profileDetails.rank }}</p>
+      <p>{{ 'treesPlanted' | translate }}: {{ profileDetails.co2Data.treesCount }}</p>
+      <p>{{ 'CO2Trapped' | translate }}: {{ profileDetails.co2Data.co2 }}</p>
+      <p>{{ 'website' | translate }}: {{ profileDetails.homepage }}</p>
     </div>
     <div class="column is-half">
-      <p>{{ 'memberSince' | translate }}:</p>
-      <p>{{ 'type' | translate }}:</p>
-      <p>{{ 'organisation' | translate }}:</p>
-      <p>{{ 'location' | translate }}:</p>
+      <p>{{ 'memberSince' | translate }}: {{ profileDetails.regDate }}</p>
+      <p>{{ 'type' | translate }}: {{ profileDetails.organizationType }}</p>
+      <p>{{ 'organisation' | translate }}: {{ profileDetails.organisation }}</p>
+      <p>{{ 'location' | translate }}: {{ profileDetails.location }}</p>
     </div>
   </div>
-  <div class="columns column is-half padding-2">
+  <div class="columns column is-half padding-2" *ngIf="teamDetails">
     <div class="column is-half">
-      <p>{{ 'rank' | translate }}:</p>
-      <p>{{ 'treesPlanted' | translate }}:</p>
-      <p>{{ 'CO2Trapped' | translate }}:</p>
-      <p>{{ 'website' | translate }}:</p>
+      <p>{{ 'rank' | translate }}: {{ teamDetails.rank }}</p>
+      <p>{{ 'treesPlanted' | translate }}: {{ teamDetails.treesPlanted }}</p>
+      <p>{{ 'CO2Trapped' | translate }}: {{ teamDetails.CO2Trapped }}</p>
+      <p>{{ 'website' | translate }}: {{ teamDetails.website }}</p>
     </div>
     <div class="column is-half">
-      <p>{{ 'memberSince' | translate }}:</p>
-      <p>{{ 'type' | translate }}:</p>
-      <p>{{ 'teamLeader' | translate }}:</p>
-      <p>{{ 'members' | translate }}:</p>
+      <p>{{ 'memberSince' | translate }}: {{ teamDetails.rank }}</p>
+      <p>{{ 'type' | translate }}: {{ teamDetails.treesPlanted }}</p>
+      <p>{{ 'teamLeader' | translate }}: {{ teamDetails.CO2Trapped }}</p>
+      <p>{{ 'members' | translate }}: {{ teamDetails.website }}</p>
     </div>
   </div>
 </div>
 
 <div class="columns">
   <div class="column is-half border-right padding-2">
-    <p>
-      sakjdlkh lk laksjdkj lkjaklsdjlk kjgh jhgf k guzfguizhiol huizfguztf uzguigzu fuzgui hui
-      zguzftuzfu zg
-    </p>
+    <p>{{ profileDetails.aboutMe }}</p>
   </div>
   <div class="column is-half padding-2">
-    <p>
-      sakjdlkh lk laksjdkj lkjaklsdjlk kjgh jhgf k guzfguizhiol huizfguztf uzguigzu fuzgui hui
-      zguzftuzfu zg
-    </p>
+    <!-- <p>{{ teamDetails.about }}</p> -->
   </div>
 </div>

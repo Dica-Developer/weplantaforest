@@ -42,7 +42,7 @@ export const userRoutes: Routes = [
   { path: 'project/:projectName', component: ProjectPageComponent },
   { path: 'imprint', component: ImprintPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },
-  // { path: 'profile/:userId', component: ProfilePageComponent },
+  { path: 'profile/:username', component: ProfilePageComponent },
   { path: 'profile', component: ProfilePageComponent },
 ];
 

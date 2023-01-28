@@ -1,3 +1,12 @@
-<app-profile-info [profileDetails]="profileDetails$ | async"></app-profile-info>
+<app-profile-info
+  *ngIf="profileDetails$ | async"
+  [profileDetails]="profileDetails$ | async"
+></app-profile-info>
+<!-- <app-profile-info
+  *ngIf="profileDetails$ | async"
+  [profileDetails]="profileDetails$ | async"
+  [teamDetails]="teamDetails$ | async"
+></app-profile-info> -->
+
 <!-- <app-profile-plantings></app-profile-plantings> -->
 <app-newsletter> </app-newsletter>
