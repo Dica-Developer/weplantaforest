@@ -4,10 +4,9 @@ import { UtilModule } from '../../util/util.module';
 import { RouterModule } from '@angular/router';
 import { ProfilePageComponent } from './profile-page.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
-import { TeamInfoComponent } from './components/team-info/team-info.component';
 
 @NgModule({
-  declarations: [ProfilePageComponent, ProfileInfoComponent, TeamInfoComponent],
+  declarations: [ProfilePageComponent, ProfileInfoComponent],
   imports: [CommonModule, UtilModule, RouterModule],
   exports: [ProfilePageComponent],
 })
