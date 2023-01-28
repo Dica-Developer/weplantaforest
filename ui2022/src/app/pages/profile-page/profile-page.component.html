@@ -8,5 +8,21 @@
   [teamDetails]="teamDetails$ | async"
 ></app-profile-info> -->
 
-<!-- <app-profile-plantings></app-profile-plantings> -->
+<div class="columns is-flex w-100 padding-2 is-multiline" *ngIf="plantings">
+  <app-carousel-item
+    *ngFor="let planting of plantings"
+    [rankingItem]="planting"
+    class="column is-one-quarter"
+  >
+  </app-carousel-item>
+</div>
+<!-- <div class="columns is-flex w-100 padding-2 is-multiline" *ngIf="plantings">
+  <app-carousel-item
+    *ngFor="let planting of plantings$ | async"
+    [rankingItem]="planting"
+    class="column is-one-quarter"
+  >
+  </app-carousel-item>
+</div> -->
+
 <app-newsletter> </app-newsletter>
