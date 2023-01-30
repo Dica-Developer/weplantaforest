@@ -13,3 +13,19 @@
 .border-top {
   border-top: 1px solid var(--black);
 }
+
+.inputOutline {
+  border: 1px var(--black) solid;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+input {
+  font-family: 'Bull-mono';
+  background: #00000000;
+  color: var(--black);
+  border: none;
+  outline: 0;
+  font-size: 1rem;
+}
