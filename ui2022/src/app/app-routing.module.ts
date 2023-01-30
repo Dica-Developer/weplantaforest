@@ -21,6 +21,7 @@ import { ImprintPageComponent } from './pages/imprint-page/imprint-page.componen
 import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
 import { ProjectPageComponent } from './pages/project-page/project-page.component';
 import { ProjectReportsOverviewPageComponent } from './pages/project-reports-overview-page/project-reports-overview-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -41,6 +42,8 @@ export const userRoutes: Routes = [
   { path: 'project/:projectName', component: ProjectPageComponent },
   { path: 'imprint', component: ImprintPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },
+  { path: 'profile/:username', component: ProfilePageComponent },
+  { path: 'profile', component: ProfilePageComponent },
 ];
 
 const routes: Routes = [

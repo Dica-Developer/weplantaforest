@@ -1,0 +1,70 @@
+<div class="columns w-100 border-bottom">
+  <div class="column columns is-half border-right padding-2">
+    <div class="column is-half">
+      <h2>
+        {{ 'profile' | translate }}
+      </h2>
+      <h4>{{ profileDetails.userName }}</h4>
+      <h4>{{ profileDetails.mail }}</h4>
+    </div>
+    <div class="column is-half">
+      <div class="imageWrapper">
+        <img src="assets/lucy.jpg" alt="" />
+      </div>
+    </div>
+  </div>
+  <div class="column columns is-half padding-2">
+    <div class="column is-half">
+      <h2>
+        {{ 'team' | translate }}
+      </h2>
+      <h4>{{ profileDetails.teamName }}</h4>
+      <h4>{{ profileDetails.organisation }}</h4>
+    </div>
+    <div class="column is-half">
+      <div class="imageWrapper">
+        <img src="assets/lucy.jpg" alt="" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="columns border-bottom">
+  <div class="columns column is-half border-right padding-2">
+    <div class="column is-half">
+      <p>{{ 'rank' | translate }}: {{ profileDetails.rank }}</p>
+      <p>{{ 'treesPlanted' | translate }}: {{ profileDetails.co2Data.treesCount }}</p>
+      <p>{{ 'CO2Trapped' | translate }}: {{ profileDetails.co2Data.co2 }}</p>
+      <p>{{ 'website' | translate }}: {{ profileDetails.homepage }}</p>
+    </div>
+    <div class="column is-half">
+      <p>{{ 'memberSince' | translate }}: {{ profileDetails.regDate }}</p>
+      <p>{{ 'type' | translate }}: {{ profileDetails.organizationType }}</p>
+      <p>{{ 'organisation' | translate }}: {{ profileDetails.organisation }}</p>
+      <p>{{ 'location' | translate }}: {{ profileDetails.location }}</p>
+    </div>
+  </div>
+  <div class="columns column is-half padding-2" *ngIf="teamDetails">
+    <div class="column is-half">
+      <p>{{ 'rank' | translate }}: {{ teamDetails.rank }}</p>
+      <p>{{ 'treesPlanted' | translate }}: {{ teamDetails.treesPlanted }}</p>
+      <p>{{ 'CO2Trapped' | translate }}: {{ teamDetails.CO2Trapped }}</p>
+      <p>{{ 'website' | translate }}: {{ teamDetails.website }}</p>
+    </div>
+    <div class="column is-half">
+      <p>{{ 'memberSince' | translate }}: {{ teamDetails.rank }}</p>
+      <p>{{ 'type' | translate }}: {{ teamDetails.treesPlanted }}</p>
+      <p>{{ 'teamLeader' | translate }}: {{ teamDetails.CO2Trapped }}</p>
+      <p>{{ 'members' | translate }}: {{ teamDetails.website }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="columns border-bottom">
+  <div class="column is-half border-right padding-2">
+    <p>{{ profileDetails.aboutMe }}</p>
+  </div>
+  <div class="column is-half padding-2">
+    <!-- <p>{{ teamDetails.about }}</p> -->
+  </div>
+</div>

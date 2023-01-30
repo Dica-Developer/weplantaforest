@@ -41,6 +41,7 @@ import { FooterComponent } from './common-components/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { MobileMenuComponent } from './common-components/mobile-menu/mobile-menu.component';
 import { NewsletterComponent } from './common-components/newsletter/newsletter.component';
+import { CarouselItemComponent } from './common-components/carousel-item/carousel-item.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { NewsletterComponent } from './common-components/newsletter/newsletter.c
     MobileMenuComponent,
     SendReceiptConfirmationDialog,
     NewsletterComponent,
+    CarouselItemComponent,
   ],
   imports: [
     CommonModule,
@@ -108,6 +110,7 @@ import { NewsletterComponent } from './common-components/newsletter/newsletter.c
     FooterComponent,
     MobileMenuComponent,
     NewsletterComponent,
+    CarouselItemComponent,
   ],
 })
 export class UtilModule {}

@@ -36,6 +36,8 @@ export interface AuthState {
   passwordResetRequestSent: boolean;
   passwordResetSent: boolean;
   passwordResetLinkVerified: boolean;
+  loggedIn: false;
+  jwtToken: null;
 }
 
 export const initialState: AuthState = {
@@ -43,6 +45,8 @@ export const initialState: AuthState = {
   passwordResetRequestSent: false,
   passwordResetSent: false,
   passwordResetLinkVerified: true,
+  loggedIn: false,
+  jwtToken: null,
 };
 
 const authReducer = createReducer(

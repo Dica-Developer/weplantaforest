@@ -5,6 +5,7 @@
   "aboutUs": "Über uns",
   "explore": "Erforschen",
   "login": "Login",
+  "logout": "Logout",
   "headerText": "Regional und glaubwürdig.",
   "headerSubtext1": "Wir pflanzen Bäume. Weil wir wollen.",
   "headerSubtext2": "Und weil wir müssen.",
@@ -63,6 +64,19 @@
   "newsLetter": "Newsletter",
   "email": "E-Mail",
   "name": "Name",
-  "newsLetterText": "Bleibe immer auf dem neuesten Stand. Wir updaten dich, wie es mit unseren Projekten voran geht, wieviele Bäume wir gepflanzt haben und wann wir die nächste Erkundungstour machen."
+  "profile": "Profile",
+  "team": "Team",
+  "newsLetterText": "Bleibe immer auf dem neuesten Stand. Wir updaten dich, wie es mit unseren Projekten voran geht, wieviele Bäume wir gepflanzt haben und wann wir die nächste Erkundungstour machen.",
+  "rank": "Rang",
+  "treesPlanted": "Bäume gepflanzt",
+  "CO2Trapped": "CO2 gebunden",
+  "website": "Website",
+  "memberSince": "Mietglied seit",
+  "type": "Typ",
+  "organisation": "Organisation",
+  "location": "Ort",
+  "teamLeader": "Teamleiter",
+  "members": "Mitglieder",
+  "plantings": "Pflanzungen"
 
 }
