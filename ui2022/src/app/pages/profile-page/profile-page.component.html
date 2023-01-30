@@ -8,13 +8,16 @@
   [teamDetails]="teamDetails$ | async"
 ></app-profile-info> -->
 
-<div class="columns is-flex w-100 padding-2 is-multiline" *ngIf="plantings">
-  <app-carousel-item
-    *ngFor="let planting of plantings"
-    [rankingItem]="planting"
-    class="column is-one-quarter"
-  >
-  </app-carousel-item>
+<div class="is-flex is-flex-direction-column w-100 padding-2" *ngIf="plantings">
+  <h4 class="center">{{ 'plantings' | translate }}</h4>
+  <div class="columns is-flex is-flex-direction-row is-multiline">
+    <app-carousel-item
+      *ngFor="let planting of plantings"
+      [rankingItem]="planting"
+      class="column is-one-quarter"
+    >
+    </app-carousel-item>
+  </div>
 </div>
 <!-- <div class="columns is-flex w-100 padding-2 is-multiline" *ngIf="plantings">
   <app-carousel-item

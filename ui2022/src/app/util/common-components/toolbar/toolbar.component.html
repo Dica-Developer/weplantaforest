@@ -32,6 +32,11 @@
   </div>
   <div class="h-100 is-flex-grow-1 center-vertically-horizontally hide-mobile">
     <app-button label="{{ 'login' | translate }}" (clicked)="loginClicked()"></app-button>
+    <!-- <app-button
+      *ngIf="isLoggedIn | async"
+      label="{{ 'logout' | translate }}"
+      (clicked)="logoutClicked()"
+    ></app-button> -->
   </div>
 </mat-toolbar>
 

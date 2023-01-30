@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import { logout } from 'src/app/store/auth.store';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -15,13 +18,17 @@ export class ToolbarComponent implements OnInit {
   overlayIsOpen = false;
   control: FormControl;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit(): void {}
 
   loginClicked() {
     // console.log('login clicked');
     this.router.navigate(['/login']);
+  }
+
+  logoutClicked() {
+    this.store.dispatch(logout());
   }
 
   toggleMenu() {
