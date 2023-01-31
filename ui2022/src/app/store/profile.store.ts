@@ -4,7 +4,7 @@ import { AppState, PagedData } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
 import { switchMap } from 'rxjs/operators';
-import { environment } from "../../environments/environment";
+import { environment } from '../../environments/environment';
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -90,8 +90,12 @@ const profileReducer = createReducer(
     details: {
       ...details,
       profileImageUrl: `${environment.backendUrl}/user/image/${details.imageFileName}/150/150`,
-      regDate: new Date(details.regDate)
-    }
+      regDate: new Date(details.regDate),
+      co2Data: {
+        ...details.co2Data,
+        co2: Number.parseFloat(details.co2Data.co2).toFixed(2),
+      },
+    },
   })),
   on(loadAdminFlagSuccess, (state, { isAdmin }) => ({ ...state, isAdmin })),
   on(loadTreesByUserSuccess, (state, { trees }) => ({
