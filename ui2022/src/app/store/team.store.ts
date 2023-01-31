@@ -1,34 +1,53 @@
 import { Injectable } from '@angular/core';
-import {
-  createAction,
-  createReducer,
-  createSelector,
-  on,
-  props,
-} from '@ngrx/store';
+import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { AppState } from './app.state';
 import { TeamService } from '../services/team.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
 import * as he from 'he';
+import { Co2Data } from './tree.store';
 
 export interface Team {
   id: number;
   name: string;
 }
 
+export interface TeamDetails {
+  id: number;
+  name: string;
+  rank: number;
+  co2Data: Co2Data;
+  homepage: string;
+  regDate: number;
+  type: string;
+  teamLeader: string;
+  membersAmount: string;
+  teamDescrition: string;
+}
+
 export const loadTeams = createAction('[Team] load all teams');
 export const loadTeamsSuccess = createAction(
   '[Team] load all teams success',
-  props<{ teams: Team[] }>()
+  props<{ teams: Team[] }>(),
+);
+
+export const loadTeamDetails = createAction(
+  '[Team] load team details',
+  props<{ teamName: string }>(),
+);
+export const loadTeamDetailsSuccess = createAction(
+  '[Team] load team details success',
+  props<{ details: TeamDetails }>(),
 );
 
 export interface TeamState {
   teams: Team[];
+  teamDetails: TeamDetails;
 }
 
 export const initialState: TeamState = {
   teams: [],
+  teamDetails: null,
 };
 
 const teamReducer = createReducer(
@@ -46,7 +65,13 @@ const teamReducer = createReducer(
       ...state,
       teams: teamsDecoded,
     };
-  })
+  }),
+  on(loadTeamDetailsSuccess, (state, { details }) => {
+    return {
+      ...state,
+      teamDetails: details,
+    };
+  }),
 );
 
 export function teamReducerFn(state, action) {
@@ -55,9 +80,11 @@ export function teamReducerFn(state, action) {
 
 export const teamsFeature = (state: AppState) => state.teamsState;
 
-export const selectTeams = createSelector(
+export const selectTeams = createSelector(teamsFeature, (state: TeamState) => state.teams);
+
+export const selectTeamDetails = createSelector(
   teamsFeature,
-  (state: TeamState) => state.teams
+  (state: TeamState) => state.teamDetails,
 );
 
 @Injectable()
@@ -70,8 +97,23 @@ export class TeamEffects {
       switchMap(() =>
         this.teamService
           .loadTeams()
-          .pipe(switchMap((teams: Team[]) => [loadTeamsSuccess({ teams })]))
-      )
-    )
+          .pipe(switchMap((teams: Team[]) => [loadTeamsSuccess({ teams })])),
+      ),
+    ),
+  );
+
+  LoadTeamDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadTeamDetails),
+      switchMap((action) =>
+        this.teamService
+          .loadTeamDetails(action.teamName)
+          .pipe(
+            switchMap((teamDetail: TeamDetails) => [
+              loadTeamDetailsSuccess({ details: teamDetail }),
+            ]),
+          ),
+      ),
+    ),
   );
 }

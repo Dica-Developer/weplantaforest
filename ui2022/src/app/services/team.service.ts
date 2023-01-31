@@ -11,4 +11,8 @@ export class TeamService {
   loadTeams() {
     return this.http.get(environment.backendAdminUrl + '/teams');
   }
+
+  loadTeamDetails(teamName: string) {
+    return this.http.get(environment.backendUrl + '/team?teamName=' + encodeURIComponent(teamName));
+  }
 }
