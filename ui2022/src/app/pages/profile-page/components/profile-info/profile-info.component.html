@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="column columns is-half padding-2">
+  <div class="column columns is-half padding-2" *ngIf="teamDetails">
     <div class="column is-half">
       <h2>
         {{ 'team' | translate }}
@@ -25,6 +25,14 @@
       <div class="imageWrapper">
         <img src="assets/lucy.jpg" alt="" />
       </div>
+    </div>
+  </div>
+  <div class="column columns is-half padding-2" *ngIf="!teamDetails">
+    <div class="column is-half">
+      <h2>
+        {{ 'team' | translate }}
+      </h2>
+      <h4>{{ profileDetails.userName }} {{ 'noTeamYet' | translate }}</h4>
     </div>
   </div>
 </div>

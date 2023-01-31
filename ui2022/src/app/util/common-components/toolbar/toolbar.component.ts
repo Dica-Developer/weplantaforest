@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { logout } from 'src/app/store/auth.store';
+import { logout, selectLoggedIn } from 'src/app/store/auth.store';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,6 +17,7 @@ export class ToolbarComponent implements OnInit {
   menuOpened = false;
   overlayIsOpen = false;
   control: FormControl;
+  loggedIn$ = this.store.select(selectLoggedIn);
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
