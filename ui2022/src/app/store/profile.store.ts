@@ -4,6 +4,7 @@ import { AppState, PagedData } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
 import { switchMap } from 'rxjs/operators';
+import { environment } from "../../environments/environment";
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -41,6 +42,7 @@ export interface ProfileDetails {
   editAllowed: boolean;
   homepage: string;
   imageFileName: string;
+  profileImageUrl: string;
   lang: string;
   lastVisit: number;
   location: string;
@@ -49,7 +51,7 @@ export interface ProfileDetails {
   organisation: string;
   organizationType: string;
   rank: number;
-  regDate: number;
+  regDate: Date;
   teamName: string;
   userName: string;
   trees: PagedData<ProfileTree>;
@@ -79,13 +81,17 @@ export const initialState: ProfileState = {
   isAdmin: false,
   details: null,
 };
-
+// http://localhost:8081/user/image/Gabor.png/150/150
 const profileReducer = createReducer(
   initialState,
   on(setUsername, (state, { username }) => ({ ...state, username })),
   on(loadProfileDetailsSuccess, (state, { details }) => ({
     ...state,
-    details,
+    details: {
+      ...details,
+      profileImageUrl: `${environment.backendUrl}/user/image/${details.imageFileName}/150/150`,
+      regDate: new Date(details.regDate)
+    }
   })),
   on(loadAdminFlagSuccess, (state, { isAdmin }) => ({ ...state, isAdmin })),
   on(loadTreesByUserSuccess, (state, { trees }) => ({
