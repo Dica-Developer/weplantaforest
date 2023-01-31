@@ -38,6 +38,6 @@ export class ProjectTileComponent implements OnInit {
   }
 
   routeToProject() {
-    this.router.navigate(['/project/' + encodeURIComponent(this.projectReport.projectName)]);
+    this.router.navigate(['/project/' + this.projectReport.projectName]);
   }
 }
