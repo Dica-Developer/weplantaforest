@@ -11,7 +11,17 @@ div.scrollmenu app-project-tile {
 }
 
 .scroll {
-  overflow: hidden;
+  overflow: scroll;
+  // hide srollbar
+  ::-webkit-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    background: transparent !important;
+  }
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */
 }
 
 .projectTile {
