@@ -1,4 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+
+export interface RankingItem {
+  imageUrl: string;
+  name: string;
+  amount: number;
+  linkTo: string;
+}
 
 @Component({
   selector: 'app-carousel-item',
@@ -6,9 +14,15 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./carousel-item.component.scss'],
 })
 export class CarouselItemComponent implements OnInit {
-  @Input() rankingItem: any;
+  @Input() rankingItem: RankingItem;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  route() {
+    if(this.rankingItem.linkTo){
+      this.router.navigateByUrl(this.rankingItem.linkTo);
+    }
+  }
 }
