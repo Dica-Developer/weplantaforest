@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { logout, selectLoggedIn } from 'src/app/store/auth.store';
+import { logout } from 'src/app/store/auth.store';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,14 +17,13 @@ export class ToolbarComponent implements OnInit {
   menuOpened = false;
   overlayIsOpen = false;
   control: FormControl = new FormControl('');
-  loggedIn$ = this.store.select(selectLoggedIn);
+  loggedIn = localStorage.getItem('jwt');
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit(): void {}
 
   loginClicked() {
-    // console.log('login clicked');
     this.router.navigate(['/login']);
   }
 

@@ -10,7 +10,7 @@ import { addError } from './error.state';
 import { setUsername, loadProfileDetails, loadAdminFlag } from './profile.store';
 
 export const login = createAction('[Auth] login', props<{ name: string; password: string }>());
-export const loginSuccess = createAction('[Auth] login success');
+export const loginSuccess = createAction('[Auth] login success', props<{ token: string }>());
 export const loginFailed = createAction('[Auth] Login failed', props<{ error: string }>());
 export const resetPasswordRequest = createAction(
   '[Auth] Reset Password Request',
@@ -37,8 +37,6 @@ export interface AuthState {
   passwordResetRequestSent: boolean;
   passwordResetSent: boolean;
   passwordResetLinkVerified: boolean;
-  loggedIn: boolean;
-  jwtToken: null;
 }
 
 export const initialState: AuthState = {
@@ -46,8 +44,6 @@ export const initialState: AuthState = {
   passwordResetRequestSent: false,
   passwordResetSent: false,
   passwordResetLinkVerified: true,
-  loggedIn: false,
-  jwtToken: null,
 };
 
 const authReducer = createReducer(
@@ -68,17 +64,16 @@ const authReducer = createReducer(
     ...state,
     loginError: error,
   })),
-  on(loginSuccess, (state) => ({
+  on(loginSuccess, (state, { token }) => ({
     ...state,
     loggedIn: true,
+    jwtToken: token,
   })),
   on(logout, (state) => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('username');
     return {
       ...state,
-      loggedIn: null,
-      jwtToken: null,
     };
   }),
 );
@@ -90,8 +85,6 @@ export function authReducerFn(state, action) {
 export const authFeature = (state: AppState) => state.authState;
 
 export const selectLoginError = createSelector(authFeature, (state: AuthState) => state.loginError);
-
-export const selectLoggedIn = createSelector(authFeature, (state: AuthState) => state.loggedIn);
 
 export const selectPasswordResetRequestSent = createSelector(
   authFeature,
@@ -126,7 +119,6 @@ export class AuthEffects {
             localStorage.setItem('username', response.headers.get('X-AUTH-USERNAME'));
             this.router.navigate(['/backOffice2022/carts']);
             return [
-              loginSuccess(),
               setUsername({
                 username: response.headers.get('X-AUTH-USERNAME'),
               }),
@@ -141,17 +133,6 @@ export class AuthEffects {
         ),
       ),
     ),
-  );
-
-  LoginSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(loginSuccess),
-        tap((action) => {
-          this.router.navigateByUrl('/');
-        }),
-      ),
-    { dispatch: false },
   );
 
   Logout$ = createEffect(
