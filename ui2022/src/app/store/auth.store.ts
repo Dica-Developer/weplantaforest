@@ -10,6 +10,7 @@ import { addError } from './error.state';
 import { setUsername, loadProfileDetails, loadAdminFlag } from './profile.store';
 
 export const login = createAction('[Auth] login', props<{ name: string; password: string }>());
+export const loginSuccess = createAction('[Auth] login success');
 export const loginFailed = createAction('[Auth] Login failed', props<{ error: string }>());
 export const resetPasswordRequest = createAction(
   '[Auth] Reset Password Request',
@@ -36,7 +37,7 @@ export interface AuthState {
   passwordResetRequestSent: boolean;
   passwordResetSent: boolean;
   passwordResetLinkVerified: boolean;
-  loggedIn: false;
+  loggedIn: boolean;
   jwtToken: null;
 }
 
@@ -67,6 +68,10 @@ const authReducer = createReducer(
     ...state,
     loginError: error,
   })),
+  on(loginSuccess, (state) => ({
+    ...state,
+    loggedIn: true,
+  })),
   on(logout, (state) => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('username');
@@ -85,6 +90,8 @@ export function authReducerFn(state, action) {
 export const authFeature = (state: AppState) => state.authState;
 
 export const selectLoginError = createSelector(authFeature, (state: AuthState) => state.loginError);
+
+export const selectLoggedIn = createSelector(authFeature, (state: AuthState) => state.loggedIn);
 
 export const selectPasswordResetRequestSent = createSelector(
   authFeature,
@@ -119,7 +126,7 @@ export class AuthEffects {
             localStorage.setItem('username', response.headers.get('X-AUTH-USERNAME'));
             this.router.navigate(['/backOffice2022/carts']);
             return [
-              // loginSuccess({ jwtToken: response.headers.get('X-AUTH-TOKEN') }),
+              loginSuccess(),
               setUsername({
                 username: response.headers.get('X-AUTH-USERNAME'),
               }),
@@ -136,12 +143,23 @@ export class AuthEffects {
     ),
   );
 
+  LoginSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginSuccess),
+        tap((action) => {
+          this.router.navigateByUrl('/');
+        }),
+      ),
+    { dispatch: false },
+  );
+
   Logout$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(logout),
         tap((action: any) => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
         }),
       ),
     { dispatch: false },
