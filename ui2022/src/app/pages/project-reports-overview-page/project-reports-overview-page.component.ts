@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { filter, map, Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import {
   loadActiveProjectReports,
@@ -18,7 +17,6 @@ import {
 })
 export class ProjectReportsOverviewPageComponent implements OnInit {
   type: string = 'all';
-  selectProjectReportsSub: Subscription;
   activeProjectReports$ = this.store.select(selectActiveProjectReports);
   inactiveProjectReports$ = this.store.select(selectInActiveProjectReports);
 
@@ -32,8 +30,4 @@ export class ProjectReportsOverviewPageComponent implements OnInit {
   setType(event: any) {
     this.type = event;
   }
-
-  // ngOnDestroy() {
-  //   this.selectProjectReportsSub.unsubscribe();
-  // }
 }

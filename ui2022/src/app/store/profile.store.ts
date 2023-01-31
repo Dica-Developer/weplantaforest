@@ -181,7 +181,9 @@ export class ProfileEffects {
                 const projectName = tree.projectArticle?.project?.name
                   ? tree.projectArticle?.project?.name
                   : 'Community';
-                const projectLink = tree.projectArticle?.project?.name ? `/project/${tree.projectArticle?.project?.name}`: null;
+                const projectLink = tree.projectArticle?.project?.name
+                  ? `/project/${tree.projectArticle?.project?.name}`
+                  : null;
                 trees.push({
                   id: tree.id,
                   amount: tree.amount,
@@ -193,7 +195,7 @@ export class ProfileEffects {
                   projectName,
                   treeTypeName: tree.treeType?.name,
                   treeTypeImageUrl: `${environment.backendUrl}/treeType/image/${tree.treeType?.imageFile}/60/60`,
-                  projectLink
+                  projectLink,
                 });
                 res.content = trees;
               }

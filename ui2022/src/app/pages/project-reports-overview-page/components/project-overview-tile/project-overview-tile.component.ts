@@ -26,7 +26,6 @@ export class ProjectOverviewTileComponent implements OnInit {
       '/project/image/' +
       encodeURI(this.projectReport.projectImageFileName) +
       '/300/300';
-    // this.imgUrl = environment.baseUrl + '/assets/forest.png';
     this.progress =
       (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
       100;
@@ -36,7 +35,7 @@ export class ProjectOverviewTileComponent implements OnInit {
     );
   }
 
-  // routeToProject() {
-  //   this.router.navigate(['/project/' + encodeURIComponent(this.projectReport.projectName)]);
-  // }
+  route() {
+    this.router.navigate(['/project/' + this.projectReport.projectName]);
+  }
 }

@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ProjectReportService } from '../services/project-report.service';
+import { environment } from 'src/environments/environment';
 
 export interface ProjectReport {
   id: number;
@@ -33,6 +34,8 @@ export interface ProjectReportData {
   amountOfPlantedTrees: number;
   amountOfMaximumTreesToPlant: number;
   active: boolean;
+  projectImageUrl: string;
+  projectLink: string;
 }
 
 export const loadProjectReports = createAction('[ProjectReport] load project reports');
@@ -180,13 +183,30 @@ export class ProjectReportsEffects {
     this.actions$.pipe(
       ofType(loadActiveProjectReports),
       switchMap((action) =>
-        this.projectReportService
-          .loadActiveProjectReports()
-          .pipe(
-            switchMap((activeProjects: any[]) => [
-              loadActiveProjectReportsSuccess({ activeProjectReports: activeProjects }),
-            ]),
-          ),
+        this.projectReportService.loadActiveProjectReports().pipe(
+          switchMap((activeProjects: any[]) => {
+            if (activeProjects) {
+              const projects: ProjectReportData[] = [];
+              for (const report of activeProjects) {
+                projects.push({
+                  projectId: report.projectId,
+                  projectName: report.projectName,
+                  description: report.description,
+                  projectImageFileName: report.projectImageFileName,
+                  latitude: report.latitude,
+                  longitude: report.longitude,
+                  amountOfPlantedTrees: report.amountOfPlantedTrees,
+                  amountOfMaximumTreesToPlant: report.amountOfMaximumTreesToPlant,
+                  active: report.active,
+                  projectImageUrl: `${environment.backendUrl}/projects/image/${report.projectImageFileName}/60/60`,
+                  projectLink: `/project/${report.projectName}`,
+                });
+                activeProjects = projects;
+              }
+            }
+            return [loadActiveProjectReportsSuccess({ activeProjectReports: activeProjects })];
+          }),
+        ),
       ),
     ),
   );
@@ -195,13 +215,33 @@ export class ProjectReportsEffects {
     this.actions$.pipe(
       ofType(loadInActiveProjectReports),
       switchMap((action) =>
-        this.projectReportService
-          .loadInActiveProjectReports(0, 10)
-          .pipe(
-            switchMap((inactiveProjects: any[]) => [
+        this.projectReportService.loadInActiveProjectReports(0, 10).pipe(
+          switchMap((inactiveProjects: any) => {
+            if (inactiveProjects) {
+              console.log(inactiveProjects);
+              const projects: ProjectReportData[] = [];
+              for (const report of inactiveProjects.content) {
+                projects.push({
+                  projectId: report.projectId,
+                  projectName: report.projectName,
+                  description: report.description,
+                  projectImageFileName: report.projectImageFileName,
+                  latitude: report.latitude,
+                  longitude: report.longitude,
+                  amountOfPlantedTrees: report.amountOfPlantedTrees,
+                  amountOfMaximumTreesToPlant: report.amountOfMaximumTreesToPlant,
+                  active: report.active,
+                  projectImageUrl: `${environment.backendUrl}/projects/image/${report.projectImageFileName}/60/60`,
+                  projectLink: `/project/${report.projectName}`,
+                });
+                inactiveProjects.content = projects;
+              }
+            }
+            return [
               loadInActiveProjectReportsSuccess({ inactiveProjectReports: inactiveProjects }),
-            ]),
-          ),
+            ];
+          }),
+        ),
       ),
     ),
   );

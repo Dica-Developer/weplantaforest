@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { loadProfileDetails, selectProfileDetails } from 'src/app/store/profile.store';
 import { selectActiveProjectReports } from 'src/app/store/project-report.store';
@@ -13,7 +12,6 @@ import { loadTeamDetails, selectTeamDetails } from 'src/app/store/team.store';
   styleUrls: ['./profile-page.component.scss'],
 })
 export class ProfilePageComponent implements OnInit {
-  selectProjectReportsSub: Subscription;
   profileDetails$ = this.store.select(selectProfileDetails);
   plantings$ = this.store.select(selectActiveProjectReports);
   teamDetails$ = this.store.select(selectTeamDetails);

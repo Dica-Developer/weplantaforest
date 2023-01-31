@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import {
   loadActiveProjectReports,
@@ -13,7 +12,6 @@ import {
   styleUrls: ['./projects-section.component.scss'],
 })
 export class ProjectsSectionComponent implements OnInit {
-  selectProjectReportsSub: Subscription;
   projectReports$ = this.store.select(selectActiveProjectReports);
 
   constructor(private store: Store<AppState>) {
