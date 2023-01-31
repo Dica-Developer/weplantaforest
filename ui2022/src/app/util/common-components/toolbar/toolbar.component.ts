@@ -16,7 +16,7 @@ export class ToolbarComponent implements OnInit {
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
   menuOpened = false;
   overlayIsOpen = false;
-  control: FormControl;
+  control: FormControl = new FormControl('');
   loggedIn$ = this.store.select(selectLoggedIn);
 
   constructor(private router: Router, private store: Store<AppState>) {}
