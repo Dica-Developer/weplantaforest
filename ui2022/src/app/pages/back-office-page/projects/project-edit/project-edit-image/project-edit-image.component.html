@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-4">
+<div class="columns">
+  <div class="column is-4">
     <mat-form-field appearance="fill">
       <mat-label>Beschreibung(De)</mat-label>
       <textarea
@@ -19,10 +19,10 @@
       ></textarea>
     </mat-form-field>
   </div>
-  <div class="col-6">
+  <div class="column is-6">
     <img src="{{ imageSrc }}" width="400" height="300" />
   </div>
-  <div class="col-2">
+  <div class="column is-2">
     <button mat-raised-button color="primary" (click)="updateImage()"  [disabled]="!saveAvailable">
       Speichern
     </button>
