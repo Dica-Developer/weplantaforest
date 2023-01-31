@@ -1,7 +1,10 @@
 <div class="is-flex is-flex-direction-row margin-left-1 columns is-mobile">
   <div class="column is-3">
     <div class="image">
-      <img src="assets/ipat_logo.jpg" alt="profileImage" />
+      <img
+        src="{{ rankingItem.imageUrl ? rankingItem.imageUrl : 'assets/ipat_logo.jpg' }}"
+        alt="profileImage"
+      />
     </div>
   </div>
   <div class="column is-9">

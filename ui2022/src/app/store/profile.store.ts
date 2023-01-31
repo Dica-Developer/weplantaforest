@@ -73,7 +73,7 @@ export interface ProfileTree {
   plantedOn: Date;
   projectName: string;
   treeTypeName: string;
-  treeTypeImage: string;
+  treeTypeImageUrl: string;
 }
 
 export const initialState: ProfileState = {
@@ -181,7 +181,7 @@ export class ProfileEffects {
                   plantedOn: new Date(tree.plantedOn),
                   projectName,
                   treeTypeName: tree.treeType?.name,
-                  treeTypeImage: tree.treeType?.imageFile,
+                  treeTypeImageUrl: `${environment.backendUrl}/treeType/image/${tree.treeType?.imageFile}/60/60`,
                 });
                 res.content = trees;
               }
