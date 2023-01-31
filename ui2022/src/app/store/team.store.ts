@@ -66,6 +66,12 @@ const teamReducer = createReducer(
       teams: teamsDecoded,
     };
   }),
+  on(loadTeamDetails, (state, { teamName }) => {
+    return {
+      ...state,
+      teamDetails: null,
+    };
+  }),
   on(loadTeamDetailsSuccess, (state, { details }) => {
     return {
       ...state,

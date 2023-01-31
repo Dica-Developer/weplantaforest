@@ -1,6 +1,7 @@
 <app-profile-info
   *ngIf="profileDetails$ | async"
   [profileDetails]="profileDetails$ | async"
+  [teamDetails]="teamDetails$ | async"
 ></app-profile-info>
 
 <div

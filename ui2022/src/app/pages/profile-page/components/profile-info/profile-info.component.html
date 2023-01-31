@@ -9,7 +9,7 @@
     </div>
     <div class="column is-half">
       <div class="imageWrapper">
-        <img src="{{profileDetails.profileImageUrl}}" alt="" />
+        <img src="{{ profileDetails.profileImageUrl }}" alt="" />
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
       <p>{{ 'website' | translate }}: {{ profileDetails.homepage }}</p>
     </div>
     <div class="column is-half">
-      <p>{{ 'memberSince' | translate }}: {{ profileDetails.regDate | date:'dd.MM.yyyy'}}</p>
+      <p>{{ 'memberSince' | translate }}: {{ profileDetails.regDate | date : 'dd.MM.yyyy' }}</p>
       <p>{{ 'type' | translate }}: {{ profileDetails.organizationType }}</p>
       <p>{{ 'organisation' | translate }}: {{ profileDetails.organisation }}</p>
       <p>{{ 'location' | translate }}: {{ profileDetails.location }}</p>

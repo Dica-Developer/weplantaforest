@@ -5,6 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
 import { switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { loadTeamDetails } from './team.store';
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -136,14 +137,22 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(loadProfileDetails),
       switchMap((action) =>
-        this.profileService
-          .loadUserDetails(action.username)
-          .pipe(
-            switchMap((details) => [
-              loadProfileDetailsSuccess({ details }),
-              loadTreesByUser({ username: action.username, page: 0, size: 15 }),
-            ]),
-          ),
+        this.profileService.loadUserDetails(action.username).pipe(
+          switchMap((details: any) => {
+            if (details.teamName !== '') {
+              return [
+                loadProfileDetailsSuccess({ details }),
+                loadTreesByUser({ username: action.username, page: 0, size: 15 }),
+                loadTeamDetails({ teamName: details.teamName }),
+              ];
+            } else {
+              return [
+                loadProfileDetailsSuccess({ details }),
+                loadTreesByUser({ username: action.username, page: 0, size: 15 }),
+              ];
+            }
+          }),
+        ),
       ),
     ),
   );
