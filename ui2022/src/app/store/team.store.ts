@@ -6,6 +6,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
 import * as he from 'he';
 import { Co2Data } from './tree.store';
+import { environment } from 'src/environments/environment';
 
 export interface Team {
   id: number;
@@ -23,6 +24,8 @@ export interface TeamDetails {
   teamLeader: string;
   membersAmount: string;
   teamDescrition: string;
+  imageFileName: string;
+  teamImageUrl: string;
 }
 
 export const loadTeams = createAction('[Team] load all teams');
@@ -66,7 +69,7 @@ const teamReducer = createReducer(
       teams: teamsDecoded,
     };
   }),
-  on(loadTeamDetails, (state, { teamName }) => {
+  on(loadTeamDetails, (state) => {
     return {
       ...state,
       teamDetails: null,
@@ -75,7 +78,10 @@ const teamReducer = createReducer(
   on(loadTeamDetailsSuccess, (state, { details }) => {
     return {
       ...state,
-      teamDetails: details,
+      teamDetails: {
+        ...details,
+        teamImageUrl: `${environment.backendUrl}/team/image/${details.imageFileName}/150/150`,
+      },
     };
   }),
 );
