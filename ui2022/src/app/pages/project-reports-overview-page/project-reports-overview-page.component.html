@@ -7,7 +7,7 @@
     <h4 class="padding-1 padding-left is-hidden-tablet border-bottom w-100">
       {{ 'activeProjects' | translate }}
     </h4>
-    <div class="column is-two-fifths border-right is-hidden-mobile">
+    <div class="column is-two-fifths border-right border-bottom is-hidden-mobile">
       <h4 class="padding-1 padding-left">{{ 'activeProjects' | translate }}</h4>
     </div>
     <div class="column is-one-fifth" *ngFor="let project of activeProjectReports$ | async">
