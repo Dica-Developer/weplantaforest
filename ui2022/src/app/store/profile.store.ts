@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
-import { AppState } from './app.state';
+import { AppState, PagedData } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
 import { switchMap } from 'rxjs/operators';
@@ -18,6 +18,15 @@ export const loadAdminFlag = createAction('[Profile] load Admin flag');
 export const loadAdminFlagSuccess = createAction(
   '[Profile] load Admin flag success',
   props<{ isAdmin: boolean }>(),
+);
+
+export const loadTreesByUser = createAction(
+  '[Profile] load trees by user',
+  props<{ username: string; page: number; size: number }>(),
+);
+export const loadTreesByUserSuccess = createAction(
+  '[Profile] load trees by user success',
+  props<{ trees: PagedData<ProfileTree> }>(),
 );
 
 export interface Co2Data {
@@ -43,12 +52,26 @@ export interface ProfileDetails {
   regDate: number;
   teamName: string;
   userName: string;
+  trees: PagedData<ProfileTree>;
 }
 
 export interface ProfileState {
   username: string;
   isAdmin: boolean;
   details: ProfileDetails;
+}
+
+export interface ProfileTree {
+  id: number;
+  amount: number;
+  imagePath: string;
+  longitude: number;
+  latitude: number;
+  submittedOn: Date;
+  plantedOn: Date;
+  projectName: string;
+  treeTypeName: string;
+  treeTypeImage: string;
 }
 
 export const initialState: ProfileState = {
@@ -65,6 +88,13 @@ const profileReducer = createReducer(
     details,
   })),
   on(loadAdminFlagSuccess, (state, { isAdmin }) => ({ ...state, isAdmin })),
+  on(loadTreesByUserSuccess, (state, { trees }) => ({
+    ...state,
+    details: {
+      ...state.details,
+      trees,
+    },
+  })),
 );
 
 export function profileReducerFn(state, action) {
@@ -98,7 +128,12 @@ export class ProfileEffects {
       switchMap((action) =>
         this.profileService
           .loadUserDetails(action.username)
-          .pipe(switchMap((details) => [loadProfileDetailsSuccess({ details })])),
+          .pipe(
+            switchMap((details) => [
+              loadProfileDetailsSuccess({ details }),
+              loadTreesByUser({ username: action.username, page: 0, size: 15 }),
+            ]),
+          ),
       ),
     ),
   );
@@ -110,6 +145,40 @@ export class ProfileEffects {
         this.profileService
           .isAdmin()
           .pipe(switchMap((isAdmin: boolean) => [loadAdminFlagSuccess({ isAdmin })])),
+      ),
+    ),
+  );
+
+  LoadTreesByUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadTreesByUser),
+      switchMap((action) =>
+        this.profileService.loadTrees(action.username, action.page, action.size).pipe(
+          switchMap((res) => {
+            if (res && res.content) {
+              const trees: ProfileTree[] = [];
+              for (const tree of res.content) {
+                const projectName = tree.projectArticle?.project?.name
+                  ? tree.projectArticle?.project?.name
+                  : 'Community';
+                trees.push({
+                  id: tree.id,
+                  amount: tree.amount,
+                  imagePath: tree.imagePath,
+                  longitude: tree.longitude,
+                  latitude: tree.latitude,
+                  submittedOn: new Date(tree.submittedOn),
+                  plantedOn: new Date(tree.plantedOn),
+                  projectName,
+                  treeTypeName: tree.treeType?.name,
+                  treeTypeImage: tree.treeType?.imageFile,
+                });
+                res.content = trees;
+              }
+            }
+            return [loadTreesByUserSuccess({ trees: res })];
+          }),
+        ),
       ),
     ),
   );
