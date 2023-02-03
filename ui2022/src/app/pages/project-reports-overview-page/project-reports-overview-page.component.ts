@@ -4,10 +4,8 @@ import { AppState } from 'src/app/store/app.state';
 import {
   loadActiveProjectReports,
   loadInActiveProjectReports,
-  loadProjectReports,
   selectActiveProjectReports,
   selectInActiveProjectReports,
-  selectProjectReports,
 } from 'src/app/store/project-report.store';
 
 @Component({
