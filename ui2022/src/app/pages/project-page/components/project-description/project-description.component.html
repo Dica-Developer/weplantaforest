@@ -5,13 +5,6 @@
     <a routerLink="/projects">{{ 'backToProjects' | translate }}</a>
   </div>
   <div class="column is-two-fifths">
-    <div class="is-flex is-flex-direction-column">
-      <img src="assets/lucy.jpg" alt="" />
-      <div class="is-flex is-flex-direction-row">
-        <img style="width: 50%" src="assets/ycul.jpg" alt="" />
-        <img style="width: 50%" src="assets/ycul.jpg" alt="" />
-      </div>
-      <img src="assets/lucy.jpg" alt="" />
-    </div>
+    <app-lightbox-gallery *ngIf="imageUrls" [imageUrls]="imageUrls"></app-lightbox-gallery>
   </div>
 </div>
