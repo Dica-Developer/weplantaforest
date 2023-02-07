@@ -1,0 +1,21 @@
+<div
+  class="is-flex is-flex-direction-column"
+  #imageLink
+  *ngFor="let imageUrl of imageUrls; let i = index"
+>
+  <img id="myImg" [src]="imageUrl" (click)="openModal(i)" />
+</div>
+
+<!-- Modal Content (The Image) -->
+<div id="myModal" class="lightbox">
+  <div class="content" (swiperight)="plusSlides(-1)" (swipeleft)="plusSlides(1)">
+    <div *ngFor="let image of imageUrls">
+      <div class="mySlides w-100">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <img class="slideImage" [src]="image" />
+      </div>
+      <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+      <a class="next" (click)="plusSlides(1)">&#10095;</a>
+    </div>
+  </div>
+</div>

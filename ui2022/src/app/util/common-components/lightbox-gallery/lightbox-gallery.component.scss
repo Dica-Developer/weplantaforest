@@ -1,0 +1,77 @@
+#myImg {
+  cursor: pointer;
+  width: 100%;
+}
+
+/* The Modal (background) */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #000000bb;
+}
+
+/* Modal Content */
+.content {
+  position: relative;
+}
+
+.slideImage {
+  max-height: calc(100vh - 86px);
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 3rem;
+  color: var(--background);
+}
+
+.close:hover,
+.close:focus {
+  color: var(--green);
+  cursor: pointer;
+}
+
+/* Hide the slides by default */
+.mySlides {
+  text-align: center;
+  display: none;
+  opacity: 0;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  text-decoration: none;
+  cursor: pointer;
+  position: absolute;
+  top: 45%;
+  padding: 16px;
+  font-size: 2rem;
+  color: var(--background);
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  color: var(--green);
+}
