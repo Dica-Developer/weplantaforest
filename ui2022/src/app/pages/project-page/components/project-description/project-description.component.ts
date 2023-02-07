@@ -13,7 +13,7 @@ export class ProjectDescriptionComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
   imgUrl: string;
   description: string;
-  imageUrls: String[] = ['assets/lucy.jpg', 'assets/lucy.jpg', 'assets/lucy.jpg'];
+  imageUrls: String[] = ['assets/lucy.jpg', 'assets/upside.jpg', 'assets/lucy.jpg'];
   constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
 
   ngOnInit(): void {
