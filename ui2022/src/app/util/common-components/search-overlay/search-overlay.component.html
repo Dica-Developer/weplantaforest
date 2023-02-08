@@ -1,0 +1,14 @@
+<div class="icon" (click)="closeSearch()">
+  <mat-icon>close</mat-icon>
+</div>
+<div class="inputOutline">
+  <input
+    [placeholder]="'enterSearch' | translate"
+    name="search"
+    type="text"
+    [formControl]="control"
+  />
+</div>
+<div class="results" *ngFor="let result of (searchResults$ | async).projects">
+  {{ result.name }}
+</div>

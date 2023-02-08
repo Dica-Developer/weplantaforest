@@ -43,6 +43,7 @@ import { MobileMenuComponent } from './common-components/mobile-menu/mobile-menu
 import { NewsletterComponent } from './common-components/newsletter/newsletter.component';
 import { CarouselItemComponent } from './common-components/carousel-item/carousel-item.component';
 import { LightboxGalleryComponent } from './common-components/lightbox-gallery/lightbox-gallery.component';
+import { SearchOverlayComponent } from './common-components/search-overlay/search-overlay.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { LightboxGalleryComponent } from './common-components/lightbox-gallery/l
     NewsletterComponent,
     CarouselItemComponent,
     LightboxGalleryComponent,
+    SearchOverlayComponent,
   ],
   imports: [
     CommonModule,
@@ -114,6 +116,7 @@ import { LightboxGalleryComponent } from './common-components/lightbox-gallery/l
     NewsletterComponent,
     CarouselItemComponent,
     LightboxGalleryComponent,
+    SearchOverlayComponent,
   ],
 })
 export class UtilModule {}
