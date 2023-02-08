@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse } from '@a
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from "../../store/app.state";
+import { AppState } from '../../store/app.state';
 import { addError } from '../../store/error.state';
 
 @Injectable()
@@ -14,15 +14,13 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log('error:');
-        
         console.log(error);
-        
         switch (error.status) {
           case 500:
             this.handleError500();
             break;
           case 401:
-            break;  
+            break;
           case 0:
             this.handleError0(error);
             break;
@@ -55,7 +53,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   handleError500() {
-    this.store.dispatch(addError({error: {message: 'Ein unerwarteter Fehler ist aufgetreten.', key: 'UNKNOWN_ERROR'}}))
+    this.store.dispatch(
+      addError({
+        error: { message: 'Ein unerwarteter Fehler ist aufgetreten.', key: 'UNKNOWN_ERROR' },
+      }),
+    );
     // const translateService = this.injector.get(TranslateService);
     // this.toastService.show(translateService.instant('error.UNKNOWN_ERROR'), {
     //   classname: 'bg-danger text-light',

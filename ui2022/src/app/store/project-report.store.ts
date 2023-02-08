@@ -218,7 +218,6 @@ export class ProjectReportsEffects {
         this.projectReportService.loadInActiveProjectReports(0, 10).pipe(
           switchMap((inactiveProjects: any) => {
             if (inactiveProjects) {
-              console.log(inactiveProjects);
               const projects: ProjectReportData[] = [];
               for (const report of inactiveProjects.content) {
                 projects.push({

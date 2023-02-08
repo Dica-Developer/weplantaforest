@@ -1,9 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import {
-  NgcCookieConsentService,
-  NgcStatusChangeEvent,
-} from 'ngx-cookieconsent';
+import { NgcCookieConsentService, NgcStatusChangeEvent } from 'ngx-cookieconsent';
 import { Subscription } from 'rxjs';
 
 @Injectable({
@@ -16,35 +13,24 @@ export class AppCookieService {
 
   constructor(
     private ngCookieConsent: NgcCookieConsentService,
-    private ngxCookieService: CookieService
+    private ngxCookieService: CookieService,
   ) {}
 
   init() {
-    console.log('init cookieService');
+    this.popupCloseSubscription = this.ngCookieConsent.popupClose$.subscribe(() => {
+      // you can use this.ngCookieConsent.getConfig() to do stuff...
+    });
 
-    this.popupCloseSubscription = this.ngCookieConsent.popupClose$.subscribe(
-      () => {
-        console.log('popup closed');
-
-        // you can use this.ngCookieConsent.getConfig() to do stuff...
-      }
+    this.statusChangeSubscription = this.ngCookieConsent.statusChange$.subscribe(
+      (event: NgcStatusChangeEvent) => {
+        if (event.status == 'allow') {
+        } else if (event.status == 'deny') {
+          this.ngxCookieService.deleteAll('/');
+        }
+      },
     );
 
-    this.statusChangeSubscription =
-      this.ngCookieConsent.statusChange$.subscribe(
-        (event: NgcStatusChangeEvent) => {
-          console.log('cookie status changed');
-          console.log(event);
-          if (event.status == 'allow') {
-          } else if (event.status == 'deny') {
-            this.ngxCookieService.deleteAll('/');
-          }
-        }
-      );
-
-    this.revokeChoiceSubscription =
-      this.ngCookieConsent.revokeChoice$.subscribe(() => {
-      });
+    this.revokeChoiceSubscription = this.ngCookieConsent.revokeChoice$.subscribe(() => {});
   }
 
   ngOnDestroy() {

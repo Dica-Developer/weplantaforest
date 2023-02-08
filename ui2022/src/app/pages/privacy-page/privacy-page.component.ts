@@ -20,7 +20,6 @@ export class PrivacyPageComponent implements OnInit {
     }
     this.contentService.getInfrastructureArticle('PRIVACY', this.lang).subscribe((res) => {
       this.privacyPolicy = res;
-      console.log(res);
     });
   }
 }

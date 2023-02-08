@@ -20,7 +20,6 @@ export class ImprintPageComponent implements OnInit {
     }
     this.contentService.getInfrastructureArticle('IMPRESS', this.lang).subscribe((res) => {
       this.imprints = res;
-      console.log(res);
     });
   }
 }
