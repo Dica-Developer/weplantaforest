@@ -1,5 +1,6 @@
 package org.dicadeveloper.weplantaforest.team;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +15,7 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
 
     @Query(value = GET_TEAM_DETAILS_QUERY)
     public TeamReportData getTeamDetails(@Param("name") String name);
+
+    @Query(value = "SELECT team FROM Team team WHERE team.name like %:searchValue%")
+    public List<Team> searchTeams(@Param("searchValue") String searchValue);
 }

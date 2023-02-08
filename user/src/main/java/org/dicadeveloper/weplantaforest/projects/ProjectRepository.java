@@ -1,5 +1,7 @@
 package org.dicadeveloper.weplantaforest.projects;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +20,6 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
     @Transactional(readOnly = true)
     public Page<Project> active(Pageable pageable);
 
+    @Query(value = "SELECT project FROM Project project WHERE project.name like %:searchValue%")
+    public List<Project> searchProjects(@Param("searchValue") String searchValue);
 }
