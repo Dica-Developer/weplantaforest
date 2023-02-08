@@ -44,6 +44,7 @@ import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/u
 import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
 import { RankingEffects, rankingReducerFn } from './store/ranking.store';
 import { NgScrollbarModule, NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
+import { SearchEffects, searchReducerFn } from "./store/search.store";
 
 export const MY_FORMATS = {
   parse: {
@@ -119,6 +120,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       treesState: treeReducerFn,
       rankingState: rankingReducerFn,
       projectReportsState: projectsReportReducerFn,
+      searchState: searchReducerFn
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -134,6 +136,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       TreeEffects,
       RankingEffects,
       ProjectReportsEffects,
+      SearchEffects
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),

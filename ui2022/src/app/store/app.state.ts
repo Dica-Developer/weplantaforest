@@ -23,6 +23,7 @@ export interface PagedData<T> {
 }
 
 import { ProjectReportState } from './project-report.store';
+import { SearchState } from "./search.store";
 
 export interface AppState {
   readonly authState: AuthState;
@@ -40,4 +41,5 @@ export interface AppState {
   readonly treesState: TreeState;
   readonly rankingState: RankingState;
   readonly projectReportsState: ProjectReportState;
+  readonly searchState: SearchState;
 }
