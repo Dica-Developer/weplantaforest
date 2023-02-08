@@ -31,16 +31,6 @@ export class LightboxGalleryComponent implements OnInit {
     this.showSlides(index);
   }
 
-  // navigateToCard(id: number) {
-  //   let newIndex = -1;
-  //   this.imageUrls.filter((indexCard, index) => {
-  //     if (indexCard.id === id) {
-  //       newIndex = index;
-  //     }
-  //   });
-  //   this.setCurrentSlide(newIndex);
-  // }
-
   // listens for escape key when menu open
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {

@@ -29,10 +29,36 @@
 /* The Close Button */
 .close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 3rem;
+  top: 2rem;
+  right: 2rem;
   color: var(--background);
+  background: #000000cc;
+  border-radius: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  mat-icon {
+    position: relative;
+    top: 0.5rem;
+    font-size: 2rem;
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+.imageNav {
+  position: absolute;
+  bottom: 4rem;
+  .index {
+    margin: 0 0.25rem;
+    color: var(--background);
+  }
+  .index:hover {
+    cursor: pointer;
+    color: var(--dark-brown);
+  }
+  .selected {
+    color: var(--dark-brown);
+  }
 }
 
 .close:hover,

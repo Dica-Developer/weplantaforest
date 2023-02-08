@@ -11,11 +11,20 @@
   <div class="content" (swiperight)="plusSlides(-1)" (swipeleft)="plusSlides(1)">
     <div *ngFor="let image of imageUrls">
       <div class="mySlides w-100">
-        <span class="close" (click)="closeModal()">&times;</span>
+        <div class="close">
+          <mat-icon>close</mat-icon>
+        </div>
         <img class="slideImage" [src]="image" />
       </div>
-      <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
-      <a class="next" (click)="plusSlides(1)">&#10095;</a>
+      <div class="imageNav w-100 is-flex is-justify-content-center">
+        <mat-icon
+          [class.selected]="slideIndex === i"
+          class="index"
+          *ngFor="let image of imageUrls; let i = index"
+          (click)="openModal(i)"
+          >circle</mat-icon
+        >
+      </div>
     </div>
   </div>
 </div>
