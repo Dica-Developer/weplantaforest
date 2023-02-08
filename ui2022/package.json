@@ -38,6 +38,7 @@
     "ngx-cookie-service": "14.0.1",
     "ngx-cookieconsent": "4.0.1",
     "ngx-editor": "15.0.1",
+    "ngx-scrollbar": "^10.0.1",
     "rxjs": "~7.5.7",
     "tslib": "^2.4.1",
     "zone.js": "~0.12.0"

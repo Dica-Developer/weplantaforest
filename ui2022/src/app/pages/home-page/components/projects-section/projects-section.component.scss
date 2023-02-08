@@ -1,28 +1,28 @@
-div.scrollmenu {
-  overflow: auto;
-  white-space: nowrap;
-}
+// div.scrollmenu {
+//   overflow: auto;
+//   white-space: nowrap;
+// }
 
-div.scrollmenu app-project-tile {
-  display: inline-block;
-  text-align: center;
-  padding: 0.5rem;
-  text-decoration: none;
-}
+// div.scrollmenu app-project-tile {
+//   display: inline-block;
+//   text-align: center;
+//   padding: 0.5rem;
+//   text-decoration: none;
+// }
 
-.scroll {
-  overflow: scroll;
-  // hide srollbar
-  ::-webkit-scrollbar {
-    scrollbar-width: none; /* Firefox */
-    background: transparent !important;
-  }
-}
+// .scroll {
+//   overflow: scroll;
+//   // hide srollbar
+//   ::-webkit-scrollbar {
+//     scrollbar-width: none; /* Firefox */
+//     background: transparent !important;
+//   }
+// }
 
-.scroll::-webkit-scrollbar {
-  display: none;
-  /* for Chrome, Safari, and Opera */
-}
+// .scroll::-webkit-scrollbar {
+//   display: none;
+//   /* for Chrome, Safari, and Opera */
+// }
 
 .projectTile {
   height: 700px;
@@ -49,4 +49,17 @@ app-circle-icon {
   .projectTile {
     height: initial;
   }
+}
+
+.project-row {
+  display: flex;
+  padding-bottom: 15px;
+}
+
+ng-scrollbar {
+  border: none;
+  --scrollbar-size: 8px;
+  --scrollbar-thumb-color: #65594e;
+  --scrollbar-border-radius: 4px;
+  // border: 1px solid gray;
 }

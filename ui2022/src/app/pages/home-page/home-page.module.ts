@@ -7,6 +7,7 @@ import { ForestTourComponent } from './components/forest-tour/forest-tour.compon
 import { PlantedTreesComponent } from './components/planted-trees/planted-trees.component';
 import { ProjectsSectionComponent } from './components/projects-section/projects-section.component';
 import { RouterModule } from '@angular/router';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { RouterModule } from '@angular/router';
     PlantedTreesComponent,
     ProjectsSectionComponent,
   ],
-  imports: [CommonModule, UtilModule, RouterModule],
+  imports: [CommonModule, UtilModule, RouterModule, NgScrollbarModule],
   exports: [HomePageComponent],
 })
 export class HomePageModule {}

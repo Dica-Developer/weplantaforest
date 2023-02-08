@@ -43,6 +43,7 @@ import localeDeExtra from '@angular/common/locales/extra/de';
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
 import { RankingEffects, rankingReducerFn } from './store/ranking.store';
+import { NgScrollbarModule, NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
 
 export const MY_FORMATS = {
   parse: {
@@ -183,6 +184,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
         deps: [HttpClient],
       },
     }),
+    NgScrollbarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
