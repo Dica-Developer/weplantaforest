@@ -11,9 +11,7 @@ export class LightboxGalleryComponent implements OnInit {
 
   constructor(private elem: ElementRef) {}
 
-  ngOnInit(): void {
-    console.log(this.imageUrls);
-  }
+  ngOnInit(): void {}
 
   openModal(index: number) {
     this.slideIndex = index;
