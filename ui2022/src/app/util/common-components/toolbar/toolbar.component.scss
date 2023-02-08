@@ -20,22 +20,6 @@ mat-toolbar {
   }
 }
 
-.inputOutline {
-  border: 1px var(--background) solid;
-  border-radius: 2.25rem;
-}
-
-input {
-  font-family: 'Bull-mono';
-  min-width: 500px;
-  background: #00000000;
-  color: var(--background);
-  margin: 1rem;
-  border: none;
-  outline: 0;
-  font-size: 1rem;
-}
-
 mat-icon {
   cursor: pointer;
   width: 40px;
@@ -63,23 +47,6 @@ mat-icon:hover {
   height: 100vh;
   width: 100%;
   transition: 0.5s;
-
-  .icon {
-    width: 4rem;
-    height: 4rem;
-    mat-icon {
-      color: var(--background);
-      height: 4rem;
-      width: 4rem;
-      font-size: 4rem;
-    }
-    mat-icon:hover {
-      color: var(--green);
-    }
-    position: absolute;
-    top: 6rem;
-    right: 4%;
-  }
 }
 
 .overlayOpen {
@@ -89,28 +56,11 @@ mat-icon:hover {
 }
 
 @media only screen and (max-width: 768px) {
-  input {
-    min-width: 300px;
-    font-size: 0.8rem;
-  }
-
   .hide-mobile {
     display: none;
   }
 
   .hide-desktop {
     display: flex;
-  }
-
-  .overlay {
-    .icon {
-      width: 3rem;
-      height: 3rem;
-      mat-icon {
-        height: 3rem;
-        width: 3rem;
-        font-size: 3rem;
-      }
-    }
   }
 }

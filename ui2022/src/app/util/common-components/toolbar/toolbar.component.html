@@ -45,20 +45,10 @@
 </mat-toolbar>
 
 <div
-  class="overlay is-align-items-center is-justify-content-center center"
+  class="overlay is-align-items-center is-justify-content-center center is-flex-direction-column"
   [ngClass]="overlayIsOpen ? 'overlayOpen' : ''"
 >
-  <div class="icon" (click)="toggleSearch()">
-    <mat-icon>close</mat-icon>
-  </div>
-  <div class="inputOutline">
-    <input
-      [placeholder]="'enterSearch' | translate"
-      name="search"
-      type="text"
-      [formControl]="control"
-    />
-  </div>
+  <app-search-overlay (searchClosed)="toggleSearch()"></app-search-overlay>
 </div>
 
 <app-mobile-menu

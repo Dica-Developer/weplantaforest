@@ -18,22 +18,11 @@ export class ToolbarComponent implements OnInit {
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
   menuOpened = false;
   overlayIsOpen = false;
-  control: FormControl = new FormControl('');
   loggedIn = localStorage.getItem('jwt');
-
-  valueCHangeSub: Subscription;
-
-  searchResults$ = this.store.select(selectSearchResults);
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
-  ngOnInit(): void {
-    this.valueCHangeSub = this.control.valueChanges.subscribe((searchValue) => {
-      if (searchValue && searchValue.length > 1) {
-        this.store.dispatch(search({ searchValue }));
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   loginClicked() {
     this.router.navigate(['/login']);
@@ -48,8 +37,8 @@ export class ToolbarComponent implements OnInit {
   }
 
   toggleSearch() {
-    if(!this.overlayIsOpen) {
-      window.scroll(0,0);
+    if (!this.overlayIsOpen) {
+      window.scroll(0, 0);
     }
     this.overlayIsOpen = !this.overlayIsOpen;
   }
