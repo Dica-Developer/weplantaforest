@@ -3,10 +3,10 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { AppState } from 'src/app/store/app.state';
-import { logout } from 'src/app/store/auth.store';
-import { search } from 'src/app/store/search.store';
-import { environment } from 'src/environments/environment';
+import { AppState } from '../../../store/app.state';
+import { logout } from '../../../store/auth.store';
+import { search, selectSearchResults } from '../../../store/search.store';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-toolbar',
@@ -22,6 +22,8 @@ export class ToolbarComponent implements OnInit {
   loggedIn = localStorage.getItem('jwt');
 
   valueCHangeSub: Subscription;
+
+  searchResults$ = this.store.select(selectSearchResults);
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
@@ -46,6 +48,9 @@ export class ToolbarComponent implements OnInit {
   }
 
   toggleSearch() {
+    if(!this.overlayIsOpen) {
+      window.scroll(0,0);
+    }
     this.overlayIsOpen = !this.overlayIsOpen;
   }
 }
