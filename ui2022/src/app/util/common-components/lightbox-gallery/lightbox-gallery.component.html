@@ -16,6 +16,9 @@
         </div>
         <img class="slideImage" [src]="image" />
       </div>
+
+      <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+      <a class="next" (click)="plusSlides(1)">&#10095;</a>
       <div class="imageNav w-100 is-flex is-justify-content-center">
         <mat-icon
           [class.selected]="slideIndex === i"

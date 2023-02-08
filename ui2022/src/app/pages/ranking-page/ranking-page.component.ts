@@ -23,6 +23,7 @@ export class RankingPageComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.loadRankings('bestUser');
   }
 
