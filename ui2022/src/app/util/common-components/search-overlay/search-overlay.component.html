@@ -9,6 +9,39 @@
     [formControl]="control"
   />
 </div>
-<div class="results" *ngFor="let result of (searchResults$ | async).projects">
-  {{ result.name }}
+
+<div class="results w-100">
+  <div
+    class="result is-flex is-justify-content-space-between"
+    *ngFor="let result of (searchResults$ | async).projects"
+  >
+    <span>
+      {{ result.name }}
+    </span>
+    <span class="type">
+      {{ 'project' | translate }}
+    </span>
+  </div>
+  <div
+    class="result is-flex is-justify-content-space-between"
+    *ngFor="let result of (searchResults$ | async).teams"
+  >
+    <span>
+      {{ result.name }}
+    </span>
+    <span class="type">
+      {{ 'team' | translate }}
+    </span>
+  </div>
+  <div
+    class="result is-flex is-justify-content-space-between"
+    *ngFor="let result of (searchResults$ | async).users"
+  >
+    <span>
+      {{ result.name }}
+    </span>
+    <span class="type">
+      {{ 'users' | translate }}
+    </span>
+  </div>
 </div>

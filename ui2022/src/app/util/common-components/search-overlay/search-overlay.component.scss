@@ -1,17 +1,19 @@
 .inputOutline {
+  margin: 15rem auto 1rem auto;
   border: 1px var(--background) solid;
   border-radius: 2.25rem;
+  width: 567px;
 }
 
 input {
   font-family: 'Bull-mono';
-  min-width: 500px;
   background: #00000000;
   color: var(--background);
   margin: 1rem;
   border: none;
   outline: 0;
   font-size: 1rem;
+  width: 100%;
 }
 
 .icon {
@@ -32,12 +34,34 @@ input {
   right: 4%;
 }
 
-.results {
-  color: red;
+.result {
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.75rem;
+  color: var(--background);
 }
+
+.result:hover {
+  background: var(--dark-brown-hover);
+  cursor: pointer;
+}
+
+.type {
+  margin-left: 1rem;
+  color: gray;
+}
+
+span {
+  text-align: left;
+}
+
 @media only screen and (max-width: 768px) {
+  .inputOutline {
+    width: 350px;
+  }
+
   input {
-    min-width: 300px;
+    width: 300px;
     font-size: 0.8rem;
   }
 

@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { AppState } from '../../../store/app.state';
 import { logout } from '../../../store/auth.store';
-import { search, selectSearchResults } from '../../../store/search.store';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -34,6 +31,14 @@ export class ToolbarComponent implements OnInit {
 
   toggleMenu() {
     this.menuOpened = !this.menuOpened;
+  }
+
+  // listens for escape key when menu open
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.overlayIsOpen) {
+      this.overlayIsOpen = false;
+    }
   }
 
   toggleSearch() {
