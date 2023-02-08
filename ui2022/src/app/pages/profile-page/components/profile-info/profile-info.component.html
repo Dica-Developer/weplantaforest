@@ -18,7 +18,9 @@
       <div class="column is-half">
         <p>{{ 'rank' | translate }}: {{ profileDetails.rank }}</p>
         <p>{{ 'treesPlanted' | translate }}: {{ profileDetails.co2Data.treesCount }}</p>
-        <p>{{ 'CO2Trapped' | translate }}: {{ profileDetails.co2Data.co2 + ' t' }}</p>
+        <p
+          innerHTML="{{ ('CO2Trapped' | translate) + ': ' + profileDetails.co2Data.co2 + ' t' }}"
+        ></p>
         <p>{{ 'website' | translate }}: {{ profileDetails.homepage }}</p>
       </div>
       <div class="column is-half">
@@ -67,7 +69,7 @@
       <div class="column is-half">
         <p>{{ 'rank' | translate }}: {{ teamDetails.rank }}</p>
         <p>{{ 'treesPlanted' | translate }}: {{ teamDetails.treesPlanted }}</p>
-        <p>{{ 'CO2Trapped' | translate }}: {{ teamDetails.CO2Trapped }}</p>
+        <p innerHTML="{{ ('CO2Trapped' | translate) + ': ' + teamDetails.CO2Trapped + ' t' }}"></p>
         <p>{{ 'website' | translate }}: {{ teamDetails.website }}</p>
       </div>
       <div class="column is-half">

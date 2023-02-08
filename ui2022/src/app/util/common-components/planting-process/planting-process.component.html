@@ -8,9 +8,7 @@
         <app-tree-icon></app-tree-icon>
       </div>
       <h4>{{ 'selectTree' | translate }}</h4>
-      <p class="desc">
-        {{ 'selectTreeText' | translate }}
-      </p>
+      <p class="desc" [innerHTML]="'selectTreeText' | translate"></p>
     </div>
     <div class="line"></div>
     <div class="is-flex is-flex-direction-column is-align-items-center">

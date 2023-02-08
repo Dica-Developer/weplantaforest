@@ -16,7 +16,7 @@
     </nav>
 
     <h2>{{ 'plantedTrees' | translate | titlecase }}</h2>
-    <p>{{ 'rankingPageText' | translate }}</p>
+    <p [innerHTML]="'rankingPageText' | translate"></p>
     <div class="radio-buttons">
       <div class="category">
         <div
