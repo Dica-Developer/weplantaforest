@@ -1,7 +1,7 @@
 <div
   class="is-flex is-flex-direction-column"
   #imageLink
-  *ngFor="let imageUrl of imageUrls; let i = index"
+  *ngFor="let imageUrl of imageUrls.slice(0, 5); let i = index"
 >
   <img id="myImg" [src]="imageUrl" (click)="openModal(i)" />
 </div>

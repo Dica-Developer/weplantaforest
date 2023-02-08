@@ -1,5 +1,5 @@
 <div class="project-tile is-flex is-flex-direction-column" (click)="route()">
-  <img src="assets/ycul.jpg" alt="" />
+  <img [src]="imgUrl" alt="image" />
   <div class="tile-body h-100 is-flex is-flex-direction-column is-justify-content-space-between">
     <h4>{{ projectReport.projectName }}</h4>
     <div class="description" innerHtml="{{ description }}"></div>

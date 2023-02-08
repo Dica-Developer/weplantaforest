@@ -11,18 +11,33 @@ import { environment } from 'src/environments/environment';
 })
 export class ProjectDescriptionComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
-  imgUrl: string;
   description: string;
-  imageUrls: String[] = ['assets/lucy.jpg', 'assets/upside.jpg', 'assets/lucy.jpg'];
+  // imageUrls: String[] = [
+  //   'assets/lucy.jpg',
+  //   'assets/upside.jpg',
+  //   'assets/lucy.jpg',
+  //   'assets/upside.jpg',
+  //   'assets/lucy.jpg',
+  //   'assets/upside.jpg',
+  //   'assets/lucy.jpg',
+  //   'assets/upside.jpg',
+  //   'assets/lucy.jpg',
+  //   'assets/upside.jpg',
+  //   'assets/lucy.jpg',
+  //   'assets/upside.jpg',
+  //   'assets/lucy.jpg',
+  // ];
+  imageUrls: String[] = [];
   constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
 
   ngOnInit(): void {
-    // this.imgUrl =
-    //   environment.backendUrl +
-    //   '/project/image/' +
-    //   encodeURI(this.projectReport.projectImageFileName) +
-    //   '/300/300';
-    this.imgUrl = environment.baseUrl + '/assets/lucy.jpg';
+    this.imageUrls = [];
+    console.log(this.projectReport.images);
+    for (let image of this.projectReport.images) {
+      let url =
+        environment.backendUrl + '/project/image/' + encodeURI(image.imageFileName) + '/300/300';
+      this.imageUrls.push(url);
+    }
     this.description = this.textHelper.getTextForLanguage(
       this.projectReport.projectReportData.description,
       this.translateService.currentLang,

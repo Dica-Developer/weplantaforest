@@ -5,6 +5,9 @@
     <a routerLink="/projects">{{ 'backToProjects' | translate }}</a>
   </div>
   <div class="column is-two-fifths">
-    <app-lightbox-gallery *ngIf="imageUrls" [imageUrls]="imageUrls"></app-lightbox-gallery>
+    <app-lightbox-gallery
+      *ngIf="imageUrls?.length > 0"
+      [imageUrls]="imageUrls"
+    ></app-lightbox-gallery>
   </div>
 </div>
