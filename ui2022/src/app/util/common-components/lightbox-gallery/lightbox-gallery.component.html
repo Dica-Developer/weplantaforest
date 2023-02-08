@@ -11,7 +11,7 @@
   <div class="content" (swiperight)="plusSlides(-1)" (swipeleft)="plusSlides(1)">
     <div *ngFor="let image of imageUrls">
       <div class="mySlides w-100">
-        <div class="close">
+        <div class="close" (click)="closeModal()">
           <mat-icon>close</mat-icon>
         </div>
         <img class="slideImage" [src]="image" />
