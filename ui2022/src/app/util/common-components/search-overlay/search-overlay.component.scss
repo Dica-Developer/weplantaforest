@@ -20,6 +20,9 @@ input {
   cursor: pointer;
   width: 4rem;
   height: 4rem;
+  position: absolute;
+  top: 6rem;
+  right: 3rem;
   mat-icon {
     color: var(--background);
     height: 4rem;
@@ -29,12 +32,19 @@ input {
   mat-icon:hover {
     color: var(--green);
   }
-  position: absolute;
-  top: 6rem;
-  right: 4%;
+}
+
+.results {
+  margin: 0 auto;
+  max-width: 900px;
 }
 
 .result {
+  span {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: clip;
+  }
   border-radius: 0.5rem;
   font-size: 1rem;
   padding: 0.75rem;
@@ -47,12 +57,9 @@ input {
 }
 
 .type {
+  // font-family: 'Bull-regular' !important;
   margin-left: 1rem;
   color: gray;
-}
-
-span {
-  text-align: left;
 }
 
 @media only screen and (max-width: 768px) {
@@ -68,6 +75,7 @@ span {
   .icon {
     width: 3rem;
     height: 3rem;
+    right: 1rem;
     mat-icon {
       height: 3rem;
       width: 3rem;

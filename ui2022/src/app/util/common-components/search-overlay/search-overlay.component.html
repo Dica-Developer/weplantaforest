@@ -14,6 +14,8 @@
   <div
     class="result is-flex is-justify-content-space-between"
     *ngFor="let result of (searchResults$ | async).projects"
+    routerLink="/{{ result.link }}"
+    (click)="closeSearch()"
   >
     <span>
       {{ result.name }}
@@ -25,6 +27,8 @@
   <div
     class="result is-flex is-justify-content-space-between"
     *ngFor="let result of (searchResults$ | async).teams"
+    routerLink="/{{ result.link }}"
+    (click)="closeSearch()"
   >
     <span>
       {{ result.name }}
@@ -35,13 +39,15 @@
   </div>
   <div
     class="result is-flex is-justify-content-space-between"
-    *ngFor="let result of (searchResults$ | async).users"
+    *ngFor="let result of (searchResults$ | async).user"
+    routerLink="/{{ result.link }}"
+    (click)="closeSearch()"
   >
     <span>
       {{ result.name }}
     </span>
     <span class="type">
-      {{ 'users' | translate }}
+      {{ 'profile' | translate }}
     </span>
   </div>
 </div>

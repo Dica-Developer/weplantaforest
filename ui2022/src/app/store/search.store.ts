@@ -25,6 +25,7 @@ export interface SearchState {
 export interface IdName {
   id: number;
   name: string;
+  link: string;
 }
 export const initialState: SearchState = {
   result: {

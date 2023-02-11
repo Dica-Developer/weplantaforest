@@ -19,7 +19,7 @@ import org.dicadeveloper.weplantaforest.projects.Project;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j; 
 import lombok.NonNull;
 
 @RestController
@@ -40,13 +40,13 @@ public class SearchController {
     List<Project> projects = projectRepository.searchProjects(searchValue);
 
     for (User user : users) {
-      result.user.add(new IdName(user.getId(), user.getName()));
+      result.user.add(new IdName(user.getId(), user.getName(), "profile/" + user.getName()));
     }
     for (Team team : teams) {
-      result.teams.add(new IdName(team.getId(), team.getName()));
+      result.teams.add(new IdName(team.getId(), team.getName(), "team/" + team.getName()));
     }
     for (Project project : projects) {
-      result.projects.add(new IdName(project.getId(), project.getName()));
+      result.projects.add(new IdName(project.getId(), project.getName(), "project/" + project.getName()));
     }
 
     return new ResponseEntity<>(result, HttpStatus.OK);

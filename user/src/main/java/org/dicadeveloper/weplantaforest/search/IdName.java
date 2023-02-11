@@ -8,4 +8,5 @@ import lombok.Getter;
 public class IdName {
   Long id;
   String name;
+  String link;
 }
