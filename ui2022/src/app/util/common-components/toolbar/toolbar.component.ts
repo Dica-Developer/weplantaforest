@@ -33,6 +33,12 @@ export class ToolbarComponent implements OnInit {
     this.menuOpened = !this.menuOpened;
   }
 
+  closeSearch() {
+    if (this.overlayIsOpen) {
+      this.overlayIsOpen = false;
+    }
+  }
+
   // listens for escape key when menu open
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
