@@ -1,0 +1,39 @@
+<div class="columns w-100 padding-2 border-bottom" *ngIf="teamDetails">
+  <div class="column is-half">
+    <h2>
+      {{ 'team' | translate }}
+    </h2>
+    <h4>{{ teamDetails.teamName }}</h4>
+    <h4>{{ teamDetails.organisation }}</h4>
+  </div>
+  <div class="column is-half">
+    <div class="imageWrapper">
+      <img src="{{ teamDetails.teamImageUrl }}" alt="" />
+    </div>
+  </div>
+</div>
+<div class="columns w-100 padding-2 border-bottom" *ngIf="!teamDetails">
+  <div class="column is-half">
+    <h2>
+      {{ 'team' | translate }}
+    </h2>
+    <h4>{{ teamDetails.userName }} {{ 'noTeamYet' | translate }}</h4>
+  </div>
+  <div class="column is-half">
+    <div class="imageWrapper"></div>
+  </div>
+</div>
+<div class="columns padding-2" *ngIf="teamDetails">
+  <div class="column is-half">
+    <p>{{ 'rank' | translate }}: {{ teamDetails.rank }}</p>
+    <p>{{ 'treesPlanted' | translate }}: {{ teamDetails.treesPlanted }}</p>
+    <p innerHTML="{{ ('CO2Trapped' | translate) + ': ' + teamDetails.CO2Trapped + ' t' }}"></p>
+    <p>{{ 'website' | translate }}: {{ teamDetails.website }}</p>
+  </div>
+  <div class="column is-half">
+    <p>{{ 'memberSince' | translate }}: {{ teamDetails.rank }}</p>
+    <p>{{ 'type' | translate }}: {{ teamDetails.treesPlanted }}</p>
+    <p>{{ 'teamLeader' | translate }}: {{ teamDetails.adminName }}</p>
+    <p>{{ 'members' | translate }}: {{ teamDetails.memberCount }}</p>
+  </div>
+</div>

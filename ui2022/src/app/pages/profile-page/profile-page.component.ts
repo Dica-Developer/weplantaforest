@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { loadProfileDetails, selectProfileDetails } from 'src/app/store/profile.store';
 import { selectActiveProjectReports } from 'src/app/store/project-report.store';
-import { loadTeamDetails, selectTeamDetails } from 'src/app/store/team.store';
+import { selectTeamDetails } from 'src/app/store/team.store';
 
 @Component({
   selector: 'app-profile-page',
