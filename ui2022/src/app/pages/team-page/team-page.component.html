@@ -1,0 +1,25 @@
+<!-- <app-team-info
+  *ngIf="profileDetails$ | async"
+  [teamDetails]="teamDetails$ | async"
+></app-team-info> -->
+
+<!-- <div
+  class="is-flex is-flex-direction-column w-100 padding-2"
+  *ngIf="(profileDetails$ | async)?.trees?.content"
+>
+  <h4 class="center">{{ 'plantings' | translate }}</h4>
+  <div class="columns is-flex is-flex-direction-row is-multiline">
+    <app-carousel-item
+      *ngFor="let planting of (profileDetails$ | async).trees.content"
+      [rankingItem]="{
+        name: planting.projectName,
+        amount: planting.amount,
+        imageUrl: planting.treeTypeImageUrl,
+        linkTo: planting.projectLink
+      }"
+      class="column is-one-quarter"
+    >
+    </app-carousel-item>
+  </div>
+</div> -->
+<app-newsletter> </app-newsletter>

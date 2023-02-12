@@ -12,6 +12,7 @@ import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { ProjectPageModule } from './project-page/project-page.module';
 import { ProjectReportsOverviewModule } from './project-reports-overview-page/project-reports-overview.module';
 import { ProfilePageModule } from './profile-page/profile-page.module';
+import { TeamPageModule } from './team-page/team-page.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ProfilePageModule } from './profile-page/profile-page.module';
     RankingPageModule,
     ProjectReportsOverviewModule,
     ProfilePageModule,
+    TeamPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,
