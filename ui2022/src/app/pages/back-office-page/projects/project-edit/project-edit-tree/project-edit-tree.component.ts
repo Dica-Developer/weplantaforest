@@ -45,6 +45,7 @@ export class ProjectEditTreeComponent implements OnInit, OnDestroy {
           name: this.textHelper.getTextForLanguage(tt.name, 'de'),
         });
       }
+      console.log(res);
     });
   }
 

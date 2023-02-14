@@ -23,6 +23,20 @@
   border-radius: 9px;
 }
 
+.imageWrapper {
+  display: flex;
+  align-items: center; /* vertical */
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  max-height: 300px;
+  img {
+    height: auto;
+    width: 100%;
+  }
+}
+
 .tile-body {
   font-family: 'Bull-mono';
   padding: 1rem;
