@@ -44,6 +44,7 @@ import { NewsletterComponent } from './common-components/newsletter/newsletter.c
 import { CarouselItemComponent } from './common-components/carousel-item/carousel-item.component';
 import { LightboxGalleryComponent } from './common-components/lightbox-gallery/lightbox-gallery.component';
 import { SearchOverlayComponent } from './common-components/search-overlay/search-overlay.component';
+import { TreeInfoOverlayComponent } from './common-components/tree-info-overlay/tree-info-overlay.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { SearchOverlayComponent } from './common-components/search-overlay/searc
     CarouselItemComponent,
     LightboxGalleryComponent,
     SearchOverlayComponent,
+    TreeInfoOverlayComponent,
   ],
   imports: [
     CommonModule,
