@@ -51,5 +51,8 @@
 <app-mobile-menu
   (menuClosed)="toggleMenu()"
   (clickedSearchEmitter)="toggleSearch(); toggleMenu()"
+  (clickedLogin)="loginClicked(); toggleMenu()"
+  (clickedLogout)="logoutClicked(); toggleMenu()"
   *ngIf="menuOpened"
+  [loggedIn]="loggedIn"
 ></app-mobile-menu>

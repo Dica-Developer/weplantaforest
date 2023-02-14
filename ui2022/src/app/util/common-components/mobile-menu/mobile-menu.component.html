@@ -11,7 +11,16 @@
   <div class="is-flex h-80px border-bottom">
     <div class="h-100 is-flex-grow-3 border-right"></div>
     <div class="h-100 w-160px center-vertically-horizontally">
-      <app-button label="{{ 'login' | translate }}" (clicked)="loginClicked()"></app-button>
+      <app-button
+        *ngIf="!loggedIn"
+        label="{{ 'login' | translate }}"
+        (clicked)="loginClicked()"
+      ></app-button>
+      <app-button
+        *ngIf="loggedIn"
+        label="{{ 'logout' | translate }}"
+        (clicked)="logoutClicked()"
+      ></app-button>
     </div>
   </div>
   <div
