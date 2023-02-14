@@ -79,6 +79,11 @@
   "teamLeader": "Teamleiter",
   "members": "Mitglieder",
   "plantings": "Pflanzungen",
-  "noTeamYet": "ist noch keinem Team beigetreten."
-
+  "noTeamYet": "ist noch keinem Team beigetreten.",
+  "detailedProcessHere": "Detaillierter Ablauf hier",
+  "plantText1": "Kurze Beschreibung zum Ablauf:",
+  "plantText2": "Absprung zu Über uns",
+  "tree": "Baum",
+  "trees": "Bäume",
+  "createSelfplantedTree": "Eigene Pflanzung erstellen"
 }

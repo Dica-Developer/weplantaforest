@@ -13,6 +13,8 @@ import { ProjectPageModule } from './project-page/project-page.module';
 import { ProjectReportsOverviewModule } from './project-reports-overview-page/project-reports-overview.module';
 import { ProfilePageModule } from './profile-page/profile-page.module';
 import { TeamPageModule } from './team-page/team-page.module';
+import { PlantProposalPageComponent } from './plant-proposal-page/plant-proposal-page.component';
+import { NgxSliderModule } from "@angular-slider/ngx-slider";
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { TeamPageModule } from './team-page/team-page.module';
     ResetPasswordPageComponent,
     ImprintPageComponent,
     PrivacyPageComponent,
+    PlantProposalPageComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +35,7 @@ import { TeamPageModule } from './team-page/team-page.module';
     ProjectReportsOverviewModule,
     ProfilePageModule,
     TeamPageModule,
+    NgxSliderModule
   ],
   exports: [
     ForgotPasswordPageComponent,

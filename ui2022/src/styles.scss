@@ -147,3 +147,20 @@ snack-bar-container {
 .ag-icon {
   font-family: 'agGridAlpine' !important;
 }
+
+.border-right {
+  border-right-style: solid;
+  border-right: 1px;
+}
+
+.border-top-right {
+  border-right-style: solid!important;
+  border-right: 1px;
+  border-top-style: solid!important;
+  border-top: 1px;
+}
+
+.border-top {
+  border-top-style: solid!important;
+  border-top: 1px;
+}

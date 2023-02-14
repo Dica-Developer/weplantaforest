@@ -1,0 +1,45 @@
+<div class="columns">
+  <div class="column padding-left is-one-third border-right">
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li>
+          <a class="breadcrumb-active">
+            {{ 'plantTree' | translate | titlecase }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <h2>{{ 'plantTree' | translate | titlecase }}</h2>
+    <p class="desktop">
+      {{ 'plantText1' | translate }} <br />
+      {{ 'plantText2' | translate }}
+    </p>
+    <a routerLink="/">
+      {{ 'detailedProcessHere' | translate }}
+    </a>
+  </div>
+  <div class="column">
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          {{ ' ' }}
+        </li>
+      </ul>
+    </nav>
+    <h2>{{ 'createSelfplantedTree' | translate | titlecase }}</h2>
+  </div>
+</div>
+<div class="columns">
+  <div class="column is-two-thirds border-top-right padding-left padding-right">
+    <div class="custom-slider">
+      <ngx-slider [(value)]="value" [options]="sliderOptions" (valueChange)="getProposal($event)"></ngx-slider>
+    </div>
+  </div>
+  <div class="column border-top"></div>
+</div>

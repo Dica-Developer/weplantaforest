@@ -23,6 +23,7 @@ import { ProjectPageComponent } from './pages/project-page/project-page.componen
 import { ProjectReportsOverviewPageComponent } from './pages/project-reports-overview-page/project-reports-overview-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { TeamPageComponent } from './pages/team-page/team-page.component';
+import { PlantProposalPageComponent } from "./pages/plant-proposal-page/plant-proposal-page.component";
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -45,6 +46,7 @@ export const userRoutes: Routes = [
   { path: 'privacy', component: PrivacyPageComponent },
   { path: 'profile/:username', component: ProfilePageComponent },
   { path: 'team/:teamname', component: TeamPageComponent },
+  { path: 'plant', component: PlantProposalPageComponent },
 ];
 
 const routes: Routes = [
