@@ -27,6 +27,7 @@ export class ToolbarComponent implements OnInit {
 
   logoutClicked() {
     this.store.dispatch(logout());
+    this.loggedIn = localStorage.getItem('jwt');
   }
 
   toggleMenu() {

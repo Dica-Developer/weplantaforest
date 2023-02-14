@@ -13,18 +13,14 @@ export class AuthService {
     return this.http.post(
       environment.backendUrl + '/api/login',
       { name, password },
-      { observe: 'response' }
+      { observe: 'response' },
     );
   }
 
   resetPasswordRequest(email: string, language: string) {
     return this.http.post(
-      environment.backendUrl +
-        '/password_request?userName=' +
-        email +
-        '&language=' +
-        language,
-      {}
+      environment.backendUrl + '/password_request?userName=' + email + '&language=' + language,
+      {},
     );
   }
 
@@ -40,7 +36,7 @@ export class AuthService {
         '&language=' +
         language,
       {},
-      { responseType: 'text' }
+      { responseType: 'text' },
     );
   }
 
@@ -54,7 +50,7 @@ export class AuthService {
         '&language=' +
         language,
       {},
-      { responseType: 'text' }
+      { responseType: 'text' },
     );
   }
 }

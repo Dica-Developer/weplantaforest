@@ -141,6 +141,7 @@ export class AuthEffects {
         ofType(logout),
         tap((action: any) => {
           this.router.navigate(['/']);
+          localStorage.removeItem('jwt');
         }),
       ),
     { dispatch: false },
