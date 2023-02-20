@@ -30,15 +30,19 @@ mat-icon:hover {
 p {
   overflow: hidden;
   text-overflow: ellipsis;
-  // display: -webkit-box;
-  // line-clamp: 8;
-  // -webkit-line-clamp: 8; /* number of lines to show */
-  // -webkit-box-orient: vertical;
 }
 
 .treeTile {
   border: 1px solid var(--black);
-  padding: 0.5rem;
+  padding: 1rem;
+}
+
+.infoPage {
+  padding-top: 0 !important;
+}
+
+.column {
+  padding: 0 !important;
 }
 
 @media only screen and (max-width: 768px) {

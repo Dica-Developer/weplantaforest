@@ -41,7 +41,9 @@
   <div class="treeSelectionTab columns is-mobile">
     <div class="column is-one-fifth-desktop is-half-mobile treeTile" *ngFor="let tree of trees">
       <div class="is-flex is-justify-content-end">
-        {{ tree.name }}
+        <p>
+          {{ tree.name }}
+        </p>
       </div>
       <img src="{{ tree.imgUrl }}" alt="tree" />
     </div>
