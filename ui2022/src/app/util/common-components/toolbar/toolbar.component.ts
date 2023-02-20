@@ -14,6 +14,7 @@ export class ToolbarComponent implements OnInit {
   logoUrl = environment.baseUrl + '/assets/ipatlogo_black.svg';
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
   menuOpened = false;
+  treeInfo = false;
   overlayIsOpen = false;
   loggedIn = localStorage.getItem('jwt');
 
@@ -32,6 +33,10 @@ export class ToolbarComponent implements OnInit {
 
   toggleMenu() {
     this.menuOpened = !this.menuOpened;
+  }
+
+  toggleTreeOverlay() {
+    this.treeInfo = !this.treeInfo;
   }
 
   closeSearch() {

@@ -1,1 +1,49 @@
-<p>tree-info-overlay works!</p>
+<div class="tree-overlay w-100 is-flex-direction-column is-flex">
+  <div class="is-flex is-flex-direction-row is-justify-content-space-between padding-2">
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/projectReports">
+            {{ 'projects' | translate }}
+          </a>
+        </li>
+        <li>
+          <a class="breadcrumb-active">
+            <!-- {{ projectReport.projectReportData.projectName }} -->
+            Lärche
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <mat-icon (click)="closeOverlay()">close</mat-icon>
+  </div>
+
+  <div class="is-flex is-flex-direction-column infoPage padding-2">
+    <div class="description columns is-flex is-flex-direction-row">
+      <div class="column is-half">
+        <h2>Lärche</h2>
+        <p>
+          dasdasdasdasdasdasdasdasd asdasdasdasd asdasdasdasdasda sddasdasdasd asdasdasdasd
+          asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd
+        </p>
+        <p>asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</p>
+      </div>
+      <div class="column is-half imageWrapper">
+        <img src="assets/ycul.jpg" alt="lucy" />
+      </div>
+    </div>
+  </div>
+  <div class="treeSelectionTab columns is-mobile">
+    <div class="column is-one-fifth-desktop is-half-mobile treeTile" *ngFor="let tree of trees">
+      <div class="is-flex is-justify-content-end">
+        {{ tree.name }}
+      </div>
+      <img src="{{ tree.imgUrl }}" alt="tree" />
+    </div>
+  </div>
+</div>
