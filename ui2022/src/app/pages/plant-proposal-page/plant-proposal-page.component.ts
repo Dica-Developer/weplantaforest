@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import {
@@ -17,7 +17,7 @@ import { addPlantbagItem, resetPlantbag } from 'src/app/store/plantbag.store';
   templateUrl: './plant-proposal-page.component.html',
   styleUrls: ['./plant-proposal-page.component.scss'],
 })
-export class PlantProposalPageComponent implements OnInit {
+export class PlantProposalPageComponent implements OnInit, OnDestroy {
   value: number = 5;
 
   simpleProposal;
@@ -39,7 +39,9 @@ export class PlantProposalPageComponent implements OnInit {
     hidePointerLabels: true,
   };
 
-  constructor(private store: Store<AppState>, private translateService: TranslateService) {}
+  constructor(private store: Store<AppState>, private translateService: TranslateService) {
+   
+  }
 
   ngOnInit(): void {
     this.store.dispatch(getSimplePlantProposal({ amountOfTrees: 5 }));
@@ -78,7 +80,7 @@ export class PlantProposalPageComponent implements OnInit {
         value: 100,
         legend: `100 ${trees}`,
       });
-    });
+    });  
   }
 
   ngOnDestroy() {
