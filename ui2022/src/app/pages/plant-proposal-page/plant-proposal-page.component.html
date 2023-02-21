@@ -58,7 +58,10 @@
         </p>
       </div>
       <div class="column is-one-third">
-        <app-button label="{{ 'intoPlantbag' | translate }}"></app-button>
+        <app-button
+          label="{{ 'intoPlantbag' | translate }}"
+          (click)="putIntoPlantbag()"
+        ></app-button>
       </div>
     </div>
   </div>
