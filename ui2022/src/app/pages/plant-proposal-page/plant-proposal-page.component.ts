@@ -9,7 +9,7 @@ import {
 import { Options } from '@angular-slider/ngx-slider';
 import { TranslateService } from '@ngx-translate/core';
 import { loadActiveProjects, selectActiveProjects } from 'src/app/store/project.store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from 'src/app/store/plantbag.store';
 
 @Component({
@@ -28,14 +28,11 @@ export class PlantProposalPageComponent implements OnInit {
   proposalPrice$ = this.store.select(selectProposalPrice);
   activeProjects$: Observable<any>;
 
+  translateTreeSub: Subscription;
+  translateTreesSub: Subscription;
+
   sliderOptions: Options = {
-    stepsArray: [
-      { value: 1, legend: `1 ${this.translateService.instant('tree')}` },
-      { value: 5, legend: `5 ${this.translateService.instant('trees')}` },
-      { value: 10, legend: `10 ${this.translateService.instant('trees')}` },
-      { value: 50, legend: `50 ${this.translateService.instant('trees')}` },
-      { value: 100, legend: `100 ${this.translateService.instant('trees')}` },
-    ],
+    stepsArray: [],
     showTicks: true,
     showTicksValues: false,
     hideLimitLabels: true,
@@ -54,11 +51,41 @@ export class PlantProposalPageComponent implements OnInit {
       this.activeProjects = activeProjects;
     });
     this.activeProjects$ = this.store.select(selectActiveProjects);
+
+    this.translateTreeSub = this.translateService.get('tree').subscribe((tree) => {
+      [{ value: 1, legend: `1 ${tree}` }];
+      this.sliderOptions.stepsArray = [
+        { value: 1, legend: `1 ${tree}` },
+        ...this.sliderOptions.stepsArray,
+      ];
+    });
+
+    this.translateTreesSub = this.translateService.get('trees').subscribe((trees) => {
+      this.sliderOptions.stepsArray.push({
+        value: 5,
+        legend: `5 ${trees}`,
+      });
+      this.sliderOptions.stepsArray.push({
+        value: 10,
+        legend: `10 ${trees}`,
+      });
+      this.sliderOptions.stepsArray.push({
+        value: 50,
+        legend: `50 ${trees}`,
+      });
+
+      this.sliderOptions.stepsArray.push({
+        value: 100,
+        legend: `100 ${trees}`,
+      });
+    });
   }
 
   ngOnDestroy() {
     this.activeProjectsSub.unsubscribe();
     this.proposalSub.unsubscribe();
+    this.translateTreeSub.unsubscribe();
+    this.translateTreesSub.unsubscribe();
   }
 
   getProposal(event) {
