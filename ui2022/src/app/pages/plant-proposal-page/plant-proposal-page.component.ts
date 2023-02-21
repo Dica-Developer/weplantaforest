@@ -39,9 +39,7 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
     hidePointerLabels: true,
   };
 
-  constructor(private store: Store<AppState>, private translateService: TranslateService) {
-   
-  }
+  constructor(private store: Store<AppState>, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.store.dispatch(getSimplePlantProposal({ amountOfTrees: 5 }));
@@ -80,7 +78,7 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
         value: 100,
         legend: `100 ${trees}`,
       });
-    });  
+    });
   }
 
   ngOnDestroy() {
