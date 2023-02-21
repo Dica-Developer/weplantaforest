@@ -4,7 +4,7 @@
   >
     <h2>{{ 'plantTree' | translate }}</h2>
     <p>{{ 'selectAndPlantNow' | translate }}</p>
-    <app-button label="{{ 'plantNow' | translate }}" (clicked)="plantClicked()"></app-button>
+    <app-button label="{{ 'plantNow' | translate }}" routerLink="/plant"></app-button>
   </div>
   <div class="column bordered">
     <app-tree-tile name="Lärche"></app-tree-tile>

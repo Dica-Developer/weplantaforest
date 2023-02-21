@@ -12,9 +12,4 @@ export class PlantTreeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  plantClicked() {
-    console.log('plant clicked');
-    
-  }
-
 }
