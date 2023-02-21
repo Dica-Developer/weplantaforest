@@ -34,6 +34,7 @@ public class TreeType {
     private String name;
 
     @Column(name = "_description")
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class })
     private String description;
 
     @Column(name = "_imageFile")
