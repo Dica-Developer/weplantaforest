@@ -42,6 +42,8 @@ export class ProjectEditTreeComponent implements OnInit, OnDestroy {
       for (let tt of res) {
         this.treeTypes.push({
           id: tt.id,
+          imageFileName: tt.imageFileName,
+          description: tt.description,
           name: this.textHelper.getTextForLanguage(tt.name, 'de'),
         });
       }

@@ -1,10 +1,4 @@
-import {
-  createAction,
-  props,
-  createReducer,
-  on,
-  createSelector,
-} from '@ngrx/store';
+import { createAction, props, createReducer, on, createSelector } from '@ngrx/store';
 import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectService } from '../services/project.service';
@@ -15,6 +9,8 @@ import { addSuccessMessage } from './success-message.state';
 
 export interface TreeType {
   id: number;
+  imageFileName: string;
+  description: string;
   name: string;
 }
 
@@ -128,120 +124,103 @@ export interface ActiveProjectArticle {
 export const loadProjects = createAction('[Project] load projects');
 export const loadProjectsSuccess = createAction(
   '[Project] load projects success',
-  props<{ projects: GridProject[] }>()
+  props<{ projects: GridProject[] }>(),
 );
 
 export const addGridProject = createAction(
   '[Project] add grid project',
-  props<{ project: GridProject }>()
+  props<{ project: GridProject }>(),
 );
 
-export const loadProjectDetails = createAction(
-  '[Project] load details',
-  props<{ id: number }>()
-);
+export const loadProjectDetails = createAction('[Project] load details', props<{ id: number }>());
 export const resetProjectDetails = createAction('[Project] reset details');
 export const loadProjectDetailsSuccess = createAction(
   '[Project] load details success',
-  props<{ projectDetails: ProjectDetails }>()
+  props<{ projectDetails: ProjectDetails }>(),
 );
 
-export const loadProjectArticles = createAction(
-  '[Project] load articles',
-  props<{ id: number }>()
-);
+export const loadProjectArticles = createAction('[Project] load articles', props<{ id: number }>());
 export const loadProjectArticlesSuccess = createAction(
   '[Project] load articles success',
-  props<{ articles: ProjectArticle[] }>()
+  props<{ articles: ProjectArticle[] }>(),
 );
 
 export const addArticle = createAction(
   '[Project] add article',
-  props<{ article: ProjectArticle }>()
+  props<{ article: ProjectArticle }>(),
 );
 
-export const deleteArticle = createAction(
-  '[Project] delete article',
-  props<{ id: number }>()
-);
+export const deleteArticle = createAction('[Project] delete article', props<{ id: number }>());
 export const deleteArticleSuccess = createAction(
   '[Project] delete article success',
-  props<{ id: number }>()
+  props<{ id: number }>(),
 );
 export const deleteArticleWithoutId = createAction(
   '[Project] delete article without id',
-  props<{ article: ProjectArticle; index: number }>()
+  props<{ article: ProjectArticle; index: number }>(),
 );
 
-export const loadProjectImages = createAction(
-  '[Project] load images',
-  props<{ id: number }>()
-);
+export const loadProjectImages = createAction('[Project] load images', props<{ id: number }>());
 export const loadProjectImagesSuccess = createAction(
   '[Project] load images success',
-  props<{ images: ProjectImage[] }>()
+  props<{ images: ProjectImage[] }>(),
 );
 
 export const deleteProjectImage = createAction(
   '[Project] delete image',
-  props<{ id: number; imageFileName: string }>()
+  props<{ id: number; imageFileName: string }>(),
 );
 export const deleteProjectImageSuccess = createAction(
   '[Project] delete image success',
-  props<{ id: number }>()
+  props<{ id: number }>(),
 );
 
 export const createEditProjectImageData = createAction(
   '[Project] create/edit projectImage data',
-  props<{ projectImageData: ProjectImageCreateEditRequest; file: any }>()
+  props<{ projectImageData: ProjectImageCreateEditRequest; file: any }>(),
 );
 
 export const addProjectImage = createAction(
   '[Project] add project image',
-  props<{ image: ProjectImage }>()
+  props<{ image: ProjectImage }>(),
 );
 
 export const uploadProjectImage = createAction(
   '[Project] upload image',
-  props<{ imageId: number; file: any }>()
+  props<{ imageId: number; file: any }>(),
 );
 
 export const updateProject = createAction(
   '[Project] update',
-  props<{ request: ProjectEditRequest; mainImageFile: any }>()
+  props<{ request: ProjectEditRequest; mainImageFile: any }>(),
 );
 
 export const updateProjectMainImage = createAction(
   '[Project] update mainImage',
-  props<{ projectId: number; file: any }>()
+  props<{ projectId: number; file: any }>(),
 );
 
-export const deleteProject = createAction(
-  '[Project] delete project',
-  props<{ id: number }>()
-);
+export const deleteProject = createAction('[Project] delete project', props<{ id: number }>());
 export const deleteProjectSuccess = createAction(
   '[Project] delete project success',
-  props<{ id: number }>()
+  props<{ id: number }>(),
 );
 
-export const loadActiveProjects = createAction(
-  '[Project] load active projects'
-);
+export const loadActiveProjects = createAction('[Project] load active projects');
 
 export const loadActiveProjectsSuccess = createAction(
   '[Project] load active projects success',
-  props<{ activeProjects: ActiveProject[] }>()
+  props<{ activeProjects: ActiveProject[] }>(),
 );
 
 export const loadActiveProjectArticles = createAction(
   '[Project] load active project articles',
-  props<{ id: number; projectName: string }>()
+  props<{ id: number; projectName: string }>(),
 );
 
 export const loadActiveProjectArticlesSuccess = createAction(
   '[Project] load active projects articles success',
-  props<{ id: number; articles: ActiveProjectArticle[] }>()
+  props<{ id: number; articles: ActiveProjectArticle[] }>(),
 );
 
 export interface ProjectState {
@@ -320,9 +299,7 @@ const projectsReducer = createReducer(
     ...state,
     projectDetails: {
       ...state.projectDetails,
-      articles: state.projectDetails.articles.filter(
-        (el) => el.articleId != id
-      ),
+      articles: state.projectDetails.articles.filter((el) => el.articleId != id),
     },
   })),
   on(deleteArticleWithoutId, (state, { article, index }) => {
@@ -350,18 +327,15 @@ const projectsReducer = createReducer(
       images: state.projectDetails.images.filter((el) => el.imageId != id),
     },
   })),
-  on(
-    addProjectImage,
-    (state, { image }) => {
-      return {
-        ...state,
-        projectDetails: {
-          ...state.projectDetails,
-          images: [image, ...state.projectDetails.images],
-        },
-      };
-    }
-  ),
+  on(addProjectImage, (state, { image }) => {
+    return {
+      ...state,
+      projectDetails: {
+        ...state.projectDetails,
+        images: [image, ...state.projectDetails.images],
+      },
+    };
+  }),
   on(deleteProjectSuccess, (state, { id }) => ({
     ...state,
     projects: state.projects.filter((project) => project.id != id),
@@ -385,7 +359,7 @@ const projectsReducer = createReducer(
           return project;
         }
       }),
-  }))
+  })),
 );
 
 export function projectsReducerFn(state, action) {
@@ -396,35 +370,32 @@ export const projectsFeature = (state: AppState) => state.projectsState;
 
 export const selectProjects = createSelector(
   projectsFeature,
-  (state: ProjectState) => state.projects
+  (state: ProjectState) => state.projects,
 );
 
 export const selectProjectsLoading = createSelector(
   projectsFeature,
-  (state: ProjectState) => state.projectsLoading
+  (state: ProjectState) => state.projectsLoading,
 );
 
 export const selectProjectDetails = createSelector(
   projectsFeature,
-  (state: ProjectState) => state.projectDetails
+  (state: ProjectState) => state.projectDetails,
 );
 
 export const selectProjectDetailsLoading = createSelector(
   projectsFeature,
-  (state: ProjectState) => state.projectDetailsLoading
+  (state: ProjectState) => state.projectDetailsLoading,
 );
 
 export const selectActiveProjects = createSelector(
   projectsFeature,
-  (state: ProjectState) => state.activeProjects
+  (state: ProjectState) => state.activeProjects,
 );
 
 @Injectable()
 export class ProjectsEffects {
-  constructor(
-    private actions$: Actions,
-    private projectService: ProjectService
-  ) {}
+  constructor(private actions$: Actions, private projectService: ProjectService) {}
 
   LoadProjects$ = createEffect(() =>
     this.actions$.pipe(
@@ -432,13 +403,9 @@ export class ProjectsEffects {
       switchMap((action) =>
         this.projectService
           .loadAll()
-          .pipe(
-            switchMap((projects: GridProject[]) => [
-              loadProjectsSuccess({ projects }),
-            ])
-          )
-      )
-    )
+          .pipe(switchMap((projects: GridProject[]) => [loadProjectsSuccess({ projects })])),
+      ),
+    ),
   );
 
   LoadProjectDetails$ = createEffect(() =>
@@ -452,10 +419,10 @@ export class ProjectsEffects {
               loadProjectDetailsSuccess({ projectDetails }),
               loadProjectArticles({ id: action.id }),
               loadProjectImages({ id: action.id }),
-            ])
-          )
-      )
-    )
+            ]),
+          ),
+      ),
+    ),
   );
 
   DeleteProject$ = createEffect(() =>
@@ -464,9 +431,9 @@ export class ProjectsEffects {
       switchMap((action) =>
         this.projectService
           .deleteroject(action.id)
-          .pipe(switchMap(() => [deleteProjectSuccess({ id: action.id })]))
-      )
-    )
+          .pipe(switchMap(() => [deleteProjectSuccess({ id: action.id })])),
+      ),
+    ),
   );
 
   LoadProjectArticles$ = createEffect(() =>
@@ -476,12 +443,10 @@ export class ProjectsEffects {
         this.projectService
           .loadArticles(action.id)
           .pipe(
-            switchMap((articles: ProjectArticle[]) => [
-              loadProjectArticlesSuccess({ articles }),
-            ])
-          )
-      )
-    )
+            switchMap((articles: ProjectArticle[]) => [loadProjectArticlesSuccess({ articles })]),
+          ),
+      ),
+    ),
   );
 
   DeleteProjectArticle$ = createEffect(() =>
@@ -494,10 +459,10 @@ export class ProjectsEffects {
             addError({
               error: { key: 'ARTICLE_DELETE_FAILED', message: error.error },
             }),
-          ])
-        )
-      )
-    )
+          ]),
+        ),
+      ),
+    ),
   );
 
   LoadProjectImages$ = createEffect(() =>
@@ -509,10 +474,10 @@ export class ProjectsEffects {
           .pipe(
             switchMap((images: ProjectImage[]) => [
               loadProjectImagesSuccess({ images: images.reverse() }),
-            ])
-          )
-      )
-    )
+            ]),
+          ),
+      ),
+    ),
   );
 
   DeleteProjectImage$ = createEffect(() =>
@@ -525,10 +490,10 @@ export class ProjectsEffects {
             // addError({
             //   error: { key: 'ARTICLE_DELETE_FAILED', message: error.error },
             // }),
-          ])
-        )
-      )
-    )
+          ]),
+        ),
+      ),
+    ),
   );
 
   CreateEditProjectImageData$ = createEffect(() =>
@@ -544,10 +509,10 @@ export class ProjectsEffects {
                 })
               : null,
             // loadProjectImagesSuccess({ images }),
-          ])
-        )
-      )
-    )
+          ]),
+        ),
+      ),
+    ),
   );
 
   UploadProjectImage$ = createEffect(() =>
@@ -563,10 +528,10 @@ export class ProjectsEffects {
               },
             }),
             // loadProjectImagesSuccess({ images }),
-          ])
-        )
-      )
-    )
+          ]),
+        ),
+      ),
+    ),
   );
 
   UpdateProject$ = createEffect(() =>
@@ -606,10 +571,10 @@ export class ProjectsEffects {
                 message: 'Das Speichern ist leider fehlgeschlagen!',
               },
             }),
-          ])
-        )
-      )
-    )
+          ]),
+        ),
+      ),
+    ),
   );
 
   UpdateProjectMainImage$ = createEffect(() =>
@@ -625,15 +590,15 @@ export class ProjectsEffects {
               },
             }),
             // loadProjectImagesSuccess({ images }),
-          ])
+          ]),
           // catchError((error) => [
           //   addError({
           //     error: { key: 'PROJECT_UPDATE_FAILED', message: 'Das Speichern ist leider fehlgeschlagen!' },
           //   }),
           // ])
-        )
-      )
-    )
+        ),
+      ),
+    ),
   );
 
   LoadActiveProjects$ = createEffect(() =>
@@ -649,14 +614,14 @@ export class ProjectsEffects {
                 loadActiveProjectArticles({
                   id: project.projectId,
                   projectName: project.projectName,
-                })
+                }),
               );
             }
             return actions;
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 
   LoadActiveProjectArticles$ = createEffect(() =>
@@ -668,9 +633,9 @@ export class ProjectsEffects {
           .pipe(
             mergeMap((articles: ActiveProjectArticle[]) => [
               loadActiveProjectArticlesSuccess({ id: action.id, articles }),
-            ])
-          )
-      )
-    )
+            ]),
+          ),
+      ),
+    ),
   );
 }

@@ -41,7 +41,7 @@ p {
   padding-top: 0 !important;
 }
 
-.column {
+.column:not.treeTile {
   padding: 0 !important;
 }
 

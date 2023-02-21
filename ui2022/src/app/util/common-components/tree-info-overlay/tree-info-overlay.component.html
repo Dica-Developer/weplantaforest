@@ -3,19 +3,18 @@
     <nav class="breadcrumb">
       <ul>
         <li>
-          <a routerLink="/">
+          <a routerLink="/" (click)="closeOverlay()">
             {{ 'startPage' | translate }}
           </a>
         </li>
         <li>
-          <a routerLink="/projectReports">
+          <a routerLink="/projectReports" (click)="closeOverlay()">
             {{ 'projects' | translate }}
           </a>
         </li>
-        <li>
+        <li *ngIf="currentTree">
           <a class="breadcrumb-active">
-            <!-- {{ projectReport.projectReportData.projectName }} -->
-            Lärche
+            {{ currentTree.name }}
           </a>
         </li>
       </ul>
@@ -24,28 +23,42 @@
   </div>
 
   <div class="is-flex is-flex-direction-column infoPage padding-2">
-    <div class="description columns is-flex is-flex-direction-row">
+    <div *ngIf="currentTree" class="description columns is-flex is-flex-direction-row">
       <div class="column is-half">
-        <h2>Lärche</h2>
+        <h2>{{ currentTree.name }}</h2>
+        <!-- <p>
+          {{ currentTree.family }}
+        </p> -->
         <p>
-          dasdasdasdasdasdasdasdasd asdasdasdasd asdasdasdasdasda sddasdasdasd asdasdasdasd
-          asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd
+          {{ currentTree.description }}
         </p>
-        <p>asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</p>
+        <!-- <p *ngIf="selectedInfoType === 'leaf'">
+          {{ currentTree.leaf }}
+        </p>
+        <p *ngIf="selectedInfoType === 'trunk'">
+          {{ currentTree.trunk }}
+        </p>
+        <p *ngIf="selectedInfoType === 'fruit'">
+          {{ currentTree.fruit }}
+        </p> -->
       </div>
       <div class="column is-half imageWrapper">
-        <img src="assets/ycul.jpg" alt="lucy" />
+        <img src="{{ currentTree.imageFileName }}" alt="lucy" />
       </div>
     </div>
   </div>
-  <div class="treeSelectionTab columns is-mobile">
-    <div class="column is-one-fifth-desktop is-half-mobile treeTile" *ngFor="let tree of trees">
+  <div class="treeSelectionTab columns is-multiline is-mobile">
+    <div
+      class="column is-half-mobile is-one-fifth-desktop treeTile"
+      *ngFor="let tree of trees"
+      (click)="selectTree(tree)"
+    >
       <div class="is-flex is-justify-content-end">
         <p>
           {{ tree.name }}
         </p>
       </div>
-      <img src="{{ tree.imgUrl }}" alt="tree" />
+      <img src="assets/ipat_logo.png" alt="tree" />
     </div>
   </div>
 </div>
