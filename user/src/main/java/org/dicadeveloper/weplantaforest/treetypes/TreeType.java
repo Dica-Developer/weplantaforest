@@ -37,7 +37,7 @@ public class TreeType {
     private String description;
 
     @Column(name = "_imageFile")
-    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class })
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class, Views.ShortTreeType.class })
     private String imageFile;
 
     @Column(name = "_infoLink")
