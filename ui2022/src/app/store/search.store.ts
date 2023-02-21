@@ -4,6 +4,7 @@ import { createAction, createReducer, createSelector, on, props } from '@ngrx/st
 import { switchMap } from 'rxjs';
 import { SearchService } from '../services/search.service';
 import { AppState } from './app.state';
+import * as he from 'he';
 
 export const search = createAction('[Search] search', props<{ searchValue: string }>());
 export const searchSuccess = createAction(
@@ -46,9 +47,27 @@ const searchReducer = createReducer(
   on(searchSuccess, (state, action) => ({
     ...state,
     loading: false,
-    result: action.result,
+    result: decodeNames(action.result),
   })),
 );
+
+function decodeNames(bResult: SearchResult) {
+  const result: SearchResult = {
+    teams: [],
+    projects: [],
+    user: [],
+  };
+  for (const user of bResult.user) {
+    result.user.push({ id: user.id, name: he.decode(user.name), link: user.link });
+  }
+  for (const team of bResult.teams) {
+    result.teams.push({ id: team.id, name: he.decode(team.name), link: team.link });
+  }
+  for (const project of bResult.projects) {
+    result.projects.push({ id: project.id, name: he.decode(project.name), link: project.link });
+  }
+  return result;
+}
 
 export function searchReducerFn(state, action) {
   return searchReducer(state, action);
