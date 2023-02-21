@@ -15,12 +15,12 @@ export class SearchOverlayComponent implements OnInit {
   overlayIsOpen = false;
   control: FormControl = new FormControl('');
   searchResults$ = this.store.select(selectSearchResults);
-  valueCHangeSub: Subscription;
+  valueChangeSub: Subscription;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.valueCHangeSub = this.control.valueChanges.subscribe((searchValue) => {
+    this.valueChangeSub = this.control.valueChanges.subscribe((searchValue) => {
       if (searchValue && searchValue.length > 1) {
         this.store.dispatch(search({ searchValue }));
       }
@@ -29,5 +29,7 @@ export class SearchOverlayComponent implements OnInit {
 
   closeSearch() {
     this.searchClosed.emit();
+    this.control.setValue('');
+    this.store.dispatch(search({ searchValue: '' }));
   }
 }
