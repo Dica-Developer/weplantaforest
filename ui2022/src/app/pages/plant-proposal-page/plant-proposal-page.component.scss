@@ -53,3 +53,19 @@ ngx-slider.animate .ngx-slider-bubble {
     white-space: nowrap;
   }
 }
+
+
+.proposal-row {
+  // margin-top: 2rem;
+  .price-row {
+    padding-top: 2rem;
+    .is-one-third {
+      text-align: right;
+    }
+
+    .price {
+      padding-top: 2rem;
+      text-align: right;
+    }
+  }
+}

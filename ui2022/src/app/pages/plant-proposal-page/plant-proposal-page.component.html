@@ -1,5 +1,5 @@
 <div class="columns">
-  <div class="column padding-left is-one-third border-right">
+  <div class="column padding-left is-one-third border-right padding-bottom">
     <nav class="breadcrumb">
       <ul>
         <li>
@@ -24,7 +24,7 @@
       {{ 'detailedProcessHere' | translate }}
     </a>
   </div>
-  <div class="column">
+  <div class="column padding-left">
     <nav class="breadcrumb">
       <ul>
         <li>
@@ -33,13 +33,39 @@
       </ul>
     </nav>
     <h2>{{ 'createSelfplantedTree' | translate | titlecase }}</h2>
+    <p class="desktop">
+      {{ 'createSelfplantDescription1' | translate }}<br />
+      {{ 'createSelfplantDescription2' | translate }}
+    </p>
+    <a routerLink="/">
+      {{ 'createPlantingNow' | translate }}
+    </a>
   </div>
 </div>
-<div class="columns">
-  <div class="column is-two-thirds border-top-right padding-left padding-right">
+<div class="columns proposal-row">
+  <div class="column is-two-thirds border-top-right padding-left padding-right padding-top">
     <div class="custom-slider">
-      <ngx-slider [(value)]="value" [options]="sliderOptions" (valueChange)="getProposal($event)"></ngx-slider>
+      <ngx-slider
+        [(value)]="value"
+        [options]="sliderOptions"
+        (valueChange)="getProposal($event)"
+      ></ngx-slider>
+    </div>
+    <div class="columns price-row">
+      <div class="column price">
+        <p class="desktop">
+          {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
+        </p>
+      </div>
+      <div class="column is-one-third">
+        <app-button label="{{ 'intoPlantbag' | translate }}"></app-button>
+      </div>
     </div>
   </div>
-  <div class="column border-top"></div>
+  <div class="column border-top padding-left padding-top">
+    <p class="desktop">{{ 'proposalOrIndividualText' | translate }}</p>
+    <a routerLink="/">
+      {{ 'orChooseIndivudual' | translate }}
+    </a>
+  </div>
 </div>

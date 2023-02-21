@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { getSimplePlantProposal, selectSimpleProposal } from 'src/app/store/plant.store';
+import { getSimplePlantProposal, selectProposalPrice, selectSimpleProposal } from 'src/app/store/plant.store';
 import { Options } from '@angular-slider/ngx-slider';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,11 +15,10 @@ export class PlantProposalPageComponent implements OnInit {
 
   simpleProposal$;
 
+  proposalPrice$ = this.store.select(selectProposalPrice);
+
   sliderOptions: Options = {
-    // floor: 1,
-    // ceil: 100,
-    // ticksArray: [1, 5, 10, 50, 100],
-    stepsArray: [
+   stepsArray: [
       { value: 1, legend: `1 ${this.translateService.instant('tree')}` },
       { value: 5, legend: `5 ${this.translateService.instant('trees')}` },
       { value: 10, legend: `10 ${this.translateService.instant('trees')}` },
@@ -41,5 +40,9 @@ export class PlantProposalPageComponent implements OnInit {
 
   getProposal(event) {
     this.store.dispatch(getSimplePlantProposal({ amountOfTrees: event }));
+  }
+
+  putIntoPlantbag() {
+    
   }
 }

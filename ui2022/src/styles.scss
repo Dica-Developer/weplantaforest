@@ -84,6 +84,10 @@ snack-bar-container {
   padding: 0 0.5rem !important;
 }
 
+.breadcrumb {
+  min-height: 1rem;
+}
+
 .breadcrumb-active {
   text-decoration: underline !important;
 }
@@ -163,4 +167,13 @@ snack-bar-container {
 .border-top {
   border-top-style: solid!important;
   border-top: 1px;
+}
+
+
+.padding-bottom {
+  padding-bottom: 3rem;
+}
+
+.padding-top {
+  padding-top: 2rem;
 }

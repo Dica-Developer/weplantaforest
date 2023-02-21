@@ -85,5 +85,12 @@
   "plantText2": "Absprung zu Über uns",
   "tree": "Baum",
   "trees": "Bäume",
-  "createSelfplantedTree": "Eigene Pflanzung erstellen"
+  "createSelfplantedTree": "Eigene Pflanzung erstellen",
+  "createSelfplantDescription1": "Sie können auch eine eigene Pflanzung erstellen und",
+  "createSelfplantDescription2": "diese hier eintragen um ein Zertifikat zu bekommen.",
+  "createPlantingNow": "Jetzt Pflanzung erstellen",
+  "price": "Preis",
+  "intoPlantbag": "in den Pflanzkorb",
+  "proposalOrIndividualText": "Lass dir von uns einen Vorschlag generieren, der die perfekte Kombination an Bäumen ausgibt",
+  "orChooseIndivudual": "Oder Bäume individuell auswählen"
 }

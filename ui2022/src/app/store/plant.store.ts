@@ -57,6 +57,19 @@ export const selectSimpleProposal = createSelector(
   (state: PlantProposalState) => state.simpleProposal,
 );
 
+export const selectProposalPrice = createSelector(
+  plantPropsalFeature,
+  (state: PlantProposalState) => {
+    let price = 0;
+    if (state.simpleProposal) {
+      console.log(state.simpleProposal);
+      
+      price = state.simpleProposal.actualPrice / 100;
+    }
+    return parseFloat(price.toString()).toFixed(2).replace('.', ',');
+  },
+);
+
 @Injectable()
 export class PlantProposalEffects {
   constructor(private actions$: Actions, private plantbagService: PlantbagService) {}
