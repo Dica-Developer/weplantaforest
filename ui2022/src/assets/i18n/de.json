@@ -92,5 +92,6 @@
   "price": "Preis",
   "intoPlantbag": "in den Pflanzkorb",
   "proposalOrIndividualText": "Lass dir von uns einen Vorschlag generieren, der die perfekte Kombination an Bäumen ausgibt",
-  "orChooseIndivudual": "Oder Bäume individuell auswählen"
+  "orChooseIndivudual": "Oder Bäume individuell auswählen",
+  "noTreesInPlantbag": "Dein Pflanzkorb ist leer."
 }

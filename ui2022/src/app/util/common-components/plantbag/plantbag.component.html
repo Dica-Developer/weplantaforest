@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>Pflanzkorb</mat-card-title>
-  <mat-card-content>
-    <div class="columns" *ngFor="let item of (plantbag$ | async).plantbagItems">
+  <mat-card-content *ngIf="(plantbag$ | async).plantbagItems.length > 0">
+    <div *ngFor="let item of (plantbag$ | async).plantbagItems">
       <app-plantbag-tree-input
         [article]="item.article"
         [amount]="item.amount"
@@ -13,4 +13,9 @@
       <p class="price">{{'Gesamtpreis: ' + (plantbagPrice | async | currency)}}</p>
     </div>
   </mat-card-content>
+  <mat-card-content *ngIf="(plantbag$ | async).plantbagItems.length == 0">
+    <p class="desktop">
+      {{'noTreesInPlantbag' | translate}}
+    </p>
+</mat-card-content>
 </mat-card>

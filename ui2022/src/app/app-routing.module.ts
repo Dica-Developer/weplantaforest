@@ -23,7 +23,8 @@ import { ProjectPageComponent } from './pages/project-page/project-page.componen
 import { ProjectReportsOverviewPageComponent } from './pages/project-reports-overview-page/project-reports-overview-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { TeamPageComponent } from './pages/team-page/team-page.component';
-import { PlantProposalPageComponent } from "./pages/plant-proposal-page/plant-proposal-page.component";
+import { PlantProposalPageComponent } from './pages/plant-proposal-page/plant-proposal-page.component';
+import { PlantbagPageComponent } from './pages/plantbag-page/plantbag-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -47,6 +48,7 @@ export const userRoutes: Routes = [
   { path: 'profile/:username', component: ProfilePageComponent },
   { path: 'team/:teamname', component: TeamPageComponent },
   { path: 'plant', component: PlantProposalPageComponent },
+  { path: 'plantbag', component: PlantbagPageComponent },
 ];
 
 const routes: Routes = [

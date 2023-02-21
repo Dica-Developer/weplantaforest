@@ -15,6 +15,7 @@ import { ProfilePageModule } from './profile-page/profile-page.module';
 import { TeamPageModule } from './team-page/team-page.module';
 import { PlantProposalPageComponent } from './plant-proposal-page/plant-proposal-page.component';
 import { NgxSliderModule } from "@angular-slider/ngx-slider";
+import { PlantbagPageComponent } from './plantbag-page/plantbag-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { NgxSliderModule } from "@angular-slider/ngx-slider";
     ImprintPageComponent,
     PrivacyPageComponent,
     PlantProposalPageComponent,
+    PlantbagPageComponent,
   ],
   imports: [
     CommonModule,
