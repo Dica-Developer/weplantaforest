@@ -43,22 +43,16 @@
         </p> -->
       </div>
       <div class="column is-half imageWrapper">
-        <img src="{{ currentTree.imageFileName }}" alt="lucy" />
+        <img src="{{ currentTree.imageFileName }}" alt="tree" />
       </div>
     </div>
   </div>
   <div class="treeSelectionTab columns is-multiline is-mobile">
-    <div
+    <app-tree-tile
       class="column is-half-mobile is-one-fifth-desktop treeTile"
-      *ngFor="let tree of trees"
       (click)="selectTree(tree)"
-    >
-      <div class="is-flex is-justify-content-end">
-        <p>
-          {{ tree.name }}
-        </p>
-      </div>
-      <img src="assets/ipat_logo.png" alt="tree" />
-    </div>
+      *ngFor="let tree of trees"
+      [tree]="tree"
+    ></app-tree-tile>
   </div>
 </div>

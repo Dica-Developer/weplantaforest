@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { TreeType } from 'src/app/store/project.store';
 import { loadTreeTypes, selectTreeTypes } from 'src/app/store/treeType.store';
+import { environment } from 'src/environments/environment';
 import { TextHelper } from '../../text.helper';
 
 @Component({
@@ -14,6 +15,7 @@ import { TextHelper } from '../../text.helper';
 export class TreeInfoOverlayComponent implements OnInit {
   @Input() currentTree: TreeType = null;
   selectedInfoType: string = 'leaf';
+  currentImageUrl: string = '';
   @Output() treeinfoClosed = new EventEmitter();
   treeTypes$: Observable<TreeType[]>;
   selectTreetypesSub: Subscription;
@@ -42,6 +44,8 @@ export class TreeInfoOverlayComponent implements OnInit {
 
   selectTree(tree: TreeType) {
     this.currentTree = tree;
+    this.currentImageUrl =
+      environment.backendUrl + '/treeType/image/' + tree.imageFileName + '/60/60';
   }
   selectInfoType(infoType: string) {
     this.selectedInfoType = infoType;
