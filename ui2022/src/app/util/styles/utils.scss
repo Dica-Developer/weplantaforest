@@ -29,3 +29,14 @@ input {
   outline: 0;
   font-size: 1rem;
 }
+
+video {
+  opacity: 0.85;
+  min-height: 100vh;
+  max-width: unset;
+  overflow: hidden;
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}

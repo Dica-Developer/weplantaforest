@@ -1,5 +1,5 @@
 .stats {
-  margin: 8rem auto 10rem 0;
+  margin: 5rem auto 5rem 0;
   font-size: 1rem;
   line-height: 1.25rem;
 }
@@ -14,7 +14,10 @@
 }
 
 .header {
+  position: relative;
   min-height: calc(100vh - 80px);
+  z-index: 2;
+  background: #00000000;
 }
 
 .direction-wrapper {
