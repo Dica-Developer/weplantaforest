@@ -49,13 +49,13 @@ export const userRoutes: Routes = [
   { path: 'team/:teamname', component: TeamPageComponent },
   { path: 'plant', component: PlantProposalPageComponent },
   { path: 'plantbag', component: PlantbagPageComponent },
+  { path: 'login', component: LoginPageComponent },
+  { path: 'forgotPassword', component: ForgotPasswordPageComponent },
+  { path: 'password_reset', component: ResetPasswordPageComponent },
 ];
 
 const routes: Routes = [
   { path: '', component: UserRouterOutletComponent, children: userRoutes },
-  { path: 'login', component: LoginPageComponent },
-  { path: 'forgotPassword', component: ForgotPasswordPageComponent },
-  { path: 'password_reset', component: ResetPasswordPageComponent },
   {
     path: 'backOffice2022',
     component: BackOfficeRouterOutletComponent,

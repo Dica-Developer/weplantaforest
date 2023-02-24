@@ -1,9 +1,30 @@
-mat-card {
+form {
+  padding-top: 10rem;
   max-width: 400px;
-  margin: 2em auto;
-  text-align: center;
+  z-index: 2;
 }
 
-mat-form-field {
-  display: block;
+.inputOutline {
+  background: var(--background);
+}
+
+button {
+  z-index: 2;
+}
+
+.login {
+  height: calc(100vh - 80px);
+  background: #00000000;
+}
+
+@media only screen and (max-width: 768px) {
+  .login {
+    justify-content: center;
+    padding-top: initial;
+    background: #00000000;
+  }
+
+  form {
+    padding-top: 15rem;
+  }
 }

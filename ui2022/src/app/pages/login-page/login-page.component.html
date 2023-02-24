@@ -1,28 +1,32 @@
-<mat-card>
-  <mat-card-content>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <img src="{{ logoUrl }}" width="150" height="150" />
-      <h2>Backoffice</h2>
-      <mat-error *ngIf="loginError$ | async">
-        Benutzername und Passwort stimmen nicht überein
-      </mat-error>
-      <mat-form-field>
-        <input matInput placeholder="Email/Username" name="name" required formControlName="name" />
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          type="password"
-          placeholder="Password"
-          name="password"
-          required
-          formControlName="password"
-        />
-      </mat-form-field>
-      <button mat-raised-button color="primary">Login</button>
+<video autoplay id="myVideo">
+  <source src="assets/Animation.mp4" type="video/mp4" />
+</video>
+<div class="login is-flex padding-1 is-flex-direction-column w-100 is-align-items-center">
+  <form
+    class="w-100 is-flex is-flex-direction-column"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-error *ngIf="loginError$ | async">
+      Benutzername und Passwort stimmen nicht überein
+    </mat-error>
+    <div class="inputOutline">
+      <input placeholder="Email/Username" name="name" required formControlName="name" />
+    </div>
+    <div class="inputOutline">
+      <input
+        type="password"
+        placeholder="Password"
+        name="password"
+        required
+        formControlName="password"
+      />
+    </div>
+    <div class="center">
+      <app-button [label]="'Login'"></app-button>
       <br />
       <br />
       <a routerLink="/forgotPassword">Passwort vergessen?</a>
-    </form>
-  </mat-card-content>
-</mat-card>
+    </div>
+  </form>
+</div>
