@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Action, createAction, createReducer, createSelector, on, props } from '@ngrx/store';
+import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { AppState } from './app.state';
 import { AuthService } from '../services/auth.service';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { loadTreeTypes } from './treeType.store';
 import { Router } from '@angular/router';
 import { addError } from './error.state';
 import { setUsername, loadProfileDetails, loadAdminFlag } from './profile.store';
 
 export const login = createAction('[Auth] login', props<{ name: string; password: string }>());
-export const loginSuccess = createAction('[Auth] login success', props<{ token: string }>());
+export const loginSuccess = createAction('[Auth] login success');
 export const loginFailed = createAction('[Auth] Login failed', props<{ error: string }>());
 export const resetPasswordRequest = createAction(
   '[Auth] Reset Password Request',
@@ -33,6 +33,7 @@ export const verifyPasswordResetLinkFailed = createAction(
 export const logout = createAction('[Auth] logout');
 
 export interface AuthState {
+  isAuthenticated: boolean;
   loginError: string;
   passwordResetRequestSent: boolean;
   passwordResetSent: boolean;
@@ -40,6 +41,7 @@ export interface AuthState {
 }
 
 export const initialState: AuthState = {
+  isAuthenticated: false,
   loginError: null,
   passwordResetRequestSent: false,
   passwordResetSent: false,
@@ -64,16 +66,16 @@ const authReducer = createReducer(
     ...state,
     loginError: error,
   })),
-  on(loginSuccess, (state, { token }) => ({
+  on(loginSuccess, (state, {}) => ({
     ...state,
-    loggedIn: true,
-    jwtToken: token,
+    isAuthenticated: true,
   })),
   on(logout, (state) => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('username');
     return {
       ...state,
+      isAuthenticated: false,
     };
   }),
 );
@@ -117,7 +119,7 @@ export class AuthEffects {
           switchMap((response) => {
             localStorage.setItem('jwt', response.headers.get('X-AUTH-TOKEN'));
             localStorage.setItem('username', response.headers.get('X-AUTH-USERNAME'));
-            this.router.navigate(['/backOffice2022/carts']);
+            this.router.navigate(['/']);
             return [
               setUsername({
                 username: response.headers.get('X-AUTH-USERNAME'),
@@ -127,6 +129,7 @@ export class AuthEffects {
                 username: response.headers.get('X-AUTH-USERNAME'),
               }),
               loadTreeTypes(),
+              loginSuccess(),
             ];
           }),
           catchError(() => [loginFailed({ error: 'login failed' })]),

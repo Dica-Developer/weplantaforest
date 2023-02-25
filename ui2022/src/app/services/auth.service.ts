@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { AppState } from '../store/app.state';
+import { Store } from '@ngrx/store';
+import { loginSuccess } from '../store/auth.store';
+import { loadAdminFlag } from '../store/profile.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store<AppState>) {}
 
   login(name: string, password: string) {
     return this.http.post(
@@ -52,5 +55,15 @@ export class AuthService {
       {},
       { responseType: 'text' },
     );
+  }
+
+  autoLogin() {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      return;
+    } else {
+      this.store.dispatch(loginSuccess());
+      this.store.dispatch(loadAdminFlag());
+    }
   }
 }

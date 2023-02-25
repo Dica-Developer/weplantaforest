@@ -1,8 +1,9 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from './services/auth.service';
 import { AppState } from './store/app.state';
 import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
@@ -13,7 +14,7 @@ import { AppCookieService } from './util/cookie.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
     localStorage.setItem('previousUrl', this.router.url);
   }
@@ -23,6 +24,7 @@ export class AppComponent {
     private router: Router,
     private snackBar: MatSnackBar,
     private cookieService: AppCookieService,
+    private authService: AuthService,
     private translateService: TranslateService,
   ) {
     this.cookieService.init();
@@ -64,5 +66,9 @@ export class AppComponent {
           });
       }
     });
+  }
+
+  ngOnInit() {
+    this.authService.autoLogin();
   }
 }
