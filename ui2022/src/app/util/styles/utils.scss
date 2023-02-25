@@ -14,6 +14,13 @@
   border-top: 1px solid var(--black);
 }
 
+.border-top-right {
+  border-right-style: solid !important;
+  border-right: 1px;
+  border-top-style: solid !important;
+  border-top: 1px;
+}
+
 .inputOutline {
   border: 1px var(--black) solid;
   border-radius: 2rem;
