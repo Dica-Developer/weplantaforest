@@ -20,9 +20,9 @@ export class LoginPageComponent implements OnInit {
   });
 
   logoUrl = environment.baseUrl + '/assets/ipat_logo.png';
-
   video;
   btn;
+
   constructor(private store: Store<AppState>) {
     this.loginError$ = store.select(selectLoginError);
   }
@@ -42,16 +42,4 @@ export class LoginPageComponent implements OnInit {
       }),
     );
   }
-
-  // myFunction() {
-  //   if (this.video.paused) {
-  //     this.video.play();
-  //     this.btn.innerHTML = 'Pause';
-  //     console.log('playing');
-  //   } else {
-  //     this.video.pause();
-  //     this.btn.innerHTML = 'Play';
-  //     console.log('stopping');
-  //   }
-  // }
 }

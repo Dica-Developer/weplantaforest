@@ -45,6 +45,7 @@ import { CarouselItemComponent } from './common-components/carousel-item/carouse
 import { LightboxGalleryComponent } from './common-components/lightbox-gallery/lightbox-gallery.component';
 import { SearchOverlayComponent } from './common-components/search-overlay/search-overlay.component';
 import { TreeInfoOverlayComponent } from './common-components/tree-info-overlay/tree-info-overlay.component';
+import { SideMenuComponent } from './common-components/side-menu/side-menu.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { TreeInfoOverlayComponent } from './common-components/tree-info-overlay/
     LightboxGalleryComponent,
     SearchOverlayComponent,
     TreeInfoOverlayComponent,
+    SideMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -119,6 +121,7 @@ import { TreeInfoOverlayComponent } from './common-components/tree-info-overlay/
     CarouselItemComponent,
     LightboxGalleryComponent,
     SearchOverlayComponent,
+    SideMenuComponent,
   ],
 })
 export class UtilModule {}

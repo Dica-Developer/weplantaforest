@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mobile-menu',
@@ -11,7 +12,7 @@ export class MobileMenuComponent implements OnInit {
   @Output() clickedSearchEmitter = new EventEmitter();
   @Output() clickedLogin = new EventEmitter();
   @Output() clickedLogout = new EventEmitter();
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -25,6 +26,10 @@ export class MobileMenuComponent implements OnInit {
 
   closeMenu() {
     this.menuClosed.emit();
+  }
+
+  routeToProfile() {
+    this.router.navigate(['/profile/' + localStorage.getItem('username')]);
   }
 
   searchClicked() {

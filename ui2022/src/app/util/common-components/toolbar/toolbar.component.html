@@ -37,11 +37,7 @@
       label="{{ 'login' | translate }}"
       (clicked)="loginClicked()"
     ></app-button>
-    <app-button
-      *ngIf="loggedIn"
-      label="{{ 'logout' | translate }}"
-      (clicked)="logoutClicked()"
-    ></app-button>
+    <app-side-menu *ngIf="loggedIn"> </app-side-menu>
   </div>
 </mat-toolbar>
 

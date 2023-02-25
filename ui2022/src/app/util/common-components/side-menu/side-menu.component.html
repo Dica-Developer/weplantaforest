@@ -1,0 +1,23 @@
+<div [matMenuTriggerFor]="menu" class="menu is-flex is-flex-direction-row is-align-items-center">
+  <mat-icon aria-hidden="false">menu</mat-icon>
+  <span>{{ 'menu' | translate }}</span>
+</div>
+
+<mat-menu #menu="matMenu" [overlapTrigger]="true" [xPosition]="'before'">
+  <div class="is-flex is-flex-direction-column">
+    <span class="menuItem" (click)="routeToProfile()">
+      {{ 'profile' | translate }}
+    </span>
+    <span
+      class="menuItem"
+      *ngIf="isAdmin"
+      label="{{ 'backoffice' | translate }}"
+      (click)="routeToBackoffice()"
+    >
+      {{ 'backoffice' | translate }}
+    </span>
+    <span class="menuItem" (click)="logoutClicked()">
+      {{ 'logout' | translate }}
+    </span>
+  </div>
+</mat-menu>

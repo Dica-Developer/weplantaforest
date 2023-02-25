@@ -1,26 +1,32 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { logout } from '../../../store/auth.store';
 import { environment } from '../../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
   logoUrl = environment.baseUrl + '/assets/ipatlogo_black.svg';
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
+  authenticationSub: Subscription;
   menuOpened = false;
   treeInfo = false;
   overlayIsOpen = false;
-  loggedIn = localStorage.getItem('jwt');
+  loggedIn: boolean;
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authenticationSub = this.store.select('authState').subscribe((state) => {
+      this.loggedIn = state.isAuthenticated;
+    });
+  }
 
   loginClicked() {
     this.router.navigate(['/login']);
@@ -28,7 +34,6 @@ export class ToolbarComponent implements OnInit {
 
   logoutClicked() {
     this.store.dispatch(logout());
-    this.loggedIn = localStorage.getItem('jwt');
   }
 
   toggleMenu() {
@@ -58,5 +63,9 @@ export class ToolbarComponent implements OnInit {
       window.scroll(0, 0);
     }
     this.overlayIsOpen = !this.overlayIsOpen;
+  }
+
+  ngOnDestroy() {
+    this.authenticationSub?.unsubscribe();
   }
 }

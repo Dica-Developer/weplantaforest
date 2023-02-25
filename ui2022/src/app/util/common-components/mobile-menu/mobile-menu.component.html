@@ -8,9 +8,18 @@
       <mat-icon>search</mat-icon>
     </div>
   </div>
-  <div class="is-flex h-80px border-bottom">
-    <div class="h-100 is-flex-grow-3 border-right"></div>
-    <div class="h-100 w-160px center-vertically-horizontally">
+  <div class="is-flex is-justify-content-space-around h-80px border-bottom">
+    <div
+      class="h-100 center-vertically-horizontally is-flex-grow-1 border-right"
+      [class.is-flex-grow-3]="!loggedIn"
+    >
+      <app-button
+        *ngIf="loggedIn"
+        label="{{ 'profile' | translate }}"
+        (clicked)="routeToProfile()"
+      ></app-button>
+    </div>
+    <div class="h-100 center-vertically-horizontally is-flex-grow-1">
       <app-button
         *ngIf="!loggedIn"
         label="{{ 'login' | translate }}"

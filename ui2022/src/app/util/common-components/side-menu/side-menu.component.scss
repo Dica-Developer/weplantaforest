@@ -1,0 +1,19 @@
+.menu:hover,
+span:hover {
+  cursor: pointer;
+  color: var(--green);
+}
+
+span {
+  font-size: 1.25rem;
+}
+
+.menuItem {
+  margin: 0.5rem;
+}
+
+mat-icon {
+  height: 2rem;
+  width: 2rem;
+  font-size: 1.75rem;
+}
