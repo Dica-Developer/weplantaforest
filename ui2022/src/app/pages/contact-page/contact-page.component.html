@@ -1,4 +1,10 @@
-<div class="login is-flex padding-1 is-flex-direction-column w-100 is-align-items-center">
+<video autoplay id="myVideo">
+  <source src="assets/Animation.mp4" type="video/mp4" />
+</video>
+<div
+  class="contactForm is-flex padding-1 is-flex-direction-column w-100 is-justify-content-center is-align-items-center"
+>
+  <!-- <h2>{{ 'writeUs' | translate }}</h2> -->
   <form
     class="w-100 is-flex is-flex-direction-column"
     [formGroup]="contactForm"
@@ -29,13 +35,15 @@
       />
     </div>
     <div class="inputOutline">
-      <input
+      <textarea
+        rows="10"
         [placeholder]="'message' | translate"
         type="text"
         name="message"
         required
         formControlName="message"
-      />
+      >
+      </textarea>
     </div>
     <div class="center">
       <app-button [label]="'sendNow' | translate"></app-button>

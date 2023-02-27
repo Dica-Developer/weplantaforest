@@ -6,6 +6,7 @@ h1 {
   opacity: 0.85;
   position: relative;
   top: -30px;
+  text-shadow: 0 0 8px var(--background);
 }
 
 h2 {
@@ -13,12 +14,14 @@ h2 {
   font-size: 3rem !important;
   line-height: 3.25rem !important;
   color: var(--dark-brown);
+  text-shadow: 0 0 8px var(--background);
 }
 
 h4 {
   font-family: 'Bull-regular' !important;
   font-size: 1.5rem !important;
   line-height: 1.75rem !important;
+  text-shadow: 0 0 8px var(--background);
 }
 
 p {
@@ -26,6 +29,7 @@ p {
   font-size: 1rem;
   line-height: 1.25rem;
   letter-spacing: 0.02em !important;
+  text-shadow: 0 0 8px var(--background);
 }
 
 span {

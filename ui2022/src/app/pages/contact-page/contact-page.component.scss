@@ -1,0 +1,15 @@
+.contactForm {
+  min-height: calc(100vh - 80px);
+  position: relative;
+  z-index: 2;
+  form {
+    max-width: 900px;
+  }
+  .inputOutline {
+    background: var(--background);
+  }
+
+  h2 {
+    text-align: left;
+  }
+}

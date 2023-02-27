@@ -28,13 +28,19 @@
   padding: 0.5rem;
 }
 
-input {
+input,
+textarea {
+  width: 100%;
   font-family: 'Bull-mono';
   background: #00000000;
   color: var(--black);
   border: none;
   outline: 0;
   font-size: 1rem;
+}
+
+textarea {
+  padding: 0.5rem;
 }
 
 video {
