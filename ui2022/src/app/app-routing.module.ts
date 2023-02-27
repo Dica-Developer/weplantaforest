@@ -40,11 +40,8 @@ export const backofficeRoutes: Routes = [
 
 export const userRoutes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'ranking', component: RankingPageComponent },
   { path: 'projectReports', component: ProjectReportsOverviewPageComponent },
   { path: 'project/:projectName', component: ProjectPageComponent },
-  { path: 'imprint', component: ImprintPageComponent },
-  { path: 'privacy', component: PrivacyPageComponent },
   { path: 'profile/:username', component: ProfilePageComponent },
   { path: 'team/:teamname', component: TeamPageComponent },
   { path: 'plant', component: PlantProposalPageComponent },
@@ -52,6 +49,17 @@ export const userRoutes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },
   { path: 'password_reset', component: ResetPasswordPageComponent },
+  { path: 'blog', component: PrivacyPageComponent },
+  { path: 'facts', component: PrivacyPageComponent },
+  { path: 'finances', component: PrivacyPageComponent },
+  { path: 'contact', component: PrivacyPageComponent },
+  { path: 'newsletter', component: PrivacyPageComponent },
+  { path: 'about', component: PrivacyPageComponent },
+  { path: 'partner', component: PrivacyPageComponent },
+  { path: 'press', component: PrivacyPageComponent },
+  { path: 'imprint', component: ImprintPageComponent },
+  { path: 'privacy', component: PrivacyPageComponent },
+  { path: 'ranking', component: RankingPageComponent },
 ];
 
 const routes: Routes = [
