@@ -12,9 +12,11 @@
   }
 }
 
-.project-tile:hover img {
-  display: block;
+.project-tile:hover {
   cursor: pointer;
+  img {
+    display: block;
+  }
 }
 
 .tile-body {
