@@ -9,9 +9,12 @@ span {
 }
 
 .menuItem {
-  margin: 0.5rem;
+  padding: 0.5rem;
 }
 
+.menuItem:hover {
+  color: var(--green);
+}
 mat-icon {
   height: 2rem;
   width: 2rem;

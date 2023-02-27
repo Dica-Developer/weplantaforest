@@ -16,7 +16,7 @@
       <app-button
         *ngIf="loggedIn"
         label="{{ 'profile' | translate }}"
-        (clicked)="routeToProfile()"
+        (clicked)="routeToProfile(); closeMenu()"
       ></app-button>
     </div>
     <div class="h-100 center-vertically-horizontally is-flex-grow-1">
