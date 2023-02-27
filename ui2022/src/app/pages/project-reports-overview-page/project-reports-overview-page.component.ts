@@ -23,7 +23,9 @@ export class ProjectReportsOverviewPageComponent implements OnInit {
     this.store.dispatch(loadActiveProjectReports());
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+  }
 
   setType(event: any) {
     this.type = event;
