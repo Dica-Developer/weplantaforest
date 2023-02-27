@@ -25,6 +25,8 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
 import { TeamPageComponent } from './pages/team-page/team-page.component';
 import { PlantProposalPageComponent } from './pages/plant-proposal-page/plant-proposal-page.component';
 import { PlantbagPageComponent } from './pages/plantbag-page/plantbag-page.component';
+import { NewsletterComponent } from './util/common-components/newsletter/newsletter.component';
+import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -52,8 +54,8 @@ export const userRoutes: Routes = [
   { path: 'blog', component: PrivacyPageComponent },
   { path: 'facts', component: PrivacyPageComponent },
   { path: 'finances', component: PrivacyPageComponent },
-  { path: 'contact', component: PrivacyPageComponent },
-  { path: 'newsletter', component: PrivacyPageComponent },
+  { path: 'contact', component: ContactPageComponent },
+  { path: 'newsletter', component: NewsletterComponent },
   { path: 'about', component: PrivacyPageComponent },
   { path: 'partner', component: PrivacyPageComponent },
   { path: 'press', component: PrivacyPageComponent },

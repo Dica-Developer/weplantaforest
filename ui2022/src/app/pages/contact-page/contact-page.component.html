@@ -1,0 +1,44 @@
+<div class="login is-flex padding-1 is-flex-direction-column w-100 is-align-items-center">
+  <form
+    class="w-100 is-flex is-flex-direction-column"
+    [formGroup]="contactForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <!-- <mat-error *ngIf="loginError$ | async">
+      Benutzername und Passwort stimmen nicht überein
+    </mat-error> -->
+    <div class="inputOutline">
+      <input [placeholder]="'name' | translate" name="name" required formControlName="name" />
+    </div>
+    <div class="inputOutline">
+      <input
+        [placeholder]="'email' | translate"
+        type="text"
+        name="email"
+        required
+        formControlName="email"
+      />
+    </div>
+    <div class="inputOutline">
+      <input
+        [placeholder]="'phonenumber' | translate"
+        type="text"
+        name="phonenumber"
+        required
+        formControlName="phonenumber"
+      />
+    </div>
+    <div class="inputOutline">
+      <input
+        [placeholder]="'message' | translate"
+        type="text"
+        name="message"
+        required
+        formControlName="message"
+      />
+    </div>
+    <div class="center">
+      <app-button [label]="'sendNow' | translate"></app-button>
+    </div>
+  </form>
+</div>
