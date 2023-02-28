@@ -8,10 +8,10 @@
       <div innerHtml="{{ dsgvo.intro }}"></div>
       <div *ngFor="let paragraph of dsgvo.paragraphs">
         <p>
-          {{ dsgvo.title }}
+          {{ paragraph.title }}
         </p>
         <p>
-          {{ dsgvo.text }}
+          {{ paragraph.text }}
         </p>
       </div>
     </div>

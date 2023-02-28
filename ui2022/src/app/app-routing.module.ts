@@ -27,6 +27,7 @@ import { PlantProposalPageComponent } from './pages/plant-proposal-page/plant-pr
 import { PlantbagPageComponent } from './pages/plantbag-page/plantbag-page.component';
 import { NewsletterComponent } from './util/common-components/newsletter/newsletter.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -56,7 +57,7 @@ export const userRoutes: Routes = [
   { path: 'finances', component: PrivacyPageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'newsletter', component: NewsletterComponent },
-  { path: 'about', component: PrivacyPageComponent },
+  { path: 'about', component: AboutPageComponent },
   { path: 'partner', component: PrivacyPageComponent },
   { path: 'press', component: PrivacyPageComponent },
   { path: 'imprint', component: ImprintPageComponent },
