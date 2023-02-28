@@ -3,17 +3,14 @@
   border: 1px var(--background) solid;
   border-radius: 2.25rem;
   width: 567px;
+  background: var(--dark-brown);
 }
 
 input {
-  font-family: 'Bull-mono';
-  background: #00000000;
   color: var(--background);
   margin: 1rem;
   border: none;
   outline: 0;
-  font-size: 1rem;
-  width: 100%;
 }
 
 .icon {
