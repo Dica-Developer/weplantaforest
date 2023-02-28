@@ -23,8 +23,9 @@ export interface PagedData<T> {
 }
 
 import { ProjectReportState } from './project-report.store';
-import { SearchState } from "./search.store";
-import { PlantProposalState } from "./plant.store";
+import { SearchState } from './search.store';
+import { PlantProposalState } from './plant.store';
+import { BlogState } from './blog.store';
 
 export interface AppState {
   readonly authState: AuthState;
@@ -36,6 +37,7 @@ export interface AppState {
   readonly errorsState: ErrorState;
   readonly successMessagesState: SuccessMessageState;
   readonly contentState: ContentState;
+  readonly blogState: BlogState;
   readonly eventState: EventsState;
   readonly teamsState: TeamState;
   readonly plantbagState: PlantbagState;

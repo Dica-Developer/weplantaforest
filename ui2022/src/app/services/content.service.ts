@@ -71,4 +71,11 @@ export class ContentService {
         language,
     );
   }
+
+  getBlogArticles(language: string) {
+    // language string ==> all caps  --> ENGLISH / DEUTSCH
+    return this.http.get(
+      environment.backendArticleManagerUrl + '/articlesPaged?articleType=BLOG&language=' + language,
+    );
+  }
 }

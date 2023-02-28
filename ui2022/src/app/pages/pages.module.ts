@@ -18,6 +18,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PlantbagPageComponent } from './plantbag-page/plantbag-page.component';
 import { ContactModule } from './contact-page/contact-page.module';
 import { AboutPageComponent } from './about-page/about-page.component';
+import { BlogPageModule } from './blog-page/blog-page.module';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AboutPageComponent } from './about-page/about-page.component';
     TeamPageModule,
     NgxSliderModule,
     ContactModule,
+    BlogPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,
