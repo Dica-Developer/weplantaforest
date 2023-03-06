@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import { switchMap } from 'rxjs/operators';
 import { ContentService } from '../services/content.service';
 import { AppState, PagedData } from './app.state';
@@ -32,7 +31,7 @@ export const loadBlogArticles = createAction(
 
 export const loadBlogArticlesSuccess = createAction(
   '[Content] load all blog articles success',
-  props<{ blogArticles: PagedData<BlogArticle> }>(),
+  props<{ articles: PagedData<BlogArticle> }>(),
 );
 
 const blogReducer = createReducer(
@@ -41,9 +40,9 @@ const blogReducer = createReducer(
     ...state,
     articlesLoading: true,
   })),
-  on(loadBlogArticlesSuccess, (state, { blogArticles }) => ({
+  on(loadBlogArticlesSuccess, (state, { articles }) => ({
     ...state,
-    blogArticles,
+    blogArticles: articles,
     articlesLoading: false,
   })),
 );
@@ -60,20 +59,18 @@ export const selectBlogArticles = createSelector(
 );
 
 @Injectable()
-export class ProjectReportsEffects {
+export class BlogEffects {
   constructor(private actions$: Actions, private contentService: ContentService) {}
 
-  LoadBlogArticles$ = createEffect(() =>
+  loadBlogArticles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBlogArticles),
       switchMap((action) =>
-        this.contentService
-          .getBlogArticles(action.language)
-          .pipe(
-            switchMap((blogArticles: PagedData<BlogArticle>) => [
-              loadBlogArticlesSuccess({ blogArticles }),
-            ]),
-          ),
+        this.contentService.getBlogArticles(action.language).pipe(
+          switchMap((blogArticles: PagedData<BlogArticle>) => {
+            return [loadBlogArticlesSuccess({ articles: blogArticles })];
+          }),
+        ),
       ),
     ),
   );

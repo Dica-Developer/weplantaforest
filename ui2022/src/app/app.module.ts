@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -43,10 +42,11 @@ import localeDeExtra from '@angular/common/locales/extra/de';
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
 import { RankingEffects, rankingReducerFn } from './store/ranking.store';
-import { NgScrollbarModule, NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import { SearchEffects, searchReducerFn } from './store/search.store';
 import { PlantProposalEffects, plantProposalReducerFn } from './store/plant.store';
-import { NgxSliderModule } from "@angular-slider/ngx-slider";
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { BlogEffects, blogReducerFn } from './store/blog.store';
 
 export const MY_FORMATS = {
   parse: {
@@ -123,6 +123,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       rankingState: rankingReducerFn,
       projectReportsState: projectsReportReducerFn,
       searchState: searchReducerFn,
+      blogState: blogReducerFn,
       plantProposalState: plantProposalReducerFn,
     }),
     EffectsModule.forRoot([
@@ -141,6 +142,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       ProjectReportsEffects,
       SearchEffects,
       PlantProposalEffects,
+      BlogEffects,
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),
@@ -192,7 +194,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       },
     }),
     NgScrollbarModule,
-    NgxSliderModule
+    NgxSliderModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

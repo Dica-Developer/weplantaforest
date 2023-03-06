@@ -12,6 +12,10 @@ import { TeamState } from './team.store';
 import { PlantbagState } from './plantbag.store';
 import { TreeState } from './tree.store';
 import { RankingState } from './ranking.store';
+import { ProjectReportState } from './project-report.store';
+import { SearchState } from './search.store';
+import { PlantProposalState } from './plant.store';
+import { BlogState } from './blog.store';
 
 export interface PagedData<T> {
   totalPages: number;
@@ -21,11 +25,6 @@ export interface PagedData<T> {
   first: boolean;
   content: T[];
 }
-
-import { ProjectReportState } from './project-report.store';
-import { SearchState } from './search.store';
-import { PlantProposalState } from './plant.store';
-import { BlogState } from './blog.store';
 
 export interface AppState {
   readonly authState: AuthState;
