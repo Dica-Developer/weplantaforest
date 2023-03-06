@@ -32,7 +32,6 @@ export class ProjectDescriptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageUrls = [];
-    console.log(this.projectReport.images);
     for (let image of this.projectReport.images) {
       let url =
         environment.backendUrl + '/project/image/' + encodeURI(image.imageFileName) + '/300/300';
