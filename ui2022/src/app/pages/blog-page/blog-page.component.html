@@ -1,11 +1,10 @@
 <app-blog-header></app-blog-header>
 <div class="columns is-flex w-100 is-multiline">
-  <!-- <div class="column is-one-fifth" *ngFor="let project of activeProjectReports$ | async"> -->
-  <div class="column is-one-fifth">
-    <!-- <app-project-overview-tile
-      [projectReport]="project"
-      class="projectReport"
-    ></app-project-overview-tile> -->
+  <div
+    class="column is-one-fifth is-full-mobile"
+    *ngFor="let article of (blogArticles$ | async).content"
+  >
+    <app-blog-article-tile [blogArticle]="article"></app-blog-article-tile>
   </div>
 </div>
 <app-newsletter> </app-newsletter>

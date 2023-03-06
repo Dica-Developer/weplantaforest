@@ -54,6 +54,7 @@ export const userRoutes: Routes = [
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },
   { path: 'password_reset', component: ResetPasswordPageComponent },
   { path: 'blog', component: BlogPageComponent },
+  { path: 'blog/:id', component: BlogPageComponent },
   { path: 'facts', component: PrivacyPageComponent },
   { path: 'finances', component: PrivacyPageComponent },
   { path: 'contact', component: ContactPageComponent },
