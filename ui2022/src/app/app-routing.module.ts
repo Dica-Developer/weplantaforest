@@ -25,6 +25,11 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
 import { TeamPageComponent } from './pages/team-page/team-page.component';
 import { PlantProposalPageComponent } from './pages/plant-proposal-page/plant-proposal-page.component';
 import { PlantbagPageComponent } from './pages/plantbag-page/plantbag-page.component';
+import { NewsletterComponent } from './util/common-components/newsletter/newsletter.component';
+import { ContactPageComponent } from './pages/contact-page/contact-page.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
+import { BlogOverviewPageComponent } from './pages/blog-page/blog-overview-page/blog-overview-page.component';
+import { BlogArticlePageComponent } from './pages/blog-page/blog-article-page/blog-article-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -49,12 +54,13 @@ export const userRoutes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },
   { path: 'password_reset', component: ResetPasswordPageComponent },
-  { path: 'blog', component: PrivacyPageComponent },
+  { path: 'blog', component: BlogOverviewPageComponent },
+  { path: 'blog/:id', component: BlogArticlePageComponent },
   { path: 'facts', component: PrivacyPageComponent },
   { path: 'finances', component: PrivacyPageComponent },
-  { path: 'contact', component: PrivacyPageComponent },
-  { path: 'newsletter', component: PrivacyPageComponent },
-  { path: 'about', component: PrivacyPageComponent },
+  { path: 'contact', component: ContactPageComponent },
+  { path: 'newsletter', component: NewsletterComponent },
+  { path: 'about', component: AboutPageComponent },
   { path: 'partner', component: PrivacyPageComponent },
   { path: 'press', component: PrivacyPageComponent },
   { path: 'imprint', component: ImprintPageComponent },

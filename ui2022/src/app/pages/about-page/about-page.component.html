@@ -1,0 +1,19 @@
+<div
+  class="w-100 is-flex is-flex-direction-column is-justify-content-center is-align-items-center padding-1"
+>
+  <div class="about">
+    <h2>{{ 'aboutUs' | translate }}</h2>
+    <div *ngFor="let about of aboutUs?.slice().reverse()">
+      <h4>{{ about.title }}</h4>
+      <div innerHtml="{{ about.intro }}"></div>
+      <div *ngFor="let paragraph of about.paragraphs">
+        <p>
+          {{ paragraph.title }}
+        </p>
+        <p>
+          {{ paragraph.text }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

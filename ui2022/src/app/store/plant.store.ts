@@ -62,8 +62,6 @@ export const selectProposalPrice = createSelector(
   (state: PlantProposalState) => {
     let price = 0;
     if (state.simpleProposal) {
-      console.log(state.simpleProposal);
-      
       price = state.simpleProposal.actualPrice / 100;
     }
     return parseFloat(price.toString()).toFixed(2).replace('.', ',');

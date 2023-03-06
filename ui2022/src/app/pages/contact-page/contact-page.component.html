@@ -1,0 +1,52 @@
+<video autoplay id="myVideo">
+  <source src="assets/Animation.mp4" type="video/mp4" />
+</video>
+<div
+  class="contactForm is-flex padding-1 is-flex-direction-column w-100 is-justify-content-center is-align-items-center"
+>
+  <!-- <h2>{{ 'writeUs' | translate }}</h2> -->
+  <form
+    class="w-100 is-flex is-flex-direction-column"
+    [formGroup]="contactForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <!-- <mat-error *ngIf="loginError$ | async">
+      Benutzername und Passwort stimmen nicht überein
+    </mat-error> -->
+    <div class="inputOutline">
+      <input [placeholder]="'name' | translate" name="name" required formControlName="name" />
+    </div>
+    <div class="inputOutline">
+      <input
+        [placeholder]="'email' | translate"
+        type="text"
+        name="email"
+        required
+        formControlName="email"
+      />
+    </div>
+    <div class="inputOutline">
+      <input
+        [placeholder]="'phonenumber' | translate"
+        type="text"
+        name="phonenumber"
+        required
+        formControlName="phonenumber"
+      />
+    </div>
+    <div class="inputOutline">
+      <textarea
+        rows="10"
+        [placeholder]="'message' | translate"
+        type="text"
+        name="message"
+        required
+        formControlName="message"
+      >
+      </textarea>
+    </div>
+    <div class="center">
+      <app-button [label]="'sendNow' | translate"></app-button>
+    </div>
+  </form>
+</div>

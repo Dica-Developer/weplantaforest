@@ -51,6 +51,7 @@
   "partners": "Partner",
   "plantYourTree": "Pflanze deinen Baum",
   "backToProjects": "Zurück zur Übersicht",
+  "backToBlog": "Zurück zum Blog",
   "planted": "bepflanzt",
   "startYear": "Startjahr",
   "of": "von",
@@ -96,5 +97,8 @@
   "orChooseIndivudual": "Oder Bäume individuell auswählen",
   "noTreesInPlantbag": "Dein Pflanzkorb ist leer.",
   "menu": "Menü",
+  "phonenumber": "Telefonnummer",
+  "message": "Nachricht",
+  "writeUs": "Schreibe Uns!",
   "backoffice": "Backoffice"
 }

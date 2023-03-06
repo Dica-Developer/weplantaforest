@@ -30,6 +30,11 @@
     min-height: calc(100vh - 80px);
   }
 
+  video {
+    position: absolute;
+    transform: scaleY(-1);
+  }
+
   .direction-wrapper {
     flex-grow: 1;
     flex-direction: column;

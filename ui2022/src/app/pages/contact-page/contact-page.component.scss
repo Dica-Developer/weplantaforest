@@ -1,0 +1,12 @@
+.contactForm {
+  min-height: calc(100vh - 80px);
+  position: relative;
+  z-index: 2;
+  form {
+    max-width: 900px;
+  }
+
+  h2 {
+    text-align: left;
+  }
+}

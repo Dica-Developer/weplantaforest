@@ -1,0 +1,11 @@
+<app-blog-header></app-blog-header>
+<div class="columns is-flex w-100 is-multiline">
+  <div
+    class="column is-one-fifth is-full-mobile"
+    *ngFor="let article of (blogArticles$ | async).content"
+  >
+    <app-blog-article-tile [blogArticle]="article"></app-blog-article-tile>
+  </div>
+</div>
+<app-newsletter> </app-newsletter>
+<app-offer-area></app-offer-area>

@@ -14,8 +14,11 @@ import { ProjectReportsOverviewModule } from './project-reports-overview-page/pr
 import { ProfilePageModule } from './profile-page/profile-page.module';
 import { TeamPageModule } from './team-page/team-page.module';
 import { PlantProposalPageComponent } from './plant-proposal-page/plant-proposal-page.component';
-import { NgxSliderModule } from "@angular-slider/ngx-slider";
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PlantbagPageComponent } from './plantbag-page/plantbag-page.component';
+import { ContactModule } from './contact-page/contact-page.module';
+import { AboutPageComponent } from './about-page/about-page.component';
+import { BlogPageModule } from './blog-page/blog-page.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { PlantbagPageComponent } from './plantbag-page/plantbag-page.component';
     PrivacyPageComponent,
     PlantProposalPageComponent,
     PlantbagPageComponent,
+    AboutPageComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +41,9 @@ import { PlantbagPageComponent } from './plantbag-page/plantbag-page.component';
     ProjectReportsOverviewModule,
     ProfilePageModule,
     TeamPageModule,
-    NgxSliderModule
+    NgxSliderModule,
+    ContactModule,
+    BlogPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,

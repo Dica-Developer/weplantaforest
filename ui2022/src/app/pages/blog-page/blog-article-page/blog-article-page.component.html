@@ -1,0 +1,7 @@
+<div *ngIf="blogArticle$ | async">
+  <app-blog-article-header [blogArticle]="blogArticle$ | async"></app-blog-article-header>
+  <app-blog-article-description [blogArticle]="blogArticle$ | async"></app-blog-article-description>
+  <!-- <app-project-carousel [projectReport]="projectReport$ | async"></app-project-carousel> -->
+  <!-- <app-offer-area></app-offer-area> -->
+  <!-- <app-project-map></app-project-map> -->
+</div>
