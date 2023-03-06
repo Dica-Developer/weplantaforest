@@ -1,0 +1,24 @@
+<div class="columns blog-header">
+  <div
+    class="border-right column is-two-fifths is-flex is-flex-direction-column padding-left is-justify-content-space-between"
+  >
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/projectReports">
+            {{ 'blog' | translate }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h2>{{ blogArticle.title }}</h2>
+  </div>
+  <div
+    class="column padding-left padding-right is-three-fifths is-flex is-flex-direction-column is-justify-content-space-around"
+  ></div>
+</div>

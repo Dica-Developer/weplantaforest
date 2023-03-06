@@ -4,8 +4,21 @@ import { createAction, createReducer, createSelector, on, props } from '@ngrx/st
 import { switchMap } from 'rxjs/operators';
 import { ContentService } from '../services/content.service';
 import { AppState, PagedData } from './app.state';
+import { ArticleOwner } from './content.store';
 
-export interface BlogArticle {}
+export interface BlogArticle {
+  id: number;
+  createdOn: number;
+  lastEditedOn: number;
+  articleType: string;
+  showFull: boolean;
+  title: string;
+  intro: string;
+  imageFileName: string;
+  imageDescription: string;
+  owner: ArticleOwner;
+  paragraphs: any[];
+}
 
 export interface BlogState {
   articlesLoading: boolean;
