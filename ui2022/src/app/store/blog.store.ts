@@ -9,11 +9,13 @@ export interface BlogArticle {}
 
 export interface BlogState {
   articlesLoading: boolean;
+  blogArticle: any;
   blogArticles: PagedData<BlogArticle>;
 }
 
 export const intialState: BlogState = {
   articlesLoading: false,
+  blogArticle: null,
   blogArticles: {
     content: [],
     totalPages: 0,
@@ -28,10 +30,17 @@ export const loadBlogArticles = createAction(
   '[Content] load all blog articles',
   props<{ language: string }>(),
 );
-
 export const loadBlogArticlesSuccess = createAction(
   '[Content] load all blog articles success',
   props<{ articles: PagedData<BlogArticle> }>(),
+);
+export const loadBlogArticle = createAction(
+  '[Content] load  blog article',
+  props<{ id: number }>(),
+);
+export const loadBlogArticleSuccess = createAction(
+  '[Content] load blog article success',
+  props<{ article: BlogArticle }>(),
 );
 
 const blogReducer = createReducer(
@@ -40,9 +49,19 @@ const blogReducer = createReducer(
     ...state,
     articlesLoading: true,
   })),
+  on(loadBlogArticle, (state) => ({
+    ...state,
+    blogArticle: null,
+    projectLoading: true,
+  })),
   on(loadBlogArticlesSuccess, (state, { articles }) => ({
     ...state,
     blogArticles: articles,
+    articlesLoading: false,
+  })),
+  on(loadBlogArticleSuccess, (state, { article }) => ({
+    ...state,
+    blogArticle: article,
     articlesLoading: false,
   })),
 );
@@ -57,7 +76,10 @@ export const selectBlogArticles = createSelector(
   blogFeature,
   (state: BlogState) => state.blogArticles,
 );
-
+export const selectBlogArticle = createSelector(
+  blogFeature,
+  (state: BlogState) => state.blogArticle,
+);
 @Injectable()
 export class BlogEffects {
   constructor(private actions$: Actions, private contentService: ContentService) {}
@@ -69,6 +91,19 @@ export class BlogEffects {
         this.contentService.getBlogArticles(action.language).pipe(
           switchMap((blogArticles: PagedData<BlogArticle>) => {
             return [loadBlogArticlesSuccess({ articles: blogArticles })];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  loadBlogArticle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBlogArticle),
+      switchMap((action) =>
+        this.contentService.getBlogArticle(action.id).pipe(
+          switchMap((blogArticle: BlogArticle) => {
+            return [loadBlogArticleSuccess({ article: blogArticle })];
           }),
         ),
       ),

@@ -28,7 +28,8 @@ import { PlantbagPageComponent } from './pages/plantbag-page/plantbag-page.compo
 import { NewsletterComponent } from './util/common-components/newsletter/newsletter.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 import { AboutPageComponent } from './pages/about-page/about-page.component';
-import { BlogPageComponent } from './pages/blog-page/blog-page.component';
+import { BlogOverviewPageComponent } from './pages/blog-page/blog-overview-page/blog-overview-page.component';
+import { BlogArticlePageComponent } from './pages/blog-page/blog-article-page/blog-article-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -53,8 +54,8 @@ export const userRoutes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },
   { path: 'password_reset', component: ResetPasswordPageComponent },
-  { path: 'blog', component: BlogPageComponent },
-  { path: 'blog/:id', component: BlogPageComponent },
+  { path: 'blog', component: BlogOverviewPageComponent },
+  { path: 'blog/:id', component: BlogArticlePageComponent },
   { path: 'facts', component: PrivacyPageComponent },
   { path: 'finances', component: PrivacyPageComponent },
   { path: 'contact', component: ContactPageComponent },

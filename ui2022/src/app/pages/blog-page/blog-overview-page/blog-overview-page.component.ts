@@ -5,11 +5,11 @@ import { AppState } from 'src/app/store/app.state';
 import { loadBlogArticles, selectBlogArticles } from 'src/app/store/blog.store';
 
 @Component({
-  selector: 'app-blog-page',
-  templateUrl: './blog-page.component.html',
-  styleUrls: ['./blog-page.component.scss'],
+  selector: 'app-blog-overview-page',
+  templateUrl: './blog-overview-page.component.html',
+  styleUrls: ['./blog-overview-page.component.scss'],
 })
-export class BlogPageComponent implements OnInit {
+export class BlogOverviewPageComponent implements OnInit {
   type: string = 'all';
   lang: string;
   blogArticles$ = this.store.select(selectBlogArticles);
@@ -25,9 +25,5 @@ export class BlogPageComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-  }
-
-  setType(event: any) {
-    this.type = event;
   }
 }
