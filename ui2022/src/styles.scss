@@ -156,3 +156,28 @@ snack-bar-container {
   background: var(--background);
   padding: 1rem !important;
 }
+
+// finances page custom styles
+.finances {
+  ul,
+  table {
+    margin-bottom: 0.75rem;
+  }
+
+  li,
+  div,
+  td {
+    font-family: 'Bull-mono' !important;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.02em !important;
+    text-shadow: 0 0 8px var(--background);
+  }
+
+  td {
+    font-size: 0.8rem;
+    p {
+      font-size: 0.8rem;
+    }
+  }
+}

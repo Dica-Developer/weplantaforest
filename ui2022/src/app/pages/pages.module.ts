@@ -20,6 +20,7 @@ import { ContactModule } from './contact-page/contact-page.module';
 import { AboutPageComponent } from './about-page/about-page.component';
 import { BlogPageModule } from './blog-page/blog-page.module';
 import { PaymentOptionsPageComponent } from './payment-options-page/payment-options-page.component';
+import { FinancesPageModule } from './finances-page/finances-page.module';
 
 @NgModule({
   declarations: [
@@ -46,13 +47,14 @@ import { PaymentOptionsPageComponent } from './payment-options-page/payment-opti
     NgxSliderModule,
     ContactModule,
     BlogPageModule,
+    FinancesPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,
     ResetPasswordPageComponent,
     ImprintPageComponent,
     PrivacyPageComponent,
-    PaymentOptionsPageComponent
+    PaymentOptionsPageComponent,
   ],
 })
 export class PagesModule {}

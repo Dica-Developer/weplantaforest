@@ -30,7 +30,8 @@ import { ContactPageComponent } from './pages/contact-page/contact-page.componen
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { BlogOverviewPageComponent } from './pages/blog-page/blog-overview-page/blog-overview-page.component';
 import { BlogArticlePageComponent } from './pages/blog-page/blog-article-page/blog-article-page.component';
-import { PaymentOptionsPageComponent } from "./pages/payment-options-page/payment-options-page.component";
+import { PaymentOptionsPageComponent } from './pages/payment-options-page/payment-options-page.component';
+import { FinancesPageComponent } from './pages/finances-page/finances-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -58,7 +59,7 @@ export const userRoutes: Routes = [
   { path: 'blog', component: BlogOverviewPageComponent },
   { path: 'blog/:id', component: BlogArticlePageComponent },
   { path: 'facts', component: PrivacyPageComponent },
-  { path: 'finances', component: PrivacyPageComponent },
+  { path: 'finances', component: FinancesPageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'newsletter', component: NewsletterComponent },
   { path: 'about', component: AboutPageComponent },
@@ -67,7 +68,7 @@ export const userRoutes: Routes = [
   { path: 'imprint', component: ImprintPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },
   { path: 'ranking', component: RankingPageComponent },
-  { path: 'paymentOptions', component: PaymentOptionsPageComponent}
+  { path: 'paymentOptions', component: PaymentOptionsPageComponent },
 ];
 
 const routes: Routes = [

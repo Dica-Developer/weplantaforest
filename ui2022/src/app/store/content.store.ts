@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  createAction,
-  props,
-  createReducer,
-  on,
-  createSelector,
-} from '@ngrx/store';
+import { createAction, props, createReducer, on, createSelector } from '@ngrx/store';
 import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ContentService } from '../services/content.service';
@@ -16,7 +10,6 @@ export interface ContentGridEntry {
   id: number;
   title: string;
   articleType: string;
-  // owner: string;
   lang: string;
   createdOn: number;
 }
@@ -52,37 +45,37 @@ export const loadContentArticles = createAction('[Content] load all articles');
 
 export const loadContentArticlesSuccess = createAction(
   '[Content] load all articles success',
-  props<{ articles: ContentGridEntry[] }>()
+  props<{ articles: ContentGridEntry[] }>(),
 );
 
 export const addContentGridArticle = createAction(
   '[Content] add content grid article',
-  props<{ article: ContentGridEntry }>()
+  props<{ article: ContentGridEntry }>(),
 );
 
 export const loadArticleDetails = createAction(
   '[Content] load article details',
-  props<{ id: number }>()
+  props<{ id: number }>(),
 );
 
 export const loadArticleDetailsSuccess = createAction(
   '[Content] load article details success',
-  props<{ details: ContentArticleDetails }>()
+  props<{ details: ContentArticleDetails }>(),
 );
 
 export const deleteContentArticle = createAction(
   '[Content] delete article',
-  props<{ id: number }>()
+  props<{ id: number }>(),
 );
 export const deleteContentArticleSuccess = createAction(
   '[Content] delete article success',
-  props<{ id: number }>()
+  props<{ id: number }>(),
 );
 
 export const loadArticleTypes = createAction('[Content] load article types');
 export const loadArticleTypesSuccess = createAction(
   '[Content] load article types success',
-  props<{ articleTypes: string[] }>()
+  props<{ articleTypes: string[] }>(),
 );
 
 export const saveContentArticle = createAction(
@@ -92,17 +85,17 @@ export const saveContentArticle = createAction(
     userName: string;
     paragraphImages: any[];
     articleImage: any;
-  }>()
+  }>(),
 );
 
 export const uploadArticleImage = createAction(
   '[Content] upload article image',
-  props<{ articleId: number; file: any }>()
+  props<{ articleId: number; file: any }>(),
 );
 
 export const uploadParagraphImage = createAction(
   '[Content] upload paragraph image',
-  props<{ articleId: number; paragraphId: number; file: any }>()
+  props<{ articleId: number; paragraphId: number; file: any }>(),
 );
 
 export interface ContentState {
@@ -155,7 +148,7 @@ const contentReducer = createReducer(
     ...state,
     details,
     detailsLoading: false,
-  }))
+  })),
 );
 
 export function contentReducerFn(state, action) {
@@ -166,34 +159,31 @@ export const contentFeature = (state: AppState) => state.contentState;
 
 export const selectContentArticles = createSelector(
   contentFeature,
-  (state: ContentState) => state.articles
+  (state: ContentState) => state.articles,
 );
 export const selectContentArticlesLoading = createSelector(
   contentFeature,
-  (state: ContentState) => state.articlesLoading
+  (state: ContentState) => state.articlesLoading,
 );
 
 export const selectContentArticleTypes = createSelector(
   contentFeature,
-  (state: ContentState) => state.articleTypes
+  (state: ContentState) => state.articleTypes,
 );
 
 export const selectContentArticleDetails = createSelector(
   contentFeature,
-  (state: ContentState) => state.details
+  (state: ContentState) => state.details,
 );
 
 export const selectContentArticleDetailsLoading = createSelector(
   contentFeature,
-  (state: ContentState) => state.detailsLoading
+  (state: ContentState) => state.detailsLoading,
 );
 
 @Injectable()
 export class ContentEffects {
-  constructor(
-    private actions$: Actions,
-    private contentService: ContentService
-  ) {}
+  constructor(private actions$: Actions, private contentService: ContentService) {}
 
   LoadContentArticles$ = createEffect(() =>
     this.actions$.pipe(
@@ -202,12 +192,10 @@ export class ContentEffects {
         this.contentService
           .loadAll()
           .pipe(
-            switchMap((articles: ContentGridEntry[]) => [
-              loadContentArticlesSuccess({ articles }),
-            ])
-          )
-      )
-    )
+            switchMap((articles: ContentGridEntry[]) => [loadContentArticlesSuccess({ articles })]),
+          ),
+      ),
+    ),
   );
 
   DeleteContentArticle$ = createEffect(() =>
@@ -216,11 +204,9 @@ export class ContentEffects {
       switchMap((action) =>
         this.contentService
           .delete(action.id)
-          .pipe(
-            switchMap(() => [deleteContentArticleSuccess({ id: action.id })])
-          )
-      )
-    )
+          .pipe(switchMap(() => [deleteContentArticleSuccess({ id: action.id })])),
+      ),
+    ),
   );
 
   LoadArticleTypes$ = createEffect(() =>
@@ -229,13 +215,9 @@ export class ContentEffects {
       switchMap((action) =>
         this.contentService
           .getArticleTypes()
-          .pipe(
-            switchMap((articleTypes: string[]) => [
-              loadArticleTypesSuccess({ articleTypes }),
-            ])
-          )
-      )
-    )
+          .pipe(switchMap((articleTypes: string[]) => [loadArticleTypesSuccess({ articleTypes })])),
+      ),
+    ),
   );
 
   LoadArticleDetails$ = createEffect(() =>
@@ -245,12 +227,10 @@ export class ContentEffects {
         this.contentService
           .getDetails(action.id)
           .pipe(
-            switchMap((details: ContentArticleDetails) => [
-              loadArticleDetailsSuccess({ details }),
-            ])
-          )
-      )
-    )
+            switchMap((details: ContentArticleDetails) => [loadArticleDetailsSuccess({ details })]),
+          ),
+      ),
+    ),
   );
 
   SaveContentArticle$ = createEffect(() =>
@@ -266,7 +246,7 @@ export class ContentEffects {
                   key: 'CONTENT_SAVE_SUCCESS',
                   message: 'Artikel wurde gespeichert!',
                 },
-              })
+              }),
             );
             if (action.request.id == null) {
               //if request id was null, which means a new article was generated, so it has to be added to the gridArray
@@ -287,7 +267,7 @@ export class ContentEffects {
                 uploadArticleImage({
                   articleId: details.id,
                   file: action.articleImage,
-                })
+                }),
               );
               for (let pi of action.paragraphImages) {
                 //on create there are no paragraphIds, so they has to be found here
@@ -298,26 +278,20 @@ export class ContentEffects {
                     articleId: details.id,
                     paragraphId: paragraphId,
                     file: pi.imageFile,
-                  })
+                  }),
                 );
               }
 
               return actionArray;
-            } else if (
-              action.articleImage &&
-              action.paragraphImages.length == 0
-            ) {
+            } else if (action.articleImage && action.paragraphImages.length == 0) {
               actionArray.push(
                 uploadArticleImage({
                   articleId: details.id,
                   file: action.articleImage,
-                })
+                }),
               );
               return actionArray;
-            } else if (
-              !action.articleImage &&
-              action.paragraphImages.length > 0
-            ) {
+            } else if (!action.articleImage && action.paragraphImages.length > 0) {
               for (let pi of action.paragraphImages) {
                 //on create there are no paragraphIds, so they has to be found here
                 let paragraphId = this.getParagraphId(pi, details);
@@ -327,7 +301,7 @@ export class ContentEffects {
                     articleId: details.id,
                     paragraphId: paragraphId,
                     file: pi.imageFile,
-                  })
+                  }),
                 );
               }
 
@@ -335,10 +309,10 @@ export class ContentEffects {
             } else {
               return actionArray;
             }
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 
   UploadArticleImage$ = createEffect(() =>
@@ -347,9 +321,9 @@ export class ContentEffects {
       switchMap((action) =>
         this.contentService
           .uploadArticleImage(action.file, action.articleId)
-          .pipe(switchMap(() => []))
-      )
-    )
+          .pipe(switchMap(() => [])),
+      ),
+    ),
   );
 
   UploadParagraphImage$ = createEffect(() =>
@@ -357,24 +331,17 @@ export class ContentEffects {
       ofType(uploadParagraphImage),
       switchMap((action) =>
         this.contentService
-          .uploadParagraphImage(
-            action.file,
-            action.articleId,
-            action.paragraphId
-          )
-          .pipe(switchMap(() => []))
-      )
-    )
+          .uploadParagraphImage(action.file, action.articleId, action.paragraphId)
+          .pipe(switchMap(() => [])),
+      ),
+    ),
   );
 
   getParagraphId(paragraphImage: any, details: ContentArticleDetails): number {
     let paragraphId;
     // if there was no paragraphId(when a new paragraph was added for example)
     // instead of the id it is 'no [arrayIndex]'
-    if (
-      isNaN(Number(paragraphImage.paragraphId)) &&
-      paragraphImage.paragraphId.startsWith('no ')
-    ) {
+    if (isNaN(Number(paragraphImage.paragraphId)) && paragraphImage.paragraphId.startsWith('no ')) {
       const arrayIndex = paragraphImage.paragraphId.substring(3);
       paragraphId = details.paragraphs[arrayIndex].id;
     } else {
