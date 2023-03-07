@@ -5,13 +5,12 @@ import { switchMap } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
 import { AppState } from './app.state';
 import { Cart } from './carts.store';
-import { PlantbagItem } from './plantbag.store';
 
 export interface PaymentDataDto {
   cartId: number;
   giftId: number;
   company: string;
-  companyAddon: number;
+  companyAddon: string;
 
   salutation: string;
   title: string;
@@ -61,6 +60,7 @@ export interface PaymentState {
   cartCreated: boolean;
   createdCartId: number;
   cartPayed: boolean;
+  lastPayedCart: Cart;
 }
 
 export const initialState: PaymentState = {
@@ -69,6 +69,7 @@ export const initialState: PaymentState = {
   cartPayed: false,
   cartCreated: false,
   createdCartId: -1,
+  lastPayedCart: null,
 };
 
 export const paymentReducer = createReducer(
@@ -89,6 +90,10 @@ export const paymentReducer = createReducer(
     cartCreated: true,
     createdCartId: action.cartId,
   })),
+  on(loadLastPayedCartSuccess, (state, action) => ({
+    ...state,
+    lastPayedCart: action.cart
+  }))
 );
 
 export function paymentReducerFn(state, action) {
@@ -102,6 +107,11 @@ export const selectCartForPaymentCreated = createSelector(
   (state: PaymentState) => state.cartCreated,
 );
 
+export const selectLastPayedCart = createSelector(
+  paymentFeature,
+  (state: PaymentState) => state.lastPayedCart,
+);
+
 @Injectable()
 export class PaymentEffects {
   constructor(private actions$: Actions, private paymentService: PaymentService) {}
@@ -113,6 +123,17 @@ export class PaymentEffects {
         this.paymentService
           .convertPlantBagToCart(action.plantBag)
           .pipe(switchMap((cartId) => [createCartFromPlantBagSuccess({ cartId })])),
+      ),
+    ),
+  );
+
+  loadLastPayedCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadLastPayedCart),
+      switchMap(() =>
+        this.paymentService
+          .loadLastPayedCart()
+          .pipe(switchMap((cart) => [loadLastPayedCartSuccess({ cart })])),
       ),
     ),
   );

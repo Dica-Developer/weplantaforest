@@ -22,6 +22,8 @@ import { BlogPageModule } from './blog-page/blog-page.module';
 import { PaymentOptionsPageComponent } from './payment-options-page/payment-options-page.component';
 import { FinancesPageComponent } from './finances-page/finances-page.component';
 import { PartnerPageComponent } from './partner-page/partner-page.component';
+import { SepaPageComponent } from './sepa-page/sepa-page.component';
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { PartnerPageComponent } from './partner-page/partner-page.component';
     PaymentOptionsPageComponent,
     FinancesPageComponent,
     PartnerPageComponent,
+    SepaPageComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ import { PartnerPageComponent } from './partner-page/partner-page.component';
     NgxSliderModule,
     ContactModule,
     BlogPageModule,
+    RouterModule
   ],
   exports: [
     ForgotPasswordPageComponent,

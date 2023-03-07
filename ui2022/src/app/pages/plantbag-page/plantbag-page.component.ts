@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { first, Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ import {
   templateUrl: './plantbag-page.component.html',
   styleUrls: ['./plantbag-page.component.scss'],
 })
-export class PlantbagPageComponent implements OnInit {
+export class PlantbagPageComponent implements OnInit, OnDestroy {
   plantBagPrice$ = this.store.select(selectPlantbagPrice);
   plantBag$ = this.store.select(selectPlantbag);
 
@@ -29,6 +29,10 @@ export class PlantbagPageComponent implements OnInit {
         this.router.navigateByUrl('/paymentOptions');
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.cartCreatedSub?.unsubscribe();
   }
 
   convertPlantBagToCart() {

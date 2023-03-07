@@ -33,6 +33,7 @@ import { BlogArticlePageComponent } from './pages/blog-page/blog-article-page/bl
 import { PaymentOptionsPageComponent } from './pages/payment-options-page/payment-options-page.component';
 import { FinancesPageComponent } from './pages/finances-page/finances-page.component';
 import { PartnerPageComponent } from './pages/partner-page/partner-page.component';
+import { SepaPageComponent } from './pages/sepa-page/sepa-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -70,6 +71,7 @@ export const userRoutes: Routes = [
   { path: 'privacy', component: PrivacyPageComponent },
   { path: 'ranking', component: RankingPageComponent },
   { path: 'paymentOptions', component: PaymentOptionsPageComponent },
+  { path: 'sepa', component: SepaPageComponent },
 ];
 
 const routes: Routes = [

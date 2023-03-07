@@ -32,6 +32,9 @@ export interface Cart {
   callBackVorname: string;
   callBackZahlungsart: string;
   callBackLand: string;
+  callBackEmail: string;
+  callBackSalutation: string;
+  callBackTitle: string;
   cartState: string;
   id: number;
   receipt: Receipt;

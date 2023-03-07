@@ -101,5 +101,18 @@
   "message": "Nachricht",
   "writeUs": "Schreibe Uns!",
   "backoffice": "Backoffice",
-  "GoToCheckout": "Weiter zur Kasse"
+  "GoToCheckout": "Weiter zur Kasse",
+  "checkout": "Kasse",
+  "choosePaymentOption": "Zahlungsmethode wählen",
+  "company": "Unternehmen",
+  "salutation": "Anrede",
+  "title": "Titel",
+  "firstName": "Vorname",
+  "lastName": "Nachname",
+  "streetAndNo": "Straße und Hausnummer",
+  "zip": "PLZ",
+  "city": "Ort",
+  "iban": "IBAN",
+  "bic": "BIC",
+  "donateNow": "Jetzt spenden"
 }

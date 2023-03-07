@@ -1,0 +1,157 @@
+<div class="columns">
+  <div class="column"></div>
+  <div class="column">
+    <div class="columns">
+      <div class="column">
+        <form [formGroup]="form">
+          <div class="columns">
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'company' | translate }}"
+                  name="company"
+                  formControlName="company"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'salutation' | translate }}"
+                  name="salutation"
+                  formControlName="salutation"
+                />
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'title' | translate }}"
+                  name="title"
+                  formControlName="title"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'firstName' | translate }}"
+                  name="forename"
+                  formControlName="forename"
+                />
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'lastName' | translate }}"
+                  name="name"
+                  formControlName="name"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'streetAndNo' | translate }}"
+                  name="street"
+                  formControlName="street"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'zip' | translate }}"
+                  name="zip"
+                  formControlName="zip"
+                />
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'city' | translate }}"
+                  name="city"
+                  formControlName="city"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'country' | translate }}"
+                  name="country"
+                  formControlName="country"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'email' | translate }}"
+                  name="mail"
+                  formControlName="mail"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'iban' | translate }}"
+                  name="iban"
+                  formControlName="iban"
+                />
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field class="title-field" appearance="fill">
+                <input
+                  matInput
+                  placeholder="{{ 'bic' | translate }}"
+                  name="bic"
+                  formControlName="bic"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column btn-row">
+              <span class="price">
+                {{ plantBagPrice$ | async | currency : '€' }}
+              </span>
+              <br />
+              <app-button label="{{ 'donateNow' | translate }}"></app-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="column"></div>
+</div>
