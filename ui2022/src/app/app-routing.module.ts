@@ -30,6 +30,7 @@ import { ContactPageComponent } from './pages/contact-page/contact-page.componen
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { BlogOverviewPageComponent } from './pages/blog-page/blog-overview-page/blog-overview-page.component';
 import { BlogArticlePageComponent } from './pages/blog-page/blog-article-page/blog-article-page.component';
+import { PaymentOptionsPageComponent } from "./pages/payment-options-page/payment-options-page.component";
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -66,6 +67,7 @@ export const userRoutes: Routes = [
   { path: 'imprint', component: ImprintPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },
   { path: 'ranking', component: RankingPageComponent },
+  { path: 'paymentOptions', component: PaymentOptionsPageComponent}
 ];
 
 const routes: Routes = [

@@ -16,6 +16,7 @@ import { ProjectReportState } from './project-report.store';
 import { SearchState } from './search.store';
 import { PlantProposalState } from './plant.store';
 import { BlogState } from './blog.store';
+import { PaymentState } from "./payment.store";
 
 export interface PagedData<T> {
   totalPages: number;
@@ -45,4 +46,5 @@ export interface AppState {
   readonly projectReportsState: ProjectReportState;
   readonly searchState: SearchState;
   readonly plantProposalState: PlantProposalState;
+  readonly paymentState: PaymentState;
 }

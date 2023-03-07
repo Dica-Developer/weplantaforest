@@ -1,0 +1,119 @@
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
+import { switchMap } from 'rxjs';
+import { PaymentService } from '../services/payment.service';
+import { AppState } from './app.state';
+import { Cart } from './carts.store';
+import { PlantbagItem } from './plantbag.store';
+
+export interface PaymentDataDto {
+  cartId: number;
+  giftId: number;
+  company: string;
+  companyAddon: number;
+
+  salutation: string;
+  title: string;
+  forename: string;
+  name: string;
+
+  street: string;
+  country: string;
+  city: string;
+  zip: string;
+  mail: string;
+
+  receipt: string;
+  comment: string;
+
+  paymentMethod: string;
+  transactionId: string;
+  iban: string;
+  bic: string;
+}
+
+export const payPlantBag = createAction(
+  '[Payment] pay plantbag',
+  props<{ requestDto: PaymentDataDto }>(),
+);
+export const payPlantBagSucess = createAction('[Payment] pay plantbag success');
+
+export const loadLastPayedCart = createAction('[Payment] load last cart');
+
+export const loadLastPayedCartSuccess = createAction(
+  '[Payment] load last cart success',
+  props<{ cart: Cart }>(),
+);
+
+export const createCartFromPlantBag = createAction(
+  '[Payment] create cart from plantbag',
+  props<{ plantBag: any }>(),
+);
+export const createCartFromPlantBagSuccess = createAction(
+  '[Payment] create cart from plantbag success',
+  props<{ cartId: number }>(),
+);
+
+export interface PaymentState {
+  data: PaymentDataDto | null;
+  loading: boolean;
+  cartCreated: boolean;
+  createdCartId: number;
+  cartPayed: boolean;
+}
+
+export const initialState: PaymentState = {
+  data: null,
+  loading: false,
+  cartPayed: false,
+  cartCreated: false,
+  createdCartId: -1,
+};
+
+export const paymentReducer = createReducer(
+  initialState,
+  on(payPlantBag, (state, action) => ({
+    ...state,
+    data: action.requestDto,
+    loading: true,
+    done: false,
+  })),
+  on(payPlantBagSucess, (state, action) => ({
+    ...state,
+    loading: false,
+    done: true,
+  })),
+  on(createCartFromPlantBagSuccess, (state, action) => ({
+    ...state,
+    cartCreated: true,
+    createdCartId: action.cartId,
+  })),
+);
+
+export function paymentReducerFn(state, action) {
+  return paymentReducer(state, action);
+}
+
+export const paymentFeature = (state: AppState) => state.paymentState;
+
+export const selectCartForPaymentCreated = createSelector(
+  paymentFeature,
+  (state: PaymentState) => state.cartCreated,
+);
+
+@Injectable()
+export class PaymentEffects {
+  constructor(private actions$: Actions, private paymentService: PaymentService) {}
+
+  createCartFromPlantBag$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createCartFromPlantBag),
+      switchMap((action) =>
+        this.paymentService
+          .convertPlantBagToCart(action.plantBag)
+          .pipe(switchMap((cartId) => [createCartFromPlantBagSuccess({ cartId })])),
+      ),
+    ),
+  );
+}

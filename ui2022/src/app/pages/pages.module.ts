@@ -19,6 +19,7 @@ import { PlantbagPageComponent } from './plantbag-page/plantbag-page.component';
 import { ContactModule } from './contact-page/contact-page.module';
 import { AboutPageComponent } from './about-page/about-page.component';
 import { BlogPageModule } from './blog-page/blog-page.module';
+import { PaymentOptionsPageComponent } from './payment-options-page/payment-options-page.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { BlogPageModule } from './blog-page/blog-page.module';
     PlantProposalPageComponent,
     PlantbagPageComponent,
     AboutPageComponent,
+    PaymentOptionsPageComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,7 @@ import { BlogPageModule } from './blog-page/blog-page.module';
     ResetPasswordPageComponent,
     ImprintPageComponent,
     PrivacyPageComponent,
+    PaymentOptionsPageComponent
   ],
 })
 export class PagesModule {}

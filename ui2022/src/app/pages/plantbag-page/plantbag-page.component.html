@@ -1,1 +1,6 @@
 <app-plantbag></app-plantbag>
+<div class="columns" *ngIf="(plantBagPrice$ | async) > 0">
+  <div class="column checkout-btn">
+    <app-button label="{{ 'GoToCheckout' | translate }}" (click)="convertPlantBagToCart()"></app-button>
+  </div>
+</div>
