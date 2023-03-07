@@ -138,17 +138,17 @@ $dark-theme-background-palette: (
 @include mat.core($fontConfig);
 
 body {
-  --primary-color: #82ab1f;
-  --primary-lighter-color: #dae6bc;
-  --primary-darker-color: #659112;
+  --primary-color: #969900;
+  --primary-lighter-color: #969900;
+  --primary-darker-color: #969900;
   --text-primary-color: #{rgba(black, 0.87)};
   --text-primary-lighter-color: #{rgba(black, 0.87)};
   --text-primary-darker-color: #{white};
 }
 $mat-primary: (
-  main: #82ab1f,
-  lighter: #dae6bc,
-  darker: #659112,
+  main: #969900,
+  lighter: #969900,
+  darker: #969900,
   200: #82ab1f,
   // For slide toggle,
   contrast:
