@@ -20,7 +20,7 @@ import { ContactModule } from './contact-page/contact-page.module';
 import { AboutPageComponent } from './about-page/about-page.component';
 import { BlogPageModule } from './blog-page/blog-page.module';
 import { PaymentOptionsPageComponent } from './payment-options-page/payment-options-page.component';
-import { FinancesPageModule } from './finances-page/finances-page.module';
+import { FinancesPageComponent } from './finances-page/finances-page.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +32,7 @@ import { FinancesPageModule } from './finances-page/finances-page.module';
     PlantbagPageComponent,
     AboutPageComponent,
     PaymentOptionsPageComponent,
+    FinancesPageComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +48,6 @@ import { FinancesPageModule } from './finances-page/finances-page.module';
     NgxSliderModule,
     ContactModule,
     BlogPageModule,
-    FinancesPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,
@@ -55,6 +55,7 @@ import { FinancesPageModule } from './finances-page/finances-page.module';
     ImprintPageComponent,
     PrivacyPageComponent,
     PaymentOptionsPageComponent,
+    FinancesPageComponent,
   ],
 })
 export class PagesModule {}
