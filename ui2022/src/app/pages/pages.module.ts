@@ -21,6 +21,7 @@ import { AboutPageComponent } from './about-page/about-page.component';
 import { BlogPageModule } from './blog-page/blog-page.module';
 import { PaymentOptionsPageComponent } from './payment-options-page/payment-options-page.component';
 import { FinancesPageComponent } from './finances-page/finances-page.component';
+import { PartnerPageComponent } from './partner-page/partner-page.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FinancesPageComponent } from './finances-page/finances-page.component';
     AboutPageComponent,
     PaymentOptionsPageComponent,
     FinancesPageComponent,
+    PartnerPageComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { FinancesPageComponent } from './finances-page/finances-page.component';
     PrivacyPageComponent,
     PaymentOptionsPageComponent,
     FinancesPageComponent,
+    PartnerPageComponent,
   ],
 })
 export class PagesModule {}

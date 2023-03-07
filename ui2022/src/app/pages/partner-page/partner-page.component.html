@@ -1,0 +1,16 @@
+<div
+  class="w-100 is-flex is-flex-direction-column is-justify-content-center is-align-items-center padding-1"
+>
+  <div class="partner">
+    <h2>{{ 'partner' | translate }}</h2>
+    <div *ngFor="let partner of partners">
+      <h4>{{ partners.title }}</h4>
+      <div innerHtml="{{ partner.intro }}"></div>
+      <div *ngFor="let paragraph of partner.paragraphs">
+        {{ paragraph.title }}
+        <div innerHtml="{{ paragraph.title }}"></div>
+        <div innerHtml="{{ paragraph.text }}"></div>
+      </div>
+    </div>
+  </div>
+</div>
