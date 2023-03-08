@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
 import { AppState } from './app.state';
 import { Cart } from './carts.store';
+import { addSuccessMessage } from './success-message.state';
 
 export interface PaymentDataDto {
   cartId: number;
@@ -83,7 +84,7 @@ export const paymentReducer = createReducer(
   on(payPlantBagSucess, (state, action) => ({
     ...state,
     loading: false,
-    done: true,
+    cartPayed: true,
   })),
   on(createCartFromPlantBagSuccess, (state, action) => ({
     ...state,
@@ -92,8 +93,8 @@ export const paymentReducer = createReducer(
   })),
   on(loadLastPayedCartSuccess, (state, action) => ({
     ...state,
-    lastPayedCart: action.cart
-  }))
+    lastPayedCart: action.cart,
+  })),
 );
 
 export function paymentReducerFn(state, action) {
@@ -110,6 +111,11 @@ export const selectCartForPaymentCreated = createSelector(
 export const selectLastPayedCart = createSelector(
   paymentFeature,
   (state: PaymentState) => state.lastPayedCart,
+);
+
+export const selectPaymentDone = createSelector(
+  paymentFeature,
+  (state: PaymentState) => state.cartPayed,
 );
 
 @Injectable()
@@ -134,6 +140,22 @@ export class PaymentEffects {
         this.paymentService
           .loadLastPayedCart()
           .pipe(switchMap((cart) => [loadLastPayedCartSuccess({ cart })])),
+      ),
+    ),
+  );
+
+  payPlantBag$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(payPlantBag),
+      switchMap((action) =>
+        this.paymentService.payCart(action.requestDto).pipe(
+          switchMap(() => [
+            payPlantBagSucess(),
+            addSuccessMessage({
+              message: { key: 'PLANTBAG_PAYED_SUCCES', message: 'Pflanzkorb bezahlt!' },
+            }),
+          ]),
+        ),
       ),
     ),
   );

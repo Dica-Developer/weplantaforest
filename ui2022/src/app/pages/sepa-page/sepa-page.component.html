@@ -146,7 +146,12 @@
                 {{ plantBagPrice$ | async | currency : '€' }}
               </span>
               <br />
-              <app-button label="{{ 'donateNow' | translate }}"></app-button>
+              <app-button
+                *ngIf="!cartPayed"
+                label="{{ 'donateNow' | translate }}"
+                (click)="payPlantbag()"
+              ></app-button>
+              <p *ngIf="cartPayed">{{ 'plantbagPayed' | translate }}</p>
             </div>
           </div>
         </form>

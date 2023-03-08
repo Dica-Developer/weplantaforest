@@ -114,5 +114,6 @@
   "city": "Ort",
   "iban": "IBAN",
   "bic": "BIC",
-  "donateNow": "Jetzt spenden"
+  "donateNow": "Jetzt spenden",
+  "plantbagPayed": "Pflanzkorb bezahlt!"
 }

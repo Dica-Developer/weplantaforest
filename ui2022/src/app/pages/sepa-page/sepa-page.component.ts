@@ -2,9 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { AppState } from 'src/app/store/app.state';
-import { loadLastPayedCart, selectLastPayedCart } from 'src/app/store/payment.store';
-import { selectPlantbagPrice } from "src/app/store/plantbag.store";
+import { AppState } from '../../store/app.state';
+import {
+  loadLastPayedCart,
+  payPlantBag,
+  selectLastPayedCart,
+  selectPaymentDone,
+} from '../../store/payment.store';
+import { selectPlantbagPrice } from '../../store/plantbag.store';
 
 @Component({
   selector: 'app-sepa-page',
@@ -36,24 +41,23 @@ export class SepaPageComponent implements OnInit, OnDestroy {
     transactionId: new FormControl(''),
     iban: new FormControl(''),
     bic: new FormControl(''),
-
   });
 
   lastPayedCartSub: Subscription;
 
   plantBagPrice$ = this.store.select(selectPlantbagPrice);
 
+  cartPayed: boolean;
+  cartPayedSub: Subscription;
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadLastPayedCart());
     this.store.select(selectLastPayedCart).subscribe((cart) => {
-      console.log('last payed:');
-      console.log(cart);
       if (cart) {
         this.form.get('company').setValue(cart.callBackFirma);
         this.form.get('salutation').setValue(cart.callBackSalutation);
-
         this.form.get('country').setValue(cart.callBackLand);
         this.form.get('forename').setValue(cart.callBackVorname);
         this.form.get('name').setValue(cart.callBackNachname);
@@ -64,9 +68,27 @@ export class SepaPageComponent implements OnInit, OnDestroy {
         this.form.get('title').setValue(cart.callBackTitle);
       }
     });
+
+    this.cartPayedSub = this.store.select(selectPaymentDone).subscribe((cartPayed) => {
+      this.cartPayed = cartPayed;
+      if (this.cartPayed) {
+        this.form.disable();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.lastPayedCartSub?.unsubscribe();
+  }
+
+  payPlantbag() {
+    console.log(this.form.valid);
+
+    if (this.form.valid) {
+      const requestDto = this.form.value;
+      console.log(requestDto);
+
+      this.store.dispatch(payPlantBag({ requestDto }));
+    }
   }
 }
