@@ -1,14 +1,6 @@
-<div class="columns project-description">
-  <div class="column is-three-fifths padding-left is-flex is-flex-direction-column">
-    <div innerHtml="{{ intro }}"></div>
-    <p
-      *ngFor="let description of descriptions"
-      class="description"
-      innerHtml="{{ description }}"
-    ></p>
-    <a routerLink="/blog">{{ 'backToBlog' | translate }}</a>
-  </div>
-  <div class="column is-two-fifths">
-    <img src="{{ imageUrl }}" alt="blogImage" />
-  </div>
+<div class="columns project-description padding-left padding-2 is-flex is-flex-direction-column">
+  <div innerHtml="{{ intro }}"></div>
+  <img src="{{ imageUrl }}" alt="blogImage" />
+  <p *ngFor="let description of descriptions" class="description" innerHtml="{{ description }}"></p>
+  <a routerLink="/blog">{{ 'backToBlog' | translate }}</a>
 </div>

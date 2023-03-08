@@ -1,6 +1,6 @@
 <div class="columns blog-header">
   <div
-    class="border-right column is-two-fifths is-flex is-flex-direction-column padding-left is-justify-content-space-between"
+    class="border-right column is-three-fifths is-flex is-flex-direction-column padding-left is-justify-content-space-between"
   >
     <nav class="breadcrumb">
       <ul>
@@ -10,7 +10,7 @@
           </a>
         </li>
         <li>
-          <a routerLink="/projectReports">
+          <a class="breadcrumb-active" routerLink="/blog">
             {{ 'blog' | translate }}
           </a>
         </li>
@@ -19,6 +19,11 @@
     <h2>{{ blogArticle.title }}</h2>
   </div>
   <div
-    class="column padding-left padding-right is-three-fifths is-flex is-flex-direction-column is-justify-content-space-around"
-  ></div>
+    class="column is-two-fifths is-flex is-flex-direction-column is-justify-content-space-around"
+  >
+    <div class="imageWrapper" *ngIf="imageUrl">
+      <!-- <img src="{{ imageUrl }}" alt="blogImage" /> -->
+      <img src="assets/lucy.jpg" alt="blogImage" />
+    </div>
+  </div>
 </div>

@@ -1,7 +1,3 @@
-span {
-  font-size: 1.5rem !important;
-}
-
 .blog-header {
   border-bottom: 1px solid var(--black);
 }
@@ -10,25 +6,19 @@ nav {
   margin-top: 1rem;
 }
 
-h2 {
-  margin-top: 2rem;
+.imageWrapper {
+  display: flex;
+  align-items: center; /* vertical */
+  justify-content: center;
+  min-width: 100%;
+  position: relative;
+  overflow: hidden;
+  max-height: 350px;
+  img {
+    height: auto;
+  }
 }
 
-.mapLink {
-  margin-bottom: 2rem;
-}
-
-@media only screen and (max-width: 768px) {
-  span {
-    font-size: 1rem !important;
-  }
-
-  .border-right {
-    border-right: none;
-    border-bottom: 1px solid var(--black);
-  }
-
-  .mapLink {
-    margin-bottom: 1rem;
-  }
+.is-two-fifths {
+  padding: 0 !important;
 }
