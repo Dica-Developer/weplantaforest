@@ -1,10 +1,4 @@
-import {
-  createAction,
-  createReducer,
-  createSelector,
-  on,
-  props,
-} from '@ngrx/store';
+import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { ActiveProjectArticle } from './project.store';
 import { AppState } from './app.state';
 import { Injectable } from '@angular/core';
@@ -19,30 +13,24 @@ export interface PlantbagItem {
   amount: number;
 }
 
-export const addPlantbagItem = createAction(
-  '[Plantbag] add item',
-  props<{ item: PlantbagItem }>()
-);
+export const addPlantbagItem = createAction('[Plantbag] add item', props<{ item: PlantbagItem }>());
 
 export const removePlantbagItem = createAction(
   '[Plantbag] remove item',
-  props<{ articleId: number }>()
+  props<{ articleId: number }>(),
 );
 
 export const validatePlantbag = createAction(
   '[Plantbag] validate',
-  props<{ request: any; followUpAction: any }>()
+  props<{ request: any; followUpAction: any }>(),
 );
 
 export const generateCodes = createAction(
   '[Plantbag] generate codes',
-  props<{ request: any; eventId: number }>()
+  props<{ request: any; eventId: number }>(),
 );
 
-export const plantForUser = createAction(
-  '[Plantbag] plant for user',
-  props<{ request: any }>()
-);
+export const plantForUser = createAction('[Plantbag] plant for user', props<{ request: any }>());
 
 export const resetPlantbag = createAction('[Plantbag] reset plantbag');
 
@@ -60,7 +48,7 @@ const plantbagReducer = createReducer(
     //if item already exists, update amount
     if (
       state.plantbagItems.findIndex(
-        (pbItem) => pbItem.article.articleId == item.article.articleId
+        (pbItem) => pbItem.article.articleId == item.article.articleId,
       ) !== -1
     ) {
       return {
@@ -88,14 +76,12 @@ const plantbagReducer = createReducer(
   }),
   on(removePlantbagItem, (state, { articleId }) => ({
     ...state,
-    plantbagItems: state.plantbagItems.filter(
-      (item) => item.article.articleId !== articleId
-    ),
+    plantbagItems: state.plantbagItems.filter((item) => item.article.articleId !== articleId),
   })),
   on(resetPlantbag, (state) => ({
     ...state,
     plantbagItems: [],
-  }))
+  })),
 );
 
 export function plantbagReducerFn(state, action) {
@@ -104,14 +90,18 @@ export function plantbagReducerFn(state, action) {
 
 export const plantbagFeature = (state: AppState) => state.plantbagState;
 
-export const selectPlantbag = createSelector(
-  plantbagFeature,
-  (state: PlantbagState) => state
+export const selectPlantbag = createSelector(plantbagFeature, (state: PlantbagState) => state);
+
+export const selectPlantbagPrice = createSelector(plantbagFeature, (state: PlantbagState) =>
+  calcPlantbagPrice(state),
 );
 
-export const selectPlantbagPrice = createSelector(
+export const selectPlantbagPriceFormatted = createSelector(
   plantbagFeature,
-  (state: PlantbagState) => calcPlantbagPrice(state)
+  (state: PlantbagState) => {
+    const priceFormatted = parseFloat(calcPlantbagPrice(state) + '').toFixed(2) + '€';
+    return priceFormatted;
+  },
 );
 
 export function calcPlantbagPrice(plantbag: PlantbagState): number {
@@ -139,9 +129,7 @@ export function createPlantbagForBackend(plantbag: PlantbagState) {
       };
       projects[item.article.project.name] = projectToAdd;
     } else {
-      projects[item.article.project.name].plantItems[
-        item.article.treeType.name
-      ] = {
+      projects[item.article.project.name].plantItems[item.article.treeType.name] = {
         amount: item.amount,
         imageFile: item.article.treeType.imageFile,
         price: item.article.price.priceAsLong,
@@ -158,10 +146,7 @@ export function createPlantbagForBackend(plantbag: PlantbagState) {
 
 @Injectable()
 export class PlantbagEffects {
-  constructor(
-    private actions$: Actions,
-    private plantbagService: PlantbagService
-  ) {}
+  constructor(private actions$: Actions, private plantbagService: PlantbagService) {}
 
   ValidatePlantbag$ = createEffect(() =>
     this.actions$.pipe(
@@ -169,9 +154,9 @@ export class PlantbagEffects {
       switchMap((action) =>
         this.plantbagService
           .validatePlantbag(action.request.plantBag)
-          .pipe(switchMap((response: any) => [action.followUpAction]))
-      )
-    )
+          .pipe(switchMap((response: any) => [action.followUpAction])),
+      ),
+    ),
   );
 
   GenerateCodes$ = createEffect(() =>
@@ -187,10 +172,10 @@ export class PlantbagEffects {
                 message: 'Pflanzkörbe wurden generiert!',
               },
             }),
-          ])
-        )
-      )
-    )
+          ]),
+        ),
+      ),
+    ),
   );
 
   PlantForUser$ = createEffect(() =>
@@ -205,10 +190,10 @@ export class PlantbagEffects {
                 message: 'Pflanzkorb wurde generiert!',
               },
             }),
-            resetPlantbag()
-          ])
-        )
-      )
-    )
+            resetPlantbag(),
+          ]),
+        ),
+      ),
+    ),
   );
 }

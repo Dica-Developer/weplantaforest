@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [],
@@ -44,6 +45,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatExpansionModule,
     MatAutocompleteModule,
     MatMenuModule,
+    MatBadgeModule,
   ],
   exports: [
     MatInputModule,
@@ -65,6 +67,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatExpansionModule,
     MatAutocompleteModule,
     MatMenuModule,
+    MatBadgeModule,
   ],
 })
 export class MaterialModule {}

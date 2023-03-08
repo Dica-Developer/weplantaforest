@@ -5,6 +5,7 @@ import { AppState } from '../../../store/app.state';
 import { logout } from '../../../store/auth.store';
 import { environment } from '../../../../environments/environment';
 import { Subscription } from 'rxjs';
+import { selectPlantbagPriceFormatted } from '../../../store/plantbag.store';
 
 @Component({
   selector: 'app-toolbar',
@@ -19,6 +20,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   treeInfo = false;
   overlayIsOpen = false;
   loggedIn: boolean;
+  plantBagPrice$ = this.store.select(selectPlantbagPriceFormatted);
 
   constructor(private router: Router, private store: Store<AppState>) {}
 

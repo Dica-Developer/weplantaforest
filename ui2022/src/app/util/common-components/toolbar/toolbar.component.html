@@ -19,6 +19,9 @@
   </div>
   <div class="h-100 w-80px is-flex-grow-0 bordered">
     <app-barrel-icon
+      matBadge="{{ plantBagPrice$ | async }}"
+      matBadgeColor="warn"
+      [matBadgeHidden]="(plantBagPrice$ | async) == '0.00€'"
       [inToolbar]="true"
       class="h-100 center-vertically-horizontally inToolbar"
       routerLink="/plantbag"
