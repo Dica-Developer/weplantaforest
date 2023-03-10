@@ -10,17 +10,20 @@ button {
 
 .login {
   height: calc(100vh - 80px);
-  background: #00000000;
+  background-image: url(/assets/baumscheiben.png);
+  background-size: cover;
+  background-position: center;
+  background-size: cover;
 }
 
 @media only screen and (max-width: 768px) {
   .login {
-    justify-content: center;
+    background-position: right;
+    justify-content: flex-end;
     padding-top: initial;
-    background: #00000000;
   }
 
   form {
-    padding-top: 15rem;
+    padding-bottom: 2rem;
   }
 }

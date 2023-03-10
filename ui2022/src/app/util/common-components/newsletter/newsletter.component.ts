@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-newsletter',
@@ -6,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./newsletter.component.scss'],
 })
 export class NewsletterComponent implements OnInit {
-  constructor() {}
+  fullScreenNewsletter: boolean = false;
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.router.url.includes('newsletter')) {
+      this.fullScreenNewsletter = true;
+    }
+  }
 
   subscribeToNewsletter() {}
 }

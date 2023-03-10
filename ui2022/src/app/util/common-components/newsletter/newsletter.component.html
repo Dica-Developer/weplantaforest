@@ -1,5 +1,5 @@
-<div class="newsletter w-100 is-flex columns">
-  <div class="is-flex column is-one-third is-flex-direction-column">
+<div class="newsletter w-100 is-flex columns" [class.newsletterPage]="fullScreenNewsletter">
+  <div class="is-flex column is-one-third is-flex-direction-column is-justify-content-center">
     <h2>{{ 'newsLetter' | translate }}</h2>
     <p>{{ 'newsLetterText' | translate }}</p>
   </div>

@@ -1,6 +1,14 @@
 .newsletter {
+  background-image: url(/assets/baumscheiben.png);
+  background-size: cover;
+  background-position: center;
+  background-size: cover;
   flex-direction: row;
   padding: 3rem;
+}
+
+.newsletterPage {
+  height: calc(100vh - 80px);
 }
 
 @media only screen and (max-width: 768px) {
