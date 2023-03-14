@@ -1,6 +1,6 @@
 .label-div {
   margin: 2rem auto 4rem auto;
-  text-align: right;
+  text-align: left;
   font-family: 'Bull-regular';
   font-size: 1rem;
 
@@ -14,11 +14,19 @@
   margin-bottom: 2rem;
   text-align: center;
   .number-big {
+    text-shadow: 0 0 8px var(--background);
+    opacity: 0.85;
     font-size: 20rem !important;
     font-family: 'NBArchitect' !important;
     line-height: 20rem !important;
     color: var(--brown);
   }
+}
+
+.section {
+  background-image: url(/assets/baumscheiben.png);
+  background-size: cover;
+  background-position: center;
 }
 
 @media only screen and (max-width: 1600px) {

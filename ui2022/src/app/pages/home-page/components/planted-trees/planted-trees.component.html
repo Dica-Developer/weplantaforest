@@ -1,11 +1,13 @@
-<div class="label-div padding-right">
-  <app-circle-icon></app-circle-icon>
-  <div>
-    {{ 'plantedTrees' | translate }}
+<div class="section">
+  <div class="label-div padding-left">
+    <app-circle-icon></app-circle-icon>
+    <div>
+      {{ 'plantedTrees' | translate }}
+    </div>
   </div>
-</div>
-<div class="tree-count-div">
-  <span class="number-big">
-    {{ treeCount$ | async }}
-  </span>
+  <div class="tree-count-div">
+    <span class="number-big">
+      {{ treeCount$ | async }}
+    </span>
+  </div>
 </div>
