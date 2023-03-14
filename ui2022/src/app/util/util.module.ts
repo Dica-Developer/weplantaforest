@@ -46,6 +46,9 @@ import { LightboxGalleryComponent } from './common-components/lightbox-gallery/l
 import { SearchOverlayComponent } from './common-components/search-overlay/search-overlay.component';
 import { TreeInfoOverlayComponent } from './common-components/tree-info-overlay/tree-info-overlay.component';
 import { SideMenuComponent } from './common-components/side-menu/side-menu.component';
+import { LeafletMapComponent } from './common-components/leaflet-map/leaflet-map.component';
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -84,6 +87,7 @@ import { SideMenuComponent } from './common-components/side-menu/side-menu.compo
     SearchOverlayComponent,
     TreeInfoOverlayComponent,
     SideMenuComponent,
+    LeafletMapComponent,
   ],
   imports: [
     CommonModule,
@@ -93,6 +97,8 @@ import { SideMenuComponent } from './common-components/side-menu/side-menu.compo
     ReactiveFormsModule,
     TranslateModule,
     RouterModule,
+    LeafletModule,
+    LeafletDrawModule,
   ],
   exports: [
     MaterialModule,
@@ -122,6 +128,7 @@ import { SideMenuComponent } from './common-components/side-menu/side-menu.compo
     LightboxGalleryComponent,
     SearchOverlayComponent,
     SideMenuComponent,
+    LeafletMapComponent,
   ],
 })
 export class UtilModule {}

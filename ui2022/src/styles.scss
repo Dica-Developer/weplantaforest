@@ -191,3 +191,7 @@ snack-bar-container {
   border-radius: 0 !important;
   background: transparent !important;
 }
+
+.leaflet-container {
+  z-index: 1;
+}

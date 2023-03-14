@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import {
@@ -13,10 +13,22 @@ import {
 })
 export class ProjectsSectionComponent implements OnInit {
   projectReports$ = this.store.select(selectActiveProjectReports);
+  mapHeight: string = '900px';
+  screenWidth;
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(loadActiveProjectReports());
+    this.getScreenSize();
   }
 
-  ngOnInit(): void {}
+  @HostListener('window:load', ['$event'])
+  getScreenSize(event?) {
+    this.screenWidth = window.innerWidth;
+  }
+
+  ngOnInit(): void {
+    if (this.screenWidth < 764) {
+      this.mapHeight = '600px';
+    }
+  }
 }

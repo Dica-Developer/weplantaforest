@@ -2,6 +2,6 @@
   <app-project-header [projectReport]="projectReport$ | async"></app-project-header>
   <app-project-description [projectReport]="projectReport$ | async"></app-project-description>
   <app-project-carousel [projectReport]="projectReport$ | async"></app-project-carousel>
+  <app-leaflet-map [positions]="(projectReport$ | async).positions"></app-leaflet-map>
   <app-offer-area></app-offer-area>
-  <!-- <app-project-map></app-project-map> -->
 </div>
