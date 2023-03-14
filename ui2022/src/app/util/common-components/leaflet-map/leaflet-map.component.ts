@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import * as L from 'leaflet';
 import { tileLayer, latLng, Map } from 'leaflet';
@@ -13,6 +13,7 @@ export class LeafletMapComponent implements OnInit {
   coords = [];
   polygon;
   control: UntypedFormControl;
+  screenWidth;
 
   @Input() positions: any[];
   @Input() mapHeight: string = '600px';
@@ -28,8 +29,12 @@ export class LeafletMapComponent implements OnInit {
     zoom: 2,
   };
 
-  constructor() {}
+  @HostListener('window:load', ['$event'])
+  getScreenSize(event?) {
+    this.screenWidth = window.innerWidth;
+  }
 
+  constructor() {}
   ngOnInit(): void {
     if (this.positions) {
       this.coords = this.createPolygonPoints();
@@ -44,10 +49,14 @@ export class LeafletMapComponent implements OnInit {
         map.addLayer(this.polygon);
         this.map.fitBounds(this.polygon.getBounds());
       } else {
-        map.setView(new L.LatLng(51.482814, 11.969977), 13);
+        // adjust zoom if mobile view
+        if (this.screenWidth < 764) {
+          map.setView(new L.LatLng(51.9481, 10.26517), 5);
+        } else {
+          map.setView(new L.LatLng(51.9481, 10.26517), 6);
+        }
       }
       map.invalidateSize();
-      // this.addDrawOptions(map);
     });
   }
 
