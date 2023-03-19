@@ -34,6 +34,7 @@ import { PaymentOptionsPageComponent } from './pages/payment-options-page/paymen
 import { FinancesPageComponent } from './pages/finances-page/finances-page.component';
 import { PartnerPageComponent } from './pages/partner-page/partner-page.component';
 import { SepaPageComponent } from './pages/sepa-page/sepa-page.component';
+import { PlantSelfPageComponent } from './pages/plant-self-page/plant-self-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -54,6 +55,7 @@ export const userRoutes: Routes = [
   { path: 'profile/:username', component: ProfilePageComponent },
   { path: 'team/:teamname', component: TeamPageComponent },
   { path: 'plant', component: PlantProposalPageComponent },
+  { path: 'plantSelf', component: PlantSelfPageComponent },
   { path: 'plantbag', component: PlantbagPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },

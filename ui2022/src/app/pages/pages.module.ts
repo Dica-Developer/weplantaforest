@@ -24,6 +24,7 @@ import { FinancesPageComponent } from './finances-page/finances-page.component';
 import { PartnerPageComponent } from './partner-page/partner-page.component';
 import { SepaPageComponent } from './sepa-page/sepa-page.component';
 import { RouterModule } from "@angular/router";
+import { PlantSelfPageComponent } from './plant-self-page/plant-self-page.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { RouterModule } from "@angular/router";
     FinancesPageComponent,
     PartnerPageComponent,
     SepaPageComponent,
+    PlantSelfPageComponent,
   ],
   imports: [
     CommonModule,

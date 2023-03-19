@@ -13,11 +13,11 @@ import { Observable, Subscription, take } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from 'src/app/store/plantbag.store';
 
 @Component({
-  selector: 'app-plant-proposal-page',
-  templateUrl: './plant-proposal-page.component.html',
-  styleUrls: ['./plant-proposal-page.component.scss'],
+  selector: 'app-plant-self-page',
+  templateUrl: './plant-self-page.component.html',
+  styleUrls: ['./plant-self-page.component.scss'],
 })
-export class PlantProposalPageComponent implements OnInit, OnDestroy {
+export class PlantSelfPageComponent implements OnInit {
   value: number = 5;
 
   simpleProposal;
@@ -48,25 +48,6 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
       this.activeProjects = activeProjects;
     });
     this.activeProjects$ = this.store.select(selectActiveProjects);
-
-    this.sliderOptions.stepsArray.push({ value: 1, legend: `1` });
-    this.sliderOptions.stepsArray.push({
-      value: 5,
-      legend: `5`,
-    });
-    this.sliderOptions.stepsArray.push({
-      value: 10,
-      legend: `10`,
-    });
-    this.sliderOptions.stepsArray.push({
-      value: 50,
-      legend: `50`,
-    });
-
-    this.sliderOptions.stepsArray.push({
-      value: 100,
-      legend: `100`,
-    });
   }
 
   ngOnDestroy() {
