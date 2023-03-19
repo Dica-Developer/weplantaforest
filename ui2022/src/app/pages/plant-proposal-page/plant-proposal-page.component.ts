@@ -29,7 +29,13 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
   activeProjects$: Observable<any>;
 
   sliderOptions: Options = {
-    stepsArray: [],
+    stepsArray: [
+      { value: 1, legend: `1` },
+      { value: 5, legend: `5` },
+      { value: 10, legend: `10` },
+      { value: 50, legend: `50` },
+      { value: 100, legend: `100` },
+    ],
     showTicks: true,
     showTicksValues: false,
     hideLimitLabels: true,
@@ -48,25 +54,6 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
       this.activeProjects = activeProjects;
     });
     this.activeProjects$ = this.store.select(selectActiveProjects);
-
-    this.sliderOptions.stepsArray.push({ value: 1, legend: `1` });
-    this.sliderOptions.stepsArray.push({
-      value: 5,
-      legend: `5`,
-    });
-    this.sliderOptions.stepsArray.push({
-      value: 10,
-      legend: `10`,
-    });
-    this.sliderOptions.stepsArray.push({
-      value: 50,
-      legend: `50`,
-    });
-
-    this.sliderOptions.stepsArray.push({
-      value: 100,
-      legend: `100`,
-    });
   }
 
   ngOnDestroy() {

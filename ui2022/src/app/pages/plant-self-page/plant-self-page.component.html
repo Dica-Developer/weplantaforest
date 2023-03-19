@@ -29,21 +29,16 @@
         (valueChange)="getProposal($event)"
       ></ngx-slider>
     </div>
-    <div class="columns price-row">
-      <div class="column price">
-        <p class="desktop">
-          {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
-        </p>
-      </div>
-      <div class="column is-one-third">
-        <app-button
-          label="{{ 'intoPlantbag' | translate }}"
-          (click)="putIntoPlantbag()"
-        ></app-button>
-      </div>
+    <div class="is-flex is-align-items-center is-justify-content-flex-end price-row">
+      <p class="desktop">
+        {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
+      </p>
+      <app-button label="{{ 'intoPlantbag' | translate }}" (click)="putIntoPlantbag()"></app-button>
     </div>
   </div>
-  <div class="column border-top padding-left padding-top">
+  <div
+    class="column border-top padding-left is-flex is-flex-direction-column is-justify-content-space-around padding-top"
+  >
     <p class="desktop">{{ 'proposalOrIndividualText' | translate }}</p>
     <a routerLink="/">
       {{ 'orChooseIndivudual' | translate }}

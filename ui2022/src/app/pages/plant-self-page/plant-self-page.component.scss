@@ -9,6 +9,11 @@ h2 {
   margin-top: 2rem;
 }
 
+.desktop {
+  margin-bottom: 0 !important;
+  margin-right: 1rem;
+}
+
 ::ng-deep {
   .custom-slider .ngx-slider .ngx-slider-bar {
     // background: #ffe4d1;
