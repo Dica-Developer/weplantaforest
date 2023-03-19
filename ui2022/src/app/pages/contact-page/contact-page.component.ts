@@ -12,12 +12,9 @@ export class ContactPageComponent implements OnInit {
   contactForm = new UntypedFormGroup({
     name: new UntypedFormControl(''),
     email: new UntypedFormControl(''),
-    phonenumber: new UntypedFormControl(''),
+    phone: new UntypedFormControl(''),
     message: new UntypedFormControl(''),
   });
-
-  video;
-  btn;
 
   constructor(private store: Store<AppState>) {}
 
@@ -27,11 +24,12 @@ export class ContactPageComponent implements OnInit {
 
   onSubmit(): void {
     console.log('submitting');
-
     // this.store.dispatch(
     //   contact({
     //     name: this.contactForm.get('name').value,
-    //     password: this.contactForm.get('email').value,
+    //     email: this.contactForm.get('email').value,
+    //     phone: this.contactForm.get('phone').value,
+    //     message: this.contactForm.get('message').value,
     //   }),
     // );
   }
