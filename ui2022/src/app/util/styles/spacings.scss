@@ -14,6 +14,9 @@
 .padding-3 {
   padding: 3rem;
 }
+.padding-4 {
+  padding: 4rem;
+}
 
 .padding-bottom-3 {
   padding-bottom: 3rem;
@@ -73,7 +76,15 @@
   align-items: center;
 }
 
+.map-margin {
+  border: 1px solid var(--dark-brown);
+  margin: 4rem;
+}
+
 @media only screen and (max-width: 768px) {
+  .map-margin {
+    margin: 1rem;
+  }
   .padding-left {
     padding-left: 1rem !important;
   }

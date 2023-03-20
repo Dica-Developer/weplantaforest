@@ -52,9 +52,9 @@
       ></ngx-slider>
     </div>
     <div class="is-flex is-align-items-center is-justify-content-flex-end price-row">
-      <p class="desktop">
+      <span class="desktop">
         {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
-      </p>
+      </span>
       <app-button label="{{ 'intoPlantbag' | translate }}" (click)="putIntoPlantbag()"></app-button>
     </div>
   </div>
