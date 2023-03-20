@@ -19,7 +19,7 @@
         type="text"
         name="email"
         required
-        formControlName="email"
+        formControlName="mail"
       />
     </div>
     <div class="inputOutline">
@@ -28,7 +28,7 @@
         type="text"
         name="phonenumber"
         required
-        formControlName="phonenumber"
+        formControlName="phone"
       />
     </div>
     <div class="inputOutline">
@@ -42,8 +42,8 @@
       >
       </textarea>
     </div>
-    <div class="center">
-      <app-button [label]="'sendNow' | translate"></app-button>
-    </div>
   </form>
+  <div class="center">
+    <app-button (clicked)="onSubmit()" [label]="'sendNow' | translate"></app-button>
+  </div>
 </div>

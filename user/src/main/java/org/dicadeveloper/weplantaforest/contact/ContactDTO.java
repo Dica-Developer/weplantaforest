@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactDTO {
-
     private String reason;
     private String name;
     private String mail;

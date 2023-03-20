@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
+import { ContactRequest, submitContactRequestAction } from 'src/app/store/contact.store';
 
 @Component({
   selector: 'app-contact-page',
@@ -10,8 +11,9 @@ import { AppState } from 'src/app/store/app.state';
 })
 export class ContactPageComponent implements OnInit {
   contactForm = new UntypedFormGroup({
+    reason: new UntypedFormControl(''),
     name: new UntypedFormControl(''),
-    email: new UntypedFormControl(''),
+    mail: new UntypedFormControl(''),
     phone: new UntypedFormControl(''),
     message: new UntypedFormControl(''),
   });
@@ -23,14 +25,13 @@ export class ContactPageComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('submitting');
-    // this.store.dispatch(
-    //   contact({
-    //     name: this.contactForm.get('name').value,
-    //     email: this.contactForm.get('email').value,
-    //     phone: this.contactForm.get('phone').value,
-    //     message: this.contactForm.get('message').value,
-    //   }),
-    // );
+    let contactRequest: ContactRequest = {
+      reason: this.contactForm.get('reason').value,
+      name: this.contactForm.get('name').value,
+      mail: this.contactForm.get('mail').value,
+      phone: this.contactForm.get('phone').value,
+      message: this.contactForm.get('message').value,
+    };
+    this.store.dispatch(submitContactRequestAction({ request: contactRequest }));
   }
 }

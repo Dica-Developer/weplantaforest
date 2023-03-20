@@ -47,7 +47,8 @@ import { SearchEffects, searchReducerFn } from './store/search.store';
 import { PlantProposalEffects, plantProposalReducerFn } from './store/plant.store';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BlogEffects, blogReducerFn } from './store/blog.store';
-import { PaymentEffects, paymentReducerFn } from "./store/payment.store";
+import { PaymentEffects, paymentReducerFn } from './store/payment.store';
+import { ContactEffects, contactReducerFn } from './store/contact.store';
 
 export const MY_FORMATS = {
   parse: {
@@ -126,7 +127,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       searchState: searchReducerFn,
       blogState: blogReducerFn,
       plantProposalState: plantProposalReducerFn,
-      paymentState: paymentReducerFn
+      paymentState: paymentReducerFn,
+      contactState: contactReducerFn,
     }),
     EffectsModule.forRoot([
       AuthEffects,
@@ -145,7 +147,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
       SearchEffects,
       PlantProposalEffects,
       BlogEffects,
-      PaymentEffects
+      PaymentEffects,
+      ContactEffects,
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),
