@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { loadActiveProjects, selectActiveProjects } from 'src/app/store/project.store';
 import { Observable, Subscription, take } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from 'src/app/store/plantbag.store';
+import { SliderHelper } from 'src/app/util/helper/slider.helper';
 
 @Component({
   selector: 'app-plant-proposal-page',
@@ -29,20 +30,18 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
   activeProjects$: Observable<any>;
 
   sliderOptions: Options = {
-    stepsArray: [
-      { value: 1, legend: `1` },
-      { value: 5, legend: `5` },
-      { value: 10, legend: `10` },
-      { value: 50, legend: `50` },
-      { value: 100, legend: `100` },
-    ],
+    stepsArray: this.sliderHelper.returnSliderArray(),
     showTicks: true,
     showTicksValues: false,
     hideLimitLabels: true,
     hidePointerLabels: true,
   };
 
-  constructor(private store: Store<AppState>, private translateService: TranslateService) {}
+  constructor(
+    private store: Store<AppState>,
+    private sliderHelper: SliderHelper,
+    private translateService: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.store.dispatch(getSimplePlantProposal({ amountOfTrees: 5 }));
