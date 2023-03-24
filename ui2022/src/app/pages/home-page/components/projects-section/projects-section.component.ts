@@ -28,7 +28,7 @@ export class ProjectsSectionComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.screenWidth < 764) {
-      this.mapHeight = '600px';
+      this.mapHeight = '500px';
     }
   }
 }
