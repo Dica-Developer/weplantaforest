@@ -66,17 +66,8 @@ h2 {
   }
 }
 
-.proposal-row {
-  // margin-top: 2rem;
-  .price-row {
-    padding-top: 2rem;
-    .is-one-third {
-      text-align: right;
-    }
-
-    .price {
-      padding-top: 2rem;
-      text-align: right;
-    }
+@media only screen and (max-width: 768px) {
+  .switchToFlexCol {
+    flex-direction: column;
   }
 }

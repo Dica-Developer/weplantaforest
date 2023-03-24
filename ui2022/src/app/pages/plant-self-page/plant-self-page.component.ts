@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import {
@@ -7,11 +7,13 @@ import {
   selectSimpleProposal,
 } from 'src/app/store/plant.store';
 import { Options } from '@angular-slider/ngx-slider';
-import { TranslateService } from '@ngx-translate/core';
-import { loadActiveProjects, selectActiveProjects } from 'src/app/store/project.store';
+import { loadActiveProjects, selectActiveProjects, TreeType } from 'src/app/store/project.store';
 import { Observable, Subscription, take } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from 'src/app/store/plantbag.store';
 import { SliderHelper } from 'src/app/util/helper/slider.helper';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { loadTreeTypes, selectTreeTypes } from 'src/app/store/treeType.store';
+import { TextHelper } from 'src/app/util/text.helper';
 
 @Component({
   selector: 'app-plant-self-page',
@@ -19,35 +21,61 @@ import { SliderHelper } from 'src/app/util/helper/slider.helper';
   styleUrls: ['./plant-self-page.component.scss'],
 })
 export class PlantSelfPageComponent implements OnInit {
+  controlObj: UntypedFormGroup;
+  selectedTreeType: TreeType;
+  treeTypes: TreeType[] = [];
   value: number = 5;
+  screenWidth;
+  mapHeight: string = '700px';
 
   simpleProposal;
   activeProjects;
-  proposalSub: Subscription;
   activeProjectsSub: Subscription;
 
-  proposalPrice$ = this.store.select(selectProposalPrice);
+  treeTypes$ = this.store.select(selectTreeTypes);
   activeProjects$: Observable<any>;
 
   sliderOptions: Options = {
     stepsArray: this.sliderHelper.returnSliderArray(),
-    showTicks: false,
+    showTicks: true,
     showTicksValues: false,
     hideLimitLabels: true,
     hidePointerLabels: false,
   };
+  selectTreetypesSub: Subscription;
+
+  selfPlantForm = new UntypedFormGroup({
+    shortDescription: new UntypedFormControl(''),
+  });
 
   constructor(
     private store: Store<AppState>,
     private sliderHelper: SliderHelper,
-    private translateService: TranslateService,
-  ) {}
+    private textHelper: TextHelper,
+  ) {
+    this.store.dispatch(loadTreeTypes());
+    this.selectTreetypesSub = store.select(selectTreeTypes).subscribe((res) => {
+      for (let tt of res) {
+        this.treeTypes.push({
+          id: tt.id,
+          imageFileName: tt.imageFileName,
+          description: tt.description,
+          name: this.textHelper.getTextForLanguage(tt.name, 'de'),
+        });
+      }
+    });
+    this.getScreenSize();
+  }
+
+  @HostListener('window:load', ['$event'])
+  getScreenSize(event?) {
+    this.screenWidth = window.innerWidth;
+  }
 
   ngOnInit(): void {
-    this.store.dispatch(getSimplePlantProposal({ amountOfTrees: 5 }));
-    this.proposalSub = this.store.select(selectSimpleProposal).subscribe((proposal) => {
-      this.simpleProposal = proposal;
-    });
+    if (this.screenWidth < 764) {
+      this.mapHeight = '500px';
+    }
     this.store.dispatch(loadActiveProjects());
     this.activeProjectsSub = this.store.select(selectActiveProjects).subscribe((activeProjects) => {
       this.activeProjects = activeProjects;
@@ -57,11 +85,10 @@ export class PlantSelfPageComponent implements OnInit {
 
   ngOnDestroy() {
     this.activeProjectsSub.unsubscribe();
-    this.proposalSub.unsubscribe();
   }
 
-  getProposal(event) {
-    this.store.dispatch(getSimplePlantProposal({ amountOfTrees: event }));
+  addTreesToForm(event) {
+    console.log(event.value);
   }
 
   putIntoPlantbag() {
@@ -79,4 +106,13 @@ export class PlantSelfPageComponent implements OnInit {
       }
     }
   }
+
+  treeTypeChanged($event) {
+    console.log($event.value);
+    this.selectedTreeType = $event.value;
+  }
+
+  addOtherTreeType() {}
+
+  submitPlanting() {}
 }

@@ -116,5 +116,9 @@
   "iban": "IBAN",
   "bic": "BIC",
   "donateNow": "Jetzt spenden",
-  "plantbagPayed": "Pflanzkorb bezahlt!"
+  "plantbagPayed": "Pflanzkorb bezahlt!",
+  "shortDescription": "Kurze Beschreibung",
+  "backToPlantProposal": "Zurück zu Baum Pflanzen",
+  "addPlantingNow": "Jetzt Pflanzung eintragen",
+  "addOtherTreeType": "Weitere Baumart hinzufügen"
 }

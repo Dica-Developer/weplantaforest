@@ -21,32 +21,59 @@
   </div>
 </div>
 <div class="columns proposal-row">
-  <div class="column is-three-fifths border-top-right padding-left padding-right padding-top-2">
-    <div class="custom-slider">
-      <ngx-slider
-        [(value)]="value"
-        [options]="sliderOptions"
-        (valueChange)="getProposal($event)"
-      ></ngx-slider>
-    </div>
-    <div class="is-flex is-align-items-center is-justify-content-flex-end price-row">
-      <p class="desktop">
-        {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
-      </p>
-      <app-button label="{{ 'intoPlantbag' | translate }}" (click)="putIntoPlantbag()"></app-button>
-    </div>
-  </div>
-  <div
-    class="column border-top padding-left is-flex is-flex-direction-column is-justify-content-space-around padding-top"
-  >
-    <p class="desktop">{{ 'proposalOrIndividualText' | translate }}</p>
-    <a routerLink="/">
-      {{ 'orChooseIndivudual' | translate }}
-    </a>
+  <div class="column is-two-fifths padding-left padding-right padding-top-2 padding-bottom-2"></div>
+  <div class="column is-three-fifths padding-left padding-right padding-top-2 padding-bottom-2">
+    <form [formGroup]="selfPlantForm">
+      <div class="custom-slider mb-4">
+        <ngx-slider
+          [(value)]="value"
+          [options]="sliderOptions"
+          (valueChange)="addTreesToForm($event)"
+        ></ngx-slider>
+      </div>
+      <div class="is-flex is-flex-row switchToFlexCol is-justify-content-space-between">
+        <mat-form-field>
+          <mat-label>Baumart</mat-label>
+          <mat-select [value]="selectedTreeType" (selectionChange)="treeTypeChanged($event)">
+            <mat-option *ngFor="let treeType of treeTypes" [value]="treeType.id">{{
+              treeType.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <app-button
+          label="{{ 'addOtherTreeType' | translate }}"
+          (click)="addOtherTreeType()"
+        ></app-button>
+      </div>
+      <div class="inputOutline mt-4">
+        <textarea
+          rows="10"
+          [placeholder]="'shortDescription' | translate"
+          type="text"
+          name="shortDescription"
+          required
+          formControlName="shortDescription"
+        >
+        </textarea>
+      </div>
+    </form>
   </div>
 </div>
 <div class="map-margin">
-  <app-leaflet-map></app-leaflet-map>
+  <app-leaflet-map [mapHeight]="mapHeight"></app-leaflet-map>
+</div>
+
+<div
+  class="is-flex is-flex-row switchToFlexCol is-justify-content-space-between is-align-items-center padding-left padding-right"
+>
+  <a routerLink="/" class="mb-4">
+    {{ 'backToPlantProposal' | translate }}
+  </a>
+  <app-button
+    class="mb-4"
+    label="{{ 'addPlantingNow' | translate }}"
+    (click)="submitPlanting()"
+  ></app-button>
 </div>
 
 <app-offer-area></app-offer-area>
