@@ -44,6 +44,8 @@
   }
 
   .description {
+    font-size: 1rem !important;
+    line-height: 1.25;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

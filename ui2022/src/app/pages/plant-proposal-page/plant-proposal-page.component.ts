@@ -9,7 +9,7 @@ import {
 import { Options } from '@angular-slider/ngx-slider';
 import { TranslateService } from '@ngx-translate/core';
 import { loadActiveProjects, selectActiveProjects } from 'src/app/store/project.store';
-import { Observable, Subscription, take } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from 'src/app/store/plantbag.store';
 import { SliderHelper } from 'src/app/util/helper/slider.helper';
 

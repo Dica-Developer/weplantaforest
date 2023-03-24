@@ -6,7 +6,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PlantbagService } from '../services/plantbag.service';
 import { switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
-import { loadEventCodes, addCartsToEvent } from './events.store';
+import { addCartsToEvent } from './events.store';
 
 export interface PlantbagItem {
   article: ActiveProjectArticle;
