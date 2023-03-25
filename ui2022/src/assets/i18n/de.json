@@ -55,6 +55,8 @@
   "planted": "bepflanzt",
   "startYear": "Startjahr",
   "of": "von",
+  "yes": "Ja",
+  "no": "Nein",
   "newestPlantings": "Neueste Pflanzungen",
   "linkToMap": "Link zur Karte",
   "donors": "Spender",
@@ -78,6 +80,9 @@
   "type": "Typ",
   "organisation": "Organisation",
   "location": "Ort",
+  "teamName": "Teamname",
+  "aboutMe": "Über mich",
+  "username": "Username",
   "teamLeader": "Teamleiter",
   "members": "Mitglieder",
   "plantings": "Pflanzungen",
@@ -120,5 +125,7 @@
   "shortDescription": "Kurze Beschreibung",
   "backToPlantProposal": "Zurück zu Baum Pflanzen",
   "addPlantingNow": "Jetzt Pflanzung eintragen",
-  "addOtherTreeType": "Weitere Baumart hinzufügen"
+  "addOtherTreeType": "Weitere Baumart hinzufügen",
+  "editProfile": "Profil editieren",
+  "saveProfile": "Speichern"
 }

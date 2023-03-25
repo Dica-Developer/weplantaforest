@@ -30,6 +30,11 @@ export const loadTreesByUserSuccess = createAction(
   '[Profile] load trees by user success',
   props<{ trees: PagedData<ProfileTree> }>(),
 );
+export const updateProfile = createAction('[Profile] update Details', props<{ profile: string }>());
+export const updateProfileSuccess = createAction(
+  '[Profile] update Details success',
+  props<{ details: ProfileDetails }>(),
+);
 
 export interface Co2Data {
   treesCount: number;

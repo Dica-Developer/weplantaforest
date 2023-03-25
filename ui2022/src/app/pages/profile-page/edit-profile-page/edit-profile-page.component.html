@@ -1,0 +1,94 @@
+<div class="is-flex is-flex-direction-column padding-4 padding-top-2">
+  <form [formGroup]="profileForm">
+    <h2>{{ 'editProfile' | translate }}</h2>
+    <div class="is-flex is-flex-direction-row w-100">
+      <mat-form-field appearance="fill" class="w-100 margin-right-1">
+        <input
+          matInput
+          [placeholder]="'username' | translate"
+          name="username"
+          formControlName="username"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <input matInput [placeholder]="'email' | translate" name="mail" formControlName="mail" />
+      </mat-form-field>
+    </div>
+    <div class="is-flex is-flex-direction-row">
+      <mat-form-field appearance="fill" class="w-100">
+        <textarea
+          matInput
+          rows="5"
+          type="text"
+          [placeholder]="'aboutMe' | translate"
+          name="aboutMe"
+          formControlName="aboutMe"
+        >
+        </textarea>
+      </mat-form-field>
+    </div>
+    <div class="is-flex is-flex-direction-row w-100">
+      <mat-form-field appearance="fill" class="w-100 margin-right-1">
+        <input
+          matInput
+          [placeholder]="'teamName' | translate"
+          name="teamName"
+          formControlName="teamName"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <input
+          matInput
+          [placeholder]="'organisation' | translate"
+          name="organisation"
+          formControlName="organisation"
+        />
+      </mat-form-field>
+    </div>
+    <div class="is-flex is-flex-direction-row is-align-items-center w-100">
+      <mat-form-field appearance="fill" class="w-100 margin-right-1">
+        <input
+          matInput
+          [placeholder]="'location' | translate"
+          name="location"
+          formControlName="location"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <input
+          matInput
+          [placeholder]="'website' | translate"
+          name="homepage"
+          formControlName="homepage"
+        />
+      </mat-form-field>
+    </div>
+    <div class="is-flex is-flex-direction-row is-align-items-center w-100">
+      <h4 class="margin-right-1">{{ 'newsletter' | translate }}</h4>
+      <div class="radio-buttons is-flex is-flex-grow-1 flex-row">
+        <div class="category margin-right-1">
+          <div [ngClass]="selectedRadio === false ? 'circle circle-active' : 'circle'">
+            <div></div>
+          </div>
+          <span>{{ 'yes' | translate | titlecase }}</span>
+        </div>
+        <div class="category">
+          <div [ngClass]="selectedRadio === false ? 'circle circle-active' : 'circle'">
+            <div></div>
+          </div>
+          <span>{{ 'no' | translate | titlecase }}</span>
+        </div>
+      </div>
+      <!-- <mat-radio-group
+      aria-label="Select an option"
+      class="is-flex is-flex-direction-row is-align-items-center"
+      >
+      <mat-radio-button value="1">Option 1</mat-radio-button>
+      <mat-radio-button value="2">Option 2</mat-radio-button>
+    </mat-radio-group> -->
+    </div>
+    <div class="is-flex is-justify-content-center">
+      <app-button (clicked)="updateProfile()" [label]="'saveProfile' | translate"></app-button>
+    </div>
+  </form>
+</div>

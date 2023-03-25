@@ -2,9 +2,12 @@
   <div class="column is-half border-right border-bottom">
     <div class="columns w-100 padding-2 border-bottom">
       <div class="column is-half">
-        <h2>
-          {{ 'profile' | translate }}
-        </h2>
+        <div class="w-100 is-flex is-flex-row is-justify-content-space-between">
+          <h2>
+            {{ 'profile' | translate }}
+          </h2>
+          <mat-icon *ngIf="showEdit" (click)="editProfile()">edit</mat-icon>
+        </div>
         <h4>{{ profileDetails.userName }}</h4>
         <h4>{{ profileDetails.mail }}</h4>
       </div>

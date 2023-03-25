@@ -16,6 +16,11 @@ h4 {
   }
 }
 
+mat-icon:hover {
+  cursor: pointer;
+  color: var(--green);
+}
+
 @media only screen and (max-width: 768px) {
   .padding-2 {
     padding: 1rem;

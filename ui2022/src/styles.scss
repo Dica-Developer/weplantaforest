@@ -111,11 +111,8 @@ snack-bar-container {
 }
 
 ///////// radio button
-.radio-buttons {
-  margin-top: 2rem;
-}
-
 .category {
+  display: flex;
   margin-bottom: 1rem;
   span {
     font-size: 1.25rem;

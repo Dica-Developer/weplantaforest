@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-info',
@@ -8,8 +9,14 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ProfileInfoComponent implements OnInit {
   @Input() profileDetails;
   @Input() teamDetails;
+  @Input() showEdit;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  editProfile() {
+    let username = localStorage.getItem('username');
+    this.router.navigate(['/editProfile/' + username]);
+  }
 }

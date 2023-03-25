@@ -15,10 +15,16 @@ export class ProfilePageComponent implements OnInit {
   profileDetails$ = this.store.select(selectProfileDetails);
   plantings$ = this.store.select(selectActiveProjectReports);
   teamDetails$ = this.store.select(selectTeamDetails);
+  showEdit: boolean = false;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadProfileDetails({ username: paramMap.get('username') }));
+      if (paramMap.get('username') === localStorage.getItem('username')) {
+        this.showEdit = true;
+      } else {
+        this.showEdit = false;
+      }
     });
   }
 
