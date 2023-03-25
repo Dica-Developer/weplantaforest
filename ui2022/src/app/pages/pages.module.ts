@@ -23,8 +23,9 @@ import { PaymentOptionsPageComponent } from './payment-options-page/payment-opti
 import { FinancesPageComponent } from './finances-page/finances-page.component';
 import { PartnerPageComponent } from './partner-page/partner-page.component';
 import { SepaPageComponent } from './sepa-page/sepa-page.component';
-import { RouterModule } from "@angular/router";
+import { RouterModule } from '@angular/router';
 import { PlantSelfPageComponent } from './plant-self-page/plant-self-page.component';
+import { FactsPageComponent } from './facts-page/facts-page/facts-page.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { PlantSelfPageComponent } from './plant-self-page/plant-self-page.compon
     PartnerPageComponent,
     SepaPageComponent,
     PlantSelfPageComponent,
+    FactsPageComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,7 @@ import { PlantSelfPageComponent } from './plant-self-page/plant-self-page.compon
     NgxSliderModule,
     ContactModule,
     BlogPageModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     ForgotPasswordPageComponent,

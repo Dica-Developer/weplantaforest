@@ -36,6 +36,7 @@ import { SepaPageComponent } from './pages/sepa-page/sepa-page.component';
 import { PlantSelfPageComponent } from './pages/plant-self-page/plant-self-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page/profile-page.component';
 import { EditProfilePageComponent } from './pages/profile-page/edit-profile-page/edit-profile-page.component';
+import { FactsPageComponent } from './pages/facts-page/facts-page/facts-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -64,7 +65,7 @@ export const userRoutes: Routes = [
   { path: 'password_reset', component: ResetPasswordPageComponent },
   { path: 'blog', component: BlogOverviewPageComponent },
   { path: 'blog/:id', component: BlogArticlePageComponent },
-  { path: 'facts', component: PrivacyPageComponent },
+  { path: 'facts', component: FactsPageComponent },
   { path: 'finances', component: FinancesPageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'newsletter', component: NewsletterComponent },
