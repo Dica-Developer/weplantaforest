@@ -21,7 +21,6 @@ import { ImprintPageComponent } from './pages/imprint-page/imprint-page.componen
 import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
 import { ProjectPageComponent } from './pages/project-page/project-page.component';
 import { ProjectReportsOverviewPageComponent } from './pages/project-reports-overview-page/project-reports-overview-page.component';
-import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { TeamPageComponent } from './pages/team-page/team-page.component';
 import { PlantProposalPageComponent } from './pages/plant-proposal-page/plant-proposal-page.component';
 import { PlantbagPageComponent } from './pages/plantbag-page/plantbag-page.component';
@@ -35,6 +34,8 @@ import { FinancesPageComponent } from './pages/finances-page/finances-page.compo
 import { PartnerPageComponent } from './pages/partner-page/partner-page.component';
 import { SepaPageComponent } from './pages/sepa-page/sepa-page.component';
 import { PlantSelfPageComponent } from './pages/plant-self-page/plant-self-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page/profile-page.component';
+import { EditProfilePageComponent } from './pages/profile-page/edit-profile-page/edit-profile-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -53,6 +54,7 @@ export const userRoutes: Routes = [
   { path: 'projectReports', component: ProjectReportsOverviewPageComponent },
   { path: 'project/:projectName', component: ProjectPageComponent },
   { path: 'profile/:username', component: ProfilePageComponent },
+  { path: 'editProfile/:username', component: EditProfilePageComponent },
   { path: 'team/:teamname', component: TeamPageComponent },
   { path: 'plant', component: PlantProposalPageComponent },
   { path: 'plantSelf', component: PlantSelfPageComponent },
