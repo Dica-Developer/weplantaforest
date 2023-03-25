@@ -211,4 +211,47 @@ export class ProfileEffects {
       ),
     ),
   );
+
+  // UpdateProfile$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(updateProfile),
+  //     switchMap((action) =>
+  //       this.profileService.upda(action.request).pipe(
+  //         switchMap((projectId: number) => {
+  //           const project: GridProject = {
+  //             id: projectId,
+  //             name: action.request.name,
+  //           };
+  //           if (action.mainImageFile) {
+  //             return [
+  //               addGridProject({ project }),
+  //               updateProjectMainImage({
+  //                 projectId,
+  //                 file: action.mainImageFile,
+  //               }),
+  //             ];
+  //           } else {
+  //             return [
+  //               addGridProject({ project }),
+  //               addSuccessMessage({
+  //                 message: {
+  //                   key: 'PROJECT_SAVE_SUCCESS',
+  //                   message: 'Projekt wurde gespeichert!',
+  //                 },
+  //               }),
+  //             ];
+  //           }
+  //         }),
+  //         catchError((error) => [
+  //           addError({
+  //             error: {
+  //               key: 'PROJECT_UPDATE_FAILED',
+  //               message: 'Das Speichern ist leider fehlgeschlagen!',
+  //             },
+  //           }),
+  //         ]),
+  //       ),
+  //     ),
+  //   ),
+  // );
 }

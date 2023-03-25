@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { PagedData } from "../store/app.state";
+import { PagedData } from '../store/app.state';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +21,9 @@ export class ProfileService {
     return this.http.get<PagedData<any>>(
       `${environment.backendUrl}/trees/owner?userName=${username}&page=${page}&size=${size}`,
     );
+  }
+
+  updateProfile(request) {
+    return this.http.post(environment.backendUrl + '/user/edit', request);
   }
 }

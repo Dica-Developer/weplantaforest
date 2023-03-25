@@ -1,5 +1,5 @@
 <div class="is-flex is-flex-direction-column padding-4 padding-top-2">
-  <form [formGroup]="profileForm">
+  <form [formGroup]="profileForm" *ngIf="profileForm">
     <h2>{{ 'editProfile' | translate }}</h2>
     <div class="is-flex is-flex-direction-row w-100">
       <mat-form-field appearance="fill" class="w-100 margin-right-1">
