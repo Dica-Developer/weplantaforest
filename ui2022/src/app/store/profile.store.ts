@@ -6,6 +6,7 @@ import { ProfileService } from '../services/profile.service';
 import { switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { loadTeamDetails } from './team.store';
+import { logout } from './auth.store';
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -30,10 +31,13 @@ export const loadTreesByUserSuccess = createAction(
   '[Profile] load trees by user success',
   props<{ trees: PagedData<ProfileTree> }>(),
 );
-export const updateProfile = createAction('[Profile] update Details', props<{ profile: string }>());
-export const updateProfileSuccess = createAction(
-  '[Profile] update Details success',
-  props<{ details: ProfileDetails }>(),
+export const updateProfileProperty = createAction(
+  '[Profile] update Detail',
+  props<{ username: string; propertyToUpdate: string; controlValue }>(),
+);
+export const updateProfilePropertySuccess = createAction(
+  '[Profile] update Detail success',
+  props<{ propertyToUpdate: string; controlValue }>(),
 );
 
 export interface Co2Data {
@@ -112,6 +116,14 @@ const profileReducer = createReducer(
       trees,
     },
   })),
+  on(updateProfilePropertySuccess, (state, { propertyToUpdate, controlValue }) => {
+    return {
+      ...state,
+      details: {
+        ...state.details,
+      },
+    };
+  }),
 );
 
 export function profileReducerFn(state, action) {
@@ -212,46 +224,22 @@ export class ProfileEffects {
     ),
   );
 
-  // UpdateProfile$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(updateProfile),
-  //     switchMap((action) =>
-  //       this.profileService.upda(action.request).pipe(
-  //         switchMap((projectId: number) => {
-  //           const project: GridProject = {
-  //             id: projectId,
-  //             name: action.request.name,
-  //           };
-  //           if (action.mainImageFile) {
-  //             return [
-  //               addGridProject({ project }),
-  //               updateProjectMainImage({
-  //                 projectId,
-  //                 file: action.mainImageFile,
-  //               }),
-  //             ];
-  //           } else {
-  //             return [
-  //               addGridProject({ project }),
-  //               addSuccessMessage({
-  //                 message: {
-  //                   key: 'PROJECT_SAVE_SUCCESS',
-  //                   message: 'Projekt wurde gespeichert!',
-  //                 },
-  //               }),
-  //             ];
-  //           }
-  //         }),
-  //         catchError((error) => [
-  //           addError({
-  //             error: {
-  //               key: 'PROJECT_UPDATE_FAILED',
-  //               message: 'Das Speichern ist leider fehlgeschlagen!',
-  //             },
-  //           }),
-  //         ]),
-  //       ),
-  //     ),
-  //   ),
-  // );
+  UpdateProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateProfileProperty),
+      switchMap((action) =>
+        this.profileService
+          .updateProfile(action.username, action.propertyToUpdate, action.controlValue)
+          .pipe(
+            switchMap(() => {
+              if (action.propertyToUpdate === 'NAME') {
+                return [logout()];
+              } else {
+                return [loadProfileDetails({ username: action.username })];
+              }
+            }),
+          ),
+      ),
+    ),
+  );
 }

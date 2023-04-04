@@ -6,7 +6,7 @@ import { AppState } from 'src/app/store/app.state';
 import {
   loadProfileDetails,
   selectProfileDetails,
-  updateProfile,
+  updateProfileProperty,
 } from 'src/app/store/profile.store';
 
 @Component({
@@ -28,13 +28,14 @@ export class EditProfilePageComponent implements OnInit {
           this.profileForm = new FormGroup({
             username: new UntypedFormControl(res.userName),
             mail: new UntypedFormControl(res.mail),
-            teamName: new UntypedFormControl(res.teamName),
             aboutMe: new UntypedFormControl(res.aboutMe),
             location: new UntypedFormControl(res.location),
             organisation: new UntypedFormControl(res.organisation),
             homepage: new UntypedFormControl(res.homepage),
             newsletter: new UntypedFormControl(res.newsletter),
           });
+          this.profileForm.get('mail').disable();
+          this.profileForm.get('username').disable();
         }
       });
     });
@@ -42,7 +43,8 @@ export class EditProfilePageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  updateProfile() {
-    // this.store.dispatch(updateProfile(this.profileForm.value));
+  updateProfile(propertyToUpdate: string, controlValue) {
+    let username = localStorage.getItem('username');
+    this.store.dispatch(updateProfileProperty({ username, propertyToUpdate, controlValue }));
   }
 }

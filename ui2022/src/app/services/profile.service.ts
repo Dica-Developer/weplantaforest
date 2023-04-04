@@ -23,7 +23,16 @@ export class ProfileService {
     );
   }
 
-  updateProfile(request) {
-    return this.http.post(environment.backendUrl + '/user/edit', request);
+  updateProfile(username: string, propertyToUpdate: string, controlValue) {
+    return this.http.post(
+      environment.backendUrl +
+        '/user/edit?userName=' +
+        encodeURIComponent(username) +
+        '&toEdit=' +
+        propertyToUpdate +
+        '&newEntry=' +
+        encodeURIComponent(controlValue),
+      {},
+    );
   }
 }

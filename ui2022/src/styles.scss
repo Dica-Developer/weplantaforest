@@ -182,8 +182,8 @@ snack-bar-container {
 
 .mat-badge-content {
   top: 10px !important;
-  right: 15px !important;
-  width: 50px !important;
+  right: 10px !important;
+  width: 60px !important;
   height: 17px !important;
   border-radius: 0 !important;
   background: transparent !important;
@@ -191,4 +191,8 @@ snack-bar-container {
 
 .leaflet-container {
   z-index: 1;
+}
+
+.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+  background-color: rgb(0, 0, 0, 0.04);
 }

@@ -9,14 +9,22 @@
           name="username"
           formControlName="username"
         />
+        <!-- <mat-hint>{{ 'changeNameHint' | translate }}</mat-hint> -->
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-100">
-        <input matInput [placeholder]="'email' | translate" name="mail" formControlName="mail" />
+        <input
+          matInput
+          [placeholder]="'email' | translate"
+          name="mail"
+          formControlName="mail"
+          [disabled]="true"
+        />
       </mat-form-field>
     </div>
     <div class="is-flex is-flex-direction-row">
       <mat-form-field appearance="fill" class="w-100">
         <textarea
+          (blur)="updateProfile('ABOUTME', profileForm.get('aboutMe').value)"
           matInput
           rows="5"
           type="text"
@@ -28,16 +36,9 @@
       </mat-form-field>
     </div>
     <div class="is-flex is-flex-direction-row w-100">
-      <mat-form-field appearance="fill" class="w-100 margin-right-1">
-        <input
-          matInput
-          [placeholder]="'teamName' | translate"
-          name="teamName"
-          formControlName="teamName"
-        />
-      </mat-form-field>
       <mat-form-field appearance="fill" class="w-100">
         <input
+          (blur)="updateProfile('ORGANISATION', profileForm.get('organisation').value)"
           matInput
           [placeholder]="'organisation' | translate"
           name="organisation"
@@ -48,6 +49,7 @@
     <div class="is-flex is-flex-direction-row is-align-items-center w-100">
       <mat-form-field appearance="fill" class="w-100 margin-right-1">
         <input
+          (blur)="updateProfile('LOCATION', profileForm.get('location').value)"
           matInput
           [placeholder]="'location' | translate"
           name="location"
@@ -56,6 +58,7 @@
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-100">
         <input
+          (blur)="updateProfile('HOMEPAGE', profileForm.get('homepage').value)"
           matInput
           [placeholder]="'website' | translate"
           name="homepage"
