@@ -5048,6 +5048,13 @@ ngx-editor@15.0.1:
     prosemirror-view "1.29.0"
     tslib "^2.3.0"
 
+ngx-paypal@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-paypal/-/ngx-paypal-10.1.0.tgz#fd0d8b2332a42ade1afae80591899bb1b5b8c994"
+  integrity sha512-5hWxarRFW681J6ZePWTRjiQrboyyZHQcmYIaCIvJHRjTU+N5t1WKfzQJPCZQ93nTOyPcn8iB1UaLeDcF5xSgoA==
+  dependencies:
+    tslib "^2.3.0"
+
 ngx-scrollbar@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/ngx-scrollbar/-/ngx-scrollbar-10.0.1.tgz#58b3425c0c72aae6d9b9bb7d12a72a505f920c5a"
