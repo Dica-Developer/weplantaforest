@@ -74,9 +74,9 @@ public class UserReportData {
         return organizationType.toString();
     }
 
-    public String getNewsletter() {
-        return newsletter ? "JA" : "NEIN";
-    }
+    // public String getNewsletter() {
+    //     return newsletter ? "JA" : "NEIN";
+    // }
 
     long rank;
 

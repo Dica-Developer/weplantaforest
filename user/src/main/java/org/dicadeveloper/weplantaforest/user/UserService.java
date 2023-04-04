@@ -166,7 +166,7 @@ public class UserService {
                 user.setMail(newEntry);
                 break;
             case "NEWSLETTER":
-                user.setNewsletter(newEntry.equals("JA") ? true : false);
+                user.setNewsletter(newEntry.equals("true"));
                 break;
             case "ORGANIZATION_TYPE":
                 user.setOrganizationType(OrganizationType.valueOf(newEntry));

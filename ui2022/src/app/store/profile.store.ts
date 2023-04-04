@@ -53,7 +53,7 @@ export interface ProfileDetails {
   lastVisit: number;
   location: string;
   mail: string;
-  newsletter: string;
+  newsletter: boolean;
   organisation: string;
   organizationType: string;
   rank: number;
