@@ -26,6 +26,7 @@ import { SepaPageComponent } from './sepa-page/sepa-page.component';
 import { RouterModule } from '@angular/router';
 import { PlantSelfPageComponent } from './plant-self-page/plant-self-page.component';
 import { FactsPageComponent } from './facts-page/facts-page/facts-page.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { FactsPageComponent } from './facts-page/facts-page/facts-page.component
     ContactModule,
     BlogPageModule,
     RouterModule,
+    NgChartsModule,
   ],
   exports: [
     ForgotPasswordPageComponent,

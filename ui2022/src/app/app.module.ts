@@ -49,6 +49,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BlogEffects, blogReducerFn } from './store/blog.store';
 import { PaymentEffects, paymentReducerFn } from './store/payment.store';
 import { ContactEffects, contactReducerFn } from './store/contact.store';
+import { NgChartsModule } from 'ng2-charts';
 
 export const MY_FORMATS = {
   parse: {
@@ -201,6 +202,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     }),
     NgScrollbarModule,
     NgxSliderModule,
+    NgChartsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
