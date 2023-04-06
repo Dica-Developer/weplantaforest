@@ -128,5 +128,9 @@
   "addOtherTreeType": "Weitere Baumart hinzufügen",
   "editProfile": "Profil editieren",
   "changeNameHint": "erfordert Neuanmeldung!",
-  "saveProfile": "Speichern"
+  "saveProfile": "Speichern",
+  "PRIVATE": "Privatperson",
+  "COMMERCIAL": "Unternehmen",
+  "NONPROFIT": "Non-Profit Organisation",
+  "EDUCATIONAL": "Schule"
 }

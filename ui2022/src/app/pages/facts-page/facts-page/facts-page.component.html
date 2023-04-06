@@ -10,11 +10,47 @@
   </canvas>
   <canvas
     baseChart
-    [data]="amountOfTreesSummedData"
+    [data]="amountOfTreesSumData"
     [options]="barChartOptions"
     [plugins]="barChartPlugins"
     [legend]="barChartLegend"
     [type]="'line'"
+  >
+  </canvas>
+  <canvas
+    baseChart
+    [data]="co2SumData"
+    [options]="barChartOptions"
+    [plugins]="barChartPlugins"
+    [legend]="barChartLegend"
+    [type]="'line'"
+  >
+  </canvas>
+  <canvas
+    baseChart
+    [data]="usersPerYearData"
+    [options]="barChartOptions"
+    [plugins]="barChartPlugins"
+    [legend]="barChartLegend"
+    [type]="'bar'"
+  >
+  </canvas>
+  <canvas
+    baseChart
+    [data]="usersSumData"
+    [options]="barChartOptions"
+    [plugins]="barChartPlugins"
+    [legend]="barChartLegend"
+    [type]="'line'"
+  >
+  </canvas>
+  <canvas
+    baseChart
+    [data]="treesPerOrgData"
+    [options]="barChartOptions"
+    [plugins]="barChartPlugins"
+    [legend]="barChartLegend"
+    [type]="'pie'"
   >
   </canvas>
 </div>
