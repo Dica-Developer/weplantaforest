@@ -1,56 +1,91 @@
-<div *ngIf="chartsInitialized">
-  <canvas
-    baseChart
-    [data]="amountPerYearData"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [legend]="barChartLegend"
-    [type]="'bar'"
-  >
-  </canvas>
-  <canvas
-    baseChart
-    [data]="amountOfTreesSumData"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [legend]="barChartLegend"
-    [type]="'line'"
-  >
-  </canvas>
-  <canvas
-    baseChart
-    [data]="co2SumData"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [legend]="barChartLegend"
-    [type]="'line'"
-  >
-  </canvas>
-  <canvas
-    baseChart
-    [data]="usersPerYearData"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [legend]="barChartLegend"
-    [type]="'bar'"
-  >
-  </canvas>
-  <canvas
-    baseChart
-    [data]="usersSumData"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [legend]="barChartLegend"
-    [type]="'line'"
-  >
-  </canvas>
-  <canvas
-    baseChart
-    [data]="treesPerOrgData"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [legend]="barChartLegend"
-    [type]="'pie'"
-  >
-  </canvas>
+<div *ngIf="chartsInitialized" class="is-flex is-flex-direction-column padding-1 facts-page">
+  <h2 class="margin-top-2 center">{{ 'facts' | translate }}</h2>
+  <div class="margin-bottom-2">
+    <h4>{{ 'plantedTrees' | translate }}</h4>
+    <div class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
+      <div class="w-100">
+        <canvas
+          baseChart
+          [data]="amountPerYearData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [type]="'bar'"
+        >
+        </canvas>
+      </div>
+      <div class="w-100">
+        <canvas
+          baseChart
+          [data]="amountOfTreesSumData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [type]="'line'"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="margin-bottom-2">
+    <h4>{{ 'CO2Trapped' | translate }}</h4>
+    <div class="is-flex is-flex-direction-row is-justify-content-center">
+      <canvas
+        baseChart
+        [data]="co2SumData"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'line'"
+      >
+      </canvas>
+    </div>
+  </div>
+  <div class="margin-bottom-2">
+    <h4>{{ 'Nutzerzahlen' | translate }}</h4>
+    <div class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
+      <div class="w-100">
+        <canvas
+          baseChart
+          [data]="usersPerYearData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [type]="'bar'"
+        >
+        </canvas>
+      </div>
+      <div class="w-100">
+        <canvas
+          baseChart
+          [data]="usersSumData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [type]="'line'"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="margin-bottom-2">
+    <h4>{{ 'plantedTreesPerType' | translate }}</h4>
+    <div class="is-flex is-flex-direction-row is-justify-content-space-around canvas-row">
+      <ul>
+        <li style="color: rgb(130, 171, 31)">{{ 'PRIVATE' | translate }}</li>
+        <li style="color: rgb(70, 100, 31)">{{ 'COMMERCIAL' | translate }}</li>
+        <li style="color: rgb(10, 50, 31)">{{ 'NONPROFIT' | translate }}</li>
+        <li style="color: rgb(50, 171, 31)">{{ 'EDUCATIONAL' | translate }}</li>
+      </ul>
+      <canvas
+        baseChart
+        [data]="treesPerOrgData"
+        [options]="pieChartoptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'pie'"
+      >
+      </canvas>
+    </div>
+  </div>
 </div>

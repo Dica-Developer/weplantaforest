@@ -28,6 +28,9 @@ export class FactsPageComponent implements OnInit {
   public barChartLegend = false;
   public barChartPlugins = [];
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    responsive: true,
+  };
+  public pieChartoptions: ChartConfiguration<'bar'>['options'] = {
     responsive: false,
   };
   constructor(
