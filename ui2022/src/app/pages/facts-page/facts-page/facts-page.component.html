@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="margin-bottom-2">
-    <h4>{{ 'CO2Trapped' | translate }}</h4>
+    <h4 [innerHTML]="'CO2Trapped' | translate"></h4>
     <div class="is-flex is-flex-direction-row is-justify-content-center">
       <canvas
         baseChart
@@ -72,10 +72,10 @@
     <h4>{{ 'plantedTreesPerType' | translate }}</h4>
     <div class="is-flex is-flex-direction-row is-justify-content-space-around canvas-row">
       <ul>
-        <li style="color: rgb(130, 171, 31)">{{ 'PRIVATE' | translate }}</li>
-        <li style="color: rgb(70, 100, 31)">{{ 'COMMERCIAL' | translate }}</li>
-        <li style="color: rgb(10, 50, 31)">{{ 'NONPROFIT' | translate }}</li>
-        <li style="color: rgb(50, 171, 31)">{{ 'EDUCATIONAL' | translate }}</li>
+        <li style="color: rgb(130, 171, 31); font-weight: bold">{{ 'PRIVATE' | translate }}</li>
+        <li style="color: rgb(70, 100, 31); font-weight: bold">{{ 'COMMERCIAL' | translate }}</li>
+        <li style="color: rgb(10, 50, 31); font-weight: bold">{{ 'NONPROFIT' | translate }}</li>
+        <li style="color: rgb(50, 171, 31); font-weight: bold">{{ 'EDUCATIONAL' | translate }}</li>
       </ul>
       <canvas
         baseChart

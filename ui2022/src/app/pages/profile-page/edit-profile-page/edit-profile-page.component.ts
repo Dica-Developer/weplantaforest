@@ -16,7 +16,7 @@ import {
 })
 export class EditProfilePageComponent implements OnInit {
   profileForm: UntypedFormGroup;
-  selectedRadio: Boolean;
+  selectedNewsletter: Boolean;
 
   profileDetails$ = this.store.select(selectProfileDetails);
 
@@ -36,6 +36,7 @@ export class EditProfilePageComponent implements OnInit {
           });
           this.profileForm.get('mail').disable();
           this.profileForm.get('username').disable();
+          this.selectedNewsletter = this.profileForm.get('newsletter').value;
         }
       });
     });
@@ -46,5 +47,12 @@ export class EditProfilePageComponent implements OnInit {
   updateProfile(propertyToUpdate: string, controlValue) {
     let username = localStorage.getItem('username');
     this.store.dispatch(updateProfileProperty({ username, propertyToUpdate, controlValue }));
+  }
+
+  updateNewsletterBoolean(newsletter: boolean) {
+    this.profileForm.get('newsletter').setValue(newsletter);
+    console.log(this.profileForm.value);
+    this.selectedNewsletter = newsletter;
+    this.updateProfile('NEWSLETTER', newsletter);
   }
 }
