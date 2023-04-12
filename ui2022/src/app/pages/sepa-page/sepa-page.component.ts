@@ -6,6 +6,7 @@ import { AppState } from '../../store/app.state';
 import {
   loadLastPayedCart,
   payPlantBag,
+  selectCreatedCartId,
   selectLastPayedCart,
   selectPaymentDone,
 } from '../../store/payment.store';
@@ -50,11 +51,13 @@ export class SepaPageComponent implements OnInit, OnDestroy {
   cartPayed: boolean;
   cartPayedSub: Subscription;
 
+  cartIdSub: Subscription;
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadLastPayedCart());
-    this.store.select(selectLastPayedCart).subscribe((cart) => {
+    this.lastPayedCartSub = this.store.select(selectLastPayedCart).subscribe((cart) => {
       if (cart) {
         this.form.get('company').setValue(cart.callBackFirma);
         this.form.get('salutation').setValue(cart.callBackSalutation);
@@ -75,19 +78,21 @@ export class SepaPageComponent implements OnInit, OnDestroy {
         this.form.disable();
       }
     });
+
+    this.cartIdSub = this.store.select(selectCreatedCartId).subscribe((cartId) => {
+      this.form.get('cartId').setValue(cartId);
+    });
   }
 
   ngOnDestroy(): void {
     this.lastPayedCartSub?.unsubscribe();
+    this.cartPayedSub?.unsubscribe();
+    this.cartIdSub?.unsubscribe();
   }
 
   payPlantbag() {
-    console.log(this.form.valid);
-
     if (this.form.valid) {
       const requestDto = this.form.value;
-      console.log(requestDto);
-
       this.store.dispatch(payPlantBag({ requestDto }));
     }
   }

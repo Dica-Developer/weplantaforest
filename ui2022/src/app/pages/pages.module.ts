@@ -27,6 +27,7 @@ import { RouterModule } from '@angular/router';
 import { PlantSelfPageComponent } from './plant-self-page/plant-self-page.component';
 import { FactsPageComponent } from './facts-page/facts-page/facts-page.component';
 import { NgChartsModule } from 'ng2-charts';
+import { NgxPayPalModule } from "ngx-paypal";
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { NgChartsModule } from 'ng2-charts';
     BlogPageModule,
     RouterModule,
     NgChartsModule,
+    NgxPayPalModule
   ],
   exports: [
     ForgotPasswordPageComponent,

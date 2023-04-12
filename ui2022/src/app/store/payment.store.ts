@@ -55,6 +55,8 @@ export const createCartFromPlantBagSuccess = createAction(
   props<{ cartId: number }>(),
 );
 
+export const resetCreatedCartId = createAction('[Payment] reset createdCartId and cartPayed');
+
 export interface PaymentState {
   data: PaymentDataDto | null;
   loading: boolean;
@@ -95,6 +97,11 @@ export const paymentReducer = createReducer(
     ...state,
     lastPayedCart: action.cart,
   })),
+  on(resetCreatedCartId, (state) => ({
+    ...state,
+    cartCreated: false,
+    createdCartId: null,
+  })),
 );
 
 export function paymentReducerFn(state, action) {
@@ -116,6 +123,11 @@ export const selectLastPayedCart = createSelector(
 export const selectPaymentDone = createSelector(
   paymentFeature,
   (state: PaymentState) => state.cartPayed,
+);
+
+export const selectCreatedCartId = createSelector(
+  paymentFeature,
+  (state: PaymentState) => state.createdCartId,
 );
 
 @Injectable()

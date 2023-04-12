@@ -6,7 +6,10 @@
       <div class="column">
         <img src="assets/images/sepa.png" width="256" height="183" routerLink="/sepa" />
       </div>
-      <div class="column"></div>
+      <div class="column">
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

@@ -50,6 +50,7 @@ import { BlogEffects, blogReducerFn } from './store/blog.store';
 import { PaymentEffects, paymentReducerFn } from './store/payment.store';
 import { ContactEffects, contactReducerFn } from './store/contact.store';
 import { NgChartsModule } from 'ng2-charts';
+import { NgxPayPalModule } from "ngx-paypal";
 
 export const MY_FORMATS = {
   parse: {
