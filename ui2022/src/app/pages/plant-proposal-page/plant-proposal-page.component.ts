@@ -1,17 +1,17 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/app.state';
+import { AppState } from '../../store/app.state';
 import {
   getSimplePlantProposal,
   selectProposalPrice,
   selectSimpleProposal,
-} from 'src/app/store/plant.store';
+} from '../../store/plant.store';
 import { Options } from '@angular-slider/ngx-slider';
 import { TranslateService } from '@ngx-translate/core';
-import { loadActiveProjects, selectActiveProjects } from 'src/app/store/project.store';
+import { loadActiveProjects, selectActiveProjects } from '../../store/project.store';
 import { Observable, Subscription } from 'rxjs';
-import { addPlantbagItem, resetPlantbag } from 'src/app/store/plantbag.store';
-import { SliderHelper } from 'src/app/util/helper/slider.helper';
+import { addPlantbagItem, resetPlantbag } from '../../store/plantbag.store';
+import { SliderHelper } from '../../util/helper/slider.helper';
 
 @Component({
   selector: 'app-plant-proposal-page',
