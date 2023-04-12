@@ -51,7 +51,6 @@ export class EditProfilePageComponent implements OnInit {
 
   updateNewsletterBoolean(newsletter: boolean) {
     this.profileForm.get('newsletter').setValue(newsletter);
-    console.log(this.profileForm.value);
     this.selectedNewsletter = newsletter;
     this.updateProfile('NEWSLETTER', newsletter);
   }
