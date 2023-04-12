@@ -2,7 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { first, Subscription } from 'rxjs';
-import { createCartFromPlantBag, selectCartForPaymentCreated } from 'src/app/store/payment.store';
+import {
+  createCartFromPlantBag,
+  resetCreatedCartId,
+  selectCartForPaymentCreated,
+} from '../../store/payment.store';
 import { AppState } from '../../store/app.state';
 import {
   createPlantbagForBackend,
@@ -21,9 +25,12 @@ export class PlantbagPageComponent implements OnInit, OnDestroy {
 
   cartCreatedSub: Subscription;
 
+  plantBagSub: Subscription;
+
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
+    this.store.dispatch(resetCreatedCartId());
     this.cartCreatedSub = this.store.select(selectCartForPaymentCreated).subscribe((created) => {
       if (created) {
         this.router.navigateByUrl('/paymentOptions');
@@ -33,10 +40,11 @@ export class PlantbagPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.cartCreatedSub?.unsubscribe();
+    this.plantBagSub?.unsubscribe();
   }
 
   convertPlantBagToCart() {
-    this.plantBag$.pipe(first()).subscribe((plantBagState) => {
+    this.plantBagSub = this.plantBag$.pipe(first()).subscribe((plantBagState) => {
       const plantBag = createPlantbagForBackend(plantBagState);
       this.store.dispatch(createCartFromPlantBag({ plantBag }));
     });
