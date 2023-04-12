@@ -15,4 +15,13 @@ export class SliderHelper {
       { value: 100, legend: `100` },
     ];
   }
+
+  returnSliderArray10() {
+    return [
+      { value: 1, legend: `1` },
+      { value: 2, legend: `2` },
+      { value: 5, legend: `5` },
+      { value: 10, legend: `10` },
+    ];
+  }
 }

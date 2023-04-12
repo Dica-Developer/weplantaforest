@@ -134,5 +134,9 @@
   "PRIVATE": "Privatperson",
   "COMMERCIAL": "Unternehmen",
   "NONPROFIT": "Non-Profit Organisation",
-  "EDUCATIONAL": "Schule"
+  "EDUCATIONAL": "Schule",
+  "imageUpload": "Bild hochladen",
+  "noImgPicked": "Kein Bild ausgewählt",
+  "selfPlantSuccess": "Pflanzung erstellt",
+  "plsLoginToContinue": "Bitte melde dich an um eine eigene Pflanzung zu erstellen!"
 }

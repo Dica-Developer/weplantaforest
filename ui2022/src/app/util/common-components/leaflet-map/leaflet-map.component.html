@@ -1,6 +1,8 @@
 <div
   [style.height]="mapHeight"
   leaflet
+  [leafletLayers]="treeMarker"
   [leafletOptions]="options"
   (leafletMapReady)="onMapReady($event)"
+  (leafletClick)="mapClicked($event)"
 ></div>

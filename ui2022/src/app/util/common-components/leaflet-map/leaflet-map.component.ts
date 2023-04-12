@@ -1,7 +1,7 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import * as L from 'leaflet';
-import { tileLayer, latLng, Map } from 'leaflet';
+import { tileLayer, latLng, marker, icon, Map } from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-map',
@@ -15,8 +15,11 @@ export class LeafletMapComponent implements OnInit {
   control: UntypedFormControl;
   screenWidth;
 
+  @Input() showMarker: boolean = false;
   @Input() positions: any[];
   @Input() mapHeight: string = '600px';
+  @Output() markerSet = new EventEmitter();
+  treeMarker: any[];
 
   options = {
     layers: [
@@ -70,5 +73,25 @@ export class LeafletMapComponent implements OnInit {
       }
     }
     return coords;
+  }
+
+  mapClicked(event: any) {
+    if (!this.showMarker) {
+      return;
+    }
+    this.treeMarker = [];
+    this.treeMarker.push(this.createMarker(event.latlng.lat, event.latlng.lng));
+    this.markerSet.emit({ lat: event.latlng.lat, lng: event.latlng.lng });
+    console.log(this.treeMarker);
+  }
+
+  createMarker(lat: number, lng: number) {
+    return marker([lat, lng], {
+      icon: icon({
+        iconAnchor: [7, 35],
+        iconUrl: '/assets/shovel.svg',
+        iconRetinaUrl: '/assets/shovel.svg',
+      }),
+    });
   }
 }

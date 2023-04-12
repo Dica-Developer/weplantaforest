@@ -17,6 +17,17 @@ export class PlantbagService {
     return this.http.post(environment.backendUrl + '/plantForUser/', request);
   }
 
+  plantSelf(request: any) {
+    return this.http.post(environment.backendUrl + '/plantSelf/', request);
+  }
+
+  uploadPlantSelfImage(treeId: number, image: any) {
+    const formData = new FormData();
+    formData.append('treeId', treeId + '');
+    formData.append('file', image);
+    return this.http.post(environment.backendUrl + '/plantSelf/upload', formData);
+  }
+
   getPlantProposal(amountOfTrees: number) {
     return this.http.get<SimplePlantProposal>(
       environment.backendUrl + '/simplePlantProposalForTrees/' + amountOfTrees,

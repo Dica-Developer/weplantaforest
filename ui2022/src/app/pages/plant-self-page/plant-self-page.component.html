@@ -15,65 +15,106 @@
       </ul>
     </nav>
     <h2>{{ 'createSelfplantedTree' | translate | titlecase }}</h2>
-    <p class="desktop">
+    <p class="desktop" *ngIf="selectAuthenticated$ | async">
       {{ 'createSelfplantDescription3' | translate }}
     </p>
   </div>
 </div>
-<div class="columns proposal-row">
-  <div class="column is-two-fifths padding-left padding-right padding-top-2 padding-bottom-2"></div>
-  <div class="column is-three-fifths padding-left padding-right padding-top-2 padding-bottom-2">
-    <form [formGroup]="selfPlantForm">
-      <div class="custom-slider mb-4">
-        <ngx-slider
-          [(value)]="value"
-          [options]="sliderOptions"
-          (valueChange)="addTreesToForm($event)"
-        ></ngx-slider>
-      </div>
-      <div class="is-flex is-flex-row switchToFlexCol is-justify-content-space-between">
-        <mat-form-field>
-          <mat-label>Baumart</mat-label>
-          <mat-select [value]="selectedTreeType" (selectionChange)="treeTypeChanged($event)">
-            <mat-option *ngFor="let treeType of treeTypes" [value]="treeType.id">{{
-              treeType.name
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <app-button
-          label="{{ 'addOtherTreeType' | translate }}"
-          (click)="addOtherTreeType()"
-        ></app-button>
-      </div>
-      <div class="inputOutline mt-4">
-        <textarea
-          rows="10"
-          [placeholder]="'shortDescription' | translate"
-          type="text"
-          name="shortDescription"
-          required
-          formControlName="shortDescription"
-        >
-        </textarea>
-      </div>
-    </form>
-  </div>
-</div>
-<div class="map-margin">
-  <app-leaflet-map [mapHeight]="mapHeight"></app-leaflet-map>
-</div>
-
 <div
-  class="is-flex is-flex-row switchToFlexCol is-justify-content-space-between is-align-items-center padding-left padding-right"
+  class="column is-flex-direction-column is-flex padding-left padding-bottom-2"
+  *ngIf="!(selectAuthenticated$ | async)"
 >
-  <a routerLink="/" class="mb-4">
-    {{ 'backToPlantProposal' | translate }}
-  </a>
-  <app-button
-    class="mb-4"
-    label="{{ 'addPlantingNow' | translate }}"
-    (click)="submitPlanting()"
-  ></app-button>
+  <p>{{ 'plsLoginToContinue' | translate }}</p>
+  <app-button label="{{ 'login' | translate }}" (clicked)="routeToLogin()"></app-button>
+</div>
+<div *ngIf="selectAuthenticated$ | async">
+  <div class="columns proposal-row">
+    <div class="column is-two-fifths padding-left padding-right padding-top-2 padding-bottom-2">
+      <form [formGroup]="selfPlantForm">
+        <div>
+          <input
+            #csvInput
+            hidden="true"
+            type="file"
+            (change)="imageChanged($event)"
+            accept=".png, .jpg, .jpeg"
+          />
+          <app-button
+            label="{{ 'imageUpload' | translate }}"
+            (click)="csvInput.click()"
+          ></app-button>
+          <div class="margin-top-2">
+            <img src="{{ imageSrc }}" width="400" height="300" *ngIf="imageSrc" />
+            <p *ngIf="!imageSrc">{{ 'noImgPicked' | translate }}</p>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="column is-three-fifths padding-left padding-right padding-top-2 padding-bottom-2">
+      <form [formGroup]="selfPlantForm">
+        <div class="custom-slider mb-4">
+          <ngx-slider
+            [(value)]="sliderDefaultValue"
+            [options]="sliderOptions"
+            (valueChange)="addTreesToForm($event)"
+          ></ngx-slider>
+        </div>
+        <div class="is-flex is-flex-direction-row is-justify-content-space-between switchToFlexCol">
+          <mat-form-field>
+            <mat-label>Datum</mat-label>
+            <input matInput [matDatepicker]="datepicker" formControlName="plantedOn" />
+            <mat-hint></mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker>
+              <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDatepickerApply>OK</button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Baumart</mat-label>
+            <mat-select [value]="selectedTreeType" (selectionChange)="treeTypeChanged($event)">
+              <mat-option *ngFor="let treeType of treeTypes" [value]="treeType.id">{{
+                treeType.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="inputOutline mt-4">
+          <textarea
+            rows="10"
+            [placeholder]="'shortDescription' | translate"
+            type="text"
+            name="shortDescription"
+            required
+            formControlName="shortDescription"
+          >
+          </textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="map-margin">
+    <app-leaflet-map
+      [showMarker]="true"
+      [mapHeight]="mapHeight"
+      (markerSet)="setTreeCoordinates($event)"
+    ></app-leaflet-map>
+  </div>
+
+  <div
+    class="is-flex is-flex-row switchToFlexCol is-justify-content-space-between is-align-items-center padding-left padding-right"
+  >
+    <a routerLink="/" class="mb-4">
+      {{ 'backToPlantProposal' | translate }}
+    </a>
+    <app-button
+      class="mb-4"
+      label="{{ 'addPlantingNow' | translate }}"
+      (click)="submitPlanting()"
+    ></app-button>
+  </div>
 </div>
 
 <app-offer-area></app-offer-area>

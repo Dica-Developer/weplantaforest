@@ -103,6 +103,11 @@ export const selectVerifyPasswordResetLink = createSelector(
   (state: AuthState) => state.passwordResetLinkVerified,
 );
 
+export const selectAuthenticated = createSelector(
+  authFeature,
+  (state: AuthState) => state.isAuthenticated,
+);
+
 @Injectable()
 export class AuthEffects {
   constructor(
