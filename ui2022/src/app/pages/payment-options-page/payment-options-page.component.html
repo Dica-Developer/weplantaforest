@@ -4,11 +4,10 @@
     <h3>{{ 'choosePaymentOption' | translate }}</h3>
     <div class="columns">
       <div class="column">
-        <img src="assets/images/sepa.png" width="256" height="183" routerLink="/sepa" />
+        <img src="assets/sepa.png" width="256" height="183" routerLink="/sepa" />
       </div>
       <div class="column">
         <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-
       </div>
     </div>
   </mat-card-content>
