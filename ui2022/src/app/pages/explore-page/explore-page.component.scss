@@ -6,6 +6,17 @@
   flex-direction: row;
 }
 
+.infoType {
+  &:hover {
+    color: var(--green);
+    cursor: pointer;
+  }
+}
+
+.selected {
+  text-decoration: underline;
+}
+
 @media only screen and (max-width: 768px) {
   .description {
     flex-direction: column;

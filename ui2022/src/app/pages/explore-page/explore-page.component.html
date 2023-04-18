@@ -20,23 +20,50 @@
     <div *ngIf="currentTree" class="description columns is-flex">
       <div class="column is-half">
         <h2>{{ currentTree.name }}</h2>
+        <div class="is-flex is-flex-direction-row">
+          <p
+            (click)="selectInfoType('leaf')"
+            [class.selected]="selectedInfoType === 'leaf'"
+            class="infoType is-flex margin-right-1"
+          >
+            leaf
+          </p>
+          <p
+            (click)="selectInfoType('fruit')"
+            [class.selected]="selectedInfoType === 'fruit'"
+            class="infoType is-flex margin-right-1"
+          >
+            fruit
+          </p>
+          <p
+            (click)="selectInfoType('trunk')"
+            [class.selected]="selectedInfoType === 'trunk'"
+            class="infoType is-flex margin-right-1"
+          >
+            trunk
+          </p>
+        </div>
         <!-- <p>
             {{ currentTree.family }}
           </p> -->
         <p>
           {{ currentTree.description }}
         </p>
-        <!-- <p *ngIf="selectedInfoType === 'leaf'">
-            {{ currentTree.leaf }}
-          </p>
-          <p *ngIf="selectedInfoType === 'trunk'">
-            {{ currentTree.trunk }}
-          </p>
-          <p *ngIf="selectedInfoType === 'fruit'">
-            {{ currentTree.fruit }}
-          </p> -->
+        <p *ngIf="selectedInfoType === 'leaf'">
+          <!-- {{ currentTree.leaf }} -->
+          Leafs are green and you are noob
+        </p>
+        <p *ngIf="selectedInfoType === 'trunk'">
+          <!-- {{ currentTree.trunk }} -->
+          Leafs are green and you are nub
+        </p>
+        <p *ngIf="selectedInfoType === 'fruit'">
+          <!-- {{ currentTree.fruit }} -->
+          Leafs are green and you are bad
+        </p>
       </div>
-      <div class="column is-half imageWrapper">
+      <div class="column is-half imageWrapper is-flex is-justify-content-center">
+        <!-- <div class="infoTypeOverlay">X</div> -->
         <img src="{{ currentImageUrl }}" alt="tree" />
       </div>
     </div>

@@ -43,7 +43,7 @@ export class ExplorePageComponent implements OnInit {
   selectTree(tree: TreeType) {
     this.currentTree = tree;
     this.currentImageUrl =
-      environment.backendUrl + '/treeType/image/' + tree.imageFile + '/300/300';
+      environment.backendUrl + '/treeType/image/' + tree.imageFile + '/600/600';
   }
 
   selectInfoType(infoType: string) {
