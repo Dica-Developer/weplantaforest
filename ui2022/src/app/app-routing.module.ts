@@ -37,6 +37,7 @@ import { PlantSelfPageComponent } from './pages/plant-self-page/plant-self-page.
 import { ProfilePageComponent } from './pages/profile-page/profile-page/profile-page.component';
 import { EditProfilePageComponent } from './pages/profile-page/edit-profile-page/edit-profile-page.component';
 import { FactsPageComponent } from './pages/facts-page/facts-page/facts-page.component';
+import { ExplorePageComponent } from './pages/explore-page/explore-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -77,6 +78,7 @@ export const userRoutes: Routes = [
   { path: 'ranking', component: RankingPageComponent },
   { path: 'paymentOptions', component: PaymentOptionsPageComponent },
   { path: 'sepa', component: SepaPageComponent },
+  { path: 'explore', component: ExplorePageComponent },
 ];
 
 const routes: Routes = [
