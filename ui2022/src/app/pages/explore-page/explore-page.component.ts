@@ -26,10 +26,13 @@ export class ExplorePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectTreetypesSub = this.store.select(selectTreeTypes).subscribe((res) => {
+      this.trees = [];
+      console.log(res);
+
       for (let tt of res) {
         this.trees.push({
           id: tt.id,
-          imageFileName: tt.imageFileName,
+          imageFile: tt.imageFile,
           description: tt.description,
           name: this.textHelper.getTextForLanguage(tt.name, 'de'),
         });
@@ -40,8 +43,9 @@ export class ExplorePageComponent implements OnInit {
   selectTree(tree: TreeType) {
     this.currentTree = tree;
     this.currentImageUrl =
-      environment.backendUrl + '/treeType/image/' + tree.imageFileName + '/60/60';
+      environment.backendUrl + '/treeType/image/' + tree.imageFile + '/300/300';
   }
+
   selectInfoType(infoType: string) {
     this.selectedInfoType = infoType;
   }

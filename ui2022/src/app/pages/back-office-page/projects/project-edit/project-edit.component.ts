@@ -219,7 +219,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       },
       treeType: {
         id: null,
-        imageFileName: '',
+        imageFile: '',
         description: '',
         name: '',
       },

@@ -17,7 +17,7 @@
   </div>
 
   <div class="is-flex is-flex-direction-column infoPage padding-2">
-    <div *ngIf="currentTree" class="description columns is-flex is-flex-direction-row">
+    <div *ngIf="currentTree" class="description columns is-flex">
       <div class="column is-half">
         <h2>{{ currentTree.name }}</h2>
         <!-- <p>
@@ -37,11 +37,11 @@
           </p> -->
       </div>
       <div class="column is-half imageWrapper">
-        <img src="{{ currentTree.imageFileName }}" alt="tree" />
+        <img src="{{ currentImageUrl }}" alt="tree" />
       </div>
     </div>
   </div>
-  <div class="treeSelectionTab columns is-multiline is-mobile">
+  <div class="treeSelectionTab columns is-multiline is-mobile border-top">
     <app-tree-tile
       class="column is-half-mobile is-one-fifth-desktop treeTile"
       (click)="selectTree(tree)"

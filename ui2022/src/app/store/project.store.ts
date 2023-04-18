@@ -9,7 +9,7 @@ import { addSuccessMessage } from './success-message.state';
 
 export interface TreeType {
   id: number;
-  imageFileName: string;
+  imageFile: string;
   description: string;
   name: string;
 }

@@ -16,7 +16,6 @@ export class TreeTileComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.treeUrl =
-      environment.backendUrl + '/treeType/image/' + this.tree?.imageFileName + '/60/60';
+    this.treeUrl = environment.backendUrl + '/treeType/image/' + this.tree?.imageFile + '/200/200';
   }
 }

@@ -1,0 +1,13 @@
+.column {
+  padding: 0;
+}
+
+.description {
+  flex-direction: row;
+}
+
+@media only screen and (max-width: 768px) {
+  .description {
+    flex-direction: column;
+  }
+}

@@ -67,7 +67,7 @@ export class PlantSelfPageComponent implements OnInit {
       for (let tt of res) {
         this.treeTypes.push({
           id: tt.id,
-          imageFileName: tt.imageFileName,
+          imageFile: tt.imageFile,
           description: tt.description,
           name: this.textHelper.getTextForLanguage(tt.name, 'de'),
         });
