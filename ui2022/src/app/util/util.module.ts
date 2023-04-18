@@ -44,7 +44,6 @@ import { NewsletterComponent } from './common-components/newsletter/newsletter.c
 import { CarouselItemComponent } from './common-components/carousel-item/carousel-item.component';
 import { LightboxGalleryComponent } from './common-components/lightbox-gallery/lightbox-gallery.component';
 import { SearchOverlayComponent } from './common-components/search-overlay/search-overlay.component';
-import { TreeInfoOverlayComponent } from './common-components/tree-info-overlay/tree-info-overlay.component';
 import { SideMenuComponent } from './common-components/side-menu/side-menu.component';
 import { LeafletMapComponent } from './common-components/leaflet-map/leaflet-map.component';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
@@ -85,7 +84,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     CarouselItemComponent,
     LightboxGalleryComponent,
     SearchOverlayComponent,
-    TreeInfoOverlayComponent,
     SideMenuComponent,
     LeafletMapComponent,
   ],
