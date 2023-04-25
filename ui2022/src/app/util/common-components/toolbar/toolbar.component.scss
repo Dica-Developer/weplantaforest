@@ -68,3 +68,58 @@ mat-icon:hover {
     display: flex;
   }
 }
+
+.scale {
+  -webkit-animation: scale 2s;
+  /* Safari 4+ */
+  -moz-animation: scale 2s;
+  /* Fx 5+ */
+  -o-animation: scale 2s;
+  /* Opera 12+ */
+  animation: scale 2s;
+  /* IE 10+, Fx 29+ */
+}
+@-webkit-keyframes scale {
+  from {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  to {
+    transform: none;
+  }
+}
+@-moz-keyframes scale {
+  from {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  to {
+    transform: none;
+  }
+}
+@-o-keyframes scale {
+  from {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes scale {
+  from {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  to {
+    transform: none;
+  }
+}

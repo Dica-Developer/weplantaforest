@@ -21,12 +21,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   overlayIsOpen = false;
   loggedIn: boolean;
   plantBagPrice$ = this.store.select(selectPlantbagPriceFormatted);
+  showScaleClass = false;
+  plantBagPriceSub: Subscription;
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.authenticationSub = this.store.select('authState').subscribe((state) => {
       this.loggedIn = state.isAuthenticated;
+    });
+    this.plantBagPriceSub = this.store.select(selectPlantbagPriceFormatted).subscribe((res) => {
+      if (res !== '0.00€') {
+        //scale plantbag icon if value changes
+        this.showScaleClass = true;
+        // remove after 2,2 secs to show sclaing again if value changes
+        setTimeout(() => {
+          this.showScaleClass = false;
+        }, 2200);
+      } else {
+        this.showScaleClass = false;
+      }
     });
   }
 
@@ -69,5 +83,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authenticationSub?.unsubscribe();
+    this.plantBagPriceSub?.unsubscribe();
   }
 }
