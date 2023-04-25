@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { SimplePlantProposal } from '../store/plant.store';
+import {
+  ProjectArticleForCustomPlanting,
+  ProjectForCustomPlanting,
+  SimplePlantProposal,
+} from '../store/plant.store';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +35,18 @@ export class PlantbagService {
   getPlantProposal(amountOfTrees: number) {
     return this.http.get<SimplePlantProposal>(
       environment.backendUrl + '/simplePlantProposalForTrees/' + amountOfTrees,
+    );
+  }
+
+  getProjectsForCustomPlanting() {
+    return this.http.get<ProjectForCustomPlanting[]>(
+      environment.backendUrl + '/reports/activeProjects',
+    );
+  }
+
+  getArticlesForCustomPlantProject(projectName: string) {
+    return this.http.get<ProjectArticleForCustomPlanting[]>(
+      environment.backendUrl + '/project/articles?projectName=' + projectName,
     );
   }
 }

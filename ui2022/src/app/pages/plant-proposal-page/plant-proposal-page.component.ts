@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import {
+  getProjectsForCustomPlanting,
   getSimplePlantProposal,
+  selectProjectsForCustomPlanting,
   selectProposalPrice,
   selectSimpleProposal,
 } from '../../store/plant.store';
@@ -45,14 +47,14 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(getSimplePlantProposal({ amountOfTrees: 5 }));
+    this.store.dispatch(getProjectsForCustomPlanting());
     this.proposalSub = this.store.select(selectSimpleProposal).subscribe((proposal) => {
       this.simpleProposal = proposal;
     });
-    this.store.dispatch(loadActiveProjects());
-    this.activeProjectsSub = this.store.select(selectActiveProjects).subscribe((activeProjects) => {
-      this.activeProjects = activeProjects;
-    });
-    this.activeProjects$ = this.store.select(selectActiveProjects);
+    this.store.select(selectProjectsForCustomPlanting).subscribe(res => {
+      console.log('projects:');
+      console.log(res);
+    })
   }
 
   ngOnDestroy() {

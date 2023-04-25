@@ -4,7 +4,6 @@ import { createAction, createReducer, createSelector, on, props } from '@ngrx/st
 import { switchMap } from 'rxjs';
 import { PlantbagService } from '../services/plantbag.service';
 import { AppState } from './app.state';
-import { initialState } from './error.state';
 import { addSuccessMessage } from './success-message.state';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -16,6 +15,25 @@ export const getSimplePlantProposal = createAction(
 export const getSimplePlantProposalSuccess = createAction(
   '[Plant] get proposal success',
   props<{ simpleProposal: SimplePlantProposal }>(),
+);
+
+export const getProjectsForCustomPlanting = createAction(
+  '[Plant] get projects for custom planting',
+);
+
+export const getProjectsForCustomPlantingSuccess = createAction(
+  '[Plant] get projects for custom planting success',
+  props<{ projects: ProjectForCustomPlanting[] }>(),
+);
+
+export const getArticlesForCustomPlantProject = createAction(
+  '[Plant] get articles for custom plant project',
+  props<{ projectName: string }>(),
+);
+
+export const getArticlesForCustomPlantProjectSuccess = createAction(
+  '[Plant] get articles for custom plant project success',
+  props<{ articles: ProjectArticleForCustomPlanting[] }>(),
 );
 
 export const sendSelfPlant = createAction(
@@ -42,6 +60,28 @@ export interface PlantProposalItem {
   treeType: string;
 }
 
+export interface ProjectForCustomPlanting {
+  active: boolean;
+  amountOfMaximumTreesToPlant: number;
+  amountOfPlantedTrees: number;
+  description: string;
+  latitude: number;
+  longitude: number;
+  projectId: number;
+  projectImageFileName: string;
+  projectName: string;
+  articles: ProjectArticleForCustomPlanting[];
+}
+
+export interface ProjectArticleForCustomPlanting {
+  alreadyPlanted: number;
+  amount: number;
+  articleId: number;
+  price: { priceAsLong: number };
+  project: { id: number; name: string };
+  treeType: { description: string; imageFile: string; name: string };
+}
+
 export interface SelfPlantDataDto {
   plantedOn: Date;
   shortDescription: string;
@@ -62,11 +102,13 @@ export interface SimplePlantProposal {
 
 export interface PlantProposalState {
   simpleProposal: SimplePlantProposal;
+  customPlantingProjects: any;
   selfPlantCreated: boolean;
 }
 
-export const intialState: PlantProposalState = {
+export const initialState: PlantProposalState = {
   selfPlantCreated: false,
+  customPlantingProjects: [],
   simpleProposal: null,
 };
 
@@ -84,6 +126,25 @@ const plantProposalReducer = createReducer(
     ...state,
     selfPlantCreated: true,
   })),
+  on(getProjectsForCustomPlantingSuccess, (state, action) => ({
+    ...state,
+    customPlantingProjects: action.projects,
+  })),
+  on(getArticlesForCustomPlantProjectSuccess, (state, action) => ({
+    ...state,
+    customPlantingProjects: state.customPlantingProjects
+      .map((project) => ({ ...project }))
+      .map((project) => {
+        if (project.projectId == action.articles[0]?.project.id) {
+          return {
+            ...project,
+            articles: action.articles,
+          };
+        } else {
+          return project;
+        }
+      }),
+  })),
 );
 export function plantProposalReducerFn(state, action) {
   return plantProposalReducer(state, action);
@@ -94,6 +155,11 @@ export const plantPropsalFeature = (state: AppState) => state.plantProposalState
 export const selectSimpleProposal = createSelector(
   plantPropsalFeature,
   (state: PlantProposalState) => state.simpleProposal,
+);
+
+export const selectProjectsForCustomPlanting = createSelector(
+  plantPropsalFeature,
+  (state: PlantProposalState) => state.customPlantingProjects,
 );
 
 export const selectSelfPlantCreated = createSelector(
@@ -127,6 +193,37 @@ export class PlantProposalEffects {
         this.plantbagService
           .getPlantProposal(action.amountOfTrees)
           .pipe(switchMap((simpleProposal) => [getSimplePlantProposalSuccess({ simpleProposal })])),
+      ),
+    ),
+  );
+
+  getProjectsForCustomPlanting$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getProjectsForCustomPlanting),
+      switchMap((action) =>
+        this.plantbagService.getProjectsForCustomPlanting().pipe(
+          switchMap((projects) => {
+            const successActions = [];
+            successActions.push(getProjectsForCustomPlantingSuccess({ projects }));
+            for (const project of projects) {
+              successActions.push(
+                getArticlesForCustomPlantProject({ projectName: project.projectName }),
+              );
+            }
+            return successActions;
+          }),
+        ),
+      ),
+    ),
+  );
+
+  getArticlesForCustomPlantProject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getArticlesForCustomPlantProject),
+      switchMap((action) =>
+        this.plantbagService
+          .getArticlesForCustomPlantProject(action.projectName)
+          .pipe(switchMap((articles) => [getArticlesForCustomPlantProjectSuccess({ articles })])),
       ),
     ),
   );
