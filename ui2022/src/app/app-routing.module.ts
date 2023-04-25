@@ -39,6 +39,7 @@ import { EditProfilePageComponent } from './pages/profile-page/edit-profile-page
 import { FactsPageComponent } from './pages/facts-page/facts-page/facts-page.component';
 import { ExplorePageComponent } from './pages/explore-page/explore-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { OfferProjectPageComponent } from './pages/offer-project-page/offer-project-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -80,6 +81,7 @@ export const userRoutes: Routes = [
   { path: 'paymentOptions', component: PaymentOptionsPageComponent },
   { path: 'sepa', component: SepaPageComponent },
   { path: 'explore', component: ExplorePageComponent },
+  { path: 'offerArea', component: OfferProjectPageComponent },
   { path: '**', component: NotFoundPageComponent },
 ];
 

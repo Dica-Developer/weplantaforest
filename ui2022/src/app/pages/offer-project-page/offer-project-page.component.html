@@ -1,0 +1,68 @@
+<div
+  class="w-100 is-justify-content-center is-flex padding-1 is-flex-direction-column w-100 is-align-items-center"
+>
+  <div class="offerArea">
+    <h2 class="margin-top-2 center">
+      {{ 'offerAreaNowMobile' | translate }}
+    </h2>
+    <div>
+      <p>
+        {{ 'offerAreaIntro' | translate }}
+      </p>
+      <ul>
+        <li>
+          <p>- {{ 'offerAreaList1' | translate }}</p>
+        </li>
+        <li>
+          <p>- {{ 'offerAreaList2' | translate }}</p>
+        </li>
+        <li>
+          <p>- {{ 'offerAreaList3' | translate }}</p>
+        </li>
+        <li>
+          <p>- {{ 'offerAreaList4' | translate }}</p>
+        </li>
+      </ul>
+      <p>
+        {{ 'offerAreaDescription' | translate }}
+      </p>
+      <h4>
+        {{ 'offerAreaFormHeader' | translate }}
+      </h4>
+    </div>
+  </div>
+  <form
+    class="w-100 is-flex is-flex-direction-column"
+    [formGroup]="offerForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="inputOutline">
+      <input
+        [placeholder]="'firstName' | translate"
+        name="first"
+        required
+        formControlName="first"
+      />
+    </div>
+    <div class="w-100 inputOutline">
+      <input [placeholder]="'lastName' | translate" name="name" required formControlName="name" />
+    </div>
+    <div class="inputOutline">
+      <input [placeholder]="'email' | translate" name="email" required formControlName="mail" />
+    </div>
+    <div class="inputOutline">
+      <textarea
+        rows="10"
+        [placeholder]="'comment' | translate"
+        type="text"
+        name="comment"
+        required
+        formControlName="comment"
+      >
+      </textarea>
+    </div>
+    <div class="center" *ngIf="!formSubmitted">
+      <app-button [label]="'offerAreaNowMobile' | translate"></app-button>
+    </div>
+  </form>
+</div>

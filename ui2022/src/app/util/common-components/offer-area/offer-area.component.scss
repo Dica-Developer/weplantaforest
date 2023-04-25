@@ -2,6 +2,11 @@
   font-family: 'Bull-mono';
 }
 
+.offer:hover {
+  cursor: pointer;
+  color: var(--green);
+}
+
 .column {
   border-top: 1px solid var(--black);
   padding: 2rem;

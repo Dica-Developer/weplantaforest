@@ -196,3 +196,9 @@ snack-bar-container {
 .mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
   background-color: rgb(0, 0, 0, 0.04);
 }
+
+.offer:hover {
+  circle {
+    fill: var(--green);
+  }
+}

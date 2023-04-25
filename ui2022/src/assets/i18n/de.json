@@ -116,6 +116,7 @@
   "salutation": "Anrede",
   "title": "Titel",
   "firstName": "Vorname",
+  "comment": "Kommentar",
   "lastName": "Nachname",
   "streetAndNo": "Straße und Hausnummer",
   "zip": "PLZ",
@@ -138,5 +139,12 @@
   "imageUpload": "Bild hochladen",
   "noImgPicked": "Kein Bild ausgewählt",
   "selfPlantSuccess": "Pflanzung erstellt",
-  "plsLoginToContinue": "Bitte melde dich an um eine eigene Pflanzung zu erstellen!"
+  "plsLoginToContinue": "Bitte melde dich an um eine eigene Pflanzung zu erstellen!",
+  "offerAreaIntro": "Wir wandeln Land in gemeinnützigen Wald um. Dazu suchen wir Flächen, die:",
+  "offerAreaList1": "für eine Aufforstung in Frage kommen,",
+  "offerAreaList2": "für die wir also eine Aufforstungsgenehmigung bekommen können (also keine Trockenrasen oder Streuobstwiesen),",
+  "offerAreaList3": "mindestens drei Hektar groß sind und im Idealfall an einer Straße oder einem Weg liegen,",
+  "offerAreaList4": "nach Möglichkeit maximal 6.000 Euro/ha kosten.",
+  "offerAreaDescription": "Bei uns ist Land in guten, gemeinnützigen Händen. Wir freuen uns auch über bestehenden Wald, um ihn langfristig unter Schutz zu stellen. Denn sollten wir irgendwann mal nicht mehr existieren, werden die Werte von I Plant A Tree satzungsgemäß an eine andere gemeinnützige Umweltorganisation übertragen. Falls Du, jemand aus Deiner Familie oder Deinem Freundeskreis eine Fläche verkaufen, verschenken oder vererben möchte, melde Dich bitte bei uns.",
+  "offerAreaFormHeader": "Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden."
 }
