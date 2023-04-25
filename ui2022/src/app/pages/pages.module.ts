@@ -29,6 +29,7 @@ import { FactsPageComponent } from './facts-page/facts-page/facts-page.component
 import { NgChartsModule } from 'ng2-charts';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { ExplorePageModule } from './explore-page/explore-page.module';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ExplorePageModule } from './explore-page/explore-page.module';
     SepaPageComponent,
     PlantSelfPageComponent,
     FactsPageComponent,
+    NotFoundPageComponent,
   ],
   imports: [
     CommonModule,
