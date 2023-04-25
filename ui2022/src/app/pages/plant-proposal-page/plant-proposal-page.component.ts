@@ -51,15 +51,16 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
     this.proposalSub = this.store.select(selectSimpleProposal).subscribe((proposal) => {
       this.simpleProposal = proposal;
     });
-    this.store.select(selectProjectsForCustomPlanting).subscribe(res => {
+    this.activeProjectsSub = this.store.select(selectProjectsForCustomPlanting).subscribe(projects => {
       console.log('projects:');
-      console.log(res);
+      console.log(projects);
+      this.activeProjects = projects;
     })
   }
 
   ngOnDestroy() {
-    this.activeProjectsSub.unsubscribe();
-    this.proposalSub.unsubscribe();
+    this.activeProjectsSub?.unsubscribe();
+    this.proposalSub?.unsubscribe();
   }
 
   getProposal(event) {

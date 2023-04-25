@@ -24,7 +24,25 @@
       {{ 'detailedProcessHere' | translate }}
     </a>
   </div>
-  <div class="column padding-left">
+  <div class="column padding-left padding-right padding-top-2 padding-bottom-2">
+    <p class="desktop">{{ 'proposalOrIndividualText' | translate }}</p>
+    <div class="custom-slider">
+      <ngx-slider
+        [(value)]="value"
+        [options]="sliderOptions"
+        (valueChange)="getProposal($event)"
+      ></ngx-slider>
+    </div>
+    <div class="is-flex is-align-items-center is-justify-content-flex-end price-row">
+      <span class="desktop">
+        {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
+      </span>
+      <app-button label="{{ 'intoPlantbag' | translate }}" (click)="putIntoPlantbag()"></app-button>
+    </div>
+  </div>
+</div>
+<div class="columns proposal-row">
+  <div class="column border-top-right padding-left">
     <nav class="breadcrumb is-hidden-mobile">
       <ul>
         <li>
@@ -41,29 +59,9 @@
       {{ 'createPlantingNow' | translate }}
     </a>
   </div>
-</div>
-<div class="columns proposal-row">
-  <div
-    class="column is-three-fifths border-top-right padding-left padding-right padding-top-2 padding-bottom-2"
-  >
-    <div class="custom-slider">
-      <ngx-slider
-        [(value)]="value"
-        [options]="sliderOptions"
-        (valueChange)="getProposal($event)"
-      ></ngx-slider>
-    </div>
-    <div class="is-flex is-align-items-center is-justify-content-flex-end price-row">
-      <span class="desktop">
-        {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
-      </span>
-      <app-button label="{{ 'intoPlantbag' | translate }}" (click)="putIntoPlantbag()"></app-button>
-    </div>
-  </div>
   <div
     class="column is-flex is-flex-direction-column is-justify-content-space-around border-top padding-left padding-top"
   >
-    <p class="desktop">{{ 'proposalOrIndividualText' | translate }}</p>
     <a routerLink="/">
       {{ 'orChooseIndivudual' | translate }}
     </a>
