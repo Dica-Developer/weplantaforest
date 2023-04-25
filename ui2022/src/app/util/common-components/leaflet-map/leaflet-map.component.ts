@@ -88,9 +88,9 @@ export class LeafletMapComponent implements OnInit {
   createMarker(lat: number, lng: number) {
     return marker([lat, lng], {
       icon: icon({
-        iconAnchor: [7, 35],
-        iconUrl: '/assets/shovel.svg',
-        iconRetinaUrl: '/assets/shovel.svg',
+        iconAnchor: [17, 35],
+        iconUrl: '/assets/treeIcon.png',
+        iconRetinaUrl: '/assets/treeIcon.png',
       }),
     });
   }

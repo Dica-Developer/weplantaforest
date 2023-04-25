@@ -23,14 +23,27 @@ export class RankingItemComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    if(this.type === 'bestTeam') {
-      this.imageUrl =
-        environment.backendUrl + '/team/image/' + encodeURIComponent(this.item.imageName) + '/60/60';
-
-    }else {
-      this.imageUrl =
-        environment.backendUrl + '/user/image/' + encodeURIComponent(this.item.imageName) + '/60/60';
+    if (this.type === 'bestTeam') {
+      if (this.item.imageName && this.item.imageName != 'default') {
+        this.imageUrl =
+          environment.backendUrl +
+          '/team/image/' +
+          encodeURIComponent(this.item.imageName) +
+          '/60/60';
+      } else {
+        this.imageUrl = 'assets/ipat_logo.jpg';
+      }
+    } else {
+      if (this.item.imageName && this.item.imageName != 'default') {
+        this.imageUrl =
+          environment.backendUrl +
+          '/user/image/' +
+          encodeURIComponent(this.item.imageName) +
+          '/60/60';
+      } else {
+        this.imageUrl = 'assets/default_user.jpg';
+      }
     }
-    this.percentOfMax = this.item.amount / this.max * 100;
+    this.percentOfMax = (this.item.amount / this.max) * 100;
   }
 }
