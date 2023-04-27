@@ -14,10 +14,14 @@ export interface OfferAreaDTO {
 
 export interface InfrastrutureState {
   formDisabled: boolean;
+  captcha: string;
+  captchaImg: any;
 }
 
 export const intialState: InfrastrutureState = {
   formDisabled: false,
+  captcha: '',
+  captchaImg: null,
 };
 
 export const submitOfferArea = createAction(
@@ -27,6 +31,14 @@ export const submitOfferArea = createAction(
 export const submitOfferAreaSuccess = createAction(
   '[Infra] submit offer area  success',
   props<{ formDisabled: boolean }>(),
+);
+export const loadCaptcha = createAction(
+  '[Infra] load captcha token',
+  // props<{ offer: OfferAreaDTO }>(),
+);
+export const loadCaptchaSuccess = createAction(
+  '[Infra] load captcha token success',
+  props<{ token: string; img: any }>(),
 );
 
 export const formDisabledFlagReset = createAction('[Infra] reset formDisabled flag');
@@ -45,6 +57,11 @@ const infrastructureReducer = createReducer(
     ...state,
     formDisabled: false,
   })),
+  on(loadCaptchaSuccess, (state, { token, img }) => ({
+    ...state,
+    captcha: token,
+    captchaImg: img,
+  })),
 );
 
 export function infrastructureReducerFn(state, action) {
@@ -56,6 +73,14 @@ export const infrastructureFeature = (state: AppState) => state.infrastructureSt
 export const selectFormDisabled = createSelector(
   infrastructureFeature,
   (state: InfrastrutureState) => state.formDisabled,
+);
+export const selectCaptcha = createSelector(
+  infrastructureFeature,
+  (state: InfrastrutureState) => state.captcha,
+);
+export const selectCaptchaImg = createSelector(
+  infrastructureFeature,
+  (state: InfrastrutureState) => state.captchaImg,
 );
 
 @Injectable()
@@ -69,6 +94,19 @@ export class InfrastructureEffects {
         this.infrastructureService.submitOfferArea(action.offer).pipe(
           switchMap(() => {
             return [submitOfferAreaSuccess({ formDisabled: true })];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  loadCaptcha$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCaptcha),
+      switchMap(() =>
+        this.infrastructureService.generateCaptcha().pipe(
+          switchMap((res) => {
+            return [loadCaptchaSuccess({ token: res[0], img: res[1] })];
           }),
         ),
       ),

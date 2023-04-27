@@ -61,6 +61,20 @@
       >
       </textarea>
     </div>
+
+    <div class="is-flex is-flex-direction-row is-align-items-center margin-bottom-1">
+      <img [src]="'data:image/jpg;base64,' + captchaImg" />
+      <mat-icon class="margin-left-1" (click)="refetchNewToken()">refresh</mat-icon>
+      <div class="inputOutline">
+        <input
+          type="text"
+          [placeholder]="'captcha' | translate"
+          [value]="captchaInput"
+          (input)="updateUserInput($event.target.value)"
+        />
+      </div>
+    </div>
+
     <div class="center" *ngIf="!formSubmitted">
       <app-button [label]="'offerAreaNowMobile' | translate"></app-button>
     </div>

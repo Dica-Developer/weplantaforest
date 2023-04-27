@@ -12,4 +12,8 @@ export class InfrastrutureService {
   submitOfferArea(offerArea: OfferAreaDTO) {
     return this.http.post(environment.backendUrl + '/project/offer', offerArea);
   }
+
+  generateCaptcha() {
+    return this.http.get(environment.backendUrl + '/captcha/generate');
+  }
 }

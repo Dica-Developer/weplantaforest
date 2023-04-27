@@ -6,3 +6,18 @@ form {
 .offerArea {
   max-width: 1024px;
 }
+
+mat-icon {
+  height: 48px;
+  width: 48px;
+  font-size: 48px;
+  &:hover {
+    color: var(--green);
+    cursor: pointer;
+  }
+}
+
+.inputOutline:last-child {
+  margin-bottom: 0 !important;
+  margin-left: 1rem;
+}
