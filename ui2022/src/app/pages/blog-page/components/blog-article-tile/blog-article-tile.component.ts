@@ -21,8 +21,6 @@ export class BlogArticleTileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.blogArticle);
-
     this.imgUrl =
       environment.backendUrl +
       '/article/image/' +

@@ -21,7 +21,6 @@ export class PartnerPageComponent implements OnInit {
     }
     this.contentService.getInfrastructureArticle('PARTNER', this.lang).subscribe((res) => {
       this.partners = res;
-      console.log(res);
     });
   }
 }

@@ -51,11 +51,11 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
     this.proposalSub = this.store.select(selectSimpleProposal).subscribe((proposal) => {
       this.simpleProposal = proposal;
     });
-    this.activeProjectsSub = this.store.select(selectProjectsForCustomPlanting).subscribe(projects => {
-      console.log('projects:');
-      console.log(projects);
-      this.activeProjects = projects;
-    })
+    this.activeProjectsSub = this.store
+      .select(selectProjectsForCustomPlanting)
+      .subscribe((projects) => {
+        this.activeProjects = projects;
+      });
   }
 
   ngOnDestroy() {

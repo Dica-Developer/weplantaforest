@@ -27,8 +27,6 @@ export class ExplorePageComponent implements OnInit {
   ngOnInit(): void {
     this.selectTreetypesSub = this.store.select(selectTreeTypes).subscribe((res) => {
       this.trees = [];
-      console.log(res);
-
       for (let tt of res) {
         this.trees.push({
           id: tt.id,

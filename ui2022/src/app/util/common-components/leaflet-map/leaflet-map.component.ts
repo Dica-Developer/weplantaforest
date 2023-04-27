@@ -82,7 +82,6 @@ export class LeafletMapComponent implements OnInit {
     this.treeMarker = [];
     this.treeMarker.push(this.createMarker(event.latlng.lat, event.latlng.lng));
     this.markerSet.emit({ lat: event.latlng.lat, lng: event.latlng.lng });
-    console.log(this.treeMarker);
   }
 
   createMarker(lat: number, lng: number) {
