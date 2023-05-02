@@ -31,6 +31,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { ExplorePageModule } from './explore-page/explore-page.module';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { OfferProjectPageComponent } from './offer-project-page/offer-project-page.component';
+import { CustomPlantingComponent } from './plant-proposal-page/components/custom-planting/custom-planting.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { OfferProjectPageComponent } from './offer-project-page/offer-project-pa
     FactsPageComponent,
     NotFoundPageComponent,
     OfferProjectPageComponent,
+    CustomPlantingComponent,
   ],
   imports: [
     CommonModule,

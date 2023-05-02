@@ -24,8 +24,8 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
   value: number = 5;
 
   simpleProposal;
-  activeProjects;
   proposalSub: Subscription;
+  activeProjects;
   activeProjectsSub: Subscription;
 
   proposalPrice$ = this.store.select(selectProposalPrice);
@@ -55,6 +55,7 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
       .select(selectProjectsForCustomPlanting)
       .subscribe((projects) => {
         this.activeProjects = projects;
+        console.log(projects);
       });
   }
 

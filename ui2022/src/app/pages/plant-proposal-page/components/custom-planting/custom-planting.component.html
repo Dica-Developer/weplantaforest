@@ -1,0 +1,14 @@
+<div *ngFor="let project of activeProjects">
+  <h4>{{ project.projectName }}</h4>
+  <div *ngFor="let article of project.articles">
+    <app-plantbag-tree-input
+      [article]="article"
+      [amount]="0"
+      [withDelete]="false"
+      [showProject]="false"
+    ></app-plantbag-tree-input>
+  </div>
+</div>
+<div class="columns">
+  
+</div>
