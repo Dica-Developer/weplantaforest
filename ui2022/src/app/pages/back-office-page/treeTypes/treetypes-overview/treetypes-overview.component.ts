@@ -29,10 +29,13 @@ export class TreetypesOverviewComponent implements OnInit {
     const treeType: TreeTypeAdmin = {
       id: null,
       name: '',
+      leaf: '',
+      fruit: '',
+      trunk: '',
       description: '',
       infoLink: '',
       annualCo2SavingInTons: 0.01,
-      imageFile: null,
+      treeImageColor: null,
     };
     this.store.dispatch(addTreeType({ treeType }));
   }

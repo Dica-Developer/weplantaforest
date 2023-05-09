@@ -5,7 +5,7 @@ import { TextHelper } from '../../../../util/text.helper';
 import { environment } from '../../../../../environments/environment';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { TreeTypeImageType } from "src/app/services/treeType.service";
+import { TreeTypeImageType } from 'src/app/services/treeType.service';
 
 @Component({
   selector: 'app-treetype-edit',
@@ -21,14 +21,23 @@ export class TreetypeEditComponent implements OnInit {
     annualCo2SavingInTons: new UntypedFormControl(0.01),
     descriptionDe: new UntypedFormControl(''),
     descriptionEn: new UntypedFormControl(''),
-    imageFile: new UntypedFormControl(null),
+    treeImageColor: new UntypedFormControl(null),
     infoLink: new UntypedFormControl(''),
     nameDe: new UntypedFormControl(''),
     nameEn: new UntypedFormControl(''),
+    leafDe: new UntypedFormControl(''),
+    leafEn: new UntypedFormControl(''),
+    fruitDe: new UntypedFormControl(''),
+    fruitEn: new UntypedFormControl(''),
+    trunkDe: new UntypedFormControl(''),
+    trunkEn: new UntypedFormControl(''),
   });
 
-  imageFile: any;
-  imageSrc: any;
+  treeImageColorFile: any;
+  treeImageBWFile: any;
+  fruitImageColorFile: any;
+  fruitImageBWFile: any;
+  imagePreviewSrc: any;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -51,39 +60,70 @@ export class TreetypeEditComponent implements OnInit {
       .setValue(this.textHelper.getTextForLanguage(treeType.description, 'en'));
     this.form.get('nameDe').setValue(this.textHelper.getTextForLanguage(treeType.name, 'de'));
     this.form.get('nameEn').setValue(this.textHelper.getTextForLanguage(treeType.name, 'en'));
-    this.form.get('imageFile').setValue(treeType.imageFile);
+    this.form.get('leafDe').setValue(this.textHelper.getTextForLanguage(treeType.leaf, 'de'));
+    this.form.get('leafEn').setValue(this.textHelper.getTextForLanguage(treeType.leaf, 'en'));
+    this.form.get('fruitDe').setValue(this.textHelper.getTextForLanguage(treeType.fruit, 'de'));
+    this.form.get('fruitEn').setValue(this.textHelper.getTextForLanguage(treeType.fruit, 'en'));
+    this.form.get('trunkDe').setValue(this.textHelper.getTextForLanguage(treeType.trunk, 'de'));
+    this.form.get('trunkEn').setValue(this.textHelper.getTextForLanguage(treeType.trunk, 'en'));
+    this.form.get('treeImageColor').setValue(treeType.treeImageColor);
 
-    if (this.form.get('imageFile').value) {
-      this.imageSrc =
-        environment.backendUrl + '/treeType/image/' + this.form.get('imageFile').value + '/150/150';
+    if (this.form.get('treeImageColor').value) {
+      this.imagePreviewSrc =
+        environment.backendUrl +
+        '/treeType/image/' +
+        this.form.get('treeImageColor').value +
+        '/150/150';
     } else {
-      this.imageSrc = null;
+      this.imagePreviewSrc = null;
     }
   }
 
   imageChanged(fileInputEvent: any) {
     if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
-      this.imageFile = fileInputEvent.target.files[0];
+      this.treeImageColorFile = fileInputEvent.target.files[0];
       const reader = new FileReader();
-      reader.onload = (e) => (this.imageSrc = reader.result);
-      reader.readAsDataURL(this.imageFile);
+      reader.onload = (e) => (this.imagePreviewSrc = reader.result);
+      reader.readAsDataURL(this.treeImageColorFile);
     }
   }
 
   updateTreetype(imageType: TreeTypeImageType) {
-    const name = this.textHelper.createMultiLanguageEntry(
-      this.form.get('nameDe').value,
-      this.form.get('nameEn').value,
-    );
-    const request: TreeTypeAdmin = {
-      id: this.form.get('id').value,
-      name,
-      description: '',
-      annualCo2SavingInTons: this.form.get('annualCo2SavingInTons').value,
-      imageFile: this.form.get('imageFile').value,
-      infoLink: '',
-    };
-    this.store.dispatch(updateTreetype({ request, imageFile: this.imageFile, imageType }));
+    if (this.form.valid) {
+      const name = this.textHelper.createMultiLanguageEntry(
+        this.form.get('nameDe').value,
+        this.form.get('nameEn').value,
+      );
+      const leaf = this.textHelper.createMultiLanguageEntry(
+        this.form.get('leafDe').value,
+        this.form.get('leafEn').value,
+      );
+      const fruit = this.textHelper.createMultiLanguageEntry(
+        this.form.get('fruitDe').value,
+        this.form.get('fruitEn').value,
+      );
+      const trunk = this.textHelper.createMultiLanguageEntry(
+        this.form.get('trunkDe').value,
+        this.form.get('trunkEn').value,
+      );
+      const request: TreeTypeAdmin = {
+        id: this.form.get('id').value,
+        name,
+        leaf,
+        fruit,
+        trunk,
+        description: '',
+        annualCo2SavingInTons: this.form.get('annualCo2SavingInTons').value,
+        treeImageColor: this.form.get('treeImageColor').value,
+        infoLink: '',
+      };
+      this.store.dispatch(
+        updateTreetype({
+          request,
+          images: [{ imageType: 'treeImageColor', imgSrc: this.treeImageColorFile }],
+        }),
+      );
+    }
   }
 
   delete() {
