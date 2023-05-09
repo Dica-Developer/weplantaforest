@@ -34,10 +34,36 @@ public class TreeType {
     private String name;
 
     @Column(name = "_description", columnDefinition = "TEXT")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
     private String description;
 
-    @Column(name = "_imageFile")
-    private String imageFile;
+    @Column(name = "treeImageBW")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
+    private String treeImageBW;
+
+    @Column(name = "treeImageColor")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
+    private String treeImageColor;
+
+    @Column(name = "fruitImageBw")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
+    private String fruitImageBw;
+
+    @Column(name = "fruiImageColor")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
+    private String fruiImageColor;
+
+    @Column(name = "fruit")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
+    private String fruit;
+
+    @Column(name = "trunk")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
+    private String trunk;
+
+    @Column(name = "leaf")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
+    private String leaf;
 
     @Column(name = "_infoLink")
     private String infoLink;

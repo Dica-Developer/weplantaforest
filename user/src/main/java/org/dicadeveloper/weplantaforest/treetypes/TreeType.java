@@ -37,9 +37,33 @@ public class TreeType {
     @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class })
     private String description;
 
-    @Column(name = "_imageFile")
+    @Column(name = "treeImageBW")
     @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class, Views.ShortTreeType.class })
-    private String imageFile;
+    private String treeImageBW;
+
+    @Column(name = "treeImageColor")
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class, Views.ShortTreeType.class })    
+    private String treeImageColor;
+
+    @Column(name = "fruitImageBw")
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class, Views.ShortTreeType.class })
+    private String fruitImageBw;
+
+    @Column(name = "fruiImageColor")
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class, Views.ShortTreeType.class })
+    private String fruiImageColor;
+
+    @Column(name = "fruit")
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class, Views.ShortTreeType.class })
+    private String fruit;
+
+    @Column(name = "trunk")
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class, Views.ShortTreeType.class })
+    private String trunk;
+
+    @Column(name = "leaf")
+    @JsonView({ Views.PlantedTree.class, Views.ProjectArticle.class, Views.OverviewGift.class, Views.ShortTreeType.class })
+    private String leaf;
 
     @Column(name = "_infoLink")
     private String infoLink;

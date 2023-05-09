@@ -193,7 +193,7 @@ public class DatabasePopulator {
 
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
-                treeType.setImageFile(treeTypeName + ".jpeg");
+                treeType.setTreeImageColor(treeTypeName + ".jpeg");
                 treeTypeRepository.save(treeType);
 
             }

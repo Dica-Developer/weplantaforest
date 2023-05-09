@@ -204,7 +204,7 @@ public class DatabasePopulator {
                         break;
                 }
                 treeType.setAnnualCo2SavingInTons(co2Savings);
-                treeType.setImageFile(treeTypeName + ".jpeg");
+                treeType.setTreeImageBW(treeTypeName + ".jpeg");
                 treeTypeRepository.save(treeType);
             }
         });
