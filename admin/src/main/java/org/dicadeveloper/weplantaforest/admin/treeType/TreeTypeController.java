@@ -64,9 +64,7 @@ public class TreeTypeController {
 
     @RequestMapping(value = Uris.TREETYPE_IMAGE_UPLOAD, method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> uploadUserImage(@RequestParam Long treeTypeId
-    // , @RequestParam String imageType
-    ,@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadUserImage(@RequestParam Long treeTypeId, @RequestParam String imageType ,@RequestParam("file") MultipartFile file) {
         TreeType treeType = _treeTypeRepository.findById(treeTypeId).orElse(null);
         String fileEnding;
         if (file.getOriginalFilename().length() > 0) {
@@ -81,7 +79,22 @@ public class TreeTypeController {
         if (!file.isEmpty()) {
             try {
                 imageName = _imageHelper.storeImage(file, imageFolder, imageName, true);
-                treeType.setTreeImageColor(imageName);
+                switch(imageType) {
+                  case "treeImageColor":
+                    treeType.setTreeImageColor(imageName);
+                    break;
+                  case "treeImageBW":
+                    treeType.setTreeImageBW(imageName);
+                    break;
+                  case "fruitImageBw":
+                    treeType.setFruitImageBw(imageName);
+                    break;
+                  case "fruiImageColor":
+                    treeType.setFruiImageColor(imageName);
+                    break;
+                  default:
+                    return new ResponseEntity<>("invalid treetype", HttpStatus.INTERNAL_SERVER_ERROR);
+                }
                 _treeTypeRepository.save(treeType);
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (IOException e) {
