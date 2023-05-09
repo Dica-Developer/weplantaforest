@@ -82,7 +82,6 @@ export const userRoutes: Routes = [
   { path: 'sepa', component: SepaPageComponent },
   { path: 'explore', component: ExplorePageComponent },
   { path: 'offerArea', component: OfferProjectPageComponent },
-  { path: '**', component: NotFoundPageComponent },
 ];
 
 const routes: Routes = [
@@ -93,6 +92,7 @@ const routes: Routes = [
     children: backofficeRoutes,
     canActivate: [AuthGuard],
   },
+  { path: '**', component: NotFoundPageComponent },
 ];
 
 @NgModule({

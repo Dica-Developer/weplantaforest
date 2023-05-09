@@ -33,7 +33,7 @@
         (valueChange)="getProposal($event)"
       ></ngx-slider>
     </div>
-    <div class="is-flex is-align-items-center is-justify-content-flex-end price-row">
+    <div class="is-flex is-align-items-center margin-top-1 is-justify-content-flex-end price-row">
       <span class="desktop">
         {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
       </span>
@@ -42,14 +42,7 @@
   </div>
 </div>
 <div class="columns proposal-row">
-  <div class="column border-top-right padding-left">
-    <nav class="breadcrumb is-hidden-mobile">
-      <ul>
-        <li>
-          {{ ' ' }}
-        </li>
-      </ul>
-    </nav>
+  <div class="column border-top-right padding-left padding-top-2">
     <h2>{{ 'createSelfplantedTree' | translate | titlecase }}</h2>
     <p class="desktop">
       {{ 'createSelfplantDescription1' | translate }}<br />
@@ -60,7 +53,7 @@
     </a>
   </div>
   <div
-    class="column is-flex is-flex-direction-column is-justify-content-space-around border-top padding-left padding-top"
+    class="column is-flex is-flex-direction-column is-justify-content-space-around border-top padding-left padding-top-2"
   >
     <a routerLink="/">
       {{ 'orChooseIndivudual' | translate }}

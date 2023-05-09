@@ -1,5 +1,5 @@
 <div *ngFor="let project of activeProjects">
-  <h4>{{ project.projectName }}</h4>
+  <h4 class="margin-top-1">{{ project.projectName }}</h4>
   <div *ngFor="let article of project.articles">
     <app-plantbag-tree-input
       [article]="article"
@@ -9,6 +9,4 @@
     ></app-plantbag-tree-input>
   </div>
 </div>
-<div class="columns">
-  
-</div>
+<div class="columns"></div>
