@@ -9,6 +9,11 @@
             {{ 'startPage' | translate }}
           </a>
         </li>
+        <li>
+          <a routerLink="/explore">
+            {{ 'explore' | translate }}
+          </a>
+        </li>
         <li *ngIf="currentTree">
           <a class="breadcrumb-active">
             {{ currentTree.name }}
