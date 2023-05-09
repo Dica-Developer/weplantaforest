@@ -3,6 +3,8 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { TreeTypeAdmin } from '../store/treeType.store';
 
+export declare type TreeTypeImageType = 'treeImageColor' | 'treeImageBW' | 'fruitImageBw' | 'fruiImageColor';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,9 +26,10 @@ export class TreeTypeService {
     );
   }
 
-  imageUpload(treeTypeId: number, file: any) {
+  imageUpload(treeTypeId: number, file: any, imageType: TreeTypeImageType) {
     let formData: any = new FormData();
     formData.append('treeTypeId', treeTypeId);
+    formData.append('imageType', imageType);
     formData.append('file', file);
     return this.http.post(
       environment.backendAdminUrl + '/treeType/imageUpload',

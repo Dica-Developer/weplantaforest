@@ -5,6 +5,7 @@ import { TextHelper } from '../../../../util/text.helper';
 import { environment } from '../../../../../environments/environment';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
+import { TreeTypeImageType } from "src/app/services/treeType.service";
 
 @Component({
   selector: 'app-treetype-edit',
@@ -69,7 +70,7 @@ export class TreetypeEditComponent implements OnInit {
     }
   }
 
-  updateTreetype() {
+  updateTreetype(imageType: TreeTypeImageType) {
     const name = this.textHelper.createMultiLanguageEntry(
       this.form.get('nameDe').value,
       this.form.get('nameEn').value,
@@ -82,7 +83,7 @@ export class TreetypeEditComponent implements OnInit {
       imageFile: this.form.get('imageFile').value,
       infoLink: '',
     };
-    this.store.dispatch(updateTreetype({ request, imageFile: this.imageFile }));
+    this.store.dispatch(updateTreetype({ request, imageFile: this.imageFile, imageType }));
   }
 
   delete() {

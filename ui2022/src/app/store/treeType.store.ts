@@ -9,7 +9,7 @@ import { TreeType } from './project.store';
 import { AppState } from './app.state';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { TreeTypeService } from '../services/treeType.service';
+import { TreeTypeImageType, TreeTypeService } from '../services/treeType.service';
 import { catchError, switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
 import { addError } from './error.state';
@@ -39,12 +39,12 @@ export const loadTreeTypesSuccess = createAction(
 
 export const updateTreetype = createAction(
   '[Treetypes] update treetype',
-  props<{ request: TreeTypeAdmin; imageFile: any }>()
+  props<{ request: TreeTypeAdmin; imageFile: any, imageType: TreeTypeImageType }>()
 );
 
 export const uploadTreetypeImage = createAction(
   '[Treetypes] upload image',
-  props<{ treeTypeId: number; imageFile: any }>()
+  props<{ treeTypeId: number; imageFile: any, imageType: TreeTypeImageType }>()
 );
 
 export const deleteTreeType = createAction(
@@ -158,6 +158,7 @@ export class TreeTypeEffects {
                 uploadTreetypeImage({
                   imageFile: action.imageFile,
                   treeTypeId: id,
+                  imageType: action.imageType
                 }),
               ];
             } else {
@@ -181,7 +182,7 @@ export class TreeTypeEffects {
       ofType(uploadTreetypeImage),
       switchMap((action) =>
         this.treeTypeService
-          .imageUpload(action.treeTypeId, action.imageFile)
+          .imageUpload(action.treeTypeId, action.imageFile, action.imageType)
           .pipe(
             switchMap((id: number) => [
               addSuccessMessage({
