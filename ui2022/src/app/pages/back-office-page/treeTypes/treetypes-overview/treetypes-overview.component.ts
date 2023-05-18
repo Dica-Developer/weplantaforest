@@ -36,6 +36,9 @@ export class TreetypesOverviewComponent implements OnInit {
       infoLink: '',
       annualCo2SavingInTons: 0.01,
       treeImageColor: null,
+      treeImageBW: null,
+      fruitImageColor: null,
+      fruitImageBW: null,
     };
     this.store.dispatch(addTreeType({ treeType }));
   }

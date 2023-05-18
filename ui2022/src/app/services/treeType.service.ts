@@ -6,8 +6,8 @@ import { TreeTypeAdmin } from '../store/treeType.store';
 export declare type TreeTypeImageType =
   | 'treeImageColor'
   | 'treeImageBW'
-  | 'fruiImageColor'
-  | 'fruitImageBw';
+  | 'fruitImageColor'
+  | 'fruitImageBW';
 
 @Injectable({
   providedIn: 'root',

@@ -27,6 +27,28 @@
             <mat-form-field>
               <textarea
                 matInput
+                placeholder="Beschreibung(De)"
+                name="description"
+                required
+                formControlName="descriptionDe"
+                rows="5"
+              ></textarea>
+            </mat-form-field>
+            <mat-form-field>
+              <textarea
+                matInput
+                placeholder="description(En)"
+                name="description"
+                required
+                formControlName="descriptionEn"
+                rows="5"
+              ></textarea>
+            </mat-form-field>
+          </div>
+          <div class="columns is-flex is-justify-content-space-around">
+            <mat-form-field>
+              <textarea
+                matInput
                 placeholder="Blätter(De)"
                 name="leaf"
                 required
@@ -90,107 +112,35 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="column is-6 is-flex-direction-row is-flex is-justify-content-space-around">
-          <div class="is-flex is-flex-direction-column is-align-items-center">
-            <img src="{{ imagePreviewSrc }}" width="150" height="150" *ngIf="imagePreviewSrc" />
-            <p *ngIf="!imagePreviewSrc">Kein Bild ausgewählt</p>
-            <input
-              #csvInput
-              hidden="true"
-              type="file"
-              onclick="this.value=null"
-              (change)="imageChanged($event)"
-              accept=".png, .jpg, .jpeg"
-            />
-            <button
-              class="margin-top-1"
-              mat-raised-button
-              color="primary"
-              (click)="csvInput.click()"
+        <div class="column is-6">
+          <div class="columns">
+            <app-tree-type-image-upload
+              [imageType]="'treeImageColor'"
+              [imageFileName]="form.get('treeImageColor').value"
+              (emitImageChanged)="setImageFile($event)"
             >
-              Bild
-            </button>
-            <button mat-raised-button color="primary" (click)="updateTreetype('treeImageColor')">
-              Speichern
-            </button>
-            <button mat-icon-button color="warn" (click)="delete()">
-              <mat-icon aria-hidden="false">delete</mat-icon>
-            </button>
+            </app-tree-type-image-upload>
+            <app-tree-type-image-upload
+              [imageType]="'treeImageBW'"
+              [imageFileName]="form.get('treeImageBW').value"
+              (emitImageChanged)="setImageFile($event)"
+            >
+            </app-tree-type-image-upload>
+            <app-tree-type-image-upload
+              [imageType]="'fruitImageColor'"
+              [imageFileName]="form.get('fruitImageColor').value"
+              (emitImageChanged)="setImageFile($event)"
+            >
+            </app-tree-type-image-upload>
+            <app-tree-type-image-upload
+              [imageType]="'fruitImageBW'"
+              [imageFileName]="form.get('fruitImageBW').value"
+              (emitImageChanged)="setImageFile($event)"
+            >
+            </app-tree-type-image-upload>
           </div>
-          <div class="is-flex is-flex-direction-column is-align-items-center">
-            <img src="{{ imagePreviewSrc }}" width="150" height="150" *ngIf="imagePreviewSrc" />
-            <p *ngIf="!imagePreviewSrc">Kein Bild ausgewählt</p>
-            <input
-              #csvInput
-              hidden="true"
-              type="file"
-              onclick="this.value=null"
-              (change)="imageChanged($event)"
-              accept=".png, .jpg, .jpeg"
-            />
-            <button
-              class="margin-top-1"
-              mat-raised-button
-              color="primary"
-              (click)="csvInput.click()"
-            >
-              Bild
-            </button>
-            <button mat-raised-button color="primary" (click)="updateTreetype('treeImageBW')">
-              Speichern
-            </button>
-            <button mat-icon-button color="warn" (click)="delete()">
-              <mat-icon aria-hidden="false">delete</mat-icon>
-            </button>
-          </div>
-          <div class="is-flex is-flex-direction-column is-align-items-center">
-            <img src="{{ imagePreviewSrc }}" width="150" height="150" *ngIf="imagePreviewSrc" />
-            <p *ngIf="!imagePreviewSrc">Kein Bild ausgewählt</p>
-            <input
-              #csvInput
-              hidden="true"
-              type="file"
-              onclick="this.value=null"
-              (change)="imageChanged($event)"
-              accept=".png, .jpg, .jpeg"
-            />
-            <button
-              class="margin-top-1"
-              mat-raised-button
-              color="primary"
-              (click)="csvInput.click()"
-            >
-              Bild
-            </button>
-            <button mat-raised-button color="primary" (click)="updateTreetype('fruiImageColor')">
-              Speichern
-            </button>
-            <button mat-icon-button color="warn" (click)="delete()">
-              <mat-icon aria-hidden="false">delete</mat-icon>
-            </button>
-          </div>
-          <div class="is-flex is-flex-direction-column is-align-items-center">
-            <img src="{{ imagePreviewSrc }}" width="150" height="150" *ngIf="imagePreviewSrc" />
-            <p *ngIf="!imagePreviewSrc">Kein Bild ausgewählt</p>
-            <input
-              #csvInput
-              hidden="true"
-              type="file"
-              onclick="this.value=null"
-              (change)="imageChanged($event)"
-              accept=".png, .jpg, .jpeg"
-            />
-            <button
-              class="margin-top-1"
-              mat-raised-button
-              color="primary"
-              (click)="csvInput.click()"
-            >
-              Bild
-            </button>
-            <button mat-raised-button color="primary" (click)="updateTreetype('fruitImageBw')">
-              Speichern
-            </button>
+          <div class="columns">
+            <button mat-raised-button color="primary" (click)="updateTreetype()">Speichern</button>
             <button mat-icon-button color="warn" (click)="delete()">
               <mat-icon aria-hidden="false">delete</mat-icon>
             </button>

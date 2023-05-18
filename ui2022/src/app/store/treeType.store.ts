@@ -4,7 +4,7 @@ import { AppState } from './app.state';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TreeTypeImageType, TreeTypeService } from '../services/treeType.service';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
 import { addError } from './error.state';
 
@@ -13,6 +13,9 @@ export interface TreeTypeAdmin {
   description: string;
   id: number;
   treeImageColor: string;
+  treeImageBW: string;
+  fruitImageColor: string;
+  fruitImageBW: string;
   infoLink: string;
   name: string;
   leaf: string;
@@ -175,11 +178,11 @@ export class TreeTypeEffects {
   TreetypeImageUpload$ = createEffect(() =>
     this.actions$.pipe(
       ofType(uploadTreetypeImage),
-      switchMap((action) =>
+      concatMap((action) =>
         this.treeTypeService
           .imageUpload(action.treeTypeId, action.imageFile, action.imageType)
           .pipe(
-            switchMap((id: number) => [
+            concatMap((id: number) => [
               addSuccessMessage({
                 message: {
                   key: 'TREETYPE_UPDATE_SUCCESS',

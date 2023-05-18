@@ -74,7 +74,7 @@ public class TreeTypeController {
         }
 
         String imageFolder = FileSystemInjector.getTreeTypeFolder();
-        String imageName = StringHelper.getTextForLanguage(treeType.getName(), "de") + fileEnding;
+        String imageName = StringHelper.getTextForLanguage(treeType.getName(), "de") + "_" + imageType + fileEnding ;
 
         if (!file.isEmpty()) {
             try {
@@ -86,11 +86,11 @@ public class TreeTypeController {
                   case "treeImageBW":
                     treeType.setTreeImageBW(imageName);
                     break;
-                  case "fruitImageBw":
-                    treeType.setFruitImageBw(imageName);
+                  case "fruitImageBW":
+                    treeType.setFruitImageBW(imageName);
                     break;
-                  case "fruiImageColor":
-                    treeType.setFruiImageColor(imageName);
+                  case "fruitImageColor":
+                    treeType.setFruitImageColor(imageName);
                     break;
                   default:
                     return new ResponseEntity<>("invalid treetype", HttpStatus.INTERNAL_SERVER_ERROR);

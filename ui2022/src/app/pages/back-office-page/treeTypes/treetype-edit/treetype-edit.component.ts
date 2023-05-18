@@ -2,10 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TreeTypeAdmin, updateTreetype, deleteTreeType } from '../../../../store/treeType.store';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { TextHelper } from '../../../../util/text.helper';
-import { environment } from '../../../../../environments/environment';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { TreeTypeImageType } from 'src/app/services/treeType.service';
 
 @Component({
   selector: 'app-treetype-edit',
@@ -22,6 +20,9 @@ export class TreetypeEditComponent implements OnInit {
     descriptionDe: new UntypedFormControl(''),
     descriptionEn: new UntypedFormControl(''),
     treeImageColor: new UntypedFormControl(null),
+    treeImageBW: new UntypedFormControl(null),
+    fruitImageColor: new UntypedFormControl(null),
+    fruitImageBW: new UntypedFormControl(null),
     infoLink: new UntypedFormControl(''),
     nameDe: new UntypedFormControl(''),
     nameEn: new UntypedFormControl(''),
@@ -37,7 +38,6 @@ export class TreetypeEditComponent implements OnInit {
   treeImageBWFile: any;
   fruitImageColorFile: any;
   fruitImageBWFile: any;
-  imagePreviewSrc: any;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -67,32 +67,41 @@ export class TreetypeEditComponent implements OnInit {
     this.form.get('trunkDe').setValue(this.textHelper.getTextForLanguage(treeType.trunk, 'de'));
     this.form.get('trunkEn').setValue(this.textHelper.getTextForLanguage(treeType.trunk, 'en'));
     this.form.get('treeImageColor').setValue(treeType.treeImageColor);
+    this.form.get('treeImageBW').setValue(treeType.treeImageBW);
+    this.form.get('fruitImageColor').setValue(treeType.fruitImageColor);
+    this.form.get('fruitImageBW').setValue(treeType.fruitImageBW);
+  }
 
-    if (this.form.get('treeImageColor').value) {
-      this.imagePreviewSrc =
-        environment.backendUrl +
-        '/treeType/image/' +
-        this.form.get('treeImageColor').value +
-        '/150/150';
-    } else {
-      this.imagePreviewSrc = null;
+  setImageFile(event: any) {
+    console.log(event);
+
+    switch (event.imageType) {
+      case 'treeImageColor':
+        this.treeImageColorFile = event.image;
+        break;
+      case 'treeImageBW':
+        this.treeImageBWFile = event.image;
+        break;
+      case 'fruitImageColor':
+        this.fruitImageColorFile = event.image;
+        break;
+      case 'fruitImageBW':
+        this.fruitImageBWFile = event.image;
+        break;
+      default:
+        break;
     }
   }
 
-  imageChanged(fileInputEvent: any) {
-    if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
-      this.treeImageColorFile = fileInputEvent.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => (this.imagePreviewSrc = reader.result);
-      reader.readAsDataURL(this.treeImageColorFile);
-    }
-  }
-
-  updateTreetype(imageType: TreeTypeImageType) {
+  updateTreetype() {
     if (this.form.valid) {
       const name = this.textHelper.createMultiLanguageEntry(
         this.form.get('nameDe').value,
         this.form.get('nameEn').value,
+      );
+      const description = this.textHelper.createMultiLanguageEntry(
+        this.form.get('descriptionDe').value,
+        this.form.get('descriptionEn').value,
       );
       const leaf = this.textHelper.createMultiLanguageEntry(
         this.form.get('leafDe').value,
@@ -109,18 +118,36 @@ export class TreetypeEditComponent implements OnInit {
       const request: TreeTypeAdmin = {
         id: this.form.get('id').value,
         name,
+        description,
         leaf,
         fruit,
         trunk,
-        description: '',
         annualCo2SavingInTons: this.form.get('annualCo2SavingInTons').value,
         treeImageColor: this.form.get('treeImageColor').value,
+        treeImageBW: this.form.get('treeImageBW').value,
+        fruitImageColor: this.form.get('fruitImageColor').value,
+        fruitImageBW: this.form.get('fruitImageBW').value,
         infoLink: '',
       };
+      const images = [];
+      if (this.treeImageColorFile) {
+        images.push({ imageType: 'treeImageColor', imgSrc: this.treeImageColorFile });
+      }
+      if (this.treeImageBWFile) {
+        images.push({ imageType: 'treeImageBW', imgSrc: this.treeImageBWFile });
+      }
+      if (this.fruitImageColorFile) {
+        images.push({ imageType: 'fruitImageColor', imgSrc: this.fruitImageColorFile });
+      }
+      if (this.fruitImageBWFile) {
+        images.push({ imageType: 'fruitImageBW', imgSrc: this.fruitImageBWFile });
+      }
+      console.log(images);
+
       this.store.dispatch(
         updateTreetype({
           request,
-          images: [{ imageType: 'treeImageColor', imgSrc: this.treeImageColorFile }],
+          images: images,
         }),
       );
     }

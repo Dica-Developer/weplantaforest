@@ -43,6 +43,7 @@ import { TreetypeEditComponent } from './treeTypes/treetype-edit/treetype-edit.c
 import { PlantForUserComponent } from './plant-for-user/plant-for-user/plant-for-user.component';
 import { TransferTreesComponent } from './transfer-trees/transfer-trees/transfer-trees.component';
 import { NgcCookieConsentModule } from 'ngx-cookieconsent';
+import { TreeTypeImageUploadComponent } from './treeTypes/treetype-edit/components/tree-type-image-upload/tree-type-image-upload.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { NgcCookieConsentModule } from 'ngx-cookieconsent';
     TreetypeEditComponent,
     PlantForUserComponent,
     TransferTreesComponent,
+    TreeTypeImageUploadComponent,
     // DeleteProjectConfirmationDialog
   ],
   imports: [
