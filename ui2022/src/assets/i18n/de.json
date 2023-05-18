@@ -158,5 +158,7 @@
   "ngo": "NGO",
   "signup": "registrieren",
   "forgotPassword": "Passwort vergessen?",
+  "registerHere": "Hier registrieren!",
+  "requestPassword": "Passwort anfragen",
   "noAccountYet": "Noch keinen Account?"
 }
