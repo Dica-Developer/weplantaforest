@@ -9,6 +9,19 @@ import { Router } from '@angular/router';
 import { addError } from './error.state';
 import { setUsername, loadProfileDetails, loadAdminFlag } from './profile.store';
 
+export const signup = createAction(
+  '[Auth] Signup',
+  props<{
+    name: string;
+    password: string;
+    mail: string;
+    newsletter: boolean;
+    orgType: string;
+    language: string;
+  }>(),
+);
+export const signupSuccess = createAction('[Auth] Signup success');
+export const signupFailed = createAction('[Auth] Signup failed', props<{ error: string }>());
 export const login = createAction('[Auth] login', props<{ name: string; password: string }>());
 export const loginSuccess = createAction('[Auth] login success');
 export const loginFailed = createAction('[Auth] Login failed', props<{ error: string }>());
@@ -35,6 +48,7 @@ export const logout = createAction('[Auth] logout');
 export interface AuthState {
   isAuthenticated: boolean;
   loginError: string;
+  signupError: string;
   passwordResetRequestSent: boolean;
   passwordResetSent: boolean;
   passwordResetLinkVerified: boolean;
@@ -43,6 +57,7 @@ export interface AuthState {
 export const initialState: AuthState = {
   isAuthenticated: false,
   loginError: null,
+  signupError: null,
   passwordResetRequestSent: false,
   passwordResetSent: false,
   passwordResetLinkVerified: true,
@@ -70,6 +85,13 @@ const authReducer = createReducer(
     ...state,
     isAuthenticated: true,
   })),
+  on(signupFailed, (state, { error }) => ({
+    ...state,
+    signupError: error,
+  })),
+  on(signupSuccess, (state, {}) => ({
+    ...state,
+  })),
   on(logout, (state) => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('username');
@@ -86,7 +108,15 @@ export function authReducerFn(state, action) {
 
 export const authFeature = (state: AppState) => state.authState;
 
-export const selectLoginError = createSelector(authFeature, (state: AuthState) => state.loginError);
+export const selectLoginError = createSelector(
+  authFeature,
+  (state: AuthState) => state.signupError,
+);
+
+export const selectSignupError = createSelector(
+  authFeature,
+  (state: AuthState) => state.signupError,
+);
 
 export const selectPasswordResetRequestSent = createSelector(
   authFeature,
@@ -139,6 +169,37 @@ export class AuthEffects {
           }),
           catchError(() => [loginFailed({ error: 'login failed' })]),
         ),
+      ),
+    ),
+  );
+
+  Signup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(signup),
+      switchMap((action: any) =>
+        this.authService
+          .signup(
+            action.name,
+            action.password,
+            action.mail,
+            action.newsletter,
+            action.orgType,
+            action.language,
+          )
+          .pipe(
+            switchMap((response) => {
+              localStorage.setItem('jwt', response.headers.get('X-AUTH-TOKEN'));
+              localStorage.setItem('username', response.headers.get('X-AUTH-USERNAME'));
+              this.router.navigate(['/']);
+              return [
+                setUsername({
+                  username: response.headers.get('X-AUTH-USERNAME'),
+                }),
+                signupSuccess(),
+              ];
+            }),
+            catchError(() => [signupFailed({ error: 'signup failed' })]),
+          ),
       ),
     ),
   );

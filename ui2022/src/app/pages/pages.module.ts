@@ -32,6 +32,7 @@ import { ExplorePageModule } from './explore-page/explore-page.module';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { OfferProjectPageComponent } from './offer-project-page/offer-project-page.component';
 import { CustomPlantingComponent } from './plant-proposal-page/components/custom-planting/custom-planting.component';
+import { SignupPageModule } from './signup-page/signup-page.module';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { CustomPlantingComponent } from './plant-proposal-page/components/custom
     NgChartsModule,
     NgxPayPalModule,
     ExplorePageModule,
+    SignupPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,

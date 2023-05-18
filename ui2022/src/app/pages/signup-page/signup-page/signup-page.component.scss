@@ -1,0 +1,31 @@
+form {
+  padding-top: 6rem;
+  max-width: 400px;
+  z-index: 2;
+}
+
+button {
+  z-index: 2;
+}
+
+.signup {
+  height: calc(100vh - 80px);
+  background-image: url(/assets/baumscheiben.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.padding-1 {
+  padding: 1rem !important;
+}
+@media only screen and (max-width: 768px) {
+  .signup {
+    background-position: right;
+    justify-content: flex-end;
+    padding-top: initial;
+  }
+
+  form {
+    padding-bottom: 2rem;
+  }
+}

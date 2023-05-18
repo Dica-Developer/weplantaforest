@@ -20,6 +20,21 @@ export class AuthService {
     );
   }
 
+  signup(
+    username: string,
+    password: string,
+    mail: string,
+    newsletter: boolean,
+    orgType: string,
+    language: string,
+  ) {
+    return this.http.post(
+      environment.backendUrl + '/user/registrate',
+      { username, password, mail, newsletter, orgType, language },
+      { observe: 'response' },
+    );
+  }
+
   resetPasswordRequest(email: string, language: string) {
     return this.http.post(
       environment.backendUrl + '/password_request?userName=' + email + '&language=' + language,

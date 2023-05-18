@@ -148,5 +148,15 @@
   "offerAreaDescription": "Bei uns ist Land in guten, gemeinnützigen Händen. Wir freuen uns auch über bestehenden Wald, um ihn langfristig unter Schutz zu stellen. Denn sollten wir irgendwann mal nicht mehr existieren, werden die Werte von I Plant A Tree satzungsgemäß an eine andere gemeinnützige Umweltorganisation übertragen. Falls Du, jemand aus Deiner Familie oder Deinem Freundeskreis eine Fläche verkaufen, verschenken oder vererben möchte, melde Dich bitte bei uns.",
   "offerAreaFormHeader": "Bitte trage die nötigen Daten in das Formular ein. Wir werden uns dann bei Dir melden.",
   "captcha": "captcha",
-  "wrongCaptcha": "invalid captcha"
+  "wrongCaptcha": "invalid captcha",
+  "wrongLoginCredentials": "Benutzernahme oder Passwort falsch!",
+  "password": "Passwort",
+  "repeatPassword": "Passwort wiederholen",
+  "language": "Sprache",
+  "english": "Englisch",
+  "german": "Deutsch",
+  "ngo": "NGO",
+  "signup": "registrieren",
+  "forgotPassword": "Passwort vergessen?",
+  "noAccountYet": "Noch keinen Account?"
 }

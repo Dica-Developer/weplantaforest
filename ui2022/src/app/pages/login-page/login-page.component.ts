@@ -20,19 +20,12 @@ export class LoginPageComponent implements OnInit {
   });
 
   logoUrl = environment.baseUrl + '/assets/ipat_logo.png';
-  video;
-  btn;
 
   constructor(private store: Store<AppState>) {
     this.loginError$ = store.select(selectLoginError);
   }
 
   ngOnInit(): void {}
-
-  ngAfterViewInit() {
-    this.video = document.getElementById('myVideo') as any;
-    this.btn = document.getElementById('myBtn');
-  }
 
   onSubmit(): void {
     this.store.dispatch(

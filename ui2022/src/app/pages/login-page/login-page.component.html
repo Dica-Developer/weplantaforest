@@ -5,7 +5,7 @@
     (ngSubmit)="onSubmit()"
   >
     <mat-error *ngIf="loginError$ | async">
-      Benutzername und Passwort stimmen nicht überein
+      {{ 'wrongLoginCredentials' | translate }}
     </mat-error>
     <div class="inputOutline">
       <input placeholder="Email/Username" name="name" required formControlName="name" />
@@ -23,7 +23,10 @@
       <app-button [label]="'Login'"></app-button>
       <br />
       <br />
-      <a routerLink="/forgotPassword">Passwort vergessen?</a>
+      <a routerLink="/forgotPassword">{{ 'forgotPassword' | translate }}</a>
+      <br />
+      <br />
+      <a routerLink="/signup">{{ 'noAccountYet' | translate }}</a>
     </div>
   </form>
 </div>
