@@ -32,11 +32,9 @@ export class EditProfilePageComponent implements OnInit {
             location: new UntypedFormControl(res.location),
             organisation: new UntypedFormControl(res.organisation),
             homepage: new UntypedFormControl(res.homepage),
-            newsletter: new UntypedFormControl(res.newsletter),
           });
           this.profileForm.get('mail').disable();
           this.profileForm.get('username').disable();
-          this.selectedNewsletter = this.profileForm.get('newsletter').value;
         }
       });
     });
@@ -49,9 +47,4 @@ export class EditProfilePageComponent implements OnInit {
     this.store.dispatch(updateProfileProperty({ username, propertyToUpdate, controlValue }));
   }
 
-  updateNewsletterBoolean(newsletter: boolean) {
-    this.profileForm.get('newsletter').setValue(newsletter);
-    this.selectedNewsletter = newsletter;
-    this.updateProfile('NEWSLETTER', newsletter);
-  }
 }

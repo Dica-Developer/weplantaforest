@@ -60,29 +60,6 @@
         />
       </mat-form-field>
     </div>
-    <div class="is-flex is-flex-direction-row is-align-items-center w-100">
-      <h4 class="margin-right-1">{{ 'newsletter' | translate }}</h4>
-      <div class="radio-buttons is-flex is-flex-grow-1 flex-row">
-        <div class="category margin-right-1">
-          <div
-            [ngClass]="selectedNewsletter === true ? 'circle circle-active' : 'circle'"
-            (click)="updateNewsletterBoolean(true)"
-          >
-            <div></div>
-          </div>
-          <span>{{ 'yes' | translate | titlecase }}</span>
-        </div>
-        <div class="category">
-          <div
-            [ngClass]="selectedNewsletter === false ? 'circle circle-active' : 'circle'"
-            (click)="updateNewsletterBoolean(false)"
-          >
-            <div></div>
-          </div>
-          <span>{{ 'no' | translate | titlecase }}</span>
-        </div>
-      </div>
-    </div>
     <!-- <div class="is-flex is-justify-content-center">
       <app-button (clicked)="updateProfile()" [label]="'saveProfile' | translate"></app-button>
     </div> -->
