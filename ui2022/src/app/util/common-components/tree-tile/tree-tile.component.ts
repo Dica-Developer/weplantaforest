@@ -16,6 +16,16 @@ export class TreeTileComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.treeUrl = environment.backendUrl + '/treeType/image/' + this.tree?.imageFile + '/200/200';
+    this.switchImageBW();
+  }
+
+  switchImageColor() {
+    this.treeUrl =
+      environment.backendUrl + '/treeType/image/' + this.tree?.treeImageColor + '/200/200';
+  }
+
+  switchImageBW() {
+    this.treeUrl =
+      environment.backendUrl + '/treeType/image/' + this.tree?.treeImageBW + '/200/200';
   }
 }

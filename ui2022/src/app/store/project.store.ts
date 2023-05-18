@@ -9,8 +9,12 @@ import { addSuccessMessage } from './success-message.state';
 
 export interface TreeType {
   id: number;
-  imageFile: string;
+  treeImageColor: string;
+  treeImageBW: string;
   description: string;
+  leaf: string;
+  fruit: string;
+  trunk: string;
   name: string;
 }
 

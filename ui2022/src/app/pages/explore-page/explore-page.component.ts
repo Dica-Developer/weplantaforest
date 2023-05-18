@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { TreeType } from 'src/app/store/project.store';
 import { loadTreeTypes, selectTreeTypes } from 'src/app/store/treeType.store';
+import { selectProfileDetails } from 'src/app/store/profile.store';
 import { TextHelper } from 'src/app/util/text.helper';
 import { environment } from 'src/environments/environment';
 
@@ -17,7 +18,7 @@ export class ExplorePageComponent implements OnInit {
   selectedInfoType: string = 'leaf';
   currentImageUrl: string = '';
   treeTypes$: Observable<TreeType[]>;
-  selectTreetypesSub: Subscription;
+  combinedSub: Subscription;
   trees: TreeType[] = [];
 
   constructor(private store: Store<AppState>, private textHelper: TextHelper) {
@@ -25,14 +26,29 @@ export class ExplorePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectTreetypesSub = this.store.select(selectTreeTypes).subscribe((res) => {
+    const profileDetails$ = this.store.select(selectProfileDetails);
+    const treeTypeSelect$ = this.store.select(selectTreeTypes);
+
+    this.combinedSub = combineLatest([profileDetails$, treeTypeSelect$]).subscribe((res) => {
+      let lang = 'de';
+      if (res[0]?.lang && res[0].lang === 'DEUTSCH') {
+        lang = 'de';
+        console.log(lang);
+      } else if (res[0]?.lang && res[0].lang === 'ENGLISH') {
+        lang = 'en';
+        console.log(lang);
+      }
       this.trees = [];
-      for (let tt of res) {
+      for (let tt of res[1]) {
         this.trees.push({
           id: tt.id,
-          imageFile: tt.imageFile,
-          description: tt.description,
-          name: this.textHelper.getTextForLanguage(tt.name, 'de'),
+          treeImageColor: tt.treeImageColor,
+          treeImageBW: tt.treeImageBW,
+          description: this.textHelper.getTextForLanguage(tt.description, lang),
+          leaf: this.textHelper.getTextForLanguage(tt.leaf, lang),
+          fruit: this.textHelper.getTextForLanguage(tt.fruit, lang),
+          trunk: this.textHelper.getTextForLanguage(tt.trunk, lang),
+          name: this.textHelper.getTextForLanguage(tt.name, lang),
         });
       }
     });
@@ -41,7 +57,7 @@ export class ExplorePageComponent implements OnInit {
   selectTree(tree: TreeType) {
     this.currentTree = tree;
     this.currentImageUrl =
-      environment.backendUrl + '/treeType/image/' + tree.imageFile + '/600/600';
+      environment.backendUrl + '/treeType/image/' + tree.treeImageColor + '/600/600';
   }
 
   selectInfoType(infoType: string) {

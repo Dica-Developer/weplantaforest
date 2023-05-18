@@ -8,6 +8,7 @@ import { AppState } from './store/app.state';
 import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
 import { AppCookieService } from './util/cookie.service';
+import { loadProfileDetails } from './store/profile.store';
 
 @Component({
   selector: 'app-root',
@@ -69,6 +70,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('jwt') && localStorage.getItem('username')) {
+      this.store.dispatch(loadProfileDetails({ username: localStorage.getItem('username') }));
+    }
     this.authService.autoLogin();
   }
 }

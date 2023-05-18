@@ -1,5 +1,7 @@
 <div
   class="border-right border-bottom is-flex is-justify-content-center is-align-items-center is-flex-direction-column"
+  (mouseover)="switchImageColor()"
+  (mouseleave)="switchImageBW()"
 >
   <p>{{ tree?.name }}</p>
   <img src="{{ treeUrl }}" />

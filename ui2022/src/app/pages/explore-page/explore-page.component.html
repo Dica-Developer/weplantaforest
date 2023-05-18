@@ -50,27 +50,20 @@
             trunk
           </p>
         </div>
-        <!-- <p>
-            {{ currentTree.family }}
-          </p> -->
         <p>
           {{ currentTree.description }}
         </p>
         <p *ngIf="selectedInfoType === 'leaf'">
-          <!-- {{ currentTree.leaf }} -->
-          Leafs are green and you are noob
+          {{ currentTree.leaf }}
         </p>
         <p *ngIf="selectedInfoType === 'trunk'">
-          <!-- {{ currentTree.trunk }} -->
-          Leafs are green and you are nub
+          {{ currentTree.trunk }}
         </p>
         <p *ngIf="selectedInfoType === 'fruit'">
-          <!-- {{ currentTree.fruit }} -->
-          Leafs are green and you are bad
+          {{ currentTree.fruit }}
         </p>
       </div>
       <div class="column is-half imageWrapper is-flex is-justify-content-center">
-        <!-- <div class="infoTypeOverlay">X</div> -->
         <img src="{{ currentImageUrl }}" alt="tree" />
       </div>
     </div>
