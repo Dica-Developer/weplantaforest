@@ -1,13 +1,15 @@
-<img src="{{ imagePreviewSrc }}" width="150" height="150" *ngIf="imagePreviewSrc" />
-<p *ngIf="!imagePreviewSrc">Kein Bild ausgewählt</p>
-<input
-  #csvInput
-  hidden="true"
-  type="file"
-  onclick="this.value=null"
-  (change)="imageChanged($event)"
-  accept=".png, .jpg, .jpeg"
-/>
-<button class="margin-top-1" mat-raised-button color="primary" (click)="csvInput.click()">
-  Bild
-</button>
+<div class="is-flex is-flex-direction-column">
+  <img src="{{ imagePreviewSrc }}" width="150" height="150" *ngIf="imagePreviewSrc" />
+  <p *ngIf="!imagePreviewSrc">Kein Bild ausgewählt</p>
+  <input
+    #csvInput
+    hidden="true"
+    type="file"
+    onclick="this.value=null"
+    (change)="imageChanged($event)"
+    accept=".png, .jpg, .jpeg"
+  />
+  <button class="margin-top-1" mat-raised-button color="primary" (click)="csvInput.click()">
+    Bild
+  </button>
+</div>

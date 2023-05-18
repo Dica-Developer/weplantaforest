@@ -112,8 +112,8 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="column is-6">
-          <div class="columns">
+        <div class="column is-6 is-flex is-flex-direction-column is-justify-content-space-between">
+          <div class="is-flex is-justify-content-space-around">
             <app-tree-type-image-upload
               [imageType]="'treeImageColor'"
               [imageFileName]="form.get('treeImageColor').value"
@@ -139,11 +139,12 @@
             >
             </app-tree-type-image-upload>
           </div>
-          <div class="columns">
-            <button mat-raised-button color="primary" (click)="updateTreetype()">Speichern</button>
+          <div class="is-flex is-justify-content-space-around"></div>
+          <div class="is-flex is-flex-direction-row-reverse is-align-items-center">
             <button mat-icon-button color="warn" (click)="delete()">
               <mat-icon aria-hidden="false">delete</mat-icon>
             </button>
+            <button mat-raised-button color="primary" (click)="updateTreetype()">Speichern</button>
           </div>
         </div>
       </div>
