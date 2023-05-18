@@ -68,6 +68,7 @@ export const userRoutes: Routes = [
   { path: 'signup', component: SignupPageComponent },
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },
   { path: 'password_reset', component: ResetPasswordPageComponent },
+  { path: 'userActivation/:id/:key', component: LoginPageComponent },
   { path: 'blog', component: BlogOverviewPageComponent },
   { path: 'blog/:id', component: BlogArticlePageComponent },
   { path: 'facts', component: FactsPageComponent },

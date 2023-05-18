@@ -4,6 +4,7 @@
     [formGroup]="loginForm"
     (ngSubmit)="onSubmit()"
   >
+    <h2 *ngIf="welcomePage">{{ 'welcomeActivation' | translate }}</h2>
     <mat-error *ngIf="loginError$ | async">
       {{ 'wrongLoginCredentials' | translate }}
     </mat-error>
@@ -19,8 +20,12 @@
         formControlName="password"
       />
     </div>
-    <div class="center">
-      <app-button [label]="'Login'"></app-button>
+
+    <div *ngIf="welcomePage" class="center">
+      <app-button [label]="'welcomeButton' | translate"></app-button>
+    </div>
+    <div *ngIf="!welcomePage" class="center">
+      <app-button [label]="'Login' | translate"></app-button>
       <br />
       <br />
       <a routerLink="/forgotPassword">{{ 'forgotPassword' | translate }}</a>

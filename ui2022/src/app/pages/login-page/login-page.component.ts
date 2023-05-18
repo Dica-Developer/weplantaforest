@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { selectLoginError, login } from '../../store/auth.store';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -13,6 +14,7 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginPageComponent implements OnInit {
   loginError$: Observable<string>;
+  welcomePage: boolean = this.router.url.includes('userActivation');
 
   loginForm = new UntypedFormGroup({
     name: new UntypedFormControl(''),
@@ -21,7 +23,7 @@ export class LoginPageComponent implements OnInit {
 
   logoUrl = environment.baseUrl + '/assets/ipat_logo.png';
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.loginError$ = store.select(selectLoginError);
   }
 

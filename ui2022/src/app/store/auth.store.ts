@@ -188,15 +188,8 @@ export class AuthEffects {
           )
           .pipe(
             switchMap((response) => {
-              localStorage.setItem('jwt', response.headers.get('X-AUTH-TOKEN'));
-              localStorage.setItem('username', response.headers.get('X-AUTH-USERNAME'));
               this.router.navigate(['/']);
-              return [
-                setUsername({
-                  username: response.headers.get('X-AUTH-USERNAME'),
-                }),
-                signupSuccess(),
-              ];
+              return [signupSuccess()];
             }),
             catchError(() => [signupFailed({ error: 'signup failed' })]),
           ),

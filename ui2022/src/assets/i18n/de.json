@@ -160,5 +160,7 @@
   "forgotPassword": "Passwort vergessen?",
   "registerHere": "Hier registrieren!",
   "requestPassword": "Passwort anfragen",
-  "noAccountYet": "Noch keinen Account?"
+  "noAccountYet": "Noch keinen Account?",
+  "welcomeActivation": "Willkommen bei I Plant A Tree!",
+  "welcomeMessage": "Willkommen!"
 }
