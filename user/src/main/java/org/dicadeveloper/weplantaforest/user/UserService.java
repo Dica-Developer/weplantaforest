@@ -206,7 +206,7 @@ public class UserService {
         String userName = userRegistrationData.getUsername();
         String mail = userRegistrationData.getMail();
         IpatPreconditions.checkArgument((userRepository.userExists(userName) == 0), ErrorCodes.USER_ALREADY_EXISTS);
-        IpatPreconditions.checkArgument(CommonValidator.isValidEmailAddress(mail), ErrorCodes.INVALID_MAIL);
+        // IpatPreconditions.checkArgument(CommonValidator.isValidEmailAddress(mail), ErrorCodes.INVALID_MAIL);
         IpatPreconditions.checkArgument((userRepository.userWithMailExists(mail) == 0), ErrorCodes.MAIL_ALREADY_EXISTS);
         User user = convertUserRegDataToUser(userRegistrationData);
         userRepository.save(user);
