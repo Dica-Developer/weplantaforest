@@ -17,6 +17,7 @@ export class ExplorePageComponent implements OnInit {
   @Input() currentTree: TreeType = null;
   selectedInfoType: string = 'leaf';
   currentImageUrl: string = '';
+  currentFruitUrl: string = '';
   treeTypes$: Observable<TreeType[]>;
   combinedSub: Subscription;
   trees: TreeType[] = [];
@@ -44,6 +45,8 @@ export class ExplorePageComponent implements OnInit {
           id: tt.id,
           treeImageColor: tt.treeImageColor,
           treeImageBW: tt.treeImageBW,
+          fruitImageColor: tt.fruitImageColor,
+          fruitImageBW: tt.fruitImageBW,
           description: this.textHelper.getTextForLanguage(tt.description, lang),
           leaf: this.textHelper.getTextForLanguage(tt.leaf, lang),
           fruit: this.textHelper.getTextForLanguage(tt.fruit, lang),
@@ -57,7 +60,9 @@ export class ExplorePageComponent implements OnInit {
   selectTree(tree: TreeType) {
     this.currentTree = tree;
     this.currentImageUrl =
-      environment.backendUrl + '/treeType/image/' + tree.treeImageColor + '/600/600';
+      environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/1500/1500';
+    this.currentFruitUrl =
+      environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
   }
 
   selectInfoType(infoType: string) {

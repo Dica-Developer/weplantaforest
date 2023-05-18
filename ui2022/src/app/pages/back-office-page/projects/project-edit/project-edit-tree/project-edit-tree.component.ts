@@ -44,6 +44,8 @@ export class ProjectEditTreeComponent implements OnInit, OnDestroy {
           id: tt.id,
           treeImageColor: tt.treeImageColor,
           treeImageBW: tt.treeImageBW,
+          fruitImageColor: tt.fruitImageColor,
+          fruitImageBW: tt.fruitImageBW,
           description: tt.description,
           fruit: tt.fruit,
           leaf: tt.leaf,

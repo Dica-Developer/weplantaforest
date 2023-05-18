@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Component
@@ -37,7 +38,9 @@ public class ImageHelper {
         }
 
         FileInputStream inputStream = new FileInputStream(filePath);
-        Thumbnails.of(inputStream).size(sizes[0], sizes[1]).toOutputStream(toWrite);
+
+        Thumbnails.of(inputStream).size(sizes[0], sizes[1])
+        .imageType(BufferedImage.TYPE_INT_ARGB).toOutputStream(toWrite);
         inputStream.close();
     }
 

@@ -17,8 +17,70 @@
   text-decoration: underline;
 }
 
+.img-fruit {
+  position: absolute;
+  right: 10%;
+  bottom: 50%;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+  .img-tree {
+    width: 100%;
+  }
+}
+
+.marker {
+  position: relative;
+  left: 45%;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background: var(--black);
+  opacity: 0.7;
+  border: solid 3px var(--green);
+  &:hover {
+    background: var(--green);
+    cursor: pointer;
+    opacity: 0.9;
+  }
+  z-index: 2;
+}
+
+.leafMarker {
+  bottom: 55%;
+}
+
+.trunkMarker {
+  bottom: 20%;
+}
+
+.fruitMarker {
+  left: 82%;
+  bottom: 90%;
+}
+
 @media only screen and (max-width: 768px) {
-  .description {
-    flex-direction: column;
+  .img-fruit {
+    right: 1rem;
+    max-width: 100px;
+  }
+  .marker {
+    height: 30px;
+    width: 30px;
+  }
+
+  .leafMarker {
+    bottom: 55%;
+  }
+
+  .trunkMarker {
+    bottom: 20%;
+  }
+
+  .fruitMarker {
+    left: 82%;
+    bottom: 90%;
   }
 }

@@ -23,33 +23,10 @@
     </nav>
   </div>
 
-  <div class="is-flex is-flex-direction-column infoPage padding-2">
-    <div *ngIf="currentTree" class="description columns is-flex">
-      <div class="column is-half">
+  <div class="infoPage padding-2">
+    <div *ngIf="currentTree" class="description columns">
+      <div class="column is-4">
         <h2>{{ currentTree.name }}</h2>
-        <div class="is-flex is-flex-direction-row">
-          <p
-            (click)="selectInfoType('leaf')"
-            [class.selected]="selectedInfoType === 'leaf'"
-            class="infoType is-flex margin-right-1"
-          >
-            leaf
-          </p>
-          <p
-            (click)="selectInfoType('fruit')"
-            [class.selected]="selectedInfoType === 'fruit'"
-            class="infoType is-flex margin-right-1"
-          >
-            fruit
-          </p>
-          <p
-            (click)="selectInfoType('trunk')"
-            [class.selected]="selectedInfoType === 'trunk'"
-            class="infoType is-flex margin-right-1"
-          >
-            trunk
-          </p>
-        </div>
         <p>
           {{ currentTree.description }}
         </p>
@@ -63,8 +40,16 @@
           {{ currentTree.fruit }}
         </p>
       </div>
-      <div class="column is-half imageWrapper is-flex is-justify-content-center">
-        <img src="{{ currentImageUrl }}" alt="tree" />
+      <div class="column is-8">
+        <div class="wrapper">
+          <img class="img-tree" src="{{ currentImageUrl }}" alt="tree" />
+          <div class="marker trunkMarker" (click)="selectInfoType('trunk')"></div>
+          <div class="marker leafMarker" (click)="selectInfoType('leaf')"></div>
+        </div>
+        <div class="wrapper">
+          <img class="img-fruit" src="{{ currentFruitUrl }}" alt="tree" />
+          <div class="marker fruitMarker" (click)="selectInfoType('fruit')"></div>
+        </div>
       </div>
     </div>
   </div>

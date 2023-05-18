@@ -69,6 +69,8 @@ export class PlantSelfPageComponent implements OnInit {
           id: tt.id,
           treeImageColor: tt.treeImageColor,
           treeImageBW: tt.treeImageBW,
+          fruitImageColor: tt.fruitImageColor,
+          fruitImageBW: tt.fruitImageBW,
           description: tt.description,
           fruit: tt.fruit,
           leaf: tt.leaf,
