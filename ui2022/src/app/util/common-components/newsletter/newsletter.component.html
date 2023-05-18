@@ -7,16 +7,13 @@
     class="is-flex is-flex-direction-column is-align-items-left is-justify-content-center column is-one-third padding-1"
   >
     <!-- <div class="inputOutline">
-      <input [placeholder]="'name' | translate" type="text" />
-    </div> -->
-    <!-- <div class="inputOutline">
       <input [placeholder]="'email' | translate" name="email" id="email" type="text" />
     </div>
     <app-button
       label="{{ 'sendNow' | translate }}"
       (clicked)="subscribeToNewsletter()"
     ></app-button> -->
-    <div #iframe id="iframe" [innerHTML]="html"></div>
+    <div #iframe id="iframe" [innerHTML]="html" class="nl-iframe"></div>
   </div>
   <div class="column is-one-third"></div>
 </div>
