@@ -114,30 +114,42 @@
         </div>
         <div class="column is-6 is-flex is-flex-direction-column is-justify-content-space-between">
           <div class="is-flex is-justify-content-space-around">
-            <app-tree-type-image-upload
-              [imageType]="'treeImageColor'"
-              [imageFileName]="form.get('treeImageColor').value"
-              (emitImageChanged)="setImageFile($event)"
-            >
-            </app-tree-type-image-upload>
-            <app-tree-type-image-upload
-              [imageType]="'treeImageBW'"
-              [imageFileName]="form.get('treeImageBW').value"
-              (emitImageChanged)="setImageFile($event)"
-            >
-            </app-tree-type-image-upload>
-            <app-tree-type-image-upload
-              [imageType]="'fruitImageColor'"
-              [imageFileName]="form.get('fruitImageColor').value"
-              (emitImageChanged)="setImageFile($event)"
-            >
-            </app-tree-type-image-upload>
-            <app-tree-type-image-upload
-              [imageType]="'fruitImageBW'"
-              [imageFileName]="form.get('fruitImageBW').value"
-              (emitImageChanged)="setImageFile($event)"
-            >
-            </app-tree-type-image-upload>
+            <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'treeColored' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'treeImageColor'"
+                [imageFileName]="form.get('treeImageColor').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div>
+            <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'treeBW' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'treeImageBW'"
+                [imageFileName]="form.get('treeImageBW').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div>
+            <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'fruitColored' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'fruitImageColor'"
+                [imageFileName]="form.get('fruitImageColor').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div>
+            <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'fruitBW' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'fruitImageBW'"
+                [imageFileName]="form.get('fruitImageBW').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div>
           </div>
           <div class="is-flex is-justify-content-space-around"></div>
           <div class="is-flex is-flex-direction-row-reverse is-align-items-center">
