@@ -1,0 +1,5 @@
+<div class="page is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
+  <h4 *ngIf="verificationSuccess$ | async">{{ 'welcomeActivation' | translate }}</h4>
+  <h4 *ngIf="!verificationSuccess$ | async">{{ 'welcomeActivationFailed' | translate }}</h4>
+  <a routerLink="/login"> {{ 'getToLoginHere' | translate }}</a>
+</div>

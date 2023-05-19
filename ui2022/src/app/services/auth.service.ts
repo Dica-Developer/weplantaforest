@@ -58,6 +58,20 @@ export class AuthService {
     );
   }
 
+  verifyRegistration(id: number, key: string, language: string) {
+    return this.http.post(
+      environment.backendUrl +
+        '/user/activation' +
+        '?id=' +
+        id +
+        '&key=' +
+        key +
+        '&language=' +
+        language,
+      { responseType: 'text' },
+    );
+  }
+
   verifyPasswordResetLink(id: number, key: string, language: string) {
     return this.http.post(
       environment.backendUrl +

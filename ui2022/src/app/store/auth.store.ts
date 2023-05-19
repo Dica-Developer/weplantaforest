@@ -42,7 +42,17 @@ export const verifyPasswordResetLink = createAction(
 export const verifyPasswordResetLinkFailed = createAction(
   '[Auth] Verify Password Reset Link Failed',
 );
+export const verifyRegistration = createAction(
+  '[Auth] Verify Registration',
+  props<{ id: number; key: string; language: string }>(),
+);
+export const verifyRegistrationSuccess = createAction('[Auth] Verify Registration Success');
+export const verifyRegistrationFailed = createAction(
+  '[Auth] Verify Registration Failed',
+  props<{ error: string }>(),
+);
 export const signupDoneReset = createAction('[Auth] Reset SignupDone Flag');
+export const verificationDoneReset = createAction('[Auth] Reset VerificationDone Flag');
 
 export const logout = createAction('[Auth] logout');
 
@@ -54,6 +64,7 @@ export interface AuthState {
   passwordResetSent: boolean;
   passwordResetLinkVerified: boolean;
   signupDone: boolean;
+  verificationSuccess: boolean;
 }
 
 export const initialState: AuthState = {
@@ -64,6 +75,7 @@ export const initialState: AuthState = {
   passwordResetSent: false,
   passwordResetLinkVerified: true,
   signupDone: false,
+  verificationSuccess: false,
 };
 
 const authReducer = createReducer(
@@ -99,6 +111,14 @@ const authReducer = createReducer(
   on(signupDoneReset, (state, {}) => ({
     ...state,
     signupDone: false,
+  })),
+  on(verifyRegistrationSuccess, (state, {}) => ({
+    ...state,
+    verificationSuccess: true,
+  })),
+  on(verifyRegistrationFailed, (state, {}) => ({
+    ...state,
+    verificationSuccess: false,
   })),
   on(logout, (state) => {
     localStorage.removeItem('jwt');
@@ -146,6 +166,11 @@ export const selectAuthenticated = createSelector(
   (state: AuthState) => state.isAuthenticated,
 );
 
+export const selectVerificationSuccess = createSelector(
+  authFeature,
+  (state: AuthState) => state.verificationSuccess,
+);
+
 export const selectSignupDone = createSelector(authFeature, (state: AuthState) => state.signupDone);
 
 @Injectable()
@@ -178,6 +203,20 @@ export class AuthEffects {
             ];
           }),
           catchError(() => [loginFailed({ error: 'login failed' })]),
+        ),
+      ),
+    ),
+  );
+
+  verifyRegistration$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(verifyRegistration),
+      switchMap((action: any) =>
+        this.authService.verifyRegistration(action.id, action.key, action.language).pipe(
+          switchMap((response) => {
+            return [verifyRegistrationSuccess()];
+          }),
+          catchError(() => [verifyRegistrationFailed({ error: 'verification failed' })]),
         ),
       ),
     ),

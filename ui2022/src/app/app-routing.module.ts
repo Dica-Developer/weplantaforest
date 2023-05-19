@@ -41,6 +41,7 @@ import { ExplorePageComponent } from './pages/explore-page/explore-page.componen
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { OfferProjectPageComponent } from './pages/offer-project-page/offer-project-page.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page/signup-page.component';
+import { VerifyRegistrationPageComponent } from './pages/verify-registration-page/verify-registration-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -68,7 +69,7 @@ export const userRoutes: Routes = [
   { path: 'signup', component: SignupPageComponent },
   { path: 'forgotPassword', component: ForgotPasswordPageComponent },
   { path: 'password_reset', component: ResetPasswordPageComponent },
-  { path: 'userActivation/:id/:key', component: LoginPageComponent },
+  { path: 'userActivation', pathMatch: 'full', component: VerifyRegistrationPageComponent },
   { path: 'blog', component: BlogOverviewPageComponent },
   { path: 'blog/:id', component: BlogArticlePageComponent },
   { path: 'facts', component: FactsPageComponent },

@@ -161,7 +161,8 @@
   "registerHere": "Hier registrieren!",
   "requestPassword": "Passwort anfragen",
   "noAccountYet": "Noch keinen Account?",
-  "welcomeActivation": "Willkommen bei I Plant A Tree!",
+  "welcomeActivation": "Willkommen! Bitte logge dich ein um fortzufahren.",
+  "welcomeActivationFailed": "Dieser Link ist leider ungültig",
   "welcomeMessage": "Willkommen!",
   "treeColored": "Baum (farbig)",
   "treeBW": "Baum (SW)",
@@ -211,5 +212,6 @@
   "BANK_CC_DENIED": "cc denied",
   "BANK_DOUBLED_DONATION": "Doppelte Spende.",
   "CART_IS_NULL": "Es exisitiert kein Pflanzkorb.",
-  "noTreesToPlant": "Zur Zeit stehen uns leider keine Flächen zur Wiederaufforstung zur Verfügung."
+  "noTreesToPlant": "Zur Zeit stehen uns leider keine Flächen zur Wiederaufforstung zur Verfügung.",
+  "getToLoginHere": "Zum Login!"
 }

@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
   loginError$: Observable<string>;
-  welcomePage: boolean = this.router.url.includes('userActivation');
 
   loginForm = new UntypedFormGroup({
     name: new UntypedFormControl(''),
@@ -23,7 +22,7 @@ export class LoginPageComponent implements OnInit {
 
   logoUrl = environment.baseUrl + '/assets/ipat_logo.png';
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(private store: Store<AppState>) {
     this.loginError$ = store.select(selectLoginError);
   }
 
