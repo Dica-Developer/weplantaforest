@@ -1,14 +1,37 @@
-<mat-card>
-  <mat-card-title>{{ 'checkout' | translate }}</mat-card-title>
-  <mat-card-content>
-    <h3>{{ 'choosePaymentOption' | translate }}</h3>
-    <div class="columns">
-      <div class="column">
-        <img src="assets/sepa.png" width="256" height="183" routerLink="/sepa" />
-      </div>
-      <div class="column">
+<div class="padding-2 padding-left plantbag-wrapper">
+  <nav class="breadcrumb">
+    <ul>
+      <li>
+        <a routerLink="/">
+          {{ 'startPage' | translate }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/plantbag">
+          {{ 'plantbag' | translate }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/paymentOptions" class="breadcrumb-active">
+          {{ 'choosePaymentOption' | translate }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="columns">
+    <div class="column">
+      <h2>{{ 'choosePaymentOption' | translate }}</h2>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <div class="column is-4 is-offset-4">
         <ngx-paypal [config]="payPalConfig"></ngx-paypal>
       </div>
+      <div class="column is-flex is-justify-content-center">
+        <img src="assets/sepa.png" width="256" height="183" routerLink="/sepa" />
+      </div>
     </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>
