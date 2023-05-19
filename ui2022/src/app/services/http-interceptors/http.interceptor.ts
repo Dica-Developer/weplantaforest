@@ -19,6 +19,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           case 500:
             this.handleError500();
             break;
+          case 400:
+            break;
           case 401:
             break;
           case 0:

@@ -42,6 +42,7 @@ export const verifyPasswordResetLink = createAction(
 export const verifyPasswordResetLinkFailed = createAction(
   '[Auth] Verify Password Reset Link Failed',
 );
+export const signupDoneReset = createAction('[Auth] Reset SignupDone Flag');
 
 export const logout = createAction('[Auth] logout');
 
@@ -52,6 +53,7 @@ export interface AuthState {
   passwordResetRequestSent: boolean;
   passwordResetSent: boolean;
   passwordResetLinkVerified: boolean;
+  signupDone: boolean;
 }
 
 export const initialState: AuthState = {
@@ -61,6 +63,7 @@ export const initialState: AuthState = {
   passwordResetRequestSent: false,
   passwordResetSent: false,
   passwordResetLinkVerified: true,
+  signupDone: false,
 };
 
 const authReducer = createReducer(
@@ -91,6 +94,11 @@ const authReducer = createReducer(
   })),
   on(signupSuccess, (state, {}) => ({
     ...state,
+    signupDone: true,
+  })),
+  on(signupDoneReset, (state, {}) => ({
+    ...state,
+    signupDone: false,
   })),
   on(logout, (state) => {
     localStorage.removeItem('jwt');
@@ -137,6 +145,8 @@ export const selectAuthenticated = createSelector(
   authFeature,
   (state: AuthState) => state.isAuthenticated,
 );
+
+export const selectSignupDone = createSelector(authFeature, (state: AuthState) => state.signupDone);
 
 @Injectable()
 export class AuthEffects {
@@ -188,10 +198,14 @@ export class AuthEffects {
           )
           .pipe(
             switchMap((response) => {
-              this.router.navigate(['/']);
               return [signupSuccess()];
             }),
-            catchError(() => [signupFailed({ error: 'signup failed' })]),
+            catchError((err) => [
+              signupFailed({ error: 'signup failed' }),
+              addError({
+                error: { key: 'Error', message: err.error.errorInfos[0]?.errorCode },
+              }),
+            ]),
           ),
       ),
     ),

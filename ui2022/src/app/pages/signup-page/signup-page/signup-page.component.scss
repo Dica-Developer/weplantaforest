@@ -1,7 +1,10 @@
 form {
-  padding-top: 6rem;
-  max-width: 400px;
+  padding-top: 2rem;
+  max-width: 600px;
   z-index: 2;
+  background: var(--background);
+  box-shadow: 0 0 25px 35px #dcdcd6;
+  border-radius: 2rem;
 }
 
 button {
@@ -18,14 +21,27 @@ button {
 .padding-1 {
   padding: 1rem !important;
 }
+
+.welcomeBox {
+  max-width: 600px;
+}
+
+mat-checkbox {
+  max-width: 500px;
+  font-size: 1rem;
+}
+
+span {
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  a {
+    font-size: 0.8rem;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .signup {
     background-position: right;
     justify-content: flex-end;
-    padding-top: initial;
-  }
-
-  form {
-    padding-bottom: 2rem;
   }
 }

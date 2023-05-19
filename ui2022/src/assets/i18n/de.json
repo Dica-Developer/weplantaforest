@@ -162,5 +162,16 @@
   "requestPassword": "Passwort anfragen",
   "noAccountYet": "Noch keinen Account?",
   "welcomeActivation": "Willkommen bei I Plant A Tree!",
-  "welcomeMessage": "Willkommen!"
+  "welcomeMessage": "Willkommen!",
+  "treeColored": "Baum (farbig)",
+  "treeBW": "Baum (SW)",
+  "fruitColored": "Frucht (farbig)",
+  "fruitBW": "Frucht (SW)",
+  "formInvalid": "Formular ungültig!",
+  "termsLink": "Zu den AGB!",
+  "privacyLink": "Zur Datenschutzerklärung!",
+  "MAIL_ALREADY_EXISTS": "Email existiert bereits!",
+  "privacyPolicy": "Ich habe die Datenschutzerklärung gelesen und akzeptiere diese.",
+  "terms": "Ich habe die Allgemeinen Geschäftsbedingungen gelesen und akzeptiere diese.",
+  "plsActivateAccount": "Willkommen bei I plant a tree! Um die Registrierung abzuschließen, klicke bitte auf den Link in der E-Mail, die wir dir gerade geschickt haben."
 }

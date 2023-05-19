@@ -43,9 +43,11 @@ export class AppComponent implements OnInit {
     //   }
     // }
     this.store.select(selectErrors).subscribe((errors) => {
+      console.log(errors);
+
       for (let error of errors) {
         this.snackBar
-          .open(error.message, 'X', {
+          .open(this.translateService.instant(error.message), 'X', {
             duration: 4000,
           })
           .afterDismissed()
@@ -57,7 +59,7 @@ export class AppComponent implements OnInit {
     this.store.select(selectSuccessMessages).subscribe((messages) => {
       for (let message of messages) {
         this.snackBar
-          .open(message.message, 'X', {
+          .open(this.translateService.instant(message.message), 'X', {
             duration: 4000,
             panelClass: ['success-snackbar'],
           })
