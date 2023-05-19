@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../store/app.state';
 import { resetPasswordRequest, selectPasswordResetRequestSent } from '../../store/auth.store';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-forgot-password-page',
@@ -19,7 +18,6 @@ export class ForgotPasswordPageComponent implements OnInit {
   passwordResetRequestSent$: Observable<boolean> = this.store.select(
     selectPasswordResetRequestSent,
   );
-  logoUrl = environment.baseUrl + 'assets/ipat_logo.png';
 
   constructor(private store: Store<AppState>) {}
 
