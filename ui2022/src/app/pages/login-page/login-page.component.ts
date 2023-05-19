@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { Observable } from 'rxjs';
-import { selectLoginError, login } from '../../store/auth.store';
+import { selectLoginError, login, loginFailed } from '../../store/auth.store';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
@@ -27,7 +27,9 @@ export class LoginPageComponent implements OnInit {
     this.loginError$ = store.select(selectLoginError);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(loginFailed({ error: '' }));
+  }
 
   onSubmit(): void {
     this.store.dispatch(
