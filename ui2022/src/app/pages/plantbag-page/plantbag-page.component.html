@@ -1,6 +1,30 @@
-<app-plantbag></app-plantbag>
-<div class="columns" *ngIf="(plantBagPrice$ | async) > 0">
+<div class="padding-2 padding-left plantbag-wrapper">
+  <nav class="breadcrumb">
+    <ul>
+      <li>
+        <a routerLink="/">
+          {{ 'startPage' | translate }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/plantbag" class="breadcrumb-active">
+          {{ 'plantbag' | translate }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="columns">
+    <div class="column">
+      <app-plantbag></app-plantbag>
+    </div>
+  </div>
+</div>
+
+<div class="columns padding-2 padding-right" *ngIf="(plantBagPrice$ | async) > 0">
   <div class="column checkout-btn">
-    <app-button label="{{ 'GoToCheckout' | translate }}" (click)="convertPlantBagToCart()"></app-button>
+    <app-button
+      label="{{ 'GoToCheckout' | translate }}"
+      (click)="convertPlantBagToCart()"
+    ></app-button>
   </div>
 </div>
