@@ -24,7 +24,16 @@
       {{ 'detailedProcessHere' | translate }}
     </a>
   </div>
-  <div class="column padding-left padding-right padding-top-2 padding-bottom-2">
+  <div
+    class="column padding-left padding-right padding-top-2 padding-bottom-2"
+    *ngIf="proposalFailed$ | async"
+  >
+    <h3>{{ 'noTreesToPlant' | translate }}</h3>
+  </div>
+  <div
+    class="column padding-left padding-right padding-top-2 padding-bottom-2"
+    *ngIf="!(proposalFailed$ | async)"
+  >
     <p class="desktop">{{ 'proposalOrIndividualText' | translate }}</p>
     <div class="custom-slider">
       <ngx-slider

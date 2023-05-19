@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
-import { switchMap } from 'rxjs';
+import { catchError, switchMap } from 'rxjs';
 import { PlantbagService } from '../services/plantbag.service';
 import { AppState } from './app.state';
 import { addSuccessMessage } from './success-message.state';
@@ -16,6 +16,8 @@ export const getSimplePlantProposalSuccess = createAction(
   '[Plant] get proposal success',
   props<{ simpleProposal: SimplePlantProposal }>(),
 );
+
+export const getSimplePlantProposalFailed = createAction('[Plant] get proposal failed');
 
 export const getProjectsForCustomPlanting = createAction(
   '[Plant] get projects for custom planting',
@@ -104,12 +106,14 @@ export interface PlantProposalState {
   simpleProposal: SimplePlantProposal;
   customPlantingProjects: any;
   selfPlantCreated: boolean;
+  proposalFailed: boolean;
 }
 
 export const initialState: PlantProposalState = {
   selfPlantCreated: false,
   customPlantingProjects: [],
   simpleProposal: null,
+  proposalFailed: false,
 };
 
 const plantProposalReducer = createReducer(
@@ -117,6 +121,10 @@ const plantProposalReducer = createReducer(
   on(getSimplePlantProposalSuccess, (state, action) => ({
     ...state,
     simpleProposal: action.simpleProposal,
+  })),
+  on(getSimplePlantProposalFailed, (state) => ({
+    ...state,
+    proposalFailed: true,
   })),
   on(selfPlantFlagReset, (state) => ({
     ...state,
@@ -157,6 +165,11 @@ export const selectSimpleProposal = createSelector(
   (state: PlantProposalState) => state.simpleProposal,
 );
 
+export const selectSimpleProposalFailed = createSelector(
+  plantPropsalFeature,
+  (state: PlantProposalState) => state.proposalFailed,
+);
+
 export const selectProjectsForCustomPlanting = createSelector(
   plantPropsalFeature,
   (state: PlantProposalState) => state.customPlantingProjects,
@@ -190,9 +203,10 @@ export class PlantProposalEffects {
     this.actions$.pipe(
       ofType(getSimplePlantProposal),
       switchMap((action) =>
-        this.plantbagService
-          .getPlantProposal(action.amountOfTrees)
-          .pipe(switchMap((simpleProposal) => [getSimplePlantProposalSuccess({ simpleProposal })])),
+        this.plantbagService.getPlantProposal(action.amountOfTrees).pipe(
+          switchMap((simpleProposal) => [getSimplePlantProposalSuccess({ simpleProposal })]),
+          catchError((err) => [getSimplePlantProposalFailed()]),
+        ),
       ),
     ),
   );

@@ -7,10 +7,10 @@ import {
   selectProjectsForCustomPlanting,
   selectProposalPrice,
   selectSimpleProposal,
+  selectSimpleProposalFailed,
 } from '../../store/plant.store';
 import { Options } from '@angular-slider/ngx-slider';
 import { TranslateService } from '@ngx-translate/core';
-import { loadActiveProjects, selectActiveProjects } from '../../store/project.store';
 import { Observable, Subscription } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from '../../store/plantbag.store';
 import { SliderHelper } from '../../util/helper/slider.helper';
@@ -27,6 +27,7 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
   proposalSub: Subscription;
   activeProjects;
   activeProjectsSub: Subscription;
+  proposalFailed$ = this.store.select(selectSimpleProposalFailed);
 
   proposalPrice$ = this.store.select(selectProposalPrice);
   activeProjects$: Observable<any>;
@@ -55,7 +56,6 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
       .select(selectProjectsForCustomPlanting)
       .subscribe((projects) => {
         this.activeProjects = projects;
-        console.log(projects);
       });
   }
 
