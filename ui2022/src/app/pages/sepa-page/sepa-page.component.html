@@ -1,143 +1,179 @@
-<div class="columns">
-  <div class="column"></div>
+<div class="padding-2 padding-left plantbag-wrapper">
+  <nav class="breadcrumb">
+    <ul>
+      <li>
+        <a routerLink="/">
+          {{ 'startPage' | translate }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/plantbag">
+          {{ 'plantbag' | translate }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/paymentOptions">
+          {{ 'choosePaymentOption' | translate }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/sepa" class="breadcrumb-active">
+          {{ 'sepaPayment' | translate }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div class="columns padding-left">
   <div class="column">
+    <h2>{{ 'sepaPayment' | translate }}</h2>
+  </div>
+</div>
+
+<div class="columns">
+  <div class="column is-4 is-offset-4">
     <div class="columns">
       <div class="column">
         <form [formGroup]="form">
           <div class="columns">
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'company' | translate }}"
                   name="company"
                   formControlName="company"
                 />
-              </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
-                <input
-                  matInput
-                  placeholder="{{ 'salutation' | translate }}"
-                  name="salutation"
+              <div class="inputOutline">
+                <mat-select
                   formControlName="salutation"
-                />
-              </mat-form-field>
+                  placeholder="{{ 'salutation' | translate }}"
+                  [compareWith]="compareValues"
+                >
+                  <mat-option
+                    *ngFor="let salutation of salutations"
+                    [value]="salutation.value"
+                    >{{ salutation.label | translate }}</mat-option
+                  >
+                </mat-select>
+              </div>
             </div>
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'title' | translate }}"
                   name="title"
                   formControlName="title"
                 />
-              </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'firstName' | translate }}"
                   name="forename"
                   formControlName="forename"
                 />
-              </mat-form-field>
+              </div>
             </div>
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'lastName' | translate }}"
                   name="name"
                   formControlName="name"
                 />
-              </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'streetAndNo' | translate }}"
                   name="street"
                   formControlName="street"
                 />
-              </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'zip' | translate }}"
                   name="zip"
                   formControlName="zip"
                 />
-              </mat-form-field>
+              </div>
             </div>
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'city' | translate }}"
                   name="city"
                   formControlName="city"
                 />
-              </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'country' | translate }}"
                   name="country"
                   formControlName="country"
                 />
-              </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'email' | translate }}"
                   name="mail"
                   formControlName="mail"
                 />
-              </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'iban' | translate }}"
                   name="iban"
                   formControlName="iban"
                 />
-              </mat-form-field>
+              </div>
             </div>
             <div class="column">
-              <mat-form-field class="title-field" appearance="fill">
+              <div class="inputOutline">
                 <input
                   matInput
                   placeholder="{{ 'bic' | translate }}"
                   name="bic"
                   formControlName="bic"
                 />
-              </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="columns">
@@ -158,5 +194,4 @@
       </div>
     </div>
   </div>
-  <div class="column"></div>
 </div>

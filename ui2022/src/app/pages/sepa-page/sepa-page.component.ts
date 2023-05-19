@@ -24,7 +24,7 @@ export class SepaPageComponent implements OnInit, OnDestroy {
     company: new FormControl(''),
     companyAddon: new FormControl(''),
 
-    salutation: new FormControl(''),
+    salutation: new FormControl(1),
     title: new FormControl(''),
     forename: new FormControl(''),
     name: new FormControl(''),
@@ -38,10 +38,11 @@ export class SepaPageComponent implements OnInit, OnDestroy {
     receipt: new FormControl(''),
     comment: new FormControl(''),
 
-    paymentMethod: new FormControl(''),
+    paymentMethod: new FormControl('SEPA'),
     transactionId: new FormControl(''),
     iban: new FormControl(''),
     bic: new FormControl(''),
+
   });
 
   lastPayedCartSub: Subscription;
@@ -52,6 +53,13 @@ export class SepaPageComponent implements OnInit, OnDestroy {
   cartPayedSub: Subscription;
 
   cartIdSub: Subscription;
+
+  salutations = [
+    { value: 1, label: 'mr' },
+    { value: 2, label: 'mrs' },
+  ];
+
+  default = 1;
 
   constructor(private store: Store<AppState>) {}
 
@@ -82,6 +90,10 @@ export class SepaPageComponent implements OnInit, OnDestroy {
     this.cartIdSub = this.store.select(selectCreatedCartId).subscribe((cartId) => {
       this.form.get('cartId').setValue(cartId);
     });
+  }
+
+  compareValues(object1: any, object2: any) {
+    return object1 && object2 && object1.value == object2.value;
   }
 
   ngOnDestroy(): void {

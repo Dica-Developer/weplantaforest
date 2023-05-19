@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
-import { switchMap } from 'rxjs';
+import { catchError, switchMap } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
 import { AppState } from './app.state';
 import { Cart } from './carts.store';
+import { addError } from './error.state';
 import { addSuccessMessage } from './success-message.state';
 
 export interface PaymentDataDto {
@@ -167,6 +168,15 @@ export class PaymentEffects {
               message: { key: 'PLANTBAG_PAYED_SUCCES', message: 'Pflanzkorb bezahlt!' },
             }),
           ]),
+          catchError((err) => {
+            console.log(err);
+            
+            return [
+              addError({
+                error: { key: 'payment_error', message: err.error.errorInfos[0]?.errorCode },
+              }),
+            ];
+          }),
         ),
       ),
     ),
