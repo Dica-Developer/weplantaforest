@@ -209,5 +209,6 @@
   "BANK_ACCOUNT_NR_TOO_LONG": "Kontonummer zu lang oder zu kurz (508)",
   "BANK_ACCOUNT_NR_TOO_SHORT": "Kontonummer zu lang oder zu kurz (509)",
   "BANK_CC_DENIED": "cc denied",
-  "BANK_DOUBLED_DONATION": "Doppelte Spende."
+  "BANK_DOUBLED_DONATION": "Doppelte Spende.",
+  "CART_IS_NULL": "Es exisitiert kein Pflanzkorb."
 }
