@@ -18,6 +18,9 @@
   min-height: calc(100vh - 80px);
   z-index: 2;
   background: #00000000;
+  background-image: url(/assets/baumscheiben.png);
+  background-size: cover;
+  background-position: center;
 }
 
 .direction-wrapper {
@@ -38,7 +41,7 @@
   .direction-wrapper {
     flex-grow: 1;
     flex-direction: column;
-    justify-content: space-between;
+    // justify-content: space-between;
   }
 
   .stats {
@@ -48,5 +51,6 @@
   .text-left {
     font-size: 2rem !important;
     line-height: 2.25rem !important;
+    margin-bottom: 1rem !important;
   }
 }
