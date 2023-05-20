@@ -34,10 +34,8 @@ export class ExplorePageComponent implements OnInit {
       let lang = 'de';
       if (res[0]?.lang && res[0].lang === 'DEUTSCH') {
         lang = 'de';
-        console.log(lang);
       } else if (res[0]?.lang && res[0].lang === 'ENGLISH') {
         lang = 'en';
-        console.log(lang);
       }
       this.trees = [];
       for (let tt of res[1]) {
@@ -60,12 +58,35 @@ export class ExplorePageComponent implements OnInit {
   selectTree(tree: TreeType) {
     this.currentTree = tree;
     this.currentImageUrl =
-      environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/1500/1500';
+      environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/1000/1000';
     this.currentFruitUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
   }
 
   selectInfoType(infoType: string) {
+    this.setImageColors(infoType);
     this.selectedInfoType = infoType;
+  }
+
+  setImageColors(infoType: string) {
+    if (infoType === 'leaf') {
+      this.currentImageUrl =
+        environment.backendUrl +
+        '/treeType/image/' +
+        this.currentTree.treeImageColor +
+        '/1000/1000';
+      this.currentFruitUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
+    } else if (infoType === 'fruit') {
+      this.currentFruitUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
+      this.currentImageUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
+    } else {
+      this.currentImageUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
+      this.currentFruitUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
+    }
   }
 }

@@ -1,5 +1,5 @@
 <div class="tree-overlay w-100 is-flex-direction-column is-flex">
-  <div
+  <!-- <div
     class="is-flex is-flex-direction-row is-justify-content-space-between padding-2 padding-left"
   >
     <nav class="breadcrumb">
@@ -21,11 +21,11 @@
         </li>
       </ul>
     </nav>
-  </div>
+  </div> -->
 
-  <div class="infoPage padding-2">
+  <div class="infoPage padding-4 padding-top-2">
     <div *ngIf="currentTree" class="description columns">
-      <div class="column is-4">
+      <div class="column is-6">
         <h2>{{ currentTree.name }}</h2>
         <p>
           {{ currentTree.description }}
@@ -40,16 +40,15 @@
           {{ currentTree.fruit }}
         </p>
       </div>
-      <div class="column is-8">
+      <div class="column is-6">
         <div class="wrapper">
           <img class="img-tree" src="{{ currentImageUrl }}" alt="tree" />
           <div class="marker trunkMarker" (click)="selectInfoType('trunk')"></div>
           <div class="marker leafMarker" (click)="selectInfoType('leaf')"></div>
-        </div>
-        <div class="wrapper">
           <img class="img-fruit" src="{{ currentFruitUrl }}" alt="tree" />
           <div class="marker fruitMarker" (click)="selectInfoType('fruit')"></div>
         </div>
+        <!-- <div class="wrapper"></div> -->
       </div>
     </div>
   </div>
