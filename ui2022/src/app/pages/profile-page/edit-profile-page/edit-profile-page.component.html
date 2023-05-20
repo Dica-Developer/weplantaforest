@@ -2,21 +2,15 @@
   <form [formGroup]="profileForm" *ngIf="profileForm">
     <h2>{{ 'editProfile' | translate }}</h2>
     <div class="is-flex is-flex-direction-row w-100">
-      <mat-form-field appearance="fill" class="w-100 margin-right-1">
-        <input
-          matInput
-          [placeholder]="'username' | translate"
-          name="username"
-          formControlName="username"
-        />
-        <!-- <mat-hint>{{ 'changeNameHint' | translate }}</mat-hint> -->
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="w-100">
-        <input matInput [placeholder]="'email' | translate" name="mail" formControlName="mail" />
-      </mat-form-field>
+      <div class="inputOutline w-100 spaceRightDesktop">
+        <input [placeholder]="'username' | translate" name="username" formControlName="username" />
+      </div>
+      <div class="inputOutline w-100">
+        <input [placeholder]="'email' | translate" name="mail" formControlName="mail" />
+      </div>
     </div>
     <div class="is-flex is-flex-direction-row">
-      <mat-form-field appearance="fill" class="w-100">
+      <div class="inputOutline w-100">
         <textarea
           (blur)="updateProfile('ABOUTME', profileForm.get('aboutMe').value)"
           matInput
@@ -27,10 +21,10 @@
           formControlName="aboutMe"
         >
         </textarea>
-      </mat-form-field>
+      </div>
     </div>
     <div class="is-flex is-flex-direction-row w-100">
-      <mat-form-field appearance="fill" class="w-100">
+      <div class="inputOutline w-100">
         <input
           (blur)="updateProfile('ORGANISATION', profileForm.get('organisation').value)"
           matInput
@@ -38,10 +32,10 @@
           name="organisation"
           formControlName="organisation"
         />
-      </mat-form-field>
+      </div>
     </div>
     <div class="is-flex is-flex-direction-row is-align-items-center w-100">
-      <mat-form-field appearance="fill" class="w-100 margin-right-1">
+      <div class="inputOutline w-100 spaceRightDesktop">
         <input
           (blur)="updateProfile('LOCATION', profileForm.get('location').value)"
           matInput
@@ -49,8 +43,8 @@
           name="location"
           formControlName="location"
         />
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="w-100">
+      </div>
+      <div class="inputOutline w-100">
         <input
           (blur)="updateProfile('HOMEPAGE', profileForm.get('homepage').value)"
           matInput
@@ -58,7 +52,7 @@
           name="homepage"
           formControlName="homepage"
         />
-      </mat-form-field>
+      </div>
     </div>
     <!-- <div class="is-flex is-justify-content-center">
       <app-button (clicked)="updateProfile()" [label]="'saveProfile' | translate"></app-button>

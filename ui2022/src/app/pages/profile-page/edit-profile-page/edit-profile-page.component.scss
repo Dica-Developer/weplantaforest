@@ -11,7 +11,19 @@ mat-form-field {
 .flex-row {
   flex-direction: row;
 }
+
+input:disabled {
+  color: grey;
+}
+
+.spaceRightDesktop {
+  margin-right: 1rem;
+}
+
 @media only screen and (max-width: 768px) {
+  .spaceRightDesktop {
+    margin-right: 0rem;
+  }
   form {
     max-width: 100%;
   }
