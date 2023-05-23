@@ -16,13 +16,10 @@
     </nav>
 
     <h2>{{ 'plantTree' | translate | titlecase }}</h2>
-    <p class="desktop">
+    <!-- <p class="desktop">
       {{ 'plantText1' | translate }} <br />
       {{ 'plantText2' | translate }}
-    </p>
-    <a routerLink="/">
-      {{ 'detailedProcessHere' | translate }}
-    </a>
+    </p> -->
   </div>
   <div
     class="column padding-left padding-right padding-top-2 padding-bottom-2"
@@ -64,9 +61,9 @@
   <div
     class="column is-flex is-flex-direction-column is-justify-content-space-around border-top padding-left padding-top-2"
   >
-    <a routerLink="/">
+    <h2>
       {{ 'orChooseIndivudual' | translate }}
-    </a>
+    </h2>
     <app-custom-planting></app-custom-planting>
   </div>
 </div>

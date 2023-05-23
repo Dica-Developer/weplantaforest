@@ -63,7 +63,7 @@
     </div>
 
     <div class="is-flex is-flex-direction-row is-align-items-center margin-bottom-1">
-      <img [src]="'data:image/jpg;base64,' + captchaImg" />
+      <img class="captcha" [src]="'data:image/jpg;base64,' + captchaImg" />
       <mat-icon class="margin-left-1" (click)="refetchNewToken()">refresh</mat-icon>
       <div class="inputOutline">
         <input

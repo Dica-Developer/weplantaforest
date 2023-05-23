@@ -3,6 +3,11 @@ form {
   z-index: 2;
 }
 
+.captcha {
+  border: var(--black) 1px solid;
+  border-radius: 20px;
+}
+
 .offerArea {
   max-width: 1024px;
 }

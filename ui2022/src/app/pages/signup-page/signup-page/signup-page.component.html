@@ -33,10 +33,18 @@
       <input [placeholder]="'email' | translate" name="mail" required formControlName="mail" />
     </div>
     <div class="is-flex is-flex-direction-row">
-      <div class="inputOutline padding-1 w-100 margin-right-1">
+      <!-- <div class="inputOutline padding-1 w-100 margin-right-1">
         <mat-label>{{ 'newsletter' | translate }}</mat-label>
         <mat-select formControlName="newsletter">
           <mat-option *ngFor="let option of newsletterOptions" [value]="option.value">{{
+            option.label | translate
+          }}</mat-option>
+        </mat-select>
+      </div> -->
+      <div class="inputOutline margin-right-1 padding-1 w-100">
+        <mat-label>{{ 'language' | translate }}</mat-label>
+        <mat-select formControlName="language">
+          <mat-option *ngFor="let option of languageOptions" [value]="option.value">{{
             option.label | translate
           }}</mat-option>
         </mat-select>
@@ -50,14 +58,7 @@
         </mat-select>
       </div>
     </div>
-    <div class="inputOutline padding-1">
-      <mat-label>{{ 'language' | translate }}</mat-label>
-      <mat-select formControlName="language">
-        <mat-option *ngFor="let option of languageOptions" [value]="option.value">{{
-          option.label | translate
-        }}</mat-option>
-      </mat-select>
-    </div>
+
     <div class="w-100 margin-bottom-1 is-flex is-justify-content-space-around">
       <mat-checkbox formControlName="terms" class="margin-right-1"> </mat-checkbox>
       <span>
