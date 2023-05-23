@@ -6,13 +6,14 @@
     <p>{{ 'selectAndPlantNow' | translate }}</p>
     <app-button label="{{ 'plantNow' | translate }}" routerLink="/plant"></app-button>
   </div>
-  <div class="column bordered">
-    <app-tree-tile name="Lärche"></app-tree-tile>
-  </div>
-  <div class="column bordered">
-    <app-tree-tile name="Eiche"></app-tree-tile>
-  </div>
-  <div class="column bordered">
-    <app-tree-tile name="Buche"></app-tree-tile>
+  <div
+    *ngFor="let tree of trees; let i = index"
+    class="column bordered padding-1"
+    routerLink="/plant"
+    (mouseenter)="hoveredIndex = i"
+    (mouseleave)="hoveredIndex = null"
+  >
+    <p class="margin-0 has-text-right">{{ tree.name }}</p>
+    <img [src]="hoveredIndex === i ? tree.urlColor : tree.urlBW" alt="tree" />
   </div>
 </div>

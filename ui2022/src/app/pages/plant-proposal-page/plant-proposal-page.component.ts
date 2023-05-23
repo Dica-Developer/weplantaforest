@@ -10,7 +10,6 @@ import {
   selectSimpleProposalFailed,
 } from '../../store/plant.store';
 import { Options } from '@angular-slider/ngx-slider';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from '../../store/plantbag.store';
 import { SliderHelper } from '../../util/helper/slider.helper';
@@ -40,13 +39,10 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
     hidePointerLabels: true,
   };
 
-  constructor(
-    private store: Store<AppState>,
-    private sliderHelper: SliderHelper,
-    private translateService: TranslateService,
-  ) {}
+  constructor(private store: Store<AppState>, private sliderHelper: SliderHelper) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.store.dispatch(getSimplePlantProposal({ amountOfTrees: 5 }));
     this.store.dispatch(getProjectsForCustomPlanting());
     this.proposalSub = this.store.select(selectSimpleProposal).subscribe((proposal) => {

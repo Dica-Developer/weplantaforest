@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, combineLatest } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { TreeType } from 'src/app/store/project.store';
 import { loadTreeTypes, selectTreeTypes } from 'src/app/store/treeType.store';
@@ -14,11 +14,10 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./explore-page.component.scss'],
 })
 export class ExplorePageComponent implements OnInit {
-  @Input() currentTree: TreeType = null;
+  currentTree: TreeType = null;
   selectedInfoType: string = 'leaf';
   currentImageUrl: string = '';
   currentFruitUrl: string = '';
-  treeTypes$: Observable<TreeType[]>;
   combinedSub: Subscription;
   trees: TreeType[] = [];
 

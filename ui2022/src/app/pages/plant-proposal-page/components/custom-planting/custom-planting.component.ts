@@ -24,7 +24,6 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
       .select(selectProjectsForCustomPlanting)
       .subscribe((projects) => {
         this.activeProjects = projects;
-        console.log(projects);
       });
     this.profileDetailsSub = this.store.select(selectProfileDetails).subscribe((details) => {
       this.profileDetails = details;

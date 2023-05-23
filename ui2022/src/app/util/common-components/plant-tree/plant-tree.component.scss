@@ -1,13 +1,10 @@
-:host ::ng-deep button {
-  background: var(--dark-brown);
-}
-
-.column {
-  padding: 2rem;
-}
-
 .bordered {
   border-right-style: solid;
   border-top-style: solid;
   border-width: 1px;
+  cursor: pointer;
+}
+
+p {
+  // margin: 0 !important;
 }
