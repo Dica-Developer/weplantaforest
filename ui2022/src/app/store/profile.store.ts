@@ -7,6 +7,7 @@ import { switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { loadTeamDetails } from './team.store';
 import { logout } from './auth.store';
+import { GiftService, GiftStatus } from '../services/gift.service';
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -40,6 +41,26 @@ export const updateProfilePropertySuccess = createAction(
   props<{ propertyToUpdate: string; controlValue }>(),
 );
 
+export const loadGiftsAsConsignor = createAction(
+  '[Profile] load gifts as consignor',
+  props<{ userName: string }>(),
+);
+
+export const loadGiftsAsConsignorSuccess = createAction(
+  '[Profile] load gifts as consignor success',
+  props<{ gifts: ProfileGift[] }>(),
+);
+
+export const loadGiftsAsRecipient = createAction(
+  '[Profile] load gifts as recipient',
+  props<{ userName: string }>(),
+);
+
+export const loadGiftsAsRecipientSuccess = createAction(
+  '[Profile] load gifts as recipient success',
+  props<{ gifts: ProfileGift[] }>(),
+);
+
 export interface Co2Data {
   treesCount: number;
   co2: number;
@@ -65,6 +86,10 @@ export interface ProfileDetails {
   teamName: string;
   userName: string;
   trees: PagedData<ProfileTree>;
+  gifts: {
+    consignor: ProfileGift[];
+    recipient: ProfileGift[];
+  };
 }
 
 export interface ProfileState {
@@ -85,6 +110,20 @@ export interface ProfileTree {
   treeTypeName: string;
   treeTypeImageUrl: string;
   projectLink: string;
+}
+
+export interface ProfileGift {
+  id: number;
+  status: GiftStatus;
+  recipient: { name: string };
+  consignor: { name: string };
+  code: {
+    cart: {
+      totalprice: number;
+      treeCount: number;
+    };
+    code: string;
+  };
 }
 
 export const initialState: ProfileState = {
@@ -124,6 +163,26 @@ const profileReducer = createReducer(
       },
     };
   }),
+  on(loadGiftsAsConsignorSuccess, (state, { gifts }) => ({
+    ...state,
+    details: {
+      ...state.details,
+      gifts: {
+        ...state.details.gifts,
+        consignor: gifts,
+      },
+    },
+  })),
+  on(loadGiftsAsRecipientSuccess, (state, { gifts }) => ({
+    ...state,
+    details: {
+      ...state.details,
+      gifts: {
+        ...state.details.gifts,
+        recipient: gifts,
+      },
+    },
+  })),
 );
 
 export function profileReducerFn(state, action) {
@@ -149,7 +208,11 @@ export const selectProfileDetails = createSelector(
 
 @Injectable()
 export class ProfileEffects {
-  constructor(private actions$: Actions, private profileService: ProfileService) {}
+  constructor(
+    private actions$: Actions,
+    private profileService: ProfileService,
+    private giftService: GiftService,
+  ) {}
 
   LoadUserDetails$ = createEffect(() =>
     this.actions$.pipe(
@@ -157,18 +220,16 @@ export class ProfileEffects {
       switchMap((action) =>
         this.profileService.loadUserDetails(action.username).pipe(
           switchMap((details: any) => {
+            const actions = [];
+            actions.push(loadProfileDetailsSuccess({ details }));
+            actions.push(loadTreesByUser({ username: action.username, page: 0, size: 15 }));
+            actions.push(loadGiftsAsConsignor({ userName: action.username }));
+            actions.push(loadGiftsAsRecipient({ userName: action.username }));
             if (details.teamName !== '') {
-              return [
-                loadProfileDetailsSuccess({ details }),
-                loadTreesByUser({ username: action.username, page: 0, size: 15 }),
-                loadTeamDetails({ teamName: details.teamName }),
-              ];
-            } else {
-              return [
-                loadProfileDetailsSuccess({ details }),
-                loadTreesByUser({ username: action.username, page: 0, size: 15 }),
-              ];
+              actions.push(loadTeamDetails({ teamName: details.teamName }));
             }
+
+            return actions;
           }),
         ),
       ),
@@ -239,6 +300,28 @@ export class ProfileEffects {
               }
             }),
           ),
+      ),
+    ),
+  );
+
+  LoadGiftsAsConsignor$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadGiftsAsConsignor),
+      switchMap((action) =>
+        this.giftService
+          .getGiftsAsConsignor(action.userName)
+          .pipe(switchMap((gifts: ProfileGift[]) => [loadGiftsAsConsignorSuccess({ gifts })])),
+      ),
+    ),
+  );
+
+  LoadGiftsAsRecipient$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadGiftsAsRecipient),
+      switchMap((action) =>
+        this.giftService
+          .getGiftsAsRecipient(action.userName)
+          .pipe(switchMap((gifts: ProfileGift[]) => [loadGiftsAsRecipientSuccess({ gifts })])),
       ),
     ),
   );
