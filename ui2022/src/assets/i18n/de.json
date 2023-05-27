@@ -213,5 +213,16 @@
   "BANK_DOUBLED_DONATION": "Doppelte Spende.",
   "CART_IS_NULL": "Es exisitiert kein Pflanzkorb.",
   "noTreesToPlant": "Zur Zeit stehen uns leider keine Flächen zur Wiederaufforstung zur Verfügung.",
-  "getToLoginHere": "Zum Login!"
+  "getToLoginHere": "Zum Login!",
+  "gifts": "Gutscheine",
+  "created": "Erstellt",
+  "consigned": "Eingelöst",
+  "consignedBy": "Eingelöst von",
+  "createdBy": "Erstellt von",
+  "code": "Code",
+  "redeemGift": "Gutschein einlösen",
+  "pleaseEnterGiftCode": "Bitte gib hier Deinen 16 stelligen Gutschein-Code ein:",
+  "CODE_ALREADY_REDEEMED": "Gutschein-Code wurde bereits eingelöst",
+  "INVALID_CODE": "Der Gutschein-Code ist ungültig",
+  "GIFT_REDEEMED": "Gutschein erfolgreich eingelöst"
 }

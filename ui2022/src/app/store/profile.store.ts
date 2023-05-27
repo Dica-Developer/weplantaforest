@@ -3,11 +3,13 @@ import { createAction, createReducer, createSelector, on, props } from '@ngrx/st
 import { AppState, PagedData } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { loadTeamDetails } from './team.store';
 import { logout } from './auth.store';
 import { GiftService, GiftStatus } from '../services/gift.service';
+import { addError } from './error.state';
+import { addSuccessMessage } from "./success-message.state";
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -60,6 +62,10 @@ export const loadGiftsAsRecipientSuccess = createAction(
   '[Profile] load gifts as recipient success',
   props<{ gifts: ProfileGift[] }>(),
 );
+
+export const redeemGift = createAction('[Profile] redeem gift', props<{ code: string }>());
+
+export const redeemGiftSuccess = createAction('[Profile] redeem gift success');
 
 export interface Co2Data {
   treesCount: number;
@@ -322,6 +328,22 @@ export class ProfileEffects {
         this.giftService
           .getGiftsAsRecipient(action.userName)
           .pipe(switchMap((gifts: ProfileGift[]) => [loadGiftsAsRecipientSuccess({ gifts })])),
+      ),
+    ),
+  );
+
+  RedeemGift$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(redeemGift),
+      switchMap((action) =>
+        this.giftService.redeemGift(action.code).pipe(
+          switchMap(() => [
+            addSuccessMessage({ message: {key: 'GIFT_REDEEMED', message: "GIFT_REDEEMED"} }),
+          ]),
+          catchError((err) => [
+            addError({ error: { message: err.error.errorInfos[0].errorCode, key: 'REDEEM_GIFT_ERROR' } }),
+          ]),
+        ),
       ),
     ),
   );

@@ -22,4 +22,8 @@ export class GiftService {
       environment.backendUrl + '/gift/search/recipient?userName=' + userName,
     );
   }
+
+  redeemGift(code: string) {
+    return this.http.post(environment.backendUrl + '/code/redeem?codeString=' + code, {});
+  }
 }

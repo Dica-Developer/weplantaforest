@@ -24,4 +24,129 @@
     </app-carousel-item>
   </div>
 </div>
+<div
+  class="is-flex is-flex-direction-column w-100 padding-2 border-bottom gift-box"
+  *ngIf="(profileDetails$ | async)?.gifts?.consignor && (profileDetails$ | async)?.gifts?.recipient"
+>
+  <h4 class="center">{{ 'gifts' | translate }}</h4>
+  <div class="columns">
+    <div class="column border-right">
+      <h4>{{ 'created' | translate }}</h4>
+      <div class="columns">
+        <div class="column">
+          <b>{{ 'code' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'trees' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'price' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'consignedBy' | translate }}</b>
+        </div>
+      </div>
+      <div class="columns" *ngFor="let gift of (profileDetails$ | async)?.gifts?.consignor">
+        <div class="column">{{ gift.code.code }}</div>
+        <div class="column">{{ gift.code.cart.treeCount }}</div>
+        <div class="column">{{ gift.code.cart.totalPrice | currency }}</div>
+        <div class="column">{{ gift.recipient?.name ? gift.recipient.name : '' }}</div>
+      </div>
+    </div>
+    <div class="column">
+      <h4>{{ 'consigned' | translate }}</h4>
+      <div class="columns">
+        <div class="column">
+          <b>{{ 'code' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'trees' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'price' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'createdBy' | translate }}</b>
+        </div>
+      </div>
+      <div class="columns" *ngFor="let gift of (profileDetails$ | async)?.gifts?.recipient">
+        <div class="column">{{ gift.code.code }}</div>
+        <div class="column">{{ gift.code.cart.treeCount }}</div>
+        <div class="column">{{ gift.code.cart.totalPrice | currency }}</div>
+        <div class="column">{{ gift.consignor?.name ? gift.consignor.name : '' }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="is-flex is-flex-direction-column w-100 padding-2 border-bottom">
+  <h4 class="center">{{ 'redeemGift' | translate }}</h4>
+  <div class="columns">
+    <div class="column center">
+      {{ 'pleaseEnterGiftCode' | translate }}
+    </div>
+  </div>
+  <form [formGroup]="giftForm">
+    <div class="columns">
+      <div class="column is-1 is-offset-4">
+        <div class="inputOutline">
+          <input
+            #value1
+            id="value-1"
+            matInput
+            name="value1"
+            formControlName="value1"
+            class="gift-input"
+          />
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="inputOutline">
+          <input
+            #value2
+            id="value-2"
+            matInput
+            name="value2"
+            formControlName="value2"
+            class="gift-input"
+            maxlength="4"
+          />
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="inputOutline">
+          <input
+            #value3
+            id="value-3"
+            matInput
+            name="value3"
+            formControlName="value3"
+            class="gift-input"
+            maxlength="4"
+          />
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="inputOutline">
+          <input
+            #value4
+            id="value-4"
+            matInput
+            name="value4"
+            formControlName="value4"
+            class="gift-input"
+            maxlength="4"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-2 is-offset-6 is-right">
+        <app-button
+        label="{{ 'redeemGift' | translate }}"
+        (click)="redeemGiftCode()"
+      ></app-button>
+      </div>
+    </div>
+  </form>
+</div>
 <app-newsletter> </app-newsletter>
