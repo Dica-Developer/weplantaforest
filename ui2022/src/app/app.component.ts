@@ -43,8 +43,6 @@ export class AppComponent implements OnInit {
     //   }
     // }
     this.store.select(selectErrors).subscribe((errors) => {
-      console.log(errors);
-
       for (let error of errors) {
         this.snackBar
           .open(this.translateService.instant(error.message), 'X', {

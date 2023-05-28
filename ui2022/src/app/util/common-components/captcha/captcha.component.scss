@@ -1,0 +1,30 @@
+.inputOutline:last-child {
+  margin-bottom: 0 !important;
+  margin-left: 1rem;
+}
+
+mat-icon {
+  height: 48px;
+  width: 48px;
+  font-size: 48px;
+  &:hover {
+    color: var(--green);
+    cursor: pointer;
+  }
+}
+
+.captcha {
+  border: var(--black) 1px solid;
+  border-radius: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  .is-col-mobile {
+    flex-direction: column !important;
+    .inputOutline:last-child {
+      margin-top: 1rem;
+      margin-bottom: 0 !important;
+      margin-left: 0;
+    }
+  }
+}

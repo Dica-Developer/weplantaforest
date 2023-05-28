@@ -1,0 +1,14 @@
+<div class="is-flex is-flex-direction-row is-col-mobile is-align-items-center margin-bottom-1">
+  <div class="is-flex is-flex-direction-row is-align-items-center">
+    <img class="captcha" [src]="'data:image/jpg;base64,' + captchaImg" />
+    <mat-icon class="margin-left-1" (click)="refetchNewToken()">refresh</mat-icon>
+  </div>
+  <div class="inputOutline">
+    <input
+      type="text"
+      [placeholder]="'captcha' | translate"
+      [value]="captchaInput"
+      (input)="updateUserInput($event.target.value)"
+    />
+  </div>
+</div>
