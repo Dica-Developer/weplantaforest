@@ -42,6 +42,7 @@
       >
       </textarea>
     </div>
+    <app-captcha (captchaStatusEmit)="updateCaptchaStatus($event)"></app-captcha>
   </form>
   <div class="center">
     <app-button (clicked)="onSubmit()" [label]="'sendNow' | translate"></app-button>

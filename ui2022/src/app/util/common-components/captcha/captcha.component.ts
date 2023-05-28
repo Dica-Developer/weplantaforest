@@ -10,9 +10,9 @@ import { loadCaptcha, selectCaptcha, selectCaptchaImg } from 'src/app/store/infr
   styleUrls: ['./captcha.component.scss'],
 })
 export class CaptchaComponent implements OnInit {
-  @Input() captchaInput: string = '';
-  @Input() captchaToken: string = '';
   @Output() captchaStatusEmit = new EventEmitter<boolean>();
+  @Input() captchaInput: string = '';
+  captchaToken: string = '';
   captchaImg;
   captchaTokenSub: Subscription;
   captchaImgSub: Subscription;

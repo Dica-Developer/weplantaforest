@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AppState } from 'src/app/store/app.state';
 import { environment } from 'src/environments/environment';
@@ -12,7 +12,6 @@ import {
 } from 'src/app/store/auth.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { loadCaptcha, selectCaptcha, selectCaptchaImg } from 'src/app/store/infrastructure.store';
 
 @Component({
   selector: 'app-signup-page',
@@ -33,7 +32,6 @@ export class SignupPageComponent implements OnInit {
     language: new UntypedFormControl('DEUTSCH', Validators.required),
     terms: new UntypedFormControl(false, Validators.requiredTrue),
     privacyPolicy: new UntypedFormControl(false, Validators.requiredTrue),
-    captcha: new UntypedFormControl(''),
   });
 
   newsletterOptions: any[] = [
@@ -56,7 +54,6 @@ export class SignupPageComponent implements OnInit {
   logoUrl = environment.baseUrl + '/assets/ipat_logo.png';
 
   captchaInput: string = '';
-  captchaToken: string = '';
   captchaValid: boolean = false;
 
   constructor(
@@ -70,7 +67,6 @@ export class SignupPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(signupDoneReset());
-    this.store.dispatch(loadCaptcha());
   }
 
   private checkPasswords(): boolean {
@@ -97,6 +93,7 @@ export class SignupPageComponent implements OnInit {
       });
     }
   }
+
   updateCaptchaStatus(event: any) {
     this.captchaValid = event;
   }
