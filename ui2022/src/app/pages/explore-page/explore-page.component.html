@@ -1,28 +1,4 @@
 <div class="tree-overlay w-100 is-flex-direction-column is-flex" id="top">
-  <!-- <div
-    class="is-flex is-flex-direction-row is-justify-content-space-between padding-2 padding-left"
-  >
-    <nav class="breadcrumb">
-      <ul>
-        <li>
-          <a routerLink="/">
-            {{ 'startPage' | translate }}
-          </a>
-        </li>
-        <li>
-          <a routerLink="/explore">
-            {{ 'explore' | translate }}
-          </a>
-        </li>
-        <li *ngIf="currentTree">
-          <a class="breadcrumb-active">
-            {{ currentTree.name }}
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div> -->
-
   <div class="infoPage padding-4 padding-top-2">
     <div *ngIf="currentTree" class="description columns">
       <div class="column is-6">
@@ -48,7 +24,6 @@
           <img class="img-fruit" src="{{ currentFruitUrl }}" alt="tree" />
           <div class="marker fruitMarker" (click)="selectInfoType('fruit')"></div>
         </div>
-        <!-- <div class="wrapper"></div> -->
       </div>
     </div>
   </div>

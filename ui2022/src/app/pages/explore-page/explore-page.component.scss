@@ -51,17 +51,18 @@
   z-index: 2;
 }
 
-.leafMarker {
-  bottom: 55%;
-}
-
 .trunkMarker {
   bottom: 20%;
 }
 
+.leafMarker {
+  left: 40%;
+  bottom: 55%;
+}
+
 .fruitMarker {
-  left: 65%;
-  top: 15%;
+  left: 50%;
+  top: 25%;
 }
 
 @media only screen and (max-width: 768px) {

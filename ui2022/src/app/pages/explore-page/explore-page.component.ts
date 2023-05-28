@@ -57,7 +57,7 @@ export class ExplorePageComponent implements OnInit {
   selectTree(tree: TreeType) {
     this.currentTree = tree;
     this.currentImageUrl =
-      environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/1000/1000';
+      environment.backendUrl + '/treeType/image/' + tree.treeImageColor + '/1000/1000';
     this.currentFruitUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
     window.scrollTo(0, 0);
@@ -71,22 +71,38 @@ export class ExplorePageComponent implements OnInit {
   setImageColors(infoType: string) {
     if (infoType === 'leaf') {
       this.currentImageUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
+      this.currentFruitUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
+      // this.currentLeafUrl =
+      //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageColor + '/250/250';
+    } else if (infoType === 'fruit') {
+      this.currentFruitUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
+      this.currentImageUrl =
+        environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
+      // this.currentLeafUrl =
+      //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageBW + '/250/250';
+    } else if (infoType === 'trunk') {
+      this.currentImageUrl =
         environment.backendUrl +
         '/treeType/image/' +
         this.currentTree.treeImageColor +
         '/1000/1000';
       this.currentFruitUrl =
         environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
-    } else if (infoType === 'fruit') {
-      this.currentFruitUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
-      this.currentImageUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
+      // this.currentLeafUrl =
+      //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageBW + '/250/250';
     } else {
       this.currentImageUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
+        environment.backendUrl +
+        '/treeType/image/' +
+        this.currentTree.treeImageColor +
+        '/1000/1000';
       this.currentFruitUrl =
         environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
+      // this.currentLeafUrl =
+      //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageBW + '/250/250';
     }
   }
 }
