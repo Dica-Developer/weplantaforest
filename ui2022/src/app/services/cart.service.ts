@@ -56,4 +56,8 @@ export class CartService {
   getCartDetails(cartId: number) {
     return this.http.get(environment.backendAdminUrl + '/cart/' + cartId);
   }
+
+  getReceipts() {
+    return this.http.get(environment.backendUrl + '/receipts');
+  }
 }

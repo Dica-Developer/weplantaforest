@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Validators } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
+import { downloadReceiptPdf } from 'src/app/store/carts.store';
 import { loadProfileDetails, redeemGift, selectProfileDetails } from 'src/app/store/profile.store';
 import { selectActiveProjectReports } from 'src/app/store/project-report.store';
 import { selectTeamDetails } from 'src/app/store/team.store';
@@ -125,5 +126,9 @@ export class ProfilePageComponent implements OnInit, AfterViewInit, OnDestroy {
       '-' +
       this.giftForm.get('value4').value;
     this.store.dispatch(redeemGift({ code }));
+  }
+
+  downloadReceipt(receiptId: number) {
+    this.store.dispatch(downloadReceiptPdf({ receiptId }));
   }
 }

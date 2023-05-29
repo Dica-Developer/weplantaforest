@@ -225,5 +225,6 @@
   "CODE_ALREADY_REDEEMED": "Gutschein-Code wurde bereits eingelöst",
   "INVALID_CODE": "Der Gutschein-Code ist ungültig",
   "GIFT_REDEEMED": "Gutschein erfolgreich eingelöst",
-  "formSubmitted": "Danke für deine Anfrage!"
+  "formSubmitted": "Danke für deine Anfrage!",
+  "receipts": "Spendenquittungen"
 }

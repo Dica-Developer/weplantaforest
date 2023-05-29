@@ -9,7 +9,8 @@ import { loadTeamDetails } from './team.store';
 import { logout } from './auth.store';
 import { GiftService, GiftStatus } from '../services/gift.service';
 import { addError } from './error.state';
-import { addSuccessMessage } from "./success-message.state";
+import { addSuccessMessage } from './success-message.state';
+import { CartService } from '../services/cart.service';
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -67,6 +68,13 @@ export const redeemGift = createAction('[Profile] redeem gift', props<{ code: st
 
 export const redeemGiftSuccess = createAction('[Profile] redeem gift success');
 
+export const loadReceipts = createAction('[Profile] load receipts');
+
+export const loadReceiptsSuccess = createAction(
+  '[Profile] load receipts success',
+  props<{ receipts: ProfileReceipt[] }>(),
+);
+
 export interface Co2Data {
   treesCount: number;
   co2: number;
@@ -96,6 +104,7 @@ export interface ProfileDetails {
     consignor: ProfileGift[];
     recipient: ProfileGift[];
   };
+  receipts: ProfileReceipt[];
 }
 
 export interface ProfileState {
@@ -130,6 +139,12 @@ export interface ProfileGift {
     };
     code: string;
   };
+}
+
+export interface ProfileReceipt {
+  receiptId: number;
+  createdOn: Date;
+  invoiceNumber: string;
 }
 
 export const initialState: ProfileState = {
@@ -189,6 +204,13 @@ const profileReducer = createReducer(
       },
     },
   })),
+  on(loadReceiptsSuccess, (state, { receipts }) => ({
+    ...state,
+    details: {
+      ...state.details,
+      receipts,
+    },
+  })),
 );
 
 export function profileReducerFn(state, action) {
@@ -218,6 +240,7 @@ export class ProfileEffects {
     private actions$: Actions,
     private profileService: ProfileService,
     private giftService: GiftService,
+    private cartService: CartService,
   ) {}
 
   LoadUserDetails$ = createEffect(() =>
@@ -231,6 +254,7 @@ export class ProfileEffects {
             actions.push(loadTreesByUser({ username: action.username, page: 0, size: 15 }));
             actions.push(loadGiftsAsConsignor({ userName: action.username }));
             actions.push(loadGiftsAsRecipient({ userName: action.username }));
+            actions.push(loadReceipts());
             if (details.teamName !== '') {
               actions.push(loadTeamDetails({ teamName: details.teamName }));
             }
@@ -338,11 +362,35 @@ export class ProfileEffects {
       switchMap((action) =>
         this.giftService.redeemGift(action.code).pipe(
           switchMap(() => [
-            addSuccessMessage({ message: {key: 'GIFT_REDEEMED', message: "GIFT_REDEEMED"} }),
+            addSuccessMessage({ message: { key: 'GIFT_REDEEMED', message: 'GIFT_REDEEMED' } }),
           ]),
           catchError((err) => [
-            addError({ error: { message: err.error.errorInfos[0].errorCode, key: 'REDEEM_GIFT_ERROR' } }),
+            addError({
+              error: { message: err.error.errorInfos[0].errorCode, key: 'REDEEM_GIFT_ERROR' },
+            }),
           ]),
+        ),
+      ),
+    ),
+  );
+
+  LoadReceipts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadReceipts),
+      switchMap((action) =>
+        this.cartService.getReceipts().pipe(
+          switchMap((results: any[]) => {
+            const receipts: ProfileReceipt[] = [];
+            results = results.reverse();
+            for (const result of results) {
+              receipts.push({
+                receiptId: result.receiptId,
+                invoiceNumber: result.invoiceNumber,
+                createdOn: new Date(result.createdOn),
+              });
+            }
+            return [loadReceiptsSuccess({ receipts })];
+          }),
         ),
       ),
     ),
