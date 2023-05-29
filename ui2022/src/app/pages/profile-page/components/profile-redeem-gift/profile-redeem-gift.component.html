@@ -1,0 +1,68 @@
+<div class="is-flex is-flex-direction-column w-100 padding-2 border-bottom">
+  <h4 class="center">{{ 'redeemGift' | translate }}</h4>
+  <div class="columns">
+    <div class="column center">
+      {{ 'pleaseEnterGiftCode' | translate }}
+    </div>
+  </div>
+  <form [formGroup]="giftForm">
+    <div class="columns">
+      <div class="column is-1 is-offset-4">
+        <div class="inputOutline">
+          <input
+            #value1
+            id="value-1"
+            matInput
+            name="value1"
+            formControlName="value1"
+            class="gift-input"
+          />
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="inputOutline">
+          <input
+            #value2
+            id="value-2"
+            matInput
+            name="value2"
+            formControlName="value2"
+            class="gift-input"
+            maxlength="4"
+          />
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="inputOutline">
+          <input
+            #value3
+            id="value-3"
+            matInput
+            name="value3"
+            formControlName="value3"
+            class="gift-input"
+            maxlength="4"
+          />
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="inputOutline">
+          <input
+            #value4
+            id="value-4"
+            matInput
+            name="value4"
+            formControlName="value4"
+            class="gift-input"
+            maxlength="4"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-2 is-offset-6 is-right">
+        <app-button label="{{ 'redeemGift' | translate }}" (click)="redeemGiftCode()"></app-button>
+      </div>
+    </div>
+  </form>
+</div>

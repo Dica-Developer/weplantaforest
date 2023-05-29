@@ -1,0 +1,55 @@
+<div
+  class="is-flex is-flex-direction-column w-100 padding-2 border-bottom gift-box"
+  *ngIf="consignorGifts && recipientGifts"
+>
+  <h4 class="center">{{ 'gifts' | translate }}</h4>
+  <div class="columns">
+    <div class="column border-right">
+      <h4>{{ 'created' | translate }}</h4>
+      <div class="columns">
+        <div class="column">
+          <b>{{ 'code' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'trees' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'price' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'consignedBy' | translate }}</b>
+        </div>
+      </div>
+      <div class="columns" *ngFor="let gift of consignorGifts">
+        <div class="column">{{ gift.code.code }}</div>
+        <div class="column">{{ gift.code.cart.treeCount }}</div>
+        <div class="column">{{ gift.code.cart.totalPrice | currency }}</div>
+        <div class="column">{{ gift.recipient?.name ? gift.recipient.name : '' }}</div>
+      </div>
+    </div>
+    <div class="column">
+      <h4>{{ 'consigned' | translate }}</h4>
+      <div class="columns">
+        <div class="column">
+          <b>{{ 'code' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'trees' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'price' | translate }}</b>
+        </div>
+        <div class="column">
+          <b>{{ 'createdBy' | translate }}</b>
+        </div>
+      </div>
+      <div class="columns" *ngFor="let gift of recipientGifts">
+        <div class="column">{{ gift.code.code }}</div>
+        <div class="column">{{ gift.code.cart.treeCount }}</div>
+        <div class="column">{{ gift.code.cart.totalPrice | currency }}</div>
+        <div class="column">{{ gift.consignor?.name ? gift.consignor.name : '' }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf=""></div>

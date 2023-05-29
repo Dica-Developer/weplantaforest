@@ -1,0 +1,20 @@
+<div
+  class="is-flex is-flex-direction-column w-100 padding-2 border-bottom"
+  *ngIf="trees"
+>
+  <h4 class="center">{{ 'plantings' | translate }}</h4>
+  <div class="columns is-flex is-flex-direction-row is-multiline">
+    <app-carousel-item
+      *ngFor="let planting of trees.content"
+      [rankingItem]="{
+        name: planting.projectName,
+        amount: planting.amount,
+        imageUrl: planting.treeTypeImageUrl,
+        linkTo: planting.projectLink
+      }"
+      class="column is-one-quarter"
+    >
+    </app-carousel-item>
+  </div>
+</div>
+<div *ngIf="!trees"></div>

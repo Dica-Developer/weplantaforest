@@ -251,7 +251,7 @@ export class ProfileEffects {
           switchMap((details: any) => {
             const actions = [];
             actions.push(loadProfileDetailsSuccess({ details }));
-            actions.push(loadTreesByUser({ username: action.username, page: 0, size: 15 }));
+            actions.push(loadTreesByUser({ username: action.username, page: 0, size: 8 }));
             actions.push(loadGiftsAsConsignor({ userName: action.username }));
             actions.push(loadGiftsAsRecipient({ userName: action.username }));
             actions.push(loadReceipts());
