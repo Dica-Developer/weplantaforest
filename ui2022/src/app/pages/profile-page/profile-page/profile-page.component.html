@@ -5,7 +5,7 @@
   [showEdit]="showEdit"
 ></app-profile-info>
 
-<app-profile-trees [trees]="(profileDetails$ | async)?.trees"></app-profile-trees>
+<app-profile-trees [trees]="(profileDetails$ | async)?.trees" [userName]="(profileDetails$ | async)?.userName"></app-profile-trees>
 <app-profile-gift-overview
   [recipientGifts]="(profileDetails$ | async)?.gifts?.recipient"
   [consignorGifts]="(profileDetails$ | async)?.gifts?.consignor"

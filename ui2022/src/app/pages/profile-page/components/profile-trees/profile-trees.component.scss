@@ -1,0 +1,24 @@
+.tree-container {
+  position: relative;
+
+  .icon {
+    font-size: 45px;
+    position: absolute;
+    top: 35%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+  }
+
+  .icon-left {
+    left: -25px;
+  }
+
+  .icon-right {
+    right: -25px;
+  }
+
+  .icon:hover {
+    color: var(--green);
+  }
+}

@@ -1,9 +1,12 @@
-<div
-  class="is-flex is-flex-direction-column w-100 padding-2 border-bottom"
-  *ngIf="trees"
->
+<div class="is-flex is-flex-direction-column w-100 padding-2 border-bottom" *ngIf="trees">
   <h4 class="center">{{ 'plantings' | translate }}</h4>
-  <div class="columns is-flex is-flex-direction-row is-multiline">
+  <div class="columns is-flex is-flex-direction-row is-multiline tree-container">
+    <mat-icon *ngIf="!trees.first" class="icon icon-left" (click)="previousPage()"
+      >keyboard_arrow_left</mat-icon
+    >
+    <mat-icon *ngIf="!trees.last" class="icon icon-right" (click)="nextPage()"
+      >keyboard_arrow_right</mat-icon
+    >
     <app-carousel-item
       *ngFor="let planting of trees.content"
       [rankingItem]="{
