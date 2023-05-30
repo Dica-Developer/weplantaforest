@@ -1,0 +1,32 @@
+<div class="is-flex is-flex-direction-column border-bottom">
+  <div
+    class="padding-left padding-right padding-top-2 padding-bottom-2"
+    *ngIf="proposalFailed$ | async"
+  >
+    <h3>{{ 'noTreesToPlant' | translate }}</h3>
+  </div>
+  <div
+    class="padding-left padding-right padding-top-2 padding-bottom-2"
+    *ngIf="!(proposalFailed$ | async)"
+  >
+    <p class="font-1">{{ 'proposalOrIndividualText' | translate }}</p>
+    <div class="is-flex is-flex-direction-row">
+      <div class="custom-slider column is-6">
+        <ngx-slider
+          [(value)]="value"
+          [options]="sliderOptions"
+          (valueChange)="getProposal($event)"
+        ></ngx-slider>
+      </div>
+      <div class="is-flex w-100 is-align-items-center is-justify-content-space-evenly">
+        <span class="font-1">
+          {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
+        </span>
+        <app-button
+          label="{{ 'intoPlantbag' | translate }}"
+          (click)="putIntoPlantbag()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+</div>

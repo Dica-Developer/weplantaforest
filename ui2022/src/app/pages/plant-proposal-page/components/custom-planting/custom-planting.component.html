@@ -1,12 +1,18 @@
-<div *ngFor="let project of activeProjects">
-  <h4 class="margin-top-1">{{ project.projectName }}</h4>
-  <div *ngFor="let article of project.articles">
-    <app-plantbag-tree-input
-      [article]="article"
-      [amount]="0"
-      [withDelete]="false"
-      [showProject]="false"
-    ></app-plantbag-tree-input>
+<div
+  class="is-flex is-flex-direction-column padding-left padding-right padding-top-2 padding-bottom-2 border-bottom"
+>
+  <h2>
+    {{ 'orChooseIndivudual' | translate }}
+  </h2>
+  <div *ngFor="let project of activeProjects">
+    <h4 class="margin-top-1">{{ project.projectName }}</h4>
+    <div *ngFor="let article of project.articles">
+      <app-plantbag-tree-input
+        [article]="article"
+        [amount]="0"
+        [withDelete]="false"
+        [showProject]="false"
+      ></app-plantbag-tree-input>
+    </div>
   </div>
 </div>
-<div class="columns"></div>

@@ -6,11 +6,6 @@ nav {
   margin-top: 1rem;
 }
 
-.desktop {
-  margin-right: 1rem;
-  font-size: 1rem;
-}
-
 ::ng-deep {
   .custom-slider .ngx-slider .ngx-slider-bar {
     // background: #ffe4d1;
@@ -63,17 +58,11 @@ nav {
   }
 }
 
-.proposal-row {
-  // margin-top: 2rem;
-  .price-row {
-    padding-top: 2rem;
-    .is-one-third {
-      text-align: right;
-    }
-
-    .price {
-      padding-top: 2rem;
-      text-align: right;
-    }
-  }
-}
+// .proposal-row {
+//   .price-row {
+//     .price {
+//       padding-top: 2rem;
+//       text-align: right;
+//     }
+//   }
+// }

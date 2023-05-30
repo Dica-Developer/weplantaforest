@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { selectProjectsForCustomPlanting } from '../../../../store/plant.store';
+import {
+  getProjectsForCustomPlanting,
+  selectProjectsForCustomPlanting,
+} from '../../../../store/plant.store';
 import { selectProfileDetails } from '../../../../store/profile.store';
 import { AppState } from '../../../../store/app.state';
 import { TextHelper } from '../../../../util/text.helper';
@@ -28,6 +31,7 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
     this.profileDetailsSub = this.store.select(selectProfileDetails).subscribe((details) => {
       this.profileDetails = details;
     });
+    this.store.dispatch(getProjectsForCustomPlanting());
   }
 
   ngOnDestroy(): void {
