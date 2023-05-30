@@ -1,6 +1,6 @@
 <div class="columns">
   <div
-    class="column is-two-fifths bordered padding-left is-flex is-flex-direction-column is-justify-content-center"
+    class="column is-two-fifths padding-left is-flex is-flex-direction-column is-justify-content-center border-right"
   >
     <h2>{{ 'plantTree' | translate }}</h2>
     <p>{{ 'selectAndPlantNow' | translate }}</p>
@@ -8,7 +8,7 @@
   </div>
   <div
     *ngFor="let tree of trees; let i = index"
-    class="column bordered padding-1"
+    class="column  padding-1 is-one-fifth border-right tree-tile"
     routerLink="/plant"
     (mouseenter)="hoveredIndex = i"
     (mouseleave)="hoveredIndex = null"

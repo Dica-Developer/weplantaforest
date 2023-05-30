@@ -44,7 +44,6 @@ export class PlantProposalPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.store.dispatch(getSimplePlantProposal({ amountOfTrees: 5 }));
-    this.store.dispatch(getProjectsForCustomPlanting());
     this.proposalSub = this.store.select(selectSimpleProposal).subscribe((proposal) => {
       this.simpleProposal = proposal;
     });

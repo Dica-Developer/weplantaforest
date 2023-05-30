@@ -9,6 +9,7 @@ import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
 import { AppCookieService } from './util/cookie.service';
 import { loadProfileDetails } from './store/profile.store';
+import { getProjectsForCustomPlanting } from "./store/plant.store";
 
 @Component({
   selector: 'app-root',
@@ -70,9 +71,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch(getProjectsForCustomPlanting());
     if (localStorage.getItem('jwt') && localStorage.getItem('username')) {
       this.store.dispatch(loadProfileDetails({ username: localStorage.getItem('username') }));
     }
+
     this.authService.autoLogin();
   }
 }
