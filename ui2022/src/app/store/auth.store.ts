@@ -202,7 +202,12 @@ export class AuthEffects {
               loginSuccess(),
             ];
           }),
-          catchError(() => [loginFailed({ error: 'login failed' })]),
+          catchError(() => {
+            return [
+              loginFailed({ error: 'login failed' }),
+              addError({ error: { key: 'Error', message: 'login failed' } }),
+            ];
+          }),
         ),
       ),
     ),

@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { selectLoginError, login, loginFailed } from '../../store/auth.store';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',

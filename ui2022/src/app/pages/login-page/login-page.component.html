@@ -4,9 +4,6 @@
     [formGroup]="loginForm"
     (ngSubmit)="onSubmit()"
   >
-    <mat-error *ngIf="loginError$ | async">
-      {{ 'wrongLoginCredentials' | translate }}
-    </mat-error>
     <div class="inputOutline">
       <input placeholder="Email/Username" name="name" required formControlName="name" />
     </div>
