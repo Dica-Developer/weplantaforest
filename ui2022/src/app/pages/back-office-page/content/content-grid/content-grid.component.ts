@@ -26,6 +26,7 @@ export class ContentGridComponent implements OnInit, OnDestroy {
       field: 'title',
       headerName: 'Titel',
       sortable: true,
+      filter: 'agTextColumnFilter',
       comparator: this.gridHelper.caseInsensitiveComparator,
       width: 400,
     },
@@ -33,6 +34,7 @@ export class ContentGridComponent implements OnInit, OnDestroy {
       field: 'articleType',
       headerName: 'Typ',
       sortable: true,
+      filter: 'agTextColumnFilter',
       comparator: this.gridHelper.caseInsensitiveComparator,
     },
     {
