@@ -6,11 +6,11 @@
 ></app-profile-info>
 
 <app-profile-trees [trees]="(profileDetails$ | async)?.trees" [userName]="(profileDetails$ | async)?.userName"></app-profile-trees>
+<app-profile-receipts [receipts]="(profileDetails$ | async)?.receipts"></app-profile-receipts>
 <app-profile-gift-overview
   [recipientGifts]="(profileDetails$ | async)?.gifts?.recipient"
   [consignorGifts]="(profileDetails$ | async)?.gifts?.consignor"
 ></app-profile-gift-overview>
-<app-profile-redeem-gift></app-profile-redeem-gift>
-<app-profile-receipts [receipts]="(profileDetails$ | async)?.receipts"></app-profile-receipts>
+<!-- <app-profile-redeem-gift></app-profile-redeem-gift> -->
 
 <app-newsletter> </app-newsletter>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import {
@@ -20,7 +20,11 @@ export class EditProfilePageComponent implements OnInit {
 
   profileDetails$ = this.store.select(selectProfileDetails);
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  constructor(
+    private store: Store<AppState>,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadProfileDetails({ username: paramMap.get('username') }));
       this.profileDetails$.subscribe((res) => {
@@ -47,4 +51,7 @@ export class EditProfilePageComponent implements OnInit {
     this.store.dispatch(updateProfileProperty({ username, propertyToUpdate, controlValue }));
   }
 
+  routeToProfile() {
+    this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+  }
 }
