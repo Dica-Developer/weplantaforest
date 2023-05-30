@@ -7,9 +7,6 @@
     [formGroup]="contactForm"
     (ngSubmit)="onSubmit()"
   >
-    <!-- <mat-error *ngIf="loginError$ | async">
-      Benutzername und Passwort stimmen nicht überein
-    </mat-error> -->
     <div class="inputOutline">
       <input [placeholder]="'name' | translate" name="name" required formControlName="name" />
     </div>
