@@ -46,6 +46,7 @@ export class LeafletMapComponent implements OnInit {
 
   onMapReady(map: Map): void {
     this.map = map;
+    this.map.scrollWheelZoom.disable();
     setTimeout(() => {
       if (this.coords.length > 0) {
         this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
