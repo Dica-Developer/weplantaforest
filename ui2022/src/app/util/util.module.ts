@@ -49,6 +49,8 @@ import { LeafletMapComponent } from './common-components/leaflet-map/leaflet-map
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { CaptchaComponent } from './common-components/captcha/captcha.component';
+import { ProjectHeaderComponent } from '../pages/project-page/components/project-header/project-header.component';
+import { ProjectDescriptionComponent } from '../pages/project-page/components/project-description/project-description.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +90,8 @@ import { CaptchaComponent } from './common-components/captcha/captcha.component'
     SideMenuComponent,
     LeafletMapComponent,
     CaptchaComponent,
+    ProjectHeaderComponent,
+    ProjectDescriptionComponent,
   ],
   imports: [
     CommonModule,
@@ -130,6 +134,8 @@ import { CaptchaComponent } from './common-components/captcha/captcha.component'
     SideMenuComponent,
     LeafletMapComponent,
     CaptchaComponent,
+    ProjectHeaderComponent,
+    ProjectDescriptionComponent,
   ],
 })
 export class UtilModule {}

@@ -22,6 +22,7 @@ import {
   ProjectImage,
   updateProject,
 } from '../../../../store/project.store';
+import { ProjectReportDetails } from 'src/app/store/project-report.store';
 
 @Component({
   selector: 'app-project-edit',
@@ -50,7 +51,28 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     mainImageFile: new UntypedFormControl(null),
   });
 
+  projectDetails: ProjectReportDetails = {
+    projectReportData: {
+      projectId: -1,
+      projectName: '',
+      description: '',
+      projectImageFileName: '',
+      latitude: 0,
+      longitude: 0,
+      amountOfMaximumTreesToPlant: 100,
+      amountOfPlantedTrees: 12,
+      active: false,
+      projectImageUrl: '',
+      projectLink: '',
+    },
+    images: [],
+    positions: [],
+  };
+
   projectDetailsSub: Subscription;
+
+  descriptionSub: Subscription;
+  nameSUb: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -67,10 +89,20 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     this.detailsLoading$ = store.select(selectProjectDetailsLoading);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.descriptionSub = this.projectForm.get('descriptionDe').valueChanges.subscribe((value) => {
+      this.projectDetails.projectReportData.description = value;
+    });
+
+    this.nameSUb = this.projectForm.get('name').valueChanges.subscribe((value) => {
+      this.projectDetails.projectReportData.projectName = value;
+    });
+  }
 
   ngOnDestroy(): void {
     this.projectDetailsSub.unsubscribe();
+    this.descriptionSub?.unsubscribe();
+    this.nameSUb?.unsubscribe();
   }
 
   initForm(details: ProjectDetails) {
@@ -78,6 +110,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     this.projectForm.get('manager').setValue(details.manager);
     if (this.projectForm.get('id').value !== details.id) {
       this.projectForm.get('name').setValue(details.name);
+      this.projectDetails.projectReportData.projectName = details.name;
       this.projectForm.get('shopActive').setValue(details.shopActive);
       this.projectForm.get('visible').setValue(details.visible);
       this.projectForm.get('id').setValue(details.id);
@@ -93,6 +126,10 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       this.projectForm
         .get('descriptionEn')
         .setValue(this.textHelper.getTextForLanguage(details.description, 'en'));
+      this.projectDetails.projectReportData.description = this.textHelper.getTextForLanguage(
+        details.description,
+        'de',
+      );
 
       let articleArray = [];
       for (let article of details.articles) {

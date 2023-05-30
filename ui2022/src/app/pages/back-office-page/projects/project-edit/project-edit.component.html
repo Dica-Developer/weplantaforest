@@ -7,29 +7,29 @@
         ></app-project-edit-location>
       </mat-tab>
       <mat-tab label="Daten">
-        <app-project-edit-data
-          [projectForm]="projectForm"
-        ></app-project-edit-data>
+        <app-project-edit-data [projectForm]="projectForm"></app-project-edit-data>
       </mat-tab>
       <mat-tab label="Bäume">
         <div class="spacer"></div>
-        <div *ngFor="let tree of projectForm.get('articles').controls; let i = index" >
-          <app-project-edit-tree [control]="tree" [index]="i" (articleRemoved)="removeArticleForm($event)"></app-project-edit-tree>
+        <div *ngFor="let tree of projectForm.get('articles').controls; let i = index">
+          <app-project-edit-tree
+            [control]="tree"
+            [index]="i"
+            (articleRemoved)="removeArticleForm($event)"
+          ></app-project-edit-tree>
           <mat-divider></mat-divider>
         </div>
         <div class="center">
-          <button mat-raised-button color="primary" (click)="addArticle()">
-            Bäume hinzufügen
-          </button>
+          <button mat-raised-button color="primary" (click)="addArticle()">Bäume hinzufügen</button>
         </div>
       </mat-tab>
       <mat-tab label="Bilder">
         <div class="spacer"></div>
-        <button mat-raised-button color="primary" (click)="addImage()">
-          Bild hinzuügen
-        </button>
+        <button mat-raised-button color="primary" (click)="addImage()">Bild hinzuügen</button>
         <div class="spacer"></div>
-        <p class="alert alert-warning" *ngIf="!projectForm.get('id').value">Bitte Bilder erst nach dem Erstellen eines Projektes hinzufügen.</p>
+        <p class="alert alert-warning" *ngIf="!projectForm.get('id').value">
+          Bitte Bilder erst nach dem Erstellen eines Projektes hinzufügen.
+        </p>
         <div *ngFor="let image of projectForm.get('images').controls">
           <app-project-edit-image
             [control]="image"
@@ -37,6 +37,10 @@
           ></app-project-edit-image>
           <mat-divider></mat-divider>
         </div>
+      </mat-tab>
+      <mat-tab label="Preview">
+        <app-project-header [projectReport]="projectDetails"></app-project-header>
+        <app-project-description [projectReport]="projectDetails"></app-project-description>
       </mat-tab>
     </mat-tab-group>
   </div>
