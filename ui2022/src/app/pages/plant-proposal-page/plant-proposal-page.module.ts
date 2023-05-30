@@ -6,6 +6,7 @@ import { PlantProposalPageComponent } from './plant-proposal-page.component';
 import { CustomPlantingComponent } from './components/custom-planting/custom-planting.component';
 import { PlantProposalRowComponent } from './components/plant-proposal-row/plant-proposal-row.component';
 import { SelfPlantRowComponent } from './components/self-plant-row/self-plant-row.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,6 @@ import { SelfPlantRowComponent } from './components/self-plant-row/self-plant-ro
     PlantProposalRowComponent,
     SelfPlantRowComponent,
   ],
-  imports: [CommonModule, UtilModule, RouterModule],
+  imports: [CommonModule, UtilModule, RouterModule, NgxSliderModule],
 })
 export class PlantProposalPageModule {}

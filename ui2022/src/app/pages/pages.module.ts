@@ -13,7 +13,6 @@ import { ProjectPageModule } from './project-page/project-page.module';
 import { ProjectReportsOverviewModule } from './project-reports-overview-page/project-reports-overview.module';
 import { ProfilePageModule } from './profile-page/profile-page.module';
 import { TeamPageModule } from './team-page/team-page.module';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PlantbagPageComponent } from './plantbag-page/plantbag-page.component';
 import { ContactModule } from './contact-page/contact-page.module';
 import { AboutPageComponent } from './about-page/about-page.component';
@@ -63,7 +62,6 @@ import { PlantProposalPageModule } from './plant-proposal-page/plant-proposal-pa
     ProjectReportsOverviewModule,
     ProfilePageModule,
     TeamPageModule,
-    NgxSliderModule,
     ContactModule,
     BlogPageModule,
     RouterModule,
