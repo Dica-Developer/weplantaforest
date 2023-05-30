@@ -5,3 +5,16 @@
 h4 {
   margin: 0;
 }
+
+
+.paging-arrow-row {
+  .column {
+    text-align: center;
+    mat-icon {
+      cursor: pointer;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 2.5rem;
+    }
+  }
+}

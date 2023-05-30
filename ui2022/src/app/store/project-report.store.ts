@@ -58,10 +58,11 @@ export const loadActiveProjectReportsSuccess = createAction(
 );
 export const loadInActiveProjectReports = createAction(
   '[ProjectReport] load inactive project reports',
+  props<{ pageSize: number }>(),
 );
 export const loadInActiveProjectReportsSuccess = createAction(
   '[ProjectReport] load inactive project reports success',
-  props<{ inactiveProjectReports: any[] }>(),
+  props<{ inactiveProjectReports: any[], amountOfInactiveProjects: number }>(),
 );
 
 export interface ProjectReportState {
@@ -71,6 +72,7 @@ export interface ProjectReportState {
   projectLoading: boolean;
   activeProjects: any[];
   inactiveProjects: any[];
+  amountOfInactiveProjects: number;
 }
 
 export const initialState: ProjectReportState = {
@@ -84,6 +86,7 @@ export const initialState: ProjectReportState = {
   },
   activeProjects: [],
   inactiveProjects: [],
+  amountOfInactiveProjects: 0,
   projectsLoading: false,
   projectReport: null,
   projectLoading: false,
@@ -115,9 +118,10 @@ const projectReportReducer = createReducer(
     activeProjects: activeProjectReports,
     projectLoading: false,
   })),
-  on(loadInActiveProjectReportsSuccess, (state, { inactiveProjectReports }) => ({
+  on(loadInActiveProjectReportsSuccess, (state, { inactiveProjectReports, amountOfInactiveProjects }) => ({
     ...state,
     inactiveProjects: inactiveProjectReports,
+    amountOfInactiveProjects,
     projectLoading: false,
   })),
 );
@@ -143,6 +147,11 @@ export const selectActiveProjectReports = createSelector(
 export const selectInActiveProjectReports = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => state.inactiveProjects,
+);
+
+export const selectAmountOfInactiveProjects = createSelector(
+  projectsReportsFeature,
+  (state: ProjectReportState) => state.amountOfInactiveProjects,
 );
 
 @Injectable()
@@ -215,7 +224,7 @@ export class ProjectReportsEffects {
     this.actions$.pipe(
       ofType(loadInActiveProjectReports),
       switchMap((action) =>
-        this.projectReportService.loadInActiveProjectReports(0, 10).pipe(
+        this.projectReportService.loadInActiveProjectReports(0, action.pageSize).pipe(
           switchMap((inactiveProjects: any) => {
             if (inactiveProjects) {
               const projects: ProjectReportData[] = [];
@@ -237,7 +246,7 @@ export class ProjectReportsEffects {
               }
             }
             return [
-              loadInActiveProjectReportsSuccess({ inactiveProjectReports: inactiveProjects }),
+              loadInActiveProjectReportsSuccess({ inactiveProjectReports: inactiveProjects, amountOfInactiveProjects: inactiveProjects.totalElements }),
             ];
           }),
         ),
