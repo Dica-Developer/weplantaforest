@@ -13,7 +13,6 @@ import { ProjectPageModule } from './project-page/project-page.module';
 import { ProjectReportsOverviewModule } from './project-reports-overview-page/project-reports-overview.module';
 import { ProfilePageModule } from './profile-page/profile-page.module';
 import { TeamPageModule } from './team-page/team-page.module';
-import { PlantProposalPageComponent } from './plant-proposal-page/plant-proposal-page.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PlantbagPageComponent } from './plantbag-page/plantbag-page.component';
 import { ContactModule } from './contact-page/contact-page.module';
@@ -31,9 +30,9 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { ExplorePageModule } from './explore-page/explore-page.module';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { OfferProjectPageComponent } from './offer-project-page/offer-project-page.component';
-import { CustomPlantingComponent } from './plant-proposal-page/components/custom-planting/custom-planting.component';
 import { SignupPageModule } from './signup-page/signup-page.module';
 import { VerifyRegistrationPageComponent } from './verify-registration-page/verify-registration-page.component';
+import { PlantProposalPageModule } from './plant-proposal-page/plant-proposal-page.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +40,6 @@ import { VerifyRegistrationPageComponent } from './verify-registration-page/veri
     ResetPasswordPageComponent,
     ImprintPageComponent,
     PrivacyPageComponent,
-    PlantProposalPageComponent,
     PlantbagPageComponent,
     AboutPageComponent,
     PaymentOptionsPageComponent,
@@ -52,7 +50,6 @@ import { VerifyRegistrationPageComponent } from './verify-registration-page/veri
     FactsPageComponent,
     NotFoundPageComponent,
     OfferProjectPageComponent,
-    CustomPlantingComponent,
     VerifyRegistrationPageComponent,
   ],
   imports: [
@@ -74,6 +71,7 @@ import { VerifyRegistrationPageComponent } from './verify-registration-page/veri
     NgxPayPalModule,
     ExplorePageModule,
     SignupPageModule,
+    PlantProposalPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,

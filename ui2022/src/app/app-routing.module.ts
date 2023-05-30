@@ -40,8 +40,8 @@ import { FactsPageComponent } from './pages/facts-page/facts-page/facts-page.com
 import { ExplorePageComponent } from './pages/explore-page/explore-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { OfferProjectPageComponent } from './pages/offer-project-page/offer-project-page.component';
-import { SignupPageComponent } from './pages/signup-page/signup-page/signup-page.component';
 import { VerifyRegistrationPageComponent } from './pages/verify-registration-page/verify-registration-page.component';
+import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
