@@ -119,9 +119,12 @@ export class TreeTypeEffects {
     this.actions$.pipe(
       ofType(loadTreeTypes),
       switchMap((action) =>
-        this.treeTypeService
-          .loadAll()
-          .pipe(switchMap((treeTypes: TreeType[]) => [loadTreeTypesSuccess({ treeTypes })])),
+        this.treeTypeService.loadAll().pipe(
+          switchMap((treeTypes: TreeType[]) => {
+            console.log(treeTypes);
+            return [loadTreeTypesSuccess({ treeTypes })];
+          }),
+        ),
       ),
     ),
   );

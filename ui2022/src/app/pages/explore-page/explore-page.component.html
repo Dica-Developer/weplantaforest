@@ -18,7 +18,12 @@
       </div>
       <div class="column is-6">
         <div class="wrapper">
-          <img class="img-tree" src="{{ currentImageUrl }}" alt="tree" />
+          <img
+            class="img-tree"
+            src="{{ currentImageUrl }}"
+            (click)="selectInfoType('description')"
+            alt="tree"
+          />
           <div class="marker trunkMarker" (click)="selectInfoType('trunk')"></div>
           <div class="marker leafMarker" (click)="selectInfoType('leaf')"></div>
           <img class="img-fruit" src="{{ currentFruitUrl }}" alt="tree" />

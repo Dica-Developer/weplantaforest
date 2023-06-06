@@ -64,45 +64,40 @@ export class ExplorePageComponent implements OnInit {
   }
 
   selectInfoType(infoType: string) {
-    this.setImageColors(infoType);
+    this.setImages(infoType);
     this.selectedInfoType = infoType;
   }
 
-  setImageColors(infoType: string) {
+  setImages(infoType: string) {
+    let coloredTreeUrl =
+      environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageColor + '/1000/1000';
+    let bwTreeUrl =
+      environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
+    let coloredFruitUrl =
+      environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
+    let bwFruitUrl =
+      environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
+    let coloredLeafUrl =
+      environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
+    let bwLeafUrl =
+      environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
+
     if (infoType === 'leaf') {
-      this.currentImageUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
-      this.currentFruitUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
-      // this.currentLeafUrl =
-      //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageColor + '/250/250';
+      this.currentImageUrl = bwTreeUrl;
+      this.currentFruitUrl = bwFruitUrl;
+      // this.currentLeafUrl = coloredLeafUrl
     } else if (infoType === 'fruit') {
-      this.currentFruitUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
-      this.currentImageUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
-      // this.currentLeafUrl =
-      //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageBW + '/250/250';
+      this.currentImageUrl = bwTreeUrl;
+      this.currentFruitUrl = coloredFruitUrl;
+      // this.currentLeafUrl = bwLeafUrl
     } else if (infoType === 'trunk') {
-      this.currentImageUrl =
-        environment.backendUrl +
-        '/treeType/image/' +
-        this.currentTree.treeImageColor +
-        '/1000/1000';
-      this.currentFruitUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
-      // this.currentLeafUrl =
-      //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageBW + '/250/250';
+      this.currentImageUrl = bwTreeUrl;
+      this.currentFruitUrl = bwFruitUrl;
+      // this.currentLeafUrl = bwLeafUrl
     } else {
-      this.currentImageUrl =
-        environment.backendUrl +
-        '/treeType/image/' +
-        this.currentTree.treeImageColor +
-        '/1000/1000';
-      this.currentFruitUrl =
-        environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
-      // this.currentLeafUrl =
-      //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageBW + '/250/250';
+      this.currentImageUrl = coloredTreeUrl;
+      this.currentFruitUrl = bwFruitUrl;
+      // this.currentLeafUrl = bwLeafUrl
     }
   }
 }

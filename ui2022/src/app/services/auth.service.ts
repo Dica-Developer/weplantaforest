@@ -4,7 +4,8 @@ import { environment } from '../../environments/environment';
 import { AppState } from '../store/app.state';
 import { Store } from '@ngrx/store';
 import { loginSuccess } from '../store/auth.store';
-import { loadAdminFlag } from '../store/profile.store';
+import { loadAdminFlag, loadProfileDetails, setUsername } from '../store/profile.store';
+import { loadTreeTypes } from '../store/treeType.store';
 
 @Injectable({
   providedIn: 'root',
@@ -93,6 +94,14 @@ export class AuthService {
     } else {
       this.store.dispatch(loginSuccess());
       this.store.dispatch(loadAdminFlag());
+      this.store.dispatch(setUsername({ username: localStorage.getItem('username') }));
+      this.store.dispatch(loadAdminFlag());
+      this.store.dispatch(
+        loadProfileDetails({
+          username: localStorage.getItem('username'),
+        }),
+      );
+      this.store.dispatch(loadTreeTypes());
     }
   }
 }
