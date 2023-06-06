@@ -36,7 +36,7 @@ public class ProjectArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "_articleId")
-    @JsonView({ Views.ProjectArticle.class })
+    @JsonView({ Views.ProjectArticle.class, Views.OverviewGift.class })
     private Long articleId;
 
     @OneToOne(fetch = FetchType.LAZY)

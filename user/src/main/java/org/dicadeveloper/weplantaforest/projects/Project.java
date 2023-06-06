@@ -38,7 +38,7 @@ public class Project {
     @Id
     @GeneratedValue
     @Column(name = "_plantId")
-    @JsonView({ Views.ProjectDetails.class, Views.ProjectArticle.class })
+    @JsonView({ Views.ProjectDetails.class, Views.ProjectArticle.class, Views.OverviewGift.class })
     private Long id;
 
     @Column(name = "_name", length = 255)

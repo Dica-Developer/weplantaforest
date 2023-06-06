@@ -47,6 +47,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "_userId")
+    @JsonView({Views.OverviewGift.class})
     private Long id;
 
     @Column(unique = true, name = "_name")

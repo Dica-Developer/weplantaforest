@@ -4,14 +4,22 @@ import { AppState } from './app.state';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PlantbagService } from '../services/plantbag.service';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
 import { addCartsToEvent } from './events.store';
+import { addError } from './error.state';
 
 export interface PlantbagItem {
   article: ActiveProjectArticle;
   amount: number;
 }
+
+export const noopAction = createAction('[Noop] does literally nothing');
+
+export const addPlantbag = createAction(
+  '[Plantbag] add plantbag',
+  props<{ items: PlantbagItem[] }>(),
+);
 
 export const addPlantbagItem = createAction('[Plantbag] add item', props<{ item: PlantbagItem }>());
 
@@ -25,6 +33,8 @@ export const validatePlantbag = createAction(
   props<{ request: any; followUpAction: any }>(),
 );
 
+export const setPlantbagValid = createAction('[Plantbag] set valid', props<{ valid: boolean }>());
+
 export const generateCodes = createAction(
   '[Plantbag] generate codes',
   props<{ request: any; eventId: number }>(),
@@ -36,6 +46,7 @@ export const resetPlantbag = createAction('[Plantbag] reset plantbag');
 
 export interface PlantbagState {
   plantbagItems: PlantbagItem[];
+  valid?: boolean;
 }
 
 export const initialState: PlantbagState = {
@@ -82,6 +93,14 @@ const plantbagReducer = createReducer(
     ...state,
     plantbagItems: [],
   })),
+  on(addPlantbag, (state, action) => ({
+    ...state,
+    plantbagItems: action.items,
+  })),
+  on(setPlantbagValid, (state, { valid }) => ({
+    ...state,
+    valid: valid,
+  })),
 );
 
 export function plantbagReducerFn(state, action) {
@@ -94,6 +113,11 @@ export const selectPlantbag = createSelector(plantbagFeature, (state: PlantbagSt
 
 export const selectPlantbagPrice = createSelector(plantbagFeature, (state: PlantbagState) =>
   calcPlantbagPrice(state),
+);
+
+export const selectPlantbagValid = createSelector(
+  plantbagFeature,
+  (state: PlantbagState) => state.valid,
 );
 
 export const selectPlantbagPriceFormatted = createSelector(
@@ -144,6 +168,63 @@ export function createPlantbagForBackend(plantbag: PlantbagState) {
   return request;
 }
 
+export function convertCartToPlantbag(cart, activeProjects) {
+  const plantBag = {
+    plantbagItems: [],
+  };
+  for (const cartItem of cart.cartItems) {
+    const plantbagItem = {
+      article: {
+        articleId: cartItem.tree.projectArticle.articleId,
+        treeType: {
+          name: cartItem.tree.treeType.name,
+          imageFile: cartItem.tree.treeType.treeImageColor,
+        },
+        project: {
+          id: cartItem.tree.projectArticle.project.id,
+          name: cartItem.tree.projectArticle.project.name,
+        },
+        price: {
+          priceAsLong: cartItem.tree.projectArticle.price.amount * 100,
+        },
+        alreadyPlanted: findAlreadyPlantedFromActiveProjects(
+          cartItem.tree.projectArticle.articleId,
+          activeProjects,
+        ),
+        amount: findAmountFromActiveProjects(
+          cartItem.tree.projectArticle.articleId,
+          activeProjects,
+        ),
+      },
+      amount: cartItem.amount,
+    };
+    plantBag.plantbagItems.push(plantbagItem);
+  }
+  return plantBag;
+}
+
+function findAlreadyPlantedFromActiveProjects(articleId, activeProjects) {
+  for (const project of activeProjects) {
+    for (const article of project.articles) {
+      if (article.articleId === articleId) {
+        return article.alreadyPlanted;
+      }
+    }
+  }
+  return 0;
+}
+
+function findAmountFromActiveProjects(articleId, activeProjects) {
+  for (const project of activeProjects) {
+    for (const article of project.articles) {
+      if (article.articleId === articleId) {
+        return article.amount;
+      }
+    }
+  }
+  return 0;
+}
+
 @Injectable()
 export class PlantbagEffects {
   constructor(private actions$: Actions, private plantbagService: PlantbagService) {}
@@ -152,9 +233,19 @@ export class PlantbagEffects {
     this.actions$.pipe(
       ofType(validatePlantbag),
       switchMap((action) =>
-        this.plantbagService
-          .validatePlantbag(action.request.plantBag)
-          .pipe(switchMap((response: any) => [action.followUpAction])),
+        this.plantbagService.validatePlantbag(action.request.plantBag).pipe(
+          switchMap((response: any) => [action.followUpAction, setPlantbagValid({ valid: true })]),
+          catchError((error) => {
+            return [
+              addError({
+                error: {
+                  key: 'PLANTBAG_VALIDATION_FAILED',
+                  message: 'treesInvalid',
+                },
+              }),
+            ];
+          }),
+        ),
       ),
     ),
   );
