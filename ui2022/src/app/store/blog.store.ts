@@ -23,12 +23,14 @@ export interface BlogArticle {
 export interface BlogState {
   articlesLoading: boolean;
   blogArticle: any;
+  amountOfBlogArticles: number;
   blogArticles: PagedData<BlogArticle>;
 }
 
 export const intialState: BlogState = {
   articlesLoading: false,
   blogArticle: null,
+  amountOfBlogArticles: 0,
   blogArticles: {
     content: [],
     totalPages: 0,
@@ -41,7 +43,7 @@ export const intialState: BlogState = {
 
 export const loadBlogArticles = createAction(
   '[Content] load all blog articles',
-  props<{ language: string }>(),
+  props<{ language: string; pageSize: number }>(),
 );
 export const loadBlogArticlesSuccess = createAction(
   '[Content] load all blog articles success',
@@ -70,6 +72,7 @@ const blogReducer = createReducer(
   on(loadBlogArticlesSuccess, (state, { articles }) => ({
     ...state,
     blogArticles: articles,
+    amountOfBlogArticles: articles.totalElements,
     articlesLoading: false,
   })),
   on(loadBlogArticleSuccess, (state, { article }) => ({
@@ -89,6 +92,10 @@ export const selectBlogArticles = createSelector(
   blogFeature,
   (state: BlogState) => state.blogArticles,
 );
+export const selectBlogArticlesAmount = createSelector(
+  blogFeature,
+  (state: BlogState) => state.amountOfBlogArticles,
+);
 export const selectBlogArticle = createSelector(
   blogFeature,
   (state: BlogState) => state.blogArticle,
@@ -101,7 +108,7 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(loadBlogArticles),
       switchMap((action) =>
-        this.contentService.getBlogArticles(action.language).pipe(
+        this.contentService.getBlogArticles(action.language, 0, action.pageSize).pipe(
           switchMap((blogArticles: PagedData<BlogArticle>) => {
             return [loadBlogArticlesSuccess({ articles: blogArticles })];
           }),

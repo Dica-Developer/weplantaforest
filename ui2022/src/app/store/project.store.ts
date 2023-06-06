@@ -436,7 +436,7 @@ export class ProjectsEffects {
       ofType(deleteProject),
       switchMap((action) =>
         this.projectService
-          .deleteroject(action.id)
+          .deleteProject(action.id)
           .pipe(switchMap(() => [deleteProjectSuccess({ id: action.id })])),
       ),
     ),

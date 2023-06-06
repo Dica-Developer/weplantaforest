@@ -16,6 +16,12 @@ h4 {
   }
 }
 
+mat-icon {
+  width: 2rem;
+  height: 2rem;
+  font-size: 2rem;
+}
+
 mat-icon:hover {
   cursor: pointer;
   color: var(--green);

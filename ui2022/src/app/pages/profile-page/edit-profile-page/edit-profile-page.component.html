@@ -12,7 +12,6 @@
     <div class="is-flex is-flex-direction-row">
       <div class="inputOutline w-100">
         <textarea
-          (blur)="updateProfile('ABOUTME', profileForm.get('aboutMe').value)"
           matInput
           rows="5"
           type="text"
@@ -26,7 +25,6 @@
     <div class="is-flex is-flex-direction-row w-100">
       <div class="inputOutline w-100">
         <input
-          (blur)="updateProfile('ORGANISATION', profileForm.get('organisation').value)"
           matInput
           [placeholder]="'organisation' | translate"
           name="organisation"
@@ -37,7 +35,6 @@
     <div class="is-flex is-flex-direction-row is-align-items-center w-100">
       <div class="inputOutline w-100 spaceRightDesktop">
         <input
-          (blur)="updateProfile('LOCATION', profileForm.get('location').value)"
           matInput
           [placeholder]="'location' | translate"
           name="location"
@@ -46,7 +43,6 @@
       </div>
       <div class="inputOutline w-100">
         <input
-          (blur)="updateProfile('HOMEPAGE', profileForm.get('homepage').value)"
           matInput
           [placeholder]="'website' | translate"
           name="homepage"
@@ -55,7 +51,7 @@
       </div>
     </div>
     <div class="is-flex is-justify-content-center">
-      <app-button (click)="routeToProfile()" [label]="'saveProfile' | translate"></app-button>
+      <app-button (click)="updateProfile()" [label]="'saveProfile' | translate"></app-button>
     </div>
   </form>
 </div>

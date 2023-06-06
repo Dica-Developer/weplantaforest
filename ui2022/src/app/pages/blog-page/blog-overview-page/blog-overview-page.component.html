@@ -7,5 +7,13 @@
     <app-blog-article-tile [blogArticle]="article"></app-blog-article-tile>
   </div>
 </div>
+<div
+  class="columns border-bottom paging-arrow-row"
+  *ngIf="(blogArticles$ | async).content?.length !== blogArticlesAmount"
+>
+  <div class="column is-2 is-offset-5">
+    <mat-icon (click)="loadAllRemainingArticles()"> keyboard_double_arrow_down </mat-icon>
+  </div>
+</div>
 <app-newsletter> </app-newsletter>
 <app-offer-area></app-offer-area>

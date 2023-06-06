@@ -3,7 +3,7 @@ import { createAction, createReducer, createSelector, on, props } from '@ngrx/st
 import { AppState, PagedData } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { loadTeamDetails } from './team.store';
 import { logout } from './auth.store';
@@ -322,7 +322,7 @@ export class ProfileEffects {
   UpdateProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateProfileProperty),
-      switchMap((action) =>
+      concatMap((action) =>
         this.profileService
           .updateProfile(action.username, action.propertyToUpdate, action.controlValue)
           .pipe(

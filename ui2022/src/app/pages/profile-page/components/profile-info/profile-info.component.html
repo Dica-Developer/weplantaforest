@@ -6,7 +6,12 @@
           <h2>
             {{ 'profile' | translate }}
           </h2>
-          <mat-icon *ngIf="showEdit" (click)="editProfile()">edit</mat-icon>
+          <mat-icon
+            *ngIf="showEdit"
+            [matTooltip]="'editProfile' | translate"
+            (click)="editProfile()"
+            >edit</mat-icon
+          >
         </div>
         <h4>{{ profileDetails.userName }}</h4>
         <h4>{{ profileDetails.mail }}</h4>
