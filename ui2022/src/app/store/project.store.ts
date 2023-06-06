@@ -570,14 +570,16 @@ export class ProjectsEffects {
               ];
             }
           }),
-          catchError((error) => [
-            addError({
-              error: {
-                key: 'PROJECT_UPDATE_FAILED',
-                message: 'Das Speichern ist leider fehlgeschlagen!',
-              },
-            }),
-          ]),
+          catchError((err) => {
+            return [
+              addError({
+                error: {
+                  key: 'PROJECT_UPDATE_FAILED',
+                  message: err.error,
+                },
+              }),
+            ];
+          }),
         ),
       ),
     ),
