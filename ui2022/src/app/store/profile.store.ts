@@ -68,6 +68,8 @@ export const redeemGift = createAction('[Profile] redeem gift', props<{ code: st
 
 export const redeemGiftSuccess = createAction('[Profile] redeem gift success');
 
+export const openGiftPdf = createAction('[Profile] open gift pdf', props<{ id: number }>());
+
 export const loadReceipts = createAction('[Profile] load receipts');
 
 export const loadReceiptsSuccess = createAction(
@@ -372,6 +374,24 @@ export class ProfileEffects {
         ),
       ),
     ),
+  );
+
+  OpenGiftPdf$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(openGiftPdf),
+        switchMap((action) =>
+          this.giftService.openGiftPdf(action.id).pipe(
+            switchMap((result: any) => {
+              const file = new Blob([result], { type: 'application/pdf' });
+              const fileURL = URL.createObjectURL(file);
+              window.open(fileURL);
+              return [];
+            }),
+          ),
+        ),
+      ),
+    { dispatch: false },
   );
 
   LoadReceipts$ = createEffect(() =>

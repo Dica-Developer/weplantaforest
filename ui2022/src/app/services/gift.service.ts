@@ -26,4 +26,9 @@ export class GiftService {
   redeemGift(code: string) {
     return this.http.post(environment.backendUrl + '/code/redeem?codeString=' + code, {});
   }
+
+  
+  openGiftPdf(id: number) {
+    return this.http.get(environment.backendUrl + '/gift/pdf?giftId=' + id, { responseType: 'arraybuffer' });
+  }
 }

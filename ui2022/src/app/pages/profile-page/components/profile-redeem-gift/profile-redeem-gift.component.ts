@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Validators } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { AppState } from '../../../../store/app.state';
-import { redeemGift } from "../../../../store/profile.store";
+import { redeemGift } from '../../../../store/profile.store';
 
 @Component({
   selector: 'app-profile-redeem-gift',
@@ -56,10 +56,17 @@ export class ProfileRedeemGiftComponent implements OnInit, AfterViewInit, OnDest
       if (value) {
         // count amount of '-' in value
         const count = (value.match(/-/g) || []).length;
+        const spaceCount = (value.match(/ /g) || []).length;
         if (count === 3) {
           //split value into 4 parts based divided by '-'
           const values = value.split('-');
           //set form values
+          this.giftForm.get('value1').setValue(values[0]);
+          this.giftForm.get('value2').setValue(values[1]);
+          this.giftForm.get('value3').setValue(values[2]);
+          this.giftForm.get('value4').setValue(values[3]);
+        } else if (spaceCount === 3) {
+          const values = value.split(' ');
           this.giftForm.get('value1').setValue(values[0]);
           this.giftForm.get('value2').setValue(values[1]);
           this.giftForm.get('value3').setValue(values[2]);

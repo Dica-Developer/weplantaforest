@@ -1,5 +1,4 @@
-<div class="is-flex is-flex-direction-column w-100 padding-2 border-bottom">
-  <h4 class="center">{{ 'redeemGift' | translate }}</h4>
+<div class="is-flex is-flex-direction-column w-100 padding-2">
   <div class="columns">
     <div class="column center">
       {{ 'pleaseEnterGiftCode' | translate }}
@@ -7,7 +6,7 @@
   </div>
   <form [formGroup]="giftForm">
     <div class="columns">
-      <div class="column is-1 is-offset-4">
+      <div class="column ">
         <div class="inputOutline">
           <input
             #value1
@@ -19,7 +18,7 @@
           />
         </div>
       </div>
-      <div class="column is-1">
+      <div class="column">
         <div class="inputOutline">
           <input
             #value2
@@ -32,7 +31,7 @@
           />
         </div>
       </div>
-      <div class="column is-1">
+      <div class="column ">
         <div class="inputOutline">
           <input
             #value3
@@ -45,7 +44,7 @@
           />
         </div>
       </div>
-      <div class="column is-1">
+      <div class="column ">
         <div class="inputOutline">
           <input
             #value4
