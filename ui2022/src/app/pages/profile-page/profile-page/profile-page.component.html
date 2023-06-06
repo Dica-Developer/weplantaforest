@@ -5,12 +5,18 @@
   [showEdit]="showEdit"
 ></app-profile-info>
 
-<app-profile-trees [trees]="(profileDetails$ | async)?.trees" [userName]="(profileDetails$ | async)?.userName"></app-profile-trees>
-<app-profile-receipts [receipts]="(profileDetails$ | async)?.receipts"></app-profile-receipts>
+<app-profile-trees
+  [trees]="(profileDetails$ | async)?.trees"
+  [userName]="(profileDetails$ | async)?.userName"
+></app-profile-trees>
+<app-profile-receipts
+  [receipts]="(profileDetails$ | async)?.receipts"
+  *ngIf="showEdit"
+></app-profile-receipts>
 <app-profile-gift-overview
   [recipientGifts]="(profileDetails$ | async)?.gifts?.recipient"
   [consignorGifts]="(profileDetails$ | async)?.gifts?.consignor"
+  *ngIf="showEdit"
 ></app-profile-gift-overview>
-<!-- <app-profile-redeem-gift></app-profile-redeem-gift> -->
 
-<app-newsletter> </app-newsletter>
+<app-newsletter *ngIf="showEdit"> </app-newsletter>

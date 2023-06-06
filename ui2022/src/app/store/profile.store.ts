@@ -254,9 +254,11 @@ export class ProfileEffects {
             const actions = [];
             actions.push(loadProfileDetailsSuccess({ details }));
             actions.push(loadTreesByUser({ username: action.username, page: 0, size: 8 }));
-            actions.push(loadGiftsAsConsignor({ userName: action.username }));
-            actions.push(loadGiftsAsRecipient({ userName: action.username }));
-            actions.push(loadReceipts());
+            if(action.username === localStorage.getItem('username')) {
+              actions.push(loadGiftsAsConsignor({ userName: action.username }));
+              actions.push(loadGiftsAsRecipient({ userName: action.username }));
+              actions.push(loadReceipts());
+            }
             if (details.teamName !== '') {
               actions.push(loadTeamDetails({ teamName: details.teamName }));
             }
