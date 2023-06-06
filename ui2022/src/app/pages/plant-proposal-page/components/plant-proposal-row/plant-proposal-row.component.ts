@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/app.state';
+import { AppState } from '../../../../store/app.state';
 import {
   getProjectsForCustomPlanting,
   getSimplePlantProposal,
@@ -8,11 +8,11 @@ import {
   selectProposalPrice,
   selectSimpleProposal,
   selectSimpleProposalFailed,
-} from 'src/app/store/plant.store';
-import { SliderHelper } from 'src/app/util/helper/slider.helper';
+} from '../../../../store/plant.store';
+import { SliderHelper } from '../../../../util/helper/slider.helper';
 import { Options } from '@angular-slider/ngx-slider';
 import { Observable, Subscription } from 'rxjs';
-import { addPlantbagItem, resetPlantbag } from 'src/app/store/plantbag.store';
+import { addPlantbagItem, resetPlantbag } from '../../../../store/plantbag.store';
 
 @Component({
   selector: 'app-plant-proposal-row',
@@ -38,6 +38,9 @@ export class PlantProposalRowComponent implements OnInit, OnDestroy {
   activeProjectsSub: Subscription;
   activeProjects$: Observable<any>;
 
+  showPutIntoPlantbagButton = false;
+  showGoToPlantbagButton = false;
+
   constructor(private store: Store<AppState>, private sliderHelper: SliderHelper) {}
 
   ngOnInit(): void {
@@ -51,6 +54,7 @@ export class PlantProposalRowComponent implements OnInit, OnDestroy {
       });
     this.proposalSub = this.store.select(selectSimpleProposal).subscribe((proposal) => {
       this.simpleProposal = proposal;
+      this.showPutIntoPlantbagButton = true;
     });
   }
 
@@ -62,8 +66,6 @@ export class PlantProposalRowComponent implements OnInit, OnDestroy {
     this.store.dispatch(resetPlantbag());
     for (const plantItem of this.simpleProposal.plantItems) {
       for (const project of this.activeProjects) {
-        console.log(project);
-        console.log(project.articles);
         if (project.projectName === plantItem.projectName) {
           for (const article of project.articles) {
             if (article.treeType.name === plantItem.treeType) {
@@ -74,6 +76,8 @@ export class PlantProposalRowComponent implements OnInit, OnDestroy {
         }
       }
     }
+    this.showPutIntoPlantbagButton = false;
+    this.showGoToPlantbagButton = true;
   }
 
   ngOnDestroy() {

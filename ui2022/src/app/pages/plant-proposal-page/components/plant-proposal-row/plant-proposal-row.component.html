@@ -25,6 +25,12 @@
         <app-button
           label="{{ 'intoPlantbag' | translate }}"
           (click)="putIntoPlantbag()"
+          *ngIf="showPutIntoPlantbagButton"
+        ></app-button>
+        <app-button
+          label="{{ 'toPlantBag' | translate }}"
+          routerLink="/plantbag"
+          *ngIf="showGoToPlantbagButton"
         ></app-button>
       </div>
     </div>
