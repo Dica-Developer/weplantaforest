@@ -6,7 +6,6 @@ h4 {
   margin: 0;
 }
 
-
 .paging-arrow-row {
   .column {
     text-align: center;
@@ -15,6 +14,9 @@ h4 {
       width: 2.5rem;
       height: 2.5rem;
       font-size: 2.5rem;
+    }
+    mat-icon:hover {
+      color: var(--green);
     }
   }
 }
