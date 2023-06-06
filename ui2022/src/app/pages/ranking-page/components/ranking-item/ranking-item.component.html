@@ -1,9 +1,9 @@
 <div class="ranking-item is-flex is-flex-direction-row">
-  <div class="img-wrapper">
+  <div class="img-wrapper" (click)="route()">
     <img src="{{ imageUrl }}" alt="{{ item.name }}" />
   </div>
   <div class="is-flex-direction-column is-flex-grow-1">
-    <span class="name">{{ item.name }}</span>
+    <span class="name" (click)="route()">{{ item.name }}</span>
     <div class="bar-wrapper">
       <div class="amount">
         {{ item.amount }}

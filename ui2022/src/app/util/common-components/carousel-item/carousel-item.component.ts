@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 export interface RankingItem {
   imageUrl: string;
@@ -16,13 +16,16 @@ export interface RankingItem {
 export class CarouselItemComponent implements OnInit {
   @Input() rankingItem: RankingItem;
 
+  @Input()
+  linkTo: string;
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   route() {
-    if(this.rankingItem.linkTo){
-      this.router.navigateByUrl(this.rankingItem.linkTo);
+    if (this.linkTo) {
+      this.router.navigate([this.linkTo]);
     }
   }
 }

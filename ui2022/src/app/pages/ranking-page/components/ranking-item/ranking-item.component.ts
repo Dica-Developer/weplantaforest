@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RankingType, TreeRankedUserData } from '../../../../store/ranking.store';
 import { environment } from '../../../../../environments/environment';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-ranking-item',
@@ -20,7 +21,7 @@ export class RankingItemComponent implements OnInit {
   imageUrl: string = '';
   percentOfMax: number = 0;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (this.type === 'bestTeam') {
@@ -45,5 +46,13 @@ export class RankingItemComponent implements OnInit {
       }
     }
     this.percentOfMax = (this.item.amount / this.max) * 100;
+  }
+
+  route() {
+    if (this.type === 'bestTeam') {
+//      this.router.navigate(['/team/' + this.item.name]);
+    } else {
+      this.router.navigate(['/profile/' + this.item.name]);
+    }
   }
 }
