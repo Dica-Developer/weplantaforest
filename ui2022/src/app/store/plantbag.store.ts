@@ -148,14 +148,14 @@ export function createPlantbagForBackend(plantbag: PlantbagState) {
       };
       projectToAdd.plantItems[item.article.treeType.name] = {
         amount: item.amount,
-        imageFile: item.article.treeType.imageFile,
+        imageFile: item.article.treeType.treeImageBW,
         price: item.article.price.priceAsLong,
       };
       projects[item.article.project.name] = projectToAdd;
     } else {
       projects[item.article.project.name].plantItems[item.article.treeType.name] = {
         amount: item.amount,
-        imageFile: item.article.treeType.imageFile,
+        imageFile: item.article.treeType.treeImageBW,
         price: item.article.price.priceAsLong,
       };
     }

@@ -117,10 +117,7 @@ export interface ActiveProjectArticle {
   price: {
     priceAsLong: number;
   };
-  treeType: {
-    name: string;
-    imageFile: string;
-  };
+  treeType: TreeType;
   project: {
     id: number;
     name: string;

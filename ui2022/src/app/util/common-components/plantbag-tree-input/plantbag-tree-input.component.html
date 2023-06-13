@@ -1,13 +1,15 @@
 <div class="columns">
-  <div class="column is-3">
+  <div class="col-is-1 image-wrapper">
+    <img class="img-tree" src="{{ imgUrl }}" alt="tree" />
+  </div>
+  <div class="column is-3 is-flex-direction-column is-flex is-justify-content-center">
     <b
       >{{ getGerman(article.treeType.name)
       }}{{ showProject ? '(' + article.project.name + ')' : '' }}</b
     >
-    <br />
     {{ article.price.priceAsLong / 100 | currency }}
   </div>
-  <div class="column is-3">
+  <div class="column is-3 is-flex-direction-column is-flex is-justify-content-center">
     <mat-form-field appearance="fill" class="title-field">
       <mat-label>{{ 'max.' + (article.amount - article.alreadyPlanted) }}</mat-label>
       <input matInput name="amount" type="number" [formControl]="control" />

@@ -5,10 +5,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { TextHelper } from '../../text.helper';
 import { Subscription } from 'rxjs';
-import {
-  addPlantbagItem,
-  removePlantbagItem,
-} from '../../../store/plantbag.store';
+import { addPlantbagItem, removePlantbagItem } from '../../../store/plantbag.store';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-plantbag-tree-input',
@@ -31,11 +29,19 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   control: UntypedFormControl;
   controlVcSub: Subscription;
   sum: number = 0;
+  imgUrl: string;
 
   constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
 
   ngOnInit(): void {
     this.initControl();
+    this.imgUrl =
+      environment.backendUrl +
+      '/treeType/image/' +
+      this.article.treeType.treeImageColor +
+      '/200/200';
+
+    console.log(this.imgUrl);
   }
 
   initControl() {
@@ -49,9 +55,7 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
     }
     this.controlVcSub = this.control.valueChanges.subscribe((res) => {
       this.calcSum(res);
-      this.store.dispatch(
-        addPlantbagItem({ item: { article: this.article, amount: res } })
-      );
+      this.store.dispatch(addPlantbagItem({ item: { article: this.article, amount: res } }));
     });
   }
 
@@ -64,9 +68,7 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessage() {
-    return (
-      'max. ' + (this.article.amount - this.article.alreadyPlanted) + ' Bäume'
-    );
+    return 'max. ' + (this.article.amount - this.article.alreadyPlanted) + ' Bäume';
   }
 
   calcSum(amount: number) {
@@ -74,8 +76,6 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   }
 
   removeItemFormPlantbag() {
-    this.store.dispatch(
-      removePlantbagItem({ articleId: this.article.articleId })
-    );
+    this.store.dispatch(removePlantbagItem({ articleId: this.article.articleId }));
   }
 }
