@@ -92,6 +92,10 @@ public class ProjectController {
         if (projectRepository.findByName(project.getName()) != null) {
           return new ResponseEntity<>("Ein Projekt mit diesem Namen existiert bereits", HttpStatus.BAD_REQUEST);
         }
+        List<ProjectArticle> articles = project.getArticles();
+        project.setArticles(null);
+        project = projectRepository.save(project);
+        project.setArticles(articles);        
       }
       if (project.getArticles() != null) {
         for (ProjectArticle article : project.getArticles()) {
