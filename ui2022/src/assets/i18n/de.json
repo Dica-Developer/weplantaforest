@@ -230,5 +230,7 @@
   "recreateGift": "Gutschein nochmal erstellen",
   "treesInvalid": "Die Bäume sind nicht mehr verfügbar.",
   "toPlantBag": "Zum Pflanzkorb",
-  "profileUpdated": "Profil aktualisiert!"
+  "profileUpdated": "Profil aktualisiert!",
+  "overview": "Übersicht",
+  "createGift": "Gutschein erstellen"
 }

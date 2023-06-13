@@ -73,4 +73,8 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
       validatePlantbag({ request, followUpAction: addPlantbag({ items: plantBag.plantbagItems }) }),
     );
   }
+
+  createGift() {
+    
+  }
 }
