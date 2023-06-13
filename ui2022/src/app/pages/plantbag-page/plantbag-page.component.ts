@@ -4,8 +4,11 @@ import { Store } from '@ngrx/store';
 import { first, Subscription } from 'rxjs';
 import {
   createCartFromPlantBag,
+  createGiftFromPlantBag,
   resetCreatedCartId,
+  resetCreatedGiftId,
   selectCartForPaymentCreated,
+  selectIsGift,
 } from '../../store/payment.store';
 import { AppState } from '../../store/app.state';
 import {
@@ -27,26 +30,39 @@ export class PlantbagPageComponent implements OnInit, OnDestroy {
 
   plantBagSub: Subscription;
 
+  isGift: boolean;
+  giftSub: Subscription;
+
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.store.dispatch(resetCreatedCartId());
+    this.store.dispatch(resetCreatedGiftId());
     this.cartCreatedSub = this.store.select(selectCartForPaymentCreated).subscribe((created) => {
       if (created) {
         this.router.navigateByUrl('/paymentOptions');
       }
+    });
+
+    this.giftSub = this.store.select(selectIsGift).subscribe((isGift) => {
+      this.isGift = isGift;
     });
   }
 
   ngOnDestroy(): void {
     this.cartCreatedSub?.unsubscribe();
     this.plantBagSub?.unsubscribe();
+    this.giftSub?.unsubscribe();
   }
 
   convertPlantBagToCart() {
     this.plantBagSub = this.plantBag$.pipe(first()).subscribe((plantBagState) => {
       const plantBag = createPlantbagForBackend(plantBagState);
-      this.store.dispatch(createCartFromPlantBag({ plantBag }));
+      if (this.isGift) {
+        this.store.dispatch(createGiftFromPlantBag({ plantBag }));
+      } else {
+        this.store.dispatch(createCartFromPlantBag({ plantBag }));
+      }
     });
   }
 }

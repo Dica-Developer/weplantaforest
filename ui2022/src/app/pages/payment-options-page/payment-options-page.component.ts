@@ -6,7 +6,10 @@ import { AppState } from '../../store/app.state';
 import {
   PaymentDataDto,
   payPlantBag,
+  resetCartPayed,
   selectCreatedCartId,
+  selectCreatedGiftId,
+  selectIsGift,
   selectPaymentDone,
 } from '../../store/payment.store';
 import { selectPlantbagPrice } from '../../store/plantbag.store';
@@ -22,6 +25,8 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
 
   cartPayed: boolean;
   cartPayedSub: Subscription;
+
+  giftSub: Subscription;
 
   paymentData: PaymentDataDto = {
     cartId: null,
@@ -54,14 +59,21 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
     this.cartIdSub = this.store.select(selectCreatedCartId).subscribe((cartId) => {
       this.paymentData.cartId = cartId;
     });
+
     this.cartPayedSub = this.store.select(selectPaymentDone).subscribe((cartPayed) => {
       this.cartPayed = cartPayed;
       //TODO: show some success message and/or disable paymentOptions to signalize that the payment is done successfully
     });
+    this.giftSub = this.store.select(selectCreatedGiftId).subscribe((giftId) => {
+      this.paymentData.giftId = giftId;
+    });
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(resetCartPayed());
+    this.cartPayedSub?.unsubscribe();
     this.cartIdSub?.unsubscribe();
+    this.giftSub?.unsubscribe();
   }
 
   initPaypalConfig(price: number) {

@@ -15,6 +15,10 @@ export class PaymentService {
     return this.http.post<number>(environment.backendUrl + '/donateTrees', plantBag);
   }
 
+  convertPlantBagToGift(plantBag: any): Observable<[number, number]> {
+    return this.http.post<[number, number]>(environment.backendUrl + '/gift/create', plantBag);
+  }
+
   payCart(paymentData: PaymentDataDto) {
     return this.http.post(environment.backendUrl + '/pay', paymentData);
   }

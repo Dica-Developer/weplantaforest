@@ -56,7 +56,23 @@ export const createCartFromPlantBagSuccess = createAction(
   props<{ cartId: number }>(),
 );
 
+export const createGiftFromPlantBag = createAction(
+  '[Payment] create gift from plantbag',
+  props<{ plantBag: any }>(),
+);
+
+export const createGiftFromPlantBagSuccess = createAction(
+  '[Payment] create gift from plantbag success',
+  props<{ cartId: number; giftId: number }>(),
+);
+
 export const resetCreatedCartId = createAction('[Payment] reset createdCartId and cartPayed');
+
+export const resetCreatedGiftId = createAction('[Payment] reset createdGiftId and cartPayed');
+
+export const setGift = createAction('[Payment] set gift', props<{ isGift: boolean }>());
+
+export const resetCartPayed = createAction('[Payment] reset cartPayed');  
 
 export interface PaymentState {
   data: PaymentDataDto | null;
@@ -65,6 +81,8 @@ export interface PaymentState {
   createdCartId: number;
   cartPayed: boolean;
   lastPayedCart: Cart;
+  isGift: boolean;
+  createdGiftId: number;
 }
 
 export const initialState: PaymentState = {
@@ -74,6 +92,8 @@ export const initialState: PaymentState = {
   cartCreated: false,
   createdCartId: -1,
   lastPayedCart: null,
+  isGift: false,
+  createdGiftId: -1,
 };
 
 export const paymentReducer = createReducer(
@@ -103,6 +123,25 @@ export const paymentReducer = createReducer(
     cartCreated: false,
     createdCartId: null,
   })),
+  on(resetCreatedGiftId, (state) => ({
+    ...state,
+    createdGiftId: null,
+    cartCreated: false,
+  })),
+  on(setGift, (state, action) => ({
+    ...state,
+    isGift: action.isGift,
+  })),
+  on(createGiftFromPlantBagSuccess, (state, action) => ({
+    ...state,
+    createdGiftId: action.giftId,
+    createdCartId: action.cartId,
+    cartCreated: true,
+  })),
+  on(resetCartPayed, (state) => ({
+    ...state,
+    cartPayed: false, 
+  }))
 );
 
 export function paymentReducerFn(state, action) {
@@ -131,6 +170,13 @@ export const selectCreatedCartId = createSelector(
   (state: PaymentState) => state.createdCartId,
 );
 
+export const selectIsGift = createSelector(paymentFeature, (state: PaymentState) => state.isGift);
+
+export const selectCreatedGiftId = createSelector(
+  paymentFeature,
+  (state: PaymentState) => state.createdGiftId,
+);
+
 @Injectable()
 export class PaymentEffects {
   constructor(private actions$: Actions, private paymentService: PaymentService) {}
@@ -142,6 +188,19 @@ export class PaymentEffects {
         this.paymentService
           .convertPlantBagToCart(action.plantBag)
           .pipe(switchMap((cartId) => [createCartFromPlantBagSuccess({ cartId })])),
+      ),
+    ),
+  );
+
+  createGiftFromPlantBag$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createGiftFromPlantBag),
+      switchMap((action) =>
+        this.paymentService
+          .convertPlantBagToGift(action.plantBag)
+          .pipe(
+            switchMap(([cartId, giftId]) => [createGiftFromPlantBagSuccess({ cartId, giftId })]),
+          ),
       ),
     ),
   );
@@ -162,15 +221,17 @@ export class PaymentEffects {
       ofType(payPlantBag),
       switchMap((action) =>
         this.paymentService.payCart(action.requestDto).pipe(
-          switchMap(() => [
-            payPlantBagSucess(),
-            addSuccessMessage({
-              message: { key: 'PLANTBAG_PAYED_SUCCES', message: 'Pflanzkorb bezahlt!' },
-            }),
-          ]),
+          switchMap(() => {
+            return [
+              payPlantBagSucess(),
+              addSuccessMessage({
+                message: { key: 'PLANTBAG_PAYED_SUCCES', message: 'Pflanzkorb bezahlt!' },
+              }),
+            ];
+          }),
           catchError((err) => {
             console.log(err);
-            
+
             return [
               addError({
                 error: { key: 'payment_error', message: err.error.errorInfos[0]?.errorCode },

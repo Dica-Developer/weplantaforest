@@ -10,7 +10,16 @@
       ></app-plantbag-tree-input>
     </div>
     <div class="columns">
-      <p class="price">{{ 'Gesamtpreis: ' + (plantbagPrice | async | currency) }}</p>
+      <div class="column">
+        <mat-checkbox [formControl]="giftControl">{{ 'asGift' | translate }}</mat-checkbox>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <p class="price">
+          {{ ('priceComplete' | translate) + ': ' + (plantbagPrice | async | currency) }}
+        </p>
+      </div>
     </div>
   </mat-card-content>
   <mat-card-content *ngIf="(plantbag$ | async).plantbagItems.length == 0">

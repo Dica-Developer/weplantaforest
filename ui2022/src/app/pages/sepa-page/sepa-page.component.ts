@@ -6,7 +6,9 @@ import { AppState } from '../../store/app.state';
 import {
   loadLastPayedCart,
   payPlantBag,
+  resetCartPayed,
   selectCreatedCartId,
+  selectCreatedGiftId,
   selectLastPayedCart,
   selectPaymentDone,
 } from '../../store/payment.store';
@@ -42,7 +44,6 @@ export class SepaPageComponent implements OnInit, OnDestroy {
     transactionId: new FormControl(''),
     iban: new FormControl(''),
     bic: new FormControl(''),
-
   });
 
   lastPayedCartSub: Subscription;
@@ -53,6 +54,7 @@ export class SepaPageComponent implements OnInit, OnDestroy {
   cartPayedSub: Subscription;
 
   cartIdSub: Subscription;
+  giftIdSub: Subscription;
 
   salutations = [
     { value: 1, label: 'mr' },
@@ -90,6 +92,10 @@ export class SepaPageComponent implements OnInit, OnDestroy {
     this.cartIdSub = this.store.select(selectCreatedCartId).subscribe((cartId) => {
       this.form.get('cartId').setValue(cartId);
     });
+
+    this.giftIdSub = this.store.select(selectCreatedGiftId).subscribe((giftId) => {
+      this.form.get('giftId').setValue(giftId);
+    });
   }
 
   compareValues(object1: any, object2: any) {
@@ -97,9 +103,11 @@ export class SepaPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(resetCartPayed());
     this.lastPayedCartSub?.unsubscribe();
     this.cartPayedSub?.unsubscribe();
     this.cartIdSub?.unsubscribe();
+    this.giftIdSub?.unsubscribe();
   }
 
   payPlantbag() {

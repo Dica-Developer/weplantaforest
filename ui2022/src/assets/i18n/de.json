@@ -232,5 +232,7 @@
   "toPlantBag": "Zum Pflanzkorb",
   "profileUpdated": "Profil aktualisiert!",
   "overview": "Übersicht",
-  "createGift": "Gutschein erstellen"
+  "createGift": "Gutschein erstellen",
+  "priceComplete": "Gesamtpreis",
+  "asGift": "Als Gutschein"
 }

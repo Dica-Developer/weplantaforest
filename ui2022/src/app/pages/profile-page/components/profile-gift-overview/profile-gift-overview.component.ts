@@ -17,6 +17,7 @@ import {
 } from '../../../../store/plantbag.store';
 import { openGiftPdf, ProfileGift } from '../../../../store/profile.store';
 import { Router } from '@angular/router';
+import { setGift } from "../../../../store/payment.store";
 
 @Component({
   selector: 'app-profile-gift-overview',
@@ -75,6 +76,7 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   }
 
   createGift() {
-    
+    this.store.dispatch(setGift({isGift: true}));
+    this.router.navigateByUrl('/plant');
   }
 }
