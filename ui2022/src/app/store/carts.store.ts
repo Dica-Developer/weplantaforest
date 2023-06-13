@@ -3,8 +3,9 @@ import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { CartService } from '../services/cart.service';
 import { Injectable } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
+import { addError } from './error.state';
 
 export interface CartsLoadRequest {
   cartStates: string[];
@@ -92,6 +93,7 @@ export interface CartItem {
 }
 
 export const loadCarts = createAction('[Carts] load', props<{ request: CartsLoadRequest }>());
+export const loadCartsError = createAction('[Carts] load error');
 export const loadCartsSuccess = createAction('[Carts] load success', props<{ carts: Cart[] }>());
 
 export const updateAddress = createAction(
@@ -177,6 +179,7 @@ const cartsReducer = createReducer(
     carts: convertToGridCarts(carts),
     cartsLoading: false,
   })),
+  on(loadCartsError, (state) => ({ ...state, cartsLoading: false })),
   on(updateAddressSuccess, (state, { cartId, field, value }) => ({
     ...state,
     carts: state.carts
@@ -301,9 +304,22 @@ export class CartsEffects {
     this.actions$.pipe(
       ofType(loadCarts),
       switchMap((action) =>
-        this.cartsService
-          .loadCarts(action.request)
-          .pipe(switchMap((carts: Cart[]) => [loadCartsSuccess({ carts })])),
+        this.cartsService.loadCarts(action.request).pipe(
+          switchMap((carts: Cart[]) => {
+            return [loadCartsSuccess({ carts })];
+          }),
+          catchError(() => {
+            return [
+              loadCartsError(),
+              addError({
+                error: {
+                  key: 'CART_ERROR',
+                  message: 'Beim Laden der Carts ist ein Fehler aufgetreten',
+                },
+              }),
+            ];
+          }),
+        ),
       ),
     ),
   );
@@ -360,15 +376,13 @@ export class CartsEffects {
     this.actions$.pipe(
       ofType(sendReceipt),
       switchMap((action) =>
-        this.cartsService
-          .sendReceipt(action.userId, action.receiptId)
-          .pipe(
-            switchMap((receiptId: number) => [
-              addSuccessMessage({
-                message: { key: 'RECEIPTMAIL_SENT', message: 'SpendenQuittung wurde verschickt' },
-              }),
-            ]),
-          ),
+        this.cartsService.sendReceipt(action.userId, action.receiptId).pipe(
+          switchMap((receiptId: number) => [
+            addSuccessMessage({
+              message: { key: 'RECEIPTMAIL_SENT', message: 'SpendenQuittung wurde verschickt' },
+            }),
+          ]),
+        ),
       ),
     ),
   );

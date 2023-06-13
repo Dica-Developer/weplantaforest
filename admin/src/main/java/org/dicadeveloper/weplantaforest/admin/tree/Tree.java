@@ -44,10 +44,10 @@ public class Tree {
     private String imagePath;
 
     @Column(name = "_longitude")
-    private float longitude;
+    private Float longitude;
 
     @Column(name = "_latitude")
-    private float latitude;
+    private Float latitude;
 
     @Column(name = "_submittedOn")
     private long submittedOn;
