@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
-import { catchError, switchMap } from 'rxjs';
+import { catchError, concatMap, switchMap } from 'rxjs';
 import { PlantbagService } from '../services/plantbag.service';
 import { AppState } from './app.state';
 import { addSuccessMessage } from './success-message.state';
@@ -234,7 +234,7 @@ export class PlantProposalEffects {
   getArticlesForCustomPlantProject$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getArticlesForCustomPlantProject),
-      switchMap((action) =>
+      concatMap((action) =>
         this.plantbagService
           .getArticlesForCustomPlantProject(action.projectName)
           .pipe(switchMap((articles) => [getArticlesForCustomPlantProjectSuccess({ articles })])),
