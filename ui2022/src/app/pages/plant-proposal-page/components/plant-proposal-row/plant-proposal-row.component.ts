@@ -55,6 +55,7 @@ export class PlantProposalRowComponent implements OnInit, OnDestroy {
     this.proposalSub = this.store.select(selectSimpleProposal).subscribe((proposal) => {
       this.simpleProposal = proposal;
       this.showPutIntoPlantbagButton = true;
+      this.showGoToPlantbagButton = false;
     });
   }
 
