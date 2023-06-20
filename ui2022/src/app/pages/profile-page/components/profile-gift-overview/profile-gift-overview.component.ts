@@ -25,11 +25,50 @@ import { setGift } from '../../../../store/payment.store';
   styleUrls: ['./profile-gift-overview.component.scss'],
 })
 export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
-  @Input()
-  recipientGifts: ProfileGift[];
+  _recipientGifts: ProfileGift[];
+  _consignorGifts: ProfileGift[];
 
   @Input()
-  consignorGifts: ProfileGift[];
+  set recipientGifts(gifts: ProfileGift[]) {
+    this._recipientGifts = gifts;
+    this.recipientGiftPages = new Map<number, ProfileGift[]>();
+    let pageCnt = 0;
+    if (gifts && gifts.length > 0) {
+      for (let i = 0; i < gifts.length; i += 5) {
+        const chunk = gifts.slice(i, i + 5);
+        this.recipientGiftPages.set(pageCnt, chunk);
+        pageCnt++;
+      }
+    }
+  }
+
+  get recipientGifts() {
+    return this._recipientGifts;
+  }
+
+  @Input()
+  set consignorGifts(gifts: ProfileGift[]) {
+    this._consignorGifts = gifts;
+    this.consignorGiftPages = new Map<number, ProfileGift[]>();
+    let pageCnt = 0;
+    if (gifts && gifts.length > 0) {
+      for (let i = 0; i < gifts.length; i += 5) {
+        const chunk = gifts.slice(i, i + 5);
+        this.consignorGiftPages.set(pageCnt, chunk);
+        pageCnt++;
+      }
+    }
+  }
+
+  get consignorGifts() {
+    return this._consignorGifts;
+  }
+
+  consignorGiftPages: Map<number, ProfileGift[]> = new Map<number, ProfileGift[]>();
+  recipientGiftPages: Map<number, ProfileGift[]> = new Map<number, ProfileGift[]>();
+
+  activeConsignorGiftPage: number = 0;
+  activeRecipientGiftPage: number = 0;
 
   activeProjectsSub: Subscription;
 
@@ -79,5 +118,33 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   createGift() {
     this.store.dispatch(setGift({ isGift: true }));
     this.router.navigateByUrl('/plant');
+  }
+
+  getConsignorGiftPage(page: number) {
+    return this.consignorGiftPages.get(page);
+  }
+
+  getPreviousConsignorGiftPage() {
+    if (this.activeConsignorGiftPage > 0) {
+      this.activeConsignorGiftPage--;
+    }
+  }
+
+  getNextConsignorGiftPage() {
+    if (this.activeConsignorGiftPage < this.consignorGiftPages.size - 1) {
+      this.activeConsignorGiftPage++;
+    }
+  }
+
+  getNextRecipientGiftPage() {
+    if (this.activeRecipientGiftPage < this.recipientGiftPages.size - 1) {
+      this.activeRecipientGiftPage++;
+    }
+  }
+
+  getPreviousRecipientGiftPage() {
+    if (this.activeRecipientGiftPage > 0) {
+      this.activeRecipientGiftPage--;
+    }
   }
 }
