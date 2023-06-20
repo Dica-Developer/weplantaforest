@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from '../../store/app.state';
@@ -63,7 +64,7 @@ export class SepaPageComponent implements OnInit, OnDestroy {
 
   default = 1;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadLastPayedCart());
@@ -86,6 +87,7 @@ export class SepaPageComponent implements OnInit, OnDestroy {
       this.cartPayed = cartPayed;
       if (this.cartPayed) {
         this.form.disable();
+        this.router.navigate(['/profile/' + localStorage.getItem('username')]);
       }
     });
 

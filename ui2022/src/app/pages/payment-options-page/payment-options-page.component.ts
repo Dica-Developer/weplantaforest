@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 import { Store } from '@ngrx/store';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { Subscription } from 'rxjs';
@@ -50,7 +51,7 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
     bic: '',
   };
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.store.select(selectPlantbagPrice).subscribe((price) => {
@@ -62,7 +63,9 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
 
     this.cartPayedSub = this.store.select(selectPaymentDone).subscribe((cartPayed) => {
       this.cartPayed = cartPayed;
-      //TODO: show some success message and/or disable paymentOptions to signalize that the payment is done successfully
+      if(this.cartPayed) {
+        this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+      }
     });
     this.giftSub = this.store.select(selectCreatedGiftId).subscribe((giftId) => {
       this.paymentData.giftId = giftId;
@@ -123,10 +126,7 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
         },
 
       onClientAuthorization: (data) => {
-        console.log(
-          'onClientAuthorization - you should probably inform your server about completed transaction at this point',
-          data,
-        );
+        //TODO: check paypal response for company name --> doesnt seem like there is one according to IPaypalConfig interface
         this.paymentData.mail = data.payer.email_address;
         this.paymentData.forename = data.payer.name?.given_name;
         this.paymentData.name = data.payer.name?.surname;
