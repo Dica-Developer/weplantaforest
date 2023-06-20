@@ -23,6 +23,7 @@ import {
   updateProject,
 } from '../../../../store/project.store';
 import { ProjectReportDetails } from 'src/app/store/project-report.store';
+import { addError } from 'src/app/store/error.state';
 
 @Component({
   selector: 'app-project-edit',
@@ -175,12 +176,23 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       longitude: this.projectForm.get('longitude').value,
       manager: this.projectForm.get('manager').value,
     };
-    this.store.dispatch(
-      updateProject({
-        request,
-        mainImageFile: this.projectForm.get('mainImageFile').value,
-      }),
-    );
+    if (request.shopActive && request.articles.length === 0) {
+      this.store.dispatch(
+        addError({
+          error: {
+            key: 'PROJECT_VALIDATION_ERROR',
+            message: 'Ein aktives Projekt muss mindestens einen Baum haben',
+          },
+        }),
+      );
+    } else {
+      this.store.dispatch(
+        updateProject({
+          request,
+          mainImageFile: this.projectForm.get('mainImageFile').value,
+        }),
+      );
+    }
   }
 
   createArticleFormGroups(details: ProjectDetails) {
