@@ -79,7 +79,7 @@
       *ngFor="let item of (rankings$ | async).content"
       [item]="item"
       [max]="maxValue$ | async"
-      [type]=""
+      [type]="type"
     ></app-ranking-item>
   </div>
 </div>

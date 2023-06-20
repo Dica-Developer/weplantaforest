@@ -49,8 +49,10 @@ export class RankingItemComponent implements OnInit {
   }
 
   route() {
+    console.log(this.type);
+    
     if (this.type === 'bestTeam') {
-//      this.router.navigate(['/team/' + this.item.name]);
+      this.router.navigate(['/team/' + this.item.name]);
     } else {
       this.router.navigate(['/profile/' + this.item.name]);
     }
