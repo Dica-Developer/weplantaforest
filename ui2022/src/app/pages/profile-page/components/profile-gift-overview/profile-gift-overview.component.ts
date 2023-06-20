@@ -17,7 +17,7 @@ import {
 } from '../../../../store/plantbag.store';
 import { openGiftPdf, ProfileGift } from '../../../../store/profile.store';
 import { Router } from '@angular/router';
-import { setGift } from "../../../../store/payment.store";
+import { setGift } from '../../../../store/payment.store';
 
 @Component({
   selector: 'app-profile-gift-overview',
@@ -50,6 +50,7 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
 
     this.plantbagValidSub = this.store.select(selectPlantbagValid).subscribe((valid) => {
       if (valid) {
+        this.store.dispatch(setGift({ isGift: true }));
         this.router.navigateByUrl('/plantbag');
       }
     });
@@ -76,7 +77,7 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   }
 
   createGift() {
-    this.store.dispatch(setGift({isGift: true}));
+    this.store.dispatch(setGift({ isGift: true }));
     this.router.navigateByUrl('/plant');
   }
 }
