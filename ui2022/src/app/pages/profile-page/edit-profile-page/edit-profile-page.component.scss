@@ -20,6 +20,17 @@ input:disabled {
   margin-right: 1rem;
 }
 
+.cancel-btn {
+  margin-right: 0.5rem;
+}
+
+:host ::ng-deep app-button.cancel-btn{
+  button {
+    background: var(--background)!important;
+    color: var(--dark-brown)!important;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .spaceRightDesktop {
     margin-right: 0rem;
