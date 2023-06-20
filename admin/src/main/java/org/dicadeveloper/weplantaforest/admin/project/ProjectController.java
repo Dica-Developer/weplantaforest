@@ -45,7 +45,7 @@ public class ProjectController {
   @JsonView(Views.ProjectNameAndId.class)
   public ResponseEntity<?> getAllProjects() {
     try {
-      Iterable<Project> projects = projectRepository.findAll();
+      Iterable<Project> projects = projectRepository.findAllByOrderByIdDesc();
       return new ResponseEntity<>(projects, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
