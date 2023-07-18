@@ -34,5 +34,13 @@
         ></app-button>
       </div>
     </div>
+
+    <div class="is-flex is-flex-direction-column">
+      <app-plantproposal-preview-row
+        *ngFor="let item of this.simpleProposal?.plantItems"
+        [plantItem]="item"
+      >
+      </app-plantproposal-preview-row>
+    </div>
   </div>
 </div>

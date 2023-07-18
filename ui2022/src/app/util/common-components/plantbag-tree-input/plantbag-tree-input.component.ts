@@ -40,8 +40,6 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
       '/treeType/image/' +
       this.article.treeType.treeImageColor +
       '/200/200';
-
-    console.log(this.imgUrl);
   }
 
   initControl() {

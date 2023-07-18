@@ -13,6 +13,7 @@ import { SliderHelper } from '../../../../util/helper/slider.helper';
 import { Options } from '@angular-slider/ngx-slider';
 import { Observable, Subscription } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from '../../../../store/plantbag.store';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-plant-proposal-row',
@@ -46,7 +47,6 @@ export class PlantProposalRowComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(getSimplePlantProposal({ amountOfTrees: 5 }));
     this.store.dispatch(getProjectsForCustomPlanting());
-
     this.activeProjectsSub = this.store
       .select(selectProjectsForCustomPlanting)
       .subscribe((projects) => {
