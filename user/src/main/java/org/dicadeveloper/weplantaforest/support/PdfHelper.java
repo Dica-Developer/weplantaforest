@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Set;
+
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -11,14 +13,36 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
 public class PdfHelper {
+
+  public void registerFonts(String fontPath) {
+    Set<String> fonts = FontFactory.getRegisteredFonts();
+    boolean hasBull = false;
+    boolean hasArchitect = false;
+    for (String font : fonts) {
+      if(font.equals("Bull")) {
+        hasBull = true;
+      }
+      if(font.equals("nbArchitect")) {
+        hasArchitect = true;
+      }
+    }
+    if(!hasBull) {
+      FontFactory.register(fontPath + "/Bull-5-Mono.ttf", "Bull");
+    }
+    if(!hasArchitect) {
+    FontFactory.register(fontPath + "/NB-Architekt-Pro-Regular.otf", "nbArchitect");
+    }
+  }
 
     public void createHeaderBlock(PdfContentByte cb, Map<String, String> pdfTexts) throws DocumentException, IOException {
         cb.saveState();
@@ -104,4 +128,23 @@ public class PdfHelper {
 
         table.writeSelectedRows(0, 3, xcoord, ycoord, cb);
     }
+
+    public void addLogo2023(PdfContentByte cb, String imagePath, float xpos, float ypos) throws MalformedURLException, IOException, DocumentException {
+      URL imageUrl = getClass().getResource(imagePath + "/IPAT_logo_Relaunch2023_RZ_RGB.png");
+      final Image logoImage = Image.getInstance(imageUrl);
+      logoImage.setAbsolutePosition(xpos, ypos);
+      logoImage.scalePercent(8f, 8f);
+      cb.addImage(logoImage);
+    }
+
+    public void addTreeImage(PdfContentByte cb, String imagePath, float xpos, float ypos) throws MalformedURLException, IOException, DocumentException {
+      URL imageUrl = getClass().getResource(imagePath + "/Speierling_color.jpg");
+      final Image logoImage = Image.getInstance(imageUrl);
+      logoImage.setAbsolutePosition(xpos, ypos);
+      logoImage.scalePercent(16f, 16f);
+      cb.addImage(logoImage);
+    }
+
+
+
 }

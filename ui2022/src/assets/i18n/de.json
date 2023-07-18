@@ -102,7 +102,7 @@
   "price": "Preis",
   "intoPlantbag": "in den Pflanzkorb",
   "proposalOrIndividualText": "Lass dir von uns einen Vorschlag generieren, der die perfekte Kombination an Bäumen ausgibt",
-  "orChooseIndivudual": "Oder Bäume auswählen",
+  "orChooseIndivudual": "Bäume auswählen",
   "noTreesInPlantbag": "Dein Pflanzkorb ist leer.",
   "menu": "Menü",
   "phonenumber": "Telefonnummer",
@@ -235,5 +235,6 @@
   "createGift": "Gutschein erstellen",
   "priceComplete": "Gesamtpreis",
   "asGift": "Als Gutschein",
-  "cancel": "Abbrechen"
+  "cancel": "Abbrechen",
+  "again": "Nochmal"
 }
