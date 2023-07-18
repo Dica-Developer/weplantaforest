@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ExplorePageComponent implements OnInit {
   currentTree: TreeType = null;
-  selectedInfoType: string = 'leaf';
+  selectedInfoType: string = '';
   currentImageUrl: string = '';
   currentFruitUrl: string = '';
   currenttrunkUrl: string = '';
@@ -59,11 +59,10 @@ export class ExplorePageComponent implements OnInit {
   selectTree(tree: TreeType) {
     this.currentTree = tree;
     this.currentImageUrl =
-      environment.backendUrl + '/treeType/image/' + tree.treeImageColor + '/1000/1000';
+      environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/1000/1000';
     this.currentFruitUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
     window.scrollTo(0, 0);
-    console.log(this.currentFruitUrl);
   }
 
   selectInfoType(infoType: string) {
@@ -92,7 +91,7 @@ export class ExplorePageComponent implements OnInit {
     console.log('infoType', infoType);
 
     if (infoType === 'leaf') {
-      this.currentImageUrl = bwTreeUrl;
+      this.currentImageUrl = coloredTreeUrl;
       this.currentFruitUrl = bwFruitUrl;
       // this.currentLeafUrl = coloredLeafUrl
     } else if (infoType === 'fruit') {
@@ -104,7 +103,7 @@ export class ExplorePageComponent implements OnInit {
       this.currentFruitUrl = coloredTrunkUrl;
       // this.currentLeafUrl = bwLeafUrl
     } else {
-      this.currentImageUrl = coloredTreeUrl;
+      this.currentImageUrl = bwTreeUrl;
       this.currentFruitUrl = bwFruitUrl;
       // this.currentLeafUrl = bwLeafUrl
     }
