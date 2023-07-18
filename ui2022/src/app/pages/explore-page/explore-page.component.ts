@@ -18,6 +18,7 @@ export class ExplorePageComponent implements OnInit {
   selectedInfoType: string = 'leaf';
   currentImageUrl: string = '';
   currentFruitUrl: string = '';
+  currenttrunkUrl: string = '';
   combinedSub: Subscription;
   trees: TreeType[] = [];
 
@@ -44,6 +45,7 @@ export class ExplorePageComponent implements OnInit {
           treeImageBW: tt.treeImageBW,
           fruitImageColor: tt.fruitImageColor,
           fruitImageBW: tt.fruitImageBW,
+          trunkImageColor: tt.trunkImageColor,
           description: this.textHelper.getTextForLanguage(tt.description, lang),
           leaf: this.textHelper.getTextForLanguage(tt.leaf, lang),
           fruit: this.textHelper.getTextForLanguage(tt.fruit, lang),
@@ -81,6 +83,10 @@ export class ExplorePageComponent implements OnInit {
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
     let bwLeafUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
+    let coloredTrunkUrl =
+      environment.backendUrl + '/treeType/image/' + this.currentTree.trunkImageColor + '/250/250';
+    // let bwTrunkUrl =
+    //   environment.backendUrl + '/treeType/image/' + this.currentTree.trunkImageBW + '/250/250';
 
     if (infoType === 'leaf') {
       this.currentImageUrl = bwTreeUrl;
@@ -92,7 +98,7 @@ export class ExplorePageComponent implements OnInit {
       // this.currentLeafUrl = bwLeafUrl
     } else if (infoType === 'trunk') {
       this.currentImageUrl = bwTreeUrl;
-      this.currentFruitUrl = bwFruitUrl;
+      this.currentFruitUrl = coloredTrunkUrl;
       // this.currentLeafUrl = bwLeafUrl
     } else {
       this.currentImageUrl = coloredTreeUrl;

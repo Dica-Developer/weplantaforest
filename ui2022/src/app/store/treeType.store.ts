@@ -16,6 +16,7 @@ export interface TreeTypeAdmin {
   treeImageBW: string;
   fruitImageColor: string;
   fruitImageBW: string;
+  trunkImageColor: string;
   infoLink: string;
   name: string;
   leaf: string;

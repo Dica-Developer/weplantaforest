@@ -150,6 +150,15 @@
               >
               </app-tree-type-image-upload>
             </div>
+            <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'trunkColor' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'fruitImageBW'"
+                [imageFileName]="form.get('trunkImageColor').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div>
           </div>
           <div class="is-flex is-justify-content-space-around"></div>
           <div class="is-flex is-flex-direction-row-reverse is-align-items-center">

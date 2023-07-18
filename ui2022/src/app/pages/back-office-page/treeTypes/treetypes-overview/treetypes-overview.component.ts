@@ -39,6 +39,7 @@ export class TreetypesOverviewComponent implements OnInit {
       treeImageBW: null,
       fruitImageColor: null,
       fruitImageBW: null,
+      trunkImageColor: null,
     };
     this.store.dispatch(addTreeType({ treeType }));
   }

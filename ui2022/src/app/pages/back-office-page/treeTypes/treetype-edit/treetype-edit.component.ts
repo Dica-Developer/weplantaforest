@@ -23,6 +23,7 @@ export class TreetypeEditComponent implements OnInit {
     treeImageBW: new UntypedFormControl(null),
     fruitImageColor: new UntypedFormControl(null),
     fruitImageBW: new UntypedFormControl(null),
+    trunkImageColor: new UntypedFormControl(null),
     infoLink: new UntypedFormControl(''),
     nameDe: new UntypedFormControl(''),
     nameEn: new UntypedFormControl(''),
@@ -70,6 +71,7 @@ export class TreetypeEditComponent implements OnInit {
     this.form.get('treeImageBW').setValue(treeType.treeImageBW);
     this.form.get('fruitImageColor').setValue(treeType.fruitImageColor);
     this.form.get('fruitImageBW').setValue(treeType.fruitImageBW);
+    this.form.get('trunkImageColor').setValue(treeType.trunkImageColor);
   }
 
   setImageFile(event: any) {
@@ -127,6 +129,7 @@ export class TreetypeEditComponent implements OnInit {
         treeImageBW: this.form.get('treeImageBW').value,
         fruitImageColor: this.form.get('fruitImageColor').value,
         fruitImageBW: this.form.get('fruitImageBW').value,
+        trunkImageColor: this.form.get('trunkImageColor').value,
         infoLink: '',
       };
       const images = [];

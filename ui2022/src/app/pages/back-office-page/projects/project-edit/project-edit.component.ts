@@ -272,6 +272,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
         treeImageBW: '',
         fruitImageColor: '',
         fruitImageBW: '',
+        trunkImageColor: '',
         description: '',
         fruit: '',
         leaf: '',
