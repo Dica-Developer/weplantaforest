@@ -53,6 +53,10 @@ public class TreeType {
     @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
     private String fruitImageColor;
 
+    @Column(name = "trunkImageColor")
+    @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
+    private String trunkImageColor;
+
     @Column(name = "fruit")
     @JsonView({ Views.ProjectArticle.class, Views.CartDetails.class, Views.TreesByUser.class })
     private String fruit;

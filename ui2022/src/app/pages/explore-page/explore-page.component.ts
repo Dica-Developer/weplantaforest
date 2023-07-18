@@ -63,6 +63,7 @@ export class ExplorePageComponent implements OnInit {
     this.currentFruitUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
     window.scrollTo(0, 0);
+    console.log(this.currentFruitUrl);
   }
 
   selectInfoType(infoType: string) {
@@ -87,6 +88,8 @@ export class ExplorePageComponent implements OnInit {
       environment.backendUrl + '/treeType/image/' + this.currentTree.trunkImageColor + '/250/250';
     // let bwTrunkUrl =
     //   environment.backendUrl + '/treeType/image/' + this.currentTree.trunkImageBW + '/250/250';
+
+    console.log('infoType', infoType);
 
     if (infoType === 'leaf') {
       this.currentImageUrl = bwTreeUrl;

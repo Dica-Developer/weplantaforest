@@ -39,6 +39,7 @@ export class TreetypeEditComponent implements OnInit {
   treeImageBWFile: any;
   fruitImageColorFile: any;
   fruitImageBWFile: any;
+  trunkImageColorFile: any;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -89,6 +90,9 @@ export class TreetypeEditComponent implements OnInit {
         break;
       case 'fruitImageBW':
         this.fruitImageBWFile = event.image;
+        break;
+      case 'trunkImageColor':
+        this.trunkImageColorFile = event.image;
         break;
       default:
         break;
@@ -145,8 +149,9 @@ export class TreetypeEditComponent implements OnInit {
       if (this.fruitImageBWFile) {
         images.push({ imageType: 'fruitImageBW', imgSrc: this.fruitImageBWFile });
       }
-      console.log(images);
-
+      if (this.trunkImageColorFile) {
+        images.push({ imageType: 'trunkImageColor', imgSrc: this.trunkImageColorFile });
+      }
       this.store.dispatch(
         updateTreetype({
           request,

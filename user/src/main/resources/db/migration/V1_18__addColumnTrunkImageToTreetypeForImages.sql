@@ -1,0 +1,1 @@
+ALTER TABLE TreeType ADD COLUMN trunkImageColor varchar(255);

@@ -98,6 +98,9 @@ public class TreeTypeController {
           case "fruitImageColor":
             treeType.setFruitImageColor(imageName);
             break;
+          case "trunkImageColor":
+            treeType.setTrunkImageColor(imageName);
+            break;
           default:
             return new ResponseEntity<>("invalid treetype", HttpStatus.INTERNAL_SERVER_ERROR);
         }
