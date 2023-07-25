@@ -63,7 +63,7 @@ public class PdfCertificateView {
     createBrownRectangle(cb, 0, 320, 595, 190);
     addCertificateHeader(cb, fontPath, pdfTexts);
     createTreeCountAndCustomTextBlock(cb, pdfTexts, fontPath);
-    // createLawTextDateAndSignatureBlock(cb, pdfTexts, date);
+    createLawTextDateAndSignatureBlock(cb, pdfTexts, date, fontPath);
     // pdfHelper.createCertificateImage(cb, imagePath, languageShortname, 165f,
     // 550f);
     // pdfHelper.addLogo(cb, imagePath, 262f, 20f);
@@ -131,7 +131,6 @@ public class PdfCertificateView {
     table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
     table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
     table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-    // table.getDefaultCell().setFixedHeight(40);
 
     PdfPCell aboutCell = new PdfPCell(new Phrase(new Chunk(pdfTexts.get("certificate.about"), textFont)));
     aboutCell.setBorder(0);
@@ -180,14 +179,16 @@ public class PdfCertificateView {
     textTable.writeSelectedRows(0, 1, 55, 400, cb);
   }
 
-  private void createLawTextDateAndSignatureBlock(PdfContentByte cb, Map<String, String> pdfTexts, String date)
+  private void createLawTextDateAndSignatureBlock(PdfContentByte cb, Map<String, String> pdfTexts, String date, String fontPath)
       throws DocumentException, MalformedURLException, IOException {
-    Font textFont = new Font(FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
-    Font textFontBold = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
-    Font textFontSmall = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
+    BaseFont bull = BaseFont.createFont(fontPath + "/Bull-5-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+    
+    
+    Font textFont = new Font(bull, 12, Font.NORMAL, BaseColor.BLACK);
+    Font textFontSmall = new Font(bull, 9, Font.NORMAL, BaseColor.BLACK);
 
-    PdfPTable table = new PdfPTable(2);
-    float[] rows = { 247.5f, 247.5f };
+    PdfPTable table = new PdfPTable(1);
+    float[] rows = { 485f };
     table.setTotalWidth(rows);
     table.getDefaultCell().setBorder(Rectangle.BOTTOM);
     table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -195,59 +196,114 @@ public class PdfCertificateView {
 
     table.getDefaultCell().setFixedHeight(75);
 
-    Phrase leftPhrase = new Phrase();
-    leftPhrase.add(new Chunk(pdfTexts.get("certificate.certify_text"), textFont));
-    leftPhrase.add(new Chunk(pdfTexts.get("certificate.planted_from"), textFont));
-    leftPhrase.add(new Chunk(Chunk.NEWLINE));
-    leftPhrase.add(new Chunk("#" + pdfTexts.get("certificateNumber"), textFontBold));
+    Phrase certifyTextPhrase = new Phrase();
+    certifyTextPhrase.add(new Chunk(pdfTexts.get("certificate.planted_from"), textFont));
+    certifyTextPhrase.add(new Chunk("#" + pdfTexts.get("certificateNumber") + " ", textFont));
+    certifyTextPhrase.add(new Chunk(pdfTexts.get("certificate.certify_text_1"), textFont));
+    certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
+    certifyTextPhrase.add(new Chunk(pdfTexts.get("certificate.certify_text_2"), textFont));
 
-    Phrase rightPhrase = new Phrase(10f);
-    rightPhrase.add(new Chunk(pdfTexts.get("certificate.no_confirmation"), textFont));
+    PdfPCell certifyTextCell = new PdfPCell(certifyTextPhrase);
+    certifyTextCell.setBorder(0);
 
-    PdfPCell rightCell = new PdfPCell();
-    rightCell.setPaddingLeft(10.0f);
-    rightCell.setBorder(Rectangle.BOTTOM);
-    rightCell.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
-    rightCell.setVerticalAlignment(Element.ALIGN_TOP);
-    rightCell.addElement(rightPhrase);
+    table.addCell(certifyTextCell);
+    table.writeSelectedRows(0, 1, 50, 305, cb);
 
-    PdfPCell dateCell = new PdfPCell();
-    dateCell.setPaddingTop(10.0f);
-    dateCell.setBorder(Rectangle.NO_BORDER);
-    dateCell.addElement(new Phrase(new Chunk(pdfTexts.get("certificate.halle") + " " + date, textFont)));
+    createDividerLine(cb, 50, 230, 485);
 
-    PdfPCell emptyCell = new PdfPCell();
-    emptyCell.setBorder(Rectangle.NO_BORDER);
+
+    PdfPTable locationDateTable = new PdfPTable(1);
+    float[] locationDateRows = { 200f };
+    locationDateTable.setTotalWidth(locationDateRows);
+
+    PdfPCell locationDateCell = new PdfPCell();
+    locationDateCell.setBorder(Rectangle.NO_BORDER);
+    locationDateCell.addElement(new Phrase(new Chunk(pdfTexts.get("certificate.halle") + " " + date, textFont)));
+    locationDateCell.setBorder(0);
+
+    locationDateTable.addCell(locationDateCell);
+    locationDateTable.writeSelectedRows(0, 1, 50, 230, cb);
 
     final Image signatureImage = Image.getInstance(getClass().getResource(_imagePath + "/Unterschrift150.jpg"));
     final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/stamp.jpg"));
+
     PdfPTable signatureAndStamp = new PdfPTable(2);
     float[] rowss = { 80f, 167.5f };
     signatureAndStamp.setTotalWidth(rowss);
+    signatureAndStamp.getDefaultCell().setVerticalAlignment(Element.ALIGN_BOTTOM);
     signatureAndStamp.getDefaultCell().setBorder(Rectangle.NO_BORDER);
     signatureAndStamp.addCell(signatureImage);
     signatureAndStamp.addCell(stampImage);
+    signatureAndStamp.writeSelectedRows(0, 1, 250, 230, cb);
 
-    PdfPCell underSignatureCell = new PdfPCell();
-    underSignatureCell.setBorder(Rectangle.NO_BORDER);
-    underSignatureCell.setPadding(0f);
+    createDividerLine(cb, 250, 110, 285);
+
+    PdfPTable underSignatureTable = new PdfPTable(1);
+    float[] underSignatureRows = { 250f };
+    underSignatureTable.setTotalWidth(underSignatureRows);
+
 
     Phrase underSignaturePhrase = new Phrase(10f);
-    underSignaturePhrase.add(new Chunk(pdfTexts.get("certificate.founder"), textFontSmall));
+    underSignaturePhrase.add(new Chunk(pdfTexts.get("certificate.founder"), textFont));
 
-    underSignatureCell.addElement(underSignaturePhrase);
+    PdfPCell underSignatureCell = new PdfPCell(underSignaturePhrase);
+    underSignatureCell.setBorder(Rectangle.NO_BORDER);
+    underSignatureCell.setPadding(0f);
     underSignatureCell.setVerticalAlignment(Element.ALIGN_TOP);
+    underSignatureTable.addCell(underSignatureCell);
+    underSignatureTable.writeSelectedRows(0, 1, 250, 110, cb);
 
-    table.addCell(leftPhrase);
-    table.addCell(rightCell);
+    createDividerLine(cb, 0, 60, 595);
 
-    table.addCell(dateCell);
-    table.addCell(signatureAndStamp);
+    PdfPTable footerTable = new PdfPTable(2);
+    float[] footerRows = { 200f, 250f };
+    
+    footerTable.setTotalWidth(footerRows);
+    footerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
-    table.addCell(emptyCell);
-    table.addCell(underSignatureCell);
+    Phrase addressPhrase = new Phrase();
+    Chunk newLineChunk = new Chunk(Chunk.NEWLINE);
+    newLineChunk.setLineHeight(15f);
 
-    table.writeSelectedRows(0, 4, 50, 305, cb);
+    Chunk address1Chunk = new Chunk(pdfTexts.get("certificate.adress_1"), textFontSmall);
+    address1Chunk.setLineHeight(14f);
+    addressPhrase.add(address1Chunk);
+    addressPhrase.add(newLineChunk);
+
+    Chunk address2Chunk = new Chunk(pdfTexts.get("certificate.adress_2"), textFontSmall);
+    address2Chunk.setLineHeight(14f);
+    addressPhrase.add(address2Chunk);
+    addressPhrase.add(newLineChunk);
+    Chunk homepageChunk = new Chunk(pdfTexts.get("certificate.header_homepage"), textFontSmall);
+    homepageChunk.setLineHeight(14f);
+    addressPhrase.add(homepageChunk);
+
+    PdfPCell addressCell = new PdfPCell(addressPhrase);
+    addressCell.setBorder(Rectangle.NO_BORDER);
+
+    footerTable.addCell(addressCell);
+
+    Phrase bankPhrase = new Phrase();
+    Chunk bankChunk = new Chunk(pdfTexts.get("certificate.bank_adress_1"), textFontSmall);
+    bankChunk.setLineHeight(14f);
+    bankPhrase.add(bankChunk);
+    bankPhrase.add(newLineChunk);
+
+    Chunk bankChunk2 = new Chunk(pdfTexts.get("certificate.bank_adress_2"), textFontSmall);
+    bankChunk2.setLineHeight(14f);
+    bankPhrase.add(bankChunk2);
+    bankPhrase.add(newLineChunk);
+    Chunk bankChunk3 = new Chunk(pdfTexts.get("certificate.bank_adress_3"), textFontSmall);
+    bankChunk3.setLineHeight(14f);
+    bankPhrase.add(bankChunk3);
+    bankPhrase.add(newLineChunk);
+
+    PdfPCell bankCell = new PdfPCell(bankPhrase);
+    bankCell.setBorder(Rectangle.NO_BORDER);
+
+    footerTable.addCell(bankCell);
+
+    footerTable.writeSelectedRows(0, 1, 50, 60, cb);
   }
 
 }

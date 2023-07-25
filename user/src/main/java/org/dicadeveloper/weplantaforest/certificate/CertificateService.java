@@ -55,12 +55,19 @@ public class CertificateService {
         textMap.put("certificate.about", _messageByLocaleService.getMessage("certificate.about", locale));
         textMap.put("certificate.trees", _messageByLocaleService.getMessage("certificate.trees", locale));
         textMap.put("certificate.tree", _messageByLocaleService.getMessage("certificate.tree", locale));
-        textMap.put("certificate.certify_text", _messageByLocaleService.getMessage("certificate.certify_text", locale));
+        textMap.put("certificate.certify_text_1", _messageByLocaleService.getMessage("certificate.certify_text_1", locale));
+        textMap.put("certificate.certify_text_2", _messageByLocaleService.getMessage("certificate.certify_text_2", locale));
         textMap.put("certificate.planted_from", _messageByLocaleService.getMessage("certificate.planted_from", locale));
         textMap.put("certificate.no_confirmation", _messageByLocaleService.getMessage("certificate.no_confirmation", locale));
         textMap.put("certificate.halle", _messageByLocaleService.getMessage("certificate.halle", locale));
         textMap.put("certificate.founder", _messageByLocaleService.getMessage("certificate.founder", locale));
         textMap.put("certificate.header_text", _messageByLocaleService.getMessage("certificate.header_text", locale));
+        textMap.put("certificate.adress_1", _messageByLocaleService.getMessage("certificate.adress_1", locale));
+        textMap.put("certificate.adress_2", _messageByLocaleService.getMessage("certificate.adress_2", locale));
+        textMap.put("certificate.bank_adress_1", _messageByLocaleService.getMessage("certificate.bank_adress_1", locale));
+        textMap.put("certificate.bank_adress_2", _messageByLocaleService.getMessage("certificate.bank_adress_2", locale));
+        textMap.put("certificate.bank_adress_3", _messageByLocaleService.getMessage("certificate.bank_adress_3", locale));
+
         return textMap;
     }
 }
