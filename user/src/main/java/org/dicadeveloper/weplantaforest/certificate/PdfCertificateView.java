@@ -224,19 +224,17 @@ public class PdfCertificateView {
     locationDateTable.addCell(locationDateCell);
     locationDateTable.writeSelectedRows(0, 1, 50, 230, cb);
 
-    final Image signatureImage = Image.getInstance(getClass().getResource(_imagePath + "/Unterschrift150.jpg"));
-    final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/stamp.jpg"));
+    final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/signature_and_stamp.jpg"));
 
-    PdfPTable signatureAndStamp = new PdfPTable(2);
-    float[] rowss = { 80f, 167.5f };
+    PdfPTable signatureAndStamp = new PdfPTable(1);
+    float[] rowss = { 250f };
     signatureAndStamp.setTotalWidth(rowss);
     signatureAndStamp.getDefaultCell().setVerticalAlignment(Element.ALIGN_BOTTOM);
     signatureAndStamp.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-    signatureAndStamp.addCell(signatureImage);
     signatureAndStamp.addCell(stampImage);
-    signatureAndStamp.writeSelectedRows(0, 1, 250, 230, cb);
+    signatureAndStamp.writeSelectedRows(0, 1, 250, 210, cb);
 
-    createDividerLine(cb, 250, 110, 285);
+    createDividerLine(cb, 250, 140, 285);
 
     PdfPTable underSignatureTable = new PdfPTable(1);
     float[] underSignatureRows = { 250f };
@@ -251,7 +249,7 @@ public class PdfCertificateView {
     underSignatureCell.setPadding(0f);
     underSignatureCell.setVerticalAlignment(Element.ALIGN_TOP);
     underSignatureTable.addCell(underSignatureCell);
-    underSignatureTable.writeSelectedRows(0, 1, 250, 110, cb);
+    underSignatureTable.writeSelectedRows(0, 1, 250, 140, cb);
 
     createDividerLine(cb, 0, 60, 595);
 
