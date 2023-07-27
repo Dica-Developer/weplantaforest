@@ -51,6 +51,7 @@ public class PdfGiftView {
         pdfHelper.createBrownRectangle(cb, 0, 320, 595, 190);
         pdfHelper.addHeader(cb, fontPath, pdfTexts.get("gift.gift"));
         createTreeCountAndPlantedByBlock(cb, pdfTexts, fontPath);
+        createInstructions(cb, pdfTexts, fontPath);
     
         pdfHelper.addFooter(cb, fontPath, pdfTexts);
 
@@ -127,23 +128,61 @@ public class PdfGiftView {
 
     }
 
+    private void createInstructions(PdfContentByte cb, Map<String, String> pdfTexts, String fontPath) throws DocumentException, IOException{
+      BaseFont bull = BaseFont.createFont(fontPath + "/Bull-5-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);    
 
- 
-    private PdfPCell createNumberCell() {
-        PdfPCell numberCell = new PdfPCell();
-        numberCell.setVerticalAlignment(Element.ALIGN_TOP);
-        numberCell.setBorder(Rectangle.NO_BORDER);
-        numberCell.setPaddingTop(15f);
-        return numberCell;
+      Font textFontBig = new Font(bull, 18, Font.NORMAL, BaseColor.BLACK);
+
+      Font textFont = new Font(bull, 12, Font.NORMAL, BaseColor.BLACK);
+
+      PdfPTable headerTable = new PdfPTable(1);
+      float[] headerRows = { 595f };
+      headerTable.setTotalWidth(headerRows);
+      Phrase headerPhrase = new Phrase();
+      headerPhrase.add(new Chunk(pdfTexts.get("gift.redeem"), textFontBig));
+      
+      PdfPCell headerCell = new PdfPCell(headerPhrase);
+      headerCell.setBorder(0);
+      headerCell.setMinimumHeight(22);
+      headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      headerCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      
+  
+      headerTable.addCell(headerCell);
+      headerTable.writeSelectedRows(0, 1, 0, 310, cb);
+
+      
+      pdfHelper.createDividerLine(cb, 40, 270, 515);
+      
+      PdfPTable table = new PdfPTable(1);
+      float[] rows = { 485f };
+      table.setTotalWidth(rows);
+      table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+      table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+      table.getDefaultCell().setVerticalAlignment(Element.ALIGN_TOP);
+  
+      table.getDefaultCell().setFixedHeight(150);
+  
+      Phrase certifyTextPhrase = new Phrase();
+      certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_1"), textFont));
+      certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
+      certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_2"), textFont));
+      certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
+      certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_3"), textFont));
+      certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
+      certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
+      certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_4"), textFont));
+      certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
+      certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_5"), textFont));
+  
+      PdfPCell certifyTextCell = new PdfPCell(certifyTextPhrase);
+      certifyTextCell.setBorder(0);
+  
+      table.addCell(certifyTextCell);
+      table.writeSelectedRows(0, 1, 40, 265, cb);
+  
+      pdfHelper.createDividerLine(cb, 40, 160, 515);
+  
     }
 
-    private PdfPCell createInstructionCell() {
-        PdfPCell instructionCell = new PdfPCell();
-        instructionCell.setHorizontalAlignment(Element.ALIGN_LEFT);
-        instructionCell.setBorder(Rectangle.BOTTOM);
-        instructionCell.setBorderWidth(1f);
-        instructionCell.setBorderColor(BaseColor.WHITE);
-        instructionCell.setPaddingBottom(10f);
-        return instructionCell;
-    }
-}
+  }

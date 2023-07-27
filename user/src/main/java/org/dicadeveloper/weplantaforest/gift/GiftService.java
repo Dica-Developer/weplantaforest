@@ -147,6 +147,12 @@ public class GiftService {
         textMap.put("bank_adress_1", _messageByLocaleService.getMessage("bank_adress_1", locale));
         textMap.put("bank_adress_2", _messageByLocaleService.getMessage("bank_adress_2", locale));
         textMap.put("bank_adress_3", _messageByLocaleService.getMessage("bank_adress_3", locale));
+        textMap.put("gift.redeem", _messageByLocaleService.getMessage("gift.redeem", locale));
+        textMap.put("gift.redeem_1", _messageByLocaleService.getMessage("gift.redeem_1", locale));
+        textMap.put("gift.redeem_2", _messageByLocaleService.getMessage("gift.redeem_2", locale));
+        textMap.put("gift.redeem_3", _messageByLocaleService.getMessage("gift.redeem_3", locale));
+        textMap.put("gift.redeem_4", _messageByLocaleService.getMessage("gift.redeem_4", locale));
+        textMap.put("gift.redeem_5", _messageByLocaleService.getMessage("gift.redeem_5", locale));
 
         return textMap;
     }
