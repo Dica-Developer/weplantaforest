@@ -51,7 +51,6 @@ public class CertificateService {
 
         textMap.put("certificate.header_company", _messageByLocaleService.getMessage("certificate.header_company", locale));
         textMap.put("certificate.header_account", _messageByLocaleService.getMessage("certificate.header_account", locale));
-        textMap.put("certificate.header_homepage", _messageByLocaleService.getMessage("certificate.header_homepage", locale));
         textMap.put("certificate.about", _messageByLocaleService.getMessage("certificate.about", locale));
         textMap.put("certificate.trees", _messageByLocaleService.getMessage("certificate.trees", locale));
         textMap.put("certificate.tree", _messageByLocaleService.getMessage("certificate.tree", locale));
@@ -62,11 +61,12 @@ public class CertificateService {
         textMap.put("certificate.halle", _messageByLocaleService.getMessage("certificate.halle", locale));
         textMap.put("certificate.founder", _messageByLocaleService.getMessage("certificate.founder", locale));
         textMap.put("certificate.header_text", _messageByLocaleService.getMessage("certificate.header_text", locale));
-        textMap.put("certificate.adress_1", _messageByLocaleService.getMessage("certificate.adress_1", locale));
-        textMap.put("certificate.adress_2", _messageByLocaleService.getMessage("certificate.adress_2", locale));
-        textMap.put("certificate.bank_adress_1", _messageByLocaleService.getMessage("certificate.bank_adress_1", locale));
-        textMap.put("certificate.bank_adress_2", _messageByLocaleService.getMessage("certificate.bank_adress_2", locale));
-        textMap.put("certificate.bank_adress_3", _messageByLocaleService.getMessage("certificate.bank_adress_3", locale));
+        textMap.put("header_homepage", _messageByLocaleService.getMessage("header_homepage", locale));
+        textMap.put("adress_1", _messageByLocaleService.getMessage("adress_1", locale));
+        textMap.put("adress_2", _messageByLocaleService.getMessage("adress_2", locale));
+        textMap.put("bank_adress_1", _messageByLocaleService.getMessage("bank_adress_1", locale));
+        textMap.put("bank_adress_2", _messageByLocaleService.getMessage("bank_adress_2", locale));
+        textMap.put("bank_adress_3", _messageByLocaleService.getMessage("bank_adress_3", locale));
 
         return textMap;
     }

@@ -55,15 +55,17 @@ public class PdfCertificateView {
     doc.open();
 
     PdfContentByte cb = pdfWriter.getDirectContent();
-    createBackground(cb);
+    pdfHelper.createBackground(cb);
     pdfHelper.addLogo2023(cb, imagePath, 50f, 730f);
-    pdfHelper.addTreeImage(cb, imagePath, 290f, 520f);
-    createDividerLine(cb, 0, 690, 335);
-    createDividerLine(cb, 560, 690, 40);
-    createBrownRectangle(cb, 0, 320, 595, 190);
+    pdfHelper.addTreeImage(cb, imagePath+ "/Speierling_color.jpg", 290f, 520f);
+    pdfHelper.createDividerLine(cb, 0, 690, 335);
+    pdfHelper.createDividerLine(cb, 560, 690, 40);
+    pdfHelper.createBrownRectangle(cb, 0, 320, 595, 190);
+    pdfHelper.addHeader(cb, fontPath, pdfTexts.get("certificate.header_text"));
     addCertificateHeader(cb, fontPath, pdfTexts);
     createTreeCountAndCustomTextBlock(cb, pdfTexts, fontPath);
     createLawTextDateAndSignatureBlock(cb, pdfTexts, date, fontPath);
+    pdfHelper.addFooter(cb, fontPath, pdfTexts);
     // pdfHelper.createCertificateImage(cb, imagePath, languageShortname, 165f,
     // 550f);
     // pdfHelper.addLogo(cb, imagePath, 262f, 20f);
@@ -71,32 +73,6 @@ public class PdfCertificateView {
     doc.close();
   }
 
-  private void createBackground(PdfContentByte cb) {
-    cb.saveState();
-    cb.setRGBColorFill(0xDC, 0xDC, 0xD6);
-    cb.rectangle(0.0f, 0.0f, 595.0f, 1165.0f);
-    cb.fill();
-    cb.stroke();
-    cb.restoreState();
-  }
-
-  private void createDividerLine(PdfContentByte cb, float x, float y, float width) {
-    cb.saveState();
-    cb.setRGBColorFill(0x65, 0x59, 0x4E);
-    cb.rectangle(x, y, width, 0.91f);
-    cb.fill();
-    cb.stroke();
-    cb.restoreState();
-  }
-
-  private void createBrownRectangle(PdfContentByte cb, float x, float y, float width, float height) {
-    cb.saveState();
-    cb.setRGBColorFill(0x65, 0x59, 0x4E);
-    cb.rectangle(x, y, width, height);
-    cb.fill();
-    cb.stroke();
-    cb.restoreState();
-  }
 
   private void addCertificateHeader(PdfContentByte cb, String fontPath, Map<String, String> pdfTexts)
       throws DocumentException {
@@ -209,7 +185,7 @@ public class PdfCertificateView {
     table.addCell(certifyTextCell);
     table.writeSelectedRows(0, 1, 50, 305, cb);
 
-    createDividerLine(cb, 50, 230, 485);
+    pdfHelper.createDividerLine(cb, 50, 230, 485);
 
 
     PdfPTable locationDateTable = new PdfPTable(1);
@@ -234,7 +210,7 @@ public class PdfCertificateView {
     signatureAndStamp.addCell(stampImage);
     signatureAndStamp.writeSelectedRows(0, 1, 250, 210, cb);
 
-    createDividerLine(cb, 250, 140, 285);
+    pdfHelper.createDividerLine(cb, 250, 140, 285);
 
     PdfPTable underSignatureTable = new PdfPTable(1);
     float[] underSignatureRows = { 250f };
@@ -251,57 +227,6 @@ public class PdfCertificateView {
     underSignatureTable.addCell(underSignatureCell);
     underSignatureTable.writeSelectedRows(0, 1, 250, 140, cb);
 
-    createDividerLine(cb, 0, 60, 595);
-
-    PdfPTable footerTable = new PdfPTable(2);
-    float[] footerRows = { 200f, 250f };
-    
-    footerTable.setTotalWidth(footerRows);
-    footerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-
-    Phrase addressPhrase = new Phrase();
-    Chunk newLineChunk = new Chunk(Chunk.NEWLINE);
-    newLineChunk.setLineHeight(15f);
-
-    Chunk address1Chunk = new Chunk(pdfTexts.get("certificate.adress_1"), textFontSmall);
-    address1Chunk.setLineHeight(14f);
-    addressPhrase.add(address1Chunk);
-    addressPhrase.add(newLineChunk);
-
-    Chunk address2Chunk = new Chunk(pdfTexts.get("certificate.adress_2"), textFontSmall);
-    address2Chunk.setLineHeight(14f);
-    addressPhrase.add(address2Chunk);
-    addressPhrase.add(newLineChunk);
-    Chunk homepageChunk = new Chunk(pdfTexts.get("certificate.header_homepage"), textFontSmall);
-    homepageChunk.setLineHeight(14f);
-    addressPhrase.add(homepageChunk);
-
-    PdfPCell addressCell = new PdfPCell(addressPhrase);
-    addressCell.setBorder(Rectangle.NO_BORDER);
-
-    footerTable.addCell(addressCell);
-
-    Phrase bankPhrase = new Phrase();
-    Chunk bankChunk = new Chunk(pdfTexts.get("certificate.bank_adress_1"), textFontSmall);
-    bankChunk.setLineHeight(14f);
-    bankPhrase.add(bankChunk);
-    bankPhrase.add(newLineChunk);
-
-    Chunk bankChunk2 = new Chunk(pdfTexts.get("certificate.bank_adress_2"), textFontSmall);
-    bankChunk2.setLineHeight(14f);
-    bankPhrase.add(bankChunk2);
-    bankPhrase.add(newLineChunk);
-    Chunk bankChunk3 = new Chunk(pdfTexts.get("certificate.bank_adress_3"), textFontSmall);
-    bankChunk3.setLineHeight(14f);
-    bankPhrase.add(bankChunk3);
-    bankPhrase.add(newLineChunk);
-
-    PdfPCell bankCell = new PdfPCell(bankPhrase);
-    bankCell.setBorder(Rectangle.NO_BORDER);
-
-    footerTable.addCell(bankCell);
-
-    footerTable.writeSelectedRows(0, 1, 50, 60, cb);
   }
 
 }

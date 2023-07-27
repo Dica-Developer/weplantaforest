@@ -48,6 +48,8 @@ public class GiftService {
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
+    private final static String RELATIVE_STATIC_FONT_PATH = "/static/font";
+
 
     @Transactional
     public Long[] generateGift(User consignor, PlantBag plantBag) throws IpatException {
@@ -100,7 +102,7 @@ public class GiftService {
         _giftRepository.save(gift);
     }
 
-    public void createGiftPdf(long giftId, HttpServletResponse response) throws IpatException {
+    public void createGiftPdf(long giftId, HttpServletResponse response) throws Exception {
         Gift gift = _giftRepository.findById(giftId).orElse(null);
         IpatPreconditions.checkNotNull(gift, ErrorCodes.GIFT_IS_NULL);
         Code code = gift.getCode();
@@ -118,23 +120,34 @@ public class GiftService {
         pdfTexts.put("treeCount", String.valueOf(treeCount));
 
         try {
-            pdf.buildPdfDocument(response.getOutputStream(), pdfTexts, splittedCode, RELATIVE_STATIC_IMAGES_PATH);
+            pdf.buildPdfDocument(response.getOutputStream(), pdfTexts, splittedCode, RELATIVE_STATIC_IMAGES_PATH, RELATIVE_STATIC_FONT_PATH);
         } catch (Exception e) {
-            throw new IpatException(ErrorCodes.ERROR_WHILE_CREATING_PDF_FOR_GIFT);
+          throw e;
+            // throw new IpatException(ErrorCodes.ERROR_WHILE_CREATING_PDF_FOR_GIFT);
         }
     }
 
     private Map<String, String> generateTextMap(Locale locale) {
         Map<String, String> textMap = new HashMap<String, String>();
         textMap.put("gift.gift", _messageByLocaleService.getMessage("gift.gift", locale));
-        textMap.put("gift.planted_tree", _messageByLocaleService.getMessage("gift.planted_tree", locale));
-        textMap.put("gift.planted_trees", _messageByLocaleService.getMessage("gift.planted_trees", locale));
         textMap.put("gift.main_text", _messageByLocaleService.getMessage("gift.main_text", locale));
         textMap.put("gift.call_url", _messageByLocaleService.getMessage("gift.call_url", locale));
         textMap.put("gift.how_it_works", _messageByLocaleService.getMessage("gift.how_it_works", locale));
         textMap.put("gift.insert_code", _messageByLocaleService.getMessage("gift.insert_code", locale));
         textMap.put("gift.now_login", _messageByLocaleService.getMessage("gift.now_login", locale));
         textMap.put("gift.have_fun", _messageByLocaleService.getMessage("gift.have_fun", locale));
+
+        textMap.put("gift.about", _messageByLocaleService.getMessage("gift.about", locale));
+        textMap.put("gift.tree", _messageByLocaleService.getMessage("gift.tree", locale));
+        textMap.put("gift.trees", _messageByLocaleService.getMessage("gift.trees", locale));
+        textMap.put("gift.planted_from", _messageByLocaleService.getMessage("gift.planted_from", locale));
+        textMap.put("header_homepage", _messageByLocaleService.getMessage("header_homepage", locale));
+        textMap.put("adress_1", _messageByLocaleService.getMessage("adress_1", locale));
+        textMap.put("adress_2", _messageByLocaleService.getMessage("adress_2", locale));
+        textMap.put("bank_adress_1", _messageByLocaleService.getMessage("bank_adress_1", locale));
+        textMap.put("bank_adress_2", _messageByLocaleService.getMessage("bank_adress_2", locale));
+        textMap.put("bank_adress_3", _messageByLocaleService.getMessage("bank_adress_3", locale));
+
         return textMap;
     }
 }

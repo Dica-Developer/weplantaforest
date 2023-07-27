@@ -98,7 +98,7 @@ public class GiftController {
     }
 
     @RequestMapping(value = Uris.GIFT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
-    public ResponseEntity<?> createGiftPdf(HttpServletResponse response, @RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long giftId) throws IpatException {
+    public ResponseEntity<?> createGiftPdf(HttpServletResponse response, @RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long giftId) throws Exception {
         val gift = _giftRepository.findById(giftId).orElse(null);
         val isAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, gift.getConsignor().getUsername());
         if (isAllowed) {
