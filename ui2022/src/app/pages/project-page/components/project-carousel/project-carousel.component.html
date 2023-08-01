@@ -23,7 +23,7 @@
         class="column is-3"
         *ngFor="let item of (plantings$ | async).content"
         [rankingItem]="item"
-        linkTo="{{'/profile/' + item.name}}"
+        linkTo="{{ '/profile/' + item.name }}"
       ></app-carousel-item>
     </div>
     <mat-icon class="desktopIcon placeholder" *ngIf="(plantings$ | async).last"
@@ -67,8 +67,8 @@
         class="column is-3"
         *ngFor="let item of (partners$ | async).content"
         [rankingItem]="item"
-        linkTo="{{'/team/' + item.name}}"
-        ></app-carousel-item>
+        linkTo="{{ '/team/' + item.name }}"
+      ></app-carousel-item>
     </div>
 
     <mat-icon class="desktopIcon placeholder" *ngIf="(partners$ | async).last">arrow_left</mat-icon>

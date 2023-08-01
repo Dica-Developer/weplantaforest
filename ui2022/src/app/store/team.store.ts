@@ -51,7 +51,7 @@ export const loadTeamDetailsSuccess = createAction(
 
 export const loadTeamMember = createAction(
   '[Team] load team members',
-  props<{ teamName: string }>(),
+  props<{ teamName: string; page: number }>(),
 );
 export const loadTeamMemberSuccess = createAction(
   '[Team] load team members success',
@@ -154,7 +154,7 @@ export class TeamEffects {
           .pipe(
             switchMap((teamDetail: TeamDetails) => [
               loadTeamDetailsSuccess({ details: teamDetail }),
-              loadTeamMember({ teamName: teamDetail.teamName }),
+              loadTeamMember({ teamName: teamDetail.teamName, page: 0 }),
             ]),
           ),
       ),
@@ -166,7 +166,7 @@ export class TeamEffects {
       ofType(loadTeamMember),
       switchMap((action) =>
         this.teamService
-          .loadTeamMembers(action.teamName)
+          .loadTeamMembers(action.teamName, action.page)
           .pipe(
             switchMap((members: PagedData<TeamMember>) => [loadTeamMemberSuccess({ members })]),
           ),

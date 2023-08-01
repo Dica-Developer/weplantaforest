@@ -1,0 +1,33 @@
+<div class="is-flex is-flex-direction-column" *ngIf="teamDetails">
+  <h4 class="center">{{ 'members' | translate }}</h4>
+  <div
+    class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
+  >
+    <mat-icon class="desktopIcon placeholder" *ngIf="(teamMembers$ | async).first"
+      >arrow_left</mat-icon
+    >
+    <mat-icon class="desktopIcon" *ngIf="!(teamMembers$ | async).first" (click)="fetchNextPage(-1)"
+      >arrow_left</mat-icon
+    >
+    <mat-icon class="mobileIcon" *ngIf="!(teamMembers$ | async).first" (click)="fetchNextPage(-1)"
+      >arrow_drop_up</mat-icon
+    >
+    <div class="columns w-100">
+      <app-team-carousel-item
+        class="column is-3"
+        *ngFor="let item of (teamMembers$ | async).content"
+        [member]="item"
+      ></app-team-carousel-item>
+    </div>
+
+    <mat-icon class="desktopIcon placeholder" *ngIf="(teamMembers$ | async).last"
+      >arrow_left</mat-icon
+    >
+    <mat-icon class="desktopIcon" *ngIf="!(teamMembers$ | async).last" (click)="fetchNextPage(1)"
+      >arrow_right</mat-icon
+    >
+    <mat-icon class="mobileIcon" *ngIf="!(teamMembers$ | async).last" (click)="fetchNextPage(1)"
+      >arrow_drop_down</mat-icon
+    >
+  </div>
+</div>

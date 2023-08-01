@@ -76,8 +76,6 @@ export class TreetypeEditComponent implements OnInit {
   }
 
   setImageFile(event: any) {
-    console.log(event);
-
     switch (event.imageType) {
       case 'treeImageColor':
         this.treeImageColorFile = event.image;

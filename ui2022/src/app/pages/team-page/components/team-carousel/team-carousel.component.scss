@@ -1,0 +1,52 @@
+.carousel-row:first-of-type {
+  border-bottom: 1px solid var(--black);
+}
+
+.carousel-row {
+  overflow: hidden;
+}
+
+h4 {
+  margin: 2rem auto 0 auto;
+}
+
+mat-icon {
+  z-index: 3;
+  position: relative;
+  height: 4rem;
+  width: 4rem;
+  font-size: 4rem;
+  color: var(--brown);
+}
+
+.placeholder {
+  color: #00000000;
+}
+
+.desktopIcon {
+  display: block;
+}
+
+.mobileIcon {
+  display: none;
+  margin: 0 auto;
+}
+
+mat-icon:not(.placeholder):hover {
+  cursor: pointer;
+  color: var(--green);
+}
+
+@media only screen and (max-width: 900px) {
+  .is-flex-direction-row {
+    flex-direction: column !important;
+  }
+
+  .desktopIcon {
+    display: none;
+  }
+
+  .mobileIcon {
+    display: block;
+  }
+}

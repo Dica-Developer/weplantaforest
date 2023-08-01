@@ -16,12 +16,14 @@ export class TeamService {
     return this.http.get(environment.backendUrl + '/team?teamName=' + encodeURIComponent(teamName));
   }
 
-  loadTeamMembers(teamName: string) {
+  loadTeamMembers(teamName: string, page: number) {
     return this.http.get(
       environment.backendUrl +
         '/team/member?teamName=' +
         encodeURIComponent(teamName) +
-        '&page=0&size=5',
+        '&page=' +
+        page +
+        '&size=4',
     );
   }
 }

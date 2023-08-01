@@ -36,7 +36,6 @@ export class BlogOverviewPageComponent implements OnInit {
     window.scrollTo(0, 0);
     this.blogArticlesAmountSub = this.store.select(selectBlogArticlesAmount).subscribe((res) => {
       this.blogArticlesAmount = res;
-      console.log(res);
     });
   }
 

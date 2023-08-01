@@ -88,8 +88,6 @@ export class ExplorePageComponent implements OnInit {
     // let bwTrunkUrl =
     //   environment.backendUrl + '/treeType/image/' + this.currentTree.trunkImageBW + '/250/250';
 
-    console.log('infoType', infoType);
-
     if (infoType === 'leaf') {
       this.currentImageUrl = coloredTreeUrl;
       this.currentFruitUrl = bwFruitUrl;

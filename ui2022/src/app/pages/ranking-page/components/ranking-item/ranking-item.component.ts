@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RankingType, TreeRankedUserData } from '../../../../store/ranking.store';
 import { environment } from '../../../../../environments/environment';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ranking-item',
@@ -49,8 +49,6 @@ export class RankingItemComponent implements OnInit {
   }
 
   route() {
-    console.log(this.type);
-    
     if (this.type === 'bestTeam') {
       this.router.navigate(['/team/' + this.item.name]);
     } else {
