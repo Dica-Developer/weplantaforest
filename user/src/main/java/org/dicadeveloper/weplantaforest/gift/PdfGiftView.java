@@ -44,14 +44,14 @@ public class PdfGiftView {
         PdfContentByte cb = pdfWriter.getDirectContent();
 
         pdfHelper.createBackground(cb);
-        pdfHelper.addLogo2023(cb, imagePath, 50f, 730f);
-        pdfHelper.addTreeImage(cb, imagePath+ "/Robinie_color.jpg", 290f, 520f);
-        pdfHelper.createDividerLine(cb, 0, 690, 335);
-        pdfHelper.createDividerLine(cb, 560, 690, 40);
-        pdfHelper.createBrownRectangle(cb, 0, 320, 595, 190);
+        pdfHelper.addLogo2023(cb, imagePath, 55f, 725f);
+        pdfHelper.addTreeImage(cb, imagePath+ "/Robinie_color.jpg", 255f, 505f);
+        pdfHelper.createDividerLine(cb, 0, 685, 310);
+        pdfHelper.createDividerLine(cb, 525, 685, 70);
+        pdfHelper.createBrownRectangle(cb, 0, 343, 595, 170);
         pdfHelper.addHeader(cb, fontPath, pdfTexts.get("gift.gift"));
         createTreeCountAndPlantedByBlock(cb, pdfTexts, fontPath);
-        createInstructions(cb, pdfTexts, fontPath);
+        createInstructions(cb, pdfTexts, fontPath, codeFragments);
     
         pdfHelper.addFooter(cb, fontPath, pdfTexts);
 
@@ -65,7 +65,7 @@ public class PdfGiftView {
   
   Font textFont = new Font(bull, 18, Font.NORMAL, background);
   Font textFontTreeCount = new Font(bull, 35, Font.NORMAL, background);
-  Font customTextFont = new Font(bull, 12, Font.NORMAL, background);
+  Font customTextFont = new Font(bull, 10.5f, Font.NORMAL, background);
 
   PdfPTable table = new PdfPTable(1);
   float[] rows = { 595f };
@@ -83,7 +83,7 @@ public class PdfGiftView {
 
   PdfPCell treeCountCell = new PdfPCell(new Phrase(new Chunk(pdfTexts.get("treeCount"), textFontTreeCount)));
   treeCountCell.setBorder(0);
-  treeCountCell.setMinimumHeight(40);
+  treeCountCell.setMinimumHeight(46);
   treeCountCell.setHorizontalAlignment(Element.ALIGN_CENTER);
   treeCountCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
@@ -116,24 +116,24 @@ public class PdfGiftView {
   plantedByCell.setHorizontalAlignment(Element.ALIGN_CENTER);
   plantedByCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
   bottomTextTable.addCell(plantedByCell);
-  bottomTextTable.writeSelectedRows(0, 1, 0, 360, cb);
+  bottomTextTable.writeSelectedRows(0, 1, 0, 380, cb);
 
   //grey divider line
   cb.saveState();
   cb.setRGBColorFill(0xDC, 0xDC, 0xD6);
-  cb.rectangle(40, 365, 515, 0.91f);
+  cb.rectangle(70, 385, 455, 0.91f);
   cb.fill();
   cb.stroke();
   cb.restoreState();
 
     }
 
-    private void createInstructions(PdfContentByte cb, Map<String, String> pdfTexts, String fontPath) throws DocumentException, IOException{
+    private void createInstructions(PdfContentByte cb, Map<String, String> pdfTexts, String fontPath, String[] codeFragments) throws DocumentException, IOException{
       BaseFont bull = BaseFont.createFont(fontPath + "/Bull-5-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);    
 
       Font textFontBig = new Font(bull, 18, Font.NORMAL, BaseColor.BLACK);
 
-      Font textFont = new Font(bull, 12, Font.NORMAL, BaseColor.BLACK);
+      Font textFont = new Font(bull, 10.5f, Font.NORMAL, BaseColor.BLACK);
 
       PdfPTable headerTable = new PdfPTable(1);
       float[] headerRows = { 595f };
@@ -152,7 +152,7 @@ public class PdfGiftView {
       headerTable.writeSelectedRows(0, 1, 0, 310, cb);
 
       
-      pdfHelper.createDividerLine(cb, 40, 270, 515);
+      pdfHelper.createDividerLine(cb, 70, 277, 455);
       
       PdfPTable table = new PdfPTable(1);
       float[] rows = { 485f };
@@ -167,6 +167,7 @@ public class PdfGiftView {
       certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_1"), textFont));
       certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
       certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_2"), textFont));
+      certifyTextPhrase.add(new Chunk(" " + String.join(" ", codeFragments), textFont));
       certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
       certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_3"), textFont));
       certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
@@ -176,12 +177,13 @@ public class PdfGiftView {
       certifyTextPhrase.add(new Chunk(pdfTexts.get("gift.redeem_5"), textFont));
   
       PdfPCell certifyTextCell = new PdfPCell(certifyTextPhrase);
+      certifyTextCell.setLeading(2,1);
       certifyTextCell.setBorder(0);
   
       table.addCell(certifyTextCell);
-      table.writeSelectedRows(0, 1, 40, 265, cb);
+      table.writeSelectedRows(0, 1, 70, 275, cb);
   
-      pdfHelper.createDividerLine(cb, 40, 160, 515);
+      pdfHelper.createDividerLine(cb, 70, 179, 455);
   
     }
 

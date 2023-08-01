@@ -141,7 +141,7 @@ public class PdfHelper {
       URL imageUrl = getClass().getResource(imagePath);
       final Image logoImage = Image.getInstance(imageUrl);
       logoImage.setAbsolutePosition(xpos, ypos);
-      logoImage.scalePercent(16f, 16f);
+      logoImage.scalePercent(18f, 18f);
       cb.addImage(logoImage);
     }
 
@@ -157,7 +157,7 @@ public class PdfHelper {
     public void createDividerLine(PdfContentByte cb, float x, float y, float width) {
       cb.saveState();
       cb.setRGBColorFill(0x65, 0x59, 0x4E);
-      cb.rectangle(x, y, width, 0.91f);
+      cb.rectangle(x, y, width, 0.9125f);
       cb.fill();
       cb.stroke();
       cb.restoreState();
@@ -179,7 +179,7 @@ public class PdfHelper {
       brown);
 
   PdfPTable table = new PdfPTable(1);
-  float[] rows = { 400f };
+  float[] rows = { 380f };
   table.setTotalWidth(rows);
   table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
   table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -192,12 +192,12 @@ public class PdfHelper {
 public void addFooter(PdfContentByte cb, String fontPath, Map<String, String> pdfTexts)
     throws DocumentException, IOException {
       BaseFont bull = BaseFont.createFont(fontPath + "/Bull-5-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-      Font textFontSmall = new Font(bull, 9, Font.NORMAL, BaseColor.BLACK);
+      Font textFontSmall = new Font(bull, 8, Font.NORMAL, BaseColor.BLACK);
   
-      createDividerLine(cb, 0, 60, 595);
+      createDividerLine(cb, 0, 75, 595);
 
       PdfPTable footerTable = new PdfPTable(2);
-      float[] footerRows = { 200f, 250f };
+      float[] footerRows = { 163f, 250f };
       
       footerTable.setTotalWidth(footerRows);
       footerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
@@ -244,7 +244,7 @@ public void addFooter(PdfContentByte cb, String fontPath, Map<String, String> pd
   
       footerTable.addCell(bankCell);
   
-      footerTable.writeSelectedRows(0, 1, 50, 60, cb);
+      footerTable.writeSelectedRows(0, 1, 70, 73, cb);
   
 }
 
