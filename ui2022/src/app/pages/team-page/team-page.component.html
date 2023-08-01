@@ -1,22 +1,22 @@
 <app-team-info *ngIf="teamDetails$ | async" [teamDetails]="teamDetails$ | async"></app-team-info>
 
-<!-- <div
+<div
   class="is-flex is-flex-direction-column w-100 padding-2"
-  *ngIf="(teamDetails$ | async)?.members.length > 0"
+  *ngIf="(teamMembers$ | async)?.content"
 >
   <h4 class="center">{{ 'members' | translate }}</h4>
   <div class="columns is-flex is-flex-direction-row is-multiline">
-    <app-carousel-item
-      *ngFor="let member of (teamDetails$ | async)?.members"
-      [member]="{
-        name: member.projectName,
-        amount: member.amount,
-        imageUrl: member.treeTypeImageUrl,
-        linkTo: member.projectLink
-      }"
+    <!-- <app-carousel-item
+      *ngFor="let member of (teamMembers$ | async)?.content"
+      [rankingItem]="member"
       class="column is-one-quarter"
-    >
-    </app-carousel-item>
+      >
+    </app-carousel-item> -->
+
+    <div *ngFor="let member of (teamMembers$ | async)?.content">
+      {{ member.name }}
+    </div>
   </div>
-</div> -->
+</div>
+
 <app-newsletter> </app-newsletter>

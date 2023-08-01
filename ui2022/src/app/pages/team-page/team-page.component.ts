@@ -19,7 +19,12 @@ export class TeamPageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
-  ngOnChanges() {}
+  ngOnInit(): void {
+    this.teamDetails$.subscribe((res) => {
+      console.log(res);
+    });
+    this.teamMembers$.subscribe((res) => {
+      console.log(res);
+    });
+  }
 }

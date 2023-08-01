@@ -3,7 +3,7 @@ import { createAction, createReducer, createSelector, on, props } from '@ngrx/st
 import { AppState } from './app.state';
 import { TeamService } from '../services/team.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, exhaustMap, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import * as he from 'he';
 import { Co2Data } from './tree.store';
 import { environment } from 'src/environments/environment';
@@ -21,7 +21,7 @@ export interface TeamMember {
 
 export interface TeamDetails {
   id: number;
-  name: string;
+  teamName: string;
   rank: number;
   co2Data: Co2Data;
   homepage: string;
@@ -152,9 +152,9 @@ export class TeamEffects {
         this.teamService
           .loadTeamDetails(action.teamName)
           .pipe(
-            concatMap((teamDetail: TeamDetails) => [
+            switchMap((teamDetail: TeamDetails) => [
               loadTeamDetailsSuccess({ details: teamDetail }),
-              loadTeamMember({ teamName: teamDetail.name }),
+              loadTeamMember({ teamName: teamDetail.teamName }),
             ]),
           ),
       ),
@@ -163,7 +163,7 @@ export class TeamEffects {
 
   LoadTeamMember$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadTeamDetails),
+      ofType(loadTeamMember),
       switchMap((action) =>
         this.teamService
           .loadTeamMembers(action.teamName)
