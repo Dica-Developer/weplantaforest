@@ -3,14 +3,20 @@ import { createAction, createReducer, createSelector, on, props } from '@ngrx/st
 import { AppState } from './app.state';
 import { TeamService } from '../services/team.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap } from 'rxjs/operators';
+import { concatMap, exhaustMap, switchMap } from 'rxjs/operators';
 import * as he from 'he';
 import { Co2Data } from './tree.store';
 import { environment } from 'src/environments/environment';
+import { PagedData } from './app.state';
 
 export interface Team {
   id: number;
   name: string;
+}
+
+export interface TeamMember {
+  name: string;
+  imageName: string;
 }
 
 export interface TeamDetails {
@@ -43,14 +49,25 @@ export const loadTeamDetailsSuccess = createAction(
   props<{ details: TeamDetails }>(),
 );
 
+export const loadTeamMember = createAction(
+  '[Team] load team members',
+  props<{ teamName: string }>(),
+);
+export const loadTeamMemberSuccess = createAction(
+  '[Team] load team members success',
+  props<{ members: PagedData<TeamMember> }>(),
+);
+
 export interface TeamState {
   teams: Team[];
   teamDetails: TeamDetails;
+  members: PagedData<TeamMember>;
 }
 
 export const initialState: TeamState = {
   teams: [],
   teamDetails: null,
+  members: null,
 };
 
 const teamReducer = createReducer(
@@ -84,6 +101,18 @@ const teamReducer = createReducer(
       },
     };
   }),
+  on(loadTeamMember, (state) => {
+    return {
+      ...state,
+      members: null,
+    };
+  }),
+  on(loadTeamMemberSuccess, (state, { members }) => {
+    return {
+      ...state,
+      members: members,
+    };
+  }),
 );
 
 export function teamReducerFn(state, action) {
@@ -98,6 +127,8 @@ export const selectTeamDetails = createSelector(
   teamsFeature,
   (state: TeamState) => state.teamDetails,
 );
+
+export const selectTeamMembers = createSelector(teamsFeature, (state: TeamState) => state.members);
 
 @Injectable()
 export class TeamEffects {
@@ -121,9 +152,23 @@ export class TeamEffects {
         this.teamService
           .loadTeamDetails(action.teamName)
           .pipe(
-            switchMap((teamDetail: TeamDetails) => [
+            concatMap((teamDetail: TeamDetails) => [
               loadTeamDetailsSuccess({ details: teamDetail }),
+              loadTeamMember({ teamName: teamDetail.name }),
             ]),
+          ),
+      ),
+    ),
+  );
+
+  LoadTeamMember$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadTeamDetails),
+      switchMap((action) =>
+        this.teamService
+          .loadTeamMembers(action.teamName)
+          .pipe(
+            switchMap((members: PagedData<TeamMember>) => [loadTeamMemberSuccess({ members })]),
           ),
       ),
     ),

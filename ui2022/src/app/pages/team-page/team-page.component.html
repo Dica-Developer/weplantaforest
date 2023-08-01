@@ -2,17 +2,17 @@
 
 <!-- <div
   class="is-flex is-flex-direction-column w-100 padding-2"
-  *ngIf="(profileDetails$ | async)?.trees?.content"
+  *ngIf="(teamDetails$ | async)?.members.length > 0"
 >
-  <h4 class="center">{{ 'plantings' | translate }}</h4>
+  <h4 class="center">{{ 'members' | translate }}</h4>
   <div class="columns is-flex is-flex-direction-row is-multiline">
     <app-carousel-item
-      *ngFor="let planting of (profileDetails$ | async).trees.content"
-      [rankingItem]="{
-        name: planting.projectName,
-        amount: planting.amount,
-        imageUrl: planting.treeTypeImageUrl,
-        linkTo: planting.projectLink
+      *ngFor="let member of (teamDetails$ | async)?.members"
+      [member]="{
+        name: member.projectName,
+        amount: member.amount,
+        imageUrl: member.treeTypeImageUrl,
+        linkTo: member.projectLink
       }"
       class="column is-one-quarter"
     >

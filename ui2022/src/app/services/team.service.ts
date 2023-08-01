@@ -15,4 +15,13 @@ export class TeamService {
   loadTeamDetails(teamName: string) {
     return this.http.get(environment.backendUrl + '/team?teamName=' + encodeURIComponent(teamName));
   }
+
+  loadTeamMembers(teamName: string) {
+    return this.http.get(
+      environment.backendUrl +
+        '/team/member?teamName=' +
+        encodeURIComponent(teamName) +
+        '&page=0&size=5',
+    );
+  }
 }
