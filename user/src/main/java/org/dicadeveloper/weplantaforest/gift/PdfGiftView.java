@@ -45,7 +45,7 @@ public class PdfGiftView {
 
         pdfHelper.createBackground(cb);
         pdfHelper.addLogo2023(cb, imagePath, 55f, 725f);
-        pdfHelper.addTreeImage(cb, imagePath+ "/Robinie_color.jpg", 255f, 505f);
+        pdfHelper.addTreeImage(cb, imagePath+ "/Robinie_color.jpg", 255f, 505f, 18f);
         pdfHelper.createDividerLine(cb, 0, 685, 310);
         pdfHelper.createDividerLine(cb, 525, 685, 70);
         pdfHelper.createBrownRectangle(cb, 0, 343, 595, 170);

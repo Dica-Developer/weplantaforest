@@ -137,11 +137,11 @@ public class PdfHelper {
       cb.addImage(logoImage);
     }
 
-    public void addTreeImage(PdfContentByte cb, String imagePath, float xpos, float ypos) throws MalformedURLException, IOException, DocumentException {
+    public void addTreeImage(PdfContentByte cb, String imagePath, float xpos, float ypos, float scaling) throws MalformedURLException, IOException, DocumentException {
       URL imageUrl = getClass().getResource(imagePath);
       final Image logoImage = Image.getInstance(imageUrl);
       logoImage.setAbsolutePosition(xpos, ypos);
-      logoImage.scalePercent(18f, 18f);
+      logoImage.scalePercent(scaling, scaling);
       cb.addImage(logoImage);
     }
 

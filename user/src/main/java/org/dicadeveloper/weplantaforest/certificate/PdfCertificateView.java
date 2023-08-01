@@ -57,12 +57,11 @@ public class PdfCertificateView {
     PdfContentByte cb = pdfWriter.getDirectContent();
     pdfHelper.createBackground(cb);
     pdfHelper.addLogo2023(cb, imagePath, 50f, 730f);
-    pdfHelper.addTreeImage(cb, imagePath+ "/Speierling_color.jpg", 290f, 520f);
+    pdfHelper.addTreeImage(cb, imagePath+ "/Speierling_color.jpg", 285f, 510f, 17f);
     pdfHelper.createDividerLine(cb, 0, 690, 335);
     pdfHelper.createDividerLine(cb, 560, 690, 40);
     pdfHelper.createBrownRectangle(cb, 0, 320, 595, 190);
     pdfHelper.addHeader(cb, fontPath, pdfTexts.get("certificate.header_text"));
-    addCertificateHeader(cb, fontPath, pdfTexts);
     createTreeCountAndCustomTextBlock(cb, pdfTexts, fontPath);
     createLawTextDateAndSignatureBlock(cb, pdfTexts, date, fontPath);
     pdfHelper.addFooter(cb, fontPath, pdfTexts);
@@ -71,24 +70,6 @@ public class PdfCertificateView {
     // pdfHelper.addLogo(cb, imagePath, 262f, 20f);
 
     doc.close();
-  }
-
-
-  private void addCertificateHeader(PdfContentByte cb, String fontPath, Map<String, String> pdfTexts)
-      throws DocumentException {
-    BaseColor brown = new BaseColor(101, 89, 78);
-    Font customFont = FontFactory.getFont("nbArchitect", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 52, Font.NORMAL,
-        brown);
-
-    PdfPTable table = new PdfPTable(1);
-    float[] rows = { 400f };
-    table.setTotalWidth(rows);
-    table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-    table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-    table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-    table.getDefaultCell().setFixedHeight(75);
-    table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.header_text"), customFont)));
-    table.writeSelectedRows(0, 1, 0, 645, cb);
   }
 
   private void createTreeCountAndCustomTextBlock(PdfContentByte cb, Map<String, String> pdfTexts, String fontPath)
@@ -136,11 +117,11 @@ public class PdfCertificateView {
     table.addCell(aboutCell);
     table.addCell(treeCountCell);
     table.addCell(treeCell);
-    table.writeSelectedRows(0, 3, 0, 510, cb);
+    table.writeSelectedRows(0, 3, 0, 500, cb);
 
     cb.saveState();
     cb.setRGBColorFill(0xDC, 0xDC, 0xD6);
-    cb.rectangle(50.0f, 345.0f, 495.0f, 60.0f);
+    cb.rectangle(50.0f, 335.0f, 495.0f, 60.0f);
     cb.fill();
     cb.stroke();
     cb.restoreState();
@@ -152,7 +133,7 @@ public class PdfCertificateView {
     textTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
     textTable.getDefaultCell().setMinimumHeight(14);
     textTable.addCell(new Phrase(new Chunk(pdfTexts.get("certificateText"), customTextFont)));
-    textTable.writeSelectedRows(0, 1, 55, 400, cb);
+    textTable.writeSelectedRows(0, 1, 55, 390, cb);
   }
 
   private void createLawTextDateAndSignatureBlock(PdfContentByte cb, Map<String, String> pdfTexts, String date, String fontPath)
@@ -160,7 +141,7 @@ public class PdfCertificateView {
     BaseFont bull = BaseFont.createFont(fontPath + "/Bull-5-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
     
     
-    Font textFont = new Font(bull, 12, Font.NORMAL, BaseColor.BLACK);
+    Font textFont = new Font(bull, 11, Font.NORMAL, BaseColor.BLACK);
     Font textFontSmall = new Font(bull, 9, Font.NORMAL, BaseColor.BLACK);
 
     PdfPTable table = new PdfPTable(1);
@@ -181,6 +162,7 @@ public class PdfCertificateView {
 
     PdfPCell certifyTextCell = new PdfPCell(certifyTextPhrase);
     certifyTextCell.setBorder(0);
+    certifyTextCell.setLeading(2,1);
 
     table.addCell(certifyTextCell);
     table.writeSelectedRows(0, 1, 50, 305, cb);
@@ -208,9 +190,9 @@ public class PdfCertificateView {
     signatureAndStamp.getDefaultCell().setVerticalAlignment(Element.ALIGN_BOTTOM);
     signatureAndStamp.getDefaultCell().setBorder(Rectangle.NO_BORDER);
     signatureAndStamp.addCell(stampImage);
-    signatureAndStamp.writeSelectedRows(0, 1, 250, 210, cb);
+    signatureAndStamp.writeSelectedRows(0, 1, 250, 212, cb);
 
-    pdfHelper.createDividerLine(cb, 250, 140, 285);
+    pdfHelper.createDividerLine(cb, 250, 130, 285);
 
     PdfPTable underSignatureTable = new PdfPTable(1);
     float[] underSignatureRows = { 250f };
@@ -225,7 +207,7 @@ public class PdfCertificateView {
     underSignatureCell.setPadding(0f);
     underSignatureCell.setVerticalAlignment(Element.ALIGN_TOP);
     underSignatureTable.addCell(underSignatureCell);
-    underSignatureTable.writeSelectedRows(0, 1, 250, 140, cb);
+    underSignatureTable.writeSelectedRows(0, 1, 250, 127, cb);
 
   }
 
