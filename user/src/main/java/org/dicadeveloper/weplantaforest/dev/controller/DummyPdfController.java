@@ -51,7 +51,7 @@ public class DummyPdfController {
     private final static String RELATIVE_STATIC_IMAGES_PATH_CERTIFICATE = "src/main/resources/static/images/pdf";
 
     @RequestMapping(value = "/gift/pdf/test", method = RequestMethod.GET, headers = "Accept=application/pdf")
-    public ResponseEntity<?> createGiftPdf(HttpServletResponse response) throws IpatException {
+    public ResponseEntity<?> createGiftPdf(HttpServletResponse response) throws Exception {
         _giftService.createGiftPdf(1L, response);
         return new ResponseEntity<>(HttpStatus.OK);
 

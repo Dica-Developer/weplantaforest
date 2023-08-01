@@ -21,6 +21,7 @@ public class CertificateService {
     private @NonNull MessageByLocaleService _messageByLocaleService;
 
     private final static String RELATIVE_STATIC_IMAGES_PATH = "/static/images/pdf";
+    private final static String RELATIVE_STATIC_FONT_PATH = "/static/font";
 
     public void generatePdf(Certificate certificate, HttpServletResponse response, String certificateNumber) throws Exception {
         PdfCertificateView pdf = new PdfCertificateView();
@@ -31,7 +32,7 @@ public class CertificateService {
         pdfTexts.put("creatorName", certificate.getCreator().getName());
         pdfTexts.put("certificateNumber", certificateNumber);
         try {
-            pdf.writePdfDataToOutputStream(response.getOutputStream(), pdfTexts, RELATIVE_STATIC_IMAGES_PATH, certificate.getCreator().getLang().getShortName());
+            pdf.writePdfDataToOutputStream(response.getOutputStream(), pdfTexts, RELATIVE_STATIC_IMAGES_PATH, certificate.getCreator().getLang().getShortName(), RELATIVE_STATIC_FONT_PATH);
         } catch (Exception e) {
             throw e;
         }
@@ -47,16 +48,26 @@ public class CertificateService {
 
     private Map<String, String> generateTextMap(Locale locale) {
         Map<String, String> textMap = new HashMap<String, String>();
+
         textMap.put("certificate.header_company", _messageByLocaleService.getMessage("certificate.header_company", locale));
         textMap.put("certificate.header_account", _messageByLocaleService.getMessage("certificate.header_account", locale));
-        textMap.put("certificate.header_homepage", _messageByLocaleService.getMessage("certificate.header_homepage", locale));
         textMap.put("certificate.about", _messageByLocaleService.getMessage("certificate.about", locale));
         textMap.put("certificate.trees", _messageByLocaleService.getMessage("certificate.trees", locale));
-        textMap.put("certificate.certify_text", _messageByLocaleService.getMessage("certificate.certify_text", locale));
+        textMap.put("certificate.tree", _messageByLocaleService.getMessage("certificate.tree", locale));
+        textMap.put("certificate.certify_text_1", _messageByLocaleService.getMessage("certificate.certify_text_1", locale));
+        textMap.put("certificate.certify_text_2", _messageByLocaleService.getMessage("certificate.certify_text_2", locale));
         textMap.put("certificate.planted_from", _messageByLocaleService.getMessage("certificate.planted_from", locale));
         textMap.put("certificate.no_confirmation", _messageByLocaleService.getMessage("certificate.no_confirmation", locale));
         textMap.put("certificate.halle", _messageByLocaleService.getMessage("certificate.halle", locale));
         textMap.put("certificate.founder", _messageByLocaleService.getMessage("certificate.founder", locale));
+        textMap.put("certificate.header_text", _messageByLocaleService.getMessage("certificate.header_text", locale));
+        textMap.put("header_homepage", _messageByLocaleService.getMessage("header_homepage", locale));
+        textMap.put("adress_1", _messageByLocaleService.getMessage("adress_1", locale));
+        textMap.put("adress_2", _messageByLocaleService.getMessage("adress_2", locale));
+        textMap.put("bank_adress_1", _messageByLocaleService.getMessage("bank_adress_1", locale));
+        textMap.put("bank_adress_2", _messageByLocaleService.getMessage("bank_adress_2", locale));
+        textMap.put("bank_adress_3", _messageByLocaleService.getMessage("bank_adress_3", locale));
+
         return textMap;
     }
 }

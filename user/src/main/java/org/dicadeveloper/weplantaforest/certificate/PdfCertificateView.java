@@ -3,10 +3,12 @@ package org.dicadeveloper.weplantaforest.certificate;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.Set;
 
 import org.dicadeveloper.weplantaforest.support.PdfHelper;
 
@@ -18,151 +20,195 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.BaseFont;
 
 public class PdfCertificateView {
 
-    private String _imagePath;
+  private String _imagePath;
 
-    PdfHelper pdfHelper = new PdfHelper();
+  PdfHelper pdfHelper = new PdfHelper();
 
-    public void writePdfDataToOutputStream(OutputStream toWrite, Map<String, String> pdfTexts, String imagePath, String languageShortname) throws Exception {
-        // create pdf
-        final Document doc = new Document();
-        final PdfWriter pdfWriter = PdfWriter.getInstance(doc, toWrite);
-        pdfWriter.setEncryption(null, null, ~(PdfWriter.ALLOW_MODIFY_CONTENTS), PdfWriter.STANDARD_ENCRYPTION_128);
+  public void writePdfDataToOutputStream(OutputStream toWrite, Map<String, String> pdfTexts, String imagePath,
+      String languageShortname, String fontPath) throws Exception {
 
-        final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"), Locale.GERMAN);
-        cal.setTimeInMillis(System.currentTimeMillis());
-        final String date = cal.get(Calendar.DAY_OF_MONTH) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.YEAR);
+    // create pdf
+    final Document doc = new Document();
+    final PdfWriter pdfWriter = PdfWriter.getInstance(doc, toWrite);
+    pdfHelper.registerFonts(fontPath);
+    pdfWriter.setEncryption(null, null, ~(PdfWriter.ALLOW_MODIFY_CONTENTS), PdfWriter.STANDARD_ENCRYPTION_128);
 
-        _imagePath = imagePath;
+    final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"), Locale.GERMAN);
+    cal.setTimeInMillis(System.currentTimeMillis());
+    final String date = cal.get(Calendar.DAY_OF_MONTH) + "." + (cal.get(Calendar.MONTH) + 1) + "."
+        + cal.get(Calendar.YEAR);
 
-        doc.open();
+    _imagePath = imagePath;
 
-        PdfContentByte cb = pdfWriter.getDirectContent();
-        pdfHelper.createHeaderBlock(cb, pdfTexts);
-        createTreeCountAndCustomTextBlock(cb, pdfTexts);
-        createLawTextDateAndSignatureBlock(cb, pdfTexts, date);
-        pdfHelper.createCertificateImage(cb, imagePath, languageShortname, 165f, 550f);
-        pdfHelper.addLogo(cb, imagePath, 262f, 20f);
+    doc.open();
 
-        doc.close();
+    PdfContentByte cb = pdfWriter.getDirectContent();
+    pdfHelper.createBackground(cb);
+    pdfHelper.addLogo2023(cb, imagePath, 50f, 730f);
+    pdfHelper.addTreeImage(cb, imagePath+ "/Speierling_color.jpg", 285f, 510f, 17f);
+    pdfHelper.createDividerLine(cb, 0, 690, 335);
+    pdfHelper.createDividerLine(cb, 560, 690, 40);
+    pdfHelper.createBrownRectangle(cb, 0, 320, 595, 190);
+    pdfHelper.addHeader(cb, fontPath, pdfTexts.get("certificate.header_text"));
+    createTreeCountAndCustomTextBlock(cb, pdfTexts, fontPath);
+    createLawTextDateAndSignatureBlock(cb, pdfTexts, date, fontPath);
+    pdfHelper.addFooter(cb, fontPath, pdfTexts);
+    // pdfHelper.createCertificateImage(cb, imagePath, languageShortname, 165f,
+    // 550f);
+    // pdfHelper.addLogo(cb, imagePath, 262f, 20f);
+
+    doc.close();
+  }
+
+  private void createTreeCountAndCustomTextBlock(PdfContentByte cb, Map<String, String> pdfTexts, String fontPath)
+      throws DocumentException, IOException {
+    BaseColor background = new BaseColor(220, 220, 214);
+    BaseColor brown = new BaseColor(101, 89, 78);
+    BaseFont bull = BaseFont.createFont(fontPath + "/Bull-5-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+    
+    Font textFont = new Font(bull, 18, Font.NORMAL, background);
+    Font textFontTreeCount = new Font(bull, 35, Font.NORMAL, background);
+    Font customTextFont = new Font(bull, 12, Font.NORMAL, brown);
+
+    PdfPTable table = new PdfPTable(1);
+    float[] rows = { 595f };
+    table.setTotalWidth(rows);
+    table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+    table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+    table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+    PdfPCell aboutCell = new PdfPCell(new Phrase(new Chunk(pdfTexts.get("certificate.about"), textFont)));
+    aboutCell.setBorder(0);
+    aboutCell.setMinimumHeight(22);
+    aboutCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    aboutCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+
+    PdfPCell treeCountCell = new PdfPCell(new Phrase(new Chunk(pdfTexts.get("treeCount"), textFontTreeCount)));
+    treeCountCell.setBorder(0);
+    treeCountCell.setMinimumHeight(40);
+    treeCountCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    treeCountCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+
+    PdfPCell treeCell = null;
+    if (pdfTexts.get("treeCount").equals("1")) {
+      treeCell = new PdfPCell(new Phrase(new Chunk(pdfTexts.get("certificate.tree"), textFont)));
+    } else {
+      treeCell = new PdfPCell(new Phrase(new Chunk(pdfTexts.get("certificate.trees"), textFont)));
     }
+    treeCell.setMinimumHeight(22);
+    treeCell.setBorder(0);
+    treeCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    treeCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
-    private void createTreeCountAndCustomTextBlock(PdfContentByte cb, Map<String, String> pdfTexts) throws DocumentException {
-        Font textFont = new Font(FontFamily.TIMES_ROMAN, 16, Font.ITALIC, BaseColor.BLACK);
-        Font textFontTreeCount = new Font(FontFamily.HELVETICA, 30, Font.BOLD, BaseColor.BLACK);
-        Font customTextFont = new Font(FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
+    table.addCell(aboutCell);
+    table.addCell(treeCountCell);
+    table.addCell(treeCell);
+    table.writeSelectedRows(0, 3, 0, 500, cb);
 
-        cb.saveState();
-        cb.setRGBColorFill(0xE0, 0xDE, 0xDF);
-        cb.rectangle(0.0f, 325.0f, 595.0f, 205.0f);
-        cb.fill();
-        cb.stroke();
-        cb.restoreState();
+    cb.saveState();
+    cb.setRGBColorFill(0xDC, 0xDC, 0xD6);
+    cb.rectangle(50.0f, 335.0f, 495.0f, 60.0f);
+    cb.fill();
+    cb.stroke();
+    cb.restoreState();
 
-        PdfPTable table = new PdfPTable(1);
-        float[] rows = { 595f };
-        table.setTotalWidth(rows);
-        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-        table.getDefaultCell().setFixedHeight(35);
-        table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.about"), textFont)));
-        table.addCell(new Phrase(new Chunk(pdfTexts.get("treeCount"), textFontTreeCount)));
-        table.addCell(new Phrase(new Chunk(pdfTexts.get("certificate.trees"), textFont)));
-        table.writeSelectedRows(0, 3, 0, 520, cb);
+    PdfPTable textTable = new PdfPTable(1);
+    float[] textRows = { 475f };
+    textTable.setTotalWidth(textRows);
+    textTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+    textTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+    textTable.getDefaultCell().setMinimumHeight(14);
+    textTable.addCell(new Phrase(new Chunk(pdfTexts.get("certificateText"), customTextFont)));
+    textTable.writeSelectedRows(0, 1, 55, 390, cb);
+  }
 
-        cb.saveState();
-        cb.setRGBColorFill(0xF7, 0xF2, 0xF4);
-        cb.rectangle(50.0f, 345.0f, 495.0f, 60.0f);
-        cb.fill();
-        cb.stroke();
-        cb.restoreState();
+  private void createLawTextDateAndSignatureBlock(PdfContentByte cb, Map<String, String> pdfTexts, String date, String fontPath)
+      throws DocumentException, MalformedURLException, IOException {
+    BaseFont bull = BaseFont.createFont(fontPath + "/Bull-5-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+    
+    
+    Font textFont = new Font(bull, 11, Font.NORMAL, BaseColor.BLACK);
+    Font textFontSmall = new Font(bull, 9, Font.NORMAL, BaseColor.BLACK);
 
-        PdfPTable textTable = new PdfPTable(1);
-        float[] textRows = { 475f };
-        textTable.setTotalWidth(textRows);
-        textTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-        textTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-        textTable.getDefaultCell().setFixedHeight(40);
-        textTable.addCell(new Phrase(new Chunk(pdfTexts.get("certificateText"), customTextFont)));
-        textTable.writeSelectedRows(0, 1, 60, 395, cb);
-    }
+    PdfPTable table = new PdfPTable(1);
+    float[] rows = { 485f };
+    table.setTotalWidth(rows);
+    table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+    table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+    table.getDefaultCell().setVerticalAlignment(Element.ALIGN_TOP);
 
-    private void createLawTextDateAndSignatureBlock(PdfContentByte cb, Map<String, String> pdfTexts, String date) throws DocumentException, MalformedURLException, IOException {
-        Font textFont = new Font(FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
-        Font textFontBold = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
-        Font textFontSmall = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
+    table.getDefaultCell().setFixedHeight(75);
 
-        PdfPTable table = new PdfPTable(2);
-        float[] rows = { 247.5f, 247.5f };
-        table.setTotalWidth(rows);
-        table.getDefaultCell().setBorder(Rectangle.BOTTOM);
-        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_TOP);
+    Phrase certifyTextPhrase = new Phrase();
+    certifyTextPhrase.add(new Chunk(pdfTexts.get("certificate.planted_from"), textFont));
+    certifyTextPhrase.add(new Chunk("#" + pdfTexts.get("certificateNumber") + " ", textFont));
+    certifyTextPhrase.add(new Chunk(pdfTexts.get("certificate.certify_text_1"), textFont));
+    certifyTextPhrase.add(new Chunk(Chunk.NEWLINE));
+    certifyTextPhrase.add(new Chunk(pdfTexts.get("certificate.certify_text_2"), textFont));
 
-        table.getDefaultCell().setFixedHeight(75);
+    PdfPCell certifyTextCell = new PdfPCell(certifyTextPhrase);
+    certifyTextCell.setBorder(0);
+    certifyTextCell.setLeading(2,1);
 
-        Phrase leftPhrase = new Phrase();
-        leftPhrase.add(new Chunk(pdfTexts.get("certificate.certify_text"), textFont));
-        leftPhrase.add(new Chunk(pdfTexts.get("certificate.planted_from"), textFont));
-        leftPhrase.add(new Chunk(Chunk.NEWLINE));
-        leftPhrase.add(new Chunk("#" + pdfTexts.get("certificateNumber"), textFontBold));
+    table.addCell(certifyTextCell);
+    table.writeSelectedRows(0, 1, 50, 305, cb);
 
-        Phrase rightPhrase = new Phrase(10f);
-        rightPhrase.add(new Chunk(pdfTexts.get("certificate.no_confirmation"), textFont));
+    pdfHelper.createDividerLine(cb, 50, 230, 485);
 
-        PdfPCell rightCell = new PdfPCell();
-        rightCell.setPaddingLeft(10.0f);
-        rightCell.setBorder(Rectangle.BOTTOM);
-        rightCell.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
-        rightCell.setVerticalAlignment(Element.ALIGN_TOP);
-        rightCell.addElement(rightPhrase);
 
-        PdfPCell dateCell = new PdfPCell();
-        dateCell.setPaddingTop(10.0f);
-        dateCell.setBorder(Rectangle.NO_BORDER);
-        dateCell.addElement(new Phrase(new Chunk(pdfTexts.get("certificate.halle") + " " + date, textFont)));
+    PdfPTable locationDateTable = new PdfPTable(1);
+    float[] locationDateRows = { 200f };
+    locationDateTable.setTotalWidth(locationDateRows);
 
-        PdfPCell emptyCell = new PdfPCell();
-        emptyCell.setBorder(Rectangle.NO_BORDER);
+    PdfPCell locationDateCell = new PdfPCell();
+    locationDateCell.setBorder(Rectangle.NO_BORDER);
+    locationDateCell.addElement(new Phrase(new Chunk(pdfTexts.get("certificate.halle") + " " + date, textFont)));
+    locationDateCell.setBorder(0);
 
-        final Image signatureImage = Image.getInstance(getClass().getResource(_imagePath + "/Unterschrift150.jpg"));
-        final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/stamp.jpg"));
-        PdfPTable signatureAndStamp = new PdfPTable(2);
-        float[] rowss = { 80f, 167.5f };
-        signatureAndStamp.setTotalWidth(rowss);
-        signatureAndStamp.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-        signatureAndStamp.addCell(signatureImage);
-        signatureAndStamp.addCell(stampImage);
+    locationDateTable.addCell(locationDateCell);
+    locationDateTable.writeSelectedRows(0, 1, 50, 230, cb);
 
-        PdfPCell underSignatureCell = new PdfPCell();
-        underSignatureCell.setBorder(Rectangle.NO_BORDER);
-        underSignatureCell.setPadding(0f);
+    final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/signature_and_stamp.jpg"));
 
-        Phrase underSignaturePhrase = new Phrase(10f);
-        underSignaturePhrase.add(new Chunk(pdfTexts.get("certificate.founder"), textFontSmall));
+    PdfPTable signatureAndStamp = new PdfPTable(1);
+    float[] rowss = { 250f };
+    signatureAndStamp.setTotalWidth(rowss);
+    signatureAndStamp.getDefaultCell().setVerticalAlignment(Element.ALIGN_BOTTOM);
+    signatureAndStamp.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+    signatureAndStamp.addCell(stampImage);
+    signatureAndStamp.writeSelectedRows(0, 1, 250, 212, cb);
 
-        underSignatureCell.addElement(underSignaturePhrase);
-        underSignatureCell.setVerticalAlignment(Element.ALIGN_TOP);
+    pdfHelper.createDividerLine(cb, 250, 130, 285);
 
-        table.addCell(leftPhrase);
-        table.addCell(rightCell);
+    PdfPTable underSignatureTable = new PdfPTable(1);
+    float[] underSignatureRows = { 250f };
+    underSignatureTable.setTotalWidth(underSignatureRows);
 
-        table.addCell(dateCell);
-        table.addCell(signatureAndStamp);
 
-        table.addCell(emptyCell);
-        table.addCell(underSignatureCell);
+    Phrase underSignaturePhrase = new Phrase(10f);
+    underSignaturePhrase.add(new Chunk(pdfTexts.get("certificate.founder"), textFont));
 
-        table.writeSelectedRows(0, 4, 50, 305, cb);
-    }
+    PdfPCell underSignatureCell = new PdfPCell(underSignaturePhrase);
+    underSignatureCell.setBorder(Rectangle.NO_BORDER);
+    underSignatureCell.setPadding(0f);
+    underSignatureCell.setVerticalAlignment(Element.ALIGN_TOP);
+    underSignatureTable.addCell(underSignatureCell);
+    underSignatureTable.writeSelectedRows(0, 1, 250, 127, cb);
+
+  }
 
 }
