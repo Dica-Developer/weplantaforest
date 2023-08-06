@@ -29,7 +29,7 @@ export interface TeamDetails {
   type: string;
   teamLeader: string;
   membersAmount: string;
-  teamDescrition: string;
+  teamDescription: string;
   imageFileName: string;
   teamImageUrl: string;
 }
@@ -98,6 +98,10 @@ const teamReducer = createReducer(
       teamDetails: {
         ...details,
         teamImageUrl: `${environment.backendUrl}/team/image/${details.imageFileName}/150/150`,
+        co2Data: {
+          ...details.co2Data,
+          co2: parseFloat((Math.round(details.co2Data.co2 * 100) / 100).toFixed(2)),
+        }
       },
     };
   }),
