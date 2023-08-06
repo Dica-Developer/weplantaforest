@@ -1,11 +1,28 @@
 <div
   class="is-flex is-flex-direction-column w-100 padding-2 border-bottom"
-  *ngIf="receipts"
+  *ngIf="receiptPages.get(activePage)"
 >
-  <h4 class="center">{{ 'receipts' | translate }}</h4>
+  <h4 class="center">
+    <div class="paging-icon">
+      <mat-icon class="paging-icon" *ngIf="activePage !== 0" (click)="decrementActivePage()"
+        >arrow_left</mat-icon
+      >
+    </div>
+    <div class="center-text">
+      {{ 'receipts' | translate }}
+    </div>
+    <div class="paging-icon">
+      <mat-icon
+        class="paging-icon"
+        (click)="incrementActivePage()"
+        *ngIf="activePage !== receiptPages.size - 1"
+        >arrow_right</mat-icon
+      >
+    </div>
+  </h4>
   <div
     class="columns is-flex is-flex-direction-row is-multiline"
-    *ngFor="let receipt of receipts"
+    *ngFor="let receipt of receiptPages.get(activePage)"
   >
     <div class="column is-1 is-offset-5">
       {{ receipt.createdOn | date : 'dd.MM.yyyy' }}

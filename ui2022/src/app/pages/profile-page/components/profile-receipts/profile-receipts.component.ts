@@ -10,8 +10,25 @@ import { ProfileReceipt } from '../../../../store/profile.store';
   styleUrls: ['./profile-receipts.component.scss'],
 })
 export class ProfileReceiptsComponent implements OnInit {
+  receiptPages: Map<number, ProfileReceipt[]> = new Map<number, ProfileReceipt[]>();
+
+  activePage: number = 0;
+
   @Input()
-  receipts: ProfileReceipt[];
+  set receipts(receipts: ProfileReceipt[]) {
+    this.receiptPages = new Map<number, ProfileReceipt[]>();
+    let pageCnt = 0;
+    if (receipts && receipts.length > 0) {
+      for (let i = 0; i < receipts.length; i += 5) {
+        const chunk = receipts.slice(i, i + 5);
+        this.receiptPages.set(pageCnt, chunk);
+        pageCnt++;
+      }
+    }
+    console.log(this.receiptPages);
+    
+
+  }
 
   constructor(private store: Store<AppState>) {}
 
@@ -19,5 +36,13 @@ export class ProfileReceiptsComponent implements OnInit {
 
   downloadReceipt(receiptId: number) {
     this.store.dispatch(downloadReceiptPdf({ receiptId }));
+  }
+
+  incrementActivePage() {
+    this.activePage++;
+  }
+
+  decrementActivePage() {
+    this.activePage--;
   }
 }
