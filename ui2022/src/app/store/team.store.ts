@@ -20,7 +20,7 @@ export interface TeamMember {
 }
 
 export interface TeamDetails {
-  id: number;
+  teamId: number;
   teamName: string;
   rank: number;
   co2Data: Co2Data;
@@ -104,7 +104,7 @@ const teamReducer = createReducer(
       ...state,
       teamDetails: {
         ...details,
-        teamImageUrl: `${environment.backendUrl}/team/image/${details.imageFileName}/150/150`,
+        teamImageUrl: `${environment.backendUrl}/team/image/${details.teamId}/150/150`,
         co2Data: {
           ...details.co2Data,
           co2: parseFloat((Math.round(details.co2Data.co2 * 100) / 100).toFixed(2)),

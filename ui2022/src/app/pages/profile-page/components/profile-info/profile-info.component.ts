@@ -19,4 +19,11 @@ export class ProfileInfoComponent implements OnInit {
     let username = localStorage.getItem('username');
     this.router.navigate(['/editProfile/' + username]);
   }
+
+  routeToTeam() {
+    console.log('routing to team');
+    
+    this.router.navigate(['/team/' + this.teamDetails.teamName]);
+  }
+
 }

@@ -18,7 +18,7 @@
       </div>
       <div class="column is-half is-flex is-justify-content-center">
         <div class="imageWrapper">
-          <img src="{{ profileDetails.profileImageUrl }}" alt="" />
+          <img src="{{ profileDetails.profileImageUrl }}" alt="" *ngIf="!profileDetails.profileImageUrl.includes(null)"/>
           <img
             *ngIf="profileDetails.profileImageUrl.includes(null)"
             src="assets/default_user.jpg"
@@ -54,12 +54,11 @@
 
   <div class="column is-half border-bottom">
     <div class="columns w-100 padding-2 border-bottom" *ngIf="teamDetails">
-      <div class="column is-half">
+      <div class="column is-half pointer" (click)="routeToTeam()">
         <h2>
           {{ 'team' | translate }}
         </h2>
-        <h4>{{ profileDetails.teamName }}</h4>
-        <h4>{{ profileDetails.organisation }}</h4>
+        <h4>{{ teamDetails.teamName }}</h4>
       </div>
       <div class="column is-half">
         <div class="imageWrapper">
@@ -81,12 +80,16 @@
     <div class="columns padding-2 border-bottom" *ngIf="teamDetails">
       <div class="column is-half">
         <p>{{ 'rank' | translate }}: {{ teamDetails.rank }}</p>
-        <p>{{ 'treesPlanted' | translate }}: {{ teamDetails.treesPlanted }}</p>
-        <p innerHTML="{{ ('CO2Trapped' | translate) + ': ' + teamDetails.CO2Trapped + ' t' }}"></p>
-        <p>{{ 'website' | translate }}: {{ teamDetails.website }}</p>
+        <p>{{ 'treesPlanted' | translate }}: {{ teamDetails.co2Data?.treesCount }}</p>
+        <p
+          innerHTML="{{ ('CO2Trapped' | translate) + ': ' + teamDetails.co2Data?.co2 + ' t' }}"
+        ></p>
+        <p class="incognito">
+          {{ 'treesPlanted' | translate }}: {{ teamDetails.co2Data?.treesCount }}
+        </p>
       </div>
       <div class="column is-half">
-        <p>{{ 'memberSince' | translate }}: {{ teamDetails.rank }}</p>
+        <p>{{ 'memberSince' | translate }}: {{ teamDetails.regDate | date : 'dd.MM.yyyy' }}</p>
         <p>{{ 'teamLeader' | translate }}: {{ teamDetails.adminName }}</p>
         <p>{{ 'members' | translate }}: {{ teamDetails.memberCount }}</p>
       </div>
