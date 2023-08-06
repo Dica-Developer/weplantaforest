@@ -67,7 +67,14 @@ export interface TeamState {
 export const initialState: TeamState = {
   teams: [],
   teamDetails: null,
-  members: null,
+  members: {
+    totalPages: 0,
+    totalElements: 0,
+    numberOfElements: 0,
+    last: true,
+    first: true,
+    content: [],
+  },
 };
 
 const teamReducer = createReducer(

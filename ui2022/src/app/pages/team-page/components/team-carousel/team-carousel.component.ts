@@ -18,15 +18,7 @@ export class TeamCarouselComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  ngAfterViewInit() {
-    this.currentMemberPage = 1;
-    this.store.dispatch(
-      loadTeamMember({
-        teamName: this.teamDetails?.teamName,
-        page: this.currentMemberPage,
-      }),
-    );
-  }
+  ngAfterViewInit() {}
 
   fetchNextPage(page: number) {
     this.currentMemberPage = this.currentMemberPage + page;
