@@ -42,7 +42,7 @@
     <div class="column is-1">{{ '   ' }}</div>
   </div>
 
-  <div class="columns is-flex is-flex-direction-row is-multiline">
+  <div class="columns is-flex is-flex-direction-row is-multiline"  *ngIf="receiptPages.size > 1">
     <div class="column is-4 is-offset-4">
       <app-paging
         [activePage]="activePage"

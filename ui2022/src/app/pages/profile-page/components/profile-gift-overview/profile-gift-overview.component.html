@@ -77,7 +77,7 @@
                 <div class="column is-1">{{ '   ' }}</div>
                 <div class="column is-3">{{ '   ' }}</div>
               </div>
-              <div class="columns">
+              <div class="columns" *ngIf="consignorGiftPages.size > 1">
                 <div class="column is-10 is-offset-1">
                   <app-paging
                   [activePage]="activeConsignorGiftPage"
@@ -122,7 +122,7 @@
                 <div class="column is-1">{{ '   ' }}</div>
                 <div class="column is-3">{{ '   ' }}</div>
               </div>
-              <div class="columns">
+              <div class="columns" *ngIf="recipientGiftPages.size > 1">
                 <div class="column is-8 is-offset-2">
                   <app-paging
                   [activePage]="activeRecipientGiftPage"
