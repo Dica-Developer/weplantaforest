@@ -25,15 +25,7 @@
             <div class="column is-6">
               <h4>{{ 'created' | translate }}</h4>
               <div class="columns">
-                <div class="column is-1">
-                  <mat-icon
-                    class="paging-icon"
-                    *ngIf="activeConsignorGiftPage !== 0"
-                    (click)="getPreviousConsignorGiftPage()"
-                    >arrow_left</mat-icon
-                  >
-                </div>
-                <div class="column is-3">
+                <div class="column is-3 is-offset-1">
                   <b>{{ 'code' | translate }}</b>
                 </div>
                 <div class="column is-1">
@@ -51,21 +43,12 @@
                 <div class="column is-1">
                   <b>{{ 'again' | translate }}</b>
                 </div>
-                <div class="column is-1">
-                  <mat-icon
-                    class="paging-icon"
-                    (click)="getNextConsignorGiftPage()"
-                    *ngIf="activeConsignorGiftPage !== consignorGiftPages.size - 1"
-                    >arrow_right</mat-icon
-                  >
-                </div>
               </div>
               <div
                 class="columns"
-                *ngFor="let gift of getConsignorGiftPage(activeConsignorGiftPage)"
+                *ngFor="let gift of consignorGiftPages.get(activeConsignorGiftPage)"
               >
-                <div class="column is-1"></div>
-                <div class="column is-3">{{ gift.code.code }}</div>
+                <div class="column is-3 is-offset-1">{{ gift.code.code }}</div>
                 <div class="column is-1">{{ gift.code.cart.treeCount }}</div>
                 <div class="column is-1">{{ gift.code.cart.totalPrice | currency }}</div>
                 <div class="column is-3">{{ gift.recipient?.name ? gift.recipient.name : '' }}</div>
@@ -84,22 +67,30 @@
                     <mat-icon aria-hidden="false">autorenew</mat-icon>
                   </button>
                 </div>
-                <div class="column is-1"></div>
+              </div>
+              <div
+                class="columns"
+                *ngFor="let fakeLine of [].constructor(5 - consignorGiftPages.get(activeConsignorGiftPage).length)"
+              >
+                <div class="column is-4">{{ '   ' }}</div>
+                <div class="column is-1">{{ '   ' }}</div>
+                <div class="column is-1">{{ '   ' }}</div>
+                <div class="column is-3">{{ '   ' }}</div>
+              </div>
+              <div class="columns">
+                <div class="column is-10 is-offset-1">
+                  <app-paging
+                  [activePage]="activeConsignorGiftPage"
+                  [totalPageCount]="consignorGiftPages.size"
+                  (pageChanged)="setConsignorGiftPage($event)"
+                ></app-paging>
+                </div>
               </div>
             </div>
             <div class="column">
               <h4>{{ 'consigned' | translate }}</h4>
               <div class="columns">
-                <div class="column is-1">
-                  <mat-icon
-                    class="paging-icon"
-                    *ngIf="activeRecipientGiftPage !== 0"
-                    (click)="getPreviousRecipientGiftPage()"
-                    >arrow_left</mat-icon
-                  >
-                </div>
-
-                <div class="column is-4">
+                <div class="column is-4 is-offset-2">
                   <b>{{ 'code' | translate }}</b>
                 </div>
                 <div class="column is-1">
@@ -108,16 +99,8 @@
                 <div class="column is-1">
                   <b>{{ 'price' | translate }}</b>
                 </div>
-                <div class="column is-3">
+                <div class="column is-2">
                   <b>{{ 'createdBy' | translate }}</b>
-                </div>
-                <div class="column is-1">
-                  <mat-icon
-                    class="paging-icon"
-                    (click)="getNextRecipientGiftPage()"
-                    *ngIf="activeRecipientGiftPage !== recipientGiftPages.size - 1"
-                    >arrow_right</mat-icon
-                  >
                 </div>
               </div>
 
@@ -125,12 +108,28 @@
                 class="columns"
                 *ngFor="let gift of recipientGiftPages.get(activeRecipientGiftPage)"
               >
-                <div class="column is-1"></div>
-                <div class="column is-4">{{ gift.code.code }}</div>
+                <div class="column is-4 is-offset-2">{{ gift.code.code }}</div>
                 <div class="column is-1">{{ gift.code.cart.treeCount }}</div>
                 <div class="column is-1">{{ gift.code.cart.totalPrice | currency }}</div>
-                <div class="column is-3">{{ gift.consignor?.name ? gift.consignor.name : '' }}</div>
-                <div class="column is-1"></div>
+                <div class="column is-2">{{ gift.consignor?.name ? gift.consignor.name : '' }}</div>
+              </div>
+              <div
+                class="columns"
+                *ngFor="let fakeLine of [].constructor(5 - recipientGiftPages.get(activeRecipientGiftPage).length)"
+              >
+                <div class="column is-4">{{ '   ' }}</div>
+                <div class="column is-1">{{ '   ' }}</div>
+                <div class="column is-1">{{ '   ' }}</div>
+                <div class="column is-3">{{ '   ' }}</div>
+              </div>
+              <div class="columns">
+                <div class="column is-8 is-offset-2">
+                  <app-paging
+                  [activePage]="activeRecipientGiftPage"
+                  [totalPageCount]="recipientGiftPages.size"
+                  (pageChanged)="setRecipientGiftPage($event)"
+                ></app-paging>
+                </div>
               </div>
             </div>
           </div>

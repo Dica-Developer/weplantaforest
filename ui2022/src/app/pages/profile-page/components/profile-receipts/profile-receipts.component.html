@@ -2,35 +2,27 @@
   class="is-flex is-flex-direction-column w-100 padding-2 border-bottom"
   *ngIf="receiptPages.get(activePage)"
 >
-  <h4 class="center">
-    <div class="paging-icon">
-      <mat-icon class="paging-icon" *ngIf="activePage !== 0" (click)="decrementActivePage()"
-        >arrow_left</mat-icon
-      >
+  <div
+    class="columns is-flex is-flex-direction-row is-multiline"
+   
+  >
+    <div class="column is-4 is-offset-4">
+      <h4 class="center">
+        {{ 'receipts' | translate }}
+      </h4>
     </div>
-    <div class="center-text">
-      {{ 'receipts' | translate }}
-    </div>
-    <div class="paging-icon">
-      <mat-icon
-        class="paging-icon"
-        (click)="incrementActivePage()"
-        *ngIf="activePage !== receiptPages.size - 1"
-        >arrow_right</mat-icon
-      >
-    </div>
-  </h4>
+  </div>
   <div
     class="columns is-flex is-flex-direction-row is-multiline"
     *ngFor="let receipt of receiptPages.get(activePage)"
   >
-    <div class="column is-1 is-offset-5">
+    <div class="column is-1 is-offset-4">
       {{ receipt.createdOn | date : 'dd.MM.yyyy' }}
     </div>
-    <div class="column is-1">
+    <div class="column is-2">
       {{ receipt.invoiceNumber }}
     </div>
-    <div class="column is-2">
+    <div class="column is-1">
       <button
         mat-icon-button
         color="primary"
@@ -39,6 +31,24 @@
       >
         <mat-icon aria-hidden="false">file_download</mat-icon>
       </button>
+    </div>
+  </div>
+  <div
+    class="columns is-flex is-flex-direction-row is-multiline"
+    *ngFor="let fakeLine of [].constructor(5 - receiptPages.get(activePage).length); let i = index"
+  >
+    <div class="column is-1 is-offset-4">{{ '   ' }}</div>
+    <div class="column is-2">{{ '   ' }}</div>
+    <div class="column is-1">{{ '   ' }}</div>
+  </div>
+
+  <div class="columns is-flex is-flex-direction-row is-multiline">
+    <div class="column is-4 is-offset-4">
+      <app-paging
+        [activePage]="activePage"
+        [totalPageCount]="receiptPages.size"
+        (pageChanged)="setActivePage($event)"
+      ></app-paging>
     </div>
   </div>
 </div>

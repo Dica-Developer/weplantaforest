@@ -38,6 +38,10 @@ export class ProfileReceiptsComponent implements OnInit {
     this.store.dispatch(downloadReceiptPdf({ receiptId }));
   }
 
+  setActivePage(page: number) {
+    this.activePage = page;
+  }
+
   incrementActivePage() {
     this.activePage++;
   }

@@ -120,31 +120,12 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/plant');
   }
 
-  getConsignorGiftPage(page: number) {
-    return this.consignorGiftPages.get(page);
+  setConsignorGiftPage(page: number) {
+    this.activeConsignorGiftPage = page;
   }
 
-  getPreviousConsignorGiftPage() {
-    if (this.activeConsignorGiftPage > 0) {
-      this.activeConsignorGiftPage--;
-    }
-  }
 
-  getNextConsignorGiftPage() {
-    if (this.activeConsignorGiftPage < this.consignorGiftPages.size - 1) {
-      this.activeConsignorGiftPage++;
-    }
-  }
-
-  getNextRecipientGiftPage() {
-    if (this.activeRecipientGiftPage < this.recipientGiftPages.size - 1) {
-      this.activeRecipientGiftPage++;
-    }
-  }
-
-  getPreviousRecipientGiftPage() {
-    if (this.activeRecipientGiftPage > 0) {
-      this.activeRecipientGiftPage--;
-    }
+  setRecipientGiftPage(page: number) {
+    this.activeRecipientGiftPage = page;
   }
 }

@@ -51,6 +51,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { CaptchaComponent } from './common-components/captcha/captcha.component';
 import { ProjectHeaderComponent } from '../pages/project-page/components/project-header/project-header.component';
 import { ProjectDescriptionComponent } from '../pages/project-page/components/project-description/project-description.component';
+import { PagingComponent } from './common-components/paging/paging.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { ProjectDescriptionComponent } from '../pages/project-page/components/pr
     CaptchaComponent,
     ProjectHeaderComponent,
     ProjectDescriptionComponent,
+    PagingComponent,
   ],
   imports: [
     CommonModule,
@@ -136,6 +138,7 @@ import { ProjectDescriptionComponent } from '../pages/project-page/components/pr
     CaptchaComponent,
     ProjectHeaderComponent,
     ProjectDescriptionComponent,
+    PagingComponent
   ],
 })
 export class UtilModule {}

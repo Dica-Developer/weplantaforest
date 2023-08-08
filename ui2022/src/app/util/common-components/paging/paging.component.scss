@@ -1,0 +1,34 @@
+.paging-wrapper {
+  text-align: center;
+}
+
+.paging-icon {
+  height: 4rem;
+  width: 4rem;
+  font-size: 4rem;
+  cursor: pointer;
+}
+
+div.stats {
+  min-height: 4rem;
+  display: inline-block;
+  text-align: center;
+
+  p {
+    margin-top: 30px;
+    font-size: 1.3rem;
+  }
+}
+
+button {
+  border: 0;
+  background: var(--background);
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
