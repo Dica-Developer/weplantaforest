@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
@@ -6,6 +6,7 @@ import { logout } from '../../../store/auth.store';
 import { environment } from '../../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { selectPlantbagPriceFormatted } from '../../../store/plantbag.store';
+import { SearchOverlayComponent } from '../search-overlay/search-overlay.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -23,6 +24,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   plantBagPrice$ = this.store.select(selectPlantbagPriceFormatted);
   showScaleClass = false;
   plantBagPriceSub: Subscription;
+  @ViewChild('searchOverlay') searchOverlay: SearchOverlayComponent;
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
@@ -79,6 +81,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       window.scroll(0, 0);
     }
     this.overlayIsOpen = !this.overlayIsOpen;
+    this.searchOverlay.focusSearch();
   }
 
   ngOnDestroy() {

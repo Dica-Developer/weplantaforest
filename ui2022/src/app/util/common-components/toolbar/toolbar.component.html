@@ -48,7 +48,7 @@
 </mat-toolbar>
 
 <div class="overlay" [ngClass]="overlayIsOpen ? 'overlayOpen' : ''">
-  <app-search-overlay (searchClosed)="toggleSearch()"></app-search-overlay>
+  <app-search-overlay #searchOverlay (searchClosed)="toggleSearch()"></app-search-overlay>
 </div>
 
 <app-mobile-menu

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -16,6 +16,7 @@ export class SearchOverlayComponent implements OnInit {
   control: FormControl = new FormControl('');
   searchResults$ = this.store.select(selectSearchResults);
   valueChangeSub: Subscription;
+  @ViewChild('search') searchElement: ElementRef;
 
   constructor(private store: Store<AppState>) {}
 
@@ -25,6 +26,14 @@ export class SearchOverlayComponent implements OnInit {
         this.store.dispatch(search({ searchValue }));
       }
     });
+  }
+
+  focusSearch() {
+    setTimeout(() => {
+      // this will make the execution after the above boolean has changed
+      this.searchElement.nativeElement.focus();
+      console.log('inside search');
+    }, 0);
   }
 
   closeSearch() {
