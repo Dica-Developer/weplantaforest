@@ -16,6 +16,7 @@ import {
   selectPlantbag,
   selectPlantbagPrice,
 } from '../../store/plantbag.store';
+import { selectAuthenticated } from "../../store/auth.store";
 
 @Component({
   selector: 'app-plantbag-page',
@@ -32,6 +33,8 @@ export class PlantbagPageComponent implements OnInit, OnDestroy {
 
   isGift: boolean;
   giftSub: Subscription;
+
+  loggedIn$ = this.store.select(selectAuthenticated);
 
   constructor(private store: Store<AppState>, private router: Router) {}
 

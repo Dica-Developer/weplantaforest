@@ -242,5 +242,6 @@
   "giftRedeemInfoHeader": "Du bist nicht eingeloggt! Nur als registrierter Nutzer kannst du Gutscheine einlösen.",
   "giftRedeemInfoDescription1": "Nur als registrierter Nutzer bekommst du automatisch eine Spendenquittung, ein eigenes Profil und kannst Zertifikate sowie Gutscheine erstellen.",
   "giftRedeemInfoDescription2": "Du hast einen Account?",
-  "giftRedeemInfoDescription3": "Du hast noch keinen Account?"
+  "giftRedeemInfoDescription3": "Du hast noch keinen Account?",
+  "plantBagInfoText": "Nur als registrierter Nutzer bekommst du automatisch eine Spendenquittung, ein eigenes Profil und kannst Zertifikate sowie Gutscheine erstellen."
 }

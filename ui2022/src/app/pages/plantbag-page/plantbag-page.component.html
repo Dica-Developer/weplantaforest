@@ -17,10 +17,24 @@
     <div class="column">
       <app-plantbag></app-plantbag>
     </div>
-  </div>  
+  </div>
 </div>
 
-<div class="columns padding-2 padding-right" *ngIf="(plantBagPrice$ | async) > 0">
+<div class="columns padding-left padding-2 padding-right" *ngIf="(plantBagPrice$ | async) > 0">
+  <div class="column is-8" *ngIf="!(loggedIn$ | async)">
+    <p class="p-header">
+      Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung
+    </p>
+    <p>{{ 'plantBagInfoText' | translate }}</p>
+    <p>
+      {{ ('giftRedeemInfoDescription2' | translate) + ' '
+      }}<a routerLink="/login">{{ 'login' | translate }}</a>
+    </p>
+    <p>
+      {{ ('giftRedeemInfoDescription3' | translate) + ' '
+      }}<a routerLink="/signup">{{ 'registerHere' | translate }}</a>
+    </p>
+  </div>
   <div class="column checkout-btn">
     <app-button
       label="{{ 'GoToCheckout' | translate }}"
