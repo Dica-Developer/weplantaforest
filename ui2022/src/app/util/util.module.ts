@@ -52,6 +52,7 @@ import { CaptchaComponent } from './common-components/captcha/captcha.component'
 import { ProjectHeaderComponent } from '../pages/project-page/components/project-header/project-header.component';
 import { ProjectDescriptionComponent } from '../pages/project-page/components/project-description/project-description.component';
 import { PagingComponent } from './common-components/paging/paging.component';
+import { ProfileRedeemGiftComponent } from "../pages/profile-page/components/profile-redeem-gift/profile-redeem-gift.component";
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { PagingComponent } from './common-components/paging/paging.component';
     ProjectHeaderComponent,
     ProjectDescriptionComponent,
     PagingComponent,
+    ProfileRedeemGiftComponent
   ],
   imports: [
     CommonModule,
@@ -138,7 +140,8 @@ import { PagingComponent } from './common-components/paging/paging.component';
     CaptchaComponent,
     ProjectHeaderComponent,
     ProjectDescriptionComponent,
-    PagingComponent
+    PagingComponent,
+    ProfileRedeemGiftComponent
   ],
 })
 export class UtilModule {}
