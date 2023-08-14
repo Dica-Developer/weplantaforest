@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  api-user-dev:
+    container_name: ipat-api-user
+    image: ipat-api-user
+    build:
+      context: .
+      dockerfile: ./Dockerfile-api
+    command: sh -c "./gradlew user:bootRun"
+    ports: 
+      - 8081:8081
+    networks:
+      - ipat-backend
+    depends_on:
+      - ipat-mysql
+
+  api-admin-dev:
+    container_name: ipat-api-admin
+    image: ipat-api-admin
+    build:
+      context: .
+      dockerfile: ./Dockerfile-api
+    command: sh -c "./gradlew admin:bootRun"
+    ports: 
+      - 8082:8082
+    networks:
+      - ipat-backend
+    depends_on:
+      - ipat-mysql
+
+  api-article-manager-dev:
+    container_name: ipat-api-article-manager
+    image: ipat-api-article-manager
+    build:
+      context: .
+      dockerfile: ./Dockerfile-api
+    command: sh -c "./gradlew article-manager:bootRun"
+    ports: 
+      - 8083:8083
+    networks:
+      - ipat-backend
+    depends_on:
+      - ipat-mysql
+
+  ipat-mysql:
+    container_name: ipat-mysql
+    build:
+      context: ./
+      dockerfile: Dockerfile-mysql
+    environment:
+        MYSQL_DATABASE: weplantaforest
+        MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./_mysql/dev-data:/var/lib/mysql/
+    command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_unicode_ci', '--sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION']
+    ports:
+        - "3306:3306"
+    networks:
+      - ipat-backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links: 
+      - ipat-mysql:db
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root    
+    ports:
+      - "8085:80"
+    networks:
+      - ipat-backend
+
+networks:
+  ipat-backend:

@@ -1,0 +1,4 @@
+FROM mysql
+
+RUN chmod a+rw /var/run/mysqld
+COPY ./_mysql/ipat_dump.sql /docker-entrypoint-initdb.d/
