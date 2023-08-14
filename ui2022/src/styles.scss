@@ -204,10 +204,15 @@ snack-bar-container {
   }
 }
 p.incognito {
-  color: var(--background)
+  color: var(--background);
 }
 
 .pointer {
   cursor: pointer;
 }
 
+.select-outline {
+  padding: 0!important;
+  padding-left: 1.5rem!important;
+  padding-right: 1.5rem!important;
+}

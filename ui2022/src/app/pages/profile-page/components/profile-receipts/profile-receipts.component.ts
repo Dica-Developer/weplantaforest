@@ -25,9 +25,6 @@ export class ProfileReceiptsComponent implements OnInit {
         pageCnt++;
       }
     }
-    console.log(this.receiptPages);
-    
-
   }
 
   constructor(private store: Store<AppState>) {}

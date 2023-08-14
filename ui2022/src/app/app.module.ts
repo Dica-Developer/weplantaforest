@@ -39,6 +39,8 @@ import { TreeEffects, treeReducerFn } from './store/tree.store';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
+import localeEn from '@angular/common/locales/en';
+import localeEnExtra from '@angular/common/locales/extra/en';
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
 import { RankingEffects, rankingReducerFn } from './store/ranking.store';
@@ -99,6 +101,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+registerLocaleData(localeEn, 'en-EN', localeEnExtra);
 
 @NgModule({
   declarations: [AppComponent, UserRouterOutletComponent, BackOfficeRouterOutletComponent],
@@ -201,7 +204,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
         provide: TranslateLoader,
         useFactory: createTranslateLoader,
         deps: [HttpClient],
-      },
+      },            
     }),
     NgScrollbarModule,
     NgxSliderModule,
@@ -210,6 +213,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-EN' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     // {provide: APP_BASE_HREF, useValue:'backOffice2022'}
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' },

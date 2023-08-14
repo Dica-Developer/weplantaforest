@@ -41,7 +41,7 @@
           formControlName="location"
         />
       </div>
-      <div class="inputOutline w-100">
+      <div class="inputOutline w-100 spaceRightDesktop">
         <input
           matInput
           [placeholder]="'website' | translate"
@@ -49,9 +49,22 @@
           formControlName="homepage"
         />
       </div>
+
+      <div class="inputOutline w-100 select-outline">
+        <mat-label>Sprache</mat-label>
+        <mat-select formControlName="lang">
+          <mat-option *ngFor="let language of languages" [value]="language">{{
+            'language_' + language | translate
+          }}</mat-option>
+        </mat-select>
+      </div>
     </div>
     <div class="is-flex is-justify-content-center">
-      <app-button [label]="'cancel' | translate" class="cancel-btn" (click)="routeToProfile()"></app-button>
+      <app-button
+        [label]="'cancel' | translate"
+        class="cancel-btn"
+        (click)="routeToProfile()"
+      ></app-button>
       <app-button (click)="updateProfile()" [label]="'saveProfile' | translate"></app-button>
     </div>
   </form>

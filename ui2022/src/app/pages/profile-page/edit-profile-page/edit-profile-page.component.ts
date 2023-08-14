@@ -22,6 +22,8 @@ export class EditProfilePageComponent implements OnInit {
 
   profileDetails$ = this.store.select(selectProfileDetails);
 
+  languages: string[] = ['DEUTSCH', 'ENGLISH'];
+
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
@@ -40,6 +42,7 @@ export class EditProfilePageComponent implements OnInit {
             location: new UntypedFormControl(res.location),
             organisation: new UntypedFormControl(res.organisation),
             homepage: new UntypedFormControl(res.homepage),
+            lang: new UntypedFormControl(res.lang),
           });
           this.profileForm.get('mail').disable();
           this.profileForm.get('username').disable();
@@ -52,34 +55,53 @@ export class EditProfilePageComponent implements OnInit {
 
   updateProfile() {
     let username = localStorage.getItem('username');
-    this.store.dispatch(
-      updateProfileProperty({
-        username,
-        propertyToUpdate: 'ABOUTME',
-        controlValue: this.profileForm.get('aboutMe').value,
-      }),
-    );
-    this.store.dispatch(
-      updateProfileProperty({
-        username,
-        propertyToUpdate: 'LOCATION',
-        controlValue: this.profileForm.get('location').value,
-      }),
-    );
-    this.store.dispatch(
-      updateProfileProperty({
-        username,
-        propertyToUpdate: 'ORGANISATION',
-        controlValue: this.profileForm.get('organisation').value,
-      }),
-    );
-    this.store.dispatch(
-      updateProfileProperty({
-        username,
-        propertyToUpdate: 'HOMEPAGE',
-        controlValue: this.profileForm.get('homepage').value,
-      }),
-    );
+    if (this.profileForm.get('aboutMe').dirty) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'ABOUTME',
+          controlValue: this.profileForm.get('aboutMe').value,
+        }),
+      );
+    }
+    if (this.profileForm.get('location').dirty) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'LOCATION',
+          controlValue: this.profileForm.get('location').value,
+        }),
+      );
+    }
+
+    if (this.profileForm.get('organisation').dirty) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'ORGANISATION',
+          controlValue: this.profileForm.get('organisation').value,
+        }),
+      );
+    }
+    if (this.profileForm.get('homepage').dirty) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'HOMEPAGE',
+          controlValue: this.profileForm.get('homepage').value,
+        }),
+      );
+    }
+    if (this.profileForm.get('lang').dirty) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'LANGUAGE',
+          controlValue: this.profileForm.get('lang').value,
+        }),
+      );
+    }
+
     this.snackbar.open(this.translateService.instant('profileUpdated'), 'OK', {
       duration: 4000,
       panelClass: ['success-snackbar'],

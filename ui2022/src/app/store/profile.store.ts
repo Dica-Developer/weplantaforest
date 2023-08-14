@@ -11,6 +11,7 @@ import { GiftService, GiftStatus } from '../services/gift.service';
 import { addError } from './error.state';
 import { addSuccessMessage } from './success-message.state';
 import { CartService } from '../services/cart.service';
+import { TranslateService } from '@ngx-translate/core';
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -350,6 +351,7 @@ export class ProfileEffects {
     private profileService: ProfileService,
     private giftService: GiftService,
     private cartService: CartService,
+    private translateService: TranslateService,
   ) {}
 
   LoadUserDetails$ = createEffect(() =>
@@ -365,6 +367,11 @@ export class ProfileEffects {
               actions.push(loadGiftsAsConsignor({ userName: action.username }));
               actions.push(loadGiftsAsRecipient({ userName: action.username }));
               actions.push(loadReceipts());
+              if (details.lang === 'DEUTSCH') {
+                this.translateService.use('de');
+              } else if (details.lang === 'ENGLISH') {
+                this.translateService.use('en');
+              }
             }
             if (details.teamName !== '') {
               actions.push(loadTeamDetails({ teamName: details.teamName }));

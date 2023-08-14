@@ -9,7 +9,7 @@ import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
 import { AppCookieService } from './util/cookie.service';
 import { loadProfileDetails } from './store/profile.store';
-import { getProjectsForCustomPlanting } from "./store/plant.store";
+import { getProjectsForCustomPlanting } from './store/plant.store';
 
 @Component({
   selector: 'app-root',
@@ -30,8 +30,9 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
   ) {
     this.cookieService.init();
-    this.translateService.setDefaultLang('de');
+    this.translateService.addLangs(['de', 'en']);
     this.translateService.use('de');
+
     //comment in for dev-purpose: to avoid manually routing back to page, where you work after each codechange
     // const previousUrl = localStorage.getItem('previousUrl');
     // if (localStorage.getItem('jwt')) {
