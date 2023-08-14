@@ -1,0 +1,56 @@
+<div class="columns">
+  <div class="column padding-left">
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li>
+          <a class="breadcrumb-active">
+            {{ 'plantings' | translate | titlecase }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <h2>{{ ('certificate' | translate) + ' #' + certificateId }}</h2>
+
+    <div class="columns" *ngIf="(certificate$ | async).plantings.length > 0">
+      <div class="column">
+        <p>
+          {{ ('of' | translate) + ': ' }}
+          <a routerLink="{{ '/profile/' + (certificate$ | async)?.creator?.name }}">{{
+            (certificate$ | async)?.creator?.name ?? ''
+          }}</a>
+        </p>
+        <p>
+          {{
+            ('aboutThePlantingOf' | translate) +
+              ' ' +
+              amountOfTrees +
+              ' ' +
+              (amountOfTrees > 1 ? ('trees2' | translate) : ('tree' | translate))
+          }}
+        </p>
+        <p class="custom-text">
+          {{ (certificate$ | async)?.text }}
+        </p>
+      </div>
+    </div>
+    <div class="columns is-flex is-flex-direction-row is-multiline tree-container">
+      <app-carousel-item
+        *ngFor="let planting of (certificate$ | async).plantings"
+        [rankingItem]="{
+          name: getTreeTypeName(planting.treeType.name),
+          amount: planting.amount,
+          imageUrl: createTreeTypeImageUrl(planting.treeType.treeImageColor),
+          linkTo: null
+        }"
+        linkTo="{{ planting.projectLink }}"
+        class="column is-one-quarter"
+      >
+      </app-carousel-item>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { PagedData } from '../store/app.state';
-import { CreateCertificateRequestDto } from '../store/profile.store';
+import { CreateCertificateRequestDto, findCertificatePlantings } from '../store/profile.store';
 
 @Injectable({
   providedIn: 'root',
@@ -38,20 +38,22 @@ export class ProfileService {
   }
 
   createCertificate(requestDto: CreateCertificateRequestDto) {
-    console.log(
-      'creating certificate for: ' + requestDto.cartIds + ' with text: ' + requestDto.text,
-    );
-
     return this.http.post(environment.backendUrl + '/certificate/create', requestDto, {
       responseType: 'text',
     });
   }
 
   openCertificatePdf(id: string) {
-    console.log('creating certificate pdf for: ' + id);
-
     return this.http.get(environment.backendUrl + '/certificate/pdf/' + id, {
       responseType: 'arraybuffer',
     });
+  }
+
+  findCertificatePlantings(id: string) {
+    return this.http.get(environment.backendUrl + '/certificate/search/' + id);
+  }
+
+  findCertificateSummary(id: string) {
+    return this.http.get(environment.backendUrl + '/certificate/summary/' + id);
   }
 }

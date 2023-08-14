@@ -42,7 +42,8 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
 import { OfferProjectPageComponent } from './pages/offer-project-page/offer-project-page.component';
 import { VerifyRegistrationPageComponent } from './pages/verify-registration-page/verify-registration-page.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
-import { GiftRedeemPageComponent } from "./pages/gift-redeem-page/gift-redeem-page.component";
+import { GiftRedeemPageComponent } from './pages/gift-redeem-page/gift-redeem-page.component';
+import { CertificateFindPageComponent } from './pages/certificate-find-page/certificate-find-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -87,7 +88,8 @@ export const userRoutes: Routes = [
   { path: 'sepa', component: SepaPageComponent },
   { path: 'explore', component: ExplorePageComponent },
   { path: 'offerArea', component: OfferProjectPageComponent },
-  { path: 'gift/redeem', component: GiftRedeemPageComponent},
+  { path: 'gift/redeem', component: GiftRedeemPageComponent },
+  { path: 'certificate/find/:id', component: CertificateFindPageComponent },
 ];
 
 const routes: Routes = [

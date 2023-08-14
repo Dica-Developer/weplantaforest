@@ -41,9 +41,6 @@ export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   }
 
   toggleCertificate(event: any, cartId: number): void {
-    console.log(event);
-
-    console.log('toggling to: ' + event.checked + ' for cartId: ' + cartId);
     if (event.checked) {
       this.cartIds.push(cartId);
     } else {
@@ -52,8 +49,6 @@ export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   }
 
   createCertificate() {
-    console.log('create certificate clicked');
-    
     this.store.dispatch(
       createCertificate({
         requestDto: { cartIds: this.cartIds, text: this.customTextControl.value },

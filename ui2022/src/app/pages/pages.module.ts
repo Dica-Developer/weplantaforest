@@ -33,6 +33,7 @@ import { SignupPageModule } from './signup-page/signup-page.module';
 import { VerifyRegistrationPageComponent } from './verify-registration-page/verify-registration-page.component';
 import { PlantProposalPageModule } from './plant-proposal-page/plant-proposal-page.module';
 import { GiftRedeemPageComponent } from './gift-redeem-page/gift-redeem-page.component';
+import { CertificateFindPageComponent } from './certificate-find-page/certificate-find-page.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { GiftRedeemPageComponent } from './gift-redeem-page/gift-redeem-page.com
     OfferProjectPageComponent,
     VerifyRegistrationPageComponent,
     GiftRedeemPageComponent,
+    CertificateFindPageComponent,
   ],
   imports: [
     CommonModule,

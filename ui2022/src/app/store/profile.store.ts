@@ -94,6 +94,26 @@ export const openCertificatePdf = createAction(
   props<{ id: string }>(),
 );
 
+export const findCertificatePlantings = createAction(
+  '[Profile] find certificate',
+  props<{ id: string }>(),
+);
+
+export const findCertificatePlantingsSuccess = createAction(
+  '[Profile] find certificate success',
+  props<{ plantings: CertificatePlanting[] }>(),
+);
+
+export const findCertificateSummary = createAction(
+  '[Profile] find certificate summary',
+  props<{ id: string }>(),
+);
+
+export const findCertificateSummarySuccess = createAction(
+  '[Profile] find certificate summary success',
+  props<{ summary: any }>(),
+);
+
 export interface Co2Data {
   treesCount: number;
   co2: number;
@@ -131,6 +151,11 @@ export interface ProfileState {
   username: string;
   isAdmin: boolean;
   details: ProfileDetails;
+  certificate: {
+    plantings: CertificatePlanting[];
+    creator: { name: string };
+    text: string;
+  };
 }
 
 export interface ProfileTree {
@@ -179,10 +204,34 @@ export interface CreateCertificateRequestDto {
   text: string;
 }
 
+export interface CertificatePlanting {
+  amount: number;
+  description: string;
+  id: number;
+  imagePath: string;
+  latitude: number;
+  longitude: number;
+  owner: { name: string };
+  plantedOn: number;
+  projectArticle: { project: { name: string } };
+  submittedOn: number;
+  treeType: {
+    description: string;
+    id: number;
+    imageFile: string;
+    name: string;
+  };
+}
+
 export const initialState: ProfileState = {
   username: '',
   isAdmin: false,
   details: null,
+  certificate: {
+    plantings: [],
+    creator: { name: '' },
+    text: '',
+  },
 };
 
 // http://localhost:8081/user/image/Gabor.png/150/150
@@ -251,6 +300,21 @@ const profileReducer = createReducer(
       carts,
     },
   })),
+  on(findCertificatePlantingsSuccess, (state, { plantings }) => ({
+    ...state,
+    certificate: {
+      ...state.certificate,
+      plantings,
+    },
+  })),
+  on(findCertificateSummarySuccess, (state, { summary }) => ({
+    ...state,
+    certificate: {
+      ...state.certificate,
+      text: summary.text,
+      creator: summary.creator,
+    },
+  })),
 );
 
 export function profileReducerFn(state, action) {
@@ -272,6 +336,11 @@ export const selectProfileImagename = createSelector(
 export const selectProfileDetails = createSelector(
   profileFeature,
   (state: ProfileState) => state.details,
+);
+
+export const selectCertificate = createSelector(
+  profileFeature,
+  (state: ProfileState) => state.certificate,
 );
 
 @Injectable()
@@ -469,19 +538,17 @@ export class ProfileEffects {
     ),
   );
 
-  CreateCertificate$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(createCertificate),
-        switchMap((action) =>
-          this.profileService.createCertificate(action.requestDto).pipe(
-            switchMap((id: string) => {
-              console.log('got id: ' + id);
-              return [openCertificatePdf({ id })];
-            }),
-          ),
+  CreateCertificate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createCertificate),
+      switchMap((action) =>
+        this.profileService.createCertificate(action.requestDto).pipe(
+          switchMap((id: string) => {
+            return [openCertificatePdf({ id })];
+          }),
         ),
       ),
+    ),
   );
 
   OpenCertificatePdf$ = createEffect(
@@ -500,5 +567,31 @@ export class ProfileEffects {
         ),
       ),
     { dispatch: false },
+  );
+
+  FindCertificatePlantings$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(findCertificatePlantings),
+      switchMap((action) =>
+        this.profileService.findCertificatePlantings(action.id).pipe(
+          switchMap((plantings: CertificatePlanting[]) => {
+            return [findCertificatePlantingsSuccess({ plantings })];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  FindCertificateSummary$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(findCertificateSummary),
+      switchMap((action) =>
+        this.profileService.findCertificateSummary(action.id).pipe(
+          switchMap((summary: any) => {
+            return [findCertificateSummarySuccess({ summary })];
+          }),
+        ),
+      ),
+    ),
   );
 }

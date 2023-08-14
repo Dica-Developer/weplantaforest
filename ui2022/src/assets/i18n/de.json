@@ -250,6 +250,8 @@
   "plantedOn": "Gepflanzt am",
   "thisTextIsShownInYourCertificate": "Dieser Text wird in deinem Zertifikat angezeigt",
   "certificateDefaultText": "Damit unsere Kinder eine schöne Zukunft haben.",
-  "createCertificate": "Zertifikat erstellen"
+  "createCertificate": "Zertifikat erstellen",
+  "aboutThePlantingOf": "Über die Pflanzung von",
+  "trees2": "Bäumen"
 
 }
