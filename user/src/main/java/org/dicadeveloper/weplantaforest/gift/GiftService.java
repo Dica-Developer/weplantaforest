@@ -130,13 +130,6 @@ public class GiftService {
     private Map<String, String> generateTextMap(Locale locale) {
         Map<String, String> textMap = new HashMap<String, String>();
         textMap.put("gift.gift", _messageByLocaleService.getMessage("gift.gift", locale));
-        textMap.put("gift.main_text", _messageByLocaleService.getMessage("gift.main_text", locale));
-        textMap.put("gift.call_url", _messageByLocaleService.getMessage("gift.call_url", locale));
-        textMap.put("gift.how_it_works", _messageByLocaleService.getMessage("gift.how_it_works", locale));
-        textMap.put("gift.insert_code", _messageByLocaleService.getMessage("gift.insert_code", locale));
-        textMap.put("gift.now_login", _messageByLocaleService.getMessage("gift.now_login", locale));
-        textMap.put("gift.have_fun", _messageByLocaleService.getMessage("gift.have_fun", locale));
-
         textMap.put("gift.about", _messageByLocaleService.getMessage("gift.about", locale));
         textMap.put("gift.tree", _messageByLocaleService.getMessage("gift.tree", locale));
         textMap.put("gift.trees", _messageByLocaleService.getMessage("gift.trees", locale));
