@@ -12,11 +12,12 @@ import { loadTeamMember, selectTeamMembers } from 'src/app/store/team.store';
 export class TeamCarouselComponent implements OnInit {
   @Input() teamDetails: TeamDetails;
   teamMembers$ = this.store.select(selectTeamMembers);
-  currentMemberPage: number;
+  currentMemberPage: number = 0;
 
   constructor(private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit() {}
 

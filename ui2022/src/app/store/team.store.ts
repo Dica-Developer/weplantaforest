@@ -139,7 +139,7 @@ export const selectTeamDetails = createSelector(
   (state: TeamState) => state.teamDetails,
 );
 
-export const selectTeamMembers = createSelector(teamsFeature, (state: TeamState) => state.members);
+export const selectTeamMembers = createSelector(teamsFeature, (state: TeamState) => state.members ?? []);
 
 @Injectable()
 export class TeamEffects {
