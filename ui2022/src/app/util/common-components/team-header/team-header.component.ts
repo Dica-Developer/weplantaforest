@@ -18,4 +18,6 @@ export class TeamHeaderComponent implements OnInit {
     console.log('routing to team');
     this.router.navigate(['/team/' + this.teamDetails.teamName]);
   }
+
+  editTeam() {}
 }

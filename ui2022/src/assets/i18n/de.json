@@ -260,6 +260,7 @@
   "inputCode": "Einbettungs-Code",
   "createTeam": "Team erstellen",
   "joinTeam": "Team beitreten",
-  "description": "Beschreibung"
+  "description": "Beschreibung",
+  "delete": "löschen"
 
 }
