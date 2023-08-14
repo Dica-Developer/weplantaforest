@@ -8,6 +8,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { ProfileTreesComponent } from './components/profile-trees/profile-trees.component';
 import { ProfileGiftOverviewComponent } from './components/profile-gift-overview/profile-gift-overview.component';
 import { ProfileReceiptsComponent } from './components/profile-receipts/profile-receipts.component';
+import { ProfileCertificatesComponent } from './components/profile-certificates/profile-certificates.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ProfileReceiptsComponent } from './components/profile-receipts/profile-
     ProfileTreesComponent,
     ProfileGiftOverviewComponent,
     ProfileReceiptsComponent,
+    ProfileCertificatesComponent,
   ],
   imports: [CommonModule, UtilModule, RouterModule],
   exports: [ProfilePageComponent, EditProfilePageComponent],

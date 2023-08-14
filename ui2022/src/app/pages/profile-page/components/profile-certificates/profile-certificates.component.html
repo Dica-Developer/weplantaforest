@@ -1,0 +1,38 @@
+<div class="is-flex is-flex-direction-column w-100 padding-2 gift-box border-bottom">
+  <h4 class="center">{{ 'certificates' | translate }}</h4>
+  <p class="center">{{ ('selectPlantBagsForCertificate' | translate) + ':' }}</p>
+  <div class="carts-wrapper">
+    <div class="cart-item-wrapper">
+      <div *ngFor="let cart of carts" class="cart">
+        <p class="center">
+          {{ ('amountOfTrees' | translate) + ': ' + cart.treeCount }}
+          <br />
+          {{ ('plantedOn' | translate) + ': ' + (getDate(cart.timeStamp) | date : 'dd.MM.yyyy') }}
+          <br />
+          {{ ('price' | translate) + ': ' + getPriceFormatted(cart.totalPrice) }}
+        </p>
+        <div class="center">
+          <mat-checkbox (change)="toggleCertificate($event, cart.id)"></mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <p>{{ 'thisTextIsShownInYourCertificate' | translate }}:</p>
+      <textarea
+        matInput
+        placeholder="Beschreibung(De)"
+        rows="5"
+        maxlength="250"
+        [formControl]="customTextControl"
+      ></textarea>
+      {{ '(' + customTextControl.value.length + '/250)' }}
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column is-2 is-offset-5">
+      <app-button label="{{ 'createCertificate' | translate }}" (click)="createCertificate()"></app-button>
+    </div>
+  </div>
+</div>

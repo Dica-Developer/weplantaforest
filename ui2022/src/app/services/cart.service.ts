@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CartsLoadRequest } from '../store/carts.store';
 import { environment } from '../../environments/environment';
+import { loadProfileCarts } from '../store/profile.store';
 
 @Injectable({
   providedIn: 'root',
@@ -59,5 +60,9 @@ export class CartService {
 
   getReceipts() {
     return this.http.get(environment.backendUrl + '/receipts');
+  }
+
+  loadProfileCarts() {
+    return this.http.get(environment.backendUrl + '/carts/search/short');
   }
 }

@@ -243,5 +243,13 @@
   "giftRedeemInfoDescription1": "Nur als registrierter Nutzer bekommst du automatisch eine Spendenquittung, ein eigenes Profil und kannst Zertifikate sowie Gutscheine erstellen.",
   "giftRedeemInfoDescription2": "Du hast einen Account?",
   "giftRedeemInfoDescription3": "Du hast noch keinen Account?",
-  "plantBagInfoText": "Nur als registrierter Nutzer bekommst du automatisch eine Spendenquittung, ein eigenes Profil und kannst Zertifikate sowie Gutscheine erstellen."
+  "plantBagInfoText": "Nur als registrierter Nutzer bekommst du automatisch eine Spendenquittung, ein eigenes Profil und kannst Zertifikate sowie Gutscheine erstellen.",
+  "certificates": "Zertifikate",
+  "selectPlantBagsForCertificate": "Bitte wähle die Pflanzkörbe aus, die im Zertifikat erscheinen sollen",
+  "amountOfTrees": "Anzahl der Bäume",
+  "plantedOn": "Gepflanzt am",
+  "thisTextIsShownInYourCertificate": "Dieser Text wird in deinem Zertifikat angezeigt",
+  "certificateDefaultText": "Damit unsere Kinder eine schöne Zukunft haben.",
+  "createCertificate": "Zertifikat erstellen"
+
 }

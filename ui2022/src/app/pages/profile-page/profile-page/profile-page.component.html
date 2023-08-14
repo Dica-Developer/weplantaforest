@@ -18,5 +18,7 @@
   [consignorGifts]="(profileDetails$ | async)?.gifts?.consignor"
   *ngIf="showEdit"
 ></app-profile-gift-overview>
-
+<app-profile-certificates
+  [carts]="(profileDetails$ | async)?.carts ?? []"
+></app-profile-certificates>
 <app-newsletter *ngIf="showEdit"> </app-newsletter>

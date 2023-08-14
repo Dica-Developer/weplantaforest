@@ -77,6 +77,23 @@ export const loadReceiptsSuccess = createAction(
   props<{ receipts: ProfileReceipt[] }>(),
 );
 
+export const loadProfileCarts = createAction('[Profile] load profile carts');
+
+export const loadProfileCartsSuccess = createAction(
+  '[Profile] load profile carts success',
+  props<{ carts: ProfileCart[] }>(),
+);
+
+export const createCertificate = createAction(
+  '[Profile] create certificate',
+  props<{ requestDto: CreateCertificateRequestDto }>(),
+);
+
+export const openCertificatePdf = createAction(
+  '[Profile] open certificate pdf',
+  props<{ id: string }>(),
+);
+
 export interface Co2Data {
   treesCount: number;
   co2: number;
@@ -107,6 +124,7 @@ export interface ProfileDetails {
     recipient: ProfileGift[];
   };
   receipts: ProfileReceipt[];
+  carts: ProfileCart[];
 }
 
 export interface ProfileState {
@@ -149,11 +167,24 @@ export interface ProfileReceipt {
   invoiceNumber: string;
 }
 
+export interface ProfileCart {
+  id: number;
+  totalPrice: number;
+  treeCount: number;
+  timeStamp: Date;
+}
+
+export interface CreateCertificateRequestDto {
+  cartIds: number[];
+  text: string;
+}
+
 export const initialState: ProfileState = {
   username: '',
   isAdmin: false,
   details: null,
 };
+
 // http://localhost:8081/user/image/Gabor.png/150/150
 const profileReducer = createReducer(
   initialState,
@@ -213,6 +244,13 @@ const profileReducer = createReducer(
       receipts,
     },
   })),
+  on(loadProfileCartsSuccess, (state, { carts }) => ({
+    ...state,
+    details: {
+      ...state.details,
+      carts,
+    },
+  })),
 );
 
 export function profileReducerFn(state, action) {
@@ -254,7 +292,7 @@ export class ProfileEffects {
             const actions = [];
             actions.push(loadProfileDetailsSuccess({ details }));
             actions.push(loadTreesByUser({ username: action.username, page: 0, size: 8 }));
-            if(action.username === localStorage.getItem('username')) {
+            if (action.username === localStorage.getItem('username')) {
               actions.push(loadGiftsAsConsignor({ userName: action.username }));
               actions.push(loadGiftsAsRecipient({ userName: action.username }));
               actions.push(loadReceipts());
@@ -262,7 +300,7 @@ export class ProfileEffects {
             if (details.teamName !== '') {
               actions.push(loadTeamDetails({ teamName: details.teamName }));
             }
-
+            actions.push(loadProfileCarts());
             return actions;
           }),
         ),
@@ -416,5 +454,51 @@ export class ProfileEffects {
         ),
       ),
     ),
+  );
+
+  LoadShortCarts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProfileCarts),
+      switchMap((action) =>
+        this.cartService.loadProfileCarts().pipe(
+          switchMap((carts: ProfileCart[]) => {
+            return [loadProfileCartsSuccess({ carts })];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  CreateCertificate$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createCertificate),
+        switchMap((action) =>
+          this.profileService.createCertificate(action.requestDto).pipe(
+            switchMap((id: string) => {
+              console.log('got id: ' + id);
+              return [openCertificatePdf({ id })];
+            }),
+          ),
+        ),
+      ),
+  );
+
+  OpenCertificatePdf$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(openCertificatePdf),
+        switchMap((action) =>
+          this.profileService.openCertificatePdf(action.id).pipe(
+            switchMap((result: any) => {
+              const file = new Blob([result], { type: 'application/pdf' });
+              const fileURL = URL.createObjectURL(file);
+              window.open(fileURL);
+              return [];
+            }),
+          ),
+        ),
+      ),
+    { dispatch: false },
   );
 }

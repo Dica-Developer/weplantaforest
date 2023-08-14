@@ -1,0 +1,11 @@
+.carts-wrapper {
+  max-width: 95vw;
+  .cart-item-wrapper {
+    overflow-x: auto;
+    .cart {
+      padding: 1rem;
+      display: table-cell;
+      min-width: 420px;
+    }
+  }
+}
