@@ -49,12 +49,10 @@
           formControlName="homepage"
         />
       </div>
-
       <div class="inputOutline w-100 select-outline">
-        <mat-label>Sprache</mat-label>
         <mat-select formControlName="lang">
           <mat-option *ngFor="let language of languages" [value]="language">{{
-            'language_' + language | translate
+            ('language' | translate) + ': ' + ('language_' + language | translate)
           }}</mat-option>
         </mat-select>
       </div>
