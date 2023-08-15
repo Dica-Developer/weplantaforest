@@ -10,7 +10,6 @@ import {
   convertCartToPlantbag,
   createPlantbagForBackend,
   validatePlantbag,
-  resetPlantbag,
   addPlantbag,
   selectPlantbagValid,
   setPlantbagValid,
@@ -39,6 +38,8 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
         this.recipientGiftPages.set(pageCnt, chunk);
         pageCnt++;
       }
+    } else {
+      this.recipientGiftPages.set(0, []);
     }
   }
 
@@ -57,6 +58,8 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
         this.consignorGiftPages.set(pageCnt, chunk);
         pageCnt++;
       }
+    } else {
+      this.consignorGiftPages.set(0, []);
     }
   }
 
@@ -123,7 +126,6 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   setConsignorGiftPage(page: number) {
     this.activeConsignorGiftPage = page;
   }
-
 
   setRecipientGiftPage(page: number) {
     this.activeRecipientGiftPage = page;

@@ -16,6 +16,14 @@ export class TeamService {
     return this.http.get(environment.backendUrl + '/team?teamName=' + encodeURIComponent(teamName));
   }
 
+  isTeamAdmin(teamId: number) {
+    return this.http.get(environment.backendUrl + '/team/isAdmin?teamId=' + teamId);
+  }
+
+  isTeamMember(teamId: number) {
+    return this.http.get(environment.backendUrl + '/team/isMember?teamId=' + teamId);
+  }
+
   loadTeamMembers(teamName: string, page: number) {
     return this.http.get(
       environment.backendUrl +

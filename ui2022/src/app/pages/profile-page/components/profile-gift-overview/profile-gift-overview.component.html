@@ -70,7 +70,11 @@
               </div>
               <div
                 class="columns"
-                *ngFor="let fakeLine of [].constructor(5 - consignorGiftPages.get(activeConsignorGiftPage).length)"
+                *ngFor="
+                  let fakeLine of [].constructor(
+                    5 - consignorGiftPages.get(activeConsignorGiftPage).length
+                  )
+                "
               >
                 <div class="column is-4">{{ '   ' }}</div>
                 <div class="column is-1">{{ '   ' }}</div>
@@ -80,10 +84,10 @@
               <div class="columns" *ngIf="consignorGiftPages.size > 1">
                 <div class="column is-10 is-offset-1">
                   <app-paging
-                  [activePage]="activeConsignorGiftPage"
-                  [totalPageCount]="consignorGiftPages.size"
-                  (pageChanged)="setConsignorGiftPage($event)"
-                ></app-paging>
+                    [activePage]="activeConsignorGiftPage"
+                    [totalPageCount]="consignorGiftPages.size"
+                    (pageChanged)="setConsignorGiftPage($event)"
+                  ></app-paging>
                 </div>
               </div>
             </div>
@@ -115,7 +119,11 @@
               </div>
               <div
                 class="columns"
-                *ngFor="let fakeLine of [].constructor(5 - recipientGiftPages.get(activeRecipientGiftPage).length)"
+                *ngFor="
+                  let fakeLine of [].constructor(
+                    5 - recipientGiftPages.get(activeRecipientGiftPage).length
+                  )
+                "
               >
                 <div class="column is-4">{{ '   ' }}</div>
                 <div class="column is-1">{{ '   ' }}</div>
@@ -125,10 +133,10 @@
               <div class="columns" *ngIf="recipientGiftPages.size > 1">
                 <div class="column is-8 is-offset-2">
                   <app-paging
-                  [activePage]="activeRecipientGiftPage"
-                  [totalPageCount]="recipientGiftPages.size"
-                  (pageChanged)="setRecipientGiftPage($event)"
-                ></app-paging>
+                    [activePage]="activeRecipientGiftPage"
+                    [totalPageCount]="recipientGiftPages.size"
+                    (pageChanged)="setRecipientGiftPage($event)"
+                  ></app-paging>
                 </div>
               </div>
             </div>
