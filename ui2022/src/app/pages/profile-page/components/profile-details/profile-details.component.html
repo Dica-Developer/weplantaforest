@@ -1,0 +1,17 @@
+<div class="columns w-100 padding-2">
+  <div class="column is-half">
+    <p>{{ 'rank' | translate }}: {{ profileDetails.rank }}</p>
+    <p>{{ 'treesPlanted' | translate }}: {{ profileDetails.co2Data.treesCount }}</p>
+    <p innerHTML="{{ ('CO2Trapped' | translate) + ': ' + profileDetails.co2Data.co2 + ' t' }}"></p>
+    <p>{{ 'website' | translate }}: {{ profileDetails.homepage }}</p>
+  </div>
+  <div class="column is-half">
+    <p>{{ 'memberSince' | translate }}: {{ profileDetails.regDate | date : 'dd.MM.yyyy' }}</p>
+    <p>{{ 'type' | translate }}: {{ profileDetails.organizationType }}</p>
+    <p>{{ 'organisation' | translate }}: {{ profileDetails.organisation }}</p>
+    <p>{{ 'location' | translate }}: {{ profileDetails.location }}</p>
+  </div>
+</div>
+<div class="columns padding-2">
+  <p>{{ profileDetails.aboutMe }}</p>
+</div>

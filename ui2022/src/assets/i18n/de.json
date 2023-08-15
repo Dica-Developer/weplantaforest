@@ -130,8 +130,9 @@
   "addPlantingNow": "Jetzt Pflanzung eintragen",
   "addOtherTreeType": "Weitere Baumart hinzufügen",
   "editProfile": "Profil editieren",
+  "edit": "editieren",
   "changeNameHint": "erfordert Neuanmeldung!",
-  "saveProfile": "Speichern",
+  "save": "Speichern",
   "PRIVATE": "Privatperson",
   "COMMERCIAL": "Unternehmen",
   "NONPROFIT": "Non-Profit Organisation",
@@ -256,6 +257,9 @@
   "language_DEUTSCH": "Deutsch",
   "language_ENGLISH": "Englisch",
   "widgets": "Widgets",
-  "inputCode": "Einbettungs-Code"
+  "inputCode": "Einbettungs-Code",
+  "createTeam": "Team erstellen",
+  "joinTeam": "Team beitreten",
+  "description": "Beschreibung"
 
 }

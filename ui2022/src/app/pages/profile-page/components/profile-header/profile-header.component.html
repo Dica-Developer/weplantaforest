@@ -1,0 +1,26 @@
+<div class="columns w-100 padding-2">
+  <div class="column is-half">
+    <h2 class="is-flex is-justify-content-space-between w-100">
+      {{ 'profile' | translate }}
+      <mat-icon *ngIf="showEdit" [matTooltip]="'edit' | translate" (click)="editProfile()"
+        >edit</mat-icon
+      >
+    </h2>
+    <h4>{{ profileDetails.userName }}</h4>
+    <h4>{{ profileDetails.mail }}</h4>
+  </div>
+  <div class="column is-half is-flex is-justify-content-center">
+    <div class="imageWrapper">
+      <img
+        src="{{ profileDetails.profileImageUrl }}"
+        alt=""
+        *ngIf="!profileDetails.profileImageUrl.includes(null)"
+      />
+      <img
+        *ngIf="profileDetails.profileImageUrl.includes(null)"
+        src="assets/default_user.jpg"
+        alt=""
+      />
+    </div>
+  </div>
+</div>

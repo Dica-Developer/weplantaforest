@@ -1,0 +1,26 @@
+<div class="w-100 padding-2 is-flex is-flex-direction-column">
+  <h2>
+    {{ 'team' | translate }}
+  </h2>
+  <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+    <div class="inputOutline">
+      <input
+        type="text"
+        [placeholder]="'name' | translate"
+        name="name"
+        required
+        formControlName="name"
+      />
+    </div>
+    <div class="inputOutline">
+      <textarea
+        type="text"
+        [placeholder]="'description' | translate"
+        name="description"
+        required
+        formControlName="description"
+      ></textarea>
+    </div>
+    <app-button [label]="'save' | translate"></app-button>
+  </form>
+</div>

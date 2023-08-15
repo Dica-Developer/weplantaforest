@@ -26,4 +26,11 @@ export class TeamService {
         '&size=4',
     );
   }
+
+  createTeam(name: string, description: string) {
+    return this.http.post(environment.backendUrl + '/team/create', {
+      name: name,
+      description: description,
+    });
+  }
 }

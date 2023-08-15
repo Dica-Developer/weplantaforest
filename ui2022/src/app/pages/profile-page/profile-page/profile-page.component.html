@@ -1,9 +1,42 @@
-<app-profile-info
-  *ngIf="profileDetails$ | async"
-  [profileDetails]="profileDetails$ | async"
-  [teamDetails]="teamDetails$ | async"
-  [showEdit]="showEdit"
-></app-profile-info>
+<div class="w-100 desktopView">
+  <div class="columns border-bottom">
+    <div class="column is-half">
+      <app-profile-header [profileDetails]="profileDetails$ | async"></app-profile-header>
+    </div>
+    <div class="column is-half">
+      <app-team-header [teamDetails]="teamDetails$ | async"></app-team-header>
+    </div>
+  </div>
+  <div class="columns border-bottom">
+    <div class="column is-half">
+      <app-profile-details
+        *ngIf="profileDetails$ | async"
+        [profileDetails]="profileDetails$ | async"
+      ></app-profile-details>
+    </div>
+    <div class="column is-half">
+      <app-team-details
+        *ngIf="teamDetails$ | async"
+        [teamDetails]="teamDetails$ | async"
+      ></app-team-details>
+    </div>
+  </div>
+</div>
+
+<div class="w-100 mobileView">
+  <app-profile-header [profileDetails]="profileDetails$ | async"></app-profile-header>
+  <app-profile-details
+    *ngIf="profileDetails$ | async"
+    [profileDetails]="profileDetails$ | async"
+  ></app-profile-details>
+  <div class="border-bottom"></div>
+  <app-team-header [teamDetails]="teamDetails$ | async"></app-team-header>
+  <app-team-details
+    *ngIf="teamDetails$ | async"
+    [teamDetails]="teamDetails$ | async"
+  ></app-team-details>
+  <div class="border-bottom"></div>
+</div>
 
 <app-profile-trees
   [trees]="(profileDetails$ | async)?.trees"

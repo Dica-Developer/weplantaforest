@@ -1,5 +1,7 @@
 <div *ngIf="teamDetails$ | async">
-  <app-team-info [teamDetails]="teamDetails$ | async"></app-team-info>
+  <app-team-header [teamDetails]="teamDetails$ | async"></app-team-header>
+  <app-team-details [teamDetails]="teamDetails$ | async"></app-team-details>
+  <div class="border-bottom"></div>
   <app-team-carousel [teamDetails]="teamDetails$ | async"></app-team-carousel>
   <app-newsletter> </app-newsletter>
 </div>

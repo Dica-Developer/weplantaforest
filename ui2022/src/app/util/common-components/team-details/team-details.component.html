@@ -1,0 +1,13 @@
+<div class="columns padding-2">
+  <div class="column is-half">
+    <p>{{ 'rank' | translate }}: {{ teamDetails.rank }}</p>
+    <p>{{ 'treesPlanted' | translate }}: {{ teamDetails.co2Data?.treesCount }}</p>
+    <p innerHTML="{{ ('CO2Trapped' | translate) + ': ' + teamDetails.co2Data?.co2 + ' t' }}"></p>
+    <p class="incognito">{{ 'treesPlanted' | translate }}: {{ teamDetails.co2Data?.treesCount }}</p>
+  </div>
+  <div class="column is-half">
+    <p>{{ 'memberSince' | translate }}: {{ teamDetails.regDate | date : 'dd.MM.yyyy' }}</p>
+    <p>{{ 'teamLeader' | translate }}: {{ teamDetails.adminName }}</p>
+    <p>{{ 'members' | translate }}: {{ teamDetails.memberCount }}</p>
+  </div>
+</div>

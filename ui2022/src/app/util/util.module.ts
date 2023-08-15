@@ -52,7 +52,9 @@ import { CaptchaComponent } from './common-components/captcha/captcha.component'
 import { ProjectHeaderComponent } from '../pages/project-page/components/project-header/project-header.component';
 import { ProjectDescriptionComponent } from '../pages/project-page/components/project-description/project-description.component';
 import { PagingComponent } from './common-components/paging/paging.component';
-import { ProfileRedeemGiftComponent } from "../pages/profile-page/components/profile-redeem-gift/profile-redeem-gift.component";
+import { ProfileRedeemGiftComponent } from '../pages/profile-page/components/profile-redeem-gift/profile-redeem-gift.component';
+import { TeamDetailsComponent } from './common-components/team-details/team-details.component';
+import { TeamHeaderComponent } from './common-components/team-header/team-header.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,9 @@ import { ProfileRedeemGiftComponent } from "../pages/profile-page/components/pro
     ProjectHeaderComponent,
     ProjectDescriptionComponent,
     PagingComponent,
-    ProfileRedeemGiftComponent
+    ProfileRedeemGiftComponent,
+    TeamDetailsComponent,
+    TeamHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -141,7 +145,9 @@ import { ProfileRedeemGiftComponent } from "../pages/profile-page/components/pro
     ProjectHeaderComponent,
     ProjectDescriptionComponent,
     PagingComponent,
-    ProfileRedeemGiftComponent
+    ProfileRedeemGiftComponent,
+    TeamDetailsComponent,
+    TeamHeaderComponent,
   ],
 })
 export class UtilModule {}

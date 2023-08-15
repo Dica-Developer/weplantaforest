@@ -8,6 +8,7 @@ import * as he from 'he';
 import { Co2Data } from './tree.store';
 import { environment } from 'src/environments/environment';
 import { PagedData } from './app.state';
+import { loadProfileDetails } from './profile.store';
 
 export interface Team {
   id: number;
@@ -58,15 +59,24 @@ export const loadTeamMemberSuccess = createAction(
   props<{ members: PagedData<TeamMember> }>(),
 );
 
+export const createTeam = createAction(
+  '[Team] create team',
+  props<{ name: string; description: string }>(),
+);
+
+export const createTeamSuccess = createAction('[Team] create team success');
+
 export interface TeamState {
   teams: Team[];
   teamDetails: TeamDetails;
+  teamCreated: boolean;
   members: PagedData<TeamMember>;
 }
 
 export const initialState: TeamState = {
   teams: [],
   teamDetails: null,
+  teamCreated: false,
   members: {
     totalPages: 0,
     totalElements: 0,
@@ -108,7 +118,7 @@ const teamReducer = createReducer(
         co2Data: {
           ...details.co2Data,
           co2: parseFloat((Math.round(details.co2Data.co2 * 100) / 100).toFixed(2)),
-        }
+        },
       },
     };
   }),
@@ -122,6 +132,17 @@ const teamReducer = createReducer(
     return {
       ...state,
       members: members,
+    };
+  }),
+  on(createTeam, (state) => {
+    return {
+      ...state,
+    };
+  }),
+  on(createTeamSuccess, (state) => {
+    return {
+      ...state,
+      teamCreated: true,
     };
   }),
 );
@@ -139,7 +160,15 @@ export const selectTeamDetails = createSelector(
   (state: TeamState) => state.teamDetails,
 );
 
-export const selectTeamMembers = createSelector(teamsFeature, (state: TeamState) => state.members ?? []);
+export const selectTeamCreated = createSelector(
+  teamsFeature,
+  (state: TeamState) => state.teamCreated,
+);
+
+export const selectTeamMembers = createSelector(
+  teamsFeature,
+  (state: TeamState) => state.members ?? [],
+);
 
 @Injectable()
 export class TeamEffects {
@@ -180,6 +209,22 @@ export class TeamEffects {
           .loadTeamMembers(action.teamName, action.page)
           .pipe(
             switchMap((members: PagedData<TeamMember>) => [loadTeamMemberSuccess({ members })]),
+          ),
+      ),
+    ),
+  );
+
+  AddTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createTeam),
+      switchMap((action) =>
+        this.teamService
+          .createTeam(action.name, action.description)
+          .pipe(
+            switchMap((team: Team) => [
+              loadProfileDetails({ username: localStorage.getItem('username') }),
+              createTeamSuccess(),
+            ]),
           ),
       ),
     ),
