@@ -12,9 +12,10 @@ import { deleteTeam, selectIsAdmin, selectIsMember } from 'src/app/store/team.st
 export class TeamHeaderComponent implements OnInit {
   @Input() teamDetails;
   @Input() profileDetails;
-  isCreatingTeam = false;
   isAdmin$ = this.store.select(selectIsAdmin);
   isMember$ = this.store.select(selectIsMember);
+  createMode = false;
+  editMode = false;
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
@@ -24,15 +25,22 @@ export class TeamHeaderComponent implements OnInit {
     this.router.navigate(['/team/' + this.teamDetails.teamName]);
   }
 
-  editTeam() {}
-
   leaveTeam() {}
 
   deleteTeam() {
     this.store.dispatch(deleteTeam({ teamId: this.teamDetails?.teamId }));
   }
 
-  toggleCreatingTeam() {
-    this.isCreatingTeam = !this.isCreatingTeam;
+  switchMode(mode: string) {
+    if (mode === 'create') {
+      this.createMode = !this.createMode;
+    } else if (mode === 'edit') {
+      this.editMode = !this.editMode;
+    }
+  }
+
+  closeTeamCreate() {
+    this.createMode = false;
+    this.editMode = false;
   }
 }

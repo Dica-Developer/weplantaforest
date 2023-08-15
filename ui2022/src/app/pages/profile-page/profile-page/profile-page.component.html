@@ -1,7 +1,7 @@
 <!--  desktop layout --><!--  desktop layout --><!--  desktop layout -->
 <div class="w-100 desktopView">
   <div class="columns border-bottom">
-    <div class="column is-half">
+    <div class="column is-half border-right">
       <app-profile-header
         *ngIf="profileDetails$ | async"
         [profileDetails]="profileDetails$ | async"
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="columns border-bottom">
-    <div class="column is-half">
+    <div class="column is-half border-right">
       <app-profile-details
         *ngIf="profileDetails$ | async"
         [profileDetails]="profileDetails$ | async"
@@ -74,7 +74,5 @@
 <app-profile-certificates
   [carts]="(profileDetails$ | async)?.carts ?? []"
 ></app-profile-certificates>
-<app-profile-widgets>
-  
-</app-profile-widgets>
+<app-profile-widgets> </app-profile-widgets>
 <app-newsletter *ngIf="showEdit"> </app-newsletter>

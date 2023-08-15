@@ -21,6 +21,7 @@
         formControlName="description"
       ></textarea>
     </div>
-    <app-button [label]="'save' | translate"></app-button>
+    <app-button class="margin-right-1" [label]="'save' | translate"></app-button>
+    <app-button [label]="'cancel' | translate" [type]="'button'" (clicked)="cancel()"></app-button>
   </form>
 </div>

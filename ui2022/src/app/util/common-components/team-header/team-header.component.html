@@ -1,9 +1,12 @@
-<div class="columns w-100 padding-2" *ngIf="teamDetails && !isCreatingTeam">
+<div class="columns w-100 padding-2" *ngIf="teamDetails && !createMode && !editMode">
   <div class="column is-half">
     <h2 class="is-flex is-justify-content-space-between w-100">
       {{ 'team' | translate }}
       <div>
-        <mat-icon *ngIf="isAdmin$ | async" [matTooltip]="'edit' | translate" (click)="editTeam()"
+        <mat-icon
+          *ngIf="isAdmin$ | async"
+          [matTooltip]="'edit' | translate"
+          (click)="switchMode('edit')"
           >edit</mat-icon
         >
         <mat-icon
@@ -27,12 +30,17 @@
 </div>
 <div
   class="columns w-100 is-flex is-flex-direction-column padding-2"
-  *ngIf="!teamDetails && !isCreatingTeam"
+  *ngIf="!teamDetails && !createMode"
 >
   <h2>
     {{ 'team' | translate }}
   </h2>
   <h4 class="margin-bottom-1">{{ profileDetails.userName }} {{ 'noTeamYet' | translate }}</h4>
-  <app-button (clicked)="toggleCreatingTeam()" [label]="'createTeam' | translate"></app-button>
+  <app-button (clicked)="switchMode('create')" [label]="'createTeam' | translate"></app-button>
 </div>
-<app-team-create *ngIf="isCreatingTeam" (teamCreated)="toggleCreatingTeam()"></app-team-create>
+<app-team-create
+  *ngIf="createMode || editMode"
+  [editMode]="editMode"
+  (closeComponent)="closeTeamCreate()"
+></app-team-create>
+<!-- <app-team-edit *ngIf="editMode" (teamEdited)="editedTeam()"></app-team-edit> -->

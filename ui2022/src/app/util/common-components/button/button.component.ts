@@ -9,6 +9,9 @@ export class ButtonComponent implements OnInit {
   @Input()
   label: string;
 
+  @Input()
+  type: string;
+
   @Output()
   clicked: EventEmitter<null> = new EventEmitter();
 

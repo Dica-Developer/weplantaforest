@@ -14,8 +14,9 @@ import { createTeam, selectTeamCreated } from 'src/app/store/team.store';
 export class TeamCreateComponent implements OnInit {
   @Input() profileDetails;
   @Input() teamDetails;
+  @Input() editMode;
 
-  @Output() teamCreated = new EventEmitter();
+  @Output() closeComponent = new EventEmitter();
 
   teamForm = new UntypedFormGroup({
     name: new UntypedFormControl('', Validators.required),
@@ -35,17 +36,30 @@ export class TeamCreateComponent implements OnInit {
 
   onSubmit() {
     if (this.teamForm.valid) {
-      this.store.dispatch(
-        createTeam({
-          name: this.teamForm.value.name,
-          description: this.teamForm.value.description,
-        }),
-      );
-      this.teamCreated.emit();
+      if (!this.editMode) {
+        this.store.dispatch(
+          createTeam({
+            name: this.teamForm.value.name,
+            description: this.teamForm.value.description,
+          }),
+        );
+      } else {
+        // this.store.dispatch(
+        //   editTeam({
+        //     name: this.teamForm.value.name,
+        //     description: this.teamForm.value.description,
+        //   }),
+        // );
+      }
+      this.closeComponent.emit();
     } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
       });
     }
+  }
+
+  cancel() {
+    this.closeComponent.emit();
   }
 }
