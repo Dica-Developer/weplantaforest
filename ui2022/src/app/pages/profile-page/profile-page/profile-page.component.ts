@@ -3,7 +3,6 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { loadProfileDetails, selectProfileDetails } from '../../../store/profile.store';
-import { selectActiveProjectReports } from '../../../store/project-report.store';
 import { selectTeamDetails } from '../../../store/team.store';
 
 @Component({
@@ -13,7 +12,6 @@ import { selectTeamDetails } from '../../../store/team.store';
 })
 export class ProfilePageComponent implements OnInit, AfterViewInit, OnDestroy {
   profileDetails$ = this.store.select(selectProfileDetails);
-  plantings$ = this.store.select(selectActiveProjectReports);
   teamDetails$ = this.store.select(selectTeamDetails);
   showEdit: boolean = false;
 

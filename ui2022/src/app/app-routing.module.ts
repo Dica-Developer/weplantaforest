@@ -35,7 +35,7 @@ import { PartnerPageComponent } from './pages/partner-page/partner-page.componen
 import { SepaPageComponent } from './pages/sepa-page/sepa-page.component';
 import { PlantSelfPageComponent } from './pages/plant-self-page/plant-self-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page/profile-page.component';
-import { EditProfilePageComponent } from './pages/profile-page/edit-profile-page/edit-profile-page.component';
+import { EditProfilePageComponent } from './pages/edit-profile-page/edit-profile-page.component';
 import { FactsPageComponent } from './pages/facts-page/facts-page/facts-page.component';
 import { ExplorePageComponent } from './pages/explore-page/explore-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';

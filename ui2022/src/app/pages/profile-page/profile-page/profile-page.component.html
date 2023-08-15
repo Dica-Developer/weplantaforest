@@ -9,10 +9,10 @@
       ></app-profile-header>
     </div>
     <div class="column is-half">
-      <app-team-create *ngIf="!(teamDetails$ | async)"></app-team-create>
       <app-team-header
-        *ngIf="teamDetails$ | async"
+        *ngIf="profileDetails$ | async"
         [teamDetails]="teamDetails$ | async"
+        [profileDetails]="profileDetails$ | async"
         [showEdit]="showEdit"
       ></app-team-header>
     </div>
@@ -46,9 +46,9 @@
   ></app-profile-details>
   <div class="border-bottom"></div>
 
-  <app-team-create *ngIf="!(teamDetails$ | async)"></app-team-create>
   <app-team-header
-    *ngIf="teamDetails$ | async"
+    *ngIf="profileDetails$ | async"
+    [profileDetails]="profileDetails$ | async"
     [teamDetails]="teamDetails$ | async"
   ></app-team-header>
   <app-team-details

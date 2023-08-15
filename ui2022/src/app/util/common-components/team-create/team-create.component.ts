@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
@@ -14,6 +14,8 @@ import { createTeam, selectTeamCreated } from 'src/app/store/team.store';
 export class TeamCreateComponent implements OnInit {
   @Input() profileDetails;
   @Input() teamDetails;
+
+  @Output() teamCreated = new EventEmitter();
 
   teamForm = new UntypedFormGroup({
     name: new UntypedFormControl('', Validators.required),
@@ -39,6 +41,7 @@ export class TeamCreateComponent implements OnInit {
           description: this.teamForm.value.description,
         }),
       );
+      this.teamCreated.emit();
     } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,

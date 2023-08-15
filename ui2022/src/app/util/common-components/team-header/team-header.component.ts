@@ -8,16 +8,21 @@ import { Router } from '@angular/router';
 })
 export class TeamHeaderComponent implements OnInit {
   @Input() teamDetails;
+  @Input() profileDetails;
   @Input() showEdit;
+  isCreatingTeam = false;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   routeToTeam() {
-    console.log('routing to team');
     this.router.navigate(['/team/' + this.teamDetails.teamName]);
   }
 
   editTeam() {}
+
+  toggleCreatingTeam() {
+    this.isCreatingTeam = !this.isCreatingTeam;
+  }
 }

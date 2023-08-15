@@ -1,4 +1,4 @@
-<div class="columns w-100 padding-2">
+<div class="columns w-100 padding-2" *ngIf="teamDetails && !isCreatingTeam">
   <div class="column is-half">
     <h2 class="is-flex is-justify-content-space-between w-100">
       {{ 'team' | translate }}
@@ -15,3 +15,14 @@
     </div>
   </div>
 </div>
+<div
+  class="columns w-100 is-flex is-flex-direction-column padding-2"
+  *ngIf="!teamDetails && !isCreatingTeam"
+>
+  <h2>
+    {{ 'team' | translate }}
+  </h2>
+  <h4 class="margin-bottom-1">{{ profileDetails.userName }} {{ 'noTeamYet' | translate }}</h4>
+  <app-button (clicked)="toggleCreatingTeam()" [label]="'createTeam' | translate"></app-button>
+</div>
+<app-team-create *ngIf="isCreatingTeam" (teamCreated)="toggleCreatingTeam()"></app-team-create>
