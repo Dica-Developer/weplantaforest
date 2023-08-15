@@ -2,9 +2,17 @@
   <div class="column is-half">
     <h2 class="is-flex is-justify-content-space-between w-100">
       {{ 'team' | translate }}
-      <mat-icon *ngIf="showEdit" [matTooltip]="'edit' | translate" (click)="editTeam()"
-        >edit</mat-icon
-      >
+      <div>
+        <mat-icon *ngIf="showEdit" [matTooltip]="'edit' | translate" (click)="editTeam()"
+          >edit</mat-icon
+        >
+        <mat-icon *ngIf="isAdmin" [matTooltip]="'delete' | translate" (click)="deleteTeam()"
+          >delete</mat-icon
+        >
+        <mat-icon *ngIf="isMember" [matTooltip]="'leave' | translate" (click)="deleteTeam()"
+          >logout</mat-icon
+        >
+      </div>
     </h2>
     <h4 class="pointer" (click)="routeToTeam()">{{ teamDetails.teamName }}</h4>
     <h4>{{ teamDetails.description }}</h4>

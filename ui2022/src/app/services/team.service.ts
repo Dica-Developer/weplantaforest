@@ -45,4 +45,8 @@ export class TeamService {
       { responseType: 'text' },
     );
   }
+
+  deleteTeam(id: number) {
+    return this.http.delete(environment.backendUrl + '/team/delete?teamId=' + id);
+  }
 }

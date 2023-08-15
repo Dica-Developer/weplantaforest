@@ -9,6 +9,8 @@ import { Co2Data } from './tree.store';
 import { environment } from 'src/environments/environment';
 import { PagedData } from './app.state';
 import { loadProfileDetails } from './profile.store';
+import { addSuccessMessage } from './success-message.state';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Team {
   id: number;
@@ -64,7 +66,13 @@ export const createTeam = createAction(
   props<{ name: string; description: string }>(),
 );
 
+export const resetTeamDetails = createAction('[Profile] reset team details');
+
 export const createTeamSuccess = createAction('[Team] create team success');
+
+export const deleteTeam = createAction('[Team] delete team', props<{ teamId: number }>());
+
+export const deleteTeamSuccess = createAction('[Team] delete team success');
 
 export interface TeamState {
   teams: Team[];
@@ -145,6 +153,12 @@ const teamReducer = createReducer(
       teamCreated: true,
     };
   }),
+  on(resetTeamDetails, (state) => {
+    return {
+      ...state,
+      teamDetails: null,
+    };
+  }),
 );
 
 export function teamReducerFn(state, action) {
@@ -172,7 +186,11 @@ export const selectTeamMembers = createSelector(
 
 @Injectable()
 export class TeamEffects {
-  constructor(private actions$: Actions, private teamService: TeamService) {}
+  constructor(
+    private actions$: Actions,
+    private teamService: TeamService,
+    private translateService: TranslateService,
+  ) {}
 
   LoadTeams$ = createEffect(() =>
     this.actions$.pipe(
@@ -218,14 +236,40 @@ export class TeamEffects {
     this.actions$.pipe(
       ofType(createTeam),
       switchMap((action) =>
-        this.teamService
-          .createTeam(action.name, action.description)
-          .pipe(
-            concatMap(() => [
-              createTeamSuccess(),
+        this.teamService.createTeam(action.name, action.description).pipe(
+          concatMap(() => [
+            addSuccessMessage({
+              message: {
+                key: 'TEAM_CREATE_SUCCESS',
+                message: this.translateService.instant('teamCreated'),
+              },
+            }),
+            createTeamSuccess(),
+            loadProfileDetails({ username: localStorage.getItem('username') }),
+          ]),
+        ),
+      ),
+    ),
+  );
+
+  DeleteTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteTeam),
+      switchMap((action) =>
+        this.teamService.deleteTeam(action.teamId).pipe(
+          concatMap(() => {
+            return [
+              addSuccessMessage({
+                message: {
+                  key: 'TEAM_DELETE_SUCCESS',
+                  message: this.translateService.instant('teamDeleted'),
+                },
+              }),
+              resetTeamDetails(),
               loadProfileDetails({ username: localStorage.getItem('username') }),
-            ]),
-          ),
+            ];
+          }),
+        ),
       ),
     ),
   );

@@ -261,6 +261,9 @@
   "createTeam": "Team erstellen",
   "joinTeam": "Team beitreten",
   "description": "Beschreibung",
-  "delete": "löschen"
+  "delete": "löschen",
+  "leave": "verlassen",
+  "teamCreated": "Team erstellt!",
+  "teamDeleted": "Team gelöscht!"
 
 }

@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import { deleteTeam } from 'src/app/store/team.store';
 
 @Component({
   selector: 'app-team-header',
@@ -11,8 +14,10 @@ export class TeamHeaderComponent implements OnInit {
   @Input() profileDetails;
   @Input() showEdit;
   isCreatingTeam = false;
+  isAdmin = true;
+  isMember = true;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit(): void {}
 
@@ -21,6 +26,10 @@ export class TeamHeaderComponent implements OnInit {
   }
 
   editTeam() {}
+
+  deleteTeam() {
+    this.store.dispatch(deleteTeam({ teamId: this.teamDetails?.teamId }));
+  }
 
   toggleCreatingTeam() {
     this.isCreatingTeam = !this.isCreatingTeam;

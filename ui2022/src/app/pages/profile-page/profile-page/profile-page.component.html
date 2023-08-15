@@ -50,6 +50,7 @@
     *ngIf="profileDetails$ | async"
     [profileDetails]="profileDetails$ | async"
     [teamDetails]="teamDetails$ | async"
+    [showEdit]="showEdit"
   ></app-team-header>
   <app-team-details
     *ngIf="teamDetails$ | async"

@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
 import { catchError, concatMap, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { loadTeamDetails } from './team.store';
+import { loadTeamDetails, resetTeamDetails } from './team.store';
 import { logout } from './auth.store';
 import { GiftService, GiftStatus } from '../services/gift.service';
 import { addError } from './error.state';
