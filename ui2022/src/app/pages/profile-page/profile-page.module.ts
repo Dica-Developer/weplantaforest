@@ -9,7 +9,6 @@ import { ProfileGiftOverviewComponent } from './components/profile-gift-overview
 import { ProfileReceiptsComponent } from './components/profile-receipts/profile-receipts.component';
 import { ProfileCertificatesComponent } from './components/profile-certificates/profile-certificates.component';
 import { ProfileWidgetsComponent } from './components/profile-widgets/profile-widgets.component';
-import { TeamEditComponent } from './components/team-edit/team-edit.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 
@@ -26,7 +25,6 @@ import { ProfileHeaderComponent } from './components/profile-header/profile-head
     ProfileTreesComponent,
     ProfileGiftOverviewComponent,
     ProfileReceiptsComponent,
-    TeamEditComponent,
     ProfileDetailsComponent,
     ProfileHeaderComponent,
   ],
