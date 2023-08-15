@@ -1,6 +1,6 @@
 {
   "plantTree": "Plant a Tree",
-  "plantTreeText": "Wir pflanzen deinen Baum, regional in einem unserer Projekte in Deutschland und kümmern uns eigenständig.",
+ "plantTreeText": "Wir pflanzen deinen Baum, regional in einem unserer Projekte in Deutschland und kümmern uns eigenständig.",
   "projects": "Projekte",
   "project": "Projekt",
   "aboutUs": "Über uns",
@@ -254,6 +254,8 @@
   "aboutThePlantingOf": "Über die Pflanzung von",
   "trees2": "Bäumen",
   "language_DEUTSCH": "Deutsch",
-  "language_ENGLISH": "Englisch"
+  "language_ENGLISH": "Englisch",
+  "widgets": "Widgets",
+  "inputCode": "Einbettungs-Code"
 
 }
