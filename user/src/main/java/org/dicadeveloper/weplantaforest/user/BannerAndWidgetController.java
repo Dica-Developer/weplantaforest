@@ -104,4 +104,33 @@ public class BannerAndWidgetController {
         return new ResponseEntity<>(htmlCode, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = Uris.WIDGET_2022, method = RequestMethod.GET)
+    public ResponseEntity<?> getWidget(HttpServletResponse response, @RequestParam String userName, @RequestParam int width, @RequestParam int height,
+            @RequestParam(required = false, defaultValue = "DEUTSCH") Language language) {
+        BufferedImage bufferedImg = null;
+        val filePath = "/static/images/widgets/";
+        val imageName = "widget_" + width + "x" + height + ".png";
+        val cacheKey = userName + "_" + language.name() + "_" + imageName;
+        if (widgetCache.containsKey(cacheKey)) {
+            bufferedImg = widgetCache.get(cacheKey);
+        } else {
+            Co2Data co2DataForUser = co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userName);
+            try {
+                bufferedImg = bannerAndWidgetHelper.createWidget2022(filePath + imageName, width, height, co2DataForUser, language);
+                widgetCache.put(cacheKey, bufferedImg);
+            } catch (IOException e) {
+                LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        try {
+            ImageIO.write(bufferedImg, "png", response.getOutputStream());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

@@ -172,6 +172,35 @@ public class BannerAndWidgetHelper {
         drawSectionCenteredString(graphics, co2, sectionWidth, new Font("Arial", Font.BOLD, 16), amountCo2Pos, co2Section);
     }
 
+    public BufferedImage createWidget2022(String imagePath, int width, int height, Co2Data co2DataForUser, Language language) throws IOException {
+        val bufferedImg = ImageIO.read(getClass().getResourceAsStream(imagePath));
+
+        Double co2Rounded = Math.round(co2DataForUser.getCo2() * 100) / 100.0;
+        var co2RoundedAsString = co2Rounded.toString();
+        if (Language.DEUTSCH.equals(language)) {
+            co2RoundedAsString = co2Rounded.toString().replace(".", ",");
+        }
+        Graphics2D graphics = bufferedImg.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        graphics.setColor(new Color(150, 153, 0));
+        graphics.setFont(new Font("Arial", Font.PLAIN, 16));
+        if (width == 200 && height == 200) {
+            graphics.setFont(new Font("Arial", Font.PLAIN, 20));
+            graphics.drawString(co2DataForUser.getTreesCount().toString(), 190, 220);
+            graphics.drawString(co2RoundedAsString, 190, 260);
+        } else if (width == 200 && height == 600) {
+            graphics.setFont(new Font("Arial", Font.PLAIN, 24));
+            graphics.drawString(co2DataForUser.getTreesCount().toString(), 75, 340);
+            graphics.drawString(co2RoundedAsString, 75, 550);
+        } else if (width == 600 && height == 200) {
+            graphics.setFont(new Font("Arial", Font.PLAIN, 24));
+            graphics.drawString(co2DataForUser.getTreesCount().toString(), 280, 160);
+            graphics.drawString(co2RoundedAsString, 500, 160);
+        } 
+        return bufferedImg;
+    }
+
     private void drawSectionCenteredString(Graphics g, String text, int imageWidth, Font font, int ycoord, int section) {
         FontMetrics metrics = g.getFontMetrics(font);
         int x = (imageWidth - metrics.stringWidth(text)) / 2;

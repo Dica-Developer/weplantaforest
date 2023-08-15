@@ -221,6 +221,8 @@ public class Uris {
 
     public static final String WIDGET_CODE = "/widget/code";
 
+    public static final String WIDGET_2022 = "/widget_2022";
+
     // statistics
 
     public static final String TREE_STATISTIC_PER_MONTH = "/statistic/treesPerMonth";
