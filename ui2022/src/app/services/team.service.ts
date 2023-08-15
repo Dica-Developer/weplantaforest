@@ -49,4 +49,16 @@ export class TeamService {
   deleteTeam(id: number) {
     return this.http.delete(environment.backendUrl + '/team/delete?teamId=' + id);
   }
+
+  updateTeam(id: number, name: string, description: string) {
+    return this.http.put(
+      environment.backendUrl + '/team/update',
+      {
+        id: id,
+        name: name,
+        description: description,
+      },
+      { responseType: 'text' },
+    );
+  }
 }

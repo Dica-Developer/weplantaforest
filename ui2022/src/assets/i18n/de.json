@@ -264,6 +264,7 @@
   "delete": "löschen",
   "leave": "verlassen",
   "teamCreated": "Team erstellt!",
-  "teamDeleted": "Team gelöscht!"
+  "teamDeleted": "Team gelöscht!",
+  "teamUpdated": "Team aktualisiert!"
 
 }

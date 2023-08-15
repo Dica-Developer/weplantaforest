@@ -38,9 +38,9 @@
   <h4 class="margin-bottom-1">{{ profileDetails.userName }} {{ 'noTeamYet' | translate }}</h4>
   <app-button (clicked)="switchMode('create')" [label]="'createTeam' | translate"></app-button>
 </div>
-<app-team-create
+<app-team-create-edit
   *ngIf="createMode || editMode"
   [editMode]="editMode"
   (closeComponent)="closeTeamCreate()"
-></app-team-create>
-<!-- <app-team-edit *ngIf="editMode" (teamEdited)="editedTeam()"></app-team-edit> -->
+  [teamDetails]="teamDetails"
+></app-team-create-edit>

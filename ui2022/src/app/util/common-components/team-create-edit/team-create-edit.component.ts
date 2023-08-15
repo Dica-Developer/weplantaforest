@@ -4,15 +4,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from 'src/app/store/app.state';
-import { createTeam, selectTeamCreated } from 'src/app/store/team.store';
+import { createTeam, updateTeam } from 'src/app/store/team.store';
 
 @Component({
-  selector: 'app-team-create',
-  templateUrl: './team-create.component.html',
-  styleUrls: ['./team-create.component.scss'],
+  selector: 'app-team-create-edit',
+  templateUrl: './team-create-edit.component.html',
+  styleUrls: ['./team-create-edit.component.scss'],
 })
-export class TeamCreateComponent implements OnInit {
-  @Input() profileDetails;
+export class TeamCreateEditComponent implements OnInit {
   @Input() teamDetails;
   @Input() editMode;
 
@@ -23,7 +22,6 @@ export class TeamCreateComponent implements OnInit {
     description: new UntypedFormControl('', Validators.required),
   });
 
-  teamCreated$ = this.store.select(selectTeamCreated);
   isCreatingTeam = false;
 
   constructor(
@@ -32,7 +30,14 @@ export class TeamCreateComponent implements OnInit {
     private translateService: TranslateService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.editMode) {
+      this.teamForm.patchValue({
+        name: this.teamDetails.teamName,
+        description: this.teamDetails.description,
+      });
+    }
+  }
 
   onSubmit() {
     if (this.teamForm.valid) {
@@ -44,12 +49,13 @@ export class TeamCreateComponent implements OnInit {
           }),
         );
       } else {
-        // this.store.dispatch(
-        //   editTeam({
-        //     name: this.teamForm.value.name,
-        //     description: this.teamForm.value.description,
-        //   }),
-        // );
+        this.store.dispatch(
+          updateTeam({
+            teamId: this.teamDetails.teamId,
+            name: this.teamForm.value.name,
+            description: this.teamForm.value.description,
+          }),
+        );
       }
       this.closeComponent.emit();
     } else {

@@ -65,10 +65,9 @@ export const createTeam = createAction(
   '[Team] create team',
   props<{ name: string; description: string }>(),
 );
+export const createTeamSuccess = createAction('[Team] create team success');
 
 export const resetTeamDetails = createAction('[Profile] reset team details');
-
-export const createTeamSuccess = createAction('[Team] create team success');
 
 export const deleteTeam = createAction('[Team] delete team', props<{ teamId: number }>());
 
@@ -92,10 +91,14 @@ export const checkIfMemberSuccess = createAction(
   props<{ isMember: boolean }>(),
 );
 
+export const updateTeam = createAction(
+  '[Team] update team',
+  props<{ teamId: number; name: string; description: string }>(),
+);
+
 export interface TeamState {
   teams: Team[];
   teamDetails: TeamDetails;
-  teamCreated: boolean;
   members: PagedData<TeamMember>;
   isAdmin: boolean;
   isMember: boolean;
@@ -104,7 +107,6 @@ export interface TeamState {
 export const initialState: TeamState = {
   teams: [],
   teamDetails: null,
-  teamCreated: false,
   members: {
     totalPages: 0,
     totalElements: 0,
@@ -169,12 +171,6 @@ const teamReducer = createReducer(
       ...state,
     };
   }),
-  on(createTeamSuccess, (state) => {
-    return {
-      ...state,
-      teamCreated: true,
-    };
-  }),
   on(resetTeamDetails, (state) => {
     return {
       ...state,
@@ -206,11 +202,6 @@ export const selectTeams = createSelector(teamsFeature, (state: TeamState) => st
 export const selectTeamDetails = createSelector(
   teamsFeature,
   (state: TeamState) => state.teamDetails,
-);
-
-export const selectTeamCreated = createSelector(
-  teamsFeature,
-  (state: TeamState) => state.teamCreated,
 );
 
 export const selectTeamMembers = createSelector(
@@ -280,6 +271,25 @@ export class TeamEffects {
               message: {
                 key: 'TEAM_CREATE_SUCCESS',
                 message: this.translateService.instant('teamCreated'),
+              },
+            }),
+            loadProfileDetails({ username: localStorage.getItem('username') }),
+          ]),
+        ),
+      ),
+    ),
+  );
+
+  UpdateTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateTeam),
+      switchMap((action) =>
+        this.teamService.updateTeam(action.teamId, action.name, action.description).pipe(
+          concatMap(() => [
+            addSuccessMessage({
+              message: {
+                key: 'TEAM_UPDATE_SUCCESS',
+                message: this.translateService.instant('teamUpdated'),
               },
             }),
             createTeamSuccess(),

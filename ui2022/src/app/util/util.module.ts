@@ -55,7 +55,7 @@ import { PagingComponent } from './common-components/paging/paging.component';
 import { ProfileRedeemGiftComponent } from '../pages/profile-page/components/profile-redeem-gift/profile-redeem-gift.component';
 import { TeamDetailsComponent } from './common-components/team-details/team-details.component';
 import { TeamHeaderComponent } from './common-components/team-header/team-header.component';
-import { TeamCreateComponent } from './common-components/team-create/team-create.component';
+import { TeamCreateEditComponent } from './common-components/team-create-edit/team-create-edit.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +101,7 @@ import { TeamCreateComponent } from './common-components/team-create/team-create
     ProfileRedeemGiftComponent,
     TeamDetailsComponent,
     TeamHeaderComponent,
-    TeamCreateComponent,
+    TeamCreateEditComponent,
   ],
   imports: [
     CommonModule,
@@ -150,7 +150,7 @@ import { TeamCreateComponent } from './common-components/team-create/team-create
     ProfileRedeemGiftComponent,
     TeamDetailsComponent,
     TeamHeaderComponent,
-    TeamCreateComponent,
+    TeamCreateEditComponent,
   ],
 })
 export class UtilModule {}
