@@ -74,11 +74,31 @@ export const deleteTeam = createAction('[Team] delete team', props<{ teamId: num
 
 export const deleteTeamSuccess = createAction('[Team] delete team success');
 
+export const checkIfAdmin = createAction(
+  '[Team] check if user is admin',
+  props<{ teamId: number }>(),
+);
+export const checkIfAdminSuccess = createAction(
+  '[Team] check if user is admin success',
+  props<{ isAdmin: boolean }>(),
+);
+
+export const checkIfMember = createAction(
+  '[Team] check if user is member',
+  props<{ teamId: number }>(),
+);
+export const checkIfMemberSuccess = createAction(
+  '[Team] check if user is member success',
+  props<{ isMember: boolean }>(),
+);
+
 export interface TeamState {
   teams: Team[];
   teamDetails: TeamDetails;
   teamCreated: boolean;
   members: PagedData<TeamMember>;
+  isAdmin: boolean;
+  isMember: boolean;
 }
 
 export const initialState: TeamState = {
@@ -93,6 +113,8 @@ export const initialState: TeamState = {
     first: true,
     content: [],
   },
+  isAdmin: false,
+  isMember: false,
 };
 
 const teamReducer = createReducer(
@@ -159,6 +181,18 @@ const teamReducer = createReducer(
       teamDetails: null,
     };
   }),
+  on(checkIfAdminSuccess, (state, { isAdmin }) => {
+    return {
+      ...state,
+      isAdmin: isAdmin,
+    };
+  }),
+  on(checkIfMemberSuccess, (state, { isMember }) => {
+    return {
+      ...state,
+      isMember: isMember,
+    };
+  }),
 );
 
 export function teamReducerFn(state, action) {
@@ -183,6 +217,9 @@ export const selectTeamMembers = createSelector(
   teamsFeature,
   (state: TeamState) => state.members ?? [],
 );
+
+export const selectIsAdmin = createSelector(teamsFeature, (state: TeamState) => state.isAdmin);
+export const selectIsMember = createSelector(teamsFeature, (state: TeamState) => state.isMember);
 
 @Injectable()
 export class TeamEffects {
@@ -213,6 +250,7 @@ export class TeamEffects {
             switchMap((teamDetail: TeamDetails) => [
               loadTeamDetailsSuccess({ details: teamDetail }),
               loadTeamMember({ teamName: teamDetail.teamName, page: 0 }),
+              checkIfAdmin({ teamId: teamDetail.teamId }),
             ]),
           ),
       ),
@@ -268,6 +306,32 @@ export class TeamEffects {
               resetTeamDetails(),
               loadProfileDetails({ username: localStorage.getItem('username') }),
             ];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  checkIfAdmin$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(checkIfAdmin),
+      switchMap((action) =>
+        this.teamService.isTeamAdmin(action.teamId).pipe(
+          concatMap((result) => {
+            return [checkIfAdminSuccess({ isAdmin: result })];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  checkIfMember$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(checkIfMember),
+      switchMap((action) =>
+        this.teamService.isTeamMember(action.teamId).pipe(
+          concatMap((result) => {
+            return [checkIfMemberSuccess({ isMember: result })];
           }),
         ),
       ),

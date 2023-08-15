@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { deleteTeam } from 'src/app/store/team.store';
+import { deleteTeam, selectIsAdmin, selectIsMember } from 'src/app/store/team.store';
 
 @Component({
   selector: 'app-team-header',
@@ -12,10 +12,9 @@ import { deleteTeam } from 'src/app/store/team.store';
 export class TeamHeaderComponent implements OnInit {
   @Input() teamDetails;
   @Input() profileDetails;
-  @Input() showEdit;
   isCreatingTeam = false;
-  isAdmin = true;
-  isMember = true;
+  isAdmin$ = this.store.select(selectIsAdmin);
+  isMember$ = this.store.select(selectIsMember);
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
@@ -26,6 +25,8 @@ export class TeamHeaderComponent implements OnInit {
   }
 
   editTeam() {}
+
+  leaveTeam() {}
 
   deleteTeam() {
     this.store.dispatch(deleteTeam({ teamId: this.teamDetails?.teamId }));

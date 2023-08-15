@@ -17,11 +17,11 @@ export class TeamService {
   }
 
   isTeamAdmin(teamId: number) {
-    return this.http.get(environment.backendUrl + '/team/isAdmin?teamId=' + teamId);
+    return this.http.get<boolean>(environment.backendUrl + '/team/isAdmin?teamId=' + teamId);
   }
 
   isTeamMember(teamId: number) {
-    return this.http.get(environment.backendUrl + '/team/isMember?teamId=' + teamId);
+    return this.http.get<boolean>(environment.backendUrl + '/team/isMember?teamId=' + teamId);
   }
 
   loadTeamMembers(teamName: string, page: number) {
