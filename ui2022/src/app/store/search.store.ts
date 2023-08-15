@@ -16,6 +16,7 @@ export interface SearchResult {
   teams: IdName[];
   user: IdName[];
   projects: IdName[];
+  certificates: IdName[];
 }
 
 export interface SearchState {
@@ -33,6 +34,7 @@ export const initialState: SearchState = {
     teams: [],
     user: [],
     projects: [],
+    certificates: [],
   },
   loading: false,
 };
@@ -42,7 +44,7 @@ const searchReducer = createReducer(
   on(search, (state) => ({
     ...state,
     loading: true,
-    result: { teams: [], user: [], projects: [] },
+    result: { teams: [], user: [], projects: [], certificates: [] },
   })),
   on(searchSuccess, (state, action) => ({
     ...state,
@@ -56,7 +58,15 @@ function decodeNames(bResult: SearchResult) {
     teams: [],
     projects: [],
     user: [],
+    certificates: [],
   };
+  for (const certificate of bResult.certificates) {
+    result.certificates.push({
+      id: certificate.id,
+      name: he.decode(certificate.name),
+      link: certificate.link,
+    });
+  }
   for (const user of bResult.user) {
     result.user.push({ id: user.id, name: he.decode(user.name), link: user.link });
   }

@@ -9,6 +9,6 @@ export class SearchService {
   constructor(private http: HttpClient) {}
 
   search(searchValue: string) {
-    return this.http.get(environment.backendUrl + '/search?searchValue=' + searchValue);
+    return this.http.get(environment.backendUrl + '/search?searchValue=' + encodeURIComponent(searchValue));
   }
 }
