@@ -8,7 +8,12 @@ import { TeamCarouselItemComponent } from './components/team-carousel-item/team-
 import { TeamCarouselComponent } from './components/team-carousel/team-carousel.component';
 
 @NgModule({
-  declarations: [TeamPageComponent, TeamInfoComponent, TeamCarouselItemComponent, TeamCarouselComponent],
+  declarations: [
+    TeamPageComponent,
+    TeamInfoComponent,
+    TeamCarouselItemComponent,
+    TeamCarouselComponent,
+  ],
   imports: [CommonModule, UtilModule, RouterModule],
   exports: [TeamPageComponent],
 })

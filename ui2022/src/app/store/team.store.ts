@@ -96,6 +96,8 @@ export const updateTeam = createAction(
   props<{ teamId: number; name: string; description: string }>(),
 );
 
+export const leaveTeam = createAction('[Team] leave team');
+
 export interface TeamState {
   teams: Team[];
   teamDetails: TeamDetails;
@@ -311,6 +313,28 @@ export class TeamEffects {
                 message: {
                   key: 'TEAM_DELETE_SUCCESS',
                   message: this.translateService.instant('teamDeleted'),
+                },
+              }),
+              resetTeamDetails(),
+              loadProfileDetails({ username: localStorage.getItem('username') }),
+            ];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  LeaveTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(leaveTeam),
+      switchMap((action) =>
+        this.teamService.leaveTeam().pipe(
+          concatMap(() => {
+            return [
+              addSuccessMessage({
+                message: {
+                  key: 'TEAM_LEAVE_SUCCESS',
+                  message: this.translateService.instant('teamLeft'),
                 },
               }),
               resetTeamDetails(),

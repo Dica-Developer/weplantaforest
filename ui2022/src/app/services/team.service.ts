@@ -50,6 +50,10 @@ export class TeamService {
     return this.http.delete(environment.backendUrl + '/team/delete?teamId=' + id);
   }
 
+  leaveTeam() {
+    return this.http.post(environment.backendUrl + '/team/leave', {});
+  }
+
   updateTeam(id: number, name: string, description: string) {
     return this.http.put(
       environment.backendUrl + '/team/update',

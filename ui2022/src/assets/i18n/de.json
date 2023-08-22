@@ -265,6 +265,9 @@
   "leave": "verlassen",
   "teamCreated": "Team erstellt!",
   "teamDeleted": "Team gelöscht!",
-  "teamUpdated": "Team aktualisiert!"
+  "teamUpdated": "Team aktualisiert!",
+  "deleteConfirmation": "wirklich löschen?",
+  "teamLeft": "Team verlassen",
+  "leaveTeam": "wirklich verlassen?"
 
 }
