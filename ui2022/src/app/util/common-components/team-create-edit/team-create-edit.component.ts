@@ -20,9 +20,12 @@ export class TeamCreateEditComponent implements OnInit {
   teamForm = new UntypedFormGroup({
     name: new UntypedFormControl('', Validators.required),
     description: new UntypedFormControl('', Validators.required),
+    mainImageFile: new UntypedFormControl(''),
   });
 
   isCreatingTeam = false;
+  mainImageFile: any;
+  imageSrc: any;
 
   constructor(
     private store: Store<AppState>,
@@ -62,6 +65,17 @@ export class TeamCreateEditComponent implements OnInit {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
       });
+    }
+  }
+
+  imageChanged(fileInputEvent: any) {
+    if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
+      this.teamForm.get('mainImageFile').setValue(fileInputEvent.target.files[0]);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imageSrc = reader.result;
+      };
+      reader.readAsDataURL(this.teamForm.get('mainImageFile').value);
     }
   }
 

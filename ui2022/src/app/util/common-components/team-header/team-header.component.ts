@@ -38,7 +38,7 @@ export class TeamHeaderComponent implements OnInit {
     if (confirmType === 'leave') {
       this.snackbar
         .open(this.translateService.instant('leaveConfirmation'), 'OK', {
-          duration: 4000,
+          duration: 5000,
         })
         .onAction()
         .subscribe(() => {
@@ -47,7 +47,7 @@ export class TeamHeaderComponent implements OnInit {
     } else if ('delete') {
       this.snackbar
         .open(this.translateService.instant('deleteConfirmation'), 'OK', {
-          duration: 4000,
+          duration: 5000,
         })
         .onAction()
         .subscribe(() => {
