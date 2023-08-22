@@ -38,6 +38,7 @@
   <app-profile-header
     *ngIf="profileDetails$ | async"
     [profileDetails]="profileDetails$ | async"
+    [showEdit]="showEdit"
   ></app-profile-header>
   <app-profile-details
     *ngIf="profileDetails$ | async"
