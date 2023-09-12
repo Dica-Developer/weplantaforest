@@ -4,6 +4,8 @@ import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angul
 import { TextHelper } from '../../../../util/text.helper';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-treetype-edit',
@@ -45,6 +47,8 @@ export class TreetypeEditComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private textHelper: TextHelper,
     private store: Store<AppState>,
+    private snackbar: MatSnackBar,
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -156,10 +160,21 @@ export class TreetypeEditComponent implements OnInit {
           images: images,
         }),
       );
+    } else {
+      this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
+        duration: 5000,
+      });
     }
   }
 
   delete() {
-    this.store.dispatch(deleteTreeType({ treeTypeId: this.form.get('id').value }));
+    this.snackbar
+      .open(this.translateService.instant('deleteConfirmation'), 'OK', {
+        duration: 5000,
+      })
+      .onAction()
+      .subscribe(() => {
+        this.store.dispatch(deleteTreeType({ treeTypeId: this.form.get('id').value }));
+      });
   }
 }
