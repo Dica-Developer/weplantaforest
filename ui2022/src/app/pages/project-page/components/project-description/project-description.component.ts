@@ -12,21 +12,6 @@ import { environment } from 'src/environments/environment';
 export class ProjectDescriptionComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
   description: string;
-  // imageUrls: String[] = [
-  //   'assets/lucy.jpg',
-  //   'assets/upside.jpg',
-  //   'assets/lucy.jpg',
-  //   'assets/upside.jpg',
-  //   'assets/lucy.jpg',
-  //   'assets/upside.jpg',
-  //   'assets/lucy.jpg',
-  //   'assets/upside.jpg',
-  //   'assets/lucy.jpg',
-  //   'assets/upside.jpg',
-  //   'assets/lucy.jpg',
-  //   'assets/upside.jpg',
-  //   'assets/lucy.jpg',
-  // ];
   imageUrls: String[] = [];
   constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
 
@@ -34,7 +19,7 @@ export class ProjectDescriptionComponent implements OnInit {
     this.imageUrls = [];
     for (let image of this.projectReport.images) {
       let url =
-        environment.backendUrl + '/project/image/' + encodeURI(image.imageFileName) + '/300/300';
+        environment.backendUrl + '/project/image/' + encodeURI(image.imageFileName) + '/1140/570';
       this.imageUrls.push(url);
     }
     this.description = this.textHelper.getTextForLanguage(

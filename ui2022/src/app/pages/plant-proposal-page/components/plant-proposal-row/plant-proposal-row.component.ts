@@ -13,7 +13,6 @@ import { SliderHelper } from '../../../../util/helper/slider.helper';
 import { Options } from '@angular-slider/ngx-slider';
 import { Observable, Subscription } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from '../../../../store/plantbag.store';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-plant-proposal-row',
