@@ -34,6 +34,7 @@ import { VerifyRegistrationPageComponent } from './verify-registration-page/veri
 import { PlantProposalPageModule } from './plant-proposal-page/plant-proposal-page.module';
 import { GiftRedeemPageComponent } from './gift-redeem-page/gift-redeem-page.component';
 import { CertificateFindPageComponent } from './certificate-find-page/certificate-find-page.component';
+import { PlantSelfPageModule } from './plant-self-page/plant-self-page.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,6 @@ import { CertificateFindPageComponent } from './certificate-find-page/certificat
     FinancesPageComponent,
     PartnerPageComponent,
     SepaPageComponent,
-    PlantSelfPageComponent,
     FactsPageComponent,
     NotFoundPageComponent,
     OfferProjectPageComponent,
@@ -74,6 +74,7 @@ import { CertificateFindPageComponent } from './certificate-find-page/certificat
     ExplorePageModule,
     SignupPageModule,
     PlantProposalPageModule,
+    PlantSelfPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,

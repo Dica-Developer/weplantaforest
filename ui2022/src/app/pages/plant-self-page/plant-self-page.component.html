@@ -14,7 +14,7 @@
         </li>
       </ul>
     </nav>
-    <h2>{{ 'createSelfplantedTree' | translate | titlecase }}</h2>
+    <h2>{{ 'createSelfplantedTree' | translate }}</h2>
     <p class="desktop" *ngIf="selectAuthenticated$ | async">
       {{ 'createSelfplantDescription3' | translate }}
     </p>
@@ -27,11 +27,39 @@
   <p>{{ 'plsLoginToContinue' | translate }}</p>
   <app-button label="{{ 'login' | translate }}" (clicked)="routeToLogin()"></app-button>
 </div>
+
 <div *ngIf="selectAuthenticated$ | async">
-  <div class="columns proposal-row">
-    <div class="column is-two-fifths padding-left padding-right padding-top-2 padding-bottom-2">
-      <form [formGroup]="selfPlantForm">
+  <form [formGroup]="selfPlantForm">
+    <div class="columns">
+      <div class="column is-two-fifths padding-left padding-right padding-top-2">
+        <mat-form-field>
+          <mat-label>Datum</mat-label>
+          <input matInput [matDatepicker]="datepicker" formControlName="plantedOn" />
+          <mat-hint></mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDatepickerApply>OK</button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="column is-three-fifths padding-left padding-right padding-top-2">
+        <div class="custom-slider mb-4">
+          <ngx-slider
+            [(value)]="sliderDefaultValue"
+            [options]="sliderOptions"
+            (valueChange)="addTreesToForm($event)"
+          ></ngx-slider>
+        </div>
+        <p>{{ 'contactForProof' | translate }}</p>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-two-fifths padding-left padding-right">
         <div>
+          <h4>{{ 'photo' | translate }}:</h4>
           <input
             #csvInput
             hidden="true"
@@ -48,39 +76,16 @@
             <p *ngIf="!imageSrc">{{ 'noImgPicked' | translate }}</p>
           </div>
         </div>
-      </form>
-    </div>
-    <div class="column is-three-fifths padding-left padding-right padding-top-2 padding-bottom-2">
-      <form [formGroup]="selfPlantForm">
-        <div class="custom-slider mb-4">
-          <ngx-slider
-            [(value)]="sliderDefaultValue"
-            [options]="sliderOptions"
-            (valueChange)="addTreesToForm($event)"
-          ></ngx-slider>
-        </div>
-        <div class="is-flex is-flex-direction-row is-justify-content-space-between switchToFlexCol">
-          <mat-form-field>
-            <mat-label>Datum</mat-label>
-            <input matInput [matDatepicker]="datepicker" formControlName="plantedOn" />
-            <mat-hint></mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker>
-              <mat-datepicker-actions>
-                <button mat-button matDatepickerCancel>Cancel</button>
-                <button mat-raised-button color="primary" matDatepickerApply>OK</button>
-              </mat-datepicker-actions>
-            </mat-datepicker>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Baumart</mat-label>
-            <mat-select [value]="selectedTreeType" (selectionChange)="treeTypeChanged($event)">
-              <mat-option *ngFor="let treeType of treeTypes" [value]="treeType.id">{{
-                treeType.name
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+      </div>
+      <div class="column is-three-fifths padding-left padding-right">
+        <mat-form-field>
+          <mat-label>Baumart</mat-label>
+          <mat-select [value]="selectedTreeType" (selectionChange)="treeTypeChanged($event)">
+            <mat-option *ngFor="let treeType of treeTypes" [value]="treeType.id">{{
+              treeType.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <div class="inputOutline mt-4">
           <textarea
             rows="10"
@@ -92,9 +97,11 @@
           >
           </textarea>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
+  </form>
+
+  <h4 class="margin-left-4">{{ 'location' | translate }}:</h4>
   <div class="map-margin">
     <app-leaflet-map
       [showMarker]="true"
