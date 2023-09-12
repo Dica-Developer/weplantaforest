@@ -50,7 +50,7 @@
   "target": "Ziel:",
   "projectsSectionInfo": "Alle Bäume werden in Deutschland gepflanzt.",
   "partners": "Partner",
-  "plantYourTree": "Pflanze deinen Baum",
+  "plantHere": "Hier pflanzen",
   "backToProjects": "Zurück zur Übersicht",
   "backToBlog": "Zurück zum Blog",
   "planted": "bepflanzt",
@@ -268,6 +268,9 @@
   "teamUpdated": "Team aktualisiert!",
   "deleteConfirmation": "wirklich löschen?",
   "teamLeft": "Team verlassen",
-  "leaveTeam": "wirklich verlassen?"
+  "leaveTeam": "wirklich  verlassen?",
+  "contactForProof": "Bei mehr als 10 kontaktiere uns bitte, da wir einen Nachweis benötigen.",
+  "location": "Standort",
+  "photo": "Foto"
 
 }
