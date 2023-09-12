@@ -14,6 +14,8 @@ import {
 } from 'src/app/store/plant.store';
 import { selectAuthenticated } from 'src/app/store/auth.store';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-plant-self-page',
@@ -24,7 +26,6 @@ export class PlantSelfPageComponent implements OnInit {
   controlObj: UntypedFormGroup;
   selectedTreeType: TreeType;
   treeTypes: TreeType[] = [];
-  sliderDefaultValue: number = 5;
   screenWidth;
   mapHeight: string = '700px';
 
@@ -36,17 +37,7 @@ export class PlantSelfPageComponent implements OnInit {
   selectTreetypesSub: Subscription;
   selfPlantCreatedSub: Subscription;
 
-  selfPlantForm = new UntypedFormGroup({
-    plantedOn: new UntypedFormControl(new Date(), [Validators.required]),
-    shortDescription: new UntypedFormControl(''),
-    amount: new UntypedFormControl(this.sliderDefaultValue),
-    imageName: new UntypedFormControl(''),
-    treeTypeId: new UntypedFormControl(null, [Validators.required]),
-    latitude: new UntypedFormControl(null, [Validators.required]),
-    longitude: new UntypedFormControl(null, [Validators.required]),
-    mainImageFile: new UntypedFormControl(null, [Validators.required]),
-  });
-
+  sliderDefaultValue: number = 5;
   sliderOptions: Options = {
     step: 1,
     floor: 1,
@@ -57,13 +48,27 @@ export class PlantSelfPageComponent implements OnInit {
     hidePointerLabels: false,
   };
 
+  selfPlantForm = new UntypedFormGroup({
+    plantedOn: new UntypedFormControl(new Date(), [Validators.required]),
+    shortDescription: new UntypedFormControl('', [Validators.required]),
+    amount: new UntypedFormControl(this.sliderDefaultValue),
+    imageName: new UntypedFormControl('', [Validators.required]),
+    treeTypeId: new UntypedFormControl(null, [Validators.required]),
+    latitude: new UntypedFormControl(null, [Validators.required]),
+    longitude: new UntypedFormControl(null, [Validators.required]),
+    mainImageFile: new UntypedFormControl(null, [Validators.required]),
+  });
+
   constructor(
     private store: Store<AppState>,
     private textHelper: TextHelper,
     private router: Router,
+    private snackbar: MatSnackBar,
+    private translateService: TranslateService,
   ) {
     this.store.dispatch(loadTreeTypes());
     this.selectTreetypesSub = store.select(selectTreeTypes).subscribe((res) => {
+      this.treeTypes = [];
       for (let tt of res) {
         this.treeTypes.push({
           id: tt.id,
@@ -79,6 +84,7 @@ export class PlantSelfPageComponent implements OnInit {
           name: this.textHelper.getTextForLanguage(tt.name, 'de'),
         });
       }
+      this.treeTypes = this.treeTypes.filter((treeType) => !treeType.name.includes('Default'));
     });
     this.getScreenSize();
     this.selectAuthenticated$ = this.store.select(selectAuthenticated);
@@ -90,6 +96,7 @@ export class PlantSelfPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     if (this.screenWidth < 764) {
       this.mapHeight = '500px';
     }
@@ -129,7 +136,13 @@ export class PlantSelfPageComponent implements OnInit {
   submitPlanting() {
     const data = this.selfPlantForm.value;
     data.plantedOn = data.plantedOn.getTime();
-    this.store.dispatch(sendSelfPlant({ selfPlantData: data }));
+    if (this.selfPlantForm.valid) {
+      this.store.dispatch(sendSelfPlant({ selfPlantData: data }));
+    } else {
+      this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
+        duration: 4000,
+      });
+    }
   }
 
   routeToLogin() {
