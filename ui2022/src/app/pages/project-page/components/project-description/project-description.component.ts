@@ -11,11 +11,13 @@ import { environment } from 'src/environments/environment';
 })
 export class ProjectDescriptionComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
+  activeProject: boolean;
   description: string;
   imageUrls: String[] = [];
   constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
 
   ngOnInit(): void {
+    this.activeProject = this.projectReport.projectReportData.active;
     this.imageUrls = [];
     for (let image of this.projectReport.images) {
       let url =
