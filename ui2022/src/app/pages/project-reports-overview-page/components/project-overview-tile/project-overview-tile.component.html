@@ -1,6 +1,16 @@
-<div class="project-tile is-flex is-flex-direction-column" (click)="route()">
-  <img [src]="imgUrl" alt="image" />
-  <div class="tile-body h-100 is-flex is-flex-direction-column is-justify-content-space-between">
+<div
+  id="project-tile"
+  [style.backgroundImage]="backgroundImgUrl"
+  (mouseenter)="showBackgroundImage(true)"
+  (mouseleave)="showBackgroundImage(false)"
+  class="project-tile is-flex is-flex-direction-column"
+  (click)="route()"
+>
+  <!-- <img [src]="imgUrl" alt="image" /> -->
+  <div
+    [style.zIndex]="zIndex"
+    class="tile-body h-100 w-100 is-flex is-flex-direction-column is-justify-content-space-between"
+  >
     <h4>{{ projectReport.projectName }}</h4>
     <div class="description" innerHtml="{{ description }}"></div>
     <div class="is-flex stats is-flex-direction-column is-justify-content-space-around">
