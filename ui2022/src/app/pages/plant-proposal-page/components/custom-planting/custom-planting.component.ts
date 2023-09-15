@@ -19,6 +19,7 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
   activeProjectsSub: Subscription;
   profileDetailsSub: Subscription;
   profileDetails;
+  collapsibleState: boolean = false;
 
   constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
 
@@ -41,5 +42,10 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
 
   getTreeTypeNameByLanguage(text: string) {
     return this.textHelper.getTextForLanguage(text, this.profileDetails?.lang ?? 'de');
+  }
+
+  toggleCollapsibleState() {
+    this.collapsibleState = !this.collapsibleState;
+    console.log(this.collapsibleState);
   }
 }

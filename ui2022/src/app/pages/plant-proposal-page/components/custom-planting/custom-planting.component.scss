@@ -1,0 +1,28 @@
+.content {
+  display: none;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.open {
+  display: block;
+}
+
+h2 {
+  margin-bottom: 0;
+  :hover {
+    mat-icon {
+      color: var(--green);
+    }
+  }
+}
+
+h4 {
+  margin-bottom: 0 !important;
+}
+
+mat-icon {
+  font-size: 3rem;
+  height: 3rem;
+  width: 3rem;
+}

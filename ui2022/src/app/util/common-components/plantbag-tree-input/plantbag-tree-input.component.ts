@@ -66,7 +66,7 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessage() {
-    return 'max. ' + (this.article.amount - this.article.alreadyPlanted) + ' Bäume';
+    return 'max. ' + (this.article.amount - this.article.alreadyPlanted);
   }
 
   calcSum(amount: number) {

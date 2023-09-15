@@ -29,6 +29,15 @@
   padding: 0.5rem;
 }
 
+.inputOutline0Bottom {
+  max-width: 100px;
+  background: var(--background);
+  border: 1px var(--black) solid;
+  border-radius: 1.75rem;
+  margin-bottom: 0;
+  padding: 0.5rem;
+}
+
 input,
 textarea {
   width: 100%;

@@ -1,25 +1,31 @@
-<div class="columns">
-  <div class="column is-1 image-wrapper">
-    <img class="img-tree" src="{{ imgUrl }}" alt="tree" />
+<div
+  class="w-100 is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center"
+>
+  <div class="is-flex is-flex-direction-row is-align-items-center gap">
+    <div class="image-wrapper">
+      <img class="img-tree" src="{{ imgUrl }}" alt="tree" />
+    </div>
+    <span class="is-flex-direction-column is-flex is-justify-content-center">
+      <b
+        >{{ getGerman(article.treeType.name)
+        }}{{ showProject ? '(' + article.project.name + ')' : '' }}</b
+      >
+      <span class="small">
+        {{ article.price.priceAsLong / 100 | currency }}
+      </span>
+    </span>
   </div>
-  <div class="column is-3 is-flex-direction-column is-flex is-justify-content-center">
-    <b
-      >{{ getGerman(article.treeType.name)
-      }}{{ showProject ? '(' + article.project.name + ')' : '' }}</b
-    >
-    {{ article.price.priceAsLong / 100 | currency }}
-  </div>
-  <div class="column is-3 is-flex-direction-column is-flex is-justify-content-center">
-    <mat-form-field appearance="fill" class="title-field">
-      <mat-label>{{ 'max.' + (article.amount - article.alreadyPlanted) }}</mat-label>
-      <input matInput name="amount" type="number" [formControl]="control" />
+  <div class="is-flex is-flex-direction-row is-align-items-center gap">
+    <span>{{ sum | currency }}</span>
+    <div class0="is-flex is-flex-direction-column">
+      <div class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom">
+        <label>{{ 'max.' + (article.amount - article.alreadyPlanted) }}</label>
+        <input matInput name="amount" type="number" [formControl]="control" />
+      </div>
       <mat-error *ngIf="control.invalid">{{ getErrorMessage() }}</mat-error>
-    </mat-form-field>
+    </div>
   </div>
-  <div class="column is-1 price">
-    <b>{{ sum | currency }}</b>
-  </div>
-  <div class="column is-1" *ngIf="withDelete">
+  <div *ngIf="withDelete">
     <button
       mat-icon-button
       (click)="removeItemFormPlantbag()"
@@ -29,3 +35,7 @@
     </button>
   </div>
 </div>
+
+<div
+  class="is-flex is-flex-direction-row is-justify-content-space-betweens is-align-items-end"
+></div>
