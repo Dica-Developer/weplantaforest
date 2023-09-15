@@ -1,7 +1,17 @@
-p {
+span {
   margin: 0.5rem 0 0 0 !important;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1rem;
+  max-width: 100%;
 }
 
 .is-flex {
   cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  span {
+    font-size: 0.75rem;
+  }
 }

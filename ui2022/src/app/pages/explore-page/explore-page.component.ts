@@ -53,6 +53,8 @@ export class ExplorePageComponent implements OnInit {
           name: this.textHelper.getTextForLanguage(tt.name, lang),
         });
       }
+      this.trees = this.trees.filter((tree) => !tree.name.includes('Strauch'));
+      this.trees = this.trees.filter((tree) => !tree.name.includes('Default'));
     });
   }
 
