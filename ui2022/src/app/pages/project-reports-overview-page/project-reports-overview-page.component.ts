@@ -16,7 +16,7 @@ import {
   styleUrls: ['./project-reports-overview-page.component.scss'],
 })
 export class ProjectReportsOverviewPageComponent implements OnInit, OnDestroy {
-  type: string = 'all';
+  type: string = 'active';
   activeProjectReports$ = this.store.select(selectActiveProjectReports);
   inactiveProjectReports$ = this.store.select(selectInActiveProjectReports);
 
