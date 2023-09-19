@@ -36,6 +36,7 @@ export interface ProjectReportData {
   active: boolean;
   projectImageUrl: string;
   projectLink: string;
+  positions: any[];
 }
 
 export const loadProjectReports = createAction('[ProjectReport] load project reports');
@@ -209,6 +210,7 @@ export class ProjectReportsEffects {
                   active: report.active,
                   projectImageUrl: `${environment.backendUrl}/projects/image/${report.projectImageFileName}/60/60`,
                   projectLink: `/project/${report.projectName}`,
+                  positions: report.positions
                 });
                 activeProjects = projects;
               }
@@ -241,6 +243,8 @@ export class ProjectReportsEffects {
                   active: report.active,
                   projectImageUrl: `${environment.backendUrl}/projects/image/${report.projectImageFileName}/60/60`,
                   projectLink: `/project/${report.projectName}`,
+                  positions: report.positions
+
                 });
                 inactiveProjects.content = projects;
               }

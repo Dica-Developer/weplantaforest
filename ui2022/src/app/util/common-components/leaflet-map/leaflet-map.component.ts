@@ -14,11 +14,30 @@ export class LeafletMapComponent implements OnInit {
   polygon;
   control: UntypedFormControl;
   screenWidth;
+  multipleAreas: any[][];
+  multipleCoords: any[][];
 
   @Input() showMarker: boolean = false;
   @Input() positions: any[];
   @Input() mapHeight: string = '600px';
   @Output() markerSet = new EventEmitter();
+
+  @Input('projectAreas')
+  set projectAreas(areas: any[][]) {
+    this.multipleAreas = areas;
+
+    this.multipleCoords = [];
+    for (let area of this.multipleAreas) {
+      this.multipleCoords.push(this.createPolygonPoints(area));
+    }
+
+    for (let coords of this.multipleCoords) {
+      this.polygon = L.polygon(coords, { color: '#82ab1f' });
+      this.map.addLayer(this.polygon);
+    }
+
+  }
+
   treeMarker: any[];
 
   options = {
@@ -40,18 +59,24 @@ export class LeafletMapComponent implements OnInit {
   constructor() {}
   ngOnInit(): void {
     if (this.positions) {
-      this.coords = this.createPolygonPoints();
+      this.coords = this.createPolygonPoints(this.positions);
     }
   }
 
   onMapReady(map: Map): void {
     this.map = map;
-    this.map.scrollWheelZoom.disable();
+    // this.map.scrollWheelZoom.disable();
     setTimeout(() => {
-      if (this.coords.length > 0) {
+    if (this.coords.length > 0) {
         this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
         map.addLayer(this.polygon);
         this.map.fitBounds(this.polygon.getBounds());
+      } else if (this.multipleCoords.length > 0) {
+
+        for (let coords of this.multipleCoords) {
+          this.polygon = L.polygon(coords, { color: '#82ab1f' });
+          map.addLayer(this.polygon);
+        }
       } else {
         // adjust zoom if mobile view
         if (this.screenWidth < 764) {
@@ -64,10 +89,10 @@ export class LeafletMapComponent implements OnInit {
     });
   }
 
-  createPolygonPoints() {
+  createPolygonPoints(positions: any[]) {
     const coords = [];
-    for (let cnt = 0; cnt < this.positions?.length; cnt++) {
-      for (let point of this.positions) {
+    for (let cnt = 0; cnt < positions.length; cnt++) {
+      for (let point of positions) {
         if (cnt === point.order) {
           coords.push([point.lat, point.lng]);
         }

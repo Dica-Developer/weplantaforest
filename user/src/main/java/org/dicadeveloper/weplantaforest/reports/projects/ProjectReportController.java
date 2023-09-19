@@ -73,6 +73,10 @@ public class ProjectReportController {
     @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
     public ResponseEntity<?> getActiveProjects() {
         List<ProjectReportData> projectReports = _projectReportRepository.getActiveProjects();
+        for(ProjectReportData project : projectReports) {
+            Project p = _projectRepository.findByName(project.getProjectName());
+            project.positions = p.getPositions();
+        }
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
 

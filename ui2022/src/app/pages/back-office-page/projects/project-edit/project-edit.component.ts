@@ -65,6 +65,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       active: false,
       projectImageUrl: '',
       projectLink: '',
+      positions: [],
     },
     images: [],
     positions: [],
