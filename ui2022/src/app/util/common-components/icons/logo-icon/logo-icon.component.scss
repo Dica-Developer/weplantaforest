@@ -1,6 +1,11 @@
+.svg-icon {
+  path {
+    fill: var(--green);
+  }
+}
 .svg-icon:hover {
   cursor: pointer;
   path {
-    fill: var(--green);
+    fill: var(--black);
   }
 }

@@ -27,6 +27,10 @@
   flex-direction: row;
 }
 
+.desktop {
+  margin-bottom: 2rem;
+}
+
 @media only screen and (max-width: 768px) {
   .header {
     padding: 1rem;
@@ -52,5 +56,9 @@
     font-size: 2rem !important;
     line-height: 2.25rem !important;
     margin-bottom: 1rem !important;
+  }
+
+  .desktop {
+    margin-bottom: 1rem;
   }
 }
