@@ -64,6 +64,14 @@ snack-bar-container {
   color: #fff !important;
 }
 
+.warning-snackbar {
+  background-color: #ebad1a !important;
+  color: #000 !important;
+  .mat-simple-snackbar-action {
+    color: #000 !important;
+  }
+}
+
 .no-display {
   display: none;
 }

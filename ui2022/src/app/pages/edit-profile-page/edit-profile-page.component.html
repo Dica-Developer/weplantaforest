@@ -34,10 +34,20 @@
 
     <div class="is-flex is-flex-direction-row w-100">
       <div class="inputOutline w-100 spaceRightDesktop">
-        <input [placeholder]="'username' | translate" name="username" formControlName="username" />
+        <input
+          (focus)="showWarning('username')"
+          [placeholder]="'username' | translate"
+          name="username"
+          formControlName="username"
+        />
       </div>
       <div class="inputOutline w-100">
-        <input [placeholder]="'email' | translate" name="mail" formControlName="mail" />
+        <input
+          (focus)="showWarning('email')"
+          [placeholder]="'email' | translate"
+          name="mail"
+          formControlName="mail"
+        />
       </div>
     </div>
     <div class="is-flex is-flex-direction-row">

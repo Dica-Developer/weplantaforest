@@ -49,8 +49,6 @@ export class EditProfilePageComponent implements OnInit {
             homepage: new UntypedFormControl(res.homepage),
             lang: new UntypedFormControl(res.lang),
           });
-          this.profileForm.get('mail').disable();
-          this.profileForm.get('username').disable();
         }
       });
     });
@@ -70,6 +68,24 @@ export class EditProfilePageComponent implements OnInit {
           username,
           propertyToUpdate: 'ABOUTME',
           controlValue: this.profileForm.get('aboutMe').value,
+        }),
+      );
+    }
+    if (this.profileForm.get('mail').dirty) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'MAIL',
+          controlValue: this.profileForm.get('mail').value,
+        }),
+      );
+    }
+    if (this.profileForm.get('username').dirty) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'NAME',
+          controlValue: this.profileForm.get('username').value,
         }),
       );
     }
@@ -128,6 +144,20 @@ export class EditProfilePageComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e) => (this.imagePreviewSrc = reader.result);
       reader.readAsDataURL(this.imageFile);
+    }
+  }
+
+  showWarning(fieldToChange: string) {
+    if (fieldToChange === 'email') {
+      this.snackbar.open(this.translateService.instant('emailChangedWarning'), 'OK', {
+        duration: 3000,
+        panelClass: ['warning-snackbar'],
+      });
+    } else if (fieldToChange === 'username') {
+      this.snackbar.open(this.translateService.instant('usernameChangedWarning'), 'OK', {
+        duration: 3000,
+        panelClass: ['warning-snackbar'],
+      });
     }
   }
 }

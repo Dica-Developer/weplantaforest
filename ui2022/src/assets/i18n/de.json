@@ -271,6 +271,9 @@
   "leaveTeam": "wirklich  verlassen?",
   "contactForProof": "Bei mehr als 10 kontaktiere uns bitte, da wir einen Nachweis benötigen.",
   "location": "Standort",
-  "photo": "Foto"
+  "photo": "Foto",
+  "emailChangedWarning": "Nach Änderung der E-Mail musst du dich neu anmelden!",
+  "usernameChangedWarning": "Nach Änderung des Usernamens musst du dich neu anmelden!"
+
 
 }
