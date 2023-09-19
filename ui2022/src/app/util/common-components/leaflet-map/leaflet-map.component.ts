@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import * as L from 'leaflet';
-import { tileLayer, latLng, marker, icon, Map } from 'leaflet';
+import { tileLayer, marker, icon, Map } from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-map',
@@ -14,8 +14,6 @@ export class LeafletMapComponent implements OnInit {
   polygon;
   control: UntypedFormControl;
   screenWidth;
-  multipleAreas: any[][];
-  multipleCoords: any[][];
 
   @Input() showMarker: boolean = false;
   @Input() positions: any[];
@@ -24,18 +22,18 @@ export class LeafletMapComponent implements OnInit {
 
   @Input('projectAreas')
   set projectAreas(areas: any[][]) {
-    this.multipleAreas = areas;
+    this.treeMarker = [];
+    for (let area of areas) {
+      const coords = this.createPolygonPoints(area)
+      const polygon = L.polygon(coords, { color: '#82ab1f' });
+      this.map.addLayer(polygon);
+      const marker = this.createMarker(polygon.getCenter().lat, polygon.getCenter().lng);
+      marker.on('click',(event) => {
+        event.target._map.setView(event.latlng, 14);
+      });
+      this.treeMarker.push(marker);
 
-    this.multipleCoords = [];
-    for (let area of this.multipleAreas) {
-      this.multipleCoords.push(this.createPolygonPoints(area));
     }
-
-    for (let coords of this.multipleCoords) {
-      this.polygon = L.polygon(coords, { color: '#82ab1f' });
-      this.map.addLayer(this.polygon);
-    }
-
   }
 
   treeMarker: any[];
@@ -65,18 +63,13 @@ export class LeafletMapComponent implements OnInit {
 
   onMapReady(map: Map): void {
     this.map = map;
-    // this.map.scrollWheelZoom.disable();
+    this.map.scrollWheelZoom.disable();
+    
     setTimeout(() => {
-    if (this.coords.length > 0) {
+      if (this.coords.length > 0) {
         this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
         map.addLayer(this.polygon);
         this.map.fitBounds(this.polygon.getBounds());
-      } else if (this.multipleCoords.length > 0) {
-
-        for (let coords of this.multipleCoords) {
-          this.polygon = L.polygon(coords, { color: '#82ab1f' });
-          map.addLayer(this.polygon);
-        }
       } else {
         // adjust zoom if mobile view
         if (this.screenWidth < 764) {
@@ -119,4 +112,5 @@ export class LeafletMapComponent implements OnInit {
       }),
     });
   }
+
 }
