@@ -1,5 +1,9 @@
 package org.dicadeveloper.weplantaforest.reports.projects;
 
+import java.util.SortedSet;
+
+import org.dicadeveloper.weplantaforest.projects.AreaPositions;
+
 import lombok.Getter;
 
 @Getter
@@ -36,4 +40,5 @@ public class ProjectReportData {
 
     boolean active;
 
+    SortedSet<AreaPositions> positions;
 }
