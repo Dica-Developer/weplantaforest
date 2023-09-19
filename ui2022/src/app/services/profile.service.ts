@@ -56,4 +56,13 @@ export class ProfileService {
   findCertificateSummary(id: string) {
     return this.http.get(environment.backendUrl + '/certificate/summary/' + id);
   }
+
+  updateProfileImage(userName: string, image: any) {
+    const formData = new FormData();
+    formData.append('userName', userName + '');
+    formData.append('file', image);
+    return this.http.post(environment.backendUrl + '/user/image/upload', formData, {
+      responseType: 'text',
+    });
+  }
 }

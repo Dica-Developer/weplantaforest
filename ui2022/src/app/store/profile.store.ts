@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../services/profile.service';
 import { catchError, concatMap, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { loadTeamDetails, resetTeamDetails } from './team.store';
+import { loadTeamDetails } from './team.store';
 import { logout } from './auth.store';
 import { GiftService, GiftStatus } from '../services/gift.service';
 import { addError } from './error.state';
@@ -115,6 +115,18 @@ export const findCertificateSummarySuccess = createAction(
   props<{ summary: any }>(),
 );
 
+export const updateProfileImage = createAction(
+  '[Profile] update profile image',
+  props<{ userName: string; image: File }>(),
+);
+
+export const updateProfileImageSuccess = createAction(
+  '[Profile] update profile image success',
+  props<{ newImageFileName: string }>(),
+);
+
+export const updateProfileImageError = createAction('[Profile] update profile image error');
+
 export interface Co2Data {
   treesCount: number;
   co2: number;
@@ -152,6 +164,7 @@ export interface ProfileState {
   username: string;
   isAdmin: boolean;
   details: ProfileDetails;
+  uploadingImage: boolean;
   certificate: {
     plantings: CertificatePlanting[];
     creator: { name: string };
@@ -228,6 +241,7 @@ export const initialState: ProfileState = {
   username: '',
   isAdmin: false,
   details: null,
+  uploadingImage: false,
   certificate: {
     plantings: [],
     creator: { name: '' },
@@ -316,6 +330,23 @@ const profileReducer = createReducer(
       creator: summary.creator,
     },
   })),
+  on(updateProfileImage, (state, {}) => ({
+    ...state,
+    uploadingImage: true,
+  })),
+  on(updateProfileImageError, (state, {}) => ({
+    ...state,
+    uploadingImage: false,
+  })),
+  on(updateProfileImageSuccess, (state, { newImageFileName }) => ({
+    ...state,
+    uploadingImage: false,
+    details: {
+      ...state.details,
+      imageFileName: newImageFileName,
+      profileImageUrl: `${environment.backendUrl}/user/image/${newImageFileName}/150/150`,
+    },
+  })),
 );
 
 export function profileReducerFn(state, action) {
@@ -342,6 +373,11 @@ export const selectProfileDetails = createSelector(
 export const selectCertificate = createSelector(
   profileFeature,
   (state: ProfileState) => state.certificate,
+);
+
+export const selectUploadingImage = createSelector(
+  profileFeature,
+  (state: ProfileState) => state.uploadingImage,
 );
 
 @Injectable()
@@ -597,6 +633,23 @@ export class ProfileEffects {
           switchMap((summary: any) => {
             return [findCertificateSummarySuccess({ summary })];
           }),
+        ),
+      ),
+    ),
+  );
+
+  UpdateProfileImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateProfileImage),
+      concatMap((action) =>
+        this.profileService.updateProfileImage(action.userName, action.image).pipe(
+          switchMap((res) => {
+            return [
+              updateProfileImageSuccess({ newImageFileName: res }),
+              loadProfileDetails({ username: action.userName }),
+            ];
+          }),
+          catchError((err) => [updateProfileImageError()]),
         ),
       ),
     ),

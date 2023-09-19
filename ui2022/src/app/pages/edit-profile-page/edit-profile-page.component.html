@@ -1,6 +1,37 @@
 <div class="is-flex is-flex-direction-column padding-4 padding-top-2">
   <form [formGroup]="profileForm" *ngIf="profileForm">
     <h2>{{ 'editProfile' | translate }}</h2>
+
+    <div
+      class="is-flex is-flex-direction-row w-100 margin-bottom-1 is-justify-content-center is-align-items-center"
+    >
+      <input
+        #csvInput
+        hidden="true"
+        type="file"
+        onclick="this.value=null"
+        (change)="imageChanged($event)"
+        accept=".png, .jpg, .jpeg"
+      />
+      <div
+        *ngIf="!(uploadingImage$ | async)"
+        class="imageWrapper pointer"
+        (click)="csvInput.click()"
+      >
+        <img src="{{ imagePreviewSrc }}" alt="" *ngIf="imagePreviewSrc" />
+        <img
+          src="{{ (profileDetails$ | async).profileImageUrl }}"
+          alt=""
+          *ngIf="(profileDetails$ | async).profileImageUrl && !imagePreviewSrc"
+        />
+        <img
+          *ngIf="!(profileDetails$ | async).profileImageUrl"
+          src="assets/default_user.jpg"
+          alt=""
+        />
+      </div>
+    </div>
+
     <div class="is-flex is-flex-direction-row w-100">
       <div class="inputOutline w-100 spaceRightDesktop">
         <input [placeholder]="'username' | translate" name="username" formControlName="username" />

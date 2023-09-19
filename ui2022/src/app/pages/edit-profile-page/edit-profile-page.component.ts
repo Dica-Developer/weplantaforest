@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -8,6 +8,8 @@ import { AppState } from 'src/app/store/app.state';
 import {
   loadProfileDetails,
   selectProfileDetails,
+  selectUploadingImage,
+  updateProfileImage,
   updateProfileProperty,
 } from 'src/app/store/profile.store';
 
@@ -18,11 +20,14 @@ import {
 })
 export class EditProfilePageComponent implements OnInit {
   profileForm: UntypedFormGroup;
+  profileDetails$ = this.store.select(selectProfileDetails);
   selectedNewsletter: Boolean;
 
-  profileDetails$ = this.store.select(selectProfileDetails);
-
   languages: string[] = ['DEUTSCH', 'ENGLISH'];
+
+  imageFile: any;
+  imagePreviewSrc: any = null;
+  uploadingImage$ = this.store.select(selectUploadingImage);
 
   constructor(
     private store: Store<AppState>,
@@ -55,6 +60,10 @@ export class EditProfilePageComponent implements OnInit {
 
   updateProfile() {
     let username = localStorage.getItem('username');
+    if (this.imagePreviewSrc) {
+      this.store.dispatch(updateProfileImage({ userName: username, image: this.imageFile }));
+      this.imagePreviewSrc = null;
+    }
     if (this.profileForm.get('aboutMe').dirty) {
       this.store.dispatch(
         updateProfileProperty({
@@ -111,5 +120,14 @@ export class EditProfilePageComponent implements OnInit {
 
   routeToProfile() {
     this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+  }
+
+  imageChanged(fileInputEvent: any) {
+    if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
+      this.imageFile = fileInputEvent.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => (this.imagePreviewSrc = reader.result);
+      reader.readAsDataURL(this.imageFile);
+    }
   }
 }

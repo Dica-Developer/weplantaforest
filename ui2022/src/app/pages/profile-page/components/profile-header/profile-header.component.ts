@@ -12,10 +12,7 @@ export class ProfileHeaderComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    console.log(this.showEdit);
-    console.log(localStorage.getItem('username'));
-  }
+  ngOnInit(): void {}
 
   editProfile() {
     let username = localStorage.getItem('username');

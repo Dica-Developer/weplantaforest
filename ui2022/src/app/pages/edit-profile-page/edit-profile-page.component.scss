@@ -24,10 +24,20 @@ input:disabled {
   margin-right: 0.5rem;
 }
 
-:host ::ng-deep app-button.cancel-btn{
+:host ::ng-deep app-button.cancel-btn {
   button {
-    background: var(--background)!important;
-    color: var(--dark-brown)!important;
+    background: var(--background) !important;
+    color: var(--dark-brown) !important;
+  }
+}
+
+.imageWrapper {
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  img {
+    border-radius: 50%;
+    height: 12rem !important;
   }
 }
 
