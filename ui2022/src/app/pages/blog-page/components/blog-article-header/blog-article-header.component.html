@@ -10,8 +10,13 @@
           </a>
         </li>
         <li>
-          <a class="breadcrumb-active" routerLink="/blog">
+          <a routerLink="/blog">
             {{ 'blog' | translate }}
+          </a>
+        </li>
+        <li>
+          <a class="breadcrumb-active">
+            {{ blogArticle.title }}
           </a>
         </li>
       </ul>
