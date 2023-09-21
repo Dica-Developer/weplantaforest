@@ -31,6 +31,12 @@ body {
   font-size: 20px;
 }
 
+.code {
+  padding: 0.5rem;
+  background-color: #c0c0bb;
+  color: var(--black);
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body {
