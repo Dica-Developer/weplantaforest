@@ -8,12 +8,9 @@
   display: block;
 }
 
-h2 {
-  margin-bottom: 0;
-  :hover {
-    mat-icon {
-      color: var(--green);
-    }
+h2:hover {
+  mat-icon {
+    color: var(--green);
   }
 }
 
