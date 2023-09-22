@@ -35,6 +35,7 @@ import { PlantProposalPageModule } from './plant-proposal-page/plant-proposal-pa
 import { GiftRedeemPageComponent } from './gift-redeem-page/gift-redeem-page.component';
 import { CertificateFindPageComponent } from './certificate-find-page/certificate-find-page.component';
 import { PlantSelfPageModule } from './plant-self-page/plant-self-page.module';
+import { FaqPageComponent } from './faq-page/faq-page.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { PlantSelfPageModule } from './plant-self-page/plant-self-page.module';
     VerifyRegistrationPageComponent,
     GiftRedeemPageComponent,
     CertificateFindPageComponent,
+    FaqPageComponent,
   ],
   imports: [
     CommonModule,

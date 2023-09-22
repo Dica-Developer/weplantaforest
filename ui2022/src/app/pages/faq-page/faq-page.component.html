@@ -1,0 +1,35 @@
+<div class="is-flex is-flex-direction-column padding-left pt-075 is-justify-content-space-between">
+  <nav class="breadcrumb">
+    <ul>
+      <li>
+        <a routerLink="/">
+          {{ 'startPage' | translate }}
+        </a>
+      </li>
+      <li>
+        <a class="breadcrumb-active" routerLink="/faq">
+          {{ 'faq' | translate }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div
+  class="w-100 is-flex is-flex-direction-column is-justify-content-center is-align-items-center padding-1"
+>
+  <div class="faq margin-top-2">
+    <h2>{{ 'faq' | translate }}</h2>
+    <div *ngFor="let faqArticle of faq?.slice().reverse()">
+      <h4>{{ faqArticle.title }}</h4>
+      <div innerHtml="{{ faqArticle.intro }}"></div>
+      <div *ngFor="let paragraph of faqArticle.paragraphs">
+        <p>
+          {{ paragraph.title }}
+        </p>
+        <p>
+          {{ paragraph.text }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
