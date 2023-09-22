@@ -39,6 +39,7 @@ export class FactsPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     let privateOrg = this.translateService.instant('PRIVATE');
     let commercialOrg = this.translateService.instant('COMMERCIAL');
     let nonprofitOrg = this.translateService.instant('NONPROFIT');
