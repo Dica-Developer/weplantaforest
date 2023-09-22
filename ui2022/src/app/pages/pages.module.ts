@@ -22,7 +22,6 @@ import { FinancesPageComponent } from './finances-page/finances-page.component';
 import { PartnerPageComponent } from './partner-page/partner-page.component';
 import { SepaPageComponent } from './sepa-page/sepa-page.component';
 import { RouterModule } from '@angular/router';
-import { PlantSelfPageComponent } from './plant-self-page/plant-self-page.component';
 import { FactsPageComponent } from './facts-page/facts-page/facts-page.component';
 import { NgChartsModule } from 'ng2-charts';
 import { NgxPayPalModule } from 'ngx-paypal';
@@ -36,6 +35,7 @@ import { GiftRedeemPageComponent } from './gift-redeem-page/gift-redeem-page.com
 import { CertificateFindPageComponent } from './certificate-find-page/certificate-find-page.component';
 import { PlantSelfPageModule } from './plant-self-page/plant-self-page.module';
 import { FaqPageComponent } from './faq-page/faq-page.component';
+import { TermsPageComponent } from './terms-page/terms-page.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +56,7 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
     GiftRedeemPageComponent,
     CertificateFindPageComponent,
     FaqPageComponent,
+    TermsPageComponent,
   ],
   imports: [
     CommonModule,
@@ -86,6 +87,8 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
     PaymentOptionsPageComponent,
     FinancesPageComponent,
     PartnerPageComponent,
+    TermsPageComponent,
+    FaqPageComponent,
   ],
 })
 export class PagesModule {}

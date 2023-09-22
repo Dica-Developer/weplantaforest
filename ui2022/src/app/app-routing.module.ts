@@ -45,6 +45,7 @@ import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 import { GiftRedeemPageComponent } from './pages/gift-redeem-page/gift-redeem-page.component';
 import { CertificateFindPageComponent } from './pages/certificate-find-page/certificate-find-page.component';
 import { FaqPageComponent } from './pages/faq-page/faq-page.component';
+import { TermsPageComponent } from './pages/terms-page/terms-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -78,6 +79,7 @@ export const userRoutes: Routes = [
   { path: 'facts', component: FactsPageComponent },
   { path: 'faq', component: FaqPageComponent },
   { path: 'finances', component: FinancesPageComponent },
+  { path: 'terms', component: TermsPageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'newsletter', component: NewsletterComponent },
   { path: 'about', component: AboutPageComponent },
