@@ -12,6 +12,7 @@ import { addError } from './error.state';
 import { addSuccessMessage } from './success-message.state';
 import { CartService } from '../services/cart.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -395,6 +396,7 @@ export class ProfileEffects {
     private giftService: GiftService,
     private cartService: CartService,
     private translateService: TranslateService,
+    private router: Router
   ) {}
 
   LoadUserDetails$ = createEffect(() =>
@@ -526,9 +528,11 @@ export class ProfileEffects {
       ofType(redeemGift),
       switchMap((action) =>
         this.giftService.redeemGift(action.code).pipe(
-          switchMap(() => [
+          switchMap(() => {
+            this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+            return [
             addSuccessMessage({ message: { key: 'GIFT_REDEEMED', message: 'GIFT_REDEEMED' } }),
-          ]),
+          ]}),
           catchError((err) => [
             addError({
               error: { message: err.error.errorInfos[0].errorCode, key: 'REDEEM_GIFT_ERROR' },
