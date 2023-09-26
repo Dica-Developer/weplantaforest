@@ -46,11 +46,11 @@ export class GridHelper {
 
   getCartStates() {
     return [
+      { value: 'VERIFIED', label: 'Verified' },
+      { value: 'DISCARDED', label: 'Discarded' },
       { value: 'CALLBACK', label: 'Callback' },
       { value: 'INITIAL', label: 'Initial' },
-      { value: 'VERIFIED', label: 'Verified' },
       { value: 'GENERATED', label: 'Generated' },
-      { value: 'DISCARDED', label: 'Discarded' },
     ];
   }
 }
