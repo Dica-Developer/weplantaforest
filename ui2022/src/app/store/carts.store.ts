@@ -330,7 +330,15 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .saveAddress(action.cartId, action.field, action.value)
-          .pipe(switchMap(() => [updateAddressSuccess(action)])),
+          .pipe(switchMap(() => [updateAddressSuccess(action),
+            addSuccessMessage({
+              message: {
+                key: 'UPDATED_ADDRESS',
+                message: `Feld ${action.field} wurde erfolgreich geändert?`,
+              },
+            }),
+
+          ])),
       ),
     ),
   );
@@ -341,7 +349,15 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .changeReceiptableFlag(action.cartId, action.value)
-          .pipe(switchMap(() => [updateReceiptableFlagSuccess(action)])),
+          .pipe(switchMap(() => [updateReceiptableFlagSuccess(action),
+            addSuccessMessage({
+              message: {
+                key: 'UPDATED_RECEIPTABLE_FLAG',
+                message: `Spendenquittung wurde auf ${action.value} gesetzt`,
+              },
+            }),
+
+          ])),
       ),
     ),
   );
@@ -352,7 +368,15 @@ export class CartsEffects {
       switchMap((action) =>
         this.cartsService
           .updateStatus(action.cartId, action.value)
-          .pipe(switchMap(() => [updateStatusSuccess(action)])),
+          .pipe(switchMap(() => [updateStatusSuccess(action),
+            addSuccessMessage({
+              message: {
+                key: 'UPDATED_CART_STATE',
+                message: `Status wurde auf ${action.value} gesetzt`,
+              },
+            }),
+
+          ])),
       ),
     ),
   );
