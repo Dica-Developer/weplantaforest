@@ -230,10 +230,17 @@ export interface CertificatePlanting {
   projectArticle: { project: { name: string } };
   submittedOn: number;
   treeType: {
-    description: string;
     id: number;
-    imageFile: string;
+    description: string;
+    fruit: string;
+    fruitImageBW: string;
+    fruitImageColor: string;
+    leaf: string;
     name: string;
+    treeImageBW: string;
+    treeImageColor: string;
+    trunk: string;
+    trunkImageColor: string;
   };
 }
 
@@ -447,8 +454,8 @@ export class ProfileEffects {
                   ? `/project/${tree.projectArticle?.project?.name}`
                   : null;
                 let treeTypeImageUrl = `${environment.backendUrl}/treeType/image/${tree.treeType?.treeImageColor}/60/60`;
-                if(projectName === 'Community' && tree.imagePath && tree.imagePath !== '') { 
-                  treeTypeImageUrl = `${environment.backendUrl}/tree/image/${tree.imagePath}/60/60`
+                if (projectName === 'Community' && tree.imagePath && tree.imagePath !== '') {
+                  treeTypeImageUrl = `${environment.backendUrl}/tree/image/${tree.imagePath}/60/60`;
                 }
                 trees.push({
                   id: tree.id,

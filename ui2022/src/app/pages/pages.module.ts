@@ -32,11 +32,11 @@ import { SignupPageModule } from './signup-page/signup-page.module';
 import { VerifyRegistrationPageComponent } from './verify-registration-page/verify-registration-page.component';
 import { PlantProposalPageModule } from './plant-proposal-page/plant-proposal-page.module';
 import { GiftRedeemPageComponent } from './gift-redeem-page/gift-redeem-page.component';
-import { CertificateFindPageComponent } from './certificate-find-page/certificate-find-page.component';
 import { PlantSelfPageModule } from './plant-self-page/plant-self-page.module';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { AwardsPageComponent } from './awards-page/awards-page.component';
+import { CertificateFindPageModule } from './certificate-find-page/ceritificate-find-page.module';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,6 @@ import { AwardsPageComponent } from './awards-page/awards-page.component';
     OfferProjectPageComponent,
     VerifyRegistrationPageComponent,
     GiftRedeemPageComponent,
-    CertificateFindPageComponent,
     FaqPageComponent,
     TermsPageComponent,
     AwardsPageComponent,
@@ -80,6 +79,7 @@ import { AwardsPageComponent } from './awards-page/awards-page.component';
     SignupPageModule,
     PlantProposalPageModule,
     PlantSelfPageModule,
+    CertificateFindPageModule,
   ],
   exports: [
     ForgotPasswordPageComponent,

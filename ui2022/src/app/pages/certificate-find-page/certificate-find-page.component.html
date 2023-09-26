@@ -16,41 +16,45 @@
     </nav>
     <h2>{{ ('certificate' | translate) + ' #' + certificateId }}</h2>
 
-    <div class="columns" *ngIf="(certificate$ | async).plantings.length > 0">
-      <div class="column">
-        <p>
-          {{ ('of' | translate) + ': ' }}
-          <a routerLink="{{ '/profile/' + (certificate$ | async)?.creator?.name }}">{{
-            (certificate$ | async)?.creator?.name ?? ''
-          }}</a>
-        </p>
-        <p>
-          {{
-            ('aboutThePlantingOf' | translate) +
-              ' ' +
-              amountOfTrees +
-              ' ' +
-              (amountOfTrees > 1 ? ('trees2' | translate) : ('tree' | translate))
-          }}
-        </p>
-        <p class="custom-text">
-          {{ (certificate$ | async)?.text }}
-        </p>
+    <div class="columns">
+      <div class="column is-8">
+        <div class="columns" *ngIf="(certificate$ | async).plantings.length > 0">
+          <div class="column">
+            <p>
+              {{ ('of' | translate) + ': ' }}
+              <a routerLink="{{ '/profile/' + (certificate$ | async)?.creator?.name }}">{{
+                (certificate$ | async)?.creator?.name ?? ''
+              }}</a>
+            </p>
+            <p>
+              {{
+                ('aboutThePlantingOf' | translate) +
+                  ' ' +
+                  amountOfTrees +
+                  ' ' +
+                  (amountOfTrees > 1 ? ('trees2' | translate) : ('tree' | translate))
+              }}
+            </p>
+            <div class="custom-text">
+              <p>
+                {{ (certificate$ | async)?.text }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-flex is-flex-direction-row is-justify-content-space-between carousel">
+          <div class="columns w-100">
+            <app-certificate-carousel-item
+              class="column is-3"
+              *ngFor="let item of (certificate$ | async).plantings"
+              [item]="item"
+            ></app-certificate-carousel-item>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="columns is-flex is-flex-direction-row is-multiline tree-container">
-      <app-carousel-item
-        *ngFor="let planting of (certificate$ | async).plantings"
-        [rankingItem]="{
-          name: getTreeTypeName(planting.treeType.name),
-          amount: planting.amount,
-          imageUrl: createTreeTypeImageUrl(planting.treeType.treeImageColor),
-          linkTo: null
-        }"
-        linkTo="{{ planting.projectLink }}"
-        class="column is-one-quarter"
-      >
-      </app-carousel-item>
+      <div class="column is-4">
+        <img src="assets/Speierling_color.jpg" alt="">
+      </div>
     </div>
   </div>
 </div>
