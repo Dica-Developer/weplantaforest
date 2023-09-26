@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -228,6 +228,10 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AppCookieService,
     CookieService,
+    {
+      provide: LOCALE_ID,
+      useValue: 'de-DE' // 'de-DE' for Germany, 'fr-FR' for France ...
+    },
   ],
   bootstrap: [AppComponent],
 })
