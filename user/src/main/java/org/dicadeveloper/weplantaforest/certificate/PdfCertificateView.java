@@ -59,7 +59,7 @@ public class PdfCertificateView {
     pdfHelper.addLogo2023(cb, imagePath, 50f, 730f);
     pdfHelper.addTreeImage(cb, imagePath+ "/Speierling_color.jpg", 285f, 510f, 17f);
     pdfHelper.createDividerLine(cb, 0, 690, 335);
-    pdfHelper.createDividerLine(cb, 560, 690, 40);
+    pdfHelper.createDividerLine(cb, 570, 690, 30);
     pdfHelper.createBrownRectangle(cb, 0, 320, 595, 190);
     pdfHelper.addHeader(cb, fontPath, pdfTexts.get("certificate.header_text"));
     createTreeCountAndCustomTextBlock(cb, pdfTexts, fontPath);
@@ -80,7 +80,7 @@ public class PdfCertificateView {
     
     Font textFont = new Font(bull, 18, Font.NORMAL, background);
     Font textFontTreeCount = new Font(bull, 35, Font.NORMAL, background);
-    Font customTextFont = new Font(bull, 12, Font.NORMAL, brown);
+    Font customTextFont = new Font(bull, 12, Font.NORMAL, BaseColor.BLACK);
 
     PdfPTable table = new PdfPTable(1);
     float[] rows = { 595f };
