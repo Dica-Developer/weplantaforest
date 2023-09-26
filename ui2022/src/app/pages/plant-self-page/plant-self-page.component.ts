@@ -138,7 +138,7 @@ export class PlantSelfPageComponent implements OnInit {
     data.plantedOn = new Date(data.plantedOn).getTime();
     if (this.selfPlantForm.valid) {
       this.store.dispatch(sendSelfPlant({ selfPlantData: data }));
-    } else {
+    } else {      
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
       });
