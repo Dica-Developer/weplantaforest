@@ -46,6 +46,5 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
 
   toggleCollapsibleState() {
     this.collapsibleState = !this.collapsibleState;
-    console.log(this.collapsibleState);
   }
 }

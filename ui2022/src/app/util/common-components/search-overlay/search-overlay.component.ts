@@ -32,7 +32,6 @@ export class SearchOverlayComponent implements OnInit {
     setTimeout(() => {
       // this will make the execution after the above boolean has changed
       this.searchElement.nativeElement.focus();
-      console.log('inside search');
     }, 0);
   }
 
