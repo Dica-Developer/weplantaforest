@@ -7,14 +7,17 @@
     <div class="inputOutline">
       <input placeholder="Email/Username" name="name" required formControlName="name" />
     </div>
-    <div class="inputOutline">
+    <div class="inputOutline is-flex is-flex-direction-row">
       <input
-        type="password"
+        [type]="showPassword ? 'text' : 'password'"
         placeholder="Password"
         name="password"
         required
         formControlName="password"
       />
+      <mat-icon matSuffix style="cursor: pointer" (click)="toggleShowPassword()">
+        {{ !showPassword ? 'visibility' : 'visibility_off' }}</mat-icon
+      >
     </div>
     <div class="center">
       <app-button [label]="'Login' | translate"></app-button>

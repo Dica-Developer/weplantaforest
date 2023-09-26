@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginPageComponent implements OnInit {
   loginError$: Observable<string>;
-
+  showPassword: boolean = false;
   loginForm = new UntypedFormGroup({
     name: new UntypedFormControl(''),
     password: new UntypedFormControl(''),
@@ -36,5 +36,9 @@ export class LoginPageComponent implements OnInit {
         password: this.loginForm.get('password').value,
       }),
     );
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 }

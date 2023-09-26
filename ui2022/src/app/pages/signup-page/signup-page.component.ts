@@ -21,6 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class SignupPageComponent implements OnInit {
   signupError$: Observable<string>;
   signupDone$: Observable<boolean>;
+  showPassword: boolean = false;
 
   signupForm = new UntypedFormGroup({
     name: new UntypedFormControl('', Validators.required),
@@ -73,6 +74,10 @@ export class SignupPageComponent implements OnInit {
     const pass = this.signupForm.get('password').value;
     const confirmPass = this.signupForm.get('repeatPassword').value;
     return pass === confirmPass;
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit(): void {

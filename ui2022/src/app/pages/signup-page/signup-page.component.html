@@ -11,23 +11,29 @@
     <div class="inputOutline">
       <input [placeholder]="'username' | translate" name="name" required formControlName="name" />
     </div>
-    <div class="inputOutline">
+    <div class="inputOutline is-flex is-flex-direction-row">
       <input
-        type="password"
+        [type]="showPassword ? 'text' : 'password'"
         [placeholder]="'password' | translate"
         name="password"
         required
         formControlName="password"
       />
+      <mat-icon matSuffix style="cursor: pointer" (click)="toggleShowPassword()">
+        {{ !showPassword ? 'visibility' : 'visibility_off' }}</mat-icon
+      >
     </div>
-    <div class="inputOutline">
+    <div class="inputOutline is-flex is-flex-direction-row">
       <input
-        type="password"
+        [type]="showPassword ? 'text' : 'password'"
         [placeholder]="'repeatPassword' | translate"
         name="repeatPassword"
         required
         formControlName="repeatPassword"
       />
+      <mat-icon matSuffix style="cursor: pointer" (click)="toggleShowPassword()">
+        {{ !showPassword ? 'visibility' : 'visibility_off' }}</mat-icon
+      >
     </div>
     <div class="inputOutline">
       <input [placeholder]="'email' | translate" name="mail" required formControlName="mail" />
@@ -59,13 +65,13 @@
       </div>
     </div>
 
-    <div class="w-100 margin-bottom-1 is-flex is-justify-content-space-around">
+    <div class="w-100 margin-bottom-1 is-flex">
       <mat-checkbox formControlName="terms" class="margin-right-1"> </mat-checkbox>
       <span>
         {{ 'agb' | translate }} <a routerlink="/privacy">{{ 'termsLink' | translate }}</a>
       </span>
     </div>
-    <div class="w-100 is-flex is-justify-content-space-around">
+    <div class="w-100 is-flex">
       <mat-checkbox class="margin-right-1" formControlName="privacyPolicy"></mat-checkbox>
       <span>
         {{ 'privacyPolicy' | translate }}
