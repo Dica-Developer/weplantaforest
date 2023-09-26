@@ -26,6 +26,9 @@ import { setGift } from '../../../../store/payment.store';
 export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   _recipientGifts: ProfileGift[];
   _consignorGifts: ProfileGift[];
+  displayedColumns: string[] = ['code', 'trees', 'price', 'consignedBy', 'PDF', 'recreate'];
+  dataSourceRecipient;
+  dataSourceConsigner;
 
   @Input()
   set recipientGifts(gifts: ProfileGift[]) {
@@ -58,6 +61,7 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
         this.consignorGiftPages.set(pageCnt, chunk);
         pageCnt++;
       }
+      this.dataSourceConsigner = this.consignorGiftPages.get(0);
     } else {
       this.consignorGiftPages.set(0, []);
     }

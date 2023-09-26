@@ -6,21 +6,70 @@
   <div class="center">
     <app-button label="{{ 'createGift' | translate }}" (click)="createGift()"></app-button>
   </div>
-  <div class="columns">
-    <div class="column">
-      <mat-tab-group mat-align-tabs="center">
-        <mat-tab label="{{ 'redeemGift' | translate }}">
-          <div class="columns">
-            <div class="column is-2"></div>
-            <div class="column">
-              <app-profile-redeem-gift></app-profile-redeem-gift>
-            </div>
-            <div class="column is-2"></div>
-          </div>
-        </mat-tab>
-        <mat-tab label="{{ 'overview' | translate }}">
-          <div class="columns">
-            <div class="column is-6">
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="{{ 'overview' | translate }}">
+      <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+        <div class="is-flex w-100 is-justify-content-center is-flex-direction-column">
+          <h4 class="text-center margin-top-1">{{ 'created' | translate }}</h4>
+
+          <table mat-table [dataSource]="_consignorGifts">
+            <ng-container matColumnDef="code">
+              <th mat-header-cell *matHeaderCellDef>{{ 'code' | translate }}</th>
+              <td class="tableAlignment minTable200" mat-cell *matCellDef="let gift">
+                {{ gift.code.code }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="trees">
+              <th mat-header-cell *matHeaderCellDef>{{ 'trees' | translate }}</th>
+              <td class="tableAlignment minTable60" mat-cell *matCellDef="let gift">
+                {{ gift.code.cart.treeCount }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef>{{ 'price' | translate }}</th>
+              <td class="tableAlignment minTable80" mat-cell *matCellDef="let gift">
+                {{ gift.code.cart.totalPrice | currency }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="consignedBy">
+              <th mat-header-cell *matHeaderCellDef>{{ 'consignedBy' | translate }}</th>
+              <td class="tableAlignment minTable200" mat-cell *matCellDef="let gift">
+                {{ gift.recipient?.name ? gift.recipient.name : '' }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="PDF">
+              <th mat-header-cell *matHeaderCellDef>{{ 'PDF' | translate }}</th>
+              <td mat-cell *matCellDef="let gift">
+                <button mat-icon-button color="primary" (click)="openGiftPdf(gift.id)">
+                  <mat-icon aria-hidden="false">file_download</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="recreate">
+              <th mat-header-cell *matHeaderCellDef>{{ 'again' | translate }}</th>
+              <td mat-cell *matCellDef="let gift">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="recreateGift(gift)"
+                  matTooltip="{{ 'recreateGift' | translate }}"
+                >
+                  <mat-icon aria-hidden="false">autorenew</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+        <div class="is-flex w-100 is-justify-content-center">
+          <h4>{{ 'consigned' | translate }}</h4>
+        </div>
+      </div>
+
+      <div class="columns">
+        <!-- <div class="column is-6">
               <h4>{{ 'created' | translate }}</h4>
               <div class="columns">
                 <div class="column is-3 is-offset-1">
@@ -88,59 +137,60 @@
                   ></app-paging>
                 </div>
               </div>
-            </div>
-            <div class="column">
-              <h4>{{ 'consigned' | translate }}</h4>
-              <div class="columns">
-                <div class="column is-4 is-offset-2">
-                  <b>{{ 'code' | translate }}</b>
-                </div>
-                <div class="column is-1">
-                  <b>{{ 'trees' | translate }}</b>
-                </div>
-                <div class="column is-1">
-                  <b>{{ 'price' | translate }}</b>
-                </div>
-                <div class="column is-2">
-                  <b>{{ 'createdBy' | translate }}</b>
-                </div>
-              </div>
+            </div> -->
 
-              <div
-                class="columns"
-                *ngFor="let gift of recipientGiftPages.get(activeRecipientGiftPage)"
-              >
-                <div class="column is-4 is-offset-2">{{ gift.code.code }}</div>
-                <div class="column is-1">{{ gift.code.cart.treeCount }}</div>
-                <div class="column is-1">{{ gift.code.cart.totalPrice | currency }}</div>
-                <div class="column is-2">{{ gift.consignor?.name ? gift.consignor.name : '' }}</div>
-              </div>
-              <div
-                class="columns"
-                *ngFor="
-                  let fakeLine of [].constructor(
-                    5 - recipientGiftPages.get(activeRecipientGiftPage).length
-                  )
-                "
-              >
-                <div class="column is-4">{{ '   ' }}</div>
-                <div class="column is-1">{{ '   ' }}</div>
-                <div class="column is-1">{{ '   ' }}</div>
-                <div class="column is-3">{{ '   ' }}</div>
-              </div>
-              <div class="columns" *ngIf="recipientGiftPages.size > 1">
-                <div class="column is-8 is-offset-2">
-                  <app-paging
-                    [activePage]="activeRecipientGiftPage"
-                    [totalPageCount]="recipientGiftPages.size"
-                    (pageChanged)="setRecipientGiftPage($event)"
-                  ></app-paging>
-                </div>
-              </div>
+        <div class="column">
+          <h4>{{ 'consigned' | translate }}</h4>
+          <div class="columns">
+            <div class="column is-4 is-offset-2">
+              <b>{{ 'code' | translate }}</b>
+            </div>
+            <div class="column is-1">
+              <b>{{ 'trees' | translate }}</b>
+            </div>
+            <div class="column is-1">
+              <b>{{ 'price' | translate }}</b>
+            </div>
+            <div class="column is-2">
+              <b>{{ 'createdBy' | translate }}</b>
             </div>
           </div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-  </div>
+
+          <div class="columns" *ngFor="let gift of recipientGiftPages.get(activeRecipientGiftPage)">
+            <div class="column is-4 is-offset-2">{{ gift.code.code }}</div>
+            <div class="column is-1">{{ gift.code.cart.treeCount }}</div>
+            <div class="column is-1">{{ gift.code.cart.totalPrice | currency }}</div>
+            <div class="column is-2">{{ gift.consignor?.name ? gift.consignor.name : '' }}</div>
+          </div>
+          <div
+            class="columns"
+            *ngFor="
+              let fakeLine of [].constructor(
+                5 - recipientGiftPages.get(activeRecipientGiftPage).length
+              )
+            "
+          >
+            <div class="column is-4">{{ '   ' }}</div>
+            <div class="column is-1">{{ '   ' }}</div>
+            <div class="column is-1">{{ '   ' }}</div>
+            <div class="column is-3">{{ '   ' }}</div>
+          </div>
+          <div class="columns" *ngIf="recipientGiftPages.size > 1">
+            <div class="column is-8 is-offset-2">
+              <app-paging
+                [activePage]="activeRecipientGiftPage"
+                [totalPageCount]="recipientGiftPages.size"
+                (pageChanged)="setRecipientGiftPage($event)"
+              ></app-paging>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{ 'redeemGift' | translate }}">
+      <div class="is-flex is-justify-content-center">
+        <app-profile-redeem-gift></app-profile-redeem-gift>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

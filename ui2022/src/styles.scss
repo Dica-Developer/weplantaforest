@@ -37,13 +37,6 @@ body {
   color: var(--black);
 }
 
-@media only screen and (max-width: 768px) {
-  html,
-  body {
-    font-size: 16px;
-  }
-}
-
 .columns {
   margin: 0 !important;
 }
@@ -229,7 +222,44 @@ p.incognito {
   font-size: 20px !important;
 }
 
-
 .circle-icon-text {
   margin-left: -0.5rem;
+}
+
+// MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE
+.mat-table {
+  background: var(--background);
+}
+
+th.mat-header-cell {
+  padding-left: 0 !important;
+  padding-top: 0.5rem !important;
+  font-family: 'Bull-mono';
+}
+
+tr,
+td {
+  padding-left: 0 !important;
+  font-family: 'Bull-mono';
+}
+
+.tableAlignment {
+  padding-top: 0.75rem !important;
+}
+
+.minTable200 {
+  min-width: 200px;
+}
+.minTable60 {
+  min-width: 60px;
+}
+.minTable80 {
+  min-width: 80px;
+}
+
+@media only screen and (max-width: 768px) {
+  html,
+  body {
+    font-size: 16px;
+  }
 }

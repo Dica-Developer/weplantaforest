@@ -22,7 +22,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatRadioModule } from '@angular/material/radio';
-
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [],
   imports: [
@@ -48,6 +48,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatMenuModule,
     MatBadgeModule,
     MatRadioModule,
+    MatTableModule,
   ],
   exports: [
     MatInputModule,
@@ -71,6 +72,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatMenuModule,
     MatBadgeModule,
     MatRadioModule,
+    MatTableModule,
   ],
 })
 export class MaterialModule {}
