@@ -57,7 +57,7 @@ public class EventController {
     @GetMapping(value = REQUEST_URL + "s")
     @JsonView(Views.EventOverview.class)
     public Iterable<Event> getEvents() {
-        return eventRepository.findAll();
+        return eventRepository.findAllByOrderByIdDesc();
     }
 
     @GetMapping(value = REQUEST_URL + "/{eventId}")
