@@ -6,6 +6,7 @@ import { PlantbagService } from '../services/plantbag.service';
 import { AppState } from './app.state';
 import { addSuccessMessage } from './success-message.state';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 export const getSimplePlantProposal = createAction(
   '[Plant] get proposal',
@@ -197,6 +198,7 @@ export class PlantProposalEffects {
     private actions$: Actions,
     private plantbagService: PlantbagService,
     private translateService: TranslateService,
+    private router: Router,
   ) {}
 
   getSimplePlantProposal$ = createEffect(() =>
@@ -253,6 +255,7 @@ export class PlantProposalEffects {
                 uploadSelfPlantImage({ treeId: treeId, image: action.selfPlantData.mainImageFile }),
               ];
             } else {
+              this.router.navigate(['/profile/' + localStorage.getItem('username')]);
               return [
                 sendSelfPlantSuccess(),
                 addSuccessMessage({
@@ -274,15 +277,18 @@ export class PlantProposalEffects {
       ofType(uploadSelfPlantImage),
       switchMap((action) =>
         this.plantbagService.uploadPlantSelfImage(action.treeId, action.image).pipe(
-          switchMap(() => [
-            sendSelfPlantSuccess(),
-            addSuccessMessage({
-              message: {
-                key: 'SELFPLANT_GENERATED',
-                message: this.translateService.instant('selfPlantSuccess'),
-              },
-            }),
-          ]),
+          switchMap(() => {
+            this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+            return [
+              sendSelfPlantSuccess(),
+              addSuccessMessage({
+                message: {
+                  key: 'SELFPLANT_GENERATED',
+                  message: this.translateService.instant('selfPlantSuccess'),
+                },
+              }),
+            ];
+          }),
         ),
       ),
     ),

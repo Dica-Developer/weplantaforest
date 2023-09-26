@@ -50,13 +50,13 @@ export class PlantSelfPageComponent implements OnInit {
 
   selfPlantForm = new UntypedFormGroup({
     plantedOn: new UntypedFormControl(new Date(), [Validators.required]),
-    shortDescription: new UntypedFormControl('', [Validators.required]),
     amount: new UntypedFormControl(this.sliderDefaultValue),
-    imageName: new UntypedFormControl('', [Validators.required]),
+    description: new UntypedFormControl('', []),
+    imageName: new UntypedFormControl('', []),
     treeTypeId: new UntypedFormControl(null, [Validators.required]),
     latitude: new UntypedFormControl(null, [Validators.required]),
     longitude: new UntypedFormControl(null, [Validators.required]),
-    mainImageFile: new UntypedFormControl(null, [Validators.required]),
+    mainImageFile: new UntypedFormControl(null, []),
   });
 
   constructor(
@@ -135,7 +135,7 @@ export class PlantSelfPageComponent implements OnInit {
 
   submitPlanting() {
     const data = this.selfPlantForm.value;
-    data.plantedOn = data.plantedOn.getTime();
+    data.plantedOn = new Date(data.plantedOn).getTime();
     if (this.selfPlantForm.valid) {
       this.store.dispatch(sendSelfPlant({ selfPlantData: data }));
     } else {

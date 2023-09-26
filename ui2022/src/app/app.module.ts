@@ -12,7 +12,7 @@ import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { projectsReportReducerFn, ProjectReportsEffects } from './store/project-report.store';
 import { TokenInterceptor } from './services/http-interceptors/token.interceptor';
 import { cartsReducerFn, CartsEffects } from './store/carts.store';
-import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { userReducerFn, UserEffects } from './store/user.store';
 import { projectsReducerFn, ProjectsEffects } from './store/project.store';
@@ -53,6 +53,7 @@ import { PaymentEffects, paymentReducerFn } from './store/payment.store';
 import { ContactEffects, contactReducerFn } from './store/contact.store';
 import { NgChartsModule } from 'ng2-charts';
 import { InfrastructureEffects, infrastructureReducerFn } from './store/infrastructure.store';
+import { MomentDateAdapter, MomentDateModule } from '@angular/material-moment-adapter';
 
 export const MY_FORMATS = {
   parse: {
@@ -156,6 +157,7 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
       PaymentEffects,
       ContactEffects,
       InfrastructureEffects,
+      MomentDateModule
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),
@@ -212,6 +214,11 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     { provide: MAT_DATE_LOCALE, useValue: 'en-EN' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
