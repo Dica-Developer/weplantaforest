@@ -29,6 +29,9 @@
         <p>
           {{ currentTree.description }}
         </p>
+        <p *ngIf="selectedInfoType === 'help'">
+          {{ 'exploreTip' | translate }}
+        </p>
         <p *ngIf="selectedInfoType === 'leaf'">
           {{ currentTree.leaf }}
         </p>

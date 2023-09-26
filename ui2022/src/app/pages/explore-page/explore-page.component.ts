@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ExplorePageComponent implements OnInit {
   currentTree: TreeType = null;
-  selectedInfoType: string = '';
+  selectedInfoType: string = 'help';
   currentImageUrl: string = '';
   currentFruitUrl: string = '';
   currenttrunkUrl: string = '';
@@ -61,7 +61,7 @@ export class ExplorePageComponent implements OnInit {
   selectTree(tree: TreeType) {
     this.currentTree = tree;
     this.currentImageUrl =
-      environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/1000/1000';
+      environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/750/750';
     this.currentFruitUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
     window.scrollTo(0, 0);
@@ -74,9 +74,9 @@ export class ExplorePageComponent implements OnInit {
 
   setImages(infoType: string) {
     let coloredTreeUrl =
-      environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageColor + '/1000/1000';
+      environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageColor + '/750/750';
     let bwTreeUrl =
-      environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/1000/1000';
+      environment.backendUrl + '/treeType/image/' + this.currentTree.treeImageBW + '/750/750';
     let coloredFruitUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
     let bwFruitUrl =

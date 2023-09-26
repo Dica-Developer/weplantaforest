@@ -280,7 +280,8 @@
   "usernameChangedWarning": "Nach Änderung des Usernamens musst du dich neu anmelden!",
   "customPlantingInfo": "Hier entscheidest du selbst, welche Bäume du wo pflanzen möchtest.",
   "date": "Datum",
-  "treeType": "Baumart"
+  "treeType": "Baumart",
+  "exploreTip": "Klicke auf die grünen Punkte um mehr über den Baum zu erfahren."
 
 
 }
