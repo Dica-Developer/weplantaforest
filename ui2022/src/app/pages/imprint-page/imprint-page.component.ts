@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ContentService } from 'src/app/services/content.service';
+import { TextHelper } from 'src/app/util/text.helper';
 
 @Component({
   selector: 'app-imprint-page',
@@ -8,18 +9,16 @@ import { ContentService } from 'src/app/services/content.service';
   styleUrls: ['./imprint-page.component.scss'],
 })
 export class ImprintPageComponent implements OnInit {
-  lang: string;
   imprints;
-  constructor(private contentService: ContentService, private translateService: TranslateService) {}
+
+  constructor(private textHelper: TextHelper, private contentService: ContentService) {}
 
   ngOnInit(): void {
-    if (this.translateService.currentLang === 'de') {
-      this.lang = 'DEUTSCH';
-    } else if (this.translateService.currentLang === 'en') {
-      this.lang = 'ENGLISH';
-    }
-    this.contentService.getInfrastructureArticle('IMPRESS', this.lang).subscribe((res) => {
-      this.imprints = res;
-    });
+    this.textHelper.getCurrentLanguage();
+    this.contentService
+      .getInfrastructureArticle('IMPRESS', this.textHelper.getCurrentLanguage())
+      .subscribe((res) => {
+        this.imprints = res;
+      });
   }
 }

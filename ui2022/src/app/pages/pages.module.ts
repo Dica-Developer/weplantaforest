@@ -36,6 +36,7 @@ import { CertificateFindPageComponent } from './certificate-find-page/certificat
 import { PlantSelfPageModule } from './plant-self-page/plant-self-page.module';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
+import { AwardsPageComponent } from './awards-page/awards-page.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { TermsPageComponent } from './terms-page/terms-page.component';
     CertificateFindPageComponent,
     FaqPageComponent,
     TermsPageComponent,
+    AwardsPageComponent,
   ],
   imports: [
     CommonModule,
