@@ -243,7 +243,6 @@
   "cancel": "Abbrechen",
   "pieces": "Stück",
   "trunkColored": "Borke",
-  "trunkBW": "Borke (SW)",
   "leafBW": "blatt (SW)",
   "again": "Nochmal",
   "giftRedeemInfoHeader": "Du bist nicht eingeloggt! Nur als registrierter Nutzer kannst du Gutscheine einlösen.",
@@ -283,7 +282,9 @@
   "customPlantingInfo": "Hier entscheidest du selbst, welche Bäume du wo pflanzen möchtest.",
   "date": "Datum",
   "treeType": "Baumart",
-  "exploreTip": "Klicke auf die grünen Punkte um mehr über den Baum zu erfahren."
+  "exploreTip": "Klicke auf die grünen Punkte um mehr über den Baum zu erfahren.",
+  "leaf": "Blätter",
+  "fruits": "Früchte"
 
 
 }

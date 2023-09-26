@@ -92,8 +92,8 @@ public class TreeTypeController {
           case "treeImageBW":
             treeType.setTreeImageBW(imageName);
             break;
-          case "fruitImageBW":
-            treeType.setFruitImageBW(imageName);
+          case "leafImage":
+            treeType.setLeafImage(imageName);
             break;
           case "fruitImageColor":
             treeType.setFruitImageColor(imageName);

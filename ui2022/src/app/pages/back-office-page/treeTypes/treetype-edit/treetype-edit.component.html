@@ -93,7 +93,7 @@
             <mat-form-field>
               <textarea
                 matInput
-                placeholder="Stamm(De)"
+                placeholder="Borke(De)"
                 name="trunk"
                 required
                 formControlName="trunkDe"
@@ -133,7 +133,16 @@
               </app-tree-type-image-upload>
             </div>
             <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'fruitColored' | translate }}</mat-label>
+              <mat-label>{{ 'leaf' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'leafImage'"
+                [imageFileName]="form.get('leafImage').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div>
+            <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'fruits' | translate }}</mat-label>
               <app-tree-type-image-upload
                 [imageType]="'fruitImageColor'"
                 [imageFileName]="form.get('fruitImageColor').value"
@@ -141,35 +150,6 @@
               >
               </app-tree-type-image-upload>
             </div>
-            <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'fruitBW' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'fruitImageBW'"
-                [imageFileName]="form.get('fruitImageBW').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div>
-          </div>
-          <div class="is-flex is-justify-content-space-around margin-bottom-1">
-            <!-- <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'leafColored' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'leafImageColor'"
-                [imageFileName]="form.get('leafImageColor').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div> -->
-            <!-- <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'leafBW' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'leafImageBW'"
-                [imageFileName]="form.get('leafImageBW').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div> -->
             <div class="is-flex is-flex-direction-column">
               <mat-label>{{ 'trunkColored' | translate }}</mat-label>
               <app-tree-type-image-upload
@@ -179,15 +159,6 @@
               >
               </app-tree-type-image-upload>
             </div>
-            <!-- <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'trunkBW' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'trunkImageBW'"
-                [imageFileName]="form.get('trunkImageBW').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div> -->
           </div>
           <div class="is-flex is-flex-direction-row-reverse is-align-items-center">
             <button mat-icon-button color="warn" (click)="delete()">
