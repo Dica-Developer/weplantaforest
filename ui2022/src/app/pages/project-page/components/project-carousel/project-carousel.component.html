@@ -19,12 +19,12 @@
       >arrow_drop_up</mat-icon
     >
     <div class="columns w-100">
-      <app-carousel-item
-        class="column is-3"
-        *ngFor="let item of (plantings$ | async).content"
-        [rankingItem]="item"
-        linkTo="{{ '/profile/' + item.name }}"
-      ></app-carousel-item>
+      <app-project-carousel-item
+      class="column is-3"
+      *ngFor="let item of (plantings$ | async).content"
+      [item]="item"
+      ></app-project-carousel-item>
+
     </div>
     <mat-icon class="desktopIcon placeholder" *ngIf="(plantings$ | async).last"
       >arrow_right</mat-icon
@@ -63,12 +63,11 @@
       >arrow_drop_up</mat-icon
     >
     <div class="columns w-100">
-      <app-carousel-item
-        class="column is-3"
-        *ngFor="let item of (partners$ | async).content"
-        [rankingItem]="item"
-        linkTo="{{ '/team/' + item.name }}"
-      ></app-carousel-item>
+      <app-project-carousel-item
+      class="column is-3"
+      *ngFor="let item of (partners$ | async).content"
+      [item]="item"
+      ></app-project-carousel-item>
     </div>
 
     <mat-icon class="desktopIcon placeholder" *ngIf="(partners$ | async).last">arrow_left</mat-icon>

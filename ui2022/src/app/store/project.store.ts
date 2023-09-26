@@ -125,6 +125,21 @@ export interface ActiveProjectArticle {
   };
 }
 
+interface ProjectCarouselItemDto {
+  name: string;
+  amount: number;
+}
+
+export interface ProjectCarouselItemDateDto extends ProjectCarouselItemDto {
+  plantedOn: number;
+  treeTypeImageName: string;
+}
+
+export interface ProjectCarouselItemAmountDto extends ProjectCarouselItemDto {
+  co2Saved: number | string;
+  imageName: string;
+}
+
 export const loadProjects = createAction('[Project] load projects');
 export const loadProjectsSuccess = createAction(
   '[Project] load projects success',

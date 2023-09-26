@@ -21,7 +21,7 @@ export class RankingService {
   loadPartnersForProject(projectName: string, page: number) {
     return this.http.get(
       environment.backendUrl +
-        '/ranking/bestTeam/project?projectName=' +
+        '/ranking/bestUser/project?projectName=' +
         encodeURIComponent(projectName) +
         '&page=' +
         page +

@@ -33,7 +33,7 @@
     <div class="columns">
       <div class="column is-two-fifths padding-left padding-right padding-top-2">
         <mat-form-field>
-          <mat-label>Datum</mat-label>
+          <mat-label>{{ 'date' | translate }}</mat-label>
           <input matInput [matDatepicker]="datepicker" formControlName="plantedOn" />
           <mat-hint></mat-hint>
           <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
@@ -79,7 +79,7 @@
       </div>
       <div class="column is-three-fifths padding-left padding-right">
         <mat-form-field>
-          <mat-label>Baumart</mat-label>
+          <mat-label>{{ 'treeType' | translate }}</mat-label>
           <mat-select [value]="selectedTreeType" (selectionChange)="treeTypeChanged($event)">
             <mat-option *ngFor="let treeType of treeTypes" [value]="treeType.id">{{
               treeType.name
