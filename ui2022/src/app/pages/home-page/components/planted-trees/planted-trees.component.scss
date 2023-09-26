@@ -1,12 +1,14 @@
 .label-div {
   margin: 2rem auto 4rem auto;
-  text-align: left;
   font-family: 'Bull-regular';
   font-size: 1rem;
 
   div {
     display: inline;
     vertical-align: super;
+  }
+  .circle-icon-text {
+    margin-left: 0.5rem;
   }
 }
 

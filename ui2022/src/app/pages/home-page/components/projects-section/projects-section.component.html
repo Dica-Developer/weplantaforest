@@ -7,8 +7,10 @@
   </div>
   <div class="column">
     <p class="center">
-      <app-circle-icon [width]="17" [height]="17"></app-circle-icon
-      >{{ 'projectsSectionInfo' | translate }}
+      <app-circle-icon [width]="17" [height]="17"></app-circle-icon>
+      <span class="circle-icon-text">
+        {{ 'projectsSectionInfo' | translate }}
+      </span>
     </p>
 
     <ng-scrollbar track="horizontal" [autoHeightDisabled]="false" thumbClass="ipat-scrollbar">

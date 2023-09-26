@@ -1,9 +1,11 @@
 <div class="section">
   <div class="label-div padding-left">
-    <app-circle-icon></app-circle-icon>
-    <div>
-      {{ 'plantedTrees' | translate }}
-    </div>
+    <p>
+      <app-circle-icon [width]="17" [height]="17"></app-circle-icon>
+      <span class="circle-icon-text">
+        {{ 'plantedTrees' | translate }}
+      </span>
+    </p>
   </div>
   <div class="tree-count-div">
     <span class="number-big">

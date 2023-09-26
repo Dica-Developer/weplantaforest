@@ -7,8 +7,10 @@
     </div>
     <div class="offer column is-flex is-align-items-center padding-left" routerLink="/offerArea">
       <p class="largeText">
-        <app-circle-icon></app-circle-icon>
-        {{ 'offerAreaNow' | translate }}
+        <app-circle-icon [width]="17" [height]="17"></app-circle-icon>
+        <span class="circle-icon-text">
+          {{ 'offerAreaNow' | translate }}
+        </span>
       </p>
       <p class="largeTextMobile">
         <app-circle-icon></app-circle-icon>
