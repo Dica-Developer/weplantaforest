@@ -46,6 +46,7 @@ import { GiftRedeemPageComponent } from './pages/gift-redeem-page/gift-redeem-pa
 import { CertificateFindPageComponent } from './pages/certificate-find-page/certificate-find-page.component';
 import { FaqPageComponent } from './pages/faq-page/faq-page.component';
 import { TermsPageComponent } from './pages/terms-page/terms-page.component';
+import { AwardsPageComponent } from './pages/awards-page/awards-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -78,6 +79,7 @@ export const userRoutes: Routes = [
   { path: 'blog/:id', component: BlogArticlePageComponent },
   { path: 'facts', component: FactsPageComponent },
   { path: 'faq', component: FaqPageComponent },
+  { path: 'awards', component: AwardsPageComponent },
   { path: 'finances', component: FinancesPageComponent },
   { path: 'terms', component: TermsPageComponent },
   { path: 'contact', component: ContactPageComponent },
