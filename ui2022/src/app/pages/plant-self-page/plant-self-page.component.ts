@@ -77,6 +77,7 @@ export class PlantSelfPageComponent implements OnInit {
           fruitImageColor: tt.fruitImageColor,
           fruitImageBW: tt.fruitImageBW,
           trunkImageColor: tt.trunkImageColor,
+          // trunkImageBW: tt.trunkImageBW,
           description: tt.description,
           fruit: tt.fruit,
           leaf: tt.leaf,
@@ -138,7 +139,7 @@ export class PlantSelfPageComponent implements OnInit {
     data.plantedOn = new Date(data.plantedOn).getTime();
     if (this.selfPlantForm.valid) {
       this.store.dispatch(sendSelfPlant({ selfPlantData: data }));
-    } else {      
+    } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
       });

@@ -46,6 +46,7 @@ export class ExplorePageComponent implements OnInit {
           fruitImageColor: tt.fruitImageColor,
           fruitImageBW: tt.fruitImageBW,
           trunkImageColor: tt.trunkImageColor,
+          // trunkImageBW: tt.trunkImageBW,
           description: this.textHelper.getTextForLanguage(tt.description, lang),
           leaf: this.textHelper.getTextForLanguage(tt.leaf, lang),
           fruit: this.textHelper.getTextForLanguage(tt.fruit, lang),
@@ -81,30 +82,30 @@ export class ExplorePageComponent implements OnInit {
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
     let bwFruitUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
-    let coloredLeafUrl =
-      environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageColor + '/250/250';
-    let bwLeafUrl =
-      environment.backendUrl + '/treeType/image/' + this.currentTree.fruitImageBW + '/250/250';
+    // let coloredLeafUrl =
+    //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageColor + '/250/250';
+    // let bwLeafUrl =
+    //   environment.backendUrl + '/treeType/image/' + this.currentTree.leafImageBW + '/250/250';
     let coloredTrunkUrl =
       environment.backendUrl + '/treeType/image/' + this.currentTree.trunkImageColor + '/250/250';
     // let bwTrunkUrl =
     //   environment.backendUrl + '/treeType/image/' + this.currentTree.trunkImageBW + '/250/250';
 
     if (infoType === 'leaf') {
-      this.currentImageUrl = coloredTreeUrl;
       this.currentFruitUrl = bwFruitUrl;
+      // this.currentImageUrl = bwTreeUrl;
       // this.currentLeafUrl = coloredLeafUrl
     } else if (infoType === 'fruit') {
-      this.currentImageUrl = bwTreeUrl;
       this.currentFruitUrl = coloredFruitUrl;
+      // this.currentImageUrl = bwTreeUrl;
       // this.currentLeafUrl = bwLeafUrl
     } else if (infoType === 'trunk') {
-      this.currentImageUrl = bwTreeUrl;
       this.currentFruitUrl = coloredTrunkUrl;
+      // this.currentImageUrl = bwTreeUrl;
       // this.currentLeafUrl = bwLeafUrl
     } else {
-      this.currentImageUrl = bwTreeUrl;
       this.currentFruitUrl = bwFruitUrl;
+      // this.currentImageUrl = bwTreeUrl;
       // this.currentLeafUrl = bwLeafUrl
     }
   }

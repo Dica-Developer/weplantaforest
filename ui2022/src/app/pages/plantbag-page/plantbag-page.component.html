@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<div class="columns padding-left padding-2 padding-right" *ngIf="(plantBagPrice$ | async) > 0">
+<div class="columns padding-left padding-right" *ngIf="(plantBagPrice$ | async) > 0">
   <div class="column is-8" *ngIf="!(loggedIn$ | async)">
     <p class="p-header">
       Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung

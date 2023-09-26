@@ -26,6 +26,9 @@ export class TreetypeEditComponent implements OnInit {
     fruitImageColor: new UntypedFormControl(null),
     fruitImageBW: new UntypedFormControl(null),
     trunkImageColor: new UntypedFormControl(null),
+    // trunkImageBW: new UntypedFormControl(null),
+    // leafImageColor: new UntypedFormControl(null),
+    // leafImageBW: new UntypedFormControl(null),
     infoLink: new UntypedFormControl(''),
     nameDe: new UntypedFormControl(''),
     nameEn: new UntypedFormControl(''),
@@ -42,6 +45,9 @@ export class TreetypeEditComponent implements OnInit {
   fruitImageColorFile: any;
   fruitImageBWFile: any;
   trunkImageColorFile: any;
+  trunkImageBWFile: any;
+  leafImageColorFile: any;
+  leafImageBWFile: any;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -77,6 +83,9 @@ export class TreetypeEditComponent implements OnInit {
     this.form.get('fruitImageColor').setValue(treeType.fruitImageColor);
     this.form.get('fruitImageBW').setValue(treeType.fruitImageBW);
     this.form.get('trunkImageColor').setValue(treeType.trunkImageColor);
+    // this.form.get('trunkImageBW').setValue(treeType.trunkImageBW);
+    // this.form.get('leafImageColor').setValue(treeType.leafImageColor);
+    // this.form.get('leafImageBW').setValue(treeType.leafImageBW);
   }
 
   setImageFile(event: any) {
@@ -96,6 +105,15 @@ export class TreetypeEditComponent implements OnInit {
       case 'trunkImageColor':
         this.trunkImageColorFile = event.image;
         break;
+      // case 'trunkImageBW':
+      //   this.trunkImageBWFile = event.image;
+      //   break;
+      // case 'leafImageColor':
+      //   this.leafImageColorFile = event.image;
+      //   break;
+      // case 'leafImageBW':
+      //   this.leafImageBWFile = event.image;
+      //   break;
       default:
         break;
     }
@@ -136,6 +154,9 @@ export class TreetypeEditComponent implements OnInit {
         fruitImageColor: this.form.get('fruitImageColor').value,
         fruitImageBW: this.form.get('fruitImageBW').value,
         trunkImageColor: this.form.get('trunkImageColor').value,
+        // trunkImageBW: this.form.get('trunkImageBW').value,
+        // leafImageColor: this.form.get('leafImageColor').value,
+        // leafImageBW: this.form.get('leafImageBW').value,
         infoLink: '',
       };
       const images = [];
@@ -154,6 +175,15 @@ export class TreetypeEditComponent implements OnInit {
       if (this.trunkImageColorFile) {
         images.push({ imageType: 'trunkImageColor', imgSrc: this.trunkImageColorFile });
       }
+      // if (this.trunkImageBWFile) {
+      //   images.push({ imageType: 'trunkImageBW', imgSrc: this.trunkImageBWFile });
+      // }
+      // if (this.leafImageColorFile) {
+      //   images.push({ imageType: 'leafImageColor', imgSrc: this.leafImageColorFile });
+      // }
+      // if (this.leafImageBWFile) {
+      //   images.push({ imageType: 'leafImageBW', imgSrc: this.leafImageBWFile });
+      // }
       this.store.dispatch(
         updateTreetype({
           request,

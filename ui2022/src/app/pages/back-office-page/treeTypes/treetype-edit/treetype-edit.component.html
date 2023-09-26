@@ -113,7 +113,7 @@
           </div>
         </div>
         <div class="column is-6 is-flex is-flex-direction-column is-justify-content-space-between">
-          <div class="is-flex is-justify-content-space-around">
+          <div class="is-flex is-justify-content-space-around margin-bottom-1">
             <div class="is-flex is-flex-direction-column">
               <mat-label>{{ 'treeColored' | translate }}</mat-label>
               <app-tree-type-image-upload
@@ -150,6 +150,26 @@
               >
               </app-tree-type-image-upload>
             </div>
+          </div>
+          <div class="is-flex is-justify-content-space-around margin-bottom-1">
+            <!-- <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'leafColored' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'leafImageColor'"
+                [imageFileName]="form.get('leafImageColor').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div> -->
+            <!-- <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'leafBW' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'leafImageBW'"
+                [imageFileName]="form.get('leafImageBW').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div> -->
             <div class="is-flex is-flex-direction-column">
               <mat-label>{{ 'trunkColored' | translate }}</mat-label>
               <app-tree-type-image-upload
@@ -159,8 +179,16 @@
               >
               </app-tree-type-image-upload>
             </div>
+            <!-- <div class="is-flex is-flex-direction-column">
+              <mat-label>{{ 'trunkBW' | translate }}</mat-label>
+              <app-tree-type-image-upload
+                [imageType]="'trunkImageBW'"
+                [imageFileName]="form.get('trunkImageBW').value"
+                (emitImageChanged)="setImageFile($event)"
+              >
+              </app-tree-type-image-upload>
+            </div> -->
           </div>
-          <div class="is-flex is-justify-content-space-around"></div>
           <div class="is-flex is-flex-direction-row-reverse is-align-items-center">
             <button mat-icon-button color="warn" (click)="delete()">
               <mat-icon aria-hidden="false">delete</mat-icon>
