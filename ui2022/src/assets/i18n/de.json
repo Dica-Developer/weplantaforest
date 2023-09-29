@@ -284,7 +284,8 @@
   "treeType": "Baumart",
   "exploreTip": "Klicke auf die grünen Punkte um mehr über den Baum zu erfahren.",
   "leaf": "Blätter",
-  "fruits": "Früchte"
+  "fruits": "Früchte",
+  "value": "Wert"
 
 
 }
