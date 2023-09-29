@@ -26,7 +26,8 @@ import { setGift } from '../../../../store/payment.store';
 export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   _recipientGifts: ProfileGift[];
   _consignorGifts: ProfileGift[];
-  displayedColumns: string[] = ['code', 'trees', 'price', 'consignedBy', 'PDF', 'recreate'];
+  displayedCreatedColumns: string[] = ['code', 'trees', 'price', 'consignedBy', 'PDF', 'recreate'];
+  displayedConsignedColumns: string[] = ['code', 'trees', 'price', 'consignor'];
   dataSourceRecipient;
   dataSourceConsigner;
 

@@ -2,16 +2,13 @@
   padding-bottom: 0;
 }
 
-.columns {
-  min-height: 70px;
-  .column {
-    text-align: center;
-  }
-}
-
 .paging-icon {
   height: 4rem;
   width: 4rem;
   font-size: 4rem;
   cursor: pointer;
+}
+
+.tableColumn {
+  padding-right: 0.75rem;
 }
