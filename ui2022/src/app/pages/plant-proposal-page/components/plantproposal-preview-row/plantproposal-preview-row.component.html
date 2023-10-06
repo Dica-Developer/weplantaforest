@@ -1,5 +1,5 @@
 <div
-  class="is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center w-100"
+  class="is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center w-100 bottomLine"
 >
   <div class="image-wrapper">
     <img class="img-tree" src="{{ imageUrl }}" alt="tree" />
@@ -14,9 +14,9 @@
     <div class="amount">{{ plantItem.amount }} {{ 'pieces' | translate }}</div>
   </div>
   <div>
-    {{ sum | currency }}
+    {{ plantItem.projectName }}
   </div>
   <div>
-    {{ plantItem.projectName }}
+    {{ sum | currency }}
   </div>
 </div>

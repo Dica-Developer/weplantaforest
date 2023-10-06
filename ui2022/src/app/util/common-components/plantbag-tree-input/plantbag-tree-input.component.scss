@@ -35,7 +35,7 @@ span {
 }
 
 .w-100 {
-  padding: 1rem 0;
+  max-width: 764px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -45,5 +45,9 @@ span {
 
   b {
     max-width: 150px;
+  }
+
+  .w-100 {
+    padding: 1rem 0;
   }
 }
