@@ -139,6 +139,10 @@ export class PlantSelfPageComponent implements OnInit {
     data.plantedOn = new Date(data.plantedOn).getTime();
     if (this.selfPlantForm.valid) {
       this.store.dispatch(sendSelfPlant({ selfPlantData: data }));
+    } else if (this.selfPlantForm.get('latitude').invalid) {
+      this.snackbar.open(this.translateService.instant('markOnMapPls'), 'OK', {
+        duration: 4000,
+      });
     } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,

@@ -285,7 +285,8 @@
   "exploreTip": "Klicke auf die grünen Punkte um mehr über den Baum zu erfahren.",
   "leaf": "Blätter",
   "fruits": "Früchte",
-  "value": "Wert"
+  "value": "Wert",
+  "markOnMapPls": "Bitte markiere die Pflanzung auf der Karte!"
 
 
 }
