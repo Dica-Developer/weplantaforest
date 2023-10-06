@@ -10,13 +10,12 @@
 <div id="myModal" class="lightbox">
   <div class="content" (swiperight)="plusSlides(-1)" (swipeleft)="plusSlides(1)">
     <div *ngFor="let image of imageUrls">
-      <div class="mySlides w-100">
+      <div class="mySlides w-100 is-justify-content-center is-align-items-center">
         <div class="close" (click)="closeModal()">
           <mat-icon>close</mat-icon>
         </div>
         <img class="slideImage" [src]="image" />
       </div>
-
       <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
       <a class="next" (click)="plusSlides(1)">&#10095;</a>
       <div class="imageNav w-100 is-flex is-justify-content-center">

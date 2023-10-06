@@ -7,7 +7,7 @@
 .lightbox {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   padding-top: 80px;
   left: 0;
   top: 0;
@@ -20,6 +20,7 @@
 /* Modal Content */
 .content {
   position: relative;
+  height: calc(100vh - 86px);
 }
 
 .slideImage {
@@ -69,6 +70,7 @@
 
 /* Hide the slides by default */
 .mySlides {
+  height: calc(100vh - 86px);
   text-align: center;
   display: none;
   opacity: 0;

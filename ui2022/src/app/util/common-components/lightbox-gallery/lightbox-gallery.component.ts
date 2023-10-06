@@ -59,7 +59,7 @@ export class LightboxGalleryComponent implements OnInit {
       }, 1);
     }
     let slide = slides[this.slideIndex] as HTMLElement;
-    slide.style.display = 'block';
+    slide.style.display = 'flex';
     setTimeout(() => {
       slide.style.opacity = '1';
     }, 1);
