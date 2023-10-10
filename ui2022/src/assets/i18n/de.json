@@ -286,7 +286,8 @@
   "leaf": "Blätter",
   "fruits": "Früchte",
   "value": "Wert",
-  "markOnMapPls": "Bitte markiere die Pflanzung auf der Karte!"
+  "markOnMapPls": "Bitte markiere die Pflanzung auf der Karte!",
+  "selectTreetype": "Bitte wähle eine Baumart aus!"
 
 
 }

@@ -143,7 +143,13 @@ export class PlantSelfPageComponent implements OnInit {
       this.snackbar.open(this.translateService.instant('markOnMapPls'), 'OK', {
         duration: 4000,
       });
-    } else {
+    }
+    else if(this.selfPlantForm.get('treeTypeId').invalid) {
+      this.snackbar.open(this.translateService.instant('selectTreetype'), 'OK', {
+        duration: 4000,
+      });
+    }
+    else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
       });
