@@ -1,6 +1,10 @@
 <div class="columns project-description padding-left padding-2 is-flex is-flex-direction-column">
   <div innerHtml="{{ intro }}"></div>
-  <img src="{{ imageUrl }}" alt="blogImage" />
-  <p *ngFor="let description of descriptions" class="description" innerHtml="{{ description }}"></p>
+  <div *ngFor="let p of blogArticle.paragraphs">
+    <p class="description" innerHtml="{{ getText(p.text) }}"></p>
+    <div *ngIf="p.imageFileName !== null" class="center">
+      <img src="{{ getImageUrl(p.imageFileName) }}" alt="blogImage" width="800" height="600" />
+    </div>
+  </div>
   <a routerLink="/blog">{{ 'backToBlog' | translate }}</a>
 </div>

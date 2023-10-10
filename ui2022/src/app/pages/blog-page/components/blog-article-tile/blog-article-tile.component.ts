@@ -21,11 +21,12 @@ export class BlogArticleTileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.imgUrl =
-      environment.backendUrl +
+      this.imgUrl =  environment.backendArticleManagerUrl +
       '/article/image/' +
+      this.blogArticle.id +
+      '/' +
       encodeURI(this.blogArticle.imageFileName) +
-      '/400/800';
+      '/800/600';
     this.description = this.textHelper.getTextForLanguage(
       this.blogArticle.intro,
       this.translateService.currentLang,

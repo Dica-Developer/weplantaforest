@@ -15,9 +15,11 @@ export class BlogArticleHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageUrl =
-      environment.backendUrl +
-      '/article/image/' +
-      encodeURI(this.blogArticle.imageFileName) +
-      '/300/300';
-  }
+    environment.backendArticleManagerUrl +
+    '/article/image/' +
+    this.blogArticle.id +
+    '/' +
+    encodeURI(this.blogArticle.imageFileName) +
+    '/400/300';
+}
 }

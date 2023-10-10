@@ -18,10 +18,12 @@ export class BlogArticleDescriptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageUrl =
-      environment.backendUrl +
+      environment.backendArticleManagerUrl +
       '/article/image/' +
+      this.blogArticle.id +
+      '/' +
       encodeURI(this.blogArticle.imageFileName) +
-      '/300/300';
+      '/800/600';
 
     this.descriptions = [];
 
@@ -36,5 +38,25 @@ export class BlogArticleDescriptionComponent implements OnInit {
       this.blogArticle.intro,
       this.translateService.currentLang,
     );
+  }
+
+  getText(text: string) {
+    return this.textHelper.getTextForLanguage(
+      text,
+      this.translateService.currentLang,
+    );
+  }
+
+  getParagraphs() {
+    return this.blogArticle.paragraphs;
+  }
+
+  getImageUrl(imageName: string) {
+    return  environment.backendArticleManagerUrl +
+    '/article/image/' +
+    this.blogArticle.id +
+    '/' +
+    encodeURI(imageName) +
+    '/800/600';
   }
 }
