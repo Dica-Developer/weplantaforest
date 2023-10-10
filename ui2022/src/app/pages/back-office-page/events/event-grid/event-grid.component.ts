@@ -32,16 +32,16 @@ export class EventGridComponent implements OnInit, OnDestroy {
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
     },
-    {
-      field: 'id',
-      headerName: 'Löschen',
-      cellRendererSelector: (params) => {
-        return {
-          component: 'gridActionRenderer',
-          value: params.data.id,
-        };
-      },
-    },
+    // {
+    //   field: 'id',
+    //   headerName: 'Löschen',
+    //   cellRendererSelector: (params) => {
+    //     return {
+    //       component: 'gridActionRenderer',
+    //       value: params.data.id,
+    //     };
+    //   },
+    // },
   ];
 
   gridOptions: GridOptions = {
