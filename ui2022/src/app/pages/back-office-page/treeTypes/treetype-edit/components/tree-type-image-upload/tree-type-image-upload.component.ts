@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { TreeTypeImageType } from 'src/app/services/treeType.service';
+import { AppState } from 'src/app/store/app.state';
 import { environment } from 'src/environments/environment';
+import { addError } from '../../../../../../store/error.state';
 
 @Component({
   selector: 'app-tree-type-image-upload',
@@ -14,7 +17,7 @@ export class TreeTypeImageUploadComponent implements OnInit {
 
   imageFile: any;
   imagePreviewSrc: any;
-  constructor() {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     if (this.imageFileName) {
@@ -27,7 +30,21 @@ export class TreeTypeImageUploadComponent implements OnInit {
 
   imageChanged(fileInputEvent: any) {
     if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
+      if (fileInputEvent.target.files[0].size >= 1048576) {
+        this.store.dispatch(
+          addError({
+            error: {
+              key: 'IMAGE_VALIDATION_ERROR',
+              message: 'Das Bild darf nicht größer als 1MB sein.',
+            },
+          }),
+        );
+        return;
+      }
+
       this.imageFile = fileInputEvent.target.files[0];
+      console.log('imageFile', this.imageFile);
+
       const reader = new FileReader();
       reader.onload = (e) => (this.imagePreviewSrc = reader.result);
       reader.readAsDataURL(this.imageFile);
