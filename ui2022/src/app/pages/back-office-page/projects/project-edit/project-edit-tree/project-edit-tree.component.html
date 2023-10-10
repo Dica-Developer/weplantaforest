@@ -1,43 +1,37 @@
 <form [formGroup]="controlObj">
-  <div class="row">
-    <div class="col">
+  <div class="columns">
+    <div class="column">
       <mat-form-field>
         <mat-label>Baumart</mat-label>
         <mat-select
           [value]="controlObj.get('treeType').get('id').value"
           (selectionChange)="treeTypeChanged($event)"
+          [required]="true"
         >
-          <mat-option
-            *ngFor="let treeType of treeTypes"
-            [value]="treeType.id"
-            >{{ treeType.name }}</mat-option
-          >
+          <mat-option *ngFor="let treeType of treeTypes" [value]="treeType.id">{{
+            treeType.name
+          }}</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-error
+        *ngIf="
+          controlObj.get('treeType').get('id').status === 'INVALID' &&
+          controlObj.get('treeType').get('id').touched
+        "
+        >Keine Baumart ausgewählt</mat-error
+      >
     </div>
-    <div class="col" formGroupName="price">
+    <div class="column" formGroupName="price">
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Preis"
-          name="amount"
-          formControlName="amount"
-          type="number"
-        />
+        <input matInput placeholder="Preis" name="amount" formControlName="amount" type="number" />
       </mat-form-field>
     </div>
-    <div class="col">
+    <div class="column">
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Anzahl"
-          name="amount"
-          formControlName="amount"
-          type="number"
-        />
+        <input matInput placeholder="Anzahl" name="amount" formControlName="amount" type="number" />
       </mat-form-field>
     </div>
-    <div class="col">
+    <div class="column">
       <button mat-icon-button color="warn" (click)="openDeleteConfirmation()">
         <mat-icon aria-hidden="false">delete</mat-icon>
       </button>

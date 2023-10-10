@@ -13,6 +13,7 @@ import {
   UntypedFormControl,
   UntypedFormBuilder,
   UntypedFormArray,
+  Validators,
 } from '@angular/forms';
 import { TextHelper } from '../../../../util/text.helper';
 import { addProjectImage } from '../../../../store/project.store';
@@ -154,6 +155,28 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
   }
 
   saveData() {
+    let articlesValid = true;
+    for(const article of this.projectForm.get('articles')['controls']) {
+      if(article.status === 'INVALID') {
+        articlesValid = false;
+        article.get('treeType').get('id').markAsTouched();
+        if(!article.value.treeType.id) {
+          this.store.dispatch(
+            addError({
+              error: {
+                key: 'PROJECT_VALIDATION_ERROR',
+                message: 'Jedem hinzugefügtem Baum muss eine Baumart zugesiwesen sein.',
+              },
+            }),
+          );
+        }
+      }
+    }
+    if(!articlesValid) {
+      return;
+    }
+
+
     const fullDescription = this.textHelper.createMultiLanguageEntry(
       this.projectForm.get('descriptionDe').value,
       this.projectForm.get('descriptionEn').value,
@@ -227,7 +250,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
   }
 
   createArticleFormGroup(article: ProjectArticle) {
-    return this.fb.group({
+    const articleFormGroup = this.fb.group({
       amount: article.amount,
       articleId: article.articleId,
       price: this.fb.group({
@@ -243,6 +266,10 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
         name: article.treeType.name,
       }),
     });
+
+    articleFormGroup.get('treeType').get('id').addValidators([Validators.required]);
+
+    return articleFormGroup;
   }
 
   createImageFormGroup(image: ProjectImage) {
