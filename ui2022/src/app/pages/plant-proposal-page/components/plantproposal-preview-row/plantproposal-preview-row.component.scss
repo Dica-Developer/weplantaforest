@@ -3,6 +3,10 @@
   max-height: 100px;
 }
 
+.columns {
+  font-family: 'Bull-mono' !important;
+}
+
 .bottomLine {
   border-bottom: 1px solid #c9c9c9;
 }
@@ -17,6 +21,10 @@
 
 .w-100 {
   max-width: 764px;
+}
+
+.column {
+  padding: 0 !important;
 }
 
 @media only screen and (max-width: 768px) {

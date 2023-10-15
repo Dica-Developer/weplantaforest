@@ -1,22 +1,22 @@
 <div
-  class="is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center w-100 bottomLine"
+  class="columns is-flex is-flex-direction-row is-justify-content-space-between text-align-center is-align-items-center w-100 bottomLine"
 >
-  <div class="image-wrapper">
+  <div class="column is-one-fifth image-wrapper">
     <img class="img-tree" src="{{ imageUrl }}" alt="tree" />
   </div>
-  <div class="is-flex-direction-column is-flex is-justify-content-center">
+  <div class="column is-one-fifth is-flex-direction-column is-flex">
     <b> {{ getGerman(plantItem.treeType) }} </b>
     <br />
     {{ plantItem.treePrice / 100 | currency }}
   </div>
-  <div class="is-flex-direction-row is-flex is-justify-content-center">
+  <div class="column is-one-fifth is-flex-direction-row is-flex">
     <div class="x">x {{ plantItem.amount }}</div>
     <div class="amount">{{ plantItem.amount }} {{ 'pieces' | translate }}</div>
   </div>
-  <div>
+  <div class="column is-one-fifth">
     {{ plantItem.projectName }}
   </div>
-  <div>
+  <div class="column is-one-fifth">
     {{ sum | currency }}
   </div>
 </div>
