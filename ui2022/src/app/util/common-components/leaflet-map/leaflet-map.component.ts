@@ -24,15 +24,14 @@ export class LeafletMapComponent implements OnInit {
   set projectAreas(areas: any[][]) {
     this.treeMarker = [];
     for (let area of areas) {
-      const coords = this.createPolygonPoints(area)
+      const coords = this.createPolygonPoints(area);
       const polygon = L.polygon(coords, { color: '#82ab1f' });
       this.map.addLayer(polygon);
       const marker = this.createMarker(polygon.getCenter().lat, polygon.getCenter().lng);
-      marker.on('click',(event) => {
+      marker.on('click', (event) => {
         event.target._map.setView(event.latlng, 14);
       });
       this.treeMarker.push(marker);
-
     }
   }
 
@@ -64,7 +63,7 @@ export class LeafletMapComponent implements OnInit {
   onMapReady(map: Map): void {
     this.map = map;
     this.map.scrollWheelZoom.disable();
-    
+
     setTimeout(() => {
       if (this.coords.length > 0) {
         this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
@@ -107,10 +106,13 @@ export class LeafletMapComponent implements OnInit {
     return marker([lat, lng], {
       icon: icon({
         iconAnchor: [17, 35],
-        iconUrl: '/assets/treeIcon.png',
-        iconRetinaUrl: '/assets/treeIcon.png',
+        // iconUrl: '/assets/treeIconGreen.png',
+        // iconRetinaUrl: '/assets/treeIconGreen.png',
+        iconUrl: '/assets/treeIconBrown.png',
+        iconRetinaUrl: '/assets/treeIconBrown.png',
+        // iconUrl: '/assets/treeIcon.png',
+        // iconRetinaUrl: '/assets/treeIcon.png',
       }),
     });
   }
-
 }
