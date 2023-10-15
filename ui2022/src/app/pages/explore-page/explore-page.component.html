@@ -50,10 +50,22 @@
             (click)="selectInfoType('description')"
             alt="tree"
           />
-          <div class="marker trunkMarker" (click)="selectInfoType('trunk')"></div>
-          <div class="marker leafMarker" (click)="selectInfoType('leaf')"></div>
+          <div
+            class="marker trunkMarker"
+            [class.activeMarker]="selectedInfoType === 'trunk'"
+            (click)="selectInfoType('trunk')"
+          ></div>
+          <div
+            class="marker leafMarker"
+            [class.activeMarker]="selectedInfoType === 'leaf'"
+            (click)="selectInfoType('leaf')"
+          ></div>
           <img class="img-fruit" src="{{ currentFruitUrl }}" alt="tree" />
-          <div class="marker fruitMarker" (click)="selectInfoType('fruit')"></div>
+          <div
+            class="marker fruitMarker"
+            [class.activeMarker]="selectedInfoType === 'fruit'"
+            (click)="selectInfoType('fruit')"
+          ></div>
         </div>
       </div>
     </div>
