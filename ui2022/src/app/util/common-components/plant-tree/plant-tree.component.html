@@ -9,7 +9,7 @@
   <div
     *ngFor="let tree of trees; let i = index"
     class="column padding-1 is-one-fifth border-right tree-tile"
-    routerLink="/explore"
+    (click)="addTreeToPlantBag(tree)"
   >
     <p class="margin-0 has-text-right">{{ tree.name }}</p>
     <img [src]="tree.urlColor" alt="tree" />
