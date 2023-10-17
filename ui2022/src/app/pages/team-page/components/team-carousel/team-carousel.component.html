@@ -4,10 +4,10 @@
     class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
   >
     <mat-icon class="desktopIcon placeholder" *ngIf="(teamMembers$ | async).first"
-      >arrow_left</mat-icon
+      >keyboard_arrow_left</mat-icon
     >
     <mat-icon class="desktopIcon" *ngIf="!(teamMembers$ | async).first" (click)="fetchNextPage(-1)"
-      >arrow_left</mat-icon
+      >keyboard_arrow_left</mat-icon
     >
     <mat-icon class="mobileIcon" *ngIf="!(teamMembers$ | async).first" (click)="fetchNextPage(-1)"
       >arrow_drop_up</mat-icon
@@ -21,10 +21,10 @@
     </div>
 
     <mat-icon class="desktopIcon placeholder" *ngIf="(teamMembers$ | async).last"
-      >arrow_left</mat-icon
+      >keyboard_arrow_left</mat-icon
     >
     <mat-icon class="desktopIcon" *ngIf="!(teamMembers$ | async).last" (click)="fetchNextPage(1)"
-      >arrow_right</mat-icon
+      >keyboard_arrow_right</mat-icon
     >
     <mat-icon class="mobileIcon" *ngIf="!(teamMembers$ | async).last" (click)="fetchNextPage(1)"
       >arrow_drop_down</mat-icon

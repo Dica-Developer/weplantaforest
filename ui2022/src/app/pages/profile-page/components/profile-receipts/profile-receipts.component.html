@@ -2,7 +2,7 @@
   <h4 class="center">
     {{ 'receipts' | translate }}
   </h4>
-  <table class="w-764 w-100" mat-table [dataSource]="receipts">
+  <table class="w-764 w-100" mat-table [dataSource]="receiptPages.get(currentPage)">
     <ng-container matColumnDef="createdOn">
       <th mat-header-cell *matHeaderCellDef>{{ 'created' | translate }}</th>
       <td class="tableAlignment minTable60" mat-cell *matCellDef="let receipt">
@@ -30,12 +30,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <!-- <mat-paginator
+  <mat-paginator
+    nextPageLabel="string"
     class="w-100 w-764"
     [length]="totalPosts"
     [pageSize]="postsPerPage"
     [pageSizeOptions]="pageSizeOptions"
     (page)="onChangePage($event)"
   >
-  </mat-paginator> -->
+  </mat-paginator>
 </div>

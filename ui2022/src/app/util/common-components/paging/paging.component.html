@@ -1,13 +1,17 @@
 <div class="paging-wrapper">
   <button class="left" [disabled]="activePage === 0" (click)="changePage(activePage - 1)">
-    <mat-icon class="paging-icon">arrow_left</mat-icon>
+    <mat-icon class="paging-icon">keyboard_arrow_left</mat-icon>
   </button>
   <div class="stats">
     <p>
       {{ activePage + 1 + ' / ' + totalPageCount }}
     </p>
   </div>
-  <button class="right" (click)="changePage(activePage + 1)" [disabled]="activePage === totalPageCount - 1">
-    <mat-icon class="paging-icon right">arrow_right</mat-icon>
+  <button
+    class="right"
+    (click)="changePage(activePage + 1)"
+    [disabled]="activePage === totalPageCount - 1"
+  >
+    <mat-icon class="paging-icon right">keyboard_arrow_right</mat-icon>
   </button>
 </div>

@@ -4,13 +4,13 @@
     class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
   >
     <mat-icon class="desktopIcon placeholder" *ngIf="(plantings$ | async).first"
-      >arrow_left</mat-icon
+      >keyboard_arrow_left</mat-icon
     >
     <mat-icon
       class="desktopIcon"
       *ngIf="!(plantings$ | async).first"
       (click)="fetchNextPage('plantings', -1)"
-      >arrow_left</mat-icon
+      >keyboard_arrow_left</mat-icon
     >
     <mat-icon
       class="mobileIcon"
@@ -20,20 +20,19 @@
     >
     <div class="columns w-100">
       <app-project-carousel-item
-      class="column is-3"
-      *ngFor="let item of (plantings$ | async).content"
-      [item]="item"
+        class="column is-3"
+        *ngFor="let item of (plantings$ | async).content"
+        [item]="item"
       ></app-project-carousel-item>
-
     </div>
     <mat-icon class="desktopIcon placeholder" *ngIf="(plantings$ | async).last"
-      >arrow_right</mat-icon
+      >keyboard_arrow_right</mat-icon
     >
     <mat-icon
       class="desktopIcon"
       *ngIf="!(plantings$ | async).last"
       (click)="fetchNextPage('plantings', 1)"
-      >arrow_right</mat-icon
+      >keyboard_arrow_right</mat-icon
     >
     <mat-icon
       class="mobileIcon"
@@ -48,13 +47,13 @@
     class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
   >
     <mat-icon class="desktopIcon placeholder" *ngIf="(partners$ | async).first"
-      >arrow_left</mat-icon
+      >keyboard_arrow_left</mat-icon
     >
     <mat-icon
       class="desktopIcon"
       *ngIf="!(partners$ | async).first"
       (click)="fetchNextPage('partners', -1)"
-      >arrow_left</mat-icon
+      >keyboard_arrow_left</mat-icon
     >
     <mat-icon
       class="mobileIcon"
@@ -64,18 +63,20 @@
     >
     <div class="columns w-100">
       <app-project-carousel-item
-      class="column is-3"
-      *ngFor="let item of (partners$ | async).content"
-      [item]="item"
+        class="column is-3"
+        *ngFor="let item of (partners$ | async).content"
+        [item]="item"
       ></app-project-carousel-item>
     </div>
 
-    <mat-icon class="desktopIcon placeholder" *ngIf="(partners$ | async).last">arrow_left</mat-icon>
+    <mat-icon class="desktopIcon placeholder" *ngIf="(partners$ | async).last"
+      >keyboard_arrow_left</mat-icon
+    >
     <mat-icon
       class="desktopIcon"
       *ngIf="!(partners$ | async).last"
       (click)="fetchNextPage('partners', 1)"
-      >arrow_right</mat-icon
+      >keyboard_arrow_right</mat-icon
     >
     <mat-icon
       class="mobileIcon"

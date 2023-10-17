@@ -2,11 +2,8 @@
   position: relative;
 
   .icon {
-    font-size: 45px;
     position: absolute;
     top: 35%;
-    width: 45px;
-    height: 45px;
     cursor: pointer;
   }
 
@@ -17,8 +14,18 @@
   .icon-right {
     right: -25px;
   }
+}
 
-  .icon:hover {
-    color: var(--green);
-  }
+mat-icon {
+  z-index: 3;
+  position: relative;
+  height: 4rem;
+  width: 4rem;
+  font-size: 4rem;
+  color: var(--brown);
+}
+
+mat-icon:not(.placeholder):hover {
+  cursor: pointer;
+  color: var(--green);
 }
