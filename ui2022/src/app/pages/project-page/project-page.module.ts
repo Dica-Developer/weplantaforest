@@ -6,6 +6,8 @@ import { ProjectFeedComponent } from './components/project-feed/project-feed.com
 import { ProjectCarouselComponent } from './components/project-carousel/project-carousel.component';
 import { RouterModule } from '@angular/router';
 import { ProjectCarouselItemComponent } from './components/project-carousel-item/project-carousel-item.component';
+import { ProjectPlantingComponent } from './components/project-planting/project-planting.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -13,8 +15,9 @@ import { ProjectCarouselItemComponent } from './components/project-carousel-item
     ProjectFeedComponent,
     ProjectCarouselComponent,
     ProjectCarouselItemComponent,
+    ProjectPlantingComponent,
   ],
-  imports: [CommonModule, UtilModule, RouterModule],
+  imports: [CommonModule, UtilModule, RouterModule, NgxSliderModule],
   exports: [ProjectPageComponent],
 })
 export class ProjectPageModule {}

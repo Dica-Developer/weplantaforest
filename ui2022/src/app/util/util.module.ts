@@ -56,6 +56,8 @@ import { ProfileRedeemGiftComponent } from '../pages/profile-page/components/pro
 import { TeamDetailsComponent } from './common-components/team-details/team-details.component';
 import { TeamHeaderComponent } from './common-components/team-header/team-header.component';
 import { TeamCreateEditComponent } from './common-components/team-create-edit/team-create-edit.component';
+import { PlantproposalPreviewRowComponent } from './common-components/plantproposal-preview-row/plantproposal-preview-row.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -102,6 +104,7 @@ import { TeamCreateEditComponent } from './common-components/team-create-edit/te
     TeamDetailsComponent,
     TeamHeaderComponent,
     TeamCreateEditComponent,
+    PlantproposalPreviewRowComponent
   ],
   imports: [
     CommonModule,
@@ -113,6 +116,8 @@ import { TeamCreateEditComponent } from './common-components/team-create-edit/te
     RouterModule,
     LeafletModule,
     LeafletDrawModule,
+    NgxSliderModule,
+    TranslateModule
   ],
   exports: [
     MaterialModule,
@@ -151,6 +156,7 @@ import { TeamCreateEditComponent } from './common-components/team-create-edit/te
     TeamDetailsComponent,
     TeamHeaderComponent,
     TeamCreateEditComponent,
+    PlantproposalPreviewRowComponent
   ],
 })
 export class UtilModule {}

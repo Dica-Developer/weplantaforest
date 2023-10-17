@@ -49,4 +49,14 @@ export class PlantbagService {
       environment.backendUrl + '/project/articles?projectName=' + projectName,
     );
   }
+
+  getSimpleProjectPlantProposal(amountOfTrees: number, projectName: string) {
+    return this.http.get<SimplePlantProposal>(
+      environment.backendUrl +
+        '/simplePlantProposalForTrees/project?projectName=' +
+        projectName +
+        '&amountOfTrees=' +
+        amountOfTrees,
+    );
+  }
 }

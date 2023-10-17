@@ -1,0 +1,38 @@
+<div class="columns project-planting">
+  <div class="column padding-left is-flex is-flex-direction-column">
+    <div class="is-flex slider-row">
+      <div class="custom-slider column is-6">
+        <ngx-slider
+          [(value)]="value"
+          [options]="sliderOptions"
+          (valueChange)="getProposal($event)"
+        ></ngx-slider>
+      </div>
+      <div class="is-flex w-100 slider-row is-align-items-center is-justify-content-space-evenly">
+        <span class="font-1">
+          {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
+        </span>
+        <app-button
+          label="{{ 'intoPlantbag' | translate }}"
+          (click)="putIntoPlantbag()"
+          *ngIf="showPutIntoPlantbagButton"
+        ></app-button>
+        <app-button
+          label="{{ 'toPlantBag' | translate }}"
+          routerLink="/plantbag"
+          *ngIf="showGoToPlantbagButton"
+        ></app-button>
+      </div>
+    </div>
+    <div class="is-flex is-flex-direction-column">
+      <app-plantproposal-preview-row
+        *ngFor="let item of (proposal$ | async)?.plantItems ?? []"
+        [plantItem]="item"
+      >
+      </app-plantproposal-preview-row>
+    </div>
+    <a class="back-link" (click)="showProjectDescriptionClicked()">{{
+      'backToDescription' | translate
+    }}</a>
+  </div>
+</div>

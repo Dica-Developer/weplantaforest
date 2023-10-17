@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ProjectReportDetails } from 'src/app/store/project-report.store';
 import { TextHelper } from 'src/app/util/text.helper';
@@ -11,6 +11,9 @@ import { environment } from 'src/environments/environment';
 })
 export class ProjectDescriptionComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
+
+  @Output() showProjectPlanting: EventEmitter<void> = new EventEmitter<void>();
+
   activeProject: boolean;
   description: string;
   imageUrls: String[] = [];
@@ -28,5 +31,9 @@ export class ProjectDescriptionComponent implements OnInit {
       this.projectReport.projectReportData.description,
       this.translateService.currentLang,
     );
+  }
+
+  showProjectPlantingClicked() {
+    this.showProjectPlanting.emit();
   }
 }

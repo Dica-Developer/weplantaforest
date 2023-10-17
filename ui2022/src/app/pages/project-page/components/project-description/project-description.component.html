@@ -3,7 +3,7 @@
     <div class="description" innerHtml="{{ description }}"></div>
     <app-button
       *ngIf="activeProject"
-      routerLink="/plant"
+      (click)="showProjectPlantingClicked()"
       label="{{ 'plantHere' | translate }}"
     ></app-button>
     <a routerLink="/projectReports">{{ 'backToProjects' | translate }}</a>

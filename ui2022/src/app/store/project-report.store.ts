@@ -4,7 +4,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ProjectReportService } from '../services/project-report.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
+import { SimplePlantProposal } from './plant.store';
+import { PlantbagService } from '../services/plantbag.service';
 
 export interface ProjectReport {
   id: number;
@@ -63,7 +65,17 @@ export const loadInActiveProjectReports = createAction(
 );
 export const loadInActiveProjectReportsSuccess = createAction(
   '[ProjectReport] load inactive project reports success',
-  props<{ inactiveProjectReports: any[], amountOfInactiveProjects: number }>(),
+  props<{ inactiveProjectReports: any[]; amountOfInactiveProjects: number }>(),
+);
+
+export const loadProjectProposal = createAction(
+  '[ProjectReport] load simple project proposal',
+  props<{ amountOfTrees: number; projectName: string }>(),
+);
+
+export const loadProjectProposalSuccess = createAction(
+  '[ProjectReport] load simple project proposal success',
+  props<{ simpleProposal: SimplePlantProposal }>(),
 );
 
 export interface ProjectReportState {
@@ -74,6 +86,7 @@ export interface ProjectReportState {
   activeProjects: any[];
   inactiveProjects: any[];
   amountOfInactiveProjects: number;
+  simpleProposal: SimplePlantProposal;
 }
 
 export const initialState: ProjectReportState = {
@@ -91,6 +104,7 @@ export const initialState: ProjectReportState = {
   projectsLoading: false,
   projectReport: null,
   projectLoading: false,
+  simpleProposal: null,
 };
 
 const projectReportReducer = createReducer(
@@ -119,11 +133,18 @@ const projectReportReducer = createReducer(
     activeProjects: activeProjectReports,
     projectLoading: false,
   })),
-  on(loadInActiveProjectReportsSuccess, (state, { inactiveProjectReports, amountOfInactiveProjects }) => ({
+  on(
+    loadInActiveProjectReportsSuccess,
+    (state, { inactiveProjectReports, amountOfInactiveProjects }) => ({
+      ...state,
+      inactiveProjects: inactiveProjectReports,
+      amountOfInactiveProjects,
+      projectLoading: false,
+    }),
+  ),
+  on(loadProjectProposalSuccess, (state, { simpleProposal }) => ({
     ...state,
-    inactiveProjects: inactiveProjectReports,
-    amountOfInactiveProjects,
-    projectLoading: false,
+    simpleProposal,
   })),
 );
 
@@ -155,9 +176,29 @@ export const selectAmountOfInactiveProjects = createSelector(
   (state: ProjectReportState) => state.amountOfInactiveProjects,
 );
 
+export const selectProjectProposal = createSelector(
+  projectsReportsFeature,
+  (state: ProjectReportState) => state.simpleProposal,
+);
+
+export const selectProjectProposalPrice = createSelector(
+  projectsReportsFeature,
+  (state: ProjectReportState) => {
+    let price = 0;
+    if (state.simpleProposal) {
+      price = state.simpleProposal.actualPrice / 100;
+    }
+    return parseFloat(price.toString()).toFixed(2).replace('.', ',');
+  },
+);
+
 @Injectable()
 export class ProjectReportsEffects {
-  constructor(private actions$: Actions, private projectReportService: ProjectReportService) {}
+  constructor(
+    private actions$: Actions,
+    private projectReportService: ProjectReportService,
+    private plantbagService: PlantbagService,
+  ) {}
 
   LoadProjects$ = createEffect(() =>
     this.actions$.pipe(
@@ -210,7 +251,7 @@ export class ProjectReportsEffects {
                   active: report.active,
                   projectImageUrl: `${environment.backendUrl}/projects/image/${report.projectImageFileName}/60/60`,
                   projectLink: `/project/${report.projectName}`,
-                  positions: report.positions
+                  positions: report.positions,
                 });
                 activeProjects = projects;
               }
@@ -243,17 +284,33 @@ export class ProjectReportsEffects {
                   active: report.active,
                   projectImageUrl: `${environment.backendUrl}/projects/image/${report.projectImageFileName}/60/60`,
                   projectLink: `/project/${report.projectName}`,
-                  positions: report.positions
-
+                  positions: report.positions,
                 });
                 inactiveProjects.content = projects;
               }
             }
             return [
-              loadInActiveProjectReportsSuccess({ inactiveProjectReports: inactiveProjects, amountOfInactiveProjects: inactiveProjects.totalElements }),
+              loadInActiveProjectReportsSuccess({
+                inactiveProjectReports: inactiveProjects,
+                amountOfInactiveProjects: inactiveProjects.totalElements,
+              }),
             ];
           }),
         ),
+      ),
+    ),
+  );
+
+  getSimplePlantProposalForProject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProjectProposal),
+      switchMap((action) =>
+        this.plantbagService
+          .getSimpleProjectPlantProposal(action.amountOfTrees, action.projectName)
+          .pipe(
+            switchMap((simpleProposal) => [loadProjectProposalSuccess({ simpleProposal })]),
+            // catchError((err) => [getSimplePlantProposalFailed()]),
+          ),
       ),
     ),
   );
