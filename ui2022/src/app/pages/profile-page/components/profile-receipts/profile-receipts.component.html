@@ -1,54 +1,41 @@
-<div
-  class="is-flex is-flex-direction-column w-100 padding-2 border-bottom"
-  *ngIf="receiptPages.get(activePage)"
->
-  <div
-    class="columns is-flex is-flex-direction-row is-multiline"
-   
+<div class="is-flex is-flex-direction-column is-align-items-center w-full padding-2 border-bottom">
+  <h4 class="center">
+    {{ 'receipts' | translate }}
+  </h4>
+  <table class="w-764 w-100" mat-table [dataSource]="receipts">
+    <ng-container matColumnDef="createdOn">
+      <th mat-header-cell *matHeaderCellDef>{{ 'created' | translate }}</th>
+      <td class="tableAlignment minTable60" mat-cell *matCellDef="let receipt">
+        {{ receipt.createdOn | date : 'dd.MM.yyyy' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="invoiceNumber">
+      <th mat-header-cell *matHeaderCellDef>{{ 'invoiceNumber' | translate }}</th>
+      <td class="tableAlignment minTable80" mat-cell *matCellDef="let receipt">
+        {{ receipt.invoiceNumber }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="PDF">
+      <th mat-header-cell *matHeaderCellDef>{{ 'PDF' | translate }}</th>
+      <td class="table48" mat-cell *matCellDef="let receipt">
+        <mat-icon
+          color="primary"
+          (click)="downloadReceipt(receipt.receiptId)"
+          [matTooltip]="'downloadReceipt' | translate"
+          aria-hidden="false"
+          >file_download</mat-icon
+        >
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <!-- <mat-paginator
+    class="w-100 w-764"
+    [length]="totalPosts"
+    [pageSize]="postsPerPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onChangePage($event)"
   >
-    <div class="column is-4 is-offset-4">
-      <h4 class="center">
-        {{ 'receipts' | translate }}
-      </h4>
-    </div>
-  </div>
-  <div
-    class="columns is-flex is-flex-direction-row is-multiline"
-    *ngFor="let receipt of receiptPages.get(activePage)"
-  >
-    <div class="column is-1 is-offset-4">
-      {{ receipt.createdOn | date : 'dd.MM.yyyy' }}
-    </div>
-    <div class="column is-2">
-      {{ receipt.invoiceNumber }}
-    </div>
-    <div class="column is-1">
-      <button
-        mat-icon-button
-        color="primary"
-        (click)="downloadReceipt(receipt.receiptId)"
-        matTooltip="download receipt"
-      >
-        <mat-icon aria-hidden="false">file_download</mat-icon>
-      </button>
-    </div>
-  </div>
-  <div
-    class="columns is-flex is-flex-direction-row is-multiline"
-    *ngFor="let fakeLine of [].constructor(5 - receiptPages.get(activePage).length); let i = index"
-  >
-    <div class="column is-1 is-offset-4">{{ '   ' }}</div>
-    <div class="column is-2">{{ '   ' }}</div>
-    <div class="column is-1">{{ '   ' }}</div>
-  </div>
-
-  <div class="columns is-flex is-flex-direction-row is-multiline"  *ngIf="receiptPages.size > 1">
-    <div class="column is-4 is-offset-4">
-      <app-paging
-        [activePage]="activePage"
-        [totalPageCount]="receiptPages.size"
-        (pageChanged)="setActivePage($event)"
-      ></app-paging>
-    </div>
-  </div>
+  </mat-paginator> -->
 </div>

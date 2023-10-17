@@ -275,7 +275,6 @@
   "teamLeft": "Team verlassen",
   "leaveTeam": "wirklich  verlassen?",
   "contactForProof": "Bei mehr als 10 kontaktiere uns bitte, da wir einen Nachweis benötigen.",
-  "location": "Standort",
   "photo": "Foto",
   "emailChangedWarning": "Nach Änderung der E-Mail musst du dich neu anmelden!",
   "usernameChangedWarning": "Nach Änderung des Usernamens musst du dich neu anmelden!",
@@ -288,5 +287,7 @@
   "value": "Wert",
   "markOnMapPls": "Bitte markiere die Pflanzung auf der Karte!",
   "selectTreetype": "Bitte wähle eine Baumart aus!",
-  "backToDescription": "Zurück zur Beschreibung"
+  "backToDescription": "Zurück zur Beschreibung",
+  "invoiceNumber":"Rechnungsnummer",
+  "downloadReceipt":"Rechnung herunterladen"
 }

@@ -23,6 +23,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -48,6 +50,7 @@ import { MatTableModule } from '@angular/material/table';
     MatMenuModule,
     MatBadgeModule,
     MatRadioModule,
+    MatPaginatorModule,
     MatTableModule,
   ],
   exports: [
@@ -72,6 +75,7 @@ import { MatTableModule } from '@angular/material/table';
     MatMenuModule,
     MatBadgeModule,
     MatRadioModule,
+    MatPaginatorModule,
     MatTableModule,
   ],
 })

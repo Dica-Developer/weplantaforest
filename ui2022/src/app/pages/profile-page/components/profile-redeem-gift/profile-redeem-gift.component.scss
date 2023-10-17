@@ -2,5 +2,11 @@
   text-align: center;
 }
 .column {
-  font-family: "Bull-mono", sans-serif;
+  font-family: 'Bull-mono', sans-serif;
+}
+
+@media only screen and (max-width: 768px) {
+  .inputOutline {
+    margin-bottom: 0 !important;
+  }
 }

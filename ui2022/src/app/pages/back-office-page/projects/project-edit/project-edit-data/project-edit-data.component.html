@@ -4,12 +4,7 @@
       <div class="columns">
         <div class="column">
           <mat-form-field>
-            <input
-              matInput
-              placeholder="Name"
-              name="name"
-              formControlName="name"
-            />
+            <input matInput placeholder="Name" name="name" formControlName="name" />
           </mat-form-field>
         </div>
         <div class="column">
@@ -26,39 +21,37 @@
         </div>
         <div class="column is-2">
           <input
-          #csvInput
-          hidden="true"
-          type="file"
-          onclick="this.value=null"
-          (change)="imageChanged($event)"
-          accept=".png, .jpg, .jpeg"
-        />
-        <button mat-raised-button color="primary" (click)="csvInput.click()">
-          Bild
-        </button>    
+            #csvInput
+            hidden="true"
+            type="file"
+            onclick="this.value=null"
+            (change)="imageChanged($event)"
+            accept=".png, .jpg, .jpeg"
+          />
+          <button mat-raised-button color="primary" (click)="csvInput.click()">Bild</button>
         </div>
         <div class="column is-6"></div>
       </div>
       <mat-divider></mat-divider>
       <div class="columns">
-        <div class="column is-2">
-          Description(De)
-        </div>
+        <div class="column is-2">Description(De)</div>
         <div class="column is-10">
-          <app-text-editor
-            [control]="this.projectForm.get('descriptionDe')"
-          ></app-text-editor>
+          {{ projectForm.get('descriptionDe').value }}
+          <!-- <app-text-editor
+            [control]="projectForm.get('descriptionDe')"
+            [editorId]="'descriptionDE'"
+          ></app-text-editor> -->
         </div>
       </div>
       <mat-divider></mat-divider>
       <div class="columns">
-        <div class="column is-2">
-          Description(En)
-        </div>
+        <div class="column is-2">Description(En)</div>
         <div class="column is-10">
-          <app-text-editor
-            [control]="this.projectForm.get('descriptionEn')"
-          ></app-text-editor>
+          {{ projectForm.get('descriptionEn').value }}
+          <!-- <app-text-editor
+            [control]="projectForm.get('descriptionEn')"
+            [editorId]="'descriptionEN'"
+          ></app-text-editor> -->
         </div>
       </div>
     </form>

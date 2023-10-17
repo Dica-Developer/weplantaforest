@@ -1,23 +1,15 @@
-.paging-icon {
-  height: 4rem;
-  width: 4rem;
-  font-size: 4rem;
-  cursor: pointer;
+.w-764 {
+  max-width: 764px;
+  margin: 0 auto;
 }
 
-div.paging-icon {
-  min-height: 4rem;
-  min-width: 4rem;
-  display: inline-block;
-  vertical-align: bottom;
+mat-icon {
+  margin-top: 0.5rem;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-div.center-text {
-  min-height: 4rem;
-  display: inline-block;
-}
-
-.column {
-  text-align: center;
-  min-height: 70px;
+mat-paginator {
+  background-color: var(--background);
 }
