@@ -6,7 +6,8 @@ import { AppState } from '../../../store/app.state';
 import { TextHelper } from '../../text.helper';
 import { Subscription } from 'rxjs';
 import { addPlantbagItem, removePlantbagItem } from '../../../store/plantbag.store';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../environments/environment';
+import { selectUserLanguage } from '../../../store/profile.store';
 
 @Component({
   selector: 'app-plantbag-tree-input',
@@ -31,6 +32,9 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   sum: number = 0;
   imgUrl: string;
 
+  userLanuage: string;
+  userLanuguageSub: Subscription;
+
   constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
 
   ngOnInit(): void {
@@ -40,6 +44,9 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
       '/treeType/image/' +
       this.article.treeType.treeImageColor +
       '/200/200';
+    this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
+      this.userLanuage = userLanguage;
+    });
   }
 
   initControl() {
@@ -59,10 +66,11 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.controlVcSub.unsubscribe();
+    this.userLanuguageSub?.unsubscribe();
   }
 
-  getGerman(text: string) {
-    return this.textHelper.getTextForLanguage(text, 'de');
+  getTreetypeName(text: string) {
+    return this.textHelper.getTextForLanguage(text, this.userLanuage);
   }
 
   getErrorMessage() {

@@ -1,28 +1,42 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { AppState } from 'src/app/store/app.state';
 import { TextHelper } from 'src/app/util/text.helper';
 import { environment } from 'src/environments/environment';
+import { selectUserLanguage } from '../../../store/profile.store';
 
 @Component({
   selector: 'app-plantproposal-preview-row',
   templateUrl: './plantproposal-preview-row.component.html',
   styleUrls: ['./plantproposal-preview-row.component.scss'],
 })
-export class PlantproposalPreviewRowComponent implements OnInit {
+export class PlantproposalPreviewRowComponent implements OnInit, OnDestroy {
   @Input() plantItem: any;
 
   imageUrl: string;
   sum: number = 0;
 
-  constructor(private textHelper: TextHelper) {}
+  userLanuage: string;
+  userLanuguageSub: Subscription;
+
+  constructor(private textHelper: TextHelper, private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.imageUrl =
       environment.backendUrl + '/treeType/image/' + this.plantItem.imageFile + '/100/100';
     this.calcSum(this.plantItem.amount);
+    this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
+      this.userLanuage = userLanguage;
+    });
   }
 
-  getGerman(text: string) {
-    return this.textHelper.getTextForLanguage(text, 'de');
+  ngOnDestroy() {
+    this.userLanuguageSub?.unsubscribe();
+  }
+
+  getTreetypeName(text: string) {
+    return this.textHelper.getTextForLanguage(text, this.userLanuage);
   }
 
   calcSum(amount: number) {

@@ -5,7 +5,7 @@
     <img class="img-tree" src="{{ imageUrl }}" alt="tree" />
   </div>
   <div class="column is-one-fifth is-flex-direction-column is-flex">
-    <b> {{ getGerman(plantItem.treeType) }} </b>
+    <b> {{ getTreetypeName(plantItem.treeType) }} </b>
     <br />
     {{ plantItem.treePrice / 100 | currency }}
   </div>

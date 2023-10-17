@@ -388,6 +388,21 @@ export const selectUploadingImage = createSelector(
   (state: ProfileState) => state.uploadingImage,
 );
 
+export const selectUserLanguage = createSelector(
+  profileFeature,
+  (state: ProfileState) => {
+    if(state.details?.lang) {
+      return state.details.lang;
+    }else {
+      if (navigator.language === 'de-De') {
+        return 'de';
+      }else {
+        return 'en'
+      }
+    }
+  },
+);
+
 @Injectable()
 export class ProfileEffects {
   constructor(
