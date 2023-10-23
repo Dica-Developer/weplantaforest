@@ -14,12 +14,12 @@ import {
 })
 export class ProjectsSectionComponent implements OnInit, OnDestroy {
   projectReports$ = this.store.select(selectActiveProjectReports);
-  mapHeight: string = '900px';
+  mapHeight: string = '768px';
   screenWidth;
 
   projectReportSub: Subscription;
 
-  projectAreas: any[][]= [];
+  projectAreas: any[][] = [];
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(loadActiveProjectReports());
@@ -39,7 +39,7 @@ export class ProjectsSectionComponent implements OnInit, OnDestroy {
     this.projectReportSub = this.projectReports$.subscribe((reports) => {
       const areas = [];
       if (reports.length > 0) {
-        for(let project of reports) {
+        for (let project of reports) {
           areas.push(project.positions);
         }
       }
