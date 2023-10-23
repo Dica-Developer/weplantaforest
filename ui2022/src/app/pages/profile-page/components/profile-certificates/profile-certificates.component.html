@@ -1,8 +1,8 @@
 <div class="is-flex is-flex-direction-column w-100 padding-2 gift-box border-bottom">
   <h4 class="center">{{ 'certificates' | translate }}</h4>
-  <p class="center">{{ ('selectPlantBagsForCertificate' | translate) + ':' }}</p>
+  <p class="center margin-bottom-1">{{ ('selectPlantBagsForCertificate' | translate) + ':' }}</p>
 
-  <table class="w-764 w-100" mat-table [dataSource]="cartPages.get(currentPage)">
+  <table class="w-528 w-100" mat-table [dataSource]="cartPages.get(currentPage)">
     <ng-container matColumnDef="createdOn">
       <th mat-header-cell *matHeaderCellDef>{{ 'amountOfTrees' | translate }}</th>
       <td class="tableAlignment" mat-cell *matCellDef="let cart">
@@ -26,7 +26,7 @@
   </table>
   <mat-paginator
     nextPageLabel="string"
-    class="w-100 w-764"
+    class="w-100 w-528 margin-bottom-1"
     [length]="totalPosts"
     [pageSize]="postsPerPage"
     [pageSizeOptions]="pageSizeOptions"
