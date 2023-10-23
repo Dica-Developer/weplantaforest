@@ -60,12 +60,12 @@
             [class.activeMarker]="selectedInfoType === 'leaf'"
             (click)="selectInfoType('leaf')"
           ></div>
-          <img class="img-fruit" src="{{ currentFruitUrl }}" alt="tree" />
           <div
             class="marker fruitMarker"
             [class.activeMarker]="selectedInfoType === 'fruit'"
             (click)="selectInfoType('fruit')"
           ></div>
+          <img class="img-fruit" src="{{ currentFruitUrl }}" />
         </div>
       </div>
     </div>

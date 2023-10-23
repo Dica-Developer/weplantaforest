@@ -77,7 +77,7 @@ export class PlantSelfPageComponent implements OnInit {
           fruitImageColor: tt.fruitImageColor,
           fruitImageBW: tt.fruitImageBW,
           trunkImageColor: tt.trunkImageColor,
-          // trunkImageBW: tt.trunkImageBW,
+          leafImage: tt.leafImage,
           description: tt.description,
           fruit: tt.fruit,
           leaf: tt.leaf,
@@ -143,13 +143,11 @@ export class PlantSelfPageComponent implements OnInit {
       this.snackbar.open(this.translateService.instant('markOnMapPls'), 'OK', {
         duration: 4000,
       });
-    }
-    else if(this.selfPlantForm.get('treeTypeId').invalid) {
+    } else if (this.selfPlantForm.get('treeTypeId').invalid) {
       this.snackbar.open(this.translateService.instant('selectTreetype'), 'OK', {
         duration: 4000,
       });
-    }
-    else {
+    } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
       });

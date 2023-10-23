@@ -24,11 +24,8 @@ export class TreetypeEditComponent implements OnInit {
     treeImageColor: new UntypedFormControl(null),
     treeImageBW: new UntypedFormControl(null),
     fruitImageColor: new UntypedFormControl(null),
-    leafImage: new UntypedFormControl(null),
     trunkImageColor: new UntypedFormControl(null),
-    // trunkImageBW: new UntypedFormControl(null),
-    // leafImageColor: new UntypedFormControl(null),
-    // leafImageBW: new UntypedFormControl(null),
+    leafImage: new UntypedFormControl(null),
     infoLink: new UntypedFormControl(''),
     nameDe: new UntypedFormControl(''),
     nameEn: new UntypedFormControl(''),
@@ -43,11 +40,8 @@ export class TreetypeEditComponent implements OnInit {
   treeImageColorFile: any;
   treeImageBWFile: any;
   fruitImageColorFile: any;
-  leafImageFile: any;
-  trunkImageColorFile: any;
-  trunkImageBWFile: any;
   leafImageColorFile: any;
-  leafImageBWFile: any;
+  trunkImageColorFile: any;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -83,9 +77,6 @@ export class TreetypeEditComponent implements OnInit {
     this.form.get('fruitImageColor').setValue(treeType.fruitImageColor);
     this.form.get('leafImage').setValue(treeType.leafImage);
     this.form.get('trunkImageColor').setValue(treeType.trunkImageColor);
-    // this.form.get('trunkImageBW').setValue(treeType.trunkImageBW);
-    // this.form.get('leafImageColor').setValue(treeType.leafImageColor);
-    // this.form.get('leafImageBW').setValue(treeType.leafImageBW);
   }
 
   setImageFile(event: any) {
@@ -100,20 +91,11 @@ export class TreetypeEditComponent implements OnInit {
         this.fruitImageColorFile = event.image;
         break;
       case 'leafImage':
-        this.leafImageFile = event.image;
+        this.leafImageColorFile = event.image;
         break;
       case 'trunkImageColor':
         this.trunkImageColorFile = event.image;
         break;
-      // case 'trunkImageBW':
-      //   this.trunkImageBWFile = event.image;
-      //   break;
-      // case 'leafImageColor':
-      //   this.leafImageColorFile = event.image;
-      //   break;
-      // case 'leafImageBW':
-      //   this.leafImageBWFile = event.image;
-      //   break;
       default:
         break;
     }
@@ -169,8 +151,8 @@ export class TreetypeEditComponent implements OnInit {
       if (this.fruitImageColorFile) {
         images.push({ imageType: 'fruitImageColor', imgSrc: this.fruitImageColorFile });
       }
-      if (this.leafImageFile) {
-        images.push({ imageType: 'leafImage', imgSrc: this.leafImageFile });
+      if (this.leafImageColorFile) {
+        images.push({ imageType: 'leafImage', imgSrc: this.leafImageColorFile });
       }
       if (this.trunkImageColorFile) {
         images.push({ imageType: 'trunkImageColor', imgSrc: this.trunkImageColorFile });

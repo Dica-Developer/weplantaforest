@@ -14,6 +14,7 @@ export interface TreeType {
   fruitImageColor: string;
   fruitImageBW: string;
   trunkImageColor: string;
+  leafImage: string;
   description: string;
   leaf: string;
   fruit: string;

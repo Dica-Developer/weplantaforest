@@ -156,11 +156,11 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
 
   saveData() {
     let articlesValid = true;
-    for(const article of this.projectForm.get('articles')['controls']) {
-      if(article.status === 'INVALID') {
+    for (const article of this.projectForm.get('articles')['controls']) {
+      if (article.status === 'INVALID') {
         articlesValid = false;
         article.get('treeType').get('id').markAsTouched();
-        if(!article.value.treeType.id) {
+        if (!article.value.treeType.id) {
           this.store.dispatch(
             addError({
               error: {
@@ -172,10 +172,9 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
         }
       }
     }
-    if(!articlesValid) {
+    if (!articlesValid) {
       return;
     }
-
 
     const fullDescription = this.textHelper.createMultiLanguageEntry(
       this.projectForm.get('descriptionDe').value,
@@ -301,6 +300,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
         fruitImageColor: '',
         fruitImageBW: '',
         trunkImageColor: '',
+        leafImage: '',
         description: '',
         fruit: '',
         leaf: '',

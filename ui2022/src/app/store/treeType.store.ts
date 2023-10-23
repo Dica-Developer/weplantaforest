@@ -14,9 +14,9 @@ export interface TreeTypeAdmin {
   id: number;
   treeImageColor: string;
   treeImageBW: string;
-  fruitImageColor: string;
   leafImage: string;
   trunkImageColor: string;
+  fruitImageColor: string;
   infoLink: string;
   name: string;
   leaf: string;
