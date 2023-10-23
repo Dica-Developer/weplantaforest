@@ -4,7 +4,11 @@ import { combineLatest, Observable, Subscription } from 'rxjs';
 import { AppState } from '../../../store/app.state';
 import { selectProjectsForCustomPlanting } from '../../../store/plant.store';
 import { environment } from '../../../../environments/environment';
-import { ProfileDetails, selectProfileDetails } from '../../../store/profile.store';
+import {
+  ProfileDetails,
+  selectProfileDetails,
+  selectUserLanguage,
+} from '../../../store/profile.store';
 import { TextHelper } from '../../text.helper';
 import { ActiveProjectArticle } from '../../../store/project.store';
 import { addPlantbagItem, resetPlantbag } from '../../../store/plantbag.store';
@@ -20,50 +24,53 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
 
   activeProjects$: Observable<any> = this.store.select(selectProjectsForCustomPlanting);
   profileDetails$: Observable<ProfileDetails> = this.store.select(selectProfileDetails);
+  language$: Observable<string> = this.store.select(selectUserLanguage);
 
   combinedSub: Subscription;
 
   constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
 
   ngOnInit(): void {
-    this.combinedSub = combineLatest([this.activeProjects$, this.profileDetails$]).subscribe(
-      ([activeProjects, profileDetails]) => {
-        this.trees = [];
-        if (activeProjects && activeProjects.length > 0) {
-          for (const project of activeProjects) {
-            if (!project.articles || project.articles.length === 0) {
-              // only start creating trees if there are articles laoded in every project
-              return;
-            }
-          }
-          const projectCount = activeProjects.length;
-
-          for (let i = 0; i < 3; i++) {
-            const randomProjectIndex = Math.floor(Math.random() * projectCount);
-            const articleCount = activeProjects[randomProjectIndex].articles.length;
-            const randomArticleIndex = Math.floor(Math.random() * articleCount);
-            const article = activeProjects[randomProjectIndex].articles[randomArticleIndex];
-            this.trees.push({
-              article,
-              name: this.textHelper.getTextForLanguage(
-                article.treeType.name,
-                profileDetails?.lang ?? 'de',
-              ),
-              urlColor:
-                environment.backendUrl +
-                '/treeType/image/' +
-                article.treeType.treeImageColor +
-                '/1000/1000',
-              urlBW:
-                environment.backendUrl +
-                '/treeType/image/' +
-                article.treeType.treeImageBW +
-                '/1000/1000',
-            });
+    this.combinedSub = combineLatest([
+      this.activeProjects$,
+      this.profileDetails$,
+      this.language$,
+    ]).subscribe(([activeProjects, profileDetails, language]) => {
+      this.trees = [];
+      if (activeProjects && activeProjects.length > 0) {
+        for (const project of activeProjects) {
+          if (!project.articles || project.articles.length === 0) {
+            // only start creating trees if there are articles laoded in every project
+            return;
           }
         }
-      },
-    );
+        const projectCount = activeProjects.length;
+
+        for (let i = 0; i < 3; i++) {
+          const randomProjectIndex = Math.floor(Math.random() * projectCount);
+          const articleCount = activeProjects[randomProjectIndex].articles.length;
+          const randomArticleIndex = Math.floor(Math.random() * articleCount);
+          const article = activeProjects[randomProjectIndex].articles[randomArticleIndex];
+          this.trees.push({
+            article,
+            name: this.textHelper.getTextForLanguage(
+              article.treeType.name,
+              profileDetails?.lang ?? language,
+            ),
+            urlColor:
+              environment.backendUrl +
+              '/treeType/image/' +
+              article.treeType.treeImageColor +
+              '/1000/1000',
+            urlBW:
+              environment.backendUrl +
+              '/treeType/image/' +
+              article.treeType.treeImageBW +
+              '/1000/1000',
+          });
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
