@@ -21,7 +21,9 @@ export class ForgotPasswordPageComponent implements OnInit {
 
   constructor(private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+  }
 
   onSubmit(): void {
     this.store.dispatch(
