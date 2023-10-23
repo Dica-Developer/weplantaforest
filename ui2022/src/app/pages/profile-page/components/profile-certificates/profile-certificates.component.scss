@@ -1,11 +1,12 @@
-.carts-wrapper {
-  max-width: 95vw;
-  .cart-item-wrapper {
-    overflow-x: auto;
-    .cart {
-      padding: 1rem;
-      display: table-cell;
-      min-width: 420px;
-    }
-  }
+.table48 {
+  vertical-align: inherit;
+}
+
+.w-764 {
+  max-width: 764px;
+  margin: 0 auto;
+}
+
+textarea {
+  font-family: 'Bull-mono' !important;
 }

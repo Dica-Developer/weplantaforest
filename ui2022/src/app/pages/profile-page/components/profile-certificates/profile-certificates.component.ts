@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { createCertificate, ProfileCart } from '../../../../store/profile.store';
 import { AppState } from '../../../../store/app.state';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-profile-certificates',
@@ -12,13 +13,28 @@ import { AppState } from '../../../../store/app.state';
   styleUrls: ['./profile-certificates.component.scss'],
 })
 export class ProfileCertificatesComponent implements OnInit, OnDestroy {
-  @Input() carts: ProfileCart[] = [];
+  @Input()
+  set carts(carts: ProfileCart[]) {
+    this.cartsArray = carts;
+    this.totalPosts = carts.length;
+    this.createReceiptPages(this.postsPerPage, carts);
+  }
+  cartsArray: ProfileCart[] = [];
+  cartPages: Map<number, ProfileCart[]> = new Map<number, ProfileCart[]>();
 
   translationSub: Subscription;
 
   customTextControl: FormControl = new FormControl('');
 
   cartIds: number[] = [];
+
+  totalPosts = 0;
+  postsPerPage = 5;
+  pageSizeOptions = [5, 10, 25, 100];
+  currentPage = 0;
+
+  displayedColumns: string[] = ['createdOn', 'invoiceNumber', 'PDF'];
+  dataSource;
 
   constructor(private translateService: TranslateService, private store: Store<AppState>) {}
 
@@ -54,5 +70,23 @@ export class ProfileCertificatesComponent implements OnInit, OnDestroy {
         requestDto: { cartIds: this.cartIds, text: this.customTextControl.value },
       }),
     );
+  }
+
+  createReceiptPages(pageSize: number, carts: ProfileCart[]) {
+    this.cartPages = new Map<number, ProfileCart[]>();
+    let pageCnt = 0;
+    if (carts && carts.length > 0) {
+      for (let i = 0; i < carts.length; i += pageSize) {
+        const chunk = carts.slice(i, i + pageSize);
+        this.cartPages.set(pageCnt, chunk);
+        pageCnt++;
+      }
+    }
+  }
+
+  onChangePage(pageData: PageEvent) {
+    this.currentPage = pageData.pageIndex;
+    this.postsPerPage = pageData.pageSize;
+    this.createReceiptPages(this.postsPerPage, this.cartsArray);
   }
 }

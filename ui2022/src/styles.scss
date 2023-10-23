@@ -265,6 +265,10 @@ td {
   font-family: 'Bull-mono' !important;
 }
 
+mat-paginator {
+  background-color: var(--background) !important;
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body {

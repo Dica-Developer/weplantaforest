@@ -1,22 +1,39 @@
 <div class="is-flex is-flex-direction-column w-100 padding-2 gift-box border-bottom">
   <h4 class="center">{{ 'certificates' | translate }}</h4>
   <p class="center">{{ ('selectPlantBagsForCertificate' | translate) + ':' }}</p>
-  <div class="carts-wrapper">
-    <div class="cart-item-wrapper">
-      <div *ngFor="let cart of carts" class="cart">
-        <p class="center">
-          {{ ('amountOfTrees' | translate) + ': ' + cart.treeCount }}
-          <br />
-          {{ ('plantedOn' | translate) + ': ' + (getDate(cart.timeStamp) | date : 'dd.MM.yyyy') }}
-          <br />
-          {{ ('price' | translate) + ': ' + getPriceFormatted(cart.totalPrice) }}
-        </p>
-        <div class="center">
-          <mat-checkbox (change)="toggleCertificate($event, cart.id)"></mat-checkbox>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <table class="w-764 w-100" mat-table [dataSource]="cartPages.get(currentPage)">
+    <ng-container matColumnDef="createdOn">
+      <th mat-header-cell *matHeaderCellDef>{{ 'amountOfTrees' | translate }}</th>
+      <td class="tableAlignment" mat-cell *matCellDef="let cart">
+        {{ cart.treeCount }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="invoiceNumber">
+      <th mat-header-cell *matHeaderCellDef>{{ 'plantedOn' | translate }}</th>
+      <td class="tableAlignment" mat-cell *matCellDef="let cart">
+        {{ getDate(cart.timeStamp) | date : 'dd.MM.yyyy' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="PDF">
+      <th mat-header-cell *matHeaderCellDef>{{ 'PDF' | translate }}</th>
+      <td class="table48" mat-cell *matCellDef="let cart">
+        <mat-checkbox (change)="toggleCertificate($event, cart.id)"></mat-checkbox>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    nextPageLabel="string"
+    class="w-100 w-764"
+    [length]="totalPosts"
+    [pageSize]="postsPerPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onChangePage($event)"
+  >
+  </mat-paginator>
+
   <div class="columns">
     <div class="column">
       <p>{{ 'thisTextIsShownInYourCertificate' | translate }}:</p>
