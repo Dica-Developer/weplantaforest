@@ -1,4 +1,6 @@
-<div class="is-flex is-flex-direction-column is-align-items-center w-full padding-2 border-bottom">
+<div
+  class="receipts is-flex is-flex-direction-column is-align-items-center w-full padding-2 border-bottom"
+>
   <h4 class="center">
     {{ 'receipts' | translate }}
   </h4>
@@ -10,7 +12,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="invoiceNumber">
-      <th mat-header-cell *matHeaderCellDef>{{ 'invoiceNumber' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'number' | translate }}</th>
       <td class="tableAlignment minTable80" mat-cell *matCellDef="let receipt">
         {{ receipt.invoiceNumber }}
       </td>

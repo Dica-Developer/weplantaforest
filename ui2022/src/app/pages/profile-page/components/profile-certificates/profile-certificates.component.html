@@ -4,7 +4,7 @@
 
   <table class="w-528 w-100" mat-table [dataSource]="cartPages.get(currentPage)">
     <ng-container matColumnDef="createdOn">
-      <th mat-header-cell *matHeaderCellDef>{{ 'amountOfTrees' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'amount' | translate }}</th>
       <td class="tableAlignment" mat-cell *matCellDef="let cart">
         {{ cart.treeCount }}
       </td>

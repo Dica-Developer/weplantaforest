@@ -263,10 +263,12 @@ td {
 
 .mat-tab-label-content {
   font-family: 'Bull-mono' !important;
+  font-size: 1rem !important;
 }
 
 mat-paginator {
   background-color: var(--background) !important;
+  font-family: 'Bull-mono' !important;
 }
 
 @media only screen and (max-width: 768px) {

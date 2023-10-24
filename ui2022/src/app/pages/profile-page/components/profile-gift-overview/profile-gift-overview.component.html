@@ -13,7 +13,9 @@
       </div>
     </mat-tab>
     <mat-tab label="{{ 'overview' | translate }}">
-      <div class="is-flex is-flex-direction-row is-justify-content-space-between margin-bottom-2">
+      <div
+        class="is-flex is-flex-direction-row tables is-justify-content-space-between margin-bottom-2"
+      >
         <div class="is-flex w-100 tableColumn is-flex-direction-column">
           <h4 class="text-center margin-top-1">{{ 'created' | translate }}</h4>
           <table class="w-100" mat-table [dataSource]="_consignorGifts">

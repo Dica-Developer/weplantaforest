@@ -12,3 +12,20 @@
 .tableColumn {
   padding-right: 0.75rem;
 }
+
+table {
+  th,
+  td {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .tableColumn {
+    padding-right: 0;
+  }
+
+  .tables {
+    flex-direction: column !important;
+  }
+}

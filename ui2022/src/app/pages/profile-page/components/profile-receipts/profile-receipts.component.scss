@@ -3,6 +3,19 @@
   margin: 0 auto;
 }
 
+.receipts {
+  background-image: url(/assets/baumscheiben.png);
+  background-size: cover;
+  background-position: center;
+}
+
+table {
+  th,
+  td {
+    font-size: 1rem;
+  }
+}
+
 mat-icon {
   margin-top: 0.5rem;
   &:hover {
