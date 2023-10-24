@@ -287,5 +287,6 @@
   "number":"Nummer",
   "downloadReceipt":"Rechnung herunterladen",
   "amount": "Anzahl",
-  "partialPrice": "Zwischensumme"
+  "partialPrice": "Zwischensumme",
+  "addToPlantbag": "In den Pflanzkorb hinzufügen"
 }

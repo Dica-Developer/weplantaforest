@@ -287,5 +287,6 @@
   "number": "Number",
   "downloadReceipt": "Download Receipt",
   "amount": "Amount",
-  "partialPrice": "Subtotal"
+  "partialPrice": "Subtotal",
+  "addToPlantbag": "Add to Plantbag"
 }
