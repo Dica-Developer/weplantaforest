@@ -23,6 +23,7 @@ export class SearchOverlayComponent implements OnInit {
   ngOnInit(): void {
     this.valueChangeSub = this.control.valueChanges.subscribe((searchValue) => {
       if (searchValue && searchValue.length > 1) {
+        searchValue = searchValue.trim();
         this.store.dispatch(search({ searchValue }));
       }
     });
