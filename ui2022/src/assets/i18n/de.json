@@ -288,5 +288,6 @@
   "downloadReceipt":"Rechnung herunterladen",
   "amount": "Anzahl",
   "partialPrice": "Zwischensumme",
-  "addToPlantbag": "In den Pflanzkorb hinzufügen"
+  "addToPlantbag": "In den Pflanzkorb hinzufügen",
+  "customPlantingInfoSingleProject": "Hier entscheidest du selbst, welche Bäume du hier pflanzen möchtest."
 }

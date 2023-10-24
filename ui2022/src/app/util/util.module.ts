@@ -59,6 +59,7 @@ import { TeamCreateEditComponent } from './common-components/team-create-edit/te
 import { PlantproposalPreviewRowComponent } from './common-components/plantproposal-preview-row/plantproposal-preview-row.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CustomPlantingComponent } from '../pages/plant-proposal-page/components/custom-planting/custom-planting.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     TeamDetailsComponent,
     TeamHeaderComponent,
     TeamCreateEditComponent,
-    PlantproposalPreviewRowComponent
+    PlantproposalPreviewRowComponent,
+    CustomPlantingComponent
   ],
   imports: [
     CommonModule,
@@ -158,7 +160,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     TeamDetailsComponent,
     TeamHeaderComponent,
     TeamCreateEditComponent,
-    PlantproposalPreviewRowComponent
+    PlantproposalPreviewRowComponent,
+    CustomPlantingComponent
   ],
 })
 export class UtilModule {}

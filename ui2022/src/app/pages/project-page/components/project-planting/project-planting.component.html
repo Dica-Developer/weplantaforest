@@ -24,13 +24,16 @@
         ></app-button>
       </div>
     </div>
-    <div class="is-flex is-flex-direction-column">
+    <div class="is-flex is-flex-direction-column column is-6">
       <app-plantproposal-preview-row
         *ngFor="let item of (proposal$ | async)?.plantItems ?? []"
         [plantItem]="item"
       >
       </app-plantproposal-preview-row>
     </div>
+    <app-custom-planting
+      [projectId]="projectReport.projectReportData.projectId"
+    ></app-custom-planting>
     <a class="back-link" (click)="showProjectDescriptionClicked()">{{
       'backToDescription' | translate
     }}</a>

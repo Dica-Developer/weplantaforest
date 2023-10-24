@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import {
@@ -22,6 +22,9 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
   collapsibleState: boolean = false;
   language$ = this.store.select(selectProfileDetails);
 
+  @Input()
+  projectId: number;
+
   constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
 
   ngOnInit(): void {
@@ -29,6 +32,9 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
       .select(selectProjectsForCustomPlanting)
       .subscribe((projects) => {
         this.activeProjects = projects;
+        if (this.projectId) {
+          this.activeProjects = projects.filter((project) => project.projectId === this.projectId);
+        }
       });
     this.profileDetailsSub = this.store.select(selectProfileDetails).subscribe((details) => {
       this.profileDetails = details;
