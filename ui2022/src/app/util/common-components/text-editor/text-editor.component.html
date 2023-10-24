@@ -1,9 +1,1 @@
-<div class="NgxEditor__Wrapper">
-  <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-  <ngx-editor
-    [editor]="editor"
-    [ngModel]="text"
-    [disabled]="false"
-    [placeholder]="'Type here...'"
-  ></ngx-editor>
-</div>
+<ckeditor [editor]="editor" data="{{ text }}" (change)="onChange($event)"></ckeditor>

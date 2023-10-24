@@ -1,40 +1,29 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Editor, toHTML } from 'ngx-editor';
+import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-text-editor',
   templateUrl: './text-editor.component.html',
   styleUrls: ['./text-editor.component.scss'],
 })
-export class TextEditorComponent implements OnInit, OnDestroy {
-  editorControl: UntypedFormControl;
+export class TextEditorComponent implements OnInit {
+  controlInternal: UntypedFormControl;
+
   text: string;
+  public editor = ClassicEditor;
 
   @Input()
   set control(controlObj: UntypedFormControl) {
-    this.editorControl = controlObj;
-    this.text = this.editorControl.value;
+    this.text = controlObj.value;
+    this.controlInternal = controlObj;
   }
-
-  editor: Editor;
-
-  valueChangeSub: Subscription;
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.editor = new Editor();
-    this.valueChangeSub = this.editor.valueChanges.subscribe((res) => {
-      if (res && res.type === 'doc') {
-        this.editorControl.setValue(toHTML(res));
-      }
-    });
-  }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    this.editor.destroy();
-    this.valueChangeSub.unsubscribe();
+  onChange(event: any) {
+    this.controlInternal.setValue(event.editor.getData());
   }
 }

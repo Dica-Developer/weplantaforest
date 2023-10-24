@@ -58,6 +58,7 @@ import { TeamHeaderComponent } from './common-components/team-header/team-header
 import { TeamCreateEditComponent } from './common-components/team-create-edit/team-create-edit.component';
 import { PlantproposalPreviewRowComponent } from './common-components/plantproposal-preview-row/plantproposal-preview-row.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     LeafletModule,
     LeafletDrawModule,
     NgxSliderModule,
-    TranslateModule
+    TranslateModule,
+    CKEditorModule
   ],
   exports: [
     MaterialModule,

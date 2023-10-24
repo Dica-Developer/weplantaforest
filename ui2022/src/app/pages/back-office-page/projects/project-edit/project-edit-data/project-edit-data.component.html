@@ -36,22 +36,14 @@
       <div class="columns">
         <div class="column is-2">Description(De)</div>
         <div class="column is-10">
-          {{ projectForm.get('descriptionDe').value }}
-          <!-- <app-text-editor
-            [control]="projectForm.get('descriptionDe')"
-            [editorId]="'descriptionDE'"
-          ></app-text-editor> -->
+          <app-text-editor [control]="projectForm.get('descriptionDe')"></app-text-editor>
         </div>
       </div>
       <mat-divider></mat-divider>
       <div class="columns">
         <div class="column is-2">Description(En)</div>
         <div class="column is-10">
-          {{ projectForm.get('descriptionEn').value }}
-          <!-- <app-text-editor
-            [control]="projectForm.get('descriptionEn')"
-            [editorId]="'descriptionEN'"
-          ></app-text-editor> -->
+          <app-text-editor [control]="projectForm.get('descriptionEn')"></app-text-editor>
         </div>
       </div>
     </form>
