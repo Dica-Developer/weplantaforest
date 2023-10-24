@@ -1,20 +1,21 @@
 <div
   class="is-flex is-flex-direction-column"
   #imageLink
-  *ngFor="let imageUrl of imageUrls.slice(0, 5); let i = index"
+  *ngFor="let image of images.slice(0, 5); let i = index"
 >
-  <img id="myImg" [src]="imageUrl" (click)="openModal(i)" />
+  <img id="myImg" [src]="image.imageUrl" (click)="openModal(i)" />
 </div>
 
 <!-- Modal Content (The Image) -->
 <div id="myModal" class="lightbox">
   <div class="content" (swiperight)="plusSlides(-1)" (swipeleft)="plusSlides(1)">
-    <div *ngFor="let image of imageUrls">
+    <div *ngFor="let image of images">
       <div class="mySlides w-100 is-justify-content-center is-align-items-center">
         <div class="close" (click)="closeModal()">
           <mat-icon>close</mat-icon>
         </div>
-        <img class="slideImage" [src]="image" />
+        <img class="slideImage" [src]="image.imageUrl" />
+        <p>{{ image.caption }}</p>
       </div>
       <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
       <a class="next" (click)="plusSlides(1)">&#10095;</a>
@@ -22,7 +23,7 @@
         <mat-icon
           [class.selected]="slideIndex === i"
           class="index"
-          *ngFor="let image of imageUrls; let i = index"
+          *ngFor="let image of images; let i = index"
           (click)="openModal(i)"
           >circle</mat-icon
         >

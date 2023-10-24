@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../store/app.state';
 import { environment } from '../../../../../../environments/environment';
 import { Subscription } from 'rxjs';
+import { addError } from '../../../../../store/error.state';
 import {
   deleteProjectImage,
   ProjectImageCreateEditRequest,
@@ -106,6 +107,18 @@ export class ProjectEditImageComponent implements OnInit, OnDestroy {
 
   imageChanged(fileInputEvent: any) {
     if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
+      if (fileInputEvent.target.files[0].size >= 1048576) {
+        this.store.dispatch(
+          addError({
+            error: {
+              key: 'IMAGE_VALIDATION_ERROR',
+              message: 'Das Bild darf nicht größer als 1MB sein.',
+            },
+          }),
+        );
+        return;
+      }
+
       this.imageFile = fileInputEvent.target.files[0];
       const reader = new FileReader();
       reader.onload = (e) => (this.imageSrc = reader.result);

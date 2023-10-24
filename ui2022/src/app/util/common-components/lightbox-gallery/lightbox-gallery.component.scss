@@ -79,6 +79,15 @@
   -moz-transition: 0.5s;
   -ms-transition: 0.5s;
   -o-transition: 0.5s;
+
+  p {
+    position: absolute;
+    bottom: 0;
+    color: var(--dark-brown);
+    padding: 1rem;
+    background: var(--background);
+    text-shadow: none;
+  }
 }
 
 /* Next & previous buttons */

@@ -6,7 +6,7 @@ import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/cor
   styleUrls: ['./lightbox-gallery.component.scss'],
 })
 export class LightboxGalleryComponent implements OnInit {
-  @Input() imageUrls: String[];
+  @Input() images: { imageUrl: string; caption: string }[];
   slideIndex = 0;
 
   constructor(private elem: ElementRef) {}
@@ -45,13 +45,13 @@ export class LightboxGalleryComponent implements OnInit {
     this.slideIndex = index;
     let slides = this.elem.nativeElement.querySelectorAll('.mySlides');
 
-    if (index > this.imageUrls.length - 1) {
+    if (index > this.images.length - 1) {
       this.slideIndex = 0;
     }
     if (index < 0) {
-      this.slideIndex = this.imageUrls.length - 1;
+      this.slideIndex = this.images.length - 1;
     }
-    for (let i = 0; i < this.imageUrls.length; i++) {
+    for (let i = 0; i < this.images.length; i++) {
       let slide = slides[i] as HTMLElement;
       slide.style.display = 'none';
       setTimeout(() => {

@@ -16,16 +16,17 @@ export class ProjectDescriptionComponent implements OnInit {
 
   activeProject: boolean;
   description: string;
-  imageUrls: String[] = [];
+  images: { imageUrl: string; caption: string }[] = [];
   constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.activeProject = this.projectReport.projectReportData.active;
-    this.imageUrls = [];
+    this.images = [];
     for (let image of this.projectReport.images) {
       let url =
         environment.backendUrl + '/project/image/' + encodeURI(image.imageFileName) + '/1140/570';
-      this.imageUrls.push(url);
+      let caption = this.textHelper.getTextForLanguage(image.description, this.translateService.currentLang);      
+      this.images.push({imageUrl: url, caption});
     }
     this.description = this.textHelper.getTextForLanguage(
       this.projectReport.projectReportData.description,

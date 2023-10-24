@@ -43,8 +43,6 @@ export class TreeTypeImageUploadComponent implements OnInit {
       }
 
       this.imageFile = fileInputEvent.target.files[0];
-      console.log('imageFile', this.imageFile);
-
       const reader = new FileReader();
       reader.onload = (e) => (this.imagePreviewSrc = reader.result);
       reader.readAsDataURL(this.imageFile);
