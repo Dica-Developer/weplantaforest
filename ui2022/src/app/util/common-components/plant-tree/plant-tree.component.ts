@@ -37,6 +37,7 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
       this.language$,
     ]).subscribe(([activeProjects, profileDetails, language]) => {
       this.trees = [];
+      const projects = [];
       if (activeProjects && activeProjects.length > 0) {
         for (const project of activeProjects) {
           if (!project.articles || project.articles.length === 0) {
@@ -44,13 +45,19 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
             return;
           }
         }
-        const projectCount = activeProjects.length;
+
+        // thre has to be made shallow copies of the projects and their articles to be able to remove them later
+        for (const project of activeProjects) {
+          const articles = [...project.articles];
+          projects.push({ ...project, articles });
+        }
+        const projectCount = projects.length;
 
         for (let i = 0; i < 3; i++) {
           const randomProjectIndex = Math.floor(Math.random() * projectCount);
-          const articleCount = activeProjects[randomProjectIndex].articles.length;
+          const articleCount = projects[randomProjectIndex].articles.length;
           const randomArticleIndex = Math.floor(Math.random() * articleCount);
-          const article = activeProjects[randomProjectIndex].articles[randomArticleIndex];
+          const article = projects[randomProjectIndex].articles[randomArticleIndex];
           this.trees.push({
             article,
             name: this.textHelper.getTextForLanguage(
@@ -68,6 +75,8 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
               article.treeType.treeImageBW +
               '/1000/1000',
           });
+          // remove article from project so it can't be selected again
+          projects[randomProjectIndex].articles.splice(randomArticleIndex, 1);
         }
       }
     });
