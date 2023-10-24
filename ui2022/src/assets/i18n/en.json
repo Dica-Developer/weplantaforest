@@ -284,7 +284,7 @@
   "markOnMapPls": "Please mark the planting on the map!",
   "selectTreetype": "Please select a tree type!",
   "backToDescription": "Back to Description",
-  "invoiceNumber": "Invoice Number",
+  "number": "Number",
   "downloadReceipt": "Download Receipt",
   "amount": "amount",
   "partialPrice": "Subtotal"

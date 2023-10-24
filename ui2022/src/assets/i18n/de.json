@@ -284,7 +284,7 @@
   "markOnMapPls": "Bitte markiere die Pflanzung auf der Karte!",
   "selectTreetype": "Bitte wähle eine Baumart aus!",
   "backToDescription": "Zurück zur Beschreibung",
-  "invoiceNumber":"Rechnungsnummer",
+  "number":"Nummer",
   "downloadReceipt":"Rechnung herunterladen",
   "amount": "Anzahl",
   "partialPrice": "Zwischensumme"
