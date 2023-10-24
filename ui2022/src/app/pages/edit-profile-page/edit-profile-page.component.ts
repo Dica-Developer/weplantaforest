@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
 import { FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import {
   loadProfileDetails,
@@ -18,7 +19,7 @@ import {
   templateUrl: './edit-profile-page.component.html',
   styleUrls: ['./edit-profile-page.component.scss'],
 })
-export class EditProfilePageComponent implements OnInit {
+export class EditProfilePageComponent implements OnInit, OnDestroy {
   profileForm: UntypedFormGroup;
   profileDetails$ = this.store.select(selectProfileDetails);
   selectedNewsletter: Boolean;
@@ -34,6 +35,13 @@ export class EditProfilePageComponent implements OnInit {
   imageFile: any;
   imagePreviewSrc: any = null;
   uploadingImage$ = this.store.select(selectUploadingImage);
+
+  uploadImageSub: Subscription;
+
+  // since there is an issue with the image url not updating(which means its exactly the same after an image update)
+  // when the image is changed, there has to be a little hack here to force the image to update
+  // so we create a random number when the uploadImage select delivers a false and put it at the end of the image url
+  randomNumber: number = 0;
 
   constructor(
     private store: Store<AppState>,
@@ -61,7 +69,17 @@ export class EditProfilePageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.uploadImageSub = this.store.select(selectUploadingImage).subscribe((uploading) => {
+      if (!uploading) {
+        this.randomNumber = this.getRandomNumber();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.uploadImageSub?.unsubscribe();
+  }
 
   updateProfile() {
     let username = localStorage.getItem('username');
@@ -166,5 +184,9 @@ export class EditProfilePageComponent implements OnInit {
         panelClass: ['warning-snackbar'],
       });
     }
+  }
+
+  getRandomNumber() {
+    return Math.floor(Math.random() * 100);
   }
 }

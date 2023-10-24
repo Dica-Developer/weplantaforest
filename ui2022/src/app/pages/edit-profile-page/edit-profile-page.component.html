@@ -20,7 +20,7 @@
       >
         <img src="{{ imagePreviewSrc }}" alt="" *ngIf="imagePreviewSrc" />
         <img
-          src="{{ (profileDetails$ | async).profileImageUrl }}"
+          src="{{ (profileDetails$ | async).profileImageUrl + '?' + randomNumber }}"
           alt=""
           *ngIf="(profileDetails$ | async).profileImageUrl && !imagePreviewSrc"
         />
