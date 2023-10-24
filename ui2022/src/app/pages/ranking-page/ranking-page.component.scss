@@ -14,6 +14,13 @@ nav {
   margin-top: 1rem;
 }
 
+.load-more-icon {
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 2.5rem;
+}
+
 @media only screen and (max-width: 768px) {
   .rankings {
     padding: 1rem;

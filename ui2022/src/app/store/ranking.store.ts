@@ -161,6 +161,11 @@ export const selectRankingMaxAmount = createSelector(
   (state: RankingState) => state.rankingsMaxAmount,
 );
 
+export const selectTotalNumber = createSelector(
+  rankingFeature,
+  (state: RankingState) => state.rankings.totalElements,
+);
+
 @Injectable()
 export class RankingEffects {
   constructor(private actions$: Actions, private rankingService: RankingService) {}

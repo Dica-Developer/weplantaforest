@@ -81,5 +81,14 @@
       [max]="maxValue$ | async"
       [type]="type"
     ></app-ranking-item>
+    <div class="column is-2 is-offset-5">
+      <mat-icon
+        class="load-more-icon"
+        *ngIf="(rankings$ | async).totalElements !== (rankings$ | async).numberOfElements"
+        (click)="loadAll()"
+      >
+        keyboard_double_arrow_down
+      </mat-icon>
+    </div>
   </div>
 </div>
