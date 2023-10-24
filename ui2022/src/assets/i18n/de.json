@@ -285,5 +285,7 @@
   "selectTreetype": "Bitte wähle eine Baumart aus!",
   "backToDescription": "Zurück zur Beschreibung",
   "invoiceNumber":"Rechnungsnummer",
-  "downloadReceipt":"Rechnung herunterladen"
+  "downloadReceipt":"Rechnung herunterladen",
+  "amount": "Anzahl",
+  "partialPrice": "Zwischensumme"
 }

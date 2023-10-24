@@ -2,6 +2,15 @@
   flex-direction: row;
 }
 
+.image-wrapper {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.column {
+  padding: 0 !important;
+}
+
 ngx-slider.animate .ngx-slider-bubble {
   display: none;
 }

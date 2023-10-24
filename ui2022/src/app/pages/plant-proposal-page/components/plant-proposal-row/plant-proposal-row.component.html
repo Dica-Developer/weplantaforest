@@ -35,7 +35,25 @@
       </div>
     </div>
 
-    <div class="is-flex is-flex-direction-column">
+    <div class="is-flex is-flex-direction-column column is-6 margin-top-2">
+      <div
+        class="columns is-flex is-flex-direction-row is-justify-content-space-between text-align-center is-align-items-center w-100 bottomLine margin-bottom-1"
+      >
+        <div class="column is-one-fifth image-wrapper"></div>
+        <div class="column is-two-fifth is-flex-direction-column is-flex">
+          <b> {{ 'treeType' | translate }} </b>
+        </div>
+        <div class="column is-two-fifth is-flex-direction-row is-flex">
+          <b> {{ 'amount' | translate }} </b>
+        </div>
+        <div class="column is-two-fifth">
+          <b> {{ 'project' | translate }} </b>
+        </div>
+        <div class="column is-one-fifth">
+          <b> {{ 'partialPrice' | translate }} </b>
+        </div>
+      </div>
+      
       <app-plantproposal-preview-row
         *ngFor="let item of this.simpleProposal?.plantItems"
         [plantItem]="item"
