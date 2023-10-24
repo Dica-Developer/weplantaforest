@@ -16,7 +16,6 @@
     </span>
   </div>
   <div class="is-flex is-flex-direction-row is-align-items-center gap">
-    <span>{{ sum | currency }}</span>
     <div class0="is-flex is-flex-direction-column">
       <div class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom">
         <label>{{ 'max.' + (article.amount - article.alreadyPlanted) }}</label>
@@ -24,6 +23,7 @@
       </div>
       <mat-error *ngIf="control.invalid">{{ getErrorMessage() }}</mat-error>
     </div>
+    <span class="minWidth">{{ sum | currency }}</span>
   </div>
   <div *ngIf="withDelete">
     <button

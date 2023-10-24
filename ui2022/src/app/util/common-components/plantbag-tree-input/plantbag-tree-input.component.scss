@@ -38,6 +38,10 @@ span {
   max-width: 764px;
 }
 
+.minWidth {
+  min-width: 150px;
+}
+
 @media only screen and (max-width: 768px) {
   .image-wrapper {
     display: none;
@@ -49,5 +53,9 @@ span {
 
   .w-100 {
     padding: 1rem 0;
+  }
+
+  .minWidth {
+    min-width: initial;
   }
 }
