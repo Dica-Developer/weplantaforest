@@ -10,8 +10,8 @@ services:
     command: sh -c "./gradlew user:bootRun"
     ports: 
       - 8081:8081
-    volumes:
-      - .:/usr/src/app
+    # volumes:
+    #   - .:/usr/src/app
     networks:
       - ipat-backend
     depends_on:
@@ -25,9 +25,9 @@ services:
       dockerfile: ./Dockerfile-api
     command: sh -c "./gradlew admin:bootRun"
     ports: 
-      - 8082:8082
-    volumes:
-      - .:/usr/src/app
+      - 8083:8083
+    # volumes:
+    #   - .:/usr/src/app
     networks:
       - ipat-backend
     depends_on:
@@ -41,9 +41,7 @@ services:
       dockerfile: ./Dockerfile-api
     command: sh -c "./gradlew article-manager:bootRun"
     ports: 
-      - 8083:8083
-    volumes:
-      - .:/usr/src/app
+      - 8082:8082
     networks:
       - ipat-backend
     depends_on:
