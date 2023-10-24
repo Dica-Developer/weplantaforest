@@ -12,7 +12,12 @@ import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { projectsReportReducerFn, ProjectReportsEffects } from './store/project-report.store';
 import { TokenInterceptor } from './services/http-interceptors/token.interceptor';
 import { cartsReducerFn, CartsEffects } from './store/carts.store';
-import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  DateAdapter,
+  MatNativeDateModule,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { userReducerFn, UserEffects } from './store/user.store';
 import { projectsReducerFn, ProjectsEffects } from './store/project.store';
@@ -70,7 +75,7 @@ export const MY_FORMATS = {
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
-    domain: 'tinesoft.github.io',
+    domain: 'iplantatree.org',
   },
   position: 'bottom',
   theme: 'block',
@@ -157,7 +162,7 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
       PaymentEffects,
       ContactEffects,
       InfrastructureEffects,
-      MomentDateModule
+      MomentDateModule,
     ]),
     MatNativeDateModule,
     AgGridModule.forRoot(),
@@ -206,7 +211,7 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
         provide: TranslateLoader,
         useFactory: createTranslateLoader,
         deps: [HttpClient],
-      },            
+      },
     }),
     NgScrollbarModule,
     NgxSliderModule,
@@ -230,7 +235,7 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
     CookieService,
     {
       provide: LOCALE_ID,
-      useValue: 'de-DE' // 'de-DE' for Germany, 'fr-FR' for France ...
+      useValue: 'de-DE', // 'de-DE' for Germany, 'fr-FR' for France ...
     },
   ],
   bootstrap: [AppComponent],
