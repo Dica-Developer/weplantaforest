@@ -285,5 +285,7 @@
   "selectTreetype": "Please select a tree type!",
   "backToDescription": "Back to Description",
   "invoiceNumber": "Invoice Number",
-  "downloadReceipt": "Download Receipt"
+  "downloadReceipt": "Download Receipt",
+  "amount": "amount",
+  "partialPrice": "Subtotal"
 }
