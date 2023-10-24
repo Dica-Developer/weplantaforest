@@ -112,7 +112,7 @@ export class ProjectEditImageComponent implements OnInit, OnDestroy {
           addError({
             error: {
               key: 'IMAGE_VALIDATION_ERROR',
-              message: 'Das Bild darf nicht größer als 1MB sein.',
+              message: 'Das Bild darf nicht größer als 1 MB sein.',
             },
           }),
         );

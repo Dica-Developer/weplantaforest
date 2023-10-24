@@ -35,7 +35,7 @@ export class TreeTypeImageUploadComponent implements OnInit {
           addError({
             error: {
               key: 'IMAGE_VALIDATION_ERROR',
-              message: 'Das Bild darf nicht größer als 1MB sein.',
+              message: 'Das Bild darf nicht größer als 1 MB sein.',
             },
           }),
         );

@@ -294,5 +294,6 @@
   "mapLocation": "Standort",
   "howManyTreesDidYouPlant": "Wieviele Bäume hast du gepflantzt?",
   "total": "Insgesamt",
-  "lastYear": "Letztes Jahr"
+  "lastYear": "Letztes Jahr",
+  "notGreaterThan1MB": "Das Bild darf nicht größer als 1 MB sein."
 }

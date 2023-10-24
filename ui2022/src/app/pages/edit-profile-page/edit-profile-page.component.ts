@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
+import { addError } from '../../store/error.state';
 import {
   loadProfileDetails,
   selectProfileDetails,
@@ -165,6 +166,18 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
 
   imageChanged(fileInputEvent: any) {
     if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
+      if (fileInputEvent.target.files[0].size >= 1048576) {
+        this.store.dispatch(
+          addError({
+            error: {
+              key: 'IMAGE_VALIDATION_ERROR',
+              message: 'notGreaterThan1MB',
+            },
+          }),
+        );
+        return;
+      }
+
       this.imageFile = fileInputEvent.target.files[0];
       const reader = new FileReader();
       reader.onload = (e) => (this.imagePreviewSrc = reader.result);
