@@ -1,6 +1,6 @@
-<div class="columns">
+<div class="columns border-bottom">
   <div
-    class="column padding-left is-flex is-flex-direction-column is-justify-content-center border-right"
+    class="column padding-left is-flex is-flex-direction-column is-justify-content-center"
   >
     <h2>{{ 'plantTree' | translate }}</h2>
     <p>{{ 'selectAndPlantNow' | translate }}</p>
@@ -8,7 +8,7 @@
   </div>
   <div
     *ngFor="let tree of trees; let i = index"
-    class="column padding-1 is-one-fifth border-right tree-tile"
+    class="column padding-1 is-one-fifth border-left tree-tile"
     (click)="addTreeToPlantBag(tree)"
     matTooltip="{{ 'addToPlantbag' | translate }}"
   >
