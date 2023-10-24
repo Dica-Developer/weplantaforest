@@ -64,6 +64,7 @@ export class ExplorePageComponent implements OnInit {
     this.currentImageUrl =
       environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/750/750';
     this.currentFruitUrl = '';
+    this.selectedInfoType = 'help';
     window.scrollTo(0, 0);
   }
 
