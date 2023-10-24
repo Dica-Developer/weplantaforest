@@ -41,12 +41,12 @@
 input,
 textarea {
   width: 100%;
-  font-family: 'Bull-mono';
+  font-family: 'Bull-mono' !important;
   background: #00000000;
   color: var(--black);
   border: none;
   outline: 0;
-  font-size: 1rem;
+  font-size: 1rem !important;
 }
 
 textarea {

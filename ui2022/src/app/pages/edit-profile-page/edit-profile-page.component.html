@@ -82,7 +82,7 @@
           formControlName="location"
         />
       </div>
-      <div class="inputOutline w-100 spaceRightDesktop">
+      <div class="inputOutline w-100">
         <input
           matInput
           [placeholder]="'website' | translate"
@@ -90,10 +90,19 @@
           formControlName="homepage"
         />
       </div>
-      <div class="inputOutline w-100 select-outline">
+    </div>
+    <div class="is-flex is-flex-direction-row is-align-items-center w-100">
+      <div class="inputOutline w-100 select-outline spaceRightDesktop">
         <mat-select formControlName="lang">
           <mat-option *ngFor="let language of languages" [value]="language">{{
             ('language' | translate) + ': ' + ('language_' + language | translate)
+          }}</mat-option>
+        </mat-select>
+      </div>
+      <div class="inputOutline w-100 select-outline">
+        <mat-select formControlName="organizationType">
+          <mat-option *ngFor="let type of orgTypeOptions" [value]="type.value">{{
+            type.label | translate
           }}</mat-option>
         </mat-select>
       </div>

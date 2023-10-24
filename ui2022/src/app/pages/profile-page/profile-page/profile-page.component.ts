@@ -26,7 +26,9 @@ export class ProfilePageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+  }
 
   ngAfterViewInit(): void {}
 

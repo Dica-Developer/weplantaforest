@@ -25,6 +25,12 @@ export class EditProfilePageComponent implements OnInit {
 
   languages: string[] = ['DEUTSCH', 'ENGLISH'];
 
+  orgTypeOptions: any[] = [
+    { value: 'NONPROFIT', label: 'NONPROFIT' },
+    { value: 'PRIVATE', label: 'PRIVATE' },
+    { value: 'COMMERCIAL', label: 'COMMERCIAL' },
+    { value: 'EDUCATIONAL', label: 'EDUCATIONAL' },
+  ];
   imageFile: any;
   imagePreviewSrc: any = null;
   uploadingImage$ = this.store.select(selectUploadingImage);
@@ -48,6 +54,7 @@ export class EditProfilePageComponent implements OnInit {
             organisation: new UntypedFormControl(res.organisation),
             homepage: new UntypedFormControl(res.homepage),
             lang: new UntypedFormControl(res.lang),
+            organizationType: new UntypedFormControl(res.organizationType),
           });
         }
       });
