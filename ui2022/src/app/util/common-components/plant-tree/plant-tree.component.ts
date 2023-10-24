@@ -12,6 +12,7 @@ import {
 import { TextHelper } from '../../text.helper';
 import { ActiveProjectArticle } from '../../../store/project.store';
 import { addPlantbagItem, resetPlantbag } from '../../../store/plantbag.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plant-tree',
@@ -28,7 +29,7 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
 
   combinedSub: Subscription;
 
-  constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
+  constructor(private store: Store<AppState>, private textHelper: TextHelper, private router: Router) {}
 
   ngOnInit(): void {
     this.combinedSub = combineLatest([
@@ -95,5 +96,6 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
     this.store.dispatch(resetPlantbag());
     const item = { article: tree.article, amount: 5 };
     this.store.dispatch(addPlantbagItem({ item }));
+    this.router.navigate(['/plant']);
   }
 }
