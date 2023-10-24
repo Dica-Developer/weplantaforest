@@ -25,6 +25,8 @@ export class RankingPageComponent implements OnInit, OnDestroy {
   totalNumberOfElementsSub: Subscription;
   totalNumberOfElements: number;
 
+  lastYear: boolean = true;
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class RankingPageComponent implements OnInit, OnDestroy {
 
   loadRankings(rankingType: RankingType) {
     this.type = rankingType;
-    this.store.dispatch(loadRankings({ rankingType, pageSize: 100, lastYear: false }));
+    this.store.dispatch(loadRankings({ rankingType, pageSize: 100, lastYear: this.lastYear }));
   }
 
   loadAll() {
@@ -55,5 +57,10 @@ export class RankingPageComponent implements OnInit, OnDestroy {
         lastYear: false,
       }),
     );
+  }
+
+  timeSpanChanged(event: any) {
+    this.lastYear = event.value;
+    this.store.dispatch(loadRankings({ rankingType: this.type, pageSize: 100, lastYear: this.lastYear }));
   }
 }

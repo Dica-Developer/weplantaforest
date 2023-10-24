@@ -72,6 +72,14 @@
         </div>
         <span>{{ 'teams' | translate | titlecase }}</span>
       </div>
+      <mat-button-toggle-group [(ngModel)]="lastYear" (change)="timeSpanChanged($event)">
+        <mat-button-toggle class="left-toggle-btn" [value]="false">{{
+          'total' | translate
+        }}</mat-button-toggle>
+        <mat-button-toggle class="right-toggle-btn" [value]="true">{{
+          'lastYear' | translate
+        }}</mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
   </div>
   <div class="column is-two-thirds rankings">

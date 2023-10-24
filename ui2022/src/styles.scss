@@ -271,6 +271,35 @@ mat-paginator {
   font-family: 'Bull-mono' !important;
 }
 
+.mat-button-toggle-button {
+  min-width: 130px;
+  background: var(--dark-brown) !important;
+  color: var(--background) !important;
+}
+
+.left-toggle-btn {
+  background: var(--background);
+  button {
+    border-top-left-radius: 45px;
+    border-bottom-left-radius: 45px;
+  }
+}
+
+.right-toggle-btn {
+  background: var(--background);
+  button {
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 45px;
+  }
+}
+
+.mat-button-toggle-checked {
+  button {
+    background: var(--green) !important;
+    color: var(--dark-brown) !important;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body {
