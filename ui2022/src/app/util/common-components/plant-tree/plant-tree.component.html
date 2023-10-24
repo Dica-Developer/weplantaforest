@@ -1,7 +1,5 @@
 <div class="columns border-bottom">
-  <div
-    class="column padding-left is-flex is-flex-direction-column is-justify-content-center"
-  >
+  <div class="column padding-left is-flex is-flex-direction-column is-justify-content-center">
     <h2>{{ 'plantTree' | translate }}</h2>
     <p>{{ 'selectAndPlantNow' | translate }}</p>
     <app-button label="{{ 'plantNow' | translate }}" routerLink="/plant"></app-button>
@@ -12,10 +10,10 @@
     (click)="addTreeToPlantBag(tree)"
     matTooltip="{{ 'addToPlantbag' | translate }}"
   >
-    <div class="is-flex is-flex-direction-row is-justify-content-space-between">
-      <p class="margin-0 has-text-right">{{ tree.name }}</p>
-      <p class="">{{ tree.article.project.name }}</p>
+    <div class="is-flex is-flex-direction-column">
+      <p class="margin-0">{{ tree.name }}</p>
+      <img [src]="tree.urlColor" alt="tree" />
+      <p class="has-text-right">{{ tree.article.project.name }}</p>
     </div>
-    <img [src]="tree.urlColor" alt="tree" />
   </div>
 </div>

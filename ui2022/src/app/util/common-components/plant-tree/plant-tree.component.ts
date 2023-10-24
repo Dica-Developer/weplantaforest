@@ -29,7 +29,11 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
 
   combinedSub: Subscription;
 
-  constructor(private store: Store<AppState>, private textHelper: TextHelper, private router: Router) {}
+  constructor(
+    private store: Store<AppState>,
+    private textHelper: TextHelper,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.combinedSub = combineLatest([
@@ -96,6 +100,6 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
     this.store.dispatch(resetPlantbag());
     const item = { article: tree.article, amount: 5 };
     this.store.dispatch(addPlantbagItem({ item }));
-    this.router.navigate(['/plant']);
+    this.router.navigate(['/plantbag']);
   }
 }
