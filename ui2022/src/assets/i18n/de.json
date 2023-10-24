@@ -289,5 +289,8 @@
   "amount": "Anzahl",
   "partialPrice": "Zwischensumme",
   "addToPlantbag": "In den Pflanzkorb hinzufügen",
-  "customPlantingInfoSingleProject": "Hier entscheidest du selbst, welche Bäume du hier pflanzen möchtest."
+  "customPlantingInfoSingleProject": "Hier entscheidest du selbst, welche Bäume du hier pflanzen möchtest.",
+  "plantDate": "Pflanzdatum",
+  "mapLocation": "Standort",
+  "howManyTreesDidYouPlant": "Wieviele Bäume hast du gepflantzt?"
 }

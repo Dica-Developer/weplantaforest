@@ -33,7 +33,7 @@
     <div class="columns">
       <div class="column is-two-fifths padding-left padding-right padding-top-2">
         <mat-form-field>
-          <mat-label>{{ 'date' | translate }}</mat-label>
+          <mat-label>{{ 'plantDate' | translate }}</mat-label>
           <input matInput [matDatepicker]="datepicker" formControlName="plantedOn" />
           <mat-hint></mat-hint>
           <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
@@ -47,6 +47,7 @@
       </div>
       <div class="column is-three-fifths padding-left padding-right padding-top-2">
         <div class="custom-slider mb-4">
+          <p>{{ 'howManyTreesDidYouPlant' | translate }}</p>
           <ngx-slider
             [(value)]="sliderDefaultValue"
             [options]="sliderOptions"
@@ -100,7 +101,7 @@
     </div>
   </form>
 
-  <h4 class="margin-left-4">{{ 'location' | translate }}:</h4>
+  <h4 class="margin-left-4">{{ 'mapLocation' | translate }}:</h4>
   <div class="map-margin">
     <app-leaflet-map
       [showMarker]="true"
