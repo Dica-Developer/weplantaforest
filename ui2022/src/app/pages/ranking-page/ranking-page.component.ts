@@ -54,7 +54,7 @@ export class RankingPageComponent implements OnInit, OnDestroy {
       loadRankings({
         rankingType: this.type,
         pageSize: this.totalNumberOfElements,
-        lastYear: false,
+        lastYear: this.lastYear,
       }),
     );
   }
