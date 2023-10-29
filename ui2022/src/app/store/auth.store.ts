@@ -65,6 +65,7 @@ export interface AuthState {
   passwordResetLinkVerified: boolean;
   signupDone: boolean;
   verificationSuccess: boolean;
+  userId: number;
 }
 
 export const initialState: AuthState = {
@@ -76,6 +77,7 @@ export const initialState: AuthState = {
   passwordResetLinkVerified: true,
   signupDone: false,
   verificationSuccess: false,
+  userId: null,
 };
 
 const authReducer = createReducer(
@@ -165,6 +167,8 @@ export const selectAuthenticated = createSelector(
   authFeature,
   (state: AuthState) => state.isAuthenticated,
 );
+
+export const selectUserId = createSelector(authFeature, (state: AuthState) => state.userId);
 
 export const selectVerificationSuccess = createSelector(
   authFeature,
