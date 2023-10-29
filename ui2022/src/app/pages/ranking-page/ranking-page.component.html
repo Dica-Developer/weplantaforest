@@ -52,7 +52,7 @@
         >
           <div></div>
         </div>
-        <span>{{ 'ngos' | translate | titlecase }}</span>
+        <span>{{ 'ngos' | translate }}</span>
       </div>
       <div class="category">
         <div
@@ -72,14 +72,24 @@
         </div>
         <span>{{ 'teams' | translate | titlecase }}</span>
       </div>
-      <mat-button-toggle-group [(ngModel)]="lastYear" (change)="timeSpanChanged($event)">
-        <mat-button-toggle class="left-toggle-btn" [value]="false">{{
-          'total' | translate
-        }}</mat-button-toggle>
-        <mat-button-toggle class="right-toggle-btn" [value]="true">{{
-          'lastYear' | translate
-        }}</mat-button-toggle>
-      </mat-button-toggle-group>
+
+      <div class="is-flex is-flex-direction-row">
+        <!-- toggle button styles utils.scss -->
+        <button
+          class="toggle-button left"
+          [class.active]="lastYear"
+          (click)="timeSpanChanged(true)"
+        >
+          {{ 'lastYear' | translate }}
+        </button>
+        <button
+          class="toggle-button right"
+          [class.active]="!lastYear"
+          (click)="timeSpanChanged(false)"
+        >
+          {{ 'total' | translate }}
+        </button>
+      </div>
     </div>
   </div>
   <div class="column is-two-thirds rankings">

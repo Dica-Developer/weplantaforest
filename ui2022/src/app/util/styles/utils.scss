@@ -67,3 +67,29 @@ video {
 .pointer {
   cursor: pointer;
 }
+
+.toggle-button {
+  font-family: 'Bull-mono';
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background: var(--dark-brown);
+  color: var(--background);
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    background: var(--green);
+    color: var(--black);
+  }
+  &.left {
+    margin-right: 2px;
+    border-radius: 45px 0 0 45px;
+  }
+  &.right {
+    border-radius: 0 45px 45px 0;
+  }
+  &.active {
+    background: var(--green);
+    color: var(--black);
+  }
+}

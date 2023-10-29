@@ -59,8 +59,10 @@ export class RankingPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  timeSpanChanged(event: any) {
-    this.lastYear = event.value;
-    this.store.dispatch(loadRankings({ rankingType: this.type, pageSize: 100, lastYear: this.lastYear }));
+  timeSpanChanged(lastYear: boolean) {
+    this.lastYear = lastYear;
+    this.store.dispatch(
+      loadRankings({ rankingType: this.type, pageSize: 100, lastYear: this.lastYear }),
+    );
   }
 }
