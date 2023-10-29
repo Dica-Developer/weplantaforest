@@ -38,6 +38,7 @@ export class OfferProjectPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.store.dispatch(formDisabledFlagReset());
     this.formSubmittedSub = this.store.select(selectFormDisabled).subscribe((created) => {
       if (created) {
