@@ -132,10 +132,10 @@
   "edit": "editieren",
   "changeNameHint": "erfordert Neuanmeldung!",
   "save": "Speichern",
-  "PRIVATE": "Privatperson",
+  "PRIVATE": "Privat",
   "COMMERCIAL": "Unternehmen",
-  "NONPROFIT": "Non-Profit Organisation",
-  "EDUCATIONAL": "Schule",
+  "NONPROFIT": "NGO",
+  "EDUCATIONAL": "Schulen",
   "imageUpload": "Bild hochladen",
   "noImgPicked": "Kein Bild ausgewählt",
   "selfPlantSuccess": "Pflanzung erstellt",
@@ -295,5 +295,6 @@
   "howManyTreesDidYouPlant": "Wieviele Bäume hast du gepflanzt?",
   "total": "Insgesamt",
   "lastYear": "Letztes Jahr",
-  "notGreaterThan1MB": "Das Bild darf nicht größer als 1 MB sein."
+  "notGreaterThan1MB": "Das Bild darf nicht größer als 1 MB sein.",
+  "widgetInfo": "Die folgenden Widgets kannst du in deine Website integrieren. Kopiere dazu einfach einen der Codes und füge ihn an der gewünschten Stelle ein."
 }

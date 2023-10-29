@@ -132,10 +132,10 @@
   "edit": "Edit",
   "changeNameHint": "Requires re-login!",
   "save": "Save",
-  "PRIVATE": "Private Individual",
+  "PRIVATE": "Private",
   "COMMERCIAL": "Company",
-  "NONPROFIT": "Non-Profit Organization",
-  "EDUCATIONAL": "School",
+  "NONPROFIT": "NGO",
+  "EDUCATIONAL": "Schools",
   "imageUpload": "Upload Image",
   "noImgPicked": "No image selected",
   "selfPlantSuccess": "Planting created",
@@ -288,5 +288,13 @@
   "downloadReceipt": "Download Receipt",
   "amount": "Amount",
   "partialPrice": "Subtotal",
-  "addToPlantbag": "Add to Plantbag"
+  "addToPlantbag": "Add to Plantbag",
+  "customPlantingInfoSingleProject": "Here, you decide which trees you want to plant.",
+  "plantDate": "Planting Date",
+  "mapLocation": "Location",
+  "howManyTreesDidYouPlant": "How many trees did you plant?",
+  "total": "Total",
+  "lastYear": "Last Year",
+  "notGreaterThan1MB": "The image must not be larger than 1 MB.",
+  "widgetInfo": "You can integrate the following widgets into your website. Simply copy one of the codes and paste it in the desired location."
 }
