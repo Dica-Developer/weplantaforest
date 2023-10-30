@@ -1,9 +1,10 @@
-<div
-  class="is-flex is-flex-direction-column"
-  #imageLink
-  *ngFor="let image of images.slice(0, 5); let i = index"
->
-  <img id="myImg" [src]="image.imageUrl" (click)="openModal(i)" />
+<div class="is-flex is-flex-direction-column" #imageLink>
+  <img id="myImg" [src]="images[0].imageUrl" (click)="openModal(0)" />
+  <div class="dots w-100 is-flex is-justify-content-center">
+    <mat-icon *ngFor="let image of images; let i = index" (click)="openModal(i)" class="index"
+      >circle</mat-icon
+    >
+  </div>
 </div>
 
 <!-- Modal Content (The Image) -->
