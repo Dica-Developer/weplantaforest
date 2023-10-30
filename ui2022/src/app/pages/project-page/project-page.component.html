@@ -1,8 +1,19 @@
 <div *ngIf="projectReport$ | async">
   <app-project-header [projectReport]="projectReport$ | async"></app-project-header>
-  <app-project-description *ngIf="!showProjectPlanting" [projectReport]="projectReport$ | async" (showProjectPlanting)="showProjectPlantingComponent()"></app-project-description>
-  <app-project-planting *ngIf="showProjectPlanting" [projectReport]="projectReport$ | async" (showProjectDescription)="showProjectDescriptionComponent()"></app-project-planting>
+  <app-project-description
+    *ngIf="!showProjectPlanting"
+    [projectReport]="projectReport$ | async"
+    (showProjectPlanting)="showProjectPlantingComponent()"
+  ></app-project-description>
+  <app-project-planting
+    *ngIf="showProjectPlanting"
+    [projectReport]="projectReport$ | async"
+    (showProjectDescription)="showProjectDescriptionComponent()"
+  ></app-project-planting>
   <app-project-carousel [projectReport]="projectReport$ | async"></app-project-carousel>
-  <app-leaflet-map [positions]="(projectReport$ | async).positions"></app-leaflet-map>
+  <app-leaflet-map
+    [positions]="(projectReport$ | async).positions"
+    [disabledMap]="true"
+  ></app-leaflet-map>
   <app-offer-area></app-offer-area>
 </div>

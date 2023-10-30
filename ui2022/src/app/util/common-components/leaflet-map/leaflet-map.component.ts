@@ -27,6 +27,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   @Input() showMarker: boolean = false;
   @Input() positions: any[];
   @Input() mapHeight: string = '600px';
+  @Input() disabledMap: boolean = false;
   @Output() markerSet = new EventEmitter();
 
   mapSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -92,6 +93,10 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   onMapReady(map: Map): void {
     this.map = map;
     this.map.scrollWheelZoom.disable();
+    if (this.disabledMap) {
+      this.map.dragging.disable();
+      this.map.keyboard.disable();
+    }
     setTimeout(() => {
       if (this.coords.length > 0) {
         this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
