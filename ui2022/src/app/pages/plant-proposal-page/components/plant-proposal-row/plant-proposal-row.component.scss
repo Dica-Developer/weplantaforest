@@ -11,6 +11,11 @@
   padding: 0 !important;
 }
 
+.header {
+  font-size: 1rem;
+  font-family: 'Bull-mono' !important;
+}
+
 ngx-slider.animate .ngx-slider-bubble {
   display: none;
 }
@@ -68,6 +73,10 @@ ngx-slider.animate .ngx-slider-bubble {
 }
 
 @media only screen and (max-width: 768px) {
+  .header {
+    display: none !important;
+  }
+
   .slider-row {
     flex-direction: column;
     app-button {

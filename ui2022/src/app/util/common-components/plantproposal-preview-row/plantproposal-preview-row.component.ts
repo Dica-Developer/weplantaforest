@@ -24,7 +24,7 @@ export class PlantproposalPreviewRowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.imageUrl =
-      environment.backendUrl + '/treeType/image/' + this.plantItem.imageFile + '/100/100';
+      environment.backendUrl + '/treeType/image/' + this.plantItem.imageFile + '/90/90';
     this.calcSum(this.plantItem.amount);
     this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
       this.userLanuage = userLanguage;

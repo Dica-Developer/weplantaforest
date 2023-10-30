@@ -13,14 +13,14 @@
         {{ _item.name }}
       </p>
       <p>
-        {{ ('treesPlanted' | translate) + ': ' + _item.amount }}
+        {{ _item.amount + ' ' + ('trees' | translate) }}
       </p>
       <p *ngIf="_item['plantedOn']">
-        {{ ('date' | translate) + ': ' + (_item['plantedOn'] | date : 'dd.MM.yyyy') }}
+        {{ _item['plantedOn'] | date : 'dd.MM.yyyy' }}
       </p>
       <p
         *ngIf="_item['co2Saved']"
-        innerHTML="{{ ('CO2Trapped' | translate) + ': ' + _item['co2Saved'] + 't' }}"
+        innerHTML="{{ _item['co2Saved'] + ' t ' + ('CO2' | translate) }}"
       ></p>
     </div>
   </div>
