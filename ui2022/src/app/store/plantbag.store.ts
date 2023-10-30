@@ -123,7 +123,7 @@ export const selectPlantbagValid = createSelector(
 export const selectPlantbagPriceFormatted = createSelector(
   plantbagFeature,
   (state: PlantbagState) => {
-    const priceFormatted = parseFloat(calcPlantbagPrice(state) + '').toFixed(2) + '€';
+    const priceFormatted = calcPlantbagPrice(state).toFixed(2);
     return priceFormatted;
   },
 );

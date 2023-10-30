@@ -22,7 +22,7 @@
   <div class="{{ 'h-100 w-80px is-flex-grow-0 bordered ' }}">
     <app-barrel-icon
       [ngClass]="{ scale: showScaleClass }"
-      matBadge="{{ plantBagPrice$ | async }}"
+      matBadge="{{ plantBagPrice$ | async | currency }}"
       matBadgeColor="warn"
       [matBadgeHidden]="(plantBagPrice$ | async) == '0.00€'"
       [inToolbar]="true"
