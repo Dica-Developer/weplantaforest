@@ -274,6 +274,7 @@
   "photo": "Photo",
   "emailChangedWarning": "After changing the email, you must log in again!",
   "usernameChangedWarning": "After changing the username, you must log in again!",
+  "passwordChangedWarning": "After changing the password, you must log in again!",
   "customPlantingInfo": "Here, you decide which trees you want to plant where.",
   "date": "Date",
   "treeType": "Tree Type",

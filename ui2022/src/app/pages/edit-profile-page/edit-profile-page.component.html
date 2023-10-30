@@ -50,6 +50,23 @@
         />
       </div>
     </div>
+    <div class="is-flex is-flex-direction-row w-100">
+      <div class="inputOutline w-100 spaceRightDesktop">
+        <input
+          (focus)="showWarning('password')"
+          [placeholder]="'password' | translate"
+          name="password"
+          formControlName="password"
+        />
+      </div>
+      <div class="inputOutline w-100">
+        <input
+          [placeholder]="'repeatPassword' | translate"
+          name="repeatPassword"
+          formControlName="repeatPassword"
+        />
+      </div>
+    </div>
     <div class="is-flex is-flex-direction-row">
       <div class="inputOutline w-100">
         <textarea

@@ -274,6 +274,7 @@
   "photo": "Foto",
   "emailChangedWarning": "Nach Änderung der E-Mail musst du dich neu anmelden!",
   "usernameChangedWarning": "Nach Änderung des Usernamens musst du dich neu anmelden!",
+  "passwordChangedWarning": "Nach Änderung des Passwortes musst du dich neu anmelden!",
   "customPlantingInfo": "Hier entscheidest du selbst, welche Bäume du wo pflanzen möchtest.",
   "date": "Datum",
   "treeType": "Baumart",

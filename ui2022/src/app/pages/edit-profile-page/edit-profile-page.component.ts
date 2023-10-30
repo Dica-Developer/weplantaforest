@@ -14,6 +14,7 @@ import {
   updateProfileImage,
   updateProfileProperty,
 } from 'src/app/store/profile.store';
+import { logout, resetPassword } from 'src/app/store/auth.store';
 
 @Component({
   selector: 'app-edit-profile-page',
@@ -64,6 +65,8 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
             homepage: new UntypedFormControl(res.homepage),
             lang: new UntypedFormControl(res.lang),
             organizationType: new UntypedFormControl(res.organizationType),
+            password: new UntypedFormControl(''),
+            repeatPassword: new UntypedFormControl(''),
           });
         }
       });
@@ -105,6 +108,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
           controlValue: this.profileForm.get('mail').value,
         }),
       );
+      // this.store.dispatch(logout());
     }
     if (this.profileForm.get('username').dirty) {
       this.store.dispatch(
@@ -114,6 +118,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
           controlValue: this.profileForm.get('username').value,
         }),
       );
+      // this.store.dispatch(logout());
     }
     if (this.profileForm.get('location').dirty) {
       this.store.dispatch(
@@ -152,7 +157,29 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
         }),
       );
     }
-
+    if (this.profileForm.get('organizationType').dirty) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'ORGANIZATION_TYPE',
+          controlValue: this.profileForm.get('organizationType').value,
+        }),
+      );
+    }
+    if (
+      this.profileForm.get('password').dirty &&
+      this.profileForm.get('repeatPassword').dirty &&
+      this.profileForm.get('password').value === this.profileForm.get('repeatPassword').value
+    ) {
+      this.store.dispatch(
+        updateProfileProperty({
+          username,
+          propertyToUpdate: 'PASSWORD',
+          controlValue: this.profileForm.get('password').value,
+        }),
+      );
+      // this.store.dispatch(logout());
+    }
     this.snackbar.open(this.translateService.instant('profileUpdated'), 'OK', {
       duration: 4000,
       panelClass: ['success-snackbar'],
@@ -193,6 +220,11 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
       });
     } else if (fieldToChange === 'username') {
       this.snackbar.open(this.translateService.instant('usernameChangedWarning'), 'OK', {
+        duration: 3000,
+        panelClass: ['warning-snackbar'],
+      });
+    } else if (fieldToChange === 'password') {
+      this.snackbar.open(this.translateService.instant('passwordChangedWarning'), 'OK', {
         duration: 3000,
         panelClass: ['warning-snackbar'],
       });
