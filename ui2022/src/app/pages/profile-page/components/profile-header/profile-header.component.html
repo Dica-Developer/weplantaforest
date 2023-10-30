@@ -12,7 +12,7 @@
     <div class="imageWrapper">
       <img
         src="{{ profileDetails.profileImageUrl + '?' + randomNumber }}"
-        alt=""
+        alt="profileImage"
         *ngIf="profileDetails.profileImageUrl"
       />
       <img *ngIf="!profileDetails.profileImageUrl" src="assets/default_user.jpg" alt="" />
