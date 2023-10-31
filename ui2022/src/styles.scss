@@ -226,6 +226,13 @@ p.incognito {
   margin-left: -0.5rem;
 }
 
+.custom-slider .ngx-slider .ngx-slider-pointer {
+  width: 25px !important;
+  height: 25px !important;
+  top: unset !important;
+  bottom: -10px !important;
+}
+
 // MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE
 .mat-table {
   background: var(--background);

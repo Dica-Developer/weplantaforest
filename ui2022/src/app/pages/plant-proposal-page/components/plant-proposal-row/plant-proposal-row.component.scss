@@ -16,6 +16,13 @@
   font-family: 'Bull-mono' !important;
 }
 
+.pricetag {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
 ngx-slider.animate .ngx-slider-bubble {
   display: none;
 }
@@ -79,8 +86,6 @@ ngx-slider.animate .ngx-slider-bubble {
 
   .slider-row {
     flex-direction: column;
-    app-button {
-      margin-top: 1rem;
-    }
+    margin-top: 1rem;
   }
 }

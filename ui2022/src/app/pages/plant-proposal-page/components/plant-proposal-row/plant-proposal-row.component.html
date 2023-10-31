@@ -11,17 +11,14 @@
   >
     <p class="font-1">{{ 'proposalOrIndividualText' | translate }}</p>
     <div class="is-flex slider-row">
-      <div class="custom-slider column is-6">
+      <div class="custom-slider column is-7">
         <ngx-slider
           [(value)]="value"
           [options]="sliderOptions"
           (valueChange)="getProposal($event)"
         ></ngx-slider>
       </div>
-      <div class="is-flex w-100 slider-row is-align-items-center is-justify-content-space-evenly">
-        <span class="font-1">
-          {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
-        </span>
+      <div class="is-flex w-100 slider-row is-align-items-center is-flex-direction-row-reverse">
         <app-button
           label="{{ 'intoPlantbag' | translate }}"
           (click)="putIntoPlantbag()"
@@ -32,6 +29,9 @@
           routerLink="/plantbag"
           *ngIf="showGoToPlantbagButton"
         ></app-button>
+        <span class="font-1 pricetag">
+          {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + ' €' }}
+        </span>
       </div>
     </div>
 
