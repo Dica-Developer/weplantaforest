@@ -13,7 +13,6 @@ import {
 })
 export class ProjectCarouselItemComponent implements OnInit {
   _item: ProjectCarouselItemDateDto | ProjectCarouselItemAmountDto;
-
   imageUrl: string;
 
   @Input()
@@ -31,8 +30,11 @@ export class ProjectCarouselItemComponent implements OnInit {
       this.imageUrl = 'assets/default_user.jpg';
     }
 
-    if(this._item['co2Saved']) {
-      this._item = {...this._item, co2Saved: Number.parseFloat(this._item['co2Saved']).toFixed(2)}
+    if (this._item['co2Saved']) {
+      this._item = {
+        ...this._item,
+        co2Saved: Number.parseFloat(this._item['co2Saved']).toFixed(2),
+      };
     }
   }
 

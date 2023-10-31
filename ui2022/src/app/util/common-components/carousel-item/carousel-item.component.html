@@ -1,20 +1,27 @@
-<div class="is-flex is-flex-direction-row margin-left-1 columns is-mobile carousel-item" (click)="route()">
+<div
+  class="is-flex is-flex-direction-row margin-left-1 columns is-mobile carousel-item"
+  (click)="route()"
+>
   <div class="column is-3">
     <div class="image">
-      <img
-        src="{{ rankingItem.imageUrl ? rankingItem.imageUrl : 'assets/ipat_logo.jpg' }}"
-        alt="profileImage"
-      />
+      <img src="{{ imageUrl }}" alt="image" />
     </div>
   </div>
   <div class="column is-9">
     <div class="is-flex is-flex-direction-column padding-1">
       <p class="name">
-        {{ rankingItem.name }}
+        {{ _item.projectName }}
       </p>
       <p>
-        {{ rankingItem.amount }}
+        {{ _item.amount + ' ' + ('trees' | translate) }}
       </p>
+      <p *ngIf="_item['plantedOn']">
+        {{ _item['plantedOn'] | date : 'dd.MM.yyyy' }}
+      </p>
+      <p
+        *ngIf="_item['co2Saved']"
+        innerHTML="{{ _item['co2Saved'] + ' t ' + ('CO2' | translate) }}"
+      ></p>
     </div>
   </div>
 </div>

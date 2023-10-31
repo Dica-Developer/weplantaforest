@@ -9,9 +9,10 @@
     >
     <app-carousel-item
       *ngFor="let planting of trees.content"
-      [rankingItem]="{
-        name: planting.projectName,
+      [item]="{
+        projectName: planting.projectName,
         amount: planting.amount,
+        plantedOn: planting.plantedOn,
         imageUrl: planting.treeTypeImageUrl,
         linkTo: planting.projectLink
       }"
