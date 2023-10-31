@@ -22,17 +22,20 @@ export class CarouselItemComponent implements OnInit {
   @Input()
   set item(item: ProfileTree) {
     this._item = item;
-    if (item['treeTypeImageName']) {
-      this.imageUrl = `${environment.backendUrl}/treeType/image/${encodeURIComponent(
-        item['treeTypeImageName'],
-      )}/60/60`;
-    } else if (item['imageName']) {
-      this.imageUrl = `${environment.backendUrl}/user/image/${encodeURIComponent(
-        item['imageName'],
-      )}/60/60`;
-    } else {
-      this.imageUrl = 'assets/default_user.jpg';
-    }
+    console.log(item);
+
+    // if (item['treeTypeImageUrl']) {
+    //   this.imageUrl = `${environment.backendUrl}/treeType/image/${encodeURIComponent(
+    //     item.treeTypeImageUrl,
+    //   )}/60/60`;
+    // } else
+    // if (item['imageName']) {
+    //   this.imageUrl = `${environment.backendUrl}/user/image/${encodeURIComponent(
+    //     item['imageName'],
+    //   )}/60/60`;
+    // } else {
+    //   this.imageUrl = 'assets/default_user.jpg';
+    // }
   }
 
   @Input()
