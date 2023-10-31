@@ -73,6 +73,10 @@ export const deleteTeam = createAction('[Team] delete team', props<{ teamId: num
 
 export const deleteTeamSuccess = createAction('[Team] delete team success');
 
+export const joinTeam = createAction('[Team] join team', props<{ teamId: number }>());
+
+export const joinTeamSuccess = createAction('[Team] join team success');
+
 export const checkIfAdmin = createAction(
   '[Team] check if user is admin',
   props<{ teamId: number }>(),
@@ -177,6 +181,13 @@ const teamReducer = createReducer(
     return {
       ...state,
       teamDetails: null,
+    };
+  }),
+  on(joinTeamSuccess, (state) => {
+    return {
+      ...state,
+      isAdmin: false,
+      isMember: true,
     };
   }),
   on(checkIfAdminSuccess, (state, { isAdmin }) => {
@@ -337,6 +348,23 @@ export class TeamEffects {
                   message: this.translateService.instant('teamLeft'),
                 },
               }),
+              resetTeamDetails(),
+              loadProfileDetails({ username: localStorage.getItem('username') }),
+            ];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  JoinTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(joinTeam),
+      switchMap((action) =>
+        this.teamService.joinTeam(action.teamId).pipe(
+          concatMap(() => {
+            return [
+              joinTeamSuccess(),
               resetTeamDetails(),
               loadProfileDetails({ username: localStorage.getItem('username') }),
             ];

@@ -1,4 +1,4 @@
-<div class="columns w-100 padding-2" *ngIf="teamDetails && !createMode && !editMode">
+<div class="columns w-100 padding-2 border-bottom" *ngIf="teamDetails && !createMode && !editMode">
   <div class="column is-half">
     <h2 class="is-flex is-justify-content-space-between w-100">
       {{ 'team' | translate }}
@@ -20,6 +20,12 @@
           [matTooltip]="'leave' | translate"
           (click)="openConfirmation('leave')"
           >logout</mat-icon
+        >
+        <mat-icon
+          *ngIf="!(isMember$ | async)"
+          [matTooltip]="'join' | translate"
+          (click)="openConfirmation('join')"
+          >group_add</mat-icon
         >
       </div>
     </h2>

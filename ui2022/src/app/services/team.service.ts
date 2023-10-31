@@ -54,6 +54,10 @@ export class TeamService {
     return this.http.post(environment.backendUrl + '/team/leave', {});
   }
 
+  joinTeam(id: number) {
+    return this.http.post(environment.backendUrl + '/team/join?teamId=' + id, {});
+  }
+
   updateTeam(id: number, name: string, description: string) {
     return this.http.put(
       environment.backendUrl + '/team/update',

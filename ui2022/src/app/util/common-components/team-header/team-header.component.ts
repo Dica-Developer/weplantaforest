@@ -5,7 +5,13 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from 'src/app/store/app.state';
-import { deleteTeam, leaveTeam, selectIsAdmin, selectIsMember } from 'src/app/store/team.store';
+import {
+  deleteTeam,
+  joinTeam,
+  leaveTeam,
+  selectIsAdmin,
+  selectIsMember,
+} from 'src/app/store/team.store';
 
 @Component({
   selector: 'app-team-header',
@@ -37,21 +43,32 @@ export class TeamHeaderComponent implements OnInit {
   openConfirmation(confirmType: string) {
     if (confirmType === 'leave') {
       this.snackbar
-        .open(this.translateService.instant('leaveConfirmation'), 'OK', {
+        .open(this.translateService.instant('leaveTeam'), 'OK', {
           duration: 5000,
         })
         .onAction()
         .subscribe(() => {
           this.leaveTeam();
         });
-    } else if ('delete') {
+    } else if (confirmType === 'delete') {
+      console.log('inside delete');
       this.snackbar
-        .open(this.translateService.instant('deleteConfirmation'), 'OK', {
+        .open(this.translateService.instant('deleteTeam'), 'OK', {
           duration: 5000,
         })
         .onAction()
         .subscribe(() => {
           this.deleteTeam();
+        });
+    } else if (confirmType === 'join') {
+      console.log('inside join');
+      this.snackbar
+        .open(this.translateService.instant('joinTeam'), 'OK', {
+          duration: 5000,
+        })
+        .onAction()
+        .subscribe(() => {
+          this.joinTeam();
         });
     }
   }
@@ -62,6 +79,10 @@ export class TeamHeaderComponent implements OnInit {
 
   deleteTeam() {
     this.store.dispatch(deleteTeam({ teamId: this.teamDetails?.teamId }));
+  }
+
+  joinTeam() {
+    this.store.dispatch(joinTeam({ teamId: this.teamDetails?.teamId }));
   }
 
   switchMode(mode: string) {
