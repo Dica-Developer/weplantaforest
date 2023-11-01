@@ -40,6 +40,8 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
 
   uploadImageSub: Subscription;
 
+  showPassword: boolean = false;
+
   // since there is an issue with the image url not updating(which means its exactly the same after an image update)
   // when the image is changed, there has to be a little hack here to force the image to update
   // so we create a random number when the uploadImage select delivers a false and put it at the end of the image url
@@ -108,7 +110,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
           controlValue: this.profileForm.get('mail').value,
         }),
       );
-      // this.store.dispatch(logout());
+      this.store.dispatch(logout());
     }
     if (this.profileForm.get('username').dirty) {
       this.store.dispatch(
@@ -118,7 +120,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
           controlValue: this.profileForm.get('username').value,
         }),
       );
-      // this.store.dispatch(logout());
+      this.store.dispatch(logout());
     }
     if (this.profileForm.get('location').dirty) {
       this.store.dispatch(
@@ -178,7 +180,8 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
           controlValue: this.profileForm.get('password').value,
         }),
       );
-      // this.store.dispatch(logout());
+      this.store.dispatch(logout());
+
     }
     this.snackbar.open(this.translateService.instant('profileUpdated'), 'OK', {
       duration: 4000,
@@ -234,4 +237,9 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   getRandomNumber() {
     return Math.floor(Math.random() * 100);
   }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
+
 }

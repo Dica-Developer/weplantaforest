@@ -51,20 +51,28 @@
       </div>
     </div>
     <div class="is-flex is-flex-direction-row w-100">
-      <div class="inputOutline w-100 spaceRightDesktop">
+      <div class="inputOutline w-100 spaceRightDesktop is-flex is-flex-direction-row">
         <input
           (focus)="showWarning('password')"
           [placeholder]="'password' | translate"
-          name="password"
+          name="passwordedit"
           formControlName="password"
+          [type]="showPassword ? 'text' : 'password'"
         />
+        <mat-icon matSuffix style="cursor: pointer" (click)="toggleShowPassword()">
+          {{ !showPassword ? 'visibility' : 'visibility_off' }}</mat-icon
+        >
       </div>
-      <div class="inputOutline w-100">
+      <div class="inputOutline w-100 is-flex is-flex-direction-row">
         <input
           [placeholder]="'repeatPassword' | translate"
           name="repeatPassword"
           formControlName="repeatPassword"
+          [type]="showPassword ? 'text' : 'password'"
         />
+        <mat-icon matSuffix style="cursor: pointer" (click)="toggleShowPassword()">
+          {{ !showPassword ? 'visibility' : 'visibility_off' }}</mat-icon
+        >
       </div>
     </div>
     <div class="is-flex is-flex-direction-row">
