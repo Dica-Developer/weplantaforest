@@ -1,7 +1,7 @@
 <div
   class="columns project-description padding-2 is-align-items-center is-justify-content-center is-flex is-flex-direction-column"
 >
-  <div innerHtml="{{ intro }}"></div>
+  <div class="mwidth" innerHtml="{{ intro }}"></div>
   <div class="mwidth" *ngFor="let p of blogArticle.paragraphs">
     <p class="description" innerHtml="{{ getText(p.text) }}"></p>
     <div *ngIf="p.imageFileName !== null" class="center blog-image">
