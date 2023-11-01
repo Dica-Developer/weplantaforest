@@ -40,6 +40,12 @@ export class TeamHeaderComponent implements OnInit {
     this.router.navigate(['/team/' + this.teamDetails.teamName]);
   }
 
+  isMyProfile() {
+    console.log(this.profileDetails.userName, localStorage.getItem('username'));
+    
+    return this.profileDetails.userName === localStorage.getItem('username');
+  }
+
   openConfirmation(confirmType: string) {
     if (confirmType === 'leave') {
       this.snackbar
@@ -51,7 +57,6 @@ export class TeamHeaderComponent implements OnInit {
           this.leaveTeam();
         });
     } else if (confirmType === 'delete') {
-      console.log('inside delete');
       this.snackbar
         .open(this.translateService.instant('deleteTeam'), 'OK', {
           duration: 5000,
@@ -61,7 +66,6 @@ export class TeamHeaderComponent implements OnInit {
           this.deleteTeam();
         });
     } else if (confirmType === 'join') {
-      console.log('inside join');
       this.snackbar
         .open(this.translateService.instant('joinTeam'), 'OK', {
           duration: 5000,

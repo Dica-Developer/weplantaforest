@@ -45,7 +45,7 @@
     {{ 'team' | translate }}
   </h2>
   <h4 class="margin-bottom-1">{{ profileDetails.userName }} {{ 'noTeamYet' | translate }}</h4>
-  <app-button (clicked)="switchMode('create')" [label]="'createTeam' | translate"></app-button>
+  <app-button *ngIf="isMyProfile()" (clicked)="switchMode('create')" [label]="'createTeam' | translate"></app-button>
 </div>
 <app-team-create-edit
   *ngIf="createMode || editMode"

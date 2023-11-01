@@ -101,7 +101,10 @@ export const updateTeam = createAction(
 
 export const leaveTeam = createAction('[Team] leave team');
 
-export const getTeamTrees = createAction('[Team] get team trees', props<{ teamName: string, page: number }>());
+export const getTeamTrees = createAction(
+  '[Team] get team trees',
+  props<{ teamName: string; page: number }>(),
+);
 export const getTeamTreesSuccess = createAction(
   '[Team] get team trees success',
   props<{ pagedTrees: PagedData<any> }>(),
@@ -166,11 +169,15 @@ const teamReducer = createReducer(
       ...state,
       teamDetails: {
         ...details,
-        teamImageUrl: `${environment.backendUrl}/team/image/${details.teamId}/150/150`,
-        co2Data: {
-          ...details.co2Data,
-          co2: parseFloat((Math.round(details.co2Data.co2 * 100) / 100).toFixed(2)),
-        },
+        teamImageUrl: details
+          ? `${environment.backendUrl}/team/image/${details.teamId}/150/150`
+          : null,
+        co2Data: details
+          ? {
+              ...details.co2Data,
+              co2: parseFloat((Math.round(details.co2Data.co2 * 100) / 100).toFixed(2)),
+            }
+          : { treesCount: 0, co2: 0 },
       },
     };
   }),
@@ -244,10 +251,7 @@ export const selectTeamMembers = createSelector(
 
 export const selectIsAdmin = createSelector(teamsFeature, (state: TeamState) => state.isAdmin);
 export const selectIsMember = createSelector(teamsFeature, (state: TeamState) => state.isMember);
-export const selectTeamTrees = createSelector(
-  teamsFeature,
-  (state: TeamState) => state.pagedTrees,
-);
+export const selectTeamTrees = createSelector(teamsFeature, (state: TeamState) => state.pagedTrees);
 
 @Injectable()
 export class TeamEffects {
