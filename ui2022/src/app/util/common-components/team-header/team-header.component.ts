@@ -41,8 +41,6 @@ export class TeamHeaderComponent implements OnInit {
   }
 
   isMyProfile() {
-    console.log(this.profileDetails.userName, localStorage.getItem('username'));
-    
     return this.profileDetails.userName === localStorage.getItem('username');
   }
 
@@ -100,5 +98,9 @@ export class TeamHeaderComponent implements OnInit {
   closeTeamCreate() {
     this.createMode = false;
     this.editMode = false;
+  }
+
+  isLoggedIn() {
+    return localStorage.getItem('username');
   }
 }

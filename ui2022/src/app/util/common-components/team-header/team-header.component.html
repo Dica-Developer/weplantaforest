@@ -2,7 +2,7 @@
   <div class="column is-half">
     <h2 class="is-flex is-justify-content-space-between w-100">
       {{ 'team' | translate }}
-      <div>
+      <div *ngIf="isLoggedIn()">
         <mat-icon
           *ngIf="isAdmin$ | async"
           [matTooltip]="'edit' | translate"
@@ -44,8 +44,15 @@
   <h2>
     {{ 'team' | translate }}
   </h2>
-  <h4 class="margin-bottom-1">{{ profileDetails.userName }} {{ 'noTeamYet' | translate }}</h4>
-  <app-button *ngIf="isMyProfile()" (clicked)="switchMode('create')" [label]="'createTeam' | translate"></app-button>
+  <h4 class="margin-bottom-1" *ngIf="!isMyProfile()">
+    {{ profileDetails.userName }} {{ 'noTeamYet' | translate }}
+  </h4>
+  <h4 class="margin-bottom-1" *ngIf="isMyProfile()">{{ 'youNoTeamYet' | translate }}</h4>
+  <app-button
+    *ngIf="isMyProfile()"
+    (clicked)="switchMode('create')"
+    [label]="'createTeam' | translate"
+  ></app-button>
 </div>
 <app-team-create-edit
   *ngIf="createMode || editMode"

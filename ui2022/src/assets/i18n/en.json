@@ -300,5 +300,6 @@
   "widgetInfo": "You can integrate the following widgets into your website. Simply copy one of the codes and paste it in the desired location.",
   "founded": "Founded",
   "join":"join",
-  "howManyTreesToPlant": "How many trees do you want to plant?"
+  "howManyTreesToPlant": "How many trees do you want to plant?",
+  "youNoTeamYet": "You have not joined any team yet."
 }

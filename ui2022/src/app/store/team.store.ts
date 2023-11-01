@@ -376,7 +376,7 @@ export class TeamEffects {
                   message: this.translateService.instant('teamLeft'),
                 },
               }),
-              resetTeamDetails(),
+              checkIfMemberSuccess({ isMember: false }),
               loadProfileDetails({ username: localStorage.getItem('username') }),
             ];
           }),
@@ -388,12 +388,12 @@ export class TeamEffects {
   JoinTeam$ = createEffect(() =>
     this.actions$.pipe(
       ofType(joinTeam),
-      switchMap((action) =>
+      switchMap((action, state) =>
         this.teamService.joinTeam(action.teamId).pipe(
           concatMap(() => {
             return [
               joinTeamSuccess(),
-              resetTeamDetails(),
+              checkIfMemberSuccess({ isMember: true }),
               loadProfileDetails({ username: localStorage.getItem('username') }),
             ];
           }),
