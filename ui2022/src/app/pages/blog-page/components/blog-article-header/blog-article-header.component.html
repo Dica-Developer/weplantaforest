@@ -21,6 +21,9 @@
         </li>
       </ul>
     </nav>
+    <div *ngIf="isAdmin$ | async">
+      <mat-icon class="edit-icon" (click)="goToEdit()">edit</mat-icon>
+    </div>
     <h2>{{ blogArticle.title }}</h2>
   </div>
   <div

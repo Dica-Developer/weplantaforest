@@ -403,6 +403,11 @@ export const selectUserLanguage = createSelector(
   },
 );
 
+export const selectIsUserAdmin = createSelector(
+  profileFeature,
+  (state: ProfileState) => state.isAdmin,
+)
+
 @Injectable()
 export class ProfileEffects {
   constructor(

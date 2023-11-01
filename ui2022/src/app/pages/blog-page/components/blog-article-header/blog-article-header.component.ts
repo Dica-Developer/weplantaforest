@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BlogArticle } from 'src/app/store/blog.store';
-import { environment } from 'src/environments/environment';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../../app/store/app.state';
+import { BlogArticle } from '../../../../../app/store/blog.store';
+import { environment } from '../../../../../environments/environment';
+import { selectIsUserAdmin } from '../../../../store/profile.store';
+import { loadArticleDetails } from '../../../../store/content.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-article-header',
@@ -10,16 +15,22 @@ import { environment } from 'src/environments/environment';
 export class BlogArticleHeaderComponent implements OnInit {
   @Input() blogArticle: BlogArticle;
   imageUrl;
+  isAdmin$ = this.store.select(selectIsUserAdmin);
 
-  constructor() {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.imageUrl =
-    environment.backendArticleManagerUrl +
-    '/article/image/' +
-    this.blogArticle.id +
-    '/' +
-    encodeURI(this.blogArticle.imageFileName) +
-    '/400/300';
-}
+      environment.backendArticleManagerUrl +
+      '/article/image/' +
+      this.blogArticle.id +
+      '/' +
+      encodeURI(this.blogArticle.imageFileName) +
+      '/400/300';
+  }
+
+  goToEdit() {
+    this.store.dispatch(loadArticleDetails({ id: this.blogArticle.id }));
+    this.router.navigate(['/backOffice2022/content']);
+  }
 }
