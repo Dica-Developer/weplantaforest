@@ -56,9 +56,9 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
           const articles = [...project.articles];
           projects.push({ ...project, articles });
         }
-        const projectCount = projects.length;
-
+        
         for (let i = 0; i < 3; i++) {
+          const projectCount = projects.length;
           const randomProjectIndex = Math.floor(Math.random() * projectCount);
           const articleCount = projects[randomProjectIndex].articles.length;
           const randomArticleIndex = Math.floor(Math.random() * articleCount);
@@ -82,6 +82,10 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
           });
           // remove article from project so it can't be selected again
           projects[randomProjectIndex].articles.splice(randomArticleIndex, 1);
+          if(projects[randomProjectIndex].articles.length === 0) {
+            // remove project if all articles have been used
+            projects.splice(randomProjectIndex, 1);
+          }
         }
       }
     });
