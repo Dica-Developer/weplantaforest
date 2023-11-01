@@ -126,6 +126,8 @@ export const updateProfileImageSuccess = createAction(
   props<{ newImageFileName: string }>(),
 );
 
+export const setHasTeam = createAction('[Profile] set team name', props<{ hasTeam: boolean }>());
+
 export const updateProfileImageError = createAction('[Profile] update profile image error');
 
 export interface Co2Data {
@@ -163,6 +165,7 @@ export interface ProfileDetails {
 
 export interface ProfileState {
   username: string;
+  hasTeam: boolean;
   isAdmin: boolean;
   details: ProfileDetails;
   uploadingImage: boolean;
@@ -247,6 +250,7 @@ export interface CertificatePlanting {
 
 export const initialState: ProfileState = {
   username: '',
+  hasTeam: false,
   isAdmin: false,
   details: null,
   uploadingImage: false,
@@ -355,6 +359,10 @@ const profileReducer = createReducer(
       profileImageUrl: `${environment.backendUrl}/user/image/${newImageFileName}/150/150`,
     },
   })),
+  on(setHasTeam, (state, { hasTeam }) => ({
+    ...state,
+    hasTeam,
+  })),
 );
 
 export function profileReducerFn(state, action) {
@@ -388,25 +396,27 @@ export const selectUploadingImage = createSelector(
   (state: ProfileState) => state.uploadingImage,
 );
 
-export const selectUserLanguage = createSelector(
-  profileFeature,
-  (state: ProfileState) => {
-    if(state.details?.lang) {
-      return state.details.lang;
-    }else {
-      if (navigator.language === 'de-De') {
-        return 'de';
-      }else {
-        return 'en'
-      }
+export const selectUserLanguage = createSelector(profileFeature, (state: ProfileState) => {
+  if (state.details?.lang) {
+    return state.details.lang;
+  } else {
+    if (navigator.language === 'de-De') {
+      return 'de';
+    } else {
+      return 'en';
     }
-  },
-);
+  }
+});
 
 export const selectIsUserAdmin = createSelector(
   profileFeature,
   (state: ProfileState) => state.isAdmin,
-)
+);
+
+export const selectHasTeam = createSelector(
+  profileFeature,
+  (state: ProfileState) => state.hasTeam,
+);
 
 @Injectable()
 export class ProfileEffects {
@@ -416,7 +426,7 @@ export class ProfileEffects {
     private giftService: GiftService,
     private cartService: CartService,
     private translateService: TranslateService,
-    private router: Router
+    private router: Router,
   ) {}
 
   LoadUserDetails$ = createEffect(() =>
@@ -429,6 +439,7 @@ export class ProfileEffects {
             actions.push(loadProfileDetailsSuccess({ details }));
             actions.push(loadTreesByUser({ username: action.username, page: 0, size: 8 }));
             if (action.username === localStorage.getItem('username')) {
+              actions.push(setHasTeam({ hasTeam: details.teamName !== '' && details.teamName }));
               actions.push(loadGiftsAsConsignor({ userName: action.username }));
               actions.push(loadGiftsAsRecipient({ userName: action.username }));
               actions.push(loadReceipts());
@@ -551,8 +562,9 @@ export class ProfileEffects {
           switchMap(() => {
             this.router.navigate(['/profile/' + localStorage.getItem('username')]);
             return [
-            addSuccessMessage({ message: { key: 'GIFT_REDEEMED', message: 'GIFT_REDEEMED' } }),
-          ]}),
+              addSuccessMessage({ message: { key: 'GIFT_REDEEMED', message: 'GIFT_REDEEMED' } }),
+            ];
+          }),
           catchError((err) => [
             addError({
               error: { message: err.error.errorInfos[0].errorCode, key: 'REDEEM_GIFT_ERROR' },

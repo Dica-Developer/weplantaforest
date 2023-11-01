@@ -55,8 +55,15 @@ export class TeamCreateEditComponent implements OnInit {
         this.store.dispatch(
           updateTeam({
             teamId: this.teamDetails.teamId,
-            name: this.teamForm.value.name,
-            description: this.teamForm.value.description,
+            toEdit: 'name',
+            newEntry: this.teamForm.value.name,
+          }),
+        );
+        this.store.dispatch(
+          updateTeam({
+            teamId: this.teamDetails.teamId,
+            toEdit: 'description',
+            newEntry: this.teamForm.value.description,
           }),
         );
       }

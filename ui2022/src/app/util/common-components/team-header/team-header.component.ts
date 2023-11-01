@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { AppState } from 'src/app/store/app.state';
+import { AppState } from '../../../../app/store/app.state';
+import { selectHasTeam } from '../../../store/profile.store';
 import {
   deleteTeam,
   joinTeam,
@@ -12,6 +13,7 @@ import {
   selectIsAdmin,
   selectIsMember,
 } from 'src/app/store/team.store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-team-header',
@@ -25,6 +27,7 @@ export class TeamHeaderComponent implements OnInit {
   isMember$ = this.store.select(selectIsMember);
   createMode = false;
   editMode = false;
+  hasTeam$: Observable<boolean> = this.store.select(selectHasTeam);
 
   constructor(
     private router: Router,

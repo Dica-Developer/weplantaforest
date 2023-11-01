@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
+export declare type TeamField = 'name' | 'description';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -58,15 +60,16 @@ export class TeamService {
     return this.http.post(environment.backendUrl + '/team/join?teamId=' + id, {});
   }
 
-  updateTeam(id: number, name: string, description: string) {
-    return this.http.put(
-      environment.backendUrl + '/team/update',
-      {
-        id: id,
-        name: name,
-        description: description,
-      },
-      { responseType: 'text' },
+  updateTeam(id: number, toEdit: TeamField, newEntry: string) {
+    return this.http.post(
+      environment.backendUrl +
+        '/team/edit?teamId=' +
+        id +
+        '&toEdit=' +
+        toEdit +
+        '&newEntry=' +
+        newEntry,
+      {},
     );
   }
 

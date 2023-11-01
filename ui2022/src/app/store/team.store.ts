@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { AppState, PagedData } from './app.state';
-import { TeamService } from '../services/team.service';
+import { TeamField, TeamService } from '../services/team.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatMap, switchMap } from 'rxjs/operators';
 import * as he from 'he';
@@ -96,7 +96,7 @@ export const checkIfMemberSuccess = createAction(
 
 export const updateTeam = createAction(
   '[Team] update team',
-  props<{ teamId: number; name: string; description: string }>(),
+  props<{ teamId: number; toEdit: TeamField; newEntry: string }>(),
 );
 
 export const leaveTeam = createAction('[Team] leave team');
@@ -324,8 +324,8 @@ export class TeamEffects {
   UpdateTeam$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateTeam),
-      switchMap((action) =>
-        this.teamService.updateTeam(action.teamId, action.name, action.description).pipe(
+      concatMap((action) =>
+        this.teamService.updateTeam(action.teamId, action.toEdit, action.newEntry).pipe(
           concatMap(() => [
             addSuccessMessage({
               message: {
@@ -355,6 +355,7 @@ export class TeamEffects {
                 },
               }),
               resetTeamDetails(),
+              checkIfMemberSuccess({ isMember: false }),
               loadProfileDetails({ username: localStorage.getItem('username') }),
             ];
           }),

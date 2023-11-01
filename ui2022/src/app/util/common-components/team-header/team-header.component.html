@@ -16,7 +16,7 @@
           >delete</mat-icon
         >
         <mat-icon
-          *ngIf="isMember$ | async"
+          *ngIf="(isMember$ | async) && !(isAdmin$ | async)"
           [matTooltip]="'leave' | translate"
           (click)="openConfirmation('leave')"
           >logout</mat-icon
