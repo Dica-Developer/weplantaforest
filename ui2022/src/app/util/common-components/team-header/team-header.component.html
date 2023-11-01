@@ -22,7 +22,7 @@
           >logout</mat-icon
         >
         <mat-icon
-          *ngIf="!(isMember$ | async)"
+          *ngIf="!(isMember$ | async) && !(hasTeam$ | async)"
           [matTooltip]="'join' | translate"
           (click)="openConfirmation('join')"
           >group_add</mat-icon

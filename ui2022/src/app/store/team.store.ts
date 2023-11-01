@@ -283,6 +283,7 @@ export class TeamEffects {
               loadTeamDetailsSuccess({ details: teamDetail }),
               loadTeamMember({ teamName: teamDetail.teamName, page: 0 }),
               checkIfAdmin({ teamId: teamDetail.teamId }),
+              checkIfMember({ teamId: teamDetail.teamId }),
             ]),
           ),
       ),
