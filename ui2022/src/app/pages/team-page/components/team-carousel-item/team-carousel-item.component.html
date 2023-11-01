@@ -1,16 +1,13 @@
-<div class="is-flex is-flex-direction-row margin-left-1 columns is-mobile carousel-item">
+<div class="is-flex is-flex-direction-row margin-left-1 columns is-mobile carousel-item" (click)="routeToProifile()">
   <div class="column is-3">
     <div class="image">
-      <img
-        src="{{ member.imageName ? member.imageName : 'assets/ipat_logo.jpg' }}"
-        alt="teamImage"
-      />
+      <img src="{{ imageUrl }}" alt="teamImage" width="60" height="60" />
     </div>
   </div>
   <div class="column is-9">
     <div class="is-flex is-flex-direction-column padding-1">
       <p class="name">
-        {{ member.name }}
+        {{ _member.name }}
       </p>
     </div>
   </div>
