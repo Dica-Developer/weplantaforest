@@ -4,8 +4,9 @@
   <div innerHtml="{{ intro }}"></div>
   <div class="mwidth" *ngFor="let p of blogArticle.paragraphs">
     <p class="description" innerHtml="{{ getText(p.text) }}"></p>
-    <div *ngIf="p.imageFileName !== null" class="center">
+    <div *ngIf="p.imageFileName !== null" class="center blog-image">
       <img src="{{ getImageUrl(p.imageFileName) }}" alt="blogImage" width="800" height="600" />
+      <p>{{ p.imageDescription }}</p>
     </div>
   </div>
   <a class="margin-top-2" routerLink="/blog">{{ 'backToBlog' | translate }}</a>

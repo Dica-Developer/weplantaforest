@@ -29,6 +29,15 @@
         <div class="column is-6">
           <img src="{{ imageSrc }}" width="400" height="300" *ngIf="imageSrc"/>
           <app-no-img-box *ngIf="!imageSrc"></app-no-img-box>
+          <mat-form-field class="title-field" *ngIf="imageSrc">
+            <input
+              matInput
+              placeholder="Bildunterschrift"
+              name="caption"
+              formControlName="imageDescription"
+            />
+          </mat-form-field>
+  
         </div>
         <div class="column is-2">
           <input
