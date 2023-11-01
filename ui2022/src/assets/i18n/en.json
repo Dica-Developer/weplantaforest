@@ -299,5 +299,6 @@
   "notGreaterThan1MB": "The image must not be larger than 1 MB.",
   "widgetInfo": "You can integrate the following widgets into your website. Simply copy one of the codes and paste it in the desired location.",
   "founded": "Founded",
-  "join":"join"
+  "join":"join",
+  "howManyTreesToPlant": "How many trees do you want to plant?"
 }

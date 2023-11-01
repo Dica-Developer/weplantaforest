@@ -299,5 +299,6 @@
   "notGreaterThan1MB": "Das Bild darf nicht größer als 1 MB sein.",
   "widgetInfo": "Die folgenden Widgets kannst du in deine Website integrieren. Kopiere dazu einfach einen der Codes und füge ihn an der gewünschten Stelle ein.",
   "founded":"Gegründet",
-  "join":"beitreten"
+  "join":"beitreten",
+  "howManyTreesToPlant": "Wieviele Bäume möchtest du pflanzen?"
 }
