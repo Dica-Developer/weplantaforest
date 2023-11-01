@@ -20,7 +20,9 @@ export class TeamTreesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.teamDetailsSub = this.store.select(selectTeamDetails).subscribe((teamDetails) => {
-      this.teamName = teamDetails.teamName;
+      if (teamDetails) {
+        this.teamName = teamDetails.teamName;
+      }
     });
   }
 

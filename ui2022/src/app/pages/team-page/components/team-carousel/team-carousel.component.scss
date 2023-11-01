@@ -1,10 +1,27 @@
-.carousel-row:first-of-type {
-  border-bottom: 1px solid var(--black);
+.team-container {
+  position: relative;
+  .icon {
+    position: absolute;
+    top: 45%;
+    cursor: pointer;
+  }
+
+  .icon-left {
+    left: 15px;
+  }
+
+  .icon-right {
+    right: 15px;
+  }
 }
 
-.carousel-row {
-  overflow: hidden;
+.carousel-row:first-of-type {
+  // border-bottom: 1px solid var(--black);
 }
+
+// .carousel-row {
+//   overflow: hidden;
+// }
 
 h4 {
   margin: 2rem auto 0 auto;
@@ -21,10 +38,6 @@ mat-icon {
 
 .placeholder {
   color: #00000000;
-}
-
-.desktopIcon {
-  display: block;
 }
 
 .mobileIcon {

@@ -31,7 +31,7 @@ export class TeamService {
         encodeURIComponent(teamName) +
         '&page=' +
         page +
-        '&size=4',
+        '&size=8',
     );
   }
 
