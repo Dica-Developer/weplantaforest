@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
-import { AppState } from './app.state';
+import { AppState, PagedData } from './app.state';
 import { TeamService } from '../services/team.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatMap, switchMap } from 'rxjs/operators';
 import * as he from 'he';
 import { Co2Data } from './tree.store';
 import { environment } from 'src/environments/environment';
-import { PagedData } from './app.state';
 import { loadProfileDetails } from './profile.store';
 import { addSuccessMessage } from './success-message.state';
 import { TranslateService } from '@ngx-translate/core';
@@ -102,12 +101,19 @@ export const updateTeam = createAction(
 
 export const leaveTeam = createAction('[Team] leave team');
 
+export const getTeamTrees = createAction('[Team] get team trees', props<{ teamName: string, page: number }>());
+export const getTeamTreesSuccess = createAction(
+  '[Team] get team trees success',
+  props<{ pagedTrees: PagedData<any> }>(),
+);
+
 export interface TeamState {
   teams: Team[];
   teamDetails: TeamDetails;
   members: PagedData<TeamMember>;
   isAdmin: boolean;
   isMember: boolean;
+  pagedTrees: PagedData<any>;
 }
 
 export const initialState: TeamState = {
@@ -123,6 +129,14 @@ export const initialState: TeamState = {
   },
   isAdmin: false,
   isMember: false,
+  pagedTrees: {
+    totalPages: 0,
+    totalElements: 0,
+    numberOfElements: 0,
+    last: true,
+    first: true,
+    content: [],
+  },
 };
 
 const teamReducer = createReducer(
@@ -202,6 +216,12 @@ const teamReducer = createReducer(
       isMember: isMember,
     };
   }),
+  on(getTeamTreesSuccess, (state, { pagedTrees }) => {
+    return {
+      ...state,
+      pagedTrees,
+    };
+  }),
 );
 
 export function teamReducerFn(state, action) {
@@ -224,6 +244,10 @@ export const selectTeamMembers = createSelector(
 
 export const selectIsAdmin = createSelector(teamsFeature, (state: TeamState) => state.isAdmin);
 export const selectIsMember = createSelector(teamsFeature, (state: TeamState) => state.isMember);
+export const selectTeamTrees = createSelector(
+  teamsFeature,
+  (state: TeamState) => state.pagedTrees,
+);
 
 @Injectable()
 export class TeamEffects {
@@ -394,6 +418,19 @@ export class TeamEffects {
         this.teamService.isTeamMember(action.teamId).pipe(
           concatMap((result) => {
             return [checkIfMemberSuccess({ isMember: result })];
+          }),
+        ),
+      ),
+    ),
+  );
+
+  getTeamTrees$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getTeamTrees),
+      switchMap((action) =>
+        this.teamService.getTrees(action.teamName, action.page).pipe(
+          concatMap((pagedTrees: PagedData<any>) => {
+            return [getTeamTreesSuccess({ pagedTrees })];
           }),
         ),
       ),

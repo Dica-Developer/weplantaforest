@@ -6,6 +6,8 @@ import { TeamPageComponent } from './team-page.component';
 import { TeamInfoComponent } from './components/team-info/team-info.component';
 import { TeamCarouselItemComponent } from './components/team-carousel-item/team-carousel-item.component';
 import { TeamCarouselComponent } from './components/team-carousel/team-carousel.component';
+import { TeamTreeCarouselItemComponent } from './components/team-tree-carousel-item/team-tree-carousel-item.component';
+import { TeamTreesComponent } from './components/team-trees/team-trees.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +15,8 @@ import { TeamCarouselComponent } from './components/team-carousel/team-carousel.
     TeamInfoComponent,
     TeamCarouselItemComponent,
     TeamCarouselComponent,
+    TeamTreeCarouselItemComponent,
+    TeamTreesComponent,
   ],
   imports: [CommonModule, UtilModule, RouterModule],
   exports: [TeamPageComponent],

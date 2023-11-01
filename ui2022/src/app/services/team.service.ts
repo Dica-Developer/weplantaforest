@@ -69,4 +69,15 @@ export class TeamService {
       { responseType: 'text' },
     );
   }
+
+  getTrees(teamName: string, page: number) {
+    return this.http.get(
+      environment.backendUrl +
+        '/trees/team?teamName=' +
+        encodeURIComponent(teamName) +
+        '&page=' +
+        page +
+        '&size=8',
+    );
+  }
 }

@@ -1,0 +1,29 @@
+.tree-container {
+  position: relative;
+  .icon {
+    position: absolute;
+    top: 45%;
+    cursor: pointer;
+  }
+
+  .icon-left {
+    left: 15px;
+  }
+
+  .icon-right {
+    right: 15px;
+  }
+}
+mat-icon {
+  z-index: 3;
+  position: relative;
+  height: 4rem;
+  width: 4rem;
+  font-size: 4rem;
+  color: var(--brown);
+}
+
+mat-icon:not(.placeholder):hover {
+  cursor: pointer;
+  color: var(--green);
+}

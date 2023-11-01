@@ -1,0 +1,21 @@
+<div class="is-flex is-flex-direction-column padding-2 border-bottom tree-container">
+  <h4 class="center">{{ 'plantings' | translate }}</h4>
+  <div
+    class="carousel-row is-flex is-flex-direction-row padding-1 is-justify-content-space-between"
+  >
+    <mat-icon *ngIf="!(teamTrees$ | async).first" class="icon icon-left" (click)="previousPage()"
+      >keyboard_arrow_left</mat-icon
+    >
+
+    <div class="columns is-flex is-flex-direction-row is-multiline padding-2">
+      <app-team-tree-carousel-item
+        *ngFor="let tree of (teamTrees$ | async).content"
+        [item]="tree"
+        class="column is-3"
+      ></app-team-tree-carousel-item>
+    </div>
+    <mat-icon *ngIf="!(teamTrees$ | async).last" class="icon icon-right" (click)="nextPage()"
+      >keyboard_arrow_right</mat-icon
+    >
+  </div>
+</div>
