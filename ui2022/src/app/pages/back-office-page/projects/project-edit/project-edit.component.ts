@@ -156,7 +156,20 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
 
   saveData() {
     let articlesValid = true;
+    const usedTreeTypes = [];
     for (const article of this.projectForm.get('articles')['controls']) {
+      if(usedTreeTypes.includes(article.value.treeType.id)) {
+        this.store.dispatch(
+          addError({
+            error: {
+              key: 'PROJECT_VALIDATION_ERROR',
+              message: 'Eine Baumart darf nur einmal verwendet werden.',
+            },
+          }),
+        );
+        return;
+      }
+      usedTreeTypes.push(article.value.treeType.id);
       if (article.status === 'INVALID') {
         articlesValid = false;
         article.get('treeType').get('id').markAsTouched();
