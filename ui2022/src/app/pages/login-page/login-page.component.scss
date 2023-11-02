@@ -1,7 +1,16 @@
 form {
-  padding-top: 10rem;
+  padding-top: 4rem;
   max-width: 400px;
   z-index: 2;
+  background: var(--background);
+  box-shadow: 0 0 25px 35px var(--background);
+  border-radius: 2rem;
+}
+
+.breadcrumb {
+  background: var(--background);
+  box-shadow: 0 0 25px 35px var(--background);
+  border-radius: 2rem;
 }
 
 button {
@@ -23,6 +32,6 @@ button {
   }
 
   form {
-    padding-bottom: 2rem;
+    padding-top: 1rem;
   }
 }

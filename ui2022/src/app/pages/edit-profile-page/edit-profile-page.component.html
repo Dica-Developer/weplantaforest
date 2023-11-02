@@ -1,4 +1,24 @@
 <div class="is-flex is-flex-direction-column padding-4 padding-top-2">
+  <nav class="breadcrumb">
+    <ul>
+      <li>
+        <a routerLink="/">
+          {{ 'startPage' | translate }}
+        </a>
+      </li>
+      <li>
+        <a>
+          {{ 'profile' | translate }}
+        </a>
+      </li>
+      <li>
+        <a class="breadcrumb-active">
+          {{ (profileDetails$ | async).userName }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+
   <form [formGroup]="profileForm" *ngIf="profileForm">
     <h2>{{ 'editProfile' | translate }}</h2>
 

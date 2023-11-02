@@ -3,7 +3,13 @@ form {
   max-width: 600px;
   z-index: 2;
   background: var(--background);
-  box-shadow: 0 0 25px 35px #dcdcd6;
+  box-shadow: 0 0 25px 35px var(--background);
+  border-radius: 2rem;
+}
+
+.breadcrumb {
+  background: var(--background);
+  box-shadow: 0 0 25px 35px var(--background);
   border-radius: 2rem;
 }
 
@@ -12,7 +18,6 @@ button {
 }
 
 .signup {
-  height: calc(100vh - 80px);
   background-image: url(/assets/baumscheiben.png);
   background-size: cover;
   background-position: center;

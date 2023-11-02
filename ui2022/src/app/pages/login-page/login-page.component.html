@@ -1,37 +1,53 @@
-<div class="login is-flex padding-1 is-flex-direction-column w-100 is-align-items-center">
-  <form
-    class="w-100 is-flex is-flex-direction-column"
-    [formGroup]="loginForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <div class="inputOutline">
-      <input placeholder="Email/Username" name="name" required formControlName="name" />
-    </div>
-    <div class="inputOutline is-flex is-flex-direction-row">
-      <input
-        [type]="showPassword ? 'text' : 'password'"
-        placeholder="Password"
-        name="password"
-        required
-        formControlName="password"
-      />
-      <mat-icon matSuffix style="cursor: pointer" (click)="toggleShowPassword()">
-        {{ !showPassword ? 'visibility' : 'visibility_off' }}</mat-icon
-      >
-    </div>
-    <div class="center">
-      <app-button [label]="'Login' | translate"></app-button>
-      <br />
-      <br />
-      <a routerLink="/forgotPassword">{{ 'forgotPassword' | translate }}</a>
-      <br />
-      <br />
-      <br />
-      <p>
-        {{ 'noAccountYet' | translate }}
+<div class="login is-flex is-flex-direction-column is-justify-content-start padding-1">
+  <nav class="breadcrumb padding-left" style="width: fit-content">
+    <ul>
+      <li>
+        <a routerLink="/">
+          {{ 'startPage' | translate }}
+        </a>
+      </li>
+      <li>
+        <a class="breadcrumb-active">
+          {{ 'login' | translate }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="is-flex padding-1 is-flex-direction-column w-100 is-align-items-center">
+    <form
+      class="w-100 is-flex is-flex-direction-column"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="inputOutline">
+        <input placeholder="Email/Username" name="name" required formControlName="name" />
+      </div>
+      <div class="inputOutline is-flex is-flex-direction-row">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Password"
+          name="password"
+          required
+          formControlName="password"
+        />
+        <mat-icon matSuffix style="cursor: pointer" (click)="toggleShowPassword()">
+          {{ !showPassword ? 'visibility' : 'visibility_off' }}</mat-icon
+        >
+      </div>
+      <div class="center">
+        <app-button [label]="'Login' | translate"></app-button>
         <br />
-        <a routerLink="/signup">{{ 'registerHere' | translate }}</a>
-      </p>
-    </div>
-  </form>
+        <br />
+        <a routerLink="/forgotPassword">{{ 'forgotPassword' | translate }}</a>
+        <br />
+        <br />
+        <br />
+        <p>
+          {{ 'noAccountYet' | translate }}
+          <br />
+          <a routerLink="/signup">{{ 'registerHere' | translate }}</a>
+        </p>
+      </div>
+    </form>
+  </div>
 </div>

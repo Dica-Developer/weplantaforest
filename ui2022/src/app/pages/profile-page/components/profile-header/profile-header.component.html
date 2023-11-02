@@ -1,5 +1,20 @@
 <div class="columns w-100 padding-2">
   <div class="column is-half">
+    <!-- <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li>
+          <a class="breadcrumb-active" [routerLink]="'/profile/' + profileDetails.userName">
+            {{ profileDetails.userName }}
+          </a>
+        </li>
+      </ul>
+    </nav> -->
+
     <h2 class="is-flex is-justify-content-space-between w-100">
       {{ 'profile' | translate }}
       <mat-icon *ngIf="showEdit" [matTooltip]="'edit' | translate" (click)="editProfile()"

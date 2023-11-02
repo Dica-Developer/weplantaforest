@@ -1,5 +1,23 @@
 <!--  desktop layout --><!--  desktop layout --><!--  desktop layout -->
 <div class="w-100 desktopView">
+  <!-- <nav class="breadcrumb padding-left">
+    <ul>
+      <li>
+        <a routerLink="/">
+          {{ 'startPage' | translate }}
+        </a>
+      </li>
+      <li>
+        <a
+          class="breadcrumb-active"
+          [routerLink]="'/profile/' + (profileDetails$ | async).userName"
+        >
+          {{ (profileDetails$ | async).userName }}
+        </a>
+      </li>
+    </ul>
+  </nav> -->
+
   <div class="columns">
     <div class="column is-half border-bottom border-right">
       <app-profile-header
