@@ -30,10 +30,17 @@
   .amount {
     margin-right: 10px;
     float: right;
+    // color: var(--background);
+  }
+  .normalFont {
+    color: var(--black);
   }
   .bar-fill {
     height: 20px;
-    background: var(--dark-green);
     border-radius: 25px;
+    background: var(--brown);
+  }
+  .lastYear {
+    background: var(--green);
   }
 }

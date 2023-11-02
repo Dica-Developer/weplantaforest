@@ -5,10 +5,10 @@
   <div class="is-flex-direction-column is-flex-grow-1">
     <span class="name" (click)="route()">{{ item.name }}</span>
     <div class="bar-wrapper">
-      <div class="amount">
+      <div class="amount" [class.normalFont]="lastYear">
         {{ item.amount }}
       </div>
-      <div class="bar-fill" [style.width.%]="percentOfMax"></div>
+      <div class="bar-fill" [class.lastYear]="lastYear" [style.width.%]="percentOfMax"></div>
     </div>
   </div>
 </div>

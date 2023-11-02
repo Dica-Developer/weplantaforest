@@ -16,6 +16,9 @@ export class RankingItemComponent implements OnInit {
   max: number;
 
   @Input()
+  lastYear: boolean = true;
+
+  @Input()
   type: RankingType;
 
   imageUrl: string = '';
