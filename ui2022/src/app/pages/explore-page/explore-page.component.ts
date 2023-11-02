@@ -68,6 +68,13 @@ export class ExplorePageComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
+  resetTree() {
+    this.currentTree = null;
+    this.currentImageUrl = '';
+    this.currentFruitUrl = '';
+    this.selectedInfoType = 'help';
+  }
+
   selectInfoType(infoType: string) {
     this.setImages(infoType);
     this.selectedInfoType = infoType;

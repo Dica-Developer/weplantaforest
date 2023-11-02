@@ -10,7 +10,7 @@
           </a>
         </li>
         <li>
-          <a routerLink="/explore">
+          <a (click)="resetTree()">
             {{ 'explore' | translate }}
           </a>
         </li>
@@ -21,29 +21,34 @@
         </li>
       </ul>
     </nav>
-    <h2>{{ 'explore' | translate }}</h2>
   </div>
   <div class="infoPage padding-4 padding-top-2">
-    <div *ngIf="currentTree" class="description columns">
+    <div class="description columns">
       <div class="column is-6">
-        <h2>{{ currentTree.name }}</h2>
-        <p>
-          {{ currentTree.description }}
-        </p>
-        <p *ngIf="selectedInfoType === 'help'">
-          {{ 'exploreTip' | translate }}
-        </p>
-        <p *ngIf="selectedInfoType === 'leaf'">
-          {{ currentTree.leaf }}
-        </p>
-        <p *ngIf="selectedInfoType === 'trunk'">
-          {{ currentTree.trunk }}
-        </p>
-        <p *ngIf="selectedInfoType === 'fruit'">
-          {{ currentTree.fruit }}
-        </p>
+        <div *ngIf="!currentTree">
+          <h2>{{ 'explore' | translate }}</h2>
+          <p>{{ 'exploreInfo' | translate }}</p>
+        </div>
+        <div *ngIf="currentTree">
+          <h2>{{ currentTree.name }}</h2>
+          <p>
+            {{ currentTree.description }}
+          </p>
+          <p *ngIf="selectedInfoType === 'help'">
+            {{ 'exploreTip' | translate }}
+          </p>
+          <p *ngIf="selectedInfoType === 'leaf'">
+            {{ currentTree.leaf }}
+          </p>
+          <p *ngIf="selectedInfoType === 'trunk'">
+            {{ currentTree.trunk }}
+          </p>
+          <p *ngIf="selectedInfoType === 'fruit'">
+            {{ currentTree.fruit }}
+          </p>
+        </div>
       </div>
-      <div class="column is-6">
+      <div *ngIf="currentTree" class="column is-6">
         <div class="wrapper">
           <img
             class="img-tree"

@@ -304,5 +304,7 @@
   "youNoTeamYet": "You have not joined any team yet.",
   "default": "Default",
   "horizontal": "Horizontal",
-  "vertical": "Vertical"
+  "vertical": "Vertical",
+  "exploreInfo": "Here you will find descriptions and illustrations of native trees. If you click on the dots in the individual tree view, you can find out more details about fruits or flowers, leaves and bark."
+
 }
