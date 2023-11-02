@@ -20,7 +20,6 @@ export class CarouselItemComponent implements OnInit {
   @Input()
   set item(item: ProfileTree) {
     this._item = item;
-    console.log(item);
   }
 
   @Input()

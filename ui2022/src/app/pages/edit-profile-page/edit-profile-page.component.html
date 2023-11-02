@@ -7,7 +7,7 @@
         </a>
       </li>
       <li>
-        <a>
+        <a [routerLink]="'/profile/' + (profileDetails$ | async).userName">
           {{ 'profile' | translate }}
         </a>
       </li>
