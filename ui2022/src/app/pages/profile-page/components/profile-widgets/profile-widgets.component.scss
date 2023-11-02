@@ -2,11 +2,11 @@ img {
   border: 1px var(--black) solid;
 }
 
-.columns {
-  .column:first-child {
-    text-align: right;
-  }
-  .column:last-child {
-    text-align: left;
+@media only screen and (max-width: 768px) {
+  .mobile-column {
+    flex-direction: column !important;
+    .padding-1 {
+      padding: 1rem 0 !important;
+    }
   }
 }

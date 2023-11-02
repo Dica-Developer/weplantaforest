@@ -301,5 +301,8 @@
   "founded": "Founded",
   "join":"join",
   "howManyTreesToPlant": "How many trees do you want to plant?",
-  "youNoTeamYet": "You have not joined any team yet."
+  "youNoTeamYet": "You have not joined any team yet.",
+  "default": "Default",
+  "horizontal": "Horizontal",
+  "vertical": "Vertical"
 }

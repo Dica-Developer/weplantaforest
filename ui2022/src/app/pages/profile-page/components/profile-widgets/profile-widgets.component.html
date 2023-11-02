@@ -1,41 +1,45 @@
 <div class="is-flex is-flex-direction-column w-100 padding-2 gift-box border-bottom">
   <h4 class="center">{{ 'widgets' | translate }}</h4>
-  <div class="w-100 is-flex is-flex-direction-row is-justify-content-center">
-    <p class="center">{{ 'widgetInfo' | translate }}</p>
-  </div>
-  <div class="columns">
-    <div class="column">
-      <img src="{{ widget100x100Url }}" alt="" width="200" height="200" />
-    </div>
-    <div class="column">
-      <p>{{ 'inputCode' | translate }}:</p>
-
-      <p class="code">
-        {{ widget100x100Code }}
-      </p>
-    </div>
-  </div>
-  <div class="columns">
-    <div class="column">
-      <img src="{{ widget300x100Url }}" alt="" width="600" height="200" />
-    </div>
-    <div class="column">
-      <p>{{ 'inputCode' | translate }}:</p>
-      <p class="code">
-        {{ widget300x100Code }}
-      </p>
-    </div>
-  </div>
-
-  <div class="columns">
-    <div class="column">
-      <img src="{{ widget100x300Url }}" alt="" width="200" height="600" />
-    </div>
-    <div class="column">
-      <p>{{ 'inputCode' | translate }}:</p>
-      <p class="code">
-        {{ widget100x300Code }}
-      </p>
-    </div>
-  </div>
+  <p class="center">{{ 'widgetInfo' | translate }}</p>
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="{{ 'default' | translate }}">
+      <div class="is-flex is-flex-direction-row mobile-column margin-top-1">
+        <img src="{{ widget100x100Url }}" alt="" width="200" height="200" />
+        <div class="is-flex is-flex-direction-column padding-1">
+          <p>{{ 'inputCode' | translate }}:</p>
+          <p class="code">
+            {{ widget100x100Code }}
+          </p>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{ 'horizontal' | translate }}">
+      <div class="is-flex is-flex-direction-row mobile-column margin-top-1">
+        <img
+          src="{{ widget300x100Url }}"
+          alt=""
+          width="600"
+          height="200"
+          style="height: fit-content !important"
+        />
+        <div class="is-flex is-flex-direction-column padding-1">
+          <p>{{ 'inputCode' | translate }}:</p>
+          <p class="code">
+            {{ widget100x300Code }}
+          </p>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{ 'vertical' | translate }}">
+      <div class="is-flex is-flex-direction-row mobile-column margin-top-1">
+        <img src="{{ widget100x300Url }}" alt="" width="200" height="600" />
+        <div class="is-flex is-flex-direction-column padding-1">
+          <p>{{ 'inputCode' | translate }}:</p>
+          <p class="code">
+            {{ widget300x100Code }}
+          </p>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

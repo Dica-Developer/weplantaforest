@@ -301,6 +301,10 @@
   "founded":"Gegründet",
   "join":"beitreten",
   "howManyTreesToPlant": "Wieviele Bäume möchtest du pflanzen?",
-  "youNoTeamYet": "Du bist noch keinem Team beigetreten."
+  "youNoTeamYet": "Du bist noch keinem Team beigetreten.",
+  "default": "Standard",
+  "horizontal": "Horizontal",
+  "vertical": "Vertikal"
+
 
 }
