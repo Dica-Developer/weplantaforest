@@ -16,6 +16,7 @@ import { selectAuthenticated } from 'src/app/store/auth.store';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { selectUserLanguage } from 'src/app/store/profile.store';
 
 @Component({
   selector: 'app-plant-self-page',
@@ -59,9 +60,12 @@ export class PlantSelfPageComponent implements OnInit {
     mainImageFile: new UntypedFormControl(null, []),
   });
 
+  userLanuage: string;
+  userLanuguageSub: Subscription;
+
   constructor(
     private store: Store<AppState>,
-    private textHelper: TextHelper,
+    public textHelper: TextHelper,
     private router: Router,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
@@ -82,13 +86,16 @@ export class PlantSelfPageComponent implements OnInit {
           fruit: tt.fruit,
           leaf: tt.leaf,
           trunk: tt.trunk,
-          name: this.textHelper.getTextForLanguage(tt.name, 'de'),
+          name: this.textHelper.getTextForLanguage(tt.name, this.userLanuage),
         });
       }
       this.treeTypes = this.treeTypes.filter((treeType) => !treeType.name.includes('Default'));
     });
     this.getScreenSize();
     this.selectAuthenticated$ = this.store.select(selectAuthenticated);
+    this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
+      this.userLanuage = userLanguage;
+    });
   }
 
   @HostListener('window:load', ['$event'])

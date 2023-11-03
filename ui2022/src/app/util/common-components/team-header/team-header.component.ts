@@ -52,6 +52,7 @@ export class TeamHeaderComponent implements OnInit {
       this.snackbar
         .open(this.translateService.instant('leaveTeam'), 'OK', {
           duration: 5000,
+          panelClass: ['warning-snackbar'],
         })
         .onAction()
         .subscribe(() => {
@@ -59,8 +60,9 @@ export class TeamHeaderComponent implements OnInit {
         });
     } else if (confirmType === 'delete') {
       this.snackbar
-        .open(this.translateService.instant('deleteTeam'), 'OK', {
+        .open(this.translateService.instant('deleteConfirmation'), 'OK', {
           duration: 5000,
+          panelClass: ['warning-snackbar'],
         })
         .onAction()
         .subscribe(() => {
@@ -70,6 +72,7 @@ export class TeamHeaderComponent implements OnInit {
       this.snackbar
         .open(this.translateService.instant('joinTeam'), 'OK', {
           duration: 5000,
+          panelClass: ['warning-snackbar'],
         })
         .onAction()
         .subscribe(() => {

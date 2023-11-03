@@ -54,7 +54,11 @@
             (valueChange)="addTreesToForm($event)"
           ></ngx-slider>
         </div>
-        <p>{{ 'contactForProof' | translate }}</p>
+        <p>
+          {{ 'contactForProof1' | translate }}
+          <a routerLink="/contact">{{ 'contactUs' | translate }}</a>
+          {{ 'contactForProof2' | translate }}
+        </p>
       </div>
     </div>
     <div class="columns">
