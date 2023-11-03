@@ -126,6 +126,8 @@ export const updateProfileImageSuccess = createAction(
   props<{ newImageFileName: string }>(),
 );
 
+export const resetProfileDetails = createAction('[Profile] reset profile details');
+
 export const setHasTeam = createAction('[Profile] set team name', props<{ hasTeam: boolean }>());
 
 export const updateProfileImageError = createAction('[Profile] update profile image error');
@@ -363,6 +365,19 @@ const profileReducer = createReducer(
     ...state,
     hasTeam,
   })),
+  on(resetProfileDetails, (state) => ({
+    ...state,
+    username: '',
+    hasTeam: false,
+    isAdmin: false,
+    details: null,
+    uploadingImage: false,
+    certificate: {
+      plantings: [],
+      creator: { name: '' },
+      text: '',
+    },
+  })),
 );
 
 export function profileReducerFn(state, action) {
@@ -413,10 +428,7 @@ export const selectIsUserAdmin = createSelector(
   (state: ProfileState) => state.isAdmin,
 );
 
-export const selectHasTeam = createSelector(
-  profileFeature,
-  (state: ProfileState) => state.hasTeam,
-);
+export const selectHasTeam = createSelector(profileFeature, (state: ProfileState) => state.hasTeam);
 
 @Injectable()
 export class ProfileEffects {

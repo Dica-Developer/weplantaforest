@@ -7,7 +7,12 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import { loadTreeTypes } from './treeType.store';
 import { Router } from '@angular/router';
 import { addError } from './error.state';
-import { setUsername, loadProfileDetails, loadAdminFlag } from './profile.store';
+import {
+  setUsername,
+  loadProfileDetails,
+  loadAdminFlag,
+  resetProfileDetails,
+} from './profile.store';
 
 export const signup = createAction(
   '[Auth] Signup',
@@ -264,6 +269,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(logout),
         tap((action: any) => {
+          resetProfileDetails();
           this.router.navigate(['/']);
           localStorage.removeItem('jwt');
         }),
