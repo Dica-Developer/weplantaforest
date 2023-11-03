@@ -55,6 +55,7 @@ export class ExplorePageComponent implements OnInit {
         });
       }
       this.trees = this.trees.filter((tree) => !tree.name.includes('Strauch'));
+      this.trees = this.trees.filter((tree) => !tree.name.includes('Shrub'));
       this.trees = this.trees.filter((tree) => !tree.name.includes('Default'));
     });
   }

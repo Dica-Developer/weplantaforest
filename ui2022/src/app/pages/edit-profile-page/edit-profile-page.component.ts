@@ -181,7 +181,6 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
         }),
       );
       this.store.dispatch(logout());
-
     }
     this.snackbar.open(this.translateService.instant('profileUpdated'), 'OK', {
       duration: 4000,
@@ -241,5 +240,4 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
   }
-
 }
