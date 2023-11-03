@@ -14,7 +14,7 @@ import {
   updateProfileImage,
   updateProfileProperty,
 } from 'src/app/store/profile.store';
-import { logout, resetPassword } from 'src/app/store/auth.store';
+import { logout } from 'src/app/store/auth.store';
 
 @Component({
   selector: 'app-edit-profile-page',
@@ -29,9 +29,9 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   languages: string[] = ['DEUTSCH', 'ENGLISH'];
 
   orgTypeOptions: any[] = [
-    { value: 'NONPROFIT', label: 'NONPROFIT' },
     { value: 'PRIVATE', label: 'PRIVATE' },
     { value: 'COMMERCIAL', label: 'COMMERCIAL' },
+    { value: 'NONPROFIT', label: 'NONPROFIT' },
     { value: 'EDUCATIONAL', label: 'EDUCATIONAL' },
   ];
   imageFile: any;
