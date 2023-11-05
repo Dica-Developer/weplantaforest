@@ -4,11 +4,14 @@
 
 export const environment = {
   production: false,
+  // backendUrl: 'http://192.168.178.88:8081',
+  // backendAdminUrl: 'http://192.168.178.88:8083',
+  // backendArticleManagerUrl: 'http://192.168.178.88:8082',
   backendUrl: 'http://localhost:8081',
   backendAdminUrl: 'http://localhost:8083',
   backendArticleManagerUrl: 'http://localhost:8082',
   oldFrontendUrl: 'http://localhost:8080',
-  baseUrl: ""
+  baseUrl: '',
 };
 
 /*
