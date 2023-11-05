@@ -3,13 +3,14 @@
   max-height: 90px;
 }
 
-.columns {
-  font-size: 1rem;
-  font-family: 'Bull-mono' !important;
-}
-
 .bottomLine {
   border-bottom: 1px solid #c9c9c9;
+}
+
+.column {
+  font-size: 1rem;
+  font-family: 'Bull-mono' !important;
+  padding: 0 !important;
 }
 
 .amount {
@@ -20,19 +21,12 @@
   display: none;
 }
 
-.column:not:first-child {
-  padding: 0.5rem 0 !important;
-}
-
-.column:first-child {
-  padding: 0 !important;
-}
-
 @media only screen and (max-width: 768px) {
-  .columns {
-    font-size: 0.75rem;
-  }
   .amount {
+    display: none;
+  }
+
+  .projectname {
     display: none;
   }
 

@@ -36,24 +36,23 @@
     </div>
 
     <div class="is-flex is-flex-direction-column column is-8 margin-top-2">
-      <div
-        class="columns header is-flex is-flex-direction-row is-justify-content-space-between text-align-center is-align-items-center w-100 bottomLine margin-bottom-1"
-      >
-        <div class="column is-one-fifth image-wrapper"></div>
-        <div class="column is-two-fifth is-flex-direction-column is-flex">
+      <div class="columns header">
+        <div class="column is-one-fifth">
+          <div class="image-wrapper"></div>
+        </div>
+        <div class="column is-one-fifth">
           <b> {{ 'treeType' | translate }} </b>
         </div>
-        <div class="column is-two-fifth is-flex-direction-row is-flex">
+        <div class="column is-one-fifth">
           <b> {{ 'amount' | translate }} </b>
         </div>
-        <div class="column is-two-fifth">
+        <div class="column is-one-fifth">
           <b> {{ 'project' | translate }} </b>
         </div>
         <div class="column is-one-fifth">
           <b> {{ 'partialPrice' | translate }} </b>
         </div>
       </div>
-
       <app-plantproposal-preview-row
         *ngFor="let item of this.simpleProposal?.plantItems"
         [plantItem]="item"

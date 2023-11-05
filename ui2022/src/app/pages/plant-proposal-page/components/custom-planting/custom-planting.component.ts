@@ -19,7 +19,6 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
   activeProjectsSub: Subscription;
   profileDetailsSub: Subscription;
   profileDetails;
-  collapsibleState: boolean = false;
   language$ = this.store.select(selectProfileDetails);
 
   @Input()
@@ -51,9 +50,5 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
     this.language$.subscribe((lang) => {
       return this.textHelper.getTextForLanguage(text, this.profileDetails?.lang ?? lang);
     });
-  }
-
-  toggleCollapsibleState() {
-    this.collapsibleState = !this.collapsibleState;
   }
 }

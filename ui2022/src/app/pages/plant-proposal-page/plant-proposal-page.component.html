@@ -17,8 +17,18 @@
     <h2>{{ 'plantTree' | translate }}</h2>
   </div>
 </div>
+<div class="plant-proposal-page">
+  <mat-tab-group>
+    <mat-tab label="{{ 'proposal' | translate }}">
+      <app-plant-proposal-row></app-plant-proposal-row>
+    </mat-tab>
+    <mat-tab label="{{ 'custom' | translate }}">
+      <app-custom-planting></app-custom-planting>
+    </mat-tab>
+    <mat-tab label="{{ 'selfplant' | translate }}">
+      <app-self-plant-row></app-self-plant-row>
+    </mat-tab>
+  </mat-tab-group>
+</div>
 
-<app-plant-proposal-row></app-plant-proposal-row>
-<app-custom-planting></app-custom-planting>
-<app-self-plant-row></app-self-plant-row>
 <app-offer-area></app-offer-area>

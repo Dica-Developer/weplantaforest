@@ -1,15 +1,10 @@
 <div
   class="is-flex is-flex-direction-column padding-left padding-right padding-top-2 padding-bottom-2 border-bottom collapsible"
 >
-  <h2
-    (click)="toggleCollapsibleState()"
-    class="is-flex is-justify-content-space-between is-align-items-center pointer"
-  >
+  <h2 class="is-flex is-justify-content-space-between is-align-items-center pointer">
     <span>
       {{ 'orChooseIndivudual' | translate }}
     </span>
-    <mat-icon *ngIf="collapsibleState" aria-hidden="false">expand_less</mat-icon>
-    <mat-icon *ngIf="!collapsibleState" aria-hidden="false">expand_more</mat-icon>
   </h2>
   <p>
     {{
@@ -18,7 +13,7 @@
         : ('customPlantingInfo' | translate)
     }}
   </p>
-  <div *ngFor="let project of activeProjects" [class.open]="collapsibleState" class="content">
+  <div *ngFor="let project of activeProjects" class="content">
     <h4 class="margin-top-1">{{ project.projectName }}</h4>
     <div *ngFor="let article of project.articles">
       <app-plantbag-tree-input

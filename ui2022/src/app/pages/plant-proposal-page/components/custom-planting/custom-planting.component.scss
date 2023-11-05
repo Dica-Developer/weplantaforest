@@ -1,12 +1,13 @@
 .content {
-  display: none;
+  // display: none;
   overflow: hidden;
   margin-bottom: 1rem;
-}
-
-.open {
   display: block;
 }
+
+// .open {
+//   display: block;
+// }
 
 h2:hover {
   mat-icon {

@@ -308,9 +308,24 @@ mat-paginator {
   }
 }
 
+.plant-proposal-page {
+  .mat-tab-label-container {
+    padding-left: 4rem !important;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body {
     font-size: 16px;
+  }
+
+  .plant-proposal-page {
+    .mat-tab-label-container {
+      padding-left: 0rem !important;
+    }
+    .mat-tab-label {
+      padding: 0 0.5rem;
+    }
   }
 }
