@@ -7,7 +7,7 @@
 .lightbox {
   display: none;
   position: fixed;
-  z-index: 3;
+  z-index: 4;
   padding-top: 80px;
   left: 0;
   top: 0;
@@ -47,7 +47,7 @@
 }
 
 .dots {
-  z-index: 2;
+  z-index: 4;
   position: relative;
   bottom: 2rem;
 }
