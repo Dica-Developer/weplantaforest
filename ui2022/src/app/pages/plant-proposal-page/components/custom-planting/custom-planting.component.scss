@@ -1,26 +1,5 @@
 .content {
-  // display: none;
   overflow: hidden;
   margin-bottom: 1rem;
   display: block;
-}
-
-// .open {
-//   display: block;
-// }
-
-h2:hover {
-  mat-icon {
-    color: var(--green);
-  }
-}
-
-h4 {
-  margin-bottom: 0 !important;
-}
-
-mat-icon {
-  font-size: 3rem;
-  height: 3rem;
-  width: 3rem;
 }
