@@ -8,7 +8,6 @@
     *ngFor="let tree of trees; let i = index"
     class="column padding-1 is-one-fifth border-left tree-tile"
     (click)="addTreeToPlantBag(tree)"
-    matTooltip="{{ 'addToPlantbag' | translate }}"
   >
     <div class="is-flex is-flex-direction-column">
       <p class="margin-0">{{ tree.name }}</p>
