@@ -40,10 +40,7 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initControl();
     this.imgUrl =
-      environment.backendUrl +
-      '/treeType/image/' +
-      this.article.treeType.treeImageColor +
-      '/200/200';
+      environment.backendUrl + '/treeType/image/' + this.article.treeType.treeImageColor + '/90/90';
     this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
       this.userLanuage = userLanguage;
     });

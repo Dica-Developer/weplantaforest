@@ -16,7 +16,7 @@ import {
   selectPlantbag,
   selectPlantbagPrice,
 } from '../../store/plantbag.store';
-import { selectAuthenticated } from "../../store/auth.store";
+import { selectAuthenticated } from '../../store/auth.store';
 
 @Component({
   selector: 'app-plantbag-page',
@@ -39,6 +39,7 @@ export class PlantbagPageComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.store.dispatch(resetCreatedCartId());
     this.store.dispatch(resetCreatedGiftId());
     this.cartCreatedSub = this.store.select(selectCartForPaymentCreated).subscribe((created) => {

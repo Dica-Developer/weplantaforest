@@ -21,10 +21,14 @@
   border-top: 1px;
 }
 
+.bottomLine {
+  border-bottom: 1px solid #c9c9c9;
+}
+
 .inputOutline {
   background: var(--background);
   border: 1px var(--black) solid;
-  border-radius: 2rem;
+  border-radius: 1rem;
   margin-bottom: 1rem;
   padding: 0.5rem;
 }
@@ -33,7 +37,7 @@
   max-width: 100px;
   background: var(--background);
   border: 1px var(--black) solid;
-  border-radius: 1.75rem;
+  border-radius: 1rem;
   margin-bottom: 0;
   padding: 0.5rem;
 }
@@ -91,5 +95,17 @@ video {
   &.active {
     background: var(--green);
     color: var(--black);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .hideOnDesktop {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .hideOnMobile {
+    display: none;
   }
 }

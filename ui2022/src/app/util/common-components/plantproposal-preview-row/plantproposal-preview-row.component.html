@@ -1,20 +1,20 @@
 <div class="w-100 columns is-flex is-align-items-center w-100 bottomLine">
-  <div class="column is-one-fifth">
+  <div class="column">
     <img class="img-tree" src="{{ imageUrl }}" alt="tree" />
   </div>
-  <div class="column is-one-fifth">
+  <div class="column">
     <b> {{ getTreetypeName(plantItem.treeType) }} </b>
   </div>
-  <div class="column is-one-fifth">
+  <div class="column">
     <div class="x">x {{ plantItem.amount }}</div>
     <div class="amount">{{ plantItem.amount }} {{ 'pieces' | translate }}</div>
   </div>
-  <div class="projectname column is-one-fifth">
+  <div class="projectname column">
     <div>
       {{ plantItem.projectName }}
     </div>
   </div>
-  <div class="column is-one-fifth">
+  <div class="column">
     <div>
       {{ sum | currency }}
     </div>

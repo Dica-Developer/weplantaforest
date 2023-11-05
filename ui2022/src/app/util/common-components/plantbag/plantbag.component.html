@@ -1,30 +1,32 @@
 <h2>{{ 'plantbag' | translate }}</h2>
-<mat-card>
-  <mat-card-content *ngIf="(plantbag$ | async).plantbagItems.length > 0">
-    <div *ngFor="let item of (plantbag$ | async).plantbagItems">
-      <app-plantbag-tree-input
-        [article]="item.article"
-        [amount]="item.amount"
-        [withDelete]="true"
-        [showProject]="true"
-      ></app-plantbag-tree-input>
+<div *ngIf="(plantbag$ | async).plantbagItems.length > 0">
+  <div *ngFor="let item of (plantbag$ | async).plantbagItems">
+    <app-plantbag-tree-input
+      [article]="item.article"
+      [amount]="item.amount"
+      [withDelete]="true"
+      [showProject]="true"
+    ></app-plantbag-tree-input>
+  </div>
+  <div class="columns is-mobile">
+    <div class="column hideOnMobile"></div>
+    <div class="column hideOnMobile"></div>
+    <div class="column hideOnMobile"></div>
+    <div class="column hideOnMobile"></div>
+    <div class="column hideOnMobile"></div>
+    <div class="column is-half-mobile">
+      <mat-checkbox [formControl]="giftControl">{{ 'asGift' | translate }}</mat-checkbox>
     </div>
-    <div class="columns">
-      <div class="column">
-        <mat-checkbox [formControl]="giftControl">{{ 'asGift' | translate }}</mat-checkbox>
-      </div>
+    <div class="column is-half-mobile">
+      <p class="price">
+        {{ 'priceComplete' | translate }} <br />
+        {{ plantbagPrice | async | currency }}
+      </p>
     </div>
-    <div class="columns">
-      <div class="column">
-        <p class="price">
-          {{ ('priceComplete' | translate) + ': ' + (plantbagPrice | async | currency) }}
-        </p>
-      </div>
-    </div>
-  </mat-card-content>
-  <mat-card-content *ngIf="(plantbag$ | async).plantbagItems.length == 0">
-    <p class="desktop">
-      {{ 'noTreesInPlantbag' | translate }}
-    </p>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>
+<div *ngIf="(plantbag$ | async).plantbagItems.length == 0">
+  <p class="desktop">
+    {{ 'noTreesInPlantbag' | translate }}
+  </p>
+</div>
