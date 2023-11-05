@@ -23,7 +23,7 @@
     <h2>{{ 'editProfile' | translate }}</h2>
 
     <div
-      class="is-flex is-flex-direction-row w-100 margin-bottom-1 is-justify-content-center is-align-items-center"
+      class="is-flex is-flex-direction-row switchToCol w-100 margin-bottom-1 is-justify-content-center is-align-items-center"
     >
       <input
         #csvInput
@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div class="is-flex is-flex-direction-row w-100">
+    <div class="is-flex is-flex-direction-row switchToCol w-100">
       <div class="inputOutline w-100 spaceRightDesktop">
         <input
           (focus)="showWarning('username')"
@@ -70,9 +70,10 @@
         />
       </div>
     </div>
-    <div class="is-flex is-flex-direction-row w-100">
+    <div class="is-flex is-flex-direction-row switchToCol w-100">
       <div class="inputOutline w-100 spaceRightDesktop is-flex is-flex-direction-row">
         <input
+          class="is-flex is-flex-direction-row"
           (focus)="showWarning('password')"
           [placeholder]="'password' | translate"
           name="passwordedit"
@@ -95,7 +96,7 @@
         >
       </div>
     </div>
-    <div class="is-flex is-flex-direction-row">
+    <div class="is-flex is-flex-direction-row switchToCol">
       <div class="inputOutline w-100">
         <textarea
           matInput
@@ -108,7 +109,7 @@
         </textarea>
       </div>
     </div>
-    <div class="is-flex is-flex-direction-row w-100">
+    <div class="is-flex is-flex-direction-row switchToCol w-100">
       <div class="inputOutline w-100">
         <input
           matInput
@@ -118,7 +119,7 @@
         />
       </div>
     </div>
-    <div class="is-flex is-flex-direction-row is-align-items-center w-100">
+    <div class="is-flex is-flex-direction-row switchToCol is-align-items-center w-100">
       <div class="inputOutline w-100 spaceRightDesktop">
         <input
           matInput
@@ -136,7 +137,7 @@
         />
       </div>
     </div>
-    <div class="is-flex is-flex-direction-row is-align-items-center w-100">
+    <div class="is-flex is-flex-direction-row switchToCol is-align-items-center w-100">
       <div class="inputOutline w-100 select-outline spaceRightDesktop">
         <mat-select formControlName="lang">
           <mat-option *ngFor="let language of languages" [value]="language">{{

@@ -16,7 +16,7 @@
   <app-plantbag></app-plantbag>
   <div *ngIf="!(loggedIn$ | async)">
     <p class="fat">
-      Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung
+      {{ 'notLoggedIn' | translate }}
     </p>
     <p>{{ 'plantBagInfoText' | translate }}</p>
     <p>

@@ -310,6 +310,7 @@
   "exploreInfo": "Hier findest du Beschreibungen und Illustrationen von heimischen Bäumen. Wenn du in der Einzelbaumansicht auf die Punkte klickst, erfährst du weitere Details über Früchte oder Blüten, Blätter und Borke.",
   "proposal": "Vorschlag",
   "custom": "Individuell",
-  "selfplant": "Selbstpflanzung"
+  "selfplant": "Selbstpflanzung",
+  "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung"
 
 }

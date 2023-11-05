@@ -310,6 +310,7 @@
   "exploreInfo": "Here you will find descriptions and illustrations of native trees. If you click on the dots in the individual tree view, you can find out more details about fruits or flowers, leaves and bark.",
   "proposal": "Proposal",
   "custom": "Custom",
-  "selfplant": "Selfplant"
+  "selfplant": "Selfplant",
+  "notLoggedIn": "You are not logged in! If you plant anonymously, fewer functions are available to you."
 
 }
