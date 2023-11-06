@@ -83,4 +83,13 @@ export class TeamService {
         '&size=8',
     );
   }
+
+  updateTeamImage(teamId: number, image: any) {
+    const formData = new FormData();
+    formData.append('teamId', teamId + '');
+    formData.append('file', image);
+    return this.http.post(environment.backendUrl + '/team/image/upload', formData, {
+      responseType: 'text',
+    });
+  }
 }
