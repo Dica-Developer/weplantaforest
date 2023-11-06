@@ -1,5 +1,8 @@
-<div class="columns w-100 padding-2 border-bottom" *ngIf="teamDetails && !createMode && !editMode">
-  <div class="column is-half">
+<div
+  class="columns is-flex h-100 w-100 border-bottom"
+  *ngIf="teamDetails && !createMode && !editMode"
+>
+  <div class="column is-half padding-2 leftSide">
     <h2 class="is-flex is-justify-content-space-between w-100">
       {{ 'team' | translate }}
       <div *ngIf="isLoggedIn()">

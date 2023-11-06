@@ -1,4 +1,4 @@
-<div *ngIf="teamDetails$ | async">
+<div class="teamPage" *ngIf="teamDetails$ | async">
   <app-team-header [teamDetails]="teamDetails$ | async"></app-team-header>
   <app-team-details [teamDetails]="teamDetails$ | async"></app-team-details>
   <div class="border-bottom"></div>
