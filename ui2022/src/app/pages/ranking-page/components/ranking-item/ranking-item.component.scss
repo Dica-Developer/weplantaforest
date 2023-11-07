@@ -30,17 +30,18 @@
   .amount {
     margin-right: 10px;
     float: right;
-    // color: var(--background);
   }
   .normalFont {
     color: var(--black);
   }
   .bar-fill {
+    min-width: 20px;
     height: 20px;
     border-radius: 25px;
     background: var(--brown);
   }
   .lastYear {
     background: var(--green);
+    color: var(--black);
   }
 }
