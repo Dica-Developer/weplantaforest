@@ -308,11 +308,11 @@ mat-paginator {
   }
 }
 
-.plant-proposal-page {
-  .mat-tab-label-container {
-    padding-left: 4rem !important;
-  }
-}
+// .plant-proposal-page {
+//   .mat-tab-label-container {
+//     padding-left: 4rem !important;
+//   }
+// }
 
 .teamPage {
   .leftSide {
@@ -327,9 +327,9 @@ mat-paginator {
   }
 
   .plant-proposal-page {
-    .mat-tab-label-container {
-      padding-left: 0rem !important;
-    }
+    // .mat-tab-label-container {
+    //   padding-left: 0rem !important;
+    // }
     .mat-tab-label {
       padding: 0 0.5rem;
     }

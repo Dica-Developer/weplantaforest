@@ -80,10 +80,6 @@ ngx-slider.animate .ngx-slider-bubble {
 }
 
 @media only screen and (max-width: 768px) {
-  .header {
-    display: none !important;
-  }
-
   .slider-row {
     flex-direction: column;
     margin-top: 1rem;

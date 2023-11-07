@@ -1,42 +1,63 @@
-<div class="columns project-planting">
-  <div class="column padding-left is-flex is-flex-direction-column">
-    <div class="is-flex slider-row">
-      <div class="custom-slider column is-7">
-        <p>{{ 'howManyTreesToPlant' | translate }}</p>
-        <ngx-slider
-          [(value)]="value"
-          [options]="sliderOptions"
-          (valueChange)="getProposal($event)"
-        ></ngx-slider>
+<div class="padding-2 padding-left padding-right is-flex is-flex-direction-column border-bottom">
+  <mat-tab-group>
+    <mat-tab label="{{ 'proposal' | translate }}">
+      <p class="font-1 padding-top-1">{{ 'proposalOrIndividualText' | translate }}</p>
+      <div class="is-flex slider-row">
+        <div class="custom-slider column is-7">
+          <ngx-slider
+            [(value)]="value"
+            [options]="sliderOptions"
+            (valueChange)="getProposal($event)"
+          ></ngx-slider>
+        </div>
+        <div class="is-flex w-100 slider-row is-align-items-center is-flex-direction-row-reverse">
+          <app-button
+            label="{{ 'intoPlantbag' | translate }}"
+            (click)="putIntoPlantbag()"
+            *ngIf="showPutIntoPlantbagButton"
+          ></app-button>
+          <app-button
+            label="{{ 'toPlantBag' | translate }}"
+            routerLink="/plantbag"
+            *ngIf="showGoToPlantbagButton"
+          ></app-button>
+          <span class="font-1 pricetag">
+            {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + ' €' }}
+          </span>
+        </div>
       </div>
-      <div class="is-flex w-100 slider-row is-align-items-center is-justify-content-space-evenly">
-        <span class="font-1">
-          {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + '€' }}
-        </span>
-        <app-button
-          label="{{ 'intoPlantbag' | translate }}"
-          (click)="putIntoPlantbag()"
-          *ngIf="showPutIntoPlantbagButton"
-        ></app-button>
-        <app-button
-          label="{{ 'toPlantBag' | translate }}"
-          routerLink="/plantbag"
-          *ngIf="showGoToPlantbagButton"
-        ></app-button>
+      <div class="is-flex is-flex-direction-column column is-8 margin-top-2">
+        <div class="columns hideOnMobile">
+          <div class="column">
+            <div class="image-wrapper"></div>
+          </div>
+          <div class="column">
+            <b> {{ 'treeType' | translate }} </b>
+          </div>
+          <div class="column">
+            <b> {{ 'amount' | translate }} </b>
+          </div>
+          <div class="column">
+            <b> {{ 'project' | translate }} </b>
+          </div>
+          <div class="column">
+            <b> {{ 'partialPrice' | translate }} </b>
+          </div>
+        </div>
+        <app-plantproposal-preview-row
+          *ngFor="let item of (proposal$ | async)?.plantItems ?? []"
+          [plantItem]="item"
+        >
+        </app-plantproposal-preview-row>
       </div>
-    </div>
-    <div class="is-flex is-flex-direction-column column is-7">
-      <app-plantproposal-preview-row
-        *ngFor="let item of (proposal$ | async)?.plantItems ?? []"
-        [plantItem]="item"
-      >
-      </app-plantproposal-preview-row>
-    </div>
-    <app-custom-planting
-      [projectId]="projectReport.projectReportData.projectId"
-    ></app-custom-planting>
-    <a class="back-link" (click)="showProjectDescriptionClicked()">{{
-      'backToDescription' | translate
-    }}</a>
-  </div>
+    </mat-tab>
+    <mat-tab label="{{ 'custom' | translate }}">
+      <app-custom-planting
+        [projectId]="projectReport.projectReportData.projectId"
+      ></app-custom-planting>
+    </mat-tab>
+  </mat-tab-group>
+  <a class="margin-top-2" (click)="showProjectDescriptionClicked()">{{
+    'backToDescription' | translate
+  }}</a>
 </div>

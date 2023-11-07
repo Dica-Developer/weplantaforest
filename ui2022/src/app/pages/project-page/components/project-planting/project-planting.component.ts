@@ -28,7 +28,6 @@ import { addPlantbagItem, resetPlantbag } from '../../../../store/plantbag.store
   selector: 'app-project-planting',
   templateUrl: './project-planting.component.html',
   styleUrls: ['./project-planting.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class ProjectPlantingComponent implements OnInit, OnDestroy {
   @Input() projectReport: ProjectReportDetails;
@@ -60,8 +59,6 @@ export class ProjectPlantingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.proposalSub = this.store.select(selectProjectProposal).subscribe((proposal) => {
-      console.log(proposal);
-
       this.proposal = proposal;
       this.showPutIntoPlantbagButton = true;
       this.showGoToPlantbagButton = false;

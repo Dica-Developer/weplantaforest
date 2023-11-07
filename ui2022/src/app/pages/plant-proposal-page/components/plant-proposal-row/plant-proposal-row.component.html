@@ -1,14 +1,8 @@
-<div class="is-flex is-flex-direction-column border-bottom">
-  <div
-    class="padding-left padding-right padding-top-2 padding-bottom-2"
-    *ngIf="proposalFailed$ | async"
-  >
+<div class="is-flex is-flex-direction-column padding-top-1 padding-bottom-1">
+  <div *ngIf="proposalFailed$ | async">
     <h3>{{ 'noTreesToPlant' | translate }}</h3>
   </div>
-  <div
-    class="padding-left padding-right padding-top-2 padding-bottom-2"
-    *ngIf="!(proposalFailed$ | async)"
-  >
+  <div *ngIf="!(proposalFailed$ | async)">
     <p class="font-1">{{ 'proposalOrIndividualText' | translate }}</p>
     <div class="is-flex slider-row">
       <div class="custom-slider column is-7">
@@ -36,7 +30,7 @@
     </div>
 
     <div class="is-flex is-flex-direction-column column is-8 margin-top-2">
-      <div class="columns header">
+      <div class="columns hideOnMobile">
         <div class="column">
           <div class="image-wrapper"></div>
         </div>

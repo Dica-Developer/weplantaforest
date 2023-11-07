@@ -1,24 +1,27 @@
-app-custom-planting {
-  div:first-child {
-    padding-left: 0!important;
-    border-bottom: 0!important;
-  }
+.pricetag {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 
-.project-planting {
-  border-bottom: 1px solid var(--black);
+.columns {
+  font-size: 1rem;
+  font-family: 'Bull-mono' !important;
 }
 
-.back-link {
-  margin-top: 2rem;
+.column {
+  padding: 0 !important;
 }
 
+.image-wrapper {
+  max-width: 90px;
+  max-height: 90px;
+}
 
 @media only screen and (max-width: 768px) {
   .slider-row {
     flex-direction: column;
-    app-button {
-      margin-top: 1rem;
-    }
+    margin-top: 1rem;
   }
 }
