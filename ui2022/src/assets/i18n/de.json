@@ -11,7 +11,7 @@
   "headerSubtext1": "Wir pflanzen Bäume für das Klima.",
   "headerSubtext2": "Und für unsere Kinder.",
   "learnMore": "Mehr über uns erfahren",
-  "selectAndPlantNow": "Jetzt Bäume auswählen und pflanzen. Folgende Bäume stehen zur Auswahl:",
+  "selectAndPlantNow": "Jetzt Bäume auswählen und pflanzen.",
   "plantNow": "Jetzt Baum pflanzen",
   "selectTree": "Baum auswählen",
   "selectTreeText": "Wähle aus, welche Bäume du pflanzen willst. Du kannst direkt sehen, wieviel CO<sub>2</sub> gebunden wird.",
@@ -310,7 +310,7 @@
   "exploreInfo": "Hier findest du Beschreibungen und Illustrationen von heimischen Bäumen. Wenn du in der Einzelbaumansicht auf die Punkte klickst, erfährst du weitere Details über Früchte oder Blüten, Blätter und Borke.",
   "proposal": "Vorschlag",
   "custom": "Individuell",
-  "selfplant": "Selbstpflanzung",
+  "selfplant": "Selbst Pflanzen",
   "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung"
 
 }

@@ -28,7 +28,7 @@
       }}<a routerLink="/signup">{{ 'registerHere' | translate }}</a>
     </p>
   </div>
-  <div class="is-flex w-100 is-justify-content-center">
+  <div class="is-flex w-100 is-justify-content-end">
     <app-button
       *ngIf="(plantBagPrice$ | async) > 0"
       label="{{ 'GoToCheckout' | translate }}"

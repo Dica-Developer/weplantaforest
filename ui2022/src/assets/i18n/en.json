@@ -11,7 +11,7 @@
   "headerSubtext1": "We plant trees for the climate.",
   "headerSubtext2": "And for our children.",
   "learnMore": "Learn more about us",
-  "selectAndPlantNow": "Select and plant trees now. The following trees are available:",
+  "selectAndPlantNow": "Select and plant trees now.",
   "plantNow": "Plant Tree Now",
   "selectTree": "Select tree",
   "selectTreeText": "Choose which trees you want to plant. You can see directly how much CO<sub>2</sub> is bound.",
@@ -279,7 +279,7 @@
   "passwordChangedWarning": "After changing the password, you must log in again!",
   "customPlantingInfo": "Here, you decide which trees you want to plant where.",
   "date": "Date",
-  "treeType": "Tree Type",
+  "treeType": "Tree Species",
   "exploreTip": "Click on the green dots to learn more about the tree.",
   "leaf": "Leaves",
   "fruits": "Fruits",
@@ -310,7 +310,7 @@
   "exploreInfo": "Here you will find descriptions and illustrations of native trees. If you click on the dots in the individual tree view, you can find out more details about fruits or flowers, leaves and bark.",
   "proposal": "Proposal",
   "custom": "Custom",
-  "selfplant": "Selfplant",
+  "selfplant": "Plant Yourself",
   "notLoggedIn": "You are not logged in! If you plant anonymously, fewer functions are available to you."
 
 }
