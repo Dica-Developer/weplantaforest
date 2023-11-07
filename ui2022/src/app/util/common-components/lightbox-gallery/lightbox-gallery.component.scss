@@ -56,9 +56,15 @@
   font-size: 0.75rem;
   color: var(--background);
 }
-.index:hover {
+
+mat-icon {
+  color: var(--dark-brown);
+}
+
+mat-icon:hover {
   color: var(--green);
 }
+
 .imageNav {
   position: absolute;
   bottom: 4rem;
