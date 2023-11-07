@@ -10,7 +10,7 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(
       httpRequest.clone({
         setHeaders: {
-          'X-AUTH-TOKEN': localStorage.getItem('jwt') ? localStorage.getItem('jwt') : '',
+          'X-AUTH-TOKEN': localStorage.getItem('jwt') ? localStorage.getItem('jwt') : 'anonym-user',
         },
       }),
     );
