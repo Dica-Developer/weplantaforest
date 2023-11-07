@@ -24,7 +24,7 @@
       [ngClass]="{ scale: showScaleClass }"
       matBadge="{{ plantBagPrice$ | async | currency }}"
       matBadgeColor="warn"
-      [matBadgeHidden]="(plantBagPrice$ | async) == '0.00€'"
+      [matBadgeHidden]="(plantBagPrice$ | async) == '0.00'"
       [inToolbar]="true"
       class="h-100 center-vertically-horizontally inToolbar"
       routerLink="/plantbag"
