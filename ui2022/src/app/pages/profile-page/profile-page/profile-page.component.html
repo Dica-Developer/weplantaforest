@@ -10,11 +10,8 @@
             </a>
           </li>
           <li>
-            <a
-              class="breadcrumb-active"
-              [routerLink]="'/profile/' + (profileDetails$ | async).userName"
-            >
-              {{ (profileDetails$ | async).userName }}
+            <a class="breadcrumb-active">
+              {{ (profileDetails$ | async)?.userName }}
             </a>
           </li>
         </ul>
@@ -86,13 +83,13 @@
   [userName]="(profileDetails$ | async)?.userName"
 ></app-profile-trees>
 <app-profile-receipts
-  *ngIf="showEdit"
+  *ngIf="showEdit && (profileDetails$ | async)?.receipts"
   [receipts]="(profileDetails$ | async)?.receipts ?? []"
 ></app-profile-receipts>
 <app-profile-gift-overview
   [recipientGifts]="(profileDetails$ | async)?.gifts?.recipient"
   [consignorGifts]="(profileDetails$ | async)?.gifts?.consignor"
-  *ngIf="showEdit"
+  *ngIf="showEdit && (profileDetails$ | async)?.gifts"
 ></app-profile-gift-overview>
 <app-profile-certificates
   *ngIf="showEdit"
