@@ -320,6 +320,12 @@ mat-paginator {
   }
 }
 
+.teamPage {
+  .borderRight {
+    border-right: 1px solid var(--black);
+  }
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body {
