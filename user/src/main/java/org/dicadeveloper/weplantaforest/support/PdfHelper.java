@@ -147,7 +147,7 @@ public class PdfHelper {
 
     public void createBackground(PdfContentByte cb) {
       cb.saveState();
-      cb.setRGBColorFill(0xDC, 0xDC, 0xD6);
+      cb.setRGBColorFill(0xFD, 0xFE, 0xFB);
       cb.rectangle(0.0f, 0.0f, 595.0f, 1165.0f);
       cb.fill();
       cb.stroke();

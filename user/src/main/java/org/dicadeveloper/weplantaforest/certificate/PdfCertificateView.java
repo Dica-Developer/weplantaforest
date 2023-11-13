@@ -120,7 +120,7 @@ public class PdfCertificateView {
     table.writeSelectedRows(0, 3, 0, 500, cb);
 
     cb.saveState();
-    cb.setRGBColorFill(0xDC, 0xDC, 0xD6);
+    cb.setRGBColorFill(0xFD, 0xFE, 0xFB);
     cb.rectangle(50.0f, 335.0f, 495.0f, 60.0f);
     cb.fill();
     cb.stroke();
