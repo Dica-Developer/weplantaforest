@@ -1,0 +1,59 @@
+form {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 70%;
+}
+
+mat-form-field {
+  font-family: 'Bull-mono' !important;
+  font-size: 1rem;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+input:disabled {
+  color: grey;
+}
+
+.spaceRightDesktop {
+  margin-right: 1rem;
+}
+
+.cancel-btn {
+  margin-right: 0.5rem;
+}
+
+:host ::ng-deep app-button.cancel-btn {
+  button {
+    background: var(--background) !important;
+    color: var(--dark-brown) !important;
+  }
+}
+
+.imageWrapper {
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  img {
+    border-radius: 50%;
+    height: 12rem !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .spaceRightDesktop {
+    margin-right: 0rem;
+  }
+  form {
+    max-width: 100%;
+  }
+  .switchToCol {
+    flex-direction: column !important;
+  }
+
+  .padding-4 {
+    padding: 1rem;
+  }
+}

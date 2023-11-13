@@ -47,6 +47,7 @@ import { CertificateFindPageComponent } from './pages/certificate-find-page/cert
 import { FaqPageComponent } from './pages/faq-page/faq-page.component';
 import { TermsPageComponent } from './pages/terms-page/terms-page.component';
 import { AwardsPageComponent } from './pages/awards-page/awards-page.component';
+import { EditTeamPageComponent } from './pages/edit-team-page/edit-team-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -66,6 +67,7 @@ export const userRoutes: Routes = [
   { path: 'project/:projectName', component: ProjectPageComponent },
   { path: 'profile/:username', component: ProfilePageComponent },
   { path: 'editProfile/:username', component: EditProfilePageComponent },
+  { path: 'editTeam/:teamName', component: EditTeamPageComponent },
   { path: 'team/:teamname', component: TeamPageComponent },
   { path: 'plant', component: PlantProposalPageComponent },
   { path: 'plantSelf', component: PlantSelfPageComponent },

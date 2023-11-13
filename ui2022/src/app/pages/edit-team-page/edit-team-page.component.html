@@ -1,0 +1,84 @@
+<div class="padding-left padding-top-075">
+  <nav class="breadcrumb">
+    <ul>
+      <li>
+        <a routerLink="/">
+          {{ 'startPage' | translate }}
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/team/' + (teamDetails$ | async)?.teamName">
+          {{ 'team' | translate }}
+        </a>
+      </li>
+      <li>
+        <a class="breadcrumb-active">
+          {{ (teamDetails$ | async)?.teamName }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div class="is-flex is-flex-direction-column padding-4 padding-top-2">
+  <form [formGroup]="teamForm" *ngIf="teamForm">
+    <h2>{{ 'editTeam' | translate }}</h2>
+
+    <div
+      class="is-flex is-flex-direction-row switchToCol w-100 margin-bottom-1 is-justify-content-center is-align-items-center"
+    >
+      <input
+        #csvInput
+        hidden="true"
+        type="file"
+        onclick="this.value=null"
+        (change)="imageChanged($event)"
+        accept=".png, .jpg, .jpeg"
+      />
+      <div
+        *ngIf="!(uploadingImage$ | async)"
+        class="imageWrapper pointer"
+        (click)="csvInput.click()"
+      >
+        <img src="{{ imagePreviewSrc }}" alt="" *ngIf="imagePreviewSrc" />
+        <img
+          src="{{ (teamDetails$ | async)?.teamImageUrl + '?' + randomNumber }}"
+          alt=""
+          *ngIf="(teamDetails$ | async)?.teamImageUrl && !imagePreviewSrc"
+        />
+        <img *ngIf="!(teamDetails$ | async)?.teamImageUrl" src="assets/default_user.jpg" alt="" />
+      </div>
+    </div>
+
+    <div class="is-flex is-flex-direction-row switchToCol w-100">
+      <div class="inputOutline w-100">
+        <input
+          matInput
+          [placeholder]="'teamName' | translate"
+          name="teamName"
+          formControlName="teamName"
+        />
+      </div>
+    </div>
+    <div class="is-flex is-flex-direction-row switchToCol">
+      <div class="inputOutline w-100">
+        <textarea
+          matInput
+          rows="5"
+          type="text"
+          [placeholder]="'shortDescription' | translate"
+          name="description"
+          formControlName="description"
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="is-flex is-justify-content-center">
+      <app-button
+        [label]="'cancel' | translate"
+        class="cancel-btn"
+        (click)="routeToTeam()"
+      ></app-button>
+      <app-button (click)="updateTeam()" [label]="'save' | translate"></app-button>
+    </div>
+  </form>
+</div>

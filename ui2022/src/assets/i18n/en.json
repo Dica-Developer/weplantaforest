@@ -311,6 +311,7 @@
   "proposal": "Proposal",
   "custom": "Custom",
   "selfplant": "Plant Yourself",
-  "notLoggedIn": "You are not logged in! If you plant anonymously, fewer functions are available to you."
+  "notLoggedIn": "You are not logged in! If you plant anonymously, fewer functions are available to you.",
+  "editTeam": "Edit Team"
 
 }

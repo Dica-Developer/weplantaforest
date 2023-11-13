@@ -24,4 +24,8 @@ export class SliderHelper {
       { value: 10, legend: `10` },
     ];
   }
+
+  getRandomNumber() {
+    return Math.floor(Math.random() * 100);
+  }
 }

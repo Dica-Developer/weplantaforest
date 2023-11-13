@@ -533,7 +533,11 @@ export class ProfileEffects {
           .updateProfile(action.username, action.propertyToUpdate, action.controlValue)
           .pipe(
             switchMap(() => {
-              if (action.propertyToUpdate === 'NAME' || action.propertyToUpdate === 'EMAIL') {
+              if (
+                action.propertyToUpdate === 'NAME' ||
+                action.propertyToUpdate === 'MAIL' ||
+                action.propertyToUpdate === 'PASSWORD'
+              ) {
                 return [logout()];
               } else {
                 return [loadProfileDetails({ username: action.username })];

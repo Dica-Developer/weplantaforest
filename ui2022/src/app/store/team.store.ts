@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { loadProfileDetails } from './profile.store';
 import { addSuccessMessage } from './success-message.state';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 export interface Team {
   id: number;
@@ -31,7 +32,7 @@ export interface TeamDetails {
   type: string;
   teamLeader: string;
   membersAmount: string;
-  teamDescription: string;
+  description: string;
   imageFileName: string;
   teamImageUrl: string;
 }
@@ -96,7 +97,7 @@ export const checkIfMemberSuccess = createAction(
 
 export const updateTeam = createAction(
   '[Team] update team',
-  props<{ teamId: number; toEdit: TeamField; newEntry: string }>(),
+  props<{ teamId: number; teamName: string; propertyToUpdate: TeamField; newEntry: string }>(),
 );
 
 export const leaveTeam = createAction('[Team] leave team');
@@ -108,6 +109,26 @@ export const getTeamTrees = createAction(
 export const getTeamTreesSuccess = createAction(
   '[Team] get team trees success',
   props<{ pagedTrees: PagedData<any> }>(),
+);
+
+export const updateTeamImage = createAction(
+  '[Profile] update Team image',
+  props<{ teamId: string; image: File }>(),
+);
+
+export const updateTeamImageSuccess = createAction(
+  '[Profile] update Team image success',
+  props<{ newImageFileName: string }>(),
+);
+
+export const updateTeamProperty = createAction(
+  '[Profile] update Team property',
+  props<{ teamId: string; propertyToUpdate: string; teamName: string; controlValue }>(),
+);
+
+export const updateTeamPropertySuccess = createAction(
+  '[Profile] update Team image success',
+  props<{ propertyToUpdate: string; controlValue }>(),
 );
 
 export interface TeamState {
@@ -259,6 +280,7 @@ export class TeamEffects {
     private actions$: Actions,
     private teamService: TeamService,
     private translateService: TranslateService,
+    private router: Router,
   ) {}
 
   LoadTeams$ = createEffect(() =>
@@ -326,7 +348,7 @@ export class TeamEffects {
     this.actions$.pipe(
       ofType(updateTeam),
       concatMap((action) =>
-        this.teamService.updateTeam(action.teamId, action.toEdit, action.newEntry).pipe(
+        this.teamService.updateTeam(action.teamId, action.propertyToUpdate, action.newEntry).pipe(
           concatMap(() => [
             addSuccessMessage({
               message: {
@@ -334,8 +356,8 @@ export class TeamEffects {
                 message: this.translateService.instant('teamUpdated'),
               },
             }),
-            createTeamSuccess(),
             loadProfileDetails({ username: localStorage.getItem('username') }),
+            loadTeamDetails({ teamName: action.teamName }),
           ]),
         ),
       ),
@@ -348,6 +370,7 @@ export class TeamEffects {
       switchMap((action) =>
         this.teamService.deleteTeam(action.teamId).pipe(
           concatMap(() => {
+            // this.router.navigate(['/']);
             return [
               addSuccessMessage({
                 message: {

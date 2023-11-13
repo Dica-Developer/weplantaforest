@@ -15,6 +15,7 @@ import {
   updateProfileProperty,
 } from 'src/app/store/profile.store';
 import { logout } from 'src/app/store/auth.store';
+import { SliderHelper } from 'src/app/util/helper/slider.helper';
 
 @Component({
   selector: 'app-edit-profile-page',
@@ -53,6 +54,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     private router: Router,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
+    private sliderHelper: SliderHelper,
   ) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadProfileDetails({ username: paramMap.get('username') }));
@@ -78,13 +80,9 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.uploadImageSub = this.store.select(selectUploadingImage).subscribe((uploading) => {
       if (!uploading) {
-        this.randomNumber = this.getRandomNumber();
+        this.randomNumber = this.sliderHelper.getRandomNumber();
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.uploadImageSub?.unsubscribe();
   }
 
   updateProfile() {
@@ -110,7 +108,6 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
           controlValue: this.profileForm.get('mail').value,
         }),
       );
-      this.store.dispatch(logout());
     }
     if (this.profileForm.get('username').dirty) {
       this.store.dispatch(
@@ -120,7 +117,6 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
           controlValue: this.profileForm.get('username').value,
         }),
       );
-      this.store.dispatch(logout());
     }
     if (this.profileForm.get('location').dirty) {
       this.store.dispatch(
@@ -180,7 +176,6 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
           controlValue: this.profileForm.get('password').value,
         }),
       );
-      this.store.dispatch(logout());
     }
     this.snackbar.open(this.translateService.instant('profileUpdated'), 'OK', {
       duration: 4000,
@@ -233,11 +228,11 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  getRandomNumber() {
-    return Math.floor(Math.random() * 100);
-  }
-
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
+  }
+
+  ngOnDestroy(): void {
+    this.uploadImageSub?.unsubscribe();
   }
 }

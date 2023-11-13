@@ -128,7 +128,7 @@
   "backToPlantProposal": "Zurück zu Baum pflanzen",
   "addPlantingNow": "Jetzt Pflanzung eintragen",
   "addOtherTreeType": "Weitere Baumart hinzufügen",
-  "editProfile": "Profil editieren",
+  "editProfile": "Profil Editieren",
   "edit": "editieren",
   "changeNameHint": "erfordert Neuanmeldung!",
   "save": "Speichern",
@@ -311,6 +311,7 @@
   "proposal": "Vorschlag",
   "custom": "Individuell",
   "selfplant": "Selbst Pflanzen",
-  "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung"
+  "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung",
+  "editTeam": "Team Editieren"
 
 }

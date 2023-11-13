@@ -47,6 +47,10 @@ export class TeamHeaderComponent implements OnInit {
     return this.profileDetails.userName === localStorage.getItem('username');
   }
 
+  editTeam() {
+    this.router.navigate(['/editTeam/' + this.teamDetails.teamName]);
+  }
+
   openConfirmation(confirmType: string) {
     if (confirmType === 'leave') {
       this.snackbar

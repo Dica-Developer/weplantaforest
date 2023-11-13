@@ -1,15 +1,9 @@
-<div
-  class="columns is-flex h-100 w-100 border-bottom"
-  *ngIf="teamDetails && !createMode && !editMode"
->
-  <div class="column is-half padding-2 leftSide">
-    <h2 class="is-flex is-justify-content-space-between w-100">
+<div class="columns h-100 w-100 border-bottom" *ngIf="teamDetails && !createMode && !editMode">
+  <div class="column is-half leftSide padding-2">
+    <h2 class="w-100 is-flex is-justify-content-space-between w-100">
       {{ 'team' | translate }}
-      <div *ngIf="isLoggedIn()">
-        <mat-icon
-          *ngIf="isAdmin$ | async"
-          [matTooltip]="'edit' | translate"
-          (click)="switchMode('edit')"
+      <div class="is-flex is-flex-direction-row" *ngIf="isLoggedIn()">
+        <mat-icon *ngIf="isAdmin$ | async" [matTooltip]="'edit' | translate" (click)="editTeam()"
           >edit</mat-icon
         >
         <mat-icon
@@ -34,9 +28,10 @@
     </h2>
     <h4 class="pointer" (click)="routeToTeam()">{{ teamDetails.teamName }}</h4>
   </div>
-  <div class="column is-half">
+  <div class="column is-half padding-2">
     <div class="imageWrapper">
       <img src="{{ teamDetails.teamImageUrl }}" alt="" />
+      <img *ngIf="!teamDetails.teamImageUrl" src="assets/default_user.jpg" alt="" />
     </div>
   </div>
 </div>

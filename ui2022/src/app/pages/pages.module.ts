@@ -37,6 +37,7 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { AwardsPageComponent } from './awards-page/awards-page.component';
 import { CertificateFindPageModule } from './certificate-find-page/ceritificate-find-page.module';
+import { EditTeamPageComponent } from './edit-team-page/edit-team-page.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { CertificateFindPageModule } from './certificate-find-page/ceritificate-
     FaqPageComponent,
     TermsPageComponent,
     AwardsPageComponent,
+    EditTeamPageComponent,
   ],
   imports: [
     CommonModule,

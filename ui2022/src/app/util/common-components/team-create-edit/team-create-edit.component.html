@@ -1,4 +1,4 @@
-<div class="w-100 padding-2 is-flex is-flex-direction-column">
+<div class="w-100 padding-2 is-flex is-flex-direction-column border-bottom">
   <h2>
     {{ 'team' | translate }}
   </h2>
@@ -21,26 +21,6 @@
         formControlName="description"
       ></textarea>
     </div>
-
-    <!-- <div>
-      <input
-        #csvInput
-        hidden="true"
-        type="file"
-        (change)="imageChanged($event)"
-        accept=".png, .jpg, .jpeg"
-      />
-      <app-button
-        [type]="'button'"
-        label="{{ 'imageUpload' | translate }}"
-        (click)="csvInput.click()"
-      ></app-button>
-      <div class="margin-top-2">
-        <img src="{{ imageSrc }}" width="400" height="300" *ngIf="imageSrc" />
-        <p *ngIf="!imageSrc">{{ 'noImgPicked' | translate }}</p>
-      </div>
-    </div> -->
-
     <app-button class="margin-right-1" [label]="'save' | translate"></app-button>
     <app-button [label]="'cancel' | translate" [type]="'button'" (clicked)="cancel()"></app-button>
   </form>

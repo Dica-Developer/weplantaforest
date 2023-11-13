@@ -108,4 +108,7 @@ video {
   .hideOnMobile {
     display: none;
   }
+  .switchColOnMobile {
+    flex-direction: column !important;
+  }
 }
