@@ -13,7 +13,7 @@
       </li>
     </ul>
   </nav>
-  <app-plantbag></app-plantbag>
+  <app-plantbag (convertPlantBagToCartClicked)="convertPlantBagToCart()"></app-plantbag>
   <div *ngIf="!(loggedIn$ | async)">
     <p class="fat">
       {{ 'notLoggedIn' | translate }}

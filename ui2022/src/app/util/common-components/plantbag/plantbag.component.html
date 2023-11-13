@@ -1,5 +1,22 @@
 <h2>{{ 'plantbag' | translate }}</h2>
 <div *ngIf="(plantbag$ | async).plantbagItems.length > 0">
+  <div class="columns is-mobile">
+    <div class="column hideOnMobile"></div>
+    <div class="column hideOnMobile">
+      <b> {{ 'treeType' | translate }} </b>
+    </div>
+    <div class="column hideOnMobile">
+      <b> {{ 'project' | translate }} </b>
+    </div>
+    <div class="column hideOnMobile">
+      <b> {{ 'amount' | translate }} </b>
+    </div>
+    <div class="column hideOnMobile">
+      <b> {{ 'partialPrice' | translate }} </b>
+    </div>
+    <div class="column hideOnMobile"></div>
+  </div>
+
   <div *ngFor="let item of (plantbag$ | async).plantbagItems">
     <app-plantbag-tree-input
       [article]="item.article"
@@ -9,8 +26,6 @@
     ></app-plantbag-tree-input>
   </div>
   <div class="columns is-mobile">
-    <!-- <div class="column hideOnMobile"></div> -->
-    <div class="column hideOnMobile"></div>
     <div class="column hideOnMobile"></div>
     <div class="column hideOnMobile"></div>
     <div class="column hideOnMobile"></div>
@@ -23,6 +38,18 @@
         {{ plantbagPrice | async | currency }}
       </p>
     </div>
+    <div class="column hideOnMobile">
+      <app-button
+        label="{{ 'GoToCheckout' | translate }}"
+        (click)="convertPlantBagToCartEmit()"
+      ></app-button>
+    </div>
+  </div>
+  <div class="hideOnDesktop w-100 is-flex is-justify-content-center">
+    <app-button
+      label="{{ 'GoToCheckout' | translate }}"
+      (click)="convertPlantBagToCartEmit()"
+    ></app-button>
   </div>
 </div>
 <div *ngIf="(plantbag$ | async).plantbagItems.length == 0">

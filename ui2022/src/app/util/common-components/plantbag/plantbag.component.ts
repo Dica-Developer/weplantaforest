@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { PlantbagState, selectPlantbag, selectPlantbagPrice } from '../../../store/plantbag.store';
@@ -14,6 +14,7 @@ import { selectIsGift, setGift } from 'src/app/store/payment.store';
 })
 export class PlantbagComponent implements OnInit, OnDestroy {
   plantbag$: Observable<PlantbagState>;
+  @Output() convertPlantBagToCartClicked = new EventEmitter();
 
   plantbagPrice: Observable<number>;
 
@@ -35,6 +36,7 @@ export class PlantbagComponent implements OnInit, OnDestroy {
     this.giftControlSub = this.giftControl.valueChanges.subscribe((isGift) => {
       this.store.dispatch(setGift({ isGift }));
     });
+    console.log(this.plantbagPrice);
   }
 
   ngOnDestroy(): void {
@@ -44,5 +46,9 @@ export class PlantbagComponent implements OnInit, OnDestroy {
 
   getGermanText(text: string): string {
     return this.textHelper.getTextForLanguage(text, 'de');
+  }
+
+  convertPlantBagToCartEmit() {
+    this.convertPlantBagToCartClicked.emit();
   }
 }
