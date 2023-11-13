@@ -27,7 +27,7 @@ export class ProfilePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
     this.routeParamsSub = this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      this.store.dispatch(loadProfileDetails({ username: paramMap.get('username') }));
+      this.store.dispatch(loadProfileDetails({ username: decodeURIComponent(paramMap.get('username')) }));
 
       if (paramMap.get('username') === localStorage.getItem('username')) {
         this.showEdit = true;

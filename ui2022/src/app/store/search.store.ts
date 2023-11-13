@@ -68,10 +68,10 @@ function decodeNames(bResult: SearchResult) {
     });
   }
   for (const user of bResult.user) {
-    result.user.push({ id: user.id, name: he.decode(user.name), link: user.link });
+    result.user.push({ id: user.id, name: he.decode(user.name), link: createEncodedLink(user.link) });
   }
   for (const team of bResult.teams) {
-    result.teams.push({ id: team.id, name: he.decode(team.name), link: team.link });
+    result.teams.push({ id: team.id, name: he.decode(team.name), link: createEncodedLink(team.link) });
   }
   for (const project of bResult.projects) {
     result.projects.push({ id: project.id, name: he.decode(project.name), link: project.link });
@@ -89,6 +89,12 @@ export const selectSearchResults = createSelector(
   searchFeature,
   (state: SearchState) => state.result,
 );
+
+
+function createEncodedLink(link: string): string {
+//we have to encode "/" in user and teamNames because otherwise the router will not work
+  return link.substring(0, link.indexOf('/') + 1) + encodeURIComponent(link.substring(link.indexOf('/') + 1));
+}
 
 @Injectable()
 export class SearchEffects {
