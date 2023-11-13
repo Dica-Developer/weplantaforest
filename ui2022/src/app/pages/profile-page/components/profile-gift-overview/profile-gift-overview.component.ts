@@ -49,7 +49,7 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   @Input()
   set recipientGifts(gifts: ProfileGift[]) {
     this._recipientGifts = gifts;
-    this.totalRecipientGifts = gifts.length;
+    this.totalRecipientGifts = gifts?.length;
     this.recipientGiftPages = new Map<number, ProfileGift[]>();
     let pageCnt = 0;
     if (gifts && gifts.length > 0) {
@@ -71,7 +71,7 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   set consignorGifts(gifts: ProfileGift[]) {
     console.log(gifts);
     this._consignorGifts = gifts;
-    this.totalConsignorGifts = gifts.length;
+    this.totalConsignorGifts = gifts?.length;
     this.consignorGiftPages = new Map<number, ProfileGift[]>();
     let pageCnt = 0;
     if (gifts && gifts.length > 0) {
