@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { selectPlantbagPriceFormatted } from '../../../store/plantbag.store';
 import { SearchOverlayComponent } from '../search-overlay/search-overlay.component';
+import { resetTree } from 'src/app/store/treeType.store';
 
 @Component({
   selector: 'app-toolbar',
@@ -82,6 +83,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     this.overlayIsOpen = !this.overlayIsOpen;
     this.searchOverlay.focusSearch();
+  }
+
+  resetTree() {
+    this.store.dispatch(resetTree());
   }
 
   ngOnDestroy() {

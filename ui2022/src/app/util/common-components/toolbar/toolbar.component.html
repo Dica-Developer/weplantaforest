@@ -10,7 +10,9 @@
     <a routerLink="/projectReports" [routerLinkActive]="'border-bottom'">{{
       'projects' | translate
     }}</a>
-    <a routerLink="/explore" [routerLinkActive]="'border-bottom'">{{ 'explore' | translate }}</a>
+    <a routerLink="/explore" [routerLinkActive]="'border-bottom'" (click)="resetTree()">{{
+      'explore' | translate
+    }}</a>
     <a routerLink="/blog" [routerLinkActive]="'border-bottom'">{{ 'blog' | translate }}</a>
   </div>
   <div

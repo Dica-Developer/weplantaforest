@@ -1,12 +1,14 @@
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { TreeType } from './project.store';
 import { AppState } from './app.state';
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TreeTypeImageType, TreeTypeService } from '../services/treeType.service';
-import { catchError, concatMap, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, exhaustMap, switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
 import { addError } from './error.state';
+import { Router } from '@angular/router';
+import { ExplorePageComponent } from '../pages/explore-page/explore-page.component';
 
 export interface TreeTypeAdmin {
   annualCo2SavingInTons: number;
@@ -66,6 +68,8 @@ export const addTreeType = createAction(
   props<{ treeType: TreeTypeAdmin }>(),
 );
 
+export const resetTree = createAction('[Treetypes] reset Tree on explore page');
+
 export interface TreeTypeState {
   treeTypes: TreeType[];
   treeTypesForAdmin: TreeTypeAdmin[];
@@ -114,7 +118,11 @@ export const selectTreeTypesForAdmin = createSelector(
 
 @Injectable()
 export class TreeTypeEffects {
-  constructor(private actions$: Actions, private treeTypeService: TreeTypeService) {}
+  constructor(
+    private actions$: Actions,
+    private treeTypeService: TreeTypeService,
+    private router: Router,
+  ) {}
 
   LoadTreeTypes$ = createEffect(() =>
     this.actions$.pipe(
@@ -223,5 +231,19 @@ export class TreeTypeEffects {
         ),
       ),
     ),
+  );
+
+  ResetTree$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(resetTree),
+        exhaustMap(() => {
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['explore']);
+          });
+          return [];
+        }),
+      ),
+    { dispatch: false },
   );
 }
