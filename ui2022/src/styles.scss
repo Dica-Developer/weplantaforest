@@ -332,6 +332,11 @@ mat-paginator {
     font-size: 16px;
   }
 
+  .gift-box {
+    .mat-tab-label {
+      padding: 0 0.75rem;
+    }
+  }
   .plant-proposal-page {
     // .mat-tab-label-container {
     //   padding-left: 0rem !important;
