@@ -7,13 +7,13 @@
         </a>
       </li>
       <li>
-        <a [routerLink]="'/profile/' + (profileDetails$ | async).userName">
+        <a [routerLink]="'/profile/' + (profileDetails$ | async)?.userName">
           {{ 'profile' | translate }}
         </a>
       </li>
       <li>
         <a class="breadcrumb-active">
-          {{ (profileDetails$ | async).userName }}
+          {{ (profileDetails$ | async)?.userName }}
         </a>
       </li>
     </ul>
