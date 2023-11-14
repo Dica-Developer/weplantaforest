@@ -34,8 +34,10 @@
     </div>
     <div class="column is-half-mobile">
       <p class="price">
-        {{ 'priceComplete' | translate }} <br />
-        {{ plantbagPrice | async | currency }}
+        <b>
+          {{ 'priceComplete' | translate }} <br />
+          {{ plantbagPrice | async | currency }}
+        </b>
       </p>
     </div>
     <div class="column hideOnMobile">

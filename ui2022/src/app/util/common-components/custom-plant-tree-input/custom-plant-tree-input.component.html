@@ -1,0 +1,78 @@
+<!-- DESKTOP VIEW -->
+<div class="hideOnMobile">
+  <div class="w-100 columns is-flex is-align-items-center w-100 bottomLine">
+    <div class="column">
+      <img class="img-tree" src="{{ imgUrl }}" alt="tree" />
+    </div>
+    <div class="column">
+      <span class="is-flex-direction-column is-flex is-justify-content-center">
+        <span class="fat">{{ getTreetypeName(formGroup.get('article').value.treeType.name) }}</span>
+        <span> {{ formGroup.get('article').value.price.priceAsLong / 100 | currency }}</span>
+      </span>
+    </div>
+    <!-- <div class="column">
+      <span>
+        {{ showProject ? formGroup.get('article').value.project.name : '' }}
+      </span>
+    </div> -->
+    <div class="column">
+      <div class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom">
+        <label>{{ 'max.' + (formGroup.get('article').value.amount - formGroup.get('article').value.alreadyPlanted) }}</label>
+        <input matInput name="amount" type="number" [formControl]="formGroup.get('amount')" />
+      </div>
+      <mat-error *ngIf="formGroup.get('amount').invalid">{{ getErrorMessage() }}</mat-error>
+    </div>
+    <!-- <div class="column">
+      <span> <span> x</span> {{ article.price.priceAsLong / 100 | currency }} </span>
+    </div> -->
+    <div class="projectname column">
+      <span class="minWidth">{{ sum | currency }}</span>
+    </div>
+    <div class="column">
+      <!-- <div *ngIf="withDelete">
+        <button
+          mat-icon-button
+          (click)="removeItemFormPlantbag()"
+          matTooltip="Artikel aus Pflanzkorb entfernen"
+        >
+          <mat-icon aria-hidden="false">delete</mat-icon>
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<!--^^^^^^^^^^^ DESKTOP VIEW ^^^^^^^^^^^^^^^^^^-->
+
+<!-- MOBILE VIEW -->
+<div class="hideOnDesktop">
+  <div class="is-flex is-flex-direction-column bottomLine padding-bottom-1">
+    <div
+      class="w-100 is-flex-direction-row is-flex is-align-items-center is-justify-content-space-between"
+    >
+      <span>{{ getTreetypeName(formGroup.get('article').value.treeType.name) }}</span>
+      <!-- <div *ngIf="withDelete">
+        <button
+          mat-icon-button
+          (click)="removeItemFormPlantbag()"
+          matTooltip="Artikel aus Pflanzkorb entfernen"
+        >
+          <mat-icon aria-hidden="false">delete</mat-icon>
+        </button>
+      </div> -->
+    </div>
+    <div
+      class="w-100 is-flex-direction-row is-flex is-align-items-center is-justify-content-space-between"
+    >
+      <div>
+        <div class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom">
+          <label>{{ 'max.' + (formGroup.get('article').value.amount - formGroup.get('article').value.alreadyPlanted) }}</label>
+          <input matInput name="amount" type="number" [formControl]="formGroup.get('amount')" />
+        </div>
+        <mat-error *ngIf="formGroup.get('amount').invalid">{{ getErrorMessage() }}</mat-error>
+      </div>
+      <span> <span> x</span> {{ formGroup.get('article').value.price.priceAsLong / 100 | currency }} </span>
+      <span class="minWidth">{{ sum | currency }}</span>
+    </div>
+  </div>
+</div>
+<!-- ^^^^^^^^^^^^^^^^^^^^ MOBILE VIEW^^^^^^^^^^^^^^^^^^^^ -->

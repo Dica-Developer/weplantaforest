@@ -60,6 +60,7 @@ import { PlantproposalPreviewRowComponent } from './common-components/plantpropo
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CustomPlantingComponent } from '../pages/plant-proposal-page/components/custom-planting/custom-planting.component';
+import { CustomPlantTreeInputComponent } from './common-components/custom-plant-tree-input/custom-plant-tree-input.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { CustomPlantingComponent } from '../pages/plant-proposal-page/components
     TeamHeaderComponent,
     TeamCreateEditComponent,
     PlantproposalPreviewRowComponent,
-    CustomPlantingComponent
+    CustomPlantingComponent,
+    CustomPlantTreeInputComponent
   ],
   imports: [
     CommonModule,
@@ -161,7 +163,8 @@ import { CustomPlantingComponent } from '../pages/plant-proposal-page/components
     TeamHeaderComponent,
     TeamCreateEditComponent,
     PlantproposalPreviewRowComponent,
-    CustomPlantingComponent
+    CustomPlantingComponent,
+    CustomPlantTreeInputComponent
   ],
 })
 export class UtilModule {}

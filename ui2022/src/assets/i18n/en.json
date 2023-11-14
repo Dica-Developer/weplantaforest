@@ -312,6 +312,7 @@
   "custom": "Custom",
   "selfplant": "Plant Yourself",
   "notLoggedIn": "You are not logged in! If you plant anonymously, fewer functions are available to you.",
-  "editTeam": "Edit Team"
+  "editTeam": "Edit Team",
+  "checkYourInputs": "Please check your entries!"
 
 }

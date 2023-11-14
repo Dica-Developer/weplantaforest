@@ -312,6 +312,7 @@
   "custom": "Individuell",
   "selfplant": "Selbst Pflanzen",
   "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung",
-  "editTeam": "Team Editieren"
+  "editTeam": "Team Editieren",
+  "checkYourInputs": "Bitte überprüfe deine Eingaben!"
 
 }

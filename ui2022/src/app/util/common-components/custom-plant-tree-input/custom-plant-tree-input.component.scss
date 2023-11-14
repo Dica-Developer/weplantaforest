@@ -1,0 +1,36 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+mat-error {
+  position: absolute;
+}
+
+.is-flex {
+  font-family: 'Bull-mono', sans-serif;
+}
+
+span {
+  font-size: 1rem;
+}
+
+.minWidth {
+  min-width: 150px;
+}
+
+@media only screen and (max-width: 768px) {
+  b {
+    max-width: 150px;
+  }
+
+  .minWidth {
+    min-width: initial;
+  }
+}

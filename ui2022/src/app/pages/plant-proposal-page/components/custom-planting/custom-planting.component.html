@@ -1,9 +1,4 @@
 <div class="is-flex is-flex-direction-column padding-top-1">
-  <!-- <h2 class="is-flex is-justify-content-space-between is-align-items-center">
-    <span>
-      {{ 'orChooseIndivudual' | translate }}
-    </span>
-  </h2> -->
   <p>
     {{
       projectId
@@ -13,13 +8,27 @@
   </p>
   <div *ngFor="let project of activeProjects" class="content">
     <h4 class="margin-bottom-1">{{ project.projectName }}</h4>
-    <div *ngFor="let article of project.articles">
-      <app-plantbag-tree-input
-        [article]="article"
-        [amount]="0"
-        [withDelete]="false"
-        [showProject]="false"
-      ></app-plantbag-tree-input>
+    <div *ngIf="formGroup.get(project.projectName)">
+      <div *ngFor="let fg of getFormArray(project.projectName)">
+        <app-custom-plant-tree-input [formGroup]="fg"></app-custom-plant-tree-input>
+      </div>
     </div>
+  </div>
+  <div class="is-flex w-100 slider-row is-align-items-center is-flex-direction-row-reverse price-row">
+    <app-button
+      label="{{ 'intoPlantbag' | translate }}"
+      (click)="putIntoPlantbag()"
+      *ngIf="showPutIntoPlantbagButton"
+    ></app-button>
+    <app-button
+      label="{{ 'toPlantBag' | translate }}"
+      routerLink="/plantbag"
+      *ngIf="showGoToPlantbagButton"
+    ></app-button>
+    <span class="font-1 pricetag">
+      <b>
+        {{ ('price' | translate) + ': ' + totalPrice + ' €' }}
+      </b>
+    </span>
   </div>
 </div>
