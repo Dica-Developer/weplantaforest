@@ -6,6 +6,7 @@ import { PaymentService } from '../services/payment.service';
 import { AppState } from './app.state';
 import { Cart } from './carts.store';
 import { addError } from './error.state';
+import { resetPlantbag } from './plantbag.store';
 import { addSuccessMessage } from './success-message.state';
 
 export interface PaymentDataDto {
@@ -227,11 +228,10 @@ export class PaymentEffects {
               addSuccessMessage({
                 message: { key: 'PLANTBAG_PAYED_SUCCES', message: 'Pflanzkorb bezahlt!' },
               }),
+              resetPlantbag()
             ];
           }),
           catchError((err) => {
-            console.log(err);
-
             return [
               addError({
                 error: { key: 'payment_error', message: err.error.errorInfos[0]?.errorCode },
