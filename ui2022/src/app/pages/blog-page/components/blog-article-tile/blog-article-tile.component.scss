@@ -6,17 +6,13 @@
   white-space: pre-wrap;
   border-bottom: 1px solid var(--black);
   border-right: 1px solid var(--black);
-  img {
-    position: relative;
-    display: none;
-  }
+  background-image: none;
+  background-size: cover;
+  background-position: center;
 }
 
 .blog-tile:hover {
   cursor: pointer;
-  img {
-    display: block;
-  }
 }
 
 .tile-body {
@@ -42,10 +38,6 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .blog-tile:hover img {
-    display: none;
-  }
-
   .blog-tile {
     height: initial;
   }

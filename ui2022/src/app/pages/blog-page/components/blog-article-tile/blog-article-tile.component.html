@@ -1,8 +1,17 @@
-<div class="blog-tile is-flex is-flex-direction-column" (click)="route()">
-  <div class="tile-body is-flex is-flex-direction-column is-justify-content-space-between">
+<div
+  id="blog-tile"
+  [style.backgroundImage]="backgroundImgUrl"
+  (mouseenter)="showBackgroundImage(true)"
+  (mouseleave)="showBackgroundImage(false)"
+  class="blog-tile is-flex is-flex-direction-column"
+  (click)="route()"
+>
+  <div
+    [style.zIndex]="zIndex"
+    class="tile-body is-flex h-100 w-100 is-flex-direction-column is-justify-content-space-between"
+  >
     <h4>{{ blogArticle.title }}</h4>
     <span class="dateAuthor">{{ blogArticle.createdOn | date }} {{ blogArticle.owner.name }}</span>
-    <img [src]="imgUrl" alt="image" />
     <div class="description" innerHtml="{{ description }}"></div>
   </div>
 </div>

@@ -14,6 +14,9 @@ export class BlogArticleTileComponent implements OnInit {
   imgUrl: string;
   progress: number;
   description: string;
+  backgroundImgUrl: string = 'none';
+  zIndex: number = 1;
+
   constructor(
     private textHelper: TextHelper,
     private translateService: TranslateService,
@@ -21,16 +24,27 @@ export class BlogArticleTileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-      this.imgUrl =  environment.backendArticleManagerUrl +
+    this.imgUrl =
+      environment.backendArticleManagerUrl +
       '/article/image/' +
       this.blogArticle.id +
       '/' +
       encodeURI(this.blogArticle.imageFileName) +
-      '/800/600';
+      '/800/400';
     this.description = this.textHelper.getTextForLanguage(
       this.blogArticle.intro,
       this.translateService.currentLang,
     );
+  }
+
+  showBackgroundImage(check: boolean) {
+    if (check && this.blogArticle.imageFileName) {
+      this.backgroundImgUrl = 'url(' + this.imgUrl + ')';
+      this.zIndex = -1;
+    } else {
+      this.backgroundImgUrl = 'none';
+      this.zIndex = 1;
+    }
   }
 
   route() {
