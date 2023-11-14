@@ -24,7 +24,9 @@
           *ngIf="showGoToPlantbagButton"
         ></app-button>
         <span class="font-1 pricetag">
-          {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + ' €' }}
+          <b>
+            {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + ' €' }}
+          </b>
         </span>
       </div>
     </div>
