@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '../../../../app/store/app.state';
-import { selectHasTeam } from '../../../store/profile.store';
+import { selectHasTeam, selectUploadingImage } from '../../../store/profile.store';
 import {
   deleteTeam,
   joinTeam,
@@ -13,7 +13,8 @@ import {
   selectIsAdmin,
   selectIsMember,
 } from 'src/app/store/team.store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { SliderHelper } from '../../helper/slider.helper';
 
 @Component({
   selector: 'app-team-header',
@@ -28,6 +29,12 @@ export class TeamHeaderComponent implements OnInit {
   createMode = false;
   editMode = false;
   hasTeam$: Observable<boolean> = this.store.select(selectHasTeam);
+  uploadImageSub: Subscription;
+
+  // since there is an issue with the image url not updating(which means its exactly the same after an image update)
+  // when the image is changed, there has to be a little hack here to force the image to update
+  // so we create a random number when the uploadImage select delivers a false and put it at the end of the image url
+  randomNumber: number = 0;
 
   constructor(
     private router: Router,
@@ -35,9 +42,16 @@ export class TeamHeaderComponent implements OnInit {
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
     public dialog: MatDialog,
+    private sliderHelper: SliderHelper,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.uploadImageSub = this.store.select(selectUploadingImage).subscribe((uploading) => {
+      if (!uploading) {
+        this.randomNumber = this.sliderHelper.getRandomNumber();
+      }
+    });
+  }
 
   routeToTeam() {
     this.router.navigate(['/team/' + this.teamDetails.teamName]);

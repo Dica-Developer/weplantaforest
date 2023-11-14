@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { selectUploadingImage } from '../../../../store/profile.store';
+import { SliderHelper } from 'src/app/util/helper/slider.helper';
 
 @Component({
   selector: 'app-profile-header',
@@ -21,12 +22,16 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
   // so we create a random number when the uploadImage select delivers a false and put it at the end of the image url
   randomNumber: number = 0;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+    private sliderHelper: SliderHelper,
+  ) {}
 
   ngOnInit(): void {
     this.uploadImageSub = this.store.select(selectUploadingImage).subscribe((uploading) => {
       if (!uploading) {
-        this.randomNumber = this.getRandomNumber();
+        this.randomNumber = this.sliderHelper.getRandomNumber();
       }
     });
   }
@@ -38,9 +43,5 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
   editProfile() {
     let username = localStorage.getItem('username');
     this.router.navigate(['/editProfile/' + username]);
-  }
-
-  getRandomNumber() {
-    return Math.floor(Math.random() * 100);
   }
 }

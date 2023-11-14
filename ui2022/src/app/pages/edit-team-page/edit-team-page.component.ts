@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
+import { addError } from 'src/app/store/error.state';
 import { selectUploadingImage } from 'src/app/store/profile.store';
 import {
   loadTeamDetails,
@@ -61,14 +62,16 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
 
   updateTeam() {
     if (this.imagePreviewSrc) {
-      console.log(this.imagePreviewSrc);
-      // this.store.dispatch(
-      //   updateTeamImage({ teamId: this.teamForm.value.teamId, image: this.imageFile }),
-      // );
-      // this.imagePreviewSrc = null;
+      this.store.dispatch(
+        updateTeamImage({
+          teamId: this.teamForm.value.teamId,
+          teamName: this.teamForm.value.teamName,
+          image: this.imageFile,
+        }),
+      );
+      this.imagePreviewSrc = null;
     }
     if (this.teamForm.get('description').dirty) {
-      console.log(this.teamForm.get('description').value);
       this.store.dispatch(
         updateTeamProperty({
           teamId: this.teamForm.value.teamId,
@@ -93,6 +96,27 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
       panelClass: ['success-snackbar'],
     });
     this.routeToTeam();
+  }
+
+  imageChanged(fileInputEvent: any) {
+    if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
+      if (fileInputEvent.target.files[0].size >= 1048576) {
+        this.store.dispatch(
+          addError({
+            error: {
+              key: 'IMAGE_VALIDATION_ERROR',
+              message: 'notGreaterThan1MB',
+            },
+          }),
+        );
+        return;
+      }
+
+      this.imageFile = fileInputEvent.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => (this.imagePreviewSrc = reader.result);
+      reader.readAsDataURL(this.imageFile);
+    }
   }
 
   routeToTeam() {

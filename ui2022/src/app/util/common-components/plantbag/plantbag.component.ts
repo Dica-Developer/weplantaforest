@@ -36,7 +36,6 @@ export class PlantbagComponent implements OnInit, OnDestroy {
     this.giftControlSub = this.giftControl.valueChanges.subscribe((isGift) => {
       this.store.dispatch(setGift({ isGift }));
     });
-    console.log(this.plantbagPrice);
   }
 
   ngOnDestroy(): void {

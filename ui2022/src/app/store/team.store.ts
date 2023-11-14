@@ -3,7 +3,7 @@ import { createAction, createReducer, createSelector, on, props } from '@ngrx/st
 import { AppState, PagedData } from './app.state';
 import { TeamField, TeamService } from '../services/team.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, switchMap } from 'rxjs/operators';
 import * as he from 'he';
 import { Co2Data } from './tree.store';
 import { environment } from 'src/environments/environment';
@@ -113,7 +113,7 @@ export const getTeamTreesSuccess = createAction(
 
 export const updateTeamImage = createAction(
   '[Profile] update Team image',
-  props<{ teamId: string; image: File }>(),
+  props<{ teamId: number; teamName: string; image: File }>(),
 );
 
 export const updateTeamImageSuccess = createAction(
@@ -123,13 +123,15 @@ export const updateTeamImageSuccess = createAction(
 
 export const updateTeamProperty = createAction(
   '[Profile] update Team property',
-  props<{ teamId: string; propertyToUpdate: string; teamName: string; controlValue }>(),
+  props<{ teamId: number; propertyToUpdate: TeamField; teamName: string; controlValue }>(),
 );
 
 export const updateTeamPropertySuccess = createAction(
   '[Profile] update Team image success',
   props<{ propertyToUpdate: string; controlValue }>(),
 );
+
+export const updateTeamImageError = createAction('[Profile] update Team image error');
 
 export interface TeamState {
   teams: Team[];
@@ -138,6 +140,7 @@ export interface TeamState {
   isAdmin: boolean;
   isMember: boolean;
   pagedTrees: PagedData<any>;
+  uploadingImage: boolean;
 }
 
 export const initialState: TeamState = {
@@ -161,6 +164,7 @@ export const initialState: TeamState = {
     first: true,
     content: [],
   },
+  uploadingImage: false,
 };
 
 const teamReducer = createReducer(
@@ -248,6 +252,29 @@ const teamReducer = createReducer(
     return {
       ...state,
       pagedTrees,
+    };
+  }),
+  on(updateTeamImage, (state) => {
+    return {
+      ...state,
+      uploadingImage: true,
+    };
+  }),
+  on(updateTeamImageError, (state) => {
+    return {
+      ...state,
+      uploadingImage: false,
+    };
+  }),
+  on(updateTeamImageSuccess, (state, { newImageFileName }) => {
+    return {
+      ...state,
+      teamDetails: {
+        ...state.teamDetails,
+        imageFileName: newImageFileName,
+        teamImageUrl: `${environment.backendUrl}/team/image/${newImageFileName}/150/150`,
+      },
+      uploadingImage: false,
     };
   }),
 );
@@ -346,20 +373,22 @@ export class TeamEffects {
 
   UpdateTeam$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(updateTeam),
+      ofType(updateTeamProperty),
       concatMap((action) =>
-        this.teamService.updateTeam(action.teamId, action.propertyToUpdate, action.newEntry).pipe(
-          concatMap(() => [
-            addSuccessMessage({
-              message: {
-                key: 'TEAM_UPDATE_SUCCESS',
-                message: this.translateService.instant('teamUpdated'),
-              },
-            }),
-            loadProfileDetails({ username: localStorage.getItem('username') }),
-            loadTeamDetails({ teamName: action.teamName }),
-          ]),
-        ),
+        this.teamService
+          .updateTeam(action.teamId, action.propertyToUpdate, action.controlValue)
+          .pipe(
+            concatMap(() => [
+              addSuccessMessage({
+                message: {
+                  key: 'TEAM_UPDATE_SUCCESS',
+                  message: this.translateService.instant('teamUpdated'),
+                },
+              }),
+              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadTeamDetails({ teamName: action.teamName }),
+            ]),
+          ),
       ),
     ),
   );
@@ -461,6 +490,24 @@ export class TeamEffects {
           concatMap((pagedTrees: PagedData<any>) => {
             return [getTeamTreesSuccess({ pagedTrees })];
           }),
+        ),
+      ),
+    ),
+  );
+
+  UpdateTeamImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateTeamImage),
+      concatMap((action) =>
+        this.teamService.updateTeamImage(action.teamId, action.image).pipe(
+          switchMap((res) => {
+            console.log(res);
+            return [
+              updateTeamImageSuccess({ newImageFileName: res }),
+              loadTeamDetails({ teamName: action.teamName }),
+            ];
+          }),
+          catchError((err) => [updateTeamImageError()]),
         ),
       ),
     ),

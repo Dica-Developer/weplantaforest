@@ -69,7 +69,6 @@ export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
 
   @Input()
   set consignorGifts(gifts: ProfileGift[]) {
-    console.log(gifts);
     this._consignorGifts = gifts;
     this.totalConsignorGifts = gifts?.length;
     this.consignorGiftPages = new Map<number, ProfileGift[]>();

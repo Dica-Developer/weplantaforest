@@ -14,7 +14,6 @@ import {
   updateProfileImage,
   updateProfileProperty,
 } from 'src/app/store/profile.store';
-import { logout } from 'src/app/store/auth.store';
 import { SliderHelper } from 'src/app/util/helper/slider.helper';
 
 @Component({
