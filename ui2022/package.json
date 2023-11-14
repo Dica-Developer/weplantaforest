@@ -40,6 +40,7 @@
     "ag-grid-community": "^27.3.0",
     "bulma": "^0.9.4",
     "chart.js": "^4.2.1",
+    "cookieconsent": "^3.1.1",
     "he": "^1.2.0",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",

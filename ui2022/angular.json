@@ -29,9 +29,11 @@
               "src/app/util/styles/spacings.scss",
               "src/app/util/styles/utils.scss",
               "./node_modules/leaflet/dist/leaflet.css",
-              "./node_modules/leaflet-draw/dist/leaflet.draw.css"
+              "./node_modules/leaflet-draw/dist/leaflet.draw.css",
+              "./node_modules/cookieconsent/build/cookieconsent.min.css"
             ],
             "scripts": [
+              "./node_modules/cookieconsent/build/cookieconsent.min.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

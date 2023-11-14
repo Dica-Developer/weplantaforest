@@ -326,6 +326,15 @@ mat-paginator {
   }
 }
 
+.cc-allow {
+  border-radius: 45px;
+  padding: 0.35rem 1rem;
+  font-size: 1rem;
+  background: var(--dark-brown);
+  border-radius: 45px;
+  color: var(--background);
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body {

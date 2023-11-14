@@ -73,7 +73,7 @@ export const MY_FORMATS = {
   },
 };
 
-const cookieConfig: NgcCookieConsentConfig = {
+export const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
     domain: 'iplantatree.org',
   },
@@ -81,13 +81,13 @@ const cookieConfig: NgcCookieConsentConfig = {
   theme: 'block',
   palette: {
     popup: {
-      background: '#4f3a2c',
-      text: '#ffffff',
-      link: '#ffffff',
+      background: '#65594e',
+      text: '#fdfefb',
+      link: '#fdfefb',
     },
     button: {
-      background: '#82ab1f',
-      text: '#ffffff',
+      background: '#969900',
+      text: '#fdfefb',
       border: 'transparent',
     },
   },
