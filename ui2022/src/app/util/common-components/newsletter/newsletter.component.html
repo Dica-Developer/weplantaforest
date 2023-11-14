@@ -1,31 +1,36 @@
-<div
-  *ngIf="fullScreenNewsletter"
-  class="is-flex is-flex-direction-column pt-075 padding-left is-justify-content-space-between"
->
-  <nav class="breadcrumb">
-    <ul>
-      <li>
-        <a routerLink="/">
-          {{ 'startPage' | translate }}
-        </a>
-      </li>
-      <li>
-        <a class="breadcrumb-active" routerLink="/newsletter">
-          {{ 'newsletter' | translate }}
-        </a>
-      </li>
-    </ul>
-  </nav>
-</div>
-<div class="newsletter w-100 is-flex columns" [class.newsletterPage]="fullScreenNewsletter">
-  <div class="is-flex column is-one-third is-flex-direction-column is-justify-content-center">
-    <h2>{{ 'newsletter' | translate }}</h2>
-    <p>{{ 'newsLetterText' | translate }}</p>
+<div class="newsletter">
+  <div
+    *ngIf="fullScreenNewsletter"
+    class="is-flex is-flex-direction-column pt-075 padding-left is-justify-content-space-between"
+  >
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li>
+          <a class="breadcrumb-active" routerLink="/newsletter">
+            {{ 'newsletter' | translate }}
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
   <div
-    class="is-flex is-flex-direction-column is-align-items-left is-justify-content-center column is-one-third padding-1"
+    class="switchToCol w-100 padding-3 is-flex columns"
+    [class.newsletterPage]="fullScreenNewsletter"
   >
-    <div #iframe id="iframe" [innerHTML]="html" class="nl-iframe"></div>
+    <div class="is-flex column is-one-third is-flex-direction-column is-justify-content-center">
+      <h2>{{ 'newsletter' | translate }}</h2>
+      <p>{{ 'newsLetterText' | translate }}</p>
+    </div>
+    <div
+      class="is-flex is-flex-direction-column is-align-items-left is-justify-content-center column is-one-third padding-1"
+    >
+      <div #iframe id="iframe" [innerHTML]="html" class="nl-iframe"></div>
+    </div>
+    <div class="column is-one-third"></div>
   </div>
-  <div class="column is-one-third"></div>
 </div>

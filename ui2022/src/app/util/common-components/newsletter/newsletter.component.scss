@@ -3,7 +3,6 @@
   background-size: cover;
   background-position: center;
   flex-direction: row;
-  padding: 3rem;
 }
 
 .newsletterPage {
@@ -15,8 +14,12 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .newsletter {
+  .switchToCol {
     flex-direction: column;
+    padding: 1rem;
+  }
+
+  .padding-3 {
     padding: 1rem;
   }
 }
