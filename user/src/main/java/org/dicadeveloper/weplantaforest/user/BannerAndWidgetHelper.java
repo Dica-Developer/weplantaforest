@@ -175,6 +175,17 @@ public class BannerAndWidgetHelper {
     public BufferedImage createWidget2022(String imagePath, int width, int height, Co2Data co2DataForUser, Language language) throws IOException {
         val bufferedImg = ImageIO.read(getClass().getResourceAsStream(imagePath));
 
+        var plantedTreesText = "";
+        var co2BoundText = "";
+        if (Language.DEUTSCH.equals(language)) {
+            plantedTreesText = "gepflanzte Bäume";
+            co2BoundText = "CO2 gebunden in t";
+        } else {
+            plantedTreesText = "Trees planted";
+            co2BoundText = "CO2 bound in t";
+        }
+       
+
         Double co2Rounded = Math.round(co2DataForUser.getCo2() * 100) / 100.0;
         var co2RoundedAsString = co2Rounded.toString();
         if (Language.DEUTSCH.equals(language)) {
@@ -184,20 +195,40 @@ public class BannerAndWidgetHelper {
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         graphics.setColor(new Color(150, 153, 0));
-        graphics.setFont(new Font("Arial", Font.PLAIN, 16));
         if (width == 200 && height == 200) {
+            graphics.setColor(new Color(0, 0, 0));
+            graphics.setFont(new Font("Arial", Font.PLAIN, 15));
+            graphics.drawString(plantedTreesText, 10, 220);
+            graphics.drawString(co2BoundText, 10, 263);            
             graphics.setFont(new Font("Arial", Font.PLAIN, 20));
+            graphics.setColor(new Color(150, 153, 0));
             graphics.drawString(co2DataForUser.getTreesCount().toString(), 190, 220);
-            graphics.drawString(co2RoundedAsString, 190, 260);
+            graphics.drawString(co2RoundedAsString, 190, 263);
         } else if (width == 200 && height == 600) {
+            graphics.setColor(new Color(0, 0, 0));
+            graphics.setFont(new Font("Arial", Font.PLAIN, 15));
+            drawCenteredString(graphics, plantedTreesText, 200, new Font("Arial", Font.PLAIN, 15), 255);
+            drawCenteredString(graphics, co2BoundText, 200, new Font("Arial", Font.PLAIN, 15), 460);
+
             graphics.setFont(new Font("Arial", Font.PLAIN, 24));
-            graphics.drawString(co2DataForUser.getTreesCount().toString(), 75, 340);
-            graphics.drawString(co2RoundedAsString, 75, 550);
+            graphics.setColor(new Color(150, 153, 0));
+            drawCenteredString(graphics, co2DataForUser.getTreesCount().toString(), 200, new Font("Arial", Font.PLAIN, 24), 340);
+            drawCenteredString(graphics, co2RoundedAsString, 200, new Font("Arial", Font.PLAIN, 24), 550);
+            // graphics.drawString(co2DataForUser.getTreesCount().toString(), 75, 340);
+            // graphics.drawString(co2RoundedAsString, 75, 550);
         } else if (width == 600 && height == 200) {
+            graphics.setColor(new Color(0, 0, 0));
+            graphics.setFont(new Font("Arial", Font.PLAIN, 15));
+            graphics.drawString(plantedTreesText, 245, 60);
+            graphics.drawString(co2BoundText, 450, 60);            
+
             graphics.setFont(new Font("Arial", Font.PLAIN, 24));
+            graphics.setColor(new Color(150, 153, 0));
             graphics.drawString(co2DataForUser.getTreesCount().toString(), 280, 160);
-            graphics.drawString(co2RoundedAsString, 500, 160);
+            graphics.drawString(co2RoundedAsString, 480, 160);
         } 
+
+
         return bufferedImg;
     }
 
