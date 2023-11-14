@@ -79,7 +79,7 @@
   "treesPlanted": "Bäume gepflanzt",
   "CO2Trapped": "CO<sub>2</sub> gebunden",
   "CO2": "CO<sub>2</sub>",
-  "website": "Website",
+  "website": "Webseite",
   "memberSince": "Registriert seit",
   "type": "Typ",
   "organisation": "Organisation",
@@ -287,8 +287,8 @@
   "markOnMapPls": "Bitte markiere die Pflanzung auf der Karte!",
   "selectTreetype": "Bitte wähle eine Baumart aus!",
   "backToDescription": "Zurück zur Beschreibung",
-  "number":"Nummer",
-  "downloadReceipt":"Rechnung herunterladen",
+  "number": "Nummer",
+  "downloadReceipt": "Rechnung herunterladen",
   "amount": "Anzahl",
   "partialPrice": "Zwischensumme",
   "addToPlantbag": "In den Pflanzkorb hinzufügen",
@@ -300,8 +300,8 @@
   "lastYear": "Letztes Jahr",
   "notGreaterThan1MB": "Das Bild darf nicht größer als 1 MB sein.",
   "widgetInfo": "Die folgenden Widgets kannst du in deine Website integrieren. Kopiere dazu einfach einen der Codes und füge ihn an der gewünschten Stelle ein.",
-  "founded":"Gegründet",
-  "join":"beitreten",
+  "founded": "Gegründet",
+  "join": "beitreten",
   "howManyTreesToPlant": "Wieviele Bäume möchtest du pflanzen?",
   "youNoTeamYet": "Du bist noch keinem Team beigetreten.",
   "default": "Standard",
@@ -313,6 +313,14 @@
   "selfplant": "Selbst Pflanzen",
   "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung",
   "editTeam": "Team Editieren",
-  "checkYourInputs": "Bitte überprüfe deine Eingaben!"
-
+  "checkYourInputs": "Bitte überprüfe deine Eingaben!",
+  "cookie": {
+    "header": "Webseite verwendet Cookies!",
+    "message": "Diese Webseite verwendet Cookies.",
+    "dismiss": "Ok!",
+    "allow": "Erlauben",
+    "deny": "Ablehnen",
+    "link": "Mehr erfahren",
+    "policy": "Cookies"
+  }
 }

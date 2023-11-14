@@ -326,13 +326,25 @@ mat-paginator {
   }
 }
 
+.cc-deny,
+.cc-message {
+  font-size: 1rem !important;
+}
+.cc-link {
+  font-weight: bold;
+}
 .cc-allow {
   border-radius: 45px;
   padding: 0.35rem 1rem;
-  font-size: 1rem;
-  background: var(--dark-brown);
+  font-size: 1rem !important;
+  background: var(--dark-brown) !important;
   border-radius: 45px;
-  color: var(--background);
+  color: var(--background) !important;
+  text-decoration: none;
+  &:hover {
+    background: var(--green) !important;
+    color: var(--black) !important;
+  }
 }
 
 @media only screen and (max-width: 768px) {

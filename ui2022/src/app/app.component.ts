@@ -8,8 +8,10 @@ import { AppState } from './store/app.state';
 import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
 import { AppCookieService } from './util/cookie.service';
-import { loadProfileDetails } from './store/profile.store';
+import { loadProfileDetails, selectUserLanguage } from './store/profile.store';
 import { getProjectsForCustomPlanting } from './store/plant.store';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,11 @@ export class AppComponent implements OnInit {
     localStorage.setItem('previousUrl', this.router.url);
   }
 
+  languageSub: Subscription;
+  cookieTranslateSub: Subscription;
+
   constructor(
+    private ccService: NgcCookieConsentService,
     private store: Store<AppState>,
     private router: Router,
     private snackBar: MatSnackBar,
@@ -29,10 +35,17 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private translateService: TranslateService,
   ) {
-    this.cookieService.init();
     this.translateService.addLangs(['de', 'en']);
-    this.translateService.use('de');
+    this.languageSub = this.store.select(selectUserLanguage).subscribe((language) => {
+      if (language === 'ENGLISH' || language === 'en') {
+        this.translateService.use('en');
+      } else if (language === 'DEUTSCH' || language === 'de') {
+        this.translateService.use('de');
+      }
+      this.initCookieTranslations();
+    });
 
+    this.cookieService.init();
     //comment in for dev-purpose: to avoid manually routing back to page, where you work after each codechange
     // const previousUrl = localStorage.getItem('previousUrl');
     // if (localStorage.getItem('jwt')) {
@@ -79,11 +92,42 @@ export class AppComponent implements OnInit {
       // if browser language isn't german, use english as default for non logged in users
       if (navigator.language === 'de-De') {
         this.translateService.use('de');
-      }else {
+      } else {
         this.translateService.use('en');
       }
     }
-
     this.authService.autoLogin();
+  }
+
+  ngOnDestroy() {
+    this.languageSub.unsubscribe();
+    this.cookieTranslateSub.unsubscribe();
+  }
+
+  initCookieTranslations() {
+    this.cookieTranslateSub?.unsubscribe();
+    this.cookieTranslateSub = this.translateService //
+      .get([
+        'cookie.header',
+        'cookie.message',
+        'cookie.dismiss',
+        'cookie.allow',
+        'cookie.deny',
+        'cookie.link',
+        'cookie.policy',
+      ])
+      .subscribe((data) => {
+        this.ccService.getConfig().content = this.ccService.getConfig().content || {};
+        // Override default messages with the translated ones
+        this.ccService.getConfig().content.header = data['cookie.header'];
+        this.ccService.getConfig().content.message = data['cookie.message'];
+        this.ccService.getConfig().content.dismiss = data['cookie.dismiss'];
+        this.ccService.getConfig().content.allow = data['cookie.allow'];
+        this.ccService.getConfig().content.deny = data['cookie.deny'];
+        this.ccService.getConfig().content.link = data['cookie.link'];
+        this.ccService.getConfig().content.policy = data['cookie.policy'];
+        this.ccService.destroy(); // remove previous cookie bar (with default messages)
+        this.ccService.init(this.ccService.getConfig()); // update config with translated messages
+      });
   }
 }

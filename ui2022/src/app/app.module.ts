@@ -81,12 +81,12 @@ export const cookieConfig: NgcCookieConsentConfig = {
   theme: 'block',
   palette: {
     popup: {
-      background: '#3c3335',
-      text: '#fdfefb',
-      link: '#fdfefb',
+      background: '#fdfefb',
+      text: '#3c3335',
+      link: '#3c3335',
     },
     button: {
-      background: '#969900',
+      background: '#3c3335',
       text: '#fdfefb',
       border: 'transparent',
     },

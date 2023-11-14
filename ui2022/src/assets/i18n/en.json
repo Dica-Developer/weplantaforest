@@ -245,7 +245,7 @@
   "giftRedeemInfoDescription1": "Only as a registered user will you automatically receive a donation receipt, your own profile, and can create certificates and gift vouchers.",
   "giftRedeemInfoDescription2": "Do you have an account?",
   "giftRedeemInfoDescription3": "Don't have an account yet?",
-   "plantBagInfoText": "Only as a registered user will you automatically receive a donation receipt, your own profile, and can create certificates and gift vouchers.",
+  "plantBagInfoText": "Only as a registered user will you automatically receive a donation receipt, your own profile, and can create certificates and gift vouchers.",
   "certificates": "Certificates",
   "selectPlantBagsForCertificate": "Please select the plant bags to appear on the certificate",
   "amountOfTrees": "Number of Trees",
@@ -301,7 +301,7 @@
   "notGreaterThan1MB": "The image must not be larger than 1 MB.",
   "widgetInfo": "You can integrate the following widgets into your website. Simply copy one of the codes and paste it in the desired location.",
   "founded": "Founded",
-  "join":"join",
+  "join": "join",
   "howManyTreesToPlant": "How many trees do you want to plant?",
   "youNoTeamYet": "You have not joined any team yet.",
   "default": "Default",
@@ -313,6 +313,14 @@
   "selfplant": "Plant Yourself",
   "notLoggedIn": "You are not logged in! If you plant anonymously, fewer functions are available to you.",
   "editTeam": "Edit Team",
-  "checkYourInputs": "Please check your entries!"
-
+  "checkYourInputs": "Please check your entries!",
+  "cookie": {
+    "header": "Cookies used on the website!",
+    "message": "This website uses cookies.",
+    "dismiss": "Got it!",
+    "allow": "Allow",
+    "deny": "Decline",
+    "link": "Learn more",
+    "policy": "Cookie Policy"
+  }
 }
