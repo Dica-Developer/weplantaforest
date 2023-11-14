@@ -17,8 +17,18 @@
     </div> -->
     <div class="column">
       <div class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom">
-        <label>{{ 'max.' + (formGroup.get('article').value.amount - formGroup.get('article').value.alreadyPlanted) }}</label>
-        <input matInput name="amount" type="number" [formControl]="formGroup.get('amount')" />
+        <label>{{
+          'max.' +
+            (formGroup.get('article').value.amount - formGroup.get('article').value.alreadyPlanted)
+        }}</label>
+        <input
+          matInput
+          name="amount"
+          type="number"
+          [formControl]="formGroup.get('amount')"
+          min="0"
+          onkeypress="return event.charCode != 45"
+        />
       </div>
       <mat-error *ngIf="formGroup.get('amount').invalid">{{ getErrorMessage() }}</mat-error>
     </div>
@@ -65,12 +75,25 @@
     >
       <div>
         <div class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom">
-          <label>{{ 'max.' + (formGroup.get('article').value.amount - formGroup.get('article').value.alreadyPlanted) }}</label>
-          <input matInput name="amount" type="number" [formControl]="formGroup.get('amount')" />
+          <label>{{
+            'max.' +
+              (formGroup.get('article').value.amount -
+                formGroup.get('article').value.alreadyPlanted)
+          }}</label>
+          <input
+            matInput
+            name="amount"
+            type="number"
+            [formControl]="formGroup.get('amount')"
+            min="0"
+            onkeypress="return event.charCode != 45"
+          />
         </div>
         <mat-error *ngIf="formGroup.get('amount').invalid">{{ getErrorMessage() }}</mat-error>
       </div>
-      <span> <span> x</span> {{ formGroup.get('article').value.price.priceAsLong / 100 | currency }} </span>
+      <span>
+        <span> x</span> {{ formGroup.get('article').value.price.priceAsLong / 100 | currency }}
+      </span>
       <span class="minWidth">{{ sum | currency }}</span>
     </div>
   </div>

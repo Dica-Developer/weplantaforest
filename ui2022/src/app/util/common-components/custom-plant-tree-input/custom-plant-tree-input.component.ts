@@ -20,6 +20,7 @@ export class CustomPlantTreeInputComponent implements OnInit, OnDestroy {
 
   userLanuage: string;
   userLanuguageSub: Subscription;
+  controlSub: Subscription;
 
   constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
 
@@ -33,6 +34,13 @@ export class CustomPlantTreeInputComponent implements OnInit, OnDestroy {
     this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
       this.userLanuage = userLanguage;
     });
+    this.controlSub = this.formGroup.get('amount').valueChanges.subscribe((amount) => {
+      if(amount < 0) {
+        
+      }else {
+        this.calcSum(amount);
+      }
+    });
   }
 
   initControl() {
@@ -41,6 +49,7 @@ export class CustomPlantTreeInputComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userLanuguageSub?.unsubscribe();
+    this.controlSub?.unsubscribe();
   }
 
   getTreetypeName(text: string) {
