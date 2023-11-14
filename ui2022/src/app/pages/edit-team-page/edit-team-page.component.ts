@@ -53,6 +53,7 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.uploadImageSub = this.store.select(selectUploadingImage).subscribe((uploading) => {
       if (!uploading) {
         this.randomNumber = this.sliderHelper.getRandomNumber();
