@@ -39,6 +39,7 @@
 
   h4 {
     text-decoration: underline;
+    font-size: 1.25rem !important;
   }
 
   .description {
@@ -47,8 +48,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    line-clamp: 8;
-    -webkit-line-clamp: 8; /* number of lines to show */
+    line-clamp: 15;
+    -webkit-line-clamp: 15; /* number of lines to show */
     -webkit-box-orient: vertical;
   }
 
