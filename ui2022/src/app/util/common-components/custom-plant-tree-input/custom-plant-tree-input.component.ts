@@ -35,12 +35,12 @@ export class CustomPlantTreeInputComponent implements OnInit, OnDestroy {
       this.userLanuage = userLanguage;
     });
     this.controlSub = this.formGroup.get('amount').valueChanges.subscribe((amount) => {
-      if(amount < 0) {
-        
-      }else {
+      if (amount < 0) {
+      } else {
         this.calcSum(amount);
       }
     });
+    console.log(this.formGroup.value);
   }
 
   initControl() {

@@ -1,20 +1,38 @@
-<div class="is-flex is-flex-direction-column padding-top-1">
-  <p>
+<div class="is-flex is-flex-direction-column padding-top-2">
+  <p class="padding-bottom-1">
     {{
       projectId
         ? ('customPlantingInfoSingleProject' | translate)
         : ('customPlantingInfo' | translate)
     }}
   </p>
+  <div class="columns hideOnMobile">
+    <div class="column"></div>
+    <div class="column">
+      <b> {{ 'project' | translate }} </b>
+    </div>
+    <div class="column">
+      <b> {{ 'treeType' | translate }} </b>
+    </div>
+    <div class="column">
+      <b> {{ 'amount' | translate }} </b>
+    </div>
+    <div class="column">
+      <b> {{ 'partialPrice' | translate }} </b>
+    </div>
+    <div class="column"></div>
+  </div>
   <div *ngFor="let project of activeProjects" class="content">
-    <h4 class="margin-bottom-1">{{ project.projectName }}</h4>
+    <h4 class="margin-bottom-1 hideOnDesktop">{{ project.projectName }}</h4>
     <div *ngIf="formGroup.get(project.projectName)">
       <div *ngFor="let fg of getFormArray(project.projectName)">
         <app-custom-plant-tree-input [formGroup]="fg"></app-custom-plant-tree-input>
       </div>
     </div>
   </div>
-  <div class="is-flex w-100 slider-row is-align-items-center is-flex-direction-row-reverse price-row">
+  <div
+    class="is-flex w-100 slider-row is-align-items-center is-flex-direction-row-reverse price-row"
+  >
     <app-button
       label="{{ 'intoPlantbag' | translate }}"
       (click)="putIntoPlantbag()"
