@@ -38,7 +38,7 @@ import { ErrorInterceptor } from './services/http-interceptors/http.interceptor'
 import { AppCookieService } from './util/cookie.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PagesModule } from './pages/pages.module';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TreeEffects, treeReducerFn } from './store/tree.store';
 import { CommonModule, registerLocaleData } from '@angular/common';
@@ -59,6 +59,8 @@ import { ContactEffects, contactReducerFn } from './store/contact.store';
 import { NgChartsModule } from 'ng2-charts';
 import { InfrastructureEffects, infrastructureReducerFn } from './store/infrastructure.store';
 import { MomentDateAdapter, MomentDateModule } from '@angular/material-moment-adapter';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { PaginatorIntlService } from './util/material/paginator-intl';
 
 export const MY_FORMATS = {
   parse: {
@@ -218,6 +220,15 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
     NgChartsModule,
   ],
   providers: [
+    {
+      provide: MatPaginatorIntl,
+      useFactory: (translate) => {
+        const service = new PaginatorIntlService();
+        service.injectTranslateService(translate);
+        return service;
+      },
+      deps: [TranslateService],
+    },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {
       provide: DateAdapter,

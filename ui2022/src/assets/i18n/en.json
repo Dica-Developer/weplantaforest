@@ -304,7 +304,7 @@
   "join": "join",
   "howManyTreesToPlant": "How many trees do you want to plant?",
   "youNoTeamYet": "You have not joined any team yet.",
-  "default": "Default",
+  "square": "Square",
   "horizontal": "Horizontal",
   "vertical": "Vertical",
   "exploreInfo": "Here you will find descriptions and illustrations of native trees. If you click on the dots in the individual tree view, you can find out more details about fruits or flowers, leaves and bark.",
@@ -322,5 +322,11 @@
     "deny": "Decline",
     "link": "Learn more",
     "policy": "Cookie Policy"
+  },
+  "paginator": {
+    "of": "of",
+    "itemsPerPage": "Items per Page",
+    "nextPage": "Next Page",
+    "previousPage": "Previous Page"
   }
 }
