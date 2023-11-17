@@ -326,6 +326,14 @@ mat-paginator {
   }
 }
 
+app-profile-page {
+  .teamHeader {
+    mat-icon {
+      display: none;
+    }
+  }
+}
+
 .cc-deny,
 .cc-message {
   font-size: 1rem !important;

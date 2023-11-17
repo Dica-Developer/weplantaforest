@@ -14,18 +14,22 @@
     </ul>
   </nav>
   <app-plantbag (convertPlantBagToCartClicked)="convertPlantBagToCart()"></app-plantbag>
-  <div *ngIf="!(loggedIn$ | async)">
+  <div *ngIf="!(loggedIn$ | async)" class="padding-top-1">
     <p class="fat">
       {{ 'notLoggedIn' | translate }}
     </p>
     <p>{{ 'plantBagInfoText' | translate }}</p>
     <p>
-      {{ ('giftRedeemInfoDescription2' | translate) + ' '
-      }}<a routerLink="/login">{{ 'login' | translate }}</a>
+      {{ ('giftRedeemInfoDescription2' | translate) + ' ' }}
+      <br />
+      <br />
+      <a class="fat" routerLink="/login">{{ 'login' | translate }}</a>
     </p>
     <p>
-      {{ ('giftRedeemInfoDescription3' | translate) + ' '
-      }}<a routerLink="/signup">{{ 'registerHere' | translate }}</a>
+      {{ ('giftRedeemInfoDescription3' | translate) + ' ' }}
+      <br />
+      <br />
+      <a class="fat" routerLink="/signup">{{ 'registerHere' | translate }}</a>
     </p>
   </div>
 </div>
