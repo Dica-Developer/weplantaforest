@@ -7,6 +7,21 @@
     <mat-icon *ngIf="!trees.last" class="icon icon-right" (click)="nextPage()"
       >keyboard_arrow_right</mat-icon
     >
+    <ng-container *ngFor="let planting of trees.content; let i = index">
+      <app-carousel-item
+        [item]="{
+          projectName: planting.projectName,
+          amount: planting.amount,
+          plantedOn: planting.plantedOn,
+          treeTypeImageUrl: planting.treeTypeImageUrl,
+          linkTo: planting.projectLink
+        }"
+        linkTo="{{ planting.projectLink }}"
+        class="column is-one-quarter is-hidden-tablet"
+        *ngIf="i < 2"
+      >
+      </app-carousel-item>
+    </ng-container>
     <app-carousel-item
       *ngFor="let planting of trees.content"
       [item]="{
@@ -17,8 +32,9 @@
         linkTo: planting.projectLink
       }"
       linkTo="{{ planting.projectLink }}"
-      class="column is-one-quarter"
+      class="column is-one-quarter is-hidden-mobile"
     >
+      <!-- Hide on tablets and show on mobile -->
     </app-carousel-item>
   </div>
 </div>
