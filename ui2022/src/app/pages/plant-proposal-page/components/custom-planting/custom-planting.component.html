@@ -6,23 +6,24 @@
         : ('customPlantingInfo' | translate)
     }}
   </p>
-  <div class="columns hideOnMobile">
-    <div class="column"></div>
-    <div class="column">
-      <b> {{ 'project' | translate }} </b>
-    </div>
-    <div class="column">
-      <b> {{ 'treeType' | translate }} </b>
-    </div>
-    <div class="column">
-      <b> {{ 'amount' | translate }} </b>
-    </div>
-    <div class="column">
-      <b> {{ 'partialPrice' | translate }} </b>
-    </div>
-    <div class="column"></div>
-  </div>
   <div *ngFor="let project of activeProjects" class="content">
+    <div class="columns hideOnMobile">
+      <div class="column">
+        <b>
+          {{ project.projectName }}
+        </b>
+      </div>
+      <div class="column">
+        <b> {{ 'treeType' | translate }} </b>
+      </div>
+      <div class="column">
+        <b> {{ 'amount' | translate }} </b>
+      </div>
+      <div class="column">
+        <b> {{ 'partialPrice' | translate }} </b>
+      </div>
+      <div class="column"></div>
+    </div>
     <h4 class="margin-bottom-1 hideOnDesktop">{{ project.projectName }}</h4>
     <div *ngIf="formGroup.get(project.projectName)">
       <div *ngFor="let fg of getFormArray(project.projectName)">
