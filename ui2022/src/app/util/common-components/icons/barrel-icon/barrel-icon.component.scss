@@ -1,18 +1,20 @@
-.svg-icon {
-  path {
-    fill: var(--brown);
-  }
-}
-
 .inToolbar {
   cursor: pointer;
   path {
     fill: var(--dark-brown);
   }
 }
-.inToolbar:hover {
+.inToolbar:active {
   cursor: pointer;
   path {
     fill: var(--green);
+  }
+}
+@media only screen and (min-width: 768px) {
+  .inToolbar:hover {
+    cursor: pointer;
+    path {
+      fill: var(--green);
+    }
   }
 }

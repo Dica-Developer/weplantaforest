@@ -52,6 +52,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       }),
     ],
     drawControl: false,
+    dragging: !L.Browser.mobile,
+    // touchZoom: L.Browser.mobile,
     zoom: 2,
   };
 
@@ -94,8 +96,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     this.map = map;
     this.map.scrollWheelZoom.disable();
     if (this.disabledMap) {
-      this.map.dragging.disable();
-      this.map.keyboard.disable();
     }
     setTimeout(() => {
       if (this.coords.length > 0) {
