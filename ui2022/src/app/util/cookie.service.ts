@@ -23,12 +23,9 @@ export class AppCookieService {
 
     this.statusChangeSubscription = this.ngCookieConsent.statusChange$.subscribe(
       (event: NgcStatusChangeEvent) => {
-        console.log(this.ngxCookieService.getAll());
         if (event.status == 'allow') {
-          console.log('allow');
           // do stuff when allow
         } else if (event.status == 'deny') {
-          console.log('deny');
           this.ngxCookieService.deleteAll('/');
         }
       },

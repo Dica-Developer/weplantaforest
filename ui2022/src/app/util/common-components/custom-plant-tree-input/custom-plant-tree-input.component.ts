@@ -40,7 +40,6 @@ export class CustomPlantTreeInputComponent implements OnInit, OnDestroy {
         this.calcSum(amount);
       }
     });
-    console.log(this.formGroup.value);
   }
 
   initControl() {

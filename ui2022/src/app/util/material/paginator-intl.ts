@@ -1,25 +1,5 @@
-import { Injectable, OnInit } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
-
-// @Injectable()
-// export class PaginatorI18n extends MatPaginatorIntl implements OnInit {
-//   constructor(private translate: TranslateService) {
-//     super();
-//   }
-
-//   ngOnInit() {
-//     this.translateLabels();
-//   }
-
-//   translateLabels() {
-//     super.itemsPerPageLabel = this.translate.instant('itemsPerPage');
-//     console.log(this.translate.instant('itemsPerPage'));
-//     super.nextPageLabel = this.translate.instant('nextPage');
-//     super.previousPageLabel = this.translate.instant('previousPage');
-//     this.changes.next();
-//   }
-// }
 
 export class PaginatorIntlService extends MatPaginatorIntl {
   translate: TranslateService;

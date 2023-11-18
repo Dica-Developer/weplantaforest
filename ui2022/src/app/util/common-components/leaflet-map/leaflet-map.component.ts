@@ -53,7 +53,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     ],
     drawControl: false,
     dragging: !L.Browser.mobile,
-    // touchZoom: L.Browser.mobile,
     zoom: 2,
   };
 
