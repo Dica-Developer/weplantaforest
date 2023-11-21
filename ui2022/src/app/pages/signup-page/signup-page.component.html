@@ -1,6 +1,4 @@
-<div
-  class="signup is-flex is-flex-direction-column w-100 padding-1 is-justify-content-space-between"
->
+<div class="signup is-flex is-flex-direction-column w-100 padding-1">
   <nav class="breadcrumb padding-left" style="width: fit-content">
     <ul>
       <li>
@@ -100,7 +98,7 @@
         <app-button [label]="'signup' | translate"></app-button>
       </div>
     </form>
-    <div class="is-flex is-justfiy-content-center is-align-items-center welcomeBox h-100">
+    <div class="is-flex is-justfiy-content-center is-align-items-center welcomeBox">
       <h4 *ngIf="signupDone$ | async">{{ 'plsActivateAccount' | translate }}</h4>
     </div>
   </div>
