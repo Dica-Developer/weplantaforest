@@ -80,6 +80,7 @@
           name="passwordedit"
           formControlName="password"
           [type]="showPassword ? 'text' : 'password'"
+          autocomplete="new-password"
         />
         <mat-icon matSuffix style="cursor: pointer" (click)="toggleShowPassword()">
           {{ !showPassword ? 'visibility' : 'visibility_off' }}</mat-icon
