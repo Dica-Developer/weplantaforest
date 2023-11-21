@@ -48,7 +48,7 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
       this.initForm(projects);
       if (proposal) {
         for (const plantItem of proposal.plantItems) {
-          if((this.formGroup.get(plantItem.projectName) as FormArray)) {
+          if (this.formGroup.get(plantItem.projectName) as FormArray) {
             for (const fg of (this.formGroup.get(plantItem.projectName) as FormArray).controls) {
               if (fg.value.article.treeType.name === plantItem.treeType) {
                 fg.get('amount').setValue(plantItem.amount);
@@ -108,22 +108,29 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
     }
     this.formGroup = new FormGroup({});
     for (const project of this.activeProjects) {
-      this.formGroup.addControl(project.projectName, new FormArray([]));
+      const array = [];
       if (project.articles && project.articles.length > 0) {
         for (const article of project.articles) {
-          (this.formGroup.get(project.projectName) as FormArray).push(
-            new FormGroup({
-              article: new FormControl(article),
-              amount: new FormControl(0, [
-                Validators.min(0),
-                Validators.max(article.amount - article.alreadyPlanted),
-              ]),
-            }),
-          );
+          if (article.amount > article.alreadyPlanted) {
+            array.push(
+              new FormGroup({
+                article: new FormControl(article),
+                amount: new FormControl(0, [
+                  Validators.min(0),
+                  Validators.max(article.amount - article.alreadyPlanted),
+                ]),
+              }),
+            );
+          }
         }
       }
+      if (array.length !== 0) {
+        this.formGroup.addControl(project.projectName, new FormArray(array));        
+      }else {
+        //remove project from activeProjects if there are no articles to plant
+        this.activeProjects = this.activeProjects.filter((p) => p.projectId !== project.projectId);
+      }
     }
-
     this.formGroupSub?.unsubscribe();
     this.formGroupSub = this.formGroup.valueChanges.subscribe((value) => {
       let price = 0;
