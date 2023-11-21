@@ -8,10 +8,10 @@
   <div class="column is-half">
     <p>{{ 'memberSince' | translate }}: {{ profileDetails.regDate | date : 'dd.MM.yyyy' }}</p>
     <p>{{ 'type' | translate }}: {{ profileDetails.organizationType | translate }}</p>
-    <p>{{ 'organisation' | translate }}: {{ profileDetails.organisation }}</p>
+    <p innerHTML="{{ 'organisation' | translate }}: {{ profileDetails.organisation }}"></p>
     <p innerHTML="{{ 'location' | translate }}: {{ profileDetails.location }}"></p>
   </div>
 </div>
 <div class="columns padding-2">
-  <p>{{ profileDetails.aboutMe }}</p>
+  <p innerHTML="{{ profileDetails.aboutMe }}"></p>
 </div>
