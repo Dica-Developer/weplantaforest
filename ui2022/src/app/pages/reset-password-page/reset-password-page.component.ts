@@ -29,6 +29,7 @@ export class ResetPasswordPageComponent implements OnInit {
   );
   id: string = '';
   key: string = '';
+  showPassword: boolean = false;
 
   logoUrl = environment.baseUrl + 'assets/ipat_logo.png';
 
@@ -50,6 +51,10 @@ export class ResetPasswordPageComponent implements OnInit {
         }),
       );
     });
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit(): void {
