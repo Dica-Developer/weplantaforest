@@ -1,3 +1,20 @@
 .faq {
   max-width: 1080px;
 }
+
+
+.scroll-container {
+  max-height: 55vh;
+}
+
+.faq-link {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+ng-scrollbar {
+  border: none;
+  --scrollbar-size: 8px;
+  --scrollbar-thumb-color: #65594e;
+  --scrollbar-border-radius: 4px;
+}
