@@ -42,7 +42,6 @@ import { TreetypesOverviewComponent } from './treeTypes/treetypes-overview/treet
 import { TreetypeEditComponent } from './treeTypes/treetype-edit/treetype-edit.component';
 import { PlantForUserComponent } from './plant-for-user/plant-for-user/plant-for-user.component';
 import { TransferTreesComponent } from './transfer-trees/transfer-trees/transfer-trees.component';
-import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 import { TreeTypeImageUploadComponent } from './treeTypes/treetype-edit/components/tree-type-image-upload/tree-type-image-upload.component';
 
 @NgModule({
@@ -88,7 +87,6 @@ import { TreeTypeImageUploadComponent } from './treeTypes/treetype-edit/componen
     AgGridModule.forRoot(),
     LeafletModule,
     LeafletDrawModule,
-    NgcCookieConsentModule,
   ],
 })
 export class BackofficePageModule {}

@@ -7,10 +7,8 @@ import { AuthService } from './services/auth.service';
 import { AppState } from './store/app.state';
 import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
-import { AppCookieService } from './util/cookie.service';
 import { loadProfileDetails, selectUserLanguage } from './store/profile.store';
 import { getProjectsForCustomPlanting } from './store/plant.store';
-import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -27,11 +25,9 @@ export class AppComponent implements OnInit {
   cookieTranslateSub: Subscription;
 
   constructor(
-    private ccService: NgcCookieConsentService,
     private store: Store<AppState>,
     private router: Router,
     private snackBar: MatSnackBar,
-    private cookieService: AppCookieService,
     private authService: AuthService,
     private translateService: TranslateService,
   ) {
@@ -81,32 +77,5 @@ export class AppComponent implements OnInit {
   ngOnDestroy() {
     this.languageSub.unsubscribe();
     this.cookieTranslateSub.unsubscribe();
-  }
-
-  initCookieTranslations() {
-    this.cookieTranslateSub?.unsubscribe();
-    this.cookieTranslateSub = this.translateService //
-      .get([
-        'cookie.header',
-        'cookie.message',
-        'cookie.dismiss',
-        'cookie.allow',
-        'cookie.deny',
-        'cookie.link',
-        'cookie.policy',
-      ])
-      .subscribe((data) => {
-        this.ccService.getConfig().content = this.ccService.getConfig().content || {};
-        // Override default messages with the translated ones
-        this.ccService.getConfig().content.header = data['cookie.header'];
-        this.ccService.getConfig().content.message = data['cookie.message'];
-        this.ccService.getConfig().content.dismiss = data['cookie.dismiss'];
-        this.ccService.getConfig().content.allow = data['cookie.allow'];
-        this.ccService.getConfig().content.deny = data['cookie.deny'];
-        this.ccService.getConfig().content.link = data['cookie.link'];
-        this.ccService.getConfig().content.policy = data['cookie.policy'];
-        this.ccService.destroy(); // remove previous cookie bar (with default messages)
-        this.ccService.init(this.ccService.getConfig()); // update config with translated messages
-      });
   }
 }
