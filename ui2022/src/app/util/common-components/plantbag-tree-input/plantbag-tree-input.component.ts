@@ -58,6 +58,13 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
     this.controlVcSub = this.control.valueChanges.subscribe((res) => {
       this.calcSum(res);
       this.store.dispatch(addPlantbagItem({ item: { article: this.article, amount: res } }));
+      //#763
+      // since there are new plantbag items after changing the amount, the focus gets lost when changing the input
+      // so we look for the input element with their id (--> 'article-' + articleId) and focus it again programmatically
+      setTimeout(() => {
+        let el = document.getElementById('article-' + this.article.articleId);
+        el.focus();
+      }, 10);
     });
   }
 
