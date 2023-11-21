@@ -17,21 +17,19 @@ export class AppCookieService {
   ) {}
 
   init() {
-    this.popupCloseSubscription = this.ngCookieConsent.popupClose$.subscribe(() => {
-      // you can use this.ngCookieConsent.getConfig() to do stuff...
-    });
-
-    this.statusChangeSubscription = this.ngCookieConsent.statusChange$.subscribe(
-      (event: NgcStatusChangeEvent) => {
-        if (event.status == 'allow') {
-          // do stuff when allow
-        } else if (event.status == 'deny') {
-          this.ngxCookieService.deleteAll('/');
-        }
-      },
-    );
-
-    this.revokeChoiceSubscription = this.ngCookieConsent.revokeChoice$.subscribe(() => {});
+    // this.popupCloseSubscription = this.ngCookieConsent.popupClose$.subscribe(() => {
+    //   // you can use this.ngCookieConsent.getConfig() to do stuff...
+    // });
+    // this.statusChangeSubscription = this.ngCookieConsent.statusChange$.subscribe(
+    //   (event: NgcStatusChangeEvent) => {
+    //     if (event.status == 'allow') {
+    //       // do stuff when allow
+    //     } else if (event.status == 'deny') {
+    //       this.ngxCookieService.deleteAll('/');
+    //     }
+    //   },
+    // );
+    // this.revokeChoiceSubscription = this.ngCookieConsent.revokeChoice$.subscribe(() => {});
   }
 
   ngOnDestroy() {
