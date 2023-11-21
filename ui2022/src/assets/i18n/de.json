@@ -328,5 +328,9 @@
     "nextPage": "Nächste Seite",
     "previousPage": "Vorherige Seite"
   },
+  "resetPassword": "Passwort zurücksetzen",
   "receivedMailForPasswordReset":"Du hast eine E-Mail an die angegebene Adresse erhalten um dein Passwort zurückzusetzen."
+  ,
+  "passwordResetLinkInvalid": "Dieser Link ist leider ungültig.",
+  "passwordResetSuccessful": "  Passwort erfolgreich geändert."
 }

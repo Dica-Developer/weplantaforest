@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AppState } from '../../store/app.state';
 import {
   resetPasswordRequest,
-  resetPasswordSuccess,
+  resetState,
   selectPasswordResetRequestSent,
 } from '../../store/auth.store';
 
@@ -27,7 +27,7 @@ export class ForgotPasswordPageComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.store.dispatch(resetPasswordSuccess());
+    this.store.dispatch(resetState());
   }
 
   onSubmit(): void {
