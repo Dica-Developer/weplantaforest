@@ -4,8 +4,6 @@
   position: relative;
   overflow: hidden;
   white-space: pre-wrap;
-  border-bottom: 1px solid var(--black);
-  border-right: 1px solid var(--black);
   background-image: none;
   background-size: cover;
   background-position: center;
@@ -41,5 +39,8 @@
 @media only screen and (max-width: 768px) {
   .blog-tile {
     height: initial;
+  }
+  .border-right {
+    border-right: none;
   }
 }

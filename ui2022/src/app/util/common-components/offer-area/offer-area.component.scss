@@ -16,10 +16,6 @@ p {
   margin-bottom: 0;
 }
 
-.is-three-fifths {
-  border-right: 1px solid var(--black);
-}
-
 .largeText {
   display: block;
   font-size: 1.25rem !important;
@@ -53,5 +49,9 @@ app-circle-icon {
 
   .largeTextMobile {
     display: block;
+  }
+
+  .border-right {
+    border-right: none;
   }
 }
