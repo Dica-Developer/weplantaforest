@@ -415,7 +415,7 @@ export const selectUserLanguage = createSelector(profileFeature, (state: Profile
   if (state.details?.lang) {
     return state.details.lang;
   } else {
-    if (navigator.language === 'de-De') {
+    if (navigator.language === 'de-De' || navigator.language === 'de') {
       return 'de';
     } else {
       return 'en';

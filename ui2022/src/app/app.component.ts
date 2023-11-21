@@ -88,13 +88,6 @@ export class AppComponent implements OnInit {
     this.store.dispatch(getProjectsForCustomPlanting());
     if (localStorage.getItem('jwt') && localStorage.getItem('username')) {
       this.store.dispatch(loadProfileDetails({ username: localStorage.getItem('username') }));
-    } else {
-      // if browser language isn't german, use english as default for non logged in users
-      if (navigator.language === 'de-De') {
-        this.translateService.use('de');
-      } else {
-        this.translateService.use('en');
-      }
     }
     this.authService.autoLogin();
   }
