@@ -327,5 +327,6 @@
     "itemsPerPage": "Items per Page",
     "nextPage": "Next Page",
     "previousPage": "Previous Page"
-  }
+  },
+  "receivedMailForPasswordReset":"You have received an email at the address provided to reset your password."
 }

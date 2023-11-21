@@ -327,6 +327,6 @@
     "itemsPerPage": "Items pro Seite",
     "nextPage": "Nächste Seite",
     "previousPage": "Vorherige Seite"
-  }
-  
+  },
+  "receivedMailForPasswordReset":"Du hast eine E-Mail an die angegebene Adresse erhalten um dein Passwort zurückzusetzen."
 }

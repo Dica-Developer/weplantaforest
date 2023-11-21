@@ -3,7 +3,11 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../store/app.state';
-import { resetPasswordRequest, selectPasswordResetRequestSent } from '../../store/auth.store';
+import {
+  resetPasswordRequest,
+  resetPasswordSuccess,
+  selectPasswordResetRequestSent,
+} from '../../store/auth.store';
 
 @Component({
   selector: 'app-forgot-password-page',
@@ -23,6 +27,7 @@ export class ForgotPasswordPageComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    this.store.dispatch(resetPasswordSuccess());
   }
 
   onSubmit(): void {

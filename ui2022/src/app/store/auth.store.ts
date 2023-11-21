@@ -60,6 +60,7 @@ export const signupDoneReset = createAction('[Auth] Reset SignupDone Flag');
 export const verificationDoneReset = createAction('[Auth] Reset VerificationDone Flag');
 
 export const logout = createAction('[Auth] logout');
+export const resetState = createAction('[Auth] reset state');
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -87,6 +88,11 @@ export const initialState: AuthState = {
 
 const authReducer = createReducer(
   initialState,
+  on(resetState, (state) => ({
+    ...state,
+    passwordResetRequestSent: false,
+    passwordResetSent: false,
+  })),
   on(resetPasswordRequestSuccess, (state) => ({
     ...state,
     passwordResetRequestSent: true,
