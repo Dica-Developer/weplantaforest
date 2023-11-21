@@ -76,7 +76,7 @@
             class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom"
           >
             <label>{{ 'max.' + (article.amount - article.alreadyPlanted) }}</label>
-            <input matInput name="amount" type="number" [formControl]="control" />
+            <input id="{{'m-article-' + article.articleId}}" matInput name="amount" type="number" [formControl]="control" />
           </div>
           <mat-error *ngIf="control.invalid">{{ getErrorMessage() }}</mat-error>
         </div>

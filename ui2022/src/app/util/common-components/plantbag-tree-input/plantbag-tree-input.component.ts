@@ -64,6 +64,8 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         let el = document.getElementById('article-' + this.article.articleId);
         el.focus();
+        let mel = document.getElementById('m-article-' + this.article.articleId);
+        mel.focus();
       }, 10);
     });
   }
