@@ -69,6 +69,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  closeMenu() {
+    if (this.menuOpened) {
+      this.menuOpened = false;
+    }
+  }
+
   // listens for escape key when menu open
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {

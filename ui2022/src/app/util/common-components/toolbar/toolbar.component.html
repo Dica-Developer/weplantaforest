@@ -1,6 +1,10 @@
 <mat-toolbar class="is-flex is-flex-direction-row">
   <div class="h-100 is-flex-grow-1 center-vertically-horizontally">
-    <app-logo-icon class="center-vertically-horizontally" routerLink="/"></app-logo-icon>
+    <app-logo-icon
+      class="center-vertically-horizontally"
+      (click)="closeMenu()"
+      routerLink="/"
+    ></app-logo-icon>
   </div>
   <div class="border-left h-100 is-flex-grow-3 center-vertically-horizontally hide-desktop"></div>
   <div
@@ -23,6 +27,7 @@
   </div>
   <div class="{{ 'h-100 w-80px is-flex-grow-0 bordered ' }} padding-05">
     <app-barrel-icon
+      (click)="closeMenu()"
       [ngClass]="{ scale: showScaleClass }"
       matBadge="{{ plantBagPrice$ | async | currency }}"
       matBadgeColor="warn"
