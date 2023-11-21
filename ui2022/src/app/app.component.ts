@@ -42,21 +42,7 @@ export class AppComponent implements OnInit {
       } else if (language === 'DEUTSCH' || language === 'de') {
         this.translateService.use('de');
       }
-      this.initCookieTranslations();
     });
-
-    this.cookieService.init();
-    //comment in for dev-purpose: to avoid manually routing back to page, where you work after each codechange
-    // const previousUrl = localStorage.getItem('previousUrl');
-    // if (localStorage.getItem('jwt')) {
-    //   console.log(previousUrl);
-
-    //   if (previousUrl && previousUrl !== '/login') {
-    //     this.router.navigate([previousUrl]);
-    //   } else {
-    //     this.router.navigate(['/']);
-    //   }
-    // }
     this.store.select(selectErrors).subscribe((errors) => {
       for (let error of errors) {
         this.snackBar

@@ -33,10 +33,7 @@ import { eventsReducerFn, EventsEffects } from './store/events.store';
 import { teamReducerFn, TeamEffects } from './store/team.store';
 import { plantbagReducerFn, PlantbagEffects } from './store/plantbag.store';
 import { AuthGuard } from './util/auth.guard';
-import { NgcCookieConsentConfig, NgcCookieConsentModule } from 'ngx-cookieconsent';
 import { ErrorInterceptor } from './services/http-interceptors/http.interceptor';
-import { AppCookieService } from './util/cookie.service';
-import { CookieService } from 'ngx-cookie-service';
 import { PagesModule } from './pages/pages.module';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -72,35 +69,6 @@ export const MY_FORMATS = {
     monthYearLabel: 'YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'YYYY',
-  },
-};
-
-export const cookieConfig: NgcCookieConsentConfig = {
-  cookie: {
-    domain: 'iplantatree.org',
-  },
-  position: 'bottom',
-  theme: 'block',
-  palette: {
-    popup: {
-      background: '#fdfefb',
-      text: '#3c3335',
-      link: '#3c3335',
-    },
-    button: {
-      background: '#3c3335',
-      text: '#fdfefb',
-      border: 'transparent',
-    },
-  },
-  type: 'opt-out',
-  content: {
-    message: 'This website uses cookies to ensure you get the best experience on our website.',
-    dismiss: 'Got it!',
-    deny: 'Refuse cookies',
-    link: 'Learn more',
-    href: 'https://cookiesandyou.com',
-    policy: 'Cookie Policy',
   },
 };
 
@@ -206,7 +174,6 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
     }),
     LeafletModule,
     LeafletDrawModule,
-    NgcCookieConsentModule.forRoot(cookieConfig),
     TranslateModule.forRoot({
       defaultLanguage: 'de',
       loader: {
@@ -242,8 +209,8 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' },
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    AppCookieService,
-    CookieService,
+    // AppCookieService,
+    // CookieService,
     {
       provide: LOCALE_ID,
       useValue: 'de-DE', // 'de-DE' for Germany, 'fr-FR' for France ...

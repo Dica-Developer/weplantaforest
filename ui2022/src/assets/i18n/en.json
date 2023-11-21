@@ -332,4 +332,6 @@
   "receivedMailForPasswordReset": "You have received an email at the address provided to reset your password.",
   "passwordResetLinkInvalid": "The link is invalid or has expired.",
   "passwordResetSuccessful": "Your password has been successfully reset."
+  ,
+  "SiteUsesCookies": "This site uses cookies."
 }
