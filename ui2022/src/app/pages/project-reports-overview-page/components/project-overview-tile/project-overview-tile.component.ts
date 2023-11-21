@@ -32,9 +32,11 @@ export class ProjectOverviewTileComponent implements OnInit {
     this.progress =
       (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
       100;
-    this.description = this.textHelper.getTextForLanguage(
-      this.projectReport.description,
-      this.translateService.currentLang,
+    this.description = this.getFirstParagraph(
+      this.textHelper.getTextForLanguage(
+        this.projectReport.description,
+        this.translateService.currentLang,
+      ),
     );
   }
 
@@ -50,5 +52,13 @@ export class ProjectOverviewTileComponent implements OnInit {
 
   route() {
     this.router.navigate(['/project/' + this.projectReport.projectName]);
+  }
+
+  getFirstParagraph(text) {
+    if (text && text.includes('<p>')) {
+      text = text.substr(3);
+      text = text.substr(0, text.indexOf('</p>'));
+    }
+    return text;
   }
 }
