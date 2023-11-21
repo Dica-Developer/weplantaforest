@@ -303,7 +303,7 @@
   "join": "beitreten",
   "howManyTreesToPlant": "Wieviele Bäume möchtest du pflanzen?",
   "youNoTeamYet": "Du bist noch keinem Team beigetreten.",
-  "square": "Quadrat",
+  "square": "Quadratisch",
   "horizontal": "Horizontal",
   "vertical": "Vertikal",
   "exploreInfo": "Hier findest du Beschreibungen und Illustrationen von heimischen Bäumen. Wenn du in der Einzelbaumansicht auf die Punkte klickst, erfährst du weitere Details über Früchte oder Blüten, Blätter und Borke.",
@@ -324,7 +324,7 @@
   },
   "paginator": {
     "of": "von",
-    "itemsPerPage": "Items pro Seite",
+    "itemsPerPage": "Elemente pro Seite",
     "nextPage": "Nächste Seite",
     "previousPage": "Vorherige Seite"
   },
