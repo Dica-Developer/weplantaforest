@@ -35,15 +35,15 @@ public class DataInjector {
             public void run() {
                 // TODO jz: Thinking about giving this an extra state table in
                 // the db (like db.populates=v23)
-                if (!_treeTypeRepository.existsAtAll()) {
-                    int treeCount = 15000;
-                    _databasePopulator.insertUsers().insertDefaultTreeTypes().insertProjects().insertProjectArticles().insertProjectImages().insertTrees(treeCount).insertTeams()
-                            .createProjectImageFoldersAndAddMainImages().copyAndRenameProjectImagesToProjectFolders().insertCartAndCertificateToCart().insertGifts().insertReceipts()
-                            .addUserAndTeamImages().addTreeTypeImages().createMainSliderImages();
-                    LOG.info("Finished injecting " + treeCount + " trees ");
-                } else {
-                    LOG.info("No entities will be injected.");
-                }
+                // if (!_treeTypeRepository.existsAtAll()) {
+                //     int treeCount = 15000;
+                //     _databasePopulator.insertUsers().insertDefaultTreeTypes().insertProjects().insertProjectArticles().insertProjectImages().insertTrees(treeCount).insertTeams()
+                //             .createProjectImageFoldersAndAddMainImages().copyAndRenameProjectImagesToProjectFolders().insertCartAndCertificateToCart().insertGifts().insertReceipts()
+                //             .addUserAndTeamImages().addTreeTypeImages().createMainSliderImages();
+                //     LOG.info("Finished injecting " + treeCount + " trees ");
+                // } else {
+                //     LOG.info("No entities will be injected.");
+                // }
             }
         };
         Thread thread = new Thread(treeInjector);
