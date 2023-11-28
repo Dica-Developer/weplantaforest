@@ -1,3 +1,9 @@
-.is-flex {
-  min-height: 12rem;
+.image-wrapper {
+  max-width: 625px;
+}
+
+@media only screen and (max-width: 768px) {
+  .switchToCol {
+    flex-direction: column !important;
+  }
 }
