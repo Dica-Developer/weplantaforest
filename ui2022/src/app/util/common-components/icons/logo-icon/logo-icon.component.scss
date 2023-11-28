@@ -3,14 +3,8 @@
     fill: var(--green);
   }
 }
-.svg-icon:active {
-  cursor: pointer;
-  path {
-    fill: var(--black);
-  }
-}
 
-@media only screen and (min-width: 768px) {
+@media (hover: hover) {
   .svg-icon:hover {
     cursor: pointer;
     path {
