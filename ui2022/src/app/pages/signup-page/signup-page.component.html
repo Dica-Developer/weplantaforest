@@ -20,9 +20,6 @@
       [formGroup]="signupForm"
       (ngSubmit)="onSubmit()"
     >
-      <mat-error *ngIf="signupError$ | async">
-        {{ 'signupFailed' | translate }}
-      </mat-error>
       <div class="inputOutline">
         <input [placeholder]="'username' | translate" name="name" required formControlName="name" />
       </div>

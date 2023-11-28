@@ -22,6 +22,7 @@
     <h4>{{ 'plantedTrees' | translate }}</h4>
     <div class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
       <div class="w-100">
+        <div class="margin-bottom-1">{{ 'newTrees' | translate }}</div>
         <canvas
           baseChart
           [data]="amountPerYearData"
@@ -33,6 +34,7 @@
         </canvas>
       </div>
       <div class="w-100">
+        <div class="margin-bottom-1">{{ 'total' | translate }}</div>
         <canvas
           baseChart
           [data]="amountOfTreesSumData"
@@ -47,7 +49,8 @@
   </div>
   <div class="margin-bottom-2">
     <h4 [innerHTML]="'CO2Trapped' | translate"></h4>
-    <div class="is-flex is-flex-direction-row is-justify-content-center">
+    <div class="is-flex is-flex-direction-column is-justify-content-center">
+      <div class="margin-bottom-1">{{ 'total' | translate }}</div>
       <canvas
         baseChart
         [data]="co2SumData"
@@ -60,9 +63,10 @@
     </div>
   </div>
   <div class="margin-bottom-2">
-    <h4>{{ 'Nutzerzahlen' | translate }}</h4>
+    <h4>{{ 'userNumbers' | translate }}</h4>
     <div class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
       <div class="w-100">
+        <div class="margin-bottom-1">{{ 'newUsers' | translate }}</div>
         <canvas
           baseChart
           [data]="usersPerYearData"
@@ -74,6 +78,7 @@
         </canvas>
       </div>
       <div class="w-100">
+        <div class="margin-bottom-1">{{ 'total' | translate }}</div>
         <canvas
           baseChart
           [data]="usersSumData"

@@ -33,12 +33,10 @@ export default class Sepa extends Component {
         receipt: 'sofort',
         comment: '',
         paymentMethod: 'SEPA',
-        // iban: 'TE01567891011121314151',
-        // bic: 'DEUTDEUTDEU'
         iban: '',
-        bic: ''
+        bic: '',
       },
-      paymentDone: false
+      paymentDone: false,
     };
   }
 
@@ -53,7 +51,7 @@ export default class Sepa extends Component {
     var obj = this.state.paymentData;
     obj[key] = val;
     this.setState({
-      paymentData: obj
+      paymentData: obj,
     });
   }
 
@@ -63,7 +61,7 @@ export default class Sepa extends Component {
     var obj = this.state.paymentData;
     obj[key] = val;
     this.setState({
-      paymentData: obj
+      paymentData: obj,
     });
   }
 
@@ -73,12 +71,12 @@ export default class Sepa extends Component {
       var that = this;
       axios
         .get('http://localhost:8081/carts/last', config)
-        .then(function(response) {
+        .then(function (response) {
           if (response.data) {
             that.preSetValues(response.data);
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           that.refs.notification.handleError(error);
         });
     }
@@ -102,10 +100,10 @@ export default class Sepa extends Component {
       comment: '',
       paymentMethod: 'SEPA',
       iban: '',
-      bic: ''
+      bic: '',
     };
     this.setState({
-      paymentData: paymentData
+      paymentData: paymentData,
     });
   }
 
@@ -115,12 +113,12 @@ export default class Sepa extends Component {
     var config = getConfig();
     axios
       .post('http://localhost:8081/pay', this.state.paymentData, config)
-      .then(function(response) {
+      .then(function (response) {
         that.refs['spinner'].hideSpinner();
         that.refs.notification.addNotification(counterpart.translate('PAYMENT_SUCCESSFUL'), counterpart.translate('THANKS_FOR_DONATION'), 'success');
         that.props.resetPlantBag();
         that.setState({
-          paymentDone: true
+          paymentDone: true,
         });
         that.props.loadUserDetails();
         setTimeout(() => {
@@ -133,7 +131,7 @@ export default class Sepa extends Component {
           }
         }, 2000);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         that.refs['spinner'].hideSpinner();
         that.refs.notification.handleError(error);
       });
@@ -270,7 +268,7 @@ export default class Sepa extends Component {
               <CountryDropdown
                 id="country"
                 value={this.state.paymentData.country}
-                onChange={val => this.selectCountry(val)}
+                onChange={(val) => this.selectCountry(val)}
                 classes="form-control"
                 valueType="short"
                 disabled={this.state.paymentDone}

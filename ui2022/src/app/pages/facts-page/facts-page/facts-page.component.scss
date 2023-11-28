@@ -4,6 +4,10 @@
   margin: 0 auto;
 }
 
+div {
+  font-family: 'Bull-mono';
+}
+
 @media only screen and (max-width: 900px) {
   .canvas-row {
     flex-direction: column !important;

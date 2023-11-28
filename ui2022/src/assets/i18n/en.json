@@ -23,8 +23,8 @@
   "offerAreaText": "We need your help! In order to plant more trees, we are looking for new reforestation areas. Offer your area to us.",
   "offerAreaNow": "Offer Area Now",
   "offerAreaNowMobile": "Offer Area",
-  "plantedTrees": "Planted Trees",
-  "plantedTreesPerType": "Planted Trees per Donor Type",
+  "plantedTrees": "Planted trees",
+  "plantedTreesPerType": "Planted trees per donor type",
   "contact": "Contact",
   "newsletter": "Newsletter",
   "blog": "Blog",
@@ -71,7 +71,7 @@
   "name": "Name",
   "profile": "Profile",
   "user": "User",
-  "userNumbers": "User Numbers",
+  "userNumbers": "Users",
   "team": "Team",
   "newsLetterText": "Stay up to date. With our newsletter, you'll be the first to know when new projects go online. You can cancel the subscription at any time.",
   "rank": "Rank",
@@ -333,5 +333,8 @@
   "passwordResetLinkInvalid": "The link is invalid or has expired.",
   "passwordResetSuccessful": "Your password has been successfully reset."
   ,
-  "SiteUsesCookies": "This site uses cookies."
+  "SiteUsesCookies": "This site uses cookies.",
+  "newTrees": "New trees",
+  "newUsers": "New users",
+  "signupFailed": "Signup failed!"
 }

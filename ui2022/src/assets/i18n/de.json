@@ -23,8 +23,8 @@
   "offerAreaText": "Wir brauchen deine Hilfe! Um mehr Bäume zu pflanzen, sind wir auf der Suche nach neuen Aufforstungsflächen. Stell uns deine Fläche zur Verfügung.",
   "offerAreaNow": "Jetzt Fläche anbieten",
   "offerAreaNowMobile": "Fläche anbieten",
-  "plantedTrees": "gepflanzte Bäume",
-  "plantedTreesPerType": "gepflanzte Bäume pro Spendertyp",
+  "plantedTrees": "Gepflanzte Bäume",
+  "plantedTreesPerType": "Gepflanzte Bäume pro Spendertyp",
   "contact": "Kontakt",
   "newsletter": "Newsletter",
   "blog": "Blog",
@@ -333,5 +333,7 @@
   ,
   "passwordResetLinkInvalid": "Dieser Link ist leider ungültig.",
   "passwordResetSuccessful": "  Passwort erfolgreich geändert.",
-  "SiteUsesCookies":"Diese Seite verwendet Cookies."
+  "SiteUsesCookies":"Diese Seite verwendet Cookies.",
+  "newTrees": "Neue Bäume",
+  "newUsers": "Neue Nutzer"
 }
