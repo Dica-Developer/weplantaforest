@@ -2,6 +2,10 @@ mat-card {
   background: var(--background);
 }
 
+ngx-paypal {
+  position: relative;
+  z-index: 1;
+}
 
 img {
   cursor: pointer;
