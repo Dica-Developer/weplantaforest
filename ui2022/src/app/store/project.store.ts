@@ -489,13 +489,14 @@ export class ProjectsEffects {
     this.actions$.pipe(
       ofType(loadProjectImages),
       switchMap((action) =>
-        this.projectService
-          .loadImages(action.id)
-          .pipe(
-            switchMap((images: ProjectImage[]) => [
-              loadProjectImagesSuccess({ images: images.reverse() }),
-            ]),
-          ),
+        this.projectService.loadImages(action.id).pipe(
+          switchMap((images: ProjectImage[]) => {
+            const sortedImages = images.sort((a, b) => {
+              return a.date - b.date;
+            });
+            return [loadProjectImagesSuccess({ images: sortedImages })];
+          }),
+        ),
       ),
     ),
   );

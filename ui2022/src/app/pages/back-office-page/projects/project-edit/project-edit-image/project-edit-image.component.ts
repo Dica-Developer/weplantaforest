@@ -47,11 +47,13 @@ export class ProjectEditImageComponent implements OnInit, OnDestroy {
       this.controlObj
         .get('description')
         .setValue(this.textHelper.createMultiLanguageEntry(res, this.descriptionEn.value));
+        this.saveAvailable = true;
     });
     this.descEnSub = this.descriptionEn.valueChanges.subscribe((res) => {
       this.controlObj
         .get('description')
         .setValue(this.textHelper.createMultiLanguageEntry(this.descriptionDe.value, res));
+        this.saveAvailable = true;
     });
     this.imageSrc =
       environment.backendUrl +
