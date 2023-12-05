@@ -1,0 +1,34 @@
+span {
+  font-size: 1rem;
+  color: var(--black);
+}
+
+.cookieButton {
+  font-family: 'Bull-mono';
+  padding: 0.3rem 1rem;
+  background: var(--dark-brown);
+  border-radius: 45px;
+  color: var(--background);
+  border: 2px solid var(--dark-brown);
+}
+
+.cookieButton:hover {
+  color: var(--black);
+  border: 2px solid var(--green);
+  background: var(--green);
+}
+
+.outlineButton {
+  font-family: 'Bull-mono';
+  padding: 0.3rem 1rem;
+  background: var(--background);
+  border: 2px solid var(--dark-brown);
+  border-radius: 45px;
+  color: var(--black);
+}
+
+.outlineButton:hover {
+  border: 2px solid var(--green);
+  color: var(--black);
+  background: var(--green);
+}

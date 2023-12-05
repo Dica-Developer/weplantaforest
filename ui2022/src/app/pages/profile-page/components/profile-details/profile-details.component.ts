@@ -10,7 +10,5 @@ export class ProfileDetailsComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.profileDetails);
-  }
+  ngOnInit(): void {}
 }

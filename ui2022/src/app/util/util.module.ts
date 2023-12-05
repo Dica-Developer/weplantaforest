@@ -61,6 +61,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CustomPlantingComponent } from '../pages/plant-proposal-page/components/custom-planting/custom-planting.component';
 import { CustomPlantTreeInputComponent } from './common-components/custom-plant-tree-input/custom-plant-tree-input.component';
+import { CookieConfirmationComponent } from './common-components/cookie-confirmation/cookie-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { CustomPlantTreeInputComponent } from './common-components/custom-plant-
     TeamCreateEditComponent,
     PlantproposalPreviewRowComponent,
     CustomPlantingComponent,
-    CustomPlantTreeInputComponent
+    CustomPlantTreeInputComponent,
+    CookieConfirmationComponent
   ],
   imports: [
     CommonModule,

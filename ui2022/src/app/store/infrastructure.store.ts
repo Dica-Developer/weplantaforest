@@ -16,12 +16,14 @@ export interface InfrastrutureState {
   formDisabled: boolean;
   captcha: string;
   captchaImg: any;
+  cookies: boolean;
 }
 
 export const intialState: InfrastrutureState = {
   formDisabled: false,
   captcha: '',
   captchaImg: null,
+  cookies: false,
 };
 
 export const submitOfferArea = createAction(
@@ -40,13 +42,21 @@ export const loadCaptchaSuccess = createAction(
   '[Infra] load captcha token success',
   props<{ token: string; img: any }>(),
 );
+export const acceptCookies = createAction('[Infra] accept cookies');
+export const declineCookies = createAction('[Infra] decline cookies');
 
 export const formDisabledFlagReset = createAction('[Infra] reset formDisabled flag');
 
 const infrastructureReducer = createReducer(
   intialState,
-  on(submitOfferArea, (state) => ({
+  on(acceptCookies, (state) => ({
     ...state,
+    cookies: true,
+    formDisabled: false,
+  })),
+  on(declineCookies, (state) => ({
+    ...state,
+    cookies: false,
     formDisabled: false,
   })),
   on(submitOfferAreaSuccess, (state) => ({
@@ -70,6 +80,10 @@ export function infrastructureReducerFn(state, action) {
 
 export const infrastructureFeature = (state: AppState) => state.infrastructureState;
 
+export const selectCookies = createSelector(
+  infrastructureFeature,
+  (state: InfrastrutureState) => state.cookies,
+);
 export const selectFormDisabled = createSelector(
   infrastructureFeature,
   (state: InfrastrutureState) => state.formDisabled,

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../store/app.state';
 import {
   PaymentDataDto,
@@ -14,6 +14,7 @@ import {
   selectPaymentDone,
 } from '../../store/payment.store';
 import { selectPlantbagPrice } from '../../store/plantbag.store';
+import { selectCookies } from 'src/app/store/infrastructure.store';
 
 @Component({
   selector: 'app-payment-options-page',
@@ -51,6 +52,8 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
     bic: '',
   };
 
+  showPaypal$: Observable<boolean> = this.store.select(selectCookies);
+
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
@@ -63,7 +66,7 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
 
     this.cartPayedSub = this.store.select(selectPaymentDone).subscribe((cartPayed) => {
       this.cartPayed = cartPayed;
-      if(this.cartPayed) {
+      if (this.cartPayed) {
         this.router.navigate(['/profile/' + localStorage.getItem('username')]);
       }
     });

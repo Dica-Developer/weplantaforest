@@ -1,0 +1,16 @@
+<div class="is-hidden-mobile is-flex is-flex-direction-row is-align-items-center">
+  <span class="margin-right-1">{{ 'cookieHeader' | translate }}</span>
+  <span class="pointer cookieButton margin-right-1" (click)="acceptCookies()">{{
+    'allow' | translate
+  }}</span>
+  <span class="pointer outlineButton margin-right-1" (click)="rejectCookies()">{{
+    'deny' | translate
+  }}</span>
+</div>
+<div class="is-hidden-desktop is-flex is-flex-direction-column is-align-items-center">
+  <span class="margin-bottom-05">{{ 'cookieHeader' | translate }}</span>
+  <div class="is-flex w-100 is-flex-direction-row is-justify-content-space-evenly">
+    <span class="pointer cookieButton" (click)="acceptCookies()">{{ 'allow' | translate }}</span>
+    <span class="pointer outlineButton" (click)="rejectCookies()">{{ 'deny' | translate }}</span>
+  </div>
+</div>

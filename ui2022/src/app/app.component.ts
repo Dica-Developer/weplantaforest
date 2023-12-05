@@ -10,6 +10,8 @@ import { selectSuccessMessages, removeSuccessMessage } from './store/success-mes
 import { loadProfileDetails, selectUserLanguage } from './store/profile.store';
 import { getProjectsForCustomPlanting } from './store/plant.store';
 import { Subscription } from 'rxjs';
+import { acceptCookies } from './store/infrastructure.store';
+import { CookieConfirmationComponent } from './util/common-components/cookie-confirmation/cookie-confirmation.component';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +24,7 @@ export class AppComponent implements OnInit {
   }
 
   languageSub: Subscription;
-  cookieTranslateSub: Subscription;
+  translateSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -72,10 +74,18 @@ export class AppComponent implements OnInit {
       this.store.dispatch(loadProfileDetails({ username: localStorage.getItem('username') }));
     }
     this.authService.autoLogin();
+    this.openCookieConfirmation();
+  }
+
+  openCookieConfirmation() {
+    this.snackBar.openFromComponent(CookieConfirmationComponent, {
+      duration: 10000,
+      panelClass: ['custom-snackbar'],
+    });
   }
 
   ngOnDestroy() {
     this.languageSub.unsubscribe();
-    this.cookieTranslateSub.unsubscribe();
+    this.translateSub.unsubscribe();
   }
 }

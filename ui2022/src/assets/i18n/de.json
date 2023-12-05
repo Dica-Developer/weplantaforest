@@ -313,6 +313,7 @@
   "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung",
   "editTeam": "Team editieren",
   "checkYourInputs": "Bitte überprüfe deine Eingaben!",
+  "cookieHeader": "Webseite verwendet Cookies um Zahlungen per Paypal zu ermöglichen!",
   "cookie": {
     "header": "Webseite verwendet Cookies!",
     "message": "Diese Webseite verwendet Cookies.",

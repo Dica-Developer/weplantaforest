@@ -359,6 +359,14 @@ app-profile-page {
   height: 100%;
 }
 
+.mat-snack-bar-container {
+  max-width: 50vw;
+}
+
+.custom-snackbar {
+  background: var(--background) !important;
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body {
