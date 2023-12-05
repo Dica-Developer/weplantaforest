@@ -18,6 +18,7 @@ import org.dicadeveloper.weplantaforest.support.Uris;
 import org.dicadeveloper.weplantaforest.user.User;
 import org.dicadeveloper.weplantaforest.user.UserRepository;
 import org.dicadeveloper.weplantaforest.views.Views;
+import org.dicadeveloper.weplantaforest.reports.co2.Co2Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.common.net.UrlEscapers;
@@ -105,6 +107,10 @@ public class TeamController {
         }
         if (null != teamReportData) {
             teamReportData.setCo2Data(co2Repository.getAllTreesAndCo2SavingForTeam(System.currentTimeMillis(), teamReportData.getTeamName()));
+            if(teamReportData.getCo2Data().getTreesCount() == null) {
+                var co2Data = new Co2Data(0L, 0.0);
+                teamReportData.setCo2Data(co2Data);
+            }
             teamReportData.setRank(calcTeamRank(teamReportData.getTeamName(), teamReportData.getCo2Data().getTreesCount()));
             return new ResponseEntity<>(teamReportData, HttpStatus.OK);
         } else {
