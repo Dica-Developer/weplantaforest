@@ -260,6 +260,12 @@ const teamReducer = createReducer(
       uploadingImage: true,
     };
   }),
+  on(deleteTeamSuccess, (state) => {
+    return {
+      ...state,
+      teamDetails: null,
+    };
+  }),
   on(updateTeamImageError, (state) => {
     return {
       ...state,
@@ -399,8 +405,8 @@ export class TeamEffects {
       switchMap((action) =>
         this.teamService.deleteTeam(action.teamId).pipe(
           concatMap(() => {
-            // this.router.navigate(['/']);
             return [
+              deleteTeamSuccess(),
               addSuccessMessage({
                 message: {
                   key: 'TEAM_DELETE_SUCCESS',

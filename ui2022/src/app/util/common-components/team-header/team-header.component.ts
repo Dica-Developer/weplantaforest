@@ -84,6 +84,7 @@ export class TeamHeaderComponent implements OnInit {
         })
         .onAction()
         .subscribe(() => {
+          // this.router.navigate(['/profile/' + localStorage.getItem('username')]);
           this.deleteTeam();
         });
     } else if (confirmType === 'join') {
@@ -104,6 +105,9 @@ export class TeamHeaderComponent implements OnInit {
   }
 
   deleteTeam() {
+    setTimeout(() => {
+      this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+    }, 250);
     this.store.dispatch(deleteTeam({ teamId: this.teamDetails?.teamId }));
   }
 
