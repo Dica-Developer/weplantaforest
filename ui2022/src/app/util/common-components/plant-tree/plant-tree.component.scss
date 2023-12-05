@@ -8,6 +8,8 @@
   cursor: pointer;
 }
 
-.border-left {
-  border-left: none;
+@media only screen and (max-width: 768px) {
+  .border-left {
+    border-left: none;
+  }
 }
