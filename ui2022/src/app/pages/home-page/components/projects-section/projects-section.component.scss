@@ -1,14 +1,9 @@
-.projectTile {
-  height: 700px;
-  max-width: 700px;
-}
-
 app-circle-icon {
   margin-right: 1rem;
 }
 
 .center {
-  margin: 2.75rem auto;
+  margin: 1.5rem auto;
 }
 
 .column {
@@ -18,20 +13,19 @@ app-circle-icon {
 .column:first-child {
   border-right: 1px solid var(--black);
 }
-@media only screen and (max-width: 900px) {
-  .projectTile {
-    height: initial;
-  }
-}
-
-.project-row {
-  display: flex;
-  padding-bottom: 15px;
-}
 
 ng-scrollbar {
+  max-height: 700px !important;
+  height: 700px !important;
   border: none;
   --scrollbar-size: 8px;
   --scrollbar-thumb-color: #65594e;
   --scrollbar-border-radius: 4px;
+}
+
+@media only screen and (max-width: 768px) {
+  ng-scrollbar {
+    height: 550px !important;
+    max-height: 550px !important;
+  }
 }
