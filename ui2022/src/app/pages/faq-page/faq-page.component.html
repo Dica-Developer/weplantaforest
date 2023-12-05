@@ -18,7 +18,7 @@
 </div>
 <div class="w-100 is-flex is-flex-direction-column padding-1 padding-left margin-top-1">
   <h2>{{ 'faq' | translate }}</h2>
-  <div class="columns">
+  <div class="columns is-hidden-mobile">
     <div class="column is-4">
       <div *ngFor="let faqArticle of faq; index as i">
         <div class="faq-link">
@@ -37,6 +37,16 @@
           </div>
         </div>
       </ng-scrollbar>
+    </div>
+  </div>
+  <div class="columns is-hidden-desktop">
+    <div class="column">
+      <div *ngFor="let faqArticle of faq; index as i">
+        <div key="{{ i }}" id="{{ 'faq-' + i }}">
+          <h4>{{ faqArticle.title }}</h4>
+          <div innerHtml="{{ faqArticle.intro }}"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

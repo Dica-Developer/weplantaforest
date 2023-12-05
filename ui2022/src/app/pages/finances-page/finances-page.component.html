@@ -19,7 +19,7 @@
 <div class="w-100 is-flex is-flex-direction-column padding-1 padding-left margin-top-1">
   <h2>{{ 'finances' | translate }}</h2>
 
-  <div class="columns">
+  <div class="columns is-hidden-mobile">
     <div class="column is-2">
       <div class="scroll-container">
         <div *ngFor="let finance of finances; index as i">
@@ -44,6 +44,20 @@
           </div>
         </div>
       </ng-scrollbar>
+    </div>
+  </div>
+  <div class="columns is-hidden-desktop">
+    <div class="column">
+      <div *ngFor="let finance of finances; index as i">
+        <div id="{{ 'finance-' + i }}">
+          <h4>{{ finance.title }}</h4>
+          <div innerHtml="{{ finance.intro }}"></div>
+          <div *ngFor="let paragraph of finance.paragraphs">
+            <div innerHtml="{{ paragraph.title }}"></div>
+            <div innerHtml="{{ paragraph.text }}"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
