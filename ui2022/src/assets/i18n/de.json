@@ -313,16 +313,10 @@
   "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung",
   "editTeam": "Team editieren",
   "checkYourInputs": "Bitte überprüfe deine Eingaben!",
-  "cookieHeader": "Webseite verwendet Cookies um Zahlungen per Paypal zu ermöglichen!",
-  "cookie": {
-    "header": "Webseite verwendet Cookies!",
-    "message": "Diese Webseite verwendet Cookies.",
-    "dismiss": "Ok!",
-    "allow": "Erlauben",
-    "deny": "Ablehnen",
-    "link": "Mehr erfahren",
-    "policy": "Cookies"
-  },
+  "cookieHeader": "Diese Webseite verwendet Cookies um Zahlungen per Paypal zu ermöglichen.",
+  "allow": "Erlauben",
+  "deny": "Ablehnen",
+  "LearnPrivacy": "Mehr erfahren!",
   "paginator": {
     "of": "von",
     "itemsPerPage": "Elemente pro Seite",

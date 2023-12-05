@@ -313,16 +313,10 @@
   "notLoggedIn": "You are not logged in! If you plant anonymously, fewer functions are available to you.",
   "editTeam": "Edit Team",
   "checkYourInputs": "Please check your entries!",
-  "cookieHeader": "Website uses Cookies to enable Paypal Payments!",
-  "cookie": {
-    "header": "Cookies used on the website!",
-    "message": "This website uses cookies.",
-    "dismiss": "Got it!",
-    "allow": "Allow",
-    "deny": "Decline",
-    "link": "Learn more",
-    "policy": "Cookie Policy"
-  },
+  "cookieHeader": "This website uses cookies to enable Paypal payments.",
+  "allow": "Allow",
+  "deny": "Decline",
+  "LearnPrivacy": "Learn more!",
   "paginator": {
     "of": "of",
     "itemsPerPage": "Items per Page",

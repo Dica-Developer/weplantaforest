@@ -79,7 +79,6 @@ export class AppComponent implements OnInit {
 
   openCookieConfirmation() {
     this.snackBar.openFromComponent(CookieConfirmationComponent, {
-      duration: 10000,
       panelClass: ['custom-snackbar'],
     });
   }
