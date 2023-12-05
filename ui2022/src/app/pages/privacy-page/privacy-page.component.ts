@@ -14,6 +14,7 @@ export class PrivacyPageComponent implements OnInit {
   constructor(private textHelper: TextHelper, private contentService: ContentService) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.contentService
       .getInfrastructureArticle('PRIVACY', this.textHelper.getCurrentLanguage())
       .subscribe((res) => {

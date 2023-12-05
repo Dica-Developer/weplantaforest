@@ -19,6 +19,7 @@ export class ImprintPageComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, private contentService: ContentService) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.languageSub = this.store.select(selectUserLanguage).subscribe((language) => {
       this.imprintSub?.unsubscribe();
       let lng = '';

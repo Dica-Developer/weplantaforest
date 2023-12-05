@@ -14,6 +14,7 @@ export class PartnerPageComponent implements OnInit {
   constructor(private contentService: ContentService, private translateService: TranslateService) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     if (this.translateService.currentLang === 'de') {
       this.lang = 'DEUTSCH';
     } else if (this.translateService.currentLang === 'en') {
