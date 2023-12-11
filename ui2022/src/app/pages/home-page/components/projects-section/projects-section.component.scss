@@ -2,8 +2,12 @@ app-circle-icon {
   margin-right: 1rem;
 }
 
-.center {
-  margin: 1.5rem auto;
+h2 {
+  margin: 1rem auto;
+}
+
+p {
+  margin: 1.7rem auto;
 }
 
 .column {
@@ -27,5 +31,9 @@ ng-scrollbar {
   ng-scrollbar {
     height: 550px !important;
     max-height: 550px !important;
+  }
+
+  p {
+    margin: 1rem auto;
   }
 }

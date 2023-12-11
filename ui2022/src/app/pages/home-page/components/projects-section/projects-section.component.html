@@ -1,6 +1,6 @@
 <div class="columns border-bottom">
-  <div class="column padding-right is-half">
-    <h2 class="padding-top-2 padding-left">{{ 'projects' | translate }}</h2>
+  <div class="column padding-right padding-left is-half padding-bottom-2">
+    <h2 class="">{{ 'projects' | translate }}</h2>
     <div class="map-margin">
       <app-leaflet-map [mapHeight]="mapHeight" [projectAreas]="projectAreas"></app-leaflet-map>
     </div>
@@ -12,14 +12,13 @@
         {{ 'projectsSectionInfo' | translate }}
       </span>
     </p>
-
     <ng-scrollbar track="horizontal" thumbClass="ipat-scrollbar">
       <div class="is-flex h-100">
         <app-project-tile *ngFor="let project of projectReports$ | async" [projectReport]="project">
         </app-project-tile>
       </div>
     </ng-scrollbar>
-    <div class="center">
+    <div class="center margin-top-1">
       <app-button routerLink="projectReports" label="{{ 'allProjects' | translate }}"></app-button>
     </div>
   </div>
