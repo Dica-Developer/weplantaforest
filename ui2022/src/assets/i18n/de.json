@@ -310,7 +310,7 @@
   "proposal": "Vorschlag",
   "custom": "Individuell",
   "selfplant": "Selbst Pflanzen",
-  "notLoggedIn": "Du bist nicht eingeloggt! Wenn du anonym pflanzt, stehen dir weniger Funktionen zur Verfügung",
+  "notLoggedIn": "Du bist nicht eingeloggt! Wenn du als Gast pflanzt, stehen dir weniger Funktionen zur Verfügung.",
   "editTeam": "Team editieren",
   "checkYourInputs": "Bitte überprüfe deine Eingaben!",
   "cookieHeader": "Diese Webseite verwendet Cookies um Zahlungen per Paypal zu ermöglichen.",
