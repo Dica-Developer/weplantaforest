@@ -1,13 +1,8 @@
 .image-wrapper {
-  margin-left: 4rem;
   max-width: 500px;
 }
 
 @media only screen and (max-width: 768px) {
-  .image-wrapper {
-    margin-left: 0;
-  }
-
   .switchToCol {
     flex-direction: column !important;
   }
