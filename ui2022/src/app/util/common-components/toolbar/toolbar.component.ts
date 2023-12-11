@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { logout } from '../../../store/auth.store';
 import { environment } from '../../../../environments/environment';
-import { Subscription } from 'rxjs';
+import { Subscription, skip } from 'rxjs';
 import { selectPlantbagPriceFormatted } from '../../../store/plantbag.store';
 import { SearchOverlayComponent } from '../search-overlay/search-overlay.component';
 import { resetTree } from 'src/app/store/treeType.store';
@@ -33,18 +33,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.authenticationSub = this.store.select('authState').subscribe((state) => {
       this.loggedIn = state.isAuthenticated;
     });
-    this.plantBagPriceSub = this.store.select(selectPlantbagPriceFormatted).subscribe((res) => {
-      if (res !== '0.00€') {
-        //scale plantbag icon if value changes
-        this.showScaleClass = true;
-        // remove after 2,2 secs to show sclaing again if value changes
-        setTimeout(() => {
+    this.plantBagPriceSub = this.store
+      .select(selectPlantbagPriceFormatted)
+      .pipe(skip(1))
+      .subscribe((res) => {
+        if (res !== '0.00€') {
+          //scale plantbag icon if value changes
+          this.showScaleClass = true;
+          // remove after 2,2 secs to show sclaing again if value changes
+          setTimeout(() => {
+            this.showScaleClass = false;
+          }, 2200);
+        } else {
           this.showScaleClass = false;
-        }, 2200);
-      } else {
-        this.showScaleClass = false;
-      }
-    });
+        }
+      });
   }
 
   loginClicked() {
