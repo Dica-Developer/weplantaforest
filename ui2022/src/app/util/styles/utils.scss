@@ -76,14 +76,14 @@ video {
   font-family: 'Bull-mono';
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background: var(--dark-brown);
-  color: var(--background);
+  color: var(--black);
+  background: var(--green);
   cursor: pointer;
   border: none;
 
   &:hover {
-    background: var(--green);
-    color: var(--black);
+    background: var(--dark-brown);
+    color: var(--background);
   }
   &.left {
     margin-right: 2px;
@@ -93,8 +93,8 @@ video {
     border-radius: 0 45px 45px 0;
   }
   &.active {
-    background: var(--green);
-    color: var(--black);
+    background: var(--dark-brown);
+    color: var(--background);
   }
 }
 
