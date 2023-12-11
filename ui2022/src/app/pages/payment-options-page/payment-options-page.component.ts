@@ -15,6 +15,7 @@ import {
 } from '../../store/payment.store';
 import { selectPlantbagPrice } from '../../store/plantbag.store';
 import { selectCookies } from 'src/app/store/infrastructure.store';
+import { selectAuthenticated } from 'src/app/store/auth.store';
 
 @Component({
   selector: 'app-payment-options-page',
@@ -51,6 +52,7 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
     iban: '',
     bic: '',
   };
+  loggedIn$ = this.store.select(selectAuthenticated);
 
   showPaypal$: Observable<boolean> = this.store.select(selectCookies);
 

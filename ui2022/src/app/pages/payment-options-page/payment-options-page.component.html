@@ -32,6 +32,24 @@
       <div class="column is-flex is-justify-content-center">
         <img src="assets/sepa.png" width="256" height="183" routerLink="/sepa" />
       </div>
+      <div *ngIf="!(loggedIn$ | async)" class="padding-top-1">
+        <p class="fat">
+          {{ 'notLoggedIn' | translate }}
+        </p>
+        <p>{{ 'plantBagInfoText' | translate }}</p>
+        <p>
+          {{ ('giftRedeemInfoDescription2' | translate) + ' ' }}
+          <br />
+          <br />
+          <a class="fat" routerLink="/login">{{ 'login' | translate }}</a>
+        </p>
+        <p>
+          {{ ('giftRedeemInfoDescription3' | translate) + ' ' }}
+          <br />
+          <br />
+          <a class="fat" routerLink="/signup">{{ 'registerHere' | translate }}</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>
