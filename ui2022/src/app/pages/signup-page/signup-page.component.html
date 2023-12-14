@@ -20,6 +20,7 @@
       [formGroup]="signupForm"
       (ngSubmit)="onSubmit()"
     >
+      <h2 class="center">{{ 'signup' | translate }}</h2>
       <div class="inputOutline">
         <input [placeholder]="'username' | translate" name="name" required formControlName="name" />
       </div>

@@ -1,6 +1,6 @@
 <div class="is-flex is-flex-direction-column padding-top-2 padding-bottom-1">
   <div *ngIf="proposalFailed$ | async">
-    <h3>{{ 'noTreesToPlant' | translate }}</h3>
+    <p>{{ 'noTreesToPlant' | translate }}</p>
   </div>
   <div *ngIf="!(proposalFailed$ | async)">
     <p class="font-1">{{ 'proposalOrIndividualText' | translate }}</p>
