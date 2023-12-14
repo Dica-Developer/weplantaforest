@@ -11,22 +11,7 @@
     </div>
   </div>
 
-  <div class="columns header no-login-heder padding-left" *ngIf="!(loggedIn$ | async)">
-    <div class="column is-8">
-      <h4>{{ 'giftRedeemInfoHeader' | translate }}</h4>
-    </div>
-  </div>
-  <div class="columns padding-left" *ngIf="!(loggedIn$ | async)">
-    <div class="column is-8">
-      <p>{{ 'giftRedeemInfoDescription1' | translate }}</p>
-      <p>
-        {{ ('giftRedeemInfoDescription2' | translate) + ' '
-        }}<a routerLink="/login">{{ 'login' | translate }}</a>
-      </p>
-      <p>
-        {{ ('giftRedeemInfoDescription3' | translate) + ' '
-        }}<a routerLink="/signup">{{ 'registerHere' | translate }}</a>
-      </p>
-    </div>
+  <div class="padding-left padding-right padding-2">
+    <app-not-authenticated-warning *ngIf="!(loggedIn$ | async)"> </app-not-authenticated-warning>
   </div>
 </div>
