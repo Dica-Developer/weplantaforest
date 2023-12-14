@@ -18,7 +18,13 @@
     <div class="column">
       <div class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom">
         <label>{{ 'max.' + (article.amount - article.alreadyPlanted) }}</label>
-        <input id="{{'article-' + article.articleId}}" matInput name="amount" type="number" [formControl]="control" />
+        <input
+          id="{{ 'article-' + article.articleId }}"
+          matInput
+          name="amount"
+          type="number"
+          [formControl]="control"
+        />
       </div>
       <mat-error *ngIf="control.invalid">{{ getErrorMessage() }}</mat-error>
     </div>
@@ -33,7 +39,7 @@
         <button
           mat-icon-button
           (click)="removeItemFormPlantbag()"
-          matTooltip="Artikel aus Pflanzkorb entfernen"
+          [matTooltip]="'deleteFromPlantbag' | translate"
         >
           <mat-icon aria-hidden="false">delete</mat-icon>
         </button>
@@ -76,7 +82,13 @@
             class="is-flex-direction-column is-flex is-justify-content-center inputOutline0Bottom"
           >
             <label>{{ 'max.' + (article.amount - article.alreadyPlanted) }}</label>
-            <input id="{{'m-article-' + article.articleId}}" matInput name="amount" type="number" [formControl]="control" />
+            <input
+              id="{{ 'm-article-' + article.articleId }}"
+              matInput
+              name="amount"
+              type="number"
+              [formControl]="control"
+            />
           </div>
           <mat-error *ngIf="control.invalid">{{ getErrorMessage() }}</mat-error>
         </div>
