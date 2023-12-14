@@ -240,7 +240,7 @@
   "trunkColored": "Bark",
   "leafBW": "Leaf (BW)",
   "again": "Again",
-  "giftRedeemInfoHeader": "You are not logged in! Only registered users can redeem gifts.",
+  "giftRedeemInfoHeader": "Only registered users can redeem gifts.",
   "giftRedeemInfoDescription1": "Only as a registered user will you automatically receive a donation receipt, your own profile, and can create certificates and gift vouchers.",
   "giftRedeemInfoDescription2": "Do you have an account?",
   "giftRedeemInfoDescription3": "Don't have an account yet?",
@@ -310,7 +310,7 @@
   "proposal": "Proposal",
   "custom": "Custom",
   "selfplant": "Plant Yourself",
-  "notLoggedIn": "You are not logged in! If you plant as guest, fewer functions are available to you.",
+  "notLoggedIn": "You are not logged in! If you plant as a guest, fewer functions are available.",
   "editTeam": "Edit Team",
   "checkYourInputs": "Please check your entries!",
   "cookieHeader": "This website uses cookies to enable Paypal payments.",
@@ -330,5 +330,6 @@
   "SiteUsesCookies": "This site uses cookies.",
   "newTrees": "New trees",
   "newUsers": "New users",
-  "signupFailed": "Signup failed!"
+  "signupFailed": "Signup failed!",
+  "deleteFromPlantbag": "remove from plant bag"
 }

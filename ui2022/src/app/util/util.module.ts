@@ -62,6 +62,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CustomPlantingComponent } from '../pages/plant-proposal-page/components/custom-planting/custom-planting.component';
 import { CustomPlantTreeInputComponent } from './common-components/custom-plant-tree-input/custom-plant-tree-input.component';
 import { CookieConfirmationComponent } from './common-components/cookie-confirmation/cookie-confirmation.component';
+import { NotAuthenticatedWarningComponent } from './common-components/not-authenticated-warning/not-authenticated-warning.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { CookieConfirmationComponent } from './common-components/cookie-confirma
     PlantproposalPreviewRowComponent,
     CustomPlantingComponent,
     CustomPlantTreeInputComponent,
-    CookieConfirmationComponent
+    CookieConfirmationComponent,
+    NotAuthenticatedWarningComponent,
   ],
   imports: [
     CommonModule,
@@ -125,7 +127,7 @@ import { CookieConfirmationComponent } from './common-components/cookie-confirma
     LeafletDrawModule,
     NgxSliderModule,
     TranslateModule,
-    CKEditorModule
+    CKEditorModule,
   ],
   exports: [
     MaterialModule,
@@ -166,7 +168,9 @@ import { CookieConfirmationComponent } from './common-components/cookie-confirma
     TeamCreateEditComponent,
     PlantproposalPreviewRowComponent,
     CustomPlantingComponent,
-    CustomPlantTreeInputComponent
+    CustomPlantTreeInputComponent,
+    NotAuthenticatedWarningComponent,
+    CookieConfirmationComponent,
   ],
 })
 export class UtilModule {}

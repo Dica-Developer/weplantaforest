@@ -1,0 +1,19 @@
+<div class="border">
+  <p *ngIf="!showGiftWarning" class="padding-1 fat warning">
+    {{ 'notLoggedIn' | translate }}
+  </p>
+  <p *ngIf="showGiftWarning" class="padding-1 fat warning">
+    {{ 'giftRedeemInfoHeader' | translate }}
+  </p>
+  <div class="padding-1">
+    <p>{{ 'plantBagInfoText' | translate }}</p>
+    <p>
+      {{ ('giftRedeemInfoDescription2' | translate) + ' ' }}
+      <a class="fat" routerLink="/login">{{ 'login' | translate }}</a>
+    </p>
+    <p>
+      {{ ('giftRedeemInfoDescription3' | translate) + ' ' }}
+      <a class="fat" routerLink="/signup">{{ 'registerHere' | translate }}</a>
+    </p>
+  </div>
+</div>

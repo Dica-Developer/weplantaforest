@@ -330,5 +330,6 @@
   "passwordResetSuccessful": "  Passwort erfolgreich geändert.",
   "SiteUsesCookies":"Diese Seite verwendet Cookies.",
   "newTrees": "Neue Bäume",
-  "newUsers": "Neue Nutzer"
+  "newUsers": "Neue Nutzer",
+  "deleteFromPlantbag": "Artikel aus Pflanzkorb entfernen"
 }
