@@ -18,6 +18,7 @@
   --dark-brown-hover: #332b2d;
   --brown: #65594e;
   --dark-green: #959349;
+  --orange: #ff5a00;
 }
 
 html,
@@ -52,7 +53,7 @@ mat-divider {
 }
 
 snack-bar-container {
-  background-color: #ff5a00 !important;
+  background-color: var(--orange) !important;
   color: #fff !important;
   .mat-simple-snackbar-action {
     color: #fff !important;

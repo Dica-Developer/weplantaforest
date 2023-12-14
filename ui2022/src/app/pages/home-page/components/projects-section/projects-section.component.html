@@ -1,12 +1,14 @@
 <div class="columns border-bottom">
   <div class="column padding-right padding-left is-half padding-bottom-2">
-    <h2 class="">{{ 'projects' | translate }}</h2>
-    <div class="map-margin">
+    <h2 style="height: 100px" class="is-flex is-align-items-center">
+      {{ 'projects' | translate }}
+    </h2>
+    <div class="map-border">
       <app-leaflet-map [mapHeight]="mapHeight" [projectAreas]="projectAreas"></app-leaflet-map>
     </div>
   </div>
   <div class="column">
-    <p class="center">
+    <p class="is-flex is-justify-content-center is-align-items-center" style="height: 100px">
       <app-circle-icon [width]="17" [height]="17"></app-circle-icon>
       <span class="circle-icon-text">
         {{ 'projectsSectionInfo' | translate }}
