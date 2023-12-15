@@ -13,7 +13,6 @@ import {
   DeleteProjectConfirmationDialog,
 } from './grid-components/grid-project-actions/grid-project-actions.component';
 import { TextEditorComponent } from './common-components/text-editor/text-editor.component';
-import { NgxEditorModule } from 'ngx-editor';
 import {
   GridContentActionsComponent,
   DeleteContentArticleConfirmationDialog,
@@ -63,6 +62,10 @@ import { CustomPlantingComponent } from '../pages/plant-proposal-page/components
 import { CustomPlantTreeInputComponent } from './common-components/custom-plant-tree-input/custom-plant-tree-input.component';
 import { CookieConfirmationComponent } from './common-components/cookie-confirmation/cookie-confirmation.component';
 import { NotAuthenticatedWarningComponent } from './common-components/not-authenticated-warning/not-authenticated-warning.component';
+import { InstagramIconComponent } from './common-components/icons/instagram-icon/instagram-icon.component';
+import { YoutubeIconComponent } from './common-components/icons/youtube-icon/youtube-icon.component';
+import { FacebookIconComponent } from './common-components/icons/facebook-icon/facebook-icon.component';
+import { FooterIconsListComponent } from './common-components/footer-icons-list/footer-icons-list.component';
 
 @NgModule({
   declarations: [
@@ -114,11 +117,14 @@ import { NotAuthenticatedWarningComponent } from './common-components/not-authen
     CustomPlantTreeInputComponent,
     CookieConfirmationComponent,
     NotAuthenticatedWarningComponent,
+    InstagramIconComponent,
+    YoutubeIconComponent,
+    FacebookIconComponent,
+    FooterIconsListComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    NgxEditorModule.forChild({}),
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
@@ -171,6 +177,7 @@ import { NotAuthenticatedWarningComponent } from './common-components/not-authen
     CustomPlantTreeInputComponent,
     NotAuthenticatedWarningComponent,
     CookieConfirmationComponent,
+    FooterIconsListComponent,
   ],
 })
 export class UtilModule {}

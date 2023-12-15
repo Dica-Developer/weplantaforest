@@ -368,6 +368,31 @@ app-profile-page {
   background: var(--background) !important;
 }
 
+// correct hover effect in footer
+a:hover {
+  app-instagram-icon {
+    .svg-icon {
+      path {
+        fill: var(--green) !important;
+      }
+    }
+  }
+  app-youtube-icon {
+    .svg-icon {
+      path {
+        fill: var(--green) !important;
+      }
+    }
+  }
+  app-facebook-icon {
+    .svg-icon {
+      path {
+        fill: var(--green) !important;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .mat-snack-bar-container {
     max-width: 100% !important;

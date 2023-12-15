@@ -1,0 +1,14 @@
+.svg-icon {
+  path {
+    fill: var(--black);
+  }
+}
+
+@media (hover: hover) {
+  .svg-icon:hover {
+    cursor: pointer;
+    path {
+      fill: var(--green);
+    }
+  }
+}

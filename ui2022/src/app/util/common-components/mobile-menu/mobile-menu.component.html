@@ -64,7 +64,7 @@
     <a>{{ 'blog' | translate }}</a>
     <mat-icon>arrow_forward</mat-icon>
   </div>
-  <div class="is-flex-grow-1 is-flex is-flex-direction-column">
+  <div class="is-flex is-flex-grow-1 is-flex-direction-column">
     <div class="columns is-flex is-flex-grow-1 border-bottom">
       <div
         class="padding-1 column is-6 is-flex is-flex-direction-column is-justify-content-space-between"
@@ -92,8 +92,40 @@
         <a routerLink="/privacy" (click)="closeMenu()"> {{ 'dsgvo' | translate }} </a>
         <a routerLink="/terms" (click)="closeMenu()">{{ 'agb' | translate }}</a>
       </div>
-      <div class="border-left column is-6 padding-1 is-flex">
-        <app-logo-icon routerLink="/"></app-logo-icon>
+      <div class="border-left column is-6 padding-1 is-flex is-flex-direction-column">
+        <a
+          class="is-flex is-align-items-center is-flex-direction-row"
+          href="https://www.instagram.com/iplantatree/"
+          target="_blank"
+        >
+          <app-instagram-icon
+            style="margin-right: 10px"
+            href="https://www.instagram.com/iplantatree/"
+          ></app-instagram-icon>
+          instagram
+        </a>
+        <a
+          class="is-flex is-align-items-center"
+          href="https://www.instagram.com/iplantatree/"
+          target="_blank"
+        >
+          <app-youtube-icon
+            style="margin-right: 10px"
+            href="https://www.instagram.com/iplantatree/"
+          ></app-youtube-icon>
+          youtube
+        </a>
+        <a
+          class="is-flex is-align-items-center"
+          href="https://www.instagram.com/iplantatree/"
+          target="_blank"
+        >
+          <app-facebook-icon
+            style="margin-right: 10px"
+            href="https://www.instagram.com/iplantatree/"
+          ></app-facebook-icon>
+          facebook
+        </a>
       </div>
     </div>
   </div>
