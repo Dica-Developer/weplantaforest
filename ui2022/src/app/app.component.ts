@@ -12,6 +12,7 @@ import { getProjectsForCustomPlanting } from './store/plant.store';
 import { Subscription } from 'rxjs';
 import { acceptCookies } from './store/infrastructure.store';
 import { CookieConfirmationComponent } from './util/common-components/cookie-confirmation/cookie-confirmation.component';
+import { CookieHelper } from './util/cookie.helper';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private translateService: TranslateService,
+    private cookieHelper: CookieHelper,
   ) {
     this.translateService.addLangs(['de', 'en']);
     this.languageSub = this.store.select(selectUserLanguage).subscribe((language) => {
@@ -74,13 +76,7 @@ export class AppComponent implements OnInit {
       this.store.dispatch(loadProfileDetails({ username: localStorage.getItem('username') }));
     }
     this.authService.autoLogin();
-    this.openCookieConfirmation();
-  }
-
-  openCookieConfirmation() {
-    this.snackBar.openFromComponent(CookieConfirmationComponent, {
-      panelClass: ['custom-snackbar'],
-    });
+    this.cookieHelper.openCookieConfirmation();
   }
 
   ngOnDestroy() {
