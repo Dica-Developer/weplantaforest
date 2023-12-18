@@ -193,13 +193,13 @@ nav {
   }
 }
 
-.mat-badge-content {
-  top: 0px !important;
-  right: 0px !important;
-  width: 60px !important;
-  height: 17px !important;
-  border-radius: 0 !important;
-  background: transparent !important;
+app-toolbar {
+  .mat-badge-content {
+    background: transparent !important;
+    top: 0px !important;
+    right: 0px !important;
+    width: 60px !important;
+  }
 }
 
 .leaflet-container {

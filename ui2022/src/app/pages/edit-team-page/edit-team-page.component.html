@@ -39,6 +39,7 @@
         class="imageWrapper pointer"
         (click)="csvInput.click()"
       >
+        <div class="middle">{{ 'imageUpload' | translate }}</div>
         <img src="{{ imagePreviewSrc }}" alt="" *ngIf="imagePreviewSrc" />
         <img
           src="{{ (teamDetails$ | async)?.teamImageUrl + '?' + randomNumber }}"

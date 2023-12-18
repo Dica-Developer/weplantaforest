@@ -46,6 +46,21 @@
   padding: 0.5rem;
 }
 
+.middle {
+  font-family: 'Bull-mono';
+  transition: 0.2s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--black);
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
 input,
 textarea {
   width: 100%;

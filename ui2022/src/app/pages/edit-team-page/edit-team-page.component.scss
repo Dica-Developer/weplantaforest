@@ -33,12 +33,25 @@ input:disabled {
 }
 
 .imageWrapper {
-  width: 12rem;
-  height: 12rem;
-  border-radius: 50%;
   img {
     border-radius: 50%;
     height: 12rem !important;
+    transition: 0.2s ease-in-out;
+  }
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  position: relative;
+}
+
+.imageWrapper:hover {
+  .middle {
+    opacity: 1;
+    text-shadow: 0 0 8px var(--background);
+    z-index: 2;
+  }
+  img {
+    opacity: 0.3;
   }
 }
 
