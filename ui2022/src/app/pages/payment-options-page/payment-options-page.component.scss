@@ -1,12 +1,20 @@
-mat-card {
-  background: var(--background);
-}
-
 ngx-paypal {
   position: relative;
   z-index: 1;
 }
 
+.paypalWrapper {
+  max-width: 400px;
+  p {
+    margin: 0;
+    margin-right: 1rem;
+  }
+}
+
 img {
   cursor: pointer;
+}
+
+.allowCookies {
+  color: black;
 }

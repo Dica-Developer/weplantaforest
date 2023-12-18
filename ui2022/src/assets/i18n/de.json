@@ -329,7 +329,9 @@
   "passwordResetLinkInvalid": "Dieser Link ist leider ungültig.",
   "passwordResetSuccessful": "  Passwort erfolgreich geändert.",
   "SiteUsesCookies":"Diese Seite verwendet Cookies.",
+  "allowPaypalCookies":"Paypal Cookies erlauben",
   "newTrees": "Neue Bäume",
   "newUsers": "Neue Nutzer",
+  "signupFailed": "Registrierung fehlgeschlagen!",
   "deleteFromPlantbag": "Artikel aus Pflanzkorb entfernen"
 }

@@ -16,6 +16,7 @@ import {
 import { selectPlantbagPrice } from '../../store/plantbag.store';
 import { selectCookies } from 'src/app/store/infrastructure.store';
 import { selectAuthenticated } from 'src/app/store/auth.store';
+import { CookieHelper } from 'src/app/util/cookie.helper';
 
 @Component({
   selector: 'app-payment-options-page',
@@ -56,7 +57,11 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
 
   showPaypal$: Observable<boolean> = this.store.select(selectCookies);
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private cookieHelper: CookieHelper,
+  ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
@@ -144,5 +149,9 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
         this.store.dispatch(payPlantBag({ requestDto: this.paymentData }));
       },
     };
+  }
+
+  showCookieConfirmation() {
+    this.cookieHelper.openCookieConfirmation();
   }
 }
