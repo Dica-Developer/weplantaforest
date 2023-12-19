@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Validators } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { AppState } from '../../../../store/app.state';
 import { redeemGift } from '../../../../store/profile.store';
@@ -13,19 +12,19 @@ import { redeemGift } from '../../../../store/profile.store';
 })
 export class ProfileRedeemGiftComponent implements OnInit, AfterViewInit, OnDestroy {
   giftForm: FormGroup = new FormGroup({
-    value1: new FormControl('', [Validators.required(), Validators.minLength(4)]),
+    value1: new FormControl('', [Validators.required, Validators.minLength(4)]),
     value2: new FormControl('', [
-      Validators.required(),
+      Validators.required,
       Validators.maxLength(4),
       Validators.minLength(4),
     ]),
     value3: new FormControl('', [
-      Validators.required(),
+      Validators.required,
       Validators.maxLength(4),
       Validators.minLength(4),
     ]),
     value4: new FormControl('', [
-      Validators.required(),
+      Validators.required,
       Validators.maxLength(4),
       Validators.minLength(4),
     ]),
