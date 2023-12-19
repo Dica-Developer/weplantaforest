@@ -1,19 +1,21 @@
-mat-card{
+mat-card {
   padding: 15px;
   text-align: center;
 }
 
-.cart-states{
+.cart-states {
   width: 300px;
 }
 
-.date-range{
- margin-left: 15px;
- margin-right: 15px;
+.date-range {
+  margin-left: 15px;
+  margin-right: 15px;
+  input {
+    font-size: 14px !important;
+  }
 }
 
 .mat-progress-spinner {
   display: inline;
   top: -10px;
-
 }
