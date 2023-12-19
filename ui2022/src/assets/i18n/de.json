@@ -324,14 +324,14 @@
     "previousPage": "Vorherige Seite"
   },
   "resetPassword": "Passwort zurücksetzen",
-  "receivedMailForPasswordReset":"Du hast eine E-Mail an die angegebene Adresse erhalten um dein Passwort zurückzusetzen."
-  ,
+  "receivedMailForPasswordReset": "Du hast eine E-Mail an die angegebene Adresse erhalten um dein Passwort zurückzusetzen.",
   "passwordResetLinkInvalid": "Dieser Link ist leider ungültig.",
   "passwordResetSuccessful": "  Passwort erfolgreich geändert.",
-  "SiteUsesCookies":"Diese Seite verwendet Cookies.",
-  "allowPaypalCookies":"Paypal Cookies erlauben",
+  "SiteUsesCookies": "Diese Seite verwendet Cookies.",
+  "allowPaypalCookies": "Paypal Cookies erlauben",
   "newTrees": "Neue Bäume",
   "newUsers": "Neue Nutzer",
   "signupFailed": "Registrierung fehlgeschlagen!",
-  "deleteFromPlantbag": "Artikel aus Pflanzkorb entfernen"
+  "deleteFromPlantbag": "Artikel aus Pflanzkorb entfernen",
+  "NOT_ENOUGH_TREES": "Die Bäume sind leider nicht mehr verfügbar. Bitte aktualisiere die Seite um die verfügbaren Bäume zu sehen."
 }

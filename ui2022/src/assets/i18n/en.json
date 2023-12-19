@@ -332,5 +332,6 @@
   "newTrees": "New trees",
   "newUsers": "New users",
   "signupFailed": "Signup failed!",
-  "deleteFromPlantbag": "remove from plant bag"
+  "deleteFromPlantbag": "remove from plant bag",
+  "NOT_ENOUGH_TREES": "Unfortunately the trees are not available anymore. Please refresh the page to get the actual amount of trees."
 }

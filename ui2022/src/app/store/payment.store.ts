@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { catchError, switchMap } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
 import { AppState } from './app.state';
@@ -73,7 +74,7 @@ export const resetCreatedGiftId = createAction('[Payment] reset createdGiftId an
 
 export const setGift = createAction('[Payment] set gift', props<{ isGift: boolean }>());
 
-export const resetCartPayed = createAction('[Payment] reset cartPayed');  
+export const resetCartPayed = createAction('[Payment] reset cartPayed');
 
 export interface PaymentState {
   data: PaymentDataDto | null;
@@ -141,8 +142,8 @@ export const paymentReducer = createReducer(
   })),
   on(resetCartPayed, (state) => ({
     ...state,
-    cartPayed: false, 
-  }))
+    cartPayed: false,
+  })),
 );
 
 export function paymentReducerFn(state, action) {
@@ -180,7 +181,11 @@ export const selectCreatedGiftId = createSelector(
 
 @Injectable()
 export class PaymentEffects {
-  constructor(private actions$: Actions, private paymentService: PaymentService) {}
+  constructor(
+    private actions$: Actions,
+    private paymentService: PaymentService,
+    private translateService: TranslateService,
+  ) {}
 
   createCartFromPlantBag$ = createEffect(() =>
     this.actions$.pipe(
@@ -190,6 +195,13 @@ export class PaymentEffects {
           .convertPlantBagToCart(action.plantBag)
           .pipe(switchMap((cartId) => [createCartFromPlantBagSuccess({ cartId })])),
       ),
+      catchError((err) => {
+        return [
+          addError({
+            error: { key: 'payment_error', message: err.error.errorInfos[0]?.errorCode },
+          }),
+        ];
+      }),
     ),
   );
 
@@ -228,7 +240,7 @@ export class PaymentEffects {
               addSuccessMessage({
                 message: { key: 'PLANTBAG_PAYED_SUCCES', message: 'Pflanzkorb bezahlt!' },
               }),
-              resetPlantbag()
+              resetPlantbag(),
             ];
           }),
           catchError((err) => {
