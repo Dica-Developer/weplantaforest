@@ -412,8 +412,8 @@ export const selectUploadingImage = createSelector(
 );
 
 export const selectUserLanguage = createSelector(profileFeature, (state: ProfileState) => {
-  if (state.details?.lang) {
-    return state.details.lang;
+  if (localStorage.getItem('lang')) {
+    return localStorage.getItem('lang');
   } else {
     if (navigator.language === 'de-De' || navigator.language === 'de') {
       return 'de';
@@ -456,9 +456,11 @@ export class ProfileEffects {
               actions.push(loadGiftsAsRecipient({ userName: action.username }));
               actions.push(loadReceipts());
               if (details.lang === 'DEUTSCH') {
+                localStorage.setItem('lang', 'de');
                 this.translateService.use('de');
               } else if (details.lang === 'ENGLISH') {
                 this.translateService.use('en');
+                localStorage.setItem('lang', 'en');
               }
             }
             if (details.teamName !== '') {
