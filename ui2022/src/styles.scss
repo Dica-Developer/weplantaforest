@@ -18,7 +18,7 @@
   --dark-brown-hover: #332b2d;
   --brown: #65594e;
   --dark-green: #959349;
-  --orange: #ff5500;
+  --orange: #ff874b;
 }
 
 html,
@@ -49,27 +49,26 @@ mat-divider {
 }
 
 .mat-raised-button.mat-warn {
-  color: #fff !important;
+  color: var(--background) !important;
 }
 
 snack-bar-container {
   background-color: var(--orange) !important;
-  color: #fff !important;
+  color: var(--black) !important;
   .mat-simple-snackbar-action {
-    color: #fff !important;
+    color: var(--black) !important;
   }
 }
 
 .success-snackbar {
   background-color: var(--green) !important;
-  color: #fff !important;
 }
 
 .warning-snackbar {
-  background-color: #ebad1a !important;
-  color: #000 !important;
+  background-color: #f3b930 !important;
+  color: var(--black) !important;
   .mat-simple-snackbar-action {
-    color: #000 !important;
+    color: var(--black) !important;
   }
 }
 
