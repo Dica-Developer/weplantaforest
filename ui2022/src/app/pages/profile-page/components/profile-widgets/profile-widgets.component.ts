@@ -58,7 +58,11 @@ export class ProfileWidgetsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
-      this.userLanuage = userLanguage;
+      if (userLanguage === 'en') {
+        this.userLanuage = 'ENGLISH';
+      } else {
+        this.userLanuage = 'DEUTSCH';
+      }
       this.createWidgetUrls();
     });
   }
