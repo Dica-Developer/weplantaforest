@@ -66,6 +66,7 @@ import { InstagramIconComponent } from './common-components/icons/instagram-icon
 import { YoutubeIconComponent } from './common-components/icons/youtube-icon/youtube-icon.component';
 import { FacebookIconComponent } from './common-components/icons/facebook-icon/facebook-icon.component';
 import { FooterIconsListComponent } from './common-components/footer-icons-list/footer-icons-list.component';
+import { SafeHtmlPipe } from './common-components/safehtml.pipe';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { FooterIconsListComponent } from './common-components/footer-icons-list/
     YoutubeIconComponent,
     FacebookIconComponent,
     FooterIconsListComponent,
+    SafeHtmlPipe
   ],
   imports: [
     CommonModule,
@@ -178,6 +180,7 @@ import { FooterIconsListComponent } from './common-components/footer-icons-list/
     NotAuthenticatedWarningComponent,
     CookieConfirmationComponent,
     FooterIconsListComponent,
+    SafeHtmlPipe
   ],
 })
 export class UtilModule {}

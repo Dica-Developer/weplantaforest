@@ -33,10 +33,10 @@
           <div *ngFor="let finance of finances; index as i">
             <div id="{{ 'finance-' + i }}">
               <h4>{{ finance.title }}</h4>
-              <div innerHtml="{{ finance.intro }}"></div>
+              <div [innerHtml]="finance.intro | safeHtml"></div>
               <div *ngFor="let paragraph of finance.paragraphs">
                 <div innerHtml="{{ paragraph.title }}"></div>
-                <div innerHtml="{{ paragraph.text }}"></div>
+                <div [innerHtml]="paragraph.text | safeHtml"></div>
               </div>
             </div>
           </div>
@@ -49,10 +49,10 @@
       <div *ngFor="let finance of finances; index as i">
         <div id="{{ 'finance-' + i }}">
           <h4>{{ finance.title }}</h4>
-          <div innerHtml="{{ finance.intro }}"></div>
+          <div [innerHtml]="finance.intro | safeHtml"></div>
           <div *ngFor="let paragraph of finance.paragraphs">
             <div innerHtml="{{ paragraph.title }}"></div>
-            <div innerHtml="{{ paragraph.text }}"></div>
+            <div [innerHtml]="paragraph.text | safeHtml"></div>
           </div>
         </div>
       </div>
