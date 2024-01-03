@@ -36,5 +36,6 @@ export class TextEditorComponent implements OnInit {
 
   onChange(event: any) {
     this.controlInternal.setValue(event.editor.getData());
+    this.rawHTMLControl.setValue(event.editor.getData());
   }
 }
