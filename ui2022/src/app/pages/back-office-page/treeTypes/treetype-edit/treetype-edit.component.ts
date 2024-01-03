@@ -5,7 +5,7 @@ import { TextHelper } from '../../../../util/text.helper';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 @Component({
   selector: 'app-treetype-edit',

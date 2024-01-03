@@ -17,7 +17,7 @@ import {
 import { openGiftPdf, ProfileGift } from '../../../../store/profile.store';
 import { Router } from '@angular/router';
 import { setGift } from '../../../../store/payment.store';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 
 @Component({
   selector: 'app-profile-gift-overview',

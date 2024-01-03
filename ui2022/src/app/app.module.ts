@@ -55,7 +55,7 @@ import { ContactEffects, contactReducerFn } from './store/contact.store';
 import { NgChartsModule } from 'ng2-charts';
 import { InfrastructureEffects, infrastructureReducerFn } from './store/infrastructure.store';
 import { MomentDateAdapter, MomentDateModule } from '@angular/material-moment-adapter';
-import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatLegacyPaginatorIntl as MatPaginatorIntl } from '@angular/material/legacy-paginator';
 import { PaginatorIntlService } from './util/material/paginator-intl';
 
 export const MY_FORMATS = {

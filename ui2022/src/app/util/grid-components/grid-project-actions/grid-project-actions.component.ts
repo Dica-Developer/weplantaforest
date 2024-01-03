@@ -4,7 +4,7 @@ import { AppState } from 'src/app/store/app.state';
 import { ICellEditorAngularComp } from 'ag-grid-angular';
 import { loadProjectDetails } from 'src/app/store/project.store';
 import { deleteProject } from '../../../store/project.store';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-grid-project-actions',

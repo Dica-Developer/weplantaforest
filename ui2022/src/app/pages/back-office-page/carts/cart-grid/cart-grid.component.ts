@@ -8,7 +8,7 @@ import { GridCheckboxComponent } from '../../../../util/grid-components/grid-che
 import { GridSelectComponent } from '../../../../util/grid-components/grid-select/grid-select.component';
 import { updateStatus, CartDetails, selectCartDetails } from '../../../../store/carts.store';
 import { GridCartActionsComponent } from '../../../../util/grid-components/grid-cart-actions/grid-cart-actions.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-cart-grid',

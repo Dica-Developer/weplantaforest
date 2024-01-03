@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { downloadReceiptPdf } from '../../../../store/carts.store';
 import { AppState } from '../../../../store/app.state';
 import { ProfileReceipt } from '../../../../store/profile.store';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 
 @Component({
   selector: 'app-profile-receipts',
