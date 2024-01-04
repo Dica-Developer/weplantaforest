@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, UntypedFormControl } from '@angular/forms';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './text-editor.component.html',
   styleUrls: ['./text-editor.component.scss'],
 })
-export class TextEditorComponent implements OnInit {
+export class TextEditorComponent implements OnInit, OnDestroy {
   controlInternal: UntypedFormControl;
 
   rawHTMLControl = new FormControl('');
@@ -17,6 +17,11 @@ export class TextEditorComponent implements OnInit {
   public editor = ClassicEditor;
 
   rawControlSub: Subscription;
+
+  selectedTab: number = 0;
+
+  changeFromEditor: boolean = true;
+  changeFromRawHtml: boolean = false;
 
   @Input()
   set control(controlObj: UntypedFormControl) {
@@ -28,14 +33,36 @@ export class TextEditorComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.rawControlSub = this.rawHTMLControl.valueChanges.subscribe((value) => {
-      this.controlInternal.setValue(value);
-      this.text = value;
-    });
+    this.createRawControlSub();
+  }
+
+  ngOnDestroy(): void {
+    this.rawControlSub?.unsubscribe();
   }
 
   onChange(event: any) {
     this.controlInternal.setValue(event.editor.getData());
-    this.rawHTMLControl.setValue(event.editor.getData());
+    if (this.changeFromEditor) {
+      this.rawHTMLControl.setValue(event.editor.getData());
+    }
+  }
+
+  createRawControlSub() {
+    this.rawControlSub = this.rawHTMLControl.valueChanges.subscribe((value) => {
+      this.controlInternal.setValue(value);
+      if (this.changeFromRawHtml) {
+        this.text = value;
+      }
+    });
+  }
+
+  tabChanged(event: any) {
+    if (event.index === 0) {
+      this.changeFromEditor = true;
+      this.changeFromRawHtml = false;
+    } else if (event.index === 1) {
+      this.changeFromEditor = false;
+      this.changeFromRawHtml = true;
+    }
   }
 }

@@ -1,11 +1,11 @@
-<mat-tab-group mat-align-tabs="center">
-  <mat-tab label="Editor"> 
-      <ckeditor [editor]="editor" data="{{ text }}" (change)="onChange($event)"></ckeditor>
+<mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+  <mat-tab label="Editor">
+    <ckeditor [editor]="editor" data="{{ text }}" (change)="onChange($event)"></ckeditor>
   </mat-tab>
-  <mat-tab label="Raw HTML"> 
+  <mat-tab label="Raw HTML">
     <textarea [formControl]="rawHTMLControl" rows="15"></textarea>
   </mat-tab>
   <mat-tab label="Preview">
     <div [innerHTML]="controlInternal.value | safeHtml"></div>
-</mat-tab>
+  </mat-tab>
 </mat-tab-group>
