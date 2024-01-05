@@ -9,7 +9,7 @@ import {
 } from '../../../../../store/project.store';
 import { selectTreeTypes } from '../../../../../store/treeType.store';
 import { TextHelper } from '../../../../../util/text.helper';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 @Component({

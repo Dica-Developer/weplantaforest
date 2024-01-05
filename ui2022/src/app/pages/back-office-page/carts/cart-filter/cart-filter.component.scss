@@ -1,3 +1,5 @@
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card {
   padding: 15px;
   text-align: center;
@@ -15,7 +17,7 @@ mat-card {
   }
 }
 
-.mat-progress-spinner {
+.mat-mdc-progress-spinner {
   display: inline;
   top: -10px;
 }

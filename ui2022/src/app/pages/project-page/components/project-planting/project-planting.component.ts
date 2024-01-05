@@ -1,4 +1,4 @@
-import { Options } from '@angular-slider/ngx-slider';
+import { Options } from 'ngx-slider-v2';
 import {
   Component,
   EventEmitter,

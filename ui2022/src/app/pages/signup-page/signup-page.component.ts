@@ -10,7 +10,7 @@ import {
   signup,
   signupDoneReset,
 } from 'src/app/store/auth.store';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

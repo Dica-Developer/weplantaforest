@@ -9,9 +9,13 @@
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+/* TODO(mdc-migration): Remove all-legacy-component-typographies once all legacy components are migrated*/
+@include mat.all-component-typographies();
+@include mat.all-component-typographies();
+/* TODO(mdc-migration): Remove legacy-core once all legacy components are migrated*/
+@include mat.core();
+@include mat.core();
 
 $fontConfig: (
   display-4: mat.define-typography-level(112px, 112px, 300, 'Helvetica', -0.0134em),
@@ -152,8 +156,8 @@ $dark-theme-background-palette: (
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy($fontConfig);`
-@include mat.all-legacy-component-typographies($fontConfig);
-@include mat.legacy-core();
+@include mat.all-component-typographies($fontConfig);
+@include mat.core();
 
 body {
   --primary-color: #969900;
@@ -231,4 +235,6 @@ $ui2022-theme: mat.define-light-theme($theme-primary, $theme-accent, $theme-warn
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-legacy-component-themes($ui2022-theme);
+/* TODO(mdc-migration): Remove all-legacy-component-themes once all legacy components are migrated*/
+@include mat.all-component-themes($ui2022-theme);
+@include mat.all-component-themes($ui2022-theme);

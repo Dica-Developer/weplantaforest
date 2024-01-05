@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ICellEditorAngularComp } from 'ag-grid-angular';
 import { AppState } from '../../../store/app.state';
 import { Store } from '@ngrx/store';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { deleteContentArticle } from '../../../store/content.store';
 
 @Component({

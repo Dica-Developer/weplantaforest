@@ -7,7 +7,7 @@ import { ProjectCarouselComponent } from './components/project-carousel/project-
 import { RouterModule } from '@angular/router';
 import { ProjectCarouselItemComponent } from './components/project-carousel-item/project-carousel-item.component';
 import { ProjectPlantingComponent } from './components/project-planting/project-planting.component';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { NgxSliderModule } from 'ngx-slider-v2';
 
 @NgModule({
   declarations: [

@@ -8,7 +8,7 @@ import {
   loadCartDetails,
   createReceipt,
 } from 'src/app/store/carts.store';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { first } from 'rxjs';
 
 @Component({

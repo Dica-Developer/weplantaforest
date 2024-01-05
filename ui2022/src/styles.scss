@@ -48,14 +48,14 @@ mat-divider {
   margin-bottom: 15px !important;
 }
 
-.mat-raised-button.mat-warn {
+.mat-mdc-raised-button.mat-warn {
   color: var(--background) !important;
 }
 
 snack-bar-container {
   background-color: var(--orange) !important;
   color: var(--black) !important;
-  .mat-simple-snackbar-action {
+  .mat-mdc-snack-bar-action {
     color: var(--black) !important;
   }
 }
@@ -67,7 +67,7 @@ snack-bar-container {
 .warning-snackbar {
   background-color: #f3b930 !important;
   color: var(--black) !important;
-  .mat-simple-snackbar-action {
+  .mat-mdc-snack-bar-action {
     color: var(--black) !important;
   }
 }
@@ -89,6 +89,7 @@ snack-bar-container {
   margin-bottom: 15px !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 .mat-form-field-flex {
   padding: 0 0.5rem !important;
 }
@@ -161,7 +162,7 @@ nav {
   font-family: 'agGridAlpine' !important;
 }
 
-.mat-menu-panel {
+.mat-mdc-menu-panel {
   background: var(--background);
   padding: 1rem !important;
 }
@@ -205,6 +206,7 @@ app-toolbar {
   z-index: 1;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 .mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
   background-color: rgb(0, 0, 0, 0.04);
 }
@@ -235,11 +237,11 @@ p.incognito {
 }
 
 // MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE
-.mat-table {
+.mat-mdc-table {
   background: var(--background);
 }
 
-th.mat-header-cell {
+th.mat-mdc-header-cell {
   padding-left: 0 !important;
   padding-top: 0.5rem !important;
   font-family: 'Bull-mono';
@@ -269,16 +271,19 @@ td {
   width: 48px;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version.*/
 .mat-tab-label-content {
   font-family: 'Bull-mono' !important;
   font-size: 1rem !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of paginator that may no longer apply for the MDC version.*/
 mat-paginator {
   background-color: var(--background) !important;
   font-family: 'Bull-mono' !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
 .mat-button-toggle-button {
   min-width: 130px;
   background: var(--dark-brown) !important;
@@ -301,6 +306,7 @@ mat-paginator {
   }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
 .mat-button-toggle-checked {
   button {
     background: var(--green) !important;
@@ -359,7 +365,7 @@ app-profile-page {
   height: 100%;
 }
 
-.mat-snack-bar-container {
+.mat-mdc-snack-bar-container {
   max-width: 45vw !important;
 }
 
@@ -393,7 +399,7 @@ a:hover {
 }
 
 @media only screen and (max-width: 768px) {
-  .mat-snack-bar-container {
+  .mat-mdc-snack-bar-container {
     max-width: 100% !important;
   }
 
@@ -403,6 +409,7 @@ a:hover {
   }
 
   .gift-box {
+    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version.*/
     .mat-tab-label {
       padding: 0 0.75rem;
     }
@@ -411,6 +418,7 @@ a:hover {
     // .mat-tab-label-container {
     //   padding-left: 0rem !important;
     // }
+    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version.*/
     .mat-tab-label {
       padding: 0 0.5rem;
     }

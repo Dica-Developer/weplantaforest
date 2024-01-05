@@ -5,14 +5,10 @@ import { RouterModule } from '@angular/router';
 import { PlantProposalPageComponent } from './plant-proposal-page.component';
 import { PlantProposalRowComponent } from './components/plant-proposal-row/plant-proposal-row.component';
 import { SelfPlantRowComponent } from './components/self-plant-row/self-plant-row.component';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { NgxSliderModule } from 'ngx-slider-v2';
 
 @NgModule({
-  declarations: [
-    PlantProposalPageComponent,
-    PlantProposalRowComponent,
-    SelfPlantRowComponent,
-  ],
+  declarations: [PlantProposalPageComponent, PlantProposalRowComponent, SelfPlantRowComponent],
   imports: [CommonModule, UtilModule, RouterModule, NgxSliderModule],
 })
 export class PlantProposalPageModule {}

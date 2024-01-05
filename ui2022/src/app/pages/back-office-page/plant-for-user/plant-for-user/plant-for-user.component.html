@@ -29,7 +29,7 @@
   <div class="columns">
     <div class="column is-half">
       <div *ngFor="let project of activeProjects$ | async">
-        <mat-card>
+        <mat-card appearance="outlined">
           <mat-card-content>
             <h3>
               <b>{{ project.projectName }}</b>

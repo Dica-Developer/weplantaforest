@@ -48,14 +48,14 @@ import { RankingEffects, rankingReducerFn } from './store/ranking.store';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { SearchEffects, searchReducerFn } from './store/search.store';
 import { PlantProposalEffects, plantProposalReducerFn } from './store/plant.store';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { NgxSliderModule } from 'ngx-slider-v2';
 import { BlogEffects, blogReducerFn } from './store/blog.store';
 import { PaymentEffects, paymentReducerFn } from './store/payment.store';
 import { ContactEffects, contactReducerFn } from './store/contact.store';
 import { NgChartsModule } from 'ng2-charts';
 import { InfrastructureEffects, infrastructureReducerFn } from './store/infrastructure.store';
 import { MomentDateAdapter, MomentDateModule } from '@angular/material-moment-adapter';
-import { MatLegacyPaginatorIntl as MatPaginatorIntl } from '@angular/material/legacy-paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PaginatorIntlService } from './util/material/paginator-intl';
 
 export const MY_FORMATS = {

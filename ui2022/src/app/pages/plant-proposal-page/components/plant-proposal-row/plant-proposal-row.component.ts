@@ -10,7 +10,7 @@ import {
   selectSimpleProposalFailed,
 } from '../../../../store/plant.store';
 import { SliderHelper } from '../../../../util/helper/slider.helper';
-import { Options } from '@angular-slider/ngx-slider';
+import { Options } from 'ngx-slider-v2';
 import { Observable, Subscription } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from '../../../../store/plantbag.store';
 
