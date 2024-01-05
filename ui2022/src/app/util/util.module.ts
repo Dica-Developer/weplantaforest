@@ -56,7 +56,7 @@ import { TeamDetailsComponent } from './common-components/team-details/team-deta
 import { TeamHeaderComponent } from './common-components/team-header/team-header.component';
 import { TeamCreateEditComponent } from './common-components/team-create-edit/team-create-edit.component';
 import { PlantproposalPreviewRowComponent } from './common-components/plantproposal-preview-row/plantproposal-preview-row.component';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { NgxSliderModule } from 'ngx-slider-v2';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CustomPlantingComponent } from '../pages/plant-proposal-page/components/custom-planting/custom-planting.component';
 import { CustomPlantTreeInputComponent } from './common-components/custom-plant-tree-input/custom-plant-tree-input.component';

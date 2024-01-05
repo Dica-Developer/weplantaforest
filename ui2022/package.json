@@ -7,12 +7,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "postinstall": "ngcc"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
-    "@angular-slider/ngx-slider": "^2.0.4",
     "@angular/animations": "^16.2.12",
     "@angular/cdk": "^15.2.9",
     "@angular/common": "^16.2.12",
@@ -49,6 +47,7 @@
     "ng2-charts": "^4.1.1",
     "ngx-paypal": "^10.1.0",
     "ngx-scrollbar": "^10.0.1",
+    "ngx-slider-v2": "^16.0.2",
     "rxjs": "~7.5.7",
     "tslib": "^2.4.1",
     "zone.js": "~0.13.3"
