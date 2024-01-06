@@ -1,12 +1,18 @@
 .menu:hover,
-span:hover {
+span:hover,
+a:hover {
   cursor: pointer;
   color: var(--green);
 }
+// cursor: pointer;
+// color: var(--green);
 
-span {
+span,
+a {
+  text-decoration: none;
   font-size: 1.25rem;
   line-height: 1.25rem;
+  color: var(--black);
 }
 
 .menuItem {
@@ -16,6 +22,7 @@ span {
 .menuItem:hover {
   color: var(--green);
 }
+
 mat-icon {
   height: 2rem;
   width: 2rem;
