@@ -5,11 +5,9 @@
         <mat-form-field appearance="fill">
           <mat-label>Artikel-Typ</mat-label>
           <mat-select formControlName="articleType">
-            <mat-option
-              *ngFor="let articleType of articleTypes"
-              [value]="articleType"
-              >{{ articleType }}</mat-option
-            >
+            <mat-option *ngFor="let articleType of articleTypes" [value]="articleType">{{
+              articleType
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -30,45 +28,26 @@
     <div class="columns">
       <div class="column is-8">
         <mat-form-field class="title-field">
-          <input
-            matInput
-            placeholder="Titel"
-            name="title"
-            formControlName="title"
-          />
+          <input matInput placeholder="Titel" name="title" formControlName="title" />
         </mat-form-field>
       </div>
       <div class="column is-4">
         <mat-form-field>
           <mat-label>Datum</mat-label>
-          <input
-            matInput
-            [matDatepicker]="datepicker"
-            formControlName="createdOn"
-          />
+          <input matInput [matDatepicker]="datepicker" formControlName="createdOn" />
           <mat-hint></mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="datepicker"
-          ></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
           <mat-datepicker #datepicker>
             <mat-datepicker-actions>
               <button mat-button matDatepickerCancel>Cancel</button>
-              <button mat-raised-button color="primary" matDatepickerApply>
-                OK
-              </button>
+              <button mat-raised-button color="primary" matDatepickerApply>OK</button>
             </mat-datepicker-actions>
           </mat-datepicker>
         </mat-form-field>
       </div>
     </div>
     <div class="columns">
-      <div class="column is-2">Intro:</div>
-      <div class="column is-10">
-        <app-text-editor
-          [control]="this.articleForm.get('intro')"
-        ></app-text-editor>
-      </div>
+      <app-text-editor [control]="this.articleForm.get('intro')"></app-text-editor>
     </div>
     <div class="spacer"></div>
     <div class="columns">
@@ -93,16 +72,15 @@
           (change)="imageChanged($event)"
           accept=".png, .jpg, .jpeg"
         />
-        <button mat-raised-button color="primary" (click)="csvInput.click()">
-          Bild
-        </button>
+        <button mat-raised-button color="primary" (click)="csvInput.click()">Bild</button>
       </div>
-      <div class="column is-3">
-      </div>      
+      <div class="column is-3"></div>
     </div>
     <div class="column is-12">
-      <button mat-raised-button color="primary" (click)="addParagraph()" class="save-btn">Absatz hinzufügen</button>
-    </div>  
+      <button mat-raised-button color="primary" (click)="addParagraph()" class="save-btn">
+        Absatz hinzufügen
+      </button>
+    </div>
     <app-content-paragraph
       *ngFor="let paragraph of articleForm.get('paragraphs')['controls']"
       [paragraph]="paragraph"
