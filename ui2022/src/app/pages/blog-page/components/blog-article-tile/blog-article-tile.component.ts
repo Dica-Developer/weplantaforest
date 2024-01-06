@@ -30,7 +30,7 @@ export class BlogArticleTileComponent implements OnInit {
       this.blogArticle.id +
       '/' +
       encodeURI(this.blogArticle.imageFileName) +
-      '/800/400';
+      '/1000/500';
     this.description = this.textHelper.getTextForLanguage(
       this.blogArticle.intro,
       this.translateService.currentLang,
