@@ -26,7 +26,7 @@ export class ProjectTileComponent implements OnInit {
       environment.backendUrl +
       '/project/image/' +
       encodeURI(this.projectReport.projectImageFileName) +
-      '/200/400';
+      '/1200/600';
     // this.imgUrl = environment.baseUrl + '/assets/forest.png';
     this.progress =
       (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
