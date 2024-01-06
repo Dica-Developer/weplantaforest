@@ -24,9 +24,9 @@ yarn build --configuration=prod
 
 # create ui backup
 ssh ipat@iplantatree.org "rm -r iplantatree/ui2022.backup/*"
-ssh ipat@iplantatree.org "cp -a  iplantatree/ui/dist/ui2022/. iplantatree/ui2022.backup/ "
+ssh ipat@iplantatree.org "cp -a  iplantatree/ui2022/. iplantatree/ui2022.backup/ "
 # clean remote folder first
-ssh ipat@iplantatree.org "rm -r iplantatree/ui/dist/ui2022/*"
+ssh ipat@iplantatree.org "rm -r iplantatree/ui2022/*"
 # deploy new version to server
-scp -r /home/ipat/weplantaforest/ui2022/dist/ui2022/* ipat@iplantatree.org:/home/ipat/iplantatree/ui/dist/ui2022
+scp -r /home/ipat/weplantaforest/ui2022/dist/ui2022/* ipat@iplantatree.org:/home/ipat/iplantatree/ui2022
 
