@@ -78,7 +78,7 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
         if (localStorage.getItem('username')) {
           this.router.navigate(['/profile/' + localStorage.getItem('username')]);
         } else {
-          return;
+          this.router.navigate(['/']);
         }
       }
     });
