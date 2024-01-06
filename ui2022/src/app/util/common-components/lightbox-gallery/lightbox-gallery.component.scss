@@ -14,7 +14,7 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #000000bb;
+  background-color: #000000cc;
 }
 
 /* Modal Content */
@@ -33,7 +33,7 @@
   top: 2rem;
   right: 2rem;
   color: var(--background);
-  background: #000000cc;
+  background: var(--background);
   border-radius: 1.5rem;
   width: 3rem;
   height: 3rem;
