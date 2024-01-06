@@ -17,9 +17,9 @@
   </nav>
 </div>
 <div class="w-100 is-flex is-flex-direction-column padding-1 padding-left margin-top-1">
-  <h2>{{ 'faq' | translate }}</h2>
-  <div class="columns is-hidden-mobile">
+  <div class="columns is-hidden-mobile faq-columns">
     <div class="column is-4">
+      <h2>{{ 'faq' | translate }}</h2>
       <div *ngFor="let faqArticle of faq; index as i">
         <div class="faq-link">
           <a (click)="scrollTo('faq-' + i)">{{ faqArticle.title }}</a>

@@ -10,6 +10,7 @@ li {
 .column {
   padding: 0 !important;
 }
+
 .finance-link {
   font-size: 1rem;
   margin-bottom: 15px;
@@ -18,6 +19,7 @@ li {
 .scroll-container {
   min-height: 1000px;
 }
+
 ng-scrollbar {
   border: none;
   --scrollbar-size: 8px;
@@ -26,5 +28,5 @@ ng-scrollbar {
 }
 
 .finances-columns {
-  min-height: 60vh;
+  min-height: 65vh;
 }
