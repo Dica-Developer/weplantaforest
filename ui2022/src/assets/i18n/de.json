@@ -323,6 +323,7 @@
     "nextPage": "Nächste Seite",
     "previousPage": "Vorherige Seite"
   },
+  "contactFormSubmitted": "Vielen Dank! Deine Nachricht wurde gesendet.",
   "resetPassword": "Passwort zurücksetzen",
   "receivedMailForPasswordReset": "Du hast eine E-Mail an die angegebene Adresse erhalten um dein Passwort zurückzusetzen.",
   "passwordResetLinkInvalid": "Dieser Link ist leider ungültig.",

@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
-import { ContactRequest, submitContactRequestAction } from 'src/app/store/contact.store';
+import {
+  ContactRequest,
+  resetContactForm,
+  selectContactRequestSent,
+  submitContactRequestAction,
+} from 'src/app/store/contact.store';
 
 @Component({
   selector: 'app-contact-page',
   templateUrl: './contact-page.component.html',
   styleUrls: ['./contact-page.component.scss'],
 })
-export class ContactPageComponent implements OnInit {
+export class ContactPageComponent implements OnInit, OnDestroy {
   contactForm = new UntypedFormGroup({
     reason: new UntypedFormControl(''),
     name: new UntypedFormControl(''),
@@ -19,6 +25,8 @@ export class ContactPageComponent implements OnInit {
     phone: new UntypedFormControl(''),
     message: new UntypedFormControl(''),
   });
+
+  requestSentSubscription: Subscription;
 
   captchaInput: string = '';
   captchaValid: boolean = false;
@@ -31,6 +39,22 @@ export class ContactPageComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    this.contactForm.reset();
+    this.store.dispatch(resetContactForm());
+    this.requestSentSubscription = this.store
+      .select(selectContactRequestSent)
+      .subscribe((isSent) => {
+        if (isSent) {
+          this.contactForm.disable();
+          this.snackbar.open(this.translateService.instant('contactFormSubmitted'), 'OK', {
+            duration: 4000,
+            panelClass: ['success-snackbar'],
+          });
+          this.contactForm.reset();
+        } else {
+          this.contactForm.enable();
+        }
+      });
   }
 
   onSubmit(): void {
@@ -52,5 +76,11 @@ export class ContactPageComponent implements OnInit {
 
   updateCaptchaStatus(event: any) {
     this.captchaValid = event;
+  }
+
+  ngOnDestroy(): void {
+    if (this.requestSentSubscription) {
+      this.requestSentSubscription.unsubscribe();
+    }
   }
 }

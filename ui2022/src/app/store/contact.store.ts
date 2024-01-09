@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { createAction, createReducer, on, props } from '@ngrx/store';
+import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { switchMap } from 'rxjs';
 import { ContactService } from '../services/contact.service';
 
@@ -13,10 +13,12 @@ export interface ContactRequest {
 }
 
 export interface ContactState {
+  isSent: boolean;
   isLoading: boolean;
 }
 
 export const initialState: ContactState = {
+  isSent: false,
   isLoading: false,
 };
 
@@ -27,17 +29,26 @@ export const submitContactRequestAction = createAction(
   props<{ request: ContactRequest }>(),
 );
 export const submitContactRequestSuccess = createAction('[Contact] submit contact request success');
+export const resetContactForm = createAction('[Contact] reset contact form');
 
 // reducer REDUCER reducer REDUCER reducer
 const contactReducer = createReducer(
   initialState,
   on(submitContactRequestAction, (state) => ({ ...state, isLoading: true })),
-  on(submitContactRequestSuccess, (state) => ({ ...state, isLoading: false })),
+  on(submitContactRequestSuccess, (state) => ({ ...state, isLoading: false, isSent: true })),
+  on(resetContactForm, (state) => ({ ...state, isLoading: false, isSent: false })),
 );
 
 export function contactReducerFn(state, action) {
   return contactReducer(state, action);
 }
+
+const contactFeature = (state: any) => state.contactState;
+
+export const selectContactRequestSent = createSelector(
+  contactFeature,
+  (state: ContactState) => state.isSent,
+);
 
 // selectors SELECTORS selectors SELECTORS selectors
 //   export const cartsFeature = (state: AppState) => state.cartsState;
