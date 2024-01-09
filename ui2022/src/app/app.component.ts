@@ -10,8 +10,6 @@ import { selectSuccessMessages, removeSuccessMessage } from './store/success-mes
 import { loadProfileDetails, selectUserLanguage } from './store/profile.store';
 import { getProjectsForCustomPlanting } from './store/plant.store';
 import { Subscription } from 'rxjs';
-import { acceptCookies } from './store/infrastructure.store';
-import { CookieConfirmationComponent } from './util/common-components/cookie-confirmation/cookie-confirmation.component';
 import { CookieHelper } from './util/cookie.helper';
 
 @Component({

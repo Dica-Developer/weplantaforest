@@ -415,10 +415,14 @@ export const selectUserLanguage = createSelector(profileFeature, (state: Profile
   if (localStorage.getItem('lang')) {
     return localStorage.getItem('lang');
   } else {
-    if (navigator.language === 'de-De' || navigator.language === 'de') {
-      return 'de';
-    } else {
+    if (
+      navigator.language === 'en-US' ||
+      navigator.language === 'en' ||
+      navigator.language === 'en-GB'
+    ) {
       return 'en';
+    } else {
+      return 'de';
     }
   }
 });
