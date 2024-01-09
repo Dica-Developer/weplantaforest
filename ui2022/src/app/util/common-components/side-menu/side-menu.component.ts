@@ -22,10 +22,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  routeToBackoffice() {
-    this.router.navigate(['/backOffice2022/carts']);
-  }
-
   routeToProfile() {
     this.router.navigate(['/profile/' + localStorage.getItem('username')]);
   }
