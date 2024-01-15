@@ -10,7 +10,6 @@ import {
   resetCartPayed,
   selectCreatedCartId,
   selectCreatedGiftId,
-  selectIsGift,
   selectPaymentDone,
 } from '../../store/payment.store';
 import { selectPlantbagPrice } from '../../store/plantbag.store';
@@ -76,8 +75,10 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
       this.cartPayed = cartPayed;
       if (this.cartPayed) {
         if (localStorage.getItem('username')) {
+          this.store.dispatch(resetCartPayed());
           this.router.navigate(['/profile/' + localStorage.getItem('username')]);
         } else {
+          this.store.dispatch(resetCartPayed());
           this.router.navigate(['/']);
         }
       }
