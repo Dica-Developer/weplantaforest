@@ -18,6 +18,7 @@ import {
   updateUserEmail,
   updateUserActiveFlag,
 } from '../../../../store/user.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-grid',
@@ -49,7 +50,7 @@ export class UserGridComponent implements OnInit, OnDestroy {
       width: 80,
       cellRenderer: 'profileRenderer',
       onCellClicked: (event: CellClickedEvent) => {
-        window.open(environment.oldFrontendUrl + '/user/' + event.value, '_blank').focus();
+        this.router.navigate(['/profile', event.value.trim()]);
       },
     },
     {
@@ -142,7 +143,11 @@ export class UserGridComponent implements OnInit, OnDestroy {
 
   selectUsersSub: Subscription;
 
-  constructor(private store: Store<AppState>, private gridHelper: GridHelper) {
+  constructor(
+    private store: Store<AppState>,
+    private gridHelper: GridHelper,
+    private router: Router,
+  ) {
     this.usersLoading$ = this.store.select(selectUsersLoadingProgress);
     this.store.dispatch(loadUsers());
     this.selectUsersSub = this.store.select(selectUsers).subscribe((users) => {
