@@ -25,8 +25,11 @@ export class ProjectDescriptionComponent implements OnInit {
     for (let image of this.projectReport.images) {
       let url =
         environment.backendUrl + '/project/image/' + encodeURI(image.imageFileName) + '/1140/570';
-      let caption = this.textHelper.getTextForLanguage(image.description, this.translateService.currentLang);      
-      this.images.push({imageUrl: url, caption});
+      let caption = this.textHelper.getTextForLanguage(
+        image.description,
+        this.translateService.currentLang,
+      );
+      this.images.push({ imageUrl: url, caption });
     }
     this.description = this.textHelper.getTextForLanguage(
       this.projectReport.projectReportData.description,
@@ -36,5 +39,6 @@ export class ProjectDescriptionComponent implements OnInit {
 
   showProjectPlantingClicked() {
     this.showProjectPlanting.emit();
+    window.scrollTo(0, 0);
   }
 }

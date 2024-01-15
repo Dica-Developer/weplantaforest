@@ -19,7 +19,7 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   article: ActiveProjectArticle;
 
   @Input()
-  amount: number = 0;
+  amount: number = null;
 
   @Input()
   withDelete: boolean = false;
