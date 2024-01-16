@@ -25,6 +25,11 @@ export class ProjectReportService {
   }
 
   loadInActiveProjectReports(page: number, size: number) {
+    this.http
+      .get(environment.backendUrl + '/reports/inActiveProjects?page=' + page + '&size=' + size)
+      .subscribe((data) => {
+        console.log(data);
+      });
     return this.http.get(
       environment.backendUrl + '/reports/inActiveProjects?page=' + page + '&size=' + size,
     );

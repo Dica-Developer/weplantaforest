@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./project-overview-tile.component.scss'],
 })
 export class ProjectOverviewTileComponent implements OnInit {
-  @Input() projectReport;
+  @Input() projectInfo;
   imgUrl: string;
   progress: number;
   description: string;
@@ -27,21 +27,35 @@ export class ProjectOverviewTileComponent implements OnInit {
     this.imgUrl =
       environment.backendUrl +
       '/project/image/' +
-      encodeURI(this.projectReport.projectImageFileName) +
-      '/1000/500';
+      encodeURI(this.projectInfo.images[0].imageFileName) +
+      '/1200/600';
     this.progress =
-      (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
+      (this.projectInfo.projectReportData.amountOfPlantedTrees /
+        this.projectInfo.projectReportData.amountOfMaximumTreesToPlant) *
       100;
-    this.description = this.getFirstParagraph(
-      this.textHelper.getTextForLanguage(
-        this.projectReport.description,
-        this.translateService.currentLang,
-      ),
+    this.description = this.textHelper.getTextForLanguage(
+      this.projectInfo.projectReportData.description,
+      this.translateService.currentLang,
     );
+
+    // this.imgUrl =
+    //   environment.backendUrl +
+    //   '/project/image/' +
+    //   encodeURI(this.projectReport.projectImageFileName) +
+    //   '/1000/500';
+    // this.progress =
+    //   (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
+    //   100;
+    // this.description = this.getFirstParagraph(
+    //   this.textHelper.getTextForLanguage(
+    //     this.projectReport.description,
+    //     this.translateService.currentLang,
+    //   ),
+    // );
   }
 
   showBackgroundImage(check: boolean) {
-    if (check && this.projectReport.projectImageFileName) {
+    if (check && this.projectInfo.images[0].imageFileName) {
       this.backgroundImgUrl = 'url(' + this.imgUrl + ')';
       this.zIndex = -1;
     } else {
@@ -51,7 +65,7 @@ export class ProjectOverviewTileComponent implements OnInit {
   }
 
   route() {
-    this.router.navigate(['/project/' + this.projectReport.projectName]);
+    this.router.navigate(['/project/' + this.projectInfo.projectReportData.projectName]);
   }
 
   getFirstParagraph(text) {

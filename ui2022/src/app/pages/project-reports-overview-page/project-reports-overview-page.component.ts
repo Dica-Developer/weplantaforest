@@ -19,7 +19,6 @@ export class ProjectReportsOverviewPageComponent implements OnInit, OnDestroy {
   type: string = 'active';
   activeProjectReports$ = this.store.select(selectActiveProjectReports);
   inactiveProjectReports$ = this.store.select(selectInActiveProjectReports);
-
   amountOfInactiveProjects: number;
   inactiveAmountOfProjectsSub: Subscription;
 
@@ -30,7 +29,6 @@ export class ProjectReportsOverviewPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-
     this.inactiveAmountOfProjectsSub = this.store
       .select(selectAmountOfInactiveProjects)
       .subscribe((res) => {
@@ -39,6 +37,7 @@ export class ProjectReportsOverviewPageComponent implements OnInit, OnDestroy {
   }
 
   setType(event: any) {
+    console.log(event);
     this.type = event;
   }
 

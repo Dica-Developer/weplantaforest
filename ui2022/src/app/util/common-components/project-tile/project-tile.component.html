@@ -1,16 +1,20 @@
 <div class="project-tile is-flex is-flex-direction-column" (click)="routeToProject()">
   <div class="imageWrapper">
-    <img src="{{ imgUrl }}" alt="{{ projectReport.projectName }}" />
+    <img src="{{ imgUrl }}" alt="{{ projectInfo.projectReportData.projectName }}" />
   </div>
   <div class="tile-body h-100 is-flex is-flex-direction-column is-justify-content-space-between">
-    <h4>{{ projectReport.projectName }}</h4>
+    <h4>{{ projectInfo.projectReportData.projectName }}</h4>
     <div class="description" innerHtml="{{ description }}"></div>
     <div class="bar">
       <div class="inner-bar" [style.width.%]="progress"></div>
     </div>
     <div class="is-flex stats is-flex-direction-column is-justify-content-space-between">
-      <p>{{ 'alreadyPlanted' | translate }} {{ projectReport.amountOfPlantedTrees }}</p>
-      <p>{{ 'target' | translate }} {{ projectReport.amountOfMaximumTreesToPlant }}</p>
+      <p>
+        {{ 'alreadyPlanted' | translate }} {{ projectInfo.projectReportData.amountOfPlantedTrees }}
+      </p>
+      <p>
+        {{ 'target' | translate }} {{ projectInfo.projectReportData.amountOfMaximumTreesToPlant }}
+      </p>
     </div>
   </div>
 </div>

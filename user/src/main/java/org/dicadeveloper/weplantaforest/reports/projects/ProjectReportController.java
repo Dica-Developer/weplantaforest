@@ -34,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import java.util.ArrayList;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -70,20 +71,61 @@ public class ProjectReportController {
         }
     }
 
+    // @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
+    // public ResponseEntity<?> getActiveProjects() {
+    //     List<ProjectReportData> projectReports = _projectReportRepository.getActiveProjects();
+    //     for(ProjectReportData project : projectReports) {
+    //         Project p = _projectRepository.findByName(project.getProjectName());
+    //         project.positions = p.getPositions();
+    //     }
+    //     return new ResponseEntity<>(projectReports, HttpStatus.OK);
+    // }
+
+    // @RequestMapping(value = Uris.REPORT_INACTIVE_PROJECTS, method = RequestMethod.GET)
+    // public ResponseEntity<?> getInActiveProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
+    //     Page<ProjectReportData> projectReports = _projectReportRepository.getInActiveProjects(PageRequest.of(page, size));
+    //     return new ResponseEntity<>(projectReports, HttpStatus.OK);
+    // }
+
     @RequestMapping(value = Uris.REPORT_ACTIVE_PROJECTS, method = RequestMethod.GET)
-    public ResponseEntity<?> getActiveProjects() {
+        public ResponseEntity<?> getActiveProjects() {
+        List<ProjectReportExtendedData> extendedProjectReports = new ArrayList<>();
+
         List<ProjectReportData> projectReports = _projectReportRepository.getActiveProjects();
-        for(ProjectReportData project : projectReports) {
-            Project p = _projectRepository.findByName(project.getProjectName());
-            project.positions = p.getPositions();
+        for (ProjectReportData projectReportData : projectReports) {
+            Project p = _projectRepository.findByName(projectReportData.getProjectName());
+
+            ProjectReportExtendedData projectReportExtendedData = new ProjectReportExtendedData();
+            projectReportExtendedData.setProjectReportData(projectReportData);
+
+            List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(projectReportData.getProjectId());
+            projectReportExtendedData.setImages(images);
+            projectReportExtendedData.setPositions(p.getPositions());
+
+            extendedProjectReports.add(projectReportExtendedData);
         }
-        return new ResponseEntity<>(projectReports, HttpStatus.OK);
+        return new ResponseEntity<>(extendedProjectReports, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.REPORT_INACTIVE_PROJECTS, method = RequestMethod.GET)
-    public ResponseEntity<?> getInActiveProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
+    public ResponseEntity<?> getInActiveProjects(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+        List<ProjectReportExtendedData> extendedProjectReports = new ArrayList<>();
+
         Page<ProjectReportData> projectReports = _projectReportRepository.getInActiveProjects(PageRequest.of(page, size));
-        return new ResponseEntity<>(projectReports, HttpStatus.OK);
+        for (ProjectReportData projectReportData : projectReports.getContent()) {
+            Project p = _projectRepository.findByName(projectReportData.getProjectName());
+
+            ProjectReportExtendedData projectReportExtendedData = new ProjectReportExtendedData();
+            projectReportExtendedData.setProjectReportData(projectReportData);
+
+            List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(projectReportData.getProjectId());
+            projectReportExtendedData.setImages(images);
+            projectReportExtendedData.setPositions(p.getPositions());
+            
+            extendedProjectReports.add(projectReportExtendedData);
+        }
+        // Page<?> pagedProjects = PageRequest.of(page, size)
+        return new ResponseEntity<>(extendedProjectReports, HttpStatus.OK);
     }
 
     @RequestMapping(value = Uris.PROJECT_SEARCH_NAME + "{projectName}", method = RequestMethod.GET)

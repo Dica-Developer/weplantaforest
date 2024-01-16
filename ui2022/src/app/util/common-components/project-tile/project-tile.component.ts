@@ -10,10 +10,10 @@ import { TextHelper } from '../../text.helper';
   styleUrls: ['./project-tile.component.scss'],
 })
 export class ProjectTileComponent implements OnInit {
-  @Input() projectReport;
+  @Input() projectInfo;
   imgUrl: string;
-  progress: number;
-  description: string;
+  progress: number = 0;
+  description: string = '';
 
   constructor(
     private textHelper: TextHelper,
@@ -25,19 +25,19 @@ export class ProjectTileComponent implements OnInit {
     this.imgUrl =
       environment.backendUrl +
       '/project/image/' +
-      encodeURI(this.projectReport.projectImageFileName) +
+      encodeURI(this.projectInfo.images[0].imageFileName) +
       '/1200/600';
-    // this.imgUrl = environment.baseUrl + '/assets/forest.png';
     this.progress =
-      (this.projectReport.amountOfPlantedTrees / this.projectReport.amountOfMaximumTreesToPlant) *
+      (this.projectInfo.projectReportData.amountOfPlantedTrees /
+        this.projectInfo.projectReportData.amountOfMaximumTreesToPlant) *
       100;
     this.description = this.textHelper.getTextForLanguage(
-      this.projectReport.description,
+      this.projectInfo.projectReportData.description,
       this.translateService.currentLang,
     );
   }
 
   routeToProject() {
-    this.router.navigate(['/project/' + this.projectReport.projectName]);
+    this.router.navigate(['/project/' + this.projectInfo.projectReportData.projectName]);
   }
 }

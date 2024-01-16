@@ -67,24 +67,31 @@ export const loadInActiveProjectReportsSuccess = createAction(
   '[ProjectReport] load inactive project reports success',
   props<{ inactiveProjectReports: any[]; amountOfInactiveProjects: number }>(),
 );
-
 export const loadProjectProposal = createAction(
   '[ProjectReport] load simple project proposal',
   props<{ amountOfTrees: number; projectName: string }>(),
 );
-
 export const loadProjectProposalSuccess = createAction(
   '[ProjectReport] load simple project proposal success',
   props<{ simpleProposal: SimplePlantProposal }>(),
 );
+// export const loadProjectReportDetailsArray = createAction(
+//   '[ProjectReport] load all project report details',
+//   props<{ projectNames: string[] }>(),
+// );
+// export const loadProjectReportDetailsArraySuccess = createAction(
+//   '[ProjectReport] load all project report details',
+//   props<{ observableArray: any[] }>(),
+// );
 
 export interface ProjectReportState {
   projectReports: PagedData<ProjectReport>;
-  projectReport: any;
+  projectReportDetails: ProjectReportDetails;
+  // projectReportDetailsArray: any[];
   projectsLoading: boolean;
   projectLoading: boolean;
-  activeProjects: any[];
-  inactiveProjects: any[];
+  activeProjects: ProjectReportDetails[];
+  inactiveProjects: ProjectReportData[];
   amountOfInactiveProjects: number;
   simpleProposal: SimplePlantProposal;
 }
@@ -102,7 +109,8 @@ export const initialState: ProjectReportState = {
   inactiveProjects: [],
   amountOfInactiveProjects: 0,
   projectsLoading: false,
-  projectReport: null,
+  projectReportDetails: null,
+  // projectReportDetailsArray: [],
   projectLoading: false,
   simpleProposal: null,
 };
@@ -115,7 +123,7 @@ const projectReportReducer = createReducer(
   })),
   on(loadProjectReport, (state) => ({
     ...state,
-    projectReport: null,
+    projectReportDetails: null,
     projectLoading: true,
   })),
   on(loadProjectReportsSuccess, (state, { projectReports }) => ({
@@ -125,7 +133,7 @@ const projectReportReducer = createReducer(
   })),
   on(loadProjectReportSuccess, (state, { projectReportDetails }) => ({
     ...state,
-    projectReport: projectReportDetails,
+    projectReportDetails: projectReportDetails,
     projectLoading: false,
   })),
   on(loadActiveProjectReportsSuccess, (state, { activeProjectReports }) => ({
@@ -146,21 +154,23 @@ const projectReportReducer = createReducer(
     ...state,
     simpleProposal,
   })),
+  // on(loadProjectReportDetailsArraySuccess, (state, { observableArray }) => ({
+  //   ...state,
+  //   projectReportDetailsArray: observableArray,
+  // })),
 );
 
 export function projectsReportReducerFn(state, action) {
   return projectReportReducer(state, action);
 }
-
 export const projectsReportsFeature = (state: AppState) => state.projectReportsState;
-
 export const selectProjectReports = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => state.projectReports,
 );
 export const selectProjectReport = createSelector(
   projectsReportsFeature,
-  (state: ProjectReportState) => state.projectReport,
+  (state: ProjectReportState) => state.projectReportDetails,
 );
 export const selectActiveProjectReports = createSelector(
   projectsReportsFeature,
@@ -170,17 +180,14 @@ export const selectInActiveProjectReports = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => state.inactiveProjects,
 );
-
 export const selectAmountOfInactiveProjects = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => state.amountOfInactiveProjects,
 );
-
 export const selectProjectProposal = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => state.simpleProposal,
 );
-
 export const selectProjectProposalPrice = createSelector(
   projectsReportsFeature,
   (state: ProjectReportState) => {
@@ -191,6 +198,10 @@ export const selectProjectProposalPrice = createSelector(
     return parseFloat(price.toString()).toFixed(2).replace('.', ',');
   },
 );
+// export const selectProjectDetailsObservableArray = createSelector(
+//   projectsReportsFeature,
+//   (state: ProjectReportState) => state.projectReportDetailsArray,
+// );
 
 @Injectable()
 export class ProjectReportsEffects {
@@ -230,6 +241,23 @@ export class ProjectReportsEffects {
     ),
   );
 
+  // LoadProjecReportDetailsArray$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(loadProjectReportDetailsArray),
+  //     switchMap((action) => {
+  //       if (action.projectNames) {
+  //         let array = [];
+  //         for (let name of action.projectNames) {
+  //           array.push(this.projectReportService.loadProjectReport(name));
+  //         }
+  //         return [loadProjectReportDetailsArraySuccess({ observableArray: array })];
+  //       } else {
+  //         return [];
+  //       }
+  //     }),
+  //   ),
+  // );
+
   LoadActiveProjects$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadActiveProjectReports),
@@ -237,20 +265,12 @@ export class ProjectReportsEffects {
         this.projectReportService.loadActiveProjectReports().pipe(
           switchMap((activeProjects: any[]) => {
             if (activeProjects) {
-              const projects: ProjectReportData[] = [];
+              const projects: ProjectReportDetails[] = [];
               for (const report of activeProjects) {
+                // console.log(report);
                 projects.push({
-                  projectId: report.projectId,
-                  projectName: report.projectName,
-                  description: report.description,
-                  projectImageFileName: report.projectImageFileName,
-                  latitude: report.latitude,
-                  longitude: report.longitude,
-                  amountOfPlantedTrees: report.amountOfPlantedTrees,
-                  amountOfMaximumTreesToPlant: report.amountOfMaximumTreesToPlant,
-                  active: report.active,
-                  projectImageUrl: `${environment.backendUrl}/projects/image/${report.projectImageFileName}/60/60`,
-                  projectLink: `/project/${report.projectName}`,
+                  projectReportData: report.projectReportData,
+                  images: report.images,
                   positions: report.positions,
                 });
                 activeProjects = projects;
@@ -270,23 +290,14 @@ export class ProjectReportsEffects {
         this.projectReportService.loadInActiveProjectReports(0, action.pageSize).pipe(
           switchMap((inactiveProjects: any) => {
             if (inactiveProjects) {
-              const projects: ProjectReportData[] = [];
-              for (const report of inactiveProjects.content) {
+              const projects: ProjectReportDetails[] = [];
+              for (const report of inactiveProjects) {
                 projects.push({
-                  projectId: report.projectId,
-                  projectName: report.projectName,
-                  description: report.description,
-                  projectImageFileName: report.projectImageFileName,
-                  latitude: report.latitude,
-                  longitude: report.longitude,
-                  amountOfPlantedTrees: report.amountOfPlantedTrees,
-                  amountOfMaximumTreesToPlant: report.amountOfMaximumTreesToPlant,
-                  active: report.active,
-                  projectImageUrl: `${environment.backendUrl}/projects/image/${report.projectImageFileName}/60/60`,
-                  projectLink: `/project/${report.projectName}`,
+                  projectReportData: report.projectReportData,
+                  images: report.images,
                   positions: report.positions,
                 });
-                inactiveProjects.content = projects;
+                inactiveProjects = projects;
               }
             }
             return [

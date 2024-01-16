@@ -15,7 +15,7 @@
       *ngFor="let project of activeProjectReports$ | async"
     >
       <app-project-overview-tile
-        [projectReport]="project"
+        [projectInfo]="project"
         class="projectReport"
       ></app-project-overview-tile>
     </div>
@@ -30,10 +30,10 @@
     </div>
     <div
       class="column is-one-fifth is-full-mobile"
-      *ngFor="let project of (inactiveProjectReports$ | async).content"
+      *ngFor="let project of inactiveProjectReports$ | async"
     >
       <app-project-overview-tile
-        [projectReport]="project"
+        [projectInfo]="project"
         class="projectReport"
       ></app-project-overview-tile>
     </div>

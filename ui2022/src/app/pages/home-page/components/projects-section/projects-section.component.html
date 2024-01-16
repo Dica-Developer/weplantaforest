@@ -16,7 +16,7 @@
     </p>
     <ng-scrollbar track="horizontal" thumbClass="ipat-scrollbar">
       <div class="is-flex h-100">
-        <app-project-tile *ngFor="let project of projectReports$ | async" [projectReport]="project">
+        <app-project-tile *ngFor="let project of projectReportDataArray" [projectInfo]="project">
         </app-project-tile>
       </div>
     </ng-scrollbar>
