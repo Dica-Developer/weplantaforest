@@ -88,7 +88,7 @@ export class SepaPageComponent implements OnInit, OnDestroy {
       if (this.cartPayed) {
         this.form.disable();
         if (localStorage.getItem('username')) {
-          this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+          this.router.navigate(['/user/' + localStorage.getItem('username')]);
         } else {
           this.router.navigate(['/']);
         }

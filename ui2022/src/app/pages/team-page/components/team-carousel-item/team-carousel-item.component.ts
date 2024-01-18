@@ -27,7 +27,6 @@ export class TeamCarouselItemComponent implements OnInit {
   ngOnInit(): void {}
 
   routeToProifile() {
-
-    this.router.navigate(['/profile', this._member.name]);
+    this.router.navigate(['/user', this._member.name]);
   }
 }

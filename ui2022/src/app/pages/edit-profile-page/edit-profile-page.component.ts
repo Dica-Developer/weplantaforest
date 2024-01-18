@@ -185,7 +185,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   routeToProfile() {
-    this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+    this.router.navigate(['/user/' + localStorage.getItem('username')]);
   }
 
   imageChanged(fileInputEvent: any) {

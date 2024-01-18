@@ -582,7 +582,7 @@ export class ProfileEffects {
       switchMap((action) =>
         this.giftService.redeemGift(action.code).pipe(
           switchMap(() => {
-            this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+            this.router.navigate(['/user/' + localStorage.getItem('username')]);
             return [
               addSuccessMessage({ message: { key: 'GIFT_REDEEMED', message: 'GIFT_REDEEMED' } }),
             ];

@@ -29,7 +29,7 @@ export class MobileMenuComponent implements OnInit {
   }
 
   routeToProfile() {
-    this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+    this.router.navigate(['/user/' + localStorage.getItem('username')]);
   }
 
   searchClicked() {

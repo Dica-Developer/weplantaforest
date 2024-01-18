@@ -43,6 +43,6 @@ export class ProjectCarouselItemComponent implements OnInit {
   ngOnInit(): void {}
 
   linkToProfile() {
-    this.router.navigate(['/profile', this._item['name']]);
+    this.router.navigate(['/user', this._item['name']]);
   }
 }

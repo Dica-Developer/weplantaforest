@@ -49,7 +49,7 @@ public class SearchController {
     }
 
     for (User user : users) {
-      result.user.add(new IdName(user.getId(), user.getName(), "profile/" + user.getName()));
+      result.user.add(new IdName(user.getId(), user.getName(), "user/" + user.getName()));
     }
     for (Team team : teams) {
       result.teams.add(new IdName(team.getId(), team.getName(), "team/" + team.getName()));

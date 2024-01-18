@@ -19,7 +19,7 @@
       <div class="column">
         <p>
           {{ ('of' | translate) + ': ' }}
-          <a routerLink="{{ '/profile/' + (certificate$ | async)?.creator?.name }}">{{
+          <a routerLink="{{ '/user/' + (certificate$ | async)?.creator?.name }}">{{
             (certificate$ | async)?.creator?.name ?? ''
           }}</a>
         </p>

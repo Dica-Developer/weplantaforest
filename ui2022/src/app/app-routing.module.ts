@@ -65,7 +65,7 @@ export const userRoutes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'projectReports', component: ProjectReportsOverviewPageComponent },
   { path: 'project/:projectName', component: ProjectPageComponent },
-  { path: 'profile/:username', component: ProfilePageComponent },
+  { path: 'user/:username', component: ProfilePageComponent },
   { path: 'editProfile/:username', component: EditProfilePageComponent },
   { path: 'editTeam/:teamName', component: EditTeamPageComponent },
   { path: 'team/:teamname', component: TeamPageComponent },

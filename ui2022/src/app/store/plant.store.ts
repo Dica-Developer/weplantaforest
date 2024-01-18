@@ -255,7 +255,7 @@ export class PlantProposalEffects {
                 uploadSelfPlantImage({ treeId: treeId, image: action.selfPlantData.mainImageFile }),
               ];
             } else {
-              this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+              this.router.navigate(['/user/' + localStorage.getItem('username')]);
               return [
                 sendSelfPlantSuccess(),
                 addSuccessMessage({
@@ -278,7 +278,7 @@ export class PlantProposalEffects {
       switchMap((action) =>
         this.plantbagService.uploadPlantSelfImage(action.treeId, action.image).pipe(
           switchMap(() => {
-            this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+            this.router.navigate(['/user/' + localStorage.getItem('username')]);
             return [
               sendSelfPlantSuccess(),
               addSuccessMessage({

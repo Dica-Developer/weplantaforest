@@ -50,7 +50,7 @@ export class UserGridComponent implements OnInit, OnDestroy {
       width: 80,
       cellRenderer: 'profileRenderer',
       onCellClicked: (event: CellClickedEvent) => {
-        this.router.navigate(['/profile', event.value.trim()]);
+        this.router.navigate(['/user', event.value.trim()]);
       },
     },
     {

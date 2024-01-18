@@ -23,7 +23,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   routeToProfile() {
-    this.router.navigate(['/profile/' + localStorage.getItem('username')]);
+    this.router.navigate(['/user/' + localStorage.getItem('username')]);
   }
 
   logoutClicked() {
