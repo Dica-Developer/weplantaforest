@@ -98,7 +98,6 @@ public class DatabasePopulator {
             project.setName(projectName);
             project.setManager(userRepository.findByName(DEFAULT_USERS.get(i)));
             project.setDescription("<mlpr>GERMAN<equ><p>Projektbeschreibung</p><sep>ENGLISH<equ><p>project description</p><sep>ITALIAN<equ>projecto descriptiones<sep>");
-            project.setImageFileName("project" + (i + 1) + ".jpg");
             if (i < 5) {
                 project.setShopActive(false);
                 project.setVisible(false);

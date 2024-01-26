@@ -66,10 +66,6 @@ public class Project {
     @JsonView(Views.ProjectData.class)
     private Boolean visible;
 
-    @Column(name = "_mainImageFileName", length = 255)
-    @JsonView(Views.ProjectData.class)
-    private String imageFileName;
-
     /**
      * @deprecated no longer used in new version
      */

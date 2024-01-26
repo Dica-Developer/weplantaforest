@@ -75,9 +75,6 @@ public class Project {
     @Column(name = "_visible")
     private Boolean visible;
 
-    @Column(name = "_mainImageFileName", length = 255)
-    private String imageFileName;
-
     /**
      * @deprecated no longer used in new version
      */

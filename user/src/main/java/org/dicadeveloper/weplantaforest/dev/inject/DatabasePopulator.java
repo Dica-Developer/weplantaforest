@@ -128,7 +128,6 @@ public class DatabasePopulator {
             project.setManager(userRepository.findByName(DEFAULT_USERS.get(i)));
             project.setDescription(
                     "dksgny.d, mdfgnmn snfad,ng ,ydfng. ,ydfgnk.<sngdk< sglkbsnglkdfnksghnl<k njdjg nsgyö< ögn kl< bsflkjsb gkjs kgs ns< lödgksndlkgnöd<kl dykdyn ökd ökshö<g dysh ögskgös Hskg khoglksg");
-            project.setImageFileName("project" + (i + 1) + ".jpg");
             if (i < 5) {
                 project.setShopActive(false);
             } else {

@@ -87,7 +87,7 @@ public class ProjectReportController {
     @RequestMapping(value = Uris.REPORT_INACTIVE_PROJECTS, method = RequestMethod.GET)
     public ResponseEntity<?> getInActiveProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
         Page<ProjectReportData> projectReports = _projectReportRepository.getInActiveProjects(PageRequest.of(page, size));
-        for (ProjectReportData project : projectReports) {
+        for (ProjectReportData project : projectReports.getContent()) {
             List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(project.getProjectId());
             if (images != null && !images.isEmpty()) {
                 project.projectImageFileName = images.get(0).getImageFileName();

@@ -16,24 +16,6 @@
       </div>
       <mat-divider></mat-divider>
       <div class="columns">
-        <div class="column is-4">
-          <img src="{{ imageSrc }}" width="400" height="300" />
-        </div>
-        <div class="column is-2">
-          <input
-            #csvInput
-            hidden="true"
-            type="file"
-            onclick="this.value=null"
-            (change)="imageChanged($event)"
-            accept=".png, .jpg, .jpeg"
-          />
-          <button mat-raised-button color="primary" (click)="csvInput.click()">Bild</button>
-        </div>
-        <div class="column is-6"></div>
-      </div>
-      <mat-divider></mat-divider>
-      <div class="columns">
         <div class="column is-2">Description(De)</div>
         <div class="column is-10">
           <app-text-editor [control]="projectForm.get('descriptionDe')"></app-text-editor>
