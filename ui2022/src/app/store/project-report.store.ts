@@ -18,6 +18,7 @@ export interface ProjectReport {
   shopActive: boolean;
   visible: boolean;
   active: boolean;
+  positions: any[];
 }
 
 export interface ProjectReportDetails {
@@ -80,11 +81,11 @@ export const loadProjectProposalSuccess = createAction(
 
 export interface ProjectReportState {
   projectReports: PagedData<ProjectReport>;
-  projectReport: any;
+  projectReport: ProjectReportDetails;
   projectsLoading: boolean;
   projectLoading: boolean;
-  activeProjects: any[];
-  inactiveProjects: any[];
+  activeProjects: ProjectReport[];
+  inactiveProjects: ProjectReport[];
   amountOfInactiveProjects: number;
   simpleProposal: SimplePlantProposal;
 }
@@ -239,6 +240,7 @@ export class ProjectReportsEffects {
             if (activeProjects) {
               const projects: ProjectReportData[] = [];
               for (const report of activeProjects) {
+                console.log(report);
                 projects.push({
                   projectId: report.projectId,
                   projectName: report.projectName,

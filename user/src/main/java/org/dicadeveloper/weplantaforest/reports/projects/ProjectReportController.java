@@ -74,8 +74,12 @@ public class ProjectReportController {
     public ResponseEntity<?> getActiveProjects() {
         List<ProjectReportData> projectReports = _projectReportRepository.getActiveProjects();
         for(ProjectReportData project : projectReports) {
+            List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(project.getProjectId());
             Project p = _projectRepository.findByName(project.getProjectName());
             project.positions = p.getPositions();
+            if (images != null && !images.isEmpty()) {
+                project.projectImageFileName = images.get(0).getImageFileName();
+            }
         }
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
@@ -83,6 +87,12 @@ public class ProjectReportController {
     @RequestMapping(value = Uris.REPORT_INACTIVE_PROJECTS, method = RequestMethod.GET)
     public ResponseEntity<?> getInActiveProjects(@Param(value = "page") int page, @Param(value = "size") int size) {
         Page<ProjectReportData> projectReports = _projectReportRepository.getInActiveProjects(PageRequest.of(page, size));
+        for (ProjectReportData project : projectReports) {
+            List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(project.getProjectId());
+            if (images != null && !images.isEmpty()) {
+                project.projectImageFileName = images.get(0).getImageFileName();
+            }
+        }
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
     }
 
