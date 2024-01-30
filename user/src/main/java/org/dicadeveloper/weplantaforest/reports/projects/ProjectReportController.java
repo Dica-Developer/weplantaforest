@@ -78,7 +78,7 @@ public class ProjectReportController {
             Project p = _projectRepository.findByName(project.getProjectName());
             project.positions = p.getPositions();
             if (images != null && !images.isEmpty()) {
-                project.projectImageFileName = images.get(0).getImageFileName();
+                project.projectImageFileName = images.get(images.size() -1).getImageFileName();
             }
         }
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
@@ -90,7 +90,7 @@ public class ProjectReportController {
         for (ProjectReportData project : projectReports.getContent()) {
             List<ProjectImage> images = _projectImageRepository.findProjectImagesToProjectByProjectId(project.getProjectId());
             if (images != null && !images.isEmpty()) {
-                project.projectImageFileName = images.get(0).getImageFileName();
+                project.projectImageFileName = images.get(images.size() -1).getImageFileName();
             }
         }
         return new ResponseEntity<>(projectReports, HttpStatus.OK);
