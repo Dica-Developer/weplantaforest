@@ -179,7 +179,7 @@
   "sepaPayment": "SEPA Payment",
   "mr": "Mr",
   "mrs": "Mrs",
-  "BANK_UNKNOWN_ERROR": "An unexpected error occurred in transferring to the donation bank (parameter).",
+  "BANK_UNKNOWN_ERROR": "An error has occurred. Please check whether your information is correct.",
   "BANK_INVALID_ACCOUNT": "Invalid account number according to the verification process.",
   "BANK_NO_FIRSTNAME": "First name is a required field.",
   "BANK_NO_NAME": "Last name is a required field.",

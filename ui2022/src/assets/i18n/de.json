@@ -179,7 +179,7 @@
   "sepaPayment": "SEPA-Zahlung",
   "mr": "Herr",
   "mrs": "Frau",
-  "BANK_UNKNOWN_ERROR": "Es ist ein unerwarteter Fehler bei der Übertragung zur Spendenbank aufgetreten (Parameter).",
+  "BANK_UNKNOWN_ERROR": "Es ist ein Fehler aufgetreten. Bitte prüfe, ob deine Eingaben korrekt sind.",
   "BANK_INVALID_ACCOUNT": "Laut Pruefverfahren invalide Kontonummer",
   "BANK_NO_FIRSTNAME": "Vorname ist ein Pflichtfeld.",
   "BANK_NO_NAME": "Nachname ist ein Pflichtfeld.",
