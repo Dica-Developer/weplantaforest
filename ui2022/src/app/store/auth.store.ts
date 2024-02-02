@@ -32,7 +32,7 @@ export const loginSuccess = createAction('[Auth] login success');
 export const loginFailed = createAction('[Auth] Login failed', props<{ error: string }>());
 export const resetPasswordRequest = createAction(
   '[Auth] Reset Password Request',
-  props<{ email: string; language: string }>(),
+  props<{ name: string; language: string }>(),
 );
 export const resetPasswordRequestSuccess = createAction('[Auth] Reset Password Request Success');
 export const resetPassword = createAction(

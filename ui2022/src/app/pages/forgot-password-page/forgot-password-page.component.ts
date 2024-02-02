@@ -16,7 +16,7 @@ import {
 })
 export class ForgotPasswordPageComponent implements OnInit {
   forgotPasswordForm = new UntypedFormGroup({
-    email: new UntypedFormControl(''),
+    name: new UntypedFormControl(''),
   });
 
   passwordResetRequestSent$: Observable<boolean> = this.store.select(
@@ -33,7 +33,7 @@ export class ForgotPasswordPageComponent implements OnInit {
   onSubmit(): void {
     this.store.dispatch(
       resetPasswordRequest({
-        email: this.forgotPasswordForm.get('email').value,
+        name: this.forgotPasswordForm.get('name').value,
         language: 'DEUTSCH',
       }),
     );
