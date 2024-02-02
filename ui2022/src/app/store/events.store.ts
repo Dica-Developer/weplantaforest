@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  createAction,
-  createReducer,
-  createSelector,
-  on,
-  props,
-} from '@ngrx/store';
+import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EventService } from '../services/event.service';
 import { switchMap, catchError } from 'rxjs/operators';
@@ -58,47 +52,44 @@ export const loadEvents = createAction('[Events] load events');
 
 export const loadEventsSuccess = createAction(
   '[Content] load events success',
-  props<{ events: EventGridEntry[] }>()
+  props<{ events: EventGridEntry[] }>(),
 );
 
 export const loadEventDetails = createAction(
   '[Events] load eventdetails ',
-  props<{ id: number }>()
+  props<{ id: number }>(),
 );
 
 export const loadEventDetailsSuccess = createAction(
   '[Content] load eventdetails success',
-  props<{ details: EventDetails }>()
+  props<{ details: EventDetails }>(),
 );
 
-export const loadEventCodes = createAction(
-  '[Events] load event codes ',
-  props<{ id: number }>()
-);
+export const loadEventCodes = createAction('[Events] load event codes ', props<{ id: number }>());
 
 export const loadEventCodesSuccess = createAction(
   '[Content] load event codes success',
-  props<{ codes: EventCode[] }>()
+  props<{ codes: EventCode[] }>(),
 );
 
 export const updateEvent = createAction(
   '[Content] update event',
-  props<{ request: EventRequest }>()
+  props<{ request: EventRequest }>(),
 );
 
 export const createEvent = createAction(
   '[Content] create event',
-  props<{ request: EventRequest }>()
+  props<{ request: EventRequest }>(),
 );
 
 export const createEventSuccess = createAction(
   '[Content] create event success',
-  props<{ details: EventDetails }>()
+  props<{ details: EventDetails }>(),
 );
 
 export const addCartsToEvent = createAction(
   '[Content] add carts to event',
-  props<{ cartIds: number[]; eventId: number }>()
+  props<{ cartIds: number[]; eventId: number }>(),
 );
 
 export interface EventsState {
@@ -139,7 +130,7 @@ const eventsReducer = createReducer(
     ...state,
     details,
     events: [{ id: details.id, name: details.name }, ...state.events],
-  }))
+  })),
 );
 
 export function eventsReducerFn(state, action) {
@@ -148,25 +139,20 @@ export function eventsReducerFn(state, action) {
 
 export const eventsFeature = (state: AppState) => state.eventState;
 
-export const selectEvents = createSelector(
-  eventsFeature,
-  (state: EventsState) => state.events
-);
+export const selectEvents = createSelector(eventsFeature, (state: EventsState) => state.events);
 
 export const selectEventsLoading = createSelector(
   eventsFeature,
-  (state: EventsState) => state.eventsLoading
+  (state: EventsState) => state.eventsLoading,
 );
 
 export const selectEventDetails = createSelector(
   eventsFeature,
-  (state: EventsState) => state.details
+  (state: EventsState) => state.details,
 );
 
-export const selectEventCodes = createSelector(
-  eventsFeature,
-  (state: EventsState) =>
-    state.details && state.details.codes ? state.details.codes : []
+export const selectEventCodes = createSelector(eventsFeature, (state: EventsState) =>
+  state.details && state.details.codes ? state.details.codes : [],
 );
 
 @Injectable()
@@ -179,13 +165,9 @@ export class EventsEffects {
       switchMap((action) =>
         this.eventService
           .loadEvents()
-          .pipe(
-            switchMap((events: EventGridEntry[]) => [
-              loadEventsSuccess({ events }),
-            ])
-          )
-      )
-    )
+          .pipe(switchMap((events: EventGridEntry[]) => [loadEventsSuccess({ events })])),
+      ),
+    ),
   );
 
   LoadEventDetails$ = createEffect(() =>
@@ -198,10 +180,10 @@ export class EventsEffects {
             switchMap((details: EventDetails) => [
               loadEventDetailsSuccess({ details }),
               loadEventCodes({ id: action.id }),
-            ])
-          )
-      )
-    )
+            ]),
+          ),
+      ),
+    ),
   );
 
   LoadEventCodes$ = createEffect(() =>
@@ -210,13 +192,9 @@ export class EventsEffects {
       switchMap((action) =>
         this.eventService
           .loadEventCodes(action.id)
-          .pipe(
-            switchMap((codes: EventCode[]) => [
-              loadEventCodesSuccess({ codes }),
-            ])
-          )
-      )
-    )
+          .pipe(switchMap((codes: EventCode[]) => [loadEventCodesSuccess({ codes })])),
+      ),
+    ),
   );
 
   UpdateEvent$ = createEffect(() =>
@@ -233,10 +211,10 @@ export class EventsEffects {
                 message: 'Event wurde aktualisiert!',
               },
             }),
-          ])
-        )
-      )
-    )
+          ]),
+        ),
+      ),
+    ),
   );
 
   CreateEvent$ = createEffect(() =>
@@ -257,12 +235,7 @@ export class EventsEffects {
           catchError((err) => {
             console.log(err);
             let errorMessage = 'Das Speichern ist leider fehlgeschlagen';
-            if (
-              err &&
-              err.error &&
-              err.error.errorInfos &&
-              err.error.errorInfos.length >= 1
-            ) {
+            if (err && err.error && err.error.errorInfos && err.error.errorInfos.length >= 1) {
               errorMessage = err.error.errorInfos[0].errorCode;
             }
             return [
@@ -273,10 +246,10 @@ export class EventsEffects {
                 },
               }),
             ];
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 
   AddCartsToEvent$ = createEffect(() =>
@@ -292,9 +265,9 @@ export class EventsEffects {
                 message: 'Pflanzkörbe wurden dem Event hinzugefügt!',
               },
             }),
-          ])
-        )
-      )
-    )
+          ]),
+        ),
+      ),
+    ),
   );
 }

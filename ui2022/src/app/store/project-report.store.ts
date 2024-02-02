@@ -240,7 +240,6 @@ export class ProjectReportsEffects {
             if (activeProjects) {
               const projects: ProjectReportData[] = [];
               for (const report of activeProjects) {
-                console.log(report);
                 projects.push({
                   projectId: report.projectId,
                   projectName: report.projectName,
