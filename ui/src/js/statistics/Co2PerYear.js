@@ -18,8 +18,8 @@ export default class Co2PerYear extends Component {
         scaleOverride: false,
         datasetFill: false,
         responsive: true,
-        tooltipTemplate: '<%= value %>'
-      }
+        tooltipTemplate: '<%= value %>',
+      },
     };
   }
 
@@ -32,17 +32,16 @@ export default class Co2PerYear extends Component {
     var that = this;
     axios
       .get('http://localhost:8081/statistic/co2')
-      .then(function(response) {
+      .then(function (response) {
         var result = response.data;
         for (var year in result) {
-          //  console.log("value for " + year + ": " + result[year].co2);
           that.state.amountOfCo2[year] = parseFloat(result[year].co2);
           that.forceUpdate();
         }
         that.forceUpdate();
         that.refs['barChart'].update();
       })
-      .catch(function(response) {
+      .catch(function (response) {
         if (response instanceof Error) {
           console.error('Error', response.message);
         } else {
@@ -77,9 +76,9 @@ export default class Co2PerYear extends Component {
           label: counterpart.translate('PLANTED_TREES'),
           data: this.state.amountOfCo2,
           fillColor: 'rgb(81, 168, 190)',
-          borderWidth: 1
-        }
-      ]
+          borderWidth: 1,
+        },
+      ],
     };
     var that = this;
     return (

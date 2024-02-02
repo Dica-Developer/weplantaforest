@@ -56,7 +56,6 @@ export default class CodeGenerator extends Component {
     axios
       .post('http://localhost:8081/validatePlantBag', plantBag, that.state.restConfig)
       .then(function (response) {
-        // console.log('plantbag is valid');
         var request = {
           amountOfPlantBags: that.state.amount,
           cartState: 'GENERATED',
@@ -66,19 +65,15 @@ export default class CodeGenerator extends Component {
         axios
           .post('http://localhost:8081/plantForUser/', request, that.state.restConfig)
           .then(function (response) {
-            // console.log('carts generated!');
-            // console.log(response.data);
             var cartIds = response.data;
             that.loadProjects();
             axios
               .post('http://localhost:8083/event/codes/' + that.state.eventId, cartIds, that.state.restConfig)
               .then(function (response) {
-                // console.log('codes generated!');
                 that.props.loadCodesForEvent();
                 that.refs.notification.addNotification('Codes wurden dem Event hinzugefügt!', '', 'success');
               })
               .catch(function (response) {
-                // console.log(response);
                 that.refs.notification.addNotification('Fehler beim Generieren der Codes!', '', 'error');
               });
           })
@@ -87,7 +82,6 @@ export default class CodeGenerator extends Component {
           });
       })
       .catch(function (response) {
-        // console.log(response);
         var errorMessage = '';
         that.refs.notification.addNotification('Fehler beim Validieren der Pflanzkörbe!', errorMessage, 'error');
       });

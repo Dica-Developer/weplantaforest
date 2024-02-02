@@ -37,7 +37,6 @@ export default class BackOfficeOverview extends Component {
   }
 
   componentDidMount() {
-    console.log('isAdmin: ', localStorage.getItem('isAdmin'));
     if (localStorage.getItem('isAdmin') != 'true') {
       browserHistory.push('/forbidden?calledUrl=/backOffice');
     }

@@ -10,7 +10,7 @@ export default class PlantBag extends Component {
     super();
     this.state = {
       plantBag: {},
-      scale: false
+      scale: false,
     };
     this.scalingDone = this.scalingDone.bind(this);
   }
@@ -27,7 +27,7 @@ export default class PlantBag extends Component {
     if (!localStorage.getItem('plantBag')) {
       var plantBag = {
         price: 0,
-        projects: {}
+        projects: {},
       };
       localStorage.setItem('plantBag', JSON.stringify(plantBag));
     }
@@ -42,7 +42,7 @@ export default class PlantBag extends Component {
   resetPlantBag() {
     var plantBag = {
       price: 0,
-      projects: {}
+      projects: {},
     };
     localStorage.setItem('plantBag', JSON.stringify(plantBag));
     this.setState({ plantBag: plantBag });
@@ -51,7 +51,7 @@ export default class PlantBag extends Component {
 
   updatePlantBagFromLocaleStorage() {
     this.setState({
-      plantBag: JSON.parse(localStorage.getItem('plantBag'))
+      plantBag: JSON.parse(localStorage.getItem('plantBag')),
     });
   }
 
@@ -85,14 +85,7 @@ export default class PlantBag extends Component {
     }
   }
 
-  showPlantItems() {
-    // for (var project in this.state.plantBag.projects) {
-    //   console.log('project: ' + project);
-    //   for (var projectItem in this.state.plantBag.projects[project]['plantItems']) {
-    //     console.log('article: ' + projectItem + ' | amount: ' + this.state.plantBag.projects[project]['plantItems'][projectItem].amount);
-    //   }
-    // }
-  }
+  showPlantItems() {}
 
   showPlantBagPage() {
     browserHistory.push('/plantBag');

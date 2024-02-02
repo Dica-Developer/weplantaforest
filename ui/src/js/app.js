@@ -7,10 +7,10 @@ import '../less/main.less';
 import Routes from './routes';
 
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
-  error => {
+  (error) => {
     if (error.response) {
       if (error.response.status == 403) {
         browserHistory.push('/forbidden?calledUrl=' + error.response.config.url);
@@ -18,7 +18,6 @@ axios.interceptors.response.use(
         location.href = error.response.data;
       }
     } else {
-      console.log(error);
     }
     return Promise.reject(error);
   }

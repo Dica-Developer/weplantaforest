@@ -9,7 +9,6 @@ export default class ForbiddenPage extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="container paddingTopBottom15 forbidden">
         <div className="row">
