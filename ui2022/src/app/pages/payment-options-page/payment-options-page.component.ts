@@ -75,10 +75,8 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
       this.cartPayed = cartPayed;
       if (this.cartPayed) {
         if (localStorage.getItem('username')) {
-          this.store.dispatch(resetCartPayed());
           this.router.navigate(['/user/' + localStorage.getItem('username')]);
         } else {
-          this.store.dispatch(resetCartPayed());
           this.router.navigate(['/']);
         }
       }
@@ -117,12 +115,11 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
               amount: {
                 currency_code: 'EUR',
                 value: price + '',
-                // value: '0.01',
                 breakdown: {
                   item_total: {
                     currency_code: 'EUR',
-                    value: price + '',
-                    // value: '0.01',
+                    // value: price + '',
+                    value: '0.01',
                   },
                 },
               },
@@ -133,7 +130,6 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
                   unit_amount: {
                     currency_code: 'EUR',
                     value: price + '',
-                    // value: '0.01'
                   },
                 },
               ],
@@ -152,6 +148,9 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
         this.paymentData.country = data.purchase_units[0]?.shipping?.address?.country_code;
         this.paymentData.transactionId = data.id;
         this.store.dispatch(payPlantBag({ requestDto: this.paymentData }));
+      },
+      onInit: (data, actions) => {
+        actions.disable();
       },
     };
   }

@@ -58,13 +58,15 @@ export class ResetPasswordPageComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.store.dispatch(
-      resetPassword({
-        id: this.id,
-        password: this.resetPasswordForm.get('password').value,
-        key: this.key,
-        language: 'DEUTSCH',
-      }),
-    );
+    if (this.resetPasswordForm.valid) {
+      this.store.dispatch(
+        resetPassword({
+          id: this.id,
+          password: this.resetPasswordForm.get('password').value,
+          key: this.key,
+          language: 'DEUTSCH',
+        }),
+      );
+    }
   }
 }
