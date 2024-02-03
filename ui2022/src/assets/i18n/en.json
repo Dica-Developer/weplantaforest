@@ -334,5 +334,6 @@
   "newUsers": "New users",
   "signupFailed": "Signup failed!",
   "deleteFromPlantbag": "remove from plant bag",
-  "NOT_ENOUGH_TREES": "Unfortunately the trees are not available anymore. Please refresh the page to get the actual amount of trees."
+  "NOT_ENOUGH_TREES": "Unfortunately the trees are not available anymore. Please refresh the page to get the actual amount of trees.",
+  "15eurMin": "Paypal payments only possible from 15 €" 
 }

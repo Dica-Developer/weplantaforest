@@ -334,5 +334,6 @@
   "newUsers": "Neue Nutzer",
   "signupFailed": "Registrierung fehlgeschlagen!",
   "deleteFromPlantbag": "Artikel aus Pflanzkorb entfernen",
-  "NOT_ENOUGH_TREES": "Die Bäume sind leider nicht mehr verfügbar. Bitte aktualisiere die Seite um die verfügbaren Bäume zu sehen."
+  "NOT_ENOUGH_TREES": "Die Bäume sind leider nicht mehr verfügbar. Bitte aktualisiere die Seite um die verfügbaren Bäume zu sehen.",
+  "15eurMin": "Paypal-Zahlungen erst ab 15 € möglich"
 }

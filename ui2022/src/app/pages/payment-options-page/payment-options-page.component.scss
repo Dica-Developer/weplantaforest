@@ -4,11 +4,19 @@ ngx-paypal {
 }
 
 .paypalWrapper {
-  max-width: 500px;
+  max-width: 525px;
   p {
     margin: 0;
     margin-right: 1rem;
   }
+}
+
+span {
+  border: 1px solid var(--black);
+  font-weight: bold;
+  padding: 0.75rem;
+  background: var(--orange);
+  font-size: 1rem;
 }
 
 img {
