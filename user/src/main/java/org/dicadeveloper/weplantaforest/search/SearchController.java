@@ -49,7 +49,9 @@ public class SearchController {
     }
 
     for (User user : users) {
+      if (!user.banned) {
       result.user.add(new IdName(user.getId(), user.getName(), "user/" + user.getName()));
+      }
     }
     for (Team team : teams) {
       result.teams.add(new IdName(team.getId(), team.getName(), "team/" + team.getName()));

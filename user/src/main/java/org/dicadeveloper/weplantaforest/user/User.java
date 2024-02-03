@@ -70,7 +70,7 @@ public class User implements UserDetails {
     private boolean enabled = false;
 
     @Column(name = "_banned", nullable = false)
-    private boolean banned = false;
+    public boolean banned = false;
 
     @Column(name = "_regDate")
     private Long regDate;
