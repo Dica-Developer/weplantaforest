@@ -24,7 +24,11 @@
   >
     <h2 class="w-100">{{ 'choosePaymentOption' | translate }}</h2>
     <div class="paypalWrapper w-100">
-      <ngx-paypal class="w-100" [config]="payPalConfig" *ngIf="showPaypal$ | async"></ngx-paypal>
+      <ngx-paypal
+        class="w-100"
+        [config]="payPalConfig"
+        *ngIf="(cookiesAccepted$ | async) && (plantbagPrice$ | async) >= 16"
+      ></ngx-paypal>
       <div
         class="w-100 is-flex is-flex-direction-row is-align-items-center is-justify-content-center"
       >
@@ -32,7 +36,7 @@
           class="allowCookies"
           [label]="'allowPaypalCookies' | translate"
           (clicked)="showCookieConfirmation()"
-          *ngIf="!(showPaypal$ | async)"
+          *ngIf="!(cookiesAccepted$ | async)"
           >allow cookies</app-button
         >
       </div>

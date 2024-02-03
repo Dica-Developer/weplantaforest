@@ -54,7 +54,8 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
   };
   loggedIn$ = this.store.select(selectAuthenticated);
 
-  showPaypal$: Observable<boolean> = this.store.select(selectCookies);
+  cookiesAccepted$: Observable<boolean> = this.store.select(selectCookies);
+  plantbagPrice$: Observable<number> = this.store.select(selectPlantbagPrice);
 
   constructor(
     private store: Store<AppState>,
