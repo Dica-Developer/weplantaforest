@@ -289,7 +289,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(resetPasswordRequest),
       switchMap((action: any) =>
-        this.authService.resetPasswordRequest(action.email, action.language).pipe(
+        this.authService.resetPasswordRequest(action.name, action.language).pipe(
           switchMap((response) => [resetPasswordRequestSuccess()]),
           catchError((error) => [
             addError({

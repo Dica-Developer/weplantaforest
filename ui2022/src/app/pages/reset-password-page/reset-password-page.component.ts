@@ -13,6 +13,8 @@ import {
 } from '../../store/auth.store';
 import { environment } from '../../../environments/environment';
 import { PasswordValidation } from '../../util/validators/compare-password.validator';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -36,7 +38,12 @@ export class ResetPasswordPageComponent implements OnInit {
   passwordResetSent$: Observable<boolean> = this.store.select(selectPasswordResetSent);
   verifyPasswordResetLink$: Observable<boolean> = this.store.select(selectVerifyPasswordResetLink);
 
-  constructor(private store: Store<AppState>, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private store: Store<AppState>,
+    private activatedRoute: ActivatedRoute,
+    private snackbar: MatSnackBar,
+    private translateService: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.pipe(take(1)).subscribe((res) => {
@@ -67,6 +74,10 @@ export class ResetPasswordPageComponent implements OnInit {
           language: 'DEUTSCH',
         }),
       );
+    } else {
+      this.snackbar.open(this.translateService.instant('passwordsDontMatch'), 'OK', {
+        duration: 4000,
+      });
     }
   }
 }
