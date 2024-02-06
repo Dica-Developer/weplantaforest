@@ -93,6 +93,14 @@ export class SignupPageComponent implements OnInit {
           language: this.signupForm.get('language').value,
         }),
       );
+    } else if (!this.captchaValid) {
+      this.snackbar.open(this.translateService.instant('wrongCaptcha'), 'OK', {
+        duration: 4000,
+      });
+    } else if (!this.signupForm.get('terms').value || !this.signupForm.get('privacyPolicy').value) {
+      this.snackbar.open(this.translateService.instant('acceptTerms'), 'OK', {
+        duration: 4000,
+      });
     } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,

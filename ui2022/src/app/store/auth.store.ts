@@ -259,12 +259,14 @@ export class AuthEffects {
             switchMap((response) => {
               return [signupSuccess()];
             }),
-            catchError((err) => [
-              signupFailed({ error: 'signup failed' }),
-              addError({
-                error: { key: 'Error', message: err.error.errorInfos[0]?.errorCode },
-              }),
-            ]),
+            catchError((err) => {
+              return [
+                signupFailed({ error: 'signup failed' }),
+                addError({
+                  error: { key: 'Error', message: err.error.errorInfos[0]?.errorCode },
+                }),
+              ];
+            }),
           ),
       ),
     ),
