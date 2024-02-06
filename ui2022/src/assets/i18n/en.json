@@ -325,6 +325,7 @@
   },
   "contactFormSubmitted": "Thank you! Your message has been sent.",
   "resetPassword": "Reset password",
+  "passwordsDontMatch": "Passwords don't match!",
   "receivedMailForPasswordReset": "You have received an email at the address provided to reset your password.",
   "passwordResetLinkInvalid": "The link is invalid or has expired.",
   "passwordResetSuccessful": "Your password has been successfully reset.",
@@ -336,6 +337,8 @@
   "deleteFromPlantbag": "remove from plant bag",
   "NOT_ENOUGH_TREES": "Unfortunately the trees are not available anymore. Please refresh the page to get the actual amount of trees.",
   "15eurMin": "Paypal payments only possible from 15 €",
+  "backToPlantbag": "Back to plant bag",
   "USER_ALREADY_EXISTS": "This username is already taken. Please choose another one.",
-  "acceptTerms": "You must accept the terms and conditions and privacy policy in order to register."
+  "acceptTerms": "You must accept the terms and conditions and privacy policy in order to register.",
+  "emailUsername": "E-mail or Username"
 }

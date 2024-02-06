@@ -21,7 +21,12 @@
     >
       <h2 class="center">{{ 'login' | translate }}</h2>
       <div class="inputOutline">
-        <input placeholder="Email/Username" name="name" required formControlName="name" />
+        <input
+          [placeholder]="'emailUsername' | translate"
+          name="name"
+          required
+          formControlName="name"
+        />
       </div>
       <div class="inputOutline is-flex is-flex-direction-row">
         <input
