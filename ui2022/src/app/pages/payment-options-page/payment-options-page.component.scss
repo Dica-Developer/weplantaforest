@@ -13,10 +13,13 @@ ngx-paypal {
 
 span {
   border: 1px solid var(--black);
-  font-weight: bold;
   padding: 0.75rem;
-  background: var(--orange);
   font-size: 1rem;
+}
+
+.alignStart {
+  align-self: start;
+  margin-bottom: 1rem;
 }
 
 img {
