@@ -11,7 +11,7 @@ export class ProfileService {
   constructor(private http: HttpClient) {}
 
   loadUserDetails(username: string) {
-    return this.http.get(environment.backendUrl + '/user?userName=' + username);
+    return this.http.get(environment.backendUrl + '/user?userName=' + encodeURIComponent(username));
   }
 
   isAdmin() {
