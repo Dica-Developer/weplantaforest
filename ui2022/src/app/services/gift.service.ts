@@ -13,13 +13,13 @@ export class GiftService {
 
   getGiftsAsConsignor(userName: string) {
     return this.http.get<ProfileGift[]>(
-      environment.backendUrl + '/gift/search/consignor?userName=' + userName,
+      environment.backendUrl + '/gift/search/consignor?userName=' + encodeURIComponent(userName),
     );
   }
 
   getGiftsAsRecipient(userName: string) {
     return this.http.get<ProfileGift[]>(
-      environment.backendUrl + '/gift/search/recipient?userName=' + userName,
+      environment.backendUrl + '/gift/search/recipient?userName=' + encodeURIComponent(userName),
     );
   }
 
@@ -27,8 +27,9 @@ export class GiftService {
     return this.http.post(environment.backendUrl + '/code/redeem?codeString=' + code, {});
   }
 
-  
   openGiftPdf(id: number) {
-    return this.http.get(environment.backendUrl + '/gift/pdf?giftId=' + id, { responseType: 'arraybuffer' });
+    return this.http.get(environment.backendUrl + '/gift/pdf?giftId=' + id, {
+      responseType: 'arraybuffer',
+    });
   }
 }
