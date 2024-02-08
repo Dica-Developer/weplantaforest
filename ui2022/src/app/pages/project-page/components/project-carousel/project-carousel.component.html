@@ -16,7 +16,7 @@
       class="mobileIcon"
       *ngIf="!(plantings$ | async).first"
       (click)="fetchNextPage('plantings', 1)"
-      >arrow_drop_up</mat-icon
+      >keyboard_arrow_up</mat-icon
     >
     <div class="columns w-100">
       <app-project-carousel-item
@@ -38,7 +38,7 @@
       class="mobileIcon"
       *ngIf="!(plantings$ | async).last"
       (click)="fetchNextPage('plantings', 1)"
-      >arrow_drop_down</mat-icon
+      >keyboard_arrow_down</mat-icon
     >
   </div>
 
@@ -59,7 +59,7 @@
       class="mobileIcon"
       *ngIf="!(partners$ | async).first"
       (click)="fetchNextPage('partners', -1)"
-      >arrow_drop_up</mat-icon
+      >keyboard_arrow_up</mat-icon
     >
     <div class="columns w-100">
       <app-project-carousel-item
@@ -82,7 +82,7 @@
       class="mobileIcon"
       *ngIf="!(partners$ | async).last"
       (click)="fetchNextPage('partners', 1)"
-      >arrow_drop_down</mat-icon
+      >keyboard_arrow_down</mat-icon
     >
   </div>
 </div>
