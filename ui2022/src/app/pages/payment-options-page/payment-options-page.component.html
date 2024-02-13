@@ -30,7 +30,7 @@
       <ngx-paypal
         class="w-100"
         [config]="payPalConfig"
-        *ngIf="(cookiesAccepted$ | async) && (plantbagPrice$ | async) >= 16"
+        *ngIf="(cookiesAccepted$ | async) && (plantbagPrice$ | async) >= 15"
       ></ngx-paypal>
     </div>
     <app-button
@@ -42,11 +42,11 @@
     >
     <span
       class="margin-bottom-1"
-      *ngIf="(cookiesAccepted$ | async) && (plantbagPrice$ | async) < 16"
+      *ngIf="(cookiesAccepted$ | async) && (plantbagPrice$ | async) < 15"
     >
       {{ '15eurMin' | translate }}
     </span>
-    <a class="alignStart" href="plantbag">{{ 'backToPlantbag' | translate }}</a>
+    <a class="alignStart" routerLink="/plantbag">{{ 'backToPlantbag' | translate }}</a>
     <app-not-authenticated-warning *ngIf="!(loggedIn$ | async)"> </app-not-authenticated-warning>
   </div>
 </div>
