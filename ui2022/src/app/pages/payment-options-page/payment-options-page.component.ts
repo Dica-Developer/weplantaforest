@@ -119,8 +119,7 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
                 breakdown: {
                   item_total: {
                     currency_code: 'EUR',
-                    // value: price + '',
-                    value: '0.01',
+                    value: price + '',
                   },
                 },
               },
