@@ -149,9 +149,6 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
         this.paymentData.transactionId = data.id;
         this.store.dispatch(payPlantBag({ requestDto: this.paymentData }));
       },
-      onInit: (data, actions) => {
-        actions.disable();
-      },
     };
   }
 
