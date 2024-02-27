@@ -2,6 +2,18 @@
   vertical-align: inherit;
 }
 
+.boxShadow {
+  box-shadow: 0 0 35px 25px var(--background);
+  margin: 0 auto;
+  background: var(--background);
+}
+
+.certificates {
+  background-image: url(/assets/baumscheiben.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
 .w-528 {
   max-width: 528px;
   margin: 0 auto;
