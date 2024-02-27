@@ -49,7 +49,7 @@ public class SearchController {
     }
 
     for (User user : users) {
-      if (!user.banned) {
+      if (!user.banned && user.enabled) {
       result.user.add(new IdName(user.getId(), user.getName(), "user/" + user.getName()));
       }
     }

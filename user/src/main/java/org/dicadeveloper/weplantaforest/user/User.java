@@ -67,7 +67,7 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<Role>();
 
     @Column(name = "_enabled", nullable = false)
-    private boolean enabled = false;
+    public boolean enabled = false;
 
     @Column(name = "_banned", nullable = false)
     public boolean banned = false;
