@@ -182,15 +182,15 @@ public class PdfCertificateView {
     locationDateTable.addCell(locationDateCell);
     locationDateTable.writeSelectedRows(0, 1, 50, 230, cb);
 
-    final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/signature_and_stamp.jpg"));
+    final Image stampImage = Image.getInstance(getClass().getResource(_imagePath + "/signature.png"));
 
     PdfPTable signatureAndStamp = new PdfPTable(1);
-    float[] rowss = { 250f };
+    float[] rowss = { 100f };
     signatureAndStamp.setTotalWidth(rowss);
     signatureAndStamp.getDefaultCell().setVerticalAlignment(Element.ALIGN_BOTTOM);
     signatureAndStamp.getDefaultCell().setBorder(Rectangle.NO_BORDER);
     signatureAndStamp.addCell(stampImage);
-    signatureAndStamp.writeSelectedRows(0, 1, 250, 212, cb);
+    signatureAndStamp.writeSelectedRows(0, 1, 260, 180, cb);
 
     pdfHelper.createDividerLine(cb, 250, 130, 285);
 
