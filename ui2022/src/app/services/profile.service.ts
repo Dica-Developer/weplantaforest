@@ -21,7 +21,7 @@ export class ProfileService {
   loadTrees(username: string, page: number, size: number) {
     return this.http.get<PagedData<any>>(
       `${environment.backendUrl}/trees/owner?userName=${encodeURIComponent(
-        username,
+        username
       )}&page=${page}&size=${size}`,
     );
   }
