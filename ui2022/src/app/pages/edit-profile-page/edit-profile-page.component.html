@@ -40,16 +40,16 @@
         (click)="csvInput.click()"
       >
         <div class="middle">{{ 'imageUpload' | translate }}</div>
-        <img src="{{ imagePreviewSrc }}" alt="profileImage" *ngIf="imagePreviewSrc" />
+        <img src="{{ imagePreviewSrc }}" alt="profile image" *ngIf="imagePreviewSrc" />
         <img
           src="{{ (profileDetails$ | async).profileImageUrl + '?' + randomNumber }}"
-          alt="profileImage"
+          alt="profile image"
           *ngIf="(profileDetails$ | async).profileImageUrl && !imagePreviewSrc"
         />
         <img
           *ngIf="!(profileDetails$ | async).profileImageUrl"
           src="assets/default_user.jpg"
-          alt="profileImage"
+          alt="profile image"
         />
       </div>
     </div>

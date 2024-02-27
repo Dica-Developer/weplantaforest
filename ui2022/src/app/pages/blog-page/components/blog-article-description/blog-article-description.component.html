@@ -5,7 +5,7 @@
   <div class="mwidth" *ngFor="let p of blogArticle.paragraphs">
     <p class="description" [innerHtml]="getText(p.text) | safeHtml"></p>
     <div *ngIf="p.imageFileName !== null" class="center blog-image">
-      <img src="{{ getImageUrl(p.imageFileName) }}" alt="blogImage" width="800" height="600" />
+      <img src="{{ getImageUrl(p.imageFileName) }}" width="800" height="600" />
       <p>{{ p.imageDescription }}</p>
     </div>
   </div>
