@@ -35,6 +35,7 @@ export class UserGridComponent implements OnInit, OnDestroy {
       field: 'name',
       headerName: 'User Name',
       filter: 'agTextColumnFilter',
+      width: 350,
       sortable: true,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
@@ -58,6 +59,7 @@ export class UserGridComponent implements OnInit, OnDestroy {
       headerName: 'E-Mail',
       filter: 'agTextColumnFilter',
       sortable: true,
+      width: 350,
       comparator: this.gridHelper.caseInsensitiveComparator,
       editable: true,
       valueSetter: (params) => {
