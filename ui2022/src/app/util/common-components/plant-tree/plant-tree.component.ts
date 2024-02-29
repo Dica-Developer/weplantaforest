@@ -56,30 +56,32 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
           const articles = [...project.articles];
           projects.push({ ...project, articles });
         }
-        
+
         for (let i = 0; i < 3; i++) {
           const projectCount = projects.length;
           const randomProjectIndex = Math.floor(Math.random() * projectCount);
           const articleCount = projects[randomProjectIndex].articles.length;
           const randomArticleIndex = Math.floor(Math.random() * articleCount);
           const article = projects[randomProjectIndex].articles[randomArticleIndex];
-          this.trees.push({
-            article,
-            name: this.textHelper.getTextForLanguage(
-              article.treeType.name,
-              profileDetails?.lang ?? language,
-            ),
-            urlColor:
+          if (article.amount - article.alreadyPlanted > 0) {
+            this.trees.push({
+              article,
+              name: this.textHelper.getTextForLanguage(
+                article.treeType.name,
+                profileDetails?.lang ?? language,
+              ),
+              urlColor:
               environment.backendUrl +
-              '/treeType/image/' +
-              article.treeType.treeImageColor +
-              '/1000/1000',
-            urlBW:
+                '/treeType/image/' +
+                article.treeType.treeImageColor +
+                '/1000/1000',
+              urlBW:
               environment.backendUrl +
-              '/treeType/image/' +
-              article.treeType.treeImageBW +
-              '/1000/1000',
-          });
+                '/treeType/image/' +
+                article.treeType.treeImageBW +
+                '/1000/1000',
+            });
+          }
           // remove article from project so it can't be selected again
           projects[randomProjectIndex].articles.splice(randomArticleIndex, 1);
           if(projects[randomProjectIndex].articles.length === 0) {
