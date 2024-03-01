@@ -24,13 +24,20 @@
     <div *ngFor="let about of aboutUs?.slice().reverse()">
       <h4>{{ about.title }}</h4>
       <div innerHtml="{{ about.intro }}"></div>
-      <div *ngFor="let paragraph of about.paragraphs">
-        <p>
+      <div class="margin-top-2 margin-bottom-2 center" *ngIf="mainImageUrl">
+        <img
+          [src]="mainImageUrl"
+          />
+      </div>
+      <div class="margin-bottom-2" *ngFor="let paragraph of about.paragraphs; let i = index">
+        <h4>
           {{ paragraph.title }}
+        </h4>
+        <p innerHtml="{{ paragraph.text}}">
         </p>
-        <p>
-          {{ paragraph.text }}
-        </p>
+        <div class="center" *ngIf="paragraphImgUrls[i]">
+          <img [src]="paragraphImgUrls[i]" />
+        </div>
       </div>
     </div>
   </div>
