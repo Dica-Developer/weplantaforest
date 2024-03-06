@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { ContentService } from 'src/app/services/content.service';
 import { TextHelper } from 'src/app/util/text.helper';
 import { environment } from 'src/environments/environment';
