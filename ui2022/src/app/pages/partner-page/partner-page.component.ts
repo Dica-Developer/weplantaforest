@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { ContentService } from 'src/app/services/content.service';
+import { TextHelper } from 'src/app/util/text.helper';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-partner-page',
@@ -8,20 +9,26 @@ import { ContentService } from 'src/app/services/content.service';
   styleUrls: ['./partner-page.component.scss'],
 })
 export class PartnerPageComponent implements OnInit {
-  lang: string;
-  partners;
+  partners: any[] = [];
+  articleImageUrls: any[] = [];
 
-  constructor(private contentService: ContentService, private translateService: TranslateService) {}
+  constructor(private textHelper: TextHelper, private contentService: ContentService) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    if (this.translateService.currentLang === 'de') {
-      this.lang = 'DEUTSCH';
-    } else if (this.translateService.currentLang === 'en') {
-      this.lang = 'ENGLISH';
-    }
-    this.contentService.getInfrastructureArticle('PARTNER', this.lang).subscribe((res) => {
-      this.partners = res;
-    });
+    this.contentService
+      .getInfrastructureArticle('PARTNER', this.textHelper.getCurrentLanguage())
+      .subscribe((res:any) => {
+        console.log(res)
+        this.partners = res;
+        for (let i = 0; i < this.partners.length; i++) {
+          let images = {mainImageUrl: '', paragraphUrls: []};
+          images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].imageFileName);
+          for (let j = 0; j < this.partners[i].paragraphs.length; j++) {
+            images.paragraphUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
+          }
+          this.articleImageUrls.push(images);
+        }
+      });
   }
 }

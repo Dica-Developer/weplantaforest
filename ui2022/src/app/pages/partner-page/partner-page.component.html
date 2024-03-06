@@ -21,13 +21,20 @@
 >
   <div class="partner">
     <h2>{{ 'partner' | translate }}</h2>
-    <div *ngFor="let partner of partners">
+    <div *ngFor="let partner of partners; let i = index">
       <h4>{{ partners.title }}</h4>
       <div innerHtml="{{ partner.intro }}"></div>
-      <div *ngFor="let paragraph of partner.paragraphs">
-        {{ paragraph.title }}
-        <div innerHtml="{{ paragraph.title }}"></div>
-        <div innerHtml="{{ paragraph.text }}"></div>
+      <div class="margin-top-2 margin-bottom-2 center" *ngIf="articleImageUrls[i].mainImageUrl">
+        <img
+          [src]="articleImageUrls[i].mainImageUrl"
+          />
+      </div>
+      <div class="margin-bottom-2" *ngFor="let paragraph of partner.paragraphs; let j = index">
+        <h4> {{ paragraph.title }} </h4>
+        <p innerHtml="{{ paragraph.text }}"></p>
+        <div class="center" *ngIf="articleImageUrls[i].paragraphUrls[j]">
+          <img [src]="articleImageUrls[i].paragraphUrls[j]" />
+        </div>
       </div>
     </div>
   </div>

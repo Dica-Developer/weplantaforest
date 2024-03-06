@@ -9,20 +9,23 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./about-page.component.scss'],
 })
 export class AboutPageComponent implements OnInit {
-  lang: string;
-  aboutUs;
-  mainImageUrl: string;
-  paragraphImgUrls: string[] = [];
+  aboutUs: any[] = [];
+  articleImageUrls: any[] = [];
+
   constructor(private textHelper: TextHelper, private contentService: ContentService) {}
 
   ngOnInit(): void {
     this.contentService
       .getInfrastructureArticle('ABOUT_US', this.textHelper.getCurrentLanguage())
-      .subscribe((res) => {
-        this.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + res[0].id + '/' + encodeURI(res[0].imageFileName);
+      .subscribe((res:any) => {
         this.aboutUs = res;
-        for (let i = 0; i < this.aboutUs[0].paragraphs.length; i++) {
-          this.paragraphImgUrls.push(environment.backendArticleManagerUrl + '/article/image/' + res[0].id + '/' + encodeURI(this.aboutUs[0].paragraphs[i].imageFileName));
+        for (let i = 0; i < this.aboutUs.length; i++) {
+          let images = {mainImageUrl: '', paragraphUrls: []};
+          images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.aboutUs[i].id + '/' + encodeURI(this.aboutUs[i].imageFileName);
+          for (let j = 0; j < this.aboutUs[i].paragraphs.length; j++) {
+            images.paragraphUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.aboutUs[i].id + '/' + encodeURI(this.aboutUs[i].paragraphs[j].imageFileName));
+          }
+          this.articleImageUrls.push(images);
         }
       });
   }
