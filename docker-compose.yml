@@ -53,7 +53,7 @@ services:
       context: ./
       dockerfile: Dockerfile-mysql
     environment:
-        MYSQL_DATABASE: weplantaforest
+        MYSQL_DATABASE: ipat_2019
         MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./_mysql/dev-data:/var/lib/mysql/
