@@ -2,7 +2,7 @@
   <h4 class="center">{{ 'certificates' | translate }}</h4>
   <p class="boxShadow center margin-bottom-1">{{ ('selectPlantBagsForCertificate' | translate) + ':' }}</p>
 
-  <table class="w-528 w-100" mat-table [dataSource]="cartPages.get(currentPage)">
+  <table class="w-528 w-100" mat-table [dataSource]="cartPages.get(currentPage)?.slice().reverse()">
     <ng-container matColumnDef="createdOn">
       <th mat-header-cell *matHeaderCellDef>{{ 'amount' | translate }}</th>
       <td class="tableAlignment" mat-cell *matCellDef="let cart">
