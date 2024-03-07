@@ -20,10 +20,10 @@ export class AboutPageComponent implements OnInit {
       .subscribe((res:any) => {
         this.aboutUs = res;
         for (let i = 0; i < this.aboutUs.length; i++) {
-          let images = {mainImageUrl: '', paragraphUrls: []};
+          let images = {mainImageUrl: '', paragraphImageUrls: []};
           images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.aboutUs[i].id + '/' + encodeURI(this.aboutUs[i].imageFileName);
           for (let j = 0; j < this.aboutUs[i].paragraphs.length; j++) {
-            images.paragraphUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.aboutUs[i].id + '/' + encodeURI(this.aboutUs[i].paragraphs[j].imageFileName));
+            images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.aboutUs[i].id + '/' + encodeURI(this.aboutUs[i].paragraphs[j].imageFileName));
           }
           this.articleImageUrls.push(images);
         }

@@ -32,8 +32,8 @@
       <div class="margin-bottom-2" *ngFor="let paragraph of partner.paragraphs; let j = index">
         <h4> {{ paragraph.title }} </h4>
         <p innerHtml="{{ paragraph.text }}"></p>
-        <div class="center" *ngIf="articleImageUrls[i].paragraphUrls[j]">
-          <img [src]="articleImageUrls[i].paragraphUrls[j]" />
+        <div class="center" *ngIf="articleImageUrls[i].paragraphImageUrls[j]">
+          <img [src]="articleImageUrls[i].paragraphImageUrls[j]" />
         </div>
       </div>
     </div>

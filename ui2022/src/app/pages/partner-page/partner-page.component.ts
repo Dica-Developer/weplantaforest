@@ -22,10 +22,10 @@ export class PartnerPageComponent implements OnInit {
         console.log(res)
         this.partners = res;
         for (let i = 0; i < this.partners.length; i++) {
-          let images = {mainImageUrl: '', paragraphUrls: []};
+          let images = {mainImageUrl: '', paragraphImageUrls: []};
           images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].imageFileName);
           for (let j = 0; j < this.partners[i].paragraphs.length; j++) {
-            images.paragraphUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
+            images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
           }
           this.articleImageUrls.push(images);
         }
