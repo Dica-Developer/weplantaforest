@@ -3,8 +3,9 @@ import { createAction, props, createReducer, on, createSelector } from '@ngrx/st
 import { AppState } from './app.state';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ContentService } from '../services/content.service';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
+import { addError } from './error.state';
 
 export interface ContentGridEntry {
   id: number;
@@ -239,6 +240,7 @@ export class ContentEffects {
       switchMap((action) =>
         this.contentService.editArticle(action.request, action.userName).pipe(
           switchMap((details: ContentArticleDetails) => {
+            console.log(details);
             const actionArray = [];
             actionArray.push(
               addSuccessMessage({
@@ -321,7 +323,9 @@ export class ContentEffects {
       switchMap((action) =>
         this.contentService
           .uploadArticleImage(action.file, action.articleId)
-          .pipe(switchMap(() => [])),
+        .pipe(switchMap(() => { return [] }),
+          catchError((error) => {
+            return [addError({error: {key: 'Error', message: error.error.message }}) ]})),
       ),
     ),
   );
@@ -332,7 +336,9 @@ export class ContentEffects {
       switchMap((action) =>
         this.contentService
           .uploadParagraphImage(action.file, action.articleId, action.paragraphId)
-          .pipe(switchMap(() => [])),
+        .pipe(switchMap(() => { return [] }),
+          catchError((error) => {
+            return [addError({error: {key: 'Error', message: error.error.message }}) ]})),
       ),
     ),
   );
