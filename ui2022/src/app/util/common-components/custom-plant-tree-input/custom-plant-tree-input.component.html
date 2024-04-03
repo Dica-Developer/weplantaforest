@@ -23,26 +23,15 @@
           [formControl]="formGroup.get('amount')"
           min="0"
           onkeypress="return event.charCode != 45"
+          (focus)="onFocus()"
         />
       </div>
       <mat-error *ngIf="formGroup.get('amount').invalid">{{ getErrorMessage() }}</mat-error>
     </div>
-    <!-- <div class="column">
-      <span> <span> x</span> {{ article.price.priceAsLong / 100 | currency }} </span>
-    </div> -->
     <div class="projectname column">
       <span class="minWidth">{{ sum | currency }}</span>
     </div>
     <div class="column">
-      <!-- <div *ngIf="withDelete">
-        <button
-          mat-icon-button
-          (click)="removeItemFormPlantbag()"
-          matTooltip="Artikel aus Pflanzkorb entfernen"
-        >
-          <mat-icon aria-hidden="false">delete</mat-icon>
-        </button>
-      </div> -->
     </div>
   </div>
 </div>
@@ -55,15 +44,6 @@
       class="w-100 is-flex-direction-row is-flex is-align-items-center is-justify-content-space-between"
     >
       <span>{{ getTreetypeName(formGroup.get('article').value.treeType.name) }}</span>
-      <!-- <div *ngIf="withDelete">
-        <button
-          mat-icon-button
-          (click)="removeItemFormPlantbag()"
-          matTooltip="Artikel aus Pflanzkorb entfernen"
-        >
-          <mat-icon aria-hidden="false">delete</mat-icon>
-        </button>
-      </div> -->
     </div>
     <div
       class="w-100 is-flex-direction-row is-flex is-align-items-center is-justify-content-space-between"

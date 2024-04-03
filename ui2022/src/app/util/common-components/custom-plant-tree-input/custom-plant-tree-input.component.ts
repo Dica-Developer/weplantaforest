@@ -55,6 +55,12 @@ export class CustomPlantTreeInputComponent implements OnInit, OnDestroy {
     return this.textHelper.getTextForLanguage(text, this.userLanuage);
   }
 
+  onFocus() {
+    if (!this.formGroup.get('amount').touched && this.formGroup.get('amount').value === 0) {
+      this.formGroup.get('amount').setValue('');
+    }
+  }
+
   getErrorMessage() {
     return (
       'max. ' +
