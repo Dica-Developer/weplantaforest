@@ -15,9 +15,9 @@ import { PageEvent } from '@angular/material/paginator';
 export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   @Input()
   set carts(carts: ProfileCart[]) {
-    this.cartsArray = carts;
+    this.cartsArray = carts.slice().reverse();
     this.totalPosts = carts.length;
-    this.createReceiptPages(this.postsPerPage, carts);
+    this.createReceiptPages(this.postsPerPage, carts.slice().reverse());
   }
   cartsArray: ProfileCart[] = [];
   cartPages: Map<number, ProfileCart[]> = new Map<number, ProfileCart[]>();
