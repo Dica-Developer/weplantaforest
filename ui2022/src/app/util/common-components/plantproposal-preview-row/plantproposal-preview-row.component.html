@@ -4,6 +4,7 @@
   </div>
   <div class="column">
     <span> {{ getTreetypeName(plantItem.treeType) }} </span>
+    <span> {{ plantItem.treePrice / 100 | currency }}</span>
   </div>
   <div class="column">
     <div class="x">x {{ plantItem.amount }}</div>
