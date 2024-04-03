@@ -40,7 +40,9 @@ export class ProjectsSectionComponent implements OnInit, OnDestroy {
       const areas = [];
       if (reports.length > 0) {
         for (let project of reports) {
-          areas.push(project.positions);
+          if (project.positions && project.positions.length > 0) {
+            areas.push(project.positions);
+          }
         }
       }
       this.projectAreas = areas;
