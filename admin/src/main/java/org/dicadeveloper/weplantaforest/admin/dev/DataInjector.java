@@ -32,15 +32,15 @@ public class DataInjector {
             public void run() {
                 // TODO jz: Thinking about giving this an extra state table in
                 // the db (like db.populates=v23)
-                if (!treeTypeRepository.existsAtAll()) {
-                    int treeCount = 15000;
-                    databasePopulator.insertUsers().insertDefaultTreeTypes().insertProjects().insertProjectArticles().insertCarts().insertProjectImages().addMainImagesToProjectFolder()
-                            .addProjectImages().createMainSliderImages();
-                    ;
-                    LOG.info("Finished injecting {} trees ", treeCount);
-                } else {
-                    LOG.info("No entities will be injected.");
-                }
+                //if (!treeTypeRepository.existsAtAll()) {
+                //    int treeCount = 15000;
+                //    databasePopulator.insertUsers().insertDefaultTreeTypes().insertProjects().insertProjectArticles().insertCarts().insertProjectImages().addMainImagesToProjectFolder()
+                //            .addProjectImages().createMainSliderImages();
+                //    ;
+                //    LOG.info("Finished injecting {} trees ", treeCount);
+                //} else {
+                //    LOG.info("No entities will be injected.");
+                //}
             }
         };
         Thread thread = new Thread(treeInjector);
