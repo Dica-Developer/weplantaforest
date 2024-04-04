@@ -87,8 +87,20 @@ public class ArticleController {
         }
     }
 
+
+    @RequestMapping(value = "/backOffice/paragraph", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteParagraph(@RequestParam Long paragraphId) {
+        try {
+            _paragraphRepository.deleteById(paragraphId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.error("Error occured while deleting article!", e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @RequestMapping(value = "/backOffice/article", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteeArticle(@RequestParam Long articleId) {
+    public ResponseEntity<?> deleteArticle(@RequestParam Long articleId) {
         try {
             List<Paragraph> paragraphs = _paragraphRepository.getParagraphsByArticleId(articleId);
             _paragraphRepository.deleteAll(paragraphs);

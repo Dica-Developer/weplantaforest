@@ -2,6 +2,13 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title> {{ paragraph.get("title").value }}</mat-panel-title>
+        <button
+          mat-icon-button
+          (click)="deleteParagraph(paragraph.get('id').value)"
+          color="warn"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
     </mat-expansion-panel-header>
     <form [formGroup]="paragraph">
       <div class="columns">

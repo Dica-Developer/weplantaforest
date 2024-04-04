@@ -84,6 +84,7 @@
     <app-content-paragraph
       *ngFor="let paragraph of articleForm.get('paragraphs')['controls']"
       [paragraph]="paragraph"
+      (deleteParagraphClicked)="deleteParagraph($event)"
     ></app-content-paragraph>
   </form>
 </div>

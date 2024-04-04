@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, FormArray, UntypedFormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
-import { selectContentArticleTypes } from '../../../../store/content.store';
+import { deleteParagraph, selectContentArticleTypes } from '../../../../store/content.store';
 import { environment } from '../../../../../environments/environment';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-content-edit',
   templateUrl: './content-edit.component.html',
@@ -24,7 +24,7 @@ export class ContentEditComponent implements OnInit, OnDestroy {
 
   imageNameSub;
 
-  constructor(private store: Store<AppState>, private fb: UntypedFormBuilder) {}
+  constructor(private store: Store<AppState>, private fb: UntypedFormBuilder, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.handleImageUrl();
@@ -79,5 +79,14 @@ export class ContentEditComponent implements OnInit, OnDestroy {
     }
     newArray.push(newParagraph);
     this.articleForm.controls['paragraphs'] = this.fb.array(newArray);
+  }
+
+  deleteParagraph(paragraphId: any) {
+    this.store.dispatch(deleteParagraph({ id: paragraphId }));
+    let index = this.articleForm.get('paragraphs').value.findIndex((paragraph) => paragraph.id === paragraphId);
+    if (index > -1) {
+      (this.articleForm.get('paragraphs') as FormArray).removeAt(index)
+      this.cdr.detectChanges();
+    }
   }
 }

@@ -64,10 +64,16 @@ export const loadArticleDetailsSuccess = createAction(
   props<{ details: ContentArticleDetails }>(),
 );
 
+export const deleteParagraph = createAction(
+  '[Content] delete paragraph',
+  props<{ id: number }>(),
+);
+
 export const deleteContentArticle = createAction(
   '[Content] delete article',
   props<{ id: number }>(),
 );
+
 export const deleteContentArticleSuccess = createAction(
   '[Content] delete article success',
   props<{ id: number }>(),
@@ -166,17 +172,14 @@ export const selectContentArticlesLoading = createSelector(
   contentFeature,
   (state: ContentState) => state.articlesLoading,
 );
-
 export const selectContentArticleTypes = createSelector(
   contentFeature,
   (state: ContentState) => state.articleTypes,
 );
-
 export const selectContentArticleDetails = createSelector(
   contentFeature,
   (state: ContentState) => state.details,
 );
-
 export const selectContentArticleDetailsLoading = createSelector(
   contentFeature,
   (state: ContentState) => state.detailsLoading,
@@ -206,6 +209,17 @@ export class ContentEffects {
         this.contentService
           .delete(action.id)
           .pipe(switchMap(() => [deleteContentArticleSuccess({ id: action.id })])),
+      ),
+    ),
+  );
+
+  deleteParagraph$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteParagraph),
+      switchMap((action) =>
+        this.contentService
+          .deleteParagraph(action.id)
+          .pipe(switchMap(() => [])),
       ),
     ),
   );

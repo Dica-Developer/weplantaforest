@@ -13,6 +13,12 @@ export class ContentService {
     return this.http.get(environment.backendArticleManagerUrl + '/backOffice/articles');
   }
 
+  deleteParagraph(id: number) {
+    return this.http.delete(
+      environment.backendArticleManagerUrl + '/backOffice/paragraph?paragraphId=' + id,
+    );
+  }
+
   delete(id: number) {
     return this.http.delete(
       environment.backendArticleManagerUrl + '/backOffice/article?articleId=' + id,

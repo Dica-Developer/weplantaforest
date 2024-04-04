@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import { deleteParagraph } from 'src/app/store/content.store';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
@@ -9,6 +12,7 @@ import { environment } from '../../../../../environments/environment';
 })
 export class ContentParagraphComponent implements OnInit {
   @Input() paragraph: UntypedFormGroup;
+  @Output() deleteParagraphClicked: EventEmitter<void> = new EventEmitter<void>();
 
   imageFile: any;
   imageSrc: any;
@@ -17,6 +21,10 @@ export class ContentParagraphComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleImageUrl();
+  }
+
+  deleteParagraph(paragraphId: any) {
+    this.deleteParagraphClicked.emit(paragraphId);
   }
 
   handleImageUrl() {
