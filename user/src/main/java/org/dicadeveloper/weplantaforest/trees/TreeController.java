@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.dicadeveloper.weplantaforest.user.UserRepository;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -34,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TreeController {
 
     private @NonNull TreeRepository treeRepository;
+    private @NonNull UserRepository userRepository;
 
     private @NonNull ImageHelper imageHelper;
 
@@ -51,7 +53,8 @@ public class TreeController {
 
     @RequestMapping(value = Uris.TREES_BY_USER, method = RequestMethod.GET)
     @JsonView(Views.PlantedTree.class)
-    public Page<Tree> findTreesByOwnerId(@RequestParam("userName") String userName, @RequestParam("page") int page, @RequestParam("size") int size) {
+    public Page<Tree> findTreesByOwnerId(@RequestParam("userId") long userId, @RequestParam("page") int page, @RequestParam("size") int size) {
+        String userName = userRepository.findById(userId).orElse(null).getName();
         return treeRepository.findTreesByUserName(userName, PageRequest.of(page, size, Sort.by("plantedOn").descending()));
     }
 

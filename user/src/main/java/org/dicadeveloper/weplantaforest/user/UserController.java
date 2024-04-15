@@ -71,16 +71,15 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.USER_DETAILS, method = RequestMethod.GET)
-    public ResponseEntity<?> getUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
-        boolean isEditAllowed = tokenAuthenticationService.isAuthenticatedUser(userToken, userName);
-        UserReportData userReportData = userService.getUserDetails(userName, isEditAllowed);
+    public ResponseEntity<?> getUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long userId) {
+        boolean isEditAllowed = tokenAuthenticationService.isAuthenticatedUser(userToken, userId);
+        UserReportData userReportData = userService.getUserDetails(userId, isEditAllowed);
         if (null == userReportData) {
             try {
-                Long userId = Long.parseLong(userName);
                 User user = userRepository.findById(userId).orElse(null);
-                return new ResponseEntity<>("https://www.iplantatree.org/user/" + UrlEscapers.urlPathSegmentEscaper().escape(user.getName()), HttpStatus.PAYMENT_REQUIRED);
+                return new ResponseEntity<>("https://www.iplantatree.org/user/" + userId, HttpStatus.PAYMENT_REQUIRED);
             } catch (Exception e) {
-                LOG.warn("Error on finding user by workaround: " + userName, e);
+                LOG.warn("Error on finding user by workaround: " + userId, e);
             }
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -88,10 +87,10 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.EDIT_USER_DETAILS, method = RequestMethod.POST)
-    public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam String toEdit, @RequestParam String newEntry)
+    public ResponseEntity<?> editUserDetails(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long userId, @RequestParam String toEdit, @RequestParam String newEntry)
             throws IpatException {
-        if (tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
-            userService.editUser(userName, toEdit, newEntry);
+        if (tokenAuthenticationService.isAuthenticatedUser(userToken, userId)) {
+            userService.editUser(userId, toEdit, newEntry);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -99,9 +98,9 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.USER_IMAGE_UPLOAD, method = RequestMethod.POST)
-    public ResponseEntity<?> uploadUserImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName, @RequestParam("file") MultipartFile file) throws IpatException {
-        if (tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
-            String imageName = userService.uploadUserImage(userName, file);
+    public ResponseEntity<?> uploadUserImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long userId, @RequestParam("file") MultipartFile file) throws IpatException {
+        if (tokenAuthenticationService.isAuthenticatedUser(userToken, userId)) {
+            String imageName = userService.uploadUserImage(userId, file);
             return new ResponseEntity<>(imageName, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -121,8 +120,8 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.USER_LANGUAGE, method = RequestMethod.GET)
-    public String getLanguageFromUser(@RequestParam String userName) {
-        return userRepository.getUserLanguage(userName).toString();
+    public String getLanguageFromUser(@RequestParam long userId) {
+        return userRepository.getUserLanguage(userId).toString();
     }
 
     @RequestMapping(value = Uris.USER_PASSWORD_RESET_REQUEST, method = RequestMethod.POST)
@@ -150,8 +149,9 @@ public class UserController {
     }
 
     @RequestMapping(value = Uris.ANONYMIZE, method = RequestMethod.POST)
-    public ResponseEntity<?> anonymizeUser(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) throws IpatException {
-        if (tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
+    public ResponseEntity<?> anonymizeUser(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long userId) throws IpatException {
+        if (tokenAuthenticationService.isAuthenticatedUser(userToken, userId)) {
+            String userName = userRepository.findById(userId).orElseThrow().getName();
             userService.anonymizeUser(userName);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

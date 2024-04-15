@@ -126,7 +126,7 @@ public class CertificateController {
         if (certificate == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            val isAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, certificate.getCreator().getUsername());
+            val isAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, certificate.getCreator().getId());
             if (isAllowed) {
                 try {
                     _certificateSerivce.generatePdf(certificate, response, certificateNumber);

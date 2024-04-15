@@ -61,9 +61,9 @@ public class GiftController {
 
     @RequestMapping(value = Uris.GIFTS_BY_CONSIGNOR, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public ResponseEntity<?> findGiftsByConsignor(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
-        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
-            List<Gift> gifts = _giftRepository.findGiftsByConsignorExceptStatusNew(userName);
+    public ResponseEntity<?> findGiftsByConsignor(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long userId) {
+        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userId)) {
+            List<Gift> gifts = _giftRepository.findGiftsByConsignorExceptStatusNew(userId);
             return new ResponseEntity<>(gifts, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -72,9 +72,9 @@ public class GiftController {
 
     @RequestMapping(value = Uris.GIFTS_BY_RECIPIENT, method = RequestMethod.GET)
     @JsonView(Views.OverviewGift.class)
-    public ResponseEntity<?> findGiftsByRecipient(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String userName) {
-        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userName)) {
-            List<Gift> gifts = _giftRepository.findGiftsByRecipient(userName);
+    public ResponseEntity<?> findGiftsByRecipient(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long userId) {
+        if (_tokenAuthenticationService.isAuthenticatedUser(userToken, userId)) {
+            List<Gift> gifts = _giftRepository.findGiftsByRecipient(userId);
             return new ResponseEntity<>(gifts, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -100,7 +100,7 @@ public class GiftController {
     @RequestMapping(value = Uris.GIFT_PDF, method = RequestMethod.GET, headers = "Accept=application/pdf")
     public ResponseEntity<?> createGiftPdf(HttpServletResponse response, @RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam long giftId) throws Exception {
         val gift = _giftRepository.findById(giftId).orElse(null);
-        val isAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, gift.getConsignor().getUsername());
+        val isAllowed = _tokenAuthenticationService.isAuthenticatedUser(userToken, gift.getConsignor().getId());
         if (isAllowed) {
             _giftService.createGiftPdf(giftId, response);
             return new ResponseEntity<>(HttpStatus.OK);

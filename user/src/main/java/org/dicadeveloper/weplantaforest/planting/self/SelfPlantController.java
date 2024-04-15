@@ -68,7 +68,7 @@ public class SelfPlantController {
         if (null == tree) {
             throw new IpatException(ErrorCodes.TREE_NOT_FOUND);
         }
-        val isOwner = _tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getUsername());
+        val isOwner = _tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getId());
         if (_tokenAuthenticationService.isAdmin(userToken) || isOwner) {
             if (!bindingResult.hasErrors()) {
                 tree.setPlantedOn(selfPlantedTree.getPlantedOn());
@@ -94,7 +94,7 @@ public class SelfPlantController {
     public ResponseEntity<?> uploadTreeImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam("file") MultipartFile file, @RequestParam long treeId) {
         Tree tree = _treeRepository.findById(treeId).orElse(null);
         if (null != tree && !file.isEmpty()) {
-            if (_tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getUsername())) {
+            if (_tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getId())) {
                 String imageFolder = FileSystemInjector.getTreeFolder();
                 val imageName = treeId + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
                 try {
@@ -120,7 +120,7 @@ public class SelfPlantController {
         if (null == tree) {
             throw new IpatException(ErrorCodes.TREE_NOT_FOUND);
         }
-        val isOwner = _tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getUsername());
+        val isOwner = _tokenAuthenticationService.isAuthenticatedUser(userToken, tree.getOwner().getId());
         if (_tokenAuthenticationService.isAdmin(userToken) || isOwner) {
             _treeRepository.deleteById(treeId);
             return new ResponseEntity<>(HttpStatus.OK);

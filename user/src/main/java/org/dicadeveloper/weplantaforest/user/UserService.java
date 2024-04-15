@@ -130,8 +130,8 @@ public class UserService {
         throw new IpatException(ErrorCodes.NO_ANONYMOUS_CREATED);
     }
 
-    public UserReportData getUserDetails(String userName, boolean isEditAllowed) {
-        UserReportData userReportData = userRepository.getUserDetails(userName);
+    public UserReportData getUserDetails(long userId, boolean isEditAllowed) {
+        UserReportData userReportData = userRepository.getUserDetails(userId);
         if (null != userReportData) {
             userReportData.setCo2Data(co2Repository.getAllTreesAndCo2SavingForUserName(System.currentTimeMillis(), userReportData.getUserName()));
             userReportData.setRank(calcUserRank(userReportData.getUserName(), userReportData.getCo2Data().getTreesCount()));
@@ -141,8 +141,8 @@ public class UserService {
         return userReportData;
     }
 
-    public void editUser(String userName, String toEdit, String newEntry) throws IpatException {
-        User user = getUser(userName);
+    public void editUser(long userId, String toEdit, String newEntry) throws IpatException {
+        User user = getUser(userId);
         switch (toEdit) {
             case "NAME":
                 IpatPreconditions.checkArgument((userRepository.userExists(newEntry) == 0), ErrorCodes.USER_ALREADY_EXISTS);
@@ -183,10 +183,10 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String uploadUserImage(String userName, MultipartFile file) throws IpatException {
+    public String uploadUserImage(long userId, MultipartFile file) throws IpatException {
         IpatPreconditions.checkArgument("image/png".equalsIgnoreCase(file.getContentType()) || "image/jpeg".equalsIgnoreCase(file.getContentType()), ErrorCodes.WRONG_IMAGE_TYPE);
         IpatPreconditions.checkArgument(!file.isEmpty(), ErrorCodes.EMPTY_FILE);
-        User user = getUser(userName);
+        User user = getUser(userId);
 
         String imageFolder = FileSystemInjector.getUserFolder();
         String imageName = user.getName() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
