@@ -370,7 +370,7 @@ export class TeamEffects {
                 message: this.translateService.instant('teamCreated'),
               },
             }),
-            loadProfileDetails({ username: localStorage.getItem('username') }),
+            loadProfileDetails({ userId: +localStorage.getItem('userId') }),
           ]),
         ),
       ),
@@ -391,7 +391,7 @@ export class TeamEffects {
                   message: this.translateService.instant('teamUpdated'),
                 },
               }),
-              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadProfileDetails({ userId: +localStorage.getItem('userId') }),
               loadTeamDetails({ teamName: action.teamName }),
             ]),
           ),
@@ -415,7 +415,7 @@ export class TeamEffects {
               }),
               resetTeamDetails(),
               checkIfMemberSuccess({ isMember: false }),
-              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadProfileDetails({ userId: +localStorage.getItem('userId') }),
             ];
           }),
         ),
@@ -437,7 +437,7 @@ export class TeamEffects {
                 },
               }),
               checkIfMemberSuccess({ isMember: false }),
-              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadProfileDetails({ userId: +localStorage.getItem('userId') }),
             ];
           }),
         ),
@@ -454,7 +454,7 @@ export class TeamEffects {
             return [
               joinTeamSuccess(),
               checkIfMemberSuccess({ isMember: true }),
-              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadProfileDetails({ userId: +localStorage.getItem('userId') }),
             ];
           }),
         ),

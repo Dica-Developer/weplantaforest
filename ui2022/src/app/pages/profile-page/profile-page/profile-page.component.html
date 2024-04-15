@@ -80,7 +80,7 @@
 
 <app-profile-trees
   [trees]="(profileDetails$ | async)?.trees"
-  [userName]="(profileDetails$ | async)?.userName"
+  [userId]="(profileDetails$ | async)?.id"
 ></app-profile-trees>
 <app-profile-receipts
   *ngIf="showEdit && (profileDetails$ | async)?.receipts"

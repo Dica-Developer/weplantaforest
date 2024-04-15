@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
   '[Profile] load Details',
-  props<{ username: string }>(),
+  props<{ userId: number }>(),
 );
 export const loadProfileDetailsSuccess = createAction(
   '[Profile] load Details success',
@@ -28,10 +28,9 @@ export const loadAdminFlagSuccess = createAction(
   '[Profile] load Admin flag success',
   props<{ isAdmin: boolean }>(),
 );
-
 export const loadTreesByUser = createAction(
   '[Profile] load trees by user',
-  props<{ username: string; page: number; size: number }>(),
+  props<{ userId: number; page: number; size: number }>(),
 );
 export const loadTreesByUserSuccess = createAction(
   '[Profile] load trees by user success',
@@ -39,97 +38,75 @@ export const loadTreesByUserSuccess = createAction(
 );
 export const updateProfileProperty = createAction(
   '[Profile] update Detail',
-  props<{ username: string; propertyToUpdate: string; controlValue }>(),
+  props<{ userId: number; propertyToUpdate: string; controlValue }>(),
 );
 export const updateProfilePropertySuccess = createAction(
   '[Profile] update Detail success',
   props<{ propertyToUpdate: string; controlValue }>(),
 );
-
 export const loadGiftsAsConsignor = createAction(
   '[Profile] load gifts as consignor',
-  props<{ userName: string }>(),
+  props<{ userId: number }>(),
 );
-
 export const loadGiftsAsConsignorSuccess = createAction(
   '[Profile] load gifts as consignor success',
   props<{ gifts: ProfileGift[] }>(),
 );
-
 export const loadGiftsAsRecipient = createAction(
   '[Profile] load gifts as recipient',
-  props<{ userName: string }>(),
+  props<{ userId: number }>(),
 );
-
 export const loadGiftsAsRecipientSuccess = createAction(
   '[Profile] load gifts as recipient success',
   props<{ gifts: ProfileGift[] }>(),
 );
-
 export const redeemGift = createAction('[Profile] redeem gift', props<{ code: string }>());
-
 export const redeemGiftSuccess = createAction('[Profile] redeem gift success');
-
 export const openGiftPdf = createAction('[Profile] open gift pdf', props<{ id: number }>());
-
 export const loadReceipts = createAction('[Profile] load receipts');
-
 export const loadReceiptsSuccess = createAction(
   '[Profile] load receipts success',
   props<{ receipts: ProfileReceipt[] }>(),
 );
-
 export const loadProfileCarts = createAction('[Profile] load profile carts');
-
 export const loadProfileCartsSuccess = createAction(
   '[Profile] load profile carts success',
   props<{ carts: ProfileCart[] }>(),
 );
-
 export const createCertificate = createAction(
   '[Profile] create certificate',
   props<{ requestDto: CreateCertificateRequestDto }>(),
 );
-
 export const openCertificatePdf = createAction(
   '[Profile] open certificate pdf',
   props<{ id: string }>(),
 );
-
 export const findCertificatePlantings = createAction(
   '[Profile] find certificate',
   props<{ id: string }>(),
 );
-
 export const findCertificatePlantingsSuccess = createAction(
   '[Profile] find certificate success',
   props<{ plantings: CertificatePlanting[] }>(),
 );
-
 export const findCertificateSummary = createAction(
   '[Profile] find certificate summary',
   props<{ id: string }>(),
 );
-
 export const findCertificateSummarySuccess = createAction(
   '[Profile] find certificate summary success',
   props<{ summary: any }>(),
 );
-
 export const updateProfileImage = createAction(
   '[Profile] update profile image',
-  props<{ userName: string; image: File }>(),
+  props<{ userId: number; image: File }>(),
 );
-
 export const updateProfileImageSuccess = createAction(
   '[Profile] update profile image success',
   props<{ newImageFileName: string }>(),
 );
-
 export const resetProfileDetails = createAction('[Profile] reset profile details');
-
 export const setHasTeam = createAction('[Profile] set team name', props<{ hasTeam: boolean }>());
-
 export const updateProfileImageError = createAction('[Profile] update profile image error');
 
 export interface Co2Data {
@@ -449,15 +426,15 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(loadProfileDetails),
       switchMap((action) =>
-        this.profileService.loadUserDetails(action.username).pipe(
+        this.profileService.loadUserDetails(action.userId).pipe(
           switchMap((details: any) => {
             const actions = [];
             actions.push(loadProfileDetailsSuccess({ details }));
-            actions.push(loadTreesByUser({ username: action.username, page: 0, size: 8 }));
-            if (action.username === localStorage.getItem('username')) {
+            actions.push(loadTreesByUser({ userId: action.userId, page: 0, size: 8 }));
+            if (action.userId + '' === localStorage.getItem('userId')) {
               actions.push(setHasTeam({ hasTeam: details.teamName !== '' && details.teamName }));
-              actions.push(loadGiftsAsConsignor({ userName: action.username }));
-              actions.push(loadGiftsAsRecipient({ userName: action.username }));
+              actions.push(loadGiftsAsConsignor({ userId: action.userId }));
+              actions.push(loadGiftsAsRecipient({ userId: action.userId }));
               actions.push(loadReceipts());
               if (details.lang === 'DEUTSCH') {
                 localStorage.setItem('lang', 'de');
@@ -493,7 +470,7 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(loadTreesByUser),
       switchMap((action) =>
-        this.profileService.loadTrees(action.username, action.page, action.size).pipe(
+        this.profileService.loadTrees(action.userId, action.page, action.size).pipe(
           switchMap((res) => {
             if (res && res.content) {
               const trees: ProfileTree[] = [];
@@ -536,7 +513,7 @@ export class ProfileEffects {
       ofType(updateProfileProperty),
       concatMap((action) =>
         this.profileService
-          .updateProfile(action.username, action.propertyToUpdate, action.controlValue)
+          .updateProfile(action.userId, action.propertyToUpdate, action.controlValue)
           .pipe(
             switchMap(() => {
               if (
@@ -546,7 +523,7 @@ export class ProfileEffects {
               ) {
                 return [logout()];
               } else {
-                return [loadProfileDetails({ username: action.username })];
+                return [loadProfileDetails({ userId: action.userId })];
               }
             }),
           ),
@@ -559,7 +536,7 @@ export class ProfileEffects {
       ofType(loadGiftsAsConsignor),
       switchMap((action) =>
         this.giftService
-          .getGiftsAsConsignor(action.userName)
+          .getGiftsAsConsignor(action.userId)
           .pipe(switchMap((gifts: ProfileGift[]) => [loadGiftsAsConsignorSuccess({ gifts })])),
       ),
     ),
@@ -570,7 +547,7 @@ export class ProfileEffects {
       ofType(loadGiftsAsRecipient),
       switchMap((action) =>
         this.giftService
-          .getGiftsAsRecipient(action.userName)
+          .getGiftsAsRecipient(action.userId)
           .pipe(switchMap((gifts: ProfileGift[]) => [loadGiftsAsRecipientSuccess({ gifts })])),
       ),
     ),
@@ -711,11 +688,11 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(updateProfileImage),
       concatMap((action) =>
-        this.profileService.updateProfileImage(action.userName, action.image).pipe(
+        this.profileService.updateProfileImage(action.userId, action.image).pipe(
           switchMap((res) => {
             return [
               updateProfileImageSuccess({ newImageFileName: res }),
-              loadProfileDetails({ username: action.userName }),
+              loadProfileDetails({ userId: action.userId }),
             ];
           }),
           catchError((err) => [updateProfileImageError()]),

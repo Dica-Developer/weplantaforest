@@ -56,7 +56,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     private sliderHelper: SliderHelper,
   ) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      this.store.dispatch(loadProfileDetails({ username: paramMap.get('username') }));
+      this.store.dispatch(loadProfileDetails({ userId: +paramMap.get('userId') }));
       this.profileDetails$.subscribe((res) => {
         if (res) {
           this.profileForm = new FormGroup({
@@ -86,15 +86,15 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   updateProfile() {
-    let username = localStorage.getItem('username');
+    let userId = +localStorage.getItem('userId');
     if (this.imagePreviewSrc) {
-      this.store.dispatch(updateProfileImage({ userName: username, image: this.imageFile }));
+      this.store.dispatch(updateProfileImage({ userId: userId, image: this.imageFile }));
       this.imagePreviewSrc = null;
     }
     if (this.profileForm.get('aboutMe').dirty) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'ABOUTME',
           controlValue: this.profileForm.get('aboutMe').value,
         }),
@@ -103,7 +103,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     if (this.profileForm.get('mail').dirty) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'MAIL',
           controlValue: this.profileForm.get('mail').value,
         }),
@@ -112,7 +112,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     if (this.profileForm.get('username').dirty) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'NAME',
           controlValue: this.profileForm.get('username').value,
         }),
@@ -121,7 +121,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     if (this.profileForm.get('location').dirty) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'LOCATION',
           controlValue: this.profileForm.get('location').value,
         }),
@@ -131,7 +131,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     if (this.profileForm.get('organisation').dirty) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'ORGANISATION',
           controlValue: this.profileForm.get('organisation').value,
         }),
@@ -140,7 +140,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     if (this.profileForm.get('homepage').dirty) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'HOMEPAGE',
           controlValue: this.profileForm.get('homepage').value,
         }),
@@ -149,7 +149,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     if (this.profileForm.get('lang').dirty) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'LANGUAGE',
           controlValue: this.profileForm.get('lang').value,
         }),
@@ -158,7 +158,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     if (this.profileForm.get('organizationType').dirty) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'ORGANIZATION_TYPE',
           controlValue: this.profileForm.get('organizationType').value,
         }),
@@ -171,7 +171,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     ) {
       this.store.dispatch(
         updateProfileProperty({
-          username,
+          userId,
           propertyToUpdate: 'PASSWORD',
           controlValue: this.profileForm.get('password').value,
         }),
@@ -185,7 +185,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   routeToProfile() {
-    this.router.navigate(['/user/' + localStorage.getItem('username')]);
+    this.router.navigate(['/user/' + localStorage.getItem('userId')]);
   }
 
   imageChanged(fileInputEvent: any) {
@@ -215,8 +215,8 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
         duration: 3000,
         panelClass: ['warning-snackbar'],
       });
-    } else if (fieldToChange === 'username') {
-      this.snackbar.open(this.translateService.instant('usernameChangedWarning'), 'OK', {
+    } else if (fieldToChange === 'userId') {
+      this.snackbar.open(this.translateService.instant('userIdChangedWarning'), 'OK', {
         duration: 3000,
         panelClass: ['warning-snackbar'],
       });

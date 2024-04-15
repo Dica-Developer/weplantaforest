@@ -98,7 +98,7 @@ export class AuthService {
       this.store.dispatch(loadAdminFlag());
       this.store.dispatch(
         loadProfileDetails({
-          username: localStorage.getItem('username'),
+          userId: +localStorage.getItem('userId'),
         }),
       );
       this.store.dispatch(loadTreeTypes());

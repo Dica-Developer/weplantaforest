@@ -11,15 +11,15 @@ export declare type GiftStatus = 'NEW' | 'REDEEMED' | 'UNREDEEMED';
 export class GiftService {
   constructor(private http: HttpClient) {}
 
-  getGiftsAsConsignor(userName: string) {
+  getGiftsAsConsignor(userId: number) {
     return this.http.get<ProfileGift[]>(
-      environment.backendUrl + '/gift/search/consignor?userName=' + encodeURIComponent(userName),
+      environment.backendUrl + '/gift/search/consignor?userId=' + userId,
     );
   }
 
-  getGiftsAsRecipient(userName: string) {
+  getGiftsAsRecipient(userId: number) {
     return this.http.get<ProfileGift[]>(
-      environment.backendUrl + '/gift/search/recipient?userName=' + encodeURIComponent(userName),
+      environment.backendUrl + '/gift/search/recipient?userId=' + userId,
     );
   }
 

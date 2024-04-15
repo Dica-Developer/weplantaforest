@@ -13,7 +13,7 @@ export class ProfileTreesComponent implements OnInit {
   trees: PagedData<ProfileTree>;
 
   @Input()
-  userName: string;
+  userId: number;
 
   page: number = 0;
 
@@ -23,11 +23,11 @@ export class ProfileTreesComponent implements OnInit {
 
   nextPage() {
     this.page++;
-    this.store.dispatch(loadTreesByUser({ username: this.userName, page: this.page, size: 8 }));
+    this.store.dispatch(loadTreesByUser({ userId: this.userId, page: this.page, size: 8 }));
   }
 
   previousPage() {
     this.page--;
-    this.store.dispatch(loadTreesByUser({ username: this.userName, page: this.page, size: 8 }));
+    this.store.dispatch(loadTreesByUser({ userId: this.userId, page: this.page, size: 8 }));
   }
 }

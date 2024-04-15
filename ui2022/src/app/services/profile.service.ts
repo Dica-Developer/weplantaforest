@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { PagedData } from '../store/app.state';
-import { CreateCertificateRequestDto, findCertificatePlantings } from '../store/profile.store';
+import { CreateCertificateRequestDto } from '../store/profile.store';
 
 @Injectable({
   providedIn: 'root',
@@ -10,27 +10,24 @@ import { CreateCertificateRequestDto, findCertificatePlantings } from '../store/
 export class ProfileService {
   constructor(private http: HttpClient) {}
 
-  loadUserDetails(username: string) {
-    return this.http.get(environment.backendUrl + '/user?userName=' + encodeURIComponent(username));
+  loadUserDetails(userId: number) {
+    return this.http.get(environment.backendUrl + '/user?userId=' + userId);
   }
 
   isAdmin() {
     return this.http.get(environment.backendUrl + '/isAdmin');
   }
 
-  loadTrees(username: string, page: number, size: number) {
+  loadTrees(userId: number, page: number, size: number) {
     return this.http.get<PagedData<any>>(
-      `${environment.backendUrl}/trees/owner?userName=${encodeURIComponent(
-        username
-      )}&page=${page}&size=${size}`,
+      environment.backendUrl + "/trees/owner?userId=" + userId + "&page=" + page + "&size=" + size,
     );
   }
 
-  updateProfile(username: string, propertyToUpdate: string, controlValue) {
+  updateProfile(userId: number, propertyToUpdate: string, controlValue) {
     return this.http.post(
       environment.backendUrl +
-        '/user/edit?userName=' +
-        encodeURIComponent(username) +
+        '/user/edit?userId=' + userId +
         '&toEdit=' +
         propertyToUpdate +
         '&newEntry=' +
@@ -59,9 +56,9 @@ export class ProfileService {
     return this.http.get(environment.backendUrl + '/certificate/summary/' + id);
   }
 
-  updateProfileImage(userName: string, image: any) {
+  updateProfileImage(userId: number, image: any) {
     const formData = new FormData();
-    formData.append('userName', userName + '');
+    formData.append('userId', userId + '');
     formData.append('file', image);
     return this.http.post(environment.backendUrl + '/user/image/upload', formData, {
       responseType: 'text',
