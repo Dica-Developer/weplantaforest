@@ -11,7 +11,8 @@ export class LightboxGalleryComponent implements OnInit {
 
   constructor(private elem: ElementRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   openModal(index: number) {
     this.slideIndex = index;
@@ -46,10 +47,10 @@ export class LightboxGalleryComponent implements OnInit {
     let slides = this.elem.nativeElement.querySelectorAll('.mySlides');
 
     if (index > this.images.length - 1) {
-      this.slideIndex = 0;
+      this.slideIndex = this.images.length - 1;
     }
     if (index < 0) {
-      this.slideIndex = this.images.length - 1;
+      this.slideIndex = 0;
     }
     for (let i = 0; i < this.images.length; i++) {
       let slide = slides[i] as HTMLElement;

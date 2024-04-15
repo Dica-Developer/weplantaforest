@@ -24,12 +24,12 @@ export class ProjectDescriptionComponent implements OnInit {
     this.images = [];
     for (let image of this.projectReport.images) {
       let url =
-        environment.backendUrl + '/project/image/' + encodeURI(image.imageFileName) + '/1140/570';
+        environment.backendUrl + '/project/image/' + encodeURI(image.imageFileName) + '/1300/650';
       let caption = this.textHelper.getTextForLanguage(
         image.description,
         this.translateService.currentLang,
       );
-      this.images.push({ imageUrl: url, caption });
+      this.images.unshift({ imageUrl: url, caption });
     }
     this.description = this.textHelper.getTextForLanguage(
       this.projectReport.projectReportData.description,
