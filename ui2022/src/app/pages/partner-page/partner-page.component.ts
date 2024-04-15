@@ -19,7 +19,6 @@ export class PartnerPageComponent implements OnInit {
     this.contentService
       .getInfrastructureArticle('PARTNER', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
-        console.log(res)
         this.partners = res;
         for (let i = 0; i < this.partners.length; i++) {
           let images = {mainImageUrl: '', paragraphImageUrls: []};

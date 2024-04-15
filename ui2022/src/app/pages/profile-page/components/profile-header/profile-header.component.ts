@@ -41,7 +41,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
   }
 
   editProfile() {
-    let username = localStorage.getItem('username');
-    this.router.navigate(['/editProfile/' + username]);
+    let userId = localStorage.getItem('userId');
+    this.router.navigate(['/editProfile/' + userId]);
   }
 }

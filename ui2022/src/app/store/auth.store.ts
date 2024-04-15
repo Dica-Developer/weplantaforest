@@ -202,6 +202,7 @@ export class AuthEffects {
       switchMap((action: any) =>
         this.authService.login(action.name, action.password).pipe(
           switchMap((response) => {
+            localStorage.setItem('userId', response.headers.get('X-AUTH-USERID'));
             localStorage.setItem('jwt', response.headers.get('X-AUTH-TOKEN'));
             localStorage.setItem('username', response.headers.get('X-AUTH-USERNAME'));
             this.router.navigate(['/']);
@@ -211,7 +212,7 @@ export class AuthEffects {
               }),
               loadAdminFlag(),
               loadProfileDetails({
-                username: response.headers.get('X-AUTH-USERNAME'),
+                userId: +response.headers.get('X-AUTH-USERID'),
               }),
               loadTreeTypes(),
               loginSuccess(),

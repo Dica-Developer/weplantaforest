@@ -23,6 +23,8 @@ public class TokenAuthenticationService {
 
     private static final String USERNAME_HEADER_NAME = "X-AUTH-USERNAME";
 
+    private static final String USERID_HEADER_NAME = "X-AUTH-USERID";
+
     private final TokenHandler tokenHandler;
 
     private @NonNull UserService _userHelper;
@@ -37,6 +39,7 @@ public class TokenAuthenticationService {
         final User user = authentication.getDetails();
         response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
         response.addHeader(USERNAME_HEADER_NAME, user.getUsername());
+        response.addHeader(USERID_HEADER_NAME, user.getId().toString());
     }
 
     public Authentication getAuthentication(HttpServletRequest request) {
@@ -75,10 +78,10 @@ public class TokenAuthenticationService {
         return null;
     }
 
-    public boolean isAuthenticatedUser(String userToken, String userName) {
+    public boolean isAuthenticatedUser(String userToken, long userId) {
         if (userToken != "") {
             final User user = tokenHandler.parseUserFromToken(userToken);
-            if (user != null && user.getName().equals(userName)) {
+            if (user != null && user.getId().equals(userId)) {
                 return true;
             }
         }

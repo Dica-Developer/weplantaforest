@@ -70,8 +70,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(getProjectsForCustomPlanting());
-    if (localStorage.getItem('jwt') && localStorage.getItem('username')) {
-      this.store.dispatch(loadProfileDetails({ username: localStorage.getItem('username') }));
+    if (localStorage.getItem('jwt') && localStorage.getItem('userId')) {
+      this.store.dispatch(loadProfileDetails({ userId: +localStorage.getItem('userId') }));
     }
     this.authService.autoLogin();
     this.cookieHelper.openCookieConfirmation();
