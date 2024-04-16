@@ -67,6 +67,7 @@ import { YoutubeIconComponent } from './common-components/icons/youtube-icon/you
 import { FacebookIconComponent } from './common-components/icons/facebook-icon/facebook-icon.component';
 import { FooterIconsListComponent } from './common-components/footer-icons-list/footer-icons-list.component';
 import { SafeHtmlPipe } from './common-components/safehtml.pipe';
+import { DeleteConfirmationDialogComponent } from './common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +123,8 @@ import { SafeHtmlPipe } from './common-components/safehtml.pipe';
     YoutubeIconComponent,
     FacebookIconComponent,
     FooterIconsListComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    DeleteConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
