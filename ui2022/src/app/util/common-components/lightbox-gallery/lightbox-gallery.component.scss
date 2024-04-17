@@ -7,8 +7,7 @@
 .lightbox {
   display: none;
   position: fixed;
-  z-index: 4;
-  padding-top: 80px;
+  z-index: 10;
   left: 0;
   top: 0;
   width: 100%;
@@ -20,11 +19,12 @@
 /* Modal Content */
 .content {
   position: relative;
-  height: calc(100vh - 86px);
+  height: 100vh
 }
 
 .slideImage {
-  max-height: calc(100vh - 86px);
+  max-height: 100vh;
+  height: 100%;
 }
 
 /* The Close Button */
@@ -81,8 +81,8 @@ mat-icon:hover {
 
 /* Hide the slides by default */
 .mySlides {
-  height: calc(100vh - 86px);
   text-align: center;
+  height: 100vh;
   display: none;
   opacity: 0;
   transition: 0.5s;
