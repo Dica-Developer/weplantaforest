@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ICellEditorAngularComp } from 'ag-grid-angular';
 import { AppState } from '../../../store/app.state';
 import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { deleteContentArticle } from '../../../store/content.store';
+import { DeleteConfirmationDialogComponent } from '../../common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-grid-content-actions',
@@ -24,7 +25,7 @@ export class GridContentActionsComponent implements ICellEditorAngularComp {
   }
 
   deleteArticle() {
-    const dialogRef = this.dialog.open(DeleteContentArticleConfirmationDialog);
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.store.dispatch(deleteContentArticle({ id: this.articleId }));
@@ -33,8 +34,3 @@ export class GridContentActionsComponent implements ICellEditorAngularComp {
   }
 }
 
-@Component({
-  selector: 'delete-content-article-confirmation-dialog',
-  templateUrl: 'delete-content-article-confirmation-dialog.html',
-})
-export class DeleteContentArticleConfirmationDialog {}

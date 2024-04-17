@@ -14,7 +14,6 @@ import {
 import { TextEditorComponent } from './common-components/text-editor/text-editor.component';
 import {
   GridContentActionsComponent,
-  DeleteContentArticleConfirmationDialog,
 } from './grid-components/grid-content-actions/grid-content-actions.component';
 import { NoImgBoxComponent } from './common-components/no-img-box/no-img-box.component';
 import { GridEventActionsComponent } from './grid-components/grid-event-actions/grid-event-actions.component';
@@ -76,7 +75,6 @@ import { DeleteConfirmationDialogComponent } from './common-components/delete-co
     GridProjectActionsComponent,
     TextEditorComponent,
     GridContentActionsComponent,
-    DeleteContentArticleConfirmationDialog,
     NoImgBoxComponent,
     GridEventActionsComponent,
     PlantbagTreeInputComponent,
