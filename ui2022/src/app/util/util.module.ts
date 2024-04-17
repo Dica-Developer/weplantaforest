@@ -10,7 +10,6 @@ import {
 } from './grid-components/grid-cart-actions/grid-cart-actions.component';
 import {
   GridProjectActionsComponent,
-  DeleteProjectConfirmationDialog,
 } from './grid-components/grid-project-actions/grid-project-actions.component';
 import { TextEditorComponent } from './common-components/text-editor/text-editor.component';
 import {
@@ -76,7 +75,6 @@ import { DeleteConfirmationDialogComponent } from './common-components/delete-co
     GridCartActionsComponent,
     GridProjectActionsComponent,
     TextEditorComponent,
-    DeleteProjectConfirmationDialog,
     GridContentActionsComponent,
     DeleteContentArticleConfirmationDialog,
     NoImgBoxComponent,
@@ -182,7 +180,8 @@ import { DeleteConfirmationDialogComponent } from './common-components/delete-co
     NotAuthenticatedWarningComponent,
     CookieConfirmationComponent,
     FooterIconsListComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    DeleteConfirmationDialogComponent
   ],
 })
 export class UtilModule {}

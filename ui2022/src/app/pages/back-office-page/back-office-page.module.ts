@@ -8,7 +8,6 @@ import { UserOverviewComponent } from './user/user-overview/user-overview.compon
 import { CartFilterComponent } from './carts/cart-filter/cart-filter.component';
 import {
   CartGridComponent,
-  DiscardCartConfirmationDialog,
 } from './carts/cart-grid/cart-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CartDetailsComponent } from './carts/cart-details/cart-details.component';
@@ -61,7 +60,6 @@ import { TreeTypeImageUploadComponent } from './treeTypes/treetype-edit/componen
     DeleteArticleConfirmationDialog,
     ProjectEditImageComponent,
     DeleteProjectImageConfirmationDialog,
-    DiscardCartConfirmationDialog,
     ContentOverviewComponent,
     ContentGridComponent,
     ContentDetailsComponent,

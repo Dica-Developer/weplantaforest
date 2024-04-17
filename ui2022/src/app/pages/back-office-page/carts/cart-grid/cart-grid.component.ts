@@ -9,6 +9,7 @@ import { GridSelectComponent } from '../../../../util/grid-components/grid-selec
 import { updateStatus, CartDetails, selectCartDetails } from '../../../../store/carts.store';
 import { GridCartActionsComponent } from '../../../../util/grid-components/grid-cart-actions/grid-cart-actions.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from 'src/app/util/common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-cart-grid',
@@ -110,7 +111,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
         valueList: this.gridHelper.getCartStates(),
         valueChange: (cartId, value) => {
           if (value === 'DISCARDED') {
-            const dialogRef = this.dialog.open(DiscardCartConfirmationDialog);
+            const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent);
             dialogRef.afterClosed().subscribe((result) => {
               if (result) {
                 this.store.dispatch(
@@ -262,8 +263,3 @@ export class CartGridComponent implements OnInit, OnDestroy {
   }
 }
 
-@Component({
-  selector: 'discard-cart-confirmation-dialog',
-  templateUrl: 'discard-cart-confirmation-dialog.html',
-})
-export class DiscardCartConfirmationDialog {}

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { ICellEditorAngularComp } from 'ag-grid-angular';
 import { loadProjectDetails } from 'src/app/store/project.store';
 import { deleteProject } from '../../../store/project.store';
 import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from '../../common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-grid-project-actions',
@@ -30,7 +31,7 @@ export class GridProjectActionsComponent implements ICellEditorAngularComp {
   }
 
   deleteProject() {
-    const dialogRef = this.dialog.open(DeleteProjectConfirmationDialog);
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.store.dispatch(deleteProject({ id: this.projectId }));
@@ -39,9 +40,3 @@ export class GridProjectActionsComponent implements ICellEditorAngularComp {
   }
 }
 
-
-@Component({
-  selector: 'delete-project-confirmation-dialog',
-  templateUrl: 'delete-project-confirmation-dialog.html',
-})
-export class DeleteProjectConfirmationDialog {}
