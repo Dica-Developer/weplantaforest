@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from 'src/app/util/common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-treetype-edit',
@@ -49,6 +51,7 @@ export class TreetypeEditComponent implements OnInit {
     private store: Store<AppState>,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -157,15 +160,6 @@ export class TreetypeEditComponent implements OnInit {
       if (this.trunkImageColorFile) {
         images.push({ imageType: 'trunkImageColor', imgSrc: this.trunkImageColorFile });
       }
-      // if (this.trunkImageBWFile) {
-      //   images.push({ imageType: 'trunkImageBW', imgSrc: this.trunkImageBWFile });
-      // }
-      // if (this.leafImageColorFile) {
-      //   images.push({ imageType: 'leafImageColor', imgSrc: this.leafImageColorFile });
-      // }
-      // if (this.leafImageBWFile) {
-      //   images.push({ imageType: 'leafImageBW', imgSrc: this.leafImageBWFile });
-      // }
       this.store.dispatch(
         updateTreetype({
           request,
@@ -180,13 +174,11 @@ export class TreetypeEditComponent implements OnInit {
   }
 
   delete() {
-    this.snackbar
-      .open(this.translateService.instant('deleteConfirmation'), 'OK', {
-        duration: 5000,
-      })
-      .onAction()
-      .subscribe(() => {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         this.store.dispatch(deleteTreeType({ treeTypeId: this.form.get('id').value }));
-      });
+      }
+    });
   }
 }
