@@ -1,8 +1,9 @@
 <mat-accordion>
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title> {{ paragraph.get("title").value }}</mat-panel-title>
         <button
+          class="delete-button"
           mat-icon-button
           (click)="deleteParagraph(paragraph.get('id').value)"
           color="warn"
