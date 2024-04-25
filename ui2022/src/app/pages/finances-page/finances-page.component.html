@@ -23,25 +23,16 @@
 
       <div *ngFor="let finance of finances; index as i">
         <div class="finance-link">
-          <a (click)="scrollTo('finance-' + i)">{{ finance.title }}</a>
+          <a (click)="selectYear(finance)">{{ finance.title }}</a>
         </div>
       </div>
     </div>
-    <div class="column is-10">
-      <ng-scrollbar track="vertical" [autoHeightDisabled]="true" thumbClass="ipat-scrollbar">
-        <div class="scroll-container">
-          <div *ngFor="let finance of finances; index as i">
-            <div id="{{ 'finance-' + i }}">
-              <h4>{{ finance.title }}</h4>
-              <div [innerHtml]="finance.intro | safeHtml"></div>
-              <div *ngFor="let paragraph of finance.paragraphs">
-                <div innerHtml="{{ paragraph.title }}"></div>
-                <div [innerHtml]="paragraph.text | safeHtml"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ng-scrollbar>
+    <div class="column is-10" *ngIf="currentlySelectedYear">
+      <h4>{{ currentlySelectedYear?.title }}</h4>
+      <div *ngFor="let paragraph of currentlySelectedYear?.paragraphs">
+        <p>{{ paragraph.title}}</p>
+        <div innerHtml="{{ paragraph.text }}"></div>
+      </div>
     </div>
   </div>
   <div class="columns is-hidden-desktop">
