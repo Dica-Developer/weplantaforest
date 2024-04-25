@@ -10,18 +10,23 @@ import { TextHelper } from 'src/app/util/text.helper';
 export class FaqPageComponent implements OnInit {
   faq: any[] = [];
   faqOverview: any = {};
+  currentlyVisibleFaq: any = null;
 
   constructor(private textHelper: TextHelper, private contentService: ContentService) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-
     this.contentService
       .getInfrastructureArticle('FAQ', this.textHelper.getCurrentLanguage())
       .subscribe((res: any[]) => {
         this.faq = res;
         this.sortEntriesbyNumberInTitle();
+        this.selectFaq(this.faq[0]);
       });
+  }
+
+  selectFaq(faq: any) {
+    this.currentlyVisibleFaq = faq;
   }
 
   sortEntriesbyNumberInTitle() {
@@ -38,10 +43,5 @@ export class FaqPageComponent implements OnInit {
     });
     // filter out the entry without index, which is the entry with all questions
     this.faq = this.faq.filter((entry) => entry.index !== 0);
-  }
-
-  scrollTo(id) {
-    let el = document.getElementById(id);
-    el.scrollIntoView({behavior: 'smooth'});
   }
 }

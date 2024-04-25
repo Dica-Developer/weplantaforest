@@ -22,21 +22,16 @@
       <h2>{{ 'faq' | translate }}</h2>
       <div *ngFor="let faqArticle of faq; index as i">
         <div class="faq-link">
-          <a (click)="scrollTo('faq-' + i)">{{ faqArticle.title }}</a>
+          <a (click)="selectFaq(faqArticle)">{{ faqArticle.title }}</a>
         </div>
       </div>
     </div>
-    <div class="column is-8">
-      <ng-scrollbar track="vertical" [autoHeightDisabled]="false" thumbClass="ipat-scrollbar">
-        <div class="scroll-container">
-          <div *ngFor="let faqArticle of faq; index as i">
-            <div key="{{ i }}" id="{{ 'faq-' + i }}">
-              <h4>{{ faqArticle.title }}</h4>
-              <div innerHtml="{{ faqArticle.intro }}"></div>
-            </div>
-          </div>
-        </div>
-      </ng-scrollbar>
+    <div class="column is-8" *ngIf="currentlyVisibleFaq">
+      <h4>{{ currentlyVisibleFaq?.title }}</h4>
+      <div *ngFor="let paragraph of currentlyVisibleFaq?.paragraphs">
+        <p>{{ paragraph.title}}</p>
+        <div innerHtml="{{ paragraph.text }}"></div>
+      </div>
     </div>
   </div>
   <div class="columns is-hidden-desktop">
