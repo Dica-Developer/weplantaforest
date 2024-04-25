@@ -23,18 +23,20 @@
     <h2>{{ 'aboutUs' | translate }}</h2>
     <div *ngFor="let about of aboutUs?.slice().reverse(); let i = index">
       <h4>{{ about.title }}</h4>
-      <div innerHtml="{{ about.intro }}"></div>
       <div class="margin-top-2 margin-bottom-2 center" *ngIf="articleImageUrls[i].mainImageUrl">
         <img
           [src]="articleImageUrls[i].mainImageUrl"
-          />
+        />
+        <br>
+        <span class="image-caption">{{ about.imageDescription }}</span>
       </div>
+      <div innerHtml="{{ about.intro }}"></div>
       <div class="margin-bottom-2" *ngFor="let paragraph of about.paragraphs; let j = index">
         <h4> {{ paragraph.title }} </h4>
-        <p innerHtml="{{ paragraph.text}} "> </p>
         <div class="center" *ngIf="articleImageUrls[i].paragraphImageUrls[j]">
           <img [src]="articleImageUrls[i].paragraphImageUrls[j]" />
         </div>
+        <p innerHtml="{{ paragraph.text}} "> </p>
       </div>
     </div>
   </div>
