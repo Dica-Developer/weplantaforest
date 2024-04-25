@@ -14,7 +14,7 @@ import { selectUserLanguage } from '../../store/profile.store';
 export class FinancesPageComponent implements OnInit, OnDestroy {
   lang: string;
   finances;
-
+  currentlySelectedYear: any = null;
   languageSub: Subscription;
   financeSub: Subscription;
 
@@ -35,9 +35,15 @@ export class FinancesPageComponent implements OnInit, OnDestroy {
         .getInfrastructureArticle('FINANCIALS', this.lang)
         .subscribe((res) => {
           this.finances = res;
+          console.log(res)
+          this.currentlySelectedYear = this.finances[0];
         });
     });
     window.scrollTo(0, 0);
+  }
+
+  selectYear(financeArticle: any) {
+    this.currentlySelectedYear = financeArticle;
   }
 
   ngOnDestroy(): void {
