@@ -18,7 +18,7 @@
 </div>
 <div class="w-100 is-flex is-flex-direction-column padding-1 padding-left margin-top-1">
   <div class="columns is-hidden-mobile faq-columns">
-    <div class="column is-4">
+    <div class="column is-3 padding-0">
       <h2>{{ 'faq' | translate }}</h2>
       <div *ngFor="let faqArticle of faq; index as i">
         <div class="faq-link">
@@ -26,8 +26,9 @@
         </div>
       </div>
     </div>
-    <div class="column is-8" *ngIf="currentlyVisibleFaq">
+    <div class="column is-9 padding-1" *ngIf="currentlyVisibleFaq">
       <h4>{{ currentlyVisibleFaq?.title }}</h4>
+      <div innerHtml="{{ currentlyVisibleFaq.intro }}"></div>
       <div *ngFor="let paragraph of currentlyVisibleFaq?.paragraphs">
         <p>{{ paragraph.title}}</p>
         <div innerHtml="{{ paragraph.text }}"></div>
@@ -35,7 +36,7 @@
     </div>
   </div>
   <div class="columns is-hidden-desktop">
-    <div class="column">
+    <div class="column padding-0">
       <div *ngFor="let faqArticle of faq; index as i">
         <div key="{{ i }}" id="{{ 'faq-' + i }}">
           <h4>{{ faqArticle.title }}</h4>

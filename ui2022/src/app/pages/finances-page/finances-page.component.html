@@ -18,16 +18,15 @@
 </div>
 <div class="w-100 is-flex is-flex-direction-column padding-1 padding-left margin-top-1">
   <div class="columns is-hidden-mobile finances-columns">
-    <div class="column is-2">
+    <div class="column is-3 padding-0">
       <h2>{{ 'finances' | translate }}</h2>
-
       <div *ngFor="let finance of finances; index as i">
         <div class="finance-link">
           <a (click)="selectYear(finance)">{{ finance.title }}</a>
         </div>
       </div>
     </div>
-    <div class="column is-10" *ngIf="currentlySelectedYear">
+    <div class="column is-9 padding-1" *ngIf="currentlySelectedYear">
       <h4>{{ currentlySelectedYear?.title }}</h4>
       <div *ngFor="let paragraph of currentlySelectedYear?.paragraphs">
         <p>{{ paragraph.title}}</p>
