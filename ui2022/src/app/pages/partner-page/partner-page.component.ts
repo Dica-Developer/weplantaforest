@@ -19,11 +19,14 @@ export class PartnerPageComponent implements OnInit {
     this.contentService
       .getInfrastructureArticle('PARTNER', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
-        console.log(res)
         this.partners = res;
         for (let i = 0; i < this.partners.length; i++) {
           let images = {mainImageUrl: '', paragraphImageUrls: []};
-          images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].imageFileName);
+          if (this.partners[i].imageFileName === null) {
+            images.mainImageUrl = '';
+          } else {
+            images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].imageFileName);
+          }
           for (let j = 0; j < this.partners[i].paragraphs.length; j++) {
             images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
           }
