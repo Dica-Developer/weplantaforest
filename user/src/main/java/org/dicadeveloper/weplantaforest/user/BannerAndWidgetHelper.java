@@ -29,7 +29,7 @@ public class BannerAndWidgetHelper {
         if (host.contains(":8080")) {
             hostWithPath = host.replaceAll(":8080", ":8081");
         } else {
-            hostWithPath = host;
+            hostWithPath = host + "/p/u";
         }
         buffer.append("<a href=\"");
         buffer.append(host);
@@ -54,7 +54,7 @@ public class BannerAndWidgetHelper {
         if (host.contains(":8080")) {
             hostWithPath = host.replaceAll(":8080", ":8081");
         } else {
-            hostWithPath = host;
+            hostWithPath = host + "/p/u";
         }
         val urlEncodedUsername = UrlEscapers.urlPathSegmentEscaper().escape(userName);
         buffer.append("<a href=\"");

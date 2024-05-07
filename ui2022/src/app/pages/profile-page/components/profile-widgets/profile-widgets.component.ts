@@ -14,12 +14,9 @@ export class ProfileWidgetsComponent implements OnInit {
   userLanuage: string;
   userLanuguageSub: Subscription;
 
-  widget100x100Url: string =
-    environment.backendUrl + '/widget_2022?userName=Gabor&width=200&height=200&language=DEUTSCH';
-  widget300x100Url: string =
-    environment.backendUrl + '/widget_2022?userName=Gabor&width=600&height=200&language=DEUTSCH';
-  widget100x300Url: string =
-    environment.backendUrl + '/widget_2022?userName=Gabor&width=200&height=600&language=DEUTSCH';
+  widget100x100Url: string = '';
+  widget300x100Url: string = '';
+  widget100x300Url: string = '';
 
   widget100x100Code: string =
     '<a href="' +
@@ -89,7 +86,7 @@ export class ProfileWidgetsComponent implements OnInit {
 
     this.widget100x100Code =
       '<a href="' +
-      environment.backendUrl +
+      environment.frontendUrl +
       '/user/' +
       localStorage.getItem('username') +
       '"><img src="' +
@@ -102,7 +99,7 @@ export class ProfileWidgetsComponent implements OnInit {
 
     this.widget300x100Code =
       '<a href="' +
-      environment.backendUrl +
+      environment.frontendUrl +
       '/user/' +
       localStorage.getItem('username') +
       '"><img src="' +
@@ -115,7 +112,7 @@ export class ProfileWidgetsComponent implements OnInit {
 
     this.widget100x300Code =
       '<a href="' +
-      environment.backendUrl +
+      environment.frontendUrl +
       '/user/' +
       localStorage.getItem('username') +
       '"><img src="' +

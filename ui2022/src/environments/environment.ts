@@ -11,6 +11,7 @@ export const environment = {
   backendAdminUrl: 'http://localhost:8083',
   backendArticleManagerUrl: 'http://localhost:8082',
   oldFrontendUrl: 'http://localhost:8080',
+  frontendUrl: 'http://localhost:4200',
   baseUrl: '',
 };
 
