@@ -14,12 +14,10 @@
         {{ 'projectsSectionInfo' | translate }}
       </span>
     </p>
-    <ng-scrollbar track="horizontal" thumbClass="ipat-scrollbar">
-      <div class="is-flex h-100">
-        <app-project-tile *ngFor="let project of projectReports$ | async" [projectReport]="project">
-        </app-project-tile>
-      </div>
-    </ng-scrollbar>
+    <div class="scrolling-wrapper-flexbox">
+      <app-project-tile *ngFor="let project of projectReports$ | async" [projectReport]="project">
+      </app-project-tile>
+    </div>
     <div class="center margin-top-1">
       <app-button routerLink="projectReports" label="{{ 'allProjects' | translate }}"></app-button>
     </div>

@@ -15,22 +15,26 @@ h2 {
   border-right: 1px solid var(--black);
 }
 
-ng-scrollbar {
-  max-height: 700px !important;
-  height: 700px !important;
-  border: none;
-  --scrollbar-size: 8px;
-  --scrollbar-thumb-color: #65594e;
-  --scrollbar-border-radius: 4px;
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  height: 700px;
+  max-height: 700px;
+  max-width: 900px;
+  width: 100%;
+  scrollbar-color: var(--brown) var(--background);
+  scrollbar-width: auto;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
 }
 
 @media only screen and (max-width: 768px) {
-  ng-scrollbar {
-    height: 550px !important;
-    max-height: 550px !important;
-  }
-
-  p {
-    margin: 1rem;
+  .scrolling-wrapper-flexbox {
+    height: auto;
   }
 }
+
