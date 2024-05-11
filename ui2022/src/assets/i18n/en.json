@@ -330,7 +330,7 @@
   "passwordResetLinkInvalid": "The link is invalid or has expired.",
   "passwordResetSuccessful": "Your password has been successfully reset.",
   "SiteUsesCookies": "This site uses cookies.",
-  "allowPaypalCookies":"Paypal Cookies",
+  "allowPaypalCookies":"Allow cookies",
   "newTrees": "New trees",
   "newUsers": "New users",
   "signupFailed": "Signup failed!",
