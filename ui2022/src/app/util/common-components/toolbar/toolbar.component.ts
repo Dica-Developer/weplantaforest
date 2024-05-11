@@ -35,6 +35,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     });
     this.plantBagPriceSub = this.store
       .select(selectPlantbagPriceFormatted)
+      // pipe skip to prevent the wheelbarrow animation from running on reload of page
       .pipe(skip(1))
       .subscribe((res) => {
         if (res !== '0.00€') {
