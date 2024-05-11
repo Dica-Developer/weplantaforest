@@ -203,7 +203,7 @@ public class UserService {
     }
 
     public void registrateUser(UserRegistrationData userRegistrationData) throws IpatException {
-        String userName = userRegistrationData.getUsername();
+        String userName = userRegistrationData.getUsername().toLowerCase();
         String mail = userRegistrationData.getMail();
         IpatPreconditions.checkArgument((userRepository.userExists(userName) == 0), ErrorCodes.USER_ALREADY_EXISTS);
         // IpatPreconditions.checkArgument(CommonValidator.isValidEmailAddress(mail), ErrorCodes.INVALID_MAIL);
