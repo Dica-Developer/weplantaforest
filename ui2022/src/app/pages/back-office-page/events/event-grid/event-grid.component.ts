@@ -30,6 +30,7 @@ export class EventGridComponent implements OnInit, OnDestroy {
       field: 'name',
       headerName: 'Name',
       sortable: true,
+      width: 400,
       comparator: this.gridHelper.caseInsensitiveComparator,
     },
     // {
