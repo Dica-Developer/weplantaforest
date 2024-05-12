@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ContentService } from 'src/app/services/content.service';
 import { AppState } from 'src/app/store/app.state';
@@ -20,7 +19,6 @@ export class FinancesPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private contentService: ContentService,
-    private translateService: TranslateService,
     private store: Store<AppState>,
   ) {}
 
@@ -35,7 +33,6 @@ export class FinancesPageComponent implements OnInit, OnDestroy {
         .getInfrastructureArticle('FINANCIALS', this.lang)
         .subscribe((res) => {
           this.finances = res;
-          console.log(res)
           this.currentlySelectedYear = this.finances[0];
         });
     });

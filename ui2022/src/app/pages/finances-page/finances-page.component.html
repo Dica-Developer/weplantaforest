@@ -21,13 +21,12 @@
     <div class="column is-3 padding-0">
       <h2>{{ 'finances' | translate }}</h2>
       <div *ngFor="let finance of finances; index as i">
-        <div class="finance-link">
-          <a (click)="selectYear(finance)">{{ finance.title }}</a>
-        </div>
+          <h4 (click)="selectYear(finance)" class="listHeader">{{ finance.title }}</h4>
       </div>
     </div>
     <div class="column is-9 padding-1" *ngIf="currentlySelectedYear">
       <h4>{{ currentlySelectedYear?.title }}</h4>
+      <div innerHtml="{{ currentlySelectedYear.intro }}"></div>
       <div *ngFor="let paragraph of currentlySelectedYear?.paragraphs">
         <p>{{ paragraph.title}}</p>
         <div innerHtml="{{ paragraph.text }}"></div>
