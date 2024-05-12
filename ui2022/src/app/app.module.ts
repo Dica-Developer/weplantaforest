@@ -45,7 +45,6 @@ import localeEnExtra from '@angular/common/locales/extra/en';
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
 import { RankingEffects, rankingReducerFn } from './store/ranking.store';
-import { NgScrollbarModule } from 'ngx-scrollbar';
 import { SearchEffects, searchReducerFn } from './store/search.store';
 import { PlantProposalEffects, plantProposalReducerFn } from './store/plant.store';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -146,7 +145,6 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
         deps: [HttpClient],
       },
     }),
-    NgScrollbarModule,
     NgxSliderModule,
     NgChartsModule,
   ],

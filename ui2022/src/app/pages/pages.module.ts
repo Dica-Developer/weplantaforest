@@ -38,7 +38,6 @@ import { TermsPageComponent } from './terms-page/terms-page.component';
 import { AwardsPageComponent } from './awards-page/awards-page.component';
 import { CertificateFindPageModule } from './certificate-find-page/ceritificate-find-page.module';
 import { EditTeamPageComponent } from './edit-team-page/edit-team-page.component';
-import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
   declarations: [
@@ -83,7 +82,6 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     PlantProposalPageModule,
     PlantSelfPageModule,
     CertificateFindPageModule,
-    NgScrollbarModule
   ],
   exports: [
     ForgotPasswordPageComponent,
