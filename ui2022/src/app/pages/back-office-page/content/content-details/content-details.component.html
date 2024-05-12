@@ -1,17 +1,1 @@
-<div class="columns">
-  <div class="column is-12">
-    <button mat-raised-button color="primary" (click)="saveArticle()" class="save-btn">save</button>
-  </div>
-</div>
-<div class="columns">
-  <div class="column is-12">
-    <mat-tab-group mat-align-tabs="center">
-      <mat-tab label="Daten">
-        <app-content-edit [articleForm]="articleForm"></app-content-edit>
-      </mat-tab>
-      <mat-tab label="Vorschau">
-        <app-content-preview></app-content-preview>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
-</div>
+<app-content-edit (saveArticleClicked)="saveArticle()" [articleForm]="articleForm"></app-content-edit>

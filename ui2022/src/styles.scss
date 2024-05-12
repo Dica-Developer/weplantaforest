@@ -388,6 +388,10 @@ a:hover {
   }
 }
 
+.ck-editor__editable_inline {
+    min-height: 500px;
+}
+
 @media only screen and (max-width: 768px) {
   .mat-snack-bar-container {
     max-width: 100% !important;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, FormArray, UntypedFormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
@@ -14,6 +14,8 @@ export class ContentEditComponent implements OnInit, OnDestroy {
   @Input()
   articleForm: UntypedFormGroup;
 
+  @Output()
+  saveArticleClicked = new EventEmitter();
   articleTypes: string[];
   languages: string[] = ['DEUTSCH', 'ENGLISH'];
 
@@ -88,5 +90,9 @@ export class ContentEditComponent implements OnInit, OnDestroy {
       (this.articleForm.get('paragraphs') as FormArray).removeAt(index)
       this.cdr.detectChanges();
     }
+  }
+
+  saveArticle() {
+    this.saveArticleClicked.emit();
   }
 }
