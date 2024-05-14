@@ -1,5 +1,7 @@
 <div class="page is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
-  <h4 *ngIf="verificationSuccess$ | async">{{ 'welcomeActivation' | translate }}</h4>
-  <h4 *ngIf="!verificationSuccess$ | async">{{ 'welcomeActivationFailed' | translate }}</h4>
-  <a routerLink="/login"> {{ 'getToLoginHere' | translate }}</a>
+  <p class="padding-1" *ngIf="verificationSuccess$ | async">{{ 'welcomeActivation' | translate }}</p>
+  <p class="padding-1" *ngIf="!verificationSuccess$ | async">{{ 'welcomeActivationFailed' | translate }}</p>
+  <a class="padding-bottom-1" routerLink="/login"> {{ 'getToLoginHere' | translate }}</a>
+  <p class="padding-1"> {{ 'newsletterInfo' | translate }} </p>
+  <a routerLink="/newsletter"> {{'newsletter'| translate }}</a>
 </div>

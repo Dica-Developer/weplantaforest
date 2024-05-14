@@ -340,5 +340,6 @@
   "backToPlantbag": "Zurück zum Pflanzkorb",
   "USER_ALREADY_EXISTS": "Dieser Nutzername ist schon vergeben. Bitte wähle einen anderen.",
   "acceptTerms": "Du musst die AGB und Datenschutzerklärung akzeptieren, um dich zu registrieren.",
-  "emailUsername": "E-Mail oder Benutzername"
+  "emailUsername": "E-Mail oder Benutzername",
+  "newsletterInfo": "Tipp: Mit unserem Newsletter erfährst du als Erstes, wenn neue Projekte online gehen. Du kannst das Abo natürlich jederzeit kündigen."
 }
