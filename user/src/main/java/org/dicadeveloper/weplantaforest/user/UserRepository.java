@@ -11,9 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    public static final String USER_EXISTS_QUERY = "SELECT COUNT(_name) FROM User WHERE BINARY _name = :name";
+    public static final String USER_EXISTS_QUERY = "SELECT COUNT(_name) FROM User user WHERE LOWER(user._name) = LOWER(:name)";
 
-    public static final String USER_WITH_MAIL_EXISTS_QUERY = "SELECT COUNT(user) FROM User user WHERE user.mail = :mail";
+    public static final String USER_WITH_MAIL_EXISTS_QUERY = "SELECT COUNT(user) FROM User user WHERE LOWER(user.mail) = LOWER(:mail)";
 
     public static final String GET_USER_DETAILS_QUERY = "SELECT new org.dicadeveloper.weplantaforest.user.UserReportData(user.id, user.name, user.imageName, COALESCE(user.mail, ''), "
             + " user.regDate, user.lastVisit, user.organizationType, COALESCE(tm.name, ''), COALESCE(user.aboutMe, ''), COALESCE(user.location, ''), COALESCE(user.organisation, ''), "
