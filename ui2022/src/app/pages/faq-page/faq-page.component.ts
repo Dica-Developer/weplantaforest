@@ -27,6 +27,7 @@ export class FaqPageComponent implements OnInit {
 
   selectFaq(faq: any) {
     this.currentlyVisibleFaq = faq;
+    window.scrollTo(0, 0);
   }
 
   sortEntriesbyNumberInTitle() {

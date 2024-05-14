@@ -26,11 +26,11 @@
         </div>
       </div>
     </div>
-    <div class="column is-9 padding-1" *ngIf="currentlyVisibleFaq">
+    <div class="column is-9" *ngIf="currentlyVisibleFaq">
       <h4>{{ currentlyVisibleFaq?.title }}</h4>
       <div innerHtml="{{ currentlyVisibleFaq.intro }}"></div>
       <div *ngFor="let paragraph of currentlyVisibleFaq?.paragraphs">
-        <p>{{ paragraph.title}}</p>
+        <p>{{ paragraph.title }}</p>
         <div innerHtml="{{ paragraph.text }}"></div>
       </div>
     </div>

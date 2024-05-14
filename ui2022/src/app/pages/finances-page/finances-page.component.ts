@@ -41,6 +41,7 @@ export class FinancesPageComponent implements OnInit, OnDestroy {
 
   selectYear(financeArticle: any) {
     this.currentlySelectedYear = financeArticle;
+    window.scrollTo(0, 0);
   }
 
   ngOnDestroy(): void {
