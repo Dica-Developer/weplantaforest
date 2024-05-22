@@ -2,16 +2,7 @@
 
 @import '@angular/material/prebuilt-themes/purple-green.css';
 @import 'material-icons/iconfont/material-icons.css';
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
+@include mat.core();
 
 $fontConfig: (
   display-4: mat.define-typography-level(112px, 112px, 300, 'Helvetica', -0.0134em),
@@ -143,18 +134,6 @@ $dark-theme-background-palette: (
   disabled-list-option: $dark-bg-lighter-10,
 );
 
-// Compute font config
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy($fontConfig);`
-@include mat.all-legacy-component-typographies($fontConfig);
-@include mat.legacy-core();
-
 body {
   --primary-color: #969900;
   --primary-lighter-color: #969900;
@@ -228,7 +207,4 @@ $theme-warn: mat.define-palette($mat-warn, main, lighter, darker);
 // theming systems such as "color" or "typography".
 $ui2022-theme: mat.define-light-theme($theme-primary, $theme-accent, $theme-warn);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-legacy-component-themes($ui2022-theme);
+@include mat.all-component-themes($ui2022-theme);
