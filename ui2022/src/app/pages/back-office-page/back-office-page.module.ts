@@ -82,7 +82,7 @@ import { TreeTypeImageUploadComponent } from './treeTypes/treetype-edit/componen
     CommonModule,
     UtilModule,
     RouterModule,
-    AgGridModule.forRoot(),
+    AgGridModule,
     LeafletModule,
     LeafletDrawModule,
   ],

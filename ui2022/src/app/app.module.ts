@@ -133,7 +133,7 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
       MomentDateModule,
     ]),
     MatNativeDateModule,
-    AgGridModule.forRoot(),
+    AgGridModule,
     FormsModule,
     LeafletModule,
     LeafletDrawModule,
