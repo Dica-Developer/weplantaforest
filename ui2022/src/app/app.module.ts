@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { AuthEffects, authReducerFn } from './store/auth.store';
 import { EffectsModule } from '@ngrx/effects';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { UtilModule } from './util/util.module';
 import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { projectsReportReducerFn, ProjectReportsEffects } from './store/project-report.store';
@@ -77,107 +77,101 @@ export function createTranslateLoader(http: HttpClient) {
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 registerLocaleData(localeEn, 'en-EN', localeEnExtra);
 
-@NgModule({
-  declarations: [AppComponent, UserRouterOutletComponent, BackOfficeRouterOutletComponent],
-  imports: [
-    CommonModule,
-    PagesModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    UtilModule,
-    StoreModule.forRoot({
-      authState: authReducerFn,
-      profileState: profileReducerFn,
-      cartsState: cartsReducerFn,
-      userState: userReducerFn,
-      projectsState: projectsReducerFn,
-      treeTypesState: treeTypeReducerFn,
-      errorsState: errorsReducerFn,
-      successMessagesState: successMessageReducerFn,
-      contentState: contentReducerFn,
-      eventState: eventsReducerFn,
-      teamsState: teamReducerFn,
-      plantbagState: plantbagReducerFn,
-      treesState: treeReducerFn,
-      rankingState: rankingReducerFn,
-      projectReportsState: projectsReportReducerFn,
-      searchState: searchReducerFn,
-      blogState: blogReducerFn,
-      plantProposalState: plantProposalReducerFn,
-      paymentState: paymentReducerFn,
-      contactState: contactReducerFn,
-      infrastructureState: infrastructureReducerFn,
-    }),
-    EffectsModule.forRoot([
-      AuthEffects,
-      ProfileEffects,
-      CartsEffects,
-      UserEffects,
-      ProjectsEffects,
-      TreeTypeEffects,
-      ContentEffects,
-      EventsEffects,
-      TeamEffects,
-      PlantbagEffects,
-      TreeEffects,
-      RankingEffects,
-      ProjectReportsEffects,
-      SearchEffects,
-      PlantProposalEffects,
-      BlogEffects,
-      PaymentEffects,
-      ContactEffects,
-      InfrastructureEffects,
-      MomentDateModule,
-    ]),
-    MatNativeDateModule,
-    AgGridModule,
-    FormsModule,
-    LeafletModule,
-    LeafletDrawModule,
-    TranslateModule.forRoot({
-      defaultLanguage: 'de',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-    }),
-    NgxSliderModule,
-  ],
-  providers: [
-    {
-      provide: MatPaginatorIntl,
-      useFactory: (translate) => {
-        const service = new PaginatorIntlService();
-        service.injectTranslateService(translate);
-        return service;
-      },
-      deps: [TranslateService],
-    },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-EN' },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-    // {provide: APP_BASE_HREF, useValue:'backOffice2022'}
-    { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' },
-    AuthGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    // AppCookieService,
-    // CookieService,
-    {
-      provide: LOCALE_ID,
-      useValue: 'de-DE', // 'de-DE' for Germany, 'fr-FR' for France ...
-    },
-    provideCharts(withDefaultRegisterables())
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [AppComponent, UserRouterOutletComponent, BackOfficeRouterOutletComponent],
+    bootstrap: [AppComponent], imports: [CommonModule,
+        PagesModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        UtilModule,
+        StoreModule.forRoot({
+            authState: authReducerFn,
+            profileState: profileReducerFn,
+            cartsState: cartsReducerFn,
+            userState: userReducerFn,
+            projectsState: projectsReducerFn,
+            treeTypesState: treeTypeReducerFn,
+            errorsState: errorsReducerFn,
+            successMessagesState: successMessageReducerFn,
+            contentState: contentReducerFn,
+            eventState: eventsReducerFn,
+            teamsState: teamReducerFn,
+            plantbagState: plantbagReducerFn,
+            treesState: treeReducerFn,
+            rankingState: rankingReducerFn,
+            projectReportsState: projectsReportReducerFn,
+            searchState: searchReducerFn,
+            blogState: blogReducerFn,
+            plantProposalState: plantProposalReducerFn,
+            paymentState: paymentReducerFn,
+            contactState: contactReducerFn,
+            infrastructureState: infrastructureReducerFn,
+        }),
+        EffectsModule.forRoot([
+            AuthEffects,
+            ProfileEffects,
+            CartsEffects,
+            UserEffects,
+            ProjectsEffects,
+            TreeTypeEffects,
+            ContentEffects,
+            EventsEffects,
+            TeamEffects,
+            PlantbagEffects,
+            TreeEffects,
+            RankingEffects,
+            ProjectReportsEffects,
+            SearchEffects,
+            PlantProposalEffects,
+            BlogEffects,
+            PaymentEffects,
+            ContactEffects,
+            InfrastructureEffects,
+            MomentDateModule,
+        ]),
+        MatNativeDateModule,
+        AgGridModule,
+        FormsModule,
+        LeafletModule,
+        LeafletDrawModule,
+        TranslateModule.forRoot({
+            defaultLanguage: 'de',
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient],
+            },
+        }),
+        NgxSliderModule], providers: [
+        {
+            provide: MatPaginatorIntl,
+            useFactory: (translate) => {
+                const service = new PaginatorIntlService();
+                service.injectTranslateService(translate);
+                return service;
+            },
+            deps: [TranslateService],
+        },
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE],
+        },
+        { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+        { provide: MAT_DATE_LOCALE, useValue: 'en-EN' },
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+        // {provide: APP_BASE_HREF, useValue:'backOffice2022'}
+        { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' },
+        AuthGuard,
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        // AppCookieService,
+        // CookieService,
+        {
+            provide: LOCALE_ID,
+            useValue: 'de-DE', // 'de-DE' for Germany, 'fr-FR' for France ...
+        },
+        provideCharts(withDefaultRegisterables()),
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {}
