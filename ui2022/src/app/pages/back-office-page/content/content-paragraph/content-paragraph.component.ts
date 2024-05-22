@@ -1,9 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/app.state';
-import { deleteParagraph } from 'src/app/store/content.store';
 import { DeleteConfirmationDialogComponent } from 'src/app/util/common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { environment } from '../../../../../environments/environment';
 
