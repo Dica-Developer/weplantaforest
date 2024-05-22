@@ -217,10 +217,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/material-moment-adapter@^16.2.5":
-  version "16.2.14"
-  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-16.2.14.tgz#d6972a50fcbb21483ba2888c577e443bebd0b6e6"
-  integrity sha512-LagTDXEq8XOVLy8CVswCbmq7v9bb84+VikEEN09tz831U/7PHjDZ3xRgpKtv7hXrh8cTZOg3UPQw5tZk0hwh3Q==
+"@angular/material-moment-adapter@^14.2.7":
+  version "14.2.7"
+  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-14.2.7.tgz#65403f8c31b53237aecbea9f8aff5372c11ee8e2"
+  integrity sha512-uadhugTqgETxCTis4da/TpYfIUQDQSfGAxgH1n93eFNhGdW+aof3T4uKcbZ5d18RzU+lgO6RELuPnWW2PPlmCA==
   dependencies:
     tslib "^2.3.0"
 
@@ -257,17 +257,17 @@
   resolved "https://registry.yarnpkg.com/@assemblyscript/loader/-/loader-0.10.1.tgz#70e45678f06c72fa2e350e8553ec4a4d72b92e06"
   integrity sha512-H71nDOOL8Y7kWRLqf6Sums+01Q5msqBW2KhDUTemh1tvY04eSkSXrK0uj/4mmY0Xr16/3zyZmsrxN7CKuRbNRg==
 
-"@asymmetrik/ngx-leaflet-draw@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet-draw/-/ngx-leaflet-draw-14.0.1.tgz#2afa46a2faca77d0c61439fe1e905fb092a0cb92"
-  integrity sha512-HG2aXak3gdXpLRoKGqyYbbCymuJQLvdscf5kMoKpatGX7CTfvDwc4vcQ+jIVLcG3faPltFueyunyDR2EBx0E7w==
+"@asymmetrik/ngx-leaflet-draw@^15.0.1":
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet-draw/-/ngx-leaflet-draw-15.0.1.tgz#9592c9e24f365c983febbe16a2c8422097a63043"
+  integrity sha512-KLcIoYdTSlsxGb+Mwfjv1uSEizVJJswhMzKMWTX3hmKANT0qXuEwYnmIEKGITxPIEbAZZL3Cnp0/Sf9/1cR6FA==
   dependencies:
     tslib "^2.3.0"
 
-"@asymmetrik/ngx-leaflet@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet/-/ngx-leaflet-14.0.1.tgz#1263fa56804e32e36af9cf7feb8b59b618a45115"
-  integrity sha512-bARZjrkB8JbXGpeMnE2SLL4WFwpKpkyxCkHWTHR1vT/oRva6hpDhTf8PgR2zF1TYOB8GZt0JXYVZ8ao5qzYvaA==
+"@asymmetrik/ngx-leaflet@^15.0.1":
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/@asymmetrik/ngx-leaflet/-/ngx-leaflet-15.0.1.tgz#7041b4841ac854089f21d644cece16389588c1b8"
+  integrity sha512-vlwk6lxt+KtBBeGOX6XX1pRBfkH3c41kp29UsY/tj/pVGrMZ3tGH9heeal0vUMIr3ERAZzExJEqwjzoqoU2IMw==
   dependencies:
     tslib "^2.3.0"
 
@@ -1790,17 +1790,17 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz#4fc56c15c580b9adb7dc3c333a134e540b44bfb1"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
-"@ngrx/effects@^14.3.2":
-  version "14.3.3"
-  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-14.3.3.tgz#5c9e43e4dc5e1d544f4604fc6a32feec2380c413"
-  integrity sha512-bP7rIHlu1KAj5Wm0TWR7Q8VlOQOBu8uiN/fDP3Lqi8FwVW6HOq9eBGcFwJGyqwVAmulsvLFB68MhpMYg2W78+w==
+"@ngrx/effects@^15.0.0":
+  version "15.4.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-15.4.0.tgz#31e80aa2ef13953772607b9c6dcb12efce2e1da5"
+  integrity sha512-/8gHhOM9aeGaw8OG2LLwi4I4p84xzG0EU9TqWrvQcW74wn8sFZONjLvUte5YOzJ5502PPFFrfXSOc+lHnVAJUA==
   dependencies:
     tslib "^2.0.0"
 
-"@ngrx/store@14.3.2":
-  version "14.3.2"
-  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-14.3.2.tgz#91333c9c4d7b54bf98d842cb94e6afa3a6ea8df2"
-  integrity sha512-XGHjr0arh6gClo8Ce+xqJLvW9PkeXPW2tCo9Z5qMtHFI/z5dUppLVKGmMgD/fQBDyoqWTK5xu+89tDkdeZfRjQ==
+"@ngrx/store@15.0.0":
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-15.0.0.tgz#aec52a4139f6bb11e71752630e437001a77f5dd6"
+  integrity sha512-zGEK7pgL9X1M2d+tF5tJRjN9dUibfPnyAFcI0+375gBkUSU2gJxuphB0NoGPVJMtLFsW+5yI4+kjui7M6nsaYQ==
   dependencies:
     tslib "^2.0.0"
 
