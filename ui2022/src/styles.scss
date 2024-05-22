@@ -333,32 +333,7 @@ app-profile-page {
   }
 }
 
-.cc-deny,
-.cc-message {
-  font-size: 1rem !important;
-}
-.cc-link {
-  font-weight: bold;
-}
-.cc-allow {
-  border-radius: 45px;
-  padding: 0.35rem 1rem;
-  font-size: 1rem !important;
-  background: var(--dark-brown) !important;
-  border-radius: 45px;
-  color: var(--background) !important;
-  text-decoration: none;
-  &:hover {
-    background: var(--green) !important;
-    color: var(--black) !important;
-  }
-}
-
-.mat-snack-bar-container {
-  max-width: 45vw !important;
-}
-
-.custom-snackbar {
+.mdc-snackbar__surface {
   background: var(--background) !important;
 }
 
@@ -390,6 +365,7 @@ a:hover {
 .ck-editor__editable_inline {
     min-height: 500px;
 }
+
 
 @media only screen and (max-width: 768px) {
   .mat-snack-bar-container {
