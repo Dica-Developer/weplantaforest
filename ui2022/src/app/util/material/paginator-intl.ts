@@ -28,9 +28,9 @@ export class PaginatorIntlService extends MatPaginatorIntl {
   }
 
   translateLabels() {
-    super.itemsPerPageLabel = this.translate.instant('paginator.itemsPerPage');
-    super.nextPageLabel = this.translate.instant('paginator.nextPage');
-    super.previousPageLabel = this.translate.instant('paginator.previousPage');
+    this.itemsPerPageLabel = this.translate.instant('paginator.itemsPerPage');
+    this.nextPageLabel = this.translate.instant('paginator.nextPage');
+    this.previousPageLabel = this.translate.instant('paginator.previousPage');
     this.changes.next();
   }
 }

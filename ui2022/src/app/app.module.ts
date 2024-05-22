@@ -51,11 +51,11 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BlogEffects, blogReducerFn } from './store/blog.store';
 import { PaymentEffects, paymentReducerFn } from './store/payment.store';
 import { ContactEffects, contactReducerFn } from './store/contact.store';
-import { NgChartsModule } from 'ng2-charts';
 import { InfrastructureEffects, infrastructureReducerFn } from './store/infrastructure.store';
 import { MomentDateAdapter, MomentDateModule } from '@angular/material-moment-adapter';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PaginatorIntlService } from './util/material/paginator-intl';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const MY_FORMATS = {
   parse: {
@@ -146,7 +146,6 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
       },
     }),
     NgxSliderModule,
-    NgChartsModule,
   ],
   providers: [
     {
@@ -177,6 +176,7 @@ registerLocaleData(localeEn, 'en-EN', localeEnExtra);
       provide: LOCALE_ID,
       useValue: 'de-DE', // 'de-DE' for Germany, 'fr-FR' for France ...
     },
+    provideCharts(withDefaultRegisterables())
   ],
   bootstrap: [AppComponent],
 })

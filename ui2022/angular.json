@@ -101,18 +101,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ui2022:build"
+            "buildTarget": "ui2022:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ui2022:build:production"
+              "buildTarget": "ui2022:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ui2022:build"
+            "buildTarget": "ui2022:build"
           }
         },
         "test": {
