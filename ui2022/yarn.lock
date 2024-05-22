@@ -124,10 +124,10 @@
     ora "5.4.1"
     rxjs "6.6.7"
 
-"@angular-slider/ngx-slider@^14.0.0":
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/@angular-slider/ngx-slider/-/ngx-slider-14.0.0.tgz#300904fcbcb2d2011f04cb662d58b39b95a77a0a"
-  integrity sha512-hQcBdq2hjowXpIujDBTrLKqDmrMd/Nq69iuBNXYnyX8UeIG9nwQMIsv4V1BsnZty7YxnF2uhssVQnoT36HhZlg==
+"@angular-slider/ngx-slider@^15.0.0":
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-slider/ngx-slider/-/ngx-slider-15.0.1.tgz#f6a6a067222e5864fea028f1f50d79c7ad558186"
+  integrity sha512-6lk/t+mSXzQQ62v9iIwsB1iWyPi+YjMzbDQgVAohQyrgnu2yvAoHVgkLLO1xlsSzgYs9qAFYJ93P9nfPUbG7Ug==
   dependencies:
     detect-passive-events "^2.0.3"
     rxjs "~7.5.0"
@@ -4791,10 +4791,10 @@ ng2-charts@^4.1.1:
     lodash-es "^4.17.15"
     tslib "^2.3.0"
 
-ngx-paypal@^10.1.0:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/ngx-paypal/-/ngx-paypal-10.1.0.tgz#fd0d8b2332a42ade1afae80591899bb1b5b8c994"
-  integrity sha512-5hWxarRFW681J6ZePWTRjiQrboyyZHQcmYIaCIvJHRjTU+N5t1WKfzQJPCZQ93nTOyPcn8iB1UaLeDcF5xSgoA==
+ngx-paypal@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-paypal/-/ngx-paypal-11.0.0.tgz#5926b9e65707f5d79170d743d5a40a6e19eb28f8"
+  integrity sha512-ABISig5C868S3KAylZr1iG9/ydjBDqqKOyuPBpaPeqDfkBz2kSZsgX+JXvrS4oT7C3SFf3NOrN3h1ECaltx1/g==
   dependencies:
     tslib "^2.3.0"
 
