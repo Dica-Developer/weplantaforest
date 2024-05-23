@@ -10,7 +10,7 @@ export class CookieHelper {
 
   openCookieConfirmation() {
     this.snackBar.openFromComponent(CookieConfirmationComponent, {
-      panelClass: ['custom-snackbar'],
+      panelClass: ['cookie-snackbar'],
     });
   }
 }

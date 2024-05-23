@@ -96,18 +96,22 @@ export class SignupPageComponent implements OnInit {
     } else if (!this.captchaValid) {
       this.snackbar.open(this.translateService.instant('wrongCaptcha'), 'OK', {
         duration: 4000,
+        panelClass: ['warning-snackbar'],
       });
     } else if (!this.checkPasswords()) {
       this.snackbar.open(this.translateService.instant('passwordsDontMatch'), 'OK', {
         duration: 4000,
+        panelClass: ['warning-snackbar'],
       });
     } else if (!this.signupForm.get('terms').value || !this.signupForm.get('privacyPolicy').value) {
       this.snackbar.open(this.translateService.instant('acceptTerms'), 'OK', {
         duration: 4000,
+        panelClass: ['warning-snackbar'],
       });
     } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
+        panelClass: ['warning-snackbar'],
       });
     }
   }

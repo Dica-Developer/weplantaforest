@@ -51,23 +51,35 @@ mat-divider {
   color: var(--background) !important;
 }
 
-snack-bar-container {
-  background-color: var(--orange) !important;
-  color: var(--black) !important;
+// MATERIAL SNACKBAR MATERIAL SNACKBAR MATERIAL SNACKBAR MATERIAL SNACKBAR
+mat-snack-bar-container {
   .mat-simple-snackbar-action {
     color: var(--black) !important;
   }
-}
-
-.success-snackbar {
-  background-color: var(--green) !important;
-}
-
-.warning-snackbar {
-  background-color: #f3b930 !important;
-  color: var(--black) !important;
-  .mat-simple-snackbar-action {
+  .mdc-snackbar__surface {
+    background-color: var(--orange) !important;
+  }
+  .mat-mdc-snack-bar-label {
     color: var(--black) !important;
+    font-family: 'Bull-mono' !important;
+  }
+}
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  max-width: 900px!important;
+}
+.success-snackbar {
+  .mdc-snackbar__surface {
+    background: var(--green) !important;
+  }
+}
+.cookie-snackbar {
+  .mdc-snackbar__surface {
+    background-color: var(--background) !important;
+  }
+}
+.warning-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #f3b930 !important;
   }
 }
 
@@ -363,7 +375,7 @@ a:hover {
 }
 
 .ck-editor__editable_inline {
-    min-height: 500px;
+  min-height: 500px;
 }
 
 
