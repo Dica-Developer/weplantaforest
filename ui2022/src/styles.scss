@@ -134,23 +134,22 @@ mat-snack-bar-container {
 .mat-table {
   background: var(--background);
 }
-
-th.mat-header-cell {
+.mdc-data-table__table {
+  min-width: unset!important;
+}
+th.mat-mdc-header-cell {
   padding-left: 0 !important;
   padding-top: 0.5rem !important;
   font-family: 'Bull-mono';
 }
-
 tr,
 td {
   padding-left: 0 !important;
   font-family: 'Bull-mono';
 }
-
 .tableAlignment {
   padding-top: 0.75rem !important;
 }
-
 .minTable200 {
   min-width: 200px;
 }
