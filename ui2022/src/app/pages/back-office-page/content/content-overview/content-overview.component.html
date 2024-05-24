@@ -5,7 +5,7 @@
     </button>
     <app-content-grid></app-content-grid>
   </div>
-  <div [ngClass]="contentDetails ? 'column is-6' : 'no-display'" *ngIf="contentDetails">
+  <div [ngClass]="contentDetails ? 'column is-6' : 'is-hidden'" *ngIf="contentDetails">
     <app-content-details></app-content-details>
   </div>
 </div>

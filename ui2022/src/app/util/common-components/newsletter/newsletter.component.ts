@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { selectCookies } from 'src/app/store/infrastructure.store';
+import { CookieHelper } from '../../cookie.helper';
 
 @Component({
   selector: 'app-newsletter',
@@ -28,7 +29,8 @@ export class NewsletterComponent implements OnInit {
   constructor(
     private router: Router,
     protected sanitizer: DomSanitizer,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private cookieHelper: CookieHelper
   ) {}
 
   ngOnInit(): void {
@@ -39,4 +41,8 @@ export class NewsletterComponent implements OnInit {
   }
 
   subscribeToNewsletter() {}
+
+  showCookieConfirmation() {
+    this.cookieHelper.openCookieConfirmation();
+  }
 }
