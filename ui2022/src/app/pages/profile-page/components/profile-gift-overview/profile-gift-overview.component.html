@@ -6,7 +6,7 @@
   <div class="center margin-bottom-1">
     <app-button label="{{ 'createGift' | translate }}" (click)="createGift()"></app-button>
   </div>
-  <mat-tab-group mat-align-tabs="center">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
     <mat-tab label="{{ 'redeemGift' | translate }}">
       <div class="is-flex is-justify-content-center">
         <app-profile-redeem-gift></app-profile-redeem-gift>
