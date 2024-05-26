@@ -76,6 +76,7 @@ public class StatisticsController {
     public ResponseEntity<?> getCo2Statistic() {
         List<Co2StatisticData> result = new ArrayList<>();
 
+			System.out.println("result---------------: " + result);
         for (int year = 2008; year <= LocalDate.now().getYear() + 1; year++) {
             LocalDateTime startDate = null;
             if (year == (LocalDate.now().getYear() + 1)) {
@@ -84,6 +85,8 @@ public class StatisticsController {
                 startDate = LocalDateTime.of(year, 1, 1, 0, 0);
             }
             val co2 = co2Repository.getAllTreesAndCo2Saving(startDate.toInstant(ZoneOffset.UTC).toEpochMilli());
+			System.out.println("co2--------------------: " + co2.toString());
+			System.out.println(co2);
             Co2StatisticData co2StatisticData = new Co2StatisticData(Math.floor(co2.getCo2()), String.valueOf(startDate.getYear() - 1));
             result.add(co2StatisticData);
         }

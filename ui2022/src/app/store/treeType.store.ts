@@ -1,14 +1,13 @@
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { TreeType } from './project.store';
 import { AppState } from './app.state';
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TreeTypeImageType, TreeTypeService } from '../services/treeType.service';
 import { catchError, concatMap, exhaustMap, switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
 import { addError } from './error.state';
 import { Router } from '@angular/router';
-import { ExplorePageComponent } from '../pages/explore-page/explore-page.component';
 
 export interface TreeTypeAdmin {
   annualCo2SavingInTons: number;
