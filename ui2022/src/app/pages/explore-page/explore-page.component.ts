@@ -5,7 +5,7 @@ import { AppState } from 'src/app/store/app.state';
 import { TreeType } from 'src/app/store/project.store';
 import { loadTreeTypes, selectTreeTypes } from 'src/app/store/treeType.store';
 import { selectProfileDetails } from 'src/app/store/profile.store';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeTileComponent } from '../../util/common-components/tree-tile/tree-tile.component';

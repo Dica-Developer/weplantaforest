@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BlogArticle } from 'src/app/store/blog.store';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
 import { SafeHtmlPipe } from '../../../../util/common-components/safehtml.pipe';
 import { RouterLink } from '@angular/router';

@@ -4,7 +4,7 @@ import { ActiveProject, selectActiveProjects } from '../../../../store/project.s
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
 import { UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TextHelper } from '../../../../util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { createPlantbagForBackend, generateCodes } from '../../../../store/plantbag.store';
 import { validatePlantbag, PlantbagState, selectPlantbag } from '../../../../store/plantbag.store';
 import { MatButton } from '@angular/material/button';

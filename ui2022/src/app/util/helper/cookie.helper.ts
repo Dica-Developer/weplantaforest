@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CookieConfirmationComponent } from './common-components/cookie-confirmation/cookie-confirmation.component';
+import { CookieConfirmationComponent } from 'src/app/util/common-components/cookie-confirmation/cookie-confirmation.component';
 
 @Injectable({
   providedIn: 'root',

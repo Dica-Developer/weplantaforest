@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
-import { TextHelper } from '../../../../../util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../store/app.state';
 import { environment } from '../../../../../../environments/environment';

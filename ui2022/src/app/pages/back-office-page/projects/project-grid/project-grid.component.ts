@@ -7,7 +7,6 @@ import {
   GridOptions,
 } from 'ag-grid-community';
 import { AppState } from 'src/app/store/app.state';
-import { GridHelper } from '../../../../util/grid.helper';
 import { Store } from '@ngrx/store';
 import { selectProjects, selectProjectsLoading } from '../../../../store/project.store';
 import { Observable, Subscription } from 'rxjs';
@@ -16,6 +15,7 @@ import { GridProjectActionsComponent } from '../../../../util/grid-components/gr
 import { AgGridAngular } from 'ag-grid-angular';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { GridHelper } from 'src/app/util/helper/grid.helper';
 
 @Component({
     selector: 'app-project-grid',

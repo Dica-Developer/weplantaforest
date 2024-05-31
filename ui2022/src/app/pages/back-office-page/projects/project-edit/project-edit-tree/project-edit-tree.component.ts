@@ -8,7 +8,7 @@ import {
   deleteArticleWithoutId,
 } from '../../../../../store/project.store';
 import { selectTreeTypes } from '../../../../../store/treeType.store';
-import { TextHelper } from '../../../../../util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { CdkScrollable } from '@angular/cdk/scrolling';

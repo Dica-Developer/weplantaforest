@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
-import { TextHelper } from '../../text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 
 @Component({
     selector: 'app-project-tile',

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { PlantbagState, selectPlantbag, selectPlantbagPrice } from '../../../store/plantbag.store';
 import { Observable, Subscription, take } from 'rxjs';
-import { TextHelper } from '../../text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { selectIsGift, setGift } from 'src/app/store/payment.store';
 import { TranslateModule } from '@ngx-translate/core';

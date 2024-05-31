@@ -3,7 +3,7 @@ import { UntypedFormControl, Validators, FormsModule, ReactiveFormsModule } from
 import { ActiveProjectArticle } from '../../../store/project.store';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { TextHelper } from '../../text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { Subscription } from 'rxjs';
 import { addPlantbagItem, removePlantbagItem } from '../../../store/plantbag.store';
 import { environment } from '../../../../environments/environment';

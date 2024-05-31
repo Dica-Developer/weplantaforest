@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { TextHelper } from '../../text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { selectUserLanguage } from '../../../store/profile.store';

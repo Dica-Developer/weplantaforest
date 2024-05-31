@@ -1,16 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { GridHelper } from '../../../../util/grid.helper';
+import { GridHelper } from 'src/app/util/helper/grid.helper';
 import { Observable, Subscription } from 'rxjs';
 import { selectUsersLoadingProgress, loadUsers, selectUsers } from '../../../../store/user.store';
 import { CellClickedEvent, CellValueChangedEvent, ColDef, GridOptions } from 'ag-grid-community';
 import { GridCheckboxComponent } from '../../../../util/grid-components/grid-checkbox/grid-checkbox.component';
-import { environment } from '../../../../../environments/environment';
 import { UserGridProfileLinkComponent } from '../../../../util/grid-components/user-grid-profile-link/user-grid-profile-link.component';
 import {
   updateUserBannedFlag,
-  updateUserArticleManagerRole,
   updateUserAdminRole,
 } from '../../../../store/user.store';
 import {

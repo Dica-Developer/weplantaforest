@@ -15,7 +15,7 @@ import {
   UntypedFormArray,
   Validators,
 } from '@angular/forms';
-import { TextHelper } from '../../../../util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { addProjectImage } from '../../../../store/project.store';
 import {
   ProjectArticle,

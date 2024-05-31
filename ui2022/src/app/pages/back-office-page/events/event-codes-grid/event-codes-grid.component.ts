@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GridApi, ColDef, GridOptions } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
-import { GridHelper } from '../../../../util/grid.helper';
 import { AppState } from '../../../../store/app.state';
 import { Store } from '@ngrx/store';
 import { selectEventCodes, selectEventDetails } from '../../../../store/events.store';
 import { AgGridAngular } from 'ag-grid-angular';
 import { MatButton } from '@angular/material/button';
+import { GridHelper } from 'src/app/util/helper/grid.helper';
 
 @Component({
     selector: 'app-event-codes-grid',

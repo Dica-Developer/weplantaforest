@@ -10,7 +10,7 @@ import { selectSuccessMessages, removeSuccessMessage } from './store/success-mes
 import { loadProfileDetails, selectUserLanguage } from './store/profile.store';
 import { getProjectsForCustomPlanting } from './store/plant.store';
 import { Subscription } from 'rxjs';
-import { CookieHelper } from './util/cookie.helper';
+import { CookieHelper } from './util/helper/cookie.helper';
 
 @Component({
     selector: 'app-root',

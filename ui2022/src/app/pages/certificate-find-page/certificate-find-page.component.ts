@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
-import { TextHelper } from '../../util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import {
   findCertificatePlantings,
   findCertificateSummary,

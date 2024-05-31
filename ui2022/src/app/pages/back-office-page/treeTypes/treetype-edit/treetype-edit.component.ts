@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TreeTypeAdmin, updateTreetype, deleteTreeType } from '../../../../store/treeType.store';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TextHelper } from '../../../../util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';

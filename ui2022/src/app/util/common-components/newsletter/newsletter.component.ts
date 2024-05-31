@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { selectCookies } from 'src/app/store/infrastructure.store';
-import { CookieHelper } from '../../cookie.helper';
+import { CookieHelper } from 'src/app/util/helper/cookie.helper';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../button/button.component';
 import { NgIf, AsyncPipe } from '@angular/common';

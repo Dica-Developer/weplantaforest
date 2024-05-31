@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentService } from 'src/app/services/content.service';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-faq-page',
-    templateUrl: './faq-page.component.html',
-    styleUrls: ['./faq-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgFor,
-        NgIf,
-        TranslateModule,
-    ],
+  selector: 'app-faq-page',
+  templateUrl: './faq-page.component.html',
+  styleUrls: ['./faq-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgFor,
+    NgIf,
+    TranslateModule,
+  ],
 })
 export class FaqPageComponent implements OnInit {
   faq: any[] = [];

@@ -9,7 +9,7 @@ import {
   selectProfileDetails,
   selectUserLanguage,
 } from '../../../store/profile.store';
-import { TextHelper } from '../../text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { ActiveProjectArticle } from '../../../store/project.store';
 import { addPlantbagItem, resetPlantbag } from '../../../store/plantbag.store';
 import { Router, RouterLink } from '@angular/router';

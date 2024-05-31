@@ -6,7 +6,7 @@ import { TreeType } from 'src/app/store/project.store';
 import { Observable, Subscription } from 'rxjs';
 import { UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { loadTreeTypes, selectTreeTypes } from 'src/app/store/treeType.store';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import {
   selectSelfPlantCreated,
   selfPlantFlagReset,

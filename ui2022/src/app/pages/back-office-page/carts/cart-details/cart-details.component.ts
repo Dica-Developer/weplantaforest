@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
-import { TextHelper } from '../../../../util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { resetCartDetails, CartDetails, selectCartDetails } from '../../../../store/carts.store';
 import { NgFor, CurrencyPipe, DatePipe } from '@angular/common';
 import { MatCard, MatCardContent } from '@angular/material/card';

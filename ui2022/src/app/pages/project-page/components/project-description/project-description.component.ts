@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ProjectReportDetails } from 'src/app/store/project-report.store';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
 import { LightboxGalleryComponent } from '../../../../util/common-components/lightbox-gallery/lightbox-gallery.component';
 import { RouterLink } from '@angular/router';

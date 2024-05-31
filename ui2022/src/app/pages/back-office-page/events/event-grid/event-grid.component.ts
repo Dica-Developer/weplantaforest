@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GridApi, ColDef, GridOptions, CellClickedEvent } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
-import { GridHelper } from '../../../../util/grid.helper';
 import { Observable, Subscription } from 'rxjs';
 import {
   selectEvents,
@@ -14,6 +13,7 @@ import { GridEventActionsComponent } from 'src/app/util/grid-components/grid-eve
 import { AgGridAngular } from 'ag-grid-angular';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { GridHelper } from 'src/app/util/helper/grid.helper';
 
 @Component({
     selector: 'app-event-grid',

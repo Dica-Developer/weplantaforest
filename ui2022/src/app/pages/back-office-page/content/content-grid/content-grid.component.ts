@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GridApi, ColDef, GridOptions, CellClickedEvent } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
-import { GridHelper } from '../../../../util/grid.helper';
 import { GridContentActionsComponent } from '../../../../util/grid-components/grid-content-actions/grid-content-actions.component';
 import { loadArticleTypes, loadArticleDetails } from '../../../../store/content.store';
 import {
@@ -14,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { AgGridAngular } from 'ag-grid-angular';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { GridHelper } from 'src/app/util/helper/grid.helper';
 
 @Component({
     selector: 'app-content-grid',
