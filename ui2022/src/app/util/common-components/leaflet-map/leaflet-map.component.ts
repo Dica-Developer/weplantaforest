@@ -14,11 +14,11 @@ import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @Component({
-    selector: 'app-leaflet-map',
-    templateUrl: './leaflet-map.component.html',
-    styleUrls: ['./leaflet-map.component.scss'],
-    standalone: true,
-    imports: [LeafletModule],
+  selector: 'app-leaflet-map',
+  templateUrl: './leaflet-map.component.html',
+  styleUrls: ['./leaflet-map.component.scss'],
+  standalone: true,
+  imports: [LeafletModule],
 })
 export class LeafletMapComponent implements OnInit, OnDestroy {
   map: Map;
@@ -60,7 +60,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   };
 
   @HostListener('window:load', ['$event'])
-  getScreenSize(event?) {
+  getScreenSize() {
     this.screenWidth = window.innerWidth;
   }
 

@@ -13,22 +13,23 @@ import { ProjectTileComponent } from '../../../../util/common-components/project
 import { NgFor, AsyncPipe } from '@angular/common';
 import { CircleIconComponent } from '../../../../util/common-components/icons/circle-icon/circle-icon.component';
 import { LeafletMapComponent } from '../../../../util/common-components/leaflet-map/leaflet-map.component';
+import { LeafletHelper } from 'src/app/util/helper/leaflet.helper';
 
 @Component({
-    selector: 'app-projects-section',
-    templateUrl: './projects-section.component.html',
-    styleUrls: ['./projects-section.component.scss'],
-    standalone: true,
-    imports: [
-        LeafletMapComponent,
-        CircleIconComponent,
-        NgFor,
-        ProjectTileComponent,
-        ButtonComponent,
-        RouterLink,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-projects-section',
+  templateUrl: './projects-section.component.html',
+  styleUrls: ['./projects-section.component.scss'],
+  standalone: true,
+  imports: [
+    LeafletMapComponent,
+    CircleIconComponent,
+    NgFor,
+    ProjectTileComponent,
+    ButtonComponent,
+    RouterLink,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class ProjectsSectionComponent implements OnInit, OnDestroy {
   projectReports$ = this.store.select(selectActiveProjectReports);
@@ -38,8 +39,11 @@ export class ProjectsSectionComponent implements OnInit, OnDestroy {
   projectReportSub: Subscription;
 
   projectAreas: any[][] = [];
+  isBrowser: boolean;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>,
+    private leafletHelper: LeafletHelper
+  ) {
     this.store.dispatch(loadActiveProjectReports());
     this.getScreenSize();
   }
@@ -50,6 +54,8 @@ export class ProjectsSectionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isBrowser = this.leafletHelper.checkIfBrowser();
+    console.log(this.isBrowser);
     if (this.screenWidth < 764) {
       this.mapHeight = '500px';
     }

@@ -27,39 +27,40 @@ import { MatInput } from '@angular/material/input';
 import { MatFormField, MatLabel, MatHint, MatSuffix } from '@angular/material/form-field';
 import { ButtonComponent } from '../../util/common-components/button/button.component';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { LeafletHelper } from 'src/app/util/helper/leaflet.helper';
 
 @Component({
-    selector: 'app-plant-self-page',
-    templateUrl: './plant-self-page.component.html',
-    styleUrls: ['./plant-self-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        ButtonComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormField,
-        MatLabel,
-        MatInput,
-        MatDatepickerInput,
-        MatHint,
-        MatDatepickerToggle,
-        MatSuffix,
-        MatDatepicker,
-        MatDatepickerActions,
-        MatButton,
-        MatDatepickerCancel,
-        MatDatepickerApply,
-        NgxSliderModule,
-        MatSelect,
-        NgFor,
-        MatOption,
-        LeafletMapComponent,
-        OfferAreaComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-plant-self-page',
+  templateUrl: './plant-self-page.component.html',
+  styleUrls: ['./plant-self-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    ButtonComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatDatepickerInput,
+    MatHint,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatDatepickerActions,
+    MatButton,
+    MatDatepickerCancel,
+    MatDatepickerApply,
+    NgxSliderModule,
+    MatSelect,
+    NgFor,
+    MatOption,
+    LeafletMapComponent,
+    OfferAreaComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class PlantSelfPageComponent implements OnInit {
   controlObj: UntypedFormGroup;
@@ -98,6 +99,7 @@ export class PlantSelfPageComponent implements OnInit {
     mainImageFile: new UntypedFormControl(null, []),
   });
 
+  isBrowser: boolean;
   userLanuage: string;
   userLanuguageSub: Subscription;
 
@@ -107,7 +109,10 @@ export class PlantSelfPageComponent implements OnInit {
     private router: Router,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
+    private leafletHelper: LeafletHelper
   ) {
+    this.isBrowser = this.leafletHelper.checkIfBrowser();
+    console.log(this.isBrowser);
     this.store.dispatch(loadTreeTypes());
     this.selectTreetypesSub = store.select(selectTreeTypes).subscribe((res) => {
       this.treeTypes = [];

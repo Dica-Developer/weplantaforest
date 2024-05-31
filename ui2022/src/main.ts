@@ -74,7 +74,6 @@ export function createTranslateLoader(http: HttpClient) {
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 registerLocaleData(localeEn, 'en-EN', localeEnExtra);
 
-
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
@@ -125,7 +124,12 @@ bootstrapApplication(AppComponent, {
         ContactEffects,
         InfrastructureEffects,
         MomentDateModule,
-      ]), MatNativeDateModule, AgGridModule, FormsModule, LeafletModule, LeafletDrawModule, TranslateModule.forRoot({
+      ]),
+      MatNativeDateModule,
+      AgGridModule,
+      FormsModule,
+      LeafletDrawModule,
+      TranslateModule.forRoot({
         defaultLanguage: 'de',
         loader: {
           provide: TranslateLoader,

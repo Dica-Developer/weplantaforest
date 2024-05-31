@@ -106,7 +106,7 @@
   </form>
 
   <h4 class="margin-left-4">{{ 'mapLocation' | translate }}:</h4>
-  <div class="map-margin">
+  <div class="map-margin" *ngIf="isBrowser">
     <app-leaflet-map
       [showMarker]="true"
       [mapHeight]="mapHeight"
