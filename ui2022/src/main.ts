@@ -1,7 +1,4 @@
 import { enableProdMode, DEFAULT_CURRENCY_CODE, LOCALE_ID, importProvidersFrom } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { MY_FORMATS, createTranslateLoader } from './app/app.module';
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -34,7 +31,6 @@ import { profileReducerFn, ProfileEffects } from './app/store/profile.store';
 import { authReducerFn, AuthEffects } from './app/store/auth.store';
 import { StoreModule } from '@ngrx/store';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
@@ -47,17 +43,44 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, HttpClien
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PaginatorIntlService } from './app/util/material/paginator-intl';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+import localeEn from '@angular/common/locales/en';
+import localeEnExtra from '@angular/common/locales/extra/en';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
 
 if (environment.production) {
   enableProdMode();
 }
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+registerLocaleData(localeEn, 'en-EN', localeEnExtra);
+
+
 bootstrapApplication(AppComponent, {
   providers: [
+    provideRouter(routes),
     importProvidersFrom(
       CommonModule,
       BrowserModule,
-      AppRoutingModule,
       StoreModule.forRoot({
         authState: authReducerFn,
         profileState: profileReducerFn,

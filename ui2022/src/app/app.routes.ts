@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { BackOfficeRouterOutletComponent } from './router-outlets/back-office-router-outlet/back-office-router-outlet.component';
 import { CartsOverviewComponent } from './pages/back-office-page/carts/carts-overview/carts-overview.component';
 import { ContentOverviewComponent } from './pages/back-office-page/content/content-overview/content-overview.component';
@@ -14,7 +13,6 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { AuthGuard } from './util/auth.guard';
-
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 import { RankingPageComponent } from './pages/ranking-page/ranking-page.component';
 import { ImprintPageComponent } from './pages/imprint-page/imprint-page.component';
@@ -100,7 +98,7 @@ export const userRoutes: Routes = [
   { path: 'certificate/find/:id', component: CertificateFindPageComponent },
 ];
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: UserRouterOutletComponent, children: userRoutes },
   {
     path: 'backOffice2022',
@@ -111,8 +109,3 @@ const routes: Routes = [
   { path: '**', component: NotFoundPageComponent },
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}
