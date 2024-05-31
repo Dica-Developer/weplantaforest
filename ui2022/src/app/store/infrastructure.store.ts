@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { switchMap } from 'rxjs/operators';
-import { AppState, PagedData } from './app.state';
+import { AppState } from './app.state';
 import { InfrastrutureService } from '../services/infrastructure.service';
 
 export interface OfferAreaDTO {
@@ -36,7 +36,6 @@ export const submitOfferAreaSuccess = createAction(
 );
 export const loadCaptcha = createAction(
   '[Infra] load captcha token',
-  // props<{ offer: OfferAreaDTO }>(),
 );
 export const loadCaptchaSuccess = createAction(
   '[Infra] load captcha token success',
