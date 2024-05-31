@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { UntypedFormGroup, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { TextHelper } from '../../../../../util/text.helper';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../store/app.state';
@@ -12,11 +12,27 @@ import {
   ProjectImageCreateEditRequest,
   createEditProjectImageData,
 } from '../../../../../store/project.store';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-project-edit-image',
-  templateUrl: './project-edit-image.component.html',
-  styleUrls: ['./project-edit-image.component.scss'],
+    selector: 'app-project-edit-image',
+    templateUrl: './project-edit-image.component.html',
+    styleUrls: ['./project-edit-image.component.scss'],
+    standalone: true,
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatInput,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButton,
+        MatIconButton,
+        MatIcon,
+    ],
 })
 export class ProjectEditImageComponent implements OnInit, OnDestroy {
   controlObj: UntypedFormGroup;
@@ -131,7 +147,16 @@ export class ProjectEditImageComponent implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: 'delete-project-image-confirmation-dialog',
-  templateUrl: 'delete-project-image-confirmation-dialog.html',
+    selector: 'delete-project-image-confirmation-dialog',
+    templateUrl: 'delete-project-image-confirmation-dialog.html',
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        MatDialogActions,
+        MatButton,
+        MatDialogClose,
+    ],
 })
 export class DeleteProjectImageConfirmationDialog {}

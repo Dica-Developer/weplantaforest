@@ -25,11 +25,39 @@ import {
 } from '../../../../store/project.store';
 import { ProjectReportDetails } from 'src/app/store/project-report.store';
 import { addError } from 'src/app/store/error.state';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { ProjectDescriptionComponent } from '../../../project-page/components/project-description/project-description.component';
+import { ProjectHeaderComponent } from '../../../project-page/components/project-header/project-header.component';
+import { ProjectEditImageComponent } from './project-edit-image/project-edit-image.component';
+import { MatButton } from '@angular/material/button';
+import { MatDivider } from '@angular/material/divider';
+import { ProjectEditTreeComponent } from './project-edit-tree/project-edit-tree.component';
+import { ProjectEditDataComponent } from './project-edit-data/project-edit-data.component';
+import { ProjectEditLocationComponent } from './project-edit-location/project-edit-location.component';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-project-edit',
-  templateUrl: './project-edit.component.html',
-  styleUrls: ['./project-edit.component.scss'],
+    selector: 'app-project-edit',
+    templateUrl: './project-edit.component.html',
+    styleUrls: ['./project-edit.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatTabGroup,
+        MatTab,
+        ProjectEditLocationComponent,
+        ProjectEditDataComponent,
+        NgFor,
+        ProjectEditTreeComponent,
+        MatDivider,
+        MatButton,
+        ProjectEditImageComponent,
+        ProjectHeaderComponent,
+        ProjectDescriptionComponent,
+        MatProgressSpinner,
+        AsyncPipe,
+    ],
 })
 export class ProjectEditComponent implements OnInit, OnDestroy {
   details: ProjectDetails;

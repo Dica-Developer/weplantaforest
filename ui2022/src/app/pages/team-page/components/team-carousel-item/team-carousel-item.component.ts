@@ -4,9 +4,10 @@ import { TeamMember } from 'src/app/store/team.store';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-team-carousel-item',
-  templateUrl: './team-carousel-item.component.html',
-  styleUrls: ['./team-carousel-item.component.scss'],
+    selector: 'app-team-carousel-item',
+    templateUrl: './team-carousel-item.component.html',
+    styleUrls: ['./team-carousel-item.component.scss'],
+    standalone: true,
 })
 export class TeamCarouselItemComponent implements OnInit {
   _member: TeamMember;

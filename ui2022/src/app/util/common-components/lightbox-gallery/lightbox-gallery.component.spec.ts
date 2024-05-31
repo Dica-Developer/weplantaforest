@@ -8,8 +8,8 @@ describe('LightboxGalleryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LightboxGalleryComponent ]
-    })
+    imports: [LightboxGalleryComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(LightboxGalleryComponent);

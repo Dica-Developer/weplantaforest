@@ -1,13 +1,25 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ProjectReportDetails } from 'src/app/store/project-report.store';
 import { TextHelper } from 'src/app/util/text.helper';
 import { environment } from 'src/environments/environment';
+import { LightboxGalleryComponent } from '../../../../util/common-components/lightbox-gallery/lightbox-gallery.component';
+import { RouterLink } from '@angular/router';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-project-description',
-  templateUrl: './project-description.component.html',
-  styleUrls: ['./project-description.component.scss'],
+    selector: 'app-project-description',
+    templateUrl: './project-description.component.html',
+    styleUrls: ['./project-description.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        ButtonComponent,
+        RouterLink,
+        LightboxGalleryComponent,
+        TranslateModule,
+    ],
 })
 export class ProjectDescriptionComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;

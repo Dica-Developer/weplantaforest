@@ -7,11 +7,23 @@ import {
 } from '../../../../store/content.store';
 import { Subscription } from 'rxjs';
 import { loadArticleDetailsSuccess } from '../../../../store/content.store';
+import { ContentDetailsComponent } from '../content-details/content-details.component';
+import { ContentGridComponent } from '../content-grid/content-grid.component';
+import { MatButton } from '@angular/material/button';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-content-overview',
-  templateUrl: './content-overview.component.html',
-  styleUrls: ['./content-overview.component.scss'],
+    selector: 'app-content-overview',
+    templateUrl: './content-overview.component.html',
+    styleUrls: ['./content-overview.component.scss'],
+    standalone: true,
+    imports: [
+        NgClass,
+        MatButton,
+        ContentGridComponent,
+        NgIf,
+        ContentDetailsComponent,
+    ],
 })
 export class ContentOverviewComponent implements OnInit, OnDestroy {
   contentDetails: ContentArticleDetails;

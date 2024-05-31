@@ -1,16 +1,28 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { TextHelper } from '../../text.helper';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { selectUserLanguage } from '../../../store/profile.store';
+import { MatError } from '@angular/material/form-field';
+import { NgIf, CurrencyPipe } from '@angular/common';
+import { MatInput } from '@angular/material/input';
 
 @Component({
-  selector: 'app-custom-plant-tree-input',
-  templateUrl: './custom-plant-tree-input.component.html',
-  styleUrls: ['./custom-plant-tree-input.component.scss'],
+    selector: 'app-custom-plant-tree-input',
+    templateUrl: './custom-plant-tree-input.component.html',
+    styleUrls: ['./custom-plant-tree-input.component.scss'],
+    standalone: true,
+    imports: [
+        MatInput,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+        MatError,
+        CurrencyPipe,
+    ],
 })
 export class CustomPlantTreeInputComponent implements OnInit, OnDestroy {
   @Input()

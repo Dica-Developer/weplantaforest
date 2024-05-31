@@ -1,12 +1,24 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, UntypedFormControl } from '@angular/forms';
+import { FormControl, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Subscription } from 'rxjs';
+import { SafeHtmlPipe } from '../safehtml.pipe';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
 @Component({
-  selector: 'app-text-editor',
-  templateUrl: './text-editor.component.html',
-  styleUrls: ['./text-editor.component.scss'],
+    selector: 'app-text-editor',
+    templateUrl: './text-editor.component.html',
+    styleUrls: ['./text-editor.component.scss'],
+    standalone: true,
+    imports: [
+        MatTabGroup,
+        MatTab,
+        CKEditorModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SafeHtmlPipe,
+    ],
 })
 export class TextEditorComponent implements OnInit, OnDestroy {
   controlInternal: UntypedFormControl;

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileTree } from '../../../store/profile.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf, DatePipe } from '@angular/common';
 
 export interface RankingItem {
   imageUrl: string;
@@ -10,9 +12,15 @@ export interface RankingItem {
 }
 
 @Component({
-  selector: 'app-carousel-item',
-  templateUrl: './carousel-item.component.html',
-  styleUrls: ['./carousel-item.component.scss'],
+    selector: 'app-carousel-item',
+    templateUrl: './carousel-item.component.html',
+    styleUrls: ['./carousel-item.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        DatePipe,
+        TranslateModule,
+    ],
 })
 export class CarouselItemComponent implements OnInit {
   _item: ProfileTree;

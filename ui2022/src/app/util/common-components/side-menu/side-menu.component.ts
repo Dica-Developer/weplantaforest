@@ -1,14 +1,27 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { logout } from 'src/app/store/auth.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuTrigger, MatMenu } from '@angular/material/menu';
 
 @Component({
-  selector: 'app-side-menu',
-  templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss'],
+    selector: 'app-side-menu',
+    templateUrl: './side-menu.component.html',
+    styleUrls: ['./side-menu.component.scss'],
+    standalone: true,
+    imports: [
+        MatMenuTrigger,
+        MatIcon,
+        MatMenu,
+        NgIf,
+        RouterLink,
+        TranslateModule,
+    ],
 })
 export class SideMenuComponent implements OnInit, OnDestroy {
   isAdmin: boolean;

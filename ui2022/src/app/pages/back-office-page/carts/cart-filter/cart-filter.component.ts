@@ -6,15 +6,46 @@ import {
 } from '../../../../store/carts.store';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { GridHelper } from '../../../../util/grid.helper';
 import { DateHelper } from 'src/app/util/date.helper';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatButton } from '@angular/material/button';
+import { MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatDateRangePicker } from '@angular/material/datepicker';
+import { MatOption } from '@angular/material/core';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
-  selector: 'app-cart-filter',
-  templateUrl: './cart-filter.component.html',
-  styleUrls: ['./cart-filter.component.scss'],
+    selector: 'app-cart-filter',
+    templateUrl: './cart-filter.component.html',
+    styleUrls: ['./cart-filter.component.scss'],
+    standalone: true,
+    imports: [
+        MatCard,
+        MatCardContent,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        NgFor,
+        MatOption,
+        MatDateRangeInput,
+        MatStartDate,
+        MatEndDate,
+        MatDatepickerToggle,
+        MatSuffix,
+        MatDateRangePicker,
+        NgIf,
+        MatError,
+        MatButton,
+        MatProgressBar,
+        AsyncPipe,
+    ],
 })
 export class CartFilterComponent implements OnInit {
   cartStatesList = this.gridHelper.getCartStates();

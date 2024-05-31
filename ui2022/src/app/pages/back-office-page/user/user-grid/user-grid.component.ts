@@ -19,11 +19,21 @@ import {
   updateUserActiveFlag,
 } from '../../../../store/user.store';
 import { Router } from '@angular/router';
+import { AgGridAngular } from 'ag-grid-angular';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-user-grid',
-  templateUrl: './user-grid.component.html',
-  styleUrls: ['./user-grid.component.scss'],
+    selector: 'app-user-grid',
+    templateUrl: './user-grid.component.html',
+    styleUrls: ['./user-grid.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatProgressBar,
+        AgGridAngular,
+        AsyncPipe,
+    ],
 })
 export class UserGridComponent implements OnInit, OnDestroy {
   usersLoading$: Observable<boolean>;

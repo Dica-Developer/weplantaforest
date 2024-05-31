@@ -8,8 +8,8 @@ describe('UserRouterOutletComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserRouterOutletComponent ]
-    })
+    imports: [UserRouterOutletComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(UserRouterOutletComponent);

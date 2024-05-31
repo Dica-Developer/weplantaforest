@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from '../../store/app.state';
@@ -14,11 +14,32 @@ import {
   selectPaymentDone,
 } from '../../store/payment.store';
 import { selectPlantbagPrice } from '../../store/plantbag.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { MatOption } from '@angular/material/core';
+import { NgFor, NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
 
 @Component({
-  selector: 'app-sepa-page',
-  templateUrl: './sepa-page.component.html',
-  styleUrls: ['./sepa-page.component.scss'],
+    selector: 'app-sepa-page',
+    templateUrl: './sepa-page.component.html',
+    styleUrls: ['./sepa-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInput,
+        MatSelect,
+        NgFor,
+        MatOption,
+        NgIf,
+        ButtonComponent,
+        AsyncPipe,
+        CurrencyPipe,
+        TranslateModule,
+    ],
 })
 export class SepaPageComponent implements OnInit, OnDestroy {
   form: FormGroup = new FormGroup({

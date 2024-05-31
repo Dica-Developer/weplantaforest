@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import {
@@ -10,11 +10,25 @@ import {
   selectFormDisabled,
   submitOfferArea,
 } from 'src/app/store/infrastructure.store';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { NgIf } from '@angular/common';
+import { CaptchaComponent } from '../../util/common-components/captcha/captcha.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-offer-project-page',
-  templateUrl: './offer-project-page.component.html',
-  styleUrls: ['./offer-project-page.component.scss'],
+    selector: 'app-offer-project-page',
+    templateUrl: './offer-project-page.component.html',
+    styleUrls: ['./offer-project-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        FormsModule,
+        ReactiveFormsModule,
+        CaptchaComponent,
+        NgIf,
+        ButtonComponent,
+        TranslateModule,
+    ],
 })
 export class OfferProjectPageComponent implements OnInit {
   offerForm = new UntypedFormGroup({

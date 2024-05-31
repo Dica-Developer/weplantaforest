@@ -3,11 +3,14 @@ import { UntypedFormControl } from '@angular/forms';
 import * as L from 'leaflet';
 import { tileLayer, latLng, Map } from 'leaflet';
 import { ProjectPositionPoint } from '../../../../../store/project.store';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @Component({
-  selector: 'app-project-edit-location',
-  templateUrl: './project-edit-location.component.html',
-  styleUrls: ['./project-edit-location.component.scss'],
+    selector: 'app-project-edit-location',
+    templateUrl: './project-edit-location.component.html',
+    styleUrls: ['./project-edit-location.component.scss'],
+    standalone: true,
+    imports: [LeafletModule],
 })
 export class ProjectEditLocationComponent implements OnInit {
   control: UntypedFormControl;

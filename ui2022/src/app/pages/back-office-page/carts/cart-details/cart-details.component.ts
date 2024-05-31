@@ -3,11 +3,21 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
 import { TextHelper } from '../../../../util/text.helper';
 import { resetCartDetails, CartDetails, selectCartDetails } from '../../../../store/carts.store';
+import { NgFor, CurrencyPipe, DatePipe } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
-  selector: 'app-cart-details',
-  templateUrl: './cart-details.component.html',
-  styleUrls: ['./cart-details.component.scss'],
+    selector: 'app-cart-details',
+    templateUrl: './cart-details.component.html',
+    styleUrls: ['./cart-details.component.scss'],
+    standalone: true,
+    imports: [
+        MatCard,
+        MatCardContent,
+        NgFor,
+        CurrencyPipe,
+        DatePipe,
+    ],
 })
 export class CartDetailsComponent implements OnInit, OnDestroy {
   cartDetails: CartDetails;

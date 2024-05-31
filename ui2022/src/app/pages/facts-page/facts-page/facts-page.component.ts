@@ -2,12 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { ChartConfiguration } from 'chart.js';
 import { combineLatest } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-facts-page',
-  templateUrl: './facts-page.component.html',
-  styleUrls: ['./facts-page.component.scss'],
+    selector: 'app-facts-page',
+    templateUrl: './facts-page.component.html',
+    styleUrls: ['./facts-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        TranslateModule,
+    ],
 })
 export class FactsPageComponent implements OnInit {
   labels: string[] = [];

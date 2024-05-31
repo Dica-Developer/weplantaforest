@@ -1,11 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-team-tree-carousel-item',
-  templateUrl: './team-tree-carousel-item.component.html',
-  styleUrls: ['./team-tree-carousel-item.component.scss'],
+    selector: 'app-team-tree-carousel-item',
+    templateUrl: './team-tree-carousel-item.component.html',
+    styleUrls: ['./team-tree-carousel-item.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        DatePipe,
+        TranslateModule,
+    ],
 })
 export class TeamTreeCarouselItemComponent implements OnInit {
   _item: any;

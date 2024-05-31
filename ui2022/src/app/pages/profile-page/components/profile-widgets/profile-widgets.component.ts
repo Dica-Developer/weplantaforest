@@ -4,11 +4,19 @@ import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { environment } from '../../../../../environments/environment';
 import { selectUserLanguage } from '../../../../store/profile.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
 @Component({
-  selector: 'app-profile-widgets',
-  templateUrl: './profile-widgets.component.html',
-  styleUrls: ['./profile-widgets.component.scss'],
+    selector: 'app-profile-widgets',
+    templateUrl: './profile-widgets.component.html',
+    styleUrls: ['./profile-widgets.component.scss'],
+    standalone: true,
+    imports: [
+        MatTabGroup,
+        MatTab,
+        TranslateModule,
+    ],
 })
 export class ProfileWidgetsComponent implements OnInit {
   userLanuage: string;

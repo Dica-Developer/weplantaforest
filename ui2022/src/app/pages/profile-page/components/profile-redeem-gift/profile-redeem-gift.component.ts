@@ -1,14 +1,25 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from '../../../../store/app.state';
 import { redeemGift } from '../../../../store/profile.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { MatInput } from '@angular/material/input';
 
 @Component({
-  selector: 'app-profile-redeem-gift',
-  templateUrl: './profile-redeem-gift.component.html',
-  styleUrls: ['./profile-redeem-gift.component.scss'],
+    selector: 'app-profile-redeem-gift',
+    templateUrl: './profile-redeem-gift.component.html',
+    styleUrls: ['./profile-redeem-gift.component.scss'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatInput,
+        ButtonComponent,
+        TranslateModule,
+    ],
 })
 export class ProfileRedeemGiftComponent implements OnInit, AfterViewInit, OnDestroy {
   giftForm: FormGroup = new FormGroup({

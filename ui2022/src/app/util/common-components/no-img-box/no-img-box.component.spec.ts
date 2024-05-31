@@ -8,8 +8,8 @@ describe('NoImgBoxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NoImgBoxComponent ]
-    })
+    imports: [NoImgBoxComponent]
+})
     .compileComponents();
   });
 

@@ -8,8 +8,8 @@ describe('TreeTypeImageUploadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TreeTypeImageUploadComponent ]
-    })
+    imports: [TreeTypeImageUploadComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(TreeTypeImageUploadComponent);

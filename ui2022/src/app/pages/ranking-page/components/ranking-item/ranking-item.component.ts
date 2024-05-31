@@ -4,9 +4,10 @@ import { environment } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-ranking-item',
-  templateUrl: './ranking-item.component.html',
-  styleUrls: ['./ranking-item.component.scss'],
+    selector: 'app-ranking-item',
+    templateUrl: './ranking-item.component.html',
+    styleUrls: ['./ranking-item.component.scss'],
+    standalone: true,
 })
 export class RankingItemComponent implements OnInit {
   @Input()

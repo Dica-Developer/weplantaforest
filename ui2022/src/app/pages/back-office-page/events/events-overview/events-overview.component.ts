@@ -5,11 +5,23 @@ import { loadEvents, EventDetails, selectEventDetails } from '../../../../store/
 import { Subscription } from 'rxjs';
 import { loadEventDetailsSuccess } from '../../../../store/events.store';
 import { loadActiveProjects } from '../../../../store/project.store';
+import { EventDetailsComponent } from '../event-details/event-details.component';
+import { EventGridComponent } from '../event-grid/event-grid.component';
+import { MatButton } from '@angular/material/button';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-events-overview',
-  templateUrl: './events-overview.component.html',
-  styleUrls: ['./events-overview.component.scss'],
+    selector: 'app-events-overview',
+    templateUrl: './events-overview.component.html',
+    styleUrls: ['./events-overview.component.scss'],
+    standalone: true,
+    imports: [
+        NgClass,
+        MatButton,
+        EventGridComponent,
+        NgIf,
+        EventDetailsComponent,
+    ],
 })
 export class EventsOverviewComponent implements OnInit, OnDestroy {
   eventDetails: EventDetails;

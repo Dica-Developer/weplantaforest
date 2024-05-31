@@ -9,14 +9,30 @@ import {
 import { selectProfileDetails } from '../../../../store/profile.store';
 import { AppState } from '../../../../store/app.state';
 import { TextHelper } from '../../../../util/text.helper';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { resetPlantbag, addPlantbagItem } from '../../../../store/plantbag.store';
 import { addError } from 'src/app/store/error.state';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { CustomPlantTreeInputComponent } from '../../../../util/common-components/custom-plant-tree-input/custom-plant-tree-input.component';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-custom-planting',
-  templateUrl: './custom-planting.component.html',
-  styleUrls: ['./custom-planting.component.scss'],
+    selector: 'app-custom-planting',
+    templateUrl: './custom-planting.component.html',
+    styleUrls: ['./custom-planting.component.scss'],
+    standalone: true,
+    imports: [
+        NgFor,
+        NgIf,
+        CustomPlantTreeInputComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        ButtonComponent,
+        RouterLink,
+        TranslateModule,
+    ],
 })
 export class CustomPlantingComponent implements OnInit, OnDestroy {
   activeProjects;

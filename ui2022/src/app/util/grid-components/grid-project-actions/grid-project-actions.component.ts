@@ -6,11 +6,20 @@ import { loadProjectDetails } from 'src/app/store/project.store';
 import { deleteProject } from '../../../store/project.store';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from '../../common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-grid-project-actions',
-  templateUrl: './grid-project-actions.component.html',
-  styleUrls: ['./grid-project-actions.component.scss'],
+    selector: 'app-grid-project-actions',
+    templateUrl: './grid-project-actions.component.html',
+    styleUrls: ['./grid-project-actions.component.scss'],
+    standalone: true,
+    imports: [
+        MatIconButton,
+        MatTooltip,
+        MatIcon,
+    ],
 })
 export class GridProjectActionsComponent implements ICellEditorAngularComp {
   projectId: number;

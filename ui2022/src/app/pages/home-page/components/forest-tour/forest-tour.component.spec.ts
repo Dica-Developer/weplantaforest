@@ -8,8 +8,8 @@ describe('ForestTourComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ForestTourComponent ]
-    })
+    imports: [ForestTourComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(ForestTourComponent);

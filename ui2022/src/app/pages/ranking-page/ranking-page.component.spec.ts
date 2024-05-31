@@ -8,8 +8,8 @@ describe('RankingPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RankingPageComponent ]
-    })
+    imports: [RankingPageComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(RankingPageComponent);

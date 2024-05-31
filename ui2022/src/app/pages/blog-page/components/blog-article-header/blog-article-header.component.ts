@@ -5,12 +5,23 @@ import { BlogArticle } from '../../../../../app/store/blog.store';
 import { environment } from '../../../../../environments/environment';
 import { selectIsUserAdmin } from '../../../../store/profile.store';
 import { loadArticleDetails } from '../../../../store/content.store';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-blog-article-header',
-  templateUrl: './blog-article-header.component.html',
-  styleUrls: ['./blog-article-header.component.scss'],
+    selector: 'app-blog-article-header',
+    templateUrl: './blog-article-header.component.html',
+    styleUrls: ['./blog-article-header.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        MatIcon,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class BlogArticleHeaderComponent implements OnInit {
   @Input() blogArticle: BlogArticle;

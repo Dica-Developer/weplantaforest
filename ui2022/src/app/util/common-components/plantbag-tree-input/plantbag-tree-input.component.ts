@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActiveProjectArticle } from '../../../store/project.store';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
@@ -8,11 +8,31 @@ import { Subscription } from 'rxjs';
 import { addPlantbagItem, removePlantbagItem } from '../../../store/plantbag.store';
 import { environment } from '../../../../environments/environment';
 import { selectUserLanguage } from '../../../store/profile.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
+import { MatError } from '@angular/material/form-field';
+import { NgIf, CurrencyPipe } from '@angular/common';
+import { MatInput } from '@angular/material/input';
 
 @Component({
-  selector: 'app-plantbag-tree-input',
-  templateUrl: './plantbag-tree-input.component.html',
-  styleUrls: ['./plantbag-tree-input.component.scss'],
+    selector: 'app-plantbag-tree-input',
+    templateUrl: './plantbag-tree-input.component.html',
+    styleUrls: ['./plantbag-tree-input.component.scss'],
+    standalone: true,
+    imports: [
+        MatInput,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+        MatError,
+        MatIconButton,
+        MatTooltip,
+        MatIcon,
+        CurrencyPipe,
+        TranslateModule,
+    ],
 })
 export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   @Input()

@@ -8,13 +8,25 @@ import {
   loadCartDetails,
   createReceipt,
 } from 'src/app/store/carts.store';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { first } from 'rxjs';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-grid-cart-actions',
-  templateUrl: './grid-cart-actions.component.html',
-  styleUrls: ['./grid-cart-actions.component.scss'],
+    selector: 'app-grid-cart-actions',
+    templateUrl: './grid-cart-actions.component.html',
+    styleUrls: ['./grid-cart-actions.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatIconButton,
+        MatTooltip,
+        MatIcon,
+    ],
 })
 export class GridCartActionsComponent implements ICellEditorAngularComp {
   cartId: number;
@@ -61,8 +73,17 @@ export class GridCartActionsComponent implements ICellEditorAngularComp {
 }
 
 @Component({
-  selector: 'send-receipt-confirmation-dialog',
-  templateUrl: 'send-receipt-confirmation-dialog.html',
+    selector: 'send-receipt-confirmation-dialog',
+    templateUrl: 'send-receipt-confirmation-dialog.html',
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        MatDialogActions,
+        MatButton,
+        MatDialogClose,
+    ],
 })
 export class SendReceiptConfirmationDialog {
   constructor(public dialogRef: MatDialogRef<SendReceiptConfirmationDialog>) {}

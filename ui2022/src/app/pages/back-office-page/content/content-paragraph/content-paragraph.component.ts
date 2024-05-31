@@ -1,13 +1,38 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/util/common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { environment } from '../../../../../environments/environment';
+import { NoImgBoxComponent } from '../../../../util/common-components/no-img-box/no-img-box.component';
+import { NgIf } from '@angular/common';
+import { TextEditorComponent } from '../../../../util/common-components/text-editor/text-editor.component';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
 
 @Component({
-  selector: 'app-content-paragraph',
-  templateUrl: './content-paragraph.component.html',
-  styleUrls: ['./content-paragraph.component.scss'],
+    selector: 'app-content-paragraph',
+    templateUrl: './content-paragraph.component.html',
+    styleUrls: ['./content-paragraph.component.scss'],
+    standalone: true,
+    imports: [
+        MatAccordion,
+        MatExpansionPanel,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle,
+        MatIconButton,
+        MatIcon,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatInput,
+        TextEditorComponent,
+        NgIf,
+        NoImgBoxComponent,
+        MatButton,
+    ],
 })
 export class ContentParagraphComponent implements OnInit {
   @Input() paragraph: UntypedFormGroup;

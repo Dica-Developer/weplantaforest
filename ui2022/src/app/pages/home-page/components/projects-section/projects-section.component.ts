@@ -6,11 +6,29 @@ import {
   loadActiveProjectReports,
   selectActiveProjectReports,
 } from 'src/app/store/project-report.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { ProjectTileComponent } from '../../../../util/common-components/project-tile/project-tile.component';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { CircleIconComponent } from '../../../../util/common-components/icons/circle-icon/circle-icon.component';
+import { LeafletMapComponent } from '../../../../util/common-components/leaflet-map/leaflet-map.component';
 
 @Component({
-  selector: 'app-projects-section',
-  templateUrl: './projects-section.component.html',
-  styleUrls: ['./projects-section.component.scss'],
+    selector: 'app-projects-section',
+    templateUrl: './projects-section.component.html',
+    styleUrls: ['./projects-section.component.scss'],
+    standalone: true,
+    imports: [
+        LeafletMapComponent,
+        CircleIconComponent,
+        NgFor,
+        ProjectTileComponent,
+        ButtonComponent,
+        RouterLink,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class ProjectsSectionComponent implements OnInit, OnDestroy {
   projectReports$ = this.store.select(selectActiveProjectReports);

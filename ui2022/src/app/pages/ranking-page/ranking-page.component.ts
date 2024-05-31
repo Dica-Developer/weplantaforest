@@ -1,4 +1,4 @@
-import { TitleCasePipe } from '@angular/common';
+import { TitleCasePipe, NgClass, NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
@@ -10,12 +10,28 @@ import {
   selectRankings,
   selectTotalNumber,
 } from '../../store/ranking.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
+import { RankingItemComponent } from './components/ranking-item/ranking-item.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-ranking-page',
-  templateUrl: './ranking-page.component.html',
-  styleUrls: ['./ranking-page.component.scss'],
-  providers: [TitleCasePipe],
+    selector: 'app-ranking-page',
+    templateUrl: './ranking-page.component.html',
+    styleUrls: ['./ranking-page.component.scss'],
+    providers: [TitleCasePipe],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgClass,
+        NgFor,
+        RankingItemComponent,
+        NgIf,
+        MatIcon,
+        AsyncPipe,
+        TitleCasePipe,
+        TranslateModule,
+    ],
 })
 export class RankingPageComponent implements OnInit, OnDestroy {
   rankings$ = this.store.select(selectRankings);

@@ -11,11 +11,14 @@ import { UntypedFormControl } from '@angular/forms';
 import * as L from 'leaflet';
 import { tileLayer, marker, icon, Map } from 'leaflet';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @Component({
-  selector: 'app-leaflet-map',
-  templateUrl: './leaflet-map.component.html',
-  styleUrls: ['./leaflet-map.component.scss'],
+    selector: 'app-leaflet-map',
+    templateUrl: './leaflet-map.component.html',
+    styleUrls: ['./leaflet-map.component.scss'],
+    standalone: true,
+    imports: [LeafletModule],
 })
 export class LeafletMapComponent implements OnInit, OnDestroy {
   map: Map;

@@ -2,11 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { CertificatePlanting } from '../../../../store/profile.store';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-certificate-carousel-item',
-  templateUrl: './certificate-carousel-item.component.html',
-  styleUrls: ['./certificate-carousel-item.component.scss'],
+    selector: 'app-certificate-carousel-item',
+    templateUrl: './certificate-carousel-item.component.html',
+    styleUrls: ['./certificate-carousel-item.component.scss'],
+    standalone: true,
+    imports: [DatePipe, TranslateModule],
 })
 export class CertificateCarouselItemComponent implements OnInit {
   _item: CertificatePlanting;

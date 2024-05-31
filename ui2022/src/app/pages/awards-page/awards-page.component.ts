@@ -1,12 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ContentService } from 'src/app/services/content.service';
 import { TextHelper } from 'src/app/util/text.helper';
+import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-awards-page',
-  templateUrl: './awards-page.component.html',
-  styleUrls: ['./awards-page.component.scss'],
+    selector: 'app-awards-page',
+    templateUrl: './awards-page.component.html',
+    styleUrls: ['./awards-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgFor,
+        TranslateModule,
+    ],
 })
 export class AwardsPageComponent implements OnInit {
   awards;

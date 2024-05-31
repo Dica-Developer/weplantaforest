@@ -8,8 +8,8 @@ describe('TransferTreesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TransferTreesComponent ]
-    })
+    imports: [TransferTreesComponent]
+})
     .compileComponents();
   });
 

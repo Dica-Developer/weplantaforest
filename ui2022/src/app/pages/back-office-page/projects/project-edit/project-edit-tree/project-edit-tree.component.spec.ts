@@ -8,8 +8,8 @@ describe('ProjectEditTreeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProjectEditTreeComponent ]
-    })
+    imports: [ProjectEditTreeComponent]
+})
     .compileComponents();
   });
 

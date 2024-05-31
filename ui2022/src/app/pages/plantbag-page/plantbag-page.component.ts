@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { first, Subscription } from 'rxjs';
 import {
@@ -17,11 +17,24 @@ import {
   selectPlantbagPrice,
 } from '../../store/plantbag.store';
 import { selectAuthenticated } from '../../store/auth.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { NotAuthenticatedWarningComponent } from '../../util/common-components/not-authenticated-warning/not-authenticated-warning.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { PlantbagComponent } from '../../util/common-components/plantbag/plantbag.component';
 
 @Component({
-  selector: 'app-plantbag-page',
-  templateUrl: './plantbag-page.component.html',
-  styleUrls: ['./plantbag-page.component.scss'],
+    selector: 'app-plantbag-page',
+    templateUrl: './plantbag-page.component.html',
+    styleUrls: ['./plantbag-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        PlantbagComponent,
+        NgIf,
+        NotAuthenticatedWarningComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class PlantbagPageComponent implements OnInit, OnDestroy {
   plantBagPrice$ = this.store.select(selectPlantbagPrice);

@@ -8,8 +8,8 @@ describe('PagingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PagingComponent ]
-    })
+    imports: [PagingComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(PagingComponent);

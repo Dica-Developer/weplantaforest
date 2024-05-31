@@ -8,8 +8,8 @@ describe('FooterIconsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FooterIconsListComponent ]
-    })
+    imports: [FooterIconsListComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(FooterIconsListComponent);

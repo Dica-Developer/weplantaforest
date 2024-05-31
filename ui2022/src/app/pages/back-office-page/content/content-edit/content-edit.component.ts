@@ -1,14 +1,50 @@
 import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, FormArray, UntypedFormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, FormArray, UntypedFormArray, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
 import { deleteParagraph, selectContentArticleTypes } from '../../../../store/content.store';
 import { environment } from '../../../../../environments/environment';
 import { ChangeDetectorRef } from '@angular/core';
+import { ContentParagraphComponent } from '../content-paragraph/content-paragraph.component';
+import { NoImgBoxComponent } from '../../../../util/common-components/no-img-box/no-img-box.component';
+import { TextEditorComponent } from '../../../../util/common-components/text-editor/text-editor.component';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatDatepickerActions, MatDatepickerCancel, MatDatepickerApply } from '@angular/material/datepicker';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatOption } from '@angular/material/core';
+import { NgFor, NgIf } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel, MatHint, MatSuffix } from '@angular/material/form-field';
 @Component({
-  selector: 'app-content-edit',
-  templateUrl: './content-edit.component.html',
-  styleUrls: ['./content-edit.component.scss'],
+    selector: 'app-content-edit',
+    templateUrl: './content-edit.component.html',
+    styleUrls: ['./content-edit.component.scss'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        NgFor,
+        MatOption,
+        MatCheckbox,
+        MatButton,
+        MatInput,
+        MatDatepickerInput,
+        MatHint,
+        MatDatepickerToggle,
+        MatSuffix,
+        MatDatepicker,
+        MatDatepickerActions,
+        MatDatepickerCancel,
+        MatDatepickerApply,
+        TextEditorComponent,
+        NgIf,
+        NoImgBoxComponent,
+        ContentParagraphComponent,
+    ],
 })
 export class ContentEditComponent implements OnInit, OnDestroy {
   @Input()

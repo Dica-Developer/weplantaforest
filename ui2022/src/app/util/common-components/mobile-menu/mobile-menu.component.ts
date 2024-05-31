@@ -1,10 +1,28 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { FacebookIconComponent } from '../icons/facebook-icon/facebook-icon.component';
+import { YoutubeIconComponent } from '../icons/youtube-icon/youtube-icon.component';
+import { InstagramIconComponent } from '../icons/instagram-icon/instagram-icon.component';
+import { ButtonComponent } from '../button/button.component';
+import { NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-mobile-menu',
-  templateUrl: './mobile-menu.component.html',
-  styleUrls: ['./mobile-menu.component.scss'],
+    selector: 'app-mobile-menu',
+    templateUrl: './mobile-menu.component.html',
+    styleUrls: ['./mobile-menu.component.scss'],
+    standalone: true,
+    imports: [
+        MatIcon,
+        NgIf,
+        ButtonComponent,
+        RouterLink,
+        InstagramIconComponent,
+        YoutubeIconComponent,
+        FacebookIconComponent,
+        TranslateModule,
+    ],
 })
 export class MobileMenuComponent implements OnInit {
   @Input() loggedIn: boolean;

@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { logout } from '../../../store/auth.store';
@@ -8,11 +8,40 @@ import { Subscription, skip } from 'rxjs';
 import { selectPlantbagPriceFormatted } from '../../../store/plantbag.store';
 import { SearchOverlayComponent } from '../search-overlay/search-overlay.component';
 import { resetTree } from 'src/app/store/treeType.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { MobileMenuComponent } from '../mobile-menu/mobile-menu.component';
+import { SideMenuComponent } from '../side-menu/side-menu.component';
+import { ButtonComponent } from '../button/button.component';
+import { MatBadge } from '@angular/material/badge';
+import { NgClass, NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { BarrelIconComponent } from '../icons/barrel-icon/barrel-icon.component';
+import { MatIcon } from '@angular/material/icon';
+import { LogoIconComponent } from '../icons/logo-icon/logo-icon.component';
+import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss'],
+    selector: 'app-toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
+    standalone: true,
+    imports: [
+        MatToolbar,
+        LogoIconComponent,
+        RouterLink,
+        RouterLinkActive,
+        MatIcon,
+        BarrelIconComponent,
+        NgClass,
+        MatBadge,
+        NgIf,
+        ButtonComponent,
+        SideMenuComponent,
+        SearchOverlayComponent,
+        MobileMenuComponent,
+        AsyncPipe,
+        CurrencyPipe,
+        TranslateModule,
+    ],
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
   logoUrl = environment.baseUrl + '/assets/ipatlogo_black.svg';

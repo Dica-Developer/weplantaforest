@@ -12,12 +12,22 @@ import {
 import { TextHelper } from '../../text.helper';
 import { ActiveProjectArticle } from '../../../store/project.store';
 import { addPlantbagItem, resetPlantbag } from '../../../store/plantbag.store';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgFor } from '@angular/common';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  selector: 'app-plant-tree',
-  templateUrl: './plant-tree.component.html',
-  styleUrls: ['./plant-tree.component.scss'],
+    selector: 'app-plant-tree',
+    templateUrl: './plant-tree.component.html',
+    styleUrls: ['./plant-tree.component.scss'],
+    standalone: true,
+    imports: [
+        ButtonComponent,
+        RouterLink,
+        NgFor,
+        TranslateModule,
+    ],
 })
 export class PlantTreeComponent implements OnInit, OnDestroy {
   hover: boolean;

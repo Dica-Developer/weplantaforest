@@ -3,13 +3,28 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { Observable } from 'rxjs';
 import { selectLoginError, login, loginFailed } from '../../store/auth.store';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { TranslateModule } from '@ngx-translate/core';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+    selector: 'app-login-page',
+    templateUrl: './login-page.component.html',
+    styleUrls: ['./login-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        FormsModule,
+        ReactiveFormsModule,
+        MatIcon,
+        MatSuffix,
+        ButtonComponent,
+        TranslateModule,
+    ],
 })
 export class LoginPageComponent implements OnInit {
   loginError$: Observable<string>;

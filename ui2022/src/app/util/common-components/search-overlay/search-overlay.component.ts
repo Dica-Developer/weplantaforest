@@ -1,14 +1,28 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { search, selectSearchResults } from 'src/app/store/search.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-search-overlay',
-  templateUrl: './search-overlay.component.html',
-  styleUrls: ['./search-overlay.component.scss'],
+    selector: 'app-search-overlay',
+    templateUrl: './search-overlay.component.html',
+    styleUrls: ['./search-overlay.component.scss'],
+    standalone: true,
+    imports: [
+        MatIcon,
+        FormsModule,
+        ReactiveFormsModule,
+        NgFor,
+        RouterLink,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class SearchOverlayComponent implements OnInit {
   @Output() searchClosed = new EventEmitter();

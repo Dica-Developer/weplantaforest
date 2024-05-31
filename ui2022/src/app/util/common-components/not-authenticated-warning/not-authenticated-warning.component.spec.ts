@@ -8,8 +8,8 @@ describe('NotAuthenticatedWarningComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotAuthenticatedWarningComponent ]
-    })
+    imports: [NotAuthenticatedWarningComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(NotAuthenticatedWarningComponent);

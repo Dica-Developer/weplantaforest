@@ -3,15 +3,34 @@ import { Subscription } from 'rxjs';
 import { ActiveProject, selectActiveProjects } from '../../../../store/project.store';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextHelper } from '../../../../util/text.helper';
 import { createPlantbagForBackend, generateCodes } from '../../../../store/plantbag.store';
 import { validatePlantbag, PlantbagState, selectPlantbag } from '../../../../store/plantbag.store';
+import { MatButton } from '@angular/material/button';
+import { PlantbagComponent } from '../../../../util/common-components/plantbag/plantbag.component';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { PlantbagTreeInputComponent } from '../../../../util/common-components/plantbag-tree-input/plantbag-tree-input.component';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-event-code-generator',
-  templateUrl: './event-code-generator.component.html',
-  styleUrls: ['./event-code-generator.component.scss'],
+    selector: 'app-event-code-generator',
+    templateUrl: './event-code-generator.component.html',
+    styleUrls: ['./event-code-generator.component.scss'],
+    standalone: true,
+    imports: [
+        NgFor,
+        NgIf,
+        PlantbagTreeInputComponent,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        FormsModule,
+        ReactiveFormsModule,
+        PlantbagComponent,
+        MatButton,
+    ],
 })
 export class EventCodeGeneratorComponent implements OnInit, OnDestroy {
   activeProjectsSub: Subscription;

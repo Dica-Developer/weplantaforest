@@ -14,7 +14,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { AuthGuard } from './util/auth.guard';
-import { UtilModule } from './util/util.module';
+
 import { UserRouterOutletComponent } from './router-outlets/user-router-outlet/user-router-outlet.component';
 import { RankingPageComponent } from './pages/ranking-page/ranking-page.component';
 import { ImprintPageComponent } from './pages/imprint-page/imprint-page.component';
@@ -112,7 +112,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), UtilModule],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -10,14 +10,30 @@ import {
   selectSimpleProposalFailed,
 } from '../../../../store/plant.store';
 import { SliderHelper } from '../../../../util/helper/slider.helper';
-import { Options } from '@angular-slider/ngx-slider';
+import { Options, NgxSliderModule } from '@angular-slider/ngx-slider';
 import { Observable, Subscription } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from '../../../../store/plantbag.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { PlantproposalPreviewRowComponent } from '../../../../util/common-components/plantproposal-preview-row/plantproposal-preview-row.component';
+import { RouterLink } from '@angular/router';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-plant-proposal-row',
-  templateUrl: './plant-proposal-row.component.html',
-  styleUrls: ['./plant-proposal-row.component.scss'],
+    selector: 'app-plant-proposal-row',
+    templateUrl: './plant-proposal-row.component.html',
+    styleUrls: ['./plant-proposal-row.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        NgxSliderModule,
+        ButtonComponent,
+        RouterLink,
+        NgFor,
+        PlantproposalPreviewRowComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class PlantProposalRowComponent implements OnInit, OnDestroy {
   proposalFailed$ = this.store.select(selectSimpleProposalFailed);

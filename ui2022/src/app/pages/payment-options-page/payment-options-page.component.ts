@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { IPayPalConfig, ICreateOrderRequest, NgxPayPalModule } from 'ngx-paypal';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from '../../store/app.state';
 import {
@@ -16,11 +16,25 @@ import { selectPlantbagPrice } from '../../store/plantbag.store';
 import { selectCookies } from 'src/app/store/infrastructure.store';
 import { selectAuthenticated } from 'src/app/store/auth.store';
 import { CookieHelper } from 'src/app/util/cookie.helper';
+import { TranslateModule } from '@ngx-translate/core';
+import { NotAuthenticatedWarningComponent } from '../../util/common-components/not-authenticated-warning/not-authenticated-warning.component';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-payment-options-page',
-  templateUrl: './payment-options-page.component.html',
-  styleUrls: ['./payment-options-page.component.scss'],
+    selector: 'app-payment-options-page',
+    templateUrl: './payment-options-page.component.html',
+    styleUrls: ['./payment-options-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        NgxPayPalModule,
+        ButtonComponent,
+        NotAuthenticatedWarningComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
   payPalConfig: IPayPalConfig;

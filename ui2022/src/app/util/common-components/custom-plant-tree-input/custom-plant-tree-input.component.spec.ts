@@ -8,8 +8,8 @@ describe('PlantbagTreeInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CustomPlantTreeInputComponent],
-    }).compileComponents();
+    imports: [CustomPlantTreeInputComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

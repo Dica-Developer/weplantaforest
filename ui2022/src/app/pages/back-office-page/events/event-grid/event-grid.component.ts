@@ -11,11 +11,21 @@ import {
 } from '../../../../store/events.store';
 import { CellValueChangedEvent } from 'ag-grid-community';
 import { GridEventActionsComponent } from 'src/app/util/grid-components/grid-event-actions/grid-event-actions.component';
+import { AgGridAngular } from 'ag-grid-angular';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-event-grid',
-  templateUrl: './event-grid.component.html',
-  styleUrls: ['./event-grid.component.scss'],
+    selector: 'app-event-grid',
+    templateUrl: './event-grid.component.html',
+    styleUrls: ['./event-grid.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatProgressBar,
+        AgGridAngular,
+        AsyncPipe,
+    ],
 })
 export class EventGridComponent implements OnInit, OnDestroy {
   gridApi: GridApi;

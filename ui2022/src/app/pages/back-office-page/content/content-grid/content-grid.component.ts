@@ -11,11 +11,21 @@ import {
   selectContentArticlesLoading,
 } from '../../../../store/content.store';
 import { Subscription } from 'rxjs';
+import { AgGridAngular } from 'ag-grid-angular';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-content-grid',
-  templateUrl: './content-grid.component.html',
-  styleUrls: ['./content-grid.component.scss'],
+    selector: 'app-content-grid',
+    templateUrl: './content-grid.component.html',
+    styleUrls: ['./content-grid.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatProgressBar,
+        AgGridAngular,
+        AsyncPipe,
+    ],
 })
 export class ContentGridComponent implements OnInit, OnDestroy {
   gridApi: GridApi;

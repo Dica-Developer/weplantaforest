@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-paging',
-  templateUrl: './paging.component.html',
-  styleUrls: ['./paging.component.scss'],
+    selector: 'app-paging',
+    templateUrl: './paging.component.html',
+    styleUrls: ['./paging.component.scss'],
+    standalone: true,
+    imports: [MatIcon],
 })
 export class PagingComponent implements OnInit {
   @Input()

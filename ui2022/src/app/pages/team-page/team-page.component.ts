@@ -4,11 +4,27 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { loadTeamDetails, selectTeamDetails, getTeamTrees } from '../../store/team.store';
 import { Subscription } from 'rxjs';
+import { NewsletterComponent } from '../../util/common-components/newsletter/newsletter.component';
+import { TeamCarouselComponent } from './components/team-carousel/team-carousel.component';
+import { TeamTreesComponent } from './components/team-trees/team-trees.component';
+import { TeamDetailsComponent } from '../../util/common-components/team-details/team-details.component';
+import { TeamHeaderComponent } from '../../util/common-components/team-header/team-header.component';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-team-page',
-  templateUrl: './team-page.component.html',
-  styleUrls: ['./team-page.component.scss'],
+    selector: 'app-team-page',
+    templateUrl: './team-page.component.html',
+    styleUrls: ['./team-page.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        TeamHeaderComponent,
+        TeamDetailsComponent,
+        TeamTreesComponent,
+        TeamCarouselComponent,
+        NewsletterComponent,
+        AsyncPipe,
+    ],
 })
 export class TeamPageComponent implements OnInit, OnDestroy {
   teamDetails$ = this.store.select(selectTeamDetails);

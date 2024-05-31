@@ -13,11 +13,14 @@ import {
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
 import { selectUsername } from '../../../../store/profile.store';
 import { saveContentArticle } from '../../../../store/content.store';
+import { ContentEditComponent } from '../content-edit/content-edit.component';
 
 @Component({
-  selector: 'app-content-details',
-  templateUrl: './content-details.component.html',
-  styleUrls: ['./content-details.component.scss'],
+    selector: 'app-content-details',
+    templateUrl: './content-details.component.html',
+    styleUrls: ['./content-details.component.scss'],
+    standalone: true,
+    imports: [ContentEditComponent],
 })
 export class ContentDetailsComponent implements OnInit, OnDestroy {
   details: ContentArticleDetails;

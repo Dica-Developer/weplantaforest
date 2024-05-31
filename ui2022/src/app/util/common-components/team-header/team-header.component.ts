@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppState } from '../../../../app/store/app.state';
 import { selectHasTeam, selectUploadingImage } from '../../../store/profile.store';
 import {
@@ -15,11 +15,26 @@ import {
 } from 'src/app/store/team.store';
 import { Observable, Subscription } from 'rxjs';
 import { SliderHelper } from '../../helper/slider.helper';
+import { TeamCreateEditComponent } from '../team-create-edit/team-create-edit.component';
+import { ButtonComponent } from '../button/button.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-team-header',
-  templateUrl: './team-header.component.html',
-  styleUrls: ['./team-header.component.scss'],
+    selector: 'app-team-header',
+    templateUrl: './team-header.component.html',
+    styleUrls: ['./team-header.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatIcon,
+        MatTooltip,
+        ButtonComponent,
+        TeamCreateEditComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class TeamHeaderComponent implements OnInit {
   @Input() teamDetails;

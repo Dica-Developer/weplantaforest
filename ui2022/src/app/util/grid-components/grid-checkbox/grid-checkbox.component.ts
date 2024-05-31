@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { ICellEditorAngularComp } from 'ag-grid-angular';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
-  selector: 'app-grid-checkbox',
-  templateUrl: './grid-checkbox.component.html',
-  styleUrls: ['./grid-checkbox.component.scss'],
+    selector: 'app-grid-checkbox',
+    templateUrl: './grid-checkbox.component.html',
+    styleUrls: ['./grid-checkbox.component.scss'],
+    standalone: true,
+    imports: [MatCheckbox],
 })
 export class GridCheckboxComponent implements ICellEditorAngularComp {
   value: boolean;

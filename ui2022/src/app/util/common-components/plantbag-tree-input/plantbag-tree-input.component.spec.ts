@@ -8,8 +8,8 @@ describe('PlantbagTreeInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlantbagTreeInputComponent ]
-    })
+    imports: [PlantbagTreeInputComponent]
+})
     .compileComponents();
   });
 

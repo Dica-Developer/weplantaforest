@@ -13,11 +13,21 @@ import { selectProjects, selectProjectsLoading } from '../../../../store/project
 import { Observable, Subscription } from 'rxjs';
 import { loadProjects, loadProjectDetails } from '../../../../store/project.store';
 import { GridProjectActionsComponent } from '../../../../util/grid-components/grid-project-actions/grid-project-actions.component';
+import { AgGridAngular } from 'ag-grid-angular';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-project-grid',
-  templateUrl: './project-grid.component.html',
-  styleUrls: ['./project-grid.component.scss'],
+    selector: 'app-project-grid',
+    templateUrl: './project-grid.component.html',
+    styleUrls: ['./project-grid.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatProgressBar,
+        AgGridAngular,
+        AsyncPipe,
+    ],
 })
 export class ProjectGridComponent implements OnInit, OnDestroy {
   gridApi: GridApi;

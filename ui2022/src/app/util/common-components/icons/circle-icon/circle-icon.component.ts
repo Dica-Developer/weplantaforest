@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-circle-icon',
-  templateUrl: './circle-icon.component.html',
-  styleUrls: ['./circle-icon.component.scss'],
+    selector: 'app-circle-icon',
+    templateUrl: './circle-icon.component.html',
+    styleUrls: ['./circle-icon.component.scss'],
+    standalone: true,
 })
 export class CircleIconComponent implements OnInit {
   @Input() width: number = 20;

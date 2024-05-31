@@ -8,8 +8,8 @@ describe('EventGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventGridComponent ]
-    })
+    imports: [EventGridComponent]
+})
     .compileComponents();
   });
 

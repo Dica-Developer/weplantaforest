@@ -10,11 +10,23 @@ import { updateStatus, CartDetails, selectCartDetails } from '../../../../store/
 import { GridCartActionsComponent } from '../../../../util/grid-components/grid-cart-actions/grid-cart-actions.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/util/common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { CartDetailsComponent } from '../cart-details/cart-details.component';
+import { AgGridAngular } from 'ag-grid-angular';
+import { NgClass, NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-cart-grid',
-  templateUrl: './cart-grid.component.html',
-  styleUrls: ['./cart-grid.component.scss'],
+    selector: 'app-cart-grid',
+    templateUrl: './cart-grid.component.html',
+    styleUrls: ['./cart-grid.component.scss'],
+    standalone: true,
+    imports: [
+        MatButton,
+        NgClass,
+        AgGridAngular,
+        NgIf,
+        CartDetailsComponent,
+    ],
 })
 export class CartGridComponent implements OnInit, OnDestroy {
   subsetOfColumns: ColDef[] = [

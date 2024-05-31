@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppState } from 'src/app/store/app.state';
 import { environment } from 'src/environments/environment';
 import {
@@ -11,12 +11,39 @@ import {
   signupDoneReset,
 } from 'src/app/store/auth.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { CaptchaComponent } from '../../util/common-components/captcha/captcha.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatSuffix, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-signup-page',
-  templateUrl: './signup-page.component.html',
-  styleUrls: ['./signup-page.component.scss'],
+    selector: 'app-signup-page',
+    templateUrl: './signup-page.component.html',
+    styleUrls: ['./signup-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        MatIcon,
+        MatSuffix,
+        MatLabel,
+        MatSelect,
+        NgFor,
+        MatOption,
+        MatCheckbox,
+        CaptchaComponent,
+        ButtonComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class SignupPageComponent implements OnInit {
   signupError$: Observable<string>;

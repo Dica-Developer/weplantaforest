@@ -5,11 +5,15 @@ import { AppState } from 'src/app/store/app.state';
 import { TextHelper } from 'src/app/util/text.helper';
 import { environment } from 'src/environments/environment';
 import { selectUserLanguage } from '../../../store/profile.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-plantproposal-preview-row',
-  templateUrl: './plantproposal-preview-row.component.html',
-  styleUrls: ['./plantproposal-preview-row.component.scss'],
+    selector: 'app-plantproposal-preview-row',
+    templateUrl: './plantproposal-preview-row.component.html',
+    styleUrls: ['./plantproposal-preview-row.component.scss'],
+    standalone: true,
+    imports: [CurrencyPipe, TranslateModule],
 })
 export class PlantproposalPreviewRowComponent implements OnInit, OnDestroy {
   @Input() plantItem: any;

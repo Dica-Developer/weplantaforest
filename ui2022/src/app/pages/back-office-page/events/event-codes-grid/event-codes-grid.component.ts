@@ -5,11 +5,15 @@ import { GridHelper } from '../../../../util/grid.helper';
 import { AppState } from '../../../../store/app.state';
 import { Store } from '@ngrx/store';
 import { selectEventCodes, selectEventDetails } from '../../../../store/events.store';
+import { AgGridAngular } from 'ag-grid-angular';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-event-codes-grid',
-  templateUrl: './event-codes-grid.component.html',
-  styleUrls: ['./event-codes-grid.component.scss'],
+    selector: 'app-event-codes-grid',
+    templateUrl: './event-codes-grid.component.html',
+    styleUrls: ['./event-codes-grid.component.scss'],
+    standalone: true,
+    imports: [MatButton, AgGridAngular],
 })
 export class EventCodesGridComponent implements OnInit, OnDestroy {
   gridApi: GridApi;

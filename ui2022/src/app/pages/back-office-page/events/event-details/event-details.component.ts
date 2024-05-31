@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
 import { Subscription } from 'rxjs';
@@ -7,11 +7,39 @@ import { EventDetails, selectEventDetails, EventRequest } from '../../../../stor
 import { User, selectUsers, loadUsers } from '../../../../store/user.store';
 import { Team, selectTeams, loadTeams } from '../../../../store/team.store';
 import { updateEvent, createEvent } from '../../../../store/events.store';
+import { EventCodesGridComponent } from '../event-codes-grid/event-codes-grid.component';
+import { EventCodeGeneratorComponent } from '../event-code-generator/event-code-generator.component';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { MatOption } from '@angular/material/core';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, NgFor } from '@angular/common';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-event-details',
-  templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.scss'],
+    selector: 'app-event-details',
+    templateUrl: './event-details.component.html',
+    styleUrls: ['./event-details.component.scss'],
+    standalone: true,
+    imports: [
+        MatButton,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatInput,
+        MatAutocompleteTrigger,
+        NgIf,
+        MatIcon,
+        MatAutocomplete,
+        NgFor,
+        MatOption,
+        MatTabGroup,
+        MatTab,
+        EventCodeGeneratorComponent,
+        EventCodesGridComponent,
+    ],
 })
 export class EventDetailsComponent implements OnInit, OnDestroy {
   eventForm: UntypedFormGroup = new UntypedFormGroup({

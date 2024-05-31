@@ -1,11 +1,26 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../../../../environments/environment';
+import { TextEditorComponent } from '../../../../../util/common-components/text-editor/text-editor.component';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-project-edit-data',
-  templateUrl: './project-edit-data.component.html',
-  styleUrls: ['./project-edit-data.component.scss'],
+    selector: 'app-project-edit-data',
+    templateUrl: './project-edit-data.component.html',
+    styleUrls: ['./project-edit-data.component.scss'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatInput,
+        MatCheckbox,
+        MatDivider,
+        TextEditorComponent,
+    ],
 })
 export class ProjectEditDataComponent implements OnInit {
   @Input()

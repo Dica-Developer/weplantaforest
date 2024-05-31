@@ -8,8 +8,8 @@ describe('ContentGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContentGridComponent ]
-    })
+    imports: [ContentGridComponent]
+})
     .compileComponents();
   });
 

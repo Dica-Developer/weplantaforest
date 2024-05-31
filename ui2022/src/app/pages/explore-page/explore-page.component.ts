@@ -7,11 +7,23 @@ import { loadTreeTypes, selectTreeTypes } from 'src/app/store/treeType.store';
 import { selectProfileDetails } from 'src/app/store/profile.store';
 import { TextHelper } from 'src/app/util/text.helper';
 import { environment } from 'src/environments/environment';
+import { TranslateModule } from '@ngx-translate/core';
+import { TreeTileComponent } from '../../util/common-components/tree-tile/tree-tile.component';
+import { NgIf, NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-explore-page',
-  templateUrl: './explore-page.component.html',
-  styleUrls: ['./explore-page.component.scss'],
+    selector: 'app-explore-page',
+    templateUrl: './explore-page.component.html',
+    styleUrls: ['./explore-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        NgFor,
+        TreeTileComponent,
+        TranslateModule,
+    ],
 })
 export class ExplorePageComponent implements OnInit {
   currentTree: TreeType = null;

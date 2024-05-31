@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -13,13 +13,29 @@ import {
 } from '../../store/auth.store';
 import { environment } from '../../../environments/environment';
 import { PasswordValidation } from '../../util/validators/compare-password.validator';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-reset-password-page',
-  templateUrl: './reset-password-page.component.html',
-  styleUrls: ['./reset-password-page.component.scss'],
+    selector: 'app-reset-password-page',
+    templateUrl: './reset-password-page.component.html',
+    styleUrls: ['./reset-password-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        MatIcon,
+        MatSuffix,
+        ButtonComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class ResetPasswordPageComponent implements OnInit {
   resetPasswordForm = new UntypedFormGroup(

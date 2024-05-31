@@ -3,12 +3,35 @@ import { Store } from '@ngrx/store';
 import { downloadReceiptPdf } from '../../../../store/carts.store';
 import { AppState } from '../../../../store/app.state';
 import { ProfileReceipt } from '../../../../store/profile.store';
-import { PageEvent } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { TranslateModule } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 @Component({
-  selector: 'app-profile-receipts',
-  templateUrl: './profile-receipts.component.html',
-  styleUrls: ['./profile-receipts.component.scss'],
+    selector: 'app-profile-receipts',
+    templateUrl: './profile-receipts.component.html',
+    styleUrls: ['./profile-receipts.component.scss'],
+    standalone: true,
+    imports: [
+        MatTable,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        MatIcon,
+        MatTooltip,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        MatPaginator,
+        DatePipe,
+        TranslateModule,
+    ],
 })
 export class ProfileReceiptsComponent implements OnInit {
   displayedColumns: string[] = ['createdOn', 'invoiceNumber', 'PDF'];

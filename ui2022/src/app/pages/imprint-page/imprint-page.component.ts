@@ -4,11 +4,20 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { selectUserLanguage } from '../../store/profile.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-imprint-page',
-  templateUrl: './imprint-page.component.html',
-  styleUrls: ['./imprint-page.component.scss'],
+    selector: 'app-imprint-page',
+    templateUrl: './imprint-page.component.html',
+    styleUrls: ['./imprint-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgFor,
+        TranslateModule,
+    ],
 })
 export class ImprintPageComponent implements OnInit, OnDestroy {
   imprints;

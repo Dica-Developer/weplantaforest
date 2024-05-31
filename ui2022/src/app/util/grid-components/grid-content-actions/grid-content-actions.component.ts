@@ -5,11 +5,20 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { deleteContentArticle } from '../../../store/content.store';
 import { DeleteConfirmationDialogComponent } from '../../common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-grid-content-actions',
-  templateUrl: './grid-content-actions.component.html',
-  styleUrls: ['./grid-content-actions.component.scss'],
+    selector: 'app-grid-content-actions',
+    templateUrl: './grid-content-actions.component.html',
+    styleUrls: ['./grid-content-actions.component.scss'],
+    standalone: true,
+    imports: [
+        MatIconButton,
+        MatTooltip,
+        MatIcon,
+    ],
 })
 export class GridContentActionsComponent implements ICellEditorAngularComp {
   articleId: number;

@@ -4,11 +4,23 @@ import { Subscription } from 'rxjs';
 import { ContentService } from 'src/app/services/content.service';
 import { AppState } from 'src/app/store/app.state';
 import { selectUserLanguage } from '../../store/profile.store';
+import { SafeHtmlPipe } from '../../util/common-components/safehtml.pipe';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgFor, NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-finances-page',
-  templateUrl: './finances-page.component.html',
-  styleUrls: ['./finances-page.component.scss'],
+    selector: 'app-finances-page',
+    templateUrl: './finances-page.component.html',
+    styleUrls: ['./finances-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgFor,
+        NgIf,
+        TranslateModule,
+        SafeHtmlPipe,
+    ],
 })
 export class FinancesPageComponent implements OnInit, OnDestroy {
   lang: string;

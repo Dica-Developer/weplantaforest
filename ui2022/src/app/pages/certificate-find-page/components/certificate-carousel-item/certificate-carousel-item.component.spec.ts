@@ -8,8 +8,8 @@ describe('CertificateCarouselItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CertificateCarouselItemComponent ]
-    })
+    imports: [CertificateCarouselItemComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(CertificateCarouselItemComponent);
