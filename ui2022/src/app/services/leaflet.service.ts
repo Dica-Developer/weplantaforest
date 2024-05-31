@@ -4,6 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LeafletService {
+  isBrowser: boolean;
+
+  this.isBrowser = isPlatformBrowser(this.platformId);
+
+
   constructor() {}
 
 }
