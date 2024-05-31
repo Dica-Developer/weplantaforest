@@ -21,43 +21,28 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   imports: [LeafletModule],
 })
 export class LeafletMapComponent implements OnInit, OnDestroy {
-  map: Map;
-  coords = [];
-  polygon;
-  control: UntypedFormControl;
-  screenWidth;
-
+  @Output() markerSet = new EventEmitter();
   @Input() showMarker: boolean = false;
   @Input() positions: any[];
   @Input() mapHeight: string = '600px';
   @Input() disabledMap: boolean = false;
-  @Output() markerSet = new EventEmitter();
-
-  mapSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  projectAreasSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  combinedSub: Subscription;
-
-  projectAreasInternal: any[][];
-
   @Input('projectAreas')
   set projectAreas(areas: any[][]) {
     this.projectAreasInternal = areas;
     this.projectAreasSubject.next(true);
   }
 
+  mapSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  map: Map;
+  coords = [];
+  polygon;
+  control: UntypedFormControl;
+  screenWidth;
+  projectAreasSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  combinedSub: Subscription;
+  projectAreasInternal: any[][];
+  mapOptions = this.createDefaultMapOptions();
   treeMarker: any[];
-
-  options = {
-    layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '...',
-      }),
-    ],
-    drawControl: false,
-    dragging: !L.Browser.mobile,
-    zoom: 2,
-  };
 
   @HostListener('window:load', ['$event'])
   getScreenSize() {
@@ -92,6 +77,20 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.combinedSub?.unsubscribe();
+  }
+
+  createDefaultMapOptions() {
+    return {
+      layers: [
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '...',
+        }),
+      ],
+      drawControl: false,
+      dragging: !L.Browser.mobile,
+      zoom: 2,
+    }
   }
 
   onMapReady(map: Map): void {
@@ -147,4 +146,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       }),
     });
   }
+
+
 }

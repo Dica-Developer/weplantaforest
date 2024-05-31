@@ -10,10 +10,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../util/common-components/button/button.component';
 import { ProjectTileComponent } from '../../../../util/common-components/project-tile/project-tile.component';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { NgFor, AsyncPipe, CommonModule } from '@angular/common';
 import { CircleIconComponent } from '../../../../util/common-components/icons/circle-icon/circle-icon.component';
 import { LeafletMapComponent } from '../../../../util/common-components/leaflet-map/leaflet-map.component';
-import { LeafletHelper } from 'src/app/util/helper/leaflet.helper';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-projects-section',
@@ -29,6 +29,7 @@ import { LeafletHelper } from 'src/app/util/helper/leaflet.helper';
     RouterLink,
     AsyncPipe,
     TranslateModule,
+    CommonModule
   ],
 })
 export class ProjectsSectionComponent implements OnInit, OnDestroy {
@@ -42,19 +43,19 @@ export class ProjectsSectionComponent implements OnInit, OnDestroy {
   isBrowser: boolean;
 
   constructor(private store: Store<AppState>,
-    private leafletHelper: LeafletHelper
+    private platformHelper: PlatformHelper
   ) {
     this.store.dispatch(loadActiveProjectReports());
     this.getScreenSize();
   }
 
   @HostListener('window:load', ['$event'])
-  getScreenSize(event?) {
+  getScreenSize() {
     this.screenWidth = window.innerWidth;
   }
 
   ngOnInit(): void {
-    this.isBrowser = this.leafletHelper.checkIfBrowser();
+    this.isBrowser = this.platformHelper.checkIfBrowser();
     console.log(this.isBrowser);
     if (this.screenWidth < 764) {
       this.mapHeight = '500px';

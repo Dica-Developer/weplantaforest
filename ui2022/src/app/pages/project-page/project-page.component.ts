@@ -15,7 +15,7 @@ import { ProjectPlantingComponent } from './components/project-planting/project-
 import { ProjectDescriptionComponent } from './components/project-description/project-description.component';
 import { ProjectHeaderComponent } from './components/project-header/project-header.component';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { LeafletHelper } from 'src/app/util/helper/leaflet.helper';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-project-page',
@@ -41,7 +41,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<AppState>,
     private route: ActivatedRoute,
-    private leafletHelper: LeafletHelper
+    private platformHelper: PlatformHelper
   ) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadProjectReport({ projectName: paramMap.get('projectName') }));
@@ -59,7 +59,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isBrowser = this.leafletHelper.checkIfBrowser();
+    this.isBrowser = this.platformHelper.checkIfBrowser();
     console.log(this.isBrowser);
     window.scrollTo(0, 0);
   }

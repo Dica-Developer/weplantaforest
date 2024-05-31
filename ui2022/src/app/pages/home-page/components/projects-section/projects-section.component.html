@@ -3,7 +3,7 @@
     <h2 style="height: 100px" class="is-flex is-align-items-center">
       {{ 'projects' | translate }}
     </h2>
-    <div class="map-border">
+    <div class="map-border" *ngIf="isBrowser">
       <app-leaflet-map [mapHeight]="mapHeight" [projectAreas]="projectAreas"></app-leaflet-map>
     </div>
   </div>

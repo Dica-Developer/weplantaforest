@@ -27,7 +27,7 @@ import { MatInput } from '@angular/material/input';
 import { MatFormField, MatLabel, MatHint, MatSuffix } from '@angular/material/form-field';
 import { ButtonComponent } from '../../util/common-components/button/button.component';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { LeafletHelper } from 'src/app/util/helper/leaflet.helper';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-plant-self-page',
@@ -109,9 +109,9 @@ export class PlantSelfPageComponent implements OnInit {
     private router: Router,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
-    private leafletHelper: LeafletHelper
+    private platformHelper: PlatformHelper
   ) {
-    this.isBrowser = this.leafletHelper.checkIfBrowser();
+    this.isBrowser = this.platformHelper.checkIfBrowser();
     console.log(this.isBrowser);
     this.store.dispatch(loadTreeTypes());
     this.selectTreetypesSub = store.select(selectTreeTypes).subscribe((res) => {
