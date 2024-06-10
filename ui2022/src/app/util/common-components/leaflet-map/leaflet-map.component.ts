@@ -2,16 +2,18 @@ import {
   Component,
   EventEmitter,
   HostListener,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  PLATFORM_ID,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import * as L from 'leaflet';
 import { tileLayer, marker, icon, Map } from 'leaflet';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletHelper } from '../../helper/leaflet.helper';
 
 @Component({
   selector: 'app-leaflet-map',
@@ -49,12 +51,24 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
   }
 
-  constructor() {}
+  constructor(
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private leafletHelper: LeafletHelper
+  ) {}
+
   ngOnInit(): void {
     if (this.positions) {
       this.coords = this.createPolygonPoints(this.positions);
     }
+    this.afterNextRender();
+  }
 
+  async afterNextRender() {
+    const lib = await import('leaflet');
+    this.combineSubscriptions(lib);
+  }
+
+  combineSubscriptions(leaflet:any) {
     this.combinedSub = combineLatest([this.mapSubject, this.projectAreasSubject]).subscribe(
       (res) => {
         if (res[0] && res[1]) {
@@ -62,7 +76,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
           this.treeMarker = [];
           for (let area of this.projectAreasInternal) {
             const coords = this.createPolygonPoints(area);
-            const polygon = L.polygon(coords, { color: '#82ab1f' });
+
+            const polygon = leaflet.polygon(coords, { color: '#82ab1f' });
             this.map.addLayer(polygon);
             const marker = this.createMarker(polygon.getCenter().lat, polygon.getCenter().lng);
             marker.on('click', (event) => {
@@ -73,6 +88,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         }
       },
     );
+
   }
 
   ngOnDestroy(): void {
@@ -88,30 +104,31 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         }),
       ],
       drawControl: false,
-      dragging: !L.Browser.mobile,
+      dragging: !this.leafletHelper.L.Browser?.mobile,
       zoom: 2,
     }
   }
 
-  onMapReady(map: Map): void {
-    this.map = map;
+  async onMapReady(leaflet: any) {
+    const lib = await import('leaflet');
+    this.map = leaflet
     this.map.scrollWheelZoom.disable();
     if (this.disabledMap) {
     }
     setTimeout(() => {
       if (this.coords.length > 0) {
-        this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
-        map.addLayer(this.polygon);
-        this.map.fitBounds(this.polygon.getBounds());
+        this.polygon = lib.polygon(this.coords, { color: '#82ab1f' });
+        lib.addLayer(this.polygon);
+        lib.fitBounds(this.polygon.getBounds());
       } else {
         // adjust zoom if mobile view
         if (this.screenWidth < 764) {
-          map.setView(new L.LatLng(51.9481, 10.26517), 5);
+          this.map.setView([51.9481, 10.26517], 5);
         } else {
-          map.setView(new L.LatLng(51.9481, 10.26517), 6);
+          this.map.setView([51.9481, 10.26517], 6);
         }
       }
-      map.invalidateSize();
+      this.map.invalidateSize();
       this.mapSubject.next(true);
     });
   }
