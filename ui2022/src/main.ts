@@ -31,7 +31,7 @@ import { profileReducerFn, ProfileEffects } from './app/store/profile.store';
 import { authReducerFn, AuthEffects } from './app/store/auth.store';
 import { StoreModule } from '@ngrx/store';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { BrowserModule, bootstrapApplication, provideClientHydration } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { ErrorInterceptor } from './app/services/http-interceptors/http.interceptor';
@@ -165,7 +165,7 @@ bootstrapApplication(AppComponent, {
     },
     provideCharts(withDefaultRegisterables()),
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimations()
+    provideAnimations(), provideClientHydration()
   ]
 })
   .catch(err => console.error(err));
