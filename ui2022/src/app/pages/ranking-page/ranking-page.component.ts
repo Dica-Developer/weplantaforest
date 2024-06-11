@@ -14,24 +14,25 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import { RankingItemComponent } from './components/ranking-item/ranking-item.component';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-ranking-page',
-    templateUrl: './ranking-page.component.html',
-    styleUrls: ['./ranking-page.component.scss'],
-    providers: [TitleCasePipe],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgClass,
-        NgFor,
-        RankingItemComponent,
-        NgIf,
-        MatIcon,
-        AsyncPipe,
-        TitleCasePipe,
-        TranslateModule,
-    ],
+  selector: 'app-ranking-page',
+  templateUrl: './ranking-page.component.html',
+  styleUrls: ['./ranking-page.component.scss'],
+  providers: [TitleCasePipe],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgClass,
+    NgFor,
+    RankingItemComponent,
+    NgIf,
+    MatIcon,
+    AsyncPipe,
+    TitleCasePipe,
+    TranslateModule,
+  ],
 })
 export class RankingPageComponent implements OnInit, OnDestroy {
   rankings$ = this.store.select(selectRankings);
@@ -43,10 +44,12 @@ export class RankingPageComponent implements OnInit, OnDestroy {
 
   lastYear: boolean = true;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.loadRankings('bestUser');
 
     this.totalNumberOfElementsSub = this.store

@@ -10,6 +10,7 @@ import { TeamTreesComponent } from './components/team-trees/team-trees.component
 import { TeamDetailsComponent } from '../../util/common-components/team-details/team-details.component';
 import { TeamHeaderComponent } from '../../util/common-components/team-header/team-header.component';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-team-page',
@@ -30,7 +31,10 @@ export class TeamPageComponent implements OnInit, OnDestroy {
   teamDetails$ = this.store.select(selectTeamDetails);
   teamDetailsSub: Subscription;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  constructor(
+    private platformHelper: PlatformHelper,
+    private store: Store<AppState>,
+    private route: ActivatedRoute) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(
         loadTeamDetails({ teamName: decodeURIComponent(paramMap.get('teamname')) }),
@@ -56,7 +60,7 @@ export class TeamPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 
   ngOnDestroy(): void {

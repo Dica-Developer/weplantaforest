@@ -7,17 +7,18 @@ import { selectUserLanguage } from '../../store/profile.store';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-imprint-page',
-    templateUrl: './imprint-page.component.html',
-    styleUrls: ['./imprint-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgFor,
-        TranslateModule,
-    ],
+  selector: 'app-imprint-page',
+  templateUrl: './imprint-page.component.html',
+  styleUrls: ['./imprint-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgFor,
+    TranslateModule,
+  ],
 })
 export class ImprintPageComponent implements OnInit, OnDestroy {
   imprints;
@@ -25,10 +26,13 @@ export class ImprintPageComponent implements OnInit, OnDestroy {
   imprintSub: Subscription;
   languageSub: Subscription;
 
-  constructor(private store: Store<AppState>, private contentService: ContentService) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private store: Store<AppState>,
+    private contentService: ContentService) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.languageSub = this.store.select(selectUserLanguage).subscribe((language) => {
       this.imprintSub?.unsubscribe();
       let lng = '';

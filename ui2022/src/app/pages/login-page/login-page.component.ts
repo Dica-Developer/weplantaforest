@@ -10,21 +10,22 @@ import { ButtonComponent } from '../../util/common-components/button/button.comp
 import { MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-login-page',
-    templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        FormsModule,
-        ReactiveFormsModule,
-        MatIcon,
-        MatSuffix,
-        ButtonComponent,
-        TranslateModule,
-    ],
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIcon,
+    MatSuffix,
+    ButtonComponent,
+    TranslateModule,
+  ],
 })
 export class LoginPageComponent implements OnInit {
   loginError$: Observable<string>;
@@ -36,12 +37,14 @@ export class LoginPageComponent implements OnInit {
 
   logoUrl = environment.baseUrl + '/assets/ipat_logo.png';
 
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private platformHelper: PlatformHelper,
+    private store: Store<AppState>) {
     this.loginError$ = store.select(selectLoginError);
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.store.dispatch(loginFailed({ error: '' }));
   }
 

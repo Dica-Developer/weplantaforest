@@ -21,20 +21,21 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NotAuthenticatedWarningComponent } from '../../util/common-components/not-authenticated-warning/not-authenticated-warning.component';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { PlantbagComponent } from '../../util/common-components/plantbag/plantbag.component';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-plantbag-page',
-    templateUrl: './plantbag-page.component.html',
-    styleUrls: ['./plantbag-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        PlantbagComponent,
-        NgIf,
-        NotAuthenticatedWarningComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-plantbag-page',
+  templateUrl: './plantbag-page.component.html',
+  styleUrls: ['./plantbag-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    PlantbagComponent,
+    NgIf,
+    NotAuthenticatedWarningComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class PlantbagPageComponent implements OnInit, OnDestroy {
   plantBagPrice$ = this.store.select(selectPlantbagPrice);
@@ -49,10 +50,13 @@ export class PlantbagPageComponent implements OnInit, OnDestroy {
 
   loggedIn$ = this.store.select(selectAuthenticated);
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(
+    private store: Store<AppState>,
+    private platformHelper: PlatformHelper,
+    private router: Router) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.store.dispatch(resetCreatedCartId());
     this.store.dispatch(resetCreatedGiftId());
     this.cartCreatedSub = this.store.select(selectCartForPaymentCreated).subscribe((created) => {

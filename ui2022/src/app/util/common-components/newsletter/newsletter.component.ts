@@ -14,19 +14,20 @@ import { CookieHelper } from 'src/app/util/helper/cookie.helper';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../button/button.component';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
-    selector: 'app-newsletter',
-    templateUrl: './newsletter.component.html',
-    styleUrls: ['./newsletter.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        RouterLink,
-        ButtonComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-newsletter',
+  templateUrl: './newsletter.component.html',
+  styleUrls: ['./newsletter.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    RouterLink,
+    ButtonComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class NewsletterComponent implements OnInit {
   fullScreenNewsletter: boolean = false;
@@ -41,11 +42,12 @@ export class NewsletterComponent implements OnInit {
     private router: Router,
     protected sanitizer: DomSanitizer,
     private store: Store<AppState>,
-    private cookieHelper: CookieHelper
+    private cookieHelper: CookieHelper,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     if (this.router.url.includes('newsletter')) {
       this.fullScreenNewsletter = true;
     }

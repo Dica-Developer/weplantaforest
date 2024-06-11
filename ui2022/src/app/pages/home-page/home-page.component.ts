@@ -5,25 +5,26 @@ import { PlantingProcessComponent } from '../../util/common-components/planting-
 import { PlantTreeComponent } from '../../util/common-components/plant-tree/plant-tree.component';
 import { OfferAreaComponent } from '../../util/common-components/offer-area/offer-area.component';
 import { HeaderComponent } from './components/header/header.component';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-home-page',
-    templateUrl: './home-page.component.html',
-    styleUrls: ['./home-page.component.scss'],
-    standalone: true,
-    imports: [
-        HeaderComponent,
-        OfferAreaComponent,
-        PlantTreeComponent,
-        PlantingProcessComponent,
-        ProjectsSectionComponent,
-        PlantedTreesComponent,
-    ],
+  selector: 'app-home-page',
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.scss'],
+  standalone: true,
+  imports: [
+    HeaderComponent,
+    OfferAreaComponent,
+    PlantTreeComponent,
+    PlantingProcessComponent,
+    ProjectsSectionComponent,
+    PlantedTreesComponent,
+  ],
 })
 export class HomePageComponent implements OnInit {
-  constructor() {}
+  constructor(private platformHelper: PlatformHelper) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 }

@@ -18,6 +18,7 @@ import { BarrelIconComponent } from '../icons/barrel-icon/barrel-icon.component'
 import { MatIcon } from '@angular/material/icon';
 import { LogoIconComponent } from '../icons/logo-icon/logo-icon.component';
 import { MatToolbar } from '@angular/material/toolbar';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
     selector: 'app-toolbar',
@@ -56,7 +57,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   plantBagPriceSub: Subscription;
   @ViewChild('searchOverlay') searchOverlay: SearchOverlayComponent;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private router: Router,
+    private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.authenticationSub = this.store.select('authState').subscribe((state) => {
@@ -118,7 +122,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   toggleSearch() {
     if (!this.overlayIsOpen) {
-      window.scroll(0, 0);
+    this.platformHelper.scrollTop()
     }
     this.overlayIsOpen = !this.overlayIsOpen;
     this.searchOverlay.focusSearch();

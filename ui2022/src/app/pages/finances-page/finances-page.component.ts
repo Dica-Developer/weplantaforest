@@ -8,19 +8,20 @@ import { SafeHtmlPipe } from '../../util/common-components/safehtml.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-finances-page',
-    templateUrl: './finances-page.component.html',
-    styleUrls: ['./finances-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgFor,
-        NgIf,
-        TranslateModule,
-        SafeHtmlPipe,
-    ],
+  selector: 'app-finances-page',
+  templateUrl: './finances-page.component.html',
+  styleUrls: ['./finances-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgFor,
+    NgIf,
+    TranslateModule,
+    SafeHtmlPipe,
+  ],
 })
 export class FinancesPageComponent implements OnInit, OnDestroy {
   lang: string;
@@ -32,6 +33,7 @@ export class FinancesPageComponent implements OnInit, OnDestroy {
   constructor(
     private contentService: ContentService,
     private store: Store<AppState>,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
@@ -48,12 +50,12 @@ export class FinancesPageComponent implements OnInit, OnDestroy {
           this.currentlySelectedYear = this.finances[0];
         });
     });
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 
   selectYear(financeArticle: any) {
     this.currentlySelectedYear = financeArticle;
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 
   ngOnDestroy(): void {

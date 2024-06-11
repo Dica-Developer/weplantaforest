@@ -22,27 +22,28 @@ import { MatInput } from '@angular/material/input';
 import { MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-edit-profile-page',
-    templateUrl: './edit-profile-page.component.html',
-    styleUrls: ['./edit-profile-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-        MatIcon,
-        MatSuffix,
-        MatInput,
-        MatSelect,
-        NgFor,
-        MatOption,
-        ButtonComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-edit-profile-page',
+  templateUrl: './edit-profile-page.component.html',
+  styleUrls: ['./edit-profile-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIcon,
+    MatSuffix,
+    MatInput,
+    MatSelect,
+    NgFor,
+    MatOption,
+    ButtonComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class EditProfilePageComponent implements OnInit, OnDestroy {
   profileForm: UntypedFormGroup;
@@ -77,6 +78,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
     private sliderHelper: SliderHelper,
+    private platformHelper: PlatformHelper
   ) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadProfileDetails({ username: paramMap.get('username') }));
@@ -100,7 +102,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.uploadImageSub = this.store.select(selectUploadingImage).subscribe((uploading) => {
       if (!uploading) {
         this.randomNumber = this.sliderHelper.getRandomNumber();
@@ -189,8 +191,8 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     }
     if (
       this.profileForm.get('password').dirty &&
-      this.profileForm.get('repeatPassword').dirty &&
-      this.profileForm.get('password').value === this.profileForm.get('repeatPassword').value
+        this.profileForm.get('repeatPassword').dirty &&
+        this.profileForm.get('password').value === this.profileForm.get('repeatPassword').value
     ) {
       this.store.dispatch(
         updateProfileProperty({

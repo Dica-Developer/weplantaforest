@@ -14,22 +14,23 @@ import { MatIcon } from '@angular/material/icon';
 import { BlogArticleTileComponent } from '../components/blog-article-tile/blog-article-tile.component';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { BlogHeaderComponent } from '../components/blog-header/blog-header.component';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-blog-overview-page',
-    templateUrl: './blog-overview-page.component.html',
-    styleUrls: ['./blog-overview-page.component.scss'],
-    standalone: true,
-    imports: [
-        BlogHeaderComponent,
-        NgFor,
-        BlogArticleTileComponent,
-        NgIf,
-        MatIcon,
-        NewsletterComponent,
-        OfferAreaComponent,
-        AsyncPipe,
-    ],
+  selector: 'app-blog-overview-page',
+  templateUrl: './blog-overview-page.component.html',
+  styleUrls: ['./blog-overview-page.component.scss'],
+  standalone: true,
+  imports: [
+    BlogHeaderComponent,
+    NgFor,
+    BlogArticleTileComponent,
+    NgIf,
+    MatIcon,
+    NewsletterComponent,
+    OfferAreaComponent,
+    AsyncPipe,
+  ],
 })
 export class BlogOverviewPageComponent implements OnInit {
   type: string = 'all';
@@ -40,7 +41,10 @@ export class BlogOverviewPageComponent implements OnInit {
   blogArticlesAmountSub: Subscription;
   blogArticlesAmount: number;
 
-  constructor(private store: Store<AppState>, private translateService: TranslateService) {
+  constructor(
+    private store: Store<AppState>,
+    private platformHelper: PlatformHelper,
+    private translateService: TranslateService) {
     if (this.translateService.currentLang === 'de') {
       this.lang = 'DEUTSCH';
     } else if (this.translateService.currentLang === 'en') {
@@ -50,7 +54,7 @@ export class BlogOverviewPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.blogArticlesAmountSub = this.store.select(selectBlogArticlesAmount).subscribe((res) => {
       this.blogArticlesAmount = res;
     });

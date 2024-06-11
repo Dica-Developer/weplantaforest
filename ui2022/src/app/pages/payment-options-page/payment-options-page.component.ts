@@ -20,21 +20,22 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NotAuthenticatedWarningComponent } from '../../util/common-components/not-authenticated-warning/not-authenticated-warning.component';
 import { ButtonComponent } from '../../util/common-components/button/button.component';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-payment-options-page',
-    templateUrl: './payment-options-page.component.html',
-    styleUrls: ['./payment-options-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        NgxPayPalModule,
-        ButtonComponent,
-        NotAuthenticatedWarningComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-payment-options-page',
+  templateUrl: './payment-options-page.component.html',
+  styleUrls: ['./payment-options-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    NgxPayPalModule,
+    ButtonComponent,
+    NotAuthenticatedWarningComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
   payPalConfig: IPayPalConfig;
@@ -75,10 +76,11 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private router: Router,
     private cookieHelper: CookieHelper,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.store.select(selectPlantbagPrice).subscribe((price) => {
       this.initPaypalConfig(price);
     });

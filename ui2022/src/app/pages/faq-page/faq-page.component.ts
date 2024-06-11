@@ -4,6 +4,7 @@ import { TextHelper } from 'src/app/util/helper/text.helper';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-faq-page',
@@ -22,10 +23,13 @@ export class FaqPageComponent implements OnInit {
   faqOverview: any = {};
   currentlyVisibleFaq: any = null;
 
-  constructor(private textHelper: TextHelper, private contentService: ContentService) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private textHelper: TextHelper,
+    private contentService: ContentService) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.contentService
       .getInfrastructureArticle('FAQ', this.textHelper.getCurrentLanguage())
       .subscribe((res: any[]) => {
@@ -37,7 +41,7 @@ export class FaqPageComponent implements OnInit {
 
   selectFaq(faq: any) {
     this.currentlyVisibleFaq = faq;
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 
   sortEntriesbyNumberInTitle() {

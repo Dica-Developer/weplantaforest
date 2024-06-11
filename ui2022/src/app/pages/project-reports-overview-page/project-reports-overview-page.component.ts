@@ -16,23 +16,24 @@ import { MatIcon } from '@angular/material/icon';
 import { ProjectOverviewTileComponent } from './components/project-overview-tile/project-overview-tile.component';
 import { ProjectReportsHeaderComponent } from './components/project-reports-header/project-reports-header.component';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-project-reports-overview-page',
-    templateUrl: './project-reports-overview-page.component.html',
-    styleUrls: ['./project-reports-overview-page.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        ProjectReportsHeaderComponent,
-        NgFor,
-        ProjectOverviewTileComponent,
-        MatIcon,
-        NewsletterComponent,
-        OfferAreaComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-project-reports-overview-page',
+  templateUrl: './project-reports-overview-page.component.html',
+  styleUrls: ['./project-reports-overview-page.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    ProjectReportsHeaderComponent,
+    NgFor,
+    ProjectOverviewTileComponent,
+    MatIcon,
+    NewsletterComponent,
+    OfferAreaComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class ProjectReportsOverviewPageComponent implements OnInit, OnDestroy {
   type: string = 'active';
@@ -42,14 +43,15 @@ export class ProjectReportsOverviewPageComponent implements OnInit, OnDestroy {
   amountOfInactiveProjects: number;
   inactiveAmountOfProjectsSub: Subscription;
 
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private platformHelper: PlatformHelper,
+    private store: Store<AppState>) {
     this.store.dispatch(loadInActiveProjectReports({ pageSize: 8 }));
     this.store.dispatch(loadActiveProjectReports());
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-
+    this.platformHelper.scrollTop()
     this.inactiveAmountOfProjectsSub = this.store
       .select(selectAmountOfInactiveProjects)
       .subscribe((res) => {

@@ -6,6 +6,7 @@ import { CustomPlantingComponent } from './components/custom-planting/custom-pla
 import { PlantProposalRowComponent } from './components/plant-proposal-row/plant-proposal-row.component';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-plant-proposal-page',
@@ -24,9 +25,9 @@ import { RouterLink } from '@angular/router';
     ],
 })
 export class PlantProposalPageComponent implements OnInit {
-  constructor() {}
+  constructor(private platformHelper: PlatformHelper) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 }

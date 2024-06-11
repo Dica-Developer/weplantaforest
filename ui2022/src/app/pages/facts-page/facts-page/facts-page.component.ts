@@ -5,6 +5,7 @@ import { combineLatest } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-facts-page',
@@ -44,10 +45,11 @@ export class FactsPageComponent implements OnInit {
   constructor(
     private statisticsService: StatisticsService,
     private translateService: TranslateService,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     let privateOrg = this.translateService.instant('PRIVATE');
     let commercialOrg = this.translateService.instant('COMMERCIAL');
     let nonprofitOrg = this.translateService.instant('NONPROFIT');

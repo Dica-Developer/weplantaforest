@@ -7,19 +7,20 @@ import { LightboxGalleryComponent } from '../../../../util/common-components/lig
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../util/common-components/button/button.component';
 import { NgIf } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-project-description',
-    templateUrl: './project-description.component.html',
-    styleUrls: ['./project-description.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        ButtonComponent,
-        RouterLink,
-        LightboxGalleryComponent,
-        TranslateModule,
-    ],
+  selector: 'app-project-description',
+  templateUrl: './project-description.component.html',
+  styleUrls: ['./project-description.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    ButtonComponent,
+    RouterLink,
+    LightboxGalleryComponent,
+    TranslateModule,
+  ],
 })
 export class ProjectDescriptionComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
@@ -29,7 +30,10 @@ export class ProjectDescriptionComponent implements OnInit {
   activeProject: boolean;
   description: string;
   images: { imageUrl: string; caption: string }[] = [];
-  constructor(private textHelper: TextHelper, private translateService: TranslateService) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private textHelper: TextHelper,
+    private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.activeProject = this.projectReport.projectReportData.active;
@@ -51,6 +55,6 @@ export class ProjectDescriptionComponent implements OnInit {
 
   showProjectPlantingClicked() {
     this.showProjectPlanting.emit();
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 }

@@ -11,19 +11,20 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TreeTileComponent } from '../../util/common-components/tree-tile/tree-tile.component';
 import { NgIf, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-explore-page',
-    templateUrl: './explore-page.component.html',
-    styleUrls: ['./explore-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        NgFor,
-        TreeTileComponent,
-        TranslateModule,
-    ],
+  selector: 'app-explore-page',
+  templateUrl: './explore-page.component.html',
+  styleUrls: ['./explore-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    NgFor,
+    TreeTileComponent,
+    TranslateModule,
+  ],
 })
 export class ExplorePageComponent implements OnInit {
   currentTree: TreeType = null;
@@ -34,7 +35,10 @@ export class ExplorePageComponent implements OnInit {
   combinedSub: Subscription;
   trees: TreeType[] = [];
 
-  constructor(private store: Store<AppState>, private textHelper: TextHelper) {
+  constructor(
+    private store: Store<AppState>,
+    private platformHelper: PlatformHelper,
+    private textHelper: TextHelper) {
     this.store.dispatch(loadTreeTypes());
   }
 
@@ -78,7 +82,7 @@ export class ExplorePageComponent implements OnInit {
       environment.backendUrl + '/treeType/image/' + tree.treeImageBW + '/750/750';
     this.currentFruitUrl = '';
     this.selectedInfoType = 'help';
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 
   resetTree() {

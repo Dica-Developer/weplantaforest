@@ -14,21 +14,22 @@ import { ButtonComponent } from '../../util/common-components/button/button.comp
 import { NgIf } from '@angular/common';
 import { CaptchaComponent } from '../../util/common-components/captcha/captcha.component';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-offer-project-page',
-    templateUrl: './offer-project-page.component.html',
-    styleUrls: ['./offer-project-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        FormsModule,
-        ReactiveFormsModule,
-        CaptchaComponent,
-        NgIf,
-        ButtonComponent,
-        TranslateModule,
-    ],
+  selector: 'app-offer-project-page',
+  templateUrl: './offer-project-page.component.html',
+  styleUrls: ['./offer-project-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    CaptchaComponent,
+    NgIf,
+    ButtonComponent,
+    TranslateModule,
+  ],
 })
 export class OfferProjectPageComponent implements OnInit {
   offerForm = new UntypedFormGroup({
@@ -49,10 +50,11 @@ export class OfferProjectPageComponent implements OnInit {
     private store: Store<AppState>,
     private snackBar: MatSnackBar,
     private translateService: TranslateService,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.store.dispatch(formDisabledFlagReset());
     this.formSubmittedSub = this.store.select(selectFormDisabled).subscribe((created) => {
       if (created) {

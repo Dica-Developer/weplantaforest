@@ -4,6 +4,7 @@ import { ContentService } from 'src/app/services/content.service';
 import { TextHelper } from 'src/app/util/helper/text.helper';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-privacy-page',
@@ -19,10 +20,10 @@ import { RouterLink } from '@angular/router';
 export class PrivacyPageComponent implements OnInit {
   privacyPolicy: any;
 
-  constructor(private textHelper: TextHelper, private contentService: ContentService) {}
+  constructor(private platformHelper: PlatformHelper, private textHelper: TextHelper, private contentService: ContentService) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop();
     this.contentService
       .getInfrastructureArticle('PRIVACY', this.textHelper.getCurrentLanguage())
       .subscribe((res) => {

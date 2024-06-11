@@ -36,7 +36,6 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 export class ProjectPageComponent implements OnInit, OnDestroy {
   projectReport$ = this.store.select(selectProjectReport);
   projectReportSub: Subscription;
-  isBrowser: boolean;
   showProjectPlanting: boolean = false;
 
   constructor(private store: Store<AppState>,
@@ -59,9 +58,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isBrowser = this.platformHelper.checkIfBrowser();
-    console.log(this.isBrowser);
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 
   ngOnDestroy(): void {

@@ -21,29 +21,30 @@ import { MatSuffix, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-signup-page',
-    templateUrl: './signup-page.component.html',
-    styleUrls: ['./signup-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-        MatIcon,
-        MatSuffix,
-        MatLabel,
-        MatSelect,
-        NgFor,
-        MatOption,
-        MatCheckbox,
-        CaptchaComponent,
-        ButtonComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-signup-page',
+  templateUrl: './signup-page.component.html',
+  styleUrls: ['./signup-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIcon,
+    MatSuffix,
+    MatLabel,
+    MatSelect,
+    NgFor,
+    MatOption,
+    MatCheckbox,
+    CaptchaComponent,
+    ButtonComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class SignupPageComponent implements OnInit {
   signupError$: Observable<string>;
@@ -88,13 +89,14 @@ export class SignupPageComponent implements OnInit {
     private store: Store<AppState>,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
+    private platformHelper: PlatformHelper
   ) {
     this.signupError$ = store.select(selectSignupError);
     this.signupDone$ = store.select(selectSignupDone);
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.store.dispatch(signupDoneReset());
   }
 

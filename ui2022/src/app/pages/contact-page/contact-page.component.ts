@@ -14,20 +14,21 @@ import {
 import { ButtonComponent } from '../../util/common-components/button/button.component';
 import { CaptchaComponent } from '../../util/common-components/captcha/captcha.component';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-contact-page',
-    templateUrl: './contact-page.component.html',
-    styleUrls: ['./contact-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        FormsModule,
-        ReactiveFormsModule,
-        CaptchaComponent,
-        ButtonComponent,
-        TranslateModule,
-    ],
+  selector: 'app-contact-page',
+  templateUrl: './contact-page.component.html',
+  styleUrls: ['./contact-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    CaptchaComponent,
+    ButtonComponent,
+    TranslateModule,
+  ],
 })
 export class ContactPageComponent implements OnInit, OnDestroy {
   contactForm = new UntypedFormGroup({
@@ -47,10 +48,11 @@ export class ContactPageComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.contactForm.reset();
     this.store.dispatch(resetContactForm());
     this.requestSentSubscription = this.store

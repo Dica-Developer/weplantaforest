@@ -22,28 +22,29 @@ import { ProfileDetailsComponent } from '../components/profile-details/profile-d
 import { TeamHeaderComponent } from '../../../util/common-components/team-header/team-header.component';
 import { ProfileHeaderComponent } from '../components/profile-header/profile-header.component';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-profile-page',
-    templateUrl: './profile-page.component.html',
-    styleUrls: ['./profile-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        ProfileHeaderComponent,
-        TeamHeaderComponent,
-        ProfileDetailsComponent,
-        TeamDetailsComponent,
-        ProfileTreesComponent,
-        ProfileReceiptsComponent,
-        ProfileGiftOverviewComponent,
-        ProfileCertificatesComponent,
-        ProfileWidgetsComponent,
-        NewsletterComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-profile-page',
+  templateUrl: './profile-page.component.html',
+  styleUrls: ['./profile-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    ProfileHeaderComponent,
+    TeamHeaderComponent,
+    ProfileDetailsComponent,
+    TeamDetailsComponent,
+    ProfileTreesComponent,
+    ProfileReceiptsComponent,
+    ProfileGiftOverviewComponent,
+    ProfileCertificatesComponent,
+    ProfileWidgetsComponent,
+    NewsletterComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class ProfilePageComponent implements OnInit, AfterViewInit, OnDestroy {
   profileDetails$ = this.store.select(selectProfileDetails);
@@ -53,7 +54,10 @@ export class ProfilePageComponent implements OnInit, AfterViewInit, OnDestroy {
   routeParamsSub: Subscription;
   teamDetailsSub: Subscription;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  constructor(
+    private store: Store<AppState>,
+    private platformHelper: PlatformHelper,
+    private route: ActivatedRoute) {
     this.routeParamsSub = this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(
         loadProfileDetails({ username: decodeURIComponent(paramMap.get('username')) }),
@@ -81,7 +85,7 @@ export class ProfilePageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
   }
 
   ngAfterViewInit(): void {}

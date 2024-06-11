@@ -12,21 +12,22 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../util/common-components/button/button.component';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-forgot-password-page',
-    templateUrl: './forgot-password-page.component.html',
-    styleUrls: ['./forgot-password-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-        ButtonComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-forgot-password-page',
+  templateUrl: './forgot-password-page.component.html',
+  styleUrls: ['./forgot-password-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class ForgotPasswordPageComponent implements OnInit {
   forgotPasswordForm = new UntypedFormGroup({
@@ -37,10 +38,12 @@ export class ForgotPasswordPageComponent implements OnInit {
     selectPasswordResetRequestSent,
   );
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.store.dispatch(resetState());
   }
 

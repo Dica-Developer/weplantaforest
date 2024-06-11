@@ -15,5 +15,11 @@ export class PlatformHelper {
     return this.isBrowser
   }
 
+  scrollTop() {
+    if (this.isBrowser) {
+      window.scrollTo(0, 0);
+    }
+  }
+
 }
 
