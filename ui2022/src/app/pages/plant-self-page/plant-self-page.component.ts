@@ -147,7 +147,7 @@ export class PlantSelfPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     if (this.screenWidth < 764) {
       this.mapHeight = '500px';
     }
@@ -169,6 +169,7 @@ export class PlantSelfPageComponent implements OnInit {
   }
 
   setTreeCoordinates(event: any) {
+    console.log(event)
     this.selfPlantForm.get('latitude').setValue(event.lat);
     this.selfPlantForm.get('longitude').setValue(event.lng);
   }

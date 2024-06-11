@@ -12,7 +12,6 @@ import {
 import { UntypedFormControl } from '@angular/forms';
 import { tileLayer, marker, icon, Map } from 'leaflet';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletHelper } from '../../helper/leaflet.helper';
 
 @Component({
@@ -20,7 +19,7 @@ import { LeafletHelper } from '../../helper/leaflet.helper';
   templateUrl: './leaflet-map.component.html',
   styleUrls: ['./leaflet-map.component.scss'],
   standalone: true,
-  imports: [LeafletModule],
+  imports: [],
 })
 export class LeafletMapComponent implements OnInit, OnDestroy {
   @Output() markerSet = new EventEmitter();
@@ -57,15 +56,17 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    if (this._platformId === 'browser') {
+      this.leafletHelper.loadLeaflet().then((lib) => {
+        this.combineSubscriptions(lib);
+        this.map = lib.map('map', this.mapOptions);
+        this.onMapReady(this.map);
+        this.map.on('click', this.mapClicked.bind(this));
+      })
+    }
     if (this.positions) {
       this.coords = this.createPolygonPoints(this.positions);
     }
-    this.afterNextRender();
-  }
-
-  async afterNextRender() {
-    const lib = await import('leaflet');
-    this.combineSubscriptions(lib);
   }
 
   combineSubscriptions(leaflet:any) {
@@ -80,6 +81,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
             const polygon = leaflet.polygon(coords, { color: '#82ab1f' });
             this.map.addLayer(polygon);
             const marker = this.createMarker(polygon.getCenter().lat, polygon.getCenter().lng);
+            this.map.addLayer(marker);
             marker.on('click', (event) => {
               event.target._map.setView(event.latlng, 14);
             });
@@ -104,33 +106,38 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         }),
       ],
       drawControl: false,
-      dragging: !this.leafletHelper.L.Browser?.mobile,
-      zoom: 2,
+      dragging: true,
+      zoom: 6,
+      center: [51.9481, 10.26517],
     }
   }
 
   async onMapReady(leaflet: any) {
-    const lib = await import('leaflet');
+    console.log('onMapReady')
     this.map = leaflet
     this.map.scrollWheelZoom.disable();
     if (this.disabledMap) {
     }
-    setTimeout(() => {
-      if (this.coords.length > 0) {
-        this.polygon = lib.polygon(this.coords, { color: '#82ab1f' });
-        lib.addLayer(this.polygon);
-        lib.fitBounds(this.polygon.getBounds());
-      } else {
-        // adjust zoom if mobile view
-        if (this.screenWidth < 764) {
-          this.map.setView([51.9481, 10.26517], 5);
-        } else {
-          this.map.setView([51.9481, 10.26517], 6);
-        }
-      }
-      this.map.invalidateSize();
-      this.mapSubject.next(true);
-    });
+    if (this._platformId === 'browser') {
+      this.leafletHelper.loadLeaflet().then((lib) => {
+        setTimeout(() => {
+          if (this.coords.length > 0) {
+            this.polygon = lib.polygon(this.coords, { color: '#82ab1f' });
+            this.map.addLayer(this.polygon);
+            this.map.fitBounds(this.polygon.getBounds());
+          } else {
+            // adjust zoom if mobile view
+            if (this.screenWidth < 764) {
+              this.map.setView([51.9481, 10.26517], 5);
+            } else {
+              this.map.setView([51.9481, 10.26517], 6);
+            }
+          }
+          this.map.invalidateSize();
+          this.mapSubject.next(true);
+        });
+      })
+    }
   }
 
   createPolygonPoints(positions: any[]) {
@@ -149,9 +156,17 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     if (!this.showMarker) {
       return;
     }
+    this.resetTreeMarkerForSelfPlant()
     this.treeMarker = [];
     this.treeMarker.push(this.createMarker(event.latlng.lat, event.latlng.lng));
     this.markerSet.emit({ lat: event.latlng.lat, lng: event.latlng.lng });
+    this.map.addLayer(this.treeMarker[0]);
+  }
+
+  resetTreeMarkerForSelfPlant() {
+    if (this.treeMarker?.length > 0) {
+      this.map.removeLayer(this.treeMarker[0]);
+    }
   }
 
   createMarker(lat: number, lng: number) {
