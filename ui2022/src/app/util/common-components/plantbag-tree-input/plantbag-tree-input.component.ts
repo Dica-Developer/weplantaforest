@@ -15,24 +15,25 @@ import { MatIconButton } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
 import { NgIf, CurrencyPipe } from '@angular/common';
 import { MatInput } from '@angular/material/input';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
-    selector: 'app-plantbag-tree-input',
-    templateUrl: './plantbag-tree-input.component.html',
-    styleUrls: ['./plantbag-tree-input.component.scss'],
-    standalone: true,
-    imports: [
-        MatInput,
-        FormsModule,
-        ReactiveFormsModule,
-        NgIf,
-        MatError,
-        MatIconButton,
-        MatTooltip,
-        MatIcon,
-        CurrencyPipe,
-        TranslateModule,
-    ],
+  selector: 'app-plantbag-tree-input',
+  templateUrl: './plantbag-tree-input.component.html',
+  styleUrls: ['./plantbag-tree-input.component.scss'],
+  standalone: true,
+  imports: [
+    MatInput,
+    FormsModule,
+    ReactiveFormsModule,
+    NgIf,
+    MatError,
+    MatIconButton,
+    MatTooltip,
+    MatIcon,
+    CurrencyPipe,
+    TranslateModule,
+  ],
 })
 export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   @Input()
@@ -55,7 +56,10 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   userLanuage: string;
   userLanuguageSub: Subscription;
 
-  constructor(private store: Store<AppState>, private textHelper: TextHelper) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private store: Store<AppState>,
+    private textHelper: TextHelper) {}
 
   ngOnInit(): void {
     this.initControl();
@@ -82,10 +86,12 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
       // since there are new plantbag items after changing the amount, the focus gets lost when changing the input
       // so we look for the input element with their id (--> 'article-' + articleId) and focus it again programmatically
       setTimeout(() => {
-        let el = document.getElementById('article-' + this.article.articleId);
-        el.focus();
-        let mel = document.getElementById('m-article-' + this.article.articleId);
-        mel.focus();
+        if (this.platformHelper.checkIfBrowser()){
+          let el = document.getElementById('article-' + this.article.articleId);
+          el.focus();
+          let mel = document.getElementById('m-article-' + this.article.articleId);
+          mel.focus();
+        }
       }, 10);
     });
   }

@@ -63,9 +63,4 @@ export class FinancesPageComponent implements OnInit, OnDestroy {
     this.financeSub?.unsubscribe();
   }
 
-  scrollTo(id) {
-    let el = document.getElementById(id);
-    el.scrollIntoView({behavior: 'smooth'});
-  }
-
 }
