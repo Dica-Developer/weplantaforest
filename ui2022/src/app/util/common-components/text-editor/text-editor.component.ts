@@ -7,18 +7,18 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
 @Component({
-    selector: 'app-text-editor',
-    templateUrl: './text-editor.component.html',
-    styleUrls: ['./text-editor.component.scss'],
-    standalone: true,
-    imports: [
-        MatTabGroup,
-        MatTab,
-        CKEditorModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SafeHtmlPipe,
-    ],
+  selector: 'app-text-editor',
+  templateUrl: './text-editor.component.html',
+  styleUrls: ['./text-editor.component.scss'],
+  standalone: true,
+  imports: [
+    MatTabGroup,
+    MatTab,
+    CKEditorModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SafeHtmlPipe,
+  ],
 })
 export class TextEditorComponent implements OnInit, OnDestroy {
   controlInternal: UntypedFormControl;
