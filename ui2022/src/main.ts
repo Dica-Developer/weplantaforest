@@ -3,7 +3,6 @@ import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { FormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { EffectsModule } from '@ngrx/effects';
@@ -70,9 +69,6 @@ export const MY_FORMATS = {
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
-registerLocaleData(localeDe, 'de-DE', localeDeExtra);
-registerLocaleData(localeEn, 'en-EN', localeEnExtra);
 
 bootstrapApplication(AppComponent, appConfig
 )

@@ -1,7 +1,6 @@
 import { ApplicationConfig, DEFAULT_CURRENCY_CODE, LOCALE_ID, importProvidersFrom } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { FormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { EffectsModule } from '@ngrx/effects';
@@ -28,7 +27,7 @@ import { profileReducerFn, ProfileEffects } from './store/profile.store';
 import { authReducerFn, AuthEffects } from './store/auth.store';
 import { StoreModule } from '@ngrx/store';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { BrowserModule, bootstrapApplication, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { ErrorInterceptor } from './services/http-interceptors/http.interceptor';
@@ -59,6 +58,9 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'YYYY',
   },
 };
+
+registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+registerLocaleData(localeEn, 'en-EN', localeEnExtra);
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -153,7 +155,7 @@ export const appConfig: ApplicationConfig = {
       useValue: 'de-DE', // 'de-DE' for Germany, 'fr-FR' for France ...
     },
     provideCharts(withDefaultRegisterables()),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
     provideAnimations(), provideClientHydration()
   ]
 };
