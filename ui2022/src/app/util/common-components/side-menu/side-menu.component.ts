@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuTrigger, MatMenu } from '@angular/material/menu';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
     selector: 'app-side-menu',
@@ -27,7 +28,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   isAdmin: boolean;
   isAdminSub: Subscription;
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(private store: Store<AppState>, private router: Router, private platformHelper: PlatformHelper) {
     this.isAdminSub = this.store.select('profileState').subscribe((state) => {
       this.isAdmin = state.isAdmin;
     });
@@ -36,7 +37,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   routeToProfile() {
-    this.router.navigate(['/user/' + localStorage.getItem('username')]);
+    this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
   }
 
   logoutClicked() {

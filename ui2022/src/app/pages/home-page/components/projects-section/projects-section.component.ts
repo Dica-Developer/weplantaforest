@@ -51,7 +51,9 @@ export class ProjectsSectionComponent implements OnInit, OnDestroy {
 
   @HostListener('window:load', ['$event'])
   getScreenSize() {
-    this.screenWidth = window.innerWidth;
+    if (this.platformHelper.checkIfBrowser()) {
+      this.screenWidth = window.innerWidth;
+    }
   }
 
   ngOnInit(): void {

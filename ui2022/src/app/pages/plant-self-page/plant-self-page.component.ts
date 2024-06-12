@@ -100,8 +100,8 @@ export class PlantSelfPageComponent implements OnInit {
   });
 
   isBrowser: boolean;
-  userLanuage: string;
-  userLanuguageSub: Subscription;
+  userLanguage: string;
+  userLanguageSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -129,21 +129,23 @@ export class PlantSelfPageComponent implements OnInit {
           fruit: tt.fruit,
           leaf: tt.leaf,
           trunk: tt.trunk,
-          name: this.textHelper.getTextForLanguage(tt.name, this.userLanuage),
+          name: this.textHelper.getTextForLanguage(tt.name, this.userLanguage),
         });
       }
       this.treeTypes = this.treeTypes.filter((treeType) => !treeType.name.includes('Default'));
     });
     this.getScreenSize();
     this.selectAuthenticated$ = this.store.select(selectAuthenticated);
-    this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
-      this.userLanuage = userLanguage;
+    this.userLanguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
+      this.userLanguage = userLanguage;
     });
   }
 
   @HostListener('window:load', ['$event'])
   getScreenSize(event?) {
-    this.screenWidth = window.innerWidth;
+    if (this.platformHelper.checkIfBrowser()) {
+      this.screenWidth = window.innerWidth;
+    }
   }
 
   ngOnInit(): void {

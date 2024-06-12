@@ -6,12 +6,13 @@ import { Store } from '@ngrx/store';
 import { loginSuccess } from '../store/auth.store';
 import { loadAdminFlag, loadProfileDetails, setUsername } from '../store/profile.store';
 import { loadTreeTypes } from '../store/treeType.store';
+import { PlatformHelper } from '../util/helper/platform.helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private store: Store<AppState>) {}
+  constructor(private http: HttpClient, private store: Store<AppState>, private platformHelper: PlatformHelper) {}
 
   login(name: string, password: string) {
     return this.http.post(
@@ -88,17 +89,17 @@ export class AuthService {
   }
 
   autoLogin() {
-    const token = localStorage.getItem('jwt');
+    const token = this.platformHelper.getLocalstorage('jwt');
     if (!token) {
       return;
     } else {
       this.store.dispatch(loginSuccess());
       this.store.dispatch(loadAdminFlag());
-      this.store.dispatch(setUsername({ username: localStorage.getItem('username') }));
+      this.store.dispatch(setUsername({ username: this.platformHelper.getLocalstorage('username') }));
       this.store.dispatch(loadAdminFlag());
       this.store.dispatch(
         loadProfileDetails({
-          username: localStorage.getItem('username'),
+          username: this.platformHelper.getLocalstorage('username'),
         }),
       );
       this.store.dispatch(loadTreeTypes());

@@ -13,6 +13,7 @@ import {
   loadAdminFlag,
   resetProfileDetails,
 } from './profile.store';
+import { PlatformHelper } from '../util/helper/platform.helper';
 
 export const signup = createAction(
   '[Auth] Signup',
@@ -134,8 +135,6 @@ const authReducer = createReducer(
     verificationSuccess: false,
   })),
   on(logout, (state) => {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('username');
     return {
       ...state,
       isAuthenticated: false,
@@ -194,6 +193,7 @@ export class AuthEffects {
     private actions$: Actions, // this is an RxJS stream of all actions
     private authService: AuthService,
     private router: Router, // we will need this service for API calls
+    private platformHelper: PlatformHelper,
   ) {}
 
   Login$ = createEffect(() =>
@@ -202,8 +202,8 @@ export class AuthEffects {
       switchMap((action: any) =>
         this.authService.login(action.name, action.password).pipe(
           switchMap((response) => {
-            localStorage.setItem('jwt', response.headers.get('X-AUTH-TOKEN'));
-            localStorage.setItem('username', response.headers.get('X-AUTH-USERNAME'));
+            this.platformHelper.setLocalstorage('jwt', response.headers.get('X-AUTH-TOKEN'));
+            this.platformHelper.setLocalstorage('username', response.headers.get('X-AUTH-USERNAME'));
             this.router.navigate(['/']);
             return [
               setUsername({
@@ -247,27 +247,27 @@ export class AuthEffects {
       ofType(signup),
       switchMap((action: any) =>
         this.authService
-          .signup(
-            action.name,
-            action.password,
-            action.mail,
-            action.newsletter,
-            action.orgType,
-            action.language,
-          )
-          .pipe(
-            switchMap((response) => {
-              return [signupSuccess()];
-            }),
-            catchError((err) => {
-              return [
-                signupFailed({ error: 'signup failed' }),
-                addError({
-                  error: { key: 'Error', message: err.error.errorInfos[0]?.errorCode },
-                }),
-              ];
-            }),
-          ),
+        .signup(
+          action.name,
+          action.password,
+          action.mail,
+          action.newsletter,
+          action.orgType,
+          action.language,
+        )
+        .pipe(
+          switchMap((response) => {
+            return [signupSuccess()];
+          }),
+          catchError((err) => {
+            return [
+              signupFailed({ error: 'signup failed' }),
+              addError({
+                error: { key: 'Error', message: err.error.errorInfos[0]?.errorCode },
+              }),
+            ];
+          }),
+        ),
       ),
     ),
   );
@@ -279,7 +279,8 @@ export class AuthEffects {
         tap((action: any) => {
           resetProfileDetails();
           this.router.navigate(['/']);
-          localStorage.removeItem('jwt');
+          this.platformHelper.removeLocalstorage('jwt');
+          this.platformHelper.removeLocalstorage('username');
         }),
       ),
     { dispatch: false },
@@ -306,8 +307,8 @@ export class AuthEffects {
       ofType(resetPassword),
       switchMap((action: any) =>
         this.authService
-          .resetPassword(action.id, action.password, action.key, action.language)
-          .pipe(switchMap((response) => [resetPasswordSuccess()])),
+        .resetPassword(action.id, action.password, action.key, action.language)
+        .pipe(switchMap((response) => [resetPasswordSuccess()])),
       ),
     ),
   );

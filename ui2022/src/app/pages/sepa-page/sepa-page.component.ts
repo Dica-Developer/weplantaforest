@@ -20,6 +20,7 @@ import { MatOption } from '@angular/material/core';
 import { NgFor, NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { MatInput } from '@angular/material/input';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-sepa-page',
@@ -85,7 +86,7 @@ export class SepaPageComponent implements OnInit, OnDestroy {
 
   default = 1;
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(private store: Store<AppState>, private router: Router, private platformHelper: PlatformHelper) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadLastPayedCart());
@@ -108,8 +109,8 @@ export class SepaPageComponent implements OnInit, OnDestroy {
       this.cartPayed = cartPayed;
       if (this.cartPayed) {
         this.form.disable();
-        if (localStorage.getItem('username')) {
-          this.router.navigate(['/user/' + localStorage.getItem('username')]);
+        if (this.platformHelper.getLocalstorage('username')) {
+          this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
         } else {
           this.router.navigate(['/']);
         }

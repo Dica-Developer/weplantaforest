@@ -63,7 +63,7 @@ export class ProfilePageComponent implements OnInit, AfterViewInit, OnDestroy {
         loadProfileDetails({ username: decodeURIComponent(paramMap.get('username')) }),
       );
 
-      if (paramMap.get('username') === localStorage.getItem('username')) {
+      if (paramMap.get('username') === this.platformHelper.getLocalstorage('username')) {
         this.showEdit = true;
       } else {
         this.showEdit = false;

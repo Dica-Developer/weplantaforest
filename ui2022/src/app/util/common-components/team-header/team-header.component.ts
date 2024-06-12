@@ -20,6 +20,7 @@ import { ButtonComponent } from '../button/button.component';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
     selector: 'app-team-header',
@@ -58,6 +59,7 @@ export class TeamHeaderComponent implements OnInit {
     private translateService: TranslateService,
     public dialog: MatDialog,
     private sliderHelper: SliderHelper,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
@@ -73,7 +75,7 @@ export class TeamHeaderComponent implements OnInit {
   }
 
   isMyProfile() {
-    return this.profileDetails.userName === localStorage.getItem('username');
+    return this.profileDetails.userName === this.platformHelper.getLocalstorage('username');
   }
 
   editTeam() {
@@ -99,7 +101,7 @@ export class TeamHeaderComponent implements OnInit {
         })
         .onAction()
         .subscribe(() => {
-          // this.router.navigate(['/user/' + localStorage.getItem('username')]);
+          // this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
           this.deleteTeam();
         });
     } else if (confirmType === 'join') {
@@ -121,7 +123,7 @@ export class TeamHeaderComponent implements OnInit {
 
   deleteTeam() {
     setTimeout(() => {
-      this.router.navigate(['/user/' + localStorage.getItem('username')]);
+      this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
     }, 250);
     this.store.dispatch(deleteTeam({ teamId: this.teamDetails?.teamId }));
   }
@@ -144,6 +146,6 @@ export class TeamHeaderComponent implements OnInit {
   }
 
   isLoggedIn() {
-    return localStorage.getItem('username');
+    return this.platformHelper.getLocalstorage('username');
   }
 }

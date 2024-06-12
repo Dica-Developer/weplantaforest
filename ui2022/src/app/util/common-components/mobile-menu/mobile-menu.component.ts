@@ -7,6 +7,7 @@ import { InstagramIconComponent } from '../icons/instagram-icon/instagram-icon.c
 import { ButtonComponent } from '../button/button.component';
 import { NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
     selector: 'app-mobile-menu',
@@ -30,7 +31,7 @@ export class MobileMenuComponent implements OnInit {
   @Output() clickedSearchEmitter = new EventEmitter();
   @Output() clickedLogin = new EventEmitter();
   @Output() clickedLogout = new EventEmitter();
-  constructor(private router: Router) {}
+  constructor(private router: Router, private platformHelper: PlatformHelper) {}
 
   ngOnInit(): void {}
 
@@ -47,7 +48,7 @@ export class MobileMenuComponent implements OnInit {
   }
 
   routeToProfile() {
-    this.router.navigate(['/user/' + localStorage.getItem('username')]);
+    this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
   }
 
   searchClicked() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
     selector: 'app-not-authenticated-warning',
@@ -17,11 +18,13 @@ import { NgIf } from '@angular/common';
 export class NotAuthenticatedWarningComponent implements OnInit {
   showGiftWarning: boolean = false;
 
-  constructor() {}
+  constructor(private platformHelper: PlatformHelper) {}
 
   ngOnInit(): void {
-    if (window.location.pathname.includes('/gift/redeem')) {
-      this.showGiftWarning = true;
+    if (this.platformHelper.checkIfBrowser()) {
+      if (window.location.pathname.includes('/gift/redeem')) {
+        this.showGiftWarning = true;
+      }
     }
   }
 }

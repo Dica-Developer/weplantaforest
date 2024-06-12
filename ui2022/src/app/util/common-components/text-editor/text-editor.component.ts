@@ -1,10 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Subscription } from 'rxjs';
 import { SafeHtmlPipe } from '../safehtml.pipe';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { EditorHelper } from '../../helper/editor.helper';
 
 @Component({
   selector: 'app-text-editor',
@@ -14,7 +13,6 @@ import { MatTabGroup, MatTab } from '@angular/material/tabs';
   imports: [
     MatTabGroup,
     MatTab,
-    CKEditorModule,
     FormsModule,
     ReactiveFormsModule,
     SafeHtmlPipe,
@@ -22,11 +20,10 @@ import { MatTabGroup, MatTab } from '@angular/material/tabs';
 })
 export class TextEditorComponent implements OnInit, OnDestroy {
   controlInternal: UntypedFormControl;
-
   rawHTMLControl = new FormControl('');
 
   text: string;
-  public editor = ClassicEditor;
+  public editor = null;
 
   rawControlSub: Subscription;
 
@@ -42,10 +39,15 @@ export class TextEditorComponent implements OnInit, OnDestroy {
     this.rawHTMLControl.setValue(controlObj.value);
   }
 
-  constructor() {}
+  constructor(
+    private editorHelper: EditorHelper
+  ) {}
 
   ngOnInit(): void {
     this.createRawControlSub();
+    this.editor = this.editorHelper.loadCkEditor();
+    console.log(this.editor);
+    this.editor.setData(this.text);
   }
 
   ngOnDestroy(): void {

@@ -10,7 +10,6 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { tileLayer, marker, icon, Map } from 'leaflet';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { LeafletHelper } from '../../helper/leaflet.helper';
 
@@ -33,8 +32,9 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     this.projectAreasSubject.next(true);
   }
 
+  lib: any;
   mapSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  map: Map;
+  map: any;
   coords = [];
   polygon;
   control: UntypedFormControl;
@@ -42,12 +42,14 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   projectAreasSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   combinedSub: Subscription;
   projectAreasInternal: any[][];
-  mapOptions = this.createDefaultMapOptions();
+  mapOptions: any;
   treeMarker: any[];
 
   @HostListener('window:load', ['$event'])
   getScreenSize() {
-    this.screenWidth = window.innerWidth;
+    if (this._platformId === 'browser') {
+      this.screenWidth = window.innerWidth;
+    }
   }
 
   constructor(
@@ -58,6 +60,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this._platformId === 'browser') {
       this.leafletHelper.loadLeaflet().then((lib) => {
+        this.lib = lib;
+        this.mapOptions = this.createDefaultMapOptions(lib);
         this.combineSubscriptions(lib);
         this.map = lib.map('map', this.mapOptions);
         this.onMapReady(this.map);
@@ -69,7 +73,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  combineSubscriptions(leaflet:any) {
+  combineSubscriptions(leafletLib:any) {
     this.combinedSub = combineLatest([this.mapSubject, this.projectAreasSubject]).subscribe(
       (res) => {
         if (res[0] && res[1]) {
@@ -77,8 +81,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
           this.treeMarker = [];
           for (let area of this.projectAreasInternal) {
             const coords = this.createPolygonPoints(area);
-
-            const polygon = leaflet.polygon(coords, { color: '#82ab1f' });
+            const polygon = leafletLib.polygon(coords, { color: '#82ab1f' });
             this.map.addLayer(polygon);
             const marker = this.createMarker(polygon.getCenter().lat, polygon.getCenter().lng);
             this.map.addLayer(marker);
@@ -97,24 +100,24 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     this.combinedSub?.unsubscribe();
   }
 
-  createDefaultMapOptions() {
-    return {
-      layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
-          attribution: '...',
-        }),
-      ],
-      drawControl: false,
-      dragging: true,
-      zoom: 6,
-      center: [51.9481, 10.26517],
-    }
+  createDefaultMapOptions(leafletLib: any) {
+    console.log(leafletLib.Browser.mobile)
+      return {
+        layers: [
+          leafletLib.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '...',
+          }),
+        ],
+        drawControl: false,
+        dragging: !leafletLib.Browser.mobile,
+        zoom: 6,
+        center: [51.9481, 10.26517],
+      }
   }
 
-  async onMapReady(leaflet: any) {
-    console.log('onMapReady')
-    this.map = leaflet
+  async onMapReady(leafletMap: any) {
+    this.map = leafletMap
     this.map.scrollWheelZoom.disable();
     if (this.disabledMap) {
     }
@@ -170,13 +173,15 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   }
 
   createMarker(lat: number, lng: number) {
-    return marker([lat, lng], {
-      icon: icon({
-        iconAnchor: [17, 35],
-        iconUrl: '/assets/treeIconBrown.png',
-        iconRetinaUrl: '/assets/treeIconBrown.png',
-      }),
-    });
+    if (this.lib) {
+      return this.lib.marker([lat, lng], {
+        icon: this.lib.icon({
+          iconAnchor: [17, 35],
+          iconUrl: '/assets/treeIconBrown.png',
+          iconRetinaUrl: '/assets/treeIconBrown.png',
+        }),
+      });
+    }
   }
 
 

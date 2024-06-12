@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-profile-header',
@@ -37,6 +38,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private store: Store<AppState>,
     private sliderHelper: SliderHelper,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +54,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
   }
 
   editProfile() {
-    let username = localStorage.getItem('username');
+    let username = this.platformHelper.getLocalstorage('username');
     this.router.navigate(['/editProfile/' + username]);
   }
 }

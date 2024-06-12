@@ -91,8 +91,8 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
     this.cartPayedSub = this.store.select(selectPaymentDone).subscribe((cartPayed) => {
       this.cartPayed = cartPayed;
       if (this.cartPayed) {
-        if (localStorage.getItem('username')) {
-          this.router.navigate(['/user/' + localStorage.getItem('username')]);
+        if (this.platformHelper.getLocalstorage('username')) {
+          this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
         } else {
           this.router.navigate(['/']);
         }

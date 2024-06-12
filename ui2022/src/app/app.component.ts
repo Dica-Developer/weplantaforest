@@ -11,6 +11,7 @@ import { loadProfileDetails, selectUserLanguage } from './store/profile.store';
 import { getProjectsForCustomPlanting } from './store/plant.store';
 import { Subscription } from 'rxjs';
 import { CookieHelper } from './util/helper/cookie.helper';
+import { PlatformHelper } from './util/helper/platform.helper';
 
 @Component({
     selector: 'app-root',
@@ -21,7 +22,7 @@ import { CookieHelper } from './util/helper/cookie.helper';
 })
 export class AppComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
-    localStorage.setItem('previousUrl', this.router.url);
+    this.platformHelper.setLocalstorage('previousUrl', this.router.url);
   }
 
   languageSub: Subscription;
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private translateService: TranslateService,
     private cookieHelper: CookieHelper,
+    private platformHelper: PlatformHelper
   ) {
     this.translateService.addLangs(['de', 'en']);
     this.languageSub = this.store.select(selectUserLanguage).subscribe((language) => {
@@ -72,15 +74,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(getProjectsForCustomPlanting());
-    if (localStorage.getItem('jwt') && localStorage.getItem('username')) {
-      this.store.dispatch(loadProfileDetails({ username: localStorage.getItem('username') }));
+    if (this.platformHelper.getLocalstorage('jwt') && this.platformHelper.getLocalstorage('username')) {
+      this.store.dispatch(loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }));
     }
     this.authService.autoLogin();
     this.cookieHelper.openCookieConfirmation();
   }
 
   ngOnDestroy() {
-    this.languageSub.unsubscribe();
-    this.translateSub.unsubscribe();
+    if (this.platformHelper.checkIfBrowser()) {
+      this.languageSub.unsubscribe();
+      this.translateSub.unsubscribe();
+    }
   }
 }

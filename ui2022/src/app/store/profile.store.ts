@@ -13,6 +13,7 @@ import { addSuccessMessage } from './success-message.state';
 import { CartService } from '../services/cart.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { PlatformHelper } from '../util/helper/platform.helper';
 
 export const setUsername = createAction('[Profile] set username', props<{ username: string }>());
 export const loadProfileDetails = createAction(
@@ -412,20 +413,22 @@ export const selectUploadingImage = createSelector(
 );
 
 export const selectUserLanguage = createSelector(profileFeature, (state: ProfileState) => {
-  if (localStorage.getItem('lang')) {
-    return localStorage.getItem('lang');
-  } else {
-    if (
-      navigator.language === 'en-US' ||
-      navigator.language === 'en' ||
-      navigator.language === 'en-GB'
-    ) {
-      return 'en';
-    } else {
-      return 'de';
-    }
-  }
+  return 'en'
 });
+//  if (localStorage.getItem('lang')) {
+//    return localStorage.getItem('lang');
+//  } else {
+//    if (
+//      navigator.language === 'en-US' ||
+//      navigator.language === 'en' ||
+//      navigator.language === 'en-GB'
+//    ) {
+//      return 'en';
+//    } else {
+//      return 'de';
+//    }
+//  }
+//});
 
 export const selectIsUserAdmin = createSelector(
   profileFeature,
@@ -443,6 +446,7 @@ export class ProfileEffects {
     private cartService: CartService,
     private translateService: TranslateService,
     private router: Router,
+    private platformHelper: PlatformHelper,
   ) {}
 
   LoadUserDetails$ = createEffect(() =>
@@ -454,17 +458,17 @@ export class ProfileEffects {
             const actions = [];
             actions.push(loadProfileDetailsSuccess({ details }));
             actions.push(loadTreesByUser({ username: action.username, page: 0, size: 8 }));
-            if (action.username === localStorage.getItem('username')) {
+            if (action.username === this.platformHelper.getLocalstorage('username')) {
               actions.push(setHasTeam({ hasTeam: details.teamName !== '' && details.teamName }));
               actions.push(loadGiftsAsConsignor({ userName: action.username }));
               actions.push(loadGiftsAsRecipient({ userName: action.username }));
               actions.push(loadReceipts());
               if (details.lang === 'DEUTSCH') {
-                localStorage.setItem('lang', 'de');
+                this.platformHelper.setLocalstorage('lang', 'de');
                 this.translateService.use('de');
               } else if (details.lang === 'ENGLISH') {
                 this.translateService.use('en');
-                localStorage.setItem('lang', 'en');
+                this.platformHelper.setLocalstorage('lang', 'en');
               }
             }
             if (details.teamName !== '') {
@@ -582,7 +586,7 @@ export class ProfileEffects {
       switchMap((action) =>
         this.giftService.redeemGift(action.code).pipe(
           switchMap(() => {
-            this.router.navigate(['/user/' + localStorage.getItem('username')]);
+            this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
             return [
               addSuccessMessage({ message: { key: 'GIFT_REDEEMED', message: 'GIFT_REDEEMED' } }),
             ];
@@ -606,7 +610,9 @@ export class ProfileEffects {
             switchMap((result: any) => {
               const file = new Blob([result], { type: 'application/pdf' });
               const fileURL = URL.createObjectURL(file);
-              window.open(fileURL);
+              if (this.platformHelper.checkIfBrowser()) {
+                window.open(fileURL);
+              }
               return [];
             }),
           ),
@@ -672,7 +678,9 @@ export class ProfileEffects {
             switchMap((result: any) => {
               const file = new Blob([result], { type: 'application/pdf' });
               const fileURL = URL.createObjectURL(file);
-              window.open(fileURL);
+              if (this.platformHelper.checkIfBrowser()) {
+                window.open(fileURL);
+              }
               return [];
             }),
           ),

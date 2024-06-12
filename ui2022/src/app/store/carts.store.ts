@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { catchError, switchMap } from 'rxjs/operators';
 import { addSuccessMessage } from './success-message.state';
 import { addError } from './error.state';
+import { PlatformHelper } from '../util/helper/platform.helper';
 
 export interface CartsLoadRequest {
   cartStates: string[];
@@ -298,7 +299,7 @@ function convertToGridCart(cart: Cart): GridCart {
 
 @Injectable()
 export class CartsEffects {
-  constructor(private actions$: Actions, private cartsService: CartService) {}
+  constructor(private actions$: Actions, private cartsService: CartService, private platformHelper: PlatformHelper) {}
 
   LoadCarts$ = createEffect(() =>
     this.actions$.pipe(
@@ -419,7 +420,9 @@ export class CartsEffects {
           this.cartsService.downloadReceipt(action.receiptId).pipe(
             switchMap((res) => {
               let pdfData = URL.createObjectURL(new Blob([res], { type: 'application/pdf' }));
-              window.open(pdfData);
+              if (this.platformHelper.checkIfBrowser()) {
+                window.open(pdfData);
+              }
 
               return [];
             }),

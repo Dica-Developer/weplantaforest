@@ -111,7 +111,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   updateProfile() {
-    let username = localStorage.getItem('username');
+    let username = this.platformHelper.getLocalstorage('username');
     if (this.imagePreviewSrc) {
       this.store.dispatch(updateProfileImage({ userName: username, image: this.imageFile }));
       this.imagePreviewSrc = null;
@@ -210,7 +210,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   routeToProfile() {
-    this.router.navigate(['/user/' + localStorage.getItem('username')]);
+    this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
   }
 
   imageChanged(fileInputEvent: any) {

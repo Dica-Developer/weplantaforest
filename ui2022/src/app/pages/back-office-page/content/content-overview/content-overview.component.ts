@@ -11,6 +11,7 @@ import { ContentDetailsComponent } from '../content-details/content-details.comp
 import { ContentGridComponent } from '../content-grid/content-grid.component';
 import { MatButton } from '@angular/material/button';
 import { NgClass, NgIf } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-content-overview',
@@ -32,11 +33,11 @@ export class ContentOverviewComponent implements OnInit, OnDestroy {
 
   loggedInUsername: string;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private platformHelper: PlatformHelper) {
     this.contentDetailsSub = store.select(selectContentArticleDetails).subscribe((res) => {
       this.contentDetails = res;
     });
-    this.loggedInUsername = localStorage.getItem('username');
+    this.loggedInUsername = this.platformHelper.getLocalstorage('username');
   }
 
   ngOnInit(): void {}
