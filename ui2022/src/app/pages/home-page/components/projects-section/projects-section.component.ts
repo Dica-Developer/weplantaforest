@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { Subscription } from 'rxjs';
 import {
+    ProjectReport,
   loadActiveProjectReports,
   selectActiveProjectReports,
 } from 'src/app/store/project-report.store';
@@ -35,7 +36,7 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 export class ProjectsSectionComponent implements OnInit, OnDestroy {
   projectReports$ = this.store.select(selectActiveProjectReports);
   mapHeight: string = '768px';
-  screenWidth;
+  screenWidth: number;
 
   projectReportSub: Subscription;
 
@@ -58,22 +59,25 @@ export class ProjectsSectionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isBrowser = this.platformHelper.checkIfBrowser();
-    console.log(this.isBrowser);
     if (this.screenWidth < 764) {
       this.mapHeight = '500px';
     }
 
     this.projectReportSub = this.projectReports$.subscribe((reports) => {
-      const areas = [];
-      if (reports.length > 0) {
-        for (let project of reports) {
-          if (project.positions && project.positions.length > 0) {
-            areas.push(project.positions);
-          }
+      this.projectAreas = this.createProjectAreas(reports);
+    });
+  }
+
+  createProjectAreas(projectReports: ProjectReport[]) {
+    const areas = [];
+    if (projectReports.length > 0) {
+      for (let project of projectReports) {
+        if (project.positions && project.positions.length > 0) {
+          areas.push(project.positions);
         }
       }
-      this.projectAreas = areas;
-    });
+    }
+    return areas;
   }
 
   ngOnDestroy(): void {

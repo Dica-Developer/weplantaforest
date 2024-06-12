@@ -12,6 +12,7 @@ import {
 import { UntypedFormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { LeafletHelper } from '../../helper/leaflet.helper';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-map',
@@ -22,7 +23,7 @@ import { LeafletHelper } from '../../helper/leaflet.helper';
 })
 export class LeafletMapComponent implements OnInit, OnDestroy {
   @Output() markerSet = new EventEmitter();
-  @Input() showMarker: boolean = false;
+  @Input() showSelfPlantMarker: boolean = false;
   @Input() positions: any[];
   @Input() mapHeight: string = '600px';
   @Input() disabledMap: boolean = false;
@@ -32,18 +33,18 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     this.projectAreasSubject.next(true);
   }
 
-  lib: any;
+  lib: typeof L;
   mapSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  map: any;
-  coords = [];
-  polygon;
+  map: L.Map;
+  coords: L.LatLngTuple[] = [];
+  polygon: L.Polygon;
   control: UntypedFormControl;
-  screenWidth;
+  screenWidth: number;
   projectAreasSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   combinedSub: Subscription;
-  projectAreasInternal: any[][];
+  projectAreasInternal: {lat: number, lng: number, order: number}[][];
   mapOptions: any;
-  treeMarker: any[];
+  treeMarker: L.Marker[];
 
   @HostListener('window:load', ['$event'])
   getScreenSize() {
@@ -101,7 +102,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   }
 
   createDefaultMapOptions(leafletLib: any) {
-    console.log(leafletLib.Browser.mobile)
       return {
         layers: [
           leafletLib.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -119,8 +119,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   async onMapReady(leafletMap: any) {
     this.map = leafletMap
     this.map.scrollWheelZoom.disable();
-    if (this.disabledMap) {
-    }
     if (this._platformId === 'browser') {
       this.leafletHelper.loadLeaflet().then((lib) => {
         setTimeout(() => {
@@ -156,7 +154,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   }
 
   mapClicked(event: any) {
-    if (!this.showMarker) {
+    if (!this.showSelfPlantMarker) {
       return;
     }
     this.resetTreeMarkerForSelfPlant()
