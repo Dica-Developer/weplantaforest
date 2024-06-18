@@ -102,43 +102,39 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   }
 
   createDefaultMapOptions(leafletLib: any) {
-      return {
-        layers: [
-          leafletLib.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '...',
-          }),
-        ],
-        drawControl: false,
-        dragging: !leafletLib.Browser.mobile,
-        zoom: 6,
-        center: [51.9481, 10.26517],
-      }
+    return {
+      layers: [
+        leafletLib.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '...',
+        }),
+      ],
+      drawControl: false,
+      dragging: !leafletLib.Browser.mobile,
+      zoom: 6,
+      center: [51.9481, 10.26517],
+    }
   }
 
   async onMapReady(leafletMap: any) {
     this.map = leafletMap
     this.map.scrollWheelZoom.disable();
-    if (this._platformId === 'browser') {
-      this.leafletHelper.loadLeaflet().then((lib) => {
-        setTimeout(() => {
-          if (this.coords.length > 0) {
-            this.polygon = lib.polygon(this.coords, { color: '#82ab1f' });
-            this.map.addLayer(this.polygon);
-            this.map.fitBounds(this.polygon.getBounds());
-          } else {
-            // adjust zoom if mobile view
-            if (this.screenWidth < 764) {
-              this.map.setView([51.9481, 10.26517], 5);
-            } else {
-              this.map.setView([51.9481, 10.26517], 6);
-            }
-          }
-          this.map.invalidateSize();
-          this.mapSubject.next(true);
-        });
-      })
-    }
+    setTimeout(() => {
+      if (this.coords.length > 0) {
+        this.polygon = this.lib.polygon(this.coords, { color: '#82ab1f' });
+        this.map.addLayer(this.polygon);
+        this.map.fitBounds(this.polygon.getBounds());
+      } else {
+        // adjust zoom if mobile view
+        if (this.screenWidth < 764) {
+          this.map.setView([51.9481, 10.26517], 5);
+        } else {
+          this.map.setView([51.9481, 10.26517], 6);
+        }
+      }
+      this.map.invalidateSize();
+      this.mapSubject.next(true);
+    });
   }
 
   createPolygonPoints(positions: any[]) {

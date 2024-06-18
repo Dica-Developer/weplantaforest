@@ -26,8 +26,6 @@
     "@angular/platform-server": "^18.0.0",
     "@angular/router": "^18.0.2",
     "@angular/ssr": "^18.0.0",
-    "@asymmetrik/ngx-leaflet": "^18.0.1",
-    "@asymmetrik/ngx-leaflet-draw": "^18.0.0",
     "@ckeditor/ckeditor5-angular": "^7.0.1",
     "@ckeditor/ckeditor5-build-classic": "^41.4.2",
     "@ckeditor/ckeditor5-core": "^41.4.2",

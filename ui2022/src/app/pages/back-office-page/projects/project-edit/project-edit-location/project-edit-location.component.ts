@@ -1,23 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import * as L from 'leaflet';
-import { tileLayer, latLng, Map } from 'leaflet';
 import { ProjectPositionPoint } from '../../../../../store/project.store';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletHelper } from 'src/app/util/helper/leaflet.helper';
+declare const L: any; // --> Works
 
 @Component({
-    selector: 'app-project-edit-location',
-    templateUrl: './project-edit-location.component.html',
-    styleUrls: ['./project-edit-location.component.scss'],
-    standalone: true,
-    imports: [LeafletModule],
+  selector: 'app-project-edit-location',
+  templateUrl: './project-edit-location.component.html',
+  styleUrls: ['./project-edit-location.component.scss'],
+  standalone: true,
+  imports: [],
 })
 export class ProjectEditLocationComponent implements OnInit {
   control: UntypedFormControl;
 
-  map: Map;
+  lib: typeof L;
+  draw: any;
+  map: L.Map;
   coords;
   polygon;
+  drawControl;
+  drawnItems
 
   @Input()
   set positions(control: UntypedFormControl) {
@@ -25,37 +28,42 @@ export class ProjectEditLocationComponent implements OnInit {
     this.coords = this.createPolygonPoints();
   }
 
-  options = {
-    layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '...',
-      }),
-    ],
-    drawControl: false,
-    zoom: 2,
-  };
+  mapOptions: any
 
-  constructor() {}
+  constructor(
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private leafletHelper: LeafletHelper,
+  ) {}
 
-  ngOnInit(): void {}
-
-  onMapReady(map: Map): void {
-    this.map = map;
-    setTimeout(() => {
-      if (this.coords.length > 0) {
-        this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
-        map.addLayer(this.polygon);
-        this.map.fitBounds(this.polygon.getBounds());
-      } else {
-        map.setView(new L.LatLng(51.482814, 11.969977), 13);
-      }
-      map.invalidateSize();
-      this.addDrawOptions(map);
-    });
+  ngOnInit(): void {
+    if (this._platformId === 'browser') {
+      this.leafletHelper.loadLeaflet().then((lib) => {
+        this.lib = lib;
+        this.mapOptions = this.createDefaultMapOptions(lib);
+        this.map = lib.map('map', this.mapOptions);
+        this.onMapReady(this.map);
+      })
+    }
   }
 
-  addClickListener(map: Map) {
+  onMapReady(leafletMap: any): void {
+    if (this._platformId === 'browser') {
+      this.map = leafletMap;
+      setTimeout(() => {
+        if (this.coords.length > 0) {
+          this.polygon = this.lib.polygon(this.coords, { color: '#82ab1f' });
+          this.map.addLayer(this.polygon);
+          this.map.fitBounds(this.polygon.getBounds());
+        } else {
+          this.map.setView([51.482814, 11.969977], 13);
+        }
+        this.map.invalidateSize();
+        this.addDrawOptions(this.map);
+      });
+    }
+  }
+
+  addClickListener(map: L.Map) {
     this.map.on('click', (e) => {});
   }
 
@@ -71,16 +79,35 @@ export class ProjectEditLocationComponent implements OnInit {
     return coords;
   }
 
+  createDefaultMapOptions(leafletLib: any) {
+    return {
+      layers: [
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '...',
+        }),
+      ],
+      drawControl: false,
+      zoom: 2,
+    };
+  }
+
   resetPolygon() {
     this.map.removeLayer(this.polygon);
     this.control.setValue([]);
     this.polygon = null;
   }
 
-  addDrawOptions(map: Map) {
-    let drawnItems = new L.FeatureGroup();
-    map.addLayer(drawnItems);
-    let drawControl = new L.Control.Draw({
+  addDrawOptions(map: L.Map) {
+    if (this.drawControl) {
+      map.removeControl(this.drawControl);
+    }
+    if (this.drawnItems) {
+      map.removeLayer(this.drawnItems);
+    }
+    this.drawnItems = new L.FeatureGroup();
+    map.addLayer(this.drawnItems);
+    this.drawControl = new L.Control.Draw({
       position: 'topright',
       draw: {
         polygon: {
@@ -97,11 +124,10 @@ export class ProjectEditLocationComponent implements OnInit {
         circlemarker: false,
       },
       edit: {
-        featureGroup: drawnItems,
+        featureGroup: this.drawnItems,
       },
     });
-    map.addControl(drawControl);
-
+    map.addControl(this.drawControl);
     map.on(L.Draw.Event.CREATED, (e) => {
       if (this.polygon) {
         this.map.removeLayer(this.polygon);
@@ -112,7 +138,7 @@ export class ProjectEditLocationComponent implements OnInit {
     });
   }
 
-  createNewProjectPositionPoints(points: latLng[]) {
+  createNewProjectPositionPoints(points: any[]) {
     const mapPoints: ProjectPositionPoint[] = [];
     let cnt = 0;
     for (let p of points) {
