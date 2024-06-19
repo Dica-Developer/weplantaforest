@@ -116,7 +116,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  async onMapReady(leafletMap: any) {
+  onMapReady(leafletMap: any) {
     this.map = leafletMap
     this.map.scrollWheelZoom.disable();
     setTimeout(() => {

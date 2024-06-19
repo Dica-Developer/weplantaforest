@@ -5,19 +5,18 @@ import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
   providedIn: 'root',
 })
 export class LeafletHelper {
-  public Leaflet = null;
+  public L = null;
   public draw = null;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (this.platformId === 'browser') {
-      this.Leaflet = import('leaflet');
-      this.draw = import('leaflet-draw');
-    }
   }
 
   async loadLeaflet() {
-    this.Leaflet = await this.Leaflet;
-    return this.Leaflet;
+    if (this.platformId === 'browser' && !this.L) {
+      this.L = await import('leaflet');
+      await import('leaflet-draw');
+    }
+    return this.L;
   }
 
   async loadLeafletDraw() {
