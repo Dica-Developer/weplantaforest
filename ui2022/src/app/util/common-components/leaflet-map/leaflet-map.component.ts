@@ -35,7 +35,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
   lib: typeof L;
   mapSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  map: L.Map;
+  map: L.Map
   coords: L.LatLngTuple[] = [];
   polygon: L.Polygon;
   control: UntypedFormControl;
