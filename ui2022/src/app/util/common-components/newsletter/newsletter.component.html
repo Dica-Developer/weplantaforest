@@ -34,7 +34,7 @@
         [label]="'allowPaypalCookies' | translate"
         (clicked)="showCookieConfirmation()"
         *ngIf="!(cookiesAccepted$ | async)"
-        >allow cookies</app-button
+        ></app-button
       >
       <div
         *ngIf="(cookiesAccepted$ | async)"

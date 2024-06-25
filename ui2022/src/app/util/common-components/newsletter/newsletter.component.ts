@@ -13,7 +13,7 @@ import { selectCookies } from 'src/app/store/infrastructure.store';
 import { CookieHelper } from 'src/app/util/helper/cookie.helper';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../button/button.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
@@ -22,8 +22,8 @@ import { PlatformHelper } from '../../helper/platform.helper';
   styleUrls: ['./newsletter.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
     RouterLink,
+    CommonModule,
     ButtonComponent,
     AsyncPipe,
     TranslateModule,
@@ -32,12 +32,13 @@ import { PlatformHelper } from '../../helper/platform.helper';
 export class NewsletterComponent implements OnInit {
   fullScreenNewsletter: boolean = false;
   cookiesAccepted$: Observable<boolean> = this.store.select(selectCookies);
+  safeUrl;
   html = this.sanitizer.bypassSecurityTrustHtml(
     '<iframe width="100%" height="312" src="https://t924dfe8a.emailsys1a.net/126/2029/86f32163be/subscribe/form.html"></iframe>',
   );
-  safeUrl;
 
   @ViewChild('iframe') submitButton: ElementRef<HTMLElement>;
+
   constructor(
     private router: Router,
     protected sanitizer: DomSanitizer,

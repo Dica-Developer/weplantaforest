@@ -19,7 +19,7 @@ import { CookieHelper } from 'src/app/util/helper/cookie.helper';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotAuthenticatedWarningComponent } from '../../util/common-components/not-authenticated-warning/not-authenticated-warning.component';
 import { ButtonComponent } from '../../util/common-components/button/button.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
@@ -29,8 +29,8 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
   standalone: true,
   imports: [
     RouterLink,
-    NgIf,
     NgxPayPalModule,
+    CommonModule,
     ButtonComponent,
     NotAuthenticatedWarningComponent,
     AsyncPipe,
