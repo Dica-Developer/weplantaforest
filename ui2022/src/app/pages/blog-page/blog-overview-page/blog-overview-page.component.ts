@@ -15,6 +15,7 @@ import { BlogArticleTileComponent } from '../components/blog-article-tile/blog-a
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { BlogHeaderComponent } from '../components/blog-header/blog-header.component';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { LanguageHelper } from 'src/app/util/helper/language.helper';
 
 @Component({
   selector: 'app-blog-overview-page',
@@ -44,10 +45,11 @@ export class BlogOverviewPageComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private platformHelper: PlatformHelper,
-    private translateService: TranslateService) {
-    if (this.translateService.currentLang === 'de') {
+    private languageHelper: LanguageHelper,
+  ) {
+    if (this.languageHelper.getUserLanguage() === 'de') {
       this.lang = 'DEUTSCH';
-    } else if (this.translateService.currentLang === 'en') {
+    } else if (this.languageHelper.getUserLanguage() === 'en') {
       this.lang = 'ENGLISH';
     }
     this.store.dispatch(loadBlogArticles({ pageSize: 10, language: this.lang }));

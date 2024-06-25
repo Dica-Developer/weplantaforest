@@ -3,12 +3,12 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ContentService } from 'src/app/services/content.service';
 import { AppState } from 'src/app/store/app.state';
-import { selectUserLanguage } from '../../store/profile.store';
 import { SafeHtmlPipe } from '../../util/common-components/safehtml.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { LanguageHelper } from 'src/app/util/helper/language.helper';
 
 @Component({
   selector: 'app-finances-page',
@@ -23,33 +23,31 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
     SafeHtmlPipe,
   ],
 })
-export class FinancesPageComponent implements OnInit, OnDestroy {
+export class FinancesPageComponent implements OnInit {
   lang: string;
   finances;
   currentlySelectedYear: any = null;
-  languageSub: Subscription;
   financeSub: Subscription;
 
   constructor(
     private contentService: ContentService,
     private store: Store<AppState>,
-    private platformHelper: PlatformHelper
+    private platformHelper: PlatformHelper,
+    private languageHelper: LanguageHelper
   ) {}
 
   ngOnInit(): void {
-    this.languageSub = this.store.select(selectUserLanguage).subscribe((res) => {
-      if (res === 'de' || res === 'DEUTSCH') {
-        this.lang = 'DEUTSCH';
-      } else {
-        this.lang = 'ENGLISH';
-      }
-      this.financeSub = this.contentService
-        .getInfrastructureArticle('FINANCIALS', this.lang)
-        .subscribe((res) => {
-          this.finances = res;
-          this.currentlySelectedYear = this.finances[0];
-        });
-    });
+    if (this.languageHelper.getUserLanguage() === 'de' || this.languageHelper.getUserLanguage() === 'DEUTSCH') {
+      this.lang = 'DEUTSCH';
+    } else {
+      this.lang = 'ENGLISH';
+    }
+    this.financeSub = this.contentService
+      .getInfrastructureArticle('FINANCIALS', this.lang)
+      .subscribe((res) => {
+        this.finances = res;
+        this.currentlySelectedYear = this.finances[0];
+      });
     this.platformHelper.scrollTop()
   }
 
@@ -59,7 +57,6 @@ export class FinancesPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.languageSub?.unsubscribe();
     this.financeSub?.unsubscribe();
   }
 

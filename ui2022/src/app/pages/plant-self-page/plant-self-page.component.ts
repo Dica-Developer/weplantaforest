@@ -16,7 +16,6 @@ import { selectAuthenticated } from 'src/app/store/auth.store';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { selectUserLanguage } from 'src/app/store/profile.store';
 import { OfferAreaComponent } from '../../util/common-components/offer-area/offer-area.component';
 import { LeafletMapComponent } from '../../util/common-components/leaflet-map/leaflet-map.component';
 import { MatOption } from '@angular/material/core';
@@ -28,6 +27,7 @@ import { MatFormField, MatLabel, MatHint, MatSuffix } from '@angular/material/fo
 import { ButtonComponent } from '../../util/common-components/button/button.component';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { LanguageHelper } from 'src/app/util/helper/language.helper';
 
 @Component({
   selector: 'app-plant-self-page',
@@ -100,11 +100,10 @@ export class PlantSelfPageComponent implements OnInit {
   });
 
   isBrowser: boolean;
-  userLanguage: string;
-  userLanguageSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
+    private languageHelper: LanguageHelper,
     public textHelper: TextHelper,
     private router: Router,
     private snackbar: MatSnackBar,
@@ -112,7 +111,6 @@ export class PlantSelfPageComponent implements OnInit {
     private platformHelper: PlatformHelper
   ) {
     this.isBrowser = this.platformHelper.checkIfBrowser();
-    console.log(this.isBrowser);
     this.store.dispatch(loadTreeTypes());
     this.selectTreetypesSub = store.select(selectTreeTypes).subscribe((res) => {
       this.treeTypes = [];
@@ -129,16 +127,13 @@ export class PlantSelfPageComponent implements OnInit {
           fruit: tt.fruit,
           leaf: tt.leaf,
           trunk: tt.trunk,
-          name: this.textHelper.getTextForLanguage(tt.name, this.userLanguage),
+          name: this.textHelper.getTextForLanguage(tt.name, this.languageHelper.getUserLanguage()),
         });
       }
       this.treeTypes = this.treeTypes.filter((treeType) => !treeType.name.includes('Default'));
     });
     this.getScreenSize();
     this.selectAuthenticated$ = this.store.select(selectAuthenticated);
-    this.userLanguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
-      this.userLanguage = userLanguage;
-    });
   }
 
   @HostListener('window:load', ['$event'])

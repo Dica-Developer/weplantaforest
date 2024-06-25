@@ -412,24 +412,6 @@ export const selectUploadingImage = createSelector(
   (state: ProfileState) => state.uploadingImage,
 );
 
-export const selectUserLanguage = createSelector(profileFeature, (state: ProfileState) => {
-  return 'en'
-});
-//  if (localStorage.getItem('lang')) {
-//    return localStorage.getItem('lang');
-//  } else {
-//    if (
-//      navigator.language === 'en-US' ||
-//      navigator.language === 'en' ||
-//      navigator.language === 'en-GB'
-//    ) {
-//      return 'en';
-//    } else {
-//      return 'de';
-//    }
-//  }
-//});
-
 export const selectIsUserAdmin = createSelector(
   profileFeature,
   (state: ProfileState) => state.isAdmin,

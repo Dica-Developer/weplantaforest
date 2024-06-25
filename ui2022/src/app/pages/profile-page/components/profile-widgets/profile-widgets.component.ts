@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { environment } from '../../../../../environments/environment';
-import { selectUserLanguage } from '../../../../store/profile.store';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { LanguageHelper } from 'src/app/util/helper/language.helper';
 
 @Component({
   selector: 'app-profile-widgets',
@@ -20,12 +19,10 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
   ],
 })
 export class ProfileWidgetsComponent implements OnInit {
-  userLanuage: string;
-  userLanuguageSub: Subscription;
-
   widget100x100Url: string = '';
   widget300x100Url: string = '';
   widget100x300Url: string = '';
+  userLanuage: string = 'de';
 
   widget100x100Code: string =
   '<a href="' +
@@ -60,17 +57,16 @@ export class ProfileWidgetsComponent implements OnInit {
     this.platformHelper.getLocalstorage('username') +
     '&width=200&height=600&language=DEUTSCH" /></a>';
 
-  constructor(private store: Store<AppState>, private platformHelper: PlatformHelper) {}
+  constructor(private store: Store<AppState>, private platformHelper: PlatformHelper,  private languageHelper: LanguageHelper) {}
 
   ngOnInit(): void {
-    this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
-      if (userLanguage === 'en') {
-        this.userLanuage = 'ENGLISH';
-      } else {
-        this.userLanuage = 'DEUTSCH';
-      }
-      this.createWidgetUrls();
-    });
+    this.userLanuage = this.languageHelper.getUserLanguage();
+    if (this.languageHelper.getUserLanguage() === 'en' || this.languageHelper.getUserLanguage() === 'ENGLISH') {
+      this.userLanuage = 'ENGLISH';
+    } else {
+      this.userLanuage = 'DEUTSCH';
+    }
+    this.createWidgetUrls();
   }
 
   createWidgetUrls() {

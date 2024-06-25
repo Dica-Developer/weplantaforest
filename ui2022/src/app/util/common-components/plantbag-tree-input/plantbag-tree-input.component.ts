@@ -7,7 +7,6 @@ import { TextHelper } from 'src/app/util/helper/text.helper';
 import { Subscription } from 'rxjs';
 import { addPlantbagItem, removePlantbagItem } from '../../../store/plantbag.store';
 import { environment } from '../../../../environments/environment';
-import { selectUserLanguage } from '../../../store/profile.store';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -16,6 +15,7 @@ import { MatError } from '@angular/material/form-field';
 import { NgIf, CurrencyPipe } from '@angular/common';
 import { MatInput } from '@angular/material/input';
 import { PlatformHelper } from '../../helper/platform.helper';
+import { LanguageHelper } from '../../helper/language.helper';
 
 @Component({
   selector: 'app-plantbag-tree-input',
@@ -53,10 +53,8 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
   sum: number = 0;
   imgUrl: string;
 
-  userLanuage: string;
-  userLanuguageSub: Subscription;
-
   constructor(
+    private languageHelper: LanguageHelper,
     private platformHelper: PlatformHelper,
     private store: Store<AppState>,
     private textHelper: TextHelper) {}
@@ -65,9 +63,6 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
     this.initControl();
     this.imgUrl =
       environment.backendUrl + '/treeType/image/' + this.article.treeType.treeImageColor + '/90/90';
-    this.userLanuguageSub = this.store.select(selectUserLanguage).subscribe((userLanguage) => {
-      this.userLanuage = userLanguage;
-    });
   }
 
   initControl() {
@@ -98,11 +93,10 @@ export class PlantbagTreeInputComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.controlVcSub.unsubscribe();
-    this.userLanuguageSub?.unsubscribe();
   }
 
   getTreetypeName(text: string) {
-    return this.textHelper.getTextForLanguage(text, this.userLanuage);
+    return this.textHelper.getTextForLanguage(text, this.languageHelper.getUserLanguage());
   }
 
   getErrorMessage() {

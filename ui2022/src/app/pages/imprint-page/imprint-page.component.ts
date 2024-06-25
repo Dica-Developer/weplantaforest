@@ -3,11 +3,11 @@ import { ContentService } from 'src/app/services/content.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { selectUserLanguage } from '../../store/profile.store';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { LanguageHelper } from 'src/app/util/helper/language.helper';
 
 @Component({
   selector: 'app-imprint-page',
@@ -23,30 +23,28 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 export class ImprintPageComponent implements OnInit, OnDestroy {
   imprints;
 
+  lang: string;
   imprintSub: Subscription;
   languageSub: Subscription;
 
   constructor(
     private platformHelper: PlatformHelper,
     private store: Store<AppState>,
+    private languageHelper: LanguageHelper,
     private contentService: ContentService) {}
 
   ngOnInit(): void {
     this.platformHelper.scrollTop()
-    this.languageSub = this.store.select(selectUserLanguage).subscribe((language) => {
-      this.imprintSub?.unsubscribe();
-      let lng = '';
-      if (language === 'ENGLISH' || language === 'en') {
-        lng = 'ENGLISH';
-      } else if (language === 'DEUTSCH' || language === 'de') {
-        lng = 'DEUTSCH';
-      }
-      this.imprintSub = this.contentService
-        .getInfrastructureArticle('IMPRESS', lng)
-        .subscribe((res) => {
-          this.imprints = res;
-        });
-    });
+    if (this.languageHelper.getUserLanguage() === 'ENGLISH' || this.languageHelper.getUserLanguage() === 'en') {
+      this.lang = 'ENGLISH';
+    } else {
+      this.lang = 'DEUTSCH';
+    }
+    this.imprintSub = this.contentService
+      .getInfrastructureArticle('IMPRESS', this.lang)
+      .subscribe((res) => {
+        this.imprints = res;
+      });
   }
 
   ngOnDestroy(): void {

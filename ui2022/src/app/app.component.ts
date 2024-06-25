@@ -7,18 +7,19 @@ import { AuthService } from './services/auth.service';
 import { AppState } from './store/app.state';
 import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
-import { loadProfileDetails, selectUserLanguage } from './store/profile.store';
+import { loadProfileDetails } from './store/profile.store';
 import { getProjectsForCustomPlanting } from './store/plant.store';
 import { Subscription } from 'rxjs';
 import { CookieHelper } from './util/helper/cookie.helper';
 import { PlatformHelper } from './util/helper/platform.helper';
+import { LanguageHelper } from './util/helper/language.helper';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: true,
-    imports: [RouterOutlet],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [RouterOutlet],
 })
 export class AppComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
@@ -35,16 +36,12 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private translateService: TranslateService,
     private cookieHelper: CookieHelper,
-    private platformHelper: PlatformHelper
+    private platformHelper: PlatformHelper,
+    private languageHelper: LanguageHelper
+
   ) {
     this.translateService.addLangs(['de', 'en']);
-    this.languageSub = this.store.select(selectUserLanguage).subscribe((language) => {
-      if (language === 'ENGLISH' || language === 'en') {
-        this.translateService.use('en');
-      } else if (language === 'DEUTSCH' || language === 'de') {
-        this.translateService.use('de');
-      }
-    });
+    this.translateService.use(this.languageHelper.getUserLanguage());
     this.store.select(selectErrors).subscribe((errors) => {
       for (let error of errors) {
         this.snackBar
