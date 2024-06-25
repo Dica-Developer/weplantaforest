@@ -3,9 +3,13 @@ span:hover,
 a:hover {
   cursor: pointer;
   color: var(--green);
+  mat-icon {
+    color: var(--green);
+  }
+  span {
+    color: var(--green);
+  }
 }
-// cursor: pointer;
-// color: var(--green);
 
 span,
 a {
