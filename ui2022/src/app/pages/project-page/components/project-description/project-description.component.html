@@ -1,6 +1,6 @@
 <div class="columns project-description">
   <div class="column is-three-fifths padding-left is-flex is-flex-direction-column">
-    <div class="description" innerHtml="{{ description }}"></div>
+    <div class="description" [innerHtml]="description | safeHtml"></div>
     <app-button
       *ngIf="activeProject"
       (click)="showProjectPlantingClicked()"

@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../util/common-components/button/button.component';
 import { NgIf } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { SafeHtmlPipe } from 'src/app/util/common-components/safehtml.pipe';
 
 @Component({
   selector: 'app-project-description',
@@ -20,6 +21,7 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
     RouterLink,
     LightboxGalleryComponent,
     TranslateModule,
+    SafeHtmlPipe
   ],
 })
 export class ProjectDescriptionComponent implements OnInit {
