@@ -16,6 +16,7 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { BlogHeaderComponent } from '../components/blog-header/blog-header.component';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { LanguageHelper } from 'src/app/util/helper/language.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 
 @Component({
   selector: 'app-blog-overview-page',
@@ -35,7 +36,6 @@ import { LanguageHelper } from 'src/app/util/helper/language.helper';
 })
 export class BlogOverviewPageComponent implements OnInit {
   type: string = 'all';
-  lang: string;
 
   blogArticles$ = this.store.select(selectBlogArticles);
 
@@ -45,14 +45,9 @@ export class BlogOverviewPageComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private platformHelper: PlatformHelper,
-    private languageHelper: LanguageHelper,
+    private textHelper: TextHelper,
   ) {
-    if (this.languageHelper.getUserLanguage() === 'de') {
-      this.lang = 'DEUTSCH';
-    } else if (this.languageHelper.getUserLanguage() === 'en') {
-      this.lang = 'ENGLISH';
-    }
-    this.store.dispatch(loadBlogArticles({ pageSize: 10, language: this.lang }));
+    this.store.dispatch(loadBlogArticles({ pageSize: 10, language: this.textHelper.getCurrentLanguage() }));
   }
 
   ngOnInit(): void {
@@ -64,7 +59,7 @@ export class BlogOverviewPageComponent implements OnInit {
 
   loadAllRemainingArticles() {
     this.store.dispatch(
-      loadBlogArticles({ pageSize: this.blogArticlesAmount, language: this.lang }),
+      loadBlogArticles({ pageSize: this.blogArticlesAmount, language: this.textHelper.getCurrentLanguage() }),
     );
   }
 }

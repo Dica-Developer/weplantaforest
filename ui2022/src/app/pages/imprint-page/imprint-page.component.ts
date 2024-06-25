@@ -8,6 +8,7 @@ import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { LanguageHelper } from 'src/app/util/helper/language.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 
 @Component({
   selector: 'app-imprint-page',
@@ -23,25 +24,19 @@ import { LanguageHelper } from 'src/app/util/helper/language.helper';
 export class ImprintPageComponent implements OnInit, OnDestroy {
   imprints;
 
-  lang: string;
   imprintSub: Subscription;
   languageSub: Subscription;
 
   constructor(
     private platformHelper: PlatformHelper,
     private store: Store<AppState>,
-    private languageHelper: LanguageHelper,
+    private textHelper: TextHelper,
     private contentService: ContentService) {}
 
   ngOnInit(): void {
     this.platformHelper.scrollTop()
-    if (this.languageHelper.getUserLanguage() === 'ENGLISH' || this.languageHelper.getUserLanguage() === 'en') {
-      this.lang = 'ENGLISH';
-    } else {
-      this.lang = 'DEUTSCH';
-    }
     this.imprintSub = this.contentService
-      .getInfrastructureArticle('IMPRESS', this.lang)
+      .getInfrastructureArticle('IMPRESS', this.textHelper.getCurrentLanguage())
       .subscribe((res) => {
         this.imprints = res;
       });

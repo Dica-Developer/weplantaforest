@@ -9,6 +9,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { LanguageHelper } from 'src/app/util/helper/language.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 
 @Component({
   selector: 'app-finances-page',
@@ -24,7 +25,6 @@ import { LanguageHelper } from 'src/app/util/helper/language.helper';
   ],
 })
 export class FinancesPageComponent implements OnInit {
-  lang: string;
   finances;
   currentlySelectedYear: any = null;
   financeSub: Subscription;
@@ -33,17 +33,12 @@ export class FinancesPageComponent implements OnInit {
     private contentService: ContentService,
     private store: Store<AppState>,
     private platformHelper: PlatformHelper,
-    private languageHelper: LanguageHelper
+    private textHelper: TextHelper
   ) {}
 
   ngOnInit(): void {
-    if (this.languageHelper.getUserLanguage() === 'de' || this.languageHelper.getUserLanguage() === 'DEUTSCH') {
-      this.lang = 'DEUTSCH';
-    } else {
-      this.lang = 'ENGLISH';
-    }
     this.financeSub = this.contentService
-      .getInfrastructureArticle('FINANCIALS', this.lang)
+      .getInfrastructureArticle('FINANCIALS', this.textHelper.getCurrentLanguage())
       .subscribe((res) => {
         this.finances = res;
         this.currentlySelectedYear = this.finances[0];

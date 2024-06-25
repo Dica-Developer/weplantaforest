@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { LanguageHelper } from 'src/app/util/helper/language.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 
 @Component({
   selector: 'app-profile-widgets',
@@ -22,7 +23,6 @@ export class ProfileWidgetsComponent implements OnInit {
   widget100x100Url: string = '';
   widget300x100Url: string = '';
   widget100x300Url: string = '';
-  userLanuage: string = 'de';
 
   widget100x100Code: string =
   '<a href="' +
@@ -57,15 +57,9 @@ export class ProfileWidgetsComponent implements OnInit {
     this.platformHelper.getLocalstorage('username') +
     '&width=200&height=600&language=DEUTSCH" /></a>';
 
-  constructor(private store: Store<AppState>, private platformHelper: PlatformHelper,  private languageHelper: LanguageHelper) {}
+  constructor(private store: Store<AppState>, private platformHelper: PlatformHelper, private textHelper: TextHelper) {}
 
   ngOnInit(): void {
-    this.userLanuage = this.languageHelper.getUserLanguage();
-    if (this.languageHelper.getUserLanguage() === 'en' || this.languageHelper.getUserLanguage() === 'ENGLISH') {
-      this.userLanuage = 'ENGLISH';
-    } else {
-      this.userLanuage = 'DEUTSCH';
-    }
     this.createWidgetUrls();
   }
 
@@ -75,19 +69,19 @@ export class ProfileWidgetsComponent implements OnInit {
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=200&height=200&language=' +
-        this.userLanuage;
+        this.textHelper.getCurrentLanguage();
     this.widget300x100Url =
       environment.backendUrl +
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=600&height=200&language=' +
-        this.userLanuage;
+        this.textHelper.getCurrentLanguage();
     this.widget100x300Url =
       environment.backendUrl +
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=200&height=600&language=' +
-        this.userLanuage;
+        this.textHelper.getCurrentLanguage();
 
     this.widget100x100Code =
       '<a href="' +
@@ -99,7 +93,7 @@ export class ProfileWidgetsComponent implements OnInit {
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=200&height=200&language=' +
-        this.userLanuage +
+        this.textHelper.getCurrentLanguage();
         '" /></a>';
 
     this.widget300x100Code =
@@ -112,7 +106,7 @@ export class ProfileWidgetsComponent implements OnInit {
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=600&height=200&language=' +
-        this.userLanuage +
+        this.textHelper.getCurrentLanguage();
         '" /></a>';
 
     this.widget100x300Code =
@@ -125,7 +119,7 @@ export class ProfileWidgetsComponent implements OnInit {
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=200&height=600&language=' +
-        this.userLanuage +
+        this.textHelper.getCurrentLanguage();
         '" /></a>';
   }
 }
