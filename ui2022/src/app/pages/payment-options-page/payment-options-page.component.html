@@ -23,7 +23,7 @@
     class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center w-100"
   >
     <h2 class="w-100">{{ 'choosePaymentOption' | translate }}</h2>
-    <div class="column is-flex is-justify-content-center">
+    <div class="is-flex is-justify-content-center">
       <img src="assets/sepa.png" width="256" height="183" routerLink="/sepa" />
     </div>
     <div
@@ -37,7 +37,7 @@
       [label]="'allowPaypalCookies' | translate"
       (clicked)="showCookieConfirmation()"
       *ngIf="!(cookiesAccepted$ | async)"
-      ></app-button
+      >allow cookies</app-button
     >
     <span
       class="margin-bottom-1"

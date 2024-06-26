@@ -19,7 +19,7 @@ import { CookieHelper } from 'src/app/util/helper/cookie.helper';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotAuthenticatedWarningComponent } from '../../util/common-components/not-authenticated-warning/not-authenticated-warning.component';
 import { ButtonComponent } from '../../util/common-components/button/button.component';
-import { NgIf, AsyncPipe, CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
@@ -40,10 +40,8 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
   payPalConfig: IPayPalConfig;
   cartIdSub: Subscription;
-
   cartPayed: boolean;
   cartPayedSub: Subscription;
-
   giftSub: Subscription;
 
   paymentData: PaymentDataDto = {
@@ -67,8 +65,8 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
     iban: '',
     bic: '',
   };
-  loggedIn$ = this.store.select(selectAuthenticated);
 
+  loggedIn$ = this.store.select(selectAuthenticated);
   cookiesAccepted$: Observable<boolean> = this.store.select(selectCookies);
   plantbagPrice$: Observable<number> = this.store.select(selectPlantbagPrice);
 
@@ -115,7 +113,6 @@ export class PaymentOptionsPageComponent implements OnInit, OnDestroy {
       currency: 'EUR',
       clientId: 'AY7q3cX-S1w60RV7sbCPo27zHabr-COtyAWUGJibBL9hkos4eg25PyskST_uYLXsPxYkBo2guws927Ky',
       style: {
-        // layout: 'vertical',
         label: 'pay',
         shape: 'pill', // pill | rect
         color: 'black', // gold | blue | silver | black
