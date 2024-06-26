@@ -22,18 +22,18 @@
   <div
     class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center w-100"
   >
-    <h2 class="w-100">{{ 'choosePaymentOption' | translate }}</h2>
-    <div class="is-flex is-justify-content-center">
+    <h2 class="w-100 margin-bottom-2">{{ 'choosePaymentOption' | translate }}</h2>
+    <div class="margin-bottom-2 is-flex is-justify-content-center">
       <img src="assets/sepa.png" width="256" height="183" routerLink="/sepa" />
     </div>
     <div
-      class="paypalWrapper w-100 center padding-bottom-1"
+      class="paypalWrapper w-100 margin-bottom-2 center padding-bottom-1"
       *ngIf="(cookiesAccepted$ | async) && (plantbagPrice$ | async) >= 15"
     >
       <ngx-paypal class="w-100" [config]="payPalConfig"></ngx-paypal>
     </div>
     <app-button
-      class="allowCookies padding-bottom-1"
+      class="allowCookies padding-bottom-1 margin-bottom-2"
       [label]="'allowPaypalCookies' | translate"
       (clicked)="showCookieConfirmation()"
       *ngIf="!(cookiesAccepted$ | async)"
@@ -45,7 +45,7 @@
     >
       {{ '15eurMin' | translate }}
     </span>
-    <a class="alignStart" routerLink="/plantbag">{{ 'backToPlantbag' | translate }}</a>
+    <a class="alignStart margin-bottom-2" routerLink="/plantbag">{{ 'backToPlantbag' | translate }}</a>
     <app-not-authenticated-warning *ngIf="!(loggedIn$ | async)"> </app-not-authenticated-warning>
   </div>
 </div>
