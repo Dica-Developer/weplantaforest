@@ -63,6 +63,13 @@ export class UserGridComponent implements OnInit, OnDestroy {
       },
     },
     {
+      field: 'regDate',
+      headerName: 'Registrierdatum',
+      sortable: true,
+      valueFormatter: this.gridHelper.dateFormatter,
+      width: 150,
+    },
+    {
       field: 'mail',
       headerName: 'E-Mail',
       filter: 'agTextColumnFilter',

@@ -72,7 +72,8 @@ public class User implements UserDetails {
     private boolean banned = false;
 
     @Column(name = "_regDate")
-    private Long regDate;
+    @JsonView(Views.OverviewUser.class)
+    public Long regDate;
 
     @Column(name = "_lastVisit")
     private Long lastVisit;

@@ -6,12 +6,14 @@ import { AppState } from './app.state';
 import { Injectable } from '@angular/core';
 import { TreeType } from './project.store';
 import { addSuccessMessage } from './success-message.state';
+import { info } from 'node:console';
 
 export interface User {
   admin: boolean;
   articleManager: boolean;
   banned: boolean;
   enabled: boolean;
+  regDate: number;
   id: number;
   mail: string;
   name: string;
@@ -271,7 +273,11 @@ export class UserEffects {
       switchMap(() =>
         this.userService
           .loadAllUser()
-          .pipe(switchMap((users: User[]) => [loadUsersSuccess({ users })])),
+          .pipe(switchMap((users: User[]) => {
+          console.log(users)
+          return [loadUsersSuccess({ users })]
+        }
+        )),
       ),
     ),
   );
