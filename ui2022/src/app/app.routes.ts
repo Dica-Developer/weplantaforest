@@ -22,7 +22,6 @@ import { ProjectReportsOverviewPageComponent } from './pages/project-reports-ove
 import { TeamPageComponent } from './pages/team-page/team-page.component';
 import { PlantProposalPageComponent } from './pages/plant-proposal-page/plant-proposal-page.component';
 import { PlantbagPageComponent } from './pages/plantbag-page/plantbag-page.component';
-import { NewsletterComponent } from './util/common-components/newsletter/newsletter.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { BlogOverviewPageComponent } from './pages/blog-page/blog-overview-page/blog-overview-page.component';
@@ -46,6 +45,7 @@ import { FaqPageComponent } from './pages/faq-page/faq-page.component';
 import { TermsPageComponent } from './pages/terms-page/terms-page.component';
 import { AwardsPageComponent } from './pages/awards-page/awards-page.component';
 import { EditTeamPageComponent } from './pages/edit-team-page/edit-team-page.component';
+import { NewsletterPageComponent } from './pages/newsletter-page/newsletter-page.component';
 
 export const backofficeRoutes: Routes = [
   { path: '', component: UserOverviewComponent },
@@ -83,7 +83,7 @@ export const userRoutes: Routes = [
   { path: 'finances', component: FinancesPageComponent },
   { path: 'terms', component: TermsPageComponent },
   { path: 'contact', component: ContactPageComponent },
-  { path: 'newsletter', component: NewsletterComponent },
+  { path: 'newsletter', component: NewsletterPageComponent },
   { path: 'about', component: AboutPageComponent },
   { path: 'partner', component: PartnerPageComponent },
   { path: 'press', component: PrivacyPageComponent },

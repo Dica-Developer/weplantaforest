@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import {
   loadBlogArticles,
@@ -15,8 +15,10 @@ import { BlogArticleTileComponent } from '../components/blog-article-tile/blog-a
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { BlogHeaderComponent } from '../components/blog-header/blog-header.component';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
-import { LanguageHelper } from 'src/app/util/helper/language.helper';
 import { TextHelper } from 'src/app/util/helper/text.helper';
+import { selectCookies } from 'src/app/store/infrastructure.store';
+import { CookieHelper } from 'src/app/util/helper/cookie.helper';
+import { ButtonComponent } from 'src/app/util/common-components/button/button.component';
 
 @Component({
   selector: 'app-blog-overview-page',
@@ -24,6 +26,7 @@ import { TextHelper } from 'src/app/util/helper/text.helper';
   styleUrls: ['./blog-overview-page.component.scss'],
   standalone: true,
   imports: [
+    ButtonComponent,
     BlogHeaderComponent,
     NgFor,
     BlogArticleTileComponent,
@@ -32,20 +35,22 @@ import { TextHelper } from 'src/app/util/helper/text.helper';
     NewsletterComponent,
     OfferAreaComponent,
     AsyncPipe,
+    TranslateModule,
   ],
 })
 export class BlogOverviewPageComponent implements OnInit {
   type: string = 'all';
 
   blogArticles$ = this.store.select(selectBlogArticles);
-
   blogArticlesAmountSub: Subscription;
   blogArticlesAmount: number;
+  cookiesAccepted$: Observable<boolean> = this.store.select(selectCookies);
 
   constructor(
     private store: Store<AppState>,
     private platformHelper: PlatformHelper,
     private textHelper: TextHelper,
+    private cookieHelper: CookieHelper,
   ) {
     this.store.dispatch(loadBlogArticles({ pageSize: 10, language: this.textHelper.getCurrentLanguage() }));
   }
@@ -61,5 +66,9 @@ export class BlogOverviewPageComponent implements OnInit {
     this.store.dispatch(
       loadBlogArticles({ pageSize: this.blogArticlesAmount, language: this.textHelper.getCurrentLanguage() }),
     );
+  }
+
+  showCookieConfirmation() {
+    this.cookieHelper.openCookieConfirmation();
   }
 }

@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
     private cookieHelper: CookieHelper,
     private platformHelper: PlatformHelper,
     private languageHelper: LanguageHelper
-
   ) {
     this.translateService.addLangs(['de', 'en']);
     this.translateService.use(this.languageHelper.getUserLanguage());

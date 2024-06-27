@@ -45,7 +45,7 @@
     >
       {{ '15eurMin' | translate }}
     </span>
-    <a class="alignStart margin-bottom-2" routerLink="/plantbag">{{ 'backToPlantbag' | translate }}</a>
+    <a class="alignStart" routerLink="/plantbag">{{ 'backToPlantbag' | translate }}</a>
     <app-not-authenticated-warning *ngIf="!(loggedIn$ | async)"> </app-not-authenticated-warning>
   </div>
 </div>
