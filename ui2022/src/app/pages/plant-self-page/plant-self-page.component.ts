@@ -156,17 +156,16 @@ export class PlantSelfPageComponent implements OnInit {
     });
   }
 
-  addTreesToForm(event) {
+  addTreesToForm(event: any) {
     this.selfPlantForm.get('amount').setValue(event);
   }
 
-  treeTypeChanged($event) {
+  treeTypeChanged($event: any) {
     this.selectedTreeType = $event.value;
     this.selfPlantForm.get('treeTypeId').setValue($event.value);
   }
 
   setTreeCoordinates(event: any) {
-    console.log(event)
     this.selfPlantForm.get('latitude').setValue(event.lat);
     this.selfPlantForm.get('longitude').setValue(event.lng);
   }
@@ -175,7 +174,7 @@ export class PlantSelfPageComponent implements OnInit {
     if (fileInputEvent.target.files && fileInputEvent.target.files[0]) {
       this.selfPlantForm.get('mainImageFile').setValue(fileInputEvent.target.files[0]);
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = () => {
         this.imageSrc = reader.result;
       };
       reader.readAsDataURL(this.selfPlantForm.get('mainImageFile').value);

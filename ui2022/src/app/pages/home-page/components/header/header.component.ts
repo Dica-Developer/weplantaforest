@@ -26,5 +26,6 @@ export class HeaderComponent implements OnInit {
     this.store.dispatch(getAllTrees());
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }

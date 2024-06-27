@@ -8,6 +8,7 @@ import { selectCookies } from 'src/app/store/infrastructure.store';
 import { ButtonComponent } from 'src/app/util/common-components/button/button.component';
 import { NewsletterComponent } from 'src/app/util/common-components/newsletter/newsletter.component';
 import { CookieHelper } from 'src/app/util/helper/cookie.helper';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-newsletter-page',
@@ -27,7 +28,12 @@ export class NewsletterPageComponent {
   constructor(
     private store: Store<AppState>,
     private cookieHelper: CookieHelper,
+    private platformHelper: PlatformHelper,
   ) {
+  }
+
+  ngOnInit() {
+    this.platformHelper.scrollTop()
   }
 
   showCookieConfirmation() {

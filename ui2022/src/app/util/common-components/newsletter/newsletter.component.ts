@@ -9,7 +9,6 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../button/button.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
   selector: 'app-newsletter',
@@ -36,11 +35,9 @@ export class NewsletterComponent implements OnInit {
   constructor(
     private router: Router,
     protected sanitizer: DomSanitizer,
-    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
-    this.platformHelper.scrollTop()
     if (this.router.url.includes('newsletter')) {
       this.fullScreenNewsletter = true;
     }

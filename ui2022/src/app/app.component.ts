@@ -9,10 +9,11 @@ import { selectErrors, removeError } from './store/error.state';
 import { selectSuccessMessages, removeSuccessMessage } from './store/success-message.state';
 import { loadProfileDetails } from './store/profile.store';
 import { getProjectsForCustomPlanting } from './store/plant.store';
-import { Subscription } from 'rxjs';
-import { CookieHelper } from './util/helper/cookie.helper';
+import { Observable, Subscription } from 'rxjs';
 import { PlatformHelper } from './util/helper/platform.helper';
 import { LanguageHelper } from './util/helper/language.helper';
+import { selectCookies } from './store/infrastructure.store';
+import { CookieHelper } from './util/helper/cookie.helper';
 
 @Component({
   selector: 'app-root',
@@ -22,10 +23,9 @@ import { LanguageHelper } from './util/helper/language.helper';
   imports: [RouterOutlet],
 })
 export class AppComponent implements OnInit {
-  @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
+  @HostListener('window:beforeunload', ['$event']) unloadHandler() {
     this.platformHelper.setLocalstorage('previousUrl', this.router.url);
   }
-
   languageSub: Subscription;
   translateSub: Subscription;
 
@@ -35,8 +35,8 @@ export class AppComponent implements OnInit {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private translateService: TranslateService,
-    private cookieHelper: CookieHelper,
     private platformHelper: PlatformHelper,
+    private cookieHelper: CookieHelper,
     private languageHelper: LanguageHelper
   ) {
     this.translateService.addLangs(['de', 'en']);
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
             duration: 4000,
           })
           .afterDismissed()
-          .subscribe((res) => {
+          .subscribe(() => {
             this.store.dispatch(removeError({ key: error.key }));
           });
       }
@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
             panelClass: ['success-snackbar'],
           })
           .afterDismissed()
-          .subscribe((res) => {
+          .subscribe(() => {
             this.store.dispatch(removeSuccessMessage({ key: message.key }));
           });
       }
@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
       this.store.dispatch(loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }));
     }
     this.authService.autoLogin();
-    this.cookieHelper.openCookieConfirmation();
+    this.cookieHelper.autoOpenCookieConfirmation();
   }
 
   ngOnDestroy() {
