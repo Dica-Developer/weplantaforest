@@ -1,15 +1,23 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppState } from 'src/app/store/app.state';
 import { createTeam, updateTeam } from 'src/app/store/team.store';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  selector: 'app-team-create-edit',
-  templateUrl: './team-create-edit.component.html',
-  styleUrls: ['./team-create-edit.component.scss'],
+    selector: 'app-team-create-edit',
+    templateUrl: './team-create-edit.component.html',
+    styleUrls: ['./team-create-edit.component.scss'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        ButtonComponent,
+        TranslateModule,
+    ],
 })
 export class TeamCreateEditComponent implements OnInit {
   @Input() teamDetails;

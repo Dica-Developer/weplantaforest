@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormGroup, UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { addError } from 'src/app/store/error.state';
@@ -15,11 +15,26 @@ import {
   updateTeamProperty,
 } from 'src/app/store/team.store';
 import { SliderHelper } from 'src/app/util/helper/slider.helper';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { MatInput } from '@angular/material/input';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-edit-team-page',
   templateUrl: './edit-team-page.component.html',
   styleUrls: ['./edit-team-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInput,
+    ButtonComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class EditTeamPageComponent implements OnInit, OnDestroy {
   teamDetails$ = this.store.select(selectTeamDetails);
@@ -37,6 +52,7 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
     private sliderHelper: SliderHelper,
+    private platformHelper: PlatformHelper
   ) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadTeamDetails({ teamName: paramMap.get('teamName') }));
@@ -53,7 +69,7 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.uploadImageSub = this.store.select(selectUploadingImage).subscribe((uploading) => {
       if (!uploading) {
         this.randomNumber = this.sliderHelper.getRandomNumber();

@@ -1,9 +1,17 @@
 import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-lightbox-gallery',
-  templateUrl: './lightbox-gallery.component.html',
-  styleUrls: ['./lightbox-gallery.component.scss'],
+    selector: 'app-lightbox-gallery',
+    templateUrl: './lightbox-gallery.component.html',
+    styleUrls: ['./lightbox-gallery.component.scss'],
+    standalone: true,
+    imports: [
+        MatIcon,
+        NgFor,
+        NgIf,
+    ],
 })
 export class LightboxGalleryComponent implements OnInit {
   @Input() images: { imageUrl: string; caption: string }[];

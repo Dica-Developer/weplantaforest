@@ -8,8 +8,8 @@ describe('BarrelIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BarrelIconComponent ]
-    })
+    imports: [BarrelIconComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(BarrelIconComponent);

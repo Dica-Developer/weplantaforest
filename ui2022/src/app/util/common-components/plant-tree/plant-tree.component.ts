@@ -7,17 +7,27 @@ import { environment } from '../../../../environments/environment';
 import {
   ProfileDetails,
   selectProfileDetails,
-  selectUserLanguage,
 } from '../../../store/profile.store';
-import { TextHelper } from '../../text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { ActiveProjectArticle } from '../../../store/project.store';
 import { addPlantbagItem, resetPlantbag } from '../../../store/plantbag.store';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgFor } from '@angular/common';
+import { ButtonComponent } from '../button/button.component';
+import { LanguageHelper } from '../../helper/language.helper';
 
 @Component({
   selector: 'app-plant-tree',
   templateUrl: './plant-tree.component.html',
   styleUrls: ['./plant-tree.component.scss'],
+  standalone: true,
+  imports: [
+    ButtonComponent,
+    RouterLink,
+    NgFor,
+    TranslateModule,
+  ],
 })
 export class PlantTreeComponent implements OnInit, OnDestroy {
   hover: boolean;
@@ -25,7 +35,6 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
 
   activeProjects$: Observable<any> = this.store.select(selectProjectsForCustomPlanting);
   profileDetails$: Observable<ProfileDetails> = this.store.select(selectProfileDetails);
-  language$: Observable<string> = this.store.select(selectUserLanguage);
 
   combinedSub: Subscription;
 
@@ -33,64 +42,64 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private textHelper: TextHelper,
     private router: Router,
+    private lanugageHelper: LanguageHelper,
   ) {}
 
   ngOnInit(): void {
     this.combinedSub = combineLatest([
       this.activeProjects$,
       this.profileDetails$,
-      this.language$,
-    ]).subscribe(([activeProjects, profileDetails, language]) => {
-      this.trees = [];
-      const projects = [];
-      if (activeProjects && activeProjects.length > 0) {
-        for (const project of activeProjects) {
-          if (!project.articles || project.articles.length === 0) {
-            // only start creating trees if there are articles laoded in every project
-            return;
+    ]).subscribe(([activeProjects, profileDetails]) => {
+        this.trees = [];
+        const projects = [];
+        if (activeProjects && activeProjects.length > 0) {
+          for (const project of activeProjects) {
+            if (!project.articles || project.articles.length === 0) {
+              // only start creating trees if there are articles laoded in every project
+              return;
+            }
           }
-        }
 
-        // thre has to be made shallow copies of the projects and their articles to be able to remove them later
-        for (const project of activeProjects) {
-          const articles = [...project.articles];
-          projects.push({ ...project, articles });
-        }
+          // thre has to be made shallow copies of the projects and their articles to be able to remove them later
+          for (const project of activeProjects) {
+            const articles = [...project.articles];
+            projects.push({ ...project, articles });
+          }
 
-        for (let i = 0; i < 3; i++) {
-          const projectCount = projects.length;
-          const randomProjectIndex = Math.floor(Math.random() * projectCount);
-          const articleCount = projects[randomProjectIndex].articles.length;
-          const randomArticleIndex = Math.floor(Math.random() * articleCount);
-          const article = projects[randomProjectIndex].articles[randomArticleIndex];
-          if (article.amount - article.alreadyPlanted > 0) {
-            this.trees.push({
-              article,
-              name: this.textHelper.getTextForLanguage(
-                article.treeType.name,
-                profileDetails?.lang ?? language,
-              ),
-              urlColor:
-              environment.backendUrl +
-                '/treeType/image/' +
-                article.treeType.treeImageColor +
-                '/1000/1000',
-              urlBW:
-              environment.backendUrl +
-                '/treeType/image/' +
-                article.treeType.treeImageBW +
-                '/1000/1000',
-            });
-          }
-          // remove article from project so it can't be selected again
-          projects[randomProjectIndex].articles.splice(randomArticleIndex, 1);
-          if(projects[randomProjectIndex].articles.length === 0) {
-            // remove project if all articles have been used
-            projects.splice(randomProjectIndex, 1);
+          for (let i = 0; i < 3; i++) {
+            const projectCount = projects.length;
+            const randomProjectIndex = Math.floor(Math.random() * projectCount);
+            const articleCount = projects[randomProjectIndex].articles.length;
+            const randomArticleIndex = Math.floor(Math.random() * articleCount);
+            const article = projects[randomProjectIndex].articles[randomArticleIndex];
+            if (article.amount - article.alreadyPlanted > 0) {
+              this.trees.push({
+                article,
+                name: this.textHelper.getTextForLanguage(
+                  article.treeType.name,
+                  profileDetails?.lang ?? this.lanugageHelper.getUserLanguage(),
+                ),
+                urlColor:
+                environment.backendUrl +
+                  '/treeType/image/' +
+                  article.treeType.treeImageColor +
+                  '/1000/1000',
+                urlBW:
+                environment.backendUrl +
+                  '/treeType/image/' +
+                  article.treeType.treeImageBW +
+                  '/1000/1000',
+              });
+            }
+            // remove article from project so it can't be selected again
+            projects[randomProjectIndex].articles.splice(randomArticleIndex, 1);
+            if(projects[randomProjectIndex].articles.length === 0) {
+              // remove project if all articles have been used
+              projects.splice(randomProjectIndex, 1);
+            }
           }
         }
-      }
-    });
+      });
   }
 
   ngOnDestroy(): void {

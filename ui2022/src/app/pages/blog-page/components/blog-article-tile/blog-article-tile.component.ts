@@ -1,13 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-blog-article-tile',
-  templateUrl: './blog-article-tile.component.html',
-  styleUrls: ['./blog-article-tile.component.scss'],
+    selector: 'app-blog-article-tile',
+    templateUrl: './blog-article-tile.component.html',
+    styleUrls: ['./blog-article-tile.component.scss'],
+    standalone: true,
+    imports: [DatePipe],
 })
 export class BlogArticleTileComponent implements OnInit {
   @Input() blogArticle;

@@ -3,18 +3,30 @@ import { CellValueChangedEvent, ColDef, GridOptions, GridApi, ColumnApi } from '
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
 import { selectCarts, updateAddress, updateReceiptableFlag } from '../../../../store/carts.store';
-import { GridHelper } from '../../../../util/grid.helper';
+import { GridHelper } from 'src/app/util/helper/grid.helper';
 import { GridCheckboxComponent } from '../../../../util/grid-components/grid-checkbox/grid-checkbox.component';
 import { GridSelectComponent } from '../../../../util/grid-components/grid-select/grid-select.component';
 import { updateStatus, CartDetails, selectCartDetails } from '../../../../store/carts.store';
 import { GridCartActionsComponent } from '../../../../util/grid-components/grid-cart-actions/grid-cart-actions.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/util/common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { CartDetailsComponent } from '../cart-details/cart-details.component';
+import { AgGridAngular } from 'ag-grid-angular';
+import { NgClass, NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-cart-grid',
-  templateUrl: './cart-grid.component.html',
-  styleUrls: ['./cart-grid.component.scss'],
+    selector: 'app-cart-grid',
+    templateUrl: './cart-grid.component.html',
+    styleUrls: ['./cart-grid.component.scss'],
+    standalone: true,
+    imports: [
+        MatButton,
+        NgClass,
+        AgGridAngular,
+        NgIf,
+        CartDetailsComponent,
+    ],
 })
 export class CartGridComponent implements OnInit, OnDestroy {
   subsetOfColumns: ColDef[] = [

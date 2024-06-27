@@ -8,8 +8,8 @@ describe('CartFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CartFilterComponent ]
-    })
+    imports: [CartFilterComponent]
+})
     .compileComponents();
   });
 

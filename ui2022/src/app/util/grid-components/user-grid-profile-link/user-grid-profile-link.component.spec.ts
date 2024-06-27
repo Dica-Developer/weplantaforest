@@ -8,8 +8,8 @@ describe('UserGridProfileLinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserGridProfileLinkComponent ]
-    })
+    imports: [UserGridProfileLinkComponent]
+})
     .compileComponents();
   });
 

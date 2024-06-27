@@ -8,11 +8,21 @@ import {
   addTreeType,
 } from '../../../../store/treeType.store';
 import { Observable } from 'rxjs';
+import { TreetypeEditComponent } from '../treetype-edit/treetype-edit.component';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-treetypes-overview',
-  templateUrl: './treetypes-overview.component.html',
-  styleUrls: ['./treetypes-overview.component.scss'],
+    selector: 'app-treetypes-overview',
+    templateUrl: './treetypes-overview.component.html',
+    styleUrls: ['./treetypes-overview.component.scss'],
+    standalone: true,
+    imports: [
+        MatButton,
+        NgFor,
+        TreetypeEditComponent,
+        AsyncPipe,
+    ],
 })
 export class TreetypesOverviewComponent implements OnInit {
   treeTypes$: Observable<TreeTypeAdmin[]>;

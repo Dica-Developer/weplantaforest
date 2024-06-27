@@ -8,8 +8,8 @@ describe('EventCodeGeneratorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventCodeGeneratorComponent ]
-    })
+    imports: [EventCodeGeneratorComponent]
+})
     .compileComponents();
   });
 

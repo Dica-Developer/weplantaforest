@@ -8,8 +8,8 @@ describe('CircleIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CircleIconComponent ]
-    })
+    imports: [CircleIconComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(CircleIconComponent);

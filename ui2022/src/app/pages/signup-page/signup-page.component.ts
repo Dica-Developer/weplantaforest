@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppState } from 'src/app/store/app.state';
 import { environment } from 'src/environments/environment';
 import {
@@ -11,12 +11,40 @@ import {
   signupDoneReset,
 } from 'src/app/store/auth.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { CaptchaComponent } from '../../util/common-components/captcha/captcha.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatSuffix, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-signup-page',
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIcon,
+    MatSuffix,
+    MatLabel,
+    MatSelect,
+    NgFor,
+    MatOption,
+    MatCheckbox,
+    CaptchaComponent,
+    ButtonComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class SignupPageComponent implements OnInit {
   signupError$: Observable<string>;
@@ -61,13 +89,14 @@ export class SignupPageComponent implements OnInit {
     private store: Store<AppState>,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
+    private platformHelper: PlatformHelper
   ) {
     this.signupError$ = store.select(selectSignupError);
     this.signupDone$ = store.select(selectSignupDone);
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.store.dispatch(signupDoneReset());
   }
 
@@ -96,18 +125,22 @@ export class SignupPageComponent implements OnInit {
     } else if (!this.captchaValid) {
       this.snackbar.open(this.translateService.instant('wrongCaptcha'), 'OK', {
         duration: 4000,
+        panelClass: ['warning-snackbar'],
       });
     } else if (!this.checkPasswords()) {
       this.snackbar.open(this.translateService.instant('passwordsDontMatch'), 'OK', {
         duration: 4000,
+        panelClass: ['warning-snackbar'],
       });
     } else if (!this.signupForm.get('terms').value || !this.signupForm.get('privacyPolicy').value) {
       this.snackbar.open(this.translateService.instant('acceptTerms'), 'OK', {
         duration: 4000,
+        panelClass: ['warning-snackbar'],
       });
     } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
+        panelClass: ['warning-snackbar'],
       });
     }
   }

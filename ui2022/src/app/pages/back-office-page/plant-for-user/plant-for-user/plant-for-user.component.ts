@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
 import {
@@ -13,11 +13,42 @@ import { User } from 'src/app/store/user.store';
 import { loadUsers, selectUsers } from '../../../../store/user.store';
 import { selectActiveProjects, loadActiveProjects } from '../../../../store/project.store';
 import { addError } from 'src/app/store/error.state';
+import { MatButton } from '@angular/material/button';
+import { PlantbagComponent } from '../../../../util/common-components/plantbag/plantbag.component';
+import { MatDivider } from '@angular/material/divider';
+import { PlantbagTreeInputComponent } from '../../../../util/common-components/plantbag-tree-input/plantbag-tree-input.component';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatOption } from '@angular/material/core';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-plant-for-user',
-  templateUrl: './plant-for-user.component.html',
-  styleUrls: ['./plant-for-user.component.scss'],
+    selector: 'app-plant-for-user',
+    templateUrl: './plant-for-user.component.html',
+    styleUrls: ['./plant-for-user.component.scss'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatInput,
+        MatAutocompleteTrigger,
+        NgIf,
+        MatIcon,
+        MatAutocomplete,
+        NgFor,
+        MatOption,
+        MatCard,
+        MatCardContent,
+        PlantbagTreeInputComponent,
+        MatDivider,
+        PlantbagComponent,
+        MatButton,
+        AsyncPipe,
+    ],
 })
 export class PlantForUserComponent implements OnInit, OnDestroy {
   form: UntypedFormGroup = this.fb.group({

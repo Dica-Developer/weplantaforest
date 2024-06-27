@@ -124,6 +124,9 @@
 .h-100 {
   height: 100%;
 }
+.h-full {
+  height: 100vh
+}
 
 .w-100 {
   width: 100%;
@@ -153,6 +156,9 @@
   height: 80px !important;
 }
 
+.center {
+  text-align: center;
+}
 .center-vertically-horizontally {
   display: flex;
   justify-content: center;

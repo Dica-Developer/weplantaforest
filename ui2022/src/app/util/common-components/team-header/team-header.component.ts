@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppState } from '../../../../app/store/app.state';
 import { selectHasTeam, selectUploadingImage } from '../../../store/profile.store';
 import {
@@ -15,11 +15,27 @@ import {
 } from 'src/app/store/team.store';
 import { Observable, Subscription } from 'rxjs';
 import { SliderHelper } from '../../helper/slider.helper';
+import { TeamCreateEditComponent } from '../team-create-edit/team-create-edit.component';
+import { ButtonComponent } from '../button/button.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
-  selector: 'app-team-header',
-  templateUrl: './team-header.component.html',
-  styleUrls: ['./team-header.component.scss'],
+    selector: 'app-team-header',
+    templateUrl: './team-header.component.html',
+    styleUrls: ['./team-header.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatIcon,
+        MatTooltip,
+        ButtonComponent,
+        TeamCreateEditComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class TeamHeaderComponent implements OnInit {
   @Input() teamDetails;
@@ -43,6 +59,7 @@ export class TeamHeaderComponent implements OnInit {
     private translateService: TranslateService,
     public dialog: MatDialog,
     private sliderHelper: SliderHelper,
+    private platformHelper: PlatformHelper
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +75,7 @@ export class TeamHeaderComponent implements OnInit {
   }
 
   isMyProfile() {
-    return this.profileDetails.userName === localStorage.getItem('username');
+    return this.profileDetails.userName === this.platformHelper.getLocalstorage('username');
   }
 
   editTeam() {
@@ -84,7 +101,7 @@ export class TeamHeaderComponent implements OnInit {
         })
         .onAction()
         .subscribe(() => {
-          // this.router.navigate(['/user/' + localStorage.getItem('username')]);
+          // this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
           this.deleteTeam();
         });
     } else if (confirmType === 'join') {
@@ -106,7 +123,7 @@ export class TeamHeaderComponent implements OnInit {
 
   deleteTeam() {
     setTimeout(() => {
-      this.router.navigate(['/user/' + localStorage.getItem('username')]);
+      this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
     }, 250);
     this.store.dispatch(deleteTeam({ teamId: this.teamDetails?.teamId }));
   }
@@ -129,6 +146,6 @@ export class TeamHeaderComponent implements OnInit {
   }
 
   isLoggedIn() {
-    return localStorage.getItem('username');
+    return this.platformHelper.getLocalstorage('username');
   }
 }

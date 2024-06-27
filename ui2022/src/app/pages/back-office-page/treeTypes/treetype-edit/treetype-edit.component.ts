@@ -1,18 +1,38 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TreeTypeAdmin, updateTreetype, deleteTreeType } from '../../../../store/treeType.store';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
-import { TextHelper } from '../../../../util/text.helper';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/util/common-components/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { MatDivider } from '@angular/material/divider';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { TreeTypeImageUploadComponent } from './components/tree-type-image-upload/tree-type-image-upload.component';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-treetype-edit',
-  templateUrl: './treetype-edit.component.html',
-  styleUrls: ['./treetype-edit.component.scss'],
+    selector: 'app-treetype-edit',
+    templateUrl: './treetype-edit.component.html',
+    styleUrls: ['./treetype-edit.component.scss'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        TreeTypeImageUploadComponent,
+        MatIconButton,
+        MatIcon,
+        MatButton,
+        MatDivider,
+        TranslateModule,
+    ],
 })
 export class TreetypeEditComponent implements OnInit {
   @Input()

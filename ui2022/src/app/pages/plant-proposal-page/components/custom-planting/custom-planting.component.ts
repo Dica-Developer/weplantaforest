@@ -8,15 +8,31 @@ import {
 } from '../../../../store/plant.store';
 import { selectProfileDetails } from '../../../../store/profile.store';
 import { AppState } from '../../../../store/app.state';
-import { TextHelper } from '../../../../util/text.helper';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TextHelper } from 'src/app/util/helper/text.helper';
+import { FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { resetPlantbag, addPlantbagItem } from '../../../../store/plantbag.store';
 import { addError } from 'src/app/store/error.state';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { CustomPlantTreeInputComponent } from '../../../../util/common-components/custom-plant-tree-input/custom-plant-tree-input.component';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-custom-planting',
-  templateUrl: './custom-planting.component.html',
-  styleUrls: ['./custom-planting.component.scss'],
+    selector: 'app-custom-planting',
+    templateUrl: './custom-planting.component.html',
+    styleUrls: ['./custom-planting.component.scss'],
+    standalone: true,
+    imports: [
+        NgFor,
+        NgIf,
+        CustomPlantTreeInputComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        ButtonComponent,
+        RouterLink,
+        TranslateModule,
+    ],
 })
 export class CustomPlantingComponent implements OnInit, OnDestroy {
   activeProjects;
@@ -125,7 +141,7 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
         }
       }
       if (array.length !== 0) {
-        this.formGroup.addControl(project.projectName, new FormArray(array));        
+        this.formGroup.addControl(project.projectName, new FormArray(array));
       }else {
         //remove project from activeProjects if there are no articles to plant
         this.activeProjects = this.activeProjects.filter((p) => p.projectId !== project.projectId);

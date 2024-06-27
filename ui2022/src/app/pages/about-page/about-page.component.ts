@@ -1,12 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentService } from 'src/app/services/content.service';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgFor, NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-about-page',
-  templateUrl: './about-page.component.html',
-  styleUrls: ['./about-page.component.scss'],
+    selector: 'app-about-page',
+    templateUrl: './about-page.component.html',
+    styleUrls: ['./about-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgFor,
+        NgIf,
+        TranslateModule,
+    ],
 })
 export class AboutPageComponent implements OnInit {
   aboutUs: any[] = [];

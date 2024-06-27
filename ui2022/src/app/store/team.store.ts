@@ -11,6 +11,7 @@ import { loadProfileDetails } from './profile.store';
 import { addSuccessMessage } from './success-message.state';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { PlatformHelper } from '../util/helper/platform.helper';
 
 export interface Team {
   id: number;
@@ -314,6 +315,7 @@ export class TeamEffects {
     private teamService: TeamService,
     private translateService: TranslateService,
     private router: Router,
+    private platformHelper: PlatformHelper
   ) {}
 
   LoadTeams$ = createEffect(() =>
@@ -370,7 +372,7 @@ export class TeamEffects {
                 message: this.translateService.instant('teamCreated'),
               },
             }),
-            loadProfileDetails({ username: localStorage.getItem('username') }),
+            loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }),
           ]),
         ),
       ),
@@ -391,7 +393,7 @@ export class TeamEffects {
                   message: this.translateService.instant('teamUpdated'),
                 },
               }),
-              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }),
               loadTeamDetails({ teamName: action.teamName }),
             ]),
           ),
@@ -415,7 +417,7 @@ export class TeamEffects {
               }),
               resetTeamDetails(),
               checkIfMemberSuccess({ isMember: false }),
-              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }),
             ];
           }),
         ),
@@ -437,7 +439,7 @@ export class TeamEffects {
                 },
               }),
               checkIfMemberSuccess({ isMember: false }),
-              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }),
             ];
           }),
         ),
@@ -454,7 +456,7 @@ export class TeamEffects {
             return [
               joinTeamSuccess(),
               checkIfMemberSuccess({ isMember: true }),
-              loadProfileDetails({ username: localStorage.getItem('username') }),
+              loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }),
             ];
           }),
         ),

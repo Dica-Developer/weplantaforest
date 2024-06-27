@@ -1,4 +1,4 @@
-import { Options } from '@angular-slider/ngx-slider';
+import { Options, NgxSliderModule } from '@angular-slider/ngx-slider';
 import {
   Component,
   EventEmitter,
@@ -23,11 +23,32 @@ import {
 } from '../../../../store/plant.store';
 import { Observable, Subscription } from 'rxjs';
 import { addPlantbagItem, resetPlantbag } from '../../../../store/plantbag.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomPlantingComponent } from '../../../plant-proposal-page/components/custom-planting/custom-planting.component';
+import { PlantproposalPreviewRowComponent } from '../../../../util/common-components/plantproposal-preview-row/plantproposal-preview-row.component';
+import { RouterLink } from '@angular/router';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
 @Component({
-  selector: 'app-project-planting',
-  templateUrl: './project-planting.component.html',
-  styleUrls: ['./project-planting.component.scss'],
+    selector: 'app-project-planting',
+    templateUrl: './project-planting.component.html',
+    styleUrls: ['./project-planting.component.scss'],
+    standalone: true,
+    imports: [
+        MatTabGroup,
+        MatTab,
+        NgxSliderModule,
+        NgIf,
+        ButtonComponent,
+        RouterLink,
+        NgFor,
+        PlantproposalPreviewRowComponent,
+        CustomPlantingComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class ProjectPlantingComponent implements OnInit, OnDestroy {
   @Input() projectReport: ProjectReportDetails;

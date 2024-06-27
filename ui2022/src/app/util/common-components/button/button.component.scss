@@ -1,12 +1,12 @@
 button {
   font-family: 'Bull-mono';
-  padding: 0.35rem 1rem;
+  padding: 1.25rem 1rem!important;
   font-size: 1rem;
   background: var(--dark-brown);
   border-radius: 45px;
-  color: var(--background);
+  color: var(--background)!important;
 }
 button:hover {
   background: var(--green);
-  color: var(--black);
+  color: var(--black)!important;
 }

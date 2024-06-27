@@ -8,8 +8,8 @@ describe('CookieConfirmationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CookieConfirmationComponent ]
-    })
+    imports: [CookieConfirmationComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(CookieConfirmationComponent);

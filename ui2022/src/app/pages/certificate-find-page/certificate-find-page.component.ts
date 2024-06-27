@@ -1,21 +1,33 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
-import { TextHelper } from '../../util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import {
   findCertificatePlantings,
   findCertificateSummary,
   selectCertificate,
 } from '../../store/profile.store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
+import { CertificateCarouselItemComponent } from './components/certificate-carousel-item/certificate-carousel-item.component';
+import { NgIf, NgFor, AsyncPipe, TitleCasePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-certificate-find-page',
-  templateUrl: './certificate-find-page.component.html',
-  styleUrls: ['./certificate-find-page.component.scss'],
+    selector: 'app-certificate-find-page',
+    templateUrl: './certificate-find-page.component.html',
+    styleUrls: ['./certificate-find-page.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        NgFor,
+        CertificateCarouselItemComponent,
+        AsyncPipe,
+        TitleCasePipe,
+        TranslateModule,
+    ],
 })
 export class CertificateFindPageComponent implements OnInit, OnDestroy {
   routeSub: Subscription;

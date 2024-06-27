@@ -8,8 +8,8 @@ describe('MobileMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MobileMenuComponent ]
-    })
+    imports: [MobileMenuComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(MobileMenuComponent);

@@ -1,13 +1,24 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BlogArticle } from 'src/app/store/blog.store';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
+import { SafeHtmlPipe } from '../../../../util/common-components/safehtml.pipe';
+import { RouterLink } from '@angular/router';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-blog-article-description',
-  templateUrl: './blog-article-description.component.html',
-  styleUrls: ['./blog-article-description.component.scss'],
+    selector: 'app-blog-article-description',
+    templateUrl: './blog-article-description.component.html',
+    styleUrls: ['./blog-article-description.component.scss'],
+    standalone: true,
+    imports: [
+        NgFor,
+        NgIf,
+        RouterLink,
+        TranslateModule,
+        SafeHtmlPipe,
+    ],
 })
 export class BlogArticleDescriptionComponent implements OnInit {
   @Input() blogArticle: BlogArticle;

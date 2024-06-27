@@ -1,20 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ContentService } from 'src/app/services/content.service';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
+import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-awards-page',
   templateUrl: './awards-page.component.html',
   styleUrls: ['./awards-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgFor,
+    TranslateModule,
+  ],
 })
 export class AwardsPageComponent implements OnInit {
   awards;
 
-  constructor(private textHelper: TextHelper, private contentService: ContentService) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private textHelper: TextHelper,
+    private contentService: ContentService) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.contentService
       .getInfrastructureArticle('AWARDS', this.textHelper.getCurrentLanguage())
       .subscribe((res) => {

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createAction, createReducer, createSelector, on, props } from '@ngrx/store';
-import { switchMap } from 'rxjs/operators';
-import { AppState, PagedData } from './app.state';
+import { exhaustMap, switchMap } from 'rxjs/operators';
+import { AppState } from './app.state';
 import { InfrastrutureService } from '../services/infrastructure.service';
+import { PlatformHelper } from '../util/helper/platform.helper';
+import { CookieHelper } from '../util/helper/cookie.helper';
 
 export interface OfferAreaDTO {
   first: string;
@@ -36,12 +38,12 @@ export const submitOfferAreaSuccess = createAction(
 );
 export const loadCaptcha = createAction(
   '[Infra] load captcha token',
-  // props<{ offer: OfferAreaDTO }>(),
 );
 export const loadCaptchaSuccess = createAction(
   '[Infra] load captcha token success',
   props<{ token: string; img: any }>(),
 );
+export const initCookies = createAction('[Infra] init cookies');
 export const acceptCookies = createAction('[Infra] accept cookies');
 export const declineCookies = createAction('[Infra] decline cookies');
 
@@ -99,7 +101,7 @@ export const selectCaptchaImg = createSelector(
 
 @Injectable()
 export class InfrastructureEffects {
-  constructor(private actions$: Actions, private infrastructureService: InfrastrutureService) {}
+  constructor(private actions$: Actions, private platformHelper: PlatformHelper, private infrastructureService: InfrastrutureService) {}
 
   submitOfferArea$ = createEffect(() =>
     this.actions$.pipe(

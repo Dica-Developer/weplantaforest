@@ -8,8 +8,8 @@ describe('ShovelIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShovelIconComponent ]
-    })
+    imports: [ShovelIconComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(ShovelIconComponent);

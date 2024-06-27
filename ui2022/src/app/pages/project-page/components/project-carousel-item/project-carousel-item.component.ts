@@ -5,11 +5,19 @@ import {
   ProjectCarouselItemDateDto,
   ProjectCarouselItemAmountDto,
 } from '../../../../store/project.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-project-carousel-item',
-  templateUrl: './project-carousel-item.component.html',
-  styleUrls: ['./project-carousel-item.component.scss'],
+    selector: 'app-project-carousel-item',
+    templateUrl: './project-carousel-item.component.html',
+    styleUrls: ['./project-carousel-item.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        DatePipe,
+        TranslateModule,
+    ],
 })
 export class ProjectCarouselItemComponent implements OnInit {
   _item: ProjectCarouselItemDateDto | ProjectCarouselItemAmountDto;

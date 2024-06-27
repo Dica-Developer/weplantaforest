@@ -8,11 +8,24 @@ import {
   selectPartners,
   selectPlantings,
 } from 'src/app/store/ranking.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { ProjectCarouselItemComponent } from '../project-carousel-item/project-carousel-item.component';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-project-carousel',
-  templateUrl: './project-carousel.component.html',
-  styleUrls: ['./project-carousel.component.scss'],
+    selector: 'app-project-carousel',
+    templateUrl: './project-carousel.component.html',
+    styleUrls: ['./project-carousel.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatIcon,
+        NgFor,
+        ProjectCarouselItemComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class ProjectCarouselComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;

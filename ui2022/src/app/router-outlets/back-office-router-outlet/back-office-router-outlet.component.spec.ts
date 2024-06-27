@@ -8,8 +8,8 @@ describe('BackOfficeRouterOutletComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BackOfficeRouterOutletComponent ]
-    })
+    imports: [BackOfficeRouterOutletComponent]
+})
     .compileComponents();
   });
 

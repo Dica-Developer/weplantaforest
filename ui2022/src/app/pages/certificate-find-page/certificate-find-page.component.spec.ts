@@ -8,8 +8,8 @@ describe('CertificateFindPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CertificateFindPageComponent ]
-    })
+    imports: [CertificateFindPageComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(CertificateFindPageComponent);

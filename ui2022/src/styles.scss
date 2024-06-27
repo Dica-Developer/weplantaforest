@@ -1,8 +1,7 @@
-@import 'ag-grid-community/dist/styles/ag-grid.css';
-@import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-@import '~leaflet/dist/leaflet.css';
+@import 'leaflet/dist/leaflet.css';
 @import 'bulma/bulma.sass';
-
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
 // Fonts
 @import './assets/fonts/bull5/bull5.css';
 @import './assets/fonts/nbArchitect/nbArchitect.css';
@@ -43,42 +42,152 @@ body {
   margin: 0 !important;
 }
 
+// MAT BUTTON MAT BUTTON MAT BUTTON MAT BUTTON MAT BUTTON MAT BUTTON MAT BUTTON MAT BUTTON
+.mat-raised-button.mat-warn {
+  color: var(--background) !important;
+}
+.mat-button-toggle-button {
+  min-width: 130px;
+  background: var(--dark-brown) !important;
+  color: var(--background) !important;
+}
+.left-toggle-btn {
+  background: var(--background);
+  button {
+    border-top-left-radius: 45px;
+    border-bottom-left-radius: 45px;
+  }
+}
+.right-toggle-btn {
+  background: var(--background);
+  button {
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 45px;
+  }
+}
+.mat-button-toggle-checked {
+  button {
+    background: var(--green) !important;
+    color: var(--dark-brown) !important;
+  }
+}
+
+// MAT TOOLBAR AND BADGE MAT TOOLBAR AND BADGE MAT TOOLBAR AND BADGE MAT TOOLBAR AND BADGE MAT TOOLBAR AND BADGE MAT TOOLBAR AND BADGE
+app-toolbar {
+  .mat-badge-content {
+    background: transparent !important;
+    top: 0px !important;
+    right: 0px !important;
+    width: 60px !important;
+    left: 0!important;
+    margin: 0!important;
+  }
+}
+.mat-toolbar-single-row {
+  padding: 0 !important;
+}
+
+// MATERIAL SNACKBAR MATERIAL SNACKBAR MATERIAL SNACKBAR MATERIAL SNACKBAR
+mat-snack-bar-container {
+  .mat-simple-snackbar-action {
+    color: var(--black) !important;
+  }
+  .mdc-snackbar__surface {
+    background-color: var(--orange) !important;
+  }
+  .mat-mdc-snack-bar-label {
+    color: var(--black) !important;
+    font-family: 'Bull-mono' !important;
+  }
+}
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  max-width: 900px!important;
+}
+.success-snackbar {
+  .mdc-snackbar__surface {
+    background: var(--green) !important;
+  }
+}
+.cookie-snackbar {
+  .mdc-snackbar__surface {
+    background-color: var(--background) !important;
+  }
+}
+.warning-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #f3b930 !important;
+  }
+}
+
+// MAT FORMS MAT FORMS MAT FORMS MAT FORMS MAT FORMS MAT FORMS
+.mat-form-field-flex {
+  padding: 0 0.5rem !important;
+}
+.form-wrapper {
+  padding: 15px;
+}
+.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+  background-color: rgb(0, 0, 0, 0.04);
+}
+
+// MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE
+.mat-table {
+  background: var(--background);
+}
+.mdc-data-table__table {
+  min-width: unset!important;
+}
+th.mat-mdc-header-cell {
+  padding-left: 0 !important;
+  padding-top: 0.5rem !important;
+  font-family: 'Bull-mono';
+}
+tr,
+td {
+  padding-left: 0 !important;
+  font-family: 'Bull-mono';
+}
+.tableAlignment {
+  padding-top: 0.75rem !important;
+}
+.minTable200 {
+  min-width: 200px;
+}
+.minTable60 {
+  min-width: 60px;
+}
+.minTable80 {
+  min-width: 80px;
+}
+.table48 {
+  padding: 0 !important;
+  width: 48px;
+}
+
+// MAT TABS MAT TABS MAT TABS MAT TABS MAT TABS MAT TABS MAT TABS MAT TABS MAT TABS
+.mat-mdc-tab-header .mat-mdc-tab {
+  flex-grow: 0;
+}
+.mdc-tab__text-label {
+  font-family: 'Bull-mono' !important;
+  font-size: 1rem !important;
+}
+
+// MAT MENU MAT MENU MAT MENU MAT MENU MAT MENU MANT MENU MAT MENU MAT MENU
+.mat-mdc-menu-content {
+  padding: 1rem!important;
+}
+
 mat-divider {
   margin-top: 15px !important;
   margin-bottom: 15px !important;
 }
 
-.mat-raised-button.mat-warn {
-  color: var(--background) !important;
+mat-paginator {
+  background-color: var(--background) !important;
+  font-family: 'Bull-mono' !important;
 }
 
-snack-bar-container {
-  background-color: var(--orange) !important;
-  color: var(--black) !important;
-  .mat-simple-snackbar-action {
-    color: var(--black) !important;
-  }
-}
-
-.success-snackbar {
-  background-color: var(--green) !important;
-}
-
-.warning-snackbar {
-  background-color: #f3b930 !important;
-  color: var(--black) !important;
-  .mat-simple-snackbar-action {
-    color: var(--black) !important;
-  }
-}
-
-.no-display {
-  display: none;
-}
-
-.form-wrapper {
-  padding: 15px;
-}
 
 .spacer {
   height: 15px;
@@ -87,10 +196,6 @@ snack-bar-container {
 .top-row-btn {
   margin-top: 15px !important;
   margin-bottom: 15px !important;
-}
-
-.mat-form-field-flex {
-  padding: 0 0.5rem !important;
 }
 
 nav {
@@ -104,10 +209,6 @@ nav {
   text-decoration: underline !important;
 }
 
-.center {
-  text-align: center;
-}
-
 .image-wrapper {
   width: 100%;
   position: relative;
@@ -116,10 +217,6 @@ nav {
     height: 100%;
     min-width: 100%;
   }
-}
-
-.mat-toolbar-single-row {
-  padding: 0 !important;
 }
 
 ///////// radio button
@@ -161,11 +258,6 @@ nav {
   font-family: 'agGridAlpine' !important;
 }
 
-.mat-menu-panel {
-  background: var(--background);
-  padding: 1rem !important;
-}
-
 // finances page custom styles
 .finances,
 .partner {
@@ -192,21 +284,9 @@ nav {
   }
 }
 
-app-toolbar {
-  .mat-badge-content {
-    background: transparent !important;
-    top: 0px !important;
-    right: 0px !important;
-    width: 60px !important;
-  }
-}
-
+// lEAFLET LEAFLET lEAFLET LEAFLET lEAFLET LEAFLET lEAFLET LEAFLET lEAFLET LEAFLET lEAFLET LEAFLET lEAFLET LEAFLET
 .leaflet-container {
   z-index: 1;
-}
-
-.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
-  background-color: rgb(0, 0, 0, 0.04);
 }
 
 .offer:hover {
@@ -233,87 +313,6 @@ p.incognito {
   top: unset !important;
   bottom: -10px !important;
 }
-
-// MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE MATERIAL TABLE
-.mat-table {
-  background: var(--background);
-}
-
-th.mat-header-cell {
-  padding-left: 0 !important;
-  padding-top: 0.5rem !important;
-  font-family: 'Bull-mono';
-}
-
-tr,
-td {
-  padding-left: 0 !important;
-  font-family: 'Bull-mono';
-}
-
-.tableAlignment {
-  padding-top: 0.75rem !important;
-}
-
-.minTable200 {
-  min-width: 200px;
-}
-.minTable60 {
-  min-width: 60px;
-}
-.minTable80 {
-  min-width: 80px;
-}
-.table48 {
-  padding: 0 !important;
-  width: 48px;
-}
-
-.mat-tab-label-content {
-  font-family: 'Bull-mono' !important;
-  font-size: 1rem !important;
-}
-
-mat-paginator {
-  background-color: var(--background) !important;
-  font-family: 'Bull-mono' !important;
-}
-
-.mat-button-toggle-button {
-  min-width: 130px;
-  background: var(--dark-brown) !important;
-  color: var(--background) !important;
-}
-
-.left-toggle-btn {
-  background: var(--background);
-  button {
-    border-top-left-radius: 45px;
-    border-bottom-left-radius: 45px;
-  }
-}
-
-.right-toggle-btn {
-  background: var(--background);
-  button {
-    border-top-right-radius: 45px;
-    border-bottom-right-radius: 45px;
-  }
-}
-
-.mat-button-toggle-checked {
-  button {
-    background: var(--green) !important;
-    color: var(--dark-brown) !important;
-  }
-}
-
-// .plant-proposal-page {
-//   .mat-tab-label-container {
-//     padding-left: 4rem !important;
-//   }
-// }
-
 .teamPage {
   .leftSide {
     border-right: 1px solid var(--black);
@@ -332,35 +331,6 @@ app-profile-page {
       display: none;
     }
   }
-}
-
-.cc-deny,
-.cc-message {
-  font-size: 1rem !important;
-}
-.cc-link {
-  font-weight: bold;
-}
-.cc-allow {
-  border-radius: 45px;
-  padding: 0.35rem 1rem;
-  font-size: 1rem !important;
-  background: var(--dark-brown) !important;
-  border-radius: 45px;
-  color: var(--background) !important;
-  text-decoration: none;
-  &:hover {
-    background: var(--green) !important;
-    color: var(--black) !important;
-  }
-}
-
-.mat-snack-bar-container {
-  max-width: 45vw !important;
-}
-
-.custom-snackbar {
-  background: var(--background) !important;
 }
 
 // correct hover effect in footer
@@ -389,8 +359,9 @@ a:hover {
 }
 
 .ck-editor__editable_inline {
-    min-height: 500px;
+  min-height: 500px;
 }
+
 
 @media only screen and (max-width: 768px) {
   .mat-snack-bar-container {

@@ -254,7 +254,6 @@ export class ContentEffects {
       switchMap((action) =>
         this.contentService.editArticle(action.request, action.userName).pipe(
           switchMap((details: ContentArticleDetails) => {
-            console.log(details);
             const actionArray = [];
             actionArray.push(
               addSuccessMessage({

@@ -6,11 +6,19 @@ import { Subscription } from 'rxjs';
 import { ProjectGridComponent } from '../project-grid/project-grid.component';
 import { ProjectManager, resetProjectDetails } from '../../../../store/project.store';
 import { loadProjectDetailsSuccess, ProjectDetails } from '../../../../store/project.store';
+import { ProjectEditComponent } from '../project-edit/project-edit.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-projects-overview',
-  templateUrl: './projects-overview.component.html',
-  styleUrls: ['./projects-overview.component.scss'],
+    selector: 'app-projects-overview',
+    templateUrl: './projects-overview.component.html',
+    styleUrls: ['./projects-overview.component.scss'],
+    standalone: true,
+    imports: [
+        MatButton,
+        ProjectGridComponent,
+        ProjectEditComponent,
+    ],
 })
 export class ProjectsOverviewComponent implements OnInit, OnDestroy {
   manager: ProjectManager;

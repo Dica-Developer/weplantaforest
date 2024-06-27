@@ -67,13 +67,10 @@ ngx-slider.animate .ngx-slider-bubble {
     width: 0px;
     height: 0px;
   }
-  .custom-slider .ngx-slider .ngx-slider-tick:last-child() {
+  .custom-slider .ngx-slider .ngx-slider-tick:last-child {
     margin-left: 0px;
   }
 
-  .custom-slider .ngx-slider .ngx-slider-tick.ngx-slider-selected {
-    // background: orange;
-  }
   .custom-slider .ngx-slider .ngx-slider-tick-legend {
     white-space: nowrap;
   }

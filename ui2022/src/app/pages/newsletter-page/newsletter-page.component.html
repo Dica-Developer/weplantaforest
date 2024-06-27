@@ -1,0 +1,10 @@
+<div class="is-flex h-full center-vertically-horizontally">
+  <app-button
+    class="allowCookies padding-bottom-1"
+    [label]="'allowPaypalCookies' | translate"
+    (clicked)="showCookieConfirmation()"
+    *ngIf="!(cookiesAccepted$ | async)"
+  ></app-button
+  >
+  <app-newsletter *ngIf="(cookiesAccepted$ | async)"> </app-newsletter>
+</div>

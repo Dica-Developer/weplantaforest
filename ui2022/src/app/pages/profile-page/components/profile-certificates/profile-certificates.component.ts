@@ -1,16 +1,42 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { FormControl } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { createCertificate, ProfileCart } from '../../../../store/profile.store';
 import { AppState } from '../../../../store/app.state';
-import { PageEvent } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { DatePipe } from '@angular/common';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 @Component({
-  selector: 'app-profile-certificates',
-  templateUrl: './profile-certificates.component.html',
-  styleUrls: ['./profile-certificates.component.scss'],
+    selector: 'app-profile-certificates',
+    templateUrl: './profile-certificates.component.html',
+    styleUrls: ['./profile-certificates.component.scss'],
+    standalone: true,
+    imports: [
+        MatTable,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        MatCheckbox,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        MatPaginator,
+        MatInput,
+        FormsModule,
+        ReactiveFormsModule,
+        ButtonComponent,
+        DatePipe,
+        TranslateModule,
+    ],
 })
 export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   @Input()

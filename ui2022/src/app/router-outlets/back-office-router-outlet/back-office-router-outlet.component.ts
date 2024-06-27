@@ -5,11 +5,23 @@ import { Observable } from 'rxjs';
 import { selectUsername, selectProfileImagename } from '../../store/profile.store';
 import { environment } from '../../../environments/environment';
 import { logout } from '../../store/auth.store';
+import { AsyncPipe } from '@angular/common';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-back-office-router-outlet',
-  templateUrl: './back-office-router-outlet.component.html',
-  styleUrls: ['./back-office-router-outlet.component.scss'],
+    selector: 'app-back-office-router-outlet',
+    templateUrl: './back-office-router-outlet.component.html',
+    styleUrls: ['./back-office-router-outlet.component.scss'],
+    standalone: true,
+    imports: [
+        MatToolbar,
+        MatToolbarRow,
+        RouterLink,
+        RouterLinkActive,
+        RouterOutlet,
+        AsyncPipe,
+    ],
 })
 export class BackOfficeRouterOutletComponent implements OnInit {
   username$: Observable<string>;

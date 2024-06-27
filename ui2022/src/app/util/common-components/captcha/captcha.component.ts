@@ -3,11 +3,15 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { loadCaptcha, selectCaptcha, selectCaptchaImg } from 'src/app/store/infrastructure.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-captcha',
-  templateUrl: './captcha.component.html',
-  styleUrls: ['./captcha.component.scss'],
+    selector: 'app-captcha',
+    templateUrl: './captcha.component.html',
+    styleUrls: ['./captcha.component.scss'],
+    standalone: true,
+    imports: [MatIcon, TranslateModule],
 })
 export class CaptchaComponent implements OnInit {
   @Output() captchaStatusEmit = new EventEmitter<boolean>();

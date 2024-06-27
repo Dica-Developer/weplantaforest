@@ -1,6 +1,6 @@
-<div *ngIf="details" class="columns">
-  <div class="column is-11">
-    <mat-tab-group mat-align-tabs="center">
+<div *ngIf="details" class="is-flex is-flex-direction-column">
+  <div class="is-flex is-12">
+    <mat-tab-group class="w-100" mat-align-tabs="center">
       <mat-tab label="Karte">
         <app-project-edit-location
           [positions]="projectForm.get('positions')"
@@ -44,7 +44,7 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <div class="column is-1">
+  <div>
     <button mat-raised-button color="primary" (click)="saveData()">Speichern</button>
   </div>
 </div>

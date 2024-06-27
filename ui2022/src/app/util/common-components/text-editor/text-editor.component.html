@@ -1,7 +1,4 @@
 <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
-  <mat-tab label="Editor">
-    <ckeditor [editor]="editor" data="{{ text }}" (change)="onChange($event)"></ckeditor>
-  </mat-tab>
   <mat-tab label="Raw HTML">
     <textarea [formControl]="rawHTMLControl" rows="15"></textarea>
   </mat-tab>

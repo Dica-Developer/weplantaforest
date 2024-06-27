@@ -8,8 +8,8 @@ describe('YoutubeIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ YoutubeIconComponent ]
-    })
+    imports: [YoutubeIconComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(YoutubeIconComponent);

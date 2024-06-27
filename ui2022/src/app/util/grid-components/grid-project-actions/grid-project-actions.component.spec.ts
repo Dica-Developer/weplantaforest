@@ -8,8 +8,8 @@ describe('GridProjectActionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GridProjectActionsComponent ]
-    })
+    imports: [GridProjectActionsComponent]
+})
     .compileComponents();
   });
 

@@ -8,8 +8,8 @@ describe('ProfileRedeemGiftComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProfileRedeemGiftComponent ]
-    })
+    imports: [ProfileRedeemGiftComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(ProfileRedeemGiftComponent);

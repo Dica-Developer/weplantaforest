@@ -29,15 +29,7 @@
     <div
       class="is-flex is-flex-direction-column is-align-items-left is-justify-content-center column is-one-third padding-1"
     >
-      <app-button
-        class="allowCookies padding-bottom-1"
-        [label]="'allowPaypalCookies' | translate"
-        (clicked)="showCookieConfirmation()"
-        *ngIf="!(cookiesAccepted$ | async)"
-        >allow cookies</app-button
-      >
       <div
-        *ngIf="(cookiesAccepted$ | async)"
         #iframe id="iframe" [innerHTML]="html" class="nl-iframe"></div>
     </div>
     <div class="column is-one-third"></div>

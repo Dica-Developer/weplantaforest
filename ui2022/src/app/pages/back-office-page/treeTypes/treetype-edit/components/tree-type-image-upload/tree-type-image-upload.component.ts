@@ -4,11 +4,15 @@ import { TreeTypeImageType } from 'src/app/services/treeType.service';
 import { AppState } from 'src/app/store/app.state';
 import { environment } from 'src/environments/environment';
 import { addError } from '../../../../../../store/error.state';
+import { MatButton } from '@angular/material/button';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-tree-type-image-upload',
-  templateUrl: './tree-type-image-upload.component.html',
-  styleUrls: ['./tree-type-image-upload.component.scss'],
+    selector: 'app-tree-type-image-upload',
+    templateUrl: './tree-type-image-upload.component.html',
+    styleUrls: ['./tree-type-image-upload.component.scss'],
+    standalone: true,
+    imports: [NgIf, MatButton],
 })
 export class TreeTypeImageUploadComponent implements OnInit {
   @Output() emitImageChanged = new EventEmitter<any>();

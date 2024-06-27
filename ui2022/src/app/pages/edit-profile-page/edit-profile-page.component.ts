@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormGroup, UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { addError } from '../../store/error.state';
@@ -15,11 +15,35 @@ import {
   updateProfileProperty,
 } from 'src/app/store/profile.store';
 import { SliderHelper } from 'src/app/util/helper/slider.helper';
+import { ButtonComponent } from '../../util/common-components/button/button.component';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-edit-profile-page',
   templateUrl: './edit-profile-page.component.html',
   styleUrls: ['./edit-profile-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIcon,
+    MatSuffix,
+    MatInput,
+    MatSelect,
+    NgFor,
+    MatOption,
+    ButtonComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class EditProfilePageComponent implements OnInit, OnDestroy {
   profileForm: UntypedFormGroup;
@@ -54,6 +78,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
     private sliderHelper: SliderHelper,
+    private platformHelper: PlatformHelper
   ) {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadProfileDetails({ username: paramMap.get('username') }));
@@ -77,7 +102,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    this.platformHelper.scrollTop()
     this.uploadImageSub = this.store.select(selectUploadingImage).subscribe((uploading) => {
       if (!uploading) {
         this.randomNumber = this.sliderHelper.getRandomNumber();
@@ -86,7 +111,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   updateProfile() {
-    let username = localStorage.getItem('username');
+    let username = this.platformHelper.getLocalstorage('username');
     if (this.imagePreviewSrc) {
       this.store.dispatch(updateProfileImage({ userName: username, image: this.imageFile }));
       this.imagePreviewSrc = null;
@@ -166,8 +191,8 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     }
     if (
       this.profileForm.get('password').dirty &&
-      this.profileForm.get('repeatPassword').dirty &&
-      this.profileForm.get('password').value === this.profileForm.get('repeatPassword').value
+        this.profileForm.get('repeatPassword').dirty &&
+        this.profileForm.get('password').value === this.profileForm.get('repeatPassword').value
     ) {
       this.store.dispatch(
         updateProfileProperty({
@@ -185,7 +210,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   }
 
   routeToProfile() {
-    this.router.navigate(['/user/' + localStorage.getItem('username')]);
+    this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
   }
 
   imageChanged(fileInputEvent: any) {

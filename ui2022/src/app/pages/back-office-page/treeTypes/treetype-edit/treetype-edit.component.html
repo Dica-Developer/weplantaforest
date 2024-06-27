@@ -1,174 +1,181 @@
-<mat-card>
-  <mat-card-content>
-    <form [formGroup]="form">
-      <div class="columns">
-        <div class="column is-6">
-          <div class="columns is-flex is-justify-content-space-around">
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Name(De)"
-                name="name"
-                required
-                formControlName="nameDe"
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Name(En)"
-                name="name"
-                required
-                formControlName="nameEn"
-              />
-            </mat-form-field>
-          </div>
-          <div class="columns is-flex is-justify-content-space-around">
-            <mat-form-field>
-              <textarea
-                matInput
-                placeholder="Beschreibung(De)"
-                name="description"
-                required
-                formControlName="descriptionDe"
-                rows="5"
-              ></textarea>
-            </mat-form-field>
-            <mat-form-field>
-              <textarea
-                matInput
-                placeholder="description(En)"
-                name="description"
-                required
-                formControlName="descriptionEn"
-                rows="5"
-              ></textarea>
-            </mat-form-field>
-          </div>
-          <div class="columns is-flex is-justify-content-space-around">
-            <mat-form-field>
-              <textarea
-                matInput
-                placeholder="Blätter(De)"
-                name="leaf"
-                required
-                formControlName="leafDe"
-                rows="5"
-              ></textarea>
-            </mat-form-field>
-            <mat-form-field>
-              <textarea
-                matInput
-                placeholder="leaf(En)"
-                name="leaf"
-                required
-                formControlName="leafEn"
-                rows="5"
-              ></textarea>
-            </mat-form-field>
-          </div>
-          <div class="columns is-flex is-justify-content-space-around">
-            <mat-form-field>
-              <textarea
-                matInput
-                placeholder="Früchte(De)"
-                name="fruit"
-                required
-                formControlName="fruitDe"
-                rows="5"
-              ></textarea>
-            </mat-form-field>
-            <mat-form-field>
-              <textarea
-                matInput
-                placeholder="fruit(En)"
-                name="fruit"
-                required
-                formControlName="fruitEn"
-                rows="5"
-              ></textarea>
-            </mat-form-field>
-          </div>
-          <div class="columns is-flex is-justify-content-space-around">
-            <mat-form-field>
-              <textarea
-                matInput
-                placeholder="Borke(De)"
-                name="trunk"
-                required
-                formControlName="trunkDe"
-                rows="5"
-              ></textarea>
-            </mat-form-field>
-            <mat-form-field>
-              <textarea
-                matInput
-                placeholder="trunk(En)"
-                name="trunk"
-                required
-                formControlName="trunkEn"
-                rows="5"
-              ></textarea>
-            </mat-form-field>
-          </div>
+<form [formGroup]="form">
+  <div class="is-flex is-flex-direction-row treeType padding-1">
+    <div class="is-flex is-flex-direction-column is-flex-grow-1 margin-right-1">
+      <div class="is-flex is-flex-direction-row is-justify-content-space-around">
+        <mat-form-field class="is-flex-grow-1 margin-right-1">
+          <input
+            matInput
+            placeholder="Name(De)"
+            name="name"
+            required
+            formControlName="nameDe"
+          />
+        </mat-form-field>
+        <mat-form-field class="is-flex-grow-1">
+          <input
+            matInput
+            placeholder="Name(En)"
+            name="name"
+            required
+            formControlName="nameEn"
+          />
+        </mat-form-field>
+      </div>
+      <div class="is-flex is-flex-direction-row is-justify-content-space-around">
+        <mat-form-field class="is-flex-grow-1 margin-right-1">
+          <textarea
+            matInput
+            placeholder="Beschreibung(De)"
+            name="description"
+            required
+            formControlName="descriptionDe"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field class="is-flex-grow-1">
+          <textarea
+            matInput
+            placeholder="description(En)"
+            name="description"
+            required
+            formControlName="descriptionEn"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="is-flex is-flex-direction-row is-justify-content-space-around">
+        <mat-form-field class="is-flex-grow-1 margin-right-1">
+          <textarea
+            matInput
+            placeholder="Blätter(De)"
+            name="leaf"
+            required
+            formControlName="leafDe"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field class="is-flex-grow-1">
+          <textarea
+            matInput
+            placeholder="leaf(En)"
+            name="leaf"
+            required
+            formControlName="leafEn"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="is-flex is-flex-direction-row is-justify-content-space-around">
+        <mat-form-field class="is-flex-grow-1 margin-right-1">
+          <textarea
+            matInput
+            placeholder="Früchte(De)"
+            name="fruit"
+            required
+            formControlName="fruitDe"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field class="is-flex-grow-1">
+          <textarea
+            matInput
+            placeholder="fruit(En)"
+            name="fruit"
+            required
+            formControlName="fruitEn"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="is-flex is-flex-direction-row is-justify-content-space-around">
+        <mat-form-field class="is-flex-grow-1 margin-right-1">
+          <textarea
+            matInput
+            placeholder="Borke(De)"
+            name="trunk"
+            required
+            formControlName="trunkDe"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field class="is-flex-grow-1">
+          <textarea
+            matInput
+            placeholder="trunk(En)"
+            name="trunk"
+            required
+            formControlName="trunkEn"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="is-flex is-flex-direction-column">
+      <div class="is-flex is-justify-content-space-around margin-bottom-1">
+        <div class="is-flex is-flex-direction-column">
+          <mat-label>{{ 'treeColored' | translate }}</mat-label>
+          <app-tree-type-image-upload
+            [imageType]="'treeImageColor'"
+            [imageFileName]="form.get('treeImageColor').value"
+            (emitImageChanged)="setImageFile($event)"
+          >
+          </app-tree-type-image-upload>
         </div>
-        <div class="column is-6 is-flex is-flex-direction-column is-justify-content-space-between">
-          <div class="is-flex is-justify-content-space-around margin-bottom-1">
-            <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'treeColored' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'treeImageColor'"
-                [imageFileName]="form.get('treeImageColor').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div>
-            <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'treeBW' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'treeImageBW'"
-                [imageFileName]="form.get('treeImageBW').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div>
-            <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'leaf' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'leafImage'"
-                [imageFileName]="form.get('leafImage').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div>
-            <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'fruits' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'fruitImageColor'"
-                [imageFileName]="form.get('fruitImageColor').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div>
-            <div class="is-flex is-flex-direction-column">
-              <mat-label>{{ 'trunkColored' | translate }}</mat-label>
-              <app-tree-type-image-upload
-                [imageType]="'trunkImageColor'"
-                [imageFileName]="form.get('trunkImageColor').value"
-                (emitImageChanged)="setImageFile($event)"
-              >
-              </app-tree-type-image-upload>
-            </div>
-          </div>
-          <div class="is-flex is-flex-direction-row-reverse is-align-items-center">
-            <button mat-icon-button color="warn" (click)="delete()">
-              <mat-icon aria-hidden="false">delete</mat-icon>
-            </button>
-            <button mat-raised-button color="primary" (click)="updateTreetype()">Speichern</button>
-          </div>
+        <div class="is-flex is-flex-direction-column">
+          <mat-label>{{ 'treeBW' | translate }}</mat-label>
+          <app-tree-type-image-upload
+            [imageType]="'treeImageBW'"
+            [imageFileName]="form.get('treeImageBW').value"
+            (emitImageChanged)="setImageFile($event)"
+          >
+          </app-tree-type-image-upload>
+        </div>
+        <div class="is-flex is-flex-direction-column">
+          <mat-label>{{ 'leaf' | translate }}</mat-label>
+          <app-tree-type-image-upload
+            [imageType]="'leafImage'"
+            [imageFileName]="form.get('leafImage').value"
+            (emitImageChanged)="setImageFile($event)"
+          >
+          </app-tree-type-image-upload>
+        </div>
+        <div class="is-flex is-flex-direction-column">
+          <mat-label>{{ 'fruits' | translate }}</mat-label>
+          <app-tree-type-image-upload
+            [imageType]="'fruitImageColor'"
+            [imageFileName]="form.get('fruitImageColor').value"
+            (emitImageChanged)="setImageFile($event)"
+          >
+          </app-tree-type-image-upload>
+        </div>
+        <div class="is-flex is-flex-direction-column">
+          <mat-label>{{ 'trunkColored' | translate }}</mat-label>
+          <app-tree-type-image-upload
+            [imageType]="'trunkImageColor'"
+            [imageFileName]="form.get('trunkImageColor').value"
+            (emitImageChanged)="setImageFile($event)"
+          >
+          </app-tree-type-image-upload>
         </div>
       </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+      <div class="is-flex is-flex-direction-row-reverse is-align-items-center">
+        <button mat-icon-button color="warn" (click)="delete()">
+          <mat-icon aria-hidden="false">delete</mat-icon>
+        </button>
+        <button mat-raised-button color="primary" (click)="updateTreetype()">Speichern</button>
+      </div>
+      <div class="is-flex is-flex-direction-row-reverse is-align-items-center">
+        <mat-form-field class="is-flex-grow-1 margin-right-1">
+          <mat-label>{{ 'search' | translate }}</mat-label>
+          <input
+            matInput
+            placeholder="CO2 Einsparung in tonnen"
+            name="annualCo2SavingInTons"
+            formControlName="annualCo2SavingInTons"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</form>
 <mat-divider></mat-divider>

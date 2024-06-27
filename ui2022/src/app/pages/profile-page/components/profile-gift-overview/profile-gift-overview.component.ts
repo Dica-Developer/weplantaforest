@@ -17,12 +17,45 @@ import {
 import { openGiftPdf, ProfileGift } from '../../../../store/profile.store';
 import { Router } from '@angular/router';
 import { setGift } from '../../../../store/payment.store';
-import { PageEvent } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ProfileRedeemGiftComponent } from '../profile-redeem-gift/profile-redeem-gift.component';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { ButtonComponent } from '../../../../util/common-components/button/button.component';
+import { NgIf, CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-profile-gift-overview',
-  templateUrl: './profile-gift-overview.component.html',
-  styleUrls: ['./profile-gift-overview.component.scss'],
+    selector: 'app-profile-gift-overview',
+    templateUrl: './profile-gift-overview.component.html',
+    styleUrls: ['./profile-gift-overview.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        ButtonComponent,
+        MatTabGroup,
+        MatTab,
+        ProfileRedeemGiftComponent,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        MatIconButton,
+        MatIcon,
+        MatTooltip,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        MatPaginator,
+        CurrencyPipe,
+        TranslateModule,
+    ],
 })
 export class ProfileGiftOverviewComponent implements OnInit, OnDestroy {
   displayedCreatedColumns: string[] = ['code', 'trees', 'price', 'consignedBy', 'PDF', 'recreate'];

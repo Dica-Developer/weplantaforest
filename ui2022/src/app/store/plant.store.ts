@@ -7,6 +7,7 @@ import { AppState } from './app.state';
 import { addSuccessMessage } from './success-message.state';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { PlatformHelper } from '../util/helper/platform.helper';
 
 export const getSimplePlantProposal = createAction(
   '[Plant] get proposal',
@@ -142,17 +143,17 @@ const plantProposalReducer = createReducer(
   on(getArticlesForCustomPlantProjectSuccess, (state, action) => ({
     ...state,
     customPlantingProjects: state.customPlantingProjects
-      .map((project) => ({ ...project }))
-      .map((project) => {
-        if (project.projectId == action.articles[0]?.project.id) {
-          return {
-            ...project,
-            articles: action.articles,
-          };
-        } else {
-          return project;
-        }
-      }),
+    .map((project) => ({ ...project }))
+    .map((project) => {
+      if (project.projectId == action.articles[0]?.project.id) {
+        return {
+          ...project,
+          articles: action.articles,
+        };
+      } else {
+        return project;
+      }
+    }),
   })),
 );
 export function plantProposalReducerFn(state, action) {
@@ -199,6 +200,7 @@ export class PlantProposalEffects {
     private plantbagService: PlantbagService,
     private translateService: TranslateService,
     private router: Router,
+    private platformHelper: PlatformHelper
   ) {}
 
   getSimplePlantProposal$ = createEffect(() =>
@@ -238,8 +240,8 @@ export class PlantProposalEffects {
       ofType(getArticlesForCustomPlantProject),
       concatMap((action) =>
         this.plantbagService
-          .getArticlesForCustomPlantProject(action.projectName)
-          .pipe(switchMap((articles) => [getArticlesForCustomPlantProjectSuccess({ articles })])),
+        .getArticlesForCustomPlantProject(action.projectName)
+        .pipe(switchMap((articles) => [getArticlesForCustomPlantProjectSuccess({ articles })])),
       ),
     ),
   );
@@ -255,7 +257,7 @@ export class PlantProposalEffects {
                 uploadSelfPlantImage({ treeId: treeId, image: action.selfPlantData.mainImageFile }),
               ];
             } else {
-              this.router.navigate(['/user/' + localStorage.getItem('username')]);
+              this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
               return [
                 sendSelfPlantSuccess(),
                 addSuccessMessage({
@@ -278,7 +280,7 @@ export class PlantProposalEffects {
       switchMap((action) =>
         this.plantbagService.uploadPlantSelfImage(action.treeId, action.image).pipe(
           switchMap(() => {
-            this.router.navigate(['/user/' + localStorage.getItem('username')]);
+            this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
             return [
               sendSelfPlantSuccess(),
               addSuccessMessage({

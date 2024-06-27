@@ -8,14 +8,36 @@ import {
   transferTrees,
 } from '../../../../store/user.store';
 import { Subscription, Observable } from 'rxjs';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.state';
+import { MatButton } from '@angular/material/button';
+import { MatOption } from '@angular/material/core';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-transfer-trees',
-  templateUrl: './transfer-trees.component.html',
-  styleUrls: ['./transfer-trees.component.scss'],
+    selector: 'app-transfer-trees',
+    templateUrl: './transfer-trees.component.html',
+    styleUrls: ['./transfer-trees.component.scss'],
+    standalone: true,
+    imports: [
+        MatFormField,
+        MatInput,
+        FormsModule,
+        MatAutocompleteTrigger,
+        ReactiveFormsModule,
+        NgIf,
+        MatIcon,
+        MatAutocomplete,
+        NgFor,
+        MatOption,
+        MatButton,
+        AsyncPipe,
+    ],
 })
 export class TransferTreesComponent implements OnInit {
   allUsers: User[];

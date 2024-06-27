@@ -8,8 +8,8 @@ describe('GridCartActionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GridCartActionsComponent ]
-    })
+    imports: [GridCartActionsComponent]
+})
     .compileComponents();
   });
 

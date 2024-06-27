@@ -1,33 +1,5 @@
-<div style="height: 600px;"
-     leaflet 
-     [leafletOptions]="options"
-     (leafletMapReady)="onMapReady($event)" 
-     >
-</div>
-<!-- <div class="row">
-  <div class="col-2">
-    <b>latitude</b>
-  </div>
-  <div class="col-2">
-    <b>longitude</b>
-  </div>
-  <div class="col-1">
-    <b>order</b>
-  </div>
-  <div class="col-1">
-    <button mat-raised-button color="primary" (click)="resetPolygon()">
-      reset
-    </button>
-  </div>
-</div>
-<div class="row" *ngFor="let point of control.value">
-  <div class="col-2">
-    {{point.lat}}
-  </div>
-  <div class="col-2">
-    {{point.lng}}
-  </div>
-  <div class="col-1">
-    {{point.order}}
-  </div>
-</div> -->
+<div
+  id="map"
+  [style.height]="'600px'"
+  leaflet
+></div>

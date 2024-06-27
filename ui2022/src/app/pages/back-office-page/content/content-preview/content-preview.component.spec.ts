@@ -8,8 +8,8 @@ describe('ContentPreviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContentPreviewComponent ]
-    })
+    imports: [ContentPreviewComponent]
+})
     .compileComponents();
   });
 

@@ -3,12 +3,23 @@ import { ContentService } from 'src/app/services/content.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { selectUserLanguage } from '../../store/profile.store';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { LanguageHelper } from 'src/app/util/helper/language.helper';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 
 @Component({
   selector: 'app-imprint-page',
   templateUrl: './imprint-page.component.html',
   styleUrls: ['./imprint-page.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgFor,
+    TranslateModule,
+  ],
 })
 export class ImprintPageComponent implements OnInit, OnDestroy {
   imprints;
@@ -16,24 +27,19 @@ export class ImprintPageComponent implements OnInit, OnDestroy {
   imprintSub: Subscription;
   languageSub: Subscription;
 
-  constructor(private store: Store<AppState>, private contentService: ContentService) {}
+  constructor(
+    private platformHelper: PlatformHelper,
+    private store: Store<AppState>,
+    private textHelper: TextHelper,
+    private contentService: ContentService) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.languageSub = this.store.select(selectUserLanguage).subscribe((language) => {
-      this.imprintSub?.unsubscribe();
-      let lng = '';
-      if (language === 'ENGLISH' || language === 'en') {
-        lng = 'ENGLISH';
-      } else if (language === 'DEUTSCH' || language === 'de') {
-        lng = 'DEUTSCH';
-      }
-      this.imprintSub = this.contentService
-        .getInfrastructureArticle('IMPRESS', lng)
-        .subscribe((res) => {
-          this.imprints = res;
-        });
-    });
+    this.platformHelper.scrollTop()
+    this.imprintSub = this.contentService
+      .getInfrastructureArticle('IMPRESS', this.textHelper.getCurrentLanguage())
+      .subscribe((res) => {
+        this.imprints = res;
+      });
   }
 
   ngOnDestroy(): void {

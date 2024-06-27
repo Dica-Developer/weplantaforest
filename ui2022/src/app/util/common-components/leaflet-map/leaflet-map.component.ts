@@ -2,71 +2,79 @@ import {
   Component,
   EventEmitter,
   HostListener,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  PLATFORM_ID,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import * as L from 'leaflet';
-import { tileLayer, marker, icon, Map } from 'leaflet';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
+import { LeafletHelper } from '../../helper/leaflet.helper';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-map',
   templateUrl: './leaflet-map.component.html',
   styleUrls: ['./leaflet-map.component.scss'],
+  standalone: true,
+  imports: [],
 })
 export class LeafletMapComponent implements OnInit, OnDestroy {
-  map: Map;
-  coords = [];
-  polygon;
-  control: UntypedFormControl;
-  screenWidth;
-
-  @Input() showMarker: boolean = false;
+  @Output() markerSet = new EventEmitter();
+  @Input() showSelfPlantMarker: boolean = false;
   @Input() positions: any[];
   @Input() mapHeight: string = '600px';
   @Input() disabledMap: boolean = false;
-  @Output() markerSet = new EventEmitter();
-
-  mapSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  projectAreasSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  combinedSub: Subscription;
-
-  projectAreasInternal: any[][];
-
   @Input('projectAreas')
   set projectAreas(areas: any[][]) {
     this.projectAreasInternal = areas;
     this.projectAreasSubject.next(true);
   }
 
-  treeMarker: any[];
-
-  options = {
-    layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '...',
-      }),
-    ],
-    drawControl: false,
-    dragging: !L.Browser.mobile,
-    zoom: 2,
-  };
+  lib: typeof L;
+  mapSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  map: L.Map
+  coords: L.LatLngTuple[] = [];
+  polygon: L.Polygon;
+  control: UntypedFormControl;
+  screenWidth: number;
+  projectAreasSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  combinedSub: Subscription;
+  projectAreasInternal: {lat: number, lng: number, order: number}[][];
+  mapOptions: any;
+  treeMarker: L.Marker[];
 
   @HostListener('window:load', ['$event'])
-  getScreenSize(event?) {
-    this.screenWidth = window.innerWidth;
+  getScreenSize() {
+    if (this._platformId === 'browser') {
+      this.screenWidth = window.innerWidth;
+    }
   }
 
-  constructor() {}
+  constructor(
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private leafletHelper: LeafletHelper
+  ) {}
+
   ngOnInit(): void {
+    if (this._platformId === 'browser') {
+      this.leafletHelper.loadLeaflet().then((lib) => {
+        this.lib = lib;
+        this.mapOptions = this.createDefaultMapOptions(lib);
+        this.combineSubscriptions(lib);
+        this.map = lib.map('map', this.mapOptions);
+        this.onMapReady(this.map);
+        this.map.on('click', this.mapClicked.bind(this));
+      })
+    }
     if (this.positions) {
       this.coords = this.createPolygonPoints(this.positions);
     }
+  }
 
+  combineSubscriptions(leafletLib:any) {
     this.combinedSub = combineLatest([this.mapSubject, this.projectAreasSubject]).subscribe(
       (res) => {
         if (res[0] && res[1]) {
@@ -74,9 +82,10 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
           this.treeMarker = [];
           for (let area of this.projectAreasInternal) {
             const coords = this.createPolygonPoints(area);
-            const polygon = L.polygon(coords, { color: '#82ab1f' });
+            const polygon = leafletLib.polygon(coords, { color: '#82ab1f' });
             this.map.addLayer(polygon);
             const marker = this.createMarker(polygon.getCenter().lat, polygon.getCenter().lng);
+            this.map.addLayer(marker);
             marker.on('click', (event) => {
               event.target._map.setView(event.latlng, 14);
             });
@@ -85,31 +94,45 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         }
       },
     );
+
   }
 
   ngOnDestroy(): void {
     this.combinedSub?.unsubscribe();
   }
 
-  onMapReady(map: Map): void {
-    this.map = map;
-    this.map.scrollWheelZoom.disable();
-    if (this.disabledMap) {
+  createDefaultMapOptions(leafletLib: any) {
+    return {
+      layers: [
+        leafletLib.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '...',
+        }),
+      ],
+      drawControl: false,
+      dragging: !leafletLib.Browser.mobile,
+      zoom: 6,
+      center: [51.9481, 10.26517],
     }
+  }
+
+  onMapReady(leafletMap: any) {
+    this.map = leafletMap
+    this.map.scrollWheelZoom.disable();
     setTimeout(() => {
       if (this.coords.length > 0) {
-        this.polygon = L.polygon(this.coords, { color: '#82ab1f' });
-        map.addLayer(this.polygon);
+        this.polygon = this.lib.polygon(this.coords, { color: '#82ab1f' });
+        this.map.addLayer(this.polygon);
         this.map.fitBounds(this.polygon.getBounds());
       } else {
         // adjust zoom if mobile view
         if (this.screenWidth < 764) {
-          map.setView(new L.LatLng(51.9481, 10.26517), 5);
+          this.map.setView([51.9481, 10.26517], 5);
         } else {
-          map.setView(new L.LatLng(51.9481, 10.26517), 6);
+          this.map.setView([51.9481, 10.26517], 6);
         }
       }
-      map.invalidateSize();
+      this.map.invalidateSize();
       this.mapSubject.next(true);
     });
   }
@@ -127,21 +150,33 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   }
 
   mapClicked(event: any) {
-    if (!this.showMarker) {
+    if (!this.showSelfPlantMarker) {
       return;
     }
+    this.resetTreeMarkerForSelfPlant()
     this.treeMarker = [];
     this.treeMarker.push(this.createMarker(event.latlng.lat, event.latlng.lng));
     this.markerSet.emit({ lat: event.latlng.lat, lng: event.latlng.lng });
+    this.map.addLayer(this.treeMarker[0]);
+  }
+
+  resetTreeMarkerForSelfPlant() {
+    if (this.treeMarker?.length > 0) {
+      this.map.removeLayer(this.treeMarker[0]);
+    }
   }
 
   createMarker(lat: number, lng: number) {
-    return marker([lat, lng], {
-      icon: icon({
-        iconAnchor: [17, 35],
-        iconUrl: '/assets/treeIconBrown.png',
-        iconRetinaUrl: '/assets/treeIconBrown.png',
-      }),
-    });
+    if (this.lib) {
+      return this.lib.marker([lat, lng], {
+        icon: this.lib.icon({
+          iconAnchor: [17, 35],
+          iconUrl: '/assets/treeIconBrown.png',
+          iconRetinaUrl: '/assets/treeIconBrown.png',
+        }),
+      });
+    }
   }
+
+
 }

@@ -8,8 +8,8 @@ describe('TeamCarouselItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TeamCarouselItemComponent ]
-    })
+    imports: [TeamCarouselItemComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(TeamCarouselItemComponent);

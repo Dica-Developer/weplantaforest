@@ -1,13 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { TextHelper } from 'src/app/util/text.helper';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-project-overview-tile',
-  templateUrl: './project-overview-tile.component.html',
-  styleUrls: ['./project-overview-tile.component.scss'],
+    selector: 'app-project-overview-tile',
+    templateUrl: './project-overview-tile.component.html',
+    styleUrls: ['./project-overview-tile.component.scss'],
+    standalone: true,
+    imports: [TranslateModule],
 })
 export class ProjectOverviewTileComponent implements OnInit {
   @Input() projectReport;

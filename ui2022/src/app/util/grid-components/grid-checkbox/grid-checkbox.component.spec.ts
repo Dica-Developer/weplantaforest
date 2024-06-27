@@ -8,8 +8,8 @@ describe('GridCheckboxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GridCheckboxComponent ]
-    })
+    imports: [GridCheckboxComponent]
+})
     .compileComponents();
   });
 

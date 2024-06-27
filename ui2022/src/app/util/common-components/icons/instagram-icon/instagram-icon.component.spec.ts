@@ -8,8 +8,8 @@ describe('InstagramIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InstagramIconComponent ]
-    })
+    imports: [InstagramIconComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(InstagramIconComponent);
