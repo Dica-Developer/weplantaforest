@@ -21,16 +21,23 @@
 >
   <div class="awards margin-top-2">
     <h2>{{ 'awards' | translate }}</h2>
-    <div *ngFor="let awardsArticle of awards?.slice().reverse()">
+    <div *ngFor="let awardsArticle of awards?.slice().reverse(); let i = index">
       <h4>{{ awardsArticle.title }}</h4>
+      <div class="margin-top-2 margin-bottom-2 center" *ngIf="articleImageUrls[i]?.mainImageUrl">
+        <img
+        [src]="articleImageUrls[i]?.mainImageUrl"
+      />
+        <br>
+        <span class="image-caption">{{ awardsArticle.imageDescription }}</span>
+      </div>
       <div innerHtml="{{ awardsArticle.intro }}"></div>
       <div *ngFor="let paragraph of awardsArticle.paragraphs">
-        <p>
-          {{ paragraph.title }}
-        </p>
-        <p>
-          {{ paragraph.text }}
-        </p>
+        <h4> {{ paragraph.title }} </h4>
+        <div class="center" *ngIf="articleImageUrls[i]?.paragraphImageUrls[j]">
+          <img [src]="articleImageUrls[i].paragraphImageUrls[j]" />
+        </div>
+        <br>
+        <p innerHtml="{{ paragraph.text }}"></p>
       </div>
     </div>
   </div>

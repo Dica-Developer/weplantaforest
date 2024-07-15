@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-partner-page',
@@ -22,6 +23,7 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 export class PartnerPageComponent implements OnInit {
   partners: any[] = [];
   articleImageUrls: any[] = [];
+  articleSub: Subscription;
 
   constructor(
     private platformHelper: PlatformHelper,
@@ -30,7 +32,7 @@ export class PartnerPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.platformHelper.scrollTop()
-    this.contentService
+    this.articleSub = this.contentService
       .getInfrastructureArticle('PARTNER', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
         this.partners = res;
@@ -45,7 +47,13 @@ export class PartnerPageComponent implements OnInit {
             images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
           }
           this.articleImageUrls.push(images);
+          console.log(this.articleImageUrls)
         }
       });
+  }
+
+
+  ngOnDestroy(): void {
+    this.articleSub.unsubscribe();
   }
 }
