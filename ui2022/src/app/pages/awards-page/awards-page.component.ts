@@ -36,8 +36,6 @@ export class AwardsPageComponent implements OnInit {
       .getInfrastructureArticle('AWARDS', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
         this.awards = res;
-        console.log(this.awards);
-        console.log(res);
         for (let i = 0; i < this.awards.length; i++) {
           let images = {mainImageUrl: '', paragraphImageUrls: []};
           if (this.awards[i].imageFileName === null) {
@@ -49,7 +47,6 @@ export class AwardsPageComponent implements OnInit {
             images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.awards[i].id + '/' + encodeURI(this.awards[i].paragraphs[j].imageFileName));
           }
           this.articleImageUrls.push(images);
-          console.log(this.articleImageUrls[0].mainImageUrl)
         }
       });
   }

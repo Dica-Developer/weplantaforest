@@ -47,7 +47,6 @@ export class PartnerPageComponent implements OnInit {
             images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
           }
           this.articleImageUrls.push(images);
-          console.log(this.articleImageUrls)
         }
       });
   }
