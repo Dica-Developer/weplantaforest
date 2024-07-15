@@ -12,6 +12,7 @@ import { TreeTileComponent } from '../../util/common-components/tree-tile/tree-t
 import { NgIf, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { OfferAreaComponent } from 'src/app/util/common-components/offer-area/offer-area.component';
 
 @Component({
   selector: 'app-explore-page',
@@ -20,6 +21,7 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
   standalone: true,
   imports: [
     RouterLink,
+    OfferAreaComponent,
     NgIf,
     NgFor,
     TreeTileComponent,

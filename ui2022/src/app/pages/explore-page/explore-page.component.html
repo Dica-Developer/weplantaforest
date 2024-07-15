@@ -51,11 +51,11 @@
       <div *ngIf="currentTree" class="column is-6">
         <div class="wrapper">
           <img
-            class="img-tree"
-            src="{{ currentImageUrl }}"
-            (click)="selectInfoType('description')"
-            alt="tree image"
-          />
+          class="img-tree"
+          src="{{ currentImageUrl }}"
+          (click)="selectInfoType('description')"
+          alt="tree image"
+        />
           <div
             class="marker trunkMarker"
             [class.activeMarker]="selectedInfoType === 'trunk'"
@@ -84,4 +84,5 @@
       [tree]="tree"
     ></app-tree-tile>
   </div>
+  <app-offer-area></app-offer-area>
 </div>

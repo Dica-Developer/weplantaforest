@@ -10,7 +10,7 @@
       </li>
       <li>
         <a class="breadcrumb-active" routerLink="/partner">
-          {{ 'partner' | translate }}
+          {{ 'partners' | translate }}
         </a>
       </li>
     </ul>
@@ -20,7 +20,7 @@
   class="w-100 is-flex is-flex-direction-column is-justify-content-center is-align-items-center padding-1"
 >
   <div class="partner">
-    <h2>{{ 'partner' | translate }}</h2>
+    <h2>{{ 'partners' | translate }}</h2>
     <div *ngFor="let partner of partners; let i = index">
       <h4>{{ partner.title }}</h4>
       <div class="margin-top-2 margin-bottom-2 center" *ngIf="articleImageUrls[i].mainImageUrl">
