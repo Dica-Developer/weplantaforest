@@ -44,13 +44,10 @@
       <p>
         {{ 'offerAreaDescription' | translate }}
       </p>
-      <h4>
-        {{ 'offerAreaFormHeader' | translate }}
-      </h4>
     </div>
   </div>
   <form
-    class="w-100 is-flex is-flex-direction-column"
+    class="w-100 margin-top-2 is-flex is-flex-direction-column"
     [formGroup]="offerForm"
     (ngSubmit)="onSubmit()"
   >

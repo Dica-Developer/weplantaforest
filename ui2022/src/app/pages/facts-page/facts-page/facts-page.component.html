@@ -20,7 +20,7 @@
   <h2 class="margin-top-2 center">{{ 'facts' | translate }}</h2>
   <div class="margin-bottom-2">
     <h4>{{ 'plantedTrees' | translate }}</h4>
-    <div class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
+    <div *ngIf="chartsInitialized" class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
       <div class="w-100">
         <div class="margin-bottom-1">{{ 'newTrees' | translate }}</div>
         <canvas
