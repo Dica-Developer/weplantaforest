@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentService } from 'src/app/services/content.service';
 import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
     TranslateModule,
   ],
 })
-export class PartnerPageComponent implements OnInit {
+export class PartnerPageComponent implements OnInit, OnDestroy {
   partners: any[] = [];
   articleImageUrls: any[] = [];
   articleSub: Subscription;
@@ -50,7 +50,6 @@ export class PartnerPageComponent implements OnInit {
         }
       });
   }
-
 
   ngOnDestroy(): void {
     this.articleSub.unsubscribe();

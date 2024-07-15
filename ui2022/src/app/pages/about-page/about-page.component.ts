@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentService } from 'src/app/services/content.service';
 import { TextHelper } from 'src/app/util/helper/text.helper';
 import { environment } from 'src/environments/environment';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
     selector: 'app-about-page',
@@ -18,14 +20,16 @@ import { RouterLink } from '@angular/router';
         TranslateModule,
     ],
 })
-export class AboutPageComponent implements OnInit {
+export class AboutPageComponent implements OnInit, OnDestroy {
   aboutUs: any[] = [];
   articleImageUrls: any[] = [];
+  articleSub: Subscription;
 
-  constructor(private textHelper: TextHelper, private contentService: ContentService) {}
+  constructor(private platformHelper: PlatformHelper, private textHelper: TextHelper, private contentService: ContentService) {}
 
   ngOnInit(): void {
-    this.contentService
+    this.platformHelper.scrollTop()
+    this.articleSub = this.contentService
       .getInfrastructureArticle('ABOUT_US', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
         this.aboutUs = res;
@@ -38,5 +42,9 @@ export class AboutPageComponent implements OnInit {
           this.articleImageUrls.push(images);
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.articleSub.unsubscribe();
   }
 }

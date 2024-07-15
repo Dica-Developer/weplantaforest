@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentService } from 'src/app/services/content.service';
 import { TextHelper } from 'src/app/util/helper/text.helper';
@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
     NgIf
   ],
 })
-export class AwardsPageComponent implements OnInit {
+export class AwardsPageComponent implements OnInit, OnDestroy {
   awards: any[] = [];
   articleImageUrls: any[] = [];
   articleSub: Subscription;
