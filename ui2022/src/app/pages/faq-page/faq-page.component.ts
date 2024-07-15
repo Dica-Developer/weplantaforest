@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentService } from 'src/app/services/content.service';
 import { TextHelper } from 'src/app/util/helper/text.helper';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-faq-page',
@@ -18,10 +19,11 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
     TranslateModule,
   ],
 })
-export class FaqPageComponent implements OnInit {
+export class FaqPageComponent implements OnInit, OnDestroy {
   faq: any[] = [];
   faqOverview: any = {};
   currentlyVisibleFaq: any = null;
+  faqSub: Subscription;
 
   constructor(
     private platformHelper: PlatformHelper,
@@ -30,7 +32,7 @@ export class FaqPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.platformHelper.scrollTop()
-    this.contentService
+    this.faqSub = this.contentService
       .getInfrastructureArticle('FAQ', this.textHelper.getCurrentLanguage())
       .subscribe((res: any[]) => {
         this.faq = res;
@@ -58,5 +60,9 @@ export class FaqPageComponent implements OnInit {
     });
     // filter out the entry without index, which is the entry with all questions
     this.faq = this.faq.filter((entry) => entry.index !== 0);
+  }
+
+  ngOnDestroy() {
+    this.faqSub?.unsubscribe();
   }
 }
