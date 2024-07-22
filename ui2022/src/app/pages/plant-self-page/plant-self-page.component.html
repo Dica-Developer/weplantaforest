@@ -48,11 +48,7 @@
       <div class="column is-three-fifths padding-left padding-right padding-top-2">
         <div class="custom-slider mb-4">
           <p>{{ 'howManyTreesDidYouPlant' | translate }}</p>
-          <ngx-slider
-            [(value)]="sliderDefaultValue"
-            [options]="sliderOptions"
-            (valueChange)="addTreesToForm($event)"
-          ></ngx-slider>
+          <app-slider [stepsArray]="stepsArray" (valueChanged)="addTreesToForm($event)"></app-slider>
         </div>
         <p>
           {{ 'contactForProof1' | translate }}

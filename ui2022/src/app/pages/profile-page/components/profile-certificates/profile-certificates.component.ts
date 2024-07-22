@@ -13,30 +13,30 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 @Component({
-    selector: 'app-profile-certificates',
-    templateUrl: './profile-certificates.component.html',
-    styleUrls: ['./profile-certificates.component.scss'],
-    standalone: true,
-    imports: [
-        MatTable,
-        MatColumnDef,
-        MatHeaderCellDef,
-        MatHeaderCell,
-        MatCellDef,
-        MatCell,
-        MatCheckbox,
-        MatHeaderRowDef,
-        MatHeaderRow,
-        MatRowDef,
-        MatRow,
-        MatPaginator,
-        MatInput,
-        FormsModule,
-        ReactiveFormsModule,
-        ButtonComponent,
-        DatePipe,
-        TranslateModule,
-    ],
+  selector: 'app-profile-certificates',
+  templateUrl: './profile-certificates.component.html',
+  styleUrls: ['./profile-certificates.component.scss'],
+  standalone: true,
+  imports: [
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatCheckbox,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    MatInput,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonComponent,
+    DatePipe,
+    TranslateModule,
+  ],
 })
 export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   @Input()
@@ -47,8 +47,6 @@ export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   }
   cartsArray: ProfileCart[] = [];
   cartPages: Map<number, ProfileCart[]> = new Map<number, ProfileCart[]>();
-
-  translationSub: Subscription;
 
   customTextControl: FormControl = new FormControl('');
 
@@ -65,14 +63,13 @@ export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   constructor(private translateService: TranslateService, private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.translationSub = this.translateService.get('certificateDefaultText').subscribe((text) => {
-      this.customTextControl.setValue(text);
-    });
   }
 
-  ngOnDestroy(): void {
-    this.translationSub?.unsubscribe();
+  ngOnChanges() {
+    this.customTextControl.setValue(this.translateService.instant('certificateDefaultText'));
   }
+
+  ngOnDestroy(): void {}
 
   getDate(timeStamp: number): Date {
     return new Date(timeStamp);

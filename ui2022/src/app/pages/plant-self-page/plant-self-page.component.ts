@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { Options, NgxSliderModule } from '@angular-slider/ngx-slider';
 import { TreeType } from 'src/app/store/project.store';
 import { Observable, Subscription } from 'rxjs';
 import { UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +27,7 @@ import { ButtonComponent } from '../../util/common-components/button/button.comp
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { LanguageHelper } from 'src/app/util/helper/language.helper';
+import { SliderComponent } from 'src/app/util/common-components/slider/slider.component';
 
 @Component({
   selector: 'app-plant-self-page',
@@ -52,7 +52,6 @@ import { LanguageHelper } from 'src/app/util/helper/language.helper';
     MatButton,
     MatDatepickerCancel,
     MatDatepickerApply,
-    NgxSliderModule,
     MatSelect,
     NgFor,
     MatOption,
@@ -60,6 +59,7 @@ import { LanguageHelper } from 'src/app/util/helper/language.helper';
     OfferAreaComponent,
     AsyncPipe,
     TranslateModule,
+    SliderComponent
   ],
 })
 export class PlantSelfPageComponent implements OnInit {
@@ -72,22 +72,13 @@ export class PlantSelfPageComponent implements OnInit {
   mainImageFile: any;
   imageSrc: any;
 
+  stepsArray = [1, 2, 5, 8, 10]
   treeTypes$ = this.store.select(selectTreeTypes);
   selectAuthenticated$: Observable<boolean>;
   selectTreetypesSub: Subscription;
   selfPlantCreatedSub: Subscription;
 
   sliderDefaultValue: number = 5;
-  sliderOptions: Options = {
-    step: 1,
-    floor: 1,
-    ceil: 10,
-    showTicks: true,
-    showTicksValues: false,
-    hideLimitLabels: false,
-    hidePointerLabels: false,
-  };
-
   selfPlantForm = new UntypedFormGroup({
     plantedOn: new UntypedFormControl(new Date(), [Validators.required]),
     amount: new UntypedFormControl(this.sliderDefaultValue),
