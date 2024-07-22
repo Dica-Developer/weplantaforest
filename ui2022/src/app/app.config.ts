@@ -45,7 +45,6 @@ import localeEn from '@angular/common/locales/en';
 import localeEnExtra from '@angular/common/locales/extra/en';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 export const MY_FORMATS = {
   parse: {
@@ -127,7 +126,6 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       }),
-      NgxSliderModule
     ),
     {
       provide: MatPaginatorIntl,

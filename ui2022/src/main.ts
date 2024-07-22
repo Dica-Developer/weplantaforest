@@ -1,7 +1,6 @@
 import { enableProdMode, DEFAULT_CURRENCY_CODE, LOCALE_ID, importProvidersFrom } from '@angular/core';
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';

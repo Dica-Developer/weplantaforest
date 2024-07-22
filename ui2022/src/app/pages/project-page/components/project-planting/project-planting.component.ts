@@ -1,4 +1,3 @@
-import { Options, NgxSliderModule } from '@angular-slider/ngx-slider';
 import {
   Component,
   EventEmitter,
@@ -30,25 +29,26 @@ import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../util/common-components/button/button.component';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { SliderComponent } from 'src/app/util/common-components/slider/slider.component';
 
 @Component({
-    selector: 'app-project-planting',
-    templateUrl: './project-planting.component.html',
-    styleUrls: ['./project-planting.component.scss'],
-    standalone: true,
-    imports: [
-        MatTabGroup,
-        MatTab,
-        NgxSliderModule,
-        NgIf,
-        ButtonComponent,
-        RouterLink,
-        NgFor,
-        PlantproposalPreviewRowComponent,
-        CustomPlantingComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-project-planting',
+  templateUrl: './project-planting.component.html',
+  styleUrls: ['./project-planting.component.scss'],
+  standalone: true,
+  imports: [
+    MatTabGroup,
+    MatTab,
+    NgIf,
+    ButtonComponent,
+    RouterLink,
+    NgFor,
+    PlantproposalPreviewRowComponent,
+    CustomPlantingComponent,
+    AsyncPipe,
+    TranslateModule,
+    SliderComponent
+  ],
 })
 export class ProjectPlantingComponent implements OnInit, OnDestroy {
   @Input() projectReport: ProjectReportDetails;
@@ -66,15 +66,6 @@ export class ProjectPlantingComponent implements OnInit, OnDestroy {
 
   showPutIntoPlantbagButton = false;
   showGoToPlantbagButton = false;
-
-  value: number = 5;
-  sliderOptions: Options = {
-    stepsArray: this.sliderHelper.returnSliderArray(),
-    showTicks: true,
-    showTicksValues: false,
-    hideLimitLabels: true,
-    hidePointerLabels: true,
-  };
 
   constructor(private store: Store<AppState>, private sliderHelper: SliderHelper) {}
 

@@ -4,11 +4,7 @@
       <p class="font-1 padding-top-1">{{ 'proposalOrIndividualText' | translate }}</p>
       <div class="is-flex slider-row">
         <div class="custom-slider column is-7">
-          <ngx-slider
-            [(value)]="value"
-            [options]="sliderOptions"
-            (valueChange)="getProposal($event)"
-          ></ngx-slider>
+          <app-slider (valueChanged)="getProposal($event)"></app-slider>
         </div>
         <div class="is-flex w-100 slider-row is-align-items-center is-flex-direction-row-reverse">
           <app-button

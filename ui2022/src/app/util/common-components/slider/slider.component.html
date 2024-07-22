@@ -1,1 +1,6 @@
-<p>slider works!</p>
+<div class="slidecontainer">
+  <input type="range" min="0" max="4" value="1" #ref class="slider" id="myRange" (change)="showValue(ref.value)">
+</div>
+<div class="sliderValues is-flex is-flex-direction-row is-justify-content-space-between">
+  <div *ngFor="let value of stepsArray" class="sliderValue">{{ value }}</div>
+</div>
