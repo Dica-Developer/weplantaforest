@@ -25,44 +25,15 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 })
 export class RankingsComponent {
   rankings$ = this.store.select(selectRankings);
-  maxValue$ = this.store.select(selectRankingMaxAmount);
-  type: RankingType = 'bestUser';
-
-  totalNumberOfElementsSub: Subscription;
-  totalNumberOfElements: number;
-
-  lastYear: boolean = true;
 
   constructor(
     private platformHelper: PlatformHelper,
-    private store: Store<AppState>) {}
+    private store: Store<AppState>) {
+    this.store.dispatch(loadRankings({ rankingType: 'bestUser', pageSize: 5, lastYear: true }))
+  }
 
   ngOnInit(): void {
     this.platformHelper.scrollTop()
-    this.loadRankings('bestUser');
-    this.totalNumberOfElementsSub = this.store
-      .select(selectTotalNumber)
-      .subscribe((totalNumber) => {
-        this.totalNumberOfElements = totalNumber;
-      });
   }
 
-  ngOnDestroy(): void {
-    this.totalNumberOfElementsSub?.unsubscribe();
-  }
-
-  loadRankings(rankingType: RankingType) {
-    this.type = rankingType;
-    this.store.dispatch(loadRankings({ rankingType, pageSize: 5, lastYear: this.lastYear }));
-  }
-
-  loadAll() {
-    this.store.dispatch(
-      loadRankings({
-        rankingType: this.type,
-        pageSize: this.totalNumberOfElements,
-        lastYear: this.lastYear,
-      }),
-    );
-  }
 }
