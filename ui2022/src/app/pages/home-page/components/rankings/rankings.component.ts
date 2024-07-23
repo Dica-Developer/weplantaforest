@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { RankingItemComponent } from 'src/app/pages/ranking-page/components/ranking-item/ranking-item.component';
 import { AppState } from 'src/app/store/app.state';
-import { selectRankings, loadRankings } from 'src/app/store/ranking.store';
+import { loadRankings, selectRankings } from 'src/app/store/ranking.store';
 
 @Component({
   selector: 'app-rankings',
