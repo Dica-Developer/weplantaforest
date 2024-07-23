@@ -1,1 +1,13 @@
-<p>newest-plantings works!</p>
+<div class="newest">
+  <h2 class="center">{{ 'newestPlantings' | translate }}</h2>
+  <div
+    class="is-flex is-flex-direction-row is-multiline columns padding-1 is-justify-content-space-between"
+  >
+    <app-project-carousel-item
+      class="is-flex column is-half is-full-mobile"
+      *ngFor="let item of (plantings$ | async).content"
+      [item]="item"
+    ></app-project-carousel-item>
+  </div>
+</div>
+

@@ -12,6 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectCarouselItemComponent } from '../project-carousel-item/project-carousel-item.component';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { selectProjectsForCustomPlanting } from 'src/app/store/plant.store';
 
 @Component({
     selector: 'app-project-carousel',
@@ -30,6 +32,7 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 export class ProjectCarouselComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
   plantings$ = this.store.select(selectPlantings);
+  activeProjects$: Observable<any> = this.store.select(selectProjectsForCustomPlanting);
   partners$ = this.store.select(selectPartners);
   currentPlantingPage: number;
   currentPartnerPage: number;

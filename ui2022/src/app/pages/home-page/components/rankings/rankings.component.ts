@@ -40,7 +40,6 @@ export class RankingsComponent {
   ngOnInit(): void {
     this.platformHelper.scrollTop()
     this.loadRankings('bestUser');
-
     this.totalNumberOfElementsSub = this.store
       .select(selectTotalNumber)
       .subscribe((totalNumber) => {
@@ -54,7 +53,7 @@ export class RankingsComponent {
 
   loadRankings(rankingType: RankingType) {
     this.type = rankingType;
-    this.store.dispatch(loadRankings({ rankingType, pageSize: 100, lastYear: this.lastYear }));
+    this.store.dispatch(loadRankings({ rankingType, pageSize: 5, lastYear: this.lastYear }));
   }
 
   loadAll() {

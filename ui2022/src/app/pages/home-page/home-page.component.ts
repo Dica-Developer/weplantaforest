@@ -7,6 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { PlantingProcessComponent } from './components/planting-process/planting-process.component';
 import { RankingsComponent } from './components/rankings/rankings.component';
+import { NewestPlantingsComponent } from './components/newest-plantings/newest-plantings.component';
 
 @Component({
   selector: 'app-home-page',
@@ -20,7 +21,8 @@ import { RankingsComponent } from './components/rankings/rankings.component';
     PlantingProcessComponent,
     ProjectsSectionComponent,
     PlantedTreesComponent,
-    RankingsComponent
+    RankingsComponent,
+    NewestPlantingsComponent
   ],
 })
 export class HomePageComponent implements OnInit {

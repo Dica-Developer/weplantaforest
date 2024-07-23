@@ -6,12 +6,12 @@ import { RankingService } from '../services/ranking.service';
 import { AppState, PagedData } from './app.state';
 
 export declare type RankingType =
-  | 'bestUser'
-  | 'bestTeam'
-  | 'bestOrgType/PRIVATE'
-  | 'bestOrgType/COMMERCIAL'
-  | 'bestOrgType/NONPROFIT'
-  | 'bestOrgType/EDUCATIONAL';
+| 'bestUser'
+| 'bestTeam'
+| 'bestOrgType/PRIVATE'
+| 'bestOrgType/COMMERCIAL'
+| 'bestOrgType/NONPROFIT'
+| 'bestOrgType/EDUCATIONAL';
 
 export const loadRankings = createAction(
   '[Ranking] load all',
@@ -43,6 +43,15 @@ export const loadLatestPlantingsSuccess = createAction(
   props<{ plantings: PagedData<CarouselItem> }>(),
 );
 
+export const loadNewestTrees = createAction(
+  '[Ranking] load latest trees',
+);
+
+export const loadNewestTreesSuccess = createAction(
+  '[Ranking] load latest trees success',
+  props<{ latestTrees: PagedData<CarouselItem> }>(),
+);
+
 export interface TreeRankedUserData {
   name: string;
   imageName: string;
@@ -58,6 +67,7 @@ export interface CarouselItem {
 
 export interface RankingState {
   rankings: PagedData<TreeRankedUserData>;
+  newestPlantings: PagedData<CarouselItem>;
   plantings: PagedData<CarouselItem>;
   partners: PagedData<CarouselItem>;
   rankingsLoading: boolean;
@@ -66,6 +76,14 @@ export interface RankingState {
 
 export const initialState: RankingState = {
   rankings: {
+    content: [],
+    totalPages: 0,
+    totalElements: 0,
+    numberOfElements: 0,
+    last: true,
+    first: true,
+  },
+  newestPlantings: {
     content: [],
     totalPages: 0,
     totalElements: 0,
@@ -114,6 +132,15 @@ const rankingReducer = createReducer(
     partners: action.partners,
     rankingsLoading: false,
   })),
+  on(loadNewestTrees, (state) => ({
+    ...state,
+    rankingsLoading: true,
+  })),
+  on(loadNewestTreesSuccess, (state, action) => ({
+    ...state,
+    newestPlantings: action.latestTrees,
+    rankingsLoading: false,
+  })),
   on(loadLatestPlantings, (state) => ({
     ...state,
     rankingsLoading: true,
@@ -151,6 +178,11 @@ export const selectPartners = createSelector(
   (state: RankingState) => state.partners,
 );
 
+export const selectNewestPlantings = createSelector(
+  rankingFeature,
+  (state: RankingState) => state.newestPlantings,
+);
+
 export const selectPlantings = createSelector(
   rankingFeature,
   (state: RankingState) => state.plantings,
@@ -175,10 +207,10 @@ export class RankingEffects {
       ofType(loadRankings),
       switchMap((action) =>
         this.rankingService
-          .loadAll(action.rankingType, action.pageSize, action.lastYear)
-          .pipe(
-            switchMap((result: PagedData<TreeRankedUserData>) => [loadRankingsSuccess({ result })]),
-          ),
+        .loadAll(action.rankingType, action.pageSize, action.lastYear)
+        .pipe(
+          switchMap((result: PagedData<TreeRankedUserData>) => [loadRankingsSuccess({ result })]),
+        ),
       ),
     ),
   );
@@ -188,12 +220,12 @@ export class RankingEffects {
       ofType(loadPartners),
       switchMap((action) =>
         this.rankingService
-          .loadPartnersForProject(action.projectName, action.page)
-          .pipe(
-            switchMap((partners: PagedData<CarouselItem>) => [
-              loadPartnersSuccess({ partners: partners }),
-            ]),
-          ),
+        .loadPartnersForProject(action.projectName, action.page)
+        .pipe(
+          switchMap((partners: PagedData<CarouselItem>) => [
+            loadPartnersSuccess({ partners: partners }),
+          ]),
+        ),
       ),
     ),
   );
@@ -203,12 +235,27 @@ export class RankingEffects {
       ofType(loadLatestPlantings),
       switchMap((action) =>
         this.rankingService
-          .loadLatestTreesForProject(action.projectName, action.page)
-          .pipe(
-            switchMap((plantings: PagedData<CarouselItem>) => [
-              loadLatestPlantingsSuccess({ plantings: plantings }),
-            ]),
-          ),
+        .loadLatestTreesForProject(action.projectName, action.page)
+        .pipe(
+          switchMap((plantings: PagedData<CarouselItem>) => [
+            loadLatestPlantingsSuccess({ plantings: plantings }),
+          ]),
+        ),
+      ),
+    ),
+  );
+
+  loadLatestTrees$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadNewestTrees),
+      switchMap((action) =>
+        this.rankingService
+        .loadLatestTrees()
+        .pipe(
+          switchMap((plantings: PagedData<CarouselItem>) => [
+            loadNewestTreesSuccess({ latestTrees: plantings }),
+          ]),
+        ),
       ),
     ),
   );

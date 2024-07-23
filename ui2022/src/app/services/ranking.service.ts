@@ -39,4 +39,11 @@ export class RankingService {
         '&size=4',
     );
   }
+
+  loadLatestTrees() {
+    return this.http.get(
+      environment.backendUrl +
+        '/ranking/lastPlantedTrees?page=1&size=4',
+    );
+  }
 }

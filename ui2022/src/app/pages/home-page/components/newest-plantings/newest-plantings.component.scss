@@ -1,0 +1,10 @@
+.newest {
+  border-right: 1px solid var(--black);
+}
+
+@media only screen and (max-width: 900px) {
+  .newest {
+    border-right: none;
+  }
+}
+

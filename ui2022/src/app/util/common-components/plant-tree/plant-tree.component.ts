@@ -55,12 +55,12 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
         if (activeProjects && activeProjects.length > 0) {
           for (const project of activeProjects) {
             if (!project.articles || project.articles.length === 0) {
-              // only start creating trees if there are articles laoded in every project
+              // only start creating trees if there are articles loaded in every project
               return;
             }
           }
 
-          // thre has to be made shallow copies of the projects and their articles to be able to remove them later
+          // shallow copies of the projects and their articles are needed in order to remove them later
           for (const project of activeProjects) {
             const articles = [...project.articles];
             projects.push({ ...project, articles });
