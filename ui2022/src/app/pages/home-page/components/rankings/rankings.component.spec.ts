@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ForestTourComponent } from './forest-tour.component';
+import { RankingsComponent } from './rankings.component';
 
-describe('ForestTourComponent', () => {
-  let component: ForestTourComponent;
-  let fixture: ComponentFixture<ForestTourComponent>;
+describe('RankingsComponent', () => {
+  let component: RankingsComponent;
+  let fixture: ComponentFixture<RankingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [ForestTourComponent]
-})
+      imports: [RankingsComponent]
+    })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ForestTourComponent);
+    fixture = TestBed.createComponent(RankingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
