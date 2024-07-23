@@ -1,4 +1,50 @@
 <div *ngIf="blogArticle$ | async">
-  <app-blog-article-header [blogArticle]="blogArticle$ | async"></app-blog-article-header>
-  <app-blog-article-description [blogArticle]="blogArticle$ | async"></app-blog-article-description>
-</div>
+  <div
+    class="is-flex is-flex-direction-row padding-right padding-left padding-top-075 is-justify-content-space-between"
+  >
+    <nav class="breadcrumb">
+      <ul>
+        <li>
+          <a routerLink="/">
+            {{ 'startPage' | translate }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/blog">
+            {{ 'blog' | translate }}
+          </a>
+        </li>
+        <li>
+          <a class="breadcrumb-active">
+            {{ blogArticle?.title }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div *ngIf="isAdmin$ | async">
+      <mat-icon class="edit-icon" (click)="goToEdit()">edit</mat-icon>
+    </div>
+  </div>
+  <div
+    class="w-100 is-flex is-flex-direction-column is-justify-content-center is-align-items-center padding-1"
+    *ngIf="blogArticle"
+  >
+    <div class="blogArticle margin-top-2">
+      <h4>{{ blogArticle.title }}</h4>
+      <div class="margin-top-2 margin-bottom-2 center" *ngIf="mainImageUrl">
+        <img
+        [src]="mainImageUrl"
+      />
+        <br>
+        <span class="image-caption">{{ blogArticle.imageDescription }}</span>
+      </div>
+      <div innerHtml="{{ blogArticle.intro }}"></div>
+      <div class="margin-bottom-2" *ngFor="let paragraph of blogArticle.paragraphs; let j = index">
+        <h4> {{ paragraph.title }} </h4>
+        <div class="margin-bottom-1 center" *ngIf="articleImageUrls[j]">
+          <img [src]="articleImageUrls[j]" />
+        </div>
+        <p innerHtml="{{ paragraph.text}} "> </p>
+      </div>
+    </div>
+  </div>
