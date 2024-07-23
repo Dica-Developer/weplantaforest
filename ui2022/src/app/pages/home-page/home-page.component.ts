@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PlantedTreesComponent } from './components/planted-trees/planted-trees.component';
 import { ProjectsSectionComponent } from './components/projects-section/projects-section.component';
-import { PlantingProcessComponent } from '../../util/common-components/planting-process/planting-process.component';
 import { PlantTreeComponent } from '../../util/common-components/plant-tree/plant-tree.component';
 import { OfferAreaComponent } from '../../util/common-components/offer-area/offer-area.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { PlantingProcessComponent } from './components/planting-process/planting-process.component';
+import { RankingsComponent } from './components/rankings/rankings.component';
 
 @Component({
   selector: 'app-home-page',
@@ -19,6 +20,7 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
     PlantingProcessComponent,
     ProjectsSectionComponent,
     PlantedTreesComponent,
+    RankingsComponent
   ],
 })
 export class HomePageComponent implements OnInit {

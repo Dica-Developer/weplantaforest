@@ -34,6 +34,9 @@
 .padding-right-05 {
   padding-right: 0.5rem;
 }
+.padding-right-1 {
+  padding-right: 1rem;
+}
 .padding-top-1 {
   padding-top: 1rem;
 }
@@ -170,6 +173,10 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .switchToCol {
+    flex-direction: column !important;
+  }
+
   .padding-left {
     padding-left: 1rem !important;
   }
