@@ -4,6 +4,12 @@
   border-width: 1px;
 }
 
+.stats {
+  margin: 1rem auto 1rem 0;
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+
 .tree-tile {
   cursor: pointer;
 }
@@ -11,5 +17,9 @@
 @media only screen and (max-width: 768px) {
   .border-left {
     border-left: none;
+  }
+
+  .stats {
+    margin: 0 auto 1rem 0;
   }
 }

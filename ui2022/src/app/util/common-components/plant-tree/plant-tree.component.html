@@ -1,5 +1,6 @@
 <div class="columns border-bottom">
   <div class="column padding-left is-flex is-flex-direction-column is-justify-content-center">
+    <div class="stats"><app-tree-icon></app-tree-icon>{{ treeCount$ | async }}</div>
     <h2>{{ 'plantTree' | translate }}</h2>
     <p>{{ 'selectAndPlantNow' | translate }}</p>
     <app-button label="{{ 'plantNow' | translate }}" routerLink="/plant"></app-button>

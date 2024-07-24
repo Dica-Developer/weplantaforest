@@ -1,6 +1,5 @@
 <div class="is-flex is-flex-direction-column padding-top-2 padding-left-2 padding-right-2">
   <h2>{{ 'ranking' | translate | titlecase }}</h2>
-  <p [innerHTML]="'rankingPageText' | translate"></p>
   <app-ranking-item
     *ngFor="let item of (rankings$ | async).content"
     [item]="item"

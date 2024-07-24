@@ -13,9 +13,11 @@ import { ActiveProjectArticle } from '../../../store/project.store';
 import { addPlantbagItem, resetPlantbag } from '../../../store/plantbag.store';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgFor } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { LanguageHelper } from '../../helper/language.helper';
+import { getAllTrees, selectAllTreeCount } from 'src/app/store/tree.store';
+import { TreeIconComponent } from '../icons/tree-icon/tree-icon.component';
 
 @Component({
   selector: 'app-plant-tree',
@@ -27,6 +29,8 @@ import { LanguageHelper } from '../../helper/language.helper';
     RouterLink,
     NgFor,
     TranslateModule,
+    TreeIconComponent,
+    AsyncPipe
   ],
 })
 export class PlantTreeComponent implements OnInit, OnDestroy {
@@ -37,13 +41,17 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
   profileDetails$: Observable<ProfileDetails> = this.store.select(selectProfileDetails);
 
   combinedSub: Subscription;
+  treeCount$ = this.store.select(selectAllTreeCount);
+
 
   constructor(
     private store: Store<AppState>,
     private textHelper: TextHelper,
     private router: Router,
     private lanugageHelper: LanguageHelper,
-  ) {}
+  ) {
+    this.store.dispatch(getAllTrees());
+  }
 
   ngOnInit(): void {
     this.combinedSub = combineLatest([
