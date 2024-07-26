@@ -1,0 +1,10 @@
+mat-icon {
+  color: var(--dark-brown);
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 2.5rem;
+  &:hover {
+    color: var(--green);
+  }
+}
