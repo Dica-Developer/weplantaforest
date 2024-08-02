@@ -14,19 +14,20 @@ import { CartDetailsComponent } from '../cart-details/cart-details.component';
 import { AgGridAngular } from 'ag-grid-angular';
 import { NgClass, NgIf } from '@angular/common';
 import { MatButton } from '@angular/material/button';
+import { CsvHelper } from 'src/app/util/helper/csv.helper';
 
 @Component({
-    selector: 'app-cart-grid',
-    templateUrl: './cart-grid.component.html',
-    styleUrls: ['./cart-grid.component.scss'],
-    standalone: true,
-    imports: [
-        MatButton,
-        NgClass,
-        AgGridAngular,
-        NgIf,
-        CartDetailsComponent,
-    ],
+  selector: 'app-cart-grid',
+  templateUrl: './cart-grid.component.html',
+  styleUrls: ['./cart-grid.component.scss'],
+  standalone: true,
+  imports: [
+    MatButton,
+    NgClass,
+    AgGridAngular,
+    NgIf,
+    CartDetailsComponent,
+  ],
 })
 export class CartGridComponent implements OnInit, OnDestroy {
   subsetOfColumns: ColDef[] = [
@@ -222,6 +223,7 @@ export class CartGridComponent implements OnInit, OnDestroy {
 
   selectCartsSub = this.store.select(selectCarts).subscribe((carts) => {
     this.rowData = carts;
+    console.log(this.rowData)
   });
 
   selectCartDetailsSub = this.store.select(selectCartDetails).subscribe((details) => {
@@ -235,9 +237,11 @@ export class CartGridComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private gridHelper: GridHelper,
     public dialog: MatDialog,
+    private csvHelper: CsvHelper
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngOnDestroy(): void {
     this.selectCartsSub.unsubscribe();
@@ -272,6 +276,10 @@ export class CartGridComponent implements OnInit, OnDestroy {
     this.columnApi = params.columnApi;
     // this.columnApi.autoSizeAllColumns();
     this.columnApi.sizeColumnsToFit(1800);
+  }
+
+  downloadCSV() {
+    this.csvHelper.exportToCsv('carts', this.rowData)
   }
 }
 
