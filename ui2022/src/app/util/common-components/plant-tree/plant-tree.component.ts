@@ -114,6 +114,10 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
     this.combinedSub?.unsubscribe();
   }
 
+  routeToPlanting() {
+    this.router.navigate(['/plant'])
+  }
+
   addTreeToPlantBag(tree: {
     article: ActiveProjectArticle;
     name: string;

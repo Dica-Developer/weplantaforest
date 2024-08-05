@@ -3,7 +3,7 @@
     <div class="stats"><app-tree-icon></app-tree-icon>{{ treeCount$ | async }}</div>
     <h2>{{ 'plantTree' | translate }}</h2>
     <p>{{ 'selectAndPlantNow' | translate }}</p>
-    <app-button label="{{ 'plantNow' | translate }}" routerLink="/plant"></app-button>
+    <app-button label="{{ 'plantNow' | translate }}" (clicked)="routeToPlanting()"></app-button>
   </div>
   <div
     *ngFor="let tree of trees; let i = index"
