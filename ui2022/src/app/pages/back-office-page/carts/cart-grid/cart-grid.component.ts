@@ -223,7 +223,6 @@ export class CartGridComponent implements OnInit, OnDestroy {
 
   selectCartsSub = this.store.select(selectCarts).subscribe((carts) => {
     this.rowData = carts;
-    console.log(this.rowData)
   });
 
   selectCartDetailsSub = this.store.select(selectCartDetails).subscribe((details) => {
@@ -279,7 +278,13 @@ export class CartGridComponent implements OnInit, OnDestroy {
   }
 
   downloadCSV() {
-    this.csvHelper.exportToCsv('carts', this.rowData)
+    // convert all timestamps to a readable date before downloading the csv
+    let data = this.rowData.map(entry => {
+      let newEntry = {... entry };
+      newEntry.createdAt = new Date(entry.createdAt).toLocaleDateString()
+      return newEntry
+    })
+    this.csvHelper.exportToCsv('carts', data)
   }
 }
 
