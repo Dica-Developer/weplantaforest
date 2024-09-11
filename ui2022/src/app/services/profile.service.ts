@@ -26,6 +26,11 @@ export class ProfileService {
     );
   }
 
+  deleteProfile(id: number) {
+    console.log(id)
+    return this.http.delete(environment.backendUrl + '/user/delete?id=' + id)
+  }
+
   updateProfile(username: string, propertyToUpdate: string, controlValue) {
     return this.http.post(
       environment.backendUrl +

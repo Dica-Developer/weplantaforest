@@ -160,6 +160,8 @@ public class Uris {
 
     public static final String EDIT_USER_DETAILS = "/user/edit";
 
+    public static final String DELETE_USER = "/user/delete";
+
     public static final String REGISTRATE_USER = "/user/registrate";
 
     public static final String USER_ACTIVATE = "/user/activation";

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { selectUploadingImage } from '../../../../store/profile.store';
 import { SliderHelper } from 'src/app/util/helper/slider.helper';
@@ -10,6 +10,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
     selector: 'app-profile-header',
@@ -38,7 +39,8 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private store: Store<AppState>,
     private sliderHelper: SliderHelper,
-    private platformHelper: PlatformHelper
+    private platformHelper: PlatformHelper,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +53,14 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.uploadImageSub?.unsubscribe();
+  }
+
+  deleteProfile() {
+    let id = this.profileDetails.id
+    this.profileService.deleteProfile(id).pipe(take(1)).subscribe(res => {
+      console.log(res)
+
+    })
   }
 
   editProfile() {

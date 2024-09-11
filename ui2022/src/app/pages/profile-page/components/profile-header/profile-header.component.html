@@ -20,6 +20,9 @@
       <mat-icon *ngIf="showEdit" [matTooltip]="'edit' | translate" (click)="editProfile()"
         >edit</mat-icon
       >
+      <mat-icon *ngIf="showEdit" [matTooltip]="'delete' | translate" (click)="deleteProfile()"
+        >delete</mat-icon
+      >
     </h2>
     <h4>{{ profileDetails.userName }}</h4>
   </div>
