@@ -11,6 +11,7 @@ import { ButtonComponent } from '../../../../util/common-components/button/butto
 import { MatInput } from '@angular/material/input';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile-certificates',
@@ -60,7 +61,7 @@ export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['createdOn', 'invoiceNumber', 'PDF'];
   dataSource;
 
-  constructor(private translateService: TranslateService, private store: Store<AppState>) {}
+  constructor(private snackbar: MatSnackBar, private translateService: TranslateService, private store: Store<AppState>) {}
 
   ngOnInit(): void {
   }
@@ -88,11 +89,19 @@ export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   }
 
   createCertificate() {
-    this.store.dispatch(
-      createCertificate({
-        requestDto: { cartIds: this.cartIds, text: this.customTextControl.value },
-      }),
-    );
+    console.log(this.cartIds)
+    if (this.cartIds.length > 0) {
+      this.store.dispatch(
+        createCertificate({
+          requestDto: { cartIds: this.cartIds, text: this.customTextControl.value },
+        }),
+      );
+    } else {
+      this.snackbar.open(this.translateService.instant('selectPlantbag'), 'ok', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      })
+    }
   }
 
   createReceiptPages(pageSize: number, carts: ProfileCart[]) {
