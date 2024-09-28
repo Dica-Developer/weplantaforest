@@ -14,6 +14,10 @@ export class LeafletHelper {
   async loadLeaflet() {
     if (this.platformId === 'browser' && !this.L) {
       this.L = await import('leaflet');
+      // check for leaflet.default because why the fuck not
+      if (this.L.default) {
+        this.L = this.L.default
+      }
       await import('leaflet-draw');
     }
     return this.L;
