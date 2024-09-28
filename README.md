@@ -80,3 +80,25 @@ P: I get an error while starting a gradle task.
 
 A: Paste following command in current before executing gradle
   `export GRADLE_OPTS=-Dorg.gradle.native=false`
+
+
+## Run the app with ssr and dockerized(local)
+
+### Build the frontend app 
+ cd ui2022 --> docker build -f Dockerfile-node -t ipat-test-frontend-node .
+
+### Build Nginx
+
+ cd ui2022 --> docker build -f Dockerfile-nginx -t ipat-test-nginx .
+
+### Build the backend app(same image for all 3 backend modules)
+
+from root: docker build -f Dockerfile-api -t ipat-test-api .
+
+### Build Mysql image
+
+docker build -f Dockerfile-mysql -t ipat-test-mysql .
+
+### Run the app
+
+docker-compose up
