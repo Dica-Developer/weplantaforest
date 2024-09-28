@@ -1,74 +1,80 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  ipat-test-frontend-node:
-    container_name: ipat-test-frontend-node
-    image: ipat-test-frontend-node
-    networks:
-      - ipat-test-network
-
-  ipat-test-nginx:
-    container_name: ipat-test-nginx
-    image: ipat-test-nginx
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - ipat-test-api-user
-    networks:
-      - ipat-test-network
-
-  ipat-test-api-user:
-    container_name: ipat-test-api-user
-    image: ipat-test-api
+  api-user-dev:
+    container_name: ipat-api-user
+    image: ipat-api-user
+    build:
+      context: .
+      dockerfile: ./Dockerfile-api
     command: sh -c "./gradlew user:bootRun"
+    ports: 
+      - 8081:8081
     volumes:
       - ./admin/temp:/usr/src/app/admin/temp
     networks:
-      - ipat-test-network
+      - ipat-backend
     depends_on:
-      - ipat-test-mysql
+      - ipat-mysql
 
-  ipat-test-api-admin:
-    container_name: ipat-test-api-admin
-    image: ipat-test-api
+  api-admin-dev:
+    container_name: ipat-api-admin
+    image: ipat-api-admin
+    build:
+      context: .
+      dockerfile: ./Dockerfile-api
     command: sh -c "./gradlew admin:bootRun"
+    ports: 
+      - 8083:8083
     volumes:
       - ./admin/temp:/usr/src/app/admin/temp
     networks:
-      - ipat-test-network
+      - ipat-backend
     depends_on:
-      - ipat-test-mysql
+      - ipat-mysql
 
-  ipat-test-api-article-manager:
-    container_name: ipat-test-api-article-manager
-    image: ipat-test-api
+  api-article-manager-dev:
+    container_name: ipat-api-article-manager
+    image: ipat-api-article-manager
+    build:
+      context: .
+      dockerfile: ./Dockerfile-api
     command: sh -c "./gradlew article-manager:bootRun"
-    volumes:
-      - ./admin/temp:/usr/src/app/admin/temp
+    ports: 
+      - 8082:8082
     networks:
-      - ipat-test-network
+      - ipat-backend
     depends_on:
-      - ipat-test-mysql
+      - ipat-mysql
 
-  ipat-test-mysql:
-    image: ipat-test-mysql
-    container_name: ipat-test-mysql
+  ipat-mysql:
+    container_name: ipat-mysql
+    build:
+      context: ./
+      dockerfile: Dockerfile-mysql
     environment:
-      MYSQL_DATABASE: ipat_2019
-      MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: ipat_2019
+        MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./_mysql/dev-data:/var/lib/mysql/
-    command:
-      [
-        "mysqld",
-        "--character-set-server=utf8",
-        "--collation-server=utf8_unicode_ci",
-        "--sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION",
-      ]
+    command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_unicode_ci', '--sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION']
+    ports:
+        - "3306:3306"
     networks:
-      - ipat-test-network
+      - ipat-backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links: 
+      - ipat-mysql:db
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root    
+    ports:
+      - "8085:80"
+    networks:
+      - ipat-backend
 
 networks:
-  ipat-test-network:
-    driver: bridge
+  ipat-backend:
