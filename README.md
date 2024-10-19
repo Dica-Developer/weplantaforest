@@ -102,3 +102,56 @@ docker build -f Dockerfile-mysql -t ipat-test-mysql .
 ### Run the app
 
 docker-compose up
+
+
+
+# Deploy/Build staging
+
+- build node container:
+- go to /ui2022
+docker build -f Dockerfile-node-staging --no-cache -t ipat-staging-frontend-node .
+
+- save as tar:
+docker save -o ipat-staging-frontend-node.tar  ipat-staging-frontend-node
+
+- scp to server
+scp ipat-staging-frontend-node.tar ipat@212.122.43.153:/home/ipat/ipat-staging
+
+- ssh to server- cd into ipat-staging
+
+- load into docker 
+docker load -i ipat-staging-frontend-node.tar 
+
+====================================================
+
+- build nginx container
+- go to /ui2022
+docker build --no-cache -f Dockerfile-nginx-staging -t ipat-staging-nginx .
+
+- save as tar
+docker save -o ipat-staging-nginx.tar ipat-staging-nginx
+
+- scp to server
+scp ipat-staging-nginx.tar ipat@212.122.43.153:/home/ipat/ipat-staging
+
+- ssh to server- cd into ipat-staging
+
+- load into docker 
+docker load -i ipat-staging-nginxe.tar 
+
+====================================================
+IMPORTANT: set spring.profiles.active in application.properties in every module(user,admin,article-manager) to staging,staging-secret
+
+- build api container
+docker build -f Dockerfile-api -t ipat-staging-api .
+
+- save as tar
+docker save -o ipat-staging-api.tar ipat-staging-api
+
+- scp to server
+scp ipat-staging-api.tar ipat@212.122.43.153:/home/ipat/ipat-staging
+
+- ssh to server- cd into ipat-staging
+
+- load into docker 
+docker load -i ipat-staging-api.tar 
