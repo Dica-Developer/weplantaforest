@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  backendUrl: 'https://iplantatree.org/s/u',
-  backendAdminUrl: 'https://iplantatree.org/s/a',
-  backendArticleManagerUrl: 'https://iplantatree.org/s/m',
+  backendUrl: 'https://staging.iplantatree.org/u',
+  backendAdminUrl: 'https://staging.iplantatree.org/a',
+  backendArticleManagerUrl: 'https://staging.iplantatree.org/am',
   oldFrontendUrl: 'http://iplantatree.org:81',
-  frontendUrl: 'https://iplantatree.org/staging',
-  baseUrl: "/staging"
+  frontendUrl: 'https://staging.iplantatree.org',
+  baseUrl: "/"
 };
