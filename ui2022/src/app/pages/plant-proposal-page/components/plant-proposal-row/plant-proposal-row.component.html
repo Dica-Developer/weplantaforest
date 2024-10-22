@@ -19,7 +19,7 @@
           routerLink="/plantbag"
           *ngIf="showGoToPlantbagButton"
         ></app-button>
-        <span class="font-1 pricetag">
+        <span class="font-1 is-flex is-justify-content-start is-flex-grow-1">
           <b>
             {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + ' €' }}
           </b>
