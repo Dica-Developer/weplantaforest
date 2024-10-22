@@ -26,7 +26,18 @@
     (ngSubmit)="onSubmit()"
   >
     <div class="inputOutline">
-      <input [placeholder]="'name' | translate" name="name" required formControlName="name" />
+      <input
+      [placeholder]="'name' | translate"
+      name="name"
+      required
+      formControlName="name" />
+    </div>
+    <div class="inputOutline">
+      <input
+      [placeholder]="'reason' | translate"
+      name="reason"
+      required
+      formControlName="reason" />
     </div>
     <div class="inputOutline">
       <input

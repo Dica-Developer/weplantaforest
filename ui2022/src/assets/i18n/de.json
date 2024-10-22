@@ -340,6 +340,7 @@
   "USER_ALREADY_EXISTS": "Dieser Nutzername ist schon vergeben. Bitte wähle einen anderen.",
   "acceptTerms": "Du musst die AGB und Datenschutzerklärung akzeptieren, um dich zu registrieren.",
   "more": "mehr laden",
+  "reason": "Grund",
   "emailUsername": "E-Mail oder Benutzername",
   "selectPlantbag": "Pflanzkorb auswählen!",
   "newsletterInfo": "Tipp: Mit unserem Newsletter erfährst du als Erstes, wenn neue Projekte online gehen. Du kannst das Abo natürlich jederzeit kündigen."

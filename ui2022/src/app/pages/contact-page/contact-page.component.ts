@@ -74,8 +74,8 @@ export class ContactPageComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (this.captchaValid) {
       let contactRequest: ContactRequest = {
-        reason: this.contactForm.get('reason').value,
         name: this.contactForm.get('name').value,
+        reason: this.contactForm.get('reason').value,
         mail: this.contactForm.get('mail').value,
         phone: this.contactForm.get('phone').value,
         message: this.contactForm.get('message').value,
