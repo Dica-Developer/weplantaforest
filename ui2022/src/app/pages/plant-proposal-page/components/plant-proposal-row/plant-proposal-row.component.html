@@ -4,11 +4,11 @@
   </div>
   <div *ngIf="!(proposalFailed$ | async)">
     <p class="font-1">{{ 'proposalOrIndividualText' | translate }}</p>
-    <div class="is-flex slider-row">
-      <div class="custom-slider column is-7">
-        <app-slider (valueChanged)="getProposal($event)"></app-slider>
-      </div>
-      <div class="is-flex w-100 slider-row is-align-items-center is-flex-direction-row-reverse">
+    <div class="is-flex is-align-items-center proposal-row">
+      <app-slider class="w-100" (valueChanged)="getProposal($event)"></app-slider>
+      <div
+        class="is-flex slider-row is-flex-grow-1 is-align-items-center"
+      >
         <app-button
           label="{{ 'intoPlantbag' | translate }}"
           (click)="putIntoPlantbag()"
@@ -19,7 +19,7 @@
           routerLink="/plantbag"
           *ngIf="showGoToPlantbagButton"
         ></app-button>
-        <span class="font-1 is-flex is-justify-content-start is-flex-grow-1">
+        <span class="font-1 pricetag">
           <b>
             {{ ('price' | translate) + ': ' + (proposalPrice$ | async) + ' €' }}
           </b>

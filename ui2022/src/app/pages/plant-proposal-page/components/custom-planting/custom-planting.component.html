@@ -32,7 +32,7 @@
     </div>
   </div>
   <div
-    class="is-flex w-100 slider-row is-align-items-center is-flex-direction-row-reverse"
+    class="is-flex slider-row is-align-items-center"
   >
     <app-button
       label="{{ 'intoPlantbag' | translate }}"
@@ -40,11 +40,11 @@
       *ngIf="showPutIntoPlantbagButton"
     ></app-button>
     <app-button
-      label="{{ 'toPlantBag' | translate }}"slider
+      label="{{ 'toPlantBag' | translate }}"
       routerLink="/plantbag"
       *ngIf="showGoToPlantbagButton"
     ></app-button>
-    <span class="font-1 is-flex is-justify-content-start is-flex-grow-1">
+    <span class="font-1 pricetag">
       <b>
         {{ ('price' | translate) + ': ' + totalPrice + ' €' }}
       </b>

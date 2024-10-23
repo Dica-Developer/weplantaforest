@@ -2,6 +2,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { ProjectCarouselItemComponent } from 'src/app/pages/project-page/components/project-carousel-item/project-carousel-item.component';
 import { RankingService } from 'src/app/services/ranking.service';
 import { AppState } from 'src/app/store/app.state';
@@ -21,11 +22,24 @@ import { loadNewestTrees, selectNewestPlantings} from 'src/app/store/ranking.sto
   styleUrl: './newest-plantings.component.scss'
 })
 export class NewestPlantingsComponent {
+  plantingsSub: Subscription;
   plantings$ = this.store.select(selectNewestPlantings);
+  plantings: any;
 
   constructor(private store: Store<AppState>, private rankingService: RankingService) {
     this.store.dispatch(loadNewestTrees())
   }
 
+  ngOnInit() {
+
+    this.plantingsSub = this.plantings$.subscribe(res => {
+      this.plantings = res;
+      console.log(this.plantings)
+    })
+  }
+
+  ngOnDestroy() {
+    this.plantingsSub.unsubscribe()
+  }
 
 }
