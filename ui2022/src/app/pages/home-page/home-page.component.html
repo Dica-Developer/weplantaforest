@@ -1,8 +1,12 @@
-<app-plant-tree></app-plant-tree>
-<div class="is-flex switchToCol border-bottom columns">
-  <app-newest-plantings class="column is-half is-full-mobile"></app-newest-plantings>
-  <app-rankings class="column is-half is-full-mobile"></app-rankings>
+<div class="is-flex is-flex-direction-column">
+  <div class="is-flex full-height w-100 is-flex-direction-column">
+    <app-plant-tree></app-plant-tree>
+    <div class="is-flex switchToCol border-bottom columns">
+      <app-newest-plantings class="column is-half is-full-mobile"></app-newest-plantings>
+      <app-rankings class="column is-half is-full-mobile"></app-rankings>
+    </div>
+  </div>
+  <app-planting-process></app-planting-process>
+  <app-projects-section></app-projects-section>
+  <app-planted-trees></app-planted-trees>
 </div>
-<app-planting-process></app-planting-process>
-<app-projects-section></app-projects-section>
-<app-planted-trees></app-planted-trees>
