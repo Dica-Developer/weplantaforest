@@ -15,12 +15,5 @@
     <mat-icon (click)="loadAllRemainingArticles()"> keyboard_double_arrow_down </mat-icon>
   </div>
 </div>
-<app-button
-  class="allowCookies padding-bottom-1"
-  [label]="'allowPaypalCookies' | translate"
-  (clicked)="showCookieConfirmation()"
-  *ngIf="!(cookiesAccepted$ | async)"
-></app-button
->
-<app-newsletter *ngIf="(cookiesAccepted$ | async)"> </app-newsletter>
+<app-newsletter> </app-newsletter>
 <app-offer-area></app-offer-area>

@@ -16,8 +16,6 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { BlogHeaderComponent } from '../components/blog-header/blog-header.component';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { TextHelper } from 'src/app/util/helper/text.helper';
-import { selectCookies } from 'src/app/store/infrastructure.store';
-import { CookieHelper } from 'src/app/util/helper/cookie.helper';
 import { ButtonComponent } from 'src/app/util/common-components/button/button.component';
 
 @Component({
@@ -44,13 +42,11 @@ export class BlogOverviewPageComponent implements OnInit {
   blogArticles$ = this.store.select(selectBlogArticles);
   blogArticlesAmountSub: Subscription;
   blogArticlesAmount: number;
-  cookiesAccepted$: Observable<boolean> = this.store.select(selectCookies);
 
   constructor(
     private store: Store<AppState>,
     private platformHelper: PlatformHelper,
     private textHelper: TextHelper,
-    private cookieHelper: CookieHelper,
   ) {
     this.store.dispatch(loadBlogArticles({ pageSize: 10, language: this.textHelper.getCurrentLanguage() }));
   }
@@ -68,7 +64,4 @@ export class BlogOverviewPageComponent implements OnInit {
     );
   }
 
-  showCookieConfirmation() {
-    this.cookieHelper.openCookieConfirmation();
-  }
 }

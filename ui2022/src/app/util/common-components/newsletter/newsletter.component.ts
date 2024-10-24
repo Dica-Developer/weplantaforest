@@ -9,6 +9,11 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../button/button.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import { Observable } from 'rxjs';
+import { selectCookies } from 'src/app/store/infrastructure.store';
+import { CookieHelper } from '../../helper/cookie.helper';
 
 @Component({
   selector: 'app-newsletter',
@@ -24,6 +29,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
   ],
 })
 export class NewsletterComponent implements OnInit {
+  cookiesAccepted$: Observable<boolean> = this.store.select(selectCookies);
   fullScreenNewsletter: boolean = false;
   safeUrl;
   html = this.sanitizer.bypassSecurityTrustHtml(
@@ -34,13 +40,19 @@ export class NewsletterComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private store: Store<AppState>,
     protected sanitizer: DomSanitizer,
+    private cookieHelper: CookieHelper,
   ) {}
 
   ngOnInit(): void {
     if (this.router.url.includes('newsletter')) {
       this.fullScreenNewsletter = true;
     }
+  }
+
+  showCookieConfirmation() {
+    this.cookieHelper.openCookieConfirmation();
   }
 
   subscribeToNewsletter() {}
