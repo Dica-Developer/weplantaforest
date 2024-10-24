@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { BlogArticle, loadBlogArticle, selectBlogArticle } from 'src/app/store/blog.store';
@@ -22,7 +22,8 @@ import { MatIcon } from '@angular/material/icon';
     MatIcon,
     AsyncPipe,
     TranslateModule,
-    NgFor
+    NgFor,
+    RouterModule
   ],
 })
 export class BlogArticlePageComponent implements OnInit {
