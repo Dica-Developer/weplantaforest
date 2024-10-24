@@ -72,8 +72,8 @@ export class AppComponent implements OnInit {
     this.store.dispatch(getProjectsForCustomPlanting());
     if (this.platformHelper.getLocalstorage('jwt') && this.platformHelper.getLocalstorage('username')) {
       this.store.dispatch(loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }));
+      this.authService.autoLogin();
     }
-    this.authService.autoLogin();
     this.cookieHelper.autoOpenCookieConfirmation();
   }
 

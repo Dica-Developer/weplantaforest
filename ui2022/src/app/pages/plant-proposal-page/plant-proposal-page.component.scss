@@ -1,7 +1,13 @@
-.plant-proposal-page {
-  min-height: 60vh;
+.full-height {
+  min-height: calc(100vh - 80px);
 }
 
 nav {
   margin-top: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .full-height {
+    height: initial;
+  }
 }

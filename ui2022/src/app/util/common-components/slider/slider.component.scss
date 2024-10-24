@@ -1,8 +1,4 @@
 
-.slidercontainer {
-  max-width: 1200px;
-}
-
 .slider {
   -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
@@ -16,15 +12,10 @@
   transition: opacity .2s;
 }
 
-.slider:hover {
-  opacity: 1; /* Fully shown on mouse-over */
-}
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
-  position: absolute;
-  left: 20px;
   border-radius: 8px;
   width: 16px; /* Set a specific slider handle width */
   height: 16px; /* Slider handle height */
@@ -35,8 +26,6 @@
 .slider::-moz-range-thumb {
   width: 15px; /* Set a specific slider handle width */
   height: 15px; /* Slider handle height */
-  position: absolute;
-  left: 20px;
   background: var(--green); /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
