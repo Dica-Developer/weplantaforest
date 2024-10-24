@@ -1,27 +1,23 @@
 <div
-  class="is-flex is-flex-direction-row margin-left-1 columns is-mobile carousel-item"
+  class="is-flex is-flex-direction-row margin-left-1 is-mobile carousel-item"
   (click)="linkToProfile()"
 >
-  <div class="column is-3">
-    <div class="image">
-      <img src="{{ imageUrl }}" alt="image" />
-    </div>
+  <div class="image">
+    <img src="{{ imageUrl }}" alt="image" />
   </div>
-  <div class="column is-9">
-    <div class="is-flex is-flex-direction-column padding-left-1 padding-right-1 padding-bottom-1">
-      <p class="name">
-        {{ _item.name }}
-      </p>
-      <p>
-        {{ _item.amount + ' ' + ('trees' | translate) }}
-      </p>
-      <p *ngIf="_item['plantedOn']">
-        {{ _item['plantedOn'] | date : 'dd.MM.yyyy' }}
-      </p>
-      <p
-        *ngIf="_item['co2Saved']"
-        innerHTML="{{ _item['co2Saved'] + ' t ' + ('CO2' | translate) }}"
-      ></p>
-    </div>
+  <div class="is-flex is-flex-direction-column padding-left-1 padding-right-1 padding-bottom-1">
+    <p class="name">
+      {{ _item.name }}
+    </p>
+    <p>
+      {{ _item.amount + ' ' + ('trees' | translate) }}
+    </p>
+    <p *ngIf="_item['plantedOn']">
+      {{ _item['plantedOn'] | date : 'dd.MM.yyyy' }}
+    </p>
+    <p
+      *ngIf="_item['co2Saved']"
+      innerHTML="{{ _item['co2Saved'] + ' t ' + ('CO2' | translate) }}"
+    ></p>
   </div>
 </div>

@@ -77,7 +77,6 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   async initializeEditor() {
     try {
       const CKEditor = (window as any).ClassicEditor;
-      console.log(CKEditor);
       if (CKEditor) {
         const editor = await CKEditor.create(document.querySelector('#editor'));
         editor.model.document.on('change', () => {

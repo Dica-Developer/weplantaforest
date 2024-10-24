@@ -233,7 +233,6 @@ export class EventsEffects {
             }),
           ]),
           catchError((err) => {
-            console.log(err);
             let errorMessage = 'Das Speichern ist leider fehlgeschlagen';
             if (err && err.error && err.error.errorInfos && err.error.errorInfos.length >= 1) {
               errorMessage = err.error.errorInfos[0].errorCode;

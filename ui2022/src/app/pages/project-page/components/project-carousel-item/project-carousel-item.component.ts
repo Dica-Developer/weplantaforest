@@ -5,8 +5,9 @@ import {
   ProjectCarouselItemDateDto,
   ProjectCarouselItemAmountDto,
 } from '../../../../store/project.store';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgIf, DatePipe } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-project-carousel-item',
@@ -22,6 +23,7 @@ import { NgIf, DatePipe } from '@angular/common';
 export class ProjectCarouselItemComponent implements OnInit {
   _item: ProjectCarouselItemDateDto | ProjectCarouselItemAmountDto;
   imageUrl: string;
+  html
 
   @Input()
   set item(item: ProjectCarouselItemDateDto | ProjectCarouselItemAmountDto) {
@@ -39,6 +41,7 @@ export class ProjectCarouselItemComponent implements OnInit {
     }
 
     if (this._item['co2Saved']) {
+      this.html = this.sanitizer.bypassSecurityTrustHtml(this._item['co2Saved'] + ' t ' + this.translate.instant('CO2'))
       this._item = {
         ...this._item,
         co2Saved: Number.parseFloat(this._item['co2Saved']).toFixed(2),
@@ -46,7 +49,11 @@ export class ProjectCarouselItemComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    protected sanitizer: DomSanitizer,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {}
 

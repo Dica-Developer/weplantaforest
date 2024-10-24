@@ -274,7 +274,6 @@ export class UserEffects {
         this.userService
           .loadAllUser()
           .pipe(switchMap((users: User[]) => {
-          console.log(users)
           return [loadUsersSuccess({ users })]
         }
         )),

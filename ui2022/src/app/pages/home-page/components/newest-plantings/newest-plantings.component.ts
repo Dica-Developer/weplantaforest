@@ -31,10 +31,8 @@ export class NewestPlantingsComponent {
   }
 
   ngOnInit() {
-
     this.plantingsSub = this.plantings$.subscribe(res => {
       this.plantings = res;
-      console.log(this.plantings)
     })
   }
 

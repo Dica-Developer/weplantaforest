@@ -89,7 +89,6 @@ export class ProfileCertificatesComponent implements OnInit, OnDestroy {
   }
 
   createCertificate() {
-    console.log(this.cartIds)
     if (this.cartIds.length > 0) {
       this.store.dispatch(
         createCertificate({
