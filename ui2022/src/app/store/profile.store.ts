@@ -481,7 +481,9 @@ export class ProfileEffects {
       switchMap((action) =>
         this.profileService.loadTrees(action.username, action.page, action.size).pipe(
           switchMap((res) => {
+            let response;
             if (res && res.content) {
+              response = res;
               const trees: ProfileTree[] = [];
               for (const tree of res.content) {
                 const projectName = tree.projectArticle?.project?.name
@@ -507,10 +509,10 @@ export class ProfileEffects {
                   treeTypeImageUrl,
                   projectLink,
                 });
-                res.content = trees;
+                response.content = trees;
               }
             }
-            return [loadTreesByUserSuccess({ trees: res })];
+            return [loadTreesByUserSuccess({ trees: response })];
           }),
         ),
       ),

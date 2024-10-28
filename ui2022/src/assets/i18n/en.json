@@ -7,6 +7,8 @@
   "explore": "Explore",
   "login": "Login",
   "logout": "Logout",
+  "deleteAccount": "Delete account",
+  "deleteAccountConfirmation": "Delete Account? This can not be undone!",
   "headerText": "Regional, simple, direct  .",
   "headerSubtext1": "We plant trees for the climate.",
   "headerSubtext2": "And for our children.",

@@ -5,23 +5,26 @@ import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { selectUploadingImage } from '../../../../store/profile.store';
 import { SliderHelper } from 'src/app/util/helper/slider.helper';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { logout, softDeleteAccount } from 'src/app/store/auth.store';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AccountDeleteConfirmationComponent } from 'src/app/util/common-components/account-delete-confirmation/account-delete-confirmation.component';
 
 @Component({
-    selector: 'app-profile-header',
-    templateUrl: './profile-header.component.html',
-    styleUrls: ['./profile-header.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        MatIcon,
-        MatTooltip,
-        TranslateModule,
-    ],
+  selector: 'app-profile-header',
+  templateUrl: './profile-header.component.html',
+  styleUrls: ['./profile-header.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    MatIcon,
+    MatTooltip,
+    TranslateModule,
+  ],
 })
 export class ProfileHeaderComponent implements OnInit, OnDestroy {
   @Input() profileDetails;
@@ -38,7 +41,9 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private store: Store<AppState>,
     private sliderHelper: SliderHelper,
-    private platformHelper: PlatformHelper
+    private platformHelper: PlatformHelper,
+    private snackbar: MatSnackBar,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -56,5 +61,11 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
   editProfile() {
     let username = this.platformHelper.getLocalstorage('username');
     this.router.navigate(['/editProfile/' + username]);
+  }
+
+  softDeleteAccount() {
+    this.snackbar.openFromComponent(AccountDeleteConfirmationComponent, {
+      panelClass: ['cookie-snackbar'],
+    });
   }
 }

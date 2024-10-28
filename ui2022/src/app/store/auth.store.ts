@@ -62,6 +62,11 @@ export const verificationDoneReset = createAction('[Auth] Reset VerificationDone
 
 export const logout = createAction('[Auth] logout');
 export const resetState = createAction('[Auth] reset state');
+export const softDeleteAccount = createAction(
+  '[Auth] delete account',
+  props<{ username: string }>(),
+);
+export const softDeleteAccountSuccess = createAction('[Auth] delete account successfull');
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -319,6 +324,23 @@ export class AuthEffects {
       switchMap((action: any) =>
         this.authService.verifyPasswordResetLink(action.id, action.key, action.language).pipe(
           switchMap((response) => []),
+          catchError(() => [verifyPasswordResetLinkFailed()]),
+        ),
+      ),
+    ),
+  );
+
+  SoftDeleteAccount$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(softDeleteAccount),
+      switchMap((action: any) =>
+        this.authService.softDeleteUser(action.username).pipe(
+          switchMap((response) => {
+            return [
+              softDeleteAccountSuccess(),
+              logout()
+            ]
+          }),
           catchError(() => [verifyPasswordResetLinkFailed()]),
         ),
       ),

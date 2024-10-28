@@ -44,6 +44,16 @@ export class AuthService {
     );
   }
 
+  softDeleteUser(username: string) {
+    // softdelete by anonymizing user so plantings wont get deleted
+    return this.http.post(
+      environment.backendUrl +
+        '/user/anonymize?userName=' +
+        username,
+      {},
+    )
+  }
+
   resetPassword(id: number, password: string, key: string, language: string) {
     return this.http.post(
       environment.backendUrl +

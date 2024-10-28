@@ -7,6 +7,8 @@
   "explore": "Erforschen",
   "login": "Login",
   "logout": "Logout",
+  "deleteAccount": "Account löschen",
+  "deleteAccountConfirmation": "Account löschen? Dies kann nicht rückgängig gemacht werden!",
   "headerText": "Regional, einfach, direkt.",
   "headerSubtext1": "Wir pflanzen Bäume für das Klima.",
   "headerSubtext2": "Und für unsere Kinder.",
