@@ -5,6 +5,7 @@ import { TextHelper } from 'src/app/util/helper/text.helper';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-privacy-page',
@@ -19,15 +20,20 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 })
 export class PrivacyPageComponent implements OnInit {
   privacyPolicy: any;
+  privacyPolicySub: Subscription;
 
   constructor(private platformHelper: PlatformHelper, private textHelper: TextHelper, private contentService: ContentService) {}
 
   ngOnInit(): void {
     this.platformHelper.scrollTop();
-    this.contentService
+    this.privacyPolicySub = this.contentService
       .getInfrastructureArticle('PRIVACY', this.textHelper.getCurrentLanguage())
       .subscribe((res) => {
         this.privacyPolicy = res;
       });
+  }
+
+  ngOnDestroy() {
+    this.privacyPolicySub.unsubscribe();
   }
 }

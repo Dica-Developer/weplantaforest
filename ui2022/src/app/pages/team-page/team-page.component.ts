@@ -30,12 +30,13 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 export class TeamPageComponent implements OnInit, OnDestroy {
   teamDetails$ = this.store.select(selectTeamDetails);
   teamDetailsSub: Subscription;
+  routeParamsSub: Subscription;
 
   constructor(
     private platformHelper: PlatformHelper,
     private store: Store<AppState>,
     private route: ActivatedRoute) {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    this.routeParamsSub = this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(
         loadTeamDetails({ teamName: decodeURIComponent(paramMap.get('teamname')) }),
       );
@@ -65,5 +66,6 @@ export class TeamPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.teamDetailsSub?.unsubscribe();
+    this.routeParamsSub?.unsubscribe();
   }
 }

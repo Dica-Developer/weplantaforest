@@ -37,12 +37,13 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   projectReport$ = this.store.select(selectProjectReport);
   projectReportSub: Subscription;
   showProjectPlanting: boolean = false;
+routeParamsSub: Subscription;
 
   constructor(private store: Store<AppState>,
     private route: ActivatedRoute,
     private platformHelper: PlatformHelper
   ) {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    this.routeParamsSub = this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadProjectReport({ projectName: paramMap.get('projectName') }));
     });
     this.projectReportSub = this.projectReport$.subscribe((projectReport) => {
@@ -63,6 +64,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.projectReportSub?.unsubscribe();
+    this.routeParamsSub?.unsubscribe();
   }
 
   showProjectPlantingComponent() {

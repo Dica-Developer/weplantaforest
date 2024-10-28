@@ -28,6 +28,8 @@ export class AppComponent implements OnInit {
   }
   languageSub: Subscription;
   translateSub: Subscription;
+  errorSub: Subscription;
+  successSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -41,7 +43,7 @@ export class AppComponent implements OnInit {
   ) {
     this.translateService.addLangs(['de', 'en']);
     this.translateService.use(this.languageHelper.getUserLanguage());
-    this.store.select(selectErrors).subscribe((errors) => {
+    this.errorSub = this.store.select(selectErrors).subscribe((errors) => {
       for (let error of errors) {
         this.snackBar
           .open(this.translateService.instant(error.message), 'X', {
@@ -53,7 +55,7 @@ export class AppComponent implements OnInit {
           });
       }
     });
-    this.store.select(selectSuccessMessages).subscribe((messages) => {
+    this.successSub = this.store.select(selectSuccessMessages).subscribe((messages) => {
       for (let message of messages) {
         this.snackBar
           .open(this.translateService.instant(message.message), 'X', {
@@ -82,5 +84,7 @@ export class AppComponent implements OnInit {
       this.languageSub.unsubscribe();
       this.translateSub.unsubscribe();
     }
+    this.errorSub.unsubscribe();
+    this.successSub.unsubscribe();
   }
 }

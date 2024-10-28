@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { addError } from '../../store/error.state';
 import {
@@ -70,6 +70,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
   // when the image is changed, there has to be a little hack here to force the image to update
   // so we create a random number when the uploadImage select delivers a false and put it at the end of the image url
   randomNumber: number = 0;
+  routeParamsSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -80,9 +81,9 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
     private sliderHelper: SliderHelper,
     private platformHelper: PlatformHelper
   ) {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    this.routeParamsSub = this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadProfileDetails({ username: paramMap.get('username') }));
-      this.profileDetails$.subscribe((res) => {
+      this.profileDetails$.pipe(take(1)).subscribe((res) => {
         if (res) {
           this.profileForm = new FormGroup({
             username: new UntypedFormControl(res.userName),
@@ -259,5 +260,6 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.uploadImageSub?.unsubscribe();
+    this.routeParamsSub?.unsubscribe();
   }
 }

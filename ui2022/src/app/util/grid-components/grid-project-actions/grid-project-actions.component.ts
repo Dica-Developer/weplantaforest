@@ -9,6 +9,7 @@ import { DeleteConfirmationDialogComponent } from '../../common-components/delet
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconButton } from '@angular/material/button';
+import { take } from 'rxjs';
 
 @Component({
     selector: 'app-grid-project-actions',
@@ -41,7 +42,7 @@ export class GridProjectActionsComponent implements ICellEditorAngularComp {
 
   deleteProject() {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent);
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(take(1)).subscribe((result) => {
       if (result) {
         this.store.dispatch(deleteProject({ id: this.projectId }));
       }

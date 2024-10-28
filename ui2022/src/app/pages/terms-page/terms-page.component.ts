@@ -5,6 +5,7 @@ import { TextHelper } from 'src/app/util/helper/text.helper';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-terms-page',
@@ -19,6 +20,7 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 })
 export class TermsPageComponent implements OnInit {
   terms;
+  termsSub: Subscription;
 
   constructor(
     private platformHelper: PlatformHelper,
@@ -27,10 +29,14 @@ export class TermsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.platformHelper.scrollTop()
-    this.contentService
+    this.termsSub = this.contentService
       .getInfrastructureArticle('TERMS', this.textHelper.getCurrentLanguage())
       .subscribe((res) => {
         this.terms = res;
       });
+  }
+
+  ngOnDestroy() {
+    this.termsSub.unsubscribe()
   }
 }

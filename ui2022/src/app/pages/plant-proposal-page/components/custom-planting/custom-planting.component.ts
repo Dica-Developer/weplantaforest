@@ -40,7 +40,6 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
   profileDetailsSub: Subscription;
   profileDetails;
   language$ = this.store.select(selectProfileDetails);
-  proposalSub: Subscription;
 
   @Input()
   projectId: number;
@@ -85,6 +84,7 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
     this.activeProjectsSub?.unsubscribe();
     this.profileDetailsSub?.unsubscribe();
     this.formGroupSub?.unsubscribe();
+    this.combinedSub?.unsubscribe();
   }
 
   getTreeTypeNameByLanguage(text: string) {

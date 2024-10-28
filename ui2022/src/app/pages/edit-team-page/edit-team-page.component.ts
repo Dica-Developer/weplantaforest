@@ -44,6 +44,7 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
   imagePreviewSrc: any = null;
   uploadingImage$ = this.store.select(selectUploadingImage);
   uploadImageSub: Subscription;
+  routeParamsSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -54,7 +55,7 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
     private sliderHelper: SliderHelper,
     private platformHelper: PlatformHelper
   ) {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    this.routeParamsSub = this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.store.dispatch(loadTeamDetails({ teamName: paramMap.get('teamName') }));
       this.teamDetails$.subscribe((res) => {
         if (res) {
@@ -142,5 +143,6 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.uploadImageSub?.unsubscribe();
+    this.routeParamsSub?.unsubscribe();
   }
 }
