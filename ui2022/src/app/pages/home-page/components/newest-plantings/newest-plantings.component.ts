@@ -37,7 +37,7 @@ export class NewestPlantingsComponent {
   }
 
   ngOnDestroy() {
-    this.plantingsSub.unsubscribe()
+    this.plantingsSub?.unsubscribe()
   }
 
 }

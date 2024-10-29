@@ -16,18 +16,18 @@ import { Observable } from 'rxjs';
 import { selectProjectsForCustomPlanting } from 'src/app/store/plant.store';
 
 @Component({
-    selector: 'app-project-carousel',
-    templateUrl: './project-carousel.component.html',
-    styleUrls: ['./project-carousel.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        MatIcon,
-        NgFor,
-        ProjectCarouselItemComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-project-carousel',
+  templateUrl: './project-carousel.component.html',
+  styleUrls: ['./project-carousel.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    MatIcon,
+    NgFor,
+    ProjectCarouselItemComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class ProjectCarouselComponent implements OnInit {
   @Input() projectReport: ProjectReportDetails;
@@ -39,9 +39,7 @@ export class ProjectCarouselComponent implements OnInit {
 
   constructor(private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {
+  ngOnInit(): void {
     this.store.dispatch(
       loadLatestPlantings({
         projectName: this.projectReport?.projectReportData.projectName,

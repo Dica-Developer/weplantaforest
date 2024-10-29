@@ -1,10 +1,21 @@
 <div *ngIf="projectReport$ | async">
   <app-project-header [projectReport]="projectReport$ | async"></app-project-header>
-  <app-project-description
-    *ngIf="!showProjectPlanting"
-    [projectReport]="projectReport$ | async"
-    (showProjectPlanting)="showProjectPlantingComponent()"
-  ></app-project-description>
+
+
+  <div class="columns project-description">
+    <div class="column is-three-fifths padding-left is-flex is-flex-direction-column">
+      <div class="description" [innerHtml]="description | safeHtml"></div>
+      <app-button
+        *ngIf="(projectReport$ | async).projectReportData.active"
+        (click)="showProjectPlantingComponent()"
+        label="{{ 'plantHere' | translate }}"
+      ></app-button>
+      <a routerLink="/projectReports">{{ 'backToProjects' | translate }}</a>
+    </div>
+    <div class="column is-two-fifths">
+      <app-lightbox-gallery *ngIf="images?.length > 0" [images]="images"></app-lightbox-gallery>
+    </div>
+  </div>
   <app-project-planting
     *ngIf="showProjectPlanting"
     [projectReport]="projectReport$ | async"
