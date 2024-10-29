@@ -188,6 +188,10 @@ mat-paginator {
   font-family: 'Bull-mono' !important;
 }
 
+iframe {
+  max-width: 100%;
+  overflow: hidden;
+}
 
 .spacer {
   height: 15px;
