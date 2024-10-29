@@ -38,13 +38,13 @@
         <br>
         <span class="image-caption">{{ blogArticle.imageDescription }}</span>
       </div>
-      <div innerHtml="{{ blogArticle.intro }}"></div>
+      <div [innerHtml]="blogArticle.intro | safeHtml"></div>
       <div class="margin-bottom-2" *ngFor="let paragraph of blogArticle.paragraphs; let j = index">
         <h4> {{ paragraph.title }} </h4>
         <div class="margin-bottom-1 center" *ngIf="articleImageUrls[j]">
           <img [src]="articleImageUrls[j]" />
         </div>
-        <p innerHtml="{{ paragraph.text}} "> </p>
+        <p [innerHtml]="paragraph.text | safeHtml"> </p>
       </div>
       <a class="margin-top-2" routerLink="/blog">{{ 'backToBlog' | translate }}</a>
     </div>

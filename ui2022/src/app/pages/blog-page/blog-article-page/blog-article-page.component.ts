@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { selectIsUserAdmin } from 'src/app/store/profile.store';
 import { loadArticleDetails } from 'src/app/store/content.store';
 import { MatIcon } from '@angular/material/icon';
+import { SafeHtmlPipe } from 'src/app/util/common-components/safehtml.pipe';
 
 @Component({
   selector: 'app-blog-article-page',
@@ -23,7 +24,8 @@ import { MatIcon } from '@angular/material/icon';
     AsyncPipe,
     TranslateModule,
     NgFor,
-    RouterModule
+    RouterModule,
+    SafeHtmlPipe
   ],
 })
 export class BlogArticlePageComponent implements OnInit {

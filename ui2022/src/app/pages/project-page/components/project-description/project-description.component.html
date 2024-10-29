@@ -1,0 +1,14 @@
+<div class="columns project-description">
+  <div class="column is-three-fifths padding-left is-flex is-flex-direction-column">
+    <div class="description" [innerHtml]="description | safeHtml"></div>
+    <app-button
+      *ngIf="activeProject"
+      (click)="showProjectPlantingClicked()"
+      label="{{ 'plantHere' | translate }}"
+    ></app-button>
+    <a routerLink="/projectReports">{{ 'backToProjects' | translate }}</a>
+  </div>
+  <div class="column is-two-fifths">
+    <app-lightbox-gallery *ngIf="images?.length > 0" [images]="images"></app-lightbox-gallery>
+  </div>
+</div>
