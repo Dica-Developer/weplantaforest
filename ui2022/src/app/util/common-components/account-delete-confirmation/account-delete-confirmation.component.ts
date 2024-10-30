@@ -28,6 +28,7 @@ export class AccountDeleteConfirmationComponent {
   softDeleteAccount() {
     let username = this.platformHelper.getLocalstorage('username');
     this.store.dispatch(softDeleteAccount({username: username}))
+    this.snackBarRef.dismiss();
   }
 
   closeSnackbar() {
