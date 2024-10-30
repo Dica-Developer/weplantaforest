@@ -1,7 +1,9 @@
 #myImg {
   cursor: pointer;
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
 }
+
 
 /* The Modal (background) */
 .lightbox {
