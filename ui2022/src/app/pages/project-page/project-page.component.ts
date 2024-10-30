@@ -18,26 +18,26 @@ import { NgIf, AsyncPipe } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
-    selector: 'app-project-page',
-    templateUrl: './project-page.component.html',
-    styleUrls: ['./project-page.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        ProjectHeaderComponent,
-        ProjectDescriptionComponent,
-        ProjectPlantingComponent,
-        ProjectCarouselComponent,
-        LeafletMapComponent,
-        OfferAreaComponent,
-        AsyncPipe,
-    ],
+  selector: 'app-project-page',
+  templateUrl: './project-page.component.html',
+  styleUrls: ['./project-page.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    ProjectHeaderComponent,
+    ProjectDescriptionComponent,
+    ProjectPlantingComponent,
+    ProjectCarouselComponent,
+    LeafletMapComponent,
+    OfferAreaComponent,
+    AsyncPipe,
+  ],
 })
 export class ProjectPageComponent implements OnInit, OnDestroy {
   projectReport$ = this.store.select(selectProjectReport);
   projectReportSub: Subscription;
   showProjectPlanting: boolean = false;
-routeParamsSub: Subscription;
+  routeParamsSub: Subscription;
 
   constructor(private store: Store<AppState>,
     private route: ActivatedRoute,
