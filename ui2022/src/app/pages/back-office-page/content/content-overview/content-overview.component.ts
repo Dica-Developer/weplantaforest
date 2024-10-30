@@ -54,7 +54,7 @@ export class ContentOverviewComponent implements OnInit, OnDestroy {
       imageDescription: null,
       imageFileName: null,
       intro: '',
-      lang: null,
+      lang: 'DEUTSCH',
       paragraphs: [],
       showFull: true,
       title: '',
