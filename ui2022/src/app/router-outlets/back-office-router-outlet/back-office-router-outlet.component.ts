@@ -8,20 +8,22 @@ import { logout } from '../../store/auth.store';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { LogoIconComponent } from 'src/app/util/common-components/icons/logo-icon/logo-icon.component';
 
 @Component({
-    selector: 'app-back-office-router-outlet',
-    templateUrl: './back-office-router-outlet.component.html',
-    styleUrls: ['./back-office-router-outlet.component.scss'],
-    standalone: true,
-    imports: [
-        MatToolbar,
-        MatToolbarRow,
-        RouterLink,
-        RouterLinkActive,
-        RouterOutlet,
-        AsyncPipe,
-    ],
+  selector: 'app-back-office-router-outlet',
+  templateUrl: './back-office-router-outlet.component.html',
+  styleUrls: ['./back-office-router-outlet.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatToolbarRow,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+    AsyncPipe,
+    LogoIconComponent,
+  ],
 })
 export class BackOfficeRouterOutletComponent implements OnInit {
   username$: Observable<string>;

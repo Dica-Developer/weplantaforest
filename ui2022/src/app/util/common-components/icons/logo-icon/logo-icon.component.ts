@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-logo-icon',
@@ -11,9 +11,13 @@ export class LogoIconComponent implements OnInit {
   width: number = 56;
 
   @Input()
+  black: boolean = false;
+
+  @Input()
   height: number = 56;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }

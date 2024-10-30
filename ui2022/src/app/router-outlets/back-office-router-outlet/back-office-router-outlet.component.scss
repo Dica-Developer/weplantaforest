@@ -2,15 +2,11 @@
   width: 60px;
 }
 
-img.logo {
-  cursor: pointer;
-}
-
 mat-toolbar-row {
+  height: 80px;
   div {
     text-align: center;
     width: 100%;
-    display: block;
   }
 }
 

@@ -135,17 +135,17 @@ $dark-theme-background-palette: (
 );
 
 body {
-  --primary-color: #969900;
-  --primary-lighter-color: #969900;
-  --primary-darker-color: #969900;
+  --primary-color: #82aa1e;
+  --primary-lighter-color: #94bd39;
+  --primary-darker-color: #719701;
   --text-primary-color: #{rgba(black, 0.87)};
   --text-primary-lighter-color: #{rgba(black, 0.87)};
   --text-primary-darker-color: #{white};
 }
 $mat-primary: (
-  main: #969900,
-  lighter: #969900,
-  darker: #969900,
+  main: #82aa1e,
+  lighter: #94bd39,
+  darker: #719701,
   200: #82ab1f,
   // For slide toggle,
   contrast:

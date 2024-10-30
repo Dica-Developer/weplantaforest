@@ -1,37 +1,43 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <img src="{{ logoUrl }}" width="50" height="50" routerLink="/" class="logo" />
+    <div class="h-100 is-flex-grow-1 center-vertically-horizontally">
+      <app-logo-icon
+        class="center-vertically-horizontally"
+        [black]="true"
+        routerLink="/"
+      ></app-logo-icon>
+    </div>
     <div class="menu-spacer"></div>
     <div>
       <a mat-list-item routerLink="/backOffice2022/carts" [routerLinkActive]="'border-bottom'"
-        >Carts</a
+      >Carts</a
       >
       <a mat-list-item routerLink="/backOffice2022/user" [routerLinkActive]="'border-bottom'"
-        >User</a
+      >User</a
       >
       <a mat-list-item routerLink="/backOffice2022/projects" [routerLinkActive]="'border-bottom'"
-        >Projekte</a
+      >Projekte</a
       >
       <a mat-list-item routerLink="/backOffice2022/content" [routerLinkActive]="'border-bottom'"
-        >Content</a
+      >Content</a
       >
       <a mat-list-item routerLink="/backOffice2022/events" [routerLinkActive]="'border-bottom'"
-        >Events</a
+      >Events</a
       >
       <a mat-list-item routerLink="/backOffice2022/treetypes" [routerLinkActive]="'border-bottom'"
-        >Baumarten</a
+      >Baumarten</a
       >
       <a
         mat-list-item
         routerLink="/backOffice2022/plantForUser"
         [routerLinkActive]="'border-bottom'"
-        >Pflanzen</a
+      >Pflanzen</a
       >
       <a
         mat-list-item
         routerLink="/backOffice2022/transferTrees"
         [routerLinkActive]="'border-bottom'"
-        >Bäume übertragen</a
+      >Bäume übertragen</a
       >
     </div>
     <div class="menu-spacer"></div>
