@@ -1,11 +1,8 @@
 h1 {
-  font-size: 11rem !important;
-  font-family: 'NBArchitect' !important;
-  line-height: 11rem !important;
-  color: var(--brown) !important;
-  opacity: 0.85;
-  position: relative;
-  top: -30px;
+  font-family: 'Bull-regular' !important;
+  font-size: 3rem !important;
+  line-height: 3.25rem !important;
+  color: var(--dark-brown);
   text-shadow: 0 0 8px var(--background);
 }
 
@@ -75,15 +72,15 @@ a:hover {
 
 @media only screen and (max-width: 1600px) {
   h1 {
-    font-size: 8rem !important;
-    line-height: 8.5rem !important;
+    font-size: 3rem !important;
+    line-height: 3.25rem !important;
     top: 0;
   }
 }
 @media only screen and (max-width: 768px) {
   h1 {
-    font-size: 4.5rem !important;
-    line-height: 5rem !important;
+    font-size: 2.5rem !important;
+    line-height: 2.5rem !important;
     text-align: justify;
   }
 

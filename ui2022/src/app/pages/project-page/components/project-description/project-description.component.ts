@@ -30,6 +30,7 @@ export class ProjectDescriptionComponent implements OnInit {
   @Output() showProjectPlanting: EventEmitter<void> = new EventEmitter<void>();
 
   activeProject: boolean;
+  allPlanted: boolean = false;
   description: string;
   images: { imageUrl: string; caption: string }[] = [];
   constructor(
@@ -39,6 +40,12 @@ export class ProjectDescriptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeProject = this.projectReport.projectReportData.active;
+    let alreadyPlanted = this.projectReport.projectReportData.amountOfPlantedTrees;
+    let maxToPlant = this.projectReport.projectReportData.amountOfMaximumTreesToPlant;
+
+    if ((maxToPlant - alreadyPlanted) === 0) {
+      this.allPlanted = true;
+    }
     this.images = [];
     for (let image of this.projectReport.images) {
       let url =
