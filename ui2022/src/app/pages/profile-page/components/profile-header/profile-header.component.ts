@@ -13,6 +13,7 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { logout, softDeleteAccount } from 'src/app/store/auth.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountDeleteConfirmationComponent } from 'src/app/util/common-components/account-delete-confirmation/account-delete-confirmation.component';
+import { ButtonComponent } from 'src/app/util/common-components/button/button.component';
 
 @Component({
   selector: 'app-profile-header',
@@ -22,6 +23,7 @@ import { AccountDeleteConfirmationComponent } from 'src/app/util/common-componen
   imports: [
     NgIf,
     MatIcon,
+    ButtonComponent,
     MatTooltip,
     TranslateModule,
   ],
@@ -63,7 +65,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/editProfile/' + username]);
   }
 
-  softDeleteAccount() {
+  deleteAccount() {
     this.snackbar.openFromComponent(AccountDeleteConfirmationComponent, {
       panelClass: ['cookie-snackbar'],
     });

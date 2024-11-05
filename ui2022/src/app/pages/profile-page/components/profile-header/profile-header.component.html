@@ -1,37 +1,22 @@
 <div class="columns w-100 padding-2">
   <div class="column is-half">
-    <!-- <nav class="breadcrumb">
-      <ul>
-        <li>
-          <a routerLink="/">
-            {{ 'startPage' | translate }}
-          </a>
-        </li>
-        <li>
-          <a class="breadcrumb-active" [routerLink]="'/user/' + profileDetails.userName">
-            {{ profileDetails.userName }}
-          </a>
-        </li>
-      </ul>
-    </nav> -->
-
-    <h2 class="is-flex is-justify-content-space-between w-100">
-      {{ 'profile' | translate }}
-      <mat-icon *ngIf="showEdit" [matTooltip]="'edit' | translate" (click)="editProfile()"
-        >edit</mat-icon
-      >
-      <mat-icon *ngIf="showEdit" [matTooltip]="'deleteAccount' | translate" (click)="softDeleteAccount()"
-        >delete</mat-icon
-      >
-    </h2>
-    <h4>{{ profileDetails.userName }}</h4>
+    <div class="is-flex w-100 is-flex-direction-column margin-bottom-1">
+      <h2 class="is-flex is-justify-content-space-between w-100">
+        {{ 'profile' | translate }}
+      </h2>
+      <h4 class="margin-bottom-1">{{ profileDetails.userName }}</h4>
+      <div class="is-flex is-flex-direction-row" *ngIf="showEdit">
+        <app-button class="margin-right-1" [label]="'edit' | translate" (clicked)="editProfile()"></app-button>
+        <app-button [label]="'delete' | translate" (clicked)="deleteAccount()"></app-button>
+      </div>
+    </div>
   </div>
   <div class="column is-half is-flex is-justify-content-center">
     <div class="imageWrapper">
       <img
-        src="{{ profileDetails.profileImageUrl + '?' + randomNumber }}"
-        *ngIf="profileDetails.profileImageUrl"
-      />
+      src="{{ profileDetails.profileImageUrl + '?' + randomNumber }}"
+      *ngIf="profileDetails.profileImageUrl"
+    />
       <img *ngIf="!profileDetails.profileImageUrl" src="assets/default_user.jpg" alt="" />
     </div>
   </div>
