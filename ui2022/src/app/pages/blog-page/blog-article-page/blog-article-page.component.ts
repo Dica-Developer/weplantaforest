@@ -48,6 +48,7 @@ export class BlogArticlePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.blogArticleSub = this.blogArticle$.subscribe((article) => {
+      this.articleImageUrls = []
       if (article) {
         this.blogArticle = article;
         this.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + article.id + '/' + encodeURI(article.imageFileName);

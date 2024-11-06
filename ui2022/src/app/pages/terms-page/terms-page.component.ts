@@ -32,6 +32,7 @@ export class TermsPageComponent implements OnInit {
     this.termsSub = this.contentService
       .getInfrastructureArticle('TERMS', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
+        this.terms = []
         this.terms = res.slice().reverse();
       });
   }

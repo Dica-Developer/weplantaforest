@@ -35,6 +35,7 @@ export class FaqPageComponent implements OnInit, OnDestroy {
     this.faqSub = this.contentService
       .getInfrastructureArticle('FAQ', this.textHelper.getCurrentLanguage())
       .subscribe((res: any[]) => {
+        this.faq = []
         this.faq = res;
         this.sortEntriesbyNumberInTitle();
         this.selectFaq(this.faq[0]);

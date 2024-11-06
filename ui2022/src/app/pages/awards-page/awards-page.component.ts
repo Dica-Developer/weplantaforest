@@ -36,6 +36,8 @@ export class AwardsPageComponent implements OnInit, OnDestroy {
       .getInfrastructureArticle('AWARDS', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
         // reverse order for sorting
+        this.awards = []
+        this.articleImageUrls = []
         this.awards = res.slice().reverse();
         for (let i = 0; i < this.awards.length; i++) {
           let images = {mainImageUrl: '', paragraphImageUrls: []};

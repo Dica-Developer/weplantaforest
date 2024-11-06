@@ -30,6 +30,7 @@ export class PrivacyPageComponent implements OnInit {
       .getInfrastructureArticle('PRIVACY', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
         // reverse order for sorting
+        this.privacyPolicy = []
         this.privacyPolicy = res.slice().reverse();
       });
   }

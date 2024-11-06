@@ -39,6 +39,7 @@ export class ImprintPageComponent implements OnInit, OnDestroy {
       .getInfrastructureArticle('IMPRESS', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
         // reverse order for sorting
+        this.imprints = []
         this.imprints = res.slice().reverse();
       });
   }

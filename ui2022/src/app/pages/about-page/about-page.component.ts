@@ -33,6 +33,8 @@ export class AboutPageComponent implements OnInit, OnDestroy {
       .getInfrastructureArticle('ABOUT_US', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
         // reverse order for sorting
+        this.aboutUs = []
+        this.articleImageUrls = []
         this.aboutUs = res.slice().reverse();
         for (let i = 0; i < this.aboutUs.length; i++) {
           let images = {mainImageUrl: '', paragraphImageUrls: []};

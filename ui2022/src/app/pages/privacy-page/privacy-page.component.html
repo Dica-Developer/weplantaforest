@@ -21,7 +21,7 @@
 >
   <div class="privacy">
     <h2>{{ 'dsgvo' | translate }}</h2>
-    <div *ngFor="let dsgvo of privacyPolicy?.slice().reverse()">
+    <div *ngFor="let dsgvo of privacyPolicy">
       <h4>{{ dsgvo.title }}</h4>
       <div innerHtml="{{ dsgvo.intro }}"></div>
       <div *ngFor="let paragraph of dsgvo.paragraphs">

@@ -36,6 +36,8 @@ export class PartnerPageComponent implements OnInit, OnDestroy {
       .getInfrastructureArticle('PARTNER', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
         // reverse order for sorting
+        this.partners = []
+        this.articleImageUrls = []
         this.partners = res.slice().reverse();
         for (let i = 0; i < this.partners.length; i++) {
           let articleImages = {mainImageUrl: '', paragraphImageUrls: []};

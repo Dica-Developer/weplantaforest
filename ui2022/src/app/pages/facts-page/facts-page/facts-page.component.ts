@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { ChartConfiguration } from 'chart.js';
-import { combineLatest } from 'rxjs';
+import { combineLatest, take } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
-    selector: 'app-facts-page',
-    templateUrl: './facts-page.component.html',
-    styleUrls: ['./facts-page.component.scss'],
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        TranslateModule,
-    ],
+  selector: 'app-facts-page',
+  templateUrl: './facts-page.component.html',
+  styleUrls: ['./facts-page.component.scss'],
+  standalone: true,
+  imports: [
+    BaseChartDirective,
+    RouterLink,
+    NgIf,
+    TranslateModule,
+  ],
 })
 export class FactsPageComponent implements OnInit {
   labels: string[] = [];
@@ -61,32 +63,32 @@ export class FactsPageComponent implements OnInit {
       this.getCo2$,
       this.getUsersPerYear$,
       this.getTreesPerOrgType$,
-    ]).subscribe(([treesPerYear, co2, usersPerYear, treesPerOrg]) => {
-      (treesPerYear as any[]).forEach((year, index) => {
-        this.labels.push(year.label);
-        this.amountOfTrees.push(year.amount);
-        if (index === 0) {
-          this.amountOfTreesSum.push(year.amount);
-        } else {
-          this.amountOfTreesSum.push(this.amountOfTreesSum[index - 1] + year.amount);
-        }
+    ]).pipe(take(1)).subscribe(([treesPerYear, co2, usersPerYear, treesPerOrg]) => {
+        (treesPerYear as any[]).forEach((year, index) => {
+          this.labels.push(year.label);
+          this.amountOfTrees.push(year.amount);
+          if (index === 0) {
+            this.amountOfTreesSum.push(year.amount);
+          } else {
+            this.amountOfTreesSum.push(this.amountOfTreesSum[index - 1] + year.amount);
+          }
+        });
+        (co2 as any[]).forEach((year, index) => {
+          this.co2Saved.push(year.co2);
+        });
+        (usersPerYear as any[]).forEach((year, index) => {
+          this.amountOfUsers.push(year.amount);
+          if (index === 0) {
+            this.amountOfUsersSum.push(year.amount);
+          } else {
+            this.amountOfUsersSum.push(this.amountOfUsersSum[index - 1] + year.amount);
+          }
+        });
+        (treesPerOrg as any[]).forEach((orgType, index) => {
+          this.amountTreesPerOrg.push(orgType.amount);
+        });
+        this.chartsInitialized = true;
       });
-      (co2 as any[]).forEach((year, index) => {
-        this.co2Saved.push(year.co2);
-      });
-      (usersPerYear as any[]).forEach((year, index) => {
-        this.amountOfUsers.push(year.amount);
-        if (index === 0) {
-          this.amountOfUsersSum.push(year.amount);
-        } else {
-          this.amountOfUsersSum.push(this.amountOfUsersSum[index - 1] + year.amount);
-        }
-      });
-      (treesPerOrg as any[]).forEach((orgType, index) => {
-        this.amountTreesPerOrg.push(orgType.amount);
-      });
-      this.chartsInitialized = true;
-    });
   }
 
   public amountPerYearData: ChartConfiguration<'bar'>['data'] = {
