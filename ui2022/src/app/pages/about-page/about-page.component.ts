@@ -32,7 +32,8 @@ export class AboutPageComponent implements OnInit, OnDestroy {
     this.articleSub = this.contentService
       .getInfrastructureArticle('ABOUT_US', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
-        this.aboutUs = res;
+        // reverse order for sorting
+        this.aboutUs = res.slice().reverse();
         for (let i = 0; i < this.aboutUs.length; i++) {
           let images = {mainImageUrl: '', paragraphImageUrls: []};
           images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.aboutUs[i].id + '/' + encodeURI(this.aboutUs[i].imageFileName);

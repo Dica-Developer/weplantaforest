@@ -31,8 +31,8 @@ export class TermsPageComponent implements OnInit {
     this.platformHelper.scrollTop()
     this.termsSub = this.contentService
       .getInfrastructureArticle('TERMS', this.textHelper.getCurrentLanguage())
-      .subscribe((res) => {
-        this.terms = res;
+      .subscribe((res:any) => {
+        this.terms = res.slice().reverse();
       });
   }
 

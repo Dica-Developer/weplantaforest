@@ -21,7 +21,7 @@
 >
   <div class="imprint">
     <h2>{{ 'imprint' | translate }}</h2>
-    <div *ngFor="let imp of imprints?.slice().reverse()">
+    <div *ngFor="let imp of imprints">
       <h4>{{ imp.title }}</h4>
       <div innerHtml="{{ imp.intro }}">
         {{ imp.intro }}

@@ -21,9 +21,9 @@
 >
   <div class="partner w-100 margin-top-2">
     <h2>{{ 'partners' | translate }}</h2>
-    <div *ngFor="let partner of partners?.slice().reverse(); let i = index">
+    <div class="margin-top-1" *ngFor="let partner of partners; let i = index">
       <h4>{{ partner.title }}</h4>
-      <div class="margin-top-2 margin-bottom-2 center" *ngIf="articleImageUrls[i]?.mainImageUrl">
+      <div class="margin-top-1 margin-bottom-1 center" *ngIf="articleImageUrls[i]?.mainImageUrl">
         <img
           [src]="articleImageUrls[i]?.mainImageUrl"
           />
@@ -31,12 +31,11 @@
         <span class="image-caption">{{ partner.imageDescription }}</span>
       </div>
       <div innerHtml="{{ partner.intro }}"></div>
-      <div class="margin-bottom-2" *ngFor="let paragraph of partner.paragraphs; let j = index">
+      <div class="margin-bottom-1 margin-top-1" *ngFor="let paragraph of partner.paragraphs; let j = index">
         <h4> {{ paragraph.title }} </h4>
         <div class="center" *ngIf="articleImageUrls[i]?.paragraphImageUrls[j]">
           <img [src]="articleImageUrls[i].paragraphImageUrls[j]" />
         </div>
-        <br>
         <p innerHtml="{{ paragraph.text }}"></p>
       </div>
     </div>

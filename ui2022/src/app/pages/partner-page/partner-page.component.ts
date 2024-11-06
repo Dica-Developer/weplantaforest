@@ -35,18 +35,19 @@ export class PartnerPageComponent implements OnInit, OnDestroy {
     this.articleSub = this.contentService
       .getInfrastructureArticle('PARTNER', this.textHelper.getCurrentLanguage())
       .subscribe((res:any) => {
-        this.partners = res;
+        // reverse order for sorting
+        this.partners = res.slice().reverse();
         for (let i = 0; i < this.partners.length; i++) {
-          let images = {mainImageUrl: '', paragraphImageUrls: []};
+          let articleImages = {mainImageUrl: '', paragraphImageUrls: []};
           if (this.partners[i].imageFileName === null) {
-            images.mainImageUrl = '';
+            articleImages.mainImageUrl = '';
           } else {
-            images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].imageFileName);
+            articleImages.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].imageFileName);
           }
           for (let j = 0; j < this.partners[i].paragraphs.length; j++) {
-            images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
+            articleImages.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
           }
-          this.articleImageUrls.push(images);
+          this.articleImageUrls.push(articleImages);
         }
       });
   }

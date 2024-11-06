@@ -28,8 +28,9 @@ export class PrivacyPageComponent implements OnInit {
     this.platformHelper.scrollTop();
     this.privacyPolicySub = this.contentService
       .getInfrastructureArticle('PRIVACY', this.textHelper.getCurrentLanguage())
-      .subscribe((res) => {
-        this.privacyPolicy = res;
+      .subscribe((res:any) => {
+        // reverse order for sorting
+        this.privacyPolicy = res.slice().reverse();
       });
   }
 

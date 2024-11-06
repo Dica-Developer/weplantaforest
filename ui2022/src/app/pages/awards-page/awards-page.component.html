@@ -21,7 +21,7 @@
 >
   <div class="awards margin-top-2">
     <h2>{{ 'awards' | translate }}</h2>
-    <div *ngFor="let awardsArticle of awards?.slice().reverse(); let i = index">
+    <div *ngFor="let awardsArticle of awards; let i = index">
       <h4>{{ awardsArticle.title }}</h4>
       <div class="margin-top-2 margin-bottom-2 center" *ngIf="articleImageUrls[i]?.mainImageUrl">
         <img
