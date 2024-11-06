@@ -23,6 +23,9 @@ import { CookieHelper } from './util/helper/cookie.helper';
   imports: [RouterOutlet],
 })
 export class AppComponent implements OnInit {
+  @HostListener('window:beforeunload', ['$event']) unloadHandler() {
+    this.platformHelper.setLocalstorage('previousUrl', this.router.url);
+  }
   languageSub: Subscription;
   translateSub: Subscription;
   errorSub: Subscription;
