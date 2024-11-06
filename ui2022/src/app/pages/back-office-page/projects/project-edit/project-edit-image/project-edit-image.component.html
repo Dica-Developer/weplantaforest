@@ -19,12 +19,12 @@
       ></textarea>
     </mat-form-field>
   </div>
-  <div class="column is-6">
+  <div class="column is-5">
     <img src="{{ imageSrc }}" width="400" height="300" />
   </div>
-  <div class="column is-2">
+  <div class="column is-3 is-flex is-flex-direction-column">
     <button mat-raised-button color="primary" (click)="updateImage()"  [disabled]="!saveAvailable">
-      Speichern
+      Bild aktualisieren
     </button>
     <input
       #csvInput
@@ -35,7 +35,7 @@
       accept=".png, .jpg, .jpeg"
     />
     <button mat-raised-button color="primary" (click)="csvInput.click()">
-      Bild
+      Bild auswählen
     </button>
     <button mat-icon-button color="warn" (click)="openDeleteConfirmation()">
       <mat-icon aria-hidden="false">delete</mat-icon>

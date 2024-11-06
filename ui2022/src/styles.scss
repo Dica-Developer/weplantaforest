@@ -32,6 +32,19 @@ body {
   font-size: 20px;
 }
 
+.table, .mat-mdc-table {
+  background: var(--background)!important;
+}
+
+.table {
+  border: 1px solid var(--black);
+  padding: 3px;
+  table {
+    width: 100%;
+  }
+}
+
+
 .code {
   padding: 0.5rem;
   background-color: #dbdbd7;
