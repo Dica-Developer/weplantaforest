@@ -5,39 +5,39 @@
   <div class="column is-half leftSide padding-2">
     <h2 class="w-100 is-flex is-justify-content-space-between w-100">
       {{ 'team' | translate }}
-      <div class="is-flex is-flex-direction-row" *ngIf="isLoggedIn()">
-        <mat-icon *ngIf="isAdmin$ | async" [matTooltip]="'edit' | translate" (click)="editTeam()"
-          >edit</mat-icon
-        >
-        <mat-icon
-          *ngIf="isAdmin$ | async"
-          [matTooltip]="'delete' | translate"
-          (click)="openConfirmation('delete')"
-          >delete</mat-icon
-        >
-        <mat-icon
-          *ngIf="(isMember$ | async) && !(isAdmin$ | async)"
-          [matTooltip]="'leave' | translate"
-          (click)="openConfirmation('leave')"
-          >logout</mat-icon
-        >
-        <mat-icon
-          *ngIf="!(isMember$ | async) && !(hasTeam$ | async)"
-          [matTooltip]="'join' | translate"
-          (click)="openConfirmation('join')"
-          >group_add</mat-icon
-        >
-      </div>
     </h2>
-    <h4 class="pointer" (click)="routeToTeam()">{{ teamDetails.teamName }}</h4>
+    <h4 class="pointer margin-bottom-1" (click)="routeToTeam()">{{ teamDetails.teamName }}</h4>
+    <div class="is-flex is-flex-direction-row" >
+      <app-button
+        *ngIf="isAdmin$ | async"
+        class="margin-right-1"
+        [label]="'edit' | translate"
+        (clicked)="editTeam()">
+      </app-button>
+      <app-button
+        *ngIf="isAdmin$ | async"
+        [label]="'delete' | translate"
+        (clicked)="openConfirmation('delete')">
+      </app-button>
+      <app-button
+        *ngIf="(isMember$ | async) && !(isAdmin$ | async)"
+        [label]="'leave' | translate"
+        (clicked)="openConfirmation('leave')">
+      </app-button>
+      <app-button
+        *ngIf="!(isMember$ | async) && !(hasTeam$ | async)"
+        [label]="'join' | translate"
+        (clicked)="openConfirmation('join')">
+      </app-button>
+    </div>
   </div>
   <div class="column is-half padding-2 is-flex is-justify-content-center">
     <div class="imageWrapper pointer" (click)="routeToTeam()">
       <img
-        src="{{ teamDetails.teamImageUrl + '?' + randomNumber }}"
-        alt=""
-        *ngIf="teamDetails.teamImageUrl"
-      />
+      src="{{ teamDetails.teamImageUrl + '?' + randomNumber }}"
+      alt=""
+      *ngIf="teamDetails.teamImageUrl"
+    />
       <img *ngIf="!teamDetails.teamImageUrl" src="assets/default_user.jpg" alt="" />
     </div>
   </div>

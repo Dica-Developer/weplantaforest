@@ -21,6 +21,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { PlatformHelper } from '../../helper/platform.helper';
+import { TeamDeleteConfirmationComponent } from '../team-delete-confirmation/team-delete-confirmation.component';
 
 @Component({
     selector: 'app-team-header',
@@ -94,16 +95,12 @@ export class TeamHeaderComponent implements OnInit {
           this.leaveTeam();
         });
     } else if (confirmType === 'delete') {
-      this.snackbar
-        .open(this.translateService.instant('deleteConfirmation'), 'OK', {
-          duration: 5000,
-          panelClass: ['warning-snackbar'],
-        })
-        .onAction()
-        .subscribe(() => {
-          // this.router.navigate(['/user/' + this.platformHelper.getLocalstorage('username')]);
-          this.deleteTeam();
-        });
+      this.snackbar.openFromComponent(TeamDeleteConfirmationComponent, {
+        panelClass: ['cookie-snackbar'],
+        data:  {
+          teamId: this.teamDetails.teamId
+        }
+      })
     } else if (confirmType === 'join') {
       this.snackbar
         .open(this.translateService.instant('joinTeam'), 'OK', {
