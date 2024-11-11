@@ -1,5 +1,23 @@
 <div class="teamPage" *ngIf="teamDetails$ | async">
-  <app-team-header [teamDetails]="teamDetails$ | async"></app-team-header>
+  <div class="columns">
+    <div class="column is-half border-right">
+      <nav class="breadcrumb padding-left-2 padding-top-1">
+        <ul>
+          <li>
+            <a routerLink="/">
+              {{ 'startPage' | translate }}
+            </a>
+          </li>
+          <li>
+            <a class="breadcrumb-active">
+              {{ (teamDetails$ | async)?.teamName }}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <app-team-header [isTeampage]="true" [teamDetails]="teamDetails$ | async"></app-team-header>
   <app-team-details [teamDetails]="teamDetails$ | async"></app-team-details>
   <div class="border-bottom"></div>
   <app-team-trees></app-team-trees>

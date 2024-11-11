@@ -24,23 +24,24 @@ import { PlatformHelper } from '../../helper/platform.helper';
 import { TeamDeleteConfirmationComponent } from '../team-delete-confirmation/team-delete-confirmation.component';
 
 @Component({
-    selector: 'app-team-header',
-    templateUrl: './team-header.component.html',
-    styleUrls: ['./team-header.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        MatIcon,
-        MatTooltip,
-        ButtonComponent,
-        TeamCreateEditComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: 'app-team-header',
+  templateUrl: './team-header.component.html',
+  styleUrls: ['./team-header.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    MatIcon,
+    MatTooltip,
+    ButtonComponent,
+    TeamCreateEditComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class TeamHeaderComponent implements OnInit {
   @Input() teamDetails;
   @Input() profileDetails;
+  @Input() isTeampage = false;
   isAdmin$ = this.store.select(selectIsAdmin);
   isMember$ = this.store.select(selectIsMember);
   createMode = false;

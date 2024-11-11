@@ -200,9 +200,9 @@ const teamReducer = createReducer(
           : null,
         co2Data: details
           ? {
-              ...details.co2Data,
-              co2: parseFloat((Math.round(details.co2Data.co2 * 100) / 100).toFixed(2)),
-            }
+            ...details.co2Data,
+            co2: parseFloat((Math.round(details.co2Data.co2 * 100) / 100).toFixed(2)),
+          }
           : { treesCount: 0, co2: 0 },
       },
     };
@@ -323,8 +323,8 @@ export class TeamEffects {
       ofType(loadTeams),
       switchMap(() =>
         this.teamService
-          .loadTeams()
-          .pipe(switchMap((teams: Team[]) => [loadTeamsSuccess({ teams })])),
+        .loadTeams()
+        .pipe(switchMap((teams: Team[]) => [loadTeamsSuccess({ teams })])),
       ),
     ),
   );
@@ -334,15 +334,15 @@ export class TeamEffects {
       ofType(loadTeamDetails),
       switchMap((action) =>
         this.teamService
-          .loadTeamDetails(action.teamName)
-          .pipe(
-            switchMap((teamDetail: TeamDetails) => [
-              loadTeamDetailsSuccess({ details: teamDetail }),
-              loadTeamMember({ teamName: teamDetail.teamName, page: 0 }),
-              checkIfAdmin({ teamId: teamDetail.teamId }),
-              checkIfMember({ teamId: teamDetail.teamId }),
-            ]),
-          ),
+        .loadTeamDetails(action.teamName)
+        .pipe(
+          switchMap((teamDetail: TeamDetails) => [
+            loadTeamDetailsSuccess({ details: teamDetail }),
+            loadTeamMember({ teamName: teamDetail.teamName, page: 0 }),
+            checkIfAdmin({ teamId: teamDetail.teamId }),
+            checkIfMember({ teamId: teamDetail.teamId }),
+          ]),
+        ),
       ),
     ),
   );
@@ -352,10 +352,10 @@ export class TeamEffects {
       ofType(loadTeamMember),
       switchMap((action) =>
         this.teamService
-          .loadTeamMembers(action.teamName, action.page)
-          .pipe(
-            switchMap((members: PagedData<TeamMember>) => [loadTeamMemberSuccess({ members })]),
-          ),
+        .loadTeamMembers(action.teamName, action.page)
+        .pipe(
+          switchMap((members: PagedData<TeamMember>) => [loadTeamMemberSuccess({ members })]),
+        ),
       ),
     ),
   );
@@ -384,19 +384,19 @@ export class TeamEffects {
       ofType(updateTeamProperty),
       concatMap((action) =>
         this.teamService
-          .updateTeam(action.teamId, action.propertyToUpdate, action.controlValue)
-          .pipe(
-            concatMap(() => [
-              addSuccessMessage({
-                message: {
-                  key: 'TEAM_UPDATE_SUCCESS',
-                  message: this.translateService.instant('teamUpdated'),
-                },
-              }),
-              loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }),
-              loadTeamDetails({ teamName: action.teamName }),
-            ]),
-          ),
+        .updateTeam(action.teamId, action.propertyToUpdate, action.controlValue)
+        .pipe(
+          concatMap(() => [
+            addSuccessMessage({
+              message: {
+                key: 'TEAM_UPDATE_SUCCESS',
+                message: this.translateService.instant('teamUpdated'),
+              },
+            }),
+            loadProfileDetails({ username: this.platformHelper.getLocalstorage('username') }),
+            loadTeamDetails({ teamName: action.teamName }),
+          ]),
+        ),
       ),
     ),
   );
@@ -407,6 +407,7 @@ export class TeamEffects {
       switchMap((action) =>
         this.teamService.deleteTeam(action.teamId).pipe(
           concatMap(() => {
+            this.router.navigate(['/']);
             return [
               deleteTeamSuccess(),
               addSuccessMessage({

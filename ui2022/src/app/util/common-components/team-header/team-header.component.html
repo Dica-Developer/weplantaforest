@@ -7,7 +7,7 @@
       {{ 'team' | translate }}
     </h2>
     <h4 class="pointer margin-bottom-1" (click)="routeToTeam()">{{ teamDetails.teamName }}</h4>
-    <div class="is-flex is-flex-direction-row" >
+    <div class="is-flex is-flex-direction-row" *ngIf="isTeampage" >
       <app-button
         *ngIf="isAdmin$ | async"
         class="margin-right-1"
@@ -44,7 +44,7 @@
 </div>
 <div
   class="columns w-100 is-flex is-flex-direction-column padding-2"
-  *ngIf="!teamDetails && !createMode"
+  *ngIf="!teamDetails && !createMode && !(isMember$ | async)"
 >
   <h2>
     {{ 'team' | translate }}

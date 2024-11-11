@@ -11,21 +11,23 @@ import { TeamDetailsComponent } from '../../util/common-components/team-details/
 import { TeamHeaderComponent } from '../../util/common-components/team-header/team-header.component';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-team-page',
-    templateUrl: './team-page.component.html',
-    styleUrls: ['./team-page.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        TeamHeaderComponent,
-        TeamDetailsComponent,
-        TeamTreesComponent,
-        TeamCarouselComponent,
-        NewsletterComponent,
-        AsyncPipe,
-    ],
+  selector: 'app-team-page',
+  templateUrl: './team-page.component.html',
+  styleUrls: ['./team-page.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    TeamHeaderComponent,
+    TeamDetailsComponent,
+    TeamTreesComponent,
+    TeamCarouselComponent,
+    NewsletterComponent,
+    AsyncPipe,
+    TranslateModule
+  ],
 })
 export class TeamPageComponent implements OnInit, OnDestroy {
   teamDetails$ = this.store.select(selectTeamDetails);
