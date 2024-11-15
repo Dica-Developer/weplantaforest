@@ -46,11 +46,11 @@
   </div>
   <div class="h-100 is-flex-grow-1 center-vertically-horizontally hide-mobile">
     <app-button
-      *ngIf="!loggedIn"
+      *ngIf="!(loggedIn$ | async) && isBrowser"
       label="{{ 'login' | translate }}"
       (clicked)="loginClicked()"
     ></app-button>
-    <app-side-menu *ngIf="loggedIn"> </app-side-menu>
+    <app-side-menu *ngIf="loggedIn$ | async"> </app-side-menu>
   </div>
 </mat-toolbar>
 

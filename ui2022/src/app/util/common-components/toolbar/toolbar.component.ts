@@ -2,9 +2,9 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { logout } from '../../../store/auth.store';
+import { logout, selectAuthenticated } from '../../../store/auth.store';
 import { environment } from '../../../../environments/environment';
-import { Subscription, skip } from 'rxjs';
+import { Observable, Subscription, skip } from 'rxjs';
 import { selectPlantbagPriceFormatted } from '../../../store/plantbag.store';
 import { SearchOverlayComponent } from '../search-overlay/search-overlay.component';
 import { resetTree } from 'src/app/store/treeType.store';
@@ -21,40 +21,40 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
-    selector: 'app-toolbar',
-    templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.scss'],
-    standalone: true,
-    imports: [
-        MatToolbar,
-        LogoIconComponent,
-        RouterLink,
-        RouterLinkActive,
-        MatIcon,
-        BarrelIconComponent,
-        NgClass,
-        MatBadge,
-        NgIf,
-        ButtonComponent,
-        SideMenuComponent,
-        SearchOverlayComponent,
-        MobileMenuComponent,
-        AsyncPipe,
-        CurrencyPipe,
-        TranslateModule,
-    ],
+  selector: 'app-toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    LogoIconComponent,
+    RouterLink,
+    RouterLinkActive,
+    MatIcon,
+    BarrelIconComponent,
+    NgClass,
+    MatBadge,
+    NgIf,
+    ButtonComponent,
+    SideMenuComponent,
+    SearchOverlayComponent,
+    MobileMenuComponent,
+    AsyncPipe,
+    CurrencyPipe,
+    TranslateModule,
+  ],
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
   logoUrl = environment.baseUrl + '/assets/ipatlogo_black.svg';
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
-  authenticationSub: Subscription;
   menuOpened = false;
   treeInfo = false;
   overlayIsOpen = false;
-  loggedIn: boolean;
+  loggedIn$: Observable<boolean>;
   plantBagPrice$ = this.store.select(selectPlantbagPriceFormatted);
   showScaleClass = false;
   plantBagPriceSub: Subscription;
+  isBrowser: boolean = false;
   @ViewChild('searchOverlay') searchOverlay: SearchOverlayComponent;
 
   constructor(
@@ -63,9 +63,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.authenticationSub = this.store.select('authState').subscribe((state) => {
-      this.loggedIn = state.isAuthenticated;
-    });
+    this.loggedIn$ = this.store.select(selectAuthenticated)
+    if (this.platformHelper.checkIfBrowser()) {
+      this.isBrowser = true
+    }
     this.plantBagPriceSub = this.store
       .select(selectPlantbagPriceFormatted)
       // pipe skip to prevent the wheelbarrow animation from running on reload of page
@@ -122,7 +123,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   toggleSearch() {
     if (!this.overlayIsOpen) {
-    this.platformHelper.scrollTop()
+      this.platformHelper.scrollTop()
     }
     this.overlayIsOpen = !this.overlayIsOpen;
     this.searchOverlay.focusSearch();
@@ -133,7 +134,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authenticationSub?.unsubscribe();
     this.plantBagPriceSub?.unsubscribe();
   }
 }
