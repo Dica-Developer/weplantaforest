@@ -2,7 +2,7 @@
   <span class="margin-right-1"
   >{{ 'deleteTeamConfirmation' | translate }}
   </span>
-  <span class="pointer cookieButton margin-right-1" (click)="softDeleteAccount()">{{
+  <span class="pointer cookieButton margin-right-1" (click)="deleteTeam()">{{
     'delete' | translate
     }}</span>
   <span class="pointer outlineButton margin-right-1" (click)="closeSnackbar()">{{
@@ -14,7 +14,7 @@
   >{{ 'deleteTeamConfirmation' | translate }}
   </span>
   <div class="is-flex w-100 is-flex-direction-row is-justify-content-space-evenly">
-    <span class="pointer cookieButton" (click)="softDeleteAccount()">{{ 'delete' | translate }}</span>
+    <span class="pointer cookieButton" (click)="deleteTeam()">{{ 'delete' | translate }}</span>
     <span class="pointer outlineButton" (click)="closeSnackbar()">{{ 'cancel' | translate }}</span>
   </div>
 </div>
