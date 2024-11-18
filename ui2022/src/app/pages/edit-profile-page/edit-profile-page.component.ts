@@ -136,6 +136,7 @@ export class EditProfilePageComponent implements OnInit, OnDestroy {
       );
     }
     if (this.profileForm.get('username').dirty) {
+      this.platformHelper.setLocalstorage('username', this.profileForm.get('username').value);
       this.store.dispatch(
         updateProfileProperty({
           username,

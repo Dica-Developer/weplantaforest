@@ -27,7 +27,6 @@ export class TeamDeleteConfirmationComponent {
   ngOnInit(): void {}
 
   deleteTeam() {
-    console.log(this.data)
     let username = this.platformHelper.getLocalstorage('username');
     this.store.dispatch(deleteTeam({teamId: this.data.teamId}))
     this.snackBarRef.dismiss();
