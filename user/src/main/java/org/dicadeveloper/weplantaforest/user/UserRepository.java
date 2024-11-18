@@ -27,7 +27,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     public static final String GET_ALL_TEAM_MEMBER = "Select user FROM User user WHERE user.team.id = :teamId";
 
-    @Query(value = "SELECT * FROM User user WHERE BINARY _name = :name", nativeQuery = true)
+    @Query(value = "SELECT * FROM User user WHERE _name = :name", nativeQuery = true)
     public User findByName(@Param("name") String name);
 
     @Query(value = USER_EXISTS_QUERY, nativeQuery = true)
