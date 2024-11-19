@@ -93,8 +93,7 @@ export class ProfileWidgetsComponent implements OnInit {
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=200&height=200&language=' +
-        this.textHelper.getCurrentLanguage();
-        '" /></a>';
+        this.textHelper.getCurrentLanguage() + '" /></a>';
 
     this.widget300x100Code =
       '<a href="' +
@@ -106,8 +105,7 @@ export class ProfileWidgetsComponent implements OnInit {
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=600&height=200&language=' +
-        this.textHelper.getCurrentLanguage();
-        '" /></a>';
+        this.textHelper.getCurrentLanguage() + '" /></a>';
 
     this.widget100x300Code =
       '<a href="' +
@@ -119,7 +117,6 @@ export class ProfileWidgetsComponent implements OnInit {
         '/widget_2022?userName=' +
         this.platformHelper.getLocalstorage('username') +
         '&width=200&height=600&language=' +
-        this.textHelper.getCurrentLanguage();
-        '" /></a>';
+        this.textHelper.getCurrentLanguage() + '" /></a>';
   }
 }
