@@ -43,6 +43,8 @@
         <h4> {{ paragraph.title }} </h4>
         <div class="margin-bottom-1 center" *ngIf="articleImageUrls[j]">
           <img [src]="articleImageUrls[j]" />
+          <br>
+          <span class="image-caption">{{ paragraph.imageDescription }}</span>
         </div>
         <p [innerHtml]="paragraph.text | safeHtml"> </p>
       </div>

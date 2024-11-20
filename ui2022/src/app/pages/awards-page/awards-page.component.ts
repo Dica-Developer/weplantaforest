@@ -38,7 +38,7 @@ export class AwardsPageComponent implements OnInit, OnDestroy {
         // reverse order for sorting
         this.awards = []
         this.articleImageUrls = []
-        this.awards = res.slice().reverse();
+        this.awards = res;
         for (let i = 0; i < this.awards.length; i++) {
           let images = {mainImageUrl: '', paragraphImageUrls: []};
           if (this.awards[i].imageFileName === null) {
