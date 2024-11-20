@@ -105,53 +105,66 @@ docker-compose up
 
 
 
-# Deploy/Build staging
+# Deploy/Build staging/production
 
 - build node container:
 - go to /ui2022
 docker build -f Dockerfile-node-staging --no-cache -t ipat-staging-frontend-node .
+docker build -f Dockerfile-node-production --no-cache -t ipat-production-frontend-node .
 
 - save as tar:
 docker save -o ipat-staging-frontend-node.tar  ipat-staging-frontend-node
+docker save -o ipat-production-frontend-node.tar  ipat-production-frontend-node
 
 - scp to server
 scp ipat-staging-frontend-node.tar ipat@212.122.43.153:/home/ipat/ipat-staging
+scp ipat-production-frontend-node.tar ipat@212.122.43.153:/home/ipat/ipat-production
 
 - ssh to server- cd into ipat-staging
 
 - load into docker 
 docker load -i ipat-staging-frontend-node.tar 
+docker load -i ipat-production-frontend-node.tar
 
 ====================================================
 
 - build nginx container
 - go to /ui2022
 docker build --no-cache -f Dockerfile-nginx-staging -t ipat-staging-nginx .
+docker build --no-cache -f Dockerfile-nginx-production -t ipat-production-nginx .
 
 - save as tar
 docker save -o ipat-staging-nginx.tar ipat-staging-nginx
+docker save -o ipat-production-nginx.tar ipat-production-nginx
 
 - scp to server
 scp ipat-staging-nginx.tar ipat@212.122.43.153:/home/ipat/ipat-staging
+scp ipat-production-nginx.tar ipat@212.122.43.153:/home/ipat/ipat-production
 
 - ssh to server- cd into ipat-staging
 
 - load into docker 
-docker load -i ipat-staging-nginxe.tar 
+docker load -i ipat-staging-nginx.tar 
+docker load -i ipat-production-nginx.tar 
 
 ====================================================
-IMPORTANT: set spring.profiles.active in application.properties in every module(user,admin,article-manager) to staging,staging-secret
+IMPORTANT: set spring.profiles.active in application.properties in every module(user,admin,article-manager) 
+to staging,staging-secret/production,production-secret
 
 - build api container
 docker build -f Dockerfile-api -t ipat-staging-api .
+docker build -f Dockerfile-api -t ipat-production-api .
 
 - save as tar
 docker save -o ipat-staging-api.tar ipat-staging-api
+docker save -o ipat-production-api.tar ipat-production-api
 
 - scp to server
 scp ipat-staging-api.tar ipat@212.122.43.153:/home/ipat/ipat-staging
+scp ipat-production-api.tar ipat@212.122.43.153:/home/ipat/ipat-production
 
 - ssh to server- cd into ipat-staging
 
 - load into docker 
 docker load -i ipat-staging-api.tar 
+docker load -i ipat-production-api.tar 
