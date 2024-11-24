@@ -13,10 +13,10 @@
     <a routerLink="/plant" [routerLinkActive]="'border-bottom'">{{ 'plantTree' | translate }}</a>
     <a routerLink="/projectReports" [routerLinkActive]="'border-bottom'">{{
       'projects' | translate
-    }}</a>
+      }}</a>
     <a routerLink="/explore" [routerLinkActive]="'border-bottom'" (click)="resetTree()">{{
       'explore' | translate
-    }}</a>
+      }}</a>
     <a routerLink="/blog" [routerLinkActive]="'border-bottom'">{{ 'blog' | translate }}</a>
   </div>
   <div
@@ -64,5 +64,5 @@
   (clickedLogin)="loginClicked(); toggleMenu()"
   (clickedLogout)="logoutClicked(); toggleMenu()"
   *ngIf="menuOpened"
-  [loggedIn]="loggedIn"
+  [loggedIn]="loggedIn$ | async"
 ></app-mobile-menu>
