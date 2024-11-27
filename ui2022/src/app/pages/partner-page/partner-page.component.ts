@@ -47,7 +47,9 @@ export class PartnerPageComponent implements OnInit, OnDestroy {
             articleImages.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].imageFileName);
           }
           for (let j = 0; j < this.partners[i].paragraphs.length; j++) {
+          if (this.partners[i].paragraphs[j].imageFileName) {
             articleImages.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.partners[i].id + '/' + encodeURI(this.partners[i].paragraphs[j].imageFileName));
+            }
           }
           this.articleImageUrls.push(articleImages);
         }

@@ -50,11 +50,12 @@ export class BlogArticlePageComponent implements OnInit {
     this.blogArticleSub = this.blogArticle$.subscribe((article) => {
       this.articleImageUrls = []
       if (article) {
-        console.log(article)
         this.blogArticle = article;
         this.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + article.id + '/' + encodeURI(article.imageFileName);
         for (let j = 0; j < article.paragraphs.length; j++) {
-          this.articleImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + article.id + '/' + encodeURI(article.paragraphs[j].imageFileName));
+          if (article.paragraphs[j].imageFileName) {
+            this.articleImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + article.id + '/' + encodeURI(article.paragraphs[j].imageFileName));
+          }
         }
       }
     });

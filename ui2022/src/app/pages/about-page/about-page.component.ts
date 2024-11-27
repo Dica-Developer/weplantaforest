@@ -40,7 +40,9 @@ export class AboutPageComponent implements OnInit, OnDestroy {
           let images = {mainImageUrl: '', paragraphImageUrls: []};
           images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.aboutUs[i].id + '/' + encodeURI(this.aboutUs[i].imageFileName);
           for (let j = 0; j < this.aboutUs[i].paragraphs.length; j++) {
+          if (this.aboutUs[i].paragraphs[j].imageFileName) {
             images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.aboutUs[i].id + '/' + encodeURI(this.aboutUs[i].paragraphs[j].imageFileName));
+            }
           }
           this.articleImageUrls.push(images);
         }

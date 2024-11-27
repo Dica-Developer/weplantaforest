@@ -47,7 +47,9 @@ export class AwardsPageComponent implements OnInit, OnDestroy {
             images.mainImageUrl = environment.backendArticleManagerUrl + '/article/image/' + this.awards[i].id + '/' + encodeURI(this.awards[i].imageFileName);
           }
           for (let j = 0; j < this.awards[i].paragraphs.length; j++) {
+          if (this.awards[i].paragraphs[j].imageFileName) {
             images.paragraphImageUrls.push(environment.backendArticleManagerUrl + '/article/image/' + this.awards[i].id + '/' + encodeURI(this.awards[i].paragraphs[j].imageFileName));
+            }
           }
           this.articleImageUrls.push(images);
         }
