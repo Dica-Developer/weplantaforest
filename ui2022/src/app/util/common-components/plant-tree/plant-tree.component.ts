@@ -75,7 +75,7 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
 
           if (projects.length < 3) {
             for (let i = 0; i < projects.length; i++) {
-              for (let article of projects[i].articles) {
+              for (let article of projects[i]?.articles) {
                 if (article.amount - article.alreadyPlanted > 0) {
                   this.createTree(article, profileDetails)
                   break;
@@ -84,7 +84,7 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
             }
           } else {
             for (let i = 0; i < 3; i++) {
-              for (let article of projects[i].articles) {
+              for (let article of projects[i]?.articles) {
                 if (article.amount - article.alreadyPlanted > 0) {
                   this.createTree(article, profileDetails)
                   break;
