@@ -1,12 +1,11 @@
 <div class="is-flex is-flex-direction-column padding-top-2 padding-left-2 padding-right-2">
-  <div class="is-flex is-justify-content-space-between is-align-items-center w-100"
-  flex-grow:1>
-    <h2>{{ 'ranking' | translate | titlecase }}</h2>
-      <mat-icon routerLink="ranking"
-          [matTooltip]="'more' | translate"
-      >
-       emoji_events
-      </mat-icon>
+  <div class="padding-bottom-2 is-flex is-justify-content-space-between is-align-items-center w-100">
+    <h2 style="margin:0">{{ 'ranking' | translate }}</h2>
+    <mat-icon routerLink="ranking"
+      [matTooltip]="'more' | translate"
+    >
+      emoji_events
+    </mat-icon>
   </div>
 
   <app-ranking-item
