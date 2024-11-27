@@ -43,7 +43,7 @@ export class RankingService {
   loadLatestTrees() {
     return this.http.get(
       environment.backendUrl +
-        '/ranking/lastPlantedTrees?page=1&size=4',
+        '/ranking/lastPlantedTrees?page=0&size=4',
     );
   }
 }
