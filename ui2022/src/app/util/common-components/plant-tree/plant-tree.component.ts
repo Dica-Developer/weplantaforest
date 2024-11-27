@@ -13,7 +13,7 @@ import { ActiveProjectArticle } from '../../../store/project.store';
 import { addPlantbagItem, resetPlantbag } from '../../../store/plantbag.store';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { LanguageHelper } from '../../helper/language.helper';
 import { getAllTrees, selectAllTreeCount } from 'src/app/store/tree.store';
@@ -28,6 +28,7 @@ import { TreeIconComponent } from '../icons/tree-icon/tree-icon.component';
     ButtonComponent,
     RouterLink,
     NgFor,
+    NgIf,
     TranslateModule,
     TreeIconComponent,
     AsyncPipe
@@ -75,21 +76,11 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
 
           if (projects.length < 3) {
             for (let i = 0; i < projects.length; i++) {
-              for (let article of projects[i]?.articles) {
-                if (article.amount - article.alreadyPlanted > 0) {
-                  this.createTree(article, profileDetails)
-                  break;
-                }
-              }
+              this.createTree(projects, profileDetails, i)
             }
           } else {
             for (let i = 0; i < 3; i++) {
-              for (let article of projects[i]?.articles) {
-                if (article.amount - article.alreadyPlanted > 0) {
-                  this.createTree(article, profileDetails)
-                  break;
-                }
-              }
+              this.createTree(projects, profileDetails, i)
             }
           }
         }
@@ -105,24 +96,31 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
     }
   }
 
-  createTree(article, profileDetails) {
-    this.trees.push({
-      article,
-      name: this.textHelper.getTextForLanguage(
-        article.treeType.name,
-        profileDetails?.lang ?? this.lanugageHelper.getUserLanguage(),
-      ),
-      urlColor:
-      environment.backendUrl +
-        '/treeType/image/' +
-        article.treeType.treeImageColor +
-        '/1000/1000',
-      urlBW:
-      environment.backendUrl +
-        '/treeType/image/' +
-        article.treeType.treeImageBW +
-        '/1000/1000',
-    });
+  createTree(projects, profileDetails, i) {
+    if (projects[i]?.articles) {
+      for (let article of projects[i]?.articles) {
+        if (article.amount - article.alreadyPlanted > 0) {
+          this.trees.push({
+            article,
+            name: this.textHelper.getTextForLanguage(
+              article.treeType.name,
+              profileDetails?.lang ?? this.lanugageHelper.getUserLanguage(),
+            ),
+            urlColor:
+            environment.backendUrl +
+              '/treeType/image/' +
+              article.treeType.treeImageColor +
+              '/1000/1000',
+            urlBW:
+            environment.backendUrl +
+              '/treeType/image/' +
+              article.treeType.treeImageBW +
+              '/1000/1000',
+          });
+          break;
+        }
+      }
+    }
   }
 
   ngOnDestroy(): void {

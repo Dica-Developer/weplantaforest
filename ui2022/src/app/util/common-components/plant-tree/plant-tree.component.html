@@ -6,7 +6,7 @@
     <app-button label="{{ 'plantNow' | translate }}" (clicked)="routeToPlanting()"></app-button>
   </div>
   <div
-    *ngFor="let tree of trees; let i = index"
+    *ngFor="let tree of trees"
     class="column padding-1 is-one-fifth border-left tree-tile"
     (click)="addTreeToPlantBag(tree)"
   >
