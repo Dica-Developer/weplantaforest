@@ -61,53 +61,68 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
         this.trees = [];
         const projects = [];
         if (activeProjects && activeProjects.length > 0) {
-          for (const project of activeProjects) {
-            if (!project.articles || project.articles.length === 0) {
-              // only start creating trees if there are articles loaded in every project
-              return;
+          for (let project of activeProjects) {
+            if (this.checkIfTreesAreAvailable(project)) {
+              projects.push(project)
             }
           }
+          // sort projects by trees available
+          projects.sort((a, b) => {
+            const availableTreesA = a.amountOfMaximumTreesToPlant - a.amountOfPlantedTrees;
+            const availableTreesB = b.amountOfMaximumTreesToPlant - b.amountOfPlantedTrees;
+            return availableTreesB - availableTreesA; // Descending order
+          });
 
-          // shallow copies of the projects and their articles are needed in order to remove them later
-          for (const project of activeProjects) {
-            const articles = [...project.articles];
-            projects.push({ ...project, articles });
-          }
-
-          for (let i = 0; i < 3; i++) {
-            const projectCount = projects.length;
-            const randomProjectIndex = Math.floor(Math.random() * projectCount);
-            const articleCount = projects[randomProjectIndex].articles.length;
-            const randomArticleIndex = Math.floor(Math.random() * articleCount);
-            const article = projects[randomProjectIndex].articles[randomArticleIndex];
-            if (article.amount - article.alreadyPlanted > 0) {
-              this.trees.push({
-                article,
-                name: this.textHelper.getTextForLanguage(
-                  article.treeType.name,
-                  profileDetails?.lang ?? this.lanugageHelper.getUserLanguage(),
-                ),
-                urlColor:
-                environment.backendUrl +
-                  '/treeType/image/' +
-                  article.treeType.treeImageColor +
-                  '/1000/1000',
-                urlBW:
-                environment.backendUrl +
-                  '/treeType/image/' +
-                  article.treeType.treeImageBW +
-                  '/1000/1000',
-              });
+          if (projects.length < 3) {
+            for (let i = 0; i < projects.length; i++) {
+              for (let article of projects[i].articles) {
+                if (article.amount - article.alreadyPlanted > 0) {
+                  this.createTree(article, profileDetails)
+                  break;
+                }
+              }
             }
-            // remove article from project so it can't be selected again
-            projects[randomProjectIndex].articles.splice(randomArticleIndex, 1);
-            if(projects[randomProjectIndex].articles.length === 0) {
-              // remove project if all articles have been used
-              projects.splice(randomProjectIndex, 1);
+          } else {
+            for (let i = 0; i < 3; i++) {
+              for (let article of projects[i].articles) {
+                if (article.amount - article.alreadyPlanted > 0) {
+                  this.createTree(article, profileDetails)
+                  break;
+                }
+              }
             }
           }
         }
       });
+  }
+
+  checkIfTreesAreAvailable(project) {
+    const availableTrees = project.amountOfMaximumTreesToPlant - project.amountOfPlantedTrees
+    if (availableTrees === 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  createTree(article, profileDetails) {
+    this.trees.push({
+      article,
+      name: this.textHelper.getTextForLanguage(
+        article.treeType.name,
+        profileDetails?.lang ?? this.lanugageHelper.getUserLanguage(),
+      ),
+      urlColor:
+      environment.backendUrl +
+        '/treeType/image/' +
+        article.treeType.treeImageColor +
+        '/1000/1000',
+      urlBW:
+      environment.backendUrl +
+        '/treeType/image/' +
+        article.treeType.treeImageBW +
+        '/1000/1000',
+    });
   }
 
   ngOnDestroy(): void {
