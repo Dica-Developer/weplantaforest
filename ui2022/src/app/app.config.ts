@@ -153,7 +153,7 @@ export const appConfig: ApplicationConfig = {
       useValue: 'de-DE', // 'de-DE' for Germany, 'fr-FR' for France ...
     },
     provideCharts(withDefaultRegisterables()),
-    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(), provideClientHydration()
   ]
 };
