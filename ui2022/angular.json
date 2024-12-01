@@ -40,7 +40,7 @@
             "scripts": [],
             "extractLicenses": false,
             "sourceMap": true,
-            "optimization": false,
+            "optimization": true,
             "namedChunks": true,
             "browser": "src/main.ts",
             "server": "src/main.server.ts",
