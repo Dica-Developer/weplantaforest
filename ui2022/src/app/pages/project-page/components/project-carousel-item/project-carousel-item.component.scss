@@ -1,17 +1,13 @@
 .carousel-item {
   cursor: pointer;
+  overflow: hidden;
 }
 
 .name {
   text-decoration: underline;
 }
 
-.column {
-  padding: 0 !important;
-}
-
-.image {
-  overflow: hidden;
+img {
   border-radius: 2rem;
   width: 4rem!important;
   height: 4rem!important;

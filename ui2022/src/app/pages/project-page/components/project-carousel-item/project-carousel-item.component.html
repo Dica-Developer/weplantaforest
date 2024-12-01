@@ -1,10 +1,8 @@
 <div
-  class="is-flex is-flex-direction-row margin-left-1 is-mobile carousel-item"
+  class="is-flex w-100 is-flex-direction-row margin-right-1 is-mobile carousel-item"
   (click)="linkToProfile()"
 >
-  <div class="image">
-    <img src="{{ imageUrl }}" alt="image" />
-  </div>
+  <img src="{{ imageUrl }}" alt="image" />
   <div class="is-flex is-flex-direction-column padding-left-1 padding-right-1 padding-bottom-1">
     <p class="name">
       {{ _item.name }}
