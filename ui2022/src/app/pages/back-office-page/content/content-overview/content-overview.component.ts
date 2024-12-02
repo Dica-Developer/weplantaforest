@@ -49,7 +49,7 @@ export class ContentOverviewComponent implements OnInit, OnDestroy {
   createArticle() {
     const details: ContentArticleDetails = {
       id: null,
-      articleType: null,
+      articleType: 'Blog',
       createdOn: new Date().getTime(),
       imageDescription: null,
       imageFileName: null,
