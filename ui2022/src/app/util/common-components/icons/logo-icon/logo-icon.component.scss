@@ -4,11 +4,11 @@
   }
 }
 
-.black {
+.svg-icon:active {
+  cursor: pointer;
   path {
     fill: var(--black);
   }
-
 }
 
 @media (hover: hover) {
@@ -16,13 +16,6 @@
     cursor: pointer;
     path {
       fill: var(--black);
-    }
-  }
-
-  .black:hover {
-    cursor: pointer;
-    path {
-      fill: var(--brown);
     }
   }
 }

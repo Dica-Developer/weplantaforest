@@ -2,6 +2,7 @@
   path {
     fill: var(--brown);
   }
+  cursor: default;
 }
 
 .inToolbar {
@@ -19,7 +20,7 @@
 }
 @media (hover: hover) {
   .svg-icon:hover {
-    cursor: default;
+    cursor: pointer;
     path {
       fill: var(--brown);
     }

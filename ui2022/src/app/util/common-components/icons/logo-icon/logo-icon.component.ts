@@ -11,9 +11,6 @@ export class LogoIconComponent implements OnInit {
   width: number = 56;
 
   @Input()
-  black: boolean = false;
-
-  @Input()
   height: number = 56;
 
   constructor() {}
