@@ -109,6 +109,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
           attribution: '...',
         }),
       ],
+      attributionControl: false,
       drawControl: false,
       dragging: !leafletLib.Browser.mobile,
       zoom: 6,
