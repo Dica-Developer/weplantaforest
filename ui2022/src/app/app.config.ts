@@ -45,6 +45,7 @@ import localeEn from '@angular/common/locales/en';
 import localeEnExtra from '@angular/common/locales/extra/en';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
+import { StatisticsEffects, statsReducerFn } from './store/statistics.store';
 
 export const MY_FORMATS = {
   parse: {
@@ -92,6 +93,7 @@ export const appConfig: ApplicationConfig = {
         paymentState: paymentReducerFn,
         contactState: contactReducerFn,
         infrastructureState: infrastructureReducerFn,
+        statisticsState: statsReducerFn,
       }),
       EffectsModule.forRoot([
         AuthEffects,
@@ -113,6 +115,7 @@ export const appConfig: ApplicationConfig = {
         PaymentEffects,
         ContactEffects,
         InfrastructureEffects,
+        StatisticsEffects,
         MomentDateModule,
       ]),
       MatNativeDateModule,

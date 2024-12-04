@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { ChartConfiguration } from 'chart.js';
-import { combineLatest, take } from 'rxjs';
+import { Subscription, combineLatest, take } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { BaseChartDirective } from 'ng2-charts';
-
+import { loadCo2, loadTreesPerOrgType, loadTreesPerYear, loadUsersPerYear, selectCo2, selectTreesPerOrgType, selectTreesPerYear, selectUsersPerYear } from 'src/app/store/statistics.store';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
 @Component({
   selector: 'app-facts-page',
   templateUrl: './facts-page.component.html',
@@ -30,11 +32,16 @@ export class FactsPageComponent implements OnInit {
   amountOfUsersSum: number[] = [];
   amountTreesPerOrg: number[] = [];
   chartsInitialized = false;
+  combinedSub: Subscription;
 
-  getTreesPerYear$ = this.statisticsService.getTreesPerYear();
-  getCo2$ = this.statisticsService.getCo2();
-  getUsersPerYear$ = this.statisticsService.getUsersPerYear();
-  getTreesPerOrgType$ = this.statisticsService.getTreesPerOrgType();
+  getTreesPerYear$ = this.store.select(selectTreesPerYear)
+  getUsersPerYear$ = this.store.select(selectUsersPerYear)
+  getTreesPerOrgType$ = this.store.select(selectTreesPerOrgType)
+  getCo2$ = this.store.select(selectCo2)
+  treesPerYearSub: Subscription;
+  usersPerYearSub: Subscription;
+  treesPerOrgTypeSub: Subscription;
+  co2Sub: Subscription;
 
   public barChartLegend = false;
   public barChartPlugins = [];
@@ -44,11 +51,19 @@ export class FactsPageComponent implements OnInit {
   public pieChartoptions: ChartConfiguration<'bar'>['options'] = {
     responsive: false,
   };
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
   constructor(
+    private store: Store<AppState>,
     private statisticsService: StatisticsService,
     private translateService: TranslateService,
-    private platformHelper: PlatformHelper
-  ) {}
+    public platformHelper: PlatformHelper
+  ) {
+    this.store.dispatch(loadTreesPerYear())
+    this.store.dispatch(loadUsersPerYear())
+    this.store.dispatch(loadTreesPerOrgType())
+    this.store.dispatch(loadCo2())
+  }
 
   ngOnInit(): void {
     this.platformHelper.scrollTop()
@@ -58,35 +73,42 @@ export class FactsPageComponent implements OnInit {
     let educationalOrg = this.translateService.instant('EDUCATIONAL');
     this.piechartLabels.push(privateOrg, commercialOrg, nonprofitOrg, educationalOrg);
 
-    combineLatest([
+
+    this.treesPerYearSub = this.getTreesPerYear$.subscribe(treesPerYear => {
+      (treesPerYear as any[]).forEach((year, index) => {
+        this.labels.push(year.label);
+        this.amountOfTrees.push(year.amount);
+        if (index === 0) {
+          this.amountOfTreesSum.push(year.amount);
+        } else {
+          this.amountOfTreesSum.push(this.amountOfTreesSum[index - 1] + year.amount);
+        }
+      });
+    })
+    this.usersPerYearSub = this.getUsersPerYear$.subscribe(usersPerYear => {
+      (usersPerYear as any[]).forEach((year, index) => {
+        this.amountOfUsers.push(year.amount);
+        if (index === 0) {
+          this.amountOfUsersSum.push(year.amount);
+        } else {
+          this.amountOfUsersSum.push(this.amountOfUsersSum[index - 1] + year.amount);
+        }
+      });
+    })
+    this.treesPerOrgTypeSub = this.getTreesPerOrgType$.subscribe(treesPerOrg => {
+      (treesPerOrg as any[]).forEach((orgType, index) => {
+        this.amountTreesPerOrg.push(orgType.amount);
+      });
+    })
+    this.combinedSub = combineLatest([
       this.getTreesPerYear$,
-      this.getCo2$,
       this.getUsersPerYear$,
+      this.getCo2$,
       this.getTreesPerOrgType$,
-    ]).pipe(take(1)).subscribe(([treesPerYear, co2, usersPerYear, treesPerOrg]) => {
-        (treesPerYear as any[]).forEach((year, index) => {
-          this.labels.push(year.label);
-          this.amountOfTrees.push(year.amount);
-          if (index === 0) {
-            this.amountOfTreesSum.push(year.amount);
-          } else {
-            this.amountOfTreesSum.push(this.amountOfTreesSum[index - 1] + year.amount);
-          }
-        });
-        (co2 as any[]).forEach((year, index) => {
-          this.co2Saved.push(year.co2);
-        });
-        (usersPerYear as any[]).forEach((year, index) => {
-          this.amountOfUsers.push(year.amount);
-          if (index === 0) {
-            this.amountOfUsersSum.push(year.amount);
-          } else {
-            this.amountOfUsersSum.push(this.amountOfUsersSum[index - 1] + year.amount);
-          }
-        });
-        (treesPerOrg as any[]).forEach((orgType, index) => {
-          this.amountTreesPerOrg.push(orgType.amount);
-        });
+    ]).subscribe(([treesPerYear, usersPerYear, co2, treesPerOrg]) => {
+        if (this.platformHelper.isBrowser) {
+          this.chart?.update()
+        }
         this.chartsInitialized = true;
       });
   }

@@ -24,6 +24,7 @@
       <div class="w-100">
         <div class="margin-bottom-1">{{ 'newTrees' | translate }}</div>
         <canvas
+          *ngIf="platformHelper.isBrowser"
           baseChart
           [data]="amountPerYearData"
           [options]="barChartOptions"
@@ -36,6 +37,7 @@
       <div class="w-100">
         <div class="margin-bottom-1">{{ 'total' | translate }}</div>
         <canvas
+          *ngIf="platformHelper.isBrowser"
           baseChart
           [data]="amountOfTreesSumData"
           [options]="barChartOptions"
@@ -52,6 +54,7 @@
     <div class="is-flex is-flex-direction-column is-justify-content-center">
       <div class="margin-bottom-1">{{ 'total' | translate }}</div>
       <canvas
+        *ngIf="platformHelper.isBrowser"
         baseChart
         [data]="co2SumData"
         [options]="barChartOptions"
@@ -68,6 +71,7 @@
       <div class="w-100">
         <div class="margin-bottom-1">{{ 'newUsers' | translate }}</div>
         <canvas
+          *ngIf="platformHelper.isBrowser"
           baseChart
           [data]="usersPerYearData"
           [options]="barChartOptions"
@@ -80,6 +84,7 @@
       <div class="w-100">
         <div class="margin-bottom-1">{{ 'total' | translate }}</div>
         <canvas
+          *ngIf="platformHelper.isBrowser"
           baseChart
           [data]="usersSumData"
           [options]="barChartOptions"
@@ -101,6 +106,7 @@
         <li style="color: rgb(50, 171, 31); font-weight: bold">{{ 'schools' | translate }}</li>
       </ul>
       <canvas
+        *ngIf="platformHelper.isBrowser"
         baseChart
         [data]="treesPerOrgData"
         [options]="pieChartoptions"

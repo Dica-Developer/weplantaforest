@@ -19,6 +19,7 @@ import { BlogState } from './blog.store';
 import { PaymentState } from './payment.store';
 import { ContactState } from './contact.store';
 import { InfrastrutureState } from './infrastructure.store';
+import { StatisticsState } from './statistics.store';
 
 export interface PagedData<T> {
   totalPages: number;
@@ -51,4 +52,5 @@ export interface AppState {
   readonly paymentState: PaymentState;
   readonly contactState: ContactState;
   readonly infrastructureState: InfrastrutureState;
+  readonly statisticsState: StatisticsState;
 }
