@@ -7,7 +7,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { BaseChartDirective } from 'ng2-charts';
-import { loadCo2, loadTreesPerOrgType, loadTreesPerYear, loadUsersPerYear, selectCo2, selectStatsLoading, selectTreesPerOrgType, selectTreesPerYear, selectUsersPerYear } from 'src/app/store/statistics.store';
+import { loadCo2, loadTreesPerOrgType, loadTreesPerYear, loadUsersPerYear, selectCo2, selectCo2Loading, selectTreesPerOrgType, selectTreesPerOrgTypeLoading, selectTreesPerYear, selectTreesPerYearLoading, selectUsersPerYear, selectUsersPerYearLoading } from 'src/app/store/statistics.store';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -36,7 +36,10 @@ export class FactsPageComponent implements OnInit {
   amountTreesPerOrg: number[] = [];
   chartsInitialized = false;
   combinedSub: Subscription;
-  isLoading: Observable<boolean> = this.store.select(selectStatsLoading)
+  treesPerYearLoading: Observable<boolean> = this.store.select(selectTreesPerYearLoading)
+  co2Loading: Observable<boolean> = this.store.select(selectCo2Loading)
+  usersPerYearLoading: Observable<boolean> = this.store.select(selectUsersPerYearLoading)
+  treesPerOrgTypeLoading: Observable<boolean> = this.store.select(selectTreesPerOrgTypeLoading)
 
   getTreesPerYear$ = this.store.select(selectTreesPerYear)
   getUsersPerYear$ = this.store.select(selectUsersPerYear)

@@ -6,7 +6,10 @@ import { AppState } from './app.state';
 import { StatisticsService } from '../services/statistics.service';
 
 export interface StatisticsState {
-  statsLoading: boolean;
+  treesPerYearLoading: boolean;
+  co2Loading: boolean;
+  usersLoading: boolean;
+  treesOrgTypeLoading: boolean;
   treesPerYear: any[];
   co2: any[];
   usersPerYear: any[];
@@ -14,7 +17,10 @@ export interface StatisticsState {
 }
 
 export const intialState: StatisticsState = {
-  statsLoading: false,
+  treesPerYearLoading: false,
+  co2Loading: false,
+  usersLoading: false,
+  treesOrgTypeLoading: false,
   treesPerYear: [],
   co2: [],
   usersPerYear: [],
@@ -54,42 +60,42 @@ const statsReducer = createReducer(
   intialState,
   on(loadTreesPerYear, (state) => ({
     ...state,
-    statsLoading: true,
+    treesPerYearLoading: true,
     treesPerYear: []
   })),
   on(loadTreesPerYearSuccess, (state, {treesPerYear}) => ({
     ...state,
-    statsLoading: false,
+    treesPerYearLoading: false,
     treesPerYear: treesPerYear
   })),
   on(loadCo2, (state) => ({
     ...state,
-    statsLoading: true,
+    co2Loading: true,
     co2: []
   })),
   on(loadCo2Success, (state, {co2}) => ({
     ...state,
-    statsLoading: false,
+    co2Loading: false,
     co2: co2
   })),
   on(loadUsersPerYear, (state) => ({
     ...state,
-    statsLoading: true,
+    usersLoading: true,
     usersPerYear: []
   })),
   on(loadUsersPerYearSuccess, (state, {usersPerYear}) => ({
     ...state,
-    statsLoading: false,
+    usersLoading: false,
     usersPerYear: usersPerYear
   })),
   on(loadTreesPerOrgType, (state) => ({
     ...state,
-    statsLoading: true,
+    treesOrgTypeLoading: true,
     treesPerOrgType: []
   })),
   on(loadTreesPerOrgTypeSuccess, (state, {treesPerOrgType}) => ({
     ...state,
-    statsLoading: false,
+    treesOrgTypeLoading: false,
     treesPerOrgType: treesPerOrgType
   })),
 );
@@ -100,13 +106,25 @@ export function statsReducerFn(state, action) {
 
 export const statsFeature = (state: AppState) => state.statisticsState;
 
+export const selectTreesPerYearLoading = createSelector(
+  statsFeature,
+  (state: StatisticsState) => state.treesPerYearLoading,
+);
+export const selectCo2Loading = createSelector(
+  statsFeature,
+  (state: StatisticsState) => state.co2Loading,
+);
+export const selectUsersPerYearLoading = createSelector(
+  statsFeature,
+  (state: StatisticsState) => state.usersLoading,
+);
+export const selectTreesPerOrgTypeLoading = createSelector(
+  statsFeature,
+  (state: StatisticsState) => state.treesOrgTypeLoading,
+);
 export const selectTreesPerYear = createSelector(
   statsFeature,
   (state: StatisticsState) => state.treesPerYear,
-);
-export const selectStatsLoading = createSelector(
-  statsFeature,
-  (state: StatisticsState) => state.statsLoading,
 );
 export const selectCo2 = createSelector(
   statsFeature,

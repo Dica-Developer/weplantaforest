@@ -18,13 +18,13 @@
 </div>
 <div *ngIf="chartsInitialized" class="is-flex is-flex-direction-column padding-1 facts-page">
   <h2 class="margin-top-2 center">{{ 'facts' | translate }}</h2>
-  <div class="is-flex w-100 is-justify-content-center" *ngIf="!(isLoading | async)">
-    <mat-spinner *ngIf="isLoading | async"></mat-spinner>
-  </div>
-  <div *ngIf="!(isLoading | async)">
+  <div>
     <div class="margin-bottom-2">
       <h4>{{ 'plantedTrees' | translate }}</h4>
-      <div *ngIf="chartsInitialized" class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
+      <div class="is-flex w-100 is-justify-content-center" *ngIf="(treesPerYearLoading | async)">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="chartsInitialized && !(treesPerYearLoading | async)" class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
         <div class="w-100">
           <div class="margin-bottom-1">{{ 'newTrees' | translate }}</div>
           <canvas
@@ -55,7 +55,10 @@
     </div>
     <div class="margin-bottom-2">
       <h4 [innerHTML]="'CO2Trapped' | translate"></h4>
-      <div class="is-flex is-flex-direction-column is-justify-content-center">
+      <div class="is-flex w-100 is-justify-content-center" *ngIf="(co2Loading | async)">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="chartsInitialized && !(co2Loading | async)" class="is-flex is-flex-direction-column is-justify-content-center">
         <div class="margin-bottom-1">{{ 'total' | translate }}</div>
         <canvas
           *ngIf="platformHelper.isBrowser"
@@ -71,7 +74,10 @@
     </div>
     <div class="margin-bottom-2">
       <h4>{{ 'userNumbers' | translate }}</h4>
-      <div class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
+      <div class="is-flex w-100 is-justify-content-center" *ngIf="(usersPerYearLoading | async)">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="!(usersPerYearLoading | async)" class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
         <div class="w-100">
           <div class="margin-bottom-1">{{ 'newUsers' | translate }}</div>
           <canvas
@@ -102,7 +108,10 @@
     </div>
     <div class="margin-bottom-2">
       <h4>{{ 'plantedTreesPerType' | translate }}</h4>
-      <div class="is-flex is-flex-direction-row is-justify-content-space-around canvas-row">
+      <div class="is-flex w-100 is-justify-content-center" *ngIf="(treesPerOrgTypeLoading | async)">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="!(treesPerOrgTypeLoading | async)" class="is-flex is-flex-direction-row is-justify-content-space-around canvas-row">
         <ul>
           <li style="color: rgb(130, 171, 31); font-weight: bold">{{ 'PRIVATE' | translate }}</li>
           <li style="color: rgb(70, 100, 31); font-weight: bold">{{ 'COMMERCIAL' | translate }}</li>
