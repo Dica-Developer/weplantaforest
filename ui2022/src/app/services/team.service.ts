@@ -84,9 +84,9 @@ export class TeamService {
     );
   }
 
-  updateTeamImage(teamId: number, image: any) {
+  updateTeamImage(teamName: String, image: any) {
     const formData = new FormData();
-    formData.append('teamId', teamId + '');
+    formData.append('teamName', teamName + '');
     formData.append('file', image);
     return this.http.post(environment.backendUrl + '/team/image/upload', formData, {
       responseType: 'text',

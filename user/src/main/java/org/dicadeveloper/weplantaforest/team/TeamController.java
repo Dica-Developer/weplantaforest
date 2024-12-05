@@ -62,18 +62,8 @@ public class TeamController {
 
     @RequestMapping(value = Uris.TEAM_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
-        File directory = new File(FileSystemInjector.getTeamFolder());
-        String[] files = directory.list();
-        String teamImageName = "";
-        for (String fileName : files) {
-            if (fileName.startsWith(imageName + ".")) {
-                teamImageName = fileName;
-                break;
-            }
-        }
-        String filePath = FileSystemInjector.getTeamFolder() + "/" + teamImageName;
+        String filePath = FileSystemInjector.getTeamFolder() + "/" + imageName;
         try {
-
             imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
@@ -83,11 +73,12 @@ public class TeamController {
     }
 
     @RequestMapping(value = Uris.TEAM_IMAGE_UPLOAD, method = RequestMethod.POST)
-    public ResponseEntity<?> uploadTeamImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId, @RequestParam("file") MultipartFile file) throws IpatException {
+    public ResponseEntity<?> uploadTeamImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String teamName, @RequestParam("file") MultipartFile file) throws IpatException {
         User user = tokenAuthenticationService.getUserFromToken(userToken);
-        if (null != user && teamService.isTeamAdmin(user.getId(), teamId)) {
-            teamService.uploadTeamImage(teamId, file);
-            return new ResponseEntity<>(HttpStatus.OK);
+        Team team = teamRepository.findByName(teamName);
+        if (null != user && teamService.isTeamAdmin(user.getId(), team.getId())) {
+            String imageName = teamService.uploadTeamImage(teamName, file);
+            return new ResponseEntity<>(imageName, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -100,6 +91,7 @@ public class TeamController {
             try {
                 Long teamId = Long.parseLong(teamName);
                 Team team = teamRepository.findById(teamId).orElse(null);
+
                 return new ResponseEntity<>("https://www.iplantatree.org/team/" + UrlEscapers.urlPathSegmentEscaper().escape(team.getName()), HttpStatus.PAYMENT_REQUIRED);
             } catch (Exception e) {
                 LOG.warn("Did not find team with id: " + teamName, e);

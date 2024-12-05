@@ -81,7 +81,6 @@ public class TreeTypeController {
     int slashIndex = trimmedName.indexOf("/") != -1 ? trimmedName.indexOf("/") : trimmedName.length();
     trimmedName = trimmedName.substring(0, slashIndex);
     String imageName = trimmedName + "_" + imageType + fileEnding;
-    System.out.println(imageName);
     if (!file.isEmpty()) {
       try {
         imageName = _imageHelper.storeImage(file, imageFolder, imageName, true);
