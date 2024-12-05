@@ -104,6 +104,10 @@ export const selectTreesPerYear = createSelector(
   statsFeature,
   (state: StatisticsState) => state.treesPerYear,
 );
+export const selectStatsLoading = createSelector(
+  statsFeature,
+  (state: StatisticsState) => state.statsLoading,
+);
 export const selectCo2 = createSelector(
   statsFeature,
   (state: StatisticsState) => state.co2,

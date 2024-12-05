@@ -18,28 +18,49 @@
 </div>
 <div *ngIf="chartsInitialized" class="is-flex is-flex-direction-column padding-1 facts-page">
   <h2 class="margin-top-2 center">{{ 'facts' | translate }}</h2>
-  <div class="margin-bottom-2">
-    <h4>{{ 'plantedTrees' | translate }}</h4>
-    <div *ngIf="chartsInitialized" class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
-      <div class="w-100">
-        <div class="margin-bottom-1">{{ 'newTrees' | translate }}</div>
-        <canvas
-          *ngIf="platformHelper.isBrowser"
-          baseChart
-          [data]="amountPerYearData"
-          [options]="barChartOptions"
-          [plugins]="barChartPlugins"
-          [legend]="barChartLegend"
-          [type]="'bar'"
-        >
-        </canvas>
+  <div class="is-flex w-100 is-justify-content-center" *ngIf="!(isLoading | async)">
+    <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+  </div>
+  <div *ngIf="!(isLoading | async)">
+    <div class="margin-bottom-2">
+      <h4>{{ 'plantedTrees' | translate }}</h4>
+      <div *ngIf="chartsInitialized" class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
+        <div class="w-100">
+          <div class="margin-bottom-1">{{ 'newTrees' | translate }}</div>
+          <canvas
+            *ngIf="platformHelper.isBrowser"
+            baseChart
+            [data]="amountPerYearData"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [type]="'bar'"
+          >
+          </canvas>
+        </div>
+        <div class="w-100">
+          <div class="margin-bottom-1">{{ 'total' | translate }}</div>
+          <canvas
+            *ngIf="platformHelper.isBrowser"
+            baseChart
+            [data]="amountOfTreesSumData"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [type]="'line'"
+          >
+          </canvas>
+        </div>
       </div>
-      <div class="w-100">
+    </div>
+    <div class="margin-bottom-2">
+      <h4 [innerHTML]="'CO2Trapped' | translate"></h4>
+      <div class="is-flex is-flex-direction-column is-justify-content-center">
         <div class="margin-bottom-1">{{ 'total' | translate }}</div>
         <canvas
           *ngIf="platformHelper.isBrowser"
           baseChart
-          [data]="amountOfTreesSumData"
+          [data]="co2SumData"
           [options]="barChartOptions"
           [plugins]="barChartPlugins"
           [legend]="barChartLegend"
@@ -48,73 +69,57 @@
         </canvas>
       </div>
     </div>
-  </div>
-  <div class="margin-bottom-2">
-    <h4 [innerHTML]="'CO2Trapped' | translate"></h4>
-    <div class="is-flex is-flex-direction-column is-justify-content-center">
-      <div class="margin-bottom-1">{{ 'total' | translate }}</div>
-      <canvas
-        *ngIf="platformHelper.isBrowser"
-        baseChart
-        [data]="co2SumData"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [legend]="barChartLegend"
-        [type]="'line'"
-      >
-      </canvas>
+    <div class="margin-bottom-2">
+      <h4>{{ 'userNumbers' | translate }}</h4>
+      <div class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
+        <div class="w-100">
+          <div class="margin-bottom-1">{{ 'newUsers' | translate }}</div>
+          <canvas
+            *ngIf="platformHelper.isBrowser"
+            baseChart
+            [data]="usersPerYearData"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [type]="'bar'"
+          >
+          </canvas>
+        </div>
+        <div class="w-100">
+          <div class="margin-bottom-1">{{ 'total' | translate }}</div>
+          <canvas
+            *ngIf="platformHelper.isBrowser"
+            baseChart
+            [data]="usersSumData"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [type]="'line'"
+          >
+          </canvas>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="margin-bottom-2">
-    <h4>{{ 'userNumbers' | translate }}</h4>
-    <div class="is-flex is-flex-direction-row is-justify-content-space-between canvas-row">
-      <div class="w-100">
-        <div class="margin-bottom-1">{{ 'newUsers' | translate }}</div>
+    <div class="margin-bottom-2">
+      <h4>{{ 'plantedTreesPerType' | translate }}</h4>
+      <div class="is-flex is-flex-direction-row is-justify-content-space-around canvas-row">
+        <ul>
+          <li style="color: rgb(130, 171, 31); font-weight: bold">{{ 'PRIVATE' | translate }}</li>
+          <li style="color: rgb(70, 100, 31); font-weight: bold">{{ 'COMMERCIAL' | translate }}</li>
+          <li style="color: rgb(10, 50, 31); font-weight: bold">{{ 'ngos' | translate }}</li>
+          <li style="color: rgb(50, 171, 31); font-weight: bold">{{ 'schools' | translate }}</li>
+        </ul>
         <canvas
           *ngIf="platformHelper.isBrowser"
           baseChart
-          [data]="usersPerYearData"
-          [options]="barChartOptions"
+          [data]="treesPerOrgData"
+          [options]="pieChartoptions"
           [plugins]="barChartPlugins"
           [legend]="barChartLegend"
-          [type]="'bar'"
+          [type]="'pie'"
         >
         </canvas>
       </div>
-      <div class="w-100">
-        <div class="margin-bottom-1">{{ 'total' | translate }}</div>
-        <canvas
-          *ngIf="platformHelper.isBrowser"
-          baseChart
-          [data]="usersSumData"
-          [options]="barChartOptions"
-          [plugins]="barChartPlugins"
-          [legend]="barChartLegend"
-          [type]="'line'"
-        >
-        </canvas>
-      </div>
-    </div>
-  </div>
-  <div class="margin-bottom-2">
-    <h4>{{ 'plantedTreesPerType' | translate }}</h4>
-    <div class="is-flex is-flex-direction-row is-justify-content-space-around canvas-row">
-      <ul>
-        <li style="color: rgb(130, 171, 31); font-weight: bold">{{ 'PRIVATE' | translate }}</li>
-        <li style="color: rgb(70, 100, 31); font-weight: bold">{{ 'COMMERCIAL' | translate }}</li>
-        <li style="color: rgb(10, 50, 31); font-weight: bold">{{ 'ngos' | translate }}</li>
-        <li style="color: rgb(50, 171, 31); font-weight: bold">{{ 'schools' | translate }}</li>
-      </ul>
-      <canvas
-        *ngIf="platformHelper.isBrowser"
-        baseChart
-        [data]="treesPerOrgData"
-        [options]="pieChartoptions"
-        [plugins]="barChartPlugins"
-        [legend]="barChartLegend"
-        [type]="'pie'"
-      >
-      </canvas>
     </div>
   </div>
 </div>

@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { ChartConfiguration } from 'chart.js';
-import { Subscription, combineLatest, take } from 'rxjs';
+import { Observable, Subscription, combineLatest, take } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { BaseChartDirective } from 'ng2-charts';
-import { loadCo2, loadTreesPerOrgType, loadTreesPerYear, loadUsersPerYear, selectCo2, selectTreesPerOrgType, selectTreesPerYear, selectUsersPerYear } from 'src/app/store/statistics.store';
+import { loadCo2, loadTreesPerOrgType, loadTreesPerYear, loadUsersPerYear, selectCo2, selectStatsLoading, selectTreesPerOrgType, selectTreesPerYear, selectUsersPerYear } from 'src/app/store/statistics.store';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-facts-page',
   templateUrl: './facts-page.component.html',
@@ -19,7 +20,9 @@ import { AppState } from 'src/app/store/app.state';
     BaseChartDirective,
     RouterLink,
     NgIf,
+    AsyncPipe,
     TranslateModule,
+    MatProgressSpinnerModule
   ],
 })
 export class FactsPageComponent implements OnInit {
@@ -33,6 +36,7 @@ export class FactsPageComponent implements OnInit {
   amountTreesPerOrg: number[] = [];
   chartsInitialized = false;
   combinedSub: Subscription;
+  isLoading: Observable<boolean> = this.store.select(selectStatsLoading)
 
   getTreesPerYear$ = this.store.select(selectTreesPerYear)
   getUsersPerYear$ = this.store.select(selectUsersPerYear)
