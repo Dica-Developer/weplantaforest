@@ -44,10 +44,10 @@
         <img
           src="{{ (profileDetails$ | async).profileImageUrl + '?' + randomNumber }}"
           alt="profile image"
-          *ngIf="(profileDetails$ | async).profileImageUrl && !imagePreviewSrc"
+          *ngIf="(profileDetails$ | async).imageFileName && !imagePreviewSrc"
         />
         <img
-          *ngIf="!(profileDetails$ | async).profileImageUrl"
+          *ngIf="!(profileDetails$ | async).imageFileName && !imagePreviewSrc"
           src="assets/default_user.jpg"
           alt="profile image"
         />
