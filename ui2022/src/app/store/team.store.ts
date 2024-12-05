@@ -30,7 +30,7 @@ export interface TeamDetails {
   co2Data: Co2Data;
   regDate: number;
   type: string;
-  teamLeader: string;
+  adminName: string;
   memberCount: string;
   description: string;
   imageFileName: string;
