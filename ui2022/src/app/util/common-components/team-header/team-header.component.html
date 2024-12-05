@@ -32,13 +32,13 @@
     </div>
   </div>
   <div class="column is-half padding-2 is-flex is-justify-content-center">
-    <div class="imageWrapper pointer" (click)="routeToTeam()">
+    <div class="imageWrapper" [class.pointer]="router.url.includes('user')" (click)="routeToTeam()">
       <img
       src="{{ teamDetails.teamImageUrl + '?' + randomNumber }}"
       alt=""
-      *ngIf="teamDetails.teamImageUrl"
+      *ngIf="teamDetails.teamImageUrl && (teamDetails.imageFileName !== null)"
     />
-      <img *ngIf="!teamDetails.teamImageUrl" src="assets/default_user.jpg" alt="" />
+      <img *ngIf="!teamDetails.imageFileName" src="assets/default_user.jpg" alt="" />
     </div>
   </div>
 </div>

@@ -5,8 +5,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppState } from '../../../../app/store/app.state';
-import { selectHasTeam, selectUploadingImage } from '../../../store/profile.store';
+import { ProfileDetails, selectHasTeam, selectUploadingImage } from '../../../store/profile.store';
 import {
+    TeamDetails,
   deleteTeam,
   joinTeam,
   leaveTeam,
@@ -39,8 +40,8 @@ import { TeamDeleteConfirmationComponent } from '../team-delete-confirmation/tea
   ],
 })
 export class TeamHeaderComponent implements OnInit {
-  @Input() teamDetails;
-  @Input() profileDetails;
+  @Input() teamDetails: TeamDetails;
+  @Input() profileDetails: ProfileDetails;
   @Input() isTeampage = false;
   isAdmin$ = this.store.select(selectIsAdmin);
   isMember$ = this.store.select(selectIsMember);
@@ -55,7 +56,7 @@ export class TeamHeaderComponent implements OnInit {
   randomNumber: number = 0;
 
   constructor(
-    private router: Router,
+    public router: Router,
     private store: Store<AppState>,
     private snackbar: MatSnackBar,
     private translateService: TranslateService,
