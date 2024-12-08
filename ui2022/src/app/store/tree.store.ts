@@ -30,6 +30,10 @@ export const initialState: TreeState = {
 
 const treeReducer = createReducer(
   initialState,
+  on(getAllTrees, (state) => ({
+    ...state,
+    allTrees: null,
+  })),
   on(getAllTreesSuccess, (state, action) => ({
     ...state,
     allTrees: action.co2Data,
