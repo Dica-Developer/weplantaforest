@@ -14,14 +14,13 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class TeamReportData {
 
-    public TeamReportData(Long id, String name, Long timeStamp, String adminName, String description, Long memberCount, String imageFileName) {
+    public TeamReportData(Long id, String name, Long timeStamp, String adminName, String description, Long memberCount) {
         this.teamId = id;
         this.teamName = name;
         this.regDate = timeStamp;
         this.adminName = adminName;
         this.description = description;
         this.memberCount = memberCount;
-        this.imageFileName = imageFileName;
     }
 
     @NonNull
@@ -29,9 +28,6 @@ public class TeamReportData {
 
     @NonNull
     String teamName;
-
-    @NonNull
-    String imageFileName;
 
     @NonNull
     Long regDate;

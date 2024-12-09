@@ -82,6 +82,7 @@ export class EditTeamPageComponent implements OnInit, OnDestroy {
     if (this.imagePreviewSrc) {
       this.store.dispatch(
         updateTeamImage({
+          teamId: this.teamForm.value.teamId,
           teamName: this.teamForm.value.teamName,
           image: this.imageFile,
         }),

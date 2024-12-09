@@ -28,6 +28,7 @@ export interface TeamDetails {
   teamName: string;
   rank: number;
   co2Data: Co2Data;
+  homepage: string;
   regDate: number;
   type: string;
   adminName: string;
@@ -113,7 +114,7 @@ export const getTeamTreesSuccess = createAction(
 
 export const updateTeamImage = createAction(
   '[Profile] update Team image',
-  props<{ teamName: string; image: File }>(),
+  props<{ teamId: number; teamName: string; image: File }>(),
 );
 
 export const updateTeamImageSuccess = createAction(
@@ -195,7 +196,7 @@ const teamReducer = createReducer(
       teamDetails: {
         ...details,
         teamImageUrl: details
-          ? `${environment.backendUrl}/team/image/${details.imageFileName}/150/150`
+          ? `${environment.backendUrl}/team/image/${details.teamId}/150/150`
           : null,
         co2Data: details
           ? {
@@ -254,16 +255,16 @@ const teamReducer = createReducer(
       pagedTrees,
     };
   }),
-  on(deleteTeamSuccess, (state) => {
-    return {
-      ...state,
-      teamDetails: null,
-    };
-  }),
   on(updateTeamImage, (state) => {
     return {
       ...state,
       uploadingImage: true,
+    };
+  }),
+  on(deleteTeamSuccess, (state) => {
+    return {
+      ...state,
+      teamDetails: null,
     };
   }),
   on(updateTeamImageError, (state) => {
@@ -272,15 +273,17 @@ const teamReducer = createReducer(
       uploadingImage: false,
     };
   }),
-  on(updateTeamImageSuccess, (state, { newImageFileName }) => ({
-    ...state,
-    uploadingImage: false,
-    teamDetails: {
-      ...state.teamDetails,
-      imageFileName: newImageFileName,
-      profileImageUrl: `${environment.backendUrl}/team/image/${newImageFileName}/150/150`,
-    },
-  })),
+  on(updateTeamImageSuccess, (state, { newImageFileName }) => {
+    return {
+      ...state,
+      teamDetails: {
+        ...state.teamDetails,
+        imageFileName: newImageFileName,
+        teamImageUrl: `${environment.backendUrl}/team/image/${newImageFileName}/150/150`,
+      },
+      uploadingImage: false,
+    };
+  }),
 );
 
 export function teamReducerFn(state, action) {
@@ -505,7 +508,7 @@ export class TeamEffects {
     this.actions$.pipe(
       ofType(updateTeamImage),
       concatMap((action) =>
-        this.teamService.updateTeamImage(action.teamName, action.image).pipe(
+        this.teamService.updateTeamImage(action.teamId, action.image).pipe(
           switchMap((res) => {
             return [
               updateTeamImageSuccess({ newImageFileName: res }),

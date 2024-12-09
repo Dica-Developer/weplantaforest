@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import java.nio.file.Files;
 import org.dicadeveloper.weplantaforest.FileSystemInjector;
 import org.dicadeveloper.weplantaforest.common.errorhandling.IpatException;
 import org.dicadeveloper.weplantaforest.common.image.ImageHelper;
@@ -60,11 +61,27 @@ public class TeamController {
 
     private @NonNull TokenAuthenticationService tokenAuthenticationService;
 
+    private final static String DEFAULT_IMAGE_PATH = "/static/images/default_user.jpg";
+
     @RequestMapping(value = Uris.TEAM_IMAGE + "{imageName:.+}/{width}/{height}", method = RequestMethod.GET, headers = "Accept=image/jpeg, image/jpg, image/png, image/gif")
     public ResponseEntity<?> getImage(HttpServletResponse response, @PathVariable String imageName, @PathVariable int width, @PathVariable int height) {
-        String filePath = FileSystemInjector.getTeamFolder() + "/" + imageName;
+        File directory = new File(FileSystemInjector.getTeamFolder());
+        String[] files = directory.list();
+        String teamImageName = "";
+        for (String fileName : files) {
+            if (fileName.startsWith(imageName + ".")) {
+                teamImageName = fileName;
+                break;
+            }
+        }
+        String filePath = FileSystemInjector.getTeamFolder() + "/" + teamImageName;
         try {
-            imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
+            if (!teamImageName.isEmpty()) {
+                imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
+            } else {
+                filePath = getClass().getResource(DEFAULT_IMAGE_PATH).getPath().toString();
+                imageHelper.writeImageToOutputStream(response.getOutputStream(), filePath, width, height);
+            }
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
             LOG.error("Error occured while trying to get image " + imageName + " in folder: " + filePath, e);
@@ -73,12 +90,11 @@ public class TeamController {
     }
 
     @RequestMapping(value = Uris.TEAM_IMAGE_UPLOAD, method = RequestMethod.POST)
-    public ResponseEntity<?> uploadTeamImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam String teamName, @RequestParam("file") MultipartFile file) throws IpatException {
+    public ResponseEntity<?> uploadTeamImage(@RequestHeader(value = "X-AUTH-TOKEN") String userToken, @RequestParam Long teamId, @RequestParam("file") MultipartFile file) throws IpatException {
         User user = tokenAuthenticationService.getUserFromToken(userToken);
-        Team team = teamRepository.findByName(teamName);
-        if (null != user && teamService.isTeamAdmin(user.getId(), team.getId())) {
-            String imageName = teamService.uploadTeamImage(teamName, file);
-            return new ResponseEntity<>(imageName, HttpStatus.OK);
+        if (null != user && teamService.isTeamAdmin(user.getId(), teamId)) {
+            teamService.uploadTeamImage(teamId, file);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -91,7 +107,6 @@ public class TeamController {
             try {
                 Long teamId = Long.parseLong(teamName);
                 Team team = teamRepository.findById(teamId).orElse(null);
-
                 return new ResponseEntity<>("https://www.iplantatree.org/team/" + UrlEscapers.urlPathSegmentEscaper().escape(team.getName()), HttpStatus.PAYMENT_REQUIRED);
             } catch (Exception e) {
                 LOG.warn("Did not find team with id: " + teamName, e);

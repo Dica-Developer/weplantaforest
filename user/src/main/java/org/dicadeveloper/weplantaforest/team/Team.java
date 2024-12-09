@@ -3,7 +3,6 @@ package org.dicadeveloper.weplantaforest.team;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
@@ -16,11 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.dicadeveloper.weplantaforest.views.Views;
 import org.dicadeveloper.weplantaforest.user.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,10 +47,6 @@ public class Team {
     // necessary to avoid infinite recursion in authenticated user json object
     @JsonIgnore
     private List<User> members = new ArrayList<User>();
-
-    @Column(name = "_imageName")
-    @JsonView({ Views.TeamMember.class })
-    public String imageName;
 
     @Column(name = "_description", columnDefinition = "TEXT")
     private String description;

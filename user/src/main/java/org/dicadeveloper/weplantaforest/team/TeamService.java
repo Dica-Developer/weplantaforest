@@ -33,7 +33,6 @@ public class TeamService {
         boolean teamNameDoesNotExists = teamRepository.findByName(team.getName()) == null;
         IpatPreconditions.checkArgument(teamNameDoesNotExists, ErrorCodes.TEAM_NAME_ALREADY_EXISTS);
         team.setAdmin(admin);
-        team.setImageName(null);
         team.setTimeStamp(System.currentTimeMillis());
         teamRepository.save(team);
         admin.setTeam(team);
@@ -84,19 +83,24 @@ public class TeamService {
         teamRepository.deleteById(teamId);
     }
 
-    public String uploadTeamImage(String teamName, MultipartFile file) throws IpatException {
+    public void uploadTeamImage(Long teamId, MultipartFile file) throws IpatException {
         IpatPreconditions.checkArgument("image/png".equalsIgnoreCase(file.getContentType()) || "image/jpeg".equalsIgnoreCase(file.getContentType()), ErrorCodes.WRONG_IMAGE_TYPE);
         IpatPreconditions.checkArgument(!file.isEmpty(), ErrorCodes.EMPTY_FILE);
-        Team team = teamRepository.findByName(teamName);
+        Team team = teamRepository.findById(teamId).orElse(null);
         IpatPreconditions.checkNotNull(team, ErrorCodes.TEAM_NOT_FOUND);
 
         String imageFolder = FileSystemInjector.getTeamFolder();
-        String imageName = team.getName() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+        File teamFolder = new File(imageFolder);
+        String[] teamImages = teamFolder.list();
+        String imageName = team.getId() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
         try {
+            for (String fileName : teamImages) {
+                if (fileName.startsWith(team.getId() + ".")) {
+                    File fileToDelete = new File(imageFolder + "/" + fileName);
+                    fileToDelete.delete();
+                }
+            }
             imageHelper.storeImage(file, imageFolder, imageName, true);
-            team.setImageName(imageName);
-            teamRepository.save(team);
-            return imageName;
         } catch (IOException e) {
             throw new IpatException(ErrorCodes.SERVER_ERROR);
         }
