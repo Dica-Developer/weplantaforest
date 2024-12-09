@@ -161,7 +161,6 @@ export class StatisticsEffects {
       switchMap((action) =>
         this.statisticsService.getTreesPerYear().pipe(
           switchMap((trees:any) => {
-            console.log(trees)
             return [loadTreesPerYearSuccess({treesPerYear: trees})];
           }),
         ),

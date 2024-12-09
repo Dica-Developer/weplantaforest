@@ -507,7 +507,6 @@ export class TeamEffects {
       concatMap((action) =>
         this.teamService.updateTeamImage(action.teamName, action.image).pipe(
           switchMap((res) => {
-            console.log(res)
             return [
               updateTeamImageSuccess({ newImageFileName: res }),
               loadTeamDetails({ teamName: action.teamName }),
