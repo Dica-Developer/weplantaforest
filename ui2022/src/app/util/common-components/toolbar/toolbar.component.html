@@ -2,7 +2,7 @@
   <div class="h-100 is-flex-grow-1 center-vertically-horizontally">
     <app-logo-icon
       class="center-vertically-horizontally"
-      (click)="closeMenu()"
+      (click)="closeMenu(); closeOverlay();"
       routerLink="/"
     ></app-logo-icon>
   </div>
@@ -10,14 +10,14 @@
   <div
     class="h-100 is-flex-grow-3 is-justify-content-space-around is-align-items-center bordered hide-mobile"
   >
-    <a routerLink="/plant" [routerLinkActive]="'border-bottom'">{{ 'plantTree' | translate }}</a>
-    <a routerLink="/projectReports" [routerLinkActive]="'border-bottom'">{{
+    <a routerLink="/plant" (click)="closeOverlay()" [routerLinkActive]="'border-bottom'">{{ 'plantTree' | translate }}</a>
+    <a routerLink="/projectReports" (click)="closeOverlay()" [routerLinkActive]="'border-bottom'">{{
       'projects' | translate
       }}</a>
-    <a routerLink="/explore" [routerLinkActive]="'border-bottom'" (click)="resetTree()">{{
+    <a routerLink="/explore" [routerLinkActive]="'border-bottom'" (click)="resetTree(); closeOverlay();">{{
       'explore' | translate
       }}</a>
-    <a routerLink="/blog" [routerLinkActive]="'border-bottom'">{{ 'blog' | translate }}</a>
+    <a routerLink="/blog" (click)="closeOverlay()" [routerLinkActive]="'border-bottom'">{{ 'blog' | translate }}</a>
   </div>
   <div
     class="h-100 w-80px is-flex-grow-0 center-vertically-horizontally hide-mobile"
@@ -27,7 +27,7 @@
   </div>
   <div class="{{ 'h-100 w-80px is-flex-grow-0 bordered ' }} padding-05">
     <app-barrel-icon
-      (click)="closeMenu()"
+      (click)="closeMenu(); closeOverlay();"
       [ngClass]="{ scale: showScaleClass }"
       matBadge="{{ plantBagPrice$ | async | currency }}"
       matBadgeColor="warn"
@@ -48,7 +48,7 @@
     <app-button
       *ngIf="!(loggedIn$ | async) && isBrowser"
       label="{{ 'login' | translate }}"
-      (clicked)="loginClicked()"
+      (clicked)="loginClicked(); closeOverlay();"
     ></app-button>
     <app-side-menu *ngIf="loggedIn$ | async"> </app-side-menu>
   </div>

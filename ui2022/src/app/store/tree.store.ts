@@ -32,7 +32,7 @@ const treeReducer = createReducer(
   initialState,
   on(getAllTrees, (state) => ({
     ...state,
-    allTrees: null,
+    allTrees: { treesCount: 0, co2: 0},
   })),
   on(getAllTreesSuccess, (state, action) => ({
     ...state,

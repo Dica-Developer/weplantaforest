@@ -48,7 +48,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   logoUrl = environment.baseUrl + '/assets/ipatlogo_black.svg';
   barrelUrl = environment.baseUrl + '/assets/barrel_black.svg';
   menuOpened = false;
-  treeInfo = false;
   overlayIsOpen = false;
   loggedIn$: Observable<boolean>;
   plantBagPrice$ = this.store.select(selectPlantbagPriceFormatted);
@@ -97,10 +96,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.menuOpened = !this.menuOpened;
   }
 
-  toggleTreeOverlay() {
-    this.treeInfo = !this.treeInfo;
-  }
-
   closeSearch() {
     if (this.overlayIsOpen) {
       this.overlayIsOpen = false;
@@ -130,7 +125,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   resetTree() {
+    this.closeOverlay()
     this.store.dispatch(resetTree());
+  }
+
+  closeOverlay() {
+    this.overlayIsOpen = false
   }
 
   ngOnDestroy() {
