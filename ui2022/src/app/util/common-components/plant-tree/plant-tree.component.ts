@@ -18,6 +18,7 @@ import { ButtonComponent } from '../button/button.component';
 import { LanguageHelper } from '../../helper/language.helper';
 import { getAllTrees, selectAllTreeCount } from 'src/app/store/tree.store';
 import { TreeIconComponent } from '../icons/tree-icon/tree-icon.component';
+import { PlatformHelper } from '../../helper/platform.helper';
 
 @Component({
   selector: 'app-plant-tree',
@@ -49,9 +50,12 @@ export class PlantTreeComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private textHelper: TextHelper,
     private router: Router,
+    private platformHelper: PlatformHelper,
     private lanugageHelper: LanguageHelper,
   ) {
-    this.store.dispatch(getAllTrees());
+    if (this.platformHelper.isBrowser) {
+      this.store.dispatch(getAllTrees());
+    }
   }
 
   ngOnInit(): void {
