@@ -80,7 +80,6 @@ export class FactsPageComponent implements OnInit {
     let educationalOrg = this.translateService.instant('EDUCATIONAL');
     this.piechartLabels.push(privateOrg, commercialOrg, nonprofitOrg, educationalOrg);
 
-
     this.treesPerYearSub = this.getTreesPerYear$.subscribe(treesPerYear => {
       (treesPerYear as any[]).forEach((year, index) => {
         this.labels.push(year.label);
@@ -107,19 +106,28 @@ export class FactsPageComponent implements OnInit {
         this.amountTreesPerOrg.push(orgType.amount);
       });
     })
+    this.co2Sub = this.getCo2$.subscribe(co2 => {
+      (co2 as any[]).forEach((year, index) => {
+        this.co2Saved.push(year.co2);
+      });
+    })
+
     this.combinedSub = combineLatest([
       this.getTreesPerYear$,
       this.getUsersPerYear$,
       this.getCo2$,
       this.getTreesPerOrgType$,
     ]).subscribe(([treesPerYear, usersPerYear, co2, treesPerOrg]) => {
-        if (this.platformHelper.isBrowser) {
-          this.chart?.update()
-        }
         this.chartsInitialized = true;
+        this.updateCharts()
       });
   }
 
+  updateCharts() {
+    if (this.platformHelper.isBrowser) {
+      this.chart?.update()
+    }
+  }
   public amountPerYearData: ChartConfiguration<'bar'>['data'] = {
     labels: this.labels,
     datasets: [{ label: '', data: this.amountOfTrees, backgroundColor: 'rgb(130, 171, 31)' }],

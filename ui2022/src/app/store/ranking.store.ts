@@ -49,7 +49,7 @@ export const loadNewestTrees = createAction(
 
 export const loadNewestTreesSuccess = createAction(
   '[Ranking] load latest trees success',
-  props<{ latestTrees: PagedData<CarouselItem> }>(),
+  props<{ newestTrees: PagedData<CarouselItem> }>(),
 );
 
 export interface TreeRankedUserData {
@@ -138,7 +138,7 @@ const rankingReducer = createReducer(
   })),
   on(loadNewestTreesSuccess, (state, action) => ({
     ...state,
-    newestPlantings: action.latestTrees,
+    newestPlantings: action.newestTrees,
     rankingsLoading: false,
   })),
   on(loadLatestPlantings, (state) => ({
@@ -253,7 +253,7 @@ export class RankingEffects {
         .loadLatestTrees()
         .pipe(
           switchMap((plantings: PagedData<CarouselItem>) => [
-            loadNewestTreesSuccess({ latestTrees: plantings }),
+            loadNewestTreesSuccess({ newestTrees: plantings }),
           ]),
         ),
       ),

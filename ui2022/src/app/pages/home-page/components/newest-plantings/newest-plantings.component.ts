@@ -7,6 +7,7 @@ import { ProjectCarouselItemComponent } from 'src/app/pages/project-page/compone
 import { RankingService } from 'src/app/services/ranking.service';
 import { AppState } from 'src/app/store/app.state';
 import { loadNewestTrees, selectNewestPlantings} from 'src/app/store/ranking.store';
+import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 
 @Component({
   selector: 'app-newest-plantings',
@@ -26,8 +27,10 @@ export class NewestPlantingsComponent {
   plantings$ = this.store.select(selectNewestPlantings);
   plantings: any;
 
-  constructor(private store: Store<AppState>, private rankingService: RankingService) {
-    this.store.dispatch(loadNewestTrees())
+  constructor(private platformHelper: PlatformHelper, private store: Store<AppState>, private rankingService: RankingService) {
+    if (this.platformHelper.isBrowser) {
+      this.store.dispatch(loadNewestTrees());
+    }
   }
 
   ngOnInit() {
