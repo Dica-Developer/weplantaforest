@@ -1,7 +1,7 @@
 h1 {
   font-family: 'Bull-regular' !important;
-  font-size: 3rem !important;
-  line-height: 3.25rem !important;
+  font-size: 3.5rem !important;
+  line-height: 3.75rem !important;
   color: var(--dark-brown);
   text-shadow: 0 0 8px var(--background);
 }
@@ -58,6 +58,9 @@ a {
   }
 }
 
+a:focus {
+  color: var(--dark-brown);
+}
 a:hover {
   color: var(--green);
 }
