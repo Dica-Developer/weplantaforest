@@ -54,6 +54,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = "SELECT user FROM User user WHERE user.mail = :email")
     public User findByEmail(@Param("email") String email);
 
+    @Query("SELECT MIN(YEAR(FROM_UNIXTIME(user.regDate / 1000))) FROM User user")
+    Integer getMinRegDateForUser();
+
     @Query(value = "SELECT user FROM User user WHERE user.name LIKE %:searchValue%")
     public List<User> searchUsers(@Param("searchValue") String searchValue);
 

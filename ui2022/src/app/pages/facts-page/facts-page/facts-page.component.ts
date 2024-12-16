@@ -90,6 +90,7 @@ export class FactsPageComponent implements OnInit {
           this.amountOfTreesSum.push(this.amountOfTreesSum[index - 1] + year.amount);
         }
       });
+      this.updateCharts()
     })
     this.usersPerYearSub = this.getUsersPerYear$.subscribe(usersPerYear => {
       (usersPerYear as any[]).forEach((year, index) => {
@@ -100,16 +101,19 @@ export class FactsPageComponent implements OnInit {
           this.amountOfUsersSum.push(this.amountOfUsersSum[index - 1] + year.amount);
         }
       });
+      this.updateCharts()
     })
     this.treesPerOrgTypeSub = this.getTreesPerOrgType$.subscribe(treesPerOrg => {
       (treesPerOrg as any[]).forEach((orgType, index) => {
         this.amountTreesPerOrg.push(orgType.amount);
       });
+      this.updateCharts()
     })
     this.co2Sub = this.getCo2$.subscribe(co2 => {
       (co2 as any[]).forEach((year, index) => {
         this.co2Saved.push(year.co2);
       });
+      this.updateCharts()
     })
 
     this.combinedSub = combineLatest([
@@ -145,19 +149,6 @@ export class FactsPageComponent implements OnInit {
       },
     ],
   };
-  public co2SumData: ChartConfiguration<'line'>['data'] = {
-    labels: this.labels,
-    datasets: [
-      {
-        label: '',
-        data: this.co2Saved,
-        pointBackgroundColor: 'rgb(130, 171, 31)',
-        fill: 'origin',
-        backgroundColor: 'rgb(130, 171, 31, 0.35)',
-        borderColor: 'rgb(130, 171, 31, 0.7)',
-      },
-    ],
-  };
   public usersPerYearData: ChartConfiguration<'bar'>['data'] = {
     labels: this.labels,
     datasets: [{ label: '', data: this.amountOfUsers, backgroundColor: 'rgb(130, 171, 31)' }],
@@ -168,6 +159,19 @@ export class FactsPageComponent implements OnInit {
       {
         label: '',
         data: this.amountOfUsersSum,
+        pointBackgroundColor: 'rgb(130, 171, 31)',
+        fill: 'origin',
+        backgroundColor: 'rgb(130, 171, 31, 0.35)',
+        borderColor: 'rgb(130, 171, 31, 0.7)',
+      },
+    ],
+  };
+  public co2SumData: ChartConfiguration<'line'>['data'] = {
+    labels: this.labels,
+    datasets: [
+      {
+        label: '',
+        data: this.co2Saved,
         pointBackgroundColor: 'rgb(130, 171, 31)',
         fill: 'origin',
         backgroundColor: 'rgb(130, 171, 31, 0.35)',

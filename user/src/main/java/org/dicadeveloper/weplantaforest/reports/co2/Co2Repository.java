@@ -26,6 +26,9 @@ public interface Co2Repository extends PagingAndSortingRepository<Tree, Long> {
     @Query(GET_TREES_AND_CO2_SAVING_FOR_TEAM)
     Co2Data getAllTreesAndCo2SavingForTeam(@Param("time") long timeOfMeasurement, @Param("teamName") String teamName);
 
+    @Query("SELECT MIN(YEAR(FROM_UNIXTIME(tree.plantedOn / 1000))) FROM Tree tree")
+    Integer getMinYearForCo2Data();
+
     // TODO: subqueries doesn't work for from clause, so there has to be another
     // solution
     // select count(*) from (select sum(tree._amount) from Tree AS tree GROUP BY
