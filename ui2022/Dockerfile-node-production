@@ -7,4 +7,5 @@ COPY . ./
 # RUN npm version
 RUN yarn install
 RUN yarn build:prod
+RUN yarn postbuild
 CMD node dist/ui2022/server/server.mjs
