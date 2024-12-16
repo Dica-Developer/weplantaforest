@@ -314,10 +314,10 @@
   "notLoggedIn": "You are not logged in! If you plant as a guest, fewer functions are available.",
   "editTeam": "Edit Team",
   "checkYourInputs": "Please check your entries!",
-  "cookieHeader": "This website uses cookies to enable newsletter and Paypal payments.",
+  "cookieHeader": "This website uses cookies for newsletters, YouTube videos and PayPal payments.",
   "allow": "Allow",
   "deny": "Decline",
-  "LearnPrivacy": "Learn more!",
+  "LearnPrivacy": "Learn more.",
   "paginator": {
     "of": "of",
     "itemsPerPage": "Items per Page",
