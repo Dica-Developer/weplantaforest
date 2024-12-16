@@ -1,7 +1,9 @@
 <div class="is-flex is-flex-direction-column is-align-items-center" #imageLink>
   <img id="myImg" [src]="images[0].imageUrl" (click)="openModal(0)" />
   <div class="w-100 center padding-1">
-    <mat-icon class="pointer" aria-hidden="false" (click)="openModal(0)">collections</mat-icon>
+    <mat-icon
+      [matTooltip]="'openGallery' | translate"
+      class="pointer" aria-hidden="false" (click)="openModal(0)">collections</mat-icon>
   </div>
 </div>
 
