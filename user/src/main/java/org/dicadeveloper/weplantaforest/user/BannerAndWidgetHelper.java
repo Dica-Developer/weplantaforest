@@ -94,7 +94,7 @@ public class BannerAndWidgetHelper {
             if ("green".equals(type)) {
                 graphics.setColor(Color.WHITE);
             } else {
-                graphics.setColor(new Color(130, 171, 31));
+                graphics.setColor(new Color(130, 170, 30));
             }
             graphics.setFont(new Font("Georgia", Font.PLAIN, 10));
             if (Language.DEUTSCH.equals(language)) {
@@ -127,7 +127,7 @@ public class BannerAndWidgetHelper {
         if ("green".equals(type)) {
             graphics.setColor(Color.WHITE);
         } else {
-            graphics.setColor(new Color(130, 171, 31));
+            graphics.setColor(new Color(130, 170, 30));
         }
         if (Language.DEUTSCH.equals(language)) {
             drawCenteredString(graphics, "gepflanzte Bäume", 100, new Font("Georgia", Font.PLAIN, 9), textTreePos);
@@ -152,7 +152,7 @@ public class BannerAndWidgetHelper {
         if ("green".equals(type)) {
             graphics.setColor(Color.WHITE);
         } else {
-            graphics.setColor(new Color(130, 171, 31));
+            graphics.setColor(new Color(130, 170, 30));
         }
         if (Language.DEUTSCH.equals(language)) {
             drawSectionCenteredString(graphics, "gepflanzte Bäume", sectionWidth, new Font("Georgia", Font.PLAIN, 9), textTreePos, 1);
@@ -184,7 +184,7 @@ public class BannerAndWidgetHelper {
             plantedTreesText = "Trees planted";
             co2BoundText = "CO2 bound in t";
         }
-       
+
 
         Double co2Rounded = Math.round(co2DataForUser.getCo2() * 100) / 100.0;
         var co2RoundedAsString = co2Rounded.toString();
@@ -194,14 +194,14 @@ public class BannerAndWidgetHelper {
         Graphics2D graphics = bufferedImg.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-        graphics.setColor(new Color(150, 153, 0));
+        graphics.setColor(new Color(130, 170, 30));
         if (width == 200 && height == 200) {
             graphics.setColor(new Color(0, 0, 0));
             graphics.setFont(new Font("Arial", Font.PLAIN, 15));
             graphics.drawString(plantedTreesText, 10, 220);
-            graphics.drawString(co2BoundText, 10, 263);            
+            graphics.drawString(co2BoundText, 10, 263);
             graphics.setFont(new Font("Arial", Font.PLAIN, 20));
-            graphics.setColor(new Color(150, 153, 0));
+            graphics.setColor(new Color(130, 170, 30));
             graphics.drawString(co2DataForUser.getTreesCount().toString(), 190, 220);
             graphics.drawString(co2RoundedAsString, 190, 263);
         } else if (width == 200 && height == 600) {
@@ -211,7 +211,7 @@ public class BannerAndWidgetHelper {
             drawCenteredString(graphics, co2BoundText, 200, new Font("Arial", Font.PLAIN, 15), 460);
 
             graphics.setFont(new Font("Arial", Font.PLAIN, 24));
-            graphics.setColor(new Color(150, 153, 0));
+            graphics.setColor(new Color(130, 170, 30));
             drawCenteredString(graphics, co2DataForUser.getTreesCount().toString(), 200, new Font("Arial", Font.PLAIN, 24), 340);
             drawCenteredString(graphics, co2RoundedAsString, 200, new Font("Arial", Font.PLAIN, 24), 550);
             // graphics.drawString(co2DataForUser.getTreesCount().toString(), 75, 340);
@@ -220,13 +220,13 @@ public class BannerAndWidgetHelper {
             graphics.setColor(new Color(0, 0, 0));
             graphics.setFont(new Font("Arial", Font.PLAIN, 15));
             graphics.drawString(plantedTreesText, 245, 60);
-            graphics.drawString(co2BoundText, 450, 60);            
+            graphics.drawString(co2BoundText, 450, 60);
 
             graphics.setFont(new Font("Arial", Font.PLAIN, 24));
-            graphics.setColor(new Color(150, 153, 0));
+            graphics.setColor(new Color(130, 170, 30));
             graphics.drawString(co2DataForUser.getTreesCount().toString(), 280, 160);
             graphics.drawString(co2RoundedAsString, 480, 160);
-        } 
+        }
 
 
         return bufferedImg;

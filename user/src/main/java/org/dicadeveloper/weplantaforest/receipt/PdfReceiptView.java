@@ -62,6 +62,7 @@ public class PdfReceiptView {
         numberWordMap.put("8", "acht");
         numberWordMap.put("9", "neun");
         numberWordMap.put(",", "komma");
+        numberWordMap.put(".", "komma");
     }
 
     private PdfHelper pdfHelper = new PdfHelper();
@@ -307,6 +308,7 @@ public class PdfReceiptView {
         company = company == null ? "" : company;
         val street = latest.getCallBackStrasse() == null ? "" : latest.getCallBackStrasse();
         val city = (latest.getCallBackPlz() == null ? "" : latest.getCallBackPlz() + " ") + (latest.getCallBackOrt() == null ? "" : latest.getCallBackOrt());
+        val country = latest.getCallBackLand() == null ? "" : latest.getCallBackLand();
 
         val tableForNameAndAdress = new PdfPTable(1);
         float[] rows = { 450f };
@@ -319,8 +321,9 @@ public class PdfReceiptView {
         tableForNameAndAdress.addCell(new Phrase(new Chunk(name, textFontUserData)));
         tableForNameAndAdress.addCell(new Phrase(new Chunk(street, textFontUserData)));
         tableForNameAndAdress.addCell(new Phrase(new Chunk(city, textFontUserData)));
+        tableForNameAndAdress.addCell(new Phrase(new Chunk(country, textFontUserData)));
 
-        tableForNameAndAdress.writeSelectedRows(0, 6, 85f, 525f, cb);
+        tableForNameAndAdress.writeSelectedRows(0, 7, 85f, 525f, cb);
     }
 
     private PdfPTable createPriceTable(PdfContentByte cb, Receipt receipt) throws DocumentException {
