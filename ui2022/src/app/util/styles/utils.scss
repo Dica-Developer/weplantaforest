@@ -111,10 +111,10 @@ video {
     background: var(--dark-brown)!important;
     color: var(--background)!important;
   }
-  &:hover {
-    border: 1px solid var(--green) !important;
-    background: var(--green);
-    color: var(--black);
+  &:active {
+    border: 1px solid var(--dark-brown) !important;
+    background: var(--dark-brown)!important;
+    color: var(--background)!important;
   }
   &.left {
     margin-right: 2px;
@@ -126,6 +126,13 @@ video {
 }
 
 @media only screen and (min-width: 768px) {
+  .toggle-button {
+    &:hover {
+      border: 1px solid var(--green) !important;
+      background: var(--green);
+      color: var(--black);
+    }
+  }
   .hideOnDesktop {
     display: none !important;
   }

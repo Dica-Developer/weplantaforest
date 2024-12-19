@@ -351,7 +351,7 @@ app-profile-page {
 }
 
 // correct hover effect in footer
-a:hover {
+a:active {
   app-instagram-icon {
     .svg-icon {
       path {
@@ -370,6 +370,31 @@ a:hover {
     .svg-icon {
       path {
         fill: var(--green) !important;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) {
+  a:hover {
+    app-instagram-icon {
+      .svg-icon {
+        path {
+          fill: var(--green) !important;
+        }
+      }
+    }
+    app-youtube-icon {
+      .svg-icon {
+        path {
+          fill: var(--green) !important;
+        }
+      }
+    }
+    app-facebook-icon {
+      .svg-icon {
+        path {
+          fill: var(--green) !important;
+        }
       }
     }
   }

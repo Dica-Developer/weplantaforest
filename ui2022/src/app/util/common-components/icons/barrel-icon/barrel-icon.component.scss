@@ -18,7 +18,7 @@
     fill: var(--green);
   }
 }
-@media (hover: hover) {
+@media only screen and (min-width: 768px) {
   .svg-icon:hover {
     cursor: pointer;
     path {
