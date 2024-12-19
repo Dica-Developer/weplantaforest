@@ -3,7 +3,11 @@
     <p>{{ 'rank' | translate }}: {{ profileDetails.rank }}</p>
     <p>{{ 'treesPlanted' | translate }}: {{ profileDetails.co2Data.treesCount }}</p>
     <p innerHTML="{{ ('CO2Trapped' | translate) + ': ' + profileDetails.co2Data.co2 + ' t' }}"></p>
-    <p>{{ 'website' | translate }}: {{ profileDetails.homepage }}</p>
+    <p>{{ 'website' | translate }}:
+      <a target="_blank" rel="nofollow noopener noreferrer" [href]="setURL(profileDetails.homepage)">
+        {{ profileDetails.homepage }}
+      </a>
+    </p>
   </div>
   <div class="column is-half">
     <p>{{ 'memberSince' | translate }}: {{ profileDetails.regDate | date : 'dd.MM.yyyy' }}</p>
