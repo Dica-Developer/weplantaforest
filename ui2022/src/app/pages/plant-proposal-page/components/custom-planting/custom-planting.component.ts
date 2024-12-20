@@ -16,23 +16,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../util/common-components/button/button.component';
 import { CustomPlantTreeInputComponent } from '../../../../util/common-components/custom-plant-tree-input/custom-plant-tree-input.component';
-import { NgFor, NgIf } from '@angular/common';
+import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-custom-planting',
-    templateUrl: './custom-planting.component.html',
-    styleUrls: ['./custom-planting.component.scss'],
-    standalone: true,
-    imports: [
-        NgFor,
-        NgIf,
-        CustomPlantTreeInputComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        ButtonComponent,
-        RouterLink,
-        TranslateModule,
-    ],
+  selector: 'app-custom-planting',
+  templateUrl: './custom-planting.component.html',
+  styleUrls: ['./custom-planting.component.scss'],
+  standalone: true,
+  imports: [
+    CurrencyPipe,
+    NgFor,
+    NgIf,
+    CustomPlantTreeInputComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonComponent,
+    RouterLink,
+    TranslateModule,
+  ],
 })
 export class CustomPlantingComponent implements OnInit, OnDestroy {
   activeProjects;
@@ -49,7 +50,7 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
   showPutIntoPlantbagButton = true;
   showGoToPlantbagButton = false;
 
-  totalPrice: string = '0,00';
+  totalPrice: number = 0;
   formGroupSub: Subscription;
   combinedSub: Subscription;
 
@@ -60,19 +61,19 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
       this.store.select(selectSimpleProposal),
       this.store.select(selectProjectsForCustomPlanting),
     ]).subscribe(([proposal, projects]) => {
-      this.initForm(projects);
-      if (proposal) {
-        for (const plantItem of proposal.plantItems) {
-          if (this.formGroup.get(plantItem.projectName) as FormArray) {
-            for (const fg of (this.formGroup.get(plantItem.projectName) as FormArray).controls) {
-              if (fg.value.article.treeType.name === plantItem.treeType) {
-                fg.get('amount').setValue(plantItem.amount);
+        this.initForm(projects);
+        if (proposal) {
+          for (const plantItem of proposal.plantItems) {
+            if (this.formGroup.get(plantItem.projectName) as FormArray) {
+              for (const fg of (this.formGroup.get(plantItem.projectName) as FormArray).controls) {
+                if (fg.value.article.treeType.name === plantItem.treeType) {
+                  fg.get('amount').setValue(plantItem.amount);
+                }
               }
             }
           }
         }
-      }
-    });
+      });
 
     this.profileDetailsSub = this.store.select(selectProfileDetails).subscribe((details) => {
       this.profileDetails = details;
@@ -155,7 +156,7 @@ export class CustomPlantingComponent implements OnInit, OnDestroy {
           price += (article.amount * article.article.price.priceAsLong) / 100;
         }
       }
-      this.totalPrice = price.toFixed(2).replace('.', ',');
+      this.totalPrice = price;
       this.showPutIntoPlantbagButton = true;
       this.showGoToPlantbagButton = false;
     });

@@ -46,7 +46,7 @@ public class PdfReceiptView {
     private final static Font textFontHint = new Font(FontFamily.HELVETICA, 6.8f, Font.NORMAL, BaseColor.BLACK);
     private final static Font textFontHintBold = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 
-    private final static DecimalFormat priceFormat = new DecimalFormat("#0.00");
+    private final static DecimalFormat priceFormat = new DecimalFormat("#0.000,00");
 
     private final static HashMap<String, String> numberWordMap = new HashMap<String, String>();
 

@@ -1,9 +1,9 @@
 <div class="is-flex is-flex-direction-column padding-top-2">
   <p class="padding-bottom-1">
     {{
-      projectId
-        ? ('customPlantingInfoSingleProject' | translate)
-        : ('customPlantingInfo' | translate)
+    projectId
+    ? ('customPlantingInfoSingleProject' | translate)
+    : ('customPlantingInfo' | translate)
     }}
   </p>
   <div *ngFor="let project of activeProjects" class="content">
@@ -46,7 +46,8 @@
     ></app-button>
     <span class="font-1 pricetag">
       <b>
-        {{ ('price' | translate) + ': ' + totalPrice + ' €' }}
+        {{ 'priceComplete' | translate }} <br />
+        {{ totalPrice | currency }}
       </b>
     </span>
   </div>

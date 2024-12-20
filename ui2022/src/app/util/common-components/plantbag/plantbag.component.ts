@@ -13,22 +13,22 @@ import { PlantbagTreeInputComponent } from '../plantbag-tree-input/plantbag-tree
 import { NgIf, NgFor, AsyncPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-plantbag',
-    templateUrl: './plantbag.component.html',
-    styleUrls: ['./plantbag.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        NgFor,
-        PlantbagTreeInputComponent,
-        MatCheckbox,
-        FormsModule,
-        ReactiveFormsModule,
-        ButtonComponent,
-        AsyncPipe,
-        CurrencyPipe,
-        TranslateModule,
-    ],
+  selector: 'app-plantbag',
+  templateUrl: './plantbag.component.html',
+  styleUrls: ['./plantbag.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    PlantbagTreeInputComponent,
+    MatCheckbox,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonComponent,
+    AsyncPipe,
+    CurrencyPipe,
+    TranslateModule,
+  ],
 })
 export class PlantbagComponent implements OnInit, OnDestroy {
   plantbag$: Observable<PlantbagState>;
