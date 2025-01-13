@@ -67,9 +67,9 @@ export class FactsPageComponent implements OnInit {
     public platformHelper: PlatformHelper
   ) {
     this.store.dispatch(loadTreesPerYear())
+    this.store.dispatch(loadCo2())
     this.store.dispatch(loadUsersPerYear())
     this.store.dispatch(loadTreesPerOrgType())
-    this.store.dispatch(loadCo2())
   }
 
   ngOnInit(): void {
@@ -90,7 +90,6 @@ export class FactsPageComponent implements OnInit {
           this.amountOfTreesSum.push(this.amountOfTreesSum[index - 1] + year.amount);
         }
       });
-      this.updateCharts()
     })
     this.usersPerYearSub = this.getUsersPerYear$.subscribe(usersPerYear => {
       (usersPerYear as any[]).forEach((year, index) => {
@@ -101,19 +100,16 @@ export class FactsPageComponent implements OnInit {
           this.amountOfUsersSum.push(this.amountOfUsersSum[index - 1] + year.amount);
         }
       });
-      this.updateCharts()
     })
     this.treesPerOrgTypeSub = this.getTreesPerOrgType$.subscribe(treesPerOrg => {
       (treesPerOrg as any[]).forEach((orgType, index) => {
         this.amountTreesPerOrg.push(orgType.amount);
       });
-      this.updateCharts()
     })
     this.co2Sub = this.getCo2$.subscribe(co2 => {
       (co2 as any[]).forEach((year, index) => {
         this.co2Saved.push(year.co2);
       });
-      this.updateCharts()
     })
 
     this.combinedSub = combineLatest([
@@ -196,3 +192,4 @@ export class FactsPageComponent implements OnInit {
     ],
   };
 }
+

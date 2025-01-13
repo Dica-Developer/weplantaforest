@@ -6,7 +6,6 @@ import { AppState } from './app.state';
 import { Injectable } from '@angular/core';
 import { TreeType } from './project.store';
 import { addSuccessMessage } from './success-message.state';
-import { info } from 'node:console';
 
 export interface User {
   admin: boolean;

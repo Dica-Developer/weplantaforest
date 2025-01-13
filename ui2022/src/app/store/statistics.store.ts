@@ -39,7 +39,7 @@ export const loadCo2 = createAction(
 );
 export const loadCo2Success = createAction(
   '[Stats] load co2 success',
-  props<{ co2: any[] }>(),
+  props<{ co2Saved: any[] }>(),
 );
 export const loadUsersPerYear = createAction(
   '[Stats] load users per year',
@@ -73,10 +73,10 @@ const statsReducer = createReducer(
     co2Loading: true,
     co2: []
   })),
-  on(loadCo2Success, (state, {co2}) => ({
+  on(loadCo2Success, (state, {co2Saved}) => ({
     ...state,
     co2Loading: false,
-    co2: co2
+    co2: co2Saved
   })),
   on(loadUsersPerYear, (state) => ({
     ...state,
@@ -138,6 +138,7 @@ export const selectTreesPerOrgType = createSelector(
   statsFeature,
   (state: StatisticsState) => state.treesPerOrgType,
 );
+
 @Injectable()
 export class StatisticsEffects {
   constructor(private actions$: Actions, private statisticsService: StatisticsService) {}
@@ -148,7 +149,7 @@ export class StatisticsEffects {
       switchMap((action) =>
         this.statisticsService.getCo2().pipe(
           switchMap((co2:any) => {
-            return [loadCo2Success(co2)];
+            return [loadCo2Success({co2Saved: co2})];
           }),
         ),
       ),

@@ -82,7 +82,6 @@ import lombok.val;
             if (startYear == null) {
                 throw new IllegalStateException("No data available for CO2 statistics");
             }
-            System.out.println("startYear: " + startYear);
             for (int year = startYear; year <= LocalDate.now().getYear(); year++) {
                 LocalDateTime startDate;
                 if (year == LocalDate.now().getYear()) {
@@ -90,12 +89,19 @@ import lombok.val;
                 } else {
                     startDate = LocalDateTime.of(year, 1, 1, 0, 0);
                 }
-                System.out.println("null: ");
+
                 val co2 = co2Repository.getAllTreesAndCo2Saving(startDate.toInstant(ZoneOffset.UTC).toEpochMilli());
-                System.out.println("co2: " + co2.toString());
+
+               // Check for null and handle gracefully
+                if (co2 == null || co2.getCo2() == null) {
+                    result.add(new Co2StatisticData(0.0, String.valueOf(year))); // Add 0.0 for missing years
+                    continue;
+                }
+
                 // Create and add the CO2 statistic for the previous year
                 Co2StatisticData co2StatisticData = new Co2StatisticData(
-                        Math.floor(co2.getCo2()), String.valueOf(startDate.getYear()));
+                    Math.floor(co2.getCo2()), String.valueOf(startDate.getYear()));
+
                 result.add(co2StatisticData);
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
