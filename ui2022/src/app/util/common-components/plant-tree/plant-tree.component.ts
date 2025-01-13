@@ -36,7 +36,6 @@ import { PlatformHelper } from '../../helper/platform.helper';
   ],
 })
 export class PlantTreeComponent implements OnInit, OnDestroy {
-  hover: boolean;
   trees: { article: ActiveProjectArticle; name: string; urlColor: string; urlBW: string }[] = [];
 
   activeProjects$: Observable<any> = this.store.select(selectProjectsForCustomPlanting);

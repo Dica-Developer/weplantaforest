@@ -16,16 +16,13 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
     TranslateModule,
     ProjectCarouselItemComponent,
     AsyncPipe,
-    NgIf,
     NgFor
   ],
   templateUrl: './newest-plantings.component.html',
   styleUrl: './newest-plantings.component.scss'
 })
 export class NewestPlantingsComponent {
-  plantingsSub: Subscription;
   plantings$ = this.store.select(selectNewestPlantings);
-  plantings: any;
 
   constructor(private platformHelper: PlatformHelper, private store: Store<AppState>, private rankingService: RankingService) {
     if (this.platformHelper.isBrowser) {
@@ -34,13 +31,9 @@ export class NewestPlantingsComponent {
   }
 
   ngOnInit() {
-    this.plantingsSub = this.plantings$.subscribe(res => {
-      this.plantings = res;
-    })
   }
 
   ngOnDestroy() {
-    this.plantingsSub?.unsubscribe()
   }
 
 }
