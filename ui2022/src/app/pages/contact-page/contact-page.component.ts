@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -32,11 +32,9 @@ import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 })
 export class ContactPageComponent implements OnInit, OnDestroy {
   contactForm = new UntypedFormGroup({
-    reason: new UntypedFormControl(''),
-    name: new UntypedFormControl(''),
-    mail: new UntypedFormControl(''),
-    phone: new UntypedFormControl(''),
-    message: new UntypedFormControl(''),
+    name: new UntypedFormControl('', Validators.required),
+    mail: new UntypedFormControl('', [Validators.required, Validators.email]),
+    message: new UntypedFormControl('', Validators.required),
   });
 
   requestSentSubscription: Subscription;
@@ -72,12 +70,13 @@ export class ContactPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.captchaValid) {
+    console.log(this.contactForm.valid)
+    if (this.captchaValid && this.contactForm.valid) {
       let contactRequest: ContactRequest = {
         name: this.contactForm.get('name').value,
-        reason: this.contactForm.get('reason').value,
+        reason: '',
         mail: this.contactForm.get('mail').value,
-        phone: this.contactForm.get('phone').value,
+        phone: '',
         message: this.contactForm.get('message').value,
       };
       this.store.dispatch(submitContactRequestAction({ request: contactRequest }));

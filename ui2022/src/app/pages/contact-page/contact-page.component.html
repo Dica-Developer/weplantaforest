@@ -23,50 +23,28 @@
   <form
     class="w-100 is-flex is-flex-direction-column"
     [formGroup]="contactForm"
-    (ngSubmit)="onSubmit()"
   >
     <div class="inputOutline">
       <input
       [placeholder]="'name' | translate"
       name="name"
-      required
       formControlName="name" />
-    </div>
-    <div class="inputOutline">
-      <input
-      [placeholder]="'reason' | translate"
-      name="reason"
-      required
-      formControlName="reason" />
     </div>
     <div class="inputOutline">
       <input
         [placeholder]="'email' | translate"
         type="text"
         name="email"
-        required
         formControlName="mail"
-      />
-    </div>
-    <div class="inputOutline">
-      <input
-        [placeholder]="'phonenumber' | translate"
-        type="text"
-        name="phonenumber"
-        required
-        formControlName="phone"
       />
     </div>
     <div class="inputOutline">
       <textarea
         rows="10"
         [placeholder]="'message' | translate"
-        type="text"
         name="message"
-        required
         formControlName="message"
-      >
-      </textarea>
+      ></textarea>
     </div>
     <app-captcha (captchaStatusEmit)="updateCaptchaStatus($event)"></app-captcha>
   </form>
