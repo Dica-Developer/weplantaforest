@@ -27,9 +27,7 @@ import { PlatformHelper } from '../../helper/platform.helper';
   standalone: true,
   imports: [
     ButtonComponent,
-    RouterLink,
     NgFor,
-    NgIf,
     TranslateModule,
     TreeIconComponent,
     AsyncPipe
