@@ -16,7 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { LanguageHelper } from '../../helper/language.helper';
-import { getAllTrees, selectAllTreeCount } from 'src/app/store/tree.store';
+import { getAllTrees, selectAllTreeCount } from '../../../store/tree.store';
 import { TreeIconComponent } from '../icons/tree-icon/tree-icon.component';
 import { PlatformHelper } from '../../helper/platform.helper';
 
