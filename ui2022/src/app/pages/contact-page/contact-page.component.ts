@@ -70,7 +70,6 @@ export class ContactPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log(this.contactForm.valid)
     if (this.captchaValid && this.contactForm.valid) {
       let contactRequest: ContactRequest = {
         name: this.contactForm.get('name').value,
@@ -80,6 +79,23 @@ export class ContactPageComponent implements OnInit, OnDestroy {
         message: this.contactForm.get('message').value,
       };
       this.store.dispatch(submitContactRequestAction({ request: contactRequest }));
+    } else if (this.contactForm.get('name').invalid) {
+      this.snackbar.open(this.translateService.instant('nameRequired'), 'OK', {
+        duration: 4000,
+      });
+    } else if (this.contactForm.get('mail').invalid) {
+      this.snackbar.open(this.translateService.instant('mailRequired'), 'OK', {
+        duration: 4000,
+      });
+    } else if (this.contactForm.get('message').invalid) {
+      this.snackbar.open(this.translateService.instant('messageRequired'), 'OK', {
+        duration: 4000,
+      });
+    } else if (!this.captchaValid) {
+      this.snackbar.open(this.translateService.instant('wrongCaptcha'), 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar'],
+      });
     } else {
       this.snackbar.open(this.translateService.instant('formInvalid'), 'OK', {
         duration: 4000,
