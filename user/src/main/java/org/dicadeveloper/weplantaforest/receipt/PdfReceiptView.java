@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -46,7 +47,14 @@ public class PdfReceiptView {
     private final static Font textFontHint = new Font(FontFamily.HELVETICA, 6.8f, Font.NORMAL, BaseColor.BLACK);
     private final static Font textFontHintBold = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 
-    private final static DecimalFormat priceFormat = new DecimalFormat("#0.000,00");
+    private final static DecimalFormat priceFormat;
+
+    static {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator(','); // Set ',' as the decimal separator
+        symbols.setGroupingSeparator('.'); // Set '.' as the thousands separator
+        priceFormat = new DecimalFormat("#,##0.00", symbols);
+    }
 
     private final static HashMap<String, String> numberWordMap = new HashMap<String, String>();
 
