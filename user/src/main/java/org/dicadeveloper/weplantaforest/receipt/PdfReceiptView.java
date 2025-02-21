@@ -70,7 +70,7 @@ public class PdfReceiptView {
         numberWordMap.put("8", "acht");
         numberWordMap.put("9", "neun");
         numberWordMap.put(",", "komma");
-        numberWordMap.put(".", "komma");
+        numberWordMap.put(".", "");
     }
 
     private PdfHelper pdfHelper = new PdfHelper();
@@ -354,17 +354,23 @@ public class PdfReceiptView {
         return tableForPrices;
     }
 
-    private String generatePriceInWords(String price) {
-        String priceInWords = "";
-        for (int i = 0; i < price.length(); i++) {
-            priceInWords += numberWordMap.get(String.valueOf(price.charAt(i)));
-            if (i != price.length() - 1) {
-                priceInWords += "-";
-            }
-        }
-        return priceInWords;
-    }
+private String generatePriceInWords(String price) {
+    StringBuilder priceInWords = new StringBuilder();
+    for (int i = 0; i < price.length(); i++) {
+        String currentChar = String.valueOf(price.charAt(i));
 
+
+        priceInWords.append(numberWordMap.get(currentChar));
+
+        // Only add "-" if it's not the last character,
+        // and the next character is neither "." nor the end of the string
+        if (i < price.length() - 1 &&
+            !String.valueOf(price.charAt(i + 1)).equals(".")) {
+            priceInWords.append("-");
+        }
+    }
+    return priceInWords.toString();
+}
     private PdfPTable createDateTable(PdfContentByte cb, Receipt receipt) throws DocumentException {
         PdfPTable tableForDate = new PdfPTable(1);
         float[] rowForDate = { 110f };
