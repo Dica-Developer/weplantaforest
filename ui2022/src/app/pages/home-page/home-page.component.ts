@@ -3,7 +3,6 @@ import { PlantedTreesComponent } from './components/planted-trees/planted-trees.
 import { ProjectsSectionComponent } from './components/projects-section/projects-section.component';
 import { PlantTreeComponent } from '../../util/common-components/plant-tree/plant-tree.component';
 import { OfferAreaComponent } from '../../util/common-components/offer-area/offer-area.component';
-import { HeaderComponent } from './components/header/header.component';
 import { PlatformHelper } from 'src/app/util/helper/platform.helper';
 import { PlantingProcessComponent } from './components/planting-process/planting-process.component';
 import { RankingsComponent } from './components/rankings/rankings.component';
@@ -15,8 +14,6 @@ import { NewestPlantingsComponent } from './components/newest-plantings/newest-p
   styleUrls: ['./home-page.component.scss'],
   standalone: true,
   imports: [
-    HeaderComponent,
-    OfferAreaComponent,
     PlantTreeComponent,
     PlantingProcessComponent,
     ProjectsSectionComponent,

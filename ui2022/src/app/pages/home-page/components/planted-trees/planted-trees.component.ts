@@ -21,7 +21,6 @@ export class PlantedTreesComponent implements OnInit {
   treeCount$ = this.store.select(selectAllTreeCount);
 
   constructor(private store: Store<AppState>) {
-    this.store.dispatch(getAllTrees());
   }
 
   ngOnInit(): void {}
